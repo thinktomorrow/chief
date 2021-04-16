@@ -12,33 +12,37 @@
     @adminConfig('pageTitle')
 @endsection
 
-@component('chief::back._layouts._partials.header')
-    @slot('title')
-        @if(!$fields->component('chief-page-title')->isEmpty())
-            <livewire:fields_component
-                componentKey="chief-page-title"
-                :model="$model"
-                template="chief::manager.cards.fields.templates.pagetitle"
-            />
-        @else
-            @adminConfig('pageTitle')
-        @endif
-    @endslot
+@section('header')
+    <div class="container">
+        @component('chief::back._layouts._partials.header')
+            @slot('title')
+                @if(!$fields->component('chief-page-title')->isEmpty())
+                    <livewire:fields_component
+                        componentKey="chief-page-title"
+                        :model="$model"
+                        template="chief::manager.cards.fields.templates.pagetitle"
+                    />
+                @else
+                    @adminConfig('pageTitle')
+                @endif
+            @endslot
 
-    @slot('breadcrumbs')
-        @adminCan('index')
-            <div>
-                <a href="@adminRoute('index')" class="link link-primary">
-                    <x-link-label type="back">Ga terug</x-link-label>
-                </a>
-            </div>
-        @endAdminCan
-    @endslot
-@endcomponent
+            @slot('breadcrumbs')
+                @adminCan('index')
+                    <div>
+                        <a href="@adminRoute('index')" class="link link-primary">
+                            <x-link-label type="back">Ga terug</x-link-label>
+                        </a>
+                    </div>
+                @endAdminCan
+            @endslot
+        @endcomponent
+    </div>
+@endsection
 
 @section('content')
     <div class="container">
-        <div class="row gutter-3">
+        <div class="row gutter-6">
             <div class="w-full lg:w-2/3">
                 <div class="window window-white space-y-12">
                     @adminCan('fields-edit', $model)
@@ -52,7 +56,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="space-y-6">
+                <div class="space-y-12">
                     @adminCan('links-edit', $model)
                         <livewire:links :model="$model" class="window window-grey" />
                     @endAdminCan

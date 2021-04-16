@@ -1,28 +1,23 @@
-@section('header')
-    <div class="my-12">
-        <div class="container space-y-2">
-            @if(isset($breadcrumbs))
-                <div class="row">
-                    <div class="w-full">
-                        {!! $breadcrumbs !!}
-                    </div>
-                </div>
-            @endif
-
-            <div class="row-between-start">
-                <div class="w-full lg:w-1/2 space-y-2">
-                    <h1 class="text-grey-900">
-                        {{-- <span>{!! $subtitle ?? '' !!}</span> --}}
-                        {!! ucfirst($title) ?? '' !!}
-                    </h1>
-
-                    {{-- {{ $extra ??  '' }} --}}
-                </div>
-
-                <div class="w-full lg:w-1/2 flex justify-end items-center">
-                    {{ $slot }}
-                </div>
-            </div>
+<div class="row-between-center gutter-2">
+    @isset($breadcrumbs)
+        <div class="w-full">
+            {!! $breadcrumbs !!}
         </div>
+    @endisset
+
+    <div class="w-full lg:w-1/2">
+        <h1 class="text-grey-900">
+            {!! ucfirst($title) ?? '' !!}
+        </h1>
     </div>
-@endsection
+
+    <div class="w-full lg:w-1/2 flex justify-end items-center">
+        {{ $slot }}
+    </div>
+
+    @isset($extra)
+        <div class="w-full">
+            {{ $extra ??  '' }}
+        </div>
+    @endisset
+</div>

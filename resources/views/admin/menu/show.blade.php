@@ -2,35 +2,35 @@
 
 @section('page-title', 'Menu ' . $menu->label())
 
-@component('chief::back._layouts._partials.header')
-    @slot('title', 'Menu ' . $menu->label())
+@section('header')
+    <div class="container-sm">
+        @component('chief::back._layouts._partials.header')
+            @slot('title', 'Menu ' . $menu->label())
 
-    @if(Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1)
-        @slot('breadcrumbs')
-            <a href="{{ route('chief.back.menus.index') }}" class="link link-primary">
-                <x-link-label type="back">Menu overzicht</x-link-label>
+            @if(Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1)
+                @slot('breadcrumbs')
+                    <a href="{{ route('chief.back.menus.index') }}" class="link link-primary">
+                        <x-link-label type="back">Menu overzicht</x-link-label>
+                    </a>
+                @endslot
+            @endif
+
+            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
+                <x-link-label type="add">Menu item toevoegen</x-link-label>
             </a>
-        @endslot
-    @endif
-
-    <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
-        <x-link-label type="add">Voeg een menu item toe</x-link-label>
-    </a>
-@endcomponent
+        @endcomponent
+    </div>
+@endsection
 
 @section('content')
-    @if($menuItems->isEmpty() )
-        <div class="container">
-            <div class="row">
-                <div class="w-full lg:w-2/3 prose prose-dark">
+    <div class="container-sm">
+        <div class="row">
+            @if($menuItems->isEmpty() )
+                <div class="w-full prose prose-dark">
                     <p>Momenteel zijn er nog geen menu items toegevoegd.</p>
                 </div>
-            </div>
-        </div>
-    @else
-        <div class="container">
-            <div class="row">
-                <div class="w-full lg:w-2/3">
+            @else
+                <div class="w-full">
                     <div class="window window-white">
                         <div class="divide-y divide-grey-200 -mx-12 -my-6">
                             @foreach($menuItems as $menuItem)
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
-    @endif
+    </div>
 @stop

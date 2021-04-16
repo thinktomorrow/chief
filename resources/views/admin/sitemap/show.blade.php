@@ -2,28 +2,31 @@
 
 @section('page-title', "Sitemap")
 
-@component('chief::back._layouts._partials.header')
-    @slot('title', 'Sitemap')
+@section('header')
+    <div class="container-sm">
+        @component('chief::back._layouts._partials.header')
+            @slot('title', 'Sitemap')
 
-    @slot('breadcrumbs')
-        {{-- TODO: use route --}}
-        <a href="/admin" class="link link-primary">
-            <x-link-label type="back">Ga terug</x-link-label>
-        </a>
-    @endslot
+            @slot('breadcrumbs')
+                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
+                    <x-link-label type="back">Dashboard</x-link-label>
+                </a>
+            @endslot
 
-    <a @click="generateSitemap('generate-sitemap')" class="btn btn-primary">Vernieuw nu</a>
-@endcomponent
+            <a @click="generateSitemap('generate-sitemap')" class="btn btn-primary">Vernieuw nu</a>
+        @endcomponent
+    </div>
+@endsection
 
 @section('content')
-    <div class="container">
+    <div class="container-sm">
         <div class="row">
-            <div class="w-full lg:w-2/3 prose prose-dark">
+            <div class="w-full prose prose-dark">
                 <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 
                 <div class="space-y-2 my-6">
                     @foreach($sitemapFiles as $sitemapFile)
-                        <div class="bg-white border border-grey-200 rounded-xl p-6 flex justify-between items-center">
+                        <div class="bg-white rounded-xl p-6 flex justify-between items-center">
                             <div class="flex flex-col space-y-1">
                                 <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
 

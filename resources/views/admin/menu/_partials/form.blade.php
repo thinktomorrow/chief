@@ -1,6 +1,6 @@
 <input type="hidden" name="menu_type" value="{{ $menuitem->menu_type }}">
 
-<div class="divide-y divide-grey-200 -m-12">
+<div class="divide-y divide-grey-100 -m-12">
     <div class="p-12">
         @include('chief::admin.menu._formgroups.label')
     </div>

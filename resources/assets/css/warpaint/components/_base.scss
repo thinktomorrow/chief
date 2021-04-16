@@ -16,10 +16,24 @@
         }
     }
 
-    .container {
+    .container,
+    .container-lg {
         @apply container-5/6;
         @screen lg {
             @apply container-4/5;
+        }
+    }
+
+    .container-sm {
+        @apply container-11/12;
+        @screen lg {
+            @apply container-2/3;
+        }
+        @screen xl {
+            @apply container-1/2;
+        }
+        @screen 2xl {
+            @apply container-2/5;
         }
     }
 }

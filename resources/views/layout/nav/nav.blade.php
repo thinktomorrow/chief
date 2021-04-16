@@ -9,6 +9,7 @@
 
             <nav class="flex items-center space-x-12">
                 @include('chief::layout.nav.nav-settings')
+                @include('chief::layout.nav.nav-user')
             </nav>
         </div>
     </div>

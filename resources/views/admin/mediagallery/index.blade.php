@@ -1,19 +1,23 @@
+{{-- TODO: needs revision --}}
 @extends('chief::back._layouts.master')
 
 @section('page-title', 'Media galerij')
 
-@component('chief::back._layouts._partials.header')
-    @slot('title')
-        Media galerij
-    @endslot
-
-    @slot('breadcrumbs')
-        {{-- TODO: use correct route --}}
-        <a href="/admin" class="link link-primary">
-            <x-link-label type="back">Ga terug</x-link-label>
-        </a>
-    @endslot
-@endcomponent
+@section('header')
+    <div class="container">
+        @component('chief::back._layouts._partials.header')
+            @slot('title')
+                Media galerij
+            @endslot
+            @slot('breadcrumbs')
+                {{-- TODO: use correct route --}}
+                <a href="/admin" class="link link-primary">
+                    <x-link-label type="back">Ga terug</x-link-label>
+                </a>
+            @endslot
+        @endcomponent
+    </div>
+@endsection
 
 @section('content')
     <div class="container">
@@ -47,30 +51,27 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="window window-white space-y-6">
+                <div class="window window-white space-y-8">
                     <div>
                         <h3>Filteren</h3>
 
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
                     </div>
 
-                    <form method="GET" id="filtering" class="space-y-6">
-                        <div class="space-y-3">
-                            <h6>Bestandsnaam</h6>
+                    <form method="GET" id="filtering" class="space-y-8">
+                        @formgroup
+                            @slot('label', 'Bestandsnaam')
 
-                            <div>
-                                <input
-                                    placeholder="Zoek op bestandsnaam ..."
-                                    class="input inset-s"
-                                    type="text"
-                                    name="search"
-                                    value="{{ old('search', request()->input('search'))}}"
-                                >
-                            </div>
-                        </div>
+                            <input
+                                placeholder="Zoek op bestandsnaam ..."
+                                type="text"
+                                name="search"
+                                value="{{ old('search', request()->input('search'))}}"
+                            >
+                        @endformgroup
 
-                        <div class="space-y-3">
-                            <h6>Pagina</h6>
+                        @formgroup
+                            @slot('label', 'Pagina')
 
                             <chief-multiselect
                                 name="owner"
@@ -82,12 +83,12 @@
                                 labelkey="label"
                                 valuekey="id"
                             ></chief-multiselect>
-                        </div>
+                        @endformgroup
 
                         <label for="unused" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
                             <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
-                            <span>Toon enkel ongebruikte media</span>
+                            <span class="text-grey-700 font-medium">Toon enkel ongebruikte media</span>
                         </label>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>

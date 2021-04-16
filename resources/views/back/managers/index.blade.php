@@ -5,28 +5,30 @@
 @endsection
 
 @section('header')
-    @component('chief::back._layouts._partials.header')
-        @slot('title')
-            @adminConfig('indexTitle')
-        @endslot
+    <div class="container">
+        @component('chief::back._layouts._partials.header')
+            @slot('title')
+                @adminConfig('indexTitle')
+            @endslot
 
-        @slot('breadcrumbs')
-            <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                <x-link-label type="back">Dashboard</x-link-label>
-            </a>
-        @endslot
+            @slot('breadcrumbs')
+                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
+                    <x-link-label type="back">Dashboard</x-link-label>
+                </a>
+            @endslot
 
-        @adminCan('create')
-            <a href="@adminRoute('create')" class="btn btn-primary">
-                <x-link-label type="add">Voeg een @adminConfig('modelName') toe</x-link-label>
-            </a>
-        @endAdminCan
-    @endcomponent
+            @adminCan('create')
+                <a href="@adminRoute('create')" class="btn btn-primary">
+                    <x-link-label type="add">Voeg een @adminConfig('modelName') toe</x-link-label>
+                </a>
+            @endAdminCan
+        @endcomponent
+    </div>
 @stop
 
 @section('content')
     <div class="container">
-        <div class="row gutter-3">
+        <div class="row gutter-6">
             <div class="w-full lg:w-2/3">
                 @if($models->count())
                     <div class="window window-white">
@@ -37,7 +39,7 @@
                                 class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12"
                             >
                         @elseAdminCan
-                            <div class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12">
+                            <div class="relative divide-y divide-grey-200 -m-12">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include('chief::back.managers._index._card')
@@ -53,6 +55,11 @@
             </div>
 
             <div class="w-full lg:w-1/3">
+                {{-- TODO: show relevant content --}}
+                <div class="window window-grey">
+                    <p class="text-grey-700">Placeholder</p>
+                </div>
+
                 @if($manager->filters()->anyRenderable())
                     <div class="window window-grey">
                         <h3>Filtering</h3>
