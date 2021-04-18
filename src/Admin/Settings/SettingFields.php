@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Types\PageField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
-class SettingFieldsManager
+class SettingFields
 {
     /** @var Settings */
     private $settings;
@@ -25,11 +25,11 @@ class SettingFieldsManager
 
     public function fields(): Fields
     {
-        return new Fields([
+        $fields = new Fields([
             SelectField::make('homepage')
                 ->name('homepage.:locale')
                 ->options(UrlHelper::allOnlineModels())
-                ->translatable(config('chief.locales'))
+                ->locales()
                 ->validation('required')
                 ->grouped()
                 ->label('Homepagina')
@@ -46,57 +46,29 @@ class SettingFieldsManager
                 ->validation('required')
                 ->label('Webmaster naam')
                 ->description('Voor en achternaam van de webmaster.'),
-            PageField::make('templates')
-                ->label('Pagina templates')
-                ->pagesAsOptions()
-                ->description('Selecteer één of meerdere pagina\'s om te gebruiken als template. Een nieuwe pagina vanuit een template aanmaken start met eenzelfde paginaopbouw.')
-                ->multiple(),
         ]);
+
+        return $this->defaultSettingValues($fields);
     }
 
-    public function editFields(): Fields
+    private function defaultSettingValues(Fields $fields): Fields
     {
-        return $this->fields()->map(function (Field $field) {
+        return $fields->map(function (Field $field) {
             return $field->valueResolver(function ($model = null, $locale = null, $field) {
                 return $this->settings->get($field->getKey(), $locale);
             });
         });
     }
 
-    public function createFields(): Fields
-    {
-        return new Fields();
-    }
-
-    /**
-     * Triggers the create save action for all prepared field values.
-     *
-     * @param Request $request
-     */
-    public function saveCreateFields(Request $request): void
-    {
-        // Not used for settings manager but required by interface
-    }
-
-    /**
-     * Triggers the edit save action for all prepared field values.
-     *
-     * @param Request $request
-     */
-    public function saveEditFields(Request $request): void
-    {
-        $this->saveFields($request);
-    }
-
-    private function saveFields(Request $request): void
+    public function saveFields(Fields $fields, array $input, array $files): void
     {
         $existingHomepageValue = [];
 
-        foreach ($this->fields() as $key => $field) {
+        foreach ($fields as $key => $field) {
             if (! $setting = Setting::where('key', $key)->first()) {
                 Setting::create([
                     'key' => $key,
-                    'value' => $request->input($key, ''),
+                    'value' => data_get($input, $key, ''),
                 ]);
 
                 continue;
@@ -106,11 +78,11 @@ class SettingFieldsManager
                 $existingHomepageValue = $setting->value;
             }
 
-            $setting->update(['value' => $request->input($key, '')]);
+            $setting->update(['value' => data_get($input, $key, '')]);
         }
 
         // A changed homepage needs to be reflected in the urls as well in order to respond to incoming requests.
-        if ($request->filled(Setting::HOMEPAGE)) {
+        if (data_get($input, Setting::HOMEPAGE, null)) {
             app(ChangeHomepage::class)->onSettingChanged($existingHomepageValue);
         }
     }

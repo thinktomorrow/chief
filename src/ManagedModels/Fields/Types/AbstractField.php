@@ -293,7 +293,7 @@ abstract class AbstractField
                 return $this->value;
             }
 
-            if (! $model) {
+            if (!$model) {
                 return $this->default;
             }
 
@@ -303,7 +303,7 @@ abstract class AbstractField
                 }
 
                 // Astrotomic translatable
-                return $model->{$this->getColumn().':'.$locale};
+                return $model->{$this->getColumn() . ':' . $locale};
             }
 
             return $model->{$this->getColumn()} ?: $this->default;
@@ -330,12 +330,12 @@ abstract class AbstractField
 
     public function hasValidation(): bool
     {
-        return isset($this->validation) && ! $this->validation->isEmpty();
+        return isset($this->validation) && !$this->validation->isEmpty();
     }
 
     public function required(): bool
     {
-        if (! $this->hasValidation()) {
+        if (!$this->hasValidation()) {
             return false;
         }
 
@@ -352,7 +352,7 @@ abstract class AbstractField
 
     public function optional(): bool
     {
-        return ! $this->required();
+        return !$this->required();
     }
 
     public function getValidationNames(array $payload = []): array
@@ -363,6 +363,28 @@ abstract class AbstractField
             ->replace('name', [$this->getName()])
             ->removeKeysContaining(['files.*.detach', 'images.*.detach'])
             ->get();
+    }
+
+    /**
+     * @return Field
+     */
+    public function locales(array $locales = null): Field
+    {
+        $this->locales = (null === $locales)
+            ? config('chief.locales', [])
+            : $locales;
+
+        return $this;
+    }
+
+    public function getLocales(): array
+    {
+        return $this->locales;
+    }
+
+    public function isLocalized(): bool
+    {
+        return count($this->locales) > 0;
     }
 
     /**
@@ -383,31 +405,11 @@ abstract class AbstractField
     }
 
     /**
-     * @return Field
-     */
-    public function locales(array $locales = null): Field
-    {
-        $this->locales = null === $locales ? config('chief.locales', []) : $locales;
-
-        return $this;
-    }
-
-    public function getLocales(): array
-    {
-        return $this->locales;
-    }
-
-    public function isLocalized(): bool
-    {
-        return count($this->locales) > 0;
-    }
-
-    /**
      * @param array|null|string $items
      */
     protected function extractLocalizedItem($items, ?string $locale = null): ?string
     {
-        if (! is_array($items)) {
+        if (!is_array($items)) {
             return $items;
         }
 
@@ -478,7 +480,7 @@ abstract class AbstractField
         return array_merge([
             'model' => $this->getModel(),
             'field' => $this,
-            'key' => $this->getKey(),
+            'key'   => $this->getKey(),
         ], $this->viewData);
     }
 

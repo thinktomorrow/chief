@@ -6,13 +6,6 @@
     <div class="container-sm">
         @component('chief::back._layouts._partials.header')
             @slot('title', 'Settings')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-link-label type="back">Dashboard</x-link-label>
-                </a>
-            @endslot
-
             <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
         @endcomponent
     </div>
@@ -28,7 +21,7 @@
                         <input name="_method" type="hidden" value="PUT">
 
                         <div class="space-y-12">
-                            @foreach($manager->editFields() as $field)
+                            @foreach($fields as $field)
                                 @formgroup
                                     @slot('label',$field->getLabel())
                                     @slot('description',$field->getDescription())
