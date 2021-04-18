@@ -7,7 +7,7 @@
 
                     @if(isset($isRequired) && $isRequired)
                         <span class="label label-warning text-xs">
-                            Verplicht veld
+                            verplicht
                         </span>
                     @endif
                 </label>
