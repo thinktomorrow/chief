@@ -12,7 +12,7 @@ use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
-use Thinktomorrow\Chief\Admin\Settings\SettingFieldsManager;
+use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
 use Thinktomorrow\Chief\Admin\Settings\SettingsServiceProvider;
 use Thinktomorrow\Chief\Admin\Setup\CreatePageCommand;
@@ -140,7 +140,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->when(SettingsController::class)
             ->needs(FieldManager::class)
             ->give(function () {
-                return new SettingFieldsManager(new Settings());
+                return new SettingFields(new Settings());
             });
 
         $this->app->singleton(Registry::class, function () {

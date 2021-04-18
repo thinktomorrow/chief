@@ -28,7 +28,7 @@
                         <input name="_method" type="hidden" value="PUT">
 
                         <div class="space-y-12">
-                            @foreach($manager->editFields() as $field)
+                            @foreach($fields as $field)
                                 @formgroup
                                     @slot('label',$field->getLabel())
                                     @slot('description',$field->getDescription())

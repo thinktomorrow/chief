@@ -3,21 +3,18 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Admin\Settings\SettingFieldsManager;
+use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 
 class SettingsController extends Controller
 {
-    /** @var FieldManager */
-    private $settingFieldsManager;
+    private SettingFields $settingFields;
+    private FieldValidator $fieldValidator;
 
-    /** @var FieldValidator */
-    private $fieldValidator;
-
-    public function __construct(SettingFieldsManager $settingFieldsManager, FieldValidator $fieldValidator)
+    public function __construct(SettingFields $settingFields, FieldValidator $fieldValidator)
     {
-        $this->settingFieldsManager = $settingFieldsManager;
+        $this->settingFields = $settingFields;
         $this->fieldValidator = $fieldValidator;
     }
 
@@ -29,7 +26,7 @@ class SettingsController extends Controller
         $this->authorize('update-setting');
 
         return view('chief::admin.settings', [
-            'manager' => $this->settingFieldsManager,
+            'fields' => $this->settingFields->fields(),
         ]);
     }
 
@@ -37,9 +34,11 @@ class SettingsController extends Controller
     {
         $this->authorize('update-setting');
 
-        $this->fieldValidator->handle($this->settingFieldsManager->fields(), $request->all());
+        $fields = $this->settingFields->fields();
 
-        $this->settingFieldsManager->saveEditFields($request);
+        $this->fieldValidator->handle($fields, $request->all());
+
+        $this->settingFields->saveFields($fields, $request->all(), $request->allFiles());
 
         return redirect()->route('chief.back.settings.edit')->with('messages.success', 'De settings zijn aangepast!');
     }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <slot name="tabnav" :tabs="tabs">
-            <ul v-if="!hideNav" role="tablist" class="flex w-full border-b border-grey-100 mb-6">
+            <ul v-if="!hideNav" role="tablist" class="flex w-full list-none border-b border-grey-100 mb-6">
                 <li v-for="tab in tabs" role="presentation">
                     <slot name="tabname" :tab="tab">
                         <a v-html="tab.name"
