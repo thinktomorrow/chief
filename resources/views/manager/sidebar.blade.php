@@ -13,7 +13,7 @@
 
             <aside
                 data-sidebar-aside
-                class="absolute top-0 right-0 bottom-0 bg-white shadow-soft p-12 space-y-4 overflow-auto w-1/2 2xl:w-1/3 sidebar-slide-from-right"
+                class="absolute top-0 right-0 bottom-0 bg-white p-12 space-y-4 overflow-auto w-1/2 2xl:w-1/3 sidebar-slide-from-right"
             >
                 <div
                     data-sidebar-close
@@ -30,7 +30,7 @@
 
     <template id="js-sidebar-close-button">
         <div class="link link-primary">
-            <x-link-label type="back">Ga terug</x-link-label>
+            <x-icon-label type="back">Ga terug</x-icon-label>
         </div>
     </template>
 @endpush

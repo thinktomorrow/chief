@@ -12,13 +12,13 @@
 
         @slot('breadcrumbs')
             <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                <x-link-label type="back">Dashboard</x-link-label>
+                <x-icon-label type="back">Dashboard</x-icon-label>
             </a>
         @endslot
 
         @adminCan('create')
             <a href="@adminRoute('create')" class="btn btn-primary">
-                <x-link-label type="add">Voeg een @adminConfig('modelName') toe</x-link-label>
+                <x-icon-label type="add">Voeg een @adminConfig('modelName') toe</x-icon-label>
             </a>
         @endAdminCan
     @endcomponent

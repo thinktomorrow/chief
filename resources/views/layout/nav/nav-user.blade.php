@@ -1,6 +1,6 @@
 <dropdown>
     <span class="link link-black" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">
-        <x-link-label type="user" space="large">{{ chiefAdmin()->firstname }}</x-link-label>
+        <x-icon-label icon="icon-user" space="large">{{ chiefAdmin()->firstname }}</x-icon-label>
     </span>
 
     <div v-cloak class="dropdown-content">

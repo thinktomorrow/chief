@@ -6,7 +6,7 @@
             slot-scope="{ toggle, isActive }"
             @click="toggle"
         >
-            <x-link-label type="settings" space="large">Instellingen</x-link-label>
+            <x-icon-label icon="icon-settings" space="large">Instellingen</x-icon-label>
         </span>
 
         <div v-cloak class="dropdown-content">

@@ -49,7 +49,7 @@
                             <div>{{ $urlRecord->slug }}</div>
 
                             <span class="link link-black cursor-pointer" @click="remove">
-                                <x-link-label type="delete"></x-link-label>
+                                <x-icon-label type="delete"></x-icon-label>
                             </span>
                         </div>
                     </url-redirect>

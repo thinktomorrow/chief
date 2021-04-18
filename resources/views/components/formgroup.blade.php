@@ -1,6 +1,6 @@
 <div class="space-y-4">
     @if(isset($label) || isset($description))
-        <div class="space-y-2">
+        <div class="space-y-1">
             @isset($label)
                 <label class="text-lg space-x-1">
                     <span>{{ ucfirst($label) }}</span>

@@ -21,7 +21,7 @@
                                 <span class="label">{{ strtoupper($locale) }}</span>
 
                                 <a class="link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}">
-                                    <x-link-label type="external-link" position="append">/{{ $links->current->slug }}</x-link-label>
+                                    <x-icon-label type="external-link" position="append">/{{ $links->current->slug }}</x-icon-label>
                                 </a>
                             </div>
                         @endif

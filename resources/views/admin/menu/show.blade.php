@@ -10,13 +10,13 @@
             @if(Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1)
                 @slot('breadcrumbs')
                     <a href="{{ route('chief.back.menus.index') }}" class="link link-primary">
-                        <x-link-label type="back">Menu overzicht</x-link-label>
+                        <x-icon-label type="back">Menu overzicht</x-icon-label>
                     </a>
                 @endslot
             @endif
 
             <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
-                <x-link-label type="add">Menu item toevoegen</x-link-label>
+                <x-icon-label type="add">Menu item toevoegen</x-icon-label>
             </a>
         @endcomponent
     </div>

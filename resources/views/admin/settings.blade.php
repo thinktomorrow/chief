@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-link-label type="back">Dashboard</x-link-label>
+                    <x-icon-label type="back">Dashboard</x-icon-label>
                 </a>
             @endslot
 
@@ -36,9 +36,7 @@
                                     {!! $field->render() !!}
                                 @endformgroup
                             @endforeach
-                        </div>
 
-                        <div class="stack text-right">
                             <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
                         </div>
                     </form>

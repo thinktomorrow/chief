@@ -22,7 +22,7 @@
             </div>
 
             @if($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_INTERNAL)
-                <x-link-label type="forward" class="text-primary-500 mr-3"></x-link-label>
+                <x-icon-label type="forward" class="text-primary-500 mr-3"></x-icon-label>
 
                 <a class="label label-primary inline-block" href="{{ $item->url }}" target="_blank">
                     {{-- Todo: show internal page title --}}
@@ -31,7 +31,7 @@
             @elseif($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
                 {{-- <span class="text-grey-700">/</span> --}}
             @else
-                <x-link-label type="forward" class="text-primary-500 mr-3"></x-link-label>
+                <x-icon-label type="forward" class="text-primary-500 mr-3"></x-icon-label>
 
                 <a class="link link-primary" href="{{ $item->url }}" target="_blank">
                     {{ $item->url }}
@@ -45,7 +45,7 @@
                 href="{{ route('chief.back.menuitem.edit', $item->id) }}"
                 class="link link-black"
             >
-                <x-link-label type="edit"></x-link-label>
+                <x-icon-label type="edit"></x-icon-label>
             </a>
         </div>
     </div>

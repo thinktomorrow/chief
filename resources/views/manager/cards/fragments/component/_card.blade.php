@@ -25,7 +25,7 @@
                         href="@adminRoute('fragment-edit',$owner, $model)"
                         class="link link-black"
                     >
-                        <x-link-label type="edit"></x-link-label>
+                        <x-icon-label type="edit"></x-icon-label>
                     </a>
                 </div>
             @endAdminCan

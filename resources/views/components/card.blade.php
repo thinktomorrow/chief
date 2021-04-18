@@ -8,7 +8,7 @@
     <div class="relative">
         @if(isset($editRequestUrl))
             <a data-sidebar-{{ $type ?? '' }}-edit href="{{ $editRequestUrl }}" class="absolute right-0 top-0 link link-black">
-                <x-link-label type="edit"></x-link-label>
+                <x-icon-label type="edit"></x-icon-label>
             </a>
         @endif
 
