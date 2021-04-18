@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Application;
 
+use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
@@ -33,8 +33,9 @@ class DuplicateContext
         foreach ($context->fragments as $index => $fragment) {
 
             // If it's a shareable fragment, we'll use the original
-            if($fragment->isShared()) {
+            if ($fragment->isShared()) {
                 $this->addFragmentModel->handle($targetModel, $fragment->fragmentModel(), $index);
+
                 continue;
             }
 

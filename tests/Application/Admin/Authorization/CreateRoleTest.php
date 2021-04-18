@@ -56,28 +56,52 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function when_creating_role_name_is_required()
     {
-        $this->assertValidation(new Role(), 'name', $this->validParams(['name' => '']), route('chief.back.roles.index'), route('chief.back.roles.store'), AuthorizationDefaults::roles()->count() // default roles were already present
+        $this->assertValidation(
+            new Role(),
+            'name',
+            $this->validParams(['name' => '']),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.store'),
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 
     /** @test */
     public function when_creating_role_name_must_be_unique()
     {
-        $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']), route('chief.back.roles.index'), route('chief.back.roles.store'), AuthorizationDefaults::roles()->count() // default roles were already present
+        $this->assertValidation(
+            new Role(),
+            'name',
+            $this->validParams(['name' => 'developer']),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.store'),
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 
     /** @test */
     public function when_creating_role_permissions_are_required()
     {
-        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']), route('chief.back.roles.index'), route('chief.back.roles.store'), AuthorizationDefaults::roles()->count() // default roles were already present
+        $this->assertValidation(
+            new Role(),
+            'permission_names',
+            $this->validParams(['permission_names' => '']),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.store'),
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 
     /** @test */
     public function when_creating_role_permissions_must_be_passed_as_array()
     {
-        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']), route('chief.back.roles.index'), route('chief.back.roles.store'), AuthorizationDefaults::roles()->count() // default roles were already present
+        $this->assertValidation(
+            new Role(),
+            'permission_names',
+            $this->validParams(['permission_names' => 'view-role']),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.store'),
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 

@@ -30,7 +30,9 @@ class FieldValidator
 
     private function createValidator(Field $field, array $payload): Validator
     {
-        return $this->validatorFactory->make($payload,            $this->ruleMatrix($field->getValidationNames($payload), $field->getValidationParameters()->getRules()), // rules
+        return $this->validatorFactory->make(
+            $payload,
+            $this->ruleMatrix($field->getValidationNames($payload), $field->getValidationParameters()->getRules()), // rules
             $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getMessages()), // messages
             $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getAttributes()) // attributes
         );

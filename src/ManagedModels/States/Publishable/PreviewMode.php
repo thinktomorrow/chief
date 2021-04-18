@@ -8,21 +8,20 @@ use Illuminate\Support\Str;
 
 class PreviewMode
 {
-    private $active;
+    private bool $active;
 
     final public function __construct(bool $active)
     {
         $this->active = $active;
     }
 
-    /**
-     * @return static
-     */
     public static function fromRequest(): self
     {
-        if (! config('chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
+        // If preview mode is disabled or the current request is for the admin, preview mode should not get triggered.
+        if (! config('chief.preview-mode') || Str::startsWith(request()->path(), config('chief.route.prefix', 'admin').'/')) {
             return new static(false);
         }
+
 
         $active = (session()->get('preview-mode', static::default()) === true && auth()->guard('chief')->check());
 

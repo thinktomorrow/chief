@@ -19,6 +19,7 @@ class RefreshDatabase extends BaseCommand
         if ($this->option('reset')) {
             if (! $this->confirm('You are about to force reset the database in the ' . app()->environment() . ' environment! ARE YOU SURE?')) {
                 $this->info('aborting.');
+
                 return;
             }
         }

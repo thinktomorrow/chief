@@ -8,11 +8,9 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class PageStatePresenter
 {
-    /** @var StatefulContract */
-    private $model;
+    private StatefulContract $model;
 
-    /** @var PageState */
-    private $pageState;
+    private PageState $pageState;
 
     final public function __construct(StatefulContract $model, PageState $pageState)
     {
@@ -20,9 +18,6 @@ class PageStatePresenter
         $this->pageState = $pageState;
     }
 
-    /**
-     * @return static
-     */
     public static function fromModel(StatefulContract $model): self
     {
         return new static($model, PageState::make($model));

@@ -83,7 +83,10 @@ class GeneratePage extends BaseCommand
         $choice = null;
 
         while (! in_array($choice, ['q'])) {
-            $choice = $this->choice("Which model options would you like to set up?",                $choices = $this->modelTraits(),                'q' // Default is to just continue without traits
+            $choice = $this->choice(
+                "Which model options would you like to set up?",
+                $choices = $this->modelTraits(),
+                'q' // Default is to just continue without traits
             );
 
             if (! in_array($choice, ['q'])) {

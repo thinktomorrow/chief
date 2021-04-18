@@ -83,21 +83,39 @@ class InviteUserTest extends ChiefTestCase
     /** @test */
     public function when_creating_user_firstname_is_required()
     {
-        $this->assertValidation(new User(), 'firstname', $this->validParams(['firstname' => '']), route('chief.back.users.index'), route('chief.back.users.store'), 1 // creating account (developer) already exists
+        $this->assertValidation(
+            new User(),
+            'firstname',
+            $this->validParams(['firstname' => '']),
+            route('chief.back.users.index'),
+            route('chief.back.users.store'),
+            1 // creating account (developer) already exists
         );
     }
 
     /** @test */
     public function when_creating_user_lastname_is_required()
     {
-        $this->assertValidation(new User(), 'lastname', $this->validParams(['lastname' => '']), route('chief.back.users.index'), route('chief.back.users.store'), 1 // creating account (developer) already exists
+        $this->assertValidation(
+            new User(),
+            'lastname',
+            $this->validParams(['lastname' => '']),
+            route('chief.back.users.index'),
+            route('chief.back.users.store'),
+            1 // creating account (developer) already exists
         );
     }
 
     /** @test */
     public function when_creating_user_role_is_required()
     {
-        $this->assertValidation(new User(), 'roles', $this->validParams(['roles' => []]), route('chief.back.users.index'), route('chief.back.users.store'), 1 // creating account (developer) already exists
+        $this->assertValidation(
+            new User(),
+            'roles',
+            $this->validParams(['roles' => []]),
+            route('chief.back.users.index'),
+            route('chief.back.users.store'),
+            1 // creating account (developer) already exists
         );
     }
 
