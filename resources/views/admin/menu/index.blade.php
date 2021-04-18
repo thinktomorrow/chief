@@ -24,7 +24,7 @@
                                     </a>
 
                                     <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="hover:underline">
-                                        <x-link-label type="edit"></x-link-label>
+                                        <x-icon-label type="edit"></x-icon-label>
                                     </a>
                                 </div>
                             </div>

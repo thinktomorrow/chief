@@ -11,7 +11,7 @@
         </h1>
     </div>
 
-    <div class="w-full lg:w-1/2 flex justify-end items-center">
+    <div class="w-full lg:w-1/2 flex justify-end items-center flex-shrink-0">
         {{ $slot }}
     </div>
 

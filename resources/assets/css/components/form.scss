@@ -13,10 +13,10 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'] {
-    @apply bg-grey-100 border border-grey-150 text-grey-700 rounded-lg px-4 py-3 font-medium;
+    @apply bg-grey-100 border border-grey-200 text-grey-700 rounded-lg px-4 py-3 font-medium;
 
     &:focus {
-        @apply ring-2 ring-primary-500;
+        @apply ring-2 ring-primary-500 bg-grey-50;
     }
 
     &::placeholder {

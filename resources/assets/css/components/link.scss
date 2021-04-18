@@ -3,7 +3,8 @@
     @extend .transition-150;
 
     &:focus {
-        @apply ring-4 ring-opacity-5 ring-primary-500 bg-opacity-5 bg-primary-500 text-primary-600;
+        // @apply ring-4 ring-opacity-5 ring-primary-500 bg-opacity-5 bg-primary-500 text-primary-600;
+        @apply text-primary-600;
     }
 }
 

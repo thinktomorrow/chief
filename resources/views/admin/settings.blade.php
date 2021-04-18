@@ -6,6 +6,13 @@
     <div class="container-sm">
         @component('chief::back._layouts._partials.header')
             @slot('title', 'Settings')
+
+            @slot('breadcrumbs')
+                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
+                    <x-icon-label type="back">Dashboard</x-icon-label>
+                </a>
+            @endslot
+
             <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
         @endcomponent
     </div>
@@ -29,9 +36,7 @@
                                     {!! $field->render() !!}
                                 @endformgroup
                             @endforeach
-                        </div>
 
-                        <div class="stack text-right">
                             <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
                         </div>
                     </form>

@@ -31,7 +31,7 @@
                 @adminCan('index')
                     <div>
                         <a href="@adminRoute('index')" class="link link-primary">
-                            <x-link-label type="back">Ga terug</x-link-label>
+                            <x-icon-label type="back">Ga terug</x-icon-label>
                         </a>
                     </div>
                 @endAdminCan

@@ -5,11 +5,10 @@
         @include('chief::layout.partials.healthbar')
         @include('chief::layout.partials.svg-symbols')
 
-        <main id="main" class="relative bg-grey-150 min-h-screen">
+        <main id="main" class="bg-grey-150 min-h-screen">
             {{-- @include('chief::layout.nav.nav') --}}
 
-            <div class="relative flex">
-                {{-- TODO: fix sticky --}}
+            <div class="flex items-start">
                 <aside class="sticky top-0 flex-shrink-0">
                     @include('chief::layout.nav.nav-new')
                 </aside>
@@ -34,7 +33,7 @@
                     @stack('portals')
 
                     {{-- @include('chief::back._layouts._partials.chief-footer') --}}
-                    {{-- @yield('chief-footer') --}}
+                    @yield('chief-footer')
                 </div>
             </div>
         </main>
