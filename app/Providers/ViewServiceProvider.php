@@ -18,7 +18,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer([
-            'chief::back.managers._modals.archive-modal',
+            'chief::manager._modals.archive-modal',
             'chief::back.catalogpages._modals.archive-modal',
         ], function ($view) {
             $viewData = $view->getData();

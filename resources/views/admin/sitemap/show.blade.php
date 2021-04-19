@@ -1,10 +1,10 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title', "Sitemap")
 
 @section('header')
     <div class="container-sm">
-        @component('chief::back._layouts._partials.header')
+        @component('chief::layout._partials.header')
             @slot('title', 'Sitemap')
 
             @slot('breadcrumbs')

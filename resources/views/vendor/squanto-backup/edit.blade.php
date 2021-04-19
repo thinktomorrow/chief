@@ -1,10 +1,10 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title')
     {{ $page->label }}
 @stop
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', $page->label)
     @slot('subtitle')
         <a class="center-y" href="{{ route('squanto.index') }}">

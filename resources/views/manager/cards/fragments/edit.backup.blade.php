@@ -1,10 +1,10 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title')
     @adminConfig('pageTitle')
 @endsection
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title')
         {{ $model->adminLabel('title') }}
     @endslot
@@ -17,7 +17,7 @@
         <button data-submit-form="updateForm{{ $model->modelReference()->get() }}" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
         @endAdminCan
 
-        @include('chief::back.managers._index._options')
+        @include('chief::manager._index._options')
     </div>
 
 @endcomponent
@@ -51,7 +51,7 @@
 @push('custom-scripts-after-vue')
 
     @adminCan('asyncRedactorFileUpload', $model)
-    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)])
+    @include('chief::layout._partials.editor-script', ['imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)])
     @endAdminCan
 
 @endpush

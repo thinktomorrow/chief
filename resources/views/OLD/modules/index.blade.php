@@ -1,8 +1,8 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title', "Modules")
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', 'Gedeelde modules')
             <div class="inline-group-s">
                 <a @click="showModal('create-module')" class="btn btn-secondary inline-flex items-center">
@@ -37,7 +37,7 @@
                     <h2>{{ $module_group['manager']->adminLabel('label') }}</h2>
                     <div class="row gutter-s">
                         @foreach($module_group['modules'] as $model)
-                            @include('chief::back.managers._index._card', [
+                            @include('chief::manager._index._card', [
                                 'manager' => $module_group['manager'],
                             ])
                         @endforeach

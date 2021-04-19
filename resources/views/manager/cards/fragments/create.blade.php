@@ -47,7 +47,7 @@
         }
     </script>
 
-    @include('chief::back._layouts._partials.editor-script', ['disableImageUpload' => true])
+    @include('chief::layout._partials.editor-script', ['disableImageUpload' => true])
 @endpush
 
 @include('chief::components.file-component')

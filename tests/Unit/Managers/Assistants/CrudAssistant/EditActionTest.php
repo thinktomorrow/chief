@@ -25,7 +25,7 @@ class EditActionTest extends ChiefTestCase
 
         $this->asAdmin()->get($manager->route('edit', $model))
             ->assertStatus(200)
-            ->assertViewIs('chief::back.managers.edit');
+            ->assertViewIs('chief::manager.edit');
     }
 
     /** @test */

@@ -1,8 +1,8 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title', $modelManager->details()->singular .' archief')
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', $modelManager->details()->singular .' archief')
     @slot('subtitle')
         <a class="center-y" href="{{ $modelManager->route('index') }}">

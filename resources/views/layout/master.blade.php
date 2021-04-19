@@ -1,5 +1,5 @@
 <html>
-    @include('chief::back._layouts._partials.head')
+    @include('chief::layout._partials.head')
 
     <body>
         @include('chief::layout.partials.healthbar')
@@ -38,6 +38,6 @@
             </div>
         </main>
 
-        @include('chief::back._layouts._partials.foot')
+        @include('chief::layout._partials.foot')
     </body>
 </html>

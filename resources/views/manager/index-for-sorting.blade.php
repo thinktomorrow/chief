@@ -1,11 +1,11 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title')
     @adminConfig('pageTitle')
 @endsection
 
 @section('header')
-    @component('chief::back._layouts._partials.header')
+    @component('chief::layout._partials.header')
         @slot('title')
             @adminConfig('indexTitle')
         @endslot

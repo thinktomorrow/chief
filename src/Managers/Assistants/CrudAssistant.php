@@ -81,7 +81,7 @@ trait CrudAssistant
     {
         $modelClass = $this->managedModelClass();
 
-        return view('chief::back.managers.index', [
+        return view('chief::manager.index', [
             'manager' => $this,
             'model' => new $modelClass(),
             'models' => $this->indexModels(),
@@ -145,7 +145,7 @@ trait CrudAssistant
         $modelClass = $this->managedModelClass();
         $model = new $modelClass();
 
-        return view('chief::back.managers.create', [
+        return view('chief::manager.create', [
             'manager' => $this,
             'model' => $model,
             'fields' => Fields::make($model->fields())->notTagged(['edit', 'not-on-create']),
@@ -180,7 +180,7 @@ trait CrudAssistant
 
         $this->guard('edit', $model);
 
-        return view('chief::back.managers.edit', [
+        return view('chief::manager.edit', [
             'manager' => $this,
             'model' => $model,
             'fields' => Fields::make($model->fields())->model($model),

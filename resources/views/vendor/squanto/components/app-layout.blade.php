@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('custom-styles')
     <link rel="stylesheet" href="{{ asset('/back/redactor/redactor.css') }}">
@@ -22,7 +22,7 @@
     Vertalingen
 @endsection
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title')
         Vertalingen
     @endslot

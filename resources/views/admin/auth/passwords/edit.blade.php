@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.solo')
+@extends('chief::layout.solo')
 
 @section('title')
     @if($new_password)
@@ -30,7 +30,7 @@
                     </x-inline-notification>
                 @endif
 
-                <form role="form" method="POST" action="{{ route('chief.back.passwords.update') }}" class="prose prose-dark">
+                <form role="form" method="POST" action="{{ route('chief.back.password.update') }}" class="prose prose-dark">
                     {{ csrf_field() }}
 
                     <input type="hidden" name="_method" value="PUT">

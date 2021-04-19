@@ -15,7 +15,7 @@ class CreateActionTest extends ChiefTestCase
 
         $this->asAdmin()->get($manager->route('create'))
             ->assertStatus(200)
-            ->assertViewIs('chief::back.managers.create');
+            ->assertViewIs('chief::manager.create');
     }
 
     /** @test */

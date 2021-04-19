@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.solo')
+@extends('chief::layout.solo')
 
 @section('title')
     Er ging iets fout
@@ -10,7 +10,7 @@
         <div class="row w-full justify-center">
             <div class="xs-column-12 s-column-10 m-column-6 l-column-4 z-20">
 
-                @include('chief::back._layouts._partials.logo')
+                @include('chief::layout._partials.logo')
 
                 <h1 class="mb-8">Er ging iets fout.</h1>
                 <p class="mb-8">Het development team is op de hoogte gesteld en werkt hier zo snel mogelijk aan.</p>

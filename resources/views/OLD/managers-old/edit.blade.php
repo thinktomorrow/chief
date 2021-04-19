@@ -1,9 +1,9 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title',$manager->details()->title)
 
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', $manager->details()->title)
     @slot('subtitle')
         <div class="inline-block">
@@ -46,7 +46,7 @@
 @stop
 
 @push('custom-scripts-after-vue')
-    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('upload')])
+    @include('chief::layout._partials.editor-script', ['imageUploadUrl' => $manager->route('upload')])
 @endpush
 
 @include('chief::components.file-component')

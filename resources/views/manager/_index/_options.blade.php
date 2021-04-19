@@ -14,7 +14,7 @@
 
         @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive', 'delete'] as $action)
             @adminCan($action, $model)
-                @include('chief::back.managers._transitions.'. $action)
+                @include('chief::manager._transitions.'. $action)
             @endAdminCan
         @endforeach
     </div>

@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title')
     @adminConfig('indexTitle')
@@ -6,7 +6,7 @@
 
 @section('header')
     <div class="container">
-        @component('chief::back._layouts._partials.header')
+        @component('chief::layout._partials.header')
             @slot('title')
                 @adminConfig('indexTitle')
             @endslot
@@ -42,7 +42,7 @@
                             <div class="relative divide-y divide-grey-200 -m-12">
                         @endAdminCan
                                 @foreach($models as $model)
-                                    @include('chief::back.managers._index._card')
+                                    @include('chief::manager._index._card')
                                 @endforeach
                             </div>
                         @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
@@ -50,7 +50,7 @@
                         @endif
                     </div>
                 @else
-                    @include('chief::back.managers._index._empty')
+                    @include('chief::manager._index._empty')
                 @endif
             </div>
 

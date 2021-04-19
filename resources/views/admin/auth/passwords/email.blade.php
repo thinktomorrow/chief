@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.solo')
+@extends('chief::layout.solo')
 
 @section('title')
     Reset wachtwoord

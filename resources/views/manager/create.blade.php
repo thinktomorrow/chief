@@ -1,10 +1,10 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title')
     @adminConfig('modelName')
 @endsection
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title')
         @adminConfig('modelName')
     @endslot
@@ -37,8 +37,6 @@
                 @endformgroup
             @endforeach
 
-            @include('chief::back.managers._create._templatefield')
-
             <div class="stack text-right">
                 <button type="submit" class="btn btn-primary">Aanmaken</button>
             </div>
@@ -63,7 +61,7 @@
         }
     </script>
 
-    @include('chief::back._layouts._partials.editor-script', ['disableImageUpload' => true])
+    @include('chief::layout._partials.editor-script', ['disableImageUpload' => true])
 
 @endpush
 

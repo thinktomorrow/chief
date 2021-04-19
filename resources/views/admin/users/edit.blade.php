@@ -1,10 +1,10 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title', $user->fullname)
 
 @section('header')
     <div class="container-sm">
-        @component('chief::back._layouts._partials.header')
+        @component('chief::layout._partials.header')
             @slot('title', $user->fullname)
 
             @slot('breadcrumbs')

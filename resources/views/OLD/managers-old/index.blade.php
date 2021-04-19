@@ -1,9 +1,9 @@
 
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title', $modelManager->details()->plural)
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', $modelManager->details()->plural)
     <div class="inline-group-s">
         @if($modelManager->can('create'))

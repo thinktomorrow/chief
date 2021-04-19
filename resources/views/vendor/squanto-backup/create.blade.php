@@ -1,8 +1,8 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title','Nieuwe vertaling toevoegen')
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', 'Nieuwe vertaling toevoegen')
 @endcomponent
 

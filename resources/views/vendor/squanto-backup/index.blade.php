@@ -1,10 +1,10 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title')
     Teksten
 @stop
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title','Teksten')
     @can('create-squanto')
         <a href="{{ route('squanto.lines.create') }}" class="btn btn-primary inline-flex items-center">

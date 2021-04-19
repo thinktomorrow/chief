@@ -1,8 +1,8 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title',$manager->details()->title)
 
-@component('chief::back._layouts._partials.header')
+@component('chief::layout._partials.header')
     @slot('title', $manager->details()->title)
     @slot('subtitle')
         <div class="inline-block">
@@ -54,7 +54,7 @@
         }
     </script>
 
-    @include('chief::back._layouts._partials.editor-script', ['disableImageUpload' => true])
+    @include('chief::layout._partials.editor-script', ['disableImageUpload' => true])
 
 @endpush
 

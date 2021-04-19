@@ -1,11 +1,11 @@
 {{-- TODO: needs revision --}}
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('page-title', 'Media galerij')
 
 @section('header')
     <div class="container">
-        @component('chief::back._layouts._partials.header')
+        @component('chief::layout._partials.header')
             @slot('title')
                 Media galerij
             @endslot

@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.mail')
+@extends('chief::layout.mail')
 
 @section('preheader')
     Maak een nieuw Chief wachtwoord aan.

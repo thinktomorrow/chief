@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @section('content')
 <section class="container">

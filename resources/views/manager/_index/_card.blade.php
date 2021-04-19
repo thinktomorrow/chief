@@ -1,7 +1,7 @@
 <div class="w-full px-12 py-6" data-sortable-id="{{ $model->id }}">
     <div class="relative">
         <div class="absolute top-0 right-0">
-            @include('chief::back.managers._index._options')
+            @include('chief::manager._index._options')
 
             @adminConfig('rowBadge')
         </div>

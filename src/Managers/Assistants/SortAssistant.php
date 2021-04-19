@@ -61,7 +61,7 @@ trait SortAssistant
         $modelClass = $this->managedModelClass();
         $model = new $modelClass();
 
-        return view('chief::back.managers.index-for-sorting', [
+        return view('chief::manager.index-for-sorting', [
             'manager' => $this,
             'model' => $model,
             'models' => $this->indexModelsForSorting(),

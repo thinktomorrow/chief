@@ -31,7 +31,7 @@ class ManagersController extends Controller
 
         $managers = $manager->indexCollection();
 
-        return view('chief::back.managers.index', [
+        return view('chief::manager.index', [
             'modelManager' => $manager,
             'managers' => $managers,
         ]);
@@ -63,7 +63,7 @@ class ManagersController extends Controller
 
         $manager->guard('create');
 
-        return view('chief::back.managers.create', [
+        return view('chief::manager.create', [
             'manager' => $manager,
         ]);
     }
@@ -97,7 +97,7 @@ class ManagersController extends Controller
 
         $manager->guard('edit');
 
-        return view('chief::back.managers.edit', [
+        return view('chief::manager.edit', [
             'manager' => $manager,
         ]);
     }

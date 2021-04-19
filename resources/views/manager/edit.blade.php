@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.master')
+@extends('chief::layout.master')
 
 @push('custom-styles')
     <livewire:styles />
@@ -14,7 +14,7 @@
 
 @section('header')
     <div class="container">
-        @component('chief::back._layouts._partials.header')
+        @component('chief::layout._partials.header')
             @slot('title')
                 @if(!$fields->component('chief-page-title')->isEmpty())
                     <livewire:fields_component
@@ -71,7 +71,7 @@
                     @endAdminCan
 
                     @adminCan('delete', $model)
-                        @include('chief::back.managers._transitions.delete')
+                        @include('chief::manager._transitions.delete')
                     @endAdminCan
                 </div>
             </div>
@@ -81,7 +81,7 @@
 
 @push('custom-scripts-after-vue')
      @adminCan('asyncRedactorFileUpload', $model)
-        @include('chief::back._layouts._partials.editor-script', [
+        @include('chief::layout._partials.editor-script', [
             'imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)
         ])
      @endAdminCan

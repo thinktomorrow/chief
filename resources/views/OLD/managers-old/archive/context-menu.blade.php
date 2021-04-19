@@ -3,7 +3,7 @@
 
         @if($manager->can('update'))
             @foreach(\Thinktomorrow\Chief\ManagedModels\States\PageStatePresenter::fromModel($manager->existingModel())->transitions() as $transition)
-                @include('chief::back.managers._transitions.'.$transition)
+                @include('chief::manager._transitions.'.$transition)
             @endforeach
         @endif
 
