@@ -18,8 +18,13 @@
 
     .container,
     .container-lg {
-        @apply container-5/6;
-        @screen lg {
+        @apply container-11/12;
+
+        @screen xl {
+            @apply container-5/6;
+        }
+
+        @screen 2xl {
             @apply container-4/5;
         }
     }

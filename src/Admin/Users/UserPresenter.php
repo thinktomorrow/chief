@@ -24,7 +24,7 @@ class UserPresenter
         if ($this->user->invitation->last()) {
             $state = $this->user->invitation->last()->stateOf(InvitationState::KEY);
             if ($state == 'pending') {
-                return '<span class="label label-primary">Uitgenodigd</span>';
+                return '<span class="label label-info">Uitgenodigd</span>';
             } elseif ($state == 'denied') {
                 return '<span class="label label-error">Geblokkeerd</span>';
             }

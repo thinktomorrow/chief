@@ -58,9 +58,9 @@ ol {
 }
 
 ul {
-    @apply list-disc;
+    @apply list-disc pl-5;
 }
 
 ul li {
-    @apply list-inside;
+    @apply list-outside;
 }

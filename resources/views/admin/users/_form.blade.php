@@ -1,15 +1,16 @@
-
 @formgroup(['field' => ['firstname', 'lastname']])
     @slot('label', 'Naam')
     @slot('isRequired', true)
-    <div class="row gutter">
-        <div class="column-5">
-            <label for="firstName">Voornaam</label>
-            <input id="firstName" class="input inset-s" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
+
+    <div class="row gutter-2">
+        <div class="w-full lg:w-1/2 flex flex-col space-y-2">
+            <label for="firstName" class="font-medium text-grey-700">Voornaam</label>
+            <input id="firstName" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
         </div>
-        <div class="column-7">
-            <label for="lastName">Achternaam</label>
-            <input id="lastName" class="input inset-s" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
+
+        <div class="w-full lg:w-1/2 flex flex-col space-y-2">
+            <label for="lastName" class="font-medium text-grey-700">Achternaam</label>
+            <input id="lastName" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
         </div>
     </div>
 @endformgroup
@@ -18,23 +19,25 @@
     @slot('label', 'E-mail')
     @slot('description', 'Dit e-mail adres geldt tevens als login.')
     @slot('isRequired', true)
-    <label for="email">E-mail</label>
-    <input id="email" class="input inset-s" type="email" name="email" value="{{ old('email',$user->email) }}">
+
+    <input id="email" type="email" name="email" value="{{ old('email',$user->email) }}" class="w-full">
 @endformgroup
 
 @formgroup(['field' => 'roles'])
     @slot('label', 'Rechten')
     @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.')
     @slot('isRequired', true)
-    <label for="roles">Rechten</label>
+
     <chief-multiselect
         name="roles"
         :options=@json($roleNames)
         selected='@json(old('roles', $user->roleNames()))'
         :multiple="true"
-    >
-    </chief-multiselect>
+    ></chief-multiselect>
+
     @if($errors->has('roles.0'))
-        <span class="caption">{{ $errors->first('roles.0') }}</span>
+        <x-inline-notification type="error">
+            {{ $errors->first('roles.0') }}
+        </x-inline-notification>
     @endif
 @endformgroup

@@ -14,7 +14,7 @@
         </div>
 
         <div class="relative row-center-center min-h-screen">
-            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-12">
+            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-6">
                 <h1 class="text-grey-900">Welkom terug, Chief!</h1>
 
                 <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">

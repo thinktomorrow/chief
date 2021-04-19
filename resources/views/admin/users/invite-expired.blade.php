@@ -1,28 +1,46 @@
 @extends('chief::back._layouts.solo')
 
-@section('page-title', 'Uitnodiging niet langer geldig')
+@section('title', 'Uitnodiging niet langer geldig')
 
 @section('content')
-    <div class="container min-h-screen flex items-center">
-        <div class="row w-full justify-center my-32">
-            <div class="xs-column-12 s-column-10 m-column-6 l-column-4 relative z-20">
+    <div class="container">
+        <div class="row-center-center min-h-screen">
+            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-6 prose prose-dark">
+                <h1>Uitnodiging niet langer geldig.</h1>
 
-                <h1 class="mb-8">Uitnodiging niet langer geldig.</h1>
+                <div>
+                    <p>Deze link is jammer genoeg ongeldig. Mogelijk is de reden een van de volgende:</p>
 
-                <p class="mb-4">Deze link is jammer genoeg ongeldig. Mogelijk is de reden een van de volgende: </p>
-                
-                <ul class="list-disc ml-6">
-                    <li>de uitnodiging is reeds aanvaard.</li>
-                    <li>de uitnodiging is vervallen. Binnen 3 dagen van ontvangst dient een uitnodiging te worden aanvaard.</li>
-                    <li>Zorg ervoor dat de volledige uitnodigingslink wordt gebruikt. Van zodra een deeltje ontbreekt, is deze niet geldig.</li>
-                    <li>de uitnodiging is teruggetrokken door de beheerder.</li>
-                </ul>
+                    <ul>
+                        <li>
+                            De uitnodiging is reeds aanvaard.
+                        </li>
 
-                <div class="stack">
-                    <a class="btn btn-primary mr-4" href="mailto:{{ chiefSetting('contact_email') }}">Contacteer jouw beheerder ({{ chiefSetting('contact_name') }})</a>
-                    <a href="{{ route('chief.back.login') }}">Ga naar login pagina</a>
+                        <li>
+                            De uitnodiging is vervallen.
+                            Binnen 3 dagen van ontvangst dient een uitnodiging te worden aanvaard.
+                        </li>
+
+                        <li>
+                            Zorg ervoor dat de volledige uitnodigingslink wordt gebruikt.
+                            Van zodra een deeltje ontbreekt, is deze niet geldig.
+                        </li>
+
+                        <li>
+                            De uitnodiging is teruggetrokken door de beheerder ({{ chiefSetting('contact_name') }}).
+                        </li>
+                    </ul>
                 </div>
 
+                <div class="space-x-4">
+                    <a href="mailto:{{ chiefSetting('contact_email') }}" class="btn btn-primary">
+                        Contacteer beheerder
+                    </a>
+
+                    <a href="{{ route('chief.back.login') }}" class="btn btn-secondary">
+                        Ga naar login pagina
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -1,9 +1,12 @@
 .prose {
     $elementsLoose: h1, h2, h3;
     $elementsRelaxed: h4, h5, h6;
-    $elementsNormal: p, ol, ul, blockquote, code, img, iframe;
-    $elementsTight: figcaption, cite;
-    $elementsAll: h1, h2, h3, h4, h5, h6, p, ol, ul, blockquote, code, img, iframe, figcaption, cite;
+    $elementsNormal: p, ol, ul, blockquote, code, img, iframe, form, table;
+    $elementsTight: figcaption, cite, li;
+
+    $elementsAll: join($elementsLoose, $elementsRelaxed);
+    $elementsAll: join($elementsAll, $elementsNormal);
+    $elementsAll: join($elementsAll, $elementsTight);
 
     @each $element in $elementsAll {
         @each $subElement in $elementsLoose {
@@ -40,6 +43,7 @@
     body,
     ul,
     ol,
+    li,
     p,
     cite,
     blockquote,

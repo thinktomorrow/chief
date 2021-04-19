@@ -1,5 +1,5 @@
 @include('chief::back.managers._modals.delete-modal')
 
-<a v-cloak @click="showModal('delete-manager-<?= $model->id; ?>')" class="btn btn-error">
+<a v-cloak @click="showModal('delete-manager-<?= $model->id; ?>')" class="dropdown-link dropdown-link-error">
     Verwijderen
 </a>

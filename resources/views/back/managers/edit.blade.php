@@ -42,7 +42,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-6">
+        <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 <div class="window window-white space-y-12">
                     @adminCan('fields-edit', $model)
@@ -56,7 +56,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="space-y-12">
+                <div class="space-y-6">
                     @adminCan('links-edit', $model)
                         <livewire:links :model="$model" class="window window-grey" />
                     @endAdminCan
