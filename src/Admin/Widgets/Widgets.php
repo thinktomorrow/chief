@@ -12,7 +12,9 @@ final class Widgets
     private function __construct(array $widgets)
     {
         array_map(function (Widget $widget) {
+            //
         }, $widgets);
+
         $this->widgets = $widgets;
     }
 

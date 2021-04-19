@@ -16,11 +16,9 @@
             </div>
 
             <div class="w-full lg:w-1/2">
-                @php
-                    app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)
+                {!! app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)
                         ->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))
-                        ->get());
-                @endphp
+                        ->get())  !!}
             </div>
         </div>
     </div>

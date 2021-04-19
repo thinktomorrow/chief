@@ -14,6 +14,7 @@ final class RenderWidgets
     {
         // Validate each entry as a valid widget object.
         $widgets->each(function (Widget $widget) {
+            //
         });
 
         // Init new loop object
