@@ -1,29 +1,21 @@
-@formgroup(['field' => 'firstname'])
+@formgroup
     @slot('label', 'Voornaam')
     @slot('isRequired', true)
-    <div class="row gutter">
-        <div class="column-12">
-            <label for="firstName">Voornaam</label>
-            <input id="firstName" class="input inset-s" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
-        </div>
-    </div>
+
+    <input id="firstName" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}" class="w-full">
 @endformgroup
 
-@formgroup(['field' => 'lastname'])
+@formgroup
     @slot('label', 'Achternaam')
     @slot('isRequired', true)
-    <div class="row gutter">
-        <div class="column-12">
-            <label for="lastName">Achternaam</label>
-            <input id="lastName" class="input inset-s" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
-        </div>
-    </div>
+
+    <input id="lastName" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}" class="w-full">
 @endformgroup
 
-@formgroup(['field' => 'email'])
+@formgroup
     @slot('label', 'E-mail')
     @slot('description', 'Dit e-mail adres geldt tevens als jouw login.')
     @slot('isRequired', true)
-    <label for="email">E-mail</label>
-    <input id="email" class="input inset-s" type="email" name="email" value="{{ old('email',$user->email) }}">
+
+    <input id="email" type="email" name="email" value="{{ old('email',$user->email) }}" class="w-full">
 @endformgroup

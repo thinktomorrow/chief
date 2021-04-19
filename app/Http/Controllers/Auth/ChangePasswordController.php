@@ -16,7 +16,7 @@ class ChangePasswordController extends Controller
     {
         $user = auth()->guard('chief')->user();
 
-        return view('chief::auth.passwords.edit', ['new_password' => ! $user->password]);
+        return view('chief::admin.auth.passwords.edit', ['new_password' => ! $user->password]);
     }
 
     public function update(Request $request)
