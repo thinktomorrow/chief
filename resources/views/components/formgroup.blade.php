@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div class="space-y-3">
     @if(isset($label) || isset($description))
         <div class="space-y-1">
             @isset($label)
@@ -7,7 +7,7 @@
 
                     @if(isset($isRequired) && $isRequired)
                         <span class="label label-warning text-xs">
-                            verplicht
+                            Verplicht
                         </span>
                     @endif
                 </label>

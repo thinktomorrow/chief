@@ -1,5 +1,5 @@
 .btn {
-    @apply inline-block font-bold leading-tight outline-none px-4 py-3 rounded-lg cursor-pointer border-2;
+    @apply inline-block font-bold leading-normal outline-none px-3 py-2 rounded-lg cursor-pointer border-2;
     @extend .transition-150;
 }
 
@@ -27,10 +27,18 @@
     @apply text-red-500 border-red-500 bg-transparent;
 }
 
+.btn-error:hover {
+    @apply bg-red-500 bg-gradient-to-br from-red-500 to-red-600 border-red-600 text-white;
+}
+
 .btn-error-filled {
     @apply bg-red-500 bg-gradient-to-br from-red-500 to-red-600 border-red-500 text-white;
 }
 
-.btn-error:hover {
-    @apply bg-red-500 bg-gradient-to-br from-red-500 to-red-600 border-red-600 text-white;
+.btn-warning {
+    @apply text-orange-500 border-orange-500 bg-transparent;
+}
+
+.btn-warning:hover {
+    @apply bg-orange-500 bg-gradient-to-br from-orange-500 to-orange-600 border-orange-600 text-white;
 }
