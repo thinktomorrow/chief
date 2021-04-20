@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
@@ -106,7 +107,7 @@ class AddImageFieldValueTest extends ChiefTestCase
     /** @test */
     public function it_can_add_a_new_image_on_another_disk()
     {
-        $response = $this->uploadImage('image-on-other-disk', [
+        $response = $this->uploadImage(ArticlePage::IMAGEFIELD_DISK_KEY, [
             'nl' => [
                 $this->dummySlimImagePayload('image.png', 'image/png', 150, 150),
             ],
@@ -114,9 +115,9 @@ class AddImageFieldValueTest extends ChiefTestCase
 
         $response->assertSessionHasNoErrors();
 
-        $this->assertCount(1, $this->page->assets('image-on-other-disk'));
+        $this->assertCount(1, $this->page->assets(ArticlePage::IMAGEFIELD_DISK_KEY));
 
-        $media = $this->page->asset('image-on-other-disk')->media->first();
+        $media = $this->page->asset(ArticlePage::IMAGEFIELD_DISK_KEY)->media->first();
         $this->assertEquals('secondMediaDisk', $media->disk);
         $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
     }

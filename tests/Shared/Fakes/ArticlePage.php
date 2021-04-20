@@ -22,6 +22,9 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class ArticlePage extends Model implements Page, HasAsset
 {
+    const FILEFIELD_DISK_KEY = 'file-on-other-disk';
+    const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
+
     use PageDefaults;
     use HasDynamicAttributes;
     use SoftDeletes;
@@ -45,8 +48,10 @@ class ArticlePage extends Model implements Page, HasAsset
 
             FileField::make('thumb')->tag('edit'),
             FileField::make('thumb_trans')->translatable(['nl', 'en'])->tag('edit'),
+            FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
             ImageField::make('thumb_image')->tag('edit'),
             ImageField::make('thumb_image_trans')->translatable(['nl', 'en'])->tag('edit'),
+            ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
         ]);
     }
 
