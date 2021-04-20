@@ -192,7 +192,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         return __DIR__ . '/Shared/stubs/' . $dir;
     }
 
-    private function getTempDirectory($dir = null)
+    protected function getTempDirectory($dir = null)
     {
         return __DIR__ . '/Shared/tmp/' . $dir;
     }

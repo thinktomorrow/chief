@@ -59,8 +59,12 @@ trait SlimImageUploadAssistant
 
             $asset = AssetUploader::uploadFromBase64($imagePayload->output->image, $imagePayload->output->name);
 
+            $url = $field->isStoredOnPublicDisk()
+                ? $asset->url()
+                : ($field->generatesCustomUrl() ? $field->generateCustomUrl($asset) : '');
+
             return response()->json([
-                'url' => $asset->url(),
+                'url' => $url,
                 'filename' => $asset->filename(),
                 'id' => $asset->id,
                 'mimetype' => $asset->getMimeType(),

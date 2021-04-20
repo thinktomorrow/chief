@@ -12,6 +12,8 @@ use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class AddFileFieldValueTest extends ChiefTestCase
 {
+    const FILEFIELD_DISK_KEY = 'file-on-other-disk';
+
     use PageFormParams;
     use UploadsFile;
 
@@ -120,5 +122,23 @@ class AddFileFieldValueTest extends ChiefTestCase
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->asset('thumb_trans', 'nl')->filename());
         $this->assertEquals('tt-favicon-en.png', $this->page->asset('thumb_trans', 'en')->filename());
+    }
+
+    /** @test */
+    public function it_can_add_a_new_file_on_another_disk()
+    {
+        $response = $this->uploadFile(static::FILEFIELD_DISK_KEY, [
+            'nl' => [
+                $this->dummyUploadedFile('tt-document.txt'),
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertCount(1, $this->page->assets(static::FILEFIELD_DISK_KEY));
+
+        $media = $this->page->asset(static::FILEFIELD_DISK_KEY)->media->first();
+        $this->assertEquals('secondMediaDisk', $media->disk);
+        $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
     }
 }

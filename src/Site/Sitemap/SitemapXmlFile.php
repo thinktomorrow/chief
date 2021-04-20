@@ -19,5 +19,10 @@ class SitemapXmlFile
         $xmlString = $this->sitemapXml->generate($locale, $alternateLocales);
 
         file_put_contents($filepath, $xmlString);
+
+        // If this is the default locale, we'll create a default sitemap.xml as well
+        if($locale == config('app.fallback_locale')) {
+            file_put_contents(public_path('sitemap.xml'), $xmlString);
+        }
     }
 }

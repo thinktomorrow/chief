@@ -102,4 +102,22 @@ class AddImageFieldValueTest extends ChiefTestCase
         $this->assertEquals('tt-favicon-nl.png', $this->page->asset('thumb_image', 'nl')->filename());
         $this->assertEquals('tt-favicon-en.png', $this->page->asset('thumb_image', 'en')->filename());
     }
+
+    /** @test */
+    public function it_can_add_a_new_image_on_another_disk()
+    {
+        $response = $this->uploadImage('image-on-other-disk', [
+            'nl' => [
+                $this->dummySlimImagePayload('image.png', 'image/png', 150, 150),
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertCount(1, $this->page->assets('image-on-other-disk'));
+
+        $media = $this->page->asset('image-on-other-disk')->media->first();
+        $this->assertEquals('secondMediaDisk', $media->disk);
+        $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
+    }
 }
