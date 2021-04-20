@@ -12,25 +12,36 @@
                     <x-icon-label type="back">Dashboard</x-icon-label>
                 </a>
             @endslot
-
-            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Bewaren</button>
         @endcomponent
     </div>
 @endsection
 
 @section('content')
     <div class="container-sm">
-        <div class="row">
+        <div class="row gutter-3">
             <div class="w-full">
                 <div class="window window-white">
-                    <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
+                    <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST" class="mb-0">
                         {!! csrf_field() !!}
                         <input type="hidden" name="_method" value="PUT">
 
-                        <div class="space-y-12">
+                        <div class="space-y-6">
                             @include('chief::admin.you._form')
+
+                            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Opslaan</button>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <div class="window window-white">
+                    @formgroup
+                        @slot('label', 'Wachtwoord')
+                        @slot('description', 'Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.')
+
+                        <a class="btn btn-warning" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
+                    @endformgroup
                 </div>
             </div>
         </div>

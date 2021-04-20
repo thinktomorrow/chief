@@ -19,7 +19,7 @@
 
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
-                    <x-icon-label type="add">Voeg een @adminConfig('modelName') toe</x-icon-label>
+                    <x-icon-label type="add">@adminConfig('modelName') toevoegen</x-icon-label>
                 </a>
             @endAdminCan
         @endcomponent
@@ -36,10 +36,10 @@
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12"
+                                class="relative divide-y divide-grey-100 -m-12"
                             >
                         @elseAdminCan
-                            <div class="relative divide-y divide-grey-200 -m-12">
+                            <div class="relative divide-y divide-grey-100 -m-12">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include('chief::manager._index._card')

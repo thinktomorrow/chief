@@ -20,7 +20,7 @@
                             <div class="px-12 py-6">
                                 <div class="flex justify-between items-center">
                                     <a href="{{ route('chief.back.menus.show', $menu->key()) }}">
-                                        <span class="text-lg font-semibold text-grey-900">{{ $menu->label() }}</span>
+                                        <span class="text-lg font-medium text-grey-900">{{ $menu->label() }}</span>
                                     </a>
 
                                     <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="hover:underline">
