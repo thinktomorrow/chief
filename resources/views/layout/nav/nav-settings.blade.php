@@ -5,7 +5,6 @@
             slot="trigger"
             slot-scope="{ toggle, isActive }"
             @click="toggle"
-            style="margin-left: calc(-20px - 1rem)"
         >
             <x-icon-label icon="icon-settings" space="large">Instellingen</x-icon-label>
         </span>

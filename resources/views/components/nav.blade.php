@@ -40,7 +40,6 @@
         <a
             href="{{ $navItem->url() }}"
             class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
-            style="margin-left: calc(-20px - 1rem)"
         >
             <x-icon-label space="large" icon="icon-folder">{{ ucfirst($navItem->label()) }}</x-icon-label>
         </a>

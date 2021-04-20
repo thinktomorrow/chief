@@ -1,7 +1,7 @@
-<div class="h-screen flex flex-col justify-between bg-white p-16 space-y-12">
+<div class="h-screen flex flex-col justify-between bg-white pl-8 pr-16 py-16 space-y-12">
     <div class="space-y-24">
         <div>
-            <a href="{{ route('chief.back.dashboard') }}" class="link link-black" style="margin-left: calc(-20px - 1rem)">
+            <a href="{{ route('chief.back.dashboard') }}" class="link link-black">
                 <x-icon-label icon="icon-home" space="large">Home</x-icon-label>
             </a>
         </div>

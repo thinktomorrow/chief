@@ -3,12 +3,11 @@
         <span
             id="test-nav-link"
             class="link link-black {{ (isActiveUrl('admin/translations*') || isActiveUrl('admin/mediagallery*') || isActiveUrl('admin/menus*') || isActiveUrl('admin/sitemap*')) ? 'active' : '' }}"
-            style="margin-left: calc(-20px - 1rem)"
         >
             <x-icon-label space="large" icon="logo">Site</x-icon-label>
         </span>
 
-        <div class="flex flex-col space-y-3" style="display:none" id="sub-nav-links">
+        <div class="flex flex-col space-y-3" style="display:none; margin-left: calc(20px + 1rem)" id="sub-nav-links">
             @can('update-page')
                 <a class="link link-black text-grey-700 font-medium {{ isActiveUrl('admin/menus*') ? 'active' : '' }}" href="{{ route('chief.back.menus.index') }}">Menu</a>
                 <a class="link link-black text-grey-700 font-medium {{ isActiveUrl('admin/mediagallery*') ? 'active' : '' }}" href="{{ route('chief.mediagallery.index') }}">Media</a>

@@ -1,10 +1,10 @@
 @can('update-you')
-    <a href="{{ route('chief.back.you.edit') }}" class="link link-black" style="margin-left: calc(-20px - 1rem)">
+    <a href="{{ route('chief.back.you.edit') }}" class="link link-black">
         <x-icon-label icon="icon-user" space="large">{{ ucfirst(chiefAdmin()->firstname) }}</x-icon-label>
     </a>
 @endcan
 
-<a class="link link-black" href="{{ route('chief.back.logout') }}" style="margin-left: calc(-20px - 1rem)">
+<a class="link link-black" href="{{ route('chief.back.logout') }}">
     <x-icon-label icon="icon-logout" space="large">Logout</x-icon-label>
 </a>
 

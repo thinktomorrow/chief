@@ -1,0 +1,46 @@
+.multiselect {
+    font-size: theme('fontSize.base') !important;
+    font-weight: theme('fontWeight.medium') !important;
+}
+.multiselect__tags {
+    background: theme('colors.grey.100') !important;
+    border-radius: theme('borderRadius.lg') !important;
+    border-color: theme('colors.grey.200') !important;
+    padding-left: 0.75rem !important;
+}
+
+.multiselect__single,
+.multiselect__placeholder {
+    font-size: theme('fontSize.base') !important;
+    font-weight: theme('fontWeight.medium') !important;
+    color: theme('colors.grey.400') !important;
+    background: theme('colors.grey.100') !important;
+    line-height: theme('lineHeight.normal') !important;
+    padding-left: 0 !important;
+}
+
+.multiselect__input {
+    font-size: theme('fontSize.base') !important;
+    font-weight: theme('fontWeight.medium') !important;
+    color: theme('colors.grey.400') !important;
+}
+
+.multiselect__option--highlight {
+    background: theme('colors.green.500') !important;
+    &::after {
+        background: theme('colors.green.500') !important;
+    }
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+    background: theme('colors.red.500') !important;
+    &::after {
+        background: theme('colors.red.500') !important;
+    }
+}
+
+input[type='text'].multiselect__input:focus {
+    box-shadow: none !important;
+    padding: 0.2rem 0 !important;
+    background: transparent !important;
+}
