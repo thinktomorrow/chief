@@ -44,8 +44,12 @@ trait FileUploadAssistant
 
             $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName());
 
+            $url = $field->isStoredOnPublicDisk()
+                ? $asset->url()
+                : ($field->generatesCustomUrl() ? $field->generateCustomUrl($asset) : '');
+
             return response()->json([
-                'url' => $asset->url(),
+                'url' => $url,
                 'filename' => $asset->filename(),
                 'id' => $asset->id,
                 'mimetype' => $asset->getMimeType(),
@@ -83,3 +87,4 @@ trait FileUploadAssistant
         $this->fieldValidator()->handle(new Fields([$field]), $validationPayload);
     }
 }
+

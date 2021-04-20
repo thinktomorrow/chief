@@ -13,6 +13,10 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 {
     public function handle(HasAsset $model, MediaField $field, array $input, array $files): void
     {
+        if($field->getStorageDisk()) {
+            $this->setDisk($field->getStorageDisk());
+        }
+
         foreach ([data_get($files, 'files.' . $field->getName(), []), data_get($input, 'files.' . $field->getName(), [])] as $requestPayload) {
             foreach ($requestPayload as $locale => $values) {
                 $this->handlePayload($model, $field, $locale, $values);
@@ -33,7 +37,7 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 
         $filename = $uploadedFile->getClientOriginalName();
 
-        return $this->addAsset->add($model, $uploadedFile, $type, $locale, $this->sluggifyFilename($filename));
+        return $this->addAsset->add($model, $uploadedFile, $type, $locale, $this->sluggifyFilename($filename), $this->getCollection(), $this->getDisk());
     }
 
     /** @return Asset */
@@ -44,6 +48,6 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 
         $filename = $uploadedFile->getClientOriginalName();
 
-        return $this->assetUploader->upload($uploadedFile, $filename);
+        return $this->assetUploader->upload($uploadedFile, $filename, $this->getCollection(), $this->getDisk());
     }
 }

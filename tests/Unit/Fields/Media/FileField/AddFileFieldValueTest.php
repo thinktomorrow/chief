@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\FileField;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -120,5 +121,24 @@ class AddFileFieldValueTest extends ChiefTestCase
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->asset('thumb_trans', 'nl')->filename());
         $this->assertEquals('tt-favicon-en.png', $this->page->asset('thumb_trans', 'en')->filename());
+    }
+
+    /** @test */
+    public function it_can_add_a_new_file_on_another_disk()
+    {
+        $this->disableExceptionHandling();
+        $response = $this->uploadFile(ArticlePage::FILEFIELD_DISK_KEY, [
+            'nl' => [
+                $this->dummyUploadedFile('tt-document.txt'),
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertCount(1, $this->page->assets(ArticlePage::FILEFIELD_DISK_KEY));
+
+        $media = $this->page->asset(ArticlePage::FILEFIELD_DISK_KEY)->media->first();
+        $this->assertEquals('secondMediaDisk', $media->disk);
+        $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
     }
 }

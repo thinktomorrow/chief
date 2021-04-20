@@ -34,6 +34,9 @@ abstract class AbstractMediaFieldHandler
     /** @var SortAssets */
     protected $sortAssets;
 
+    /** @var string the media disk where the files should be stored. */
+    private $disk = '';
+
     final public function __construct(AddAsset $addAsset, ReplaceAsset $replaceAsset, DetachAsset $detachAsset, SortAssets $sortAssets, AssetUploader $assetUploader)
     {
         $this->replaceAsset = $replaceAsset;
@@ -41,6 +44,22 @@ abstract class AbstractMediaFieldHandler
         $this->detachAsset = $detachAsset;
         $this->sortAssets = $sortAssets;
         $this->assetUploader = $assetUploader;
+    }
+
+    protected function getCollection(): string
+    {
+        // Default collection for the media records. - for the time being this is not used in favor of the Asset types.
+        return 'default';
+    }
+
+    protected function setDisk(string $disk): void
+    {
+        $this->disk = $disk;
+    }
+
+    protected function getDisk(): string
+    {
+        return $this->disk;
     }
 
     protected function handlePayload(HasAsset $model, MediaField $field, string $locale, array $values): void
@@ -134,7 +153,7 @@ abstract class AbstractMediaFieldHandler
             throw new DuplicateAssetException();
         }
 
-        return $this->addAsset->add($model, $existingAsset, $type, $locale);
+        return $this->addAsset->add($model, $existingAsset, $type, $locale, null, $this->getCollection(), $this->getDisk());
     }
 
     /**

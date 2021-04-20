@@ -24,9 +24,9 @@ principles.
 - bundle old migrations
 - allow to revoke invitation.
 - list of reserved model keys such as 'fragments' (used for fragmentModel)
-- global search: 
-    - ik had ergens een usp banner toegevoegd en zou die graag op een andere pagina ook willen toevoegen
-    - komt er op de site ergens het woord 'kakkerlak' voor?
+- global search:
+  - ik had ergens een usp banner toegevoegd en zou die graag op een andere pagina ook willen toevoegen
+  - komt er op de site ergens het woord 'kakkerlak' voor?
 - audit records after creation and update
 - WithSnippets behavior
 - refactor MenuItem so it accepts interface 'MenuItemable' or so
@@ -88,7 +88,15 @@ A manager takes care of the routing and responses. It basically acts as a contro
 - Removed: ArrayIterable interface on Filters. Filters class no longer functions as an array like object. This functionality is never used in the chief internals.
 - Removed: Custom DynamicAttributes code. We now make use of the `Thinktomorrow\DynamicAttributes` package.
 
-## unreleased
+## Unreleased
+- Added: storageDisk option on ImageField and FileField to choose a custom disk location. 
+
+## 0.5.16 - 2021-02-19
+- Fixed: index view in admin was squashed due to missing container div
+- Added: default sitemap.xml for the default application locale (based on the app.fallback_locale value)
+- Added: sitemap command is now added automatically. It is no longer necessary to set this in your project kernel.
+
+# 0.5.15 - 2021-01-22
 - Fixed: use original asset for filefield thumb when thumb conversion is not available.
 - Fixed: issue where sometimes creating new page gave error on non unique url
 
@@ -180,7 +188,7 @@ This release requires migrations to be run.
 - Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.
-- Removed: `Thinktomorrow\Chief\ManagedModels\Fields\FieldArrangement`, `Thinktomorrow\Chief\ManagedModels\Fields\FieldTabs` and `Thinktomorrow\Chief\ManagedModels\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
+- Removed: `Thinktomorrow\Chief\Fields\FieldArrangement`, `Thinktomorrow\Chief\Fields\FieldTabs` and `Thinktomorrow\Chief\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
@@ -432,7 +440,7 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 - Fixed: role name cant contain spaces.
 
 ## 0.2.5 - 2019-03-05
-- Added: add `addTab()` method to `Thinktomorrow\Chief\ManagedModels\Fields\FieldArrangement` class.
+- Added: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.
 - Added: possibility to display sidebar data on manager index page via a `sections()` method on the manager.
 
 ## 0.2.4 - 2019-03-01

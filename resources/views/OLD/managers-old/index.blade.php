@@ -1,10 +1,10 @@
-
-@extends('chief::layout.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title', $modelManager->details()->plural)
 
-@component('chief::layout._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', $modelManager->details()->plural)
+
     <div class="inline-group-s">
         @if($modelManager->can('create'))
             <a href="{{ $modelManager->route('create') }}" class="btn btn-secondary inline-flex items-center">
@@ -16,52 +16,59 @@
 @endcomponent
 
 @section('content')
-
     <div class="row gutter-l stack">
         <div class="column-9">
-            <div class="row gutter-s">
-
-                @if($managers->isEmpty() && !$modelManager->filters()->anyApplied())
-
-                    @if($modelManager->can('create'))
-                        <div class="stack">
-                            <a href="{{ $modelManager->route('create') }}" class="btn btn-primary inline-flex items-center">
-                                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
-                                <span>Tijd om een {{ $modelManager->details()->singular }} toe te voegen</span>
-                            </a>
-                        </div>
-                    @else
-                        <p>Nog geen {{ $modelManager->details()->singular }} toegevoegd. Je hebt echter niet de nodige rechten om er een toe te voegen.</p>
-                    @endif
-
+            @if($managers->isEmpty() && !$modelManager->filters()->anyApplied())
+                @if($modelManager->can('create'))
+                    <div class="stack">
+                        <a href="{{ $modelManager->route('create') }}" class="btn btn-primary inline-flex items-center">
+                            <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                            <span>Tijd om een {{ $modelManager->details()->singular }} toe te voegen</span>
+                        </a>
+                    </div>
                 @else
-
-                    @if($managers->isEmpty())
-
-                        <div class="stack">
-                            <p>Geen resultaten gevonden voor uw huidige filtering.
-                            <br><a href="{{ $modelManager->route('index') }}">Bekijk alle resultaten</a>
-                            </p>
-                        </div>
-
-                    @else
-
+                    <p>Nog geen {{ $modelManager->details()->singular }} toegevoegd. Je hebt echter niet de nodige rechten om er een toe te voegen.</p>
+                @endif
+            @else
+                @if($managers->isEmpty())
+                    <div class="stack">
+                        <p>Geen resultaten gevonden voor de huidige filtering.
+                        <br><a href="{{ $modelManager->route('index') }}">Bekijk alle resultaten</a>
+                        </p>
+                    </div>
+                @else
+                    <div
+                        data-sortable-type="{{ get_class($modelManager->modelInstance()) }}"
+                        id="{{ $modelManager->isManualSortable() ? 'js-sortable' : '' }}"
+                        class="row gutter-s"
+                    >
                         @include($modelManager->indexView(), array_merge([
                             'managers' => $managers,
                         ], $modelManager->indexViewData()))
-
-                    @endif
-
+                    </div>
                 @endif
-
-            </div>
-            @if($managers instanceof Illuminate\Contracts\Pagination\Paginator)
-                {{ $managers->links('chief::manager.pagination') }}
             @endif
 
+            @if($managers instanceof Illuminate\Contracts\Pagination\Paginator)
+                {{ $managers->links('chief::back.managers.pagination') }}
+            @endif
         </div>
 
         <div class="column-3">
+            @if($modelManager->isManualSortable())
+                @if(!$managers instanceof Illuminate\Contracts\Pagination\Paginator)
+                    <div class="mb-8">
+                        <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
+                        <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
+                        <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
+                    </div>
+                @else
+                    <div class="mb-8">
+                        <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
+                        <a class="btn btn-primary" href="{{ $modelManager->route('sort-index') }}">Sorteer handmatig</a>
+                    </div>
+                @endif
+            @endif
 
             @if( $modelManager::filters()->any() )
                 <div class="mb-8">
@@ -84,8 +91,6 @@
                     </div>
                 @endif
             @endif
-
         </div>
     </div>
-
 @stop
