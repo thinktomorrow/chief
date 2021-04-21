@@ -1,30 +1,52 @@
 @if(\Illuminate\Support\Facades\Gate::check('view-user') || \Illuminate\Support\Facades\Gate::check('view-role') || \Illuminate\Support\Facades\Gate::check('view-audit') || \Illuminate\Support\Facades\Gate::check('update-setting'))
-    <dropdown>
+    @php
+        $hasActiveChildren = (isActiveUrl('admin/users*') || isActiveUrl('admin/settings*') || isActiveUrl('admin/audit*') || isActiveUrl('admin/roles*'));
+    @endphp
+
+    <div data-navigation-item class="space-y-4">
         <span
-            class="{{ (isActiveUrl('admin/users*') || isActiveUrl('admin/settings*') || isActiveUrl('admin/audit*')) ? 'link link-black active' : 'link link-black' }}"
-            slot="trigger"
-            slot-scope="{ toggle, isActive }"
-            @click="toggle"
+            data-navigation-item-label
+            class="link link-black cursor-pointer {{ $hasActiveChildren ? 'active' : '' }}"
         >
-            <x-icon-label icon="icon-settings" space="large">Instellingen</x-icon-label>
+            <x-icon-label space="large" icon="icon-settings">Instellingen</x-icon-label>
         </span>
 
-        <div v-cloak class="dropdown-content">
+        <div
+            data-navigation-item-content
+            class="flex flex-col space-y-3 animate-navigation-item-content-slide-in"
+            style="margin-left: calc(20px + 1rem); {{ $hasActiveChildren ? '' : 'display: none;' }}"
+        >
             @can('view-user')
-                <a class="{{ isActiveUrl('admin/users*') ? 'dropdown-link active' : 'dropdown-link' }}" href="{{ route('chief.back.users.index') }}">Admins</a>
+                <a
+                    class="link link-grey font-medium {{ isActiveUrl('admin/users*') ? 'active' : '' }}"
+                    href="{{ route('chief.back.users.index') }}"
+                    title="Admins"
+                > Admins </a>
             @endcan
 
             @can('view-role')
-                <a class="{{ isActiveUrl('admin/roles*') ? 'dropdown-link active' : 'dropdown-link' }}" href="{{ route('chief.back.roles.index') }}">Rechten</a>
+                <a
+                    class="{{ isActiveUrl('admin/roles*') ? 'active' : '' }}"
+                    href="{{ route('chief.back.roles.index') }}"
+                    title="Rechten"
+                > Rechten </a>
             @endcan
 
             @can('update-setting')
-                <a class="{{ isActiveUrl('admin/settings*') ? 'dropdown-link active' : 'dropdown-link' }}" href="{{ route('chief.back.settings.edit') }}">Settings</a>
+                <a
+                    class="{{ isActiveUrl('admin/settings*') ? 'active' : '' }}"
+                    href="{{ route('chief.back.settings.edit') }}"
+                    title="Settings"
+                > Settings </a>
             @endcan
 
             @can('view-audit')
-                <a class="{{ isActiveUrl('admin/audit*') ? 'dropdown-link active' : 'dropdown-link' }}" href="{{ route('chief.back.audit.index') }}">Audit</a>
+                <a
+                    class="{{ isActiveUrl('admin/audit*') ? 'active' : '' }}"
+                    href="{{ route('chief.back.audit.index') }}"
+                    title="Audit"
+                > Audit </a>
             @endcan
         </div>
-    </dropdown>
+    </div>
 @endif

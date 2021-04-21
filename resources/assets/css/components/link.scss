@@ -3,8 +3,11 @@
     @extend .transition-150;
 
     &:focus {
-        // @apply ring-4 ring-opacity-5 ring-primary-500 bg-opacity-5 bg-primary-500 text-primary-600;
         @apply text-primary-600;
+    }
+
+    &.active {
+        @apply text-primary-500;
     }
 }
 
@@ -14,6 +17,10 @@
 
 .link-black {
     @apply text-grey-900 hover:text-grey-700;
+}
+
+.link-grey {
+    @apply text-grey-700 hover:text-grey-500;
 }
 
 .link-error {

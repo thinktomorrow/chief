@@ -6,11 +6,9 @@
         @include('chief::layout.partials.svg-symbols')
 
         <main id="main" class="bg-grey-150 min-h-screen">
-            {{-- @include('chief::layout.nav.nav') --}}
-
             <div class="flex items-start">
                 <aside class="sticky top-0 flex-shrink-0">
-                    @include('chief::layout.nav.nav-new')
+                    @include('chief::layout.nav.nav')
                 </aside>
 
                 <div class="w-full py-12 space-y-12">
