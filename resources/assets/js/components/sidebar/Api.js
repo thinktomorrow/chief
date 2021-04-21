@@ -15,6 +15,9 @@ const Api = {
         fetch(url, {
             method,
             body,
+            headers: {
+                Accept: 'application/json',
+            },
         })
             .then((response) => response.json())
             .then((data) => {
@@ -28,7 +31,7 @@ const Api = {
     listenForFormSubmits(container, successCallback, errorCallback) {
         const self = this;
         const forms = Array.from(container.querySelectorAll('form'));
-
+        console.log(container, forms);
         if (forms.length < 1) return;
 
         forms.forEach((form) => {

@@ -1,14 +1,15 @@
 <div data-links-component>
     <x-chief-card
         class="{{ isset($class) ? $class : '' }}"
-        title="Visibiliteit"
+        title="Permalink"
         :editRequestUrl="$manager->route('links-edit', $model)"
         type="links"
     >
         <div class="space-y-2">
             <div class="flex items-center space-x-2">
-                <span class="font-medium">Status:</span>
-                <span class="font-medium text-success">Online</span>
+                <span class="font-medium text-success">
+
+                </span>
             </div>
 
             <div class="space-y-1">
@@ -17,12 +18,25 @@
                 @else
                     @foreach($linkForm->links() as $locale => $links)
                         @if($links->current)
-                            <div class="flex items-center space-x-3">
-                                <span class="label">{{ strtoupper($locale) }}</span>
+                            <div class="flex justify-between items-center space-x-3">
 
-                                <a class="link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}">
-                                    <x-icon-label type="external-link" position="append">/{{ $links->current->slug }}</x-icon-label>
-                                </a>
+                                <div>
+                                    @if($links->is_online)
+                                        <span class="inline-block mr-2 bg-green-300 cursor-pointer h-1 h-2 overflow-hidden rounded-full w-1 w-2" title="{{ $links->offline_reason }}"></span>
+                                    @else
+                                        <span class="inline-block mr-2 bg-red-300 cursor-help h-1 h-2 overflow-hidden rounded-full w-1 w-2" title="{{ $links->offline_reason }}"></span>
+                                    @endif
+
+                                    <a class="underline" target="_blank" rel="noopener" href="{{ $links->url }}">
+                                        {{ $links->full_path }}
+                                    </a>
+                                </div>
+
+
+                                <div>
+                                    <span class="inline-block label bg-grey-100 text-grey-400 font-normal text-xs">{{ $locale }}</span>
+                                </div>
+
                             </div>
                         @endif
                     @endforeach

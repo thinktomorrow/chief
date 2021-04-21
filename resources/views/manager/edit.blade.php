@@ -70,9 +70,11 @@
                         @endforeach
                     @endAdminCan
 
-                    @adminCan('delete', $model)
-                        @include('chief::manager._transitions.delete')
-                    @endAdminCan
+                    @foreach(['archive', 'unarchive', 'delete'] as $action)
+                        @adminCan($action, $model)
+                            @include('chief::manager._transitions.index.'. $action)
+                        @endAdminCan
+                    @endforeach
                 </div>
             </div>
         </div>

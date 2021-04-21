@@ -3,7 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## BUGS
-- locales voor pagina (view: nl - fr ... version of the page in chief)
+- locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - proper duplicate context feature (with buttons and all)
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
@@ -13,6 +13,8 @@ principles.
 - squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
 - validation op settings page toont: 'validation.required'.
 - statusAsLabel() and statusAsPlainLabel()
+- FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
+- na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
 
 ## DECISIONS
 - wat met spirit in chief?
