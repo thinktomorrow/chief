@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 final class AdminConfig
 {
-    private const PAGINATION = 16;
+    private const PAGINATION = 12;
 
     private array $config;
 

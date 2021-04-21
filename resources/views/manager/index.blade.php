@@ -11,12 +11,6 @@
                 @adminConfig('indexTitle')
             @endslot
 
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
-                </a>
-            @endslot
-
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
                     <x-icon-label type="add">@adminConfig('modelName') toevoegen</x-icon-label>
@@ -45,21 +39,16 @@
                                     @include('chief::manager._index._card')
                                 @endforeach
                             </div>
-                        @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                            {!! $models->links() !!}
-                        @endif
                     </div>
+                    @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+                        {!! $models->links() !!}
+                    @endif
                 @else
                     @include('chief::manager._index._empty')
                 @endif
             </div>
 
             <div class="w-full lg:w-1/3">
-                {{-- TODO: show relevant content --}}
-                <div class="window window-grey">
-                    <p class="text-grey-700">Placeholder</p>
-                </div>
-
                 @if($manager->filters()->anyRenderable())
                     <div class="window window-grey">
                         <h3>Filtering</h3>

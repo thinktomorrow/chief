@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -17,6 +18,9 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Paginator::defaultView('chief::pagination.default');
+        Paginator::defaultSimpleView('chief::pagination.simple-default');
+
         View::composer([
             'chief::manager._transitions.modals.archive-modal',
         ], function ($view) {
