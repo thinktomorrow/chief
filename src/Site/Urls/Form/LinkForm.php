@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Form;
 
+use Thinktomorrow\Url\Url;
+use Thinktomorrow\Url\Root;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 
 final class LinkForm
@@ -12,10 +15,17 @@ final class LinkForm
     private ProvidesUrl $model;
     private Collection $urlRecords;
 
+    private Collection $links;
+    private Collection $formValues;
+
     private function __construct(ProvidesUrl $model, Collection $urlRecords)
     {
         $this->model = $model;
         $this->urlRecords = $urlRecords;
+
+        $this->setLinks();
+        $this->injectOnlineStatusPerLocale();
+        $this->setFormValues();
     }
 
     public static function fromModel(Model $model): self
@@ -27,7 +37,17 @@ final class LinkForm
             }));
     }
 
-    public function links(): array
+    public function links(): Collection
+    {
+        return $this->links;
+    }
+
+    public function formValues(): Collection
+    {
+        return $this->formValues;
+    }
+
+    private function setLinks(): void
     {
         $links = [];
 
@@ -35,17 +55,47 @@ final class LinkForm
             $records = $this->urlRecords->get($locale, collect());
             $currentRecord = $records->reject->isRedirect()->first();
 
+            $url = $this->model->url($locale);
+
             $links[$locale] = (object)[
-                'current' => $currentRecord,
-                'url' => $this->model->url($locale),
+                'current'   => $currentRecord,
+                'url'       => $url,
+                'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())),'/') : '',
                 'redirects' => $records->filter->isRedirect(),
             ];
         }
 
-        return $links;
+        $this->links = collect($links);
     }
 
-    public function formValues(): array
+    private function injectOnlineStatusPerLocale()
+    {
+        foreach ($this->links as $locale => $links) {
+
+            [$is_online, $offline_reason] = [
+                false,
+                'Er is nog geen url voor ' . $locale
+            ];
+
+            if($links->current) {
+                [$is_online, $offline_reason] = $this->determineOnlineStatusInfo($links->current, $locale);
+            }
+
+            $this->links[$locale]->is_online = $is_online;
+            $this->links[$locale]->offline_reason = $offline_reason;
+        }
+    }
+
+    public function isAnyLinkOnline(): bool
+    {
+        foreach($this->links as $links) {
+            if($links->is_online) return true;
+        }
+
+        return false;
+    }
+
+    private function setFormValues(): void
     {
         $values = [];
 
@@ -53,20 +103,29 @@ final class LinkForm
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object)[
-                'host' => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
+                'host'         => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
                 'fixedSegment' => $this->model->baseUrlSegment($locale),
-                'value' => $currentRecord
+                'value'        => $currentRecord
                     ? $this->rawSlugValue($currentRecord->slug, $this->model->baseUrlSegment($locale))
                     : null,
             ];
         }
 
-        return $values;
+        $this->formValues = collect($values);
     }
 
     public function exist(): bool
     {
         return $this->urlRecords->isNotEmpty();
+    }
+
+    public function hasAnyRedirects(): bool
+    {
+        foreach($this->links as $links) {
+            if(!$links->redirects->isEmpty()) return true;
+        }
+
+        return false;
     }
 
     private function rawSlugValue(string $slug, string $baseUrlSegment): string
@@ -87,5 +146,43 @@ final class LinkForm
         }
 
         return $slug;
+    }
+
+    public function getPageState(): ?string
+    {
+        return (public_method_exists($this->model, 'getPageState')) ? $this->model->getPageState() : null;
+    }
+
+    /**
+     * @param $currentRecord
+     * @param $locale
+     * @return array
+     */
+    private function determineOnlineStatusInfo($currentRecord, $locale): array
+    {
+        $pagestate = $this->getPageState();
+        $is_online = ($pagestate && $pagestate == PageState::PUBLISHED && $currentRecord);
+
+        $offline_reason = 'De pagina staat offline.';
+
+        if (!$is_online) {
+            if (!$pagestate) {
+                $offline_reason = 'Pagina staat nog niet gepubliceerd.';
+            } else {
+                if ($pagestate == PageState::DRAFT) {
+                    $offline_reason = 'Pagina staat nog in draft. Je dient deze nog te publiceren.';
+                } else {
+                    if ($pagestate == PageState::ARCHIVED) {
+                        $offline_reason = 'De pagina is gearchiveerd.';
+                    } else {
+                        if ($pagestate == PageState::PUBLISHED && !$currentRecord) {
+                            $offline_reason = 'Pagina staat klaar voor publicatie maar er ontbreekt nog een link voor de ' . $locale . ' taal.';
+                        }
+                    }
+                }
+            }
+        }
+
+        return [$is_online, $offline_reason];
     }
 }

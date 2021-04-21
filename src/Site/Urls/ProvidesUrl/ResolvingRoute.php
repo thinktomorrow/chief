@@ -27,7 +27,7 @@ trait ResolvingRoute
         return route($name, $parameters);
     }
 
-    public static function setRouteResolver(Closure $resolver)
+    public static function setRouteResolver(?Closure $resolver = null)
     {
         static::$routeResolver = $resolver;
     }

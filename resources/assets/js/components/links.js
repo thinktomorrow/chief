@@ -1,5 +1,6 @@
 import Container from './sidebar/Container';
 import PanelsManager from './sidebar/PanelsManager';
+import FormSubmit from '../utilities/form-submit';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -16,6 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const linkPanelsManager = new PanelsManager('[data-sidebar-links-edit]', new Container(sidebarContainerEl), {
         onSubmitPanel: () => {
             livewireComponent.reload();
+        },
+        onNewPanel: () => {
+            console.log('triggered...');
+            // Trigger js for submit form elements (these are used for the state transitions)
+            FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
         },
         events: {
             // 'fragment-new': () => {

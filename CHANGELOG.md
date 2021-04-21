@@ -3,7 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## BUGS
-- locales voor pagina (view: nl - fr ... version of the page in chief)
+- locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - proper duplicate context feature (with buttons and all)
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
@@ -13,6 +13,8 @@ principles.
 - squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
 - validation op settings page toont: 'validation.required'.
 - statusAsLabel() and statusAsPlainLabel()
+- FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
+- na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
 
 ## DECISIONS
 - wat met spirit in chief?
@@ -88,8 +90,9 @@ A manager takes care of the routing and responses. It basically acts as a contro
 - Removed: ArrayIterable interface on Filters. Filters class no longer functions as an array like object. This functionality is never used in the chief internals.
 - Removed: Custom DynamicAttributes code. We now make use of the `Thinktomorrow\DynamicAttributes` package.
 
-## Unreleased
-- Added: storageDisk option on ImageField and FileField to choose a custom disk location. 
+## 0.5.17 - 2021-04-21
+- Fixed: integer overflow on sorting value when pages contains modules with large id.
+- Added: storageDisk option on ImageField and FileField to choose a custom disk location.
 
 ## 0.5.16 - 2021-02-19
 - Fixed: index view in admin was squashed due to missing container div

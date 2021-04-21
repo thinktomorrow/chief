@@ -15,23 +15,26 @@
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header')
-            @slot('title')
-                @if(!$fields->component('chief-page-title')->isEmpty())
+            @if(!$fields->component('chief-page-title')->isEmpty())
+                @slot('hasDefaultTitle', false)
+                @slot('title')
                     <livewire:fields_component
                         componentKey="chief-page-title"
                         :model="$model"
                         template="chief::manager.cards.fields.templates.pagetitle"
                     />
-                @else
+                @endslot
+            @else
+                @slot('title')
                     @adminConfig('pageTitle')
-                @endif
-            @endslot
+                @endslot
+            @endif
 
             @slot('breadcrumbs')
                 @adminCan('index')
                     <div>
                         <a href="@adminRoute('index')" class="link link-primary">
-                            <x-icon-label type="back">Ga terug</x-icon-label>
+                            <x-icon-label type="back">Terug naar overzicht</x-icon-label>
                         </a>
                     </div>
                 @endAdminCan
@@ -43,12 +46,14 @@
 @section('content')
     <div class="container">
         <div class="row gutter-3">
-            <div class="w-full lg:w-2/3">
-                <div class="window window-white space-y-12">
+            <div class="w-full lg:w-2/3 space-y-6">
+                <div class="window window-white">
                     @adminCan('fields-edit', $model)
                         <livewire:fields_component title="Algemeen" :model="$model" />
                     @endAdminCan
+                </div>
 
+                <div class="window window-white">
                     @adminCan('fragments-index', $model)
                         <livewire:fragments :owner="$model" />
                     @endAdminCan
@@ -70,9 +75,11 @@
                         @endforeach
                     @endAdminCan
 
-                    @adminCan('delete', $model)
-                        @include('chief::manager._transitions.delete')
-                    @endAdminCan
+                    @foreach(['archive', 'unarchive', 'delete'] as $action)
+                        @adminCan($action, $model)
+                            @include('chief::manager._transitions.index.'. $action)
+                        @endAdminCan
+                    @endforeach
                 </div>
             </div>
         </div>

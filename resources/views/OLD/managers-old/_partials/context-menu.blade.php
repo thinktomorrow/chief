@@ -12,26 +12,26 @@
         @if($manager->can('update'))
             @if($manager->existingModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract)
                 @foreach(\Thinktomorrow\Chief\ManagedModels\States\PageStatePresenter::fromModel($manager->existingModel())->transitions() as $transition)
-                    @include('chief::manager._transitions.'.$transition)
+                    @include('chief::manager._transitions.index.'.$transition)
                 @endforeach
             @else
                 @if($manager->isAssistedBy('archive'))
                     @if($manager->assistant('archive')->isArchived())
-                        @include('chief::manager._transitions.unarchive')
+                        @include('chief::manager._transitions.index.unarchive')
                     @else
-                        @include('chief::manager._transitions.archive')
+                        @include('chief::manager._transitions.index.archive')
                     @endif
                 @endif
 
                 @if($manager->isAssistedBy('publish'))
                     @if($manager->assistant('publish')->isPublished())
-                        @include('chief::manager._transitions.unpublish')
+                        @include('chief::manager._transitions.index.unpublish')
                     @else
-                        @include('chief::manager._transitions.publish')
+                        @include('chief::manager._transitions.index.publish')
                     @endif
                 @endif
 
-                @include('chief::manager._transitions.delete')
+                @include('chief::manager._transitions.index.delete')
             @endif
         @endif
 

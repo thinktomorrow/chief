@@ -1,13 +1,12 @@
-<?php
-
+@php
     $type = 'fields-' . $componentKey;
     $editRequestUrl = $manager->route('fields-edit', $model, $componentKey);
+@endphp
 
-?>
+<div class="flex items-start space-x-4">
+    <h1>{!! $fields->first()->getValue() !!}</h1>
 
-<h1 class="mr-8 center-y">
-    <span>{!! $fields->first()->getValue() !!}</span>
-    <a data-sidebar-{{ $type ?: '' }}-edit href="{{ $editRequestUrl }}" class="link link-black ml-4">
+    <a data-sidebar-{{ $type ?: '' }}-edit href="{{ $editRequestUrl }}" class="link link-primary">
         <x-icon-label type="edit"></x-icon-label>
     </a>
-</h1>
+</div>

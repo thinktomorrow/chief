@@ -3,14 +3,20 @@
  * note that this is scanned on pageload. e.g.
  * <button data-submit-form="formID">click me to submit</button>
  */
-const triggers = document.querySelectorAll('[data-submit-form]');
+function listen(selector, container) {
+    const el = container || document;
 
-for (let i = 0; i < triggers.length; i++) {
-    triggers[i].addEventListener(
-        'click',
-        function () {
-            document.getElementById(this.getAttribute('data-submit-form')).submit();
-        },
-        false
-    );
+    const triggers = el.querySelectorAll(selector);
+
+    for (let i = 0; i < triggers.length; i++) {
+        triggers[i].addEventListener(
+            'click',
+            function () {
+                document.getElementById(this.getAttribute('data-submit-form')).submit();
+            },
+            false
+        );
+    }
 }
+
+export default { listen };

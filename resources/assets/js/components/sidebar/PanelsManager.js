@@ -77,7 +77,7 @@ export default class {
                 new window.Vue({ el }); // eslint-disable-line
             });
 
-            // creating a custom event so redactor js can be initiated async
+            // creating a custom event so native js like redactor js can be initiated async
             // needs to dispatch after vue instances get created otherwise they overrides
             // all redactor event listeners like toolbar clicks ...
             const newPanelEvent = new Event('chief::newpanel');

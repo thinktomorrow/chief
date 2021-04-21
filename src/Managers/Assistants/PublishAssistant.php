@@ -78,6 +78,12 @@ trait PublishAssistant
 
         Audit::activity()->performedOn($model)->log('published');
 
+        if($request->expectsJson()) {
+            return response()->json([
+                'message' => $model->adminConfig()->getPageTitle() . ' is online geplaatst.',
+            ]);
+        }
+
         return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is online geplaatst.');
     }
 
@@ -90,6 +96,12 @@ trait PublishAssistant
         $model->unpublish();
 
         Audit::activity()->performedOn($model)->log('unpublished');
+
+        if($request->expectsJson()) {
+            return response()->json([
+                'message' => $model->adminConfig()->getPageTitle() . ' is offline gehaald.',
+            ]);
+        }
 
         return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is offline gehaald.');
     }

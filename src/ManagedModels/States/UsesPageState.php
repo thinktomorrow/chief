@@ -5,6 +5,11 @@ namespace Thinktomorrow\Chief\ManagedModels\States;
 
 trait UsesPageState
 {
+    public function getPageState(): string
+    {
+        return $this->stateOf(PageState::KEY);
+    }
+
     public function stateOf(string $key)
     {
         return $this->$key;
