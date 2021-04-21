@@ -22,7 +22,7 @@
         "maennchen/zipstream-php": "^2.1",
         "ramsey/uuid": "^4.1",
         "spatie/laravel-activitylog": "^3.0",
-        "spatie/laravel-permission": "^3.0",
+        "spatie/laravel-permission": "^4.0",
         "spatie/laravel-sitemap": "^5.6",
         "thinktomorrow/assetlibrary": "0.7.*",
         "thinktomorrow/dynamic-attributes": "^0.2.0",
