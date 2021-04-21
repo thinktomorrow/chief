@@ -11,3 +11,4 @@
 -   [ ] Register flow view files
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
 -   [ ] Digital huisstijl guide
+-   [ ] Redactor

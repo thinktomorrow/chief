@@ -2,7 +2,7 @@
     @php
         $hasActiveChildren = false;
         foreach($items as $navItem) {
-            if(isActiveUrl($navItem->url() . '/*')) {
+            if(isActiveUrl($navItem->url())) {
                 $hasActiveChildren = true;
             }
         }
@@ -35,7 +35,7 @@
     @foreach($items as $navItem)
         <a
             href="{{ $navItem->url() }}"
-            class="{{ isActiveUrl($navItem->url() . '/*') ? 'link link-black active' : 'link link-black' }}"
+            class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
         >
             <x-icon-label space="large" icon="{{ $navItem->icon() }}">{{ ucfirst($navItem->label()) }}</x-icon-label>
         </a>

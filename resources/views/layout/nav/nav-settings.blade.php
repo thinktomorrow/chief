@@ -26,7 +26,7 @@
 
             @can('view-role')
                 <a
-                    class="{{ isActiveUrl('admin/roles*') ? 'active' : '' }}"
+                    class="link link-grey font-medium {{ isActiveUrl('admin/roles*') ? 'active' : '' }}"
                     href="{{ route('chief.back.roles.index') }}"
                     title="Rechten"
                 > Rechten </a>
@@ -34,7 +34,7 @@
 
             @can('update-setting')
                 <a
-                    class="{{ isActiveUrl('admin/settings*') ? 'active' : '' }}"
+                    class="link link-grey font-medium {{ isActiveUrl('admin/settings*') ? 'active' : '' }}"
                     href="{{ route('chief.back.settings.edit') }}"
                     title="Settings"
                 > Settings </a>
@@ -42,7 +42,7 @@
 
             @can('view-audit')
                 <a
-                    class="{{ isActiveUrl('admin/audit*') ? 'active' : '' }}"
+                    class="link link-grey font-medium {{ isActiveUrl('admin/audit*') ? 'active' : '' }}"
                     href="{{ route('chief.back.audit.index') }}"
                     title="Audit"
                 > Audit </a>
