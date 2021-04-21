@@ -22,7 +22,6 @@ class AdminConfigTest extends TestCase
         $config->modelName('model_name');
         $config->rowContent('row_content');
         $config->rowTitle('row_title');
-        $config->rowBadge('row_badge');
 
         $this->assertEquals(2, $config->getPagination());
         $this->assertEquals('index_title', $config->getIndexTitle());
@@ -31,7 +30,6 @@ class AdminConfigTest extends TestCase
         $this->assertEquals('model_name', $config->getModelName());
         $this->assertEquals('row_content', $config->getRowContent());
         $this->assertEquals('row_title', $config->getRowTitle());
-        $this->assertEquals('row_badge', $config->getRowBadge());
     }
 
     /** @test */

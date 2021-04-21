@@ -32,20 +32,32 @@ trait ManagedModelDefaults
             return '';
         }
 
+        // if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
+        //     return $this instanceof ProvidesUrl
+        //         ? '<a href="' . $this->url() . '" target="_blank"><em>online</em></a>'
+        //         : '<span><em>online</em></span>';
+        // }
+
+        // if ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
+        //     return $this instanceof ProvidesUrl
+        //         ? '<a href="' . $this->url() . '" target="_blank" class="text-error"><em>offline</em></a>'
+        //         : '<span class="text-error"><em>offline</em></span>';
+        // }
+
+        // if ($this->stateOf(PageState::KEY) === PageState::ARCHIVED) {
+        //     return '<span><em>gearchiveerd</em></span>';
+        // }
+
         if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
-            return $this instanceof ProvidesUrl
-                ? '<a href="' . $this->url() . '" target="_blank"><em>online</em></a>'
-                : '<span><em>online</em></span>';
+            return '<span class="label label-success text-sm">Online</span>';
         }
 
         if ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
-            return $this instanceof ProvidesUrl
-                ? '<a href="' . $this->url() . '" target="_blank" class="text-error"><em>offline</em></a>'
-                : '<span class="text-error"><em>offline</em></span>';
+            return '<span class="label label-error text-sm">Offline</span>';
         }
 
         if ($this->stateOf(PageState::KEY) === PageState::ARCHIVED) {
-            return '<span><em>gearchiveerd</em></span>';
+            return '<span class="label label-warning text-sm">Gearchiveerd</span>';
         }
 
         return '';

@@ -30,13 +30,7 @@ final class AdminConfig
         $this->pageTitle($model->title ?? $singular);
         $this->modelName($singular);
 
-        if (isset($model->created_at) && $model->created_at) {
-            $this->rowContent('<div><span class="text-grey-300 text-sm">'.$model->created_at->format('d/m/Y').'</span></div>');
-        }
-
-        if (public_method_exists($model, 'onlineStatusAsLabel')) {
-            $this->rowBadge($model->onlineStatusAsLabel());
-        }
+        $this->rowContent(view('chief::manager._index._default-row-content', ['model' => $model])->render());
 
         return $this;
     }
@@ -124,16 +118,6 @@ final class AdminConfig
     public function getRowContent(): string
     {
         return $this->get('row.content', '');
-    }
-
-    public function rowBadge(string $rowBadge): self
-    {
-        return $this->set('row.badge', $rowBadge);
-    }
-
-    public function getRowBadge(): string
-    {
-        return $this->get('row.badge', '');
     }
 
     private function set(string $key, $value): self

@@ -10,6 +10,10 @@
     @apply bg-secondary-100 text-secondary-500;
 }
 
+.label-grey {
+    @apply bg-grey-700 text-white;
+}
+
 .label-warning {
     @apply bg-orange-100 text-orange-500;
 }
