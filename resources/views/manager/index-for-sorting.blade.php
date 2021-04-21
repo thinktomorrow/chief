@@ -1,52 +1,46 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('pageTitle')
+    @adminConfig('indexTitle')
 @endsection
 
 @section('header')
-    @component('chief::layout._partials.header')
-        @slot('title')
-            @adminConfig('indexTitle')
-        @endslot
-
-        @slot('breadcrumbs')
-            <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                <x-icon-label type="back">Dashboard</x-icon-label>
-            </a>
-        @endslot
-
-        @adminCan('create')
-            <a href="@adminRoute('create')" class="btn btn-primary">
-                <x-icon-label type="add">Voeg een @adminConfig('modelName') toe</x-icon-label>
-            </a>
-        @endAdminCan
-    @endcomponent
+    <div class="container">
+        @component('chief::layout._partials.header')
+            @slot('title')
+                @adminConfig('indexTitle')
+            @endslot
+        @endcomponent
+    </div>
 @stop
 
 @section('content')
-    <div class="stack">
-        <div class="mb-8">
-            <a class="btn btn-primary" href="{{ $manager->route('index') }}">Stop met sorteren</a>
-            <p class="font-xs mt-2">Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
-        </div>
-    </div>
+    <div class="container">
+        <div class="row gutter-6">
+            <div class="w-full lg:w-2/3 window window-white">
 
-    <div class="row gutter-l stack">
-        <div class="column-12">
-            <div
-                class="row gutter-s"
-                data-sort-on-load
-                data-sort-route="{{ $manager->route('sort-index') }}"
-                id="js-sortable"
-            >
+                <div
+                        class="window window-white"
+                        data-sort-on-load
+                        data-sort-route="{{ $manager->route('sort-index') }}"
+                        id="js-sortable"
+                >
                     @foreach($models as $model)
-                        <div class="s-column-3 inset-xs flex" data-sortable-id="{{ $model->id }}" style="cursor:grab;">
-                            <div class="bg-white border border-grey-100 rounded inset-s" style="flex:1 1 0;">
-                                <span class="text-black font-bold">@adminConfig('pageTitle')</span>
+                        <div class="flex" data-sortable-id="{{ $model->id }}" style="cursor:grab;">
+                            <div class="bg-grey-50 bg-white border border-grey-100 mb-1 p-2 rounded" style="flex:1 1 0;">
+                                <span class="">@adminConfig('pageTitle')</span>
                             </div>
                         </div>
                     @endforeach
+                </div>
+            </div>
+            <div class="w-full lg:w-1/3">
+                <div class="stack">
+                    <div class="mb-8">
+                        <a class="btn btn-primary" href="{{ $manager->route('index') }}">Stop met sorteren</a>
+                        <p class="font-xs mt-2">Sleep de blokken in de gewenste volgorde. De volgorde wordt
+                            automatisch bewaard.</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -62,16 +62,16 @@
                     </div>
                 @endif
 
-                @adminCan('sort-index')
-                    <div class="window window-grey">
+                @adminCan('sort-index', $models->first())
+                    <div class="window window-grey mb-4">
                         @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
-                            <div class="mb-8">
+                            <div class="mb-4">
                                 <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
                                 <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
                                 <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
                             </div>
                         @else
-                            <div class="mb-8">
+                            <div class="mb-4">
                                 <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
                                 <a class="btn btn-primary" href="{{ $manager->route('index-for-sorting') }}">Sorteer handmatig</a>
                             </div>

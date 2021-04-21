@@ -22,6 +22,15 @@ trait RedactorFileUploadAssistant
         ];
     }
 
+    public function canRedactorFileUploadAssistant(string $action, $model =null): bool
+    {
+        if(in_array($action, ['asyncRedactorFileUpload'])) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Upload a file via redactor editor.
      */
