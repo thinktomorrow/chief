@@ -1,12 +1,12 @@
-<div class="flex px-12 py-6">
+<div class="relative flex px-8 py-4">
     @if($level != 0)
-        <div class="flex-shrink-0 flex flex-col items-end text-grey-700 pr-3" style="width: {{ $level * 2 + 0.5 }}rem">
+        <div class="absolute flex-shrink-0 flex flex-col items-end text-grey-700" style="width: {{ $level * 2 }}rem">
             <svg width="18" height="18"><use xlink:href="#icon-arrow-tl-to-br"/></svg>
             <span class="text-xs pr-2 font-semibold">{{ $level }}</span>
         </div>
     @endif
 
-    <div class="w-full flex justify-between items-start space-x-4">
+    <div class="w-full flex justify-between items-start space-x-4" style="padding-left: {{ $level * 2 }}rem; {{ $level > 0 ? 'margin-left: 0.75rem;' : null }}">
         <div class="flex flex-wrap items-center">
             <div class="space-x-1 mr-3">
                 <a href="{{ route('chief.back.menuitem.edit', $item->id) }}">

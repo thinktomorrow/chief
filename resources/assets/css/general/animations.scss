@@ -64,6 +64,23 @@
     }
 }
 
+.animate-navigation-item-content-slide-in {
+    animation: NavigationItemContentSlideDown;
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+@keyframes NavigationItemContentSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateX(0.5rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 /**
 * Vue animations
 * @ref: https://vuejs.org/v2/guide/transitions.html

@@ -36,7 +36,7 @@
                         selected='@json(old('parent_id', $menuitem->parent_id))'
                         labelkey="label"
                         valuekey="id"
-                        placeholder="Kies het bovenliggende menuitem"
+                        placeholder="Kies het bovenliggende menu item"
                     ></chief-multiselect>
                 </div>
             </label>

@@ -29,8 +29,10 @@ final class ChiefNavigation
             if ($managerWithTags->manager->can('index')) {
                 $modelClass = $managerWithTags->manager->managedModelClass();
                 $navLabel = (new $modelClass)->adminConfig()->getNavTitle();
+                $navIcon = (new $modelClass)->adminConfig()->getNavIcon();
 
-                $this->container->make(Nav::class)->add(new NavItem($navLabel, $managerWithTags->manager->route('index'), $managerWithTags->tags));
+                $this->container->make(Nav::class)
+                    ->add(new NavItem($navLabel, $managerWithTags->manager->route('index'), $managerWithTags->tags, $navIcon));
             }
         }
 

@@ -12,11 +12,12 @@ final class NavItem
     /** @var array */
     private $tags;
 
-    public function __construct(string $label, string $url, array $tags = [])
+    public function __construct(string $label, string $url, array $tags = [], string $icon)
     {
         $this->label = $label;
         $this->url = $url;
         $this->tags = $tags;
+        $this->icon = $icon;
     }
 
     public function label(): string
@@ -29,6 +30,11 @@ final class NavItem
         return $this->url;
     }
 
+    public function icon(): string
+    {
+        return $this->icon;
+    }
+
     public function isTagged($tags): bool
     {
         return count(array_intersect($this->tags, (array) $tags)) > 0;
@@ -39,12 +45,12 @@ final class NavItem
         return count($this->tags) == 0;
     }
 
-    public function render(): string
-    {
-        $output = '<a class="link link-black' . (isActiveUrl($this->url()) ? 'active' : '') . '" href="' . $this->url() . '">';
-        $output .= ucfirst($this->label());
-        $output .= '</a>';
+    // public function render(): string
+    // {
+    //     $output = '<a class="link link-black' . (isActiveUrl($this->url()) ? 'active' : '') . '" href="' . $this->url() . '">';
+    //     $output .= ucfirst($this->label());
+    //     $output .= '</a>';
 
-        return $output;
-    }
+    //     return $output;
+    // }
 }

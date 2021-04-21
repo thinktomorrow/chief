@@ -38,7 +38,7 @@
     @endif
 
     @if($slot != '')
-        <span class="leading-none">{{ $slot }}</span>
+        <span data-icon-label class="leading-none">{{ $slot }}</span>
     @endif
 
     @if($position == 'append' && isset($iconElement))

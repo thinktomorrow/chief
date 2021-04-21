@@ -1,48 +1,43 @@
-{{-- @if(!$attributes->has('inline') && $items->count() > 1)
-    <dropdown>
-        <span class="link link-black" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">{{ $title }}</span>
+@if(!$attributes->has('inline') && $items->count() > 1)
+    @php
+        $hasActiveChildren = false;
+        foreach($items as $navItem) {
+            if(isActiveUrl($navItem->url())) {
+                $hasActiveChildren = true;
+            }
+        }
+    @endphp
 
-        <div v-cloak class="dropdown-content">
+    <div data-navigation-item class="space-y-4">
+        <span
+            data-navigation-item-label
+            class="link link-black cursor-pointer {{ $hasActiveChildren ? 'active' : '' }}"
+        >
+            {{-- TODO: navigation group should be configurable too --}}
+            <x-icon-label space="large" icon="icon-folder">{{ $title }}</x-icon-label>
+        </span>
+
+        <div
+            data-navigation-item-content
+            class="flex flex-col space-y-3 animate-navigation-item-content-slide-in"
+            style="margin-left: calc(20px + 1rem); {{ $hasActiveChildren ? '' : 'display: none;' }}"
+        >
             @foreach($items as $navItem)
                 <a
-                    class="{{ isActiveUrl($navItem->url()) ? 'dropdown-link active' : 'dropdown-link' }}"
+                    class="link link-grey font-medium {{ isActiveUrl($navItem->url()) ? 'active' : '' }}"
                     href="{{ $navItem->url() }}"
-                >
-                    {{ ucfirst($navItem->label()) }}
-                </a>
+                    title="{{ ucfirst($navItem->label()) }}"
+                > {{ ucfirst($navItem->label()) }} </a>
             @endforeach
         </div>
-    </dropdown>
-@else
-    @foreach($items as $navItem)
-        <a
-            class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
-            href="{{ $navItem->url() }}"
-        >
-            {{ ucfirst($navItem->label()) }}
-        </a>
-    @endforeach
-@endif --}}
-
-@if(!$attributes->has('inline') && $items->count() > 1)
-    <span class="link link-black" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">{{ $title }}</span>
-
-    @foreach($items as $navItem)
-        <a
-            class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
-            href="{{ $navItem->url() }}"
-        >
-            {{ ucfirst($navItem->label()) }}
-        </a>
-    @endforeach
+    </div>
 @else
     @foreach($items as $navItem)
         <a
             href="{{ $navItem->url() }}"
             class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
-            style="margin-left: calc(-20px - 1rem)"
         >
-            <x-icon-label space="large" icon="icon-folder">{{ ucfirst($navItem->label()) }}</x-icon-label>
+            <x-icon-label space="large" icon="{{ $navItem->icon() }}">{{ ucfirst($navItem->label()) }}</x-icon-label>
         </a>
     @endforeach
 @endif

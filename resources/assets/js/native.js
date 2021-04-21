@@ -1,9 +1,10 @@
 import IndexSorting from './utilities/sortable';
+import FormSubmit from './utilities/form-submit';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
  */
-import FormSubmit from './utilities/form-submit';
+require('./utilities/navigation');
 
 FormSubmit.listen('[data-submit-form]');
 
