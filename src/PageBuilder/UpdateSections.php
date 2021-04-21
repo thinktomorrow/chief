@@ -53,6 +53,9 @@ class UpdateSections
 
         $this->removeModules($referred_instances);
 
+        // Making sure the index of these values are integers starting from zero.
+        $referred_instances = $referred_instances->values();
+
         foreach ($referred_instances as $i => $instance) {
             if(!$relation = Relation::find($this->model->getMorphClass(), $this->model->id, $instance->getMorphClass(), $instance->id)) {
                 $this->model->adoptChild($instance, ['sort' => $i]);
