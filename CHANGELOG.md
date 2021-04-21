@@ -88,8 +88,9 @@ A manager takes care of the routing and responses. It basically acts as a contro
 - Removed: ArrayIterable interface on Filters. Filters class no longer functions as an array like object. This functionality is never used in the chief internals.
 - Removed: Custom DynamicAttributes code. We now make use of the `Thinktomorrow\DynamicAttributes` package.
 
-## Unreleased
-- Added: storageDisk option on ImageField and FileField to choose a custom disk location. 
+## 0.5.17 - 2021-04-21
+- Fixed: integer overflow on sorting value when pages contains modules with large id.
+- Added: storageDisk option on ImageField and FileField to choose a custom disk location.
 
 ## 0.5.16 - 2021-02-19
 - Fixed: index view in admin was squashed due to missing container div
