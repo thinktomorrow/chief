@@ -42,3 +42,19 @@
 .btn-warning:hover {
     @apply bg-orange-500 bg-gradient-to-br from-orange-500 to-orange-600 border-orange-600 text-white;
 }
+
+.btn-info {
+    @apply text-blue-500 border-blue-500 bg-transparent;
+}
+
+.btn-info:hover {
+    @apply bg-blue-500 bg-gradient-to-br from-blue-500 to-blue-600 border-blue-600 text-white;
+}
+
+.btn-success {
+    @apply text-green-500 border-green-500 bg-transparent;
+}
+
+.btn-success:hover {
+    @apply bg-green-500 bg-gradient-to-br from-green-500 to-green-600 border-green-600 text-white;
+}

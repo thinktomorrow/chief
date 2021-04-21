@@ -1,11 +1,11 @@
 .window {
-    @apply rounded-xl shadow-sm p-8;
+    @apply rounded-xl p-8;
 }
 
 .window-white {
-    @apply bg-white;
+    @apply bg-white shadow-sm;
 }
 
 .window-grey {
-    @apply bg-grey-50;
+    @apply bg-grey-50 shadow-sm;
 }

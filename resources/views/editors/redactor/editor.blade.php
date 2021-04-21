@@ -1,13 +1,14 @@
 @push('custom-scripts')
-
     <script>
         $R.options = {
             plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'clips'],
+
             @if(chiefAdmin()->hasRole('developer'))
                 buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @else
                 buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
+
             formatting: ['h2', 'h3', 'p', 'blockquote'],
             imageResizable: true,
             lang: 'nl',

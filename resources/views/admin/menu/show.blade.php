@@ -32,7 +32,7 @@
             @else
                 <div class="w-full">
                     <div class="window window-white">
-                        <div class="divide-y divide-grey-100 -m-12">
+                        <div class="divide-y divide-grey-100 -m-8">
                             @foreach($menuItems as $menuItem)
                                 @include('chief::admin.menu._partials.menu-item', [
                                     'item' => $menuItem,

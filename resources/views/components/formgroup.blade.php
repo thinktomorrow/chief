@@ -2,8 +2,8 @@
     @if(isset($label) || isset($description))
         <div class="space-y-1">
             @isset($label)
-                <label class="text-lg space-x-1">
-                    <span>{{ ucfirst($label) }}</span>
+                <label class="space-x-1">
+                    <span class="text-lg font-semibold text-grey-900">{{ ucfirst($label) }}</span>
 
                     @if(isset($isRequired) && $isRequired)
                         <span class="label label-warning text-xs">

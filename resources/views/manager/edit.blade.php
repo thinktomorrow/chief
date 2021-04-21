@@ -71,15 +71,20 @@
                             <livewire:fields_component
                                 :model="$model"
                                 :componentKey="$componentKey"
+                                :title="$componentKey"
                                 class="window window-grey" />
                         @endforeach
                     @endAdminCan
 
-                    @foreach(['archive', 'unarchive', 'delete'] as $action)
-                        @adminCan($action, $model)
-                            @include('chief::manager._transitions.index.'. $action)
-                        @endAdminCan
-                    @endforeach
+                    <div class="window">
+                        <div class="-my-8">
+                            @foreach(['archive', 'unarchive', 'delete'] as $action)
+                                @adminCan($action, $model)
+                                    @include('chief::manager._transitions.index.'. $action, [ 'style' => 'link' ])
+                                @endAdminCan
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,11 +92,7 @@
 @stop
 
 @push('custom-scripts-after-vue')
-     @adminCan('asyncRedactorFileUpload', $model)
-        @include('chief::layout._partials.editor-script', [
-            'imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)
-        ])
-     @endAdminCan
+    @include('chief::layout._partials.editor-script')
 @endpush
 
 @include('chief::components.file-component')

@@ -3,7 +3,7 @@
         <div class="flex justify-between items-start">
             @if(isset($title) && $title)
                 {{-- <h3>{{ $title }}</h3> --}}
-                <span class="text-xl font-semibold text-grey-900">{{ $title }}</span>
+                <span class="text-xl font-semibold text-grey-900">{{ ucfirst($title) }}</span>
             @endif
 
             @if(isset($editRequestUrl))

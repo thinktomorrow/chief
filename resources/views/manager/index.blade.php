@@ -22,7 +22,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-6">
+        <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 @if($models->count())
                     <div class="window window-white">

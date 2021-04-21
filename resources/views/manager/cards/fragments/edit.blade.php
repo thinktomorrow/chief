@@ -8,10 +8,10 @@
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
-    <div class="space-y-10">
+    <div class="space-y-12">
         <h3>{{ ucfirst($model->managedModelKey()) }}</h3>
 
-        <div data-vue-fields class="space-y-10">
+        <div data-vue-fields class="space-y-6">
             @foreach($fields as $field)
                 @formgroup
                     @slot('label',$field->getLabel())
@@ -27,7 +27,7 @@
             <x-chief::fragments :owner="$model"/>
         @endif
 
-        <div class="center-y justify-between">
+        <div class="space-x-4">
             <button
                 data-submit-form="updateForm{{ $model->modelReference()->get() }}"
                 type="submit"
@@ -37,9 +37,10 @@
                 Wijzigingen opslaan
             </button>
 
+            {{-- TODO: too harsh?  --}}
             <button
                 data-submit-form="removeFragment{{ $model->modelReference()->get() }}"
-                class="text-error"
+                class="btn btn-error"
                 type="submit"
                 form="removeFragment{{ $model->modelReference()->get() }}"
             >
