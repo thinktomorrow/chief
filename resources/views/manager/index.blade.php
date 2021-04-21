@@ -26,7 +26,7 @@
             <div class="w-full lg:w-2/3">
                 @if($models->count())
                     <div class="window window-white">
-                        @adminCan('sort-index')
+                        @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
@@ -67,7 +67,7 @@
                         @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
                             <div class="mb-4">
                                 <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
-                                <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
+                                <button class="btn btn-primary" data-sortable-toggle>Sorteer handmatig</button>
                                 <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
                             </div>
                         @else

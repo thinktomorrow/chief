@@ -47,11 +47,21 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3 space-y-6">
-                <div class="window window-white">
-                    @adminCan('fields-edit', $model)
-                        <livewire:fields_component title="Algemeen" :model="$model" />
-                    @endAdminCan
-                </div>
+                @adminCan('fields-edit', $model)
+                @if($fields->component('main')->any())
+                    <div class="window window-white">
+                        <h3>Algemeen</h3>
+                        @foreach($fields->component('main')->groupByComponent() as $componentKey => $componentFields)
+                            <livewire:fields_component
+                                    :model="$model"
+                                    :componentKey="$componentKey"
+                            />
+                        @endforeach
+                    </div>
+
+                @endif
+
+                @endAdminCan
 
                 <div class="window window-white">
                     @adminCan('fragments-index', $model)

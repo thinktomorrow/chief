@@ -27,6 +27,15 @@ trait FileUploadAssistant
         ];
     }
 
+    public function canFileUploadAssistant(string $action, $model =null): bool
+    {
+        if(in_array($action, ['asyncUploadFile'])) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Upload a file via the file field. Keep in mind
      * that here one file at a time is upload asynchronously

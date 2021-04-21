@@ -26,6 +26,15 @@ trait SlimImageUploadAssistant
         ];
     }
 
+    public function canSlimImageUploadAssistant(string $action, $model =null): bool
+    {
+        if(in_array($action, ['asyncUploadSlimImage'])) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Upload a file via the image field. Keep in mind
      * that here one image at a time is uploaded asynchronously
