@@ -1,5 +1,14 @@
 .window {
-    @apply rounded-xl p-8;
+    @apply rounded-xl;
+    @extend .window-sm;
+}
+
+.window-sm {
+    @apply p-8;
+}
+
+.window-lg {
+    @apply p-12;
 }
 
 .window-white {

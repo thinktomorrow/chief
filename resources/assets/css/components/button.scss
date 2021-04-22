@@ -23,6 +23,14 @@
     @apply bg-primary-500 border-primary-500 text-white;
 }
 
+.btn-grey {
+    @apply bg-grey-50 border-grey-50 text-grey-500;
+}
+
+.btn-grey:hover {
+    @apply bg-grey-500 border-grey-500 text-white;
+}
+
 .btn-error {
     @apply text-red-500 border-red-500 bg-transparent;
 }

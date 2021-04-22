@@ -10,6 +10,10 @@
     @apply bg-grey-50 text-grey-600;
 }
 
+.dropdown-link-grey {
+    @apply hover:bg-grey-50 hover:text-grey-400;
+}
+
 .dropdown-link-success {
     @apply hover:bg-green-50 hover:text-green-500;
 }

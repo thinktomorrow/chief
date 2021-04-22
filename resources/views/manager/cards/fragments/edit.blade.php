@@ -11,7 +11,7 @@
     <div class="space-y-12">
         <h3>{{ ucfirst($model->managedModelKey()) }}</h3>
 
-        <div data-vue-fields class="space-y-6">
+        <div data-vue-fields class="space-y-10">
             @foreach($fields as $field)
                 @formgroup
                     @slot('label',$field->getLabel())

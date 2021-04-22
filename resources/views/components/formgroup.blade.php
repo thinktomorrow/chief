@@ -3,7 +3,7 @@
         <div class="space-y-1">
             @isset($label)
                 <label class="space-x-1">
-                    <span class="text-lg font-semibold text-grey-900">{{ ucfirst($label) }}</span>
+                    <span class="font-semibold text-grey-900">{{ ucfirst($label) }}</span>
 
                     @if(isset($isRequired) && $isRequired)
                         <span class="label label-warning text-xs">

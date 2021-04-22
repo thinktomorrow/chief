@@ -1,9 +1,7 @@
 <template>
     <dropdown>
-        <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="hover:text-primary-500">
-            <svg width="18" height="18" class="fill-current" style="margin-right: -6px; display: inline-block">
-                <use xlink:href="#dropdown" />
-            </svg>
+        <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="icon-label">
+            <svg width="20" height="20" class="icon-label-icon"><use xlink:href="#icon-dots-vertical" /></svg>
         </span>
 
         <div>

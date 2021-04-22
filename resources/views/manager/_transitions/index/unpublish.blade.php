@@ -1,6 +1,18 @@
-<a data-submit-form="draftForm-{{ $model->id }}" class="dropdown-link hover:bg-grey-50 hover:text-grey-400 cursor-pointer">Haal offline</a>
+@php
+    switch($style ?? null) {
+        case 'button':
+            $styleClasses = 'btn btn-grey'; break;
+        case 'link':
+            $styleClasses = 'link link-grey'; break;
+        case 'dropdown-link':
+            $styleClasses = 'dropdown-link dropdown-link-grey'; break;
+        default:
+            $styleClasses = 'btn btn-grey';
+    }
+@endphp
+
+<a data-submit-form="draftForm-{{ $model->id }}" class="{{ $styleClasses }} cursor-pointer">Haal offline</a>
 
 <form class="hidden" id="draftForm-{{ $model->id }}" action="@adminRoute('unpublish', $model)" method="POST">
     {{ csrf_field() }}
-    <button type="submit">Unpublish</button>
 </form>
