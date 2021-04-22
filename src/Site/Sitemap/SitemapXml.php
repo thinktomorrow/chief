@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Sitemap;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -106,7 +105,7 @@ class SitemapXml
                     unset($this->urls[$index]);
                 }
             },
-            'rejected' => function (RequestException $reason, $index) {
+            'rejected' => function ($reason, $index) {
                 unset($this->urls[$index]);
             },
         ]);
