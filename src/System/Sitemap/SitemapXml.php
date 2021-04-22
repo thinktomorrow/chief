@@ -12,7 +12,6 @@ use Spatie\Sitemap\Tags\Url;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Urls\UrlRecord;
-use GuzzleHttp\Exception\RequestException;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 
 class SitemapXml
@@ -106,7 +105,7 @@ class SitemapXml
                     unset($this->urls[$index]);
                 }
             },
-            'rejected' => function (RequestException $reason, $index) {
+            'rejected' => function ($reason, $index) {
                 unset($this->urls[$index]);
             },
         ]);
