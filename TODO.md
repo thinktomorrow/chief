@@ -15,3 +15,8 @@
 -   [ ] Redactor init on custom event
 -   [ ] thinktomorrow/chief-redactor package
 -   [ ] Squanto view files
+-   [ ] Singles create view
+-   [ ] Closing modal via backdrop doesn't close sidebar with editing of the pagetitle
+-  [ ] Squanto view files
+-  [ ] Multiselect bij mediagallery is nog fucked up
+-  [ ] Password reset view
