@@ -85,15 +85,14 @@
                                 class="window window-grey" />
                         @endforeach
                     @endAdminCan
-
-                    <div class="window">
-                        <div class="-my-8">
-                            @foreach(['archive', 'unarchive', 'delete'] as $action)
-                                @adminCan($action, $model)
-                                    @include('chief::manager._transitions.index.'. $action, [ 'style' => 'link' ])
-                                @endAdminCan
-                            @endforeach
-                        </div>
+                </div>
+                <div class="window">
+                    <div class="flex flex-col space-y-3">
+                        @foreach(['archive', 'unarchive', 'delete'] as $action)
+                            @adminCan($action, $model)
+                                @include('chief::manager._transitions.index.'. $action, [ 'style' => 'link' ])
+                            @endAdminCan
+                        @endforeach
                     </div>
                 </div>
             </div>

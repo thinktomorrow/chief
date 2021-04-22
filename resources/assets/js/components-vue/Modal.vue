@@ -1,40 +1,45 @@
 <template>
     <!-- TODO: fix transition -->
-    <transition :name="typedtransition" mode="in-out" appear>
-        <div v-show="isVisible" class="fixed inset-0 z-10" :class="typedclass">
-            <div class="absolute inset-0 opacity-25 bg-black" @click="close"></div>
+    <!-- TODO: modal should open on form error inside of modal (e.g. delete input field) -->
+    <!-- <transition :name="typedtransition" mode="in-out" appear> -->
+    <div v-show="isVisible" class="fixed inset-0 z-10" :class="typedclass">
+        <div class="absolute inset-0 opacity-25 bg-black" @click="close"></div>
 
-            <div class="absolute inset-0 flex justify-center items-center">
-                <div class="relative window window-white shadow-xl max-w-xl">
-                    <div class="mb-4">
-                        <span class="text-sm font-medium tracking-widest text-grey-500 uppercase">
+        <div class="absolute inset-0 flex justify-center items-center">
+            <div class="relative window window-white shadow-xl max-w-xl">
+                <div class="space-y-6">
+                    <div v-if="title">
+                        <span class="text-sm uppercase font-semibold text-grey-700 tracking-widest">
                             {{ title }}
                         </span>
                     </div>
 
-                    <div class="prose prose-dark mb-6">
+                    <div class="prose prose-dark">
                         <slot></slot>
                     </div>
-
-                    <div v-if="showFooter" class="flex items-center space-x-4">
-                        <slot name="footer">
-                            <slot name="modal-action-buttons"></slot>
-
-                            <a @click="close" class="btn btn-secondary">
-                                <slot name="modal-close-btn">Annuleer</slot>
-                            </a>
-                        </slot>
-                    </div>
-
-                    <button type="button" @click="close" class="absolute top-0 right-0 link link-black link-label m-6">
-                        <svg class="link-label-icon" width="20" height="20">
-                            <use xlink:href="#x" />
-                        </svg>
-                    </button>
                 </div>
+
+                <div v-if="showFooter" class="flex items-center space-x-4 mt-8">
+                    <slot name="footer">
+                        <slot name="modal-action-buttons"></slot>
+
+                        <a @click="close" class="btn btn-secondary">
+                            <slot name="modal-close-btn">Annuleren</slot>
+                        </a>
+                    </slot>
+                </div>
+
+                <button
+                    type="button"
+                    @click="close"
+                    class="absolute top-0 right-0 link link-grey icon-label bg-white rounded-full m-7 p-1"
+                >
+                    <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#x" /></svg>
+                </button>
             </div>
         </div>
-    </transition>
+    </div>
+    <!-- </transition> -->
 </template>
 
 <script>

@@ -16,5 +16,5 @@
 @endphp
 
 <a v-cloak @click="showModal('delete-manager-<?= $model->id; ?>')" class="{{ $styleClasses }} cursor-pointer">
-    Verwijderen
+    Pagina verwijderen
 </a>

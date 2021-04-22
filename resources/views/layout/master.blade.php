@@ -26,14 +26,13 @@
                             @yield('content')
                         </div>
                     </section>
-
-                    <!-- place outside the main content area as a place for modals, secondary forms, ... -->
-                    @stack('portals')
-
-                    {{-- @include('chief::back._layouts._partials.chief-footer') --}}
-                    @yield('chief-footer')
                 </div>
             </div>
+
+            <!-- place outside the main content area as a place for modals, secondary forms, ... -->
+            @stack('portals')
+
+            @yield('chief-footer')
         </main>
 
         @include('chief::layout._partials.foot')

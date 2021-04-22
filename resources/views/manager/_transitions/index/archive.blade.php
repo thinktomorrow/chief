@@ -16,5 +16,5 @@
 @endphp
 
 <a v-cloak @click="showModal('archive-manager-<?= $model->id ?>')" class="{{ $styleClasses }} cursor-pointer">
-    Archiveer deze pagina
+    Pagina archiveren
 </a>
