@@ -1,32 +1,24 @@
 @extends('chief::layout.master')
 
-@section('custom-styles')
-    <link rel="stylesheet" href="{{ asset('/back/redactor/redactor.css') }}">
-
-    <script src="{{ asset('/back/redactor/redactor.js') }}"></script>
-    <script>
-        // Defer initiation when dom is ready
-        document.addEventListener('DOMContentLoaded', function(){
-            if(document.querySelectorAll('.redactor-editor').length > 0) {
-                $R('.redactor-editor', {
-                    paragraphize: false,
-                });
-            }
-        });
-
-    </script>
-    @include('squanto::_preventDuplicateSubmissions')
-@endsection
-
 @section('page-title')
     Vertalingen
 @endsection
 
-@component('chief::layout._partials.header')
-    @slot('title')
-        Vertalingen
-    @endslot
-@endcomponent
+@push('custom-styles')
+    <link rel="stylesheet" href="{{ asset('assets/back/css/vendor/redactor.css') }}">
+    <script src="{{ asset('/assets/back/js/vendor/redactor.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if(document.querySelectorAll('.redactor-editor').length > 0) {
+                $R('.redactor-editor', {
+                    buttons: ['html', 'format', 'bold', 'italic', 'sup', 'sub', 'strikethrough', 'lists', 'link']
+                });
+            }
+        });
+    </script>
+
+    @include('squanto::_preventDuplicateSubmissions')
+@endpush
 
 @section('content')
     {{ $slot }}

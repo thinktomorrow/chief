@@ -15,3 +15,4 @@
 -   [ ] Redactor init on custom event
 -   [ ] thinktomorrow/chief-redactor package
 -   [ ] Squanto view files
+-   [ ] Create page view update

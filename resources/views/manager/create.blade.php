@@ -4,46 +4,58 @@
     @adminConfig('modelName')
 @endsection
 
-@component('chief::layout._partials.header')
-    @slot('title')
-        @adminConfig('modelName')
-    @endslot
-    @slot('subtitle')
-        <div class="inline-block">
-            <a class="center-y" href="@adminRoute('index')">
-                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-            </a>
-        </div>
-    @endslot
+@section('header')
+    <div class="container-sm">
+        @component('chief::layout._partials.header')
+            @slot('title')
+                @adminConfig('modelName')
+            @endslot
 
-    <div class="inline-group-s">
-        <button data-submit-form="createForm" type="button" class="btn btn-primary">Aanmaken</button>
+            @slot('breadcrumbs')
+                @adminCan('index')
+                    <a href="@adminRoute('index')" class="link link-primary">
+                        <x-icon-label type="back">Terug naar overzicht</x-icon-label>
+                    </a>
+                @endAdminCan
+            @endslot
+
+            <button data-submit-form="createForm" type="button" class="btn btn-primary">Aanmaken</button>
+        @endcomponent
     </div>
-
-@endcomponent
+@endsection
 
 @section('content')
+    <div class="container-sm">
+        <div class="row">
+            <div class="w-full">
+                <div class="window window-white">
+                    <form
+                        id="createForm"
+                        method="POST"
+                        action="@adminRoute('store')"
+                        enctype="multipart/form-data"
+                        role="form"
+                        class="mb-0"
+                    >
+                        {{ csrf_field() }}
 
-    <div>
-        <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
-            {{ csrf_field() }}
+                        <div class="space-y-8">
+                            @foreach($fields as $field)
+                                @formgroup
+                                    @slot('label',$field->getLabel())
+                                    @slot('description',$field->getDescription())
+                                    @slot('isRequired', $field->required())
+                                    {!! $field->render(get_defined_vars()) !!}
+                                @endformgroup
+                            @endforeach
 
-            @foreach($fields as $field)
-                @formgroup
-                    @slot('label',$field->getLabel())
-                    @slot('description',$field->getDescription())
-                    @slot('isRequired', $field->required())
-                    {!! $field->render(get_defined_vars()) !!}
-                @endformgroup
-            @endforeach
-
-            <div class="stack text-right">
-                <button type="submit" class="btn btn-primary">Aanmaken</button>
+                            <button type="submit" class="btn btn-primary">Aanmaken</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-        </form>
+        </div>
     </div>
-
 @stop
 
 

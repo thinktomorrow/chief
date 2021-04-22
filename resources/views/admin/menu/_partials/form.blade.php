@@ -1,6 +1,6 @@
 <input type="hidden" name="menu_type" value="{{ $menuitem->menu_type }}">
 
-<div class="space-y-12">
+<div class="space-y-8">
     @include('chief::admin.menu._formgroups.label')
     @include('chief::admin.menu._formgroups.link')
 

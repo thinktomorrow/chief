@@ -6,10 +6,7 @@
     <div data-navigation-item class="space-y-4">
         <span
             data-navigation-item-label
-            class="
-                link link-black cursor-pointer
-                {{ $hasActiveChildren ? 'active' : '' }}
-            "
+            class="link link-black cursor-pointer {{ $hasActiveChildren ? 'active' : '' }}"
         >
             <x-icon-label space="large" icon="logo">Site</x-icon-label>
         </span>

@@ -9,7 +9,7 @@
             <div class="relative window window-white shadow-xl max-w-xl">
                 <div class="space-y-6">
                     <div v-if="title">
-                        <span class="text-sm uppercase font-semibold text-grey-700 tracking-widest">
+                        <span class="text-sm uppercase font-semibold text-grey-500 tracking-widest">
                             {{ title }}
                         </span>
                     </div>

@@ -29,7 +29,9 @@
                     {{ $item->page_label }}
                 </a>
             @elseif($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
-                {{-- <span class="text-grey-700">/</span> --}}
+                <x-icon-label type="forward" class="text-grey-300 mr-3"></x-icon-label>
+
+                <span class="text-grey-300 font-medium">Geen link</span>
             @else
                 <x-icon-label type="forward" class="text-primary-500 mr-3"></x-icon-label>
 
@@ -43,7 +45,7 @@
             <a
                 data-sidebar-fragments-edit
                 href="{{ route('chief.back.menuitem.edit', $item->id) }}"
-                class="link link-black"
+                class="link link-primary"
             >
                 <x-icon-label type="edit"></x-icon-label>
             </a>

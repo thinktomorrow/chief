@@ -7,7 +7,7 @@
     <div class="space-y-6">
         @foreach($fields as $field)
             <div class="space-y-2">
-                <span class="text-sm uppercase font-semibold text-grey-700 tracking-widest">{{ $field->getLabel() }}</span>
+                <span class="text-sm uppercase font-semibold text-grey-500 tracking-widest">{{ $field->getLabel() }}</span>
 
                 <!-- off course, this should be sensible, for all kinds of fieldtypes, checkboxes, images, ... ... -->
                 <!-- as well as localisation ... -->

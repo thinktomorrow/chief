@@ -21,7 +21,7 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <div class="divide-y divide-grey-100 -m-12">
+                    <div class="divide-y divide-grey-100 -m-8">
                         @foreach($menus as $menu)
                             <div class="px-8 py-4">
                                 <div class="flex justify-between items-center">
@@ -29,7 +29,7 @@
                                         <span class="text-lg font-medium text-grey-900">{{ $menu->label() }}</span>
                                     </a>
 
-                                    <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="hover:underline">
+                                    <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="link link-primary">
                                         <x-icon-label type="edit"></x-icon-label>
                                     </a>
                                 </div>

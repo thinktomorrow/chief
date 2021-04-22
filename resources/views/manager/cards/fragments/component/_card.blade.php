@@ -13,10 +13,6 @@
 
                 {{-- TODO: should show the actual fragment state --}}
                 <span class="label label-success text-sm">Online</span>
-                {{-- <div class="relative flex items-center">
-                    <div class="bg-success rounded-full min-h-2 min-w-2 transform group-hover:scale-0 transition-150"></div>
-                    <div class="absolute text-success font-medium transform scale-0 group-hover:scale-100 transition-150">Online</div>
-                </div> --}}
             </div>
 
             @adminCan('fragment-edit')
