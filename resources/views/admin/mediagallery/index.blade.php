@@ -9,10 +9,10 @@
             @slot('title')
                 Media galerij
             @endslot
+
             @slot('breadcrumbs')
-                {{-- TODO: use correct route --}}
-                <a href="/admin" class="link link-primary">
-                    <x-icon-label type="back">Ga terug</x-icon-label>
+                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
+                    <x-icon-label type="back">Dashboard</x-icon-label>
                 </a>
             @endslot
         @endcomponent
@@ -24,7 +24,7 @@
         <div class="row gutter-6">
             <div class="w-full lg:w-2/3">
                 <div class="window window-white space-y-12">
-                    <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="flex justify-between items-center">
+                    <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="flex justify-between items-center mb-0">
                         <label for="select-all" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
                             <input type="checkbox" name="select_all" id="select-all">
                             <span>Alles selecteren</span>
@@ -38,7 +38,7 @@
 
                     <div class="row gutter-3">
                         @foreach($assets as $index => $asset)
-                            <div class="w-1/3 xl:w-1/4">
+                            <div class="w-1/2 xl:w-1/3 2xl:w-1/4">
                                 @include('chief::admin.mediagallery.item')
                             </div>
                         @endforeach
@@ -67,9 +67,11 @@
                                 type="text"
                                 name="search"
                                 value="{{ old('search', request()->input('search'))}}"
+                                class="w-full"
                             >
                         @endformgroup
 
+                        {{-- TODO: fix multiselect --}}
                         @formgroup
                             @slot('label', 'Pagina')
 
@@ -99,7 +101,7 @@
     </div>
 
     <modal id="mediagallery-bulk-delete-modal" title="Selectie verwijderen">
-        <h3>Bent u zeker?</h3>
+        <h2>Bent u zeker?</h2>
 
         <p>Je staat op het punt om de geselecteerde bestanden op te ruimen. Enkel ongebruikte bestanden zullen worden verwijderd.</p>
 

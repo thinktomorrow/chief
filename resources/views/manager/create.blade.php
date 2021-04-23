@@ -58,10 +58,7 @@
     </div>
 @stop
 
-
-
 @push('custom-scripts-after-vue')
-
     <script>
         // Display a warning message to tell the user that adding images to redactor is only possible after page creation.
         var editors = document.querySelectorAll('[data-editor]');
@@ -74,7 +71,6 @@
     </script>
 
     @include('chief::layout._partials.editor-script', ['disableImageUpload' => true])
-
 @endpush
 
 @include('chief::components.file-component')

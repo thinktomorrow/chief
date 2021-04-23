@@ -14,12 +14,7 @@ export default class {
     }
 
     init() {
-        // Register unique trigger handler
         this.handle = (event) => this._handleTrigger(event);
-
-        // EventBus.subscribe('fragment-new', () => {
-        //     this.scanForTriggers();
-        // });
 
         EventBus.subscribe('fragment-new', (selectionEl) => {
             this._scanForTriggersIn(selectionEl);
@@ -38,9 +33,6 @@ export default class {
     }
 
     _scanForTriggersIn(element) {
-        console.log(element);
-        console.log(this.postActionAttribute, element.querySelectorAll(`[${this.postActionAttribute}]`));
-
         Array.from(element.querySelectorAll(`[${this.postActionAttribute}]`)).forEach((el) => {
             el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);
@@ -58,8 +50,6 @@ export default class {
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {
-            // this.scanForTriggers();
-
             EventBus.publish('fragment-add', data);
         });
     }

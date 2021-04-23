@@ -11,12 +11,13 @@
 -   [ ] Register flow view files
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
 -   [ ] Digital huisstijl guide
--   [ ] Redactor
+-   [ ] Redactor update + plugin check
 -   [ ] Redactor init on custom event
 -   [ ] thinktomorrow/chief-redactor package
--   [ ] Squanto view files
--   [ ] Singles create view
+-   [x] Squanto view files
+-   [x] Singles create view
 -   [ ] Closing modal via backdrop doesn't close sidebar with editing of the pagetitle
--   [ ] Squanto view files
 -   [ ] Multiselect bij mediagallery is nog fucked up
 -   [ ] Password reset view
+
+-   [ ] After addings a fragment, you can't add another one (BUG)

@@ -5,9 +5,11 @@ import EventBus from '../../utilities/EventBus';
  * show the available and shared fragment options
  */
 export default class {
-    constructor(container, fragmentsContainer) {
+    constructor(container, fragmentsContainerSelector) {
         this.container = container;
-        this.fragmentsContainer = fragmentsContainer;
+
+        this.fragmentsContainerSelector = fragmentsContainerSelector;
+        this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
 
         this.fragmentSelector = '[data-fragment]';
         this.triggerSelector = '[data-fragments-new-trigger]';
@@ -25,7 +27,8 @@ export default class {
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
-                console.log(`selectfragment event subscribe: ${event}`);
+                this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
+
                 this._removeTriggerElements();
                 this._addTriggerElements();
                 this._activateTriggerElements();
@@ -51,7 +54,7 @@ export default class {
     _addTriggerElements() {
         const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
 
-        // make sure to add a trigger when no fragments exist
+        // Add a trigger element if there no fragments exist yet
         if (fragmentElements.length === 0) {
             const triggerElement = this.constructor._createTriggerElement();
 
