@@ -1,17 +1,18 @@
 <template>
     <div>
         <slot name="tabnav" :tabs="tabs">
-            <ul v-if="!hideNav" role="tablist" class="flex w-full list-none border-b border-grey-100 mb-6">
+            <ul v-if="!hideNav" role="tablist" class="flex w-full list-none border-b border-grey-200 mb-3 pl-0">
                 <li v-for="tab in tabs" role="presentation">
                     <slot name="tabname" :tab="tab">
-                        <a v-html="tab.name"
-                           @click="selectTab(tab)"
-                           :href="tab.hash"
-                           :aria-controls="tab.hash"
-                           :aria-selected="tab.isActive"
-                           role="tab"
-                           class="block px-3 pb-3 text-grey-500 --bottomline"
-                           :class="{'active': tab.isActive }"
+                        <a
+                            v-html="tab.name"
+                            @click="selectTab(tab)"
+                            :href="tab.hash"
+                            :aria-controls="tab.hash"
+                            :aria-selected="tab.isActive"
+                            role="tab"
+                            class="block px-3 pb-2 font-medium text-grey-500 --bottomline"
+                            :class="{ active: tab.isActive }"
                         ></a>
                     </slot>
                 </li>
@@ -23,61 +24,61 @@
     </div>
 </template>
 <script>
-    export default {
+export default {
+    props: {
+        external_nav: { default: false, type: Boolean },
+    },
 
-        props: {
-            'external_nav': {default:false, type: Boolean},
-        },
+    data() {
+        return {
+            tabs: [],
+            hideNav: this.external_nav,
+        };
+    },
 
-	    data() {
-		    return {
-		        tabs: [],
-                hideNav: this.external_nav,
-		    };
-	    },
+    created() {
+        this.tabs = this.$children;
 
-	    created() {
-		    this.tabs = this.$children;
+        Eventbus.$on('select-tab', (hash) => {
+            this.selectTab(hash);
+        });
+    },
 
-            Eventbus.$on('select-tab',(hash) => {
-                this.selectTab(hash);
+    mounted() {
+        window.addEventListener('hashchange', () => this.selectTab(window.location.hash), false);
+
+        // Trigger the event if there is a hash on page load
+        if (window.location.hash && typeof this.findTab(window.location.hash) != 'undefined') {
+            window.dispatchEvent(new Event('hashchange'));
+        } else if (this.tabs.length > 0 && !this.isAnyTabActive()) {
+            this.selectTab(this.tabs[0]);
+        }
+    },
+
+    methods: {
+        selectTab(selectedTab) {
+            // Hash can be passed as well, so let's find the tab by hash first
+            if (typeof selectedTab == 'string') selectedTab = this.findTab(selectedTab);
+
+            // Halt here if targeted tab does not reside in this component or it's already active
+            if (typeof selectedTab == 'undefined' || selectedTab.isActive) return;
+
+            this.tabs.forEach((tab) => {
+                tab.isActive = tab == selectedTab;
             });
-	    },
-
-	    mounted(){
-            window.addEventListener('hashchange',() => this.selectTab(window.location.hash), false);
-
-            // Trigger the event if there is a hash on page load
-            if(window.location.hash && typeof this.findTab(window.location.hash) != "undefined"){
-                window.dispatchEvent(new Event('hashchange'));
-            } else if(this.tabs.length > 0 && !this.isAnyTabActive()){
-                this.selectTab(this.tabs[0]);
-            }
         },
 
-	    methods: {
-		    selectTab(selectedTab) {
+        findTab(hash) {
+            return this.tabs.find((tab) => tab.hash == hash);
+        },
 
-                // Hash can be passed as well, so let's find the tab by hash first
-                if(typeof selectedTab == "string") selectedTab = this.findTab(selectedTab);
-
-                // Halt here if targeted tab does not reside in this component or it's already active
-                if(typeof selectedTab == "undefined" || selectedTab.isActive) return;
-
-			    this.tabs.forEach(tab => {
-				    tab.isActive = (tab == selectedTab);
-			    });
-		    },
-
-            findTab(hash){
-                return this.tabs.find(tab => tab.hash == hash);
-            },
-
-            isAnyTabActive(){
-                return (typeof this.tabs.find(tab => {
+        isAnyTabActive() {
+            return (
+                typeof this.tabs.find((tab) => {
                     return tab.isActive;
-                }) != "undefined");
-            }
-	    }
-    }
+                }) != 'undefined'
+            );
+        },
+    },
+};
 </script>

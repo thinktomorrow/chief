@@ -3,9 +3,9 @@
     <!-- TODO: modal should open on form error inside of modal (e.g. delete input field) -->
     <!-- <transition :name="typedtransition" mode="in-out" appear> -->
     <div v-show="isVisible" class="fixed inset-0 z-10" :class="typedclass">
-        <div class="absolute inset-0 opacity-25 bg-black" @click="close"></div>
-
         <div class="absolute inset-0 flex justify-center items-center">
+            <div class="absolute inset-0 opacity-25 bg-black cursor-pointer" @click="close"></div>
+
             <div class="relative window window-white shadow-xl max-w-xl">
                 <div class="space-y-6">
                     <div v-if="title">
