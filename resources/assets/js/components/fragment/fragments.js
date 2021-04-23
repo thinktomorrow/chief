@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initSortable('[data-sortable-fragments]', panel.el);
     });
 
-    EventBus.subscribe('fragments-submit-panel', () => {
+    EventBus.subscribe('fragments-reloaded', () => {
         initSortable();
     });
 
