@@ -20,4 +20,6 @@
 -   [ ] Multiselect bij mediagallery is nog fucked up
 -   [ ] Password reset view
 
--   [ ] After addings a fragment, you can't add another one (BUG)
+-   [x] After addings a fragment, you can't add another one (BUG)
+-   [ ] After addings a fragment, you can't sort anymore (BUG)
+-   [ ] After deleting a fragment, you can't sort anymore (BUG)

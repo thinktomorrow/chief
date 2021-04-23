@@ -27,6 +27,7 @@ export default class {
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
+                // Needs to be redefined after Livewire rebuild the element with the added fragment
                 this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
 
                 this._removeTriggerElements();
@@ -46,9 +47,33 @@ export default class {
         return template.firstElementChild.cloneNode(true);
     }
 
-    static _createSelectionElement() {
+    _createSelectionElement() {
         const template = document.querySelector('#js-fragment-selection-template');
-        return template.firstElementChild.cloneNode(true);
+        const element = template.firstElementChild.cloneNode(true);
+
+        const self = this;
+
+        const removeSelectionElement = (e) => {
+            if (!(e.target === element || element.contains(e.target))) {
+                if (document.contains(element)) {
+                    element.parentNode.removeChild(element);
+
+                    self._removeTriggerElements();
+                    self._addTriggerElements();
+                    self._activateTriggerElements();
+                    self._onlyShowClosestTriggerElement();
+                }
+
+                window.removeEventListener('click', removeSelectionElement);
+            }
+        };
+
+        // Short timeout so the click event that initiates this function doesn't trigger it instantly
+        setTimeout(() => {
+            window.addEventListener('click', removeSelectionElement);
+        }, 50);
+
+        return element;
     }
 
     _addTriggerElements() {
@@ -94,17 +119,7 @@ export default class {
 
     _activateTriggerElement(element) {
         element.addEventListener('click', () => {
-            const selectionElement = this.constructor._createSelectionElement();
-            const existingSelectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
-
-            if (existingSelectionElement) {
-                const triggerElement = this.constructor._createTriggerElement();
-
-                this._activateTriggerElement(triggerElement);
-
-                existingSelectionElement.parentNode.insertBefore(triggerElement, existingSelectionElement);
-                existingSelectionElement.parentNode.removeChild(existingSelectionElement);
-            }
+            const selectionElement = this._createSelectionElement();
 
             element.parentNode.insertBefore(selectionElement, element);
             element.parentNode.removeChild(element);
@@ -196,6 +211,8 @@ export default class {
             if (panel.el.querySelector('input[name="order"]')) {
                 panel.el.querySelector('input[name="order"]').value = order;
             }
+
+            selectionElement.parentNode.removeChild(selectionElement);
         }
     }
 

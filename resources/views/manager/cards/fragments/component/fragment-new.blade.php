@@ -33,6 +33,7 @@
                         Kies uit één van de gedeelde blokken
                     </p>
                 </div>
+
                 <div class="flex justify-center items-center space-x-2">
                     @foreach($sharedFragments as $sharedFragment)
                         <span
@@ -40,9 +41,9 @@
                             data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) }}"
                             class="bg-primary-50 font-medium text-grey-900 py-1 px-2 rounded-lg"
                         >
-                    {{ ucfirst($sharedFragment['model']->adminConfig()->getPageTitle()) }}
+                            {{ ucfirst($sharedFragment['model']->adminConfig()->getPageTitle()) }}
                             {{ ($sharedFragment['model']->adminConfig()->getModelName()) }}
-                </span>
+                        </span>
                     @endforeach
                 </div>
             @endif
@@ -66,6 +67,4 @@
             </svg>
         </div>
     </div>
-    <!-- end fragment selection template -->
-
 </div>
