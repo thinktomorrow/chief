@@ -23,3 +23,5 @@
 -   [x] After addings a fragment, you can't add another one (BUG)
 -   [ ] After addings a fragment, you can't sort anymore (BUG)
 -   [ ] After deleting a fragment, you can't sort anymore (BUG)
+
+-   [x] Chief error page

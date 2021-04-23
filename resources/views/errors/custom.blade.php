@@ -5,21 +5,20 @@
 @endsection
 
 @section('content')
+        <div class="row-center-center min-h-screen">
+            <div class="window window-white max-w-lg prose-dark space-y-6">
+                <h1>Er ging iets fout</h1>
 
-    <div class="container min-h-screen flex items-center justify-center">
-        <div class="row w-full justify-center">
-            <div class="xs-column-12 s-column-10 m-column-6 l-column-4 z-20">
+                <p>
+                    Onze developers werden op de hoogte gebracht en zullen uitzoeken wat er fout liep.<br>
+                    Indien je dringend hulp nodig hebt bij dit probleem, kan je ons best contacteren.
+                </p>
 
-                @include('chief::layout._partials.logo')
-
-                <h1 class="mb-8">Er ging iets fout.</h1>
-                <p class="mb-8">Het development team is op de hoogte gesteld en werkt hier zo snel mogelijk aan.</p>
-
-                <a class="btn btn-primary mr-4" href="{{ url('/admin') }}">Naar het dashboard</a>
-                <a href="mailto:chief@thinktomorrow.be">Contacteer ons</a>
-
+                <p class="space-x-4">
+                    <a href="{{ route('chief.back.dashboard') }}" class="btn btn-primary">Naar het dashboard</a>
+                    <a href="mailto:chief@thinktomorrow.be" class="btn btn-secondary">Contacteer ons</a>
+                </p>
             </div>
         </div>
     </div>
-
 @endsection
