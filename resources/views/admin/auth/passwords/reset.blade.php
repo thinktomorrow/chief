@@ -5,38 +5,58 @@
 @endsection
 
 @section('content')
+    <div class="relative row-center-center min-h-screen">
+        <div class="window window-white window-lg max-w-lg space-y-6 prose prose-dark">
+            <h1>Reset jouw wachtwoord</h1>
 
-    <div class="container min-h-screen flex items-center">
-		<div class="row w-full justify-center my-32">
-			<div class="xs-column-12 s-column-10 m-column-6 l-column-4 relative z-20">
+            <form role="form" method="POST" action="{{ route('chief.back.password.request') }}" class="mb-0">
+                {{ csrf_field() }}
 
-                <h1 class="mb-8">Reset jouw wachtwoord</h1>
+                <input type="hidden" name="token" value="{{ $token }}">
 
-                <form class="block stack" role="form" method="POST" action="{{ route('chief.back.password.request') }}">
+                <div class="space-y-6">
+                    @formgroup
+                        @slot('label', 'E-mail')
 
-                    {{ csrf_field() }}
+                        <div class="space-y-2">
+                            <input type="email" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}" class="w-full">
+                            @error('email')
+                                <x-inline-notification type="error">
+                                    {{ $message }}
+                                </x-inline-notification>
+                            @enderror
+                        </div>
+                    @endformgroup
 
-                    <input type="hidden" name="token" value="{{ $token }}">
+                    @formgroup
+                        @slot('label', 'Nieuw wachtwoord')
 
+                        <div class="space-y-2">
+                            <input type="password" name="password" placeholder="Nieuw wachtwoord" id="password" class="w-full">
+                            @error('password')
+                                <x-inline-notification type="error">
+                                    {{ $message }}
+                                </x-inline-notification>
+                            @enderror
+                        </div>
+                    @endformgroup
 
-                    <div class="stack">
-                        <input type="email" class="inset-s" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}">
-                    </div>
+                    @formgroup
+                        @slot('label', 'Herhaal wachtwoord')
 
-                    <div class="stack">
-                        <input type="password" class="inset-s" name="password" placeholder="Nieuw wachtwoord" id="password">
-                    </div>
-
-                    <div class="stack">
-                        <input type="password" class="inset-s" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm">
-                    </div>
+                        <div class="space-y-2">
+                            <input type="password" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm" class="w-full">
+                            @error('password_confirmation')
+                                <x-inline-notification type="error">
+                                    {{ $message }}
+                                </x-inline-notification>
+                            @enderror
+                        </div>
+                    @endformgroup
 
                     <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
-
-                </form>
-
-			</div>
+                </div>
+            </form>
         </div>
     </div>
-
 @endsection

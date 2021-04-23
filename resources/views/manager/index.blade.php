@@ -48,42 +48,48 @@
                 @endif
             </div>
 
-            <div class="w-full lg:w-1/3">
+            <div class="w-full lg:w-1/3 space-y-6">
                 @if($manager->filters()->anyRenderable())
                     <div class="window window-grey">
-                        <h3>Filtering</h3>
+                        <span class="text-xl font-semibold text-grey-900">Filtering</span>
 
                         <form method="GET">
                             {!! $manager->filters()->render() !!}
-                            <div class="stack-xs">
-                                <button class="btn btn-primary squished-xs" type="submit">Filter</button>
-                            </div>
+
+                            <button class="btn btn-primary" type="submit">Filter</button>
                         </form>
                     </div>
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <div class="window window-grey mb-4">
-                        @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
-                            <div class="mb-4">
-                                <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
-                                <button class="btn btn-primary" data-sortable-toggle>Sorteer handmatig</button>
-                                <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
-                            </div>
-                        @else
-                            <div class="mb-4">
-                                <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
-                                <a class="btn btn-primary" href="{{ $manager->route('index-for-sorting') }}">Sorteer handmatig</a>
-                            </div>
-                        @endif
+                    <div class="window window-grey space-y-6">
+                        <div class="space-y-4">
+                            <span class="text-xl font-semibold text-grey-900">Sortering</span>
+
+                            @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
+                                <p class="text-grey-700">
+                                    Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
+                                </p>
+
+                                <button data-sortable-toggle class="btn btn-primary">Sorteer handmatig</button>
+
+                                <p class="text-grey-700 font-xs" data-sortable-show-when-sorting>
+                                    Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
+                                </p>
+                            @else
+                                <p class="text-grey-700 text-sm">
+                                    Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
+                                </p>
+
+                                <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
+                            @endif
+                        </div>
                     </div>
                 @endAdminCan
 
                 @adminCan('archive_index')
                     <div class="window window-grey">
-                        <div class="stack-s">
-                            <a href="@adminRoute('archive_index')">Bekijk de gearchiveerde items</a>
-                        </div>
+                        <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
                     </div>
                 @endAdminCan
             </div>

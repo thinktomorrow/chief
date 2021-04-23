@@ -24,7 +24,7 @@
                 v-show="amountOfOpenedNotifications < this.createdNotifications.length"
                 class="absolute bottom-0 right-0 w-6 h-6 -mr-2 -mb-2 flex justify-center items-center bg-gradient-to-br from-primary-500 to-primary-600 rounded-full pop"
             >
-                <span class="text-white text-sm font-medium leading-none">
+                <span class="text-white text-xs font-bold leading-none">
                     {{ this.createdNotifications.length - amountOfOpenedNotifications }}
                 </span>
             </div>

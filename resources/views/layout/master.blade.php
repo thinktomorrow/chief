@@ -31,8 +31,6 @@
 
             <!-- place outside the main content area as a place for modals, secondary forms, ... -->
             @stack('portals')
-
-            @yield('chief-footer')
         </main>
 
         @include('chief::layout._partials.foot')

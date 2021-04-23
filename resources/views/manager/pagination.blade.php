@@ -1,6 +1,6 @@
 @if ($paginator->lastPage() > 1)
     <div class="pt-10 w-full">
-        <ul class="flex flex-wrap justify-center items-center ">
+        <ul class="flex flex-wrap justify-center items-center">
             @if($paginator->currentPage() == 1)
                 <li class="cursor-not-allowed opacity-50">
                     <span>Vorige</span>

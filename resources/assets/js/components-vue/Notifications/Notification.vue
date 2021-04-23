@@ -10,7 +10,7 @@
             </div>
 
             <div class="flex-grow">
-                <p class="text-grey-500">
+                <p class="font-medium text-grey-500">
                     <slot>
                         <!-- Notifications that were created asynchronously, have their content stored in description variable -->
                         {{ this.description }}

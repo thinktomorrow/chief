@@ -16,31 +16,27 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-6">
-            <div class="w-full lg:w-2/3 window window-white">
-
-                <div
-                        class="window window-white"
-                        data-sort-on-load
-                        data-sort-route="{{ $manager->route('sort-index') }}"
-                        id="js-sortable"
-                >
-                    @foreach($models as $model)
-                        <div class="flex" data-sortable-id="{{ $model->id }}" style="cursor:grab;">
-                            <div class="bg-grey-50 bg-white border border-grey-100 mb-1 p-2 rounded" style="flex:1 1 0;">
-                                <span class="">@adminConfig('pageTitle')</span>
+        <div class="row gutter-3">
+            <div class="w-full lg:w-2/3">
+                <div class="window window-white">
+                    <div id="js-sortable" data-sort-on-load data-sort-route="{{ $manager->route('sort-index') }}" class="row gutter-2">
+                        @foreach($models as $model)
+                            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4" data-sortable-id="{{ $model->id }}">
+                                <div class="bg-grey-50 border border-grey-100 rounded-lg cursor-move p-4">
+                                    <span class="font-semibold text-grey-900">@adminConfig('pageTitle')</span>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
             <div class="w-full lg:w-1/3">
-                <div class="stack">
-                    <div class="mb-8">
-                        <a class="btn btn-primary" href="{{ $manager->route('index') }}">Stop met sorteren</a>
-                        <p class="font-xs mt-2">Sleep de blokken in de gewenste volgorde. De volgorde wordt
-                            automatisch bewaard.</p>
-                    </div>
+                <div class="window window-grey space-y-4">
+                    <a class="btn btn-primary" href="{{ $manager->route('index') }}">Stop met sorteren</a>
+
+                    <p class="text-grey-700 text-sm">
+                        Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
+                    </p>
                 </div>
             </div>
         </div>

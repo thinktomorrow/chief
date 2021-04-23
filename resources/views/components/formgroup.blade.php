@@ -1,4 +1,4 @@
-<div class="space-y-3">
+<div class="space-y-2">
     @if(isset($label) || isset($description))
         <div class="space-y-1">
             @isset($label)

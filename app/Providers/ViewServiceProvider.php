@@ -41,7 +41,6 @@ class ViewServiceProvider extends ServiceProvider
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
-        Blade::component('chief::layouts.app', 'chief-app-layout');
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
         Blade::component('chief::components.card', 'chief-card');
