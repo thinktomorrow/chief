@@ -4,33 +4,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 
-use Thinktomorrow\Chief\PageBuilder\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Sets\Set;
-
 class ViewPath
 {
-    /** @var ViewableContract */
-    private $viewable;
+    private string $filePath;
+    private ?string $ownerPath;
+    private ?string $basePath;
 
-    /** @var ActsAsParent */
-    private $parent;
-
-    /** @var string */
-    private $viewBasePath;
-
-    final private function __construct(ViewableContract $viewable, ActsAsParent $parent = null, string $viewBasePath = null)
+    final private function __construct(string $filePath, string $basePath = null, string $ownerPath = null)
     {
-        $this->viewable = $viewable;
-        $this->parent = $parent;
-        $this->viewBasePath = $viewBasePath;
+        $this->filePath = $filePath;
+        $this->ownerPath = $ownerPath;
+        $this->basePath = $basePath;
     }
 
-    /**
-     * @return static
-     */
-    public static function make(ViewableContract $viewable, ActsAsParent $parent = null, string $viewBasePath = null): self
+    public static function make(string $filepath, string $basePath = null, string $ownerPath = null): self
     {
-        return new static($viewable, $parent, $viewBasePath);
+        return new static($filepath, $basePath, $ownerPath);
     }
 
     /**
@@ -39,34 +28,30 @@ class ViewPath
      */
     public function get(): string
     {
-        $basePath = $this->viewBasePath ? $this->viewBasePath . '.' : '';
-        $guessedParentViewName = $this->parent ? $this->parent->viewKey() : '';
-        $guessedViewName = $this->viewable->viewKey();
-
         $viewPaths = [
-            $basePath . $guessedParentViewName . '.' . $guessedViewName,
-            $basePath . $guessedViewName,
-            $basePath . $guessedViewName . '.show',
-            $basePath . 'show',
+            $this->parseToPath([$this->basePath, $this->ownerPath, $this->filePath]),
+            $this->parseToPath([$this->basePath, $this->filePath]),
+            $this->parseToPath([$this->filePath, 'show']),
+            $this->parseToPath([$this->basePath, 'show']),
         ];
 
-        // In case the collection set is made out of pages, we'll also allow to use the
-        // generic collection page view for these sets as well as a fallback view
-        if ($this->viewable instanceof Set && $this->viewable->first() instanceof ViewableContract) {
-            $viewPaths[] = $basePath . $guessedParentViewName . '.' . $this->viewable->first()->viewKey();
-            $viewPaths[] = $basePath . $this->viewable->first()->viewKey();
-        }
-
-        foreach ($viewPaths as $viewPath) {
-            if (! view()->exists($viewPath)) {
+        foreach ($viewPaths as $path) {
+            if (! view()->exists($path)) {
                 continue;
             }
 
-            return $viewPath;
+            return $path;
         }
 
-        if (! view()->exists($basePath . 'show')) {
-            throw new NotFoundView('Viewfile not found for [' . get_class($this->viewable) . ']. Make sure the view [' . $basePath . $guessedViewName . '] or the default view [' . $basePath . 'show] exists.');
+        if (! view()->exists(last($viewPaths))) {
+            throw new NotFoundView('View file not found for [' . $this->filePath . ']. Make sure to create a [' . $viewPaths[1] . '] view.');
         }
+    }
+
+    private function parseToPath(array $parts): string
+    {
+        $viewPath = array_filter($parts, fn($value) => $value);
+
+        return implode('.', $viewPath);
     }
 }

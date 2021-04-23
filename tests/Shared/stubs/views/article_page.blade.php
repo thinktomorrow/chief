@@ -1,0 +1,2 @@
+THIS IS ARTICLE PAGE VIEW
+@fragments

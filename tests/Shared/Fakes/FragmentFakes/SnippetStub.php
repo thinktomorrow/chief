@@ -12,15 +12,15 @@ class SnippetStub implements Fragmentable
 {
     use StaticFragmentableDefaults;
 
-    public function renderAdminFragment($owner, $loop, $fragments)
-    {
-        // TODO: Implement renderAdminFragment() method.
-    }
-
-    public function renderFragment($owner, $loop, $fragments, $viewData): string
-    {
-        return 'snippet-stub';
-    }
+//    public function renderAdminFragment($owner, $loop, $fragments)
+//    {
+//        // TODO: Implement renderAdminFragment() method.
+//    }
+//
+//    public function renderFragment($owner, $loop, $fragments, $viewData): string
+//    {
+//        return 'snippet-stub';
+//    }
 
     public static function managedModelKey(): string
     {

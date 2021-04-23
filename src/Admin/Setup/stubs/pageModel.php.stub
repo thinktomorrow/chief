@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace __STUB_NAMESPACE__;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\TextField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;

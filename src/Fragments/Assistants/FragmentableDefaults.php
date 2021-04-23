@@ -24,12 +24,15 @@ trait FragmentableDefaults
 
     public function renderFragment($owner, $loop, $fragments, $viewData): string
     {
-        // Default (legacy) view rendering
-        if (public_method_exists($this, 'renderView')) {
-            return $this->renderView();
-        }
+        $this->setOwnerViewPath($owner);
 
-        return '';
+        $this->setViewData(array_merge([
+            'owner'     => $owner,
+            'loop'      => $loop,
+            'fragments' => $fragments,
+        ], $viewData));
+
+        return $this->renderView();
     }
 
     public function isFragment(): bool
@@ -46,8 +49,8 @@ trait FragmentableDefaults
 
     public function fragmentModel(): FragmentModel
     {
-        if (! isset($this->fragmentModel)) {
-            throw new \DomainException('FragmentModel property on ['.get_class($this).'] expected to be set, but it\'s not.');
+        if (!isset($this->fragmentModel)) {
+            throw new \DomainException('FragmentModel property on [' . get_class($this) . '] expected to be set, but it\'s not.');
         }
 
         return $this->fragmentModel;

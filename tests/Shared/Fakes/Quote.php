@@ -59,9 +59,4 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     {
         return config('chief.locales', []);
     }
-
-    public function renderView(): string
-    {
-        return 'quote-content';
-    }
 }

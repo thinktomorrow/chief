@@ -20,7 +20,7 @@ use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-class ArticlePage extends Model implements Page, HasAsset
+class ArticlePage extends Model implements Page
 {
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
@@ -73,10 +73,5 @@ class ArticlePage extends Model implements Page, HasAsset
     protected function dynamicLocales(): array
     {
         return config('chief.locales', []);
-    }
-
-    public function renderView(): string
-    {
-        return 'article-content';
     }
 }

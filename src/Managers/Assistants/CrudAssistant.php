@@ -168,7 +168,7 @@ trait CrudAssistant
         $model->saveFields($fields, $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '"' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
     }
 
     /**

@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 
 trait ManagedModelDefaults
 {
@@ -31,22 +30,6 @@ trait ManagedModelDefaults
         if (! $this instanceof StatefulContract) {
             return '';
         }
-
-        // if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
-        //     return $this instanceof ProvidesUrl
-        //         ? '<a href="' . $this->url() . '" target="_blank"><em>online</em></a>'
-        //         : '<span><em>online</em></span>';
-        // }
-
-        // if ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
-        //     return $this instanceof ProvidesUrl
-        //         ? '<a href="' . $this->url() . '" target="_blank" class="text-error"><em>offline</em></a>'
-        //         : '<span class="text-error"><em>offline</em></span>';
-        // }
-
-        // if ($this->stateOf(PageState::KEY) === PageState::ARCHIVED) {
-        //     return '<span><em>gearchiveerd</em></span>';
-        // }
 
         if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
             return '<span class="label label-success text-sm">Online</span>';

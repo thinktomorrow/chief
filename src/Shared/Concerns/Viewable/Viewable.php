@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 
-use Thinktomorrow\Chief\Legacy\Pages\Page;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\PageBuilder\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Sets\Set;
 
 trait Viewable
 {
-    protected $viewParent;
+    private array $viewData = [];
+    private ?string $ownerViewPath = null;
 
     public function renderView(): string
     {
@@ -24,21 +21,12 @@ trait Viewable
             }
         }
 
-        // If no view has been created for this model, we try once again to fetch the content value if any. This will silently fail
-        // if no content value is present. We consider the 'content' attribute to be a default for our copy.
-        return isset($this->content) ? (string)$this->content : '';
-    }
-
-    public function setViewParent(ActsAsParent $parent): ViewableContract
-    {
-        $this->viewParent = $parent;
-
-        return $this;
+        return '<!-- no view found for model ['.static::class.'] -->';
     }
 
     /**
      * This is the model's view identifier. This key is used to determine the full view
-     * path of the model. By default this is based on the morphKey value of the model.
+     * path of the model. By default this is based on the managedModelKey of the model.
      *
      * @return string
      * @throws NotFoundViewKey
@@ -54,21 +42,24 @@ trait Viewable
         }
 
         if (config('chief.strict')) {
-            throw new NotFoundViewKey('Missing view key. Please add a [viewKey] property to ' . get_class($this));
+            throw new NotFoundViewKey('Missing view key. Please add a [viewKey] property to ' . static::class);
         }
 
         return '';
     }
 
-    /**
-     * Group identifier for a page set.
-     *
-     * @return string
-     * @throws NotFoundViewKey
-     */
-    public function setKey(): string
+    public function setViewData(array $viewData): void
     {
-        return $this->viewKey();
+        $this->viewData = array_merge($this->viewData, $viewData);
+    }
+
+    public function setOwnerViewPath($owner): void
+    {
+        $ownerViewPath = ($owner instanceof ViewableContract)
+            ? $owner->viewKey()
+            : $owner;
+
+        $this->ownerViewPath = $ownerViewPath;
     }
 
     /**
@@ -79,9 +70,13 @@ trait Viewable
      * @return string
      * @throws NotFoundView
      */
-    protected function viewPath(): string
+    private function viewPath(): string
     {
-        return ViewPath::make($this, $this->viewParent, $this->baseViewPath ?? null)->get();
+        if (property_exists($this, 'viewPath') && isset($this->viewPath)) {
+            return $this->viewPath;
+        }
+
+        return ViewPath::make($this->viewKey(), $this->baseViewPath(), $this->ownerViewPath())->get();
     }
 
     /**
@@ -89,23 +84,22 @@ trait Viewable
      */
     private function viewData(): array
     {
-        $viewData = [
+        return array_merge([
             'model' => $this,
-            'parent' => $this->viewParent,
-        ];
+        ],$this->viewData);
+    }
 
-        /** @deprecated since 0.3 in favor of generic 'model' variable */
-        if ($this instanceof Page) {
-            $viewData['page'] = $this;
-        }
-        if ($this instanceof Module) {
-            $viewData['module'] = $this;
-        }
-        if ($this instanceof Set) {
-            $viewData['collection'] = $this;
-            $viewData['pages'] = $this;
+    private function baseViewPath(): ?string
+    {
+        if (property_exists($this, 'baseViewPath') && isset($this->baseViewPath)) {
+            return $this->baseViewPath;
         }
 
-        return $viewData;
+        return null;
+    }
+
+    private function ownerViewPath(): ?string
+    {
+        return $this->ownerViewPath;
     }
 }

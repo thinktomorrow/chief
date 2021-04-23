@@ -2,6 +2,14 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
+## TODO: seds
+- refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
+- migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
+- chief:install met set van default static fragments (textFragment, bannerFragment, galleryFragment) (+ views)
+- seo defaults weergeven (indien seo niet ingegeven, dan wordt page title gebruikt enz...)
+- nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes. 
+  - state uit 'permalink' halen.
+
 ## BUGS
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - proper duplicate context feature (with buttons and all)

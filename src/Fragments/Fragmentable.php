@@ -6,8 +6,9 @@ namespace Thinktomorrow\Chief\Fragments;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 
-interface Fragmentable extends ReferableModel, ManagedModel
+interface Fragmentable extends ReferableModel, ManagedModel, ViewableContract
 {
     public function renderAdminFragment($owner, $loop, $fragments);
 
