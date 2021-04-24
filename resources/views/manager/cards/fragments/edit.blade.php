@@ -40,7 +40,7 @@
             {{-- TODO: too harsh?  --}}
             <button
                 data-submit-form="removeFragment{{ $model->modelReference()->get() }}"
-                class="btn btn-error"
+                class="btn btn-error-outline"
                 type="submit"
                 form="removeFragment{{ $model->modelReference()->get() }}"
             >

@@ -35,7 +35,7 @@
                 },
                 {
                     title: '<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span> link as secundaire knop',
-                    'class': 'btn btn-secondary',
+                    'class': 'btn btn-primary-outline',
                     tags: ['a'],
                 },
                 {

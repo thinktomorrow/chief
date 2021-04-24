@@ -36,7 +36,7 @@
         <div class="flex">
             <div v-if="{{ json_encode($field->allowMultiple()) }} == true || items.length < 1">
                 <div data-document-upload data-locale="{{ $locale }}">
-                    <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
+                    <label for="document-upload-{{$locale}}" class="btn btn-primary-outline mr-4">
                         {!! $field->getUploadButtonLabel() !!}
                     </label>
 

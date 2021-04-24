@@ -6,7 +6,7 @@
     <h2>Standard</h2>
     <div class="stack" id="clone-27">
         <a class="btn btn-primary">Button primary</a>
-        <a class="btn btn-secondary">Button secondary</a>
+        <a class="btn btn-primary-outline">Button secondary</a>
         <a class="btn btn-tertiary">Button tertiary</a>
     </div>
     <pre class="code-box" id="code-27"></pre>
@@ -79,7 +79,7 @@
             <span class="">Volgende stap</span>
             <icon class="icon icon-arrow-right"></icon>
         </a>
-        <a class="btn btn-secondary btn-icon">
+        <a class="btn btn-primary-outline btn-icon">
             <icon class="icon icon-arrow-left "></icon>
             <span class="">Vorige stap</span>
         </a>
@@ -106,7 +106,7 @@
         <a class="btn btn-primary btn-action btn-circle">
             <i class="icon icon-eye"></i>
         </a>
-        <a class="btn btn-secondary btn-action btn-circle">
+        <a class="btn btn-primary-outline btn-action btn-circle">
             <i class="icon icon-zap"></i>
         </a>
         <a class="btn btn-warning btn-action btn-circle">
@@ -125,6 +125,3 @@
 </section>
 
 <?php include(__DIR__ . '/../_partials/footer.php'); ?>
-
-
-

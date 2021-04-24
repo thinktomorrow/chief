@@ -18,7 +18,7 @@
 
 {{--    <div class="inline-group-s">--}}
 {{--        @if($manager->can('create'))--}}
-{{--            <a href="{{ $manager->route('create') }}" class="btn btn-secondary inline-flex items-center">--}}
+{{--            <a href="{{ $manager->route('create') }}" class="btn btn-primary-outline inline-flex items-center">--}}
 {{--                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>--}}
 {{--                <span>Voeg een {{ $manager->details()->singular }} toe</span>--}}
 {{--            </a>--}}

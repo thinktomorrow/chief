@@ -658,7 +658,7 @@
           <span class="mls"> icon-zoom-out</span>
       </li>    </ul>
     <div class="row center-center">
-      <a href="https://linearicons.com/free" class="btn btn-s btn-secondary btn-round" target="_blank">More fonts at Linearicons</a>
+      <a href="https://linearicons.com/free" class="btn btn-s btn-primary-outline btn-round" target="_blank">More fonts at Linearicons</a>
     </div>
   </section>
 

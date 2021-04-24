@@ -35,7 +35,7 @@
                         <div class="space-x-4">
                             <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
 
-                            <a href="{{ route('chief.back.login') }}" class="btn btn-secondary">Terug naar login</a>
+                            <a href="{{ route('chief.back.login') }}" class="btn btn-primary-outline">Terug naar login</a>
                         </div>
                     </div>
                 </form>

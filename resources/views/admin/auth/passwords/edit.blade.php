@@ -51,7 +51,7 @@
                                 <button type="submit" class="btn btn-primary">Maak wachtwoord aan</button>
                             @else
                                 <button type="submit" class="btn btn-primary">Wijzig wachtwoord</button>
-                                <a href="{{ route('chief.back.dashboard') }}" class="btn btn-secondary">Annuleer</a>
+                                <a href="{{ route('chief.back.dashboard') }}" class="btn btn-primary-outline">Annuleer</a>
                             @endif
                         </div>
                     </div>

@@ -32,7 +32,7 @@
 
                         <div class="space-x-2">
                             <button type="submit" form="selecting" name="type" value="download" class="btn btn-primary">Download de selectie</button>
-                            <button v-cloak @click="showModal('mediagallery-bulk-delete-modal')" type="button" class="btn btn-error">Verwijder de selectie</button>
+                            <button v-cloak @click="showModal('mediagallery-bulk-delete-modal')" type="button" class="btn btn-error-outline">Verwijder de selectie</button>
                         </div>
                     </form>
 
@@ -106,7 +106,7 @@
         <p>Je staat op het punt om de geselecteerde bestanden op te ruimen. Enkel ongebruikte bestanden zullen worden verwijderd.</p>
 
         <div v-cloak slot="modal-action-buttons">
-            <button type="submit" form="selecting" name="type" value="remove" class="btn btn-error-filled">Verwijder de selectie</button>
+            <button type="submit" form="selecting" name="type" value="remove" class="btn btn-error">Verwijder de selectie</button>
         </div>
     </modal>
 @stop

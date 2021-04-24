@@ -5,13 +5,13 @@
 @php
     switch($style ?? null) {
         case 'button':
-            $styleClasses = 'btn btn-warning'; break;
+            $styleClasses = 'btn btn-warning-outline'; break;
         case 'link':
             $styleClasses = 'link link-warning'; break;
         case 'dropdown-link':
             $styleClasses = 'dropdown-link dropdown-link-warning'; break;
         default:
-            $styleClasses = 'btn btn-warning';
+            $styleClasses = 'btn btn-warning-outline';
     }
 @endphp
 

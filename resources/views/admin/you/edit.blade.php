@@ -40,7 +40,7 @@
                         @slot('label', 'Wachtwoord')
                         @slot('description', 'Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.')
 
-                        <a class="btn btn-warning" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
+                        <a class="btn btn-warning-outline" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
                     @endformgroup
                 </div>
             </div>

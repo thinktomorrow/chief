@@ -123,3 +123,10 @@ Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditCon
 Route::get('translations/{id}/edit', [\Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController::class, 'edit'])->name('squanto.edit');
 Route::put('translations/{id}', [\Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController::class, 'update'])->name('squanto.update');
 Route::get('translations', [\Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController::class, 'index'])->name('squanto.index');
+
+/**
+* -----------------------------------------------------------------
+* STYLE GUIDE ROUTES
+* -----------------------------------------------------------------
+*/
+Route::get('/style-guide', [\Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController::class, 'show'])->name('chief.back.style-guide');
