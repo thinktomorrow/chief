@@ -23,8 +23,8 @@ window.Vue.component('translation-tabs', require('./components-vue/TranslationTa
 window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
 
 window.Vue.component('modal', require('./components-vue/Modal.vue').default);
-window.Vue.component('alert', require('./components-vue/Alert.vue').default);
-window.Vue.component('delete', require('./components-vue/RemoveButton.vue').default);
+// window.Vue.component('alert', require('./components-vue/Alert.vue').default);
+// window.Vue.component('delete', require('./components-vue/RemoveButton.vue').default);
 window.Vue.component('error', require('./components-vue/Error.vue').default);
 window.Vue.component('mediagallery', require('./components-vue/MediaGallery.vue').default);
 window.Vue.component('image-component', require('./components-vue/ImageComponent.vue').default);

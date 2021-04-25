@@ -18,7 +18,7 @@
     </modal>
 
     <div class="stack-m">
-        <button class="btn btn-secondary" @click="showModal('exampleModal1')">Open modal</button>
+        <button class="btn btn-primary-outline" @click="showModal('exampleModal1')">Open modal</button>
     </div>
 
     <p>The modal component is a custom vue component which can be instantiated with the <em><?= htmlentities('<modal>'); ?></em> tag.    </p>

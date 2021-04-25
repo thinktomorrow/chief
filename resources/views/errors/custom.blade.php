@@ -16,7 +16,7 @@
 
                 <p class="space-x-4">
                     <a href="{{ route('chief.back.dashboard') }}" class="btn btn-primary">Naar het dashboard</a>
-                    <a href="mailto:chief@thinktomorrow.be" class="btn btn-secondary">Contacteer ons</a>
+                    <a href="mailto:chief@thinktomorrow.be" class="btn btn-primary-outline">Contacteer ons</a>
                 </p>
             </div>
         </div>

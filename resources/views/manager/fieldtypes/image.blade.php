@@ -43,7 +43,7 @@
 
         <div class="flex mt-4">
             <div v-if="(settings.multiple == true || items.length < 1 || !drag.hasValidUpload) && !sort.isReordering">
-                <div class="btn btn-secondary mr-4" @click="gallery.open">
+                <div class="btn btn-primary-outline mr-4" @click="gallery.open">
                     Voeg bestaande toe uit je galerij
                 </div>
 

@@ -16,7 +16,7 @@
         <div
             @click="toggleNotifications"
             v-show="createdNotifications.length > 0"
-            class="relative rounded-full p-3 bg-white border border-grey-100 shadow-lg cursor-pointer hover:bg-grey-50 pop"
+            class="relative rounded-full p-3 bg-white text-grey-900 border border-grey-100 shadow-lg cursor-pointer hover:bg-grey-50 pop"
         >
             <svg width="20" height="20" class="icon-label-icon"><use xlink:href="#icon-bell"></use></svg>
 

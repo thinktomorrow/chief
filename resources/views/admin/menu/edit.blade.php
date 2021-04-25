@@ -14,7 +14,7 @@
             @endslot
 
             <div class="space-x-3">
-                <span class="btn btn-error" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
+                <span class="btn btn-error-outline" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
                     Verwijderen
                 </span>
 

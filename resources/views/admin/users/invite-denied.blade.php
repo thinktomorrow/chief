@@ -18,7 +18,7 @@
                         Contacteer beheerder
                     </a>
 
-                    <a href="{{ route('chief.back.login') }}" class="btn btn-secondary">
+                    <a href="{{ route('chief.back.login') }}" class="btn btn-primary-outline">
                         Ga naar login pagina
                     </a>
                 </div>

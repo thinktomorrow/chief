@@ -23,7 +23,7 @@
                     <slot name="footer">
                         <slot name="modal-action-buttons"></slot>
 
-                        <a @click="close" class="btn btn-secondary">
+                        <a @click="close" class="btn btn-primary-outline">
                             <slot name="modal-close-btn">Annuleren</slot>
                         </a>
                     </slot>
