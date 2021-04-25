@@ -27,3 +27,5 @@
 -   [ ] Registering + password reset flow view files
 -   [ ] refactor formgroup with working labels, inline errors ...
 -   [ ] pagination view update
+
+-   [ ] window component? (title, spacing ...)

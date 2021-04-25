@@ -18,3 +18,11 @@
 .window-grey {
     @apply bg-grey-50 shadow-sm;
 }
+
+.window-title {
+    @apply text-xl font-semibold text-grey-900;
+}
+
+.window-subtitle {
+    @apply text-lg font-semibold text-grey-900;
+}

@@ -24,76 +24,170 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full space-y-6">
-                <div class="window window-white prose prose-dark">
-                    <h1>Heading 1</h1>
-                    <h2>Heading 2</h2>
-                    <h3>Heading 3</h3>
-                    <h4>Heading 4</h4>
-                    <h5>Heading 5</h5>
-                    <h6>Heading 6</h6>
+                <div class="window window-white prose prose-dark space-y-8 overflow-hidden">
+                    <div class="-mx-8 -mt-8">
+                        <div class="px-8 pt-8 pb-4 border-b border-grey-100">
+                            <span class="window-title">General typography</span>
+                        </div>
+                    </div>
 
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, commodi dolore ex placeat ipsum sed saepe iste nam ipsam, asperiores dolorum eligendi quaerat veritatis voluptates perferendis, dolor repellendus facere suscipit.</p>
-                </div>
+                    <div>
+                        <h1>Heading 1</h1>
+                        <h2>Heading 2</h2>
+                        <h3>Heading 3</h3>
+                        <h4>Heading 4</h4>
+                        <h5>Heading 5</h5>
+                        <h6>Heading 6</h6>
 
-                <div class="window window-white prose prose-dark">
-                    <div class="flex flex-wrap gutter-1">
-                        @foreach ([
-                            'btn-primary',
-                            'btn-primary-outline',
-                            'btn-grey',
-                            'btn-grey-outline',
-                            'btn-info',
-                            'btn-info-outline',
-                            'btn-success',
-                            'btn-success-outline',
-                            'btn-warning',
-                            'btn-warning-outline',
-                            'btn-error',
-                            'btn-error-outline',
-                        ] as $buttonStyle)
-                            <div>
-                                <a
-                                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                                    title="Style guide button"
-                                    target="_blank"
-                                    class="btn {{ $buttonStyle }}"
-                                >
-                                    btn {{ $buttonStyle }}
-                                </a>
-                            </div>
-                        @endforeach
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, commodi dolore ex placeat ipsum sed saepe iste nam ipsam, asperiores dolorum eligendi quaerat veritatis voluptates perferendis, dolor repellendus facere suscipit.</p>
                     </div>
                 </div>
 
-                <div class="window window-white prose prose-dark">
-                    <div class="flex flex-wrap gutter-1">
-                        @foreach ([
-                            'link-primary',
-                            'link-black',
-                            'link-grey',
-                            'link-info',
-                            'link-success',
-                            'link-warning',
-                            'link-error',
-                        ] as $linkStyle)
-                            <div>
-                                <p>A normal anchor link, which can be used anywhere:
+                <div class="window window-white prose prose-dark space-y-8">
+                    <div class="-mx-8 -mt-8">
+                        <div class="px-8 pt-8 pb-4 border-b border-grey-100">
+                            <span class="window-title">Buttons</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap gutter-1">
+                            @foreach ([
+                                'btn-primary',
+                                'btn-primary-outline',
+                                'btn-grey',
+                                'btn-grey-outline',
+                                'btn-info',
+                                'btn-info-outline',
+                                'btn-success',
+                                'btn-success-outline',
+                                'btn-warning',
+                                'btn-warning-outline',
+                                'btn-error',
+                                'btn-error-outline',
+                            ] as $buttonStyle)
+                                <div>
                                     <a
                                         href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                                        title="Style guide link"
+                                        title="Style guide button"
                                         target="_blank"
-                                        class="link {{ $linkStyle }}"
+                                        class="btn {{ $buttonStyle }}"
                                     >
-                                        link {{ $linkStyle }}
+                                        btn {{ $buttonStyle }}
                                     </a>
-                                </p>
-                            </div>
-                        @endforeach
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
-                <div class="window window-white prose prose-dark">
-                    <p>Placeholder for forms</p>
+                <div class="window window-white prose prose-dark space-y-8">
+                    <div class="-mx-8 -mt-8">
+                        <div class="px-8 pt-8 pb-4 border-b border-grey-100">
+                            <span class="window-title">Anchor links</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap gutter-1">
+                            @foreach ([
+                                'link-primary',
+                                'link-black',
+                                'link-grey',
+                                'link-info',
+                                'link-success',
+                                'link-warning',
+                                'link-error',
+                            ] as $linkStyle)
+                                <div>
+                                    <p>A normal anchor link, which can be used anywhere:
+                                        <a
+                                            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                            title="Style guide link"
+                                            target="_blank"
+                                            class="link {{ $linkStyle }}"
+                                        >
+                                            link {{ $linkStyle }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="window window-white space-y-8">
+                    <div class="-mx-8 -mt-8">
+                        <div class="px-8 pt-8 pb-4 border-b border-grey-100">
+                            <span class="window-title">Forms</span>
+                        </div>
+                    </div>
+
+                    <div class="row gutter-3">
+                        <div class="w-full lg:w-1/2">
+                            @newformgroup([
+                                'label' => 'First name',
+                                'id' => 'firstname',
+                                'name' => 'firstname',
+                                'isRequired' => true
+                            ])
+                                {{-- @slot('description')
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum porro,
+                                        eveniet minima omnis voluptas unde perspiciatis impedit quae sequi laboriosam qui consequatur ducimus dolor aspernatur?
+                                        Tenetur animi quo sunt nisi!
+                                    </p>
+                                @endslot --}}
+
+                                <input type="text" id="firstname" name="firstname" placeholder="John">
+                            @endnewformgroup
+                        </div>
+
+                        <div class="w-full lg:w-1/2">
+                            @newformgroup([
+                                'label' => 'Last name',
+                                'id' => 'lastname',
+                                'name' => 'lastname',
+                                'isRequired' => true
+                            ])
+                                {{-- @slot('description')
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum porro,
+                                        eveniet minima omnis voluptas unde perspiciatis impedit quae sequi laboriosam qui consequatur ducimus dolor aspernatur?
+                                        Tenetur animi quo sunt nisi!
+                                    </p>
+                                @endslot --}}
+
+                                <input type="text" id="lastname" name="lastname" placeholder="Doe">
+                            @endnewformgroup
+                        </div>
+
+                        {{-- @formgroup
+                            @slot('label', 'Password')
+
+                            <input type="password" id="password" name="password" class="w-full">
+                        @endformgroup
+
+                        @formgroup([
+                            'type' => 'checkbox'
+                        ])
+                            @slot('type', '')
+                            @slot('label', 'Name')
+
+                            <label for="rememberCheckbox" class="flex items-center space-x-2 cursor-pointer">
+                                <input id="rememberCheckbox" {{ old('remember') ? 'checked=checked' : null  }} type="checkbox" name="remember">
+                                <span class="text-grey-700 font-medium">Houd me ingelogd</span>
+                            </label>
+                        @endformgroup
+
+                        @formgroup
+                            @slot('label', 'Message')
+
+                            <textarea id="message" name="message" placeholder="Type your message here ..." class="w-full"></textarea>
+                        @endformgroup
+
+                        <button type="submit" class="btn btn-primary">Submit</button> --}}
+                    </div>
                 </div>
             </div>
         </div>

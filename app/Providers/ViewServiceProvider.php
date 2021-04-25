@@ -50,6 +50,7 @@ class ViewServiceProvider extends ServiceProvider
 
         Blade::aliasComponent('chief::back._layouts._partials.header', 'chiefheader');
         Blade::aliasComponent('chief::components.formgroup', 'formgroup');
+        Blade::aliasComponent('chief::components.new-formgroup', 'newformgroup');
 
         Blade::directive('fragments', function ($expression) {
             return "<?php echo app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->render(\$model, get_defined_vars()); ?>";
