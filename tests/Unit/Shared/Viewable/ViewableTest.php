@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Viewable;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Viewless;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundView;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ViewableTest extends ChiefTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app['view']->addLocation(__DIR__ . '/../../../Shared/stubs/views');
-    }
-
     /** @test */
     public function it_can_render_a_view()
     {
@@ -50,9 +45,6 @@ class ViewableTest extends ChiefTestCase
     {
         $this->expectException(NotFoundView::class);
 
-        config()->set('chief.strict', true);
-
-        $snippet = new SnippetStub();
-        $snippet->renderView();
+        (new Viewless())->renderView();
     }
 }

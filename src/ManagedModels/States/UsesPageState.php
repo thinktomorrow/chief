@@ -7,7 +7,7 @@ trait UsesPageState
 {
     public function getPageState(): string
     {
-        return $this->stateOf(PageState::KEY);
+        return (string) $this->stateOf(PageState::KEY);
     }
 
     public function stateOf(string $key)

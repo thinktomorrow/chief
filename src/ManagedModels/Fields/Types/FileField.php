@@ -49,7 +49,6 @@ class FileField extends MediaField implements Field
 
         /** @var Asset $asset */
         foreach ($assets as $asset) {
-
             $url = $this->isStoredOnPublicDisk()
                 ? $asset->url()
                 : ($this->generatesCustomUrl() ? $this->generateCustomUrl($asset, $model) : '');
@@ -59,14 +58,14 @@ class FileField extends MediaField implements Field
                 : '';
 
             // If the conversions haven't run yet, we'll use the original image until they are uploaded
-            if($this->isStoredOnPublicDisk() && !file_exists(public_path($thumbUrl))) {
+            if ($this->isStoredOnPublicDisk() && ! file_exists(public_path($thumbUrl))) {
                 $thumbUrl = $asset->url();
             }
 
             $files[] = (object)[
                 'id' => $asset->id,
                 'filename' => $asset->filename(),
-                'url'      => $url,
+                'url' => $url,
                 'thumbUrl' => $thumbUrl,
                 'mimetype' => $asset->getMimeType(),
                 'isImage' => ($asset->getExtensionType() == 'image'),

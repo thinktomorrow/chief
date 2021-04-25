@@ -15,7 +15,7 @@ trait Viewable
     {
         try {
             return view($this->viewPath(), $this->viewData())->render();
-        } catch (NotFoundView $e) {
+        } catch (NotFoundView | NotFoundViewKey $e) {
             if (config('chief.strict')) {
                 throw $e;
             }
@@ -57,7 +57,7 @@ trait Viewable
     {
         $ownerViewPath = ($owner instanceof ViewableContract)
             ? $owner->viewKey()
-            : $owner;
+            : (is_string($owner) ? $owner : null);
 
         $this->ownerViewPath = $ownerViewPath;
     }
@@ -69,6 +69,7 @@ trait Viewable
      *
      * @return string
      * @throws NotFoundView
+     * @throws NotFoundViewKey
      */
     private function viewPath(): string
     {
@@ -79,14 +80,11 @@ trait Viewable
         return ViewPath::make($this->viewKey(), $this->baseViewPath(), $this->ownerViewPath())->get();
     }
 
-    /**
-     * @return array
-     */
     private function viewData(): array
     {
         return array_merge([
             'model' => $this,
-        ],$this->viewData);
+        ], $this->viewData);
     }
 
     private function baseViewPath(): ?string

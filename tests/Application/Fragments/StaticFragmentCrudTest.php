@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\App\Providers\ChiefProjectServiceProvider;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
@@ -28,8 +27,6 @@ class StaticFragmentCrudTest extends ChiefTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        (new ChiefProjectServiceProvider(app()))->boot();
 
         OwnerStub::migrateUp();
         FragmentableStub::migrateUp();

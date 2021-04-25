@@ -27,8 +27,8 @@ trait FragmentableDefaults
         $this->setOwnerViewPath($owner);
 
         $this->setViewData(array_merge([
-            'owner'     => $owner,
-            'loop'      => $loop,
+            'owner' => $owner,
+            'loop' => $loop,
             'fragments' => $fragments,
         ], $viewData));
 
@@ -49,7 +49,7 @@ trait FragmentableDefaults
 
     public function fragmentModel(): FragmentModel
     {
-        if (!isset($this->fragmentModel)) {
+        if (! isset($this->fragmentModel)) {
             throw new \DomainException('FragmentModel property on [' . get_class($this) . '] expected to be set, but it\'s not.');
         }
 

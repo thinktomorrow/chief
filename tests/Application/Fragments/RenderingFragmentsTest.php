@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\App\Providers\ChiefProjectServiceProvider;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Register;
@@ -21,8 +20,6 @@ class RenderingFragmentsTest extends ChiefTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        (new ChiefProjectServiceProvider(app()))->boot();
 
         OwnerStub::migrateUp();
         FragmentableStub::migrateUp();
@@ -72,7 +69,7 @@ class RenderingFragmentsTest extends ChiefTestCase
                 'order' => 1,
             ]);
 
-        $this->assertRenderedFragments($owner, 'snippet-stub');
+        $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW\n");
     }
 
     /** @test */

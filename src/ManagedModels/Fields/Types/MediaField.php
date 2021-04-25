@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
-use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Fields\Fields;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 
@@ -64,7 +63,7 @@ abstract class MediaField extends AbstractField implements Field
 
     public function generatesCustomUrl(): bool
     {
-        return !is_null($this->customUrlGenerator) && is_callable($this->customUrlGenerator);
+        return ! is_null($this->customUrlGenerator) && is_callable($this->customUrlGenerator);
     }
 
     public function generateCustomUrl(Asset $asset, Model $model = null): string

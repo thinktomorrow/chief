@@ -22,9 +22,9 @@ trait RedactorFileUploadAssistant
         ];
     }
 
-    public function canRedactorFileUploadAssistant(string $action, $model =null): bool
+    public function canRedactorFileUploadAssistant(string $action, $model = null): bool
     {
-        if(in_array($action, ['asyncRedactorFileUpload'])) {
+        if (in_array($action, ['asyncRedactorFileUpload'])) {
             return true;
         }
 
