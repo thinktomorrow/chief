@@ -62,6 +62,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         // Set nl as default locale for testing env
         config()->set('app.fallback_locale', 'nl');
+
+        $this->app['view']->addLocation(__DIR__ . '/Shared/stubs/views');
     }
 
     protected function tearDown(): void

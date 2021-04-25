@@ -26,9 +26,9 @@ trait SlimImageUploadAssistant
         ];
     }
 
-    public function canSlimImageUploadAssistant(string $action, $model =null): bool
+    public function canSlimImageUploadAssistant(string $action, $model = null): bool
     {
-        if(in_array($action, ['asyncUploadSlimImage'])) {
+        if (in_array($action, ['asyncUploadSlimImage'])) {
             return true;
         }
 

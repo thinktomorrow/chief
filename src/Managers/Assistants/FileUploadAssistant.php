@@ -27,9 +27,9 @@ trait FileUploadAssistant
         ];
     }
 
-    public function canFileUploadAssistant(string $action, $model =null): bool
+    public function canFileUploadAssistant(string $action, $model = null): bool
     {
-        if(in_array($action, ['asyncUploadFile'])) {
+        if (in_array($action, ['asyncUploadFile'])) {
             return true;
         }
 
@@ -96,4 +96,3 @@ trait FileUploadAssistant
         $this->fieldValidator()->handle(new Fields([$field]), $validationPayload);
     }
 }
-

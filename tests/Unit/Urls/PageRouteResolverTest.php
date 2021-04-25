@@ -3,11 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\PageRouteResolver;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PageRouteResolverTest extends ChiefTestCase
 {
@@ -19,7 +16,7 @@ class PageRouteResolverTest extends ChiefTestCase
 
         $this->article = $this->setupAndCreateArticle();
 
-        app(PageRouteResolver::class)->define(function($name, $parameters = [], $locale = null){
+        app(PageRouteResolver::class)->define(function ($name, $parameters = [], $locale = null) {
             return 'foobar-' . $locale;
         });
     }

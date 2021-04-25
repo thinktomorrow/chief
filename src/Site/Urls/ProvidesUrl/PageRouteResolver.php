@@ -24,7 +24,7 @@ final class PageRouteResolver
     public function define(?Closure $resolver = null): void
     {
         foreach ($this->registry->models() as $modelClass) {
-            if (!$this->providesUrlAndAllowsForCustomRouteResolver($modelClass)) {
+            if (! $this->providesUrlAndAllowsForCustomRouteResolver($modelClass)) {
                 continue;
             }
 

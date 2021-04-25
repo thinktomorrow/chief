@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Form;
 
-use Thinktomorrow\Url\Url;
-use Thinktomorrow\Url\Root;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Url\Root;
 
 final class LinkForm
 {
@@ -58,9 +57,9 @@ final class LinkForm
             $url = $this->model->url($locale);
 
             $links[$locale] = (object)[
-                'current'   => $currentRecord,
-                'url'       => $url,
-                'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())),'/') : '',
+                'current' => $currentRecord,
+                'url' => $url,
+                'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())), '/') : '',
                 'redirects' => $records->filter->isRedirect(),
             ];
         }
@@ -71,13 +70,12 @@ final class LinkForm
     private function injectOnlineStatusPerLocale()
     {
         foreach ($this->links as $locale => $links) {
-
             [$is_online, $offline_reason] = [
                 false,
-                'Er is nog geen url voor ' . $locale
+                'Er is nog geen url voor ' . $locale,
             ];
 
-            if($links->current) {
+            if ($links->current) {
                 [$is_online, $offline_reason] = $this->determineOnlineStatusInfo($links->current, $locale);
             }
 
@@ -88,8 +86,10 @@ final class LinkForm
 
     public function isAnyLinkOnline(): bool
     {
-        foreach($this->links as $links) {
-            if($links->is_online) return true;
+        foreach ($this->links as $links) {
+            if ($links->is_online) {
+                return true;
+            }
         }
 
         return false;
@@ -103,9 +103,9 @@ final class LinkForm
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object)[
-                'host'         => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
+                'host' => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
                 'fixedSegment' => $this->model->baseUrlSegment($locale),
-                'value'        => $currentRecord
+                'value' => $currentRecord
                     ? $this->rawSlugValue($currentRecord->slug, $this->model->baseUrlSegment($locale))
                     : null,
             ];
@@ -121,8 +121,10 @@ final class LinkForm
 
     public function hasAnyRedirects(): bool
     {
-        foreach($this->links as $links) {
-            if(!$links->redirects->isEmpty()) return true;
+        foreach ($this->links as $links) {
+            if (! $links->redirects->isEmpty()) {
+                return true;
+            }
         }
 
         return false;
@@ -165,8 +167,8 @@ final class LinkForm
 
         $offline_reason = 'De pagina staat offline.';
 
-        if (!$is_online) {
-            if (!$pagestate) {
+        if (! $is_online) {
+            if (! $pagestate) {
                 $offline_reason = 'Pagina staat nog niet gepubliceerd.';
             } else {
                 if ($pagestate == PageState::DRAFT) {
@@ -175,7 +177,7 @@ final class LinkForm
                     if ($pagestate == PageState::ARCHIVED) {
                         $offline_reason = 'De pagina is gearchiveerd.';
                     } else {
-                        if ($pagestate == PageState::PUBLISHED && !$currentRecord) {
+                        if ($pagestate == PageState::PUBLISHED && ! $currentRecord) {
                             $offline_reason = 'Pagina staat klaar voor publicatie maar er ontbreekt nog een link voor de ' . $locale . ' taal.';
                         }
                     }

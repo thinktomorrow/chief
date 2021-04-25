@@ -12,7 +12,7 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 {
     public function handle(HasAsset $model, MediaField $field, array $input, array $files): void
     {
-        if($field->getStorageDisk()) {
+        if ($field->getStorageDisk()) {
             $this->setDisk($field->getStorageDisk());
         }
 

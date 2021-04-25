@@ -75,6 +75,6 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         ]);
 
         $this->assertFragmentCount($this->owner, 3);
-        $this->assertRenderedFragments($this->owner, 'quote-contentquote-content');
+        $this->assertRenderedFragments($this->owner, "THIS IS QUOTE FRAGMENT\nTHIS IS QUOTE FRAGMENT\n");
     }
 }

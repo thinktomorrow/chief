@@ -36,12 +36,14 @@ class ChiefResponseTest extends ChiefTestCase
         $response = ChiefResponse::fromSlug('foo/bar');
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('article-content', $response->getContent());
+        $this->assertEquals("THIS IS ARTICLE PAGE VIEW\n", $response->getContent());
     }
 
     /** @test */
     public function if_it_cannot_find_a_matching_url_record_it_throws_404_exception()
     {
+        config()->set('chief.strict', false);
+
         $this->expectException(NotFoundHttpException::class);
 
         $request = new Request([], [], [], [], [], [
@@ -54,6 +56,8 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function if_it_cannot_find_a_matching_model_it_throws_404_exception()
     {
+        config()->set('chief.strict', false);
+
         $this->expectException(NotFoundHttpException::class);
 
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => 0]);
@@ -68,6 +72,8 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function if_the_page_is_not_published_it_throws_404_exception()
     {
+        config()->set('chief.strict', false);
+
         $this->expectException(NotFoundHttpException::class);
 
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
@@ -114,12 +120,14 @@ class ChiefResponseTest extends ChiefTestCase
         $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar', 'en');
-        $this->assertEquals('article-content', $response->getContent());
+        $this->assertEquals("THIS IS ARTICLE PAGE VIEW\n", $response->getContent());
     }
 
     /** @test */
     public function it_cannot_respond_when_url_does_not_exist_for_given_locale()
     {
+        config()->set('chief.strict', false);
+
         $this->expectException(NotFoundHttpException::class);
 
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);

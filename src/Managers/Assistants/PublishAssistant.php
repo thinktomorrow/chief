@@ -78,7 +78,7 @@ trait PublishAssistant
 
         Audit::activity()->performedOn($model)->log('published');
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             return response()->json([
                 'message' => $model->adminConfig()->getPageTitle() . ' is online geplaatst.',
             ]);
@@ -97,7 +97,7 @@ trait PublishAssistant
 
         Audit::activity()->performedOn($model)->log('unpublished');
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             return response()->json([
                 'message' => $model->adminConfig()->getPageTitle() . ' is offline gehaald.',
             ]);

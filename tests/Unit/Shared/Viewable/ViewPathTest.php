@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Viewable;
 
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewPath;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundView;
+use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewPath;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class ViewPathTest extends TestCase
 {
@@ -28,7 +28,7 @@ class ViewPathTest extends TestCase
     /** @test */
     public function if_basepath_is_passed_this_view_is_preferred()
     {
-        $viewPath = ViewPath::make('fake_file','fake_base');
+        $viewPath = ViewPath::make('fake_file', 'fake_base');
 
         $this->assertEquals('fake_base.fake_file', $viewPath->get());
     }
@@ -36,7 +36,7 @@ class ViewPathTest extends TestCase
     /** @test */
     public function if_ownerpath_is_passed_this_view_is_preferred()
     {
-        $viewPath = ViewPath::make('fake_file','fake_base','fake_owner');
+        $viewPath = ViewPath::make('fake_file', 'fake_base', 'fake_owner');
 
         $this->assertEquals('fake_base.fake_owner.fake_file', $viewPath->get());
     }
