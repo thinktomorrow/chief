@@ -23,7 +23,7 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <div class="divide-y divide-grey-100 -m-12">
+                    <div class="divide-y divide-grey-100 -m-8">
                         @foreach($roles as $role)
                             <a href="{{ route('chief.back.roles.edit', $role->id) }}" class="block px-6 py-4">
                                 {{ $role->name }}

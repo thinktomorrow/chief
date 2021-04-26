@@ -1,25 +1,39 @@
-<div class="space-y-2">
-    @if(isset($label) || isset($description))
-        <div class="space-y-1">
-            @isset($label)
-                <label class="space-x-1">
-                    <span class="font-semibold text-grey-900">{{ ucfirst($label) }}</span>
-
-                    @if(isset($isRequired) && $isRequired)
-                        <span class="label label-warning text-xs">
-                            Verplicht
-                        </span>
-                    @endif
+<div class="{{ $attributes->get('class', '') }}">
+    @isset($label)
+        <div class="space-x-1 mb-3 leading-none">
+            @isset($id)
+                <label for="{{ $id }}" class="font-medium text-grey-900 leading-none cursor-pointer">
+                    {{ ucfirst($label) }}
                 </label>
+            @else
+                <span class="font-medium text-grey-900 leading-none">
+                    {{ ucfirst($label) }}
+                </span>
             @endisset
 
-            @isset($description)
-                <p class="text-grey-500">{!! $description !!}</p>
-            @endisset
+            @if(isset($isRequired) && $isRequired == 'true')
+                <span class="label label-info text-sm leading-none">Verplicht</span>
+            @endif
         </div>
-    @endif
+    @endisset
+
+    @isset($description)
+        <div class="prose prose-dark prose-editor mb-4">
+            {{ $description }}
+        </div>
+    @endisset
 
     <div>
         {{ $slot }}
     </div>
+
+    @isset($name)
+        <div class="mt-2">
+            @error($name)
+                <x-inline-notification type="error">
+                    {{ $message }}
+                </x-inline-notification>
+            @enderror
+        </div>
+    @endisset
 </div>

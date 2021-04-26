@@ -43,12 +43,12 @@
 @section('content')
     @if($user->isEnabled())
         <form id="disableUserForm" method="POST" action="{{ route('chief.back.users.disable', $user->id) }}">
-            {{ csrf_field() }}
+            @csrf
             {{-- <p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <input type="submit" class="text-error" value="blokkeren">.</p> --}}
         </form>
     @else
         <form id="enableUserForm" method="POST" action="{{ route('chief.back.users.enable', $user->id) }}">
-            {{ csrf_field() }}
+            @csrf
             {{-- <p>{{ $user->firstname }} is momenteel geblokkeerd. <br> <input type="submit" class="text-primary" value="Verleen opnieuw toegang">.</p> --}}
         </form>
     @endif
@@ -57,12 +57,11 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST">
-                        {!! csrf_field() !!}
+                    <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST" class="mb-0">
+                        @csrf
+                        @method('put')
 
-                        <input type="hidden" name="_method" value="PUT">
-
-                        <div class="space-y-12">
+                        <div class="space-y-8">
                             @include('chief::admin.users._form')
                         </div>
                     </form>

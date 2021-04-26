@@ -1,32 +1,27 @@
-@formgroup(['field' => ['firstname', 'lastname']])
-    @slot('label', 'Naam')
-    @slot('isRequired', true)
+<div>
+    <div class="row gutter-4">
+        <x-chief-formgroup label="Voornaam" id="firstname" name="firstname" class="w-full lg:w-1/2" isRequired>
+            <input id="firstname" type="text" name="firstname" value="{{ old('firstname', $user->firstname) }}">
+        </x-chief-formgroup>
 
-    <div class="row gutter-2">
-        <div class="w-full lg:w-1/2 flex flex-col space-y-2">
-            <label for="firstName" class="font-medium text-grey-700">Voornaam</label>
-            <input id="firstName" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
-        </div>
-
-        <div class="w-full lg:w-1/2 flex flex-col space-y-2">
-            <label for="lastName" class="font-medium text-grey-700">Achternaam</label>
-            <input id="lastName" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
-        </div>
+        <x-chief-formgroup label="Achternaam" id="lastname" name="lastname" class="w-full lg:w-1/2" isRequired>
+            <input id="lastname" type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}">
+        </x-chief-formgroup>
     </div>
-@endformgroup
+</div>
 
-@formgroup(['field' => 'email'])
-    @slot('label', 'E-mail')
-    @slot('description', 'Dit e-mail adres geldt tevens als login.')
-    @slot('isRequired', true)
+<x-chief-formgroup label="E-mail" id="email" name="email" isRequired>
+    <x-slot name="description">
+        <p>Dit e-mail adres geldt tevens als login.</p>
+    </x-slot>
 
-    <input id="email" type="email" name="email" value="{{ old('email',$user->email) }}" class="w-full">
-@endformgroup
+    <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}">
+</x-chief-formgroup>
 
-@formgroup(['field' => 'roles'])
-    @slot('label', 'Rechten')
-    @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.')
-    @slot('isRequired', true)
+<x-chief-formgroup label="Rechten" isRequired>
+    <x-slot name="description">
+        <p>Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.</p>
+    </x-slot>
 
     <chief-multiselect
         name="roles"
@@ -40,4 +35,4 @@
             {{ $errors->first('roles.0') }}
         </x-inline-notification>
     @endif
-@endformgroup
+</x-chief-formgroup>

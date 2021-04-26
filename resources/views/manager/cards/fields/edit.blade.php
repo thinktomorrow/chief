@@ -4,21 +4,25 @@
     action="@adminRoute('fields-update', $model, $componentKey)"
     enctype="multipart/form-data"
     role="form"
+    class="mb-0"
 >
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="PUT">
+    @csrf
+    @method('put')
 
-    <div class="space-y-10">
+    <div class="space-y-8">
         <h3>{{ ucfirst($componentKey) }}</h3>
 
-        <div data-vue-fields class="space-y-10">
+        <div data-vue-fields class="space-y-6">
             @foreach($fields as $field)
-                @formgroup
-                    @slot('label',$field->getLabel())
-                    @slot('description',$field->getDescription())
-                    @slot('isRequired', $field->required())
+                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
+                    @if($field->getDescription())
+                        <x-slot name="description">
+                            <p>{{ $field->getDescription() }}</p>
+                        </x-slot>
+                    @endif
+
                     {!! $field->render(get_defined_vars()) !!}
-                @endformgroup
+                </x-chief-formgroup>
             @endforeach
         </div>
 

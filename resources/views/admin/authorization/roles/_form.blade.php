@@ -1,15 +1,15 @@
-@formgroup(['field' => 'name'])
-    @slot('label', 'Naam')
-    @slot('description', 'Unieke benaming van de rol')
-    @slot('isRequired', true)
+<x-chief-formgroup label="Naam" name="name" isRequired>
+    <x-slot name="description">
+        <p>Unieke benaming van de rol.</p>
+    </x-slot>
 
-    <input class="w-full" type="text" name="name" value="{{ old('name', $role->name) }}">
-@endformgroup
+    <input type="text" name="name" value="{{ old('name', $role->name) }}">
+</x-chief-formgroup>
 
-@formgroup(['field' => 'permission_names'])
-    @slot('label', 'Rechten')
-    @slot('description', 'Met welke rechten heeft deze rol toegang tot de admin')
-    @slot('isRequired', true)
+<x-chief-formgroup label="Rechten" isRequired>
+    <x-slot name="description">
+        <p>Met welke rechten heeft deze rol toegang tot de admin.</p>
+    </x-slot>
 
     <div class="space-y-2">
         <chief-multiselect
@@ -25,4 +25,4 @@
             </x-inline-notification>
         @endif
     </div>
-@endformgroup
+</x-chief-formgroup>

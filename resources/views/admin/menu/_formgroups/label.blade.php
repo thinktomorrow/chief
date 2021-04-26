@@ -1,7 +1,7 @@
-@formgroup
-    @slot('label', 'Label')
-    @slot('description', 'Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.')
-    @slot('isRequired', true)
+<x-chief-formgroup label="Label" isRequired>
+    <x-slot name="description">
+        <p>Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.</p>
+    </x-slot>
 
     @if(count(config('chief.locales')) > 1)
         <tabs v-cloak>
@@ -14,7 +14,6 @@
                             id="trans-{{ $locale }}-label"
                             placeholder="Menu label"
                             value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
-                            class="w-full"
                         >
 
                         @error('trans.' . $locale . '.label')
@@ -35,7 +34,6 @@
                     id="trans-{{ $locale }}-label"
                     placeholder="Menu label"
                     value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
-                    class="w-full"
                 >
 
                 @error('trans.' . $locale . '.label')
@@ -46,4 +44,4 @@
             </div>
         @endforeach
     @endif
-@endformgroup
+</x-chief-formgroup>

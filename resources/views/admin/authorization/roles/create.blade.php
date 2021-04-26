@@ -27,10 +27,11 @@
                         id="createForm"
                         action="{{ route('chief.back.roles.store') }}"
                         method="POST"
+                        class="mb-0"
                     >
-                        {!! csrf_field() !!}
+                        @csrf
 
-                        <div class="space-y-12">
+                        <div class="space-y-8">
                             @include('chief::admin.authorization.roles._form')
                         </div>
                     </form>

@@ -1,21 +1,15 @@
 <template>
     <modal :id="id" class="large-modal" type="modal">
         <div v-if="!isLoading || assets.length > 1" class="row items-center mb-4">
-            <div class="column-6">
+            <div class="w-1/2">
                 <h2 class="text-2xl">Kies een bestaande afbeelding</h2>
             </div>
 
-            <div class="column-6">
-                <div class="formgroup">
-                    <div class="input-group flex justify-end items-center">
-                        <input
-                            placeholder="Zoek op bestandsnaam ..."
-                            class="input inset-s"
-                            type="text"
-                            v-model="searchQuery"
-                        />
-                        <button class="btn btn-primary-outline ml-4" @click.prevent="search()">Filter</button>
-                    </div>
+            <div class="w-1/2">
+                <div class="flex justify-end items-center space-x-4">
+                    <input placeholder="Zoek op bestandsnaam ..." type="text" v-model="searchQuery" />
+
+                    <button class="btn btn-primary-outline" @click.prevent="search()">Filter</button>
                 </div>
             </div>
         </div>
@@ -60,7 +54,7 @@
                 v-for="(asset, i) in assets"
                 v-bind:key="asset.id"
                 @click="select(asset)"
-                class="xs-column-12 s-column-6 m-column-4 l-column-3 xl-column-2 p-1 cursor-pointer"
+                class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-1 cursor-pointer"
             >
                 <div
                     :class="{ 'bg-grey-50 border-secondary-500': isSelectedAsset(asset) }"
@@ -129,7 +123,8 @@
                     </svg>
                 </span>
             </div>
-            <div v-if="multiple" @click="chooseAssets()" class="btn btn-primary inline-flex">
+
+            <div v-if="multiple" @click="chooseAssets()" class="btn btn-primary">
                 <span>Kies geselecteerde assets</span>
             </div>
         </div>

@@ -47,10 +47,10 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.sidebar', 'chief-sidebar');
         Blade::component('chief::components.inline-notification', 'inline-notification');
         Blade::component('chief::components.icon-label', 'icon-label');
+        Blade::component('chief::components.formgroup', 'chief-formgroup');
 
         Blade::aliasComponent('chief::back._layouts._partials.header', 'chiefheader');
-        Blade::aliasComponent('chief::components.formgroup', 'formgroup');
-        Blade::aliasComponent('chief::components.new-formgroup', 'newformgroup');
+        Blade::aliasComponent('chief::components.formgroup-old', 'formgroup');
 
         Blade::directive('fragments', function ($expression) {
             return "<?php echo app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->render(\$model, get_defined_vars()); ?>";

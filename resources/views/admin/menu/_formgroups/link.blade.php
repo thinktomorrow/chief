@@ -1,12 +1,9 @@
-@formgroup
-    @slot('label', 'Link')
-    @slot('isRequired', true)
-
+<x-chief-formgroup label="Link" isRequired>
     <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
-        <div class="space-y-2">
-            <!-- internal type -->
-            <label for="typeInternal" class="block cursor-pointer space-y-2">
-                <div class="flex items-center space-x-2">
+        <div class="space-y-3">
+            {{-- Internal type --}}
+            <div class="space-y-2">
+                <label for="typeInternal" class="with-radio">
                     <input
                         id="typeInternal"
                         name="type"
@@ -16,31 +13,27 @@
                         {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"' : null }}
                     >
 
-                    <span class="font-medium text-grey-700">Kies een interne pagina</span>
+                    <span>Kies een interne pagina</span>
+                </label>
+
+                <div v-if="type == 'internal'">
+                    <x-chief-formgroup name="owner_reference">
+                        <chief-multiselect
+                            name="owner_reference"
+                            :options='@json($pages)'
+                            selected='@json(old('owner_reference', $ownerReference))'
+                            grouplabel="group"
+                            groupvalues="values"
+                            labelkey="label"
+                            valuekey="id"
+                        ></chief-multiselect>
+                    </x-chief-formgroup>
                 </div>
+            </div>
 
-                <div v-if="type == 'internal'" class="relative space-y-2">
-                    <chief-multiselect
-                        name="owner_reference"
-                        :options='@json($pages)'
-                        selected='@json(old('owner_reference', $ownerReference))'
-                        grouplabel="group"
-                        groupvalues="values"
-                        labelkey="label"
-                        valuekey="id"
-                    ></chief-multiselect>
-
-                    @error('owner_reference')
-                        <x-inline-notification type="error">
-                            {{ $message}}
-                        </x-inline-notification>
-                    @enderror
-                </div>
-            </label>
-
-            <!-- custom type -->
-            <label for="typeCustom" class="block cursor-pointer space-y-2">
-                <div class="flex items-center space-x-2">
+            {{-- Custom type --}}
+            <div class="space-y-2">
+                <label for="typeCustom" class="with-radio">
                     <input
                         id="typeCustom"
                         name="type"
@@ -50,11 +43,11 @@
                         {{ (old('type', $menuitem->type) == 'custom') ? 'checked="checked"' : null }}
                     >
 
-                    <span class="font-medium text-grey-700">Kies een eigen link</span>
-                </div>
+                    <span>Kies een eigen link</span>
+                </label>
 
                 {{-- TODO: validation needs to be checked because it looks like this field can be empty? --}}
-                <div v-if="type == 'custom'" class="relative">
+                <div v-if="type == 'custom'">
                     @if(count(config('chief.locales')) > 1)
                         <tabs v-cloak>
                             @foreach(config('chief.locales') as $locale)
@@ -66,7 +59,6 @@
                                             type="text"
                                             value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                             placeholder="e.g. https://google.com"
-                                            class="w-full"
                                         >
 
                                         @error('trans' . $locale . 'url')
@@ -87,7 +79,6 @@
                                     type="text"
                                     value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                     placeholder="e.g. https://google.com"
-                                    class="w-full"
                                 >
 
                                 @error('trans' . $locale . 'url')
@@ -99,10 +90,10 @@
                         @endforeach
                     @endif
                 </div>
-            </label>
+            </div>
 
             <!-- no link -->
-            <label for="typeNolink" class="flex items-center space-x-2 cursor-pointer">
+            <label for="typeNolink" class="with-radio">
                 <input
                     id="typeNolink"
                     name="type"
@@ -112,8 +103,8 @@
                     {{ (old('type', $menuitem->type) == 'nolink') ? 'checked="checked"' : '' }}
                 >
 
-                <span class="font-medium text-grey-700">Geen link toevoegen aan dit menu item</span>
+                <span>Geen link toevoegen aan dit menu item</span>
             </label>
         </div>
     </radio-options>
-@endformgroup
+</x-chief-formgroup>

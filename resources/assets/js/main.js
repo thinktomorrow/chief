@@ -19,7 +19,7 @@ window.Vue.component('options-dropdown', require('./components-vue/OptionsDropdo
 
 window.Vue.component('tab', require('./components-vue/Tab.vue').default);
 window.Vue.component('tabs', require('./components-vue/Tabs.vue').default);
-window.Vue.component('translation-tabs', require('./components-vue/TranslationTabs.vue').default);
+// window.Vue.component('translation-tabs', require('./components-vue/TranslationTabs.vue').default);
 window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
 
 window.Vue.component('modal', require('./components-vue/Modal.vue').default);

@@ -27,11 +27,12 @@
                         id="editForm"
                         action="{{ route('chief.back.roles.update', $role->id) }}"
                         method="POST"
+                        class="mb-0"
                     >
-                        {!! method_field('put') !!}
-                        {!! csrf_field() !!}
+                        @csrf
+                        @method('put')
 
-                        <div class="space-y-12">
+                        <div class="space-y-8">
                             @include('chief::admin.authorization.roles._form')
                         </div>
                     </form>

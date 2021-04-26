@@ -6,53 +6,26 @@
 
 @section('content')
     <div class="relative row-center-center min-h-screen">
-        <div class="window window-white window-lg max-w-lg space-y-6 prose prose-dark">
-            <h1>Reset jouw wachtwoord</h1>
+        <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white window-lg space-y-8">
+            <h1 class="text-grey-900">Reset jouw wachtwoord</h1>
 
             <form role="form" method="POST" action="{{ route('chief.back.password.request') }}" class="mb-0">
-                {{ csrf_field() }}
+                @csrf
 
                 <input type="hidden" name="token" value="{{ $token }}">
 
                 <div class="space-y-6">
-                    @formgroup
-                        @slot('label', 'E-mail')
+                    <x-chief-formgroup label="E-mail" id="identity" name="email">
+                        <input id="identity" name="email" type="email" placeholder="E-mail" value="{{ old('email') }}">
+                    </x-chief-formgroup>
 
-                        <div class="space-y-2">
-                            <input type="email" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}" class="w-full">
-                            @error('email')
-                                <x-inline-notification type="error">
-                                    {{ $message }}
-                                </x-inline-notification>
-                            @enderror
-                        </div>
-                    @endformgroup
+                    <x-chief-formgroup label="Nieuw wachtwoord" id="password" name="password">
+                        <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
+                    </x-chief-formgroup>
 
-                    @formgroup
-                        @slot('label', 'Nieuw wachtwoord')
-
-                        <div class="space-y-2">
-                            <input type="password" name="password" placeholder="Nieuw wachtwoord" id="password" class="w-full">
-                            @error('password')
-                                <x-inline-notification type="error">
-                                    {{ $message }}
-                                </x-inline-notification>
-                            @enderror
-                        </div>
-                    @endformgroup
-
-                    @formgroup
-                        @slot('label', 'Herhaal wachtwoord')
-
-                        <div class="space-y-2">
-                            <input type="password" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm" class="w-full">
-                            @error('password_confirmation')
-                                <x-inline-notification type="error">
-                                    {{ $message }}
-                                </x-inline-notification>
-                            @enderror
-                        </div>
-                    @endformgroup
+                    <x-chief-formgroup label="Herhaal wachtwoord" id="password_confirmation" name="password_confirmation">
+                        <input type="password" id="password-confirm" name="password_confirmation" placeholder="Herhaal wachtwoord">
+                    </x-chief-formgroup>
 
                     <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
                 </div>

@@ -21,29 +21,21 @@
                     {{ csrf_field() }}
 
                     <div class="space-y-6">
-                        @newformgroup([
-                            'label' => 'E-mail',
-                            'id' => 'identity',
-                            'name' => 'email'
-                        ])
+                        <x-chief-formgroup label="E-mail" id="identity" name="email">
                             <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="john@doe.com" autofocus>
-                        @endnewformgroup
+                        </x-chief-formgroup>
 
-                        @newformgroup([
-                            'label' => 'Wachtwoord',
-                            'id' => 'password',
-                            'name' => 'password'
-                        ])
+                        <x-chief-formgroup label="Wachtwoord" id="password" name="password">
                             <input id="password" name="password" type="password">
-                        @endnewformgroup
+                        </x-chief-formgroup>
 
-                        @newformgroup
+                        <x-chief-formgroup>
                             <label for="rememberCheckbox" class="with-checkbox">
                                 <input id="rememberCheckbox" name="remember" type="checkbox" {{ old('remember') ? 'checked=checked' : null  }}>
 
                                 <span>Houd me ingelogd</span>
                             </label>
-                        @endnewformgroup
+                        </x-chief-formgroup>
 
                         <div class="space-x-4">
                             <button type="submit" form="valid" class="btn btn-primary">Inloggen</button>

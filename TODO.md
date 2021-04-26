@@ -29,3 +29,4 @@
 -   [ ] pagination view update
 
 -   [ ] window component? (title, spacing ...)
+-   [ ] Seems like fragments sidebar errors don't work yet

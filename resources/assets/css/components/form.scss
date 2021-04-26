@@ -9,7 +9,7 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'] {
-    @apply bg-grey-50 border border-grey-200 rounded-md px-4 py-3 font-medium text-grey-700 leading-normal w-full;
+    @apply bg-grey-50 border border-grey-200 rounded-md px-4 py-3 font-medium text-grey-700 w-full;
 
     &:focus {
         @apply ring-2 ring-primary-500 bg-grey-100;
@@ -54,6 +54,7 @@ input[type='checkbox'] {
     }
 }
 
-label.with-checkbox {
+label.with-checkbox,
+label.with-radio {
     @apply flex items-center space-x-2 cursor-pointer;
 }

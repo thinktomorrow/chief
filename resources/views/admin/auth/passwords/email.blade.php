@@ -6,10 +6,8 @@
 
 @section('content')
     <div class="relative row-center-center min-h-screen">
-        <div class="window window-white window-lg max-w-lg space-y-6 prose prose-dark">
-            <h1>Je wachtwoord vergeten?</h1>
-
-            <p>Geef je e-mailadres in om je wachtwoord te opnieuw in te stellen.</p>
+        <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white window-lg space-y-8">
+            <h1 class="text-grey-900">Je wachtwoord vergeten?</h1>
 
             {{-- TODO: is this still being used? --}}
             @if(session('status'))
@@ -19,18 +17,14 @@
                     {{ csrf_field() }}
 
                     <div class="space-y-6">
-                        @formgroup
-                            <div class="space-y-2">
-                                <input type="email" class="w-full" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}">
+                        {{-- TODO: mail confirmation message also shows as error --}}
+                        <x-chief-formgroup name="email">
+                            <x-slot name="description">
+                                <p>Geef je e-mailadres in om je wachtwoord te opnieuw in te stellen.</p>
+                            </x-slot>
 
-                                {{-- TODO: mail confirmation message also shows as error --}}
-                                @error('email')
-                                    <x-inline-notification type="error">
-                                        {{ $message }}
-                                    </x-inline-notification>
-                                @enderror
-                            </div>
-                        @endformgroup
+                            <input id="identity" name="email" type="email" placeholder="E-mail" value="{{ old('email') }}">
+                        </x-chief-formgroup>
 
                         <div class="space-x-4">
                             <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>

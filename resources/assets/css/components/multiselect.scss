@@ -3,10 +3,10 @@
     font-weight: theme('fontWeight.medium') !important;
 }
 .multiselect__tags {
-    background: theme('colors.grey.100') !important;
-    border-radius: theme('borderRadius.lg') !important;
+    background: theme('colors.grey.50') !important;
+    border-radius: theme('borderRadius.md') !important;
     border-color: theme('colors.grey.200') !important;
-    padding-left: 0.75rem !important;
+    padding-left: 1rem !important;
 }
 
 .multiselect__single,
@@ -14,9 +14,15 @@
     font-size: theme('fontSize.base') !important;
     font-weight: theme('fontWeight.medium') !important;
     color: theme('colors.grey.400') !important;
-    background: theme('colors.grey.100') !important;
+    background: theme('colors.grey.50') !important;
     line-height: theme('lineHeight.normal') !important;
     padding-left: 0 !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+.multiselect__select {
+    margin-top: 0.25rem !important;
 }
 
 .multiselect__input {

@@ -23,18 +23,19 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
-                        {{ csrf_field() }}
-                        <input name="_method" type="hidden" value="PUT">
+                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="mb-0">
+                        @csrf
+                        @method('put')
 
-                        <div class="space-y-12">
+                        <div class="space-y-8">
                             @foreach($fields as $field)
-                                @formgroup
-                                    @slot('label',$field->getLabel())
-                                    @slot('description',$field->getDescription())
-                                    @slot('isRequired', $field->required())
+                                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}" name="{{ $field->getName($locale ?? null) }}">
+                                    @if($field->getDescription())
+                                        <x-slot name="{{ $field->getDescription() }}"></x-slot>
+                                    @endif
+
                                     {!! $field->render() !!}
-                                @endformgroup
+                                </x-chief-formgroup>
                             @endforeach
 
                             <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>

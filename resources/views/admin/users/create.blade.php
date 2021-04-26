@@ -23,10 +23,10 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">
-                        {!! csrf_field() !!}
+                    <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST" class="mb-0">
+                        @csrf
 
-                        <div class="space-y-12">
+                        <div class="space-y-8">
                             @include('chief::admin.users._form')
                         </div>
                     </form>

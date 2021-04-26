@@ -59,22 +59,17 @@
                     </div>
 
                     <form method="GET" id="filtering" class="space-y-8">
-                        @formgroup
-                            @slot('label', 'Bestandsnaam')
-
+                        <x-chief-formgroup label="Bestandsnaam">
                             <input
-                                placeholder="Zoek op bestandsnaam ..."
                                 type="text"
                                 name="search"
+                                placeholder="Zoek op bestandsnaam ..."
                                 value="{{ old('search', request()->input('search'))}}"
-                                class="w-full"
                             >
-                        @endformgroup
+                        </x-chief-formgroup>
 
                         {{-- TODO: fix multiselect --}}
-                        @formgroup
-                            @slot('label', 'Pagina')
-
+                        <x-chief-formgroup label="Pagina">
                             <chief-multiselect
                                 name="owner"
                                 :options='@json($pages)'
@@ -85,13 +80,15 @@
                                 labelkey="label"
                                 valuekey="id"
                             ></chief-multiselect>
-                        @endformgroup
+                        </x-chief-formgroup>
 
-                        <label for="unused" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
-                            <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
+                        <x-chief-formgroup>
+                            <label for="unused" class="with-checkbox">
+                                <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
-                            <span class="text-grey-700 font-medium">Toon enkel ongebruikte media</span>
-                        </label>
+                                <span>Toon enkel ongebruikte media</span>
+                            </label>
+                        </x-chief-formgroup>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>

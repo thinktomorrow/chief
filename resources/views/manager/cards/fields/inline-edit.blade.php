@@ -6,27 +6,31 @@
     role="form"
     class="mb-0"
 >
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="PUT">
+    @csrf
+    @method('put')
 
-    @foreach($fields->notTagged('component') as $field)
-        @formgroup
-            @slot('label',$field->getLabel())
-            @slot('description',$field->getDescription())
-            @slot('isRequired', $field->required())
+    <div class="space-y-6">
+        @foreach($fields->notTagged('component') as $field)
+            <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
+                @if($field->getDescription())
+                    <x-slot name="description">
+                        <p>{{ $field->getDescription() }}</p>
+                    </x-slot>
+                @endif
 
-            {!! $field->render(get_defined_vars()) !!}
-        @endformgroup
-    @endforeach
+                {!! $field->render(get_defined_vars()) !!}
+            </x-chief-formgroup>
+        @endforeach
 
-    <div>
-        <button
-            data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-            type="submit"
-            form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-            class="btn btn-primary"
-        >
-            Wijzigingen opslaan
-        </button>
+        <div>
+            <button
+                data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
+                type="submit"
+                form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
+                class="btn btn-primary"
+            >
+                Wijzigingen opslaan
+            </button>
+        </div>
     </div>
 </form>

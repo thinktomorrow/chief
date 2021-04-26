@@ -35,9 +35,10 @@
                         action="{{ route('chief.back.menuitem.update', $menuitem->id) }}"
                         enctype="multipart/form-data"
                         role="form"
+                        class="mb-0"
                     >
-                        {{ csrf_field() }}
-                        {{ method_field('PUT') }}
+                        @csrf
+                        @method('put')
 
                         @include('chief::admin.menu._partials.form')
                     </form>

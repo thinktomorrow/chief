@@ -1,10 +1,11 @@
-@formgroup
-    @slot('label', 'Niveau')
-    @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
+<x-chief-formgroup label="Niveau">
+    <x-slot name="description">
+        <p>Zet dit item op het hoogste niveau of plaats het onder een bestaand.</p>
+    </x-slot>
 
     <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
         <div class="space-y-3">
-            <label for="withoutParentId" class="flex items-center space-x-2 cursor-pointer">
+            <label for="withoutParentId" class="with-radio">
                 <input
                     id="withoutParentId"
                     name="allow_parent"
@@ -13,11 +14,11 @@
                     v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"' : null }}
                 >
 
-                <span class="font-medium text-grey-700">Geef dit menu item weer op het hoogste niveau</span>
+                <span>Geef dit menu item weer op het hoogste niveau</span>
             </label>
 
-            <label for="parentId" class="block cursor-pointer space-y-3">
-                <div class="flex items-center space-x-2">
+            <div class="space-y-2">
+                <label for="parentId" class="with-radio">
                     <input
                         id="parentId"
                         name="allow_parent"
@@ -26,20 +27,22 @@
                         v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"' : null }}
                     >
 
-                    <span class="font-medium text-grey-700">Selecteer het menu item waaronder dit item behoort</span>
-                </div>
+                    <span>Selecteer het menu item waaronder dit item behoort</span>
+                </label>
 
-                <div v-if="type == '1'" class="relative">
-                    <chief-multiselect
-                        name="parent_id"
-                        :options='@json($parents)'
-                        selected='@json(old('parent_id', $menuitem->parent_id))'
-                        labelkey="label"
-                        valuekey="id"
-                        placeholder="Kies het bovenliggende menu item"
-                    ></chief-multiselect>
+                <div v-if="type == '1'">
+                    <x-chief-formgroup name="parent_id">
+                        <chief-multiselect
+                            name="parent_id"
+                            :options='@json($parents)'
+                            selected='@json(old('parent_id', $menuitem->parent_id))'
+                            labelkey="label"
+                            valuekey="id"
+                            placeholder="Kies het bovenliggende menu item"
+                        ></chief-multiselect>
+                    </x-chief-formgroup>
                 </div>
-            </label>
+            </div>
         </div>
     </radio-options>
-@endformgroup
+</x-chief-formgroup>

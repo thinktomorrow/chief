@@ -30,8 +30,9 @@
                         action="{{ route('chief.back.menuitem.store') }}"
                         enctype="multipart/form-data"
                         role="form"
+                        class="mb-0"
                     >
-                        {{ csrf_field() }}
+                        @csrf
 
                         @include('chief::admin.menu._partials.form')
                     </form>

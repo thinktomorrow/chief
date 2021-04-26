@@ -123,70 +123,35 @@
                         </div>
                     </div>
 
-                    <div class="row gutter-3">
-                        <div class="w-full lg:w-1/2">
-                            @newformgroup([
-                                'label' => 'First name',
-                                'id' => 'firstname',
-                                'name' => 'firstname',
-                                'isRequired' => true
-                            ])
-                                {{-- @slot('description')
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum porro,
-                                        eveniet minima omnis voluptas unde perspiciatis impedit quae sequi laboriosam qui consequatur ducimus dolor aspernatur?
-                                        Tenetur animi quo sunt nisi!
-                                    </p>
-                                @endslot --}}
+                    <div>
+                        <div class="row gutter-4">
+                            <div class="w-full lg:w-1/2">
+                                <x-chief-formgroup label="First name" id="firstname" name="firstname" isRequired>
+                                    <input type="text" id="firstname" name="firstname" placeholder="John">
+                                </x-chief-formgroup>
+                            </div>
 
-                                <input type="text" id="firstname" name="firstname" placeholder="John">
-                            @endnewformgroup
+                            <div class="w-full lg:w-1/2">
+                                <x-chief-formgroup label="Last name" id="lastname" name="lastname" isRequired>
+                                    <input type="text" id="lastname" name="lastname" placeholder="Doe">
+                                </x-chief-formgroup>
+                            </div>
+
+                            <x-chief-formgroup class="w-full">
+                                <label for="rememberCheckbox" class="with-checkbox">
+                                    <input id="rememberCheckbox" name="remember" type="checkbox" {{ old('remember') ? 'checked=checked' : null  }}>
+                                    <span>Houd me ingelogd</span>
+                                </label>
+                            </x-chief-formgroup>
+
+                            <x-chief-formgroup label="Message" class="w-full">
+                                <textarea id="message" name="message" placeholder="Type your message here ..."></textarea>
+                            </x-chief-formgroup>
+
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
-
-                        <div class="w-full lg:w-1/2">
-                            @newformgroup([
-                                'label' => 'Last name',
-                                'id' => 'lastname',
-                                'name' => 'lastname',
-                                'isRequired' => true
-                            ])
-                                {{-- @slot('description')
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum porro,
-                                        eveniet minima omnis voluptas unde perspiciatis impedit quae sequi laboriosam qui consequatur ducimus dolor aspernatur?
-                                        Tenetur animi quo sunt nisi!
-                                    </p>
-                                @endslot --}}
-
-                                <input type="text" id="lastname" name="lastname" placeholder="Doe">
-                            @endnewformgroup
-                        </div>
-
-                        {{-- @formgroup
-                            @slot('label', 'Password')
-
-                            <input type="password" id="password" name="password" class="w-full">
-                        @endformgroup
-
-                        @formgroup([
-                            'type' => 'checkbox'
-                        ])
-                            @slot('type', '')
-                            @slot('label', 'Name')
-
-                            <label for="rememberCheckbox" class="flex items-center space-x-2 cursor-pointer">
-                                <input id="rememberCheckbox" {{ old('remember') ? 'checked=checked' : null  }} type="checkbox" name="remember">
-                                <span class="text-grey-700 font-medium">Houd me ingelogd</span>
-                            </label>
-                        @endformgroup
-
-                        @formgroup
-                            @slot('label', 'Message')
-
-                            <textarea id="message" name="message" placeholder="Type your message here ..." class="w-full"></textarea>
-                        @endformgroup
-
-                        <button type="submit" class="btn btn-primary">Submit</button> --}}
                     </div>
                 </div>
             </div>

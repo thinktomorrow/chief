@@ -36,12 +36,13 @@
 
             <div class="w-full">
                 <div class="window window-white">
-                    @formgroup
-                        @slot('label', 'Wachtwoord')
-                        @slot('description', 'Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.')
+                    <x-chief-formgroup label="Wachtwoord">
+                        <x-slot name="description">
+                            <p>Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>
+                        </x-slot>
 
                         <a class="btn btn-warning-outline" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
-                    @endformgroup
+                    </x-chief-formgroup>
                 </div>
             </div>
         </div>
