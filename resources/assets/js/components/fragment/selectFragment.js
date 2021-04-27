@@ -25,7 +25,7 @@ export default class {
         this._activateTriggerElements();
         this._onlyShowClosestTriggerElement();
 
-        const reloadEvents = ['sortable-stored', 'fragments-reloaded'];
+        const reloadEvents = ['sortable-stored', 'fragmentsReloaded'];
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
@@ -39,7 +39,7 @@ export default class {
             });
         });
 
-        EventBus.subscribe('fragments-new-panel', (panel) => {
+        EventBus.subscribe('newFragmentPanelCreated', (panel) => {
             this._passNewFragmentOrderToPanel(panel);
         });
     }
@@ -53,7 +53,7 @@ export default class {
 
             this.fragmentsContainer.appendChild(newSelectionElement);
 
-            EventBus.publish('selection-element-created', newSelectionElement);
+            EventBus.publish('fragmentSelectionElementCreated', newSelectionElement);
 
             return;
         }
@@ -97,7 +97,7 @@ export default class {
 
             this.fragmentsContainer.replaceChild(newSelectionElement, element);
 
-            EventBus.publish('selection-element-created', newSelectionElement);
+            EventBus.publish('fragmentSelectionElementCreated', newSelectionElement);
         });
     }
 

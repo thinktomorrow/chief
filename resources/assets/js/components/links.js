@@ -15,16 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
     const linkPanelsManager = new PanelsManager('[data-sidebar-links-edit]', new Container(sidebarContainerEl), {
-        onSubmitPanel: () => {
+        panelFormSubmitted: () => {
             livewireComponent.reload();
         },
-        onNewPanel: () => {
+        newPanelCreated: () => {
             console.log('triggered...');
             // Trigger js for submit form elements (these are used for the state transitions)
             FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
         },
         events: {
-            // 'selection-element-created': () => {
+            // 'fragmentSelectionElementCreated': () => {
             //
             // },
         },

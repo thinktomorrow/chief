@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fragmentSelectionSidebarTriggerSelector,
         new Container(sidebarContainerElement),
         {
-            onNewPanel: (panel) => {
-                EventBus.publish('selection-panel-created', panel);
+            newPanelCreated: (panel) => {
+                EventBus.publish('newFragmentSelectionPanelCreated', panel);
             },
             events: {
-                'selection-element-created': () => {
+                fragmentSelectionElementCreated: () => {
                     fragmentSelectionPanelsManager.scanForPanelTriggers();
                 },
             },

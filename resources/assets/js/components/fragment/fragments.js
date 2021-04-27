@@ -22,23 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
         '[data-sidebar-fragments-edit]',
         new Container(sidebarContainerEl),
         {
-            onNewPanel: (panel) => {
-                EventBus.publish('fragments-new-panel', panel);
+            newPanelCreated: (panel) => {
+                EventBus.publish('newFragmentPanelCreated', panel);
             },
-            onSubmitPanel: () => {
-                EventBus.publish('fragments-submit-panel');
+            panelFormSubmitted: () => {
+                EventBus.publish('fragmentPanelFormSubmitted');
             },
             events: {
-                'selection-element-created': () => {
+                fragmentSelectionElementCreated: () => {
                     fragmentPanelsManager.scanForPanelTriggers();
                 },
-                'selection-panel-created': () => {
+                newFragmentSelectionPanelCreated: () => {
+                    // IS DIT NODIG???????
                     fragmentPanelsManager.scanForPanelTriggers();
                 },
-                'fragment-add': () => {
+                fragmentAdded: () => {
                     fragmentPanelsManager.replacePanelComponents();
                 },
-                'fragments-reloaded': () => {
+                fragmentsReloaded: () => {
                     fragmentPanelsManager.scanForPanelTriggers();
                 },
             },
@@ -55,15 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
         livewireComponent.reload();
     }
 
-    EventBus.subscribe('fragment-add', listen);
+    EventBus.subscribe('fragmentAdded', listen);
 
-    EventBus.subscribe('fragments-submit-panel', () => {
+    EventBus.subscribe('fragmentPanelFormSubmitted', () => {
         livewireComponent.reload();
     });
 
     window.Livewire.on('fragmentsReloaded', () => {
         console.log('reloading fragments');
-        EventBus.publish('fragments-reloaded');
+        EventBus.publish('fragmentsReloaded');
     });
 
     /**
@@ -83,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    EventBus.subscribe('fragments-new-panel', (panel) => {
+    EventBus.subscribe('newFragmentPanelCreated', (panel) => {
         initSortable('[data-sortable-fragments]', panel.el);
     });
 
-    EventBus.subscribe('fragments-reloaded', () => {
+    EventBus.subscribe('fragmentsReloaded', () => {
         initSortable();
     });
 

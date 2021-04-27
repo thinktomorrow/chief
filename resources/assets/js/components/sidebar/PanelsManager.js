@@ -8,8 +8,8 @@ export default class {
         this.triggerSelector = triggerSelector;
         this.container = container;
         this.panels = new Panels();
-        this.onNewPanel = options.onNewPanel || null;
-        this.onSubmitPanel = options.onSubmitPanel || null;
+        this.newPanelCreated = options.newPanelCreated || null;
+        this.panelFormSubmitted = options.panelFormSubmitted || null;
         this.onFail = options.onFail || null;
         this.events = options.events || {};
 
@@ -90,8 +90,8 @@ export default class {
                     console.log('success', response);
                     this.backOrClose(false);
 
-                    if (this.onSubmitPanel) {
-                        this.onSubmitPanel();
+                    if (this.panelFormSubmitted) {
+                        this.panelFormSubmitted();
                     }
                 },
                 (error) => {
@@ -108,8 +108,8 @@ export default class {
             );
             this._activate(id);
 
-            if (this.onNewPanel) {
-                this.onNewPanel(this.panels.find(id));
+            if (this.newPanelCreated) {
+                this.newPanelCreated(this.panels.find(id));
             }
         });
     }

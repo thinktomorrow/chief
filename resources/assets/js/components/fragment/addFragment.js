@@ -16,11 +16,11 @@ export default class {
     init() {
         this.handle = (event) => this._handleTrigger(event);
 
-        EventBus.subscribe('selection-element-created', (selectionEl) => {
+        EventBus.subscribe('fragmentSelectionElementCreated', (selectionEl) => {
             this._scanForTriggersIn(selectionEl);
         });
 
-        EventBus.subscribe('fragments-new-panel', (panel) => {
+        EventBus.subscribe('newFragmentPanelCreated', (panel) => {
             console.log('panel...', panel);
             this._scanForTriggersIn(panel.el);
         });
@@ -50,7 +50,7 @@ export default class {
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {
-            EventBus.publish('fragment-add', data);
+            EventBus.publish('fragmentAdded', data);
         });
     }
 }

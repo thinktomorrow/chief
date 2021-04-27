@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
             `[${el.getAttribute('data-fields-component')}]`,
             new Container(sidebarContainerEl),
             {
-                onSubmitPanel: () => {
+                panelFormSubmitted: () => {
                     livewireComponent.reload();
                 },
                 events: {
-                    // 'selection-element-created': () => {
+                    // 'fragmentSelectionElementCreated': () => {
                     //
                     // },
                 },
