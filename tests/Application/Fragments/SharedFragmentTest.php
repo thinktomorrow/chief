@@ -4,11 +4,13 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
 
 class SharedFragmentTest extends ChiefTestCase
 {
@@ -64,5 +66,21 @@ class SharedFragmentTest extends ChiefTestCase
 
         $this->assertEquals($ownerFragment->toArray(), $owner2Fragment->toArray());
         $this->assertEquals(Arr::except($ownerFragment->fragmentModel()->toArray(), 'pivot'), Arr::except($owner2Fragment->fragmentModel()->toArray(), 'pivot'));
+    }
+
+    /** @test */
+    public function it_can_retrieve_all_owning_models()
+    {
+        $owner2 = ArticlePage::create([]);
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-add', $owner2, $this->fragment));
+
+        $owners = app(GetOwningModels::class)->get($this->fragment->fragmentModel());
+
+        $this->assertCount(2, $owners);
+
+        foreach ($owners as $owner) {
+            $this->assertInstanceOf(ArticlePage::class, $owner['model']);
+            $this->assertInstanceOf(Manager::class, $owner['manager']);
+        }
     }
 }

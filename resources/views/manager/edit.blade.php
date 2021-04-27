@@ -82,6 +82,13 @@
                                 :title="$componentKey"
                                 class="window window-grey" />
                         @endforeach
+
+                        <!-- default fields - not assigned to a component -->
+                        <livewire:fields_component
+                                :model="$model"
+                                title="Algemeen"
+                                class="window window-grey"
+                        />
                     @endAdminCan
                 </div>
                 <div class="window">

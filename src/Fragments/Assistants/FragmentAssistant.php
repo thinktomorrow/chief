@@ -197,7 +197,7 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(AddFragmentModel::class)->handle($ownerModel,                $fragmentable->fragmentModel(),                $order);
+            app(AddFragmentModel::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
         } catch (FragmentAlreadyAdded $e) {
             return response()->json([
                 'message' => 'fragment not added',
@@ -230,7 +230,7 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(RemoveFragmentModel::class)->handle($ownerModel,                $fragmentable->fragmentModel(), );
+            app(RemoveFragmentModel::class)->handle($ownerModel, $fragmentable->fragmentModel(), );
         } catch (FragmentAlreadyRemoved $e) {
             return response()->json([
                 'message' => 'fragment is already removed.',
