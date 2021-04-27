@@ -79,6 +79,11 @@ final class ModelReference
         return $this->get() === $modelReferenceString;
     }
 
+    public function refersToStaticObject(): bool
+    {
+        return $this->id === "0";
+    }
+
     public function __toString(): string
     {
         return $this->get();

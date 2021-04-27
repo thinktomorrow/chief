@@ -28,16 +28,16 @@ class ViewPath
      */
     public function get(): string
     {
-        $viewPaths = [
+        $viewPaths = array_filter([
             $this->parseToPath([$this->baseFolder, $this->ownerFolder, $this->filePath]),
             $this->parseToPath([$this->ownerFolder, $this->filePath]),
             $this->parseToPath([$this->baseFolder, $this->filePath]),
             $this->parseToPath([$this->filePath, 'show']),
             $this->filePath,
-        ];
+        ], fn ($value) => $value);
 
         foreach ($viewPaths as $path) {
-            if (! $path || ! view()->exists($path)) {
+            if (! view()->exists($path)) {
                 continue;
             }
 
@@ -45,7 +45,7 @@ class ViewPath
         }
 
         if (! view()->exists(last($viewPaths))) {
-            throw new NotFoundView('View file not found for [' . $this->filePath . ']. Make sure to create a [' . last($viewPaths) . '] view.');
+            throw new NotFoundView('View file not found for [' . $this->filePath . ']. Make sure to create one of the following views: [' . implode(', ', $viewPaths) . '].');
         }
     }
 

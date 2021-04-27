@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
@@ -45,9 +45,9 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
         return 'fragments';
     }
 
-    public function fields(): Fields
+    public function fields(): iterable
     {
-        return new Fields();
+        return [];
     }
 
     protected function dynamicDocumentKey(): string
@@ -69,5 +69,15 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     public function isOffline(): bool
     {
         return ! $this->isOnline();
+    }
+
+    public function refersToStaticObject(): bool
+    {
+        return ModelReference::fromString($this->model_reference)->refersToStaticObject();
+    }
+
+    public function refersToDynamicModel(): bool
+    {
+        return !$this->refersToStaticObject();
     }
 }

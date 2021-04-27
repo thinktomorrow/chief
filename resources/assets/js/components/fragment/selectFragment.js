@@ -178,11 +178,6 @@ export default class {
         return order;
     }
 
-    static _createTriggerElement() {
-        const template = document.querySelector('#js-fragment-add-template');
-        return template.firstElementChild.cloneNode(true);
-    }
-
     _createSelectionElement() {
         const template = document.querySelector('#js-fragment-selection-template');
         const element = template.firstElementChild.cloneNode(true);
@@ -199,6 +194,11 @@ export default class {
         }
 
         return element;
+    }
+
+    static _createTriggerElement() {
+        const template = document.querySelector('#js-fragment-add-template');
+        return template.firstElementChild.cloneNode(true);
     }
 
     static _hideTriggerElement(triggerElement) {

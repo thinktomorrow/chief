@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\ManagedModels\Application\DuplicateContext;
+use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateContext;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Register\Registry;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\Application;
+namespace Thinktomorrow\Chief\ManagedModels\Actions;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
