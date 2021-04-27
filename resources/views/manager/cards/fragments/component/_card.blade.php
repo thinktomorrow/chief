@@ -2,17 +2,18 @@
     data-fragment
     data-sortable-id="{{ $model->fragmentModel()->id }}"
     data-sortable-handle
-    class="group relative w-full p-8"
+    class="relative w-full p-8"
 >
     <div class="space-y-2">
         <div class="flex justify-between items-start">
-            <div class="flex space-x-2 cursor-default">
+            <div class="flex items-center space-x-2">
                 <span class="text-lg font-semibold text-grey-900">
                     {{ ucfirst($model->managedModelKey()) }}
                 </span>
 
-                {{-- TODO: should show the actual fragment state --}}
-                <span class="label label-success text-sm">Online</span>
+                @if($model->fragmentModel()->isOffline())
+                    <span class="label label-error text-sm">Offline</span>
+                @endif
             </div>
 
             @adminCan('fragment-edit')

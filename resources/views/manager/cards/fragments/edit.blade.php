@@ -9,10 +9,10 @@
     @csrf
     @method('put')
 
-    <div class="space-y-8">
+    <div class="space-y-12">
         <h3>{{ $model->adminConfig()->getPageTitle() }}</h3>
 
-        <div data-vue-fields class="space-y-6">
+        <div data-vue-fields class="space-y-8">
             @foreach($fields as $field)
                 <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
                     @if($field->getDescription())

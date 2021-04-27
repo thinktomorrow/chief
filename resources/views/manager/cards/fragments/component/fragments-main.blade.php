@@ -1,7 +1,7 @@
 <div data-fragments-component class="space-y-4">
-    <div>
+    {{-- <div>
         <span class="text-xl font-semibold text-grey-900">Fragments</span>
-    </div>
+    </div> --}}
 
     <div
         data-fragments-container

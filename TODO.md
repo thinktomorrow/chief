@@ -30,3 +30,4 @@
 
 -   [ ] window component? (title, spacing ...)
 -   [ ] Seems like fragments sidebar errors don't work yet
+-   [ ] fragment selection element shouldn't hide on click outside of element

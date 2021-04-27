@@ -21,7 +21,7 @@
                     class="inline-block cursor-pointer"
                 ></div>
 
-                <div data-sidebar-content tabindex="0">
+                <div data-sidebar-content tabindex="0" class="outline-none">
                     <!-- panel content -->
                 </div>
             </aside>
