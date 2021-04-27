@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 
 class DuplicateFragmentTest extends ChiefTestCase
 {
@@ -27,8 +26,6 @@ class DuplicateFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->post($this->manager($snippet)->route('fragment-copy', $newOwner, $snippet));
 
-//        app(DuplicateFragment::class)->handle($snippet->fragmentModel(), $newOwner, 2);
-
         $this->assertFragmentCount($newOwner, 1);
 
         $existingFragmentFresh = $this->firstFragment($this->owner);
@@ -48,19 +45,40 @@ class DuplicateFragmentTest extends ChiefTestCase
 
         $this->assertFragmentCount($newOwner, 1);
 
-        // TODO: we currently do not duplicate the owning model, only the fragment itself. Need to be tested if this is expected behaviour
-        $this->assertCount(1, Quote::all());
+        $this->assertCount(2, Quote::all());
 
         $existingFragmentFresh = $this->firstFragment($this->owner);
         $fragmentFresh = $this->firstFragment($newOwner);
 
         $this->assertNotEquals($existingFragmentFresh->fragmentModel()->id, $fragmentFresh->fragmentModel()->id);
-//        $this->assertNotEquals($existingFragmentFresh->fragmentModel()->model_reference, $fragmentFresh->fragmentModel()->model_reference);
-//        $this->assertNotEquals($existingFragmentFresh->id, $fragmentFresh->id);
+        $this->assertNotEquals($existingFragmentFresh->fragmentModel()->model_reference, $fragmentFresh->fragmentModel()->model_reference);
+        $this->assertNotEquals($existingFragmentFresh->id, $fragmentFresh->id);
     }
 
     /** @test */
-    public function nested_fragments_are_duplicated_as_well()
+    public function static_nested_fragments_are_duplicated_as_well()
+    {
+        $quote = $this->setupAndCreateQuote($this->owner);
+        $newOwner = ArticlePage::create();
+        $nestedFragment = $this->setupAndCreateSnippet($quote);
+
+        $this->addAsFragment($nestedFragment, $quote->fragmentModel());
+
+        $this->asAdmin()->post($this->manager($quote)->route('fragment-copy', $newOwner, $quote));
+
+        $this->assertFragmentCount($newOwner, 1);
+
+        $fragmentFresh = $this->firstFragment($newOwner);
+
+        $existingNestedFragmentFresh = $this->firstFragment($quote->fragmentModel());
+        $nestedFragmentFresh = $this->firstFragment($fragmentFresh->fragmentModel());
+
+        $this->assertTrue($nestedFragmentFresh->fragmentModel()->refersToStaticObject());
+        $this->assertNotEquals($existingNestedFragmentFresh->fragmentModel()->id, $nestedFragmentFresh->fragmentModel()->id);
+    }
+
+    /** @test */
+    public function dynamic_nested_fragments_are_not_duplicated_but_shared()
     {
         $quote = $this->setupAndCreateQuote($this->owner);
         $newOwner = ArticlePage::create();
@@ -77,7 +95,8 @@ class DuplicateFragmentTest extends ChiefTestCase
         $existingNestedFragmentFresh = $this->firstFragment($quote->fragmentModel());
         $nestedFragmentFresh = $this->firstFragment($fragmentFresh->fragmentModel());
 
-        $this->assertNotEquals($existingNestedFragmentFresh->fragmentModel()->id, $nestedFragmentFresh->fragmentModel()->id);
+        $this->assertEquals($existingNestedFragmentFresh->id, $nestedFragmentFresh->id);
+        $this->assertEquals($existingNestedFragmentFresh->fragmentModel()->id, $nestedFragmentFresh->fragmentModel()->id);
     }
 
     /** @test */

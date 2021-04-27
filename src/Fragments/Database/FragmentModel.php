@@ -75,4 +75,9 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     {
         return ModelReference::fromString($this->model_reference)->refersToStaticObject();
     }
+
+    public function refersToDynamicModel(): bool
+    {
+        return !$this->refersToStaticObject();
+    }
 }
