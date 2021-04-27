@@ -33,7 +33,7 @@ class FragmentsComponentRepository
         return $this->fragments()->map(function (Fragmentable $model) {
             return [
                 'model' => $model,
-                'manager' => app(Registry::class)->manager($model::managedModelKey()),
+                'manager' => $this->registry->manager($model::managedModelKey()),
             ];
         });
     }

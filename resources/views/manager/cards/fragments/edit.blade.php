@@ -49,7 +49,40 @@
             >
                 Verwijderen
             </button>
+
         </div>
+
+        <h4>Delen</h4>
+
+        <ul>
+        @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
+            @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
+                <li>wordt ook gebruikt door <a class="underline" href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}">{{ $otherOwner['model']->adminConfig()->getPageTitle() }}</a></li>
+        @endforeach
+        </ul>
+
+    @if($model->fragmentModel()->isShared())
+            <p>Dit blok wordt gedeeld en kan worden geselecteerd door alle pagina's. Het niet langer deelbaar maken heeft enkel effect voor nieuwe pagina's. Voor de huidige pagina's blijft dit blok gedeeld.</p>
+            <button
+                    data-submit-form="unshareFragment{{ $model->modelReference()->get() }}"
+                    class="btn btn-info-outline"
+                    type="submit"
+                    form="unshareFragment{{ $model->modelReference()->get() }}"
+            >
+                Niet langer deelbaar maken
+            </button>
+        @else
+            <p>Maak dit blok selecteerbaar op alle pagina's. Aanpassingen aan de inhoud worden op alle pagina's toegepast.</p>
+            <button
+                    data-submit-form="shareFragment{{ $model->modelReference()->get() }}"
+                    class="btn btn-info-outline"
+                    type="submit"
+                    form="shareFragment{{ $model->modelReference()->get() }}"
+            >
+                Deelbaar maken
+            </button>
+        @endif
+
     </div>
 </form>
 
@@ -60,4 +93,20 @@
 >
     @csrf
     @method('delete')
+</form>
+
+<form
+        id="shareFragment{{ $model->modelReference()->get() }}"
+        method="POST"
+        action="{{ $manager->route('fragment-share', $model) }}"
+>
+    @csrf
+</form>
+
+<form
+        id="unshareFragment{{ $model->modelReference()->get() }}"
+        method="POST"
+        action="{{ $manager->route('fragment-unshare', $model) }}"
+>
+    @csrf
 </form>

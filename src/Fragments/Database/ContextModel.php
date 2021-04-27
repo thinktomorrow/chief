@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 final class ContextModel extends Model
 {
@@ -29,5 +30,13 @@ final class ContextModel extends Model
     {
         return $this->belongsToMany(FragmentModel::class, 'context_fragment_lookup', 'context_id', 'fragment_id')
                     ->orderBy('context_fragment_lookup.order');
+    }
+
+    public static function owning(FragmentModel $fragmentModel): Collection
+    {
+        return static::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')
+            ->where('context_fragment_lookup.fragment_id', $fragmentModel->id)
+            ->select(['contexts.*'])
+            ->get();
     }
 }

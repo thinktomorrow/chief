@@ -4,7 +4,7 @@ principles.
 
 ## TODO: seds
 - refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
-- migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
+- V migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - chief:install met set van default static fragments (textFragment, bannerFragment, galleryFragment) (+ views)
 - seo defaults weergeven (indien seo niet ingegeven, dan wordt page title gebruikt enz...)
 - nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes. 
@@ -23,6 +23,11 @@ principles.
 - statusAsLabel() and statusAsPlainLabel()
 - FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
 - na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
+
+## Fragments
+- fragment kunnen sharen
+- sortering bij nieuwe toegevoegde
+- online / offline toggle voor fragments
 
 ## DECISIONS
 - wat met spirit in chief?
