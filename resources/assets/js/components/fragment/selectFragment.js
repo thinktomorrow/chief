@@ -1,3 +1,4 @@
+import _isEmpty from 'lodash/isEmpty';
 import EventBus from '../../utilities/EventBus';
 
 /**
@@ -12,8 +13,9 @@ export default class {
         this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
 
         this.fragmentSelector = '[data-fragment]';
-        this.triggerSelector = '[data-fragments-new-trigger]';
-        this.selectionSelector = '[data-fragments-new-selection]';
+        this.triggerSelector = '[data-fragment-trigger-element]';
+        this.selectionSelector = '[data-fragment-selection-element]';
+        this.selectionCloseTriggerSelector = '[data-fragment-selection-element-close]';
 
         this._init();
     }
@@ -42,57 +44,27 @@ export default class {
         });
     }
 
-    static _createTriggerElement() {
-        const template = document.querySelector('#js-fragment-add-template');
-        return template.firstElementChild.cloneNode(true);
-    }
-
-    _createSelectionElement() {
-        const template = document.querySelector('#js-fragment-selection-template');
-        const element = template.firstElementChild.cloneNode(true);
-
-        const self = this;
-
-        const removeSelectionElement = (e) => {
-            if (!(e.target === element || element.contains(e.target))) {
-                if (document.contains(element)) {
-                    element.parentNode.removeChild(element);
-
-                    self._removeTriggerElements();
-                    self._addTriggerElements();
-                    self._activateTriggerElements();
-                    self._onlyShowClosestTriggerElement();
-                }
-
-                window.removeEventListener('click', removeSelectionElement);
-            }
-        };
-
-        // Short timeout so the click event that initiates this function doesn't trigger it instantly
-        setTimeout(() => {
-            window.addEventListener('click', removeSelectionElement);
-        }, 50);
-
-        return element;
-    }
-
     _addTriggerElements() {
         const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
 
-        // Add a trigger element if there no fragments exist yet
-        if (fragmentElements.length === 0) {
-            const triggerElement = this.constructor._createTriggerElement();
+        // Add a selection element instead if no fragments exist yet
+        if (_isEmpty(fragmentElements)) {
+            const newSelectionElement = this._createSelectionElement();
 
-            this.fragmentsContainer.appendChild(triggerElement);
+            this.fragmentsContainer.appendChild(newSelectionElement);
+
+            EventBus.publish('fragment-new', newSelectionElement);
 
             return;
         }
 
+        // Add a trigger element before every fragment element
         fragmentElements.forEach((element, index) => {
             const triggerElement = this.constructor._createTriggerElement();
 
             this.fragmentsContainer.insertBefore(triggerElement, element);
 
+            // Also add a trigger element after the last fragment element
             if (index === fragmentElements.length - 1) {
                 const lastTriggerElement = this.constructor._createTriggerElement();
 
@@ -119,26 +91,41 @@ export default class {
 
     _activateTriggerElement(element) {
         element.addEventListener('click', () => {
-            const selectionElement = this._createSelectionElement();
+            this._purgeFragmentsContainerFromSelectionElements();
 
-            element.parentNode.insertBefore(selectionElement, element);
+            const newSelectionElement = this._createSelectionElement();
+
+            element.parentNode.insertBefore(newSelectionElement, element);
             element.parentNode.removeChild(element);
 
-            EventBus.publish('fragment-new', selectionElement);
+            EventBus.publish('fragment-new', newSelectionElement);
+        });
+    }
+
+    _purgeFragmentsContainerFromSelectionElements() {
+        const existingSelectionElements = Array.from(this.fragmentsContainer.querySelectorAll(this.selectionSelector));
+
+        existingSelectionElements.forEach((element) => {
+            const newTriggerElement = this.constructor._createTriggerElement();
+            this._activateTriggerElement(newTriggerElement);
+
+            this.fragmentsContainer.replaceChild(newTriggerElement, element);
+        });
+    }
+
+    _hideAllTriggerElements() {
+        const triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+
+        triggerElements.forEach((element) => {
+            this.constructor._hideTriggerElement(element);
         });
     }
 
     _onlyShowClosestTriggerElement() {
         const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
 
-        // Always show the triggerSelector when there are no fragmentElements
-        if (fragmentElements.length === 0) {
-            const triggerElement = this.fragmentsContainer.querySelector(this.triggerSelector);
-
-            this.constructor._showTriggerElement(triggerElement);
-
-            return;
-        }
+        // If there are not fragments yet, there are also no triggerElements
+        if (_isEmpty(fragmentElements)) return;
 
         fragmentElements.forEach((element) => {
             element.addEventListener('mouseover', (e) => {
@@ -164,12 +151,53 @@ export default class {
         });
     }
 
-    _hideAllTriggerElements() {
-        const triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+    _passNewFragmentOrderToPanel(panel) {
+        const selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
 
-        triggerElements.forEach((element) => {
-            this.constructor._hideTriggerElement(element);
+        if (selectionElement) {
+            const order = this._getSelectionElementOrder(selectionElement);
+
+            if (panel.el.querySelector('input[name="order"]')) {
+                panel.el.querySelector('input[name="order"]').value = order;
+            }
+        }
+    }
+
+    _getSelectionElementOrder(node) {
+        const nextFragmentElement = this.constructor._getNextSiblingElement(node, this.fragmentSelector);
+        const fragmentsContainerChildren = Array.from(this.fragmentsContainer.children);
+        const fragmentElements = fragmentsContainerChildren.filter((element) => element.matches(this.fragmentSelector));
+
+        let order = fragmentElements.length;
+
+        fragmentElements.forEach((fragmentElement, index) => {
+            if (fragmentElement === nextFragmentElement) {
+                order = index;
+            }
         });
+
+        return order;
+    }
+
+    static _createTriggerElement() {
+        const template = document.querySelector('#js-fragment-add-template');
+        return template.firstElementChild.cloneNode(true);
+    }
+
+    _createSelectionElement() {
+        const template = document.querySelector('#js-fragment-selection-template');
+        const element = template.firstElementChild.cloneNode(true);
+        const elementCloseTrigger = element.querySelector(this.selectionCloseTriggerSelector);
+
+        elementCloseTrigger.addEventListener('click', () => {
+            const newTriggerElement = this.constructor._createTriggerElement();
+
+            this._activateTriggerElement(newTriggerElement);
+
+            element.parentNode.replaceChild(newTriggerElement, element);
+        });
+
+        return element;
     }
 
     static _hideTriggerElement(triggerElement) {
@@ -200,36 +228,5 @@ export default class {
         }
 
         return sibling;
-    }
-
-    _passNewFragmentOrderToPanel(panel) {
-        const selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
-
-        if (selectionElement) {
-            const order = this._getSelectionElementOrder(selectionElement);
-
-            if (panel.el.querySelector('input[name="order"]')) {
-                panel.el.querySelector('input[name="order"]').value = order;
-            }
-
-            selectionElement.parentNode.removeChild(selectionElement);
-        }
-    }
-
-    _getSelectionElementOrder(node) {
-        const nextFragmentElement = this.constructor._getNextSiblingElement(node, this.fragmentSelector);
-
-        const fragmentsContainerChildren = Array.from(this.fragmentsContainer.children);
-        const fragmentElements = fragmentsContainerChildren.filter((element) => element.matches(this.fragmentSelector));
-
-        let order = fragmentElements.length;
-
-        fragmentElements.forEach((fragmentElement, index) => {
-            if (fragmentElement === nextFragmentElement) {
-                order = index;
-            }
-        });
-
-        return order;
     }
 }

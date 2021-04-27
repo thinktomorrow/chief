@@ -1,8 +1,4 @@
-<div data-fragments-component class="space-y-4">
-    {{-- <div>
-        <span class="text-xl font-semibold text-grey-900">Fragments</span>
-    </div> --}}
-
+<div data-fragments-component>
     <div
         data-fragments-container
         data-sortable-fragments

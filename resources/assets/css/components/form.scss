@@ -13,7 +13,7 @@ input[type='file'] {
 
     /* Focusing the button with a keyboard will show a dashed black line. */
     &:focus-visible {
-        outline: 1px dashed grey;
+        outline: 1px dashed theme('colors.grey.500');
     }
 
     /* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */

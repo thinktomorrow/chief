@@ -15,18 +15,18 @@
         $iconElement = '<svg width="20" height="20"><use xlink:href="#' . $icon . '"/></svg>';
     } else {
         switch($type ?? null) {
-            case 'edit':
-                $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#icon-edit"/></svg>'; break;
             case 'back':
                 $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#icon-arrow-rtl"/></svg>'; break;
             case 'forward':
                 $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#icon-arrow-ltr"/></svg>'; break;
             case 'add':
                 $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#icon-add"/></svg>'; break;
-            case 'external-link':
-                $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#icon-external-link"/></svg>'; break;
             case 'delete':
                 $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#trash"/></svg>'; break;
+            case 'edit':
+                $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#icon-edit"/></svg>'; break;
+            case 'close':
+                $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#x"/></svg>'; break;
             default: break;
         }
     }

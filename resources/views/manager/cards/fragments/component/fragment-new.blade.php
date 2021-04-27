@@ -1,15 +1,19 @@
 <div hidden id="js-fragment-selection-template">
     <div
-        data-sortable-handle
+        data-fragment-selection-element
+        data-sortable-ignore
         data-sortable-id="remove-before-post"
-        data-fragments-new-selection
-        class="px-12 py-12"
+        class="p-8"
     >
         <div class="pop space-y-4">
-            <div>
+            <div class="relative flex justify-center items-start">
                 <p class="font-medium text-grey-700 text-center">
                     Kies een blok om toe te voegen
                 </p>
+
+                <a data-fragment-selection-element-close class="absolute top-0 right-0 link link-grey cursor-pointer">
+                    <x-icon-label type="close"></x-icon-label>
+                </a>
             </div>
 
             <div class="flex justify-center items-center space-x-2">
@@ -51,7 +55,7 @@
 
 <div hidden id="js-fragment-add-template">
     <div
-        data-fragments-new-trigger
+        data-fragment-trigger-element
         data-sortable-ignore
         data-sortable-id="remove-before-post"
         class="relative flex justify-center z-1 border-none"

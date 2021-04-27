@@ -30,7 +30,7 @@ export default {
     props: {
         type: String,
         description: String,
-        duration: String,
+        duration: [Number, String],
     },
     data() {
         return {
