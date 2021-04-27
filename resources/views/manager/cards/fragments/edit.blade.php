@@ -54,6 +54,15 @@
 
         <h4>Delen</h4>
 
+        <button
+                data-submit-form="copyFragment{{ $model->modelReference()->get() }}"
+                class="btn btn-info-outline"
+                type="submit"
+                form="copyFragment{{ $model->modelReference()->get() }}"
+        >
+            Kopieer
+        </button>
+
         <ul>
         @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
             @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
@@ -69,7 +78,7 @@
                     type="submit"
                     form="unshareFragment{{ $model->modelReference()->get() }}"
             >
-                Niet langer deelbaar maken
+                Niet langer deelbaar maken voor toekomstige pagina's
             </button>
         @else
             <p>Maak dit blok selecteerbaar op alle pagina's. Aanpassingen aan de inhoud worden op alle pagina's toegepast.</p>
@@ -79,7 +88,7 @@
                     type="submit"
                     form="shareFragment{{ $model->modelReference()->get() }}"
             >
-                Deelbaar maken
+                Deelbaar maken voor toekomstige pagina's
             </button>
         @endif
 
@@ -107,6 +116,14 @@
         id="unshareFragment{{ $model->modelReference()->get() }}"
         method="POST"
         action="{{ $manager->route('fragment-unshare', $model) }}"
+>
+    @csrf
+</form>
+
+<form
+        id="copyFragment{{ $model->modelReference()->get() }}"
+        method="POST"
+        action="{{ $manager->route('fragment-copy', $owner, $model) }}"
 >
     @csrf
 </form>

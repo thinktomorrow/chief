@@ -12,11 +12,12 @@ use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 
 trait FragmentAssistant
 {
@@ -42,11 +43,15 @@ trait FragmentAssistant
             ManagedRoute::get('fragment-edit', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragment_id}/edit'),
 
             ManagedRoute::post('fragment-add', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/add'),
+            ManagedRoute::post('fragment-copy', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/copy'),
             ManagedRoute::delete('fragment-remove', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/remove'),
+
+            // Nested routes are not used in the views, but only provided for the assistant to be able to deal with nested fragments.
             ManagedRoute::get('nested-fragment-create', 'nestedfragment/{fragmentowner_model_id}/create'),
             ManagedRoute::post('nested-fragment-store', 'nestedfragment/{fragmentowner_model_id}'),
             ManagedRoute::get('nested-fragment-edit', 'nestedfragment/{fragmentowner_model_id}/{fragment_id}/edit'),
             ManagedRoute::post('nested-fragment-add', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/add'),
+            ManagedRoute::post('nested-fragment-copy', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/copy'),
             ManagedRoute::delete('nested-fragment-remove', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/remove'),
         ];
     }
@@ -61,6 +66,7 @@ trait FragmentAssistant
             'fragment-store',
             'fragment-status',
             'fragment-add',
+            'fragment-copy',
             'fragment-share',
             'fragment-unshare',
             'fragment-remove',
@@ -71,19 +77,19 @@ trait FragmentAssistant
         $modelKey = $this->managedModelClass()::managedModelKey();
 
         // model argument is owner for create endpoints
-        if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-remove'])) {
+        if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-remove'])) {
             if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for ' . $action . ' requires a FragmentsOwner Model as second argument.');
             }
 
             // Some fragment edit/update actions have second argument as the fragmentable
-            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-remove']) && $parameters[0] instanceof Fragmentable) {
+            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-remove']) && $parameters[0] instanceof Fragmentable) {
                 $parameters[0] = $parameters[0]->fragmentModel()->id;
             }
 
             // Nested fragments routes
             if ($model instanceof Fragmentable && $model->isFragment()) {
-                return route('chief.' . $modelKey . '.nested-' . $action,                    array_merge([$model->fragmentModel()->id], $parameters));
+                return route('chief.' . $modelKey . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
             }
 
             return route('chief.' . $modelKey . '.' . $action, array_merge([
@@ -107,6 +113,7 @@ trait FragmentAssistant
             'fragment-update',
             'fragment-delete',
             'fragment-add',
+            'fragment-copy',
             'fragment-create',
             'fragment-store',
             'fragment-status',
@@ -152,7 +159,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentStore($this->fragmentRepository->find($fragmentModelId)->fragmentModel(),            $request);
+        return $this->handleFragmentStore($this->fragmentRepository->find($fragmentModelId)->fragmentModel(), $request);
     }
 
     private function handleFragmentStore($ownerModel, Request $request)
@@ -182,14 +189,14 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId),            $fragmentModelId,            $request->input('order', 0));
+        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId), $fragmentModelId, $request->input('order', 0));
     }
 
     public function nestedFragmentAdd(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),            $fragmentModelId,            $request->input('order', 0));
+        return $this->handleFragmentAdd($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), $fragmentModelId, $request->input('order', 0));
     }
 
     private function handleFragmentAdd(Model $ownerModel, string $fragmentModelId, int $order)
@@ -211,18 +218,44 @@ trait FragmentAssistant
         ], 201);
     }
 
+    public function fragmentCopy(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
+    {
+        $this->guard('fragment-store');
+
+        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), $fragmentModelId, $request->input('order', 0));
+    }
+
+    public function nestedFragmentCopy(Request $request, $fragmentOwnerModelId, $fragmentModelId)
+    {
+        $this->guard('fragment-store');
+
+        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), $fragmentModelId, $request->input('order', 0));
+    }
+
+    private function handleFragmentCopy(Model $ownerModel, string $fragmentModelId, int $order)
+    {
+        $fragmentable = $this->fragmentRepository->find($fragmentModelId);
+
+        app(DuplicateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
+
+        return response()->json([
+            'message' => 'fragment added',
+            'data' => [],
+        ], 201);
+    }
+
     public function fragmentRemove(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove($this->ownerModel($ownerKey, $ownerId),            $fragmentModelId);
+        return $this->handleFragmentRemove($this->ownerModel($ownerKey, $ownerId), $fragmentModelId);
     }
 
     public function nestedFragmentRemove(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),            $fragmentModelId);
+        return $this->handleFragmentRemove($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), $fragmentModelId);
     }
 
     private function handleFragmentRemove(Model $ownerModel, string $fragmentModelId)

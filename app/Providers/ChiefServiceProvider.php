@@ -28,7 +28,7 @@ use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\ManagedModels\Application\DuplicateContext;
+use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateContext;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Register\TaggedKeys;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;

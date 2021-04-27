@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\Application;
+namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;

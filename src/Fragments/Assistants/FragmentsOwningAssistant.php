@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
+use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FragmentsOwningAssistant
