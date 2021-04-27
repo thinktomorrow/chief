@@ -12,6 +12,7 @@ _migration/uploads
 /report
 /docs/_site
 .phpunit.result.cache
+.php_cs.cache
 build/
 
 ##########################################
