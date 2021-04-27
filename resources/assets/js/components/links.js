@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
         },
         events: {
-            // 'fragment-new': () => {
+            // 'selection-element-created': () => {
             //
             // },
         },

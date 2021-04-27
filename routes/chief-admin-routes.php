@@ -130,3 +130,29 @@ Route::get('translations', [\Thinktomorrow\Chief\App\Http\Controllers\Back\Trans
 * -----------------------------------------------------------------
 */
 Route::get('/style-guide', [\Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController::class, 'show'])->name('chief.back.style-guide');
+
+
+// FORGIVE ME BEN, FOR I HAVE SINNED
+Route::get('/fragment-select/{fragmentowner_type}/{fragmentowner_model_id}/new', function(\Illuminate\Http\Request $request) {
+    $ownerClass = app(\Thinktomorrow\Chief\Managers\Register\Registry::class)->modelClass($request['fragmentowner_type']);
+    $ownerModel = $ownerClass::withoutGlobalScopes()->find($request['fragmentowner_model_id']);
+
+    $repository = new \Thinktomorrow\Chief\Fragments\FragmentsComponentRepository(app(\Thinktomorrow\Chief\Fragments\Database\FragmentRepository::class), app(\Thinktomorrow\Chief\Managers\Register\Registry::class), $ownerModel);
+
+    return view('chief::manager.cards.fragments.component.fragment-select-new', [
+        'owner' => $ownerModel,
+        'allowedFragments' => $repository->getAllowedFragments()
+    ]);
+});
+
+Route::get('/fragment-select/{fragmentowner_type}/{fragmentowner_model_id}/duplicate', function(\Illuminate\Http\Request $request) {
+    $ownerClass = app(\Thinktomorrow\Chief\Managers\Register\Registry::class)->modelClass($request['fragmentowner_type']);
+    $ownerModel = $ownerClass::withoutGlobalScopes()->find($request['fragmentowner_model_id']);
+
+    $repository = new \Thinktomorrow\Chief\Fragments\FragmentsComponentRepository(app(\Thinktomorrow\Chief\Fragments\Database\FragmentRepository::class), app(\Thinktomorrow\Chief\Managers\Register\Registry::class), $ownerModel);
+
+    return view('chief::manager.cards.fragments.component.fragment-select-duplicate', [
+        'owner' => $ownerModel,
+        'allowedFragments' => $repository->getAllowedFragments()
+    ]);
+});

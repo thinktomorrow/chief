@@ -66,6 +66,7 @@ export default class {
         // Add new panel container to dom
         const newPanelContainer = document.createElement('div');
         newPanelContainer.setAttribute('data-panel-id', id);
+
         this.container.dom().appendChild(newPanelContainer);
 
         Api.get(url, newPanelContainer, (data) => {
@@ -86,8 +87,7 @@ export default class {
             Api.listenForFormSubmits(
                 newPanelContainer,
                 (response) => {
-                    console.log(response);
-                    console.log('SUCCESS');
+                    console.log('success', response);
                     this.backOrClose(false);
 
                     if (this.onSubmitPanel) {
