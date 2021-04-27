@@ -30,6 +30,7 @@
 -   [ ] fragment selection flow
 -   [ ] wireframe-like icons for each fragment type
 -   [ ] make it obvious that fragment elements are draggable/sortable
+-   [ ] test nested fragments
 
 ### Nice to have
 
@@ -37,3 +38,4 @@
 -   [ ] window component? (title, spacing ...)
 -   [ ] thinktomorrow/chief-redactor package
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
+-   [ ] Chief admin translations

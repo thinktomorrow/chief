@@ -12,7 +12,7 @@
     }
 
     if(isset($icon)) {
-        $iconElement = '<svg width="20" height="20"><use xlink:href="#' . $icon . '"/></svg>';
+        $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#' . $icon . '"/></svg>';
     } else {
         switch($type ?? null) {
             case 'back':

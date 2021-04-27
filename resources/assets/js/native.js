@@ -25,3 +25,4 @@ if (document.getElementById('js-sortable')) {
 require('./components/fragment/fragments');
 require('./components/links');
 require('./components/fieldcomponents');
+require('./components/fragmentSelection');

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     livewireComponent.reload();
                 },
                 events: {
-                    // 'fragment-new': () => {
+                    // 'selection-element-created': () => {
                     //
                     // },
                 },

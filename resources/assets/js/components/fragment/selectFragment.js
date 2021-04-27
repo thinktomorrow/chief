@@ -53,7 +53,7 @@ export default class {
 
             this.fragmentsContainer.appendChild(newSelectionElement);
 
-            EventBus.publish('fragment-new', newSelectionElement);
+            EventBus.publish('selection-element-created', newSelectionElement);
 
             return;
         }
@@ -95,10 +95,9 @@ export default class {
 
             const newSelectionElement = this._createSelectionElement();
 
-            element.parentNode.insertBefore(newSelectionElement, element);
-            element.parentNode.removeChild(element);
+            this.fragmentsContainer.replaceChild(newSelectionElement, element);
 
-            EventBus.publish('fragment-new', newSelectionElement);
+            EventBus.publish('selection-element-created', newSelectionElement);
         });
     }
 
@@ -189,13 +188,15 @@ export default class {
         const element = template.firstElementChild.cloneNode(true);
         const elementCloseTrigger = element.querySelector(this.selectionCloseTriggerSelector);
 
-        elementCloseTrigger.addEventListener('click', () => {
-            const newTriggerElement = this.constructor._createTriggerElement();
+        if (elementCloseTrigger) {
+            elementCloseTrigger.addEventListener('click', () => {
+                const newTriggerElement = this.constructor._createTriggerElement();
 
-            this._activateTriggerElement(newTriggerElement);
+                this._activateTriggerElement(newTriggerElement);
 
-            element.parentNode.replaceChild(newTriggerElement, element);
-        });
+                element.parentNode.replaceChild(newTriggerElement, element);
+            });
+        }
 
         return element;
     }

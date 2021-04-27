@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 EventBus.publish('fragments-submit-panel');
             },
             events: {
-                'fragment-new': () => {
+                'selection-element-created': () => {
+                    fragmentPanelsManager.scanForPanelTriggers();
+                },
+                'selection-panel-created': () => {
                     fragmentPanelsManager.scanForPanelTriggers();
                 },
                 'fragment-add': () => {
