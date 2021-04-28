@@ -28,8 +28,9 @@
 -   [x] fragment selection element close button
 -   [x] trigger elements reload after fragment selection element is created
 -   [x] fragment selection flow
--   [ ] fragment selection shouldn't have a close trigger if there are no fragments yet
+-   [x] fragment selection shouldn't have a close trigger if there are no fragments yet
 -   [ ] nested fragments testing
+-   [ ] after adding or deleting 2 elements, all fragments are acting as selection trigger elements
 -   [ ] wireframe-like icons for each fragment type
 -   [ ] make it obvious that fragment elements are draggable/sortable
 

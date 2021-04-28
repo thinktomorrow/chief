@@ -28,10 +28,12 @@ export default class {
         this._activateTriggerElements();
         this._onlyShowClosestTriggerElement();
 
-        const reloadEvents = ['sortable-stored', 'fragmentsReloaded'];
+        const reloadEvents = ['sortableStored', 'fragmentsReloaded'];
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
+                console.log('Select fragments listening to fragmentsReloaded ...');
+
                 // Needs to be redefined after Livewire rebuild the element with the added fragment
                 this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
 
@@ -80,7 +82,7 @@ export default class {
         const triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
 
         triggerElements.forEach((element) => {
-            element.parentNode.removeChild(element);
+            this.fragmentsContainer.removeChild(element);
         });
     }
 
@@ -93,12 +95,28 @@ export default class {
     }
 
     _activateTriggerElement(element) {
-        element.addEventListener('click', () => {
+        console.log('Activating trigger element:', element);
+
+        element.addEventListener('click', (e) => {
+            console.log('Clicked trigger element:', element);
+
+            // Temporary fix for problem where after adding/deleting 2 fragments,
+            // fragments start acting as trigger elements as well.
+            if (!e.currentTarget.matches(this.triggerSelector)) {
+                console.log(`
+                    Prevented handler from being triggered by fragment.
+                    This handler should only be triggered by dedicated triggers ...
+                `);
+                return;
+            }
+
             this._purgeFragmentsContainerFromSelectionElements();
 
             const newSelectionElement = this._createSelectionElement();
 
-            this.fragmentsContainer.replaceChild(newSelectionElement, element);
+            this.fragmentsContainer.insertBefore(newSelectionElement, element);
+            this.fragmentsContainer.removeChild(element);
+            // this.fragmentsContainer.replaceChild(newSelectionElement, element);
 
             EventBus.publish('fragmentSelectionElementCreated', newSelectionElement);
         });
@@ -111,7 +129,9 @@ export default class {
             const newTriggerElement = this.constructor._createTriggerElement();
             this._activateTriggerElement(newTriggerElement);
 
-            this.fragmentsContainer.replaceChild(newTriggerElement, element);
+            this.fragmentsContainer.insertBefore(newTriggerElement, element);
+            this.fragmentsContainer.removeChild(element);
+            // this.fragmentsContainer.replaceChild(newTriggerElement, element);
         });
     }
 
@@ -183,24 +203,25 @@ export default class {
 
     _createSelectionElement(isClosable = true) {
         const template = document.querySelector('#js-fragment-selection-template');
-        const element = template.firstElementChild.cloneNode(true);
-        const elementCloseTrigger = element.querySelector(this.selectionCloseTriggerSelector);
 
-        if (elementCloseTrigger) {
-            if (isClosable) {
-                elementCloseTrigger.addEventListener('click', () => {
-                    const newTriggerElement = this.constructor._createTriggerElement();
+        const newSelectionElement = template.firstElementChild.cloneNode(true);
+        const elementCloseTrigger = newSelectionElement.querySelector(this.selectionCloseTriggerSelector);
 
-                    this._activateTriggerElement(newTriggerElement);
+        if (isClosable) {
+            elementCloseTrigger.addEventListener('click', () => {
+                const newTriggerElement = this.constructor._createTriggerElement();
 
-                    element.parentNode.replaceChild(newTriggerElement, element);
-                });
-            } else {
-                elementCloseTrigger.style.display = 'none';
-            }
+                this._activateTriggerElement(newTriggerElement);
+
+                this.fragmentsContainer.insertBefore(newTriggerElement, newSelectionElement);
+                this.fragmentsContainer.removeChild(newSelectionElement);
+                // element.parentNode.replaceChild(newTriggerElement, element);
+            });
+        } else {
+            elementCloseTrigger.style.display = 'none';
         }
 
-        return element;
+        return newSelectionElement;
     }
 
     static _createTriggerElement() {

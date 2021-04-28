@@ -1,9 +1,9 @@
 @if(count($fields) > 0)
     <x-chief-card
-            class="{{ isset($class) ? $class : '' }}"
-            title="{{ $title ?? null }}"
-            :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
-            type="fields-{{ $componentKey }}"
+        class="{{ isset($class) ? $class : '' }}"
+        title="{{ $title ?? null }}"
+        :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
+        type="fields-{{ $componentKey }}"
     >
         <div class="space-y-6">
             @foreach($fields as $field)
@@ -18,19 +18,24 @@
                         <div class="prose prose-dark">
                             @switch(get_class($field))
                                 @case(\Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField::class)
-                                <p>{{ $field->getValue() }}</p>
-                                @break
+                                    <p>{{ $field->getValue() }}</p>
+                                    @break
+                                @case(\Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField::class)
+                                    <img src="{{ $field->getValue() }}" alt="image">
+                                    @break
                                 @case(\Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField::class)
-                                <img src="{{ $field->getValue() }}" alt="image">
-                                @break
+                                    <img src="{{ $field->getValue() }}" alt="image">
+                                    @break
                                 @default
-                                {!! $field->getValue() !!}
-                                @break
+                                    {!! $field->getValue() !!}
+                                    @break
                             @endswitch
                         </div>
                     @else
                         <p>...</p>
                     @endif
+
+                    {{ get_class($field) }}
                 </div>
             @endforeach
         </div>

@@ -99,7 +99,7 @@ IndexSorting.prototype._init = function () {
                         .then(() => {
                             window.Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
 
-                            EventBus.publish('sortable-stored');
+                            EventBus.publish('sortableStored');
                         })
                         .catch((error) => {
                             window.Eventbus.$emit(
@@ -108,7 +108,7 @@ IndexSorting.prototype._init = function () {
                                 'Sortering kan niet worden bewaard. Er is iets misgelopen.️'
                             );
 
-                            EventBus.publish('sortable-stored');
+                            EventBus.publish('sortableStored');
 
                             console.error(error);
                         });
