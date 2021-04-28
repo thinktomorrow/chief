@@ -22,11 +22,6 @@ export default class {
 
         this.scanForPanelTriggers();
 
-        // Listen for close triggers on the sidebar container
-        this.container.closeTriggers.forEach((trigger) => {
-            trigger.addEventListener('click', this.backOrClose.bind(this));
-        });
-
         // Subscribe events via our EventBus
         Object.keys(this.events).forEach((key) => {
             EventBus.subscribe(key, this.events[key]);
@@ -38,9 +33,26 @@ export default class {
             el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);
         });
+
+        // Listen for close triggers inside the sidebar container
+        this.container.scanForCloseTriggers();
+        this.container.closeTriggers.forEach((trigger) => {
+            trigger.removeEventListener('click', this.backOrClose.bind(this));
+            trigger.addEventListener('click', this.backOrClose.bind(this));
+        });
     }
 
     _handlePanelTrigger(event) {
+        event.preventDefault();
+
+        const link = event.target.hasAttribute('href') ? event.target : event.target.closest('[href]');
+
+        if (!link) return;
+
+        this.show(link.getAttribute('href'));
+    }
+
+    _handlePanelCloseTrigger(event) {
         event.preventDefault();
 
         const link = event.target.hasAttribute('href') ? event.target : event.target.closest('[href]');

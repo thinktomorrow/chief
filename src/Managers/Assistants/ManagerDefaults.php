@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
@@ -13,12 +14,14 @@ trait ManagerDefaults
     private string $managedModelClass;
     private FragmentRepository $fragmentRepository;
     private FieldValidator $fieldValidator;
+    private Registry $registry;
 
-    public function __construct(string $managedModelClass, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator)
+    public function __construct(string $managedModelClass, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator, Registry $registry)
     {
         $this->managedModelClass = $managedModelClass;
         $this->fragmentRepository = $fragmentRepository;
         $this->fieldValidator = $fieldValidator;
+        $this->registry = $registry;
     }
 
     public function managedModelClass(): string

@@ -2,7 +2,7 @@
     <h3>Creëer een nieuw fragment</h3>
 
     <div class="row-start-center gutter-1">
-        @forelse($allowedFragments as $allowedFragment)
+        @forelse($fragments as $allowedFragment)
             <span>
                 {{-- TODO: fragment selection panel should close on sidebar edit trigger --}}
                 <a

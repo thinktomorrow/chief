@@ -12,9 +12,17 @@ export default class {
         this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
         this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
 
-        this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
+        this.scanForCloseTriggers();
 
         this._closeWithEscape();
+    }
+
+    /**
+     * Allows to rescan the sidebar content for
+     * any dynamically loaded close triggers
+     */
+    scanForCloseTriggers() {
+        this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
     }
 
     _createDomElement() {

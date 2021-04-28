@@ -24,7 +24,7 @@
                 <div class="w-1/2">
                     <a
                         data-sidebar-fragment-selection
-                        href="{{ route('chief.back.dashboard') }}/fragment-select/{{ $owner->singular ?? 'single' }}/{{ $owner->id }}/new"
+                        href="@adminRoute('fragments-select-new', $owner)"
                         class="flex flex-col justify-center items-center bg-grey-100 rounded-md p-4 space-y-1"
                     >
                         <svg class="text-grey-700" width="24" height="24"><use xlink:href="#icon-add"/></svg>
