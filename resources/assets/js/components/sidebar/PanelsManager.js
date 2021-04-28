@@ -22,6 +22,8 @@ export default class {
 
         this.scanForPanelTriggers();
 
+        this._closeWithEscape();
+
         // Subscribe events via our EventBus
         Object.keys(this.events).forEach((key) => {
             EventBus.subscribe(key, this.events[key]);
@@ -164,6 +166,14 @@ export default class {
         // TODO: Check for unsaved content before clicking submit...
         this.panels.clear();
         this.container.close();
+    }
+
+    _closeWithEscape() {
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.panels.findActive()) {
+                this.backOrClose();
+            }
+        });
     }
 
     /**

@@ -789,8 +789,6 @@ var _default = /*#__PURE__*/function () {
     this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
     this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
     this.scanForCloseTriggers();
-
-    this._closeWithEscape();
   }
   /**
    * Allows to rescan the sidebar content for
@@ -846,17 +844,6 @@ var _default = /*#__PURE__*/function () {
       var node = document.importNode(template.content, true);
       this.closeButton.innerHTML = '';
       this.closeButton.appendChild(node);
-    }
-  }, {
-    key: "_closeWithEscape",
-    value: function _closeWithEscape() {
-      var _this2 = this;
-
-      window.addEventListener('keydown', function (e) {
-        if (_this2.isOpen() && e.key === 'Escape') {
-          _this2.close();
-        }
-      });
     }
   }], [{
     key: "_closeElement",
@@ -1110,7 +1097,10 @@ var _default = /*#__PURE__*/function () {
         return _this._handlePanelTrigger(event);
       };
 
-      this.scanForPanelTriggers(); // Subscribe events via our EventBus
+      this.scanForPanelTriggers();
+
+      this._closeWithEscape(); // Subscribe events via our EventBus
+
 
       Object.keys(this.events).forEach(function (key) {
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.subscribe(key, _this.events[key]);
@@ -1252,6 +1242,17 @@ var _default = /*#__PURE__*/function () {
       this.panels.clear();
       this.container.close();
     }
+  }, {
+    key: "_closeWithEscape",
+    value: function _closeWithEscape() {
+      var _this4 = this;
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && _this4.panels.findActive()) {
+          _this4.backOrClose();
+        }
+      });
+    }
     /**
      * Replace components found within the active panel with their up to date rendered html
      * coming from serverside. Each component is marked by the [data-sidebar-component]
@@ -1261,18 +1262,18 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "replacePanelComponents",
     value: function replacePanelComponents() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (!this.panels.findActive()) return;
       Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
         var componentKey = el.getAttribute('data-sidebar-component');
-        _Api__WEBPACK_IMPORTED_MODULE_6__.default.get(_this4.panels.findActive().url, el, function (data) {
+        _Api__WEBPACK_IMPORTED_MODULE_6__.default.get(_this5.panels.findActive().url, el, function (data) {
           var DOM = document.createElement('div');
           DOM.innerHTML = data;
 
-          _this4.panels.activePanel.replaceComponent("[data-sidebar-component=\"".concat(componentKey, "\"]"), DOM.querySelector("[data-sidebar-component=\"".concat(componentKey, "\"]")).innerHTML);
+          _this5.panels.activePanel.replaceComponent("[data-sidebar-component=\"".concat(componentKey, "\"]"), DOM.querySelector("[data-sidebar-component=\"".concat(componentKey, "\"]")).innerHTML);
 
-          _this4.scanForPanelTriggers();
+          _this5.scanForPanelTriggers();
         });
       });
     }
