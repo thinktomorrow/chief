@@ -6,7 +6,7 @@ import EventBus from '../../utilities/EventBus';
  * show the available and shared fragment options
  */
 export default class {
-    constructor(container, fragmentsContainerSelector) {
+    constructor(container, fragmentsContainerSelector = '[data-fragments-container]') {
         this.container = container;
 
         this.fragmentsContainerSelector = fragmentsContainerSelector;
@@ -49,7 +49,7 @@ export default class {
 
         // Add a selection element instead if no fragments exist yet
         if (_isEmpty(fragmentElements)) {
-            const newSelectionElement = this._createSelectionElement();
+            const newSelectionElement = this._createSelectionElement(false);
 
             this.fragmentsContainer.appendChild(newSelectionElement);
 
@@ -178,19 +178,23 @@ export default class {
         return order;
     }
 
-    _createSelectionElement() {
+    _createSelectionElement(isClosable = true) {
         const template = document.querySelector('#js-fragment-selection-template');
         const element = template.firstElementChild.cloneNode(true);
         const elementCloseTrigger = element.querySelector(this.selectionCloseTriggerSelector);
 
         if (elementCloseTrigger) {
-            elementCloseTrigger.addEventListener('click', () => {
-                const newTriggerElement = this.constructor._createTriggerElement();
+            if (isClosable) {
+                elementCloseTrigger.addEventListener('click', () => {
+                    const newTriggerElement = this.constructor._createTriggerElement();
 
-                this._activateTriggerElement(newTriggerElement);
+                    this._activateTriggerElement(newTriggerElement);
 
-                element.parentNode.replaceChild(newTriggerElement, element);
-            });
+                    element.parentNode.replaceChild(newTriggerElement, element);
+                });
+            } else {
+                elementCloseTrigger.style.display = 'none';
+            }
         }
 
         return element;

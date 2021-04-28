@@ -27,10 +27,11 @@
 -   [x] fragment selection element shouldn't hide on click outside of element
 -   [x] fragment selection element close button
 -   [x] trigger elements reload after fragment selection element is created
--   [ ] fragment selection flow
+-   [x] fragment selection flow
+-   [ ] fragment selection shouldn't have a close trigger if there are no fragments yet
+-   [ ] nested fragments testing
 -   [ ] wireframe-like icons for each fragment type
 -   [ ] make it obvious that fragment elements are draggable/sortable
--   [ ] test nested fragments
 
 ### Nice to have
 

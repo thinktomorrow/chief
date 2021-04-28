@@ -1,18 +1,14 @@
 <div data-fragments-component class="space-y-4">
-    <div class="flex justify-between items-center">
-        <h3 class="mb-0">Fragments</h3>
-
-        <div data-sidebar-component="fragmentcount">
-            <span class="font-medium text-grey-500">Aantal: {{ count($fragments) }}</span>
-        </div>
+    <div>
+        <span class="text-xl font-semibold text-grey-900">Nested fragments</span>
     </div>
 
     <div
-         data-fragments-container
-         data-sidebar-component="fragments"
-         data-sortable-fragments
-         data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-         class="divide-y divide-grey-200 border-t border-b border-grey-150 -mx-12"
+        data-fragments-container
+        data-sidebar-component="fragments"
+        data-sortable-fragments
+        data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
+        class="relative divide-y divide-grey-100 border-t border-b border-grey-100 -m-12"
     >
         @foreach($fragments as $fragment)
             @include('chief::manager.cards.fragments.component._card', [
@@ -23,5 +19,4 @@
             ])
         @endforeach
     </div>
-
 </div>

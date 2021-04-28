@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         new Container(sidebarContainerElement),
         {
             newPanelCreated: (panel) => {
+                // fragmentSelectionPanelsManager.scanForPanelTriggers();
+
                 EventBus.publish('newFragmentSelectionPanelCreated', panel);
             },
             events: {
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fragmentSelectionPanelsManager.scanForPanelTriggers();
                 },
                 newFragmentSelectionPanelCreated: (panel) => {
-                    console.log('triggered add fragment', panel);
+                    console.log('Triggering AddFragment', panel);
                     new AddFragment(panel.el);
                 },
             },
