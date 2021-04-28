@@ -21,6 +21,9 @@ export default class {
     }
 
     _init() {
+        // If one of these isn't present, don't init
+        if (!this.container || !this.fragmentsContainer) return;
+
         this._addTriggerElements();
         this._activateTriggerElements();
         this._onlyShowClosestTriggerElement();
