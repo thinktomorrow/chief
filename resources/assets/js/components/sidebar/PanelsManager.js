@@ -149,7 +149,7 @@ export default class {
      */
     backOrClose(keepPreviousPanel = true) {
         // Back to parent
-        if (this.panels.findActive().parent) {
+        if (this.panels.findActive() && this.panels.findActive().parent) {
             const previousId = this.panels.findActive().id;
 
             this.show(this.panels.findActive().parent.url);
