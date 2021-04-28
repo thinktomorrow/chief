@@ -28,18 +28,18 @@
                         class="flex flex-col justify-center items-center bg-grey-100 rounded-md p-4 space-y-1"
                     >
                         <svg class="text-grey-700" width="24" height="24"><use xlink:href="#icon-add"/></svg>
-                        <span class="font-medium text-grey-700">Maak een nieuwe blok</span>
+                        <span class="font-medium text-grey-700">Maak een nieuw blok</span>
                     </a>
                 </div>
 
                 <div class="w-1/2">
                     <a
                         data-sidebar-fragment-selection
-                        href="{{ route('chief.back.dashboard') }}/fragment-select/{{ $owner->singular ?? 'single' }}/{{ $owner->id }}/duplicate"
+                        href="@adminRoute('fragments-select-existing', $owner)"
                         class="flex flex-col justify-center items-center bg-grey-100 rounded-md p-4 space-y-1"
                     >
                         <svg class="text-grey-700" width="24" height="24"><use xlink:href="#icon-duplicate"/></svg>
-                        <span class="font-medium text-grey-700">Gebruik een bestaande blok</span>
+                        <span class="font-medium text-grey-700">Kies een bestaand blok</span>
                     </a>
                 </div>
             </div>

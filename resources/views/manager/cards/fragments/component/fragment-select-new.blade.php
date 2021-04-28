@@ -4,7 +4,6 @@
     <div class="row-start-center gutter-1">
         @forelse($fragments as $allowedFragment)
             <span>
-                {{-- TODO: fragment selection panel should close on sidebar edit trigger --}}
                 <a
                     data-sidebar-fragments-edit
                     data-sidebar-close

@@ -77,6 +77,29 @@ trait FragmentsOwningAssistant
         ]);
     }
 
+    public function fragmentsSelectExisting(Request $request, $ownerId)
+    {
+        $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
+
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner));
+    }
+
+    public function nestedFragmentsSelectExisting(Request $request, $fragmentModelId)
+    {
+        $owner = $this->fragmentRepository->find($fragmentModelId);
+
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner->fragmentModel()), $this->getSharedFragments($owner->fragmentModel()));
+    }
+
+    private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments)
+    {
+        return view('chief::manager.cards.fragments.component.fragment-select-existing', [
+            'fragments' => $fragments,
+            'sharedFragments' => $sharedFragments,
+            'owner' => $owner,
+        ]);
+    }
+
     public function fragmentsReorder(Request $request, $ownerId)
     {
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
@@ -115,6 +138,13 @@ trait FragmentsOwningAssistant
     private function getSharedFragments(Model $owner): array
     {
         $fragmentModelIds = $this->fragmentRepository->getByOwner($owner)->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
+
+        return $this->fragmentRepository->shared()->map(function ($fragmentable) {
+            return [
+                'manager' => $this->registry->manager($fragmentable::managedModelKey()),
+                'model' => $fragmentable,
+            ];
+        })->all();
 
         return $this->fragmentRepository->shared()->reject(function ($fragmentable) use ($fragmentModelIds) {
             return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
