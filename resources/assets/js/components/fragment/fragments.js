@@ -1,7 +1,6 @@
 import Container from '../sidebar/Container';
 import PanelsManager from '../sidebar/PanelsManager';
 import IndexSorting from '../../utilities/sortable';
-import AddFragment from './addFragment';
 import SelectFragment from './selectFragment';
 import EventBus from '../../utilities/EventBus';
 
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!sidebarContainerEl || !componentEl) return;
 
     new SelectFragment(document, '[data-fragments-container]');
-    new AddFragment(document);
 
     const fragmentPanelsManager = new PanelsManager(
         '[data-sidebar-fragments-edit]',

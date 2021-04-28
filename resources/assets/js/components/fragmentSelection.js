@@ -1,6 +1,7 @@
 import EventBus from '../utilities/EventBus';
 import Container from './sidebar/Container';
 import PanelsManager from './sidebar/PanelsManager';
+import AddFragment from './fragment/addFragment';
 
 document.addEventListener('DOMContentLoaded', () => {
     const sidebarContainerElement = document.querySelector('#js-sidebar-container');
@@ -19,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
             events: {
                 fragmentSelectionElementCreated: () => {
                     fragmentSelectionPanelsManager.scanForPanelTriggers();
+                },
+                newFragmentSelectionPanelCreated: (panel) => {
+                    console.log('triggered add fragment', panel);
+                    new AddFragment(panel.el);
                 },
             },
         }

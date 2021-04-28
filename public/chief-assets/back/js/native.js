@@ -89,7 +89,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 /**
  * Fragment add
- * submit fragment post request and grab results
+ * Immediately add an existing fragment to the given context.
  */
 
 var _default = /*#__PURE__*/function () {
@@ -176,9 +176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
 /* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
 /* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
-/* harmony import */ var _addFragment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./addFragment */ "./resources/assets/js/components/fragment/addFragment.js");
-/* harmony import */ var _selectFragment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _selectFragment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
 
 
 
@@ -196,7 +195,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 /**
  * Fragments JS
  */
@@ -206,14 +204,14 @@ document.addEventListener('DOMContentLoaded', function () {
   var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
 
   if (!sidebarContainerEl || !componentEl) return;
-  new _selectFragment__WEBPACK_IMPORTED_MODULE_9__.default(document, '[data-fragments-container]');
-  new _addFragment__WEBPACK_IMPORTED_MODULE_8__.default(document);
+  new _selectFragment__WEBPACK_IMPORTED_MODULE_8__.default(document, '[data-fragments-container]'); // new AddFragment(document);
+
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_6__.default('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_5__.default(sidebarContainerEl), {
     newPanelCreated: function newPanelCreated(panel) {
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.publish('newFragmentPanelCreated', panel);
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.publish('newFragmentPanelCreated', panel);
     },
     panelFormSubmitted: function panelFormSubmitted() {
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.publish('fragmentPanelFormSubmitted');
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.publish('fragmentPanelFormSubmitted');
     },
     events: {
       fragmentSelectionElementCreated: function fragmentSelectionElementCreated() {
@@ -242,13 +240,13 @@ document.addEventListener('DOMContentLoaded', function () {
     livewireComponent.reload();
   }
 
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.subscribe('fragmentAdded', listen);
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.subscribe('fragmentPanelFormSubmitted', function () {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.subscribe('fragmentAdded', listen);
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.subscribe('fragmentPanelFormSubmitted', function () {
     livewireComponent.reload();
   });
   window.Livewire.on('fragmentsReloaded', function () {
     console.log('reloading fragments');
-    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.publish('fragmentsReloaded');
+    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.publish('fragmentsReloaded');
   });
   /**
    * Sortable logic for fragment component
@@ -268,10 +266,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.subscribe('newFragmentPanelCreated', function (panel) {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.subscribe('newFragmentPanelCreated', function (panel) {
     initSortable('[data-sortable-fragments]', panel.el);
   });
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_10__.default.subscribe('fragmentsReloaded', function () {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_9__.default.subscribe('fragmentsReloaded', function () {
     initSortable();
   });
   initSortable();
@@ -597,6 +595,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
 /* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
 /* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
+/* harmony import */ var _fragment_addFragment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragment/addFragment */ "./resources/assets/js/components/fragment/addFragment.js");
+
 
 
 
@@ -612,6 +612,10 @@ document.addEventListener('DOMContentLoaded', function () {
     events: {
       fragmentSelectionElementCreated: function fragmentSelectionElementCreated() {
         fragmentSelectionPanelsManager.scanForPanelTriggers();
+      },
+      newFragmentSelectionPanelCreated: function newFragmentSelectionPanelCreated(panel) {
+        console.log('triggered add fragment', panel);
+        new _fragment_addFragment__WEBPACK_IMPORTED_MODULE_3__.default(panel.el);
       }
     }
   });

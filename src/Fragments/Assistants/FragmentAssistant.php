@@ -207,13 +207,13 @@ trait FragmentAssistant
             app(AddFragmentModel::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
         } catch (FragmentAlreadyAdded $e) {
             return response()->json([
-                'message' => 'fragment not added',
+                'message' => 'fragment ['.$fragmentModelId.'] is already added',
                 'data' => [],
             ], 400);
         }
 
         return response()->json([
-            'message' => 'fragment added',
+            'message' => 'fragment ['.$fragmentModelId.'] added',
             'data' => [],
         ], 201);
     }
@@ -239,7 +239,7 @@ trait FragmentAssistant
         app(DuplicateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
 
         return response()->json([
-            'message' => 'fragment added',
+            'message' => 'fragment ['.$fragmentModelId.'] added as copy',
             'data' => [],
         ], 201);
     }
@@ -266,13 +266,13 @@ trait FragmentAssistant
             app(RemoveFragmentModel::class)->handle($ownerModel, $fragmentable->fragmentModel(), );
         } catch (FragmentAlreadyRemoved $e) {
             return response()->json([
-                'message' => 'fragment is already removed.',
+                'message' => 'fragment ['.$fragmentModelId.'] is already removed.',
                 'data' => [],
             ], 400);
         }
 
         return response()->json([
-            'message' => 'fragment removed',
+            'message' => 'fragment ['.$fragmentModelId.'] removed',
             'data' => [],
         ]);
     }

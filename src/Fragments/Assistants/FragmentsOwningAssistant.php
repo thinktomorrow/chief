@@ -139,13 +139,6 @@ trait FragmentsOwningAssistant
     {
         $fragmentModelIds = $this->fragmentRepository->getByOwner($owner)->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
-        return $this->fragmentRepository->shared()->map(function ($fragmentable) {
-            return [
-                'manager' => $this->registry->manager($fragmentable::managedModelKey()),
-                'model' => $fragmentable,
-            ];
-        })->all();
-
         return $this->fragmentRepository->shared()->reject(function ($fragmentable) use ($fragmentModelIds) {
             return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
         })->map(function ($fragmentable) {

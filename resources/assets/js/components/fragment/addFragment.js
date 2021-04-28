@@ -3,7 +3,7 @@ import EventBus from '../../utilities/EventBus';
 
 /**
  * Fragment add
- * submit fragment post request and grab results
+ * Immediately add an existing fragment to the given context.
  */
 export default class {
     constructor(container) {
