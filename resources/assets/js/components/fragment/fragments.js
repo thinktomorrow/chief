@@ -19,6 +19,16 @@ const initSortable = (selector = '[data-sortable-fragments]', container = docume
             ...options,
         });
     });
+
+    EventBus.subscribe('newFragmentPanelCreated', (panel) => {
+        initSortable(selector, panel.el);
+
+        new SelectFragment(panel.el);
+    });
+
+    EventBus.subscribe('fragmentsReloaded', () => {
+        initSortable();
+    });
 };
 
 const initFragments = () => {
@@ -76,16 +86,6 @@ const initFragments = () => {
 
     EventBus.subscribe('fragmentPanelFormSubmitted', () => {
         livewireComponent.reload();
-    });
-
-    EventBus.subscribe('newFragmentPanelCreated', (panel) => {
-        initSortable('[data-sortable-fragments]', panel.el);
-
-        new SelectFragment(panel.el);
-    });
-
-    EventBus.subscribe('fragmentsReloaded', () => {
-        initSortable();
     });
 };
 
