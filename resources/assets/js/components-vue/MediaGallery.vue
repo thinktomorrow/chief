@@ -1,20 +1,16 @@
 <template>
-    <modal :id="id" class="large-modal" type="modal">
-        <div v-if="!isLoading || assets.length > 1" class="row items-center mb-4">
-            <div class="w-1/2">
-                <h2 class="text-2xl">Kies een bestaande afbeelding</h2>
-            </div>
+    <modal :id="id" type="modal" title="Media" size="xl">
+        <div v-if="!isLoading || assets.length > 1" class="mb-4 space-y-4">
+            <h3>Kies een bestaande afbeelding</h3>
 
-            <div class="w-1/2">
-                <div class="flex justify-end items-center space-x-4">
-                    <input placeholder="Zoek op bestandsnaam ..." type="text" v-model="searchQuery" />
+            <div class="flex items-center justify-end space-x-4">
+                <input placeholder="Zoek op bestandsnaam ..." type="text" v-model="searchQuery" />
 
-                    <button class="btn btn-primary-outline" @click.prevent="search()">Filter</button>
-                </div>
+                <button class="btn btn-primary" @click.prevent="search()">Filter</button>
             </div>
         </div>
 
-        <div data-overflow-scroll class="row overflow-scroll max-h-3/4 -mx-3">
+        <div data-overflow-scroll class="-mx-3 overflow-scroll row max-h-3/4">
             <div class="flex justify-center w-full" v-if="isLoading && assets.length < 1">
                 <svg
                     width="24"
@@ -54,13 +50,13 @@
                 v-for="(asset, i) in assets"
                 v-bind:key="asset.id"
                 @click="select(asset)"
-                class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-1 cursor-pointer"
+                class="w-full p-1 cursor-pointer xs:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6"
             >
                 <div
                     :class="{ 'bg-grey-50 border-secondary-500': isSelectedAsset(asset) }"
-                    class="p-2 border-2 rounded border-transparent hover:bg-grey-50"
+                    class="p-2 border-2 border-white rounded hover:bg-grey-50"
                 >
-                    <div class="bg-grey-100 flex items-center justify-center h-32 mb-2 rounded">
+                    <div class="flex items-center justify-center h-32 mb-2 rounded bg-grey-100">
                         <img
                             :id="'media-gallery-image-' + i"
                             :src="asset.url"
@@ -71,14 +67,14 @@
                     <div>
                         <p
                             :title="asset.filename"
-                            class="font-bold"
-                            style="text-overflow: ellipsis; overflow: hidden; width: 100%; white-space: nowrap"
+                            class="w-full overflow-hidden font-semibold text-grey-900 whitespace-nowrap overflow-ellipsis"
                         >
                             {{ asset.filename }}
                         </p>
-                        <div class="flex justify-between">
-                            <p class="block text-grey-400 mb-2">{{ asset.dimensions }}</p>
-                            <p class="block text-grey-400 mb-2">{{ asset.size }}</p>
+
+                        <div class="flex justify-between -my-1 space-x-2">
+                            <span class="my-1 text-sm font-medium text-grey-500">{{ asset.dimensions }}</span>
+                            <span class="my-1 text-sm font-medium text-grey-500">{{ asset.size }}</span>
                         </div>
                     </div>
                 </div>
@@ -86,7 +82,7 @@
         </div>
 
         <div slot="footer" class="flex justify-between w-full" v-if="assets.length > 0">
-            <div @click="loadMore()" class="btn btn-primary-outline inline-flex">
+            <div @click="loadMore()" class="inline-flex btn btn-primary-outline">
                 <span>Toon meer afbeeldingen</span>
                 <span v-if="isLoading" class="ml-2">
                     <svg
@@ -105,7 +101,7 @@
                             stroke-linecap="round"
                             r="40"
                             stroke-width="10"
-                            stroke="#5C4456"
+                            stroke="#ffffff"
                             stroke-dasharray="62.83185307179586 62.83185307179586"
                             transform="rotate(233.955 50 50)"
                         >

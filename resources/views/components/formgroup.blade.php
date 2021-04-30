@@ -1,24 +1,24 @@
 <div class="{{ $attributes->get('class', '') }}">
     @isset($label)
-        <div class="space-x-1 mb-3 leading-none">
+        <div class="mb-3 space-x-1 leading-none">
             @isset($id)
-                <label for="{{ $id }}" class="font-medium text-grey-900 leading-none cursor-pointer">
+                <label for="{{ $id }}" class="font-medium leading-none cursor-pointer text-grey-900">
                     {{ ucfirst($label) }}
                 </label>
             @else
-                <span class="font-medium text-grey-900 leading-none">
+                <span class="font-medium leading-none text-grey-900">
                     {{ ucfirst($label) }}
                 </span>
             @endisset
 
-            @if(isset($isRequired) && $isRequired == 'true')
-                <span class="label label-info text-sm leading-none">Verplicht</span>
+            @if(isset($isRequired) && ($isRequired == 'true') | $isRequired == '1')
+                <span class="text-sm leading-none label label-warning">Verplicht</span>
             @endif
         </div>
     @endisset
 
     @isset($description)
-        <div class="prose prose-dark prose-editor mb-4">
+        <div class="mb-4 prose prose-dark prose-editor">
             {{ $description }}
         </div>
     @endisset

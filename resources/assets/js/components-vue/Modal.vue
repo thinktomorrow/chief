@@ -3,13 +3,13 @@
     <!-- TODO: modal should open on form error inside of modal (e.g. delete input field) -->
     <!-- <transition :name="typedtransition" mode="in-out" appear> -->
     <div v-show="isVisible" class="fixed inset-0 z-10" :class="typedclass">
-        <div class="absolute inset-0 flex justify-center items-center">
-            <div class="absolute inset-0 opacity-25 bg-black cursor-pointer" @click="close"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative window window-white shadow-xl max-w-xl">
+            <div class="relative shadow-xl window window-white" :class="sizeClass">
                 <div class="space-y-6">
                     <div v-if="title">
-                        <span class="text-sm uppercase font-semibold text-grey-500 tracking-widest">
+                        <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">
                             {{ title }}
                         </span>
                     </div>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div v-if="showFooter" class="flex items-center space-x-4 mt-8">
+                <div v-if="showFooter" class="flex items-center mt-8 space-x-4">
                     <slot name="footer">
                         <slot name="modal-action-buttons"></slot>
 
@@ -32,7 +32,7 @@
                 <button
                     type="button"
                     @click="close"
-                    class="absolute top-0 right-0 link link-grey icon-label bg-white rounded-full m-7 p-1"
+                    class="absolute top-0 right-0 p-1 bg-white rounded-full link link-grey icon-label m-7"
                 >
                     <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#x" /></svg>
                 </button>
@@ -49,6 +49,7 @@ export default {
         active: { default: false, type: Boolean },
         title: { default: '' },
         type: { default: 'modal' },
+        size: { default: 'small' },
     },
     data() {
         return {
@@ -56,6 +57,7 @@ export default {
             showFooter: true,
             typedclass: this.type == 'sidebar-large' ? 'sidebar sidebar-large' : this.type,
             typedtransition: this.type == 'sidebar-large' ? 'sidebar' : this.type,
+            sizeClass: this.getSizeClass(),
         };
     },
     methods: {
@@ -66,6 +68,20 @@ export default {
             this.isVisible = false;
             if (this.$el.querySelector('[data-delete-confirmation]'))
                 this.$el.querySelector('[data-delete-confirmation]').value = '';
+        },
+        getSizeClass: function () {
+            switch (this.size) {
+                case 'small':
+                    return 'max-w-xl';
+                case 'large':
+                    return 'max-w-3xl';
+                case 'xl':
+                    return 'w-full lg:w-3/4 2xl:w-1/2';
+                case 'max':
+                    return 'max-w-full';
+                default:
+                    return 'max-w-xl';
+            }
         },
     },
     created() {

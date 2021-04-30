@@ -9,22 +9,44 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'] {
-    @apply bg-grey-50 border border-grey-200 rounded-md px-4 py-3 font-medium text-grey-700 w-full;
+    @apply bg-grey-50 border border-grey-200 rounded-md px-4 py-3 font-medium text-grey-700;
 
     /* Focusing the button with a keyboard will show a dashed black line. */
     &:focus-visible {
-        outline: 1px dashed theme('colors.grey.500');
+        // outline: 1px dashed theme('colors.grey.500');
+
+        @apply border-primary-500 bg-white;
     }
 
     /* Focusing the button with a mouse, touch, or stylus will show a subtle drop shadow. */
     &:focus:not(:focus-visible) {
-        outline: none;
-        @apply ring-2 ring-primary-500 bg-grey-100;
+        // outline: none;
+        // @apply ring-2 ring-primary-500 bg-grey-100;
+
+        @apply border-primary-500 bg-white;
     }
 
     &::placeholder {
         @apply text-grey-400;
     }
+}
+
+textarea,
+input[type='text'],
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='tel'],
+input[type='search'],
+input[type='phone'],
+input[type='password'],
+input[type='file'],
+input[type='range'] {
+    @apply w-full;
+}
+
+input[type='number'] {
+    min-width: theme('spacing.12');
 }
 
 input[type='checkbox'],
@@ -64,4 +86,14 @@ input[type='checkbox'] {
 label.with-checkbox,
 label.with-radio {
     @apply flex items-center space-x-2 cursor-pointer;
+}
+
+input[type='text'].with-prepend,
+input[type='date'].with-prepend {
+    @apply rounded-l-none;
+}
+
+input[type='text'].with-append,
+input[type='date'].with-append {
+    @apply rounded-r-none;
 }

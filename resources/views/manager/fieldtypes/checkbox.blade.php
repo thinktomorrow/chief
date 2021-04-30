@@ -1,15 +1,15 @@
-<div>
+<div class="space-y-2">
     @foreach($field->getOptions() as $value => $label)
-        <label class="block stack-xs custom-indicators" for="{{ $key.'-'.$value }}">
-            <input {{ in_array($value, (array)old($key, $field->getSelected())) ? 'checked="checked"':'' }}
-                   name="{{ !$field->allowMultiple() ? $key : $key.'[]' }}"
-                   value="{{ $value }}"
-                   id="{{ $key.'-'.$value }}"
-                   type="checkbox">
-            <span class="custom-checkbox"></span>
-            <strong>{{ $label }}</strong>
+        <label for="{{ $key . '-' . $value }}" class="with-checkbox">
+            <input
+                type="checkbox"
+                name="{{ !$field->allowMultiple() ? $key : $key.'[]' }}"
+                id="{{ $key.'-'.$value }}"
+                value="{{ $value }}"
+                {{ in_array($value, (array)old($key, $field->getSelected())) ? 'checked="checked"' : '' }}
+            >
+
+            <span>{{ $label }}</span>
         </label>
     @endforeach
 </div>
-
-<error class="caption text-warning" field="{{ $key }}" :errors="errors.all()"></error>

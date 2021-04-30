@@ -18,6 +18,7 @@
 -   [ ] Multiselect bij mediagallery is nog fucked up
 -   [ ] pagination view update
 -   [ ] Seems like fragments sidebar errors don't work yet
+-   [ ] Thumb css rework
 
 ### Fragments
 
@@ -41,3 +42,13 @@
 -   [ ] thinktomorrow/chief-redactor package
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
 -   [ ] Chief admin translations
+
+### Field Component
+
+-   [ ] Images getValue() always returns an empty array
+-   [ ] Working truncate for both normal strings and HTML strings
+-   [ ] Fix charactercount for normal input fields (script doesn't init)
+-   [ ] Add inline errors for every field type
+-   [ ] Sidebar form validation (POST request doesn't seem to work if validation fails)
+-   [ ] Range fieldcomponent/field view upgrade
+-   [ ] Date fieldcomponent view upgrade

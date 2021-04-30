@@ -1,14 +1,15 @@
-<div class="mt-2 opacity-50 text-sm bg-grey-100 px-3 py-2 rounded-b border border-grey-300 border-t-0" style="font-family: monospace; margin-top: -1px;">
-    <p><span id="{{ $key }}-wordcount">0</span>/{{ $field->getCharacterCount() }} karakters</p>
+<div class="px-5 pt-3 pb-2 -mt-1 border rounded-b-md border-grey-100 bg-grey-50" style="font-size: 12px;">
+    <span class="font-mono text-sm leading-4 text-grey-500">
+        <span id="{{ $key }}-wordcount">0</span>
+        / {{ $field->getCharacterCount() }} karakters
+    </span>
 </div>
 
 @push('custom-scripts-after-vue')
     <script>
-
         function characterCount(id, max) {
-
-            let formField = document.getElementById(id),
-                characterCountEl = document.getElementById(id + "-wordcount");
+            var formField = document.getElementById(id);
+            var characterCountEl = document.getElementById(id + "-wordcount");
 
             formField.addEventListener("input", function(){
                 var currentLength = this.value.length;
@@ -27,7 +28,6 @@
             });
         }
 
-        new characterCount('{{ $key }}', {{ $field->getCharacterCount() }})
-
+        characterCount('{{ $key }}', {{ $field->getCharacterCount() }})
     </script>
 @endpush
