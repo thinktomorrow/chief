@@ -42,6 +42,7 @@
 -   [ ] thinktomorrow/chief-redactor package
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
 -   [ ] Chief admin translations
+-   [ ] Lifecycle hooks documentation (+ rules for custom events)
 
 ### Field Component
 

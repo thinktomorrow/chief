@@ -14,9 +14,9 @@
                     <div class="prose prose-dark">
                         @if(in_array($field->getType(), [
                             {{-- Done --}}
-                            'input', 'html', 'number', 'range', 'date', 'phonenumber',
+                            'input', 'html', 'number', 'range', 'date', 'phonenumber', 'checkbox', 'radio', 'select',
                             {{-- Still todo --}}
-                            'checkbox', 'radio', 'select', 'page', 'image', 'file',
+                            'page', 'image', 'file',
                         ]))
                             @include('chief::manager.cards.fields.templates._partials.' . $field->getType(), ['field' => $field])
                         @else

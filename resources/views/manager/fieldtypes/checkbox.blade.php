@@ -1,4 +1,4 @@
-<div class="space-y-2">
+<div class="space-y-1">
     @foreach($field->getOptions() as $value => $label)
         <label for="{{ $key . '-' . $value }}" class="with-checkbox">
             <input
