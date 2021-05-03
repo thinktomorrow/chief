@@ -24,7 +24,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full space-y-6">
-                <div class="window window-white prose prose-dark space-y-8 overflow-hidden">
+                <div class="space-y-8 overflow-hidden prose window window-white prose-dark">
                     <div class="-mx-8 -mt-8">
                         <div class="px-8 pt-8 pb-4 border-b border-grey-100">
                             <span class="window-title">General typography</span>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                <div class="window window-white prose prose-dark space-y-8">
+                <div class="space-y-8 prose window window-white prose-dark">
                     <div class="-mx-8 -mt-8">
                         <div class="px-8 pt-8 pb-4 border-b border-grey-100">
                             <span class="window-title">Buttons</span>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="window window-white prose prose-dark space-y-8">
+                <div class="space-y-8 prose window window-white prose-dark">
                     <div class="-mx-8 -mt-8">
                         <div class="px-8 pt-8 pb-4 border-b border-grey-100">
                             <span class="window-title">Anchor links</span>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <div class="window window-white space-y-8">
+                <div class="space-y-8 window window-white">
                     <div class="-mx-8 -mt-8">
                         <div class="px-8 pt-8 pb-4 border-b border-grey-100">
                             <span class="window-title">Forms</span>

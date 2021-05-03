@@ -1,8 +1,9 @@
-<div class="flex justify-between items-center">
-    <span>De pagina staat nog in draft. </span>
+<div class="space-y-3 prose prose-dark">
+    <p>De pagina staat nog in draft.</p>
 
-    <form class="inline-block" action="@adminRoute('publish', $model)" method="POST">
+    <form action="@adminRoute('publish', $model)" method="POST">
         {{ csrf_field() }}
-        <button type="submit" class="btn btn-primary cursor-pointer">Zet nu online</button>
+
+        <button type="submit" class="btn btn-primary">Zet nu online</button>
     </form>
 </div>

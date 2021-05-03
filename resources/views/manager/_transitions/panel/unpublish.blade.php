@@ -1,19 +1,19 @@
-<div class="flex justify-between items-center">
+<div class="space-y-3 prose prose-dark">
     @if($linkForm->isAnyLinkOnline())
-        <span>De pagina staat online. 👍</span>
+        <p>De pagina staat online. 👍</p>
 
-        <form class="mb-0" action="@adminRoute('unpublish', $model)" method="POST">
+        <form action="@adminRoute('unpublish', $model)" method="POST">
             {{ csrf_field() }}
+
             <button type="submit" class="btn btn-error-outline">Haal offline</button>
         </form>
     @else
-        <span class="mr-4">De pagina staat gepubliceerd maar zal zonder link nog niet bereikbaar zijn. Voeg hieronder nog een link toe!</span>
+        <p>De pagina staat gepubliceerd maar zal zonder link nog niet bereikbaar zijn. Voeg hieronder nog een link toe!</p>
 
-        <form class="mb-0" action="@adminRoute('unpublish', $model)" method="POST">
+        <form action="@adminRoute('unpublish', $model)" method="POST">
             {{ csrf_field() }}
+
             <button type="submit" class="btn btn-error-outline">Zet terug in draft</button>
         </form>
     @endif
-
-
 </div>

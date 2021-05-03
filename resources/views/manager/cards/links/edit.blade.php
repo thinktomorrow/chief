@@ -1,4 +1,4 @@
-<div class="space-y-10">
+<div class="space-y-8">
     <h3>Permalinks beheren</h3>
 
     <div data-vue-fields>
@@ -13,7 +13,7 @@
         @csrf
         @method('PUT')
 
-        <div data-vue-fields>
+        <div data-vue-fields class="space-y-4">
             @foreach($linkForm->formValues() as $locale => $formValues)
                 <link-input
                     inline-template
@@ -23,63 +23,85 @@
                     model-class="{{ get_class($model) }}"
                     model-id="{{ $model->id }}"
                 >
-                    <div class="mb-4">
-                        <h6 class="mb-2">{{ strtoupper($locale) }} link</h6>
-
+                    <x-chief-formgroup label="{{ strtoupper($locale) }} link">
                         <div class="flex items-center space-x-3">
-                            <span v-text="fixedSegment"></span>
-                            <input @keyup="onInput" id="links.{{ $locale }}" class="input inset-s w-full" type="text" name="links[{{ $locale }}]" v-model="value" />
+                            <div class="flex w-full">
+                                <div class="prepend-to-input">
+                                    <span v-if="fixedSegment !== '/'" class="flex items-center space-x-1">
+            	                        <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
 
-                            <span v-if="is_homepage" class="inline-block label label--primary">Homepage link</span>
+                                        <span class="flex items-center leading-none">
+                                            <span>/</span>
+                                            <span v-text="fixedSegment"></span>
+                                            <span>/</span>
+                                        </span>
+                                    </span>
+
+                                    <span v-else>
+            	                        <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
+                                    </span>
+                                </div>
+
+                                <input
+                                    @keyup="onInput"
+                                    id="links.{{ $locale }}"
+                                    type="text"
+                                    name="links[{{ $locale }}]"
+                                    v-model="value"
+                                    class="with-prepend"
+                                >
+                            </div>
+
+                            {{-- TODO: test how this looks --}}
+                            <span v-if="is_homepage" class="text-sm label label-primary">Homepage link</span>
                         </div>
 
-                        <p class="inline-block right text-error" v-if="hint" v-html="hint"></p>
-                    </div>
+                        {{-- TODO: test how this looks --}}
+                        {{-- Same styling as inline-notifications but laravel component can't asynchronously be rendered by vue --}}
+                        <div class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" v-if="hint" v-html="hint"></div>
+                    </x-chief-formgroup>
                 </link-input>
             @endforeach
         </div>
     </form>
 
     @if($linkForm->hasAnyRedirects())
-        <div>
-            <h4 class="mb-4">Redirects</h4>
-            @foreach($linkForm->links() as $locale => $links)
+        <div class="space-y-3">
+            <h4 class="text-grey-900">Redirects</h4>
 
-                @if(!$links->redirects->isEmpty())
+            <div class="space-y-3">
+                @foreach($linkForm->links() as $locale => $links)
+                    @if(!$links->redirects->isEmpty())
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
 
-                    <div class="flex mb-2">
-                        <div class="w-1/5 mt-2">{{ strtoupper($locale) }}</div>
-                        <div class="w-full space-y-2">
-
-                            @foreach($links->redirects as $urlRecord)
-                                <div data-vue-fields class="space-y-1">
-                                    <url-redirect
+                            <div class="w-full px-4 py-3">
+                                <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
+                                    @foreach($links->redirects as $urlRecord)
+                                        <url-redirect
                                             inline-template
-                                            removeurl="{{ route('chief.back.assistants.url.remove-redirect',$urlRecord->id) }}"
-                                    >
-                                        <div v-show="!this.removed"
-                                             class="flex justify-between items-center bg-grey-100 px-3 py-2 rounded-lg">
-                                            <div>{{ $urlRecord->slug }}</div>
+                                            removeurl="{{ route('chief.back.assistants.url.remove-redirect', $urlRecord->id) }}"
+                                        >
+                                            <div
+                                                v-show="!this.removed"
+                                                class="flex items-center justify-between px-4 py-3"
+                                            >
+                                                <div>{{ $urlRecord->slug }}</div>
 
-                                            <span class="link link-black cursor-pointer" @click="remove">
-                                    <x-icon-label type="delete"></x-icon-label>
-                                </span>
-                                        </div>
-                                    </url-redirect>
+                                                <span class="cursor-pointer link link-error" @click="remove">
+                                                    <x-icon-label type="delete"></x-icon-label>
+                                                </span>
+                                            </div>
+                                        </url-redirect>
+                                    @endforeach
                                 </div>
-                            @endforeach
-
+                            </div>
                         </div>
-                    </div>
-
-
-                @endif
-
-
-            @endforeach
+                    @endif
+                @endforeach
+            </div>
         </div>
-
     @endif
 
-    <button class="btn btn-primary" type="submit" form="linksUpdateForm"> Wijzigingen opslaan </button>
+    <button class="btn btn-primary" type="submit" form="linksUpdateForm">Wijzigingen opslaan</button>
 </div>

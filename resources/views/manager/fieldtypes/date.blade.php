@@ -1,6 +1,6 @@
 <div class="flex">
     @if($field->getPrepend())
-        <div class="px-4 py-3 font-medium border border-r-0 bg-primary-50 border-primary-100 rounded-l-md text-primary-500">
+        <div class="prepend-to-input">
             {!! $field->getPrepend($locale ?? null) !!}
         </div>
     @endif
@@ -16,6 +16,8 @@
     >
 
     @if($field->getAppend())
-        <div class="px-4 py-3 font-medium border border-l-0 bg-primary-50 border-primary-100 rounded-r-md text-primary-500">{!! $field->getAppend($locale ?? null) !!}</div>
+        <div class="append-to-input">
+            {!! $field->getAppend($locale ?? null) !!}
+        </div>
     @endif
 </div>

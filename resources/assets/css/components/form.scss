@@ -1,3 +1,7 @@
+form {
+    @apply mb-0;
+}
+
 textarea,
 input[type='text'],
 input[type='date'],
@@ -86,6 +90,14 @@ input[type='checkbox'] {
 label.with-checkbox,
 label.with-radio {
     @apply flex items-center space-x-2 cursor-pointer;
+}
+
+.prepend-to-input {
+    @apply px-4 py-3 font-medium border border-r-0 bg-primary-50 border-primary-100 rounded-l-md text-primary-500;
+}
+
+.append-to-input {
+    @apply px-4 py-3 font-medium border border-l-0 bg-primary-50 border-primary-100 rounded-r-md text-primary-500;
 }
 
 input[type='text'].with-prepend,
