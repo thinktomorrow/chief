@@ -165,7 +165,11 @@ export default class {
                         this.panels.findActive().parent &&
                         this.panels.findActive().parent.triggerData.component.closeOnPanelFormSubmit
                     ) {
-                        this.panels.findActive().parent = null;
+                        if (this.panels.findActive().parent.parent) {
+                            this.panels.findActive().parent = this.panels.findActive().parent.parent;
+                        } else {
+                            this.panels.findActive().parent = null;
+                        }
                     }
 
                     this.backOrClose(false);
@@ -206,8 +210,14 @@ export default class {
 
         EventBus.publish('sidebarPanelActivated', this.panels.findActive().eventPayload());
 
-        // TODO: pass here type to switch templates x/terug/...
-        this.sidebarContainer.renderCloseButton();
+        this.reset();
+    }
+
+    reset() {
+        if (this.panels.findActive()) {
+            this.sidebarContainer.renderCloseButton();
+        }
+
         this.listenForEvents();
         this._setActiveComponents();
     }
@@ -248,7 +258,8 @@ export default class {
         // TODO: Check for unsaved content before clicking submit...
         this.panels.clear();
         this.sidebarContainer.close();
-        this._setActiveComponents();
+
+        this.reset();
     }
 
     listenForEscapeKey() {
