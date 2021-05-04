@@ -55,3 +55,4 @@
 -   [ ] Range fieldcomponent/field view upgrade
 -   [ ] Date fieldcomponent view upgrade
 -   [ ] Possibility to set custom template for field component view per field
+-   [ ] Checkbox, select, radio and page fields view check (by Ben)
