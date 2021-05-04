@@ -1,6 +1,7 @@
 <div class="space-y-8">
     <h3>Permalinks beheren</h3>
 
+    {{-- TODO: status component --}}
     <div data-vue-fields>
         @foreach(['publish', 'unpublish'] as $action)
             @adminCan($action, $model)
@@ -24,11 +25,12 @@
                     model-id="{{ $model->id }}"
                 >
                     <x-chief-formgroup label="{{ strtoupper($locale) }} link">
-                        <div class="flex items-center space-x-3">
+                        <div class="space-y-2">
                             <div class="flex w-full">
                                 <div class="prepend-to-input">
                                     <span v-if="fixedSegment !== '/'" class="flex items-center space-x-1">
-            	                        <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
+                                        {{-- TODO: better icon --}}
+                                        <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
 
                                         <span class="flex items-center leading-none">
                                             <span>/</span>
@@ -38,7 +40,7 @@
                                     </span>
 
                                     <span v-else>
-            	                        <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
+                                        <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
                                     </span>
                                 </div>
 
@@ -53,12 +55,15 @@
                             </div>
 
                             {{-- TODO: test how this looks --}}
-                            <span v-if="is_homepage" class="text-sm label label-primary">Homepage link</span>
+                            {{-- <div v-if="is_homepage">
+                                <span class="text-sm label label-primary">Homepage link</span>
+                            </div> --}}
+
+                            {{-- TODO: test how this looks --}}
+                            {{-- Same styling as inline-notifications but laravel component can't asynchronously be rendered by vue --}}
+                            <div class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" v-if="hint" v-html="hint"></div>
                         </div>
 
-                        {{-- TODO: test how this looks --}}
-                        {{-- Same styling as inline-notifications but laravel component can't asynchronously be rendered by vue --}}
-                        <div class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" v-if="hint" v-html="hint"></div>
                     </x-chief-formgroup>
                 </link-input>
             @endforeach

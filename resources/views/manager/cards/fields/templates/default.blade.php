@@ -5,10 +5,10 @@
         :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
         type="fields-{{ $componentKey }}"
     >
-        <div class="space-y-4">
+        <div class="space-y-6">
             @foreach($fields as $field)
                 <div class="space-y-1">
-                    <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">{{ $field->getLabel() }}</span>
+                    <span class="font-medium text-grey-900">{{ $field->getLabel() }}</span>
 
                     {{-- Todo: this condition doesn't work for example for ImageField, as it's value is null --}}
                     <div class="prose prose-dark">

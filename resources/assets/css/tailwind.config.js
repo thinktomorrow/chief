@@ -48,7 +48,7 @@ module.exports = {
 
             red: colors.red,
             green: colors.green,
-            blue: colors.blue,
+            blue: colors.lightBlue,
             orange: colors.orange,
 
             // TODO: replace by default colors

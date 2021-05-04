@@ -4,10 +4,10 @@
     $name = $name ?? $field->getName($locale);
 
     $imagesUploadSettings = json_encode([
-        'group'      => $field->getKey(),
-        'locale'     => $locale,
-        'name'       => $name,
-        'multiple'   => $field->allowMultiple(),
+        'group' => $field->getKey(),
+        'locale' => $locale,
+        'name' => $name,
+        'multiple' => $field->allowMultiple(),
     ]);
 ?>
 
@@ -25,7 +25,7 @@
         <div class="row gutter-2">
             <div
                 v-for="(item, index) in items"
-                class="column-4 draggable-item"
+                class="w-1/3 draggable-item"
                 :key="item.key"
                 :draggable="sort.isReordering"
                 :data-item-id="item.id"

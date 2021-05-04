@@ -17,6 +17,7 @@
                             <a class="mt-0.5 space-x-1 link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}" style="word-break: break-word;">
                                 <span>{{ $links->full_path }}</span>
 
+                                {{-- TODO: status component --}}
                                 @if($links->is_online)
                                     <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
                                 @else

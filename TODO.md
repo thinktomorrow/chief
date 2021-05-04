@@ -46,6 +46,7 @@
 
 ### Field Component
 
+-   [ ] Status component
 -   [ ] Images getValue() always returns an empty array
 -   [ ] Working truncate for both normal strings and HTML strings
 -   [ ] Fix charactercount for normal input fields (script doesn't init)
@@ -53,3 +54,4 @@
 -   [ ] Sidebar form validation (POST request doesn't seem to work if validation fails)
 -   [ ] Range fieldcomponent/field view upgrade
 -   [ ] Date fieldcomponent view upgrade
+-   [ ] Possibility to set custom template for field component view per field
