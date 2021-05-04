@@ -33,4 +33,11 @@ class CreateFragmentTables extends Migration
             $table->primary(['context_id', 'fragment_id']);
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('contexts');
+        Schema::dropIfExists('context_fragments');
+        Schema::dropIfExists('context_fragment_lookup');
+    }
 }
