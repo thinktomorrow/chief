@@ -11,7 +11,7 @@
 
     <div class="space-y-6">
         @foreach($fields->notTagged('component') as $field)
-            <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
+            <x-chief-formgroup label="{{ $field->getLabel() }}" name="{{ $field->getName($locale ?? null) }}" isRequired="{{ $field->required() }}">
                 @if($field->getDescription())
                     <x-slot name="description">
                         <p>{{ $field->getDescription() }}</p>

@@ -10,7 +10,7 @@
         @endforeach
     </div>
 
-    <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST" class="space-y-4">
+    <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST">
         @csrf
         @method('PUT')
 
@@ -55,15 +55,9 @@
                             </div>
 
                             {{-- TODO: test how this looks --}}
-                            {{-- <div v-if="is_homepage">
-                                <span class="text-sm label label-primary">Homepage link</span>
-                            </div> --}}
-
-                            {{-- TODO: test how this looks --}}
                             {{-- Same styling as inline-notifications but laravel component can't asynchronously be rendered by vue --}}
                             <div class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" v-if="hint" v-html="hint"></div>
                         </div>
-
                     </x-chief-formgroup>
                 </link-input>
             @endforeach
@@ -78,7 +72,9 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
-                            <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                            @if(count(config('chief.locales')) > 1)
+                                <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                            @endif
 
                             <div class="w-full px-4 py-3">
                                 <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
