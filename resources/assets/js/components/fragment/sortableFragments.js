@@ -23,4 +23,4 @@ const initSortable = (selector = '[data-sortable-fragments]', container = docume
     // });
 };
 
-export { initSortable };
+export { initSortable as default };

@@ -15,9 +15,7 @@ export default class {
     }
 
     allIn(container) {
-        return this.collection.filter((component) => {
-            return component.el(container);
-        });
+        return this.collection.filter((component) => component.el(container));
     }
 
     find(key) {
@@ -37,7 +35,7 @@ export default class {
     }
 
     add(component) {
-        if (!component instanceof Component) {
+        if (!(component instanceof Component)) {
             throw new Error('Components collection should only contain elements of Component type.');
         }
 

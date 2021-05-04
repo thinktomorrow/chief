@@ -2,7 +2,7 @@ import Sidebar from './sidebar/Sidebar';
 import Component from './sidebar/Component';
 import AddFragment from './fragment/addFragment';
 import SelectFragment from './fragment/selectFragment';
-import { initSortable } from './fragment/sortableFragments';
+import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
 
 // --------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         components: [linksComponent, fragmentsComponent, fragmentSelectionComponent, ...fieldComponents],
         reloadEvents: ['fragmentSelectionElementCreated'],
         events: {
-            sidebarPanelCreated: (panelData) => {
+            sidebarPanelCreated: () => {
                 console.log('SIDEBAR always triggered');
                 // // panel, triggerElement, triggerType
                 // if (panelData.triggerType === 'links') {
@@ -84,8 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 //     FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
                 // }
             },
-            sidebarFormSubmitted: (panelData) => {
-                // form submit -> component die dit panel getrigged heeft moeten we refreshen. (livewire) nested fragments: custom
+            sidebarFormSubmitted: () => {
+                // form submit -> component die dit panel getrigged heeft moeten we refreshen.
+                // (livewire) nested fragments: custom
                 // if (panelData.triggerType === 'links') {
                 //     linkComponent.reload();
                 //     console.log('reload...');
