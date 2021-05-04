@@ -22,7 +22,7 @@
 
             <div>
                 <a
-                        data-sidebar-fragment-selection
+                        data-sidebar-trigger="selectFragment"
                         href="@adminRoute('fragments-select-existing', $owner)"
                         class="flex flex-col justify-center items-center bg-primary-50 rounded-md p-4 space-y-1"
                 >
