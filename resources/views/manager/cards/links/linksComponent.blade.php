@@ -6,42 +6,28 @@
         type="links"
     >
         <div class="space-y-2">
-            <div class="flex items-center space-x-2">
-                <span class="font-medium text-success">
+            @unless($linkForm->exist())
+                <p class="text-grey-700">Geen huidige links</p>
+            @else
+                @foreach($linkForm->links() as $locale => $links)
+                    @if($links->current)
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
 
-                </span>
-            </div>
+                            <a class="mt-0.5 space-x-1 link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}" style="word-break: break-word;">
+                                <span>{{ $links->full_path }}</span>
 
-            <div class="space-y-1">
-                @unless($linkForm->exist())
-                    <p>Geen huidige links</p>
-                @else
-                    @foreach($linkForm->links() as $locale => $links)
-                        @if($links->current)
-                            <div class="flex justify-between items-center space-x-3">
-
-                                <div>
-                                    @if($links->is_online)
-                                        <span class="inline-block mr-2 bg-green-300 cursor-pointer h-1 h-2 overflow-hidden rounded-full w-1 w-2" title="{{ $links->offline_reason }}"></span>
-                                    @else
-                                        <span class="inline-block mr-2 bg-red-300 cursor-help h-1 h-2 overflow-hidden rounded-full w-1 w-2" title="{{ $links->offline_reason }}"></span>
-                                    @endif
-
-                                    <a class="underline" target="_blank" rel="noopener" href="{{ $links->url }}">
-                                        {{ $links->full_path }}
-                                    </a>
-                                </div>
-
-
-                                <div>
-                                    <span class="inline-block label bg-grey-100 text-grey-400 font-normal text-xs">{{ $locale }}</span>
-                                </div>
-
-                            </div>
-                        @endif
-                    @endforeach
-                @endunless
-            </div>
+                                {{-- TODO: status component --}}
+                                @if($links->is_online)
+                                    <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
+                                @else
+                                    <span class="inline-block w-2 h-2 bg-red-500 rounded-full" title="{{ $links->offline_reason }}"></span>
+                                @endif
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
+            @endunless
         </div>
     </x-chief-card>
 </div>

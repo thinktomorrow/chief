@@ -1,56 +1,6 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/assets/js/components/fieldcomponents.js":
-/*!***********************************************************!*\
-  !*** ./resources/assets/js/components/fieldcomponents.js ***!
-  \***********************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.from.js */ "./node_modules/core-js/modules/es.array.from.js");
-/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
-/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.find.js */ "./node_modules/core-js/modules/es.array.find.js");
-/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
-/* harmony import */ var _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sidebar/Sidebar */ "./resources/assets/js/components/sidebar/Sidebar.js");
-
-
-
-
-
- // --------------------------------------------------------------------------------
-// LINKS JS --------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEls = document.querySelectorAll('[data-fields-component]');
-  return;
-  Array.from(componentEls).forEach(function (el) {
-    var livewireComponent = window.Livewire.find(el.getAttribute('wire:id'));
-    var linkSidebar = new _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_5__.default("[".concat(el.getAttribute('data-fields-component'), "]"), new _sidebar_Container__WEBPACK_IMPORTED_MODULE_4__.default(sidebarContainerEl), {
-      panelFormSubmitted: function panelFormSubmitted() {
-        livewireComponent.reload();
-      },
-      events: {// 'fragmentSelectionElementCreated': () => {
-        //
-        // },
-      }
-    });
-    window.Livewire.on('fieldsComponentReloaded', function () {
-      linkSidebar.scanForPanelTriggers();
-    });
-  });
-});
-
-/***/ }),
-
 /***/ "./resources/assets/js/components/fragment/addFragment.js":
 /*!****************************************************************!*\
   !*** ./resources/assets/js/components/fragment/addFragment.js ***!
@@ -150,180 +100,6 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/fragment/fragments.js":
-/*!**************************************************************!*\
-  !*** ./resources/assets/js/components/fragment/fragments.js ***!
-  \**************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.find.js */ "./node_modules/core-js/modules/es.array.find.js");
-/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
-/* harmony import */ var _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sidebar/Sidebar */ "./resources/assets/js/components/sidebar/Sidebar.js");
-/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
-/* harmony import */ var _selectFragment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
-
-
-
-
-
-
-/**
- * Sortable logic for fragment component
- */
-// const initSortable = (selector = '[data-sortable-fragments]', container = document, options = {}) => {
-//     Array.from(container.querySelectorAll(selector)).forEach((el) => {
-//         new IndexSorting({
-//             ...{
-//                 sortableGroupEl: el,
-//                 endpoint: el.getAttribute('data-sortable-endpoint'),
-//                 handle: '[data-sortable-handle]',
-//                 isSorting: true,
-//             },
-//             ...options,
-//         });
-//     });
-//
-//     EventBus.subscribe('newFragmentPanelCreated', (panel) => {
-//         initSortable(selector, panel.el);
-//     });
-//
-//     EventBus.subscribe('fragmentsReloaded', () => {
-//         initSortable();
-//     });
-// };
-
-var initFragments = function initFragments() {
-  var fragmentsComponentElement = document.querySelector('[data-fragments-component]');
-  var sidebarContainerElement = document.querySelector('#js-sidebar-container'); // Do not trigger the sidebar script is DOM element isn't present
-
-  if (!sidebarContainerElement || !fragmentsComponentElement) return;
-  new _selectFragment__WEBPACK_IMPORTED_MODULE_4__.default(document);
-  var fragmentSidebar = new _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__.default('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_1__.default(sidebarContainerElement), {
-    // newPanelCreated: (panel) => {
-    //     EventBus.publish('newFragmentPanelCreated', panel);
-    // },
-    // panelFormSubmitted: () => {
-    //     EventBus.publish('fragmentPanelFormSubmitted');
-    // },
-    events: {// newFragmentSelectionPanelCreated: () => {
-      //     fragmentSidebar.scanForPanelTriggers();
-      // },
-      // fragmentSelectionElementCreated: () => {
-      //     fragmentSidebar.scanForPanelTriggers();
-      // },
-      // fragmentAdded: () => {
-      //     fragmentSidebar.replacePanelComponents();
-      // },
-      // fragmentsReloaded: () => {
-      //     fragmentSidebar.scanForPanelTriggers();
-      // },
-    }
-  });
-  /**
-   * Fragments livewire components logic. Update the component on important changes
-   */
-
-  var livewireComponent = window.Livewire.find(fragmentsComponentElement.getAttribute('wire:id'));
-  window.Livewire.on('fragmentsReloaded', function () {
-    console.log('Reloading fragments ...');
-    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__.default.publish('fragmentsReloaded');
-  });
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__.default.subscribe('fragmentAdded', function () {
-    console.log("Livewire component ".concat(fragmentsComponentElement.getAttribute('wire:id'), " reloaded"));
-    livewireComponent.reload();
-  });
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__.default.subscribe('fragmentPanelFormSubmitted', function () {
-    livewireComponent.reload();
-  });
-};
-
-document.addEventListener('DOMContentLoaded', function () {// initFragments();
-  // initSortable();
-}); // /**
-//  * Fragments JS
-//  */
-// document.addEventListener('DOMContentLoaded', () => {
-//     const sidebarContainerEl = document.querySelector('#js-sidebar-container');
-//     const componentEl = document.querySelector('[data-fragments-component]');
-//     // Do not trigger the sidebar script is DOM element isn't present
-//     if (!sidebarContainerEl || !componentEl) return;
-//     new SelectFragment(document, '[data-fragments-container]');
-//     new AddFragment(document);
-//     const fragmentSidebar = new Sidebar(
-//         '[data-sidebar-fragments-edit]',
-//         new Container(sidebarContainerEl),
-//         {
-//             newPanelCreated: (panel) => {
-//                 EventBus.publish('newFragmentPanelCreated', panel);
-//             },
-//             panelFormSubmitted: () => {
-//                 EventBus.publish('fragmentPanelFormSubmitted');
-//             },
-//             events: {
-//                 fragmentSelectionElementCreated: () => {
-//                     fragmentSidebar.scanForPanelTriggers();
-//                 },
-//                 // newFragmentSelectionPanelCreated: () => {
-//                 //     // IS DIT NODIG???????
-//                 //     fragmentSidebar.scanForPanelTriggers();
-//                 // },
-//                 fragmentAdded: () => {
-//                     fragmentSidebar.replacePanelComponents();
-//                 },
-//                 fragmentsReloaded: () => {
-//                     fragmentSidebar.scanForPanelTriggers();
-//                 },
-//             },
-//         }
-//     );
-//     /**
-//      * Fragments livewire components logic. Update the component on important changes
-//      */
-//     const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
-//     function listen() {
-//         console.log(`livewire comp. ${componentEl.getAttribute('wire:id')} reloaded.`);
-//         livewireComponent.reload();
-//     }
-//     EventBus.subscribe('fragmentAdded', listen);
-//     EventBus.subscribe('fragmentPanelFormSubmitted', () => {
-//         livewireComponent.reload();
-//     });
-//     window.Livewire.on('fragmentsReloaded', () => {
-//         console.log('reloading fragments');
-//         EventBus.publish('fragmentsReloaded');
-//     });
-//     /**
-//      * Sortable logic for fragment component
-//      */
-//     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
-//         Array.from(container.querySelectorAll(selector)).forEach((el) => {
-//             new IndexSorting({
-//                 ...{
-//                     sortableGroupEl: el,
-//                     endpoint: el.getAttribute('data-sortable-endpoint'),
-//                     handle: '[data-sortable-handle]',
-//                     isSorting: true,
-//                 },
-//                 ...options,
-//             });
-//         });
-//     }
-//     EventBus.subscribe('newFragmentPanelCreated', (panel) => {
-//         initSortable('[data-sortable-fragments]', panel.el);
-//         initFragments(panel);
-//     });
-//     EventBus.subscribe('fragmentsReloaded', () => {
-//         initSortable();
-//     });
-//     initSortable();
-// });
-
-/***/ }),
-
 /***/ "./resources/assets/js/components/fragment/selectFragment.js":
 /*!*******************************************************************!*\
   !*** ./resources/assets/js/components/fragment/selectFragment.js ***!
@@ -394,7 +170,7 @@ var _default = /*#__PURE__*/function () {
 
       this._build();
 
-      var reloadEvents = ['sortable-stored', 'fragmentsReloaded'];
+      var reloadEvents = ['sortableStored', 'fragmentsReloaded'];
       reloadEvents.forEach(function (event) {
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__.default.subscribe(event, function () {
           _this._build();
@@ -450,32 +226,44 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "_removeTriggerElements",
     value: function _removeTriggerElements() {
+      var _this3 = this;
+
       var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
       triggerElements.forEach(function (element) {
-        element.parentNode.removeChild(element);
+        _this3.fragmentsContainer.removeChild(element);
       });
     }
   }, {
     key: "_activateTriggerElements",
     value: function _activateTriggerElements() {
-      var _this3 = this;
+      var _this4 = this;
 
       var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
       triggerElements.forEach(function (element) {
-        _this3._activateTriggerElement(element);
+        _this4._activateTriggerElement(element);
       });
     }
   }, {
     key: "_activateTriggerElement",
     value: function _activateTriggerElement(element) {
-      var _this4 = this;
+      var _this5 = this;
 
-      element.addEventListener('click', function () {
-        _this4._purgeFragmentsContainerFromSelectionElements();
+      element.addEventListener('click', function (e) {
+        // Temporary fix for problem where after adding/deleting 2 fragments,
+        // fragments start acting as trigger elements as well.
+        if (!e.currentTarget.matches(_this5.triggerSelector)) {
+          console.log("\n                    Prevented handler from being triggered by fragment.\n                    This handler should only be triggered by dedicated triggers ...\n                ");
+          return;
+        }
 
-        var newSelectionElement = _this4._createSelectionElement();
+        _this5._purgeFragmentsContainerFromSelectionElements();
 
-        _this4.fragmentsContainer.replaceChild(newSelectionElement, element);
+        var newSelectionElement = _this5._createSelectionElement();
+
+        _this5.fragmentsContainer.insertBefore(newSelectionElement, element);
+
+        _this5.fragmentsContainer.removeChild(element); // this.fragmentsContainer.replaceChild(newSelectionElement, element);
+
 
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__.default.publish('fragmentSelectionElementCreated', newSelectionElement);
       });
@@ -483,31 +271,34 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "_purgeFragmentsContainerFromSelectionElements",
     value: function _purgeFragmentsContainerFromSelectionElements() {
-      var _this5 = this;
+      var _this6 = this;
 
       var existingSelectionElements = Array.from(this.fragmentsContainer.querySelectorAll(this.selectionSelector));
       existingSelectionElements.forEach(function (element) {
-        var newTriggerElement = _this5.constructor._createTriggerElement();
+        var newTriggerElement = _this6.constructor._createTriggerElement();
 
-        _this5._activateTriggerElement(newTriggerElement);
+        _this6._activateTriggerElement(newTriggerElement);
 
-        _this5.fragmentsContainer.replaceChild(newTriggerElement, element);
+        _this6.fragmentsContainer.insertBefore(newTriggerElement, element);
+
+        _this6.fragmentsContainer.removeChild(element); // this.fragmentsContainer.replaceChild(newTriggerElement, element);
+
       });
     }
   }, {
     key: "_hideAllTriggerElements",
     value: function _hideAllTriggerElements() {
-      var _this6 = this;
+      var _this7 = this;
 
       var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
       triggerElements.forEach(function (element) {
-        _this6.constructor._hideTriggerElement(element);
+        _this7.constructor._hideTriggerElement(element);
       });
     }
   }, {
     key: "_onlyShowClosestTriggerElement",
     value: function _onlyShowClosestTriggerElement() {
-      var _this7 = this;
+      var _this8 = this;
 
       var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector)); // If there are not fragments yet, there are also no triggerElements
 
@@ -517,20 +308,20 @@ var _default = /*#__PURE__*/function () {
           var rect = element.getBoundingClientRect();
           var centerY = rect.top + (rect.bottom - rect.top) / 2;
 
-          _this7._hideAllTriggerElements();
+          _this8._hideAllTriggerElements();
 
           if (centerY > e.clientY) {
-            var triggerElement = _this7.constructor._getPreviousSiblingElement(element, _this7.triggerSelector);
+            var triggerElement = _this8.constructor._getPreviousSiblingElement(element, _this8.triggerSelector);
 
             if (!triggerElement) return;
 
-            _this7.constructor._showTriggerElement(triggerElement);
+            _this8.constructor._showTriggerElement(triggerElement);
           } else {
-            var _triggerElement = _this7.constructor._getNextSiblingElement(element, _this7.triggerSelector);
+            var _triggerElement = _this8.constructor._getNextSiblingElement(element, _this8.triggerSelector);
 
             if (!_triggerElement) return;
 
-            _this7.constructor._showTriggerElement(_triggerElement);
+            _this8.constructor._showTriggerElement(_triggerElement);
           }
         });
       });
@@ -551,13 +342,13 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "_getSelectionElementOrder",
     value: function _getSelectionElementOrder(node) {
-      var _this8 = this;
+      var _this9 = this;
 
       var nextFragmentElement = this.constructor._getNextSiblingElement(node, this.fragmentSelector);
 
       var fragmentsContainerChildren = Array.from(this.fragmentsContainer.children);
       var fragmentElements = fragmentsContainerChildren.filter(function (element) {
-        return element.matches(_this8.fragmentSelector);
+        return element.matches(_this9.fragmentSelector);
       });
       var order = fragmentElements.length;
       fragmentElements.forEach(function (fragmentElement, index) {
@@ -570,29 +361,29 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "_createSelectionElement",
     value: function _createSelectionElement() {
-      var _this9 = this;
+      var _this10 = this;
 
       var isClosable = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-      console.log(this.templateSelector);
       var template = document.querySelector(this.templateSelector);
-      var element = template.firstElementChild.cloneNode(true);
-      var elementCloseTrigger = element.querySelector(this.selectionCloseTriggerSelector);
+      var newSelectionElement = template.firstElementChild.cloneNode(true);
+      var elementCloseTrigger = newSelectionElement.querySelector(this.selectionCloseTriggerSelector);
 
-      if (elementCloseTrigger) {
-        if (isClosable) {
-          elementCloseTrigger.addEventListener('click', function () {
-            var newTriggerElement = _this9.constructor._createTriggerElement();
+      if (isClosable) {
+        elementCloseTrigger.addEventListener('click', function () {
+          var newTriggerElement = _this10.constructor._createTriggerElement();
 
-            _this9._activateTriggerElement(newTriggerElement);
+          _this10._activateTriggerElement(newTriggerElement);
 
-            element.parentNode.replaceChild(newTriggerElement, element);
-          });
-        } else {
-          elementCloseTrigger.style.display = 'none';
-        }
+          _this10.fragmentsContainer.insertBefore(newTriggerElement, newSelectionElement);
+
+          _this10.fragmentsContainer.removeChild(newSelectionElement); // element.parentNode.replaceChild(newTriggerElement, element);
+
+        });
+      } else {
+        elementCloseTrigger.style.display = 'none';
       }
 
-      return element;
+      return newSelectionElement;
     }
   }], [{
     key: "_createTriggerElement",
@@ -709,157 +500,6 @@ var initSortable = function initSortable() {
 };
 
 
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/fragmentSelection.js":
-/*!*************************************************************!*\
-  !*** ./resources/assets/js/components/fragmentSelection.js ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
-/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
-/* harmony import */ var _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar/Sidebar */ "./resources/assets/js/components/sidebar/Sidebar.js");
-/* harmony import */ var _fragment_addFragment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragment/addFragment */ "./resources/assets/js/components/fragment/addFragment.js");
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerElement = document.querySelector('#js-sidebar-container');
-  var fragmentSelectionSidebarTriggerSelector = '[data-sidebar-fragment-selection]'; // Do not trigger the sidebar script is DOM element isn't present
-
-  if (!sidebarContainerElement) return;
-  return;
-  var fragmentSelectionSidebar = new _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__.default(fragmentSelectionSidebarTriggerSelector, new _sidebar_Container__WEBPACK_IMPORTED_MODULE_1__.default(sidebarContainerElement), {
-    newPanelCreated: function newPanelCreated(panel) {
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0__.default.publish('newFragmentSelectionPanelCreated', panel);
-    },
-    events: {
-      fragmentSelectionElementCreated: function fragmentSelectionElementCreated() {
-        fragmentSelectionSidebar.scanForPanelTriggers();
-      },
-      newFragmentSelectionPanelCreated: function newFragmentSelectionPanelCreated(panel) {
-        console.log('Triggering AddFragment', panel);
-        new _fragment_addFragment__WEBPACK_IMPORTED_MODULE_3__.default(panel.el);
-      }
-    }
-  });
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/links.js":
-/*!*************************************************!*\
-  !*** ./resources/assets/js/components/links.js ***!
-  \*************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
-/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar/Sidebar */ "./resources/assets/js/components/sidebar/Sidebar.js");
-/* harmony import */ var _utilities_form_submit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utilities/form-submit */ "./resources/assets/js/utilities/form-submit.js");
-/* harmony import */ var _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar/Component */ "./resources/assets/js/components/sidebar/Component.js");
-/* harmony import */ var _fragment_addFragment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./fragment/addFragment */ "./resources/assets/js/components/fragment/addFragment.js");
-/* harmony import */ var _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./fragment/selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
-/* harmony import */ var _fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./fragment/sortableFragments */ "./resources/assets/js/components/fragment/sortableFragments.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
-
-
-
-
-
-
-
-
- // --------------------------------------------------------------------------------
-// LINKS JS --------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-  /** Fragments */
-  var fragmentsComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default('fragments', {
-    livewire: true,
-    events: {
-      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-        console.log('sidebar fragments panel created'); // Build the select fragment elements for the nested fragments components inside the panel
-        // Trigger the sortable script to load for this panel
-
-        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_8__.default.publish('fragmentSidebarPanelCreated', panelData);
-      },
-      sidebarPanelActivated: function sidebarPanelActivated(panelData) {
-        console.log('triggered sidebarPanel', panelData.panel.el);
-        new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__.default(panelData.panel.el, {
-          templateSelector: '#js-fragment-template-select-options-nested'
-        });
-      }
-    },
-    onComponentCreation: function onComponentCreation() {
-      console.log('component will be created');
-      new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__.default(document);
-      (0,_fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_7__.initSortable)();
-    }
-  });
-  var fragmentSelectionComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default('selectFragment', {
-    closeOnPanelFormSubmit: true,
-    events: {
-      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-        console.log('Select Fragments: panel created', panelData);
-        new _fragment_addFragment__WEBPACK_IMPORTED_MODULE_5__.default(panelData.panel.el);
-      }
-    }
-  }); // EventBus.subscribe('fragmentSelectionElementCreated', () => {
-  //     sidebar.listenForEvents();
-  // });
-
-  var linksComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default('links', {
-    livewire: true,
-    events: {
-      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-        console.log('special links panel created', panelData);
-      }
-    }
-  });
-  var fieldComponents = [];
-  document.querySelectorAll('[data-fields-component]').forEach(function (fieldComponentEl) {
-    fieldComponents.push(new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default(fieldComponentEl.getAttribute('data-fields-component'), {
-      livewire: true,
-      events: {
-        sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-          console.log('special fields panel created', panelData);
-        }
-      }
-    }));
-  });
-  new _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__.default({
-    debug: true,
-    components: [linksComponent, fragmentsComponent, fragmentSelectionComponent].concat(fieldComponents),
-    reloadEvents: ['fragmentSelectionElementCreated'],
-    events: {
-      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-        console.log('SIDEBAR always triggered'); // // panel, triggerElement, triggerType
-        // if (panelData.triggerType === 'links') {
-        //     // Trigger js for submit form elements (these are used for the state transitions)
-        //     FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
-        // }
-      },
-      sidebarFormSubmitted: function sidebarFormSubmitted(panelData) {// form submit -> component die dit panel getrigged heeft moeten we refreshen. (livewire) nested fragments: custom
-        // if (panelData.triggerType === 'links') {
-        //     linkComponent.reload();
-        //     console.log('reload...');
-        //     livewireComponent.reload();
-        // }
-      }
-    }
-  });
-});
 
 /***/ }),
 
@@ -1822,6 +1462,115 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/sidebarComponents.js":
+/*!*************************************************************!*\
+  !*** ./resources/assets/js/components/sidebarComponents.js ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar/Sidebar */ "./resources/assets/js/components/sidebar/Sidebar.js");
+/* harmony import */ var _sidebar_Component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar/Component */ "./resources/assets/js/components/sidebar/Component.js");
+/* harmony import */ var _fragment_addFragment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragment/addFragment */ "./resources/assets/js/components/fragment/addFragment.js");
+/* harmony import */ var _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./fragment/selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
+/* harmony import */ var _fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./fragment/sortableFragments */ "./resources/assets/js/components/fragment/sortableFragments.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+
+
+
+
+
+
+
+ // --------------------------------------------------------------------------------
+// LINKS JS --------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', function () {
+  /** Fragments */
+  var fragmentsComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_3__.default('fragments', {
+    livewire: true,
+    events: {
+      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
+        console.log('sidebar fragments panel created'); // Build the select fragment elements for the nested fragments components inside the panel
+        // Trigger the sortable script to load for this panel
+
+        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_7__.default.publish('fragmentSidebarPanelCreated', panelData);
+      },
+      sidebarPanelActivated: function sidebarPanelActivated(panelData) {
+        console.log('triggered sidebarPanel', panelData.panel.el);
+        new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_5__.default(panelData.panel.el, {
+          templateSelector: '#js-fragment-template-select-options-nested'
+        });
+      }
+    },
+    onComponentCreation: function onComponentCreation() {
+      console.log('component will be created');
+      new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_5__.default(document);
+      (0,_fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_6__.initSortable)();
+    }
+  });
+  var fragmentSelectionComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_3__.default('selectFragment', {
+    closeOnPanelFormSubmit: true,
+    events: {
+      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
+        console.log('Select Fragments: panel created', panelData);
+        new _fragment_addFragment__WEBPACK_IMPORTED_MODULE_4__.default(panelData.panel.el);
+      }
+    }
+  }); // EventBus.subscribe('fragmentSelectionElementCreated', () => {
+  //     sidebar.listenForEvents();
+  // });
+
+  var linksComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_3__.default('links', {
+    livewire: true,
+    events: {
+      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
+        console.log('special links panel created', panelData);
+      }
+    }
+  });
+  var fieldComponents = [];
+  document.querySelectorAll('[data-fields-component]').forEach(function (fieldComponentEl) {
+    fieldComponents.push(new _sidebar_Component__WEBPACK_IMPORTED_MODULE_3__.default(fieldComponentEl.getAttribute('data-fields-component'), {
+      livewire: true,
+      events: {
+        sidebarPanelCreated: function sidebarPanelCreated(panelData) {
+          console.log('special fields panel created', panelData);
+        }
+      }
+    }));
+  });
+  new _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_2__.default({
+    debug: true,
+    components: [linksComponent, fragmentsComponent, fragmentSelectionComponent].concat(fieldComponents),
+    reloadEvents: ['fragmentSelectionElementCreated'],
+    events: {
+      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
+        console.log('SIDEBAR always triggered'); // // panel, triggerElement, triggerType
+        // if (panelData.triggerType === 'links') {
+        //     // Trigger js for submit form elements (these are used for the state transitions)
+        //     FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
+        // }
+      },
+      sidebarFormSubmitted: function sidebarFormSubmitted(panelData) {// form submit -> component die dit panel getrigged heeft moeten we refreshen. (livewire) nested fragments: custom
+        // if (panelData.triggerType === 'links') {
+        //     linkComponent.reload();
+        //     console.log('reload...');
+        //     livewireComponent.reload();
+        // }
+      }
+    }
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js/utilities/EventBus.js":
 /*!***************************************************!*\
   !*** ./resources/assets/js/utilities/EventBus.js ***!
@@ -2074,10 +1823,10 @@ IndexSorting.prototype._init = function () {
           return response.json();
         }).then(function () {
           window.Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
-          _EventBus__WEBPACK_IMPORTED_MODULE_7__.default.publish('sortable-stored');
+          _EventBus__WEBPACK_IMPORTED_MODULE_7__.default.publish('sortableStored');
         }).catch(function (error) {
           window.Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️');
-          _EventBus__WEBPACK_IMPORTED_MODULE_7__.default.publish('sortable-stored');
+          _EventBus__WEBPACK_IMPORTED_MODULE_7__.default.publish('sortableStored');
           console.error(error);
         });
       }
@@ -11294,17 +11043,11 @@ if (document.getElementById('js-sortable')) {
   });
 }
 /**
- * Sidebar
+ * Sidebar components
  */
 
 
-__webpack_require__(/*! ./components/fragment/fragments */ "./resources/assets/js/components/fragment/fragments.js");
-
-__webpack_require__(/*! ./components/links */ "./resources/assets/js/components/links.js");
-
-__webpack_require__(/*! ./components/fieldcomponents */ "./resources/assets/js/components/fieldcomponents.js");
-
-__webpack_require__(/*! ./components/fragmentSelection */ "./resources/assets/js/components/fragmentSelection.js");
+__webpack_require__(/*! ./components/sidebarComponents */ "./resources/assets/js/components/sidebarComponents.js");
 }();
 /******/ })()
 ;

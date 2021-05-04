@@ -18,6 +18,7 @@
 -   [ ] Multiselect bij mediagallery is nog fucked up
 -   [ ] pagination view update
 -   [ ] Seems like fragments sidebar errors don't work yet
+-   [ ] Thumb css rework
 
 ### Fragments
 
@@ -28,8 +29,9 @@
 -   [x] fragment selection element close button
 -   [x] trigger elements reload after fragment selection element is created
 -   [x] fragment selection flow
--   [ ] fragment selection shouldn't have a close trigger if there are no fragments yet
+-   [x] fragment selection shouldn't have a close trigger if there are no fragments yet
 -   [ ] nested fragments testing
+-   [ ] after adding or deleting 2 elements, all fragments are acting as selection trigger elements
 -   [ ] wireframe-like icons for each fragment type
 -   [ ] make it obvious that fragment elements are draggable/sortable
 
@@ -40,3 +42,16 @@
 -   [ ] thinktomorrow/chief-redactor package
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
 -   [ ] Chief admin translations
+-   [ ] Lifecycle hooks documentation (+ rules for custom events)
+
+### Field Component
+
+-   [ ] Status component
+-   [ ] Images getValue() always returns an empty array
+-   [ ] Working truncate for both normal strings and HTML strings
+-   [ ] Fix charactercount for normal input fields (script doesn't init)
+-   [ ] Add inline errors for every field type
+-   [ ] Sidebar form validation (POST request doesn't seem to work if validation fails)
+-   [ ] Range fieldcomponent/field view upgrade
+-   [ ] Date fieldcomponent view upgrade
+-   [ ] Possibility to set custom template for field component view per field

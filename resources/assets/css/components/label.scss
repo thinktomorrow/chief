@@ -1,5 +1,5 @@
 .label {
-    @apply font-medium rounded px-2 py-1 bg-grey-150 text-grey-700;
+    @apply font-semibold rounded px-2 py-1 bg-grey-150 text-grey-700;
 }
 
 .label-primary {
@@ -11,11 +11,15 @@
 }
 
 .label-grey {
+    @apply bg-grey-200 text-grey-600;
+}
+
+.label-grey-dark {
     @apply bg-grey-700 text-white;
 }
 
-.label-light-grey {
-    @apply bg-grey-50 text-grey-700;
+.label-grey-light {
+    @apply bg-grey-100 text-grey-600;
 }
 
 .label-warning {

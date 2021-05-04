@@ -6,30 +6,40 @@
         Vue.component('file', {
             props: ['options', 'name', 'group', 'locale', 'uploadUrl'],
             template: `
-                    <div class="border border-grey-100 rounded inset-s center-y bg-white">
+                    <div class="flex items-center p-4 bg-white border rounded-lg border-grey-100">
                         <input ref="hiddenInput" type="hidden" :name="hiddenInputKey" :value="hiddenInputValue"/>
-                        <div v-if="isImage" class="column-2 bg-grey-50 mr-4">
-                             <img loading="lazy" :src="thumbUrl" :alt="filename" />
+
+                        <div v-if="isImage" class="flex-shrink-0 w-1/6">
+                             <img loading="lazy" :src="thumbUrl" :alt="filename" class="rounded" />
                         </div>
-                        <div v-if="deletion" class="w-full text-error">Bestand wordt verwijderd zodra je de aanpassingen bewaart.</div>
-                        <div v-else class="w-full">
-                            <div><strong>@{{ filename }}</strong></div>
-                            <span class="text-grey-300">
+
+                        <div v-if="deletion" class="w-full mx-4">
+                            <p class="text-grey-700">Dit bestand wordt verwijderd bij het bewaren van jouw aanpassingen.</p>
+                        </div>
+
+                        <div v-else class="w-full mx-4 space-y-1">
+                            <div><span class="font-semibold text-grey-900">@{{ filename }}</span></div>
+
+                            <span class="text-grey-400">
                                 @{{ mimetype }} | @{{ size }}
                             </span>
 
                             <div v-if="url" class="pr-2 ml-auto">
-                                <a v-if="isImage" :href="url" target="_blank">Bekijk afbeelding</a>
-                                <a v-else :href="url" target="_blank">Bekijk document</a>
-                            </div>
-                            <div v-if="showLoader" class="pr-2 ml-auto">
-                                Bezig met opladen...
+                                <a v-if="isImage" :href="url" target="_blank" class="link link-primary">Bekijk afbeelding</a>
+                                <a v-else :href="url" target="_blank" class="link link-primary">Bekijk document</a>
                             </div>
 
-                            <div class="text-error" v-if="error" v-html="error"></div>
+                            <div v-if="showLoader" class="pr-2 ml-auto">
+                                <p class="text-grey-700">Bezig met opladen...</p>
+                            </div>
+
+                            <div class="text-red-500" v-if="error" v-html="error"></div>
                         </div>
-                        <div v-if="!deletion">
-                            <svg class="cursor-pointer" @click="markForDeletion" width="18" height="18"><use xlink:href="#x"/></svg>
+
+                        <div v-if="!deletion" class="mr-4">
+                            <span @click="markForDeletion">
+                                <x-icon-label type="delete" class="text-red-500"></x-icon-label>
+                            </span>
                         </div>
                     </div>
                 `,

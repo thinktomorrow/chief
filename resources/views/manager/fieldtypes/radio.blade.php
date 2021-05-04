@@ -1,18 +1,15 @@
-<radio-options inline-template :errors="errors" default-type="{{ old($key, $field->getSelected()) }}">
-    <div>
-        @foreach($field->getOptions() as $value => $label)
-            <label class="block stack-xs custom-indicators" for="{{ $key.'-'.$value }}">
-                <input v-on:click="changeType({{ $value }})" {{ old($key, $field->getSelected()) == $value ? 'checked="checked"':'' }}
+<div class="space-y-1">
+    @foreach($field->getOptions() as $value => $label)
+        <label for="{{ $key . '-' . $value }}" class="with-radio">
+            <input
+                type="radio"
                 name="{{ $key }}"
-                       value="{{ $value }}"
-                       id="{{ $key.'-'.$value }}"
-                       type="radio">
-                <span class="custom-radiobutton"></span>
-                <span><strong>{!! $label !!}</strong></span>
+                value="{{ $value }}"
+                id="{{ $key . '-' . $value }}"
+                {{ old($key, $field->getSelected()) == $value ? 'checked="checked"' : null }}
+            >
 
-            </label>
-        @endforeach
-    </div>
-</radio-options>
-
-<error class="caption text-warning" field="{{ $key }}" :errors="errors.all()"></error>
+            <span>{!! $label !!}</span>
+        </label>
+    @endforeach
+</div>

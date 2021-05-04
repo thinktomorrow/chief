@@ -1,33 +1,26 @@
-@if($field->getAppend() || $field->getPrepend())
-    <div class="input-addon">
-        @if($field->getPrepend())
-            <div class="addon inset-s">{!! $field->getPrepend($locale ?? null) !!}</div>
-        @endif
+<div class="flex">
+    @if($field->getPrepend())
+        <div class="prepend-to-input">
+            {!! $field->getPrepend($locale ?? null) !!}
+        </div>
+    @endif
 
-        <input
-            type="text"
-            name="{{ $field->getName($locale ?? null) }}"
-            id="{{ $field->getDottedName($locale ?? null) }}"
-            placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
-            value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
-        >
-
-        @if($field->getAppend())
-            <div class="addon inset-s">{!! $field->getAppend($locale ?? null) !!}</div>
-        @endif
-    </div>
-@else
     <input
         type="text"
         name="{{ $field->getName($locale ?? null) }}"
         id="{{ $field->getDottedName($locale ?? null) }}"
         placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
         value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
+        class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"
     >
-@endif
+
+    @if($field->getAppend())
+        <div class="append-to-input">
+            {!! $field->getAppend($locale ?? null) !!}
+        </div>
+    @endif
+</div>
 
 @if($field->hasCharacterCount())
     @include('chief::manager.fieldtypes.charactercount')
 @endif
-
-{{--<error class="caption text-warning" field="{{ $field->getDottedName($locale ?? null) }}" :errors="errors.all()"></error>--}}

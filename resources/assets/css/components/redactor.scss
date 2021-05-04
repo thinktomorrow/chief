@@ -1,7 +1,15 @@
 /*
-Overriding redactor vendor css
-
+    Overriding redactor vendor css
 **/
 .redactor-toolbar {
     z-index: 10 !important; // override default 100 z-index
+}
+
+.redactor-box {
+    overflow: hidden !important;
+    border-radius: theme('borderRadius.md') !important;
+    border-color: theme('borderColor.grey.200') !important;
+    &:focus {
+        border-color: theme('borderColor.primary.500') !important;
+    }
 }
