@@ -277,18 +277,30 @@ trait FragmentAssistant
         ]);
     }
 
+    public function fragmentEdit(Request $request, string $ownerKey, $ownerId, string $fragmentId)
+    {
+        $fragmentable = $this->fragmentRepository->find($fragmentId);
+
+        return $this->handleFragmentEdit($request, $this->ownerModel($ownerKey, $ownerId), $fragmentable);
+    }
+
+    public function nestedFragmentEdit(Request $request, $fragmentOwnerModelId, $fragmentModelId)
+    {
+        $fragmentable = $this->fragmentRepository->find($fragmentModelId);
+
+        return $this->handleFragmentEdit($request, $this->fragmentRepository->find($fragmentOwnerModelId), $fragmentable);
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function fragmentEdit(Request $request, string $ownerKey, $ownerId, string $fragmentId)
+    public function handleFragmentEdit(Request $request, Model $ownerModel, Fragmentable $fragmentable)
     {
-        $this->guard('fragment-edit');
-
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $this->guard('fragment-edit', $fragmentable);
 
         return view('chief::manager.cards.fragments.edit', [
             'manager' => $this,
-            'owner' => $this->ownerModel($ownerKey, $ownerId),
+            'owner' => $ownerModel,
             'model' => $fragmentable,
             'fields' => Fields::make($fragmentable->fields())->model($this->fragmentModel($fragmentable)),
         ]);

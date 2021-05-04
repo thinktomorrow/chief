@@ -20,9 +20,6 @@ if (document.getElementById('js-sortable')) {
 }
 
 /**
- * Sidebar
+ * Sidebar components
  */
-require('./components/fragment/fragments');
-require('./components/links');
-require('./components/fieldcomponents');
-require('./components/fragmentSelection');
+require('./components/sidebarComponents');

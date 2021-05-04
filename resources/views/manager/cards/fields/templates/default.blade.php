@@ -1,9 +1,9 @@
 @if(count($fields) > 0)
     <x-chief-card
-        class="{{ isset($class) ? $class : '' }}"
-        title="{{ $title ?? null }}"
-        :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
-        type="fields-{{ $componentKey }}"
+            class="{{ isset($class) ? $class : '' }}"
+            title="{{ $title ?? null }}"
+            :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
+            type="{{ $componentKey }}"
     >
         <div class="space-y-6">
             @foreach($fields as $field)

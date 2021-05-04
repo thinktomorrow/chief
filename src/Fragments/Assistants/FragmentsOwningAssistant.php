@@ -66,7 +66,7 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->fragmentRepository->find($fragmentModelId);
 
-        return $this->showFragmentsSelectNew($owner, $this->getAllowedFragments($owner->fragmentModel()));
+        return $this->showFragmentsSelectNew($owner, $this->getAllowedFragments($owner));
     }
 
     private function showFragmentsSelectNew($owner, $fragments)
@@ -88,7 +88,7 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->fragmentRepository->find($fragmentModelId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner->fragmentModel()), $this->getSharedFragments($owner->fragmentModel()));
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner->fragmentModel()));
     }
 
     private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments)

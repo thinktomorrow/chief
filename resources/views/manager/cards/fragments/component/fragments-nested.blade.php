@@ -20,3 +20,7 @@
         @endforeach
     </div>
 </div>
+
+@include('chief::manager.cards.fragments.component.fragment-template-select-options', [
+    'templateId' => 'js-fragment-template-select-options-nested',
+])

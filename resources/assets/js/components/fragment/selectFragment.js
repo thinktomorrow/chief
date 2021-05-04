@@ -6,47 +6,48 @@ import EventBus from '../../utilities/EventBus';
  * show the available and shared fragment options
  */
 export default class {
-    constructor(container, fragmentsContainerSelector = '[data-fragments-container]') {
+    constructor(container, options = {}) {
         this.container = container;
-
-        this.fragmentsContainerSelector = fragmentsContainerSelector;
-        this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
+        this.fragmentsContainerSelector = options.fragmentsContainerSelector || '[data-fragments-container]';
+        this.templateSelector = options.templateSelector || '#js-fragment-template-select-options-main';
 
         this.fragmentSelector = '[data-fragment]';
         this.triggerSelector = '[data-fragment-trigger-element]';
         this.selectionSelector = '[data-fragment-selection-element]';
         this.selectionCloseTriggerSelector = '[data-fragment-selection-element-close]';
 
+        if (!this.container || !this.findFragmentsContainer()) return;
+
         this._init();
     }
 
-    _init() {
-        // If one of these isn't present, don't init
-        if (!this.container || !this.fragmentsContainer) return;
+    findFragmentsContainer() {
+        return this.container.querySelector(this.fragmentsContainerSelector);
+    }
 
-        this._addTriggerElements();
-        this._activateTriggerElements();
-        this._onlyShowClosestTriggerElement();
+    _init() {
+        this._build();
 
         const reloadEvents = ['sortableStored', 'fragmentsReloaded'];
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
-                console.log('Select fragments listening to fragmentsReloaded ...');
-
-                // Needs to be redefined after Livewire rebuild the element with the added fragment
-                this.fragmentsContainer = this.container.querySelector(this.fragmentsContainerSelector);
-
-                this._removeTriggerElements();
-                this._addTriggerElements();
-                this._activateTriggerElements();
-                this._onlyShowClosestTriggerElement();
+                this._build();
             });
         });
 
+        // TODO: fix ordering + this event is currently not present.
         EventBus.subscribe('newFragmentPanelCreated', (panel) => {
             this._passNewFragmentOrderToPanel(panel);
         });
+    }
+
+    _build() {
+        this.fragmentsContainer = this.findFragmentsContainer();
+        this._removeTriggerElements();
+        this._addTriggerElements();
+        this._activateTriggerElements();
+        this._onlyShowClosestTriggerElement();
     }
 
     _addTriggerElements() {
@@ -95,11 +96,7 @@ export default class {
     }
 
     _activateTriggerElement(element) {
-        console.log('Activating trigger element:', element);
-
         element.addEventListener('click', (e) => {
-            console.log('Clicked trigger element:', element);
-
             // Temporary fix for problem where after adding/deleting 2 fragments,
             // fragments start acting as trigger elements as well.
             if (!e.currentTarget.matches(this.triggerSelector)) {
@@ -202,7 +199,7 @@ export default class {
     }
 
     _createSelectionElement(isClosable = true) {
-        const template = document.querySelector('#js-fragment-selection-template');
+        const template = document.querySelector(this.templateSelector);
 
         const newSelectionElement = template.firstElementChild.cloneNode(true);
         const elementCloseTrigger = newSelectionElement.querySelector(this.selectionCloseTriggerSelector);
