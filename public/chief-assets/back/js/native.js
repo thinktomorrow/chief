@@ -1338,7 +1338,11 @@ var _default = /*#__PURE__*/function () {
           _utilities_EventBus__WEBPACK_IMPORTED_MODULE_8__.default.publish('sidebarFormSubmitted', _this4.panels.findActive().eventPayload()); // We remove the parent if this parent should not be displayed after form submit of the child panel.
 
           if (_this4.panels.findActive().parent && _this4.panels.findActive().parent.triggerData.component.closeOnPanelFormSubmit) {
-            _this4.panels.findActive().parent = null;
+            if (_this4.panels.findActive().parent.parent) {
+              _this4.panels.findActive().parent = _this4.panels.findActive().parent.parent;
+            } else {
+              _this4.panels.findActive().parent = null;
+            }
           }
 
           _this4.backOrClose(false);

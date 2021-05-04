@@ -165,7 +165,11 @@ export default class {
                         this.panels.findActive().parent &&
                         this.panels.findActive().parent.triggerData.component.closeOnPanelFormSubmit
                     ) {
-                        this.panels.findActive().parent = null;
+                        if (this.panels.findActive().parent.parent) {
+                            this.panels.findActive().parent = this.panels.findActive().parent.parent;
+                        } else {
+                            this.panels.findActive().parent = null;
+                        }
                     }
 
                     this.backOrClose(false);
