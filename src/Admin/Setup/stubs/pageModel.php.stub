@@ -4,29 +4,21 @@ declare(strict_types=1);
 namespace __STUB_NAMESPACE__;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\TextField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
+use Thinktomorrow\Chief\ManagedModels\Fields\Presets\FieldPresets;
 
 class __STUB_CLASSNAME__ extends Model implements Page
 {
     use PageDefaults;
-
-    public $dynamicKeys = [
-        'title',
-        'seo_title',
-        'seo_content',
-    ];
 
     public $guarded = [];
 
     public function fields(): iterable
     {
             yield InputField::make('title')->locales()->editAsPageTitle();
-
-            yield InputField::make('seo_title')->locales()->component('seo');
-            yield TextField::make('seo_content')->locales()->component('seo');
+            yield FieldPresets::seo();
             __STUB_FIELDS__
     }
 
