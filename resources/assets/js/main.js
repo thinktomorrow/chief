@@ -14,18 +14,13 @@ window.Form = Form;
 
 /** Chief components */
 window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);
-window.Vue.component('button-dropdown', require('./components-vue/ButtonDropdown.vue').default);
 window.Vue.component('options-dropdown', require('./components-vue/OptionsDropdown.vue').default);
 
 window.Vue.component('tab', require('./components-vue/Tab.vue').default);
 window.Vue.component('tabs', require('./components-vue/Tabs.vue').default);
-// window.Vue.component('translation-tabs', require('./components-vue/TranslationTabs.vue').default);
 window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
 
 window.Vue.component('modal', require('./components-vue/Modal.vue').default);
-// window.Vue.component('alert', require('./components-vue/Alert.vue').default);
-// window.Vue.component('delete', require('./components-vue/RemoveButton.vue').default);
-window.Vue.component('error', require('./components-vue/Error.vue').default);
 window.Vue.component('mediagallery', require('./components-vue/MediaGallery.vue').default);
 window.Vue.component('image-component', require('./components-vue/ImageComponent.vue').default);
 window.Vue.component('imagesupload', require('./components-vue/ImagesUpload.vue').default);

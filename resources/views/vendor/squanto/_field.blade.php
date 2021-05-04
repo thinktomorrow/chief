@@ -28,7 +28,6 @@
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
-                            class="w-full"
                         >
                     @endif
                 </div>

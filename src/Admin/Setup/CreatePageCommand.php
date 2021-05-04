@@ -97,7 +97,7 @@ class CreatePageCommand extends Command
         $replacements = [
             '__STUB_NAMESPACE__' => $values['namespace'],
             '__STUB_CLASSNAME__' => $values['className'],
-            '__STUB_FIELDS__' => '// hier komen de fields',
+            '__STUB_FIELDS__' => '',
         ];
         // --fields=name:input,online:bool,
         return str_replace(array_keys($replacements), array_values($replacements), $content);

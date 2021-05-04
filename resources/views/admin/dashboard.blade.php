@@ -7,7 +7,7 @@
 @section('content')
     <div class="container my">
         <div class="row gutter-6">
-            <div class="w-full lg:w-1/2 space-y-6 prose prose-dark">
+            <div class="w-full space-y-6 prose lg:w-1/2 prose-dark">
                 <h1 class="text-5xl">Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}</h1>
 
                 <p class="text-lg font-medium">
