@@ -42,8 +42,8 @@ class AdminConfigTest extends TestCase
         /** @var AdminConfig $config */
         $config = $model->adminConfig();
 
-        $this->assertEquals('ArticlePages', $config->getIndexTitle());
+        $this->assertEquals('article pages', $config->getIndexTitle());
         $this->assertEquals('first article', $config->getPageTitle());
-        $this->assertEquals('ArticlePage', $config->getModelName());
+        $this->assertEquals('article page', $config->getModelName());
     }
 }

@@ -25,7 +25,6 @@ class ArticlePage extends Model implements Page
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     use PageDefaults;
-    use HasDynamicAttributes;
     use SoftDeletes;
     use AssetTrait;
     use HasPeriodTrait;
@@ -33,9 +32,6 @@ class ArticlePage extends Model implements Page
 
     public $table = 'article_pages';
     public $guarded = [];
-    public $dynamicKeys = [
-        'title', 'custom', 'title_trans', 'content_trans',
-    ];
 
     public function fields(): Fields
     {
