@@ -15,7 +15,6 @@ class DuplicateFragmentTest extends ChiefTestCase
         parent::setUp();
 
         $this->owner = $this->setupAndCreateArticle();
-
     }
 
     /** @test */

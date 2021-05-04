@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 final class FragmentModel extends Model implements ManagedModel, HasAsset
@@ -78,6 +78,6 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
 
     public function refersToDynamicModel(): bool
     {
-        return !$this->refersToStaticObject();
+        return ! $this->refersToStaticObject();
     }
 }

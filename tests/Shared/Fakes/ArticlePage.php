@@ -17,7 +17,6 @@ use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class ArticlePage extends Model implements Page
 {

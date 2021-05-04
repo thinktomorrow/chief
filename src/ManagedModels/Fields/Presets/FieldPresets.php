@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Presets;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\TextField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\TextField;
 
 class FieldPresets
 {

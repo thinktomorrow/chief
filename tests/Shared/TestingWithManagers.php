@@ -3,9 +3,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Shared;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -15,9 +13,9 @@ use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 trait TestingWithManagers

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class FragmentOwnerRepository

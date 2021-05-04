@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class GetOwningModels
 {

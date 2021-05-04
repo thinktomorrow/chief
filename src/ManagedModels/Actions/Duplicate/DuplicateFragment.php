@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 class DuplicateFragment
@@ -37,13 +37,14 @@ class DuplicateFragment
      */
     public function handle(Model $targetModel, FragmentModel $fragment, int $index, $level = 0): void
     {
-        if (!$contextModel = ContextModel::ownedBy($targetModel)) {
+        if (! $contextModel = ContextModel::ownedBy($targetModel)) {
             $contextModel = ContextModel::createForOwner($targetModel);
         }
 
         // If it's a shareable fragment, we'll use the original
-        if ($fragment->isShared() || ($level > 0 && !$fragment->refersToStaticObject())) {
+        if ($fragment->isShared() || ($level > 0 && ! $fragment->refersToStaticObject())) {
             $this->addFragmentModel->handle($targetModel, $fragment, $index);
+
             return;
         }
 

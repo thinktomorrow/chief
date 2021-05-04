@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Thinktomorrow\AssetLibrary\AssetTrait;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\ManagedModels\States\UsesPageState;

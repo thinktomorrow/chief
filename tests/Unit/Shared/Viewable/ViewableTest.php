@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Viewable;
 
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Viewless;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundView;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Viewless;
 
 class ViewableTest extends ChiefTestCase
 {

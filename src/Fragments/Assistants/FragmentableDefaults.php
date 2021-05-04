@@ -27,10 +27,10 @@ trait FragmentableDefaults
         $this->setOwnerViewPath($owner);
 
         $this->setViewData(array_merge($viewData, [
-            'owner'     => $owner,
-            'loop'      => $loop,
+            'owner' => $owner,
+            'loop' => $loop,
             'fragments' => $fragments,
-            'model'     => $this,
+            'model' => $this,
         ]));
 
         return $this->renderView();
@@ -50,7 +50,7 @@ trait FragmentableDefaults
 
     public function fragmentModel(): FragmentModel
     {
-        if (!isset($this->fragmentModel)) {
+        if (! isset($this->fragmentModel)) {
             throw new \DomainException('FragmentModel property on [' . get_class($this) . '] expected to be set, but it\'s not.');
         }
 
