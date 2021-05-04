@@ -6,7 +6,7 @@ export default class {
         this.key = key;
 
         /** DOM selector for this component */
-        this.componentSelector = options.componentSelector || '[data-' + this.key + '-component]';
+        this.componentSelector = options.componentSelector || `[data-${this.key}-component]`;
 
         /**
          * With this setting enables the component will be reloaded
@@ -19,7 +19,7 @@ export default class {
          * tells the script that the livewire component has been reloaded. This event is used
          * as trigger by the sidebar to refresh sidebar event listeners in the component.
          */
-        this.livewireEventKey = options.livewireEventKey || this.key + 'Reloaded';
+        this.livewireEventKey = options.livewireEventKey || `${this.key}Reloaded`;
 
         /**
          * Option to ignore the panels created by this component
@@ -29,10 +29,10 @@ export default class {
         this.closeOnPanelFormSubmit = options.closeOnPanelFormSubmit || false;
 
         if (options.events) {
-            Object.keys(options.events).forEach((key) => {
-                EventBus.subscribe(key, (panelData) => {
+            Object.keys(options.events).forEach((eventKey) => {
+                EventBus.subscribe(eventKey, (panelData) => {
                     if (panelData.componentKey !== this.key) return;
-                    options.events[key](panelData);
+                    options.events[eventKey](panelData);
                 });
             });
         }
@@ -50,7 +50,7 @@ export default class {
      * Usually occurs after the livewire reload.
      */
     onComponentReload() {
-        console.log('component reload for ' + this.key);
+        console.log(`component reload for ${this.key}`);
         this.onComponentReloadEvent();
     }
 

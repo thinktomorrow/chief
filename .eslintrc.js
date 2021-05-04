@@ -6,6 +6,9 @@ module.exports = {
     },
     extends: ['airbnb-base', 'eslint:recommended'],
     rules: {
+        // Turned this rule off because of conflict with prettier formatting operators at the end of a line.
+        'operator-linebreak': 0,
+
         indent: ['error', 4],
         'comma-dangle': [
             'error',

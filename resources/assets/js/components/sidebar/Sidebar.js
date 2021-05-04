@@ -76,7 +76,7 @@ export default class {
 
             // Event when livewire is reloaded on server
             window.Livewire.on(component.livewireEventKey, () => {
-                console.log('livewire reloaded ' + component.key);
+                console.log(`livewire reloaded ${component.key}`);
                 this.listenForEvents();
                 component.onComponentReload();
             });
@@ -86,7 +86,7 @@ export default class {
 
             EventBus.subscribe('sidebarFormSubmitted', (panelData) => {
                 if (panelData.component.key === component.key) {
-                    console.log('livewire reloading ' + component.key);
+                    console.log(`livewire reloading ${component.key}`);
                     livewireComponent.reload();
                 }
             });
@@ -96,9 +96,9 @@ export default class {
     _handleTrigger(event) {
         event.preventDefault();
 
-        const trigger = event.currentTarget,
-            link = trigger.getAttribute('href'),
-            componentKey = trigger.getAttribute(this.componentKeyAttribute);
+        const trigger = event.currentTarget;
+        const link = trigger.getAttribute('href');
+        const componentKey = trigger.getAttribute(this.componentKeyAttribute);
 
         if (!link) {
             if (this.debug) console.error('Not showing a new panel because the trigger has no href value provided.');
@@ -157,7 +157,7 @@ export default class {
 
             Api.listenForFormSubmits(
                 newPanelElement,
-                (response) => {
+                () => {
                     EventBus.publish('sidebarFormSubmitted', this.panels.findActive().eventPayload());
 
                     // We remove the parent if this parent should not be displayed after form submit of the child panel.
