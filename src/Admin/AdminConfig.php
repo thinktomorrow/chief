@@ -23,8 +23,8 @@ final class AdminConfig
 
     public function defaults($model): self
     {
-        $singular = Str::of(class_basename($model))->singular()->replace('_', ' ')->__toString();
-        $plural = Str::of(class_basename($model))->plural()->replace('_', ' ')->__toString();
+        $singular = Str::of(class_basename($model))->singular()->snake()->replace('_', ' ')->__toString();
+        $plural = Str::of(class_basename($model))->plural()->snake()->replace('_', ' ')->__toString();
 
         $this->indexTitle($plural);
         $this->pageTitle($model->title ?? $singular);

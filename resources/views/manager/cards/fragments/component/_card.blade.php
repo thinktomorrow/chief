@@ -8,7 +8,7 @@
         <div class="flex justify-between items-start">
             <div class="flex items-center space-x-2">
                 <span class="text-xl font-semibold text-grey-900">
-                    {{ ucfirst($model->managedModelKey()) }}
+                    {{ $model->adminConfig()->getPageTitle() }}
                 </span>
 
                 @if($model->fragmentModel()->isOffline())

@@ -18,6 +18,7 @@
                         <img src="{{ $url }}" title="{{ $asset->filename() }}">
                     @break
 
+                    {{-- TODO: maybe some nice previews / icons, easy video / audio playback who knows? --}}
                     @case('pdf')
                     <a href="{{ $url }}">{{ $asset->filename() }} ($asset->getSize())</a>
                     @break
