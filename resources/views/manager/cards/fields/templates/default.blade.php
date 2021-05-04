@@ -14,13 +14,14 @@
                     <div class="prose prose-dark">
                         @if(in_array($field->getType(), [
                             {{-- Done --}}
-                            'input', 'html', 'number', 'range', 'date', 'phonenumber', 'checkbox', 'radio', 'select', 'page',
+                            'input', 'html', 'number', 'range', 'date', 'phonenumber', 'checkbox',
+                            'radio', 'select', 'page', 'text', 'image',
                             {{-- Still todo --}}
-                            'image', 'file',
+                            'file',
                         ]))
                             @include('chief::manager.cards.fields.templates._partials.' . $field->getType(), ['field' => $field])
                         @else
-                            <p>...</p>
+                            <p class="text-grey-400">...</p>
                         @endif
                     </div>
                 </div>
