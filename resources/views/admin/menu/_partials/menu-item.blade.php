@@ -1,14 +1,14 @@
-<div class="relative flex px-8 py-4">
+<div class="relative flex px-8 py-6">
     @if($level != 0)
-        <div class="absolute flex-shrink-0 flex flex-col items-end text-grey-700" style="width: {{ $level * 2 }}rem">
+        <div class="absolute flex flex-col items-end flex-shrink-0 text-grey-700" style="width: {{ $level * 2 }}rem">
             <svg width="18" height="18"><use xlink:href="#icon-arrow-tl-to-br"/></svg>
-            <span class="text-xs pr-2 font-semibold">{{ $level }}</span>
+            <span class="pr-2 text-xs font-semibold">{{ $level }}</span>
         </div>
     @endif
 
-    <div class="w-full flex justify-between items-start space-x-4" style="padding-left: {{ $level * 2 }}rem; {{ $level > 0 ? 'margin-left: 0.75rem;' : null }}">
+    <div class="flex items-start justify-between w-full space-x-4" style="padding-left: {{ $level * 2 }}rem; {{ $level > 0 ? 'margin-left: 0.75rem;' : null }}">
         <div class="flex flex-wrap items-center">
-            <div class="space-x-1 mr-3">
+            <div class="mr-3 space-x-1">
                 <a href="{{ route('chief.back.menuitem.edit', $item->id) }}">
                     <span class="font-medium text-grey-700">{{ $item->label }}</span>
                 </a>
@@ -22,18 +22,18 @@
             </div>
 
             @if($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_INTERNAL)
-                <x-icon-label type="forward" class="text-primary-500 mr-3"></x-icon-label>
+                <x-icon-label type="forward" class="mr-3 text-primary-500"></x-icon-label>
 
-                <a class="label label-primary inline-block" href="{{ $item->url }}" target="_blank">
+                <a class="inline-block label label-primary" href="{{ $item->url }}" target="_blank">
                     {{-- Todo: show internal page title --}}
                     {{ $item->page_label }}
                 </a>
             @elseif($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
-                <x-icon-label type="forward" class="text-grey-300 mr-3"></x-icon-label>
+                <x-icon-label type="forward" class="mr-3 text-grey-300"></x-icon-label>
 
-                <span class="text-grey-300 font-medium">Geen link</span>
+                <span class="font-medium text-grey-300">Geen link</span>
             @else
-                <x-icon-label type="forward" class="text-primary-500 mr-3"></x-icon-label>
+                <x-icon-label type="forward" class="mr-3 text-primary-500"></x-icon-label>
 
                 <a class="link link-primary" href="{{ $item->url }}" target="_blank">
                     {{ $item->url }}
@@ -41,7 +41,7 @@
             @endif
         </div>
 
-        <div class="flex-shrink-0 flex items-center cursor-pointer">
+        <div class="flex items-center flex-shrink-0 cursor-pointer">
             <a
                 href="{{ route('chief.back.menuitem.edit', $item->id) }}"
                 class="link link-primary"
