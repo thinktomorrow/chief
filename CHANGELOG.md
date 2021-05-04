@@ -7,10 +7,11 @@ principles.
 - V migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - chief:install met set van default static fragments (textFragment, bannerFragment, galleryFragment) (+ views)
 - seo defaults weergeven (indien seo niet ingegeven, dan wordt page title gebruikt enz...)
-- nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes. 
-  - state uit 'permalink' halen.
+- nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
+- state uit 'permalink' halen.
 
 ## BUGS
+- kopie van quote is beschikbaar maar reeds gebruikt?...
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - proper duplicate context feature (with buttons and all)
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
@@ -23,6 +24,11 @@ principles.
 - statusAsLabel() and statusAsPlainLabel()
 - FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
 - na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
+
+HOMEPAGE en FIXED PAGES
+- homepage: indien Homepage per taal geen url laten editeren maar labeltje IS HOMEPAGE TONEN (link naar settings om aan te passen). Wel mogelijk maken om redirects toe te voegen.
+- hoempage: ook niet toeloaten om / in te geven als url. Dit is nl. enkel voor de homepage.
+- extra: hierbij voor alle fixed pages een oplossing voorzien.
 
 ## Fragments
 - fragment kunnen sharen

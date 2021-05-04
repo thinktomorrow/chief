@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
@@ -25,7 +26,7 @@ final class StaticFragmentManager implements Manager
     {
         $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
 
-        $fragmentable->fragmentModel()->saveFields($fragmentable->fields()->notTagged('edit'), $request->all(), $request->allFiles());
+        $fragmentable->fragmentModel()->saveFields(Fields::make($fragmentable->fields())->notTagged('edit'), $request->all(), $request->allFiles());
     }
 
     private function fragmentModel(Fragmentable $fragmentable): Database\FragmentModel

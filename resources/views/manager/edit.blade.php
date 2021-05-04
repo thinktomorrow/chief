@@ -61,6 +61,15 @@
 
                 @endAdminCan
 
+                <!-- TEST -->
+                <div class="window window-white">
+                    <div id="refresh-test">
+                        {{ date('H:i:s') }}
+                        <a data-sidebar-trigger href="/admin/article/create">open sidebar</a>
+                        <a data-sidebar-trigger data-sidebar-refresh="#refresh-test" href="/admin/article/create">open sidebar</a>
+                    </div>
+                </div>
+
                 <div class="window window-white">
                     @adminCan('fragments-index', $model)
                         <livewire:fragments :owner="$model" />

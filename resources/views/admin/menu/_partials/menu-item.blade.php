@@ -43,7 +43,6 @@
 
         <div class="flex-shrink-0 flex items-center cursor-pointer">
             <a
-                data-sidebar-fragments-edit
                 href="{{ route('chief.back.menuitem.edit', $item->id) }}"
                 class="link link-primary"
             >

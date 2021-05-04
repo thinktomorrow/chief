@@ -1,7 +1,7 @@
 export default class {
     constructor(containerEl) {
         if (!containerEl) {
-            throw new Error('Sidebar container element does not exist in DOM.');
+            throw new Error('No sidebar container element found in DOM.');
         }
 
         this.containerEl = containerEl;
@@ -11,16 +11,13 @@ export default class {
         this.sidebarAside = this.el.querySelector('[data-sidebar-aside]');
         this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
         this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
-
-        this.scanForCloseTriggers();
     }
 
     /**
-     * Allows to rescan the sidebar content for
-     * any dynamically loaded close triggers
+     * Get the close triggers on this container element
      */
-    scanForCloseTriggers() {
-        this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
+    getCloseTriggers() {
+        return Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
     }
 
     _createDomElement() {

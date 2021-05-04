@@ -36,6 +36,6 @@ class FieldsComponent extends Component
 
     public function reload(): void
     {
-        $this->emit('fieldsComponentReloaded');
+        $this->emit($this->componentKey. 'Reloaded');
     }
 }

@@ -7,7 +7,7 @@
             @endif
 
             @if(isset($editRequestUrl))
-                <a data-sidebar-{{ $type ?? '' }}-edit href="{{ $editRequestUrl }}" class="flex-shrink-0 link link-primary">
+                <a data-sidebar-trigger="{{ $type ?? '' }}" href="{{ $editRequestUrl }}" class="flex-shrink-0 link link-primary">
                     <x-icon-label type="edit"></x-icon-label>
                 </a>
             @endif

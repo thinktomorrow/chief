@@ -193,15 +193,6 @@ if (! function_exists('cleanupHTML')) {
         if (false !== $whitelist) {
             $value = strip_tags($value, $whitelist);
         }
-        // // cleanup HTML and any unwanted attributes
-        $purifier = new HTMLPurifier();
-        $value = $purifier->purify($value);
-
-        /**
-         * htmlPurifier converts characters to their encode equivalents. This is something
-         * that we need to reverse after the htmlPurifier cleanup.
-         */
-        $value = str_replace('&amp;', '&', $value);
 
         return $value;
     }

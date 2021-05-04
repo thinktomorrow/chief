@@ -15,5 +15,8 @@
         @endforeach
     </div>
 
-    @include('chief::manager.cards.fragments.component.fragment-new')
+    @include('chief::manager.cards.fragments.component.fragment-template-select-options', [
+        'templateId' => 'js-fragment-template-select-options-main',
+    ])
+    @include('chief::manager.cards.fragments.component.fragment-template-open-select-options')
 </div>

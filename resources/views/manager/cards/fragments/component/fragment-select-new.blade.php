@@ -5,8 +5,7 @@
         @forelse($fragments as $allowedFragment)
             <span>
                 <a
-                    data-sidebar-fragments-edit
-                    data-sidebar-close
+                    data-sidebar-trigger="fragments"
                     class="bg-grey-100 rounded-md p-4"
                     href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                 >

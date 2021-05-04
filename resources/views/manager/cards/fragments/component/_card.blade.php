@@ -18,7 +18,7 @@
 
             @adminCan('fragment-edit')
                 <a
-                    data-sidebar-fragments-edit
+                    data-sidebar-trigger="fragments"
                     data-sortable-ignore
                     href="@adminRoute('fragment-edit', $owner, $model)"
                     class="flex-shrink-0 link link-primary"
