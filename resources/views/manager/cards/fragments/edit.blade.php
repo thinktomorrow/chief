@@ -9,12 +9,12 @@
     @csrf
     @method('put')
 
-    <div class="space-y-12">
+    <div class="space-y-8">
         <h3>{{ $model->adminConfig()->getPageTitle() }}</h3>
 
-        <div data-vue-fields class="space-y-8">
+        <div data-vue-fields class="space-y-6">
             @foreach($fields as $field)
-                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
+                <x-chief-formgroup label="{{ $field->getLabel() }}" name="{{ $field->getName($locale ?? null) }}" isRequired="{{ $field->required() }}">
                     @if($field->getDescription())
                         <x-slot name="description">
                             <p>{{ $field->getDescription() }}</p>

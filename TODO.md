@@ -56,3 +56,10 @@
 -   [ ] Date fieldcomponent view upgrade
 -   [ ] Possibility to set custom template for field component view per field
 -   [ ] Checkbox, select, radio and page fields view check (by Ben)
+
+## SEDS implementation of Chief
+
+-   [ ] The command php artisan chief:page is working great. Now we need nice a finished page default config.
+-   [ ] The first page you make, which is almost always going to be the homepage, needs to be published AND given an url '/'.
+        Otherwise the page won't be visible or selectable as homepage in settings.
+-   [ ] Menu items can't be created. Error = Undefined index: path

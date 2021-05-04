@@ -44,21 +44,17 @@
 @section('content')
     <div class="container">
         <div class="row gutter-3">
-            <div class="w-full lg:w-2/3 space-y-6">
+            <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
-                @if($fields->component('main')->any())
-                    <div class="window window-white">
-                        <h3>Algemeen</h3>
-                        @foreach($fields->component('main')->groupByComponent() as $componentKey => $componentFields)
-                            <livewire:fields_component
-                                    :model="$model"
-                                    :componentKey="$componentKey"
-                            />
-                        @endforeach
-                    </div>
+                    @if($fields->component('main')->any())
+                        <div class="window window-white">
+                            <h3>Algemeen</h3>
 
-                @endif
-
+                            @foreach($fields->component('main')->groupByComponent() as $componentKey => $componentFields)
+                                <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+                            @endforeach
+                        </div>
+                    @endif
                 @endAdminCan
 
                 <div class="window window-white">
@@ -80,14 +76,15 @@
                                 :model="$model"
                                 :componentKey="$componentKey"
                                 :title="$componentKey"
-                                class="window window-grey" />
+                                class="window window-grey"
+                            />
                         @endforeach
 
                         <!-- default fields - not assigned to a component -->
                         <livewire:fields_component
-                                :model="$model"
-                                title="Algemeen"
-                                class="window window-grey"
+                            :model="$model"
+                            title="Algemeen"
+                            class="window window-grey"
                         />
                     @endAdminCan
                 </div>

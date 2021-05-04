@@ -10,12 +10,12 @@
                 @slot('description', $lineViewModel->description())
             @endif
 
-            <div class="w-full flex space-x-4">
-                <div class="w-1/12">
-                    <span class="inline-block label label-primary">{{ $locale }}</span>
-                </div>
+            <div class="flex w-full space-x-4">
+                @if(count(config('chief.locales')) > 1)
+                    <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                @endif
 
-                <div class="w-11/12">
+                <div class="w-full">
                     @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
                         <textarea
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"

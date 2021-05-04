@@ -12,7 +12,9 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if($links->current)
                         <div class="flex items-start space-x-4">
-                            <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                            @if(count(config('chief.locales')) > 1)
+                                <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                            @endif
 
                             <a class="mt-0.5 space-x-1 link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}" style="word-break: break-word;">
                                 <span>{{ $links->full_path }}</span>
