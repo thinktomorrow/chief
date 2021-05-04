@@ -12,17 +12,7 @@
 
                     {{-- Todo: this condition doesn't work for example for ImageField, as it's value is null --}}
                     <div class="prose prose-dark">
-                        @if(in_array($field->getType(), [
-                            {{-- Done --}}
-                            'input', 'html', 'number', 'range', 'date', 'phonenumber', 'checkbox',
-                            'radio', 'select', 'page', 'text', 'image',
-                            {{-- Still todo --}}
-                            'file',
-                        ]))
-                            @include('chief::manager.cards.fields.templates._partials.' . $field->getType(), ['field' => $field])
-                        @else
-                            <p class="text-grey-400">...</p>
-                        @endif
+                        @include('chief::manager.cards.fields.templates.types.' . $field->getType(), ['field' => $field])
                     </div>
                 </div>
             @endforeach
