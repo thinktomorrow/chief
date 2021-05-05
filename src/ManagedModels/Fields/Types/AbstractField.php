@@ -14,6 +14,7 @@ abstract class AbstractField
 {
     use AllowsTags;
     use AllowsComponentTags;
+    use AllowsToggle;
 
     /** @var FieldType */
     private $type;
