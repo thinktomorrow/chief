@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\App\View\Livewire\Status;
 use Thinktomorrow\Chief\App\View\Livewire\FieldsComponent;
 use Thinktomorrow\Chief\App\View\Livewire\Fragments;
 use Thinktomorrow\Chief\App\View\Livewire\Links;
@@ -38,6 +39,7 @@ class ViewServiceProvider extends ServiceProvider
         Livewire::component('fragments', Fragments::class);
         Livewire::component('links', Links::class);
         Livewire::component('fields_component', FieldsComponent::class);
+        Livewire::component('status', Status::class);
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 

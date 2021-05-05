@@ -66,6 +66,10 @@
 
             <div class="w-full lg:w-1/3">
                 <div class="space-y-6">
+                    @adminCan('status-edit', $model)
+                        <livewire:status :model="$model" class="window window-grey" />
+                    @endAdminCan
+
                     @adminCan('links-edit', $model)
                         <livewire:links :model="$model" class="window window-grey" />
                     @endAdminCan
@@ -88,7 +92,8 @@
                         />
                     @endAdminCan
                 </div>
-                <div class="window">
+
+                {{-- <div class="window">
                     <div class="flex flex-col space-y-3">
                         @foreach(['archive', 'unarchive', 'delete'] as $action)
                             @adminCan($action, $model)
@@ -96,11 +101,20 @@
                             @endAdminCan
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
 @stop
+
+@push('portals')
+    @adminCan('delete', $model)
+        @include('chief::manager._transitions.modals.delete-modal')
+    @endAdminCan
+    @adminCan('archive', $model)
+        @include('chief::manager._transitions.modals.archive-modal')
+    @endAdminCan
+@endpush
 
 @push('custom-scripts-after-vue')
     @include('chief::layout._partials.editor-script')

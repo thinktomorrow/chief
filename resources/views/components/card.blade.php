@@ -1,9 +1,8 @@
 <div class="{{ $class ?? '' }}">
     <div class="space-y-6">
-        <div class="flex justify-between items-start">
+        <div class="flex items-start justify-between">
             @if(isset($title) && $title)
-                {{-- <h3>{{ $title }}</h3> --}}
-                <span class="text-xl font-semibold text-grey-900">{{ ucfirst($title) }}</span>
+                <span class="text-xl font-semibold text-grey-900">{!! $title !!}</span>
             @endif
 
             @if(isset($editRequestUrl))
@@ -23,14 +22,14 @@
 
     {{-- <div class="relative">
         @if(isset($editRequestUrl))
-            <a data-sidebar-{{ $type ?? '' }}-edit href="{{ $editRequestUrl }}" class="absolute right-0 top-0 link link-primary">
+            <a data-sidebar-{{ $type ?? '' }}-edit href="{{ $editRequestUrl }}" class="absolute top-0 right-0 link link-primary">
                 <x-icon-label type="edit"></x-icon-label>
             </a>
         @endif
 
         <div class="space-y-6">
             @if(isset($title) && $title)
-                <h3 class="leading-none mr-8">{{ $title }}</h3>
+                <h3 class="mr-8 leading-none">{{ $title }}</h3>
             @endif
 
             @if($slot)

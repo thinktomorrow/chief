@@ -11,8 +11,8 @@ class FieldPresets
 {
     public static function seo(): iterable
     {
-        yield InputField::make('seo_title')->locales()->component('seo');
-        yield TextField::make('seo_content')->locales()->component('seo');
-        yield ImageField::make('seo_image')->locales()->component('seo');
+        yield InputField::make('seo_title')->locales()->component('SEO');
+        yield TextField::make('seo_content')->locales()->component('SEO');
+        yield ImageField::make('seo_image')->locales()->component('SEO');
     }
 }

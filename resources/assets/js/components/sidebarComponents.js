@@ -54,6 +54,27 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebarPanelCreated: (panelData) => {
                 console.log('special links panel created', panelData);
             },
+            sidebarFormSubmitted: () => {
+                const componentEl = statusComponent.el(document);
+                const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
+
+                livewireComponent.reload();
+            },
+        },
+    });
+
+    const statusComponent = new Component('status', {
+        livewire: true,
+        events: {
+            sidebarPanelCreated: (panelData) => {
+                console.log('special status panel created', panelData);
+            },
+            sidebarFormSubmitted: () => {
+                const componentEl = linksComponent.el(document);
+                const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
+
+                livewireComponent.reload();
+            },
         },
     });
 
@@ -73,25 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     new Sidebar({
         debug: true,
-        components: [linksComponent, fragmentsComponent, fragmentSelectionComponent, ...fieldComponents],
+        components: [
+            linksComponent,
+            statusComponent,
+            fragmentsComponent,
+            fragmentSelectionComponent,
+            ...fieldComponents,
+        ],
         reloadEvents: ['fragmentSelectionElementCreated'],
         events: {
             sidebarPanelCreated: () => {
-                console.log('SIDEBAR always triggered');
-                // // panel, triggerElement, triggerType
-                // if (panelData.triggerType === 'links') {
-                //     // Trigger js for submit form elements (these are used for the state transitions)
-                //     FormSubmit.listen('[data-submit-form]', sidebarContainerEl);
-                // }
+                console.log('Any sidebar panel was created.');
             },
             sidebarFormSubmitted: () => {
-                // form submit -> component die dit panel getrigged heeft moeten we refreshen.
-                // (livewire) nested fragments: custom
-                // if (panelData.triggerType === 'links') {
-                //     linkComponent.reload();
-                //     console.log('reload...');
-                //     livewireComponent.reload();
-                // }
+                //
             },
         },
     });

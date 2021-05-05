@@ -30,10 +30,10 @@
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative divide-y divide-grey-100 -mx-8 -my-6"
+                                class="relative -mx-8 -my-6 divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative divide-y divide-grey-100 -mx-8 -my-6">
+                            <div class="relative -mx-8 -my-6 divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include('chief::manager._index._card')
@@ -48,7 +48,7 @@
                 @endif
             </div>
 
-            <div class="w-full lg:w-1/3 space-y-6">
+            <div class="w-full space-y-6 lg:w-1/3">
                 @if($manager->filters()->anyRenderable())
                     <div class="window window-grey">
                         <span class="text-xl font-semibold text-grey-900">Filtering</span>
@@ -62,7 +62,7 @@
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <div class="window window-grey space-y-6">
+                    <div class="space-y-6 window window-grey">
                         <div class="space-y-4">
                             <span class="text-xl font-semibold text-grey-900">Sortering</span>
 
@@ -77,7 +77,7 @@
                                     Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
                                 </p>
                             @else
-                                <p class="text-grey-700 text-sm">
+                                <p class="text-sm text-grey-700">
                                     Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
                                 </p>
 
@@ -89,7 +89,11 @@
 
                 @adminCan('archive_index')
                     <div class="window window-grey">
-                        <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
+                        @if(Route::currentRouteName() == 'chief.single.archive_index')
+                            <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
+                        @else
+                            <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
+                        @endif
                     </div>
                 @endAdminCan
             </div>

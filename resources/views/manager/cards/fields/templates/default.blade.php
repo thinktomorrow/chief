@@ -10,7 +10,6 @@
                 <div class="space-y-1">
                     <span class="font-medium text-grey-900">{{ ucfirst($field->getLabel()) }}</span>
 
-                    {{-- Todo: this condition doesn't work for example for ImageField, as it's value is null --}}
                     <div class="prose prose-dark">
                         @include('chief::manager.cards.fields.templates.types.' . $field->getType(), ['field' => $field])
                     </div>

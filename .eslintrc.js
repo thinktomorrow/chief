@@ -6,6 +6,9 @@ module.exports = {
     },
     extends: ['airbnb-base', 'eslint:recommended'],
     rules: {
+        // Project specific rules
+        'no-use-before-define': 0,
+
         // Turned this rule off because of conflict with prettier formatting operators at the end of a line.
         'operator-linebreak': 0,
 
