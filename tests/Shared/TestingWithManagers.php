@@ -30,7 +30,7 @@ trait TestingWithManagers
         return ArticlePage::create($values);
     }
 
-    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $withSetup = true): Quote
+    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true): Quote
     {
         if ($withSetup) {
             Quote::migrateUp();
@@ -39,10 +39,10 @@ trait TestingWithManagers
 
         $quote = Quote::create($values);
 
-        return $this->addAsFragment($quote, $owner);
+        return $this->addAsFragment($quote, $owner, $order);
     }
 
-    protected function setupAndCreateSnippet(FragmentsOwner $owner, $withSetup = true): SnippetStub
+    protected function setupAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true): SnippetStub
     {
         if ($withSetup) {
             chiefRegister()->staticFragment(SnippetStub::class);
@@ -50,7 +50,7 @@ trait TestingWithManagers
 
         $snippet = new SnippetStub();
 
-        return $this->addAsFragment($snippet, $owner);
+        return $this->addAsFragment($snippet, $owner, $order);
     }
 
     protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
@@ -71,9 +71,9 @@ trait TestingWithManagers
         return ArticlePageWithImageValidation::create($values);
     }
 
-    protected function addAsFragment($model, $owner)
+    protected function addAsFragment($model, $owner, $order = 0)
     {
-        return $model->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $model, 1));
+        return $model->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $model, $order));
     }
 
     protected function manager($managedModel): Manager

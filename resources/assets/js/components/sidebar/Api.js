@@ -1,5 +1,5 @@
 const Api = {
-    get(url, container, successCallback, errorCallback) {
+    get(url, successCallback, errorCallback) {
         fetch(url)
             .then((response) => response.text())
             .then((data) => {

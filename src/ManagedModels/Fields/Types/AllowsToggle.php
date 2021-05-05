@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsToggle

@@ -11,6 +11,7 @@ function getIdGenerator() {
     };
 }
 
+let debug = false;
 const subscriptions = {};
 const getNextUniqueId = getIdGenerator();
 
@@ -31,7 +32,12 @@ function subscribe(event, callback) {
 
 function publish(event, arg) {
     if (!subscriptions[event]) return;
+
+    if (debug) {
+        console.log('Eventbus.publish: ' + event);
+    }
+
     Object.keys(subscriptions[event]).forEach((key) => subscriptions[event][key](arg));
 }
 
-export default { publish, subscribe };
+export default { publish, subscribe, debug };

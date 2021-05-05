@@ -41,8 +41,7 @@ export default class {
             options.onComponentCreation();
         }
 
-        this.onComponentReloadEvent =
-            options.onComponentReload || (options.onComponentCreation ? options.onComponentCreation : function () {});
+        this.onComponentReloadEvent = options.onComponentReload || function () {};
     }
 
     /**

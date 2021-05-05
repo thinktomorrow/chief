@@ -8,7 +8,7 @@
         <div class="flex justify-between items-start">
             <div class="flex items-center space-x-2">
                 <span class="text-xl font-semibold text-grey-900">
-                    {{ $model->adminConfig()->getPageTitle() }}
+                    {{ $model->adminConfig()->getPageTitle() }} (sort: {{ $model->fragmentModel()->pivot->order }})
                 </span>
 
                 @if($model->fragmentModel()->isOffline())

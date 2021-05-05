@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class StoreFragmentTest extends ChiefTestCase
 {
@@ -51,6 +52,27 @@ class StoreFragmentTest extends ChiefTestCase
 
         app()->setLocale('en');
         $this->assertEquals('title_trans en value', $quote->title_trans);
+    }
+
+    /** @test */
+    public function it_can_store_fragment_with_specific_order()
+    {
+        $this->disableExceptionHandling();
+        $quote1 = $this->setupAndCreateQuote($this->owner, [], 1, false);
+        $quote2 = $this->setupAndCreateQuote($this->owner, [], 2, false);
+
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner), [
+            'title' => 'new-title',
+            'custom' => 'custom-value',
+            'order' => 2,
+        ]);
+
+        $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
+        $this->assertCount(3, $fragments);
+
+        $this->assertEquals($quote1->modelReference(), $fragments[0]->modelReference());
+        $this->assertEquals($quote2->modelReference(), $fragments[2]->modelReference());
+        $this->assertEquals(new ModelReference(Quote::class, 3), $fragments[1]->modelReference());
     }
 
     /** @test */

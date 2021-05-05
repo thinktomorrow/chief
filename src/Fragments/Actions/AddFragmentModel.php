@@ -6,10 +6,18 @@ namespace Thinktomorrow\Chief\Fragments\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 
 final class AddFragmentModel
 {
+    private SortModels $sortModels;
+
+    public function __construct(SortModels $sortModels)
+    {
+        $this->sortModels = $sortModels;
+    }
+
     public function handle(Model $owner, FragmentModel $fragmentModel, int $order): void
     {
         if (! $context = ContextModel::ownedBy($owner)) {
@@ -20,8 +28,27 @@ final class AddFragmentModel
             throw new FragmentAlreadyAdded('Fragment [' . $fragmentModel->id . '] was already added to owner [' . $owner->modelReference()->get().']');
         }
 
-        $context->fragments()->attach($fragmentModel->id, [
-            'order' => $order,
-        ]);
+        $indices = $this->fetchSortIndices($context, $order, $fragmentModel->id);
+
+        $context->fragments()->attach($fragmentModel->id);
+
+        $this->sortModels->handleFragments($owner, $indices);
+    }
+
+    /**
+     * @param ContextModel $context
+     * @param int $order
+     * @param string $fragmentModelId
+     * @return mixed
+     */
+    private function fetchSortIndices(ContextModel $context, int $order, string $fragmentModelId): array
+    {
+        $indices = $context->fragments->map(function ($fragment) {
+            return $fragment->pivot->fragment_id;
+        })->values()->all();
+
+        array_splice($indices, $order, 0, $fragmentModelId);
+
+        return $indices;
     }
 }

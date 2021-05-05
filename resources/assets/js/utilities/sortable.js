@@ -132,7 +132,7 @@ IndexSorting.prototype._filterSortableIndices = function (indices) {
     // Sortablejs will generate '4w1' for elements without data id
     // This is used for instance on the plus icons in the fragments,
     // which are elements which should not impact the order numbers.
-    return indices.filter((index) => index !== '4w1');
+    return indices.filter((index) => !['4w1', '5tj'].includes(index));
 };
 
 export { IndexSorting as default };

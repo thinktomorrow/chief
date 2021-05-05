@@ -9,6 +9,7 @@ principles.
 - seo defaults weergeven (indien seo niet ingegeven, dan wordt page title gebruikt enz...)
 - nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
 - state uit 'permalink' halen.
+- sortable handle zodat tekst kan worden geselecteerd
 
 ## BUGS
 - kopie van quote is beschikbaar maar reeds gebruikt?...

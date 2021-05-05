@@ -16,9 +16,18 @@ export default class {
         this.selectionSelector = '[data-fragment-selection-element]';
         this.selectionCloseTriggerSelector = '[data-fragment-selection-element-close]';
 
-        if (!this.container || !this.findFragmentsContainer()) return;
+        this.elementExists = true;
+
+        if (!this.container || !this.findFragmentsContainer()) {
+            this.elementExists = false;
+            return;
+        }
 
         this._init();
+    }
+
+    exists() {
+        return this.elementExists;
     }
 
     findFragmentsContainer() {
@@ -32,13 +41,9 @@ export default class {
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
+                console.log('rebuilding');
                 this._build();
             });
-        });
-
-        // TODO: fix ordering + this event is currently not present.
-        EventBus.subscribe('newFragmentPanelCreated', (panel) => {
-            this._passNewFragmentOrderToPanel(panel);
         });
     }
 
@@ -170,15 +175,15 @@ export default class {
         });
     }
 
-    _passNewFragmentOrderToPanel(panel) {
+    insertOrderInPanelForm(panelElement) {
         const selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
 
         if (selectionElement) {
             const order = this._getSelectionElementOrder(selectionElement);
 
-            if (panel.el.querySelector('input[name="order"]')) {
-                panel.el.querySelector('input[name="order"]').value = order;
-            }
+            if (!panelElement.querySelector('input[name="order"]')) return;
+
+            panelElement.querySelector('input[name="order"]').setAttribute('value', order);
         }
     }
 

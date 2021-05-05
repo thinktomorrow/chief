@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -123,7 +124,7 @@ trait FragmentsOwningAssistant
         ]);
     }
 
-    private function getAllowedFragments(Model $owner): array
+    private function getAllowedFragments(FragmentsOwner $owner): array
     {
         return array_map(function ($fragmentableClass) {
             $modelClass = $this->registry->modelClass($fragmentableClass::managedModelKey());

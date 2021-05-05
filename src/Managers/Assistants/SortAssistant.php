@@ -53,6 +53,19 @@ trait SortAssistant
         ]);
     }
 
+    public function sortItem(Request $request)
+    {
+        if (! $request->index) {
+            throw new \InvalidArgumentException('Missing arguments [index] for item sorting request.');
+        }
+
+        app(SortModels::class)->handleItem((new $this->managedModelClass()), $request->index, (new $this->managedModelClass())->sortableAttribute());
+
+        return response()->json([
+            'message' => 'models sorted.',
+        ]);
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */

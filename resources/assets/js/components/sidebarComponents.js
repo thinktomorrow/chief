@@ -4,17 +4,26 @@ import AddFragment from './fragment/addFragment';
 import SelectFragment from './fragment/selectFragment';
 import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
+import Collection from '../utilities/Collection';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     /** Fragments */
+
+    /**
+     * Keep track of already loaded selectFragments so we can reference the previous
+     * one as the reference of the fragments component that should be used to
+     * reflect the expected order value for the current fragments-create panel.
+     */
+    const loadedSelectFragments = new Collection();
+
     const fragmentsComponent = new Component('fragments', {
         livewire: true,
         events: {
             sidebarPanelCreated: (panelData) => {
-                console.log('sidebar fragments panel created');
+                console.log('sidebar fragments panel created for ' + panelData.panel.id);
                 // Build the select fragment elements for the nested fragments components inside the panel
 
                 // Trigger the sortable script to load for this panel
@@ -22,14 +31,28 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             sidebarPanelActivated: (panelData) => {
                 console.log('triggered sidebarPanel', panelData.panel.el);
-                new SelectFragment(panelData.panel.el, {
+
+                const currentSelectFragment = new SelectFragment(panelData.panel.el, {
                     templateSelector: '#js-fragment-template-select-options-nested',
                 });
+
+                // If this panel contains a valid fragment container, we'll add
+                // this current selectFragment reference to our stack as well
+                if (currentSelectFragment.exists()) {
+                    loadedSelectFragments.add({ id: panelData.panel.id, class: currentSelectFragment });
+                }
+
+                // Insert the order value of the former select fragment placeholder into this panel. Not all panels need this value
+                // but the order value will not be inserted if there is no order input present so it's safe to perform this each time.
+                loadedSelectFragments.findParentOf(panelData.panel.id).class.insertOrderInPanelForm(panelData.panel.el);
             },
         },
         onComponentCreation: () => {
-            console.log('component will be created');
-            new SelectFragment(document);
+            loadedSelectFragments.clear().add({ id: 0, class: new SelectFragment(document) });
+            initSortable();
+        },
+        onComponentReload: () => {
+            loadedSelectFragments.clear().add({ id: 0, class: new SelectFragment(document) });
             initSortable();
         },
     });

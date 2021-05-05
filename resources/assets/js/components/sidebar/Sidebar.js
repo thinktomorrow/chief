@@ -32,6 +32,10 @@ export default class {
         this.handleTriggerReference = (event) => this._handleTrigger(event);
         this.handleCloseReference = () => this.backOrClose();
 
+        if (this.debug) {
+            EventBus.debug = true;
+        }
+
         this.listenForEvents();
         this.listenForLivewireEvents();
         this.listenForEscapeKey();
@@ -76,7 +80,6 @@ export default class {
 
             // Event when livewire is reloaded on server
             window.Livewire.on(component.livewireEventKey, () => {
-                console.log(`livewire reloaded ${component.key}`);
                 this.listenForEvents();
                 component.onComponentReload();
             });
@@ -86,7 +89,6 @@ export default class {
 
             EventBus.subscribe('sidebarFormSubmitted', (panelData) => {
                 if (panelData.component.key === component.key) {
-                    console.log(`livewire reloading ${component.key}`);
                     livewireComponent.reload();
                 }
             });
@@ -140,7 +142,7 @@ export default class {
         this.sidebarContainer.dom().appendChild(newPanelElement);
 
         /** Fetch the html content from the given url and insert it in the panel element */
-        Api.get(url, newPanelElement, (data) => {
+        Api.get(url, (data) => {
             newPanelElement.innerHTML = data;
 
             // only mount Vue on our vue specific fields and not on the form element itself
@@ -192,6 +194,7 @@ export default class {
                     triggerData
                 )
             );
+
             this._activate(id);
 
             EventBus.publish('sidebarPanelCreated', this.panels.findActive().eventPayload());
@@ -208,18 +211,23 @@ export default class {
         this.panels.markAsActive(id);
         this.panels.findActive().show();
 
-        EventBus.publish('sidebarPanelActivated', this.panels.findActive().eventPayload());
-
         this.reset();
     }
 
     reset() {
+        console.log('RESETTING SIDEBAR ACTIVE PANEL');
         if (this.panels.findActive()) {
             this.sidebarContainer.renderCloseButton();
         }
 
-        this.listenForEvents();
-        this._setActiveComponents();
+        this.replacePanelComponents(() => {
+            this.listenForEvents();
+            this._setActiveComponents();
+
+            if (this.panels.findActive()) {
+                EventBus.publish('sidebarPanelActivated', this.panels.findActive().eventPayload());
+            }
+        });
     }
 
     _setActiveComponents() {
@@ -239,13 +247,11 @@ export default class {
      * Either the user clicks the close button or has saved the panel form.
      */
     backOrClose(keepPreviousPanel = true) {
-        console.log(this.panels.findActive());
         // Back to parent
         if (this.panels.findActive() && this.panels.findActive().parent) {
             const previousPanel = this.panels.findActive();
 
             this.show(this.panels.findActive().parent.url);
-            this.replacePanelComponents();
 
             if (!keepPreviousPanel) {
                 this.panels.remove(previousPanel.id);
@@ -275,24 +281,32 @@ export default class {
      * coming from serverside. Each component is marked by the [data-sidebar-component]
      * attribute. A unique value is required to distinguish the different components.
      */
-    replacePanelComponents() {
-        if (!this.panels.findActive()) return;
+    replacePanelComponents(callback) {
+        if (!this.panels.findActive()) {
+            callback();
+            return;
+        }
 
-        Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach((el) => {
-            const componentKey = el.getAttribute('data-sidebar-component');
+        const replaceableElements = this.panels.findActive().el.querySelectorAll('[data-sidebar-component]');
+        if (replaceableElements.length < 1) {
+            callback();
+            return;
+        }
 
-            Api.get(this.panels.findActive().url, el, (data) => {
-                const DOM = document.createElement('div');
+        Api.get(this.panels.findActive().url, (data) => {
+            const DOM = document.createElement('div');
+            DOM.innerHTML = data;
 
-                DOM.innerHTML = data;
+            replaceableElements.forEach((el) => {
+                const componentKey = el.getAttribute('data-sidebar-component');
 
                 this.panels.activePanel.replaceDom(
                     `[data-sidebar-component="${componentKey}"]`,
                     DOM.querySelector(`[data-sidebar-component="${componentKey}"]`).innerHTML
                 );
-
-                this.listenForEvents();
             });
+
+            callback();
         });
     }
 }
