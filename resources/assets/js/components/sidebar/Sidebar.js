@@ -32,10 +32,6 @@ export default class {
         this.handleTriggerReference = (event) => this._handleTrigger(event);
         this.handleCloseReference = () => this.backOrClose();
 
-        if (this.debug) {
-            EventBus.debug = true;
-        }
-
         this.listenForEvents();
         this.listenForLivewireEvents();
         this.listenForEscapeKey();

@@ -23,9 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         livewire: true,
         events: {
             sidebarPanelCreated: (panelData) => {
-                console.log('sidebar fragments panel created for ' + panelData.panel.id);
-                // Build the select fragment elements for the nested fragments components inside the panel
-
                 // Trigger the sortable script to load for this panel
                 EventBus.publish('fragmentSidebarPanelCreated', panelData);
             },
