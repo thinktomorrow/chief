@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\HealthMonitor\Notifiers;
 
-use Thinktomorrow\Chief\System\HealthMonitor\Checks\HealthCheck;
-use Thinktomorrow\Chief\System\HealthMonitor\Notifiers\Notifier;
+use Thinktomorrow\Chief\Admin\HealthMonitor\Checks\HealthCheck;
 
 class ToastNotifier implements Notifier
 {

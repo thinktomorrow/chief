@@ -24,6 +24,7 @@ principles.
 - statusAsLabel() and statusAsPlainLabel()
 - FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
 - na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
+- UrlHelper has a lot of non-working methods now... Are all of them used?
 
 HOMEPAGE en FIXED PAGES
 - homepage: indien Homepage per taal geen url laten editeren maar labeltje IS HOMEPAGE TONEN (link naar settings om aan te passen). Wel mogelijk maken om redirects toe te voegen.

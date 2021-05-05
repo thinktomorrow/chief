@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Site\Urls;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 
