@@ -5,14 +5,14 @@
     class="relative w-full p-8"
 >
     <div class="space-y-2">
-        <div class="flex justify-between items-start">
+        <div class="flex items-start justify-between">
             <div class="flex items-center space-x-2">
                 <span class="text-xl font-semibold text-grey-900">
                     {{ $model->adminConfig()->getPageTitle() }} (sort: {{ $model->fragmentModel()->pivot->order }})
                 </span>
 
                 @if($model->fragmentModel()->isOffline())
-                    <span class="label label-error text-sm">Offline</span>
+                    <span class="text-sm label label-error">Offline</span>
                 @endif
             </div>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed bottom-0 right-0 flex justify-end items-end min-w-lg max-w-3xl p-6 space-x-4 z-50">
+    <div class="fixed bottom-0 right-0 z-10 flex items-end justify-end max-w-3xl p-6 space-x-4 min-w-lg">
         <div class="flex flex-col items-end space-y-4">
             <!-- Default slot to add on page load notifications e.g. errors -->
             <slot></slot>
@@ -16,15 +16,15 @@
         <div
             @click="toggleNotifications"
             v-show="createdNotifications.length > 0"
-            class="relative rounded-full p-3 bg-white text-grey-900 border border-grey-100 shadow-lg cursor-pointer hover:bg-grey-50 pop"
+            class="relative p-3 bg-white border rounded-full shadow-lg cursor-pointer text-grey-900 border-grey-100 hover:bg-grey-50 pop"
         >
             <svg width="20" height="20" class="icon-label-icon"><use xlink:href="#icon-bell"></use></svg>
 
             <div
                 v-show="amountOfOpenedNotifications < this.createdNotifications.length"
-                class="absolute bottom-0 right-0 w-6 h-6 -mr-2 -mb-2 flex justify-center items-center bg-gradient-to-br from-primary-500 to-primary-600 rounded-full pop"
+                class="absolute bottom-0 right-0 flex items-center justify-center w-6 h-6 -mb-2 -mr-2 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 pop"
             >
-                <span class="text-white text-xs font-bold leading-none">
+                <span class="text-xs font-bold leading-none text-white">
                     {{ this.createdNotifications.length - amountOfOpenedNotifications }}
                 </span>
             </div>

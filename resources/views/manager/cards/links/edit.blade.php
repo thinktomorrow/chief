@@ -1,15 +1,6 @@
 <div class="space-y-8">
     <h3>Permalinks beheren</h3>
 
-    {{-- TODO: status component --}}
-    <div data-vue-fields>
-        @foreach(['publish', 'unpublish'] as $action)
-            @adminCan($action, $model)
-                @include('chief::manager._transitions.panel.'. $action)
-            @endAdminCan
-        @endforeach
-    </div>
-
     <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST">
         @csrf
         @method('PUT')

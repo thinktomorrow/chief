@@ -4,7 +4,7 @@
 
 @push('custom-scripts-after-vue')
     <template id="js-sidebar-template">
-        <div data-sidebar class="fixed inset-0 z-50" style="display: none;">
+        <div data-sidebar class="fixed inset-0 z-20" style="display: none;">
             <div
                 data-sidebar-backdrop
                 data-sidebar-close

@@ -19,6 +19,7 @@
 -   [ ] pagination view update
 -   [ ] Seems like fragments sidebar errors don't work yet
 -   [ ] Thumb css rework
+-   [ ] Status component setup check by Ben
 
 ### Fragments
 
@@ -43,6 +44,9 @@
 -   [ ] How to use project specific tailwindcss classes (admin fragments, dashboard widgets ...) which are not included in default Chief build?
 -   [ ] Chief admin translations
 -   [ ] Lifecycle hooks documentation (+ rules for custom events)
+-   [ ] Happy first path, tutorial, notifications, tips
+-   [ ] Teaser
+-   [ ] Update getchief
 
 ### Field Component
 
