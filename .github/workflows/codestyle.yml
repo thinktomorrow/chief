@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '**.php'
-      - '.php_cs'
+      - '.php-cs-fixer.php'
       - '.github/workflows/codestyle.yml'
 jobs:
   codestyle:
