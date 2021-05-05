@@ -4,7 +4,8 @@
         "watch": "mix watch --mix-config=webpack.mix.js",
         "prod": "mix --production --mix-config=webpack.mix.js",
         "test": "jest",
-        "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write"
+        "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@babel/core": "^7.14.0",
@@ -51,10 +52,5 @@
     },
     "engine": {
         "node": ">=12.13.0"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     }
 }
