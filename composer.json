@@ -16,7 +16,7 @@
         "fideloper/proxy": "^4.3",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^8.20",
-        "laravel/ui": "^2.2",
+        "laravel/ui": "^3.2",
         "livewire/livewire": "^2.3",
         "maennchen/zipstream-php": "^2.1",
         "ramsey/uuid": "^4.1",
