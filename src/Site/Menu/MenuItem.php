@@ -94,7 +94,7 @@ class MenuItem extends Model
             'id' => $node->id,
             'type' => $node->type,
             'label' => $node->label,
-            'page_label' => $node->page_label,                       // Extra info when dealing with internal links
+            'page_label' => $node->page_label,            // Extra info when dealing with internal links
             'url' => $node->url(),
             'order' => $node->order,
             'owner_type' => $node->owner_type,

@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\Admin\Setup\CreateStaticFragmentCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
@@ -94,6 +95,7 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:developer',
                 'command.chief:page',
                 'command.chief:page-migration',
+                'command.chief:fragment',
             ]);
 
             // Bind our commands to the container
@@ -104,6 +106,7 @@ class ChiefServiceProvider extends ServiceProvider
 
             $this->app->bind('command.chief:page', CreatePageCommand::class);
             $this->app->bind('command.chief:page-migration', CreatePageMigrationCommand::class);
+            $this->app->bind('command.chief:fragment', CreateStaticFragmentCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
         }
@@ -160,6 +163,10 @@ class ChiefServiceProvider extends ServiceProvider
         // Setup commands
         $this->app->bind(CreatePageCommand::class, function ($app) {
             return new CreatePageCommand($app->make(FileManipulation::class), new SetupConfig(config('chief.setup', [])));
+        });
+
+        $this->app->bind(CreateStaticFragmentCommand::class, function ($app) {
+            return new CreateStaticFragmentCommand($app->make(FileManipulation::class), new SetupConfig(config('chief.setup', [])));
         });
 
         (new MacrosServiceProvider($this->app))->register();

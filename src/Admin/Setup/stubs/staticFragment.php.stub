@@ -1,0 +1,21 @@
+<?php
+declare(strict_types=1);
+
+namespace __STUB_NAMESPACE__;
+
+use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fragments\Assistants\StaticFragmentableDefaults;
+
+class __STUB_CLASSNAME__ implements Fragmentable
+{
+    use StaticFragmentableDefaults;
+
+    private $baseViewPath = 'fragments';
+
+    public function fields(): iterable
+    {
+        yield InputField::make('content')->locales();
+        __STUB_FIELDS__
+    }
+}

@@ -6,12 +6,12 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Str;
 
-class CreatePageCommand extends Command
+class CreateStaticFragmentCommand extends Command
 {
-    protected $signature = 'chief:page
+    protected $signature = 'chief:fragment
                         {--force : overwrite existing class if it already exists}';
 
-    protected $description = 'Generate a new chief page';
+    protected $description = 'Generate a new chief fragment';
 
     private FileManipulation $fileManipulation;
     private SetupConfig $config;
@@ -35,7 +35,7 @@ class CreatePageCommand extends Command
         $createMigrationFile = false;
 
         while (! $name) {
-            $name = $this->ask('What is the name in singular for your page model?');
+            $name = $this->ask('What is the name in singular for your fragment?');
         }
 
         while (! $path) {
@@ -43,35 +43,19 @@ class CreatePageCommand extends Command
         }
 
         while (! $namespace) {
-            $namespace = $this->ask('Which namespace will be used?', $this->config->namespace());
-        }
-
-        if ($this->confirm('Would you like to create a migration file?', true)) {
-            $createMigrationFile = true;
+            $namespace = $this->ask('Which namespace will be used?', $this->config->namespace($path));
         }
 
         $className = Str::studly($name);
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
+        $fullPath = base_path($path) . '/' . $className.'.php';
 
-        $this->fileManipulation->writeFile($this->config->path($className.'.php'), $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
-                'className' => $className,
-                'namespace' => $namespace,
-            ]), $this->option('force'));
+        $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/staticFragment.php.stub'), [
+            'className' => $className,
+            'namespace' => $namespace,
+        ]), $this->option('force'));
 
-        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->model('.$namespacedClassName.'::class, \Thinktomorrow\Chief\Managers\Presets\PageManager::class, \'nav\');');
-
-        if ($createMigrationFile) {
-            $this->call('chief:page-migration', ['table' => Str::snake(Str::plural($className))]);
-        }
-
-        // If already exists: don't overwrite unless --force
-        // model in namespace
-        // registration add to AppServiceProvider
-        // add frontend viewfile
-
-        // --admin-views: add admin views
-
-//        $this->info('Class ' . $this->className . ' created');
+        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->staticFragment('.$namespacedClassName.'::class);');
     }
 
     protected function writeFrontendView(): void

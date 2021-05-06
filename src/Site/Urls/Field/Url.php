@@ -34,7 +34,7 @@ final class Url
                         'array',
                         'min:1',
                         new UniqueUrlSlugRule($model, $model),
-                    ],                    [],                    [
+                    ],         [],         [
                         'url-slugs.*' => 'taalspecifieke link',
                     ])
                 ->view('chief::manager.fieldtypes.url-slugs')

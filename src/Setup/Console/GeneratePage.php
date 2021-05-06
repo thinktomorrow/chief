@@ -63,14 +63,14 @@ class GeneratePage extends BaseCommand
 
     private function publishModel(): void
     {
-        $this->publishFile(__DIR__ . '/stubs/model.php.stub',            $to = $this->dirs['model'] . '/' . ucfirst($this->plural) . '/' . ucfirst($this->singular) . '.php',            'model');
+        $this->publishFile(__DIR__ . '/stubs/model.php.stub', $to = $this->dirs['model'] . '/' . ucfirst($this->plural) . '/' . ucfirst($this->singular) . '.php', 'model');
 
         $this->addToConfig('collections', [$this->plural => $this->guessNamespace() . '\\' . ucfirst($this->singular)]);
     }
 
     private function publishController(): void
     {
-        $this->publishFile(__DIR__ . '/stubs/controller.php.stub',            $to = $this->dirs['controller'] . '/' . ucfirst($this->plural) . '/' . ucfirst($this->singular) . '.php',            'controller');
+        $this->publishFile(__DIR__ . '/stubs/controller.php.stub', $to = $this->dirs['controller'] . '/' . ucfirst($this->plural) . '/' . ucfirst($this->singular) . '.php', 'controller');
     }
 
     /**

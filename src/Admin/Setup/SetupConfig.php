@@ -12,8 +12,16 @@ final class SetupConfig
         $this->config = $config;
     }
 
-    public function namespace(): string
+    public function namespace(string $path = null): string
     {
+        if($path) {
+            $parts = explode('/',$path);
+
+            $parts = array_map(fn($part) => ucfirst($part), $parts);
+
+            return implode('\\',$parts);
+        }
+
         if (isset($this->config['namespace'])) {
             return $this->config['namespace'];
         }
@@ -36,6 +44,6 @@ final class SetupConfig
             return $this->config['path'] . '/' . $filename;
         }
 
-        return app_path('models') . '/' . $filename;
+        return 'app/Models/' . $filename;
     }
 }

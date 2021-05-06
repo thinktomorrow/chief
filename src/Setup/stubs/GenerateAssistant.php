@@ -23,7 +23,7 @@ final class GenerateAssistant
      */
     protected function replaceNamespace(&$stub, $name)
     {
-        $stub = str_replace(['DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'],            [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()],            $stub);
+        $stub = str_replace(['DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'], [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()], $stub);
 
         return $this;
     }

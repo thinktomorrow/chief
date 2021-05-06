@@ -26,7 +26,7 @@ class ChiefPasswordBrokerResolver
             throw new InvalidArgumentException("Password resetter [chief] is not defined.");
         }
 
-        return new ChiefPasswordBroker($this->createTokenRepository($config),            $this->app['auth']->createUserProvider($config['provider'] ?? null));
+        return new ChiefPasswordBroker($this->createTokenRepository($config), $this->app['auth']->createUserProvider($config['provider'] ?? null));
     }
 
     protected function createTokenRepository(array $config): DatabaseTokenRepository
@@ -39,7 +39,7 @@ class ChiefPasswordBrokerResolver
 
         $connection = $config['connection'] ?? null;
 
-        return new DatabaseTokenRepository($this->app['db']->connection($connection),            $this->app['hash'],            $config['table'],            $key,            $config['expire']);
+        return new DatabaseTokenRepository($this->app['db']->connection($connection), $this->app['hash'], $config['table'], $key, $config['expire']);
     }
 
     private function getConfig(string $name)
