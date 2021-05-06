@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Fragments\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 
 final class AddFragmentModel
 {

@@ -10,12 +10,12 @@ use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\LinkAssistant;
-use Thinktomorrow\Chief\Managers\Assistants\StatusAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\PublishAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\SortAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\StatusAssistant;
 use Thinktomorrow\Chief\Managers\Manager;
 
 final class PageManager implements Manager
