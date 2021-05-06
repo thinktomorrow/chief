@@ -294,7 +294,7 @@ trait FragmentAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function handleFragmentEdit(Request $request, Model $ownerModel, Fragmentable $fragmentable)
+    public function handleFragmentEdit(Request $request, FragmentsOwner $ownerModel, Fragmentable $fragmentable)
     {
         $this->guard('fragment-edit', $fragmentable);
 
@@ -383,9 +383,14 @@ trait FragmentAssistant
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
     }
 
+    /**
+     * @param string $ownerKey
+     * @param $ownerId
+     * @return Model (FragmentsOwner)
+     */
     private function ownerModel(string $ownerKey, $ownerId): Model
     {
-        $ownerClass = app(Registry::class)->modelClass($ownerKey);
+        $ownerClass = $this->registry->modelClass($ownerKey);
 
         return $ownerClass::withoutGlobalScopes()->find($ownerId);
     }

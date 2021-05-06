@@ -41,9 +41,13 @@ final class FragmentRepository
         return FragmentModel::where('shared', 1)->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
 
-    public function find(int $id): Fragmentable
+    /**
+     * @param int $id
+     * @return Fragmentable
+     */
+    public function find($id): Fragmentable
     {
-        return $this->fragmentFactory(FragmentModel::findOrFail($id));
+        return $this->fragmentFactory(FragmentModel::findOrFail((int) $id));
     }
 
     private function prefetchRecords(Collection $fragmentModels): void
