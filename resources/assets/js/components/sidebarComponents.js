@@ -39,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     loadedSelectFragments.add({ id: panelData.panel.id, class: currentSelectFragment });
                 }
 
-                // Insert the order value of the former select fragment placeholder into this panel. Not all panels need this value
-                // but the order value will not be inserted if there is no order input present so it's safe to perform this each time.
+                // Insert the order value of the former select fragment placeholder into this panel.
+                // Not all panels need this value but the order value will not be inserted
+                // if there is no order input present so it's safe to perform this each time.
                 loadedSelectFragments.findParentOf(panelData.panel.id).class.insertOrderInPanelForm(panelData.panel.el);
             },
         },
