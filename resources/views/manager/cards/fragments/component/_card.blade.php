@@ -4,11 +4,11 @@
     data-sortable-handle
     class="relative w-full p-8"
 >
-    <div class="space-y-2">
+    <div class="space-y-4">
         <div class="flex items-start justify-between">
             <div class="flex items-center space-x-2">
                 <span class="text-xl font-semibold text-grey-900">
-                    {{ $model->adminConfig()->getPageTitle() }} (sort: {{ $model->fragmentModel()->pivot->order }})
+                    {{ ucfirst($model->adminConfig()->getPageTitle()) }} (sort: {{ $model->fragmentModel()->pivot->order }})
                 </span>
 
                 @if($model->fragmentModel()->isOffline())

@@ -9,22 +9,15 @@
             @unless($linkForm->exist())
                 <p class="text-grey-700">Geen huidige links</p>
             @else
-                @foreach($linkForm->links() as $locale => $links)
-                    @if($links->current)
+                @foreach($linkForm->links() as $locale => $link)
+                    @if($link->current)
                         <div class="flex items-start space-x-4">
                             @if(count(config('chief.locales')) > 1)
                                 <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
                             @endif
 
-                            <a class="mt-0.5 space-x-1 link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}" style="word-break: break-word;">
-                                <span>{{ $links->full_path }}</span>
-
-                                {{-- TODO: status component --}}
-                                @if($links->is_online)
-                                    <span class="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
-                                @else
-                                    <span class="inline-block w-2 h-2 bg-red-500 rounded-full" title="{{ $links->offline_reason }}"></span>
-                                @endif
+                            <a class="mt-0.5 space-x-1 link link-primary underline" target="_blank" rel="noopener" href="{{ $link->url }}" style="word-break: break-word;">
+                                {{ $link->url }}
                             </a>
                         </div>
                     @endif

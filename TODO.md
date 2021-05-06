@@ -20,6 +20,7 @@
 -   [ ] Seems like fragments sidebar errors don't work yet
 -   [ ] Thumb css rework
 -   [ ] Status component setup check by Ben
+-   [ ] Sorting handle fragments
 
 ### Fragments
 
