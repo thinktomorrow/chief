@@ -11,6 +11,16 @@ if (! function_exists('chiefAdmin')) {
 }
 
 /**
+ * Retrieve the online fragments of the current owning model
+ */
+if (! function_exists('getFragments')) {
+    function getFragments($owner): \Illuminate\Support\Collection
+    {
+        return app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->getFragments($owner);
+    }
+}
+
+/**
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
  */

@@ -29,7 +29,7 @@
         </div>
 
         <div>
-            {!! $model->renderAdminFragment($owner, $loop, $fragments) !!}
+            {!! $model->renderAdminFragment($owner, $loop) !!}
         </div>
     </div>
 </div>

@@ -22,11 +22,11 @@ final class RenderFragments
         $this->loopsStack = [];
         $this->addLoop($fragmentables);
 
-        return $fragmentables->reduce(function ($carry, Fragmentable $fragmentable) use ($fragmentables, $owner, $viewData) {
+        return $fragmentables->reduce(function ($carry, Fragmentable $fragmentable) use ($owner, $viewData) {
             $this->incrementLoopIndices();
             $loop = $this->getLastLoop();
 
-            return $carry . $fragmentable->renderFragment($owner, $loop, $fragmentables, $viewData);
+            return $carry . $fragmentable->renderFragment($owner, $loop, $viewData);
         }, '');
     }
 }

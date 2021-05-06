@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use DomainException;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
@@ -17,19 +18,18 @@ trait FragmentableDefaults
 
     private FragmentModel $fragmentModel;
 
-    public function renderAdminFragment($owner, $loop, $fragments)
+    public function renderAdminFragment($owner, $loop): string
     {
-        return $this->renderFragment($owner, $loop, $fragments, []);
+        return $this->renderFragment($owner, $loop, []);
     }
 
-    public function renderFragment($owner, $loop, $fragments, $viewData): string
+    public function renderFragment($owner, $loop, $viewData = []): string
     {
         $this->setOwnerViewPath($owner);
 
         $this->setViewData(array_merge($viewData, [
             'owner' => $owner,
             'loop' => $loop,
-            'fragments' => $fragments,
             'model' => $this,
         ]));
 
@@ -51,7 +51,7 @@ trait FragmentableDefaults
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
-            throw new \DomainException('FragmentModel property on [' . get_class($this) . '] expected to be set, but it\'s not.');
+            throw new DomainException('FragmentModel property on [' . get_class($this) . '] expected to be set, but it\'s not.');
         }
 
         return $this->fragmentModel;
