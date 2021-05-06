@@ -13,6 +13,7 @@ _migration/uploads
 /docs/_site
 .phpunit.result.cache
 .php_cs.cache
+.php-cs-fixer.cache
 build/
 
 ##########################################
