@@ -13,7 +13,7 @@ class ModelReferenceTest extends TestCase
     /** @test */
     public function it_can_make_a_reference()
     {
-        $reference = new ModelReference('classname', 1);
+        $reference = ModelReference::make('classname', 1);
 
         $this->assertEquals('classname', $reference->className());
         $this->assertEquals(1, $reference->id());

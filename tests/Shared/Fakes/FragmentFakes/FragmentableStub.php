@@ -33,12 +33,12 @@ class FragmentableStub extends Model implements Fragmentable, FragmentsOwner
         });
     }
 
-    public function renderAdminFragment($owner, $loop, $fragments)
+    public function renderAdminFragment($owner, $loop): string
     {
-        // TODO: Implement renderAdminFragment() method.
+        return '';
     }
 
-    public function renderFragment($owner, $loop, $fragments, $viewData): string
+    public function renderFragment($owner, $loop, $viewData = []): string
     {
         return 'fragment-stub-'.$this->id.' ';
     }

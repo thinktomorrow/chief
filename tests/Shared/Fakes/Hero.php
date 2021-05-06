@@ -12,12 +12,12 @@ class Hero implements Fragmentable
 {
     use StaticFragmentableDefaults;
 
-    public function renderAdminFragment($owner, $loop, $fragments)
+    public function renderAdminFragment($owner, $loop): string
     {
         return 'hero-admin-fragment';
     }
 
-    public function renderFragment($owner, $loop, $fragments, $viewData): string
+    public function renderFragment($owner, $loop, $viewData = []): string
     {
         return 'hero-fragment';
     }

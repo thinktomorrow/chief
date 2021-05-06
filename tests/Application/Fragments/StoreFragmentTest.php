@@ -72,7 +72,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->assertCount(4, $fragments);
 
         $this->assertEquals($quote1->modelReference(), $fragments[0]->modelReference());
-        $this->assertEquals(new ModelReference(Quote::class, 4), $fragments[1]->modelReference());
+        $this->assertEquals(ModelReference::make(Quote::class, 4), $fragments[1]->modelReference());
         $this->assertEquals($quote2->modelReference(), $fragments[2]->modelReference());
         $this->assertEquals($quote3->modelReference(), $fragments[3]->modelReference());
 
