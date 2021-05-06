@@ -38,10 +38,9 @@ class DeleteModel
             // TODO: schedule for deletion instead of instantly deleting all relations and stuff...
             // so the user has a small window of recovery
 
-            // TODO: THIS IS TEMP DISABLED BECAUSE ASSET LIB DOES NOT WORK WITH OUR string IDS for the entity_id
-//            if ($model instanceof HasAsset) {
-//                $this->detachAsset->detachAll($model);
-//            }
+            if ($model instanceof HasAsset) {
+                $this->detachAsset->detachAll($model);
+            }
 
             // TODO: soft-delete the context of this model... (=fragments)
 //            Relation::deleteRelationsOf($model->getMorphClass(), $model->id);

@@ -25,7 +25,7 @@ class FragmentOwnerRepository
     {
         $model_reference = Relation::getMorphedModel($model_reference) ?? $model_reference;
 
-        return (new ModelReference($model_reference, $id))->instance();
+        return ModelReference::make($model_reference, $id)->instance();
     }
 
     private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable

@@ -1,5 +1,5 @@
 <div class="space-y-12">
-    <h3>Creëer een nieuw fragment</h3>
+    <h3>Voeg een nieuw fragment toe</h3>
 
     <div class="row-start-center gutter-1">
         @forelse($fragments as $allowedFragment)
@@ -9,7 +9,7 @@
                     class="bg-grey-100 rounded-md p-4"
                     href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                 >
-                    {{ ucfirst($allowedFragment['model']->adminConfig()->getIndexTitle()) }}
+                    {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}
                 </a>
             </span>
         @empty

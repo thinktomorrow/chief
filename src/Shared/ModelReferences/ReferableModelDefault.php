@@ -6,7 +6,7 @@ trait ReferableModelDefault
 {
     public function modelReference(): ModelReference
     {
-        return new ModelReference(static::class, $this->id);
+        return ModelReference::make(static::class, $this->id);
     }
 
     public function modelReferenceLabel(): string

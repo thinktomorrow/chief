@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\ModelReferences;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 final class ModelReference
 {
     private string $className;
     protected string $id;
 
-    public function __construct(string $className, string $id)
+    private function __construct(string $className, string $id)
     {
         $this->className = $className;
         $this->id = $id;
@@ -17,7 +19,12 @@ final class ModelReference
 
     public static function fromStatic(string $className): self
     {
-        return new static($className, "0");
+        return new static(static::convertToFullClass($className), "0");
+    }
+
+    public static function make(string $className, $id): self
+    {
+        return new static(static::convertToFullClass($className), (string) $id);
     }
 
     public static function fromString(string $reference): self
@@ -32,7 +39,7 @@ final class ModelReference
             throw new \InvalidArgumentException('Missing id on model reference. [' . $reference . '] was passed.');
         }
 
-        return new static($className, (string) $id);
+        return new static(static::convertToFullClass($className), (string) $id);
     }
 
     /**
@@ -87,5 +94,10 @@ final class ModelReference
     public function __toString(): string
     {
         return $this->get();
+    }
+
+    private static function convertToFullClass(string $className): string
+    {
+        return Relation::getMorphedModel($className) ?? $className;
     }
 }

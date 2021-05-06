@@ -16,7 +16,7 @@ class CheckLinkController
     public function check(Request $request)
     {
         /** @var ProvidesUrl|Model $model */
-        $model = (new ModelReference($request->modelClass, (string) $request->modelId))->instance();
+        $model = ModelReference::make($request->modelClass, (string) $request->modelId)->instance();
 
         // Trim slashes if any
         $slug = ($request->slug !== '/') ? trim($request->slug, '/') : $request->slug;

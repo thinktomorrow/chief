@@ -20,7 +20,7 @@ class LinksController
     public function update(Request $request)
     {
         /** @var ProvidesUrl|Model $model */
-        $model = (new ModelReference($request->modelClass, (string) $request->modelId))->instance();
+        $model = ModelReference::make($request->modelClass, (string) $request->modelId)->instance();
 
         $this->validate($request, ['links' => [
             'array', 'min:1', new UniqueUrlSlugRule($model, $model),], [], ['links.*' => 'taalspecifieke link'],
