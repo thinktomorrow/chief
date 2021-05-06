@@ -37,3 +37,36 @@
         }
     }
 }
+
+/* TODO: safelist class in purgecss */
+.wireframe {
+    @apply py-8 rounded-lg bg-grey-50;
+
+    .wireframe-container {
+        @apply px-16;
+    }
+
+    .wireframe-title {
+        @apply leading-normal font-normal text-grey-900 text-xs;
+    }
+
+    .wireframe-content {
+        @apply leading-normal text-grey-700 text-xs line-clamp-6;
+
+        &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+            @apply font-normal;
+        }
+
+        * {
+            @apply leading-normal text-grey-700 text-xs;
+
+            &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+                @apply font-normal;
+            }
+        }
+    }
+
+    .wireframe-image {
+        @apply h-24 bg-center bg-cover rounded-lg bg-grey-300;
+    }
+}

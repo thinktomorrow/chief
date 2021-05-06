@@ -9,12 +9,12 @@
 
     <input type="number" name="order" value="0" hidden>
 
-    <div class="space-y-8">
-        <h3>{{ $model->adminConfig()->getPageTitle() }}</h3>
+    <div class="space-y-12">
+        <h3>{{ ucfirst($model->adminConfig()->getPageTitle()) }}</h3>
 
-        <div data-vue-fields class="space-y-6">
+        <div data-vue-fields class="space-y-8">
             @foreach($fields as $field)
-                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
+                <x-chief-formgroup label="{{ $field->getLabel() }}" name="{{ $field->getName($locale ?? null) }}" isRequired="{{ $field->required() }}">
                     @if($field->getDescription())
                         <x-slot name="description">
                             <p>{{ $field->getDescription() }}</p>
@@ -36,6 +36,7 @@
 
 
 @push('custom-scripts-after-vue')
+    {{-- TODO: we need a better implementation for this --}}
     <script>
         // Display a warning message to tell the user that adding images to redactor is only possible after page creation.
         var editors = document.querySelectorAll('[data-editor]');
