@@ -7,7 +7,9 @@
     >
         <div class="space-y-2">
             @unless($linkForm->exist())
-                <p class="text-grey-700">Geen huidige links</p>
+                <p class="text-grey-700">
+                    <a class="block link link-primary" data-sidebar-trigger="links" href="{{ $manager->route('links-edit', $model) }}">Voeg een eerste link toe</a>
+                </p>
             @else
                 @foreach($linkForm->links() as $locale => $link)
                     @if($link->current)

@@ -18,12 +18,14 @@
                 @else
                     <x-slot name="title">
                         Status
-                        <span class="text-sm label label-info">Gepubliceerd</span>
+                        <span class="text-sm label label-info">Nog niet gepubliceerd</span>
                     </x-slot>
 
                     <p class="text-grey-700">
-                        Let op, deze pagina is nog niet zichtbaar voor de gebruiker.
-                        Daarvoor moet je eerst een url toevoegen aan de pagina.
+                        Let op! De pagina is zonder link nog niet zichtbaar op de site.
+                    </p>
+                    <p class="text-grey-700 mt-4">
+                        <a class="block link link-primary" data-sidebar-trigger="links" href="{{ $manager->route('links-edit', $model) }}">Voeg een eerste link toe</a>
                     </p>
                 @endif
 
