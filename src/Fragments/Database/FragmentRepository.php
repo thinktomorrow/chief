@@ -80,7 +80,7 @@ final class FragmentRepository
         // We would like to use uuid like (Uuid::uuid4()->__toString()); but the Asset library currently accepts integer(11) as entity_id in database
         $nextId = random_int(1000, 2000000000);
 
-        while(FragmentModel::find($nextId)) {
+        while (FragmentModel::find($nextId)) {
             $nextId = random_int(1000, 2000000000);
         }
 
