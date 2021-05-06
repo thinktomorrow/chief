@@ -56,7 +56,7 @@ class ChiefRoutesServiceProvider extends ServiceProvider
         app()->booted(function () {
             $routeName = config('chief.route.name');
 
-            Route::get('{slug?}', function ($slug = '/') use ($routeName) {
+            Route::get('{slug?}', function ($slug = '/'){
                 return ChiefResponse::fromSlug($slug);
             })->name($routeName)
                 ->where('slug', '(.*)?')

@@ -115,7 +115,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
-        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
+        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value) {
             $fallbackLocale = config('app.fallback_locale');
 
             if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
@@ -143,7 +143,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->setupEnvironmentProviders();
 
         $this->app->when(SettingsController::class)
-            ->needs(FieldManager::class)
+            ->needs(SettingFields::class)
             ->give(function () {
                 return new SettingFields(new Settings());
             });
@@ -153,19 +153,13 @@ class ChiefServiceProvider extends ServiceProvider
         });
 
         // Global chief nav singleton
-        $this->app->singleton(Nav::class, function ($app) {
+        $this->app->singleton(Nav::class, function () {
             return new Nav();
-        });
-
-        // Load up the available template applicators. If your projects requires a custom template source,
-        // you can bind your own ApplyTemplate version with a custom set of applicators.
-        $this->app->bind(DuplicateContext::class, function ($app) {
-            return new DuplicateContext($app->make(FragmentRepository::class));
         });
 
         // Setup commands
         $this->app->bind(CreatePageCommand::class, function ($app) {
-            return new CreatePageCommand($app->make(FileManipulation::class),                new SetupConfig(config('chief.setup', [])));
+            return new CreatePageCommand($app->make(FileManipulation::class), new SetupConfig(config('chief.setup', [])));
         });
 
         (new MacrosServiceProvider($this->app))->register();

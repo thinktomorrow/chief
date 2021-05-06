@@ -21,7 +21,7 @@ class ValidationServiceProvider extends ServiceProvider
     {
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
-        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
+        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value) {
             $fallbackLocale = config('app.fallback_locale');
 
             if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {

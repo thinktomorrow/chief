@@ -61,7 +61,7 @@ class MenuRequest extends FormRequest
     {
         $attributes = [];
 
-        foreach ($this->request->get('trans', []) as $locale => $trans) {
+        foreach (array_keys($this->request->get('trans', [])) as $locale) {
             $attributes['trans.' . $locale . '.label'] = $locale . ' label';
             $attributes['trans.' . $locale . '.url'] = $locale . ' link';
         }
