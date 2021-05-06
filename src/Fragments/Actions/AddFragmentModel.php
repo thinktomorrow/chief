@@ -38,10 +38,10 @@ final class AddFragmentModel
     /**
      * @param ContextModel $context
      * @param int $order
-     * @param string $fragmentModelId
+     * @param int $fragmentModelId
      * @return mixed
      */
-    private function fetchSortIndices(ContextModel $context, int $order, string $fragmentModelId): array
+    private function fetchSortIndices(ContextModel $context, int $order, int $fragmentModelId): array
     {
         $indices = $context->fragments->map(function ($fragment) {
             return $fragment->pivot->fragment_id;

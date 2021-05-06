@@ -24,7 +24,7 @@ class AddFragmentTest extends ChiefTestCase
     {
         $owner2 = ArticlePage::create();
 
-        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
+         $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
 
         $this->assertFragmentCount($owner2, 1);
     }
@@ -32,6 +32,8 @@ class AddFragmentTest extends ChiefTestCase
     /** @test */
     public function a_nested_fragment_can_add_an_existing_fragment()
     {
+        $this->disableExceptionHandling();
+
         $fragment = $this->addAsFragment(ArticlePage::create(), $this->owner);
 
         $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $this->fragment, $fragment))->assertStatus(201);

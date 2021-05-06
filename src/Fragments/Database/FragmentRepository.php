@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Ramsey\Uuid\Uuid;
 use ReflectionClass;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -42,7 +41,7 @@ final class FragmentRepository
         return FragmentModel::where('shared', 1)->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
 
-    public function find(string $id): Fragmentable
+    public function find(int $id): Fragmentable
     {
         return $this->fragmentFactory(FragmentModel::findOrFail($id));
     }
@@ -72,8 +71,15 @@ final class FragmentRepository
             ->setFragmentModel($fragmentModel);
     }
 
-    public function nextId(): string
+    public function nextId(): int
     {
-        return Uuid::uuid4()->__toString();
+        // We would like to use uuid like (Uuid::uuid4()->__toString()); but the Asset library currently accepts integer(11) as entity_id in database
+        $nextId = random_int(1000, 2000000000);
+
+        while(FragmentModel::find($nextId)) {
+            $nextId = random_int(1000, 2000000000);
+        }
+
+        return $nextId;
     }
 }

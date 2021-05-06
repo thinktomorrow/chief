@@ -16,7 +16,7 @@ class CreateFragmentTables extends Migration
         });
 
         Schema::create('context_fragments', function(Blueprint $table){
-            $table->char('id', 36)->primary();
+            $table->unsignedBigInteger('id')->primary();
             $table->string('model_reference');
             $table->json('data')->nullable();
             $table->boolean('shared')->default(0);
@@ -25,7 +25,7 @@ class CreateFragmentTables extends Migration
 
         Schema::create('context_fragment_lookup', function (Blueprint $table) {
             $table->unsignedBigInteger('context_id');
-            $table->char('fragment_id', 36);
+            $table->unsignedBigInteger('fragment_id');
             $table->unsignedSmallInteger('order')->default(0);
             $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
             $table->foreign('fragment_id')->references('id')->on('context_fragments')->onDelete('cascade');

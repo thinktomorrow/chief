@@ -189,17 +189,17 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId), $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0));
     }
 
     public function nestedFragmentAdd(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentAdd($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0));
     }
 
-    private function handleFragmentAdd(Model $ownerModel, string $fragmentModelId, int $order)
+    private function handleFragmentAdd(Model $ownerModel, int $fragmentModelId, int $order)
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
@@ -222,17 +222,17 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0));
     }
 
     public function nestedFragmentCopy(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0));
     }
 
-    private function handleFragmentCopy(Model $ownerModel, string $fragmentModelId, int $order)
+    private function handleFragmentCopy(Model $ownerModel, int $fragmentModelId, int $order)
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
@@ -248,17 +248,17 @@ trait FragmentAssistant
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove($this->ownerModel($ownerKey, $ownerId), $fragmentModelId);
+        return $this->handleFragmentRemove($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId);
     }
 
     public function nestedFragmentRemove(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), $fragmentModelId);
+        return $this->handleFragmentRemove($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId);
     }
 
-    private function handleFragmentRemove(Model $ownerModel, string $fragmentModelId)
+    private function handleFragmentRemove(Model $ownerModel, int $fragmentModelId)
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
@@ -277,18 +277,18 @@ trait FragmentAssistant
         ]);
     }
 
-    public function fragmentEdit(Request $request, string $ownerKey, $ownerId, string $fragmentId)
+    public function fragmentEdit(Request $request, string $ownerKey, $ownerId, $fragmentId)
     {
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
         return $this->handleFragmentEdit($request, $this->ownerModel($ownerKey, $ownerId), $fragmentable);
     }
 
     public function nestedFragmentEdit(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
-        $fragmentable = $this->fragmentRepository->find($fragmentModelId);
+        $fragmentable = $this->fragmentRepository->find((int) $fragmentModelId);
 
-        return $this->handleFragmentEdit($request, $this->fragmentRepository->find($fragmentOwnerModelId), $fragmentable);
+        return $this->handleFragmentEdit($request, $this->fragmentRepository->find((int) $fragmentOwnerModelId), $fragmentable);
     }
 
     /**
@@ -306,11 +306,11 @@ trait FragmentAssistant
         ]);
     }
 
-    public function fragmentUpdate(Request $request, string $fragmentId)
+    public function fragmentUpdate(Request $request, $fragmentId)
     {
         $this->guard('fragment-update');
 
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
         $this->fieldValidator()->handle(Fields::make($fragmentable->fields()), $request->all());
 
@@ -325,11 +325,11 @@ trait FragmentAssistant
         ], 200);
     }
 
-    public function fragmentShare(Request $request, string $fragmentId)
+    public function fragmentShare(Request $request, $fragmentId)
     {
         $this->guard('fragment-update');
 
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
         $fragmentable->fragmentModel()->update(['shared' => 1]);
 
@@ -339,11 +339,11 @@ trait FragmentAssistant
         ]);
     }
 
-    public function fragmentUnshare(Request $request, string $fragmentId)
+    public function fragmentUnshare(Request $request, $fragmentId)
     {
         $this->guard('fragment-update');
 
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
         $fragmentable->fragmentModel()->update(['shared' => 0]);
 
@@ -353,11 +353,11 @@ trait FragmentAssistant
         ]);
     }
 
-    public function fragmentStatus(Request $request, string $fragmentId)
+    public function fragmentStatus(Request $request, $fragmentId)
     {
         $this->guard('fragment-update');
 
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
         $fragmentable->fragmentModel()->update(['online_status' => ! ! $request->input('online_status')]);
 

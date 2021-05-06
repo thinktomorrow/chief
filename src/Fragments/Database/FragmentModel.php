@@ -26,9 +26,11 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     public $table = 'context_fragments';
     public $guarded = [];
 
-    // Allow for uuid
-    protected $keyType = 'string';
+    // Allow for uuid type behaviour
     public $incrementing = false;
+
+    // Force integer when query results come back (by default id is a string)
+    protected $casts = [ 'id' => 'integer' ];
 
     public $dynamicKeys = ['*'];
     public $dynamicKeysBlacklist = [
