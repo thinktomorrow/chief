@@ -14,13 +14,13 @@ final class SetupConfig
 
     public function namespace(string $path = null): string
     {
-        if($path) {
+        if ($path) {
             rtrim($path, '/');
-            $parts = explode('/',$path);
+            $parts = explode('/', $path);
 
-            $parts = array_map(fn($part) => ucfirst($part), $parts);
+            $parts = array_map(fn ($part) => ucfirst($part), $parts);
 
-            return implode('\\',$parts);
+            return implode('\\', $parts);
         }
 
         if (isset($this->config['namespace'])) {

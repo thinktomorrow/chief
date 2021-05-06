@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class AdminToast
 {
@@ -25,14 +25,16 @@ class AdminToast
         $locale = app()->getLocale();
 
         // Remove the locale segment if present - we assume the first segment is the locale
-        if(0 === strpos($path, $locale . '/') || $path === $locale) {
+        if (0 === strpos($path, $locale . '/') || $path === $locale) {
             $path = substr($path, strlen($locale . '/'));
         }
 
         $model = $this->findModelByUrl($path, $locale);
         $manager = $this->registry->manager($model::managedModelKey());
 
-        if(!$manager->can('edit', $model)) return null;
+        if (! $manager->can('edit', $model)) {
+            return null;
+        }
 
         return $manager->route('edit', $model);
     }

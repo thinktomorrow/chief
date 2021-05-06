@@ -24,7 +24,7 @@ class AddFragmentTest extends ChiefTestCase
     {
         $owner2 = ArticlePage::create();
 
-         $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
 
         $this->assertFragmentCount($owner2, 1);
     }
