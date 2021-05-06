@@ -66,7 +66,7 @@ class MenuItemController extends Controller
 
         $menuitem = MenuItem::findOrFail($id);
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(ChiefMenu::fromMenuItems($menuitem->menuType())->items(),            $menuitem);
+        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(ChiefMenu::fromMenuItems($menuitem->menuType())->items(), $menuitem);
 
         return view('chief::admin.menu.edit', [
             'menuitem' => $menuitem,

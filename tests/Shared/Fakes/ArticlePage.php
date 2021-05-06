@@ -37,14 +37,14 @@ class ArticlePage extends Model implements Page
         return new Fields([
             InputField::make('title')->validation(['min:4']),
             InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']),
-            InputField::make('title_trans')->translatable(['nl', 'en']),
-            InputField::make('content_trans')->translatable(['nl', 'en'])->validation('required'),
+            InputField::make('title_trans')->locales(['nl', 'en']),
+            InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale'),
 
             FileField::make('thumb')->tag('edit'),
-            FileField::make('thumb_trans')->translatable(['nl', 'en'])->tag('edit'),
+            FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit'),
             FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
             ImageField::make('thumb_image')->tag('edit'),
-            ImageField::make('thumb_image_trans')->translatable(['nl', 'en'])->tag('edit'),
+            ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit'),
             ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
         ]);
     }

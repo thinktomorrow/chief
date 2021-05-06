@@ -18,9 +18,9 @@
                                 <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
                             @endif
 
-                            <a class="mt-0.5 space-x-1 link link-primary underline" target="_blank" rel="noopener" href="{{ $link->url }}" style="word-break: break-word;">
-                                {{ $link->url }}
-                            </a>
+                                <a class="mt-0.5 space-x-1 link {{ $link->is_online ? 'link-primary' : 'link-warning' }} underline" target="_blank" rel="noopener" href="{{ $link->url }}" style="word-break: break-word;">
+                                    {{ str_replace(['http://','https://'], '', $link->url) }}
+                                </a>
                         </div>
                     @endif
                 @endforeach
