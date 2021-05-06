@@ -60,19 +60,27 @@ class StoreFragmentTest extends ChiefTestCase
         $this->disableExceptionHandling();
         $quote1 = $this->setupAndCreateQuote($this->owner, [], 1, false);
         $quote2 = $this->setupAndCreateQuote($this->owner, [], 2, false);
+        $quote3 = $this->setupAndCreateQuote($this->owner, [], 3, false);
 
         $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner), [
             'title' => 'new-title',
             'custom' => 'custom-value',
-            'order' => 2,
+            'order' => 1,
         ]);
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
-        $this->assertCount(3, $fragments);
+        $this->assertCount(4, $fragments);
 
         $this->assertEquals($quote1->modelReference(), $fragments[0]->modelReference());
+        $this->assertEquals(new ModelReference(Quote::class, 4), $fragments[1]->modelReference());
         $this->assertEquals($quote2->modelReference(), $fragments[2]->modelReference());
-        $this->assertEquals(new ModelReference(Quote::class, 3), $fragments[1]->modelReference());
+        $this->assertEquals($quote3->modelReference(), $fragments[3]->modelReference());
+
+        // Assert order is updated accordingly
+        $this->assertEquals(0, $fragments[0]->fragmentModel()->pivot->order);
+        $this->assertEquals(1, $fragments[1]->fragmentModel()->pivot->order);
+        $this->assertEquals(2, $fragments[2]->fragmentModel()->pivot->order);
+        $this->assertEquals(3, $fragments[3]->fragmentModel()->pivot->order);
     }
 
     /** @test */
