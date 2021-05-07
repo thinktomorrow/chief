@@ -40,20 +40,10 @@
                 Wijzigingen opslaan
             </button>
 
-            {{-- TODO: isn't this too harsh? Maybe we can use a delete modal? --}}
-            <button
-                data-submit-form="removeFragment{{ $model->modelReference()->get() }}"
-                class="btn btn-error-outline"
-                type="submit"
-                form="removeFragment{{ $model->modelReference()->get() }}"
-            >
-                Verwijderen
-            </button>
-
             <div data-vue-fields class="flex flex-col items-start space-y-4">
                 @adminCan('fragment-delete', $model)
                 <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
-                    Echt Verwijderen
+                    Verwijderen
                 </a>
                 @endAdminCan
             </div>
