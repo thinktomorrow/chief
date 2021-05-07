@@ -6,7 +6,7 @@
             <span>
                 <a
                     data-sidebar-trigger="fragments"
-                    class="bg-grey-100 rounded-md p-4"
+                    class="label label-primary label-lg"
                     href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                 >
                     {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}

@@ -4,19 +4,20 @@
         data-sortable-ignore
         class="relative p-8 pop"
     >
-        <a data-fragment-selection-element-close class="absolute top-0 right-0 m-2.5 link link-grey cursor-pointer">
+        <a data-fragment-selection-element-close class="absolute top-0 right-0 m-8 cursor-pointer link link-grey">
             <x-icon-label type="close"></x-icon-label>
         </a>
 
-        <div class="w-full flex justify-center items-center gutter-2">
+        <div class="flex items-center justify-center w-full gutter-2">
             <div>
                 <a
                         data-sidebar-trigger="selectFragment"
                         href="@adminRoute('fragments-select-new', $owner)"
-                        class="flex flex-col justify-center items-center bg-primary-50 rounded-md p-4 space-y-1"
+                        class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl"
                 >
-                    <svg class="text-primary-500" width="24" height="24"><use xlink:href="#icon-add"/></svg>
-                    <span class="font-medium text-primary-500">Maak een nieuw blok</span>
+                    <svg width="24" height="24"><use xlink:href="#icon-add"/></svg>
+
+                    <span>Maak een nieuw blok</span>
                 </a>
             </div>
 
@@ -24,10 +25,11 @@
                 <a
                         data-sidebar-trigger="selectFragment"
                         href="@adminRoute('fragments-select-existing', $owner)"
-                        class="flex flex-col justify-center items-center bg-primary-50 rounded-md p-4 space-y-1"
+                        class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl"
                 >
-                    <svg class="text-primary-500" width="24" height="24"><use xlink:href="#icon-duplicate"/></svg>
-                    <span class="font-medium text-primary-500">Kies een bestaand blok</span>
+                    <svg width="24" height="24"><use xlink:href="#icon-duplicate"/></svg>
+
+                    <span>Kies een bestaand blok</span>
                 </a>
             </div>
         </div>
