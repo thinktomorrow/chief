@@ -144,7 +144,16 @@ export default class {
             // only mount Vue on our vue specific fields and not on the form element itself
             // so that the submit event still works. I know this is kinda hacky.
             Array.from(newPanelElement.querySelectorAll('[data-vue-fields]')).forEach((el) => {
-                new window.Vue({ el }); // eslint-disable-line
+                // Add an id for vue
+                if (!el.hasAttribute('id')) {
+                    el.setAttribute('id', `vue_${Math.random().toString(16).substr(2, 8)}`);
+                }
+
+                const res = window.Vue.compile(el.outerHTML);
+                new window.Vue({
+                    render: res.render,
+                    staticRenderFns: res.staticRenderFns,
+                }).$mount('#' + el.getAttribute('id')); // eslint-disable-line
             });
 
             // creating a custom event so native js like redactor js can be initiated async

@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
 
-final class RemoveFragmentModel
+final class RemoveFragmentModelFromContext
 {
     public function handle(Model $owner, FragmentModel $fragmentModel): void
     {
