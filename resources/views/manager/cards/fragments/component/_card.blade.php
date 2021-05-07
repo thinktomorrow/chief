@@ -11,7 +11,7 @@
                 </span>
 
                 <span class="text-xl font-semibold text-grey-900">
-                    {{ ucfirst($model->adminConfig()->getPageTitle()) }} (sort: {{ $model->fragmentModel()->pivot->order }})
+                    {{ ucfirst($model->adminConfig()->getPageTitle()) }}
                 </span>
 
                 @if($model->fragmentModel()->isOffline())
