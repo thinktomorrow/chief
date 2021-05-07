@@ -5,8 +5,9 @@
 @endsection
 
 @section('content')
-        <div class="row-center-center min-h-screen">
-            <div class="window window-white max-w-lg prose-dark space-y-6">
+        {{-- TODO: check text --}}
+        <div class="min-h-screen row-center-center">
+            <div class="max-w-lg space-y-6 window window-white prose-dark">
                 <h1>Er ging iets fout</h1>
 
                 <p>
