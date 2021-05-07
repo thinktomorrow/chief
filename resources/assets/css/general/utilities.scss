@@ -39,6 +39,7 @@
 }
 
 /* TODO: safelist class in purgecss */
+/*! purgecss start ignore */
 .wireframe {
     @apply py-8 rounded-lg bg-grey-50;
 
@@ -47,7 +48,7 @@
     }
 
     .wireframe-title {
-        @apply leading-normal font-normal text-grey-900 text-xs;
+        @apply leading-normal font-semibold text-grey-900 text-xs;
     }
 
     .wireframe-content {
@@ -66,7 +67,12 @@
         }
     }
 
+    .wireframe-btn {
+        @apply bg-grey-200 text-grey-700 font-medium px-2 py-1 rounded text-xs inline-block;
+    }
+
     .wireframe-image {
         @apply h-24 bg-center bg-cover rounded-lg bg-grey-300;
     }
 }
+/*! purgecss end ignore */

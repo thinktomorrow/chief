@@ -1,12 +1,15 @@
 <div
     data-fragment
     data-sortable-id="{{ $model->fragmentModel()->id }}"
-    data-sortable-handle
     class="relative w-full p-8"
 >
     <div class="space-y-4">
         <div class="flex items-start justify-between">
             <div class="flex items-center space-x-2">
+                <span data-sortable-handle class="cursor-pointer link link-primary">
+                    <x-icon-label icon="icon-drag"></x-icon-label>
+                </span>
+
                 <span class="text-xl font-semibold text-grey-900">
                     {{ ucfirst($model->adminConfig()->getPageTitle()) }} (sort: {{ $model->fragmentModel()->pivot->order }})
                 </span>
