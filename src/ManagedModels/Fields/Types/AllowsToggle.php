@@ -14,19 +14,19 @@ trait AllowsToggle
      * @param string|array $options
      * @return AllowsToggle
      */
-    public function toggleFieldBy(string $fieldKey, $options): self
+    public function toggleBy(string $fieldKey, $options): self
     {
         $this->fieldToggles[$fieldKey] = (array)$options;
 
         return $this;
     }
 
-    public function toggledByFields(): bool
+    public function isToggled(): bool
     {
         return count($this->fieldToggles) > 0;
     }
 
-    public function getFieldToggles(): array
+    public function getToggles(): array
     {
         return $this->fieldToggles;
     }

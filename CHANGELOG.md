@@ -12,6 +12,7 @@ principles.
 - sortable handle zodat tekst kan worden geselecteerd
 
 ## BUGS
+- choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
 - kopie van quote is beschikbaar maar reeds gebruikt?...
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - proper duplicate context feature (with buttons and all)

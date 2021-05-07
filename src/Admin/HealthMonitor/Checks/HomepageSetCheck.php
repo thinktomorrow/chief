@@ -18,7 +18,7 @@ class HomepageSetCheck implements HealthCheck
 
     public function message(): string
     {
-        return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in via <a href="' . route('chief.back.settings.edit') . '" class="link">Settings</a>';
+        return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in via <a href="' . route('chief.back.settings.edit') . '" class="link">Instellingen</a>';
     }
 
     /**
