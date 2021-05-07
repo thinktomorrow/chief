@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
-use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModel;
+use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModelFromContext;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
@@ -31,7 +31,6 @@ trait FragmentAssistant
         return [
             ManagedRoute::put('fragment-update', 'fragment/{fragment_id}/update'),
             ManagedRoute::post('fragment-status', 'fragment/{fragment_id}/status'),
-            ManagedRoute::delete('fragment-delete', 'fragment/{fragment_id}'),
 
             ManagedRoute::post('fragment-share', 'fragment/{fragmentmodel_id}/share'),
             ManagedRoute::post('fragment-unshare', 'fragment/{fragmentmodel_id}/unshare'),
@@ -43,7 +42,7 @@ trait FragmentAssistant
 
             ManagedRoute::post('fragment-add', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/add'),
             ManagedRoute::post('fragment-copy', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/copy'),
-            ManagedRoute::delete('fragment-remove', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/remove'),
+            ManagedRoute::delete('fragment-delete', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/remove'),
 
             // Nested routes are not used in the views, but only provided for the assistant to be able to deal with nested fragments.
             ManagedRoute::get('nested-fragment-create', 'nestedfragment/{fragmentowner_model_id}/create'),
@@ -51,7 +50,7 @@ trait FragmentAssistant
             ManagedRoute::get('nested-fragment-edit', 'nestedfragment/{fragmentowner_model_id}/{fragment_id}/edit'),
             ManagedRoute::post('nested-fragment-add', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/add'),
             ManagedRoute::post('nested-fragment-copy', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/copy'),
-            ManagedRoute::delete('nested-fragment-remove', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/remove'),
+            ManagedRoute::delete('nested-fragment-delete', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/remove'),
         ];
     }
 
@@ -68,7 +67,7 @@ trait FragmentAssistant
             'fragment-copy',
             'fragment-share',
             'fragment-unshare',
-            'fragment-remove',
+            'fragment-delete',
         ])) {
             return null;
         }
@@ -76,13 +75,13 @@ trait FragmentAssistant
         $modelKey = $this->managedModelClass()::managedModelKey();
 
         // model argument is owner for create endpoints
-        if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-remove'])) {
+        if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-delete'])) {
             if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for ' . $action . ' requires a FragmentsOwner Model as second argument.');
             }
 
             // Some fragment edit/update actions have second argument as the fragmentable
-            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-remove']) && $parameters[0] instanceof Fragmentable) {
+            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-delete']) && $parameters[0] instanceof Fragmentable) {
                 $parameters[0] = $parameters[0]->fragmentModel()->id;
             }
 
@@ -118,7 +117,7 @@ trait FragmentAssistant
             'fragment-status',
             'fragment-share',
             'fragment-unshare',
-            'fragment-remove',
+            'fragment-delete',
         ]);
     }
 
@@ -243,26 +242,26 @@ trait FragmentAssistant
         ], 201);
     }
 
-    public function fragmentRemove(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
+    public function fragmentDelete(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId);
+        return $this->handleFragmentDelete($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId);
     }
 
-    public function nestedFragmentRemove(Request $request, $fragmentOwnerModelId, $fragmentModelId)
+    public function nestedFragmentDelete(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId);
+        return $this->handleFragmentDelete($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId);
     }
 
-    private function handleFragmentRemove(Model $ownerModel, int $fragmentModelId)
+    private function handleFragmentDelete(Model $ownerModel, int $fragmentModelId)
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(RemoveFragmentModel::class)->handle($ownerModel, $fragmentable->fragmentModel(), );
+            app(RemoveFragmentModelFromContext::class)->handle($ownerModel, $fragmentable->fragmentModel(), );
         } catch (FragmentAlreadyRemoved $e) {
             return response()->json([
                 'message' => 'fragment ['.$fragmentModelId.'] is already removed.',
@@ -364,22 +363,6 @@ trait FragmentAssistant
             'message' => 'fragment online status updated',
             'data' => [],
         ]);
-    }
-
-    public function fragmentDelete($id, Request $request)
-    {
-        $this->guard('fragment-delete');
-
-        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
-
-        if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
-        }
-
-        app(DeleteModel::class)->handle($model);
-
-        return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
     }
 
     /**

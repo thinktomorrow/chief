@@ -24,7 +24,7 @@ class RemoveFragmentTest extends ChiefTestCase
     {
         $this->assertFragmentCount($this->owner, 1);
 
-        $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-remove', $this->owner, $this->fragment));
+        $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-delete', $this->owner, $this->fragment));
 
         $this->assertFragmentCount($this->owner, 0);
     }
@@ -34,7 +34,7 @@ class RemoveFragmentTest extends ChiefTestCase
     {
         $fragment = $this->addAsFragment(ArticlePage::create(), $this->fragment->fragmentModel());
 
-        $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-remove', $this->fragment, $fragment))->assertStatus(200);
+        $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-delete', $this->fragment, $fragment))->assertStatus(200);
 
         $this->assertFragmentCount($this->fragment->fragmentModel(), 0);
     }
@@ -42,8 +42,8 @@ class RemoveFragmentTest extends ChiefTestCase
     /** @test */
     public function it_can_check_if_a_model_allows_for_removing_a_fragment()
     {
-        $this->assertTrue($this->manager($this->owner)->can('fragment-remove'));
-        $this->assertTrue($this->manager($this->fragment)->can('fragment-remove'));
+        $this->assertTrue($this->manager($this->owner)->can('fragment-delete'));
+        $this->assertTrue($this->manager($this->fragment)->can('fragment-delete'));
     }
 
     /** @test */
@@ -52,9 +52,9 @@ class RemoveFragmentTest extends ChiefTestCase
         $fragment = $this->addAsFragment(ArticlePage::create(), $this->owner);
         $this->assertFragmentCount($this->owner, 2);
 
-        $this->asAdmin()->delete($this->manager($this->owner)->route('fragment-remove', $this->owner, $fragment));
+        $this->asAdmin()->delete($this->manager($this->owner)->route('fragment-delete', $this->owner, $fragment));
 
-        $this->asAdmin()->delete($this->manager($this->owner)->route('fragment-remove', $this->owner, $fragment));
+        $this->asAdmin()->delete($this->manager($this->owner)->route('fragment-delete', $this->owner, $fragment));
 
         $this->assertFragmentCount($this->owner, 1);
     }

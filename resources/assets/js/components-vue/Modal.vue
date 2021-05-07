@@ -1,8 +1,5 @@
 <template>
-    <!-- TODO: fix transition -->
-    <!-- TODO: modal should open on form error inside of modal (e.g. delete input field) -->
-    <!-- <transition :name="typedtransition" mode="in-out" appear> -->
-    <div v-show="isVisible" class="fixed inset-0 z-30" :class="typedclass">
+    <div :id="this.id" v-show="isVisible" class="fixed inset-0 z-30" :class="typedclass">
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
@@ -39,7 +36,6 @@
             </div>
         </div>
     </div>
-    <!-- </transition> -->
 </template>
 
 <script>

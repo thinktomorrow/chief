@@ -49,6 +49,14 @@
             >
                 Verwijderen
             </button>
+
+            <div data-vue-fields class="flex flex-col items-start space-y-4">
+                @adminCan('fragment-delete', $model)
+                <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
+                    Echt Verwijderen
+                </a>
+                @endAdminCan
+            </div>
         </div>
 
         <div class="space-y-6">
@@ -114,14 +122,9 @@
     </div>
 </form>
 
-<form
-    id="removeFragment{{ $model->modelReference()->get() }}"
-    method="POST"
-    action="{{ $manager->route('fragment-remove', $owner, $model) }}"
->
-    @csrf
-    @method('delete')
-</form>
+<div data-vue-fields>
+    @include('chief::manager._transitions.modals.delete-fragment-modal')
+</div>
 
 <form
         id="shareFragment{{ $model->modelReference()->get() }}"
