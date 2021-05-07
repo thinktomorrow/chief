@@ -11,9 +11,9 @@
         <div class="flex items-center justify-center w-full gutter-2">
             <div>
                 <a
-                        data-sidebar-trigger="selectFragment"
-                        href="@adminRoute('fragments-select-new', $owner)"
-                        class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl"
+                    data-sidebar-trigger="selectFragment"
+                    href="@adminRoute('fragments-select-new', $owner)"
+                    class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl"
                 >
                     <svg width="24" height="24"><use xlink:href="#icon-add"/></svg>
 
@@ -23,9 +23,9 @@
 
             <div>
                 <a
-                        data-sidebar-trigger="selectFragment"
-                        href="@adminRoute('fragments-select-existing', $owner)"
-                        class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl"
+                    data-sidebar-trigger="selectFragment"
+                    href="@adminRoute('fragments-select-existing', $owner)"
+                    class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl"
                 >
                     <svg width="24" height="24"><use xlink:href="#icon-duplicate"/></svg>
 
