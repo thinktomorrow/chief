@@ -22,6 +22,7 @@
 -   [ ] Status component setup check by Ben
 -   [ ] Sorting handle fragments
 -   [ ] What happens if you want 2 different types of fragments at the start and end of fragment with 'static' fields in between
+-   [ ] Component overview
 
 ### Fragments
 

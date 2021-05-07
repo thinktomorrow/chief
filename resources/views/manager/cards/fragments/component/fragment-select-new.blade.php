@@ -3,15 +3,15 @@
 
     <div class="row-start-center gutter-1">
         @forelse($fragments as $allowedFragment)
-            <span>
+            <div>
                 <a
                     data-sidebar-trigger="fragments"
-                    class="label label-primary label-lg"
+                    class="inline-block label label-primary label-lg"
                     href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                 >
                     {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}
                 </a>
-            </span>
+            </div>
         @empty
             No available fragments.
         @endforelse

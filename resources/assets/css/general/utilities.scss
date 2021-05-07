@@ -41,10 +41,10 @@
 /* TODO: safelist class in purgecss */
 /*! purgecss start ignore */
 .wireframe {
-    @apply py-8 rounded-lg bg-grey-50;
+    @apply p-4 rounded-lg bg-grey-50;
 
     .wireframe-container {
-        @apply px-16;
+        @apply px-12;
     }
 
     .wireframe-title {
@@ -65,6 +65,12 @@
                 @apply font-normal;
             }
         }
+    }
+
+    .wireframe-content-sm {
+        @extend .wireframe-content;
+
+        @apply line-clamp-3;
     }
 
     .wireframe-btn {

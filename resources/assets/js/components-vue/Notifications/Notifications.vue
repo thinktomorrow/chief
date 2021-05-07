@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed bottom-0 right-0 z-20 flex items-end justify-end max-w-3xl p-6 space-x-4 min-w-lg">
+    <div class="fixed bottom-0 right-0 z-20 flex items-end justify-end max-w-3xl p-6 space-x-4">
         <div class="flex flex-col items-end space-y-4">
             <!-- Default slot to add on page load notifications e.g. errors -->
             <slot></slot>
