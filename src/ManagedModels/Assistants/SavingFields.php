@@ -11,11 +11,9 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\ManagedModels\Media\Application\FileFieldHandler;
 use Thinktomorrow\Chief\ManagedModels\Media\Application\ImageFieldHandler;
 use Thinktomorrow\Chief\Shared\Helpers\Form;
-use Thinktomorrow\Chief\Site\Urls\Field\Url;
 
 trait SavingFields
 {
@@ -96,16 +94,6 @@ trait SavingFields
         return (method_exists($this, $methodName)) ? $methodName : null;
     }
 
-    private function saveSectionsField(PagebuilderField $field, array $input): void
-    {
-        (new PageBuilder())->save($this, $input);
-    }
-
-    private function saveUrlFields(UrlField $field, array $input): void
-    {
-        (new Url())->save($this, $input);
-    }
-
     private function saveFileFields(FileField $field, array $input, array $files): void
     {
         app(FileFieldHandler::class)->handle($this, $field, $input, $files);
@@ -114,7 +102,6 @@ trait SavingFields
     private function saveImageFields(ImageField $field, array $input, array $files): void
     {
         app(ImageFieldHandler::class)->handle($this, $field, $input, $files);
-//        app(ImageFieldHandler::class)->handle($this, $field, data_get($input, 'images.' . $field->getName(), []), $input);
     }
 
     private function removeDuplicateFilePayload($input, $files): array

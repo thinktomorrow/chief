@@ -35,7 +35,7 @@ class DuplicateFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function a_fragment_can_be_duplicated()
+    public function a_dynamic_fragment_can_be_duplicated()
     {
         $quote = $this->setupAndCreateQuote($this->owner);
         $newOwner = ArticlePage::create();
@@ -101,8 +101,6 @@ class DuplicateFragmentTest extends ChiefTestCase
     /** @test */
     public function a_nested_shared_fragment_is_kept_shared()
     {
-        $this->disableExceptionHandling();
-
         $quote = $this->setupAndCreateQuote($this->owner);
 
         $newOwner = ArticlePage::create();

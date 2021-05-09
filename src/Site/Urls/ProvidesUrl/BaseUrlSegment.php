@@ -46,35 +46,4 @@ class BaseUrlSegment
         // so we'll want to return it in case the base segment is not added.
         return $slugWithBaseSegment ?: '/';
     }
-
-    public static function strip($value): string
-    {
-        $originalValue = $value = trim($value, '/');
-
-        $segments = static::all();
-
-        foreach ($segments as $segment) {
-            if (0 === strpos($originalValue, $segment)) {
-                $value = substr($value, strlen($segment));
-            }
-        }
-
-        return trim($value, '/');
-    }
-
-    private static function all(): array
-    {
-        $segments = [];
-
-        // TODO: fix this and also test this.
-        $managers = app(Managers::class)->all();
-
-        foreach ($managers as $manager) {
-            if (contract($manager->modelInstance(), ProvidesUrl::class)) {
-                $segments[] = $manager->modelInstance()->baseUrlSegment();
-            }
-        }
-
-        return array_unique($segments);
-    }
 }
