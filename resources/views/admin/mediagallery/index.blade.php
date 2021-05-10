@@ -24,25 +24,27 @@
         <div class="row gutter-6">
             <div class="w-full lg:w-2/3">
                 <div class="window window-white space-y-12">
-                    <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="flex justify-between items-center mb-0">
-                        <label for="select-all" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
-                            <input type="checkbox" name="select_all" id="select-all">
-                            <span>Alles selecteren</span>
-                        </label>
+                    <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
+                        <div class="flex justify-between items-center mb-0">
+                            <label for="select-all" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
+                                <input type="checkbox" name="select_all" id="select-all">
+                                <span>Alles selecteren</span>
+                            </label>
 
-                        <div class="space-x-2">
-                            <button type="submit" form="selecting" name="type" value="download" class="btn btn-primary">Download de selectie</button>
-                            <button v-cloak @click="showModal('mediagallery-bulk-delete-modal')" type="button" class="btn btn-error-outline">Verwijder de selectie</button>
+                            <div class="space-x-2">
+                                <button type="submit" form="selecting" name="type" value="download" class="btn btn-primary">Download de selectie</button>
+                                <button v-cloak @click="showModal('mediagallery-bulk-delete-modal')" type="button" class="btn btn-error-outline">Verwijder de selectie</button>
+                            </div>
+                        </div>
+
+                        <div class="row gutter-3">
+                            @foreach($assets as $index => $asset)
+                                <div class="w-1/2 xl:w-1/3 2xl:w-1/4">
+                                    @include('chief::admin.mediagallery.item')
+                                </div>
+                            @endforeach
                         </div>
                     </form>
-
-                    <div class="row gutter-3">
-                        @foreach($assets as $index => $asset)
-                            <div class="w-1/2 xl:w-1/3 2xl:w-1/4">
-                                @include('chief::admin.mediagallery.item')
-                            </div>
-                        @endforeach
-                    </div>
 
                     <div>
                         {{ $assets->links('chief::manager.pagination') }}
