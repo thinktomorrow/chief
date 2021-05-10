@@ -7,11 +7,14 @@
 
     <div class="relative flex items-center justify-center overflow-hidden" style="height: 12rem;">
         @if($asset->getExtensionType() == "image")
-            <div class="absolute top-0 bottom-0 left-0 right-0" style="opacity: 0.1; background-position: center; background-size: cover; background-image: url('{{ $asset->url() }}')"></div>
+            <div
+                class="absolute top-0 bottom-0 left-0 right-0 bg-center bg-cover opacity-10"
+                style="background-image: url('{{ $asset->url() }}')"
+            ></div>
         @endif
 
         @if($asset->getExtensionType() == "image")
-            <img class="relative" src="{{ $asset->url() }}" style="max-width:100%; max-height:100%;">
+            <img class="relative max-w-full max-h-full" src="{{ $asset->url() }}">
         @else
             {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
         @endif

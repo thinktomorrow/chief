@@ -1,14 +1,14 @@
 <div class="row">
     <div class="w-full">
         <div class="window window-white">
-            <div class="divide-y divide-grey-100 -m-12">
+            <div class="-m-8 divide-y divide-grey-100">
                 @forelse($audit as $event)
-                    <div class="px-12 py-4 space-y-1">
+                    <div class="px-6 py-4 space-y-1">
                         <div>
-                            <span class="text-grey-900 font-medium">{{ $event->description }} {{ $event->getReadableSubject() }}</span>
+                            <span class="font-medium text-grey-900">{{ $event->description }} {{ $event->getReadableSubject() }}</span>
                         </div>
 
-                        <div class="flex justify-between items-center">
+                        <div class="flex items-center justify-between">
                             @if($event->causer)
                                 <a href="{{route('chief.back.audit.show', $event->causer_id)}}" class="link link-primary">{{ $event->causer->fullname }}</a>
                             @endif
