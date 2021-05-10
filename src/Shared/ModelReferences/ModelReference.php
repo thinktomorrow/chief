@@ -76,6 +76,13 @@ final class ModelReference
         return "$this->className@$this->id";
     }
 
+    public function getMorphed(): string
+    {
+        $className = self::convertToMorphedClass($this->className);
+
+        return "$className@$this->id";
+    }
+
     public function equals($other): bool
     {
         return (get_class($this) === get_class($other) && $this->get() === $other->get());
@@ -99,5 +106,14 @@ final class ModelReference
     private static function convertToFullClass(string $className): string
     {
         return Relation::getMorphedModel($className) ?? $className;
+    }
+
+    private static function convertToMorphedClass(string $className): string
+    {
+        if($morphedModelKey = array_search($className, Relation::$morphMap)) {
+            return $morphedModelKey;
+        }
+
+        return $className;
     }
 }
