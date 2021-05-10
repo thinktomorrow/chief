@@ -30,7 +30,7 @@
             <x-chief::fragments :owner="$model"/>
         @endif
 
-        <div class="space-x-4">
+        <div class="flex space-x-4">
             <button
                 data-submit-form="updateForm{{ $model->modelReference()->get() }}"
                 type="submit"
@@ -40,11 +40,11 @@
                 Wijzigingen opslaan
             </button>
 
-            <div data-vue-fields class="flex flex-col items-start space-y-4">
+            <div data-vue-fields>
                 @adminCan('fragment-delete', $model)
-                <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
-                    Verwijderen
-                </a>
+                    <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
+                        Verwijderen
+                    </a>
                 @endAdminCan
             </div>
         </div>
