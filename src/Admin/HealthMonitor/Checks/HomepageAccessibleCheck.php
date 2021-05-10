@@ -30,7 +30,7 @@ class HomepageAccessibleCheck implements HealthCheck
             ],
         ]);
 
-        $headers = get_headers($url, false, $context);
+        $headers = get_headers($url, 0, $context);
 
         return substr($headers[0], 9, 3);
     }
