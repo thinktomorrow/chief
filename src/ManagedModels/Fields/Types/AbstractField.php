@@ -108,6 +108,11 @@ abstract class AbstractField
             ->get($locale);
     }
 
+    public function getId(string $locale = null): string
+    {
+        return $this->getDottedName($locale);
+    }
+
     public function getDottedName(string $locale = null): string
     {
         return $this->fieldName()->get($locale);

@@ -18,6 +18,7 @@
                     label="{{ $field->getLabel() }}"
                     name="{{ $field->getName($locale ?? null) }}"
                     isRequired="{{ $field->required() }}"
+                    data-toggle-field-target="{{ $field->getId($locale ?? null) }}"
                 >
                     @if($field->getDescription())
                         <x-slot name="description">

@@ -27,6 +27,7 @@ module.exports = {
         'no-plusplus': 0,
         'no-restricted-syntax': 0,
         'no-underscore-dangle': 0,
+        'wrap-iife': ['error', 'inside'],
 
         'no-new': process.env.NODE_ENV === 'production' ? 1 : 0,
         'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,

@@ -10,24 +10,37 @@ trait AllowsToggle
      * This allows to toggle visibility of other fields. When this option(s)
      * is selected, the respective fields will be shown or hidden.
      *
-     * @param string $fieldKey
-     * @param string|array $options
+     * @param string $option
+     * @param array|string $fieldKeys
      * @return AllowsToggle
      */
-    public function toggleBy(string $fieldKey, $options): self
+    public function toggleField(string $option, $fieldKeys): self
     {
-        $this->fieldToggles[$fieldKey] = (array)$options;
+        $this->fieldToggles[$option] = (array)$fieldKeys;
 
         return $this;
     }
 
-    public function isToggled(): bool
+    public function isToggle($currentOption = null): bool
     {
-        return count($this->fieldToggles) > 0;
+        if($currentOption === null) return count($this->fieldToggles) > 0;
+
+        foreach($this->fieldToggles as $option => $fieldkeys) {
+            if($option == $currentOption) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function getToggles(): array
+    public function getToggleAttributeValue($currentOption): string
     {
-        return $this->fieldToggles;
+        foreach($this->fieldToggles as $option => $fieldkeys) {
+
+            if($option == $currentOption) return implode(',',$fieldkeys);
+        }
+
+        return '';
     }
 }

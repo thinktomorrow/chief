@@ -23,15 +23,14 @@ class HomepageAccessibleCheck implements HealthCheck
             return false;
         }
 
-        // Avoid ssl errors: SSL operation failed with code 1
-        stream_context_set_default([
+        $context = stream_context_create( [
             'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,
             ],
         ]);
 
-        $headers = get_headers($url);
+        $headers = get_headers($url, false, $context);
 
         return substr($headers[0], 9, 3);
     }

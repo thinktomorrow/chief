@@ -7,6 +7,7 @@
                 id="{{ $key.'-'.$value }}"
                 value="{{ $value }}"
                 {{ in_array($value, (array)old($key, $field->getSelected())) ? 'checked="checked"' : '' }}
+                {!! $field->isToggle($value) ? 'data-toggle-field-trigger="'.$field->getToggleAttributeValue($value).'"' : '' !!}
             >
 
             <span>{{ $label }}</span>

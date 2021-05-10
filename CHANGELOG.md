@@ -3,13 +3,26 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## TODO: seds
-- refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
-- V migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
-- chief:install met set van default static fragments (textFragment, bannerFragment, galleryFragment) (+ views)
-- seo defaults weergeven (indien seo niet ingegeven, dan wordt page title gebruikt enz...)
-- nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
-- state uit 'permalink' halen.
-- sortable handle zodat tekst kan worden geselecteerd
+- ✅ refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
+- ✅ migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
+- ✅ nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
+- ✅ state uit 'permalink' halen.
+- ✅ sortable handle zodat tekst kan worden geselecteerd
+- field toggle
+- image queue
+- bug selectFragment bij 2x back
+- Media afbeelding kn niet worden verwijderd?
+- reloadPHP.sh steeds nodig?
+  
+- bestaande toevoegen
+- sortering bij bestaande toevoegen nog te doen
+- shared favorite UI
+- errors in sidebar form blijven + tonen
+- Relation mapping in ModelReference + save in db as mapped value ipv volledige class
+- psalm fixes
+- code coverage!
+- check performance leaks (blackfire)
+
 
 ## BUGS
 - choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
@@ -42,6 +55,8 @@ HOMEPAGE en FIXED PAGES
 - wat met spirit in chief?
 
 ## IMPROVE
+- seo defaults weergeven (indien seo niet ingegeven, dan wordt page title gebruikt enz...)
+- chief:install met set van default static fragments (textFragment, bannerFragment, galleryFragment) (+ views)
 - transport storeRequest and updateRequest: default urls, default short description, default title for page, ...
 - perf: not loading the managers + these routes on frontend? / when not logged in as admin?
 - remove menu translations table (=> try to remove astrotomic altogether)

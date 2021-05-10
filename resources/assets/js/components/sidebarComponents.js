@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reloadEvents: ['fragmentSelectionElementCreated'],
         events: {
             sidebarPanelCreated: () => {
-                console.log('Any sidebar panel was created.');
+                window.registerFieldToggles();
             },
             sidebarFormSubmitted: () => {
                 //

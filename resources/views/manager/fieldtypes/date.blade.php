@@ -6,10 +6,10 @@
     @endif
 
     <input
-        max="3000-01-01"
+        max="2200-01-01"
         type="date"
         name="{{ $field->getName($locale ?? null) }}"
-        id="{{ $key }}"
+        id="{{ $field->getId($locale ?? null) }}"
         placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
         value="{{ old($key, optional($field->getValue($locale ?? null))->format('Y-m-d')) }}"
         class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"

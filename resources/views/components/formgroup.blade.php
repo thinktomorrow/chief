@@ -1,4 +1,4 @@
-<div class="{{ $attributes->get('class', '') }}">
+<div {!! $attributes->has('data-toggle-field-target') ? 'data-toggle-field-target="'.$attributes->get('data-toggle-field-target').'"' : '' !!} class="{{ $attributes->get('class', '') }}">
     @isset($label)
         <div class="mb-3 space-x-1 leading-none">
             @isset($id)

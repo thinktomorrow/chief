@@ -5,6 +5,7 @@ import FormSubmit from './utilities/form-submit';
  * List here all the js utilities needed to be loaded after the Vue instantiation
  */
 require('./utilities/navigation');
+require('./utilities/toggle-fields');
 
 FormSubmit.listen('[data-submit-form]');
 

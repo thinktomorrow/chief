@@ -14,7 +14,12 @@
 
         <div data-vue-fields class="space-y-8">
             @foreach($fields as $field)
-                <x-chief-formgroup label="{{ $field->getLabel() }}" name="{{ $field->getName($locale ?? null) }}" isRequired="{{ $field->required() }}">
+                <x-chief-formgroup
+                        label="{{ $field->getLabel() }}"
+                        name="{{ $field->getName($locale ?? null) }}"
+                        isRequired="{{ $field->required() }}"
+                        data-toggle-field-target="{{ $field->getId($locale ?? null) }}"
+                >
                     @if($field->getDescription())
                         <x-slot name="description">
                             <p>{{ $field->getDescription() }}</p>

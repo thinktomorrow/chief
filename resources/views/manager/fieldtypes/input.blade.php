@@ -8,7 +8,7 @@
     <input
         type="text"
         name="{{ $field->getName($locale ?? null) }}"
-        id="{{ $field->getDottedName($locale ?? null) }}"
+        id="{{ $field->getId($locale ?? null) }}"
         placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
         value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
         class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"
