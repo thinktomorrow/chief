@@ -116,7 +116,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->updateLinks($redirectModel, ['nl' => 'second-nl', 'en' => 'second-en']);
 
         $this->asAdmin()->post($this->manager->route('archive', $model), [
-            'redirect_id' => $redirectModel->modelReference()->get(),
+            'redirect_id' => $redirectModel->modelReference()->getShort(),
         ])->assertStatus(302);
 
         $this->assertEquals(PageState::ARCHIVED, $model->fresh()->stateOf(PageState::KEY));

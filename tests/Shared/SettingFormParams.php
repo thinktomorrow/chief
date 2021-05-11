@@ -13,7 +13,7 @@ trait SettingFormParams
         $model = ArticlePage::create();
 
         $params = [
-            'homepage' => ['nl' => $model->modelReference()->get(), 'en' => $model->modelReference()->get()],
+            'homepage' => ['nl' => $model->modelReference()->getShort(), 'en' => $model->modelReference()->getShort()],
             'app_name' => 'updated app_name',
             'contact_email' => 'valid@mail.com',
             'contact_name' => 'foobar',

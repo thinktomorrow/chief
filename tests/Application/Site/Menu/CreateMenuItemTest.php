@@ -87,7 +87,7 @@ class CreateMenuItemTest extends ChiefTestCase
         $page = ArticlePage::create();
 
         $this->asAdmin()
-            ->post(route('chief.back.menuitem.store'), $this->validParams(['type' => 'internal', 'owner_reference' => $page->modelReference()->get()]))
+            ->post(route('chief.back.menuitem.store'), $this->validParams(['type' => 'internal', 'owner_reference' => $page->modelReference()->getShort()]))
             ->assertStatus(302);
 
         $this->assertEquals($page->modelReference(), MenuItem::first()->owner->modelReference());

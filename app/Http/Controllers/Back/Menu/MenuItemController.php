@@ -71,7 +71,7 @@ class MenuItemController extends Controller
         return view('chief::admin.menu.edit', [
             'menuitem' => $menuitem,
             'pages' => UrlHelper::allOnlineModels(),
-            'ownerReference' => $menuitem->owner ? $menuitem->owner->modelReference()->get() : null,
+            'ownerReference' => $menuitem->owner ? $menuitem->owner->modelReference()->getShort() : null,
             'parents' => $menuitems,
         ]);
     }

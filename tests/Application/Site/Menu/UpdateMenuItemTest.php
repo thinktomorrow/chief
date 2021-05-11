@@ -78,7 +78,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'type' => 'internal',
-                'owner_reference' => $page->modelReference()->get(),
+                'owner_reference' => $page->modelReference()->getShort(),
             ]))->assertStatus(302);
 
         $this->assertEquals($page->modelReference(), $menuitem->fresh()->owner->modelReference());

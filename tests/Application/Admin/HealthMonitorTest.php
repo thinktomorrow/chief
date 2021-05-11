@@ -44,7 +44,7 @@ class HealthMonitorTest extends ChiefTestCase
     {
         $model = ArticlePage::create();
 
-        Setting::create(['key' => Setting::HOMEPAGE, 'value' => $model->modelReference()->get()]);
+        Setting::create(['key' => Setting::HOMEPAGE, 'value' => $model->modelReference()->getShort()]);
 
         app(Monitor::class)->check();
         $this->assertStringContainsString('Het lijkt erop dat de homepagina niet meer bereikbaar is', session('alertbarmessage'));

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -68,5 +69,45 @@ class ModelReferenceTest extends ChiefTestCase
         foreach ($instances as $instance) {
             $this->assertInstanceOf(Model::class, $instance);
         }
+    }
+
+    /** @test */
+    public function it_can_get_morphed_reference()
+    {
+        Relation::$morphMap = [
+            'article' => ArticlePage::class,
+        ];
+
+        $article = ArticlePage::create();
+
+        $reference = ModelReference::make(get_class($article), $article->id);
+
+        $this->assertEquals('article@' . $article->id, $reference->getShort());
+    }
+
+    /** @test */
+    public function it_can_create_from_morphed_reference()
+    {
+        Relation::$morphMap = [
+            'article' => ArticlePage::class,
+        ];
+
+        $article = ArticlePage::create();
+
+        $reference = ModelReference::make('article', $article->id);
+
+        $this->assertEquals(get_class($article) .'@'. $article->id, $reference->get());
+        $this->assertEquals('article@' . $article->id, $reference->getShort());
+
+        $this->assertInstanceOf(ArticlePage::class, $reference->instance());
+    }
+
+    /** @test */
+    public function if_morphed_reference_does_not_exist_passed_string_is_used()
+    {
+        $reference = ModelReference::make('xxx', 1);
+
+        $this->assertEquals('xxx@1', $reference->getShort());
+        $this->assertEquals('xxx@1', $reference->get());
     }
 }

@@ -46,7 +46,7 @@ class ChangeHomepage
             $homepage = Setting::create(['key' => Setting::HOMEPAGE, 'value' => []]);
         }
 
-        $homepage->value = array_merge($homepage->value, [$urlRecord->locale => $model->modelReference()->get()]);
+        $homepage->value = array_merge($homepage->value, [$urlRecord->locale => $model->modelReference()->getShort()]);
         $homepage->save();
     }
 

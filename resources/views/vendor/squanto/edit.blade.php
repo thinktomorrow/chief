@@ -8,7 +8,7 @@
 
                 @slot('breadcrumbs')
                     <a href="{{ route('squanto.index') }}" class="link link-primary">
-                        <x-icon-label type="back">Vertalingen</x-icon-label>
+                        <x-icon-label type="back">Vaste teksten</x-icon-label>
                     </a>
                 @endslot
 

@@ -34,7 +34,7 @@ final class CreateFragmentModel
     {
         $fragmentModel = FragmentModel::create([
             'id' => $this->fragmentRepository->nextId(),
-            'model_reference' => $fragmentable->modelReference()->get(),
+            'model_reference' => $fragmentable->modelReference()->getShort(),
             'data' => $data,
         ]);
 
