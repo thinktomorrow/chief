@@ -8,8 +8,10 @@
             @case('published')
                 @if($isAnyLinkOnline)
                     <x-slot name="title">
-                        Status
-                        <span class="text-sm label label-success">Online</span>
+                        <span class="inline-flex items-center space-x-1">
+                            <span>Status</span>
+                            <span class="text-xs label label-success">Online</span>
+                        </span>
                     </x-slot>
 
                     <p class="text-grey-700">
@@ -17,23 +19,36 @@
                     </p>
                 @else
                     <x-slot name="title">
-                        Status
-                        <span class="text-sm label label-info">Nog niet gepubliceerd</span>
+                        <span class="inline-flex items-center space-x-1">
+                            <span>Status</span>
+                            <span class="text-xs label label-info">Nog niet gepubliceerd</span>
+                        </span>
                     </x-slot>
 
-                    <p class="text-grey-700">
-                        Let op! De pagina is zonder link nog niet zichtbaar op de site.
-                    </p>
-                    <p class="text-grey-700 mt-4">
-                        <a class="block link link-primary" data-sidebar-trigger="links" href="{{ $manager->route('links-edit', $model) }}">Voeg een eerste link toe</a>
-                    </p>
+                    <div class="prose prose-dark">
+                        <p>
+                            Let op! De pagina is zonder link nog niet zichtbaar op de site.
+                        </p>
+
+                        <p>
+                            <a
+                                class="link link-primary"
+                                data-sidebar-trigger="links"
+                                href="{{ $manager->route('links-edit', $model) }}"
+                            >
+                                <x-icon-label type="add">Voeg een eerste link toe</x-icon-label>
+                            </a>
+                        </p>
+                    </div>
                 @endif
 
                 @break
             @case('draft')
                 <x-slot name="title">
-                    Status
-                    <span class="text-sm label label-warning">Draft</span>
+                    <span class="inline-flex items-center space-x-1">
+                        <span>Status</span>
+                        <span class="text-xs label label-warning">Draft</span>
+                    </span>
                 </x-slot>
 
                 <p class="text-grey-700">
@@ -42,8 +57,10 @@
                 @break
             @case('archived')
                 <x-slot name="title">
-                    Status
-                    <span class="text-sm label label-warning">Gearchiveerd</span>
+                    <span class="inline-flex items-center space-x-1">
+                        <span>Status</span>
+                        <span class="text-xs label label-warning">Gearchiveerd</span>
+                    </span>
                 </x-slot>
 
                 <p class="text-grey-700">
