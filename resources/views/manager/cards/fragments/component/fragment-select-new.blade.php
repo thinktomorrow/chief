@@ -9,7 +9,7 @@
                     class="inline-block label label-primary label-lg"
                     href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                 >
-                    {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}
+                    {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
                 </a>
             </div>
         @empty
