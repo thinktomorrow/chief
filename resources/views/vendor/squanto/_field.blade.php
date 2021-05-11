@@ -1,4 +1,4 @@
-@formgroup
+<x-chief-formgroup>
     <div class="space-y-2">
         @foreach($locales as $i => $locale)
             @php
@@ -34,4 +34,4 @@
             </div>
         @endforeach
     </div>
-@endformgroup
+</x-chief-formgroup>
