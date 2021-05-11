@@ -164,7 +164,29 @@ export default class {
 
             Api.listenForFormSubmits(
                 newPanelElement,
-                () => {
+                (responseData) => {
+                    // Reset any error
+                    newPanelElement.querySelectorAll('[data-error-placeholder]').forEach((errorElement) => {
+                        errorElement.classList.add('hidden');
+                    });
+
+                    if (responseData.errors) {
+                        Object.keys(responseData.errors).forEach((name) => {
+                            const errorElement = newPanelElement.querySelector(`[data-error-placeholder="${name}"]`);
+
+                            if (!errorElement) return;
+
+                            errorElement.classList.remove('hidden');
+                            errorElement.querySelector('[data-error-placeholder-content]').innerHTML =
+                                responseData.errors[name];
+                        });
+
+                        // Show flicker of red?
+                        // Show notification?
+                        // Remove error on input?
+                        return;
+                    }
+
                     EventBus.publish('sidebarFormSubmitted', this.panels.findActive().eventPayload());
 
                     // We remove the parent if this parent should not be displayed after form submit of the child panel.

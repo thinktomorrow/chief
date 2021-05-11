@@ -35,5 +35,14 @@
                 </x-inline-notification>
             @enderror
         </div>
+
+        <div data-error-placeholder="{{ $name }}" class="mt-2 hidden">
+            <x-inline-notification type="error">
+                <div data-error-placeholder-content></div>
+            </x-inline-notification>
+        </div>
+
     @endisset
+
+
 </div>
