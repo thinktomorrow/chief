@@ -26,7 +26,7 @@ class SettingsController extends Controller
         $this->authorize('update-setting');
 
         return view('chief::admin.settings', [
-            'fields' => $this->settingFields->fields(),
+            'fields' => $this->settingFields->populatedFields(),
         ]);
     }
 
@@ -34,7 +34,7 @@ class SettingsController extends Controller
     {
         $this->authorize('update-setting');
 
-        $fields = $this->settingFields->fields();
+        $fields = $this->settingFields->populatedFields();
 
         $this->fieldValidator->handle($fields, $request->all());
 

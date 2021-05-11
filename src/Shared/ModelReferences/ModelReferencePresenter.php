@@ -12,7 +12,7 @@ class ModelReferencePresenter
     {
         return $collection->map(function (ReferableModel $item) {
             return [
-                'id' => $item->modelReference()->get(),
+                'id' => $item->modelReference()->getShort(),
                 'label' => $item->modelReferenceLabel(),
                 'group' => $item->modelReferenceGroup(),
             ];
