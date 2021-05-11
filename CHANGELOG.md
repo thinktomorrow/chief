@@ -11,8 +11,10 @@ principles.
 - field toggle
 - image queue
 - bug selectFragment bij 2x back
-- Media afbeelding kn niet worden verwijderd?
+- Marcel kn niet worden verwijderd?
 - reloadPHP.sh steeds nodig?
+- SEO tracking en events mogelijk maken in chief
+- SEO title en description metadata rendering
   
 - bestaande toevoegen
 - sortering bij bestaande toevoegen nog te doen
@@ -22,9 +24,11 @@ principles.
 - psalm fixes
 - code coverage!
 - check performance leaks (blackfire)
-
+- aanmaak fragment waarbij je direct verwacht ook een eerste nested fragment toe te voegen moet niet direct sluiten maar in edit blijven staan zodat je direct een nested fragment kan adden.
 
 ## BUGS
+- article verwijderd maar context blijft nog. Als ik database reset (en dus ook primary keys) dan wordt bij de nieuwe article ongewenst de oude context aan dit artikel gelinkt.
+- assets blijven 'actief' omdat contexts niet verwijderd worden. Kn dus niet uit mediagallery worden verwijderd. Cleanup?, deleted_at timestamp bij context?
 - choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
 - kopie van quote is beschikbaar maar reeds gebruikt?...
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!

@@ -6,8 +6,8 @@
                 name="{{ $key }}"
                 value="{{ $value }}"
                 id="{{ $field->getId($locale ?? null) }}{{ $value }}"
-                {{ old($key, $field->getSelected()) == $value ? 'checked="checked"' : null }}
-                {!! $field->isToggle($value) ? 'data-toggle-field-trigger="'.$field->getToggleAttributeValue($value).'"' : '' !!}
+                {{ old($key, $field->getSelected() ?? $field->getValue($locale ?? null)) == $value ? 'checked="checked"' : null }}
+                {!! $field->isToggle($value) ? 'data-toggle-field-trigger="'.$field->getToggleAttributeValue($value).'" data-toggle-field-group="{{ $field->getKey() }}"' : '' !!}
             >
 
             <span>{!! $label !!}</span>

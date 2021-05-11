@@ -22,7 +22,7 @@
 
                     <div class="space-y-6">
                         <x-chief-formgroup label="E-mail" id="identity" name="email">
-                            <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="john@doe.com" autofocus>
+                            <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
                         </x-chief-formgroup>
 
                         <x-chief-formgroup label="Wachtwoord" id="password" name="password">
@@ -33,7 +33,7 @@
                             <label for="rememberCheckbox" class="with-checkbox">
                                 <input id="rememberCheckbox" name="remember" type="checkbox" {{ old('remember') ? 'checked=checked' : null  }}>
 
-                                <span>Houd me ingelogd</span>
+                                <span>Hou me ingelogd</span>
                             </label>
                         </x-chief-formgroup>
 
