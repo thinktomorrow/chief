@@ -22,12 +22,6 @@ class FieldPresets
             ->locales()
             ->component('SEO')
             ->notOnCreate();
-        yield InputField::make('seo_keywords')
-            ->label('Sleutelwoorden')
-            ->description('Woorden waarop je zelf zou zoeken om deze pagina te vinden.')
-            ->locales()
-            ->component('SEO')
-            ->notOnCreate();
         yield ImageField::make('seo_image')
             ->label('Afbeelding')
             ->description('Deze afbeelding wordt getoond')
