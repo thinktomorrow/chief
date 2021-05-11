@@ -23,9 +23,9 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <div class="divide-y divide-grey-100 -m-8">
-                        <div class="px-6 py-4 flex justify-between items-center">
-                            @foreach($users as $user)
+                    <div class="-m-8 divide-y divide-grey-100">
+                        @foreach($users as $user)
+                            <div class="flex items-center justify-between px-6 py-4">
                                 <div class="space-y-1">
                                     <div class="space-x-2">
                                         @if(!chiefAdmin()->can('update-user') || ($user->hasRole('developer') && !chiefAdmin()->hasRole('developer')) )
@@ -56,8 +56,8 @@
                                         </div>
                                     </options-dropdown>
                                 @endif
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
