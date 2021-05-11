@@ -22,13 +22,15 @@
 
                     <div class="space-y-6">
                         {{-- TODO: field errors are handled but still need to show error if login credentials are incorrect --}}
-                        {{-- @if($errors && count($errors) > 0)
+                        @if($errors && count($errors) > 0)
                             <x-inline-notification type="error" size="large">
-                                @foreach ($errors->all() as $error)
-                                    {{ dd($error) }}
-                                @endforeach
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </x-inline-notification>
-                        @endif --}}
+                        @endif
 
                         <x-chief-formgroup label="E-mail" id="identity" name="email">
                             <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="john@doe.com" autofocus>
