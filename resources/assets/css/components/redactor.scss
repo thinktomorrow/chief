@@ -10,3 +10,12 @@
         border-color: theme('borderColor.primary.500') !important;
     }
 }
+
+/* makes sure the video stays in the container */
+.redactor-component[data-redactor-type='video'] {
+    overflow: scroll !important;
+}
+
+.redactor-dropdown [class*='redactor-dropdown-item-'] {
+    font-size: 1rem !important;
+}

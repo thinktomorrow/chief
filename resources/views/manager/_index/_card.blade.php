@@ -1,4 +1,4 @@
-<div class="w-full px-8 py-6" data-sortable-id="{{ $model->id }}">
+<div class="w-full px-6 py-4" data-sortable-id="{{ $model->id }}">
     <div class="space-y-2">
         <div class="flex justify-between">
             @adminCan('edit')
@@ -9,7 +9,7 @@
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                        <span class="label label-info text-sm">
+                        <span class="text-sm label label-info">
                             Homepage
                         </span>
                     @endif
