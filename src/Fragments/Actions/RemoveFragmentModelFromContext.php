@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
+use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
 
 final class RemoveFragmentModelFromContext
 {
     public function handle(Model $owner, FragmentModel $fragmentModel): void
     {
+
         if (! $context = ContextModel::ownedBy($owner)) {
             throw new \InvalidArgumentException('No context model found for owner ' . get_class($owner) . ' - ' . $owner->id);
         }
@@ -21,5 +23,7 @@ final class RemoveFragmentModelFromContext
         }
 
         $context->fragments()->detach($fragmentModel->id);
+
+        event(new FragmentRemovedFromContext($fragmentModel->id, $context->id));
     }
 }

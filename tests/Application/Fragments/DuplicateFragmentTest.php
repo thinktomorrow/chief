@@ -61,7 +61,7 @@ class DuplicateFragmentTest extends ChiefTestCase
         $newOwner = ArticlePage::create();
         $nestedFragment = $this->setupAndCreateSnippet($quote);
 
-        $this->addAsFragment($nestedFragment, $quote->fragmentModel());
+        $this->createAsFragment($nestedFragment, $quote->fragmentModel());
 
         $this->asAdmin()->post($this->manager($quote)->route('fragment-copy', $newOwner, $quote));
 
@@ -83,7 +83,7 @@ class DuplicateFragmentTest extends ChiefTestCase
         $newOwner = ArticlePage::create();
         $nestedFragment = ArticlePage::create();
 
-        $this->addAsFragment($nestedFragment, $quote->fragmentModel());
+        $this->createAsFragment($nestedFragment, $quote->fragmentModel());
 
         $this->asAdmin()->post($this->manager($quote)->route('fragment-copy', $newOwner, $quote));
 
@@ -105,7 +105,7 @@ class DuplicateFragmentTest extends ChiefTestCase
 
         $newOwner = ArticlePage::create();
 
-        $nestedFragment = $this->addAsFragment(ArticlePage::create(), $quote->fragmentModel());
+        $nestedFragment = $this->createAsFragment(ArticlePage::create(), $quote->fragmentModel());
         $this->asAdmin()->post($this->manager($quote)->route('fragment-share', $nestedFragment));
 
         $this->asAdmin()->post($this->manager($quote)->route('fragment-copy', $newOwner, $quote));

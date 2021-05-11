@@ -3,8 +3,10 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Auth\Events\Login;
+use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Admin\Users\Application\EnableUser;
@@ -22,5 +24,6 @@ class EventServiceProvider extends ServiceProvider
         Event::listen(InviteAccepted::class,EnableUser::class . '@onAcceptingInvite');
 
         Event::listen(ManagedModelCreated::class,CreateUrlForPage::class . '@onManagedModelCreated');
+        Event::listen(FragmentRemovedFromContext::class, DeleteFragment::class.'@onFragmentRemovedFromContext');
     }
 }

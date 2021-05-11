@@ -34,7 +34,7 @@ class AddFragmentTest extends ChiefTestCase
     {
         $this->disableExceptionHandling();
 
-        $fragment = $this->addAsFragment(ArticlePage::create(), $this->owner);
+        $fragment = $this->createAsFragment(ArticlePage::create(), $this->owner);
 
         $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $this->fragment, $fragment))->assertStatus(201);
 

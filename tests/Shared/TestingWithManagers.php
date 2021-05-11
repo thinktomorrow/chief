@@ -39,7 +39,7 @@ trait TestingWithManagers
 
         $quote = Quote::create($values);
 
-        return $this->addAsFragment($quote, $owner, $order);
+        return $this->createAsFragment($quote, $owner, $order);
     }
 
     protected function setupAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true): SnippetStub
@@ -50,7 +50,7 @@ trait TestingWithManagers
 
         $snippet = new SnippetStub();
 
-        return $this->addAsFragment($snippet, $owner, $order);
+        return $this->createAsFragment($snippet, $owner, $order);
     }
 
     protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
@@ -71,9 +71,14 @@ trait TestingWithManagers
         return ArticlePageWithImageValidation::create($values);
     }
 
-    protected function addAsFragment($model, $owner, $order = 0)
+    protected function createAsFragment($model, $owner, $order = 0)
     {
         return $model->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $model, $order));
+    }
+
+    protected function addFragment($fragment, $owner)
+    {
+        $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $owner, $fragment));
     }
 
     protected function manager($managedModel): Manager

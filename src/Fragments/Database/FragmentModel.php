@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -16,6 +17,7 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     use ManagedModelDefaults;
     use HasDynamicAttributes;
     use AssetTrait;
+    use SoftDeletes;
 
     /**
      * Used as reference to the fragmentModel

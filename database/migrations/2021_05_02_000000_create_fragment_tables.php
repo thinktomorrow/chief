@@ -21,6 +21,7 @@ class CreateFragmentTables extends Migration
             $table->json('data')->nullable();
             $table->boolean('shared')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('context_fragment_lookup', function (Blueprint $table) {

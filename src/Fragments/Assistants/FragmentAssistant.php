@@ -312,9 +312,6 @@ trait FragmentAssistant
 
         $this->fieldValidator()->handle(Fields::make($fragmentable->fields()), $request->all());
 
-        // TODO: pass order with request
-//        $request->merge(['order' => 1]);
-
         $this->fragmentModel($fragmentable)->saveFields(Fields::make($fragmentable->fields()), $request->all(), $request->allFiles());
 
         return response()->json([
