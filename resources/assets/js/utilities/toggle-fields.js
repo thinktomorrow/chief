@@ -16,9 +16,6 @@
 
 (function () {
     function handleToggle() {
-        console.log(getTargetElements(this));
-        // const targetSelectors = trigger.getAttribute('data-toggle-field-trigger').split(',');
-
         getTargetElements(this).forEach((target) => {
             if (target.classList.contains('hidden')) {
                 showTarget(target);
@@ -55,7 +52,7 @@
         });
 
         // except current selected ones
-        // TODO...
+        // TODO: toggle within same group
     }
 
     function hideTarget(element) {
