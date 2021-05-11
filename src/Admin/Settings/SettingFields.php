@@ -21,37 +21,33 @@ class SettingFields
         $this->settings = $settings;
     }
 
-    public function fields(): Fields
+    protected function fields(): iterable
     {
-        $fields = new Fields([
-            SelectField::make('homepage')
-                ->name('homepage.:locale')
-                ->options(UrlHelper::allOnlineModels())
-                ->locales()
-                ->validation('required')
-                ->grouped()
-                ->label('Homepagina')
-                ->description('Geef hier de homepagina voor de site op.'),
-            InputField::make('app_name')
-                ->label('Site naam')
-                ->validation('required')
-                ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
-            InputField::make('contact_email')
-                ->validation('required|email')
-                ->label('Webmaster email')
-                ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
-            InputField::make('contact_name')
-                ->validation('required')
-                ->label('Webmaster naam')
-                ->description('Voor en achternaam van de webmaster.'),
-        ]);
-
-        return $this->defaultSettingValues($fields);
+        yield SelectField::make('homepage')
+            ->name('homepage.:locale')
+            ->options(UrlHelper::allOnlineModels())
+            ->locales()
+            ->validation('required')
+            ->grouped()
+            ->label('Homepagina')
+            ->description('Geef hier de homepagina voor de site op.');
+        yield InputField::make('app_name')
+            ->label('Site naam')
+            ->validation('required')
+            ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.');
+        yield InputField::make('contact_email')
+            ->validation('required|email')
+            ->label('Webmaster email')
+            ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.');
+        yield InputField::make('contact_name')
+            ->validation('required')
+            ->label('Webmaster naam')
+            ->description('Voor en achternaam van de webmaster.');
     }
 
-    private function defaultSettingValues(Fields $fields): Fields
+    public function populatedFields(): Fields
     {
-        return $fields->map(function (Field $field) {
+        return Fields::make($this->fields())->map(function (Field $field) {
             return $field->valueResolver(function ($model = null, $locale = null, $field) {
                 return $this->settings->get($field->getKey(), $locale);
             });
@@ -63,9 +59,9 @@ class SettingFields
         $existingHomepageValue = [];
 
         foreach ($fields as $key => $field) {
-            if (! $setting = Setting::where('key', $key)->first()) {
+            if (!$setting = Setting::where('key', $key)->first()) {
                 Setting::create([
-                    'key' => $key,
+                    'key'   => $key,
                     'value' => data_get($input, $key, ''),
                 ]);
 
