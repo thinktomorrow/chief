@@ -1,7 +1,7 @@
 <div
     data-fragment
     data-sortable-id="{{ $model->fragmentModel()->id }}"
-    class="relative w-full p-8"
+    class="relative w-full {{ ($isNested ?? false) ? 'px-12 py-4' : 'p-6' }}"
 >
     <div class="space-y-4">
         <div class="flex items-start justify-between">
@@ -10,7 +10,7 @@
                     <x-icon-label icon="icon-drag"></x-icon-label>
                 </span>
 
-                <span class="text-xl font-semibold text-grey-900">
+                <span class="text-lg font-semibold text-grey-900">
                     {{ ucfirst($model->adminConfig()->getPageTitle()) }}
                 </span>
 

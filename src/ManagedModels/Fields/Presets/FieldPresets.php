@@ -11,8 +11,28 @@ class FieldPresets
 {
     public static function seo(): iterable
     {
-        yield InputField::make('seo_title')->locales()->component('SEO')->notOnCreate();
-        yield TextField::make('seo_content')->locales()->component('SEO')->notOnCreate();
-        yield ImageField::make('seo_image')->locales()->component('SEO')->notOnCreate();
+        yield InputField::make('seo_title')
+            ->label('Pagina titel')
+            ->locales()
+            ->component('SEO')
+            ->notOnCreate();
+        yield TextField::make('seo_content')
+            ->label('Korte inhoud')
+            ->description('Een korte samenvatting van deze pagina.')
+            ->locales()
+            ->component('SEO')
+            ->notOnCreate();
+        yield InputField::make('seo_keywords')
+            ->label('Sleutelwoorden')
+            ->description('Woorden waarop je zelf zou zoeken om deze pagina te vinden.')
+            ->locales()
+            ->component('SEO')
+            ->notOnCreate();
+        yield ImageField::make('seo_image')
+            ->label('Afbeelding')
+            ->description('Deze afbeelding wordt getoond')
+            ->locales()
+            ->component('SEO')
+            ->notOnCreate();
     }
 }

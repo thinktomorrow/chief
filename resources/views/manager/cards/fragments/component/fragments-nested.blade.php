@@ -8,7 +8,7 @@
         data-sidebar-component="fragments"
         data-sortable-fragments
         data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-        class="relative divide-y divide-grey-100 border-t border-b border-grey-100 -m-12"
+        class="relative -m-12 border-t border-b divide-y divide-grey-100 border-grey-100"
     >
         @foreach($fragments as $fragment)
             @include('chief::manager.cards.fragments.component._card', [
@@ -16,6 +16,7 @@
                 'owner' => $owner,
                 'manager' => $fragment['manager'],
                 'loop' => $loop,
+                'isNested' => true
             ])
         @endforeach
     </div>

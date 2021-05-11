@@ -24,6 +24,9 @@
 @import './general/utilities';
 @import './general/overrides';
 
+// Vendor CSS overrides
 @import './components/slim';
-@import './components/multiselect';
 @import './components/redactor';
+@import './components/multiselect';
+
+@import './../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';
