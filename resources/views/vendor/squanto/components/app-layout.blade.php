@@ -1,7 +1,7 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    Vertalingen
+    Vaste teksten
 @endsection
 
 @push('custom-styles')

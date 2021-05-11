@@ -38,12 +38,12 @@ class HomepageTest extends ChiefTestCase
 
         $response = $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
-                'nl' => $model->modelReference()->get(),
-                'en' => $model->modelReference()->get(),
+                'nl' => $model->modelReference()->getShort(),
+                'en' => $model->modelReference()->getShort(),
             ],
         ]));
 
-        $this->assertEquals($model->modelReference()->get(), chiefSetting('homepage'));
+        $this->assertEquals($model->modelReference()->getShort(), chiefSetting('homepage'));
         $this->assertEquals($model->getMorphClass(), UrlRecord::findBySlug('/', 'nl')->model_type);
         $this->assertEquals($model->modelReference()->id(), UrlRecord::findBySlug('/', 'nl')->model_id);
     }
@@ -65,12 +65,12 @@ class HomepageTest extends ChiefTestCase
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
-                'nl' => $model->modelReference()->get(),
-                'en' => $model->modelReference()->get(),
+                'nl' => $model->modelReference()->getShort(),
+                'en' => $model->modelReference()->getShort(),
             ],
         ]));
 
-        $this->assertEquals($model->modelReference()->get(), chiefSetting('homepage'));
+        $this->assertEquals($model->modelReference()->getShort(), chiefSetting('homepage'));
 
         // Assert existing nl url is redirected to homepage
         $nlHomepageUrlRecord = UrlRecord::findBySlug('/', 'nl');
@@ -109,12 +109,12 @@ class HomepageTest extends ChiefTestCase
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
-                'nl' => $model->modelReference()->get(),
-                'en' => $other->modelReference()->get(),
+                'nl' => $model->modelReference()->getShort(),
+                'en' => $other->modelReference()->getShort(),
             ],
         ]));
 
-        $this->assertEquals($model->modelReference()->get(), chiefSetting('homepage'));
+        $this->assertEquals($model->modelReference()->getShort(), chiefSetting('homepage'));
 
         $homepageUrlRecord = UrlRecord::findBySlug('/', 'nl');
         $this->assertEquals($model->getMorphClass(), $homepageUrlRecord->model_type);
@@ -125,7 +125,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertTrue($redirectUrlRecord->isRedirect());
         $this->assertEquals($homepageUrlRecord->id, $redirectUrlRecord->redirect_id);
 
-        $this->assertEquals($other->modelReference()->get(), chiefSetting('homepage', 'en'));
+        $this->assertEquals($other->modelReference()->getShort(), chiefSetting('homepage', 'en'));
 
         // Assert existing url record is kept the same
         $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
@@ -163,8 +163,8 @@ class HomepageTest extends ChiefTestCase
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
-                'nl' => $model->modelReference()->get(),
-                'en' => $model->modelReference()->get(),
+                'nl' => $model->modelReference()->getShort(),
+                'en' => $model->modelReference()->getShort(),
             ],
         ]));
 
@@ -176,8 +176,8 @@ class HomepageTest extends ChiefTestCase
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
-                'nl' => $other->modelReference()->get(),
-                'en' => $other->modelReference()->get(),
+                'nl' => $other->modelReference()->getShort(),
+                'en' => $other->modelReference()->getShort(),
             ],
         ]));
 
@@ -203,7 +203,7 @@ class HomepageTest extends ChiefTestCase
             ],
         ]);
 
-        $this->assertEquals($model->modelReference()->get(), chiefSetting('homepage', 'nl'));
+        $this->assertEquals($model->modelReference()->getShort(), chiefSetting('homepage', 'nl'));
         $this->assertNull(chiefSetting('homepage', 'en'));
     }
 

@@ -82,7 +82,7 @@ class ModelReferenceTest extends ChiefTestCase
 
         $reference = ModelReference::make(get_class($article), $article->id);
 
-        $this->assertEquals('article@' . $article->id, $reference->getMorphed());
+        $this->assertEquals('article@' . $article->id, $reference->getShort());
     }
 
     /** @test */
@@ -97,7 +97,7 @@ class ModelReferenceTest extends ChiefTestCase
         $reference = ModelReference::make('article', $article->id);
 
         $this->assertEquals(get_class($article) .'@'. $article->id, $reference->get());
-        $this->assertEquals('article@' . $article->id, $reference->getMorphed());
+        $this->assertEquals('article@' . $article->id, $reference->getShort());
 
         $this->assertInstanceOf(ArticlePage::class, $reference->instance());
     }
@@ -107,7 +107,7 @@ class ModelReferenceTest extends ChiefTestCase
     {
         $reference = ModelReference::make('xxx', 1);
 
-        $this->assertEquals('xxx@1', $reference->getMorphed());
+        $this->assertEquals('xxx@1', $reference->getShort());
         $this->assertEquals('xxx@1', $reference->get());
     }
 }

@@ -76,7 +76,7 @@ final class ModelReference
         return "$this->className@$this->id";
     }
 
-    public function getMorphed(): string
+    public function getShort(): string
     {
         $className = self::convertToMorphedClass($this->className);
 
@@ -90,7 +90,7 @@ final class ModelReference
 
     public function is(string $modelReferenceString): bool
     {
-        return $this->get() === $modelReferenceString;
+        return ($this->get() === $modelReferenceString || $this->getShort() === $modelReferenceString);
     }
 
     public function refersToStaticObject(): bool

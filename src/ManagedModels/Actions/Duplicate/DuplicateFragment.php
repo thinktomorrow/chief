@@ -54,7 +54,7 @@ class DuplicateFragment
 
         if ($copiedFragment->refersToDynamicModel()) {
             $model = $this->duplicateModel->handle($this->fragmentRepository->find($fragment->id));
-            $copiedFragment->model_reference = $model->modelReference()->get();
+            $copiedFragment->model_reference = $model->modelReference()->getShort();
         }
 
         $copiedFragment->save();
