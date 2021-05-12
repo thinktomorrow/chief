@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
+
 trait AllowsToggle
 {
     private array $fieldToggles = [];
@@ -12,7 +14,7 @@ trait AllowsToggle
      *
      * @param string $option
      * @param array|string $fieldKeys
-     * @return AllowsToggle
+     * @return Field
      */
     public function toggleField(string $option, $fieldKeys): self
     {
@@ -25,7 +27,7 @@ trait AllowsToggle
     {
         if($currentOption === null) return count($this->fieldToggles) > 0;
 
-        foreach($this->fieldToggles as $option => $fieldkeys) {
+        foreach(array_keys($this->fieldToggles) as $option) {
             if($option == $currentOption) {
                 return true;
             }

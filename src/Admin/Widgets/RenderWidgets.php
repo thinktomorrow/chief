@@ -13,7 +13,7 @@ final class RenderWidgets
     public function render(Collection $widgets): string
     {
         // Validate each entry as a valid widget object.
-        $widgets->each(function (Widget $widget) {
+        $widgets->each(function (Widget $_widget) {
             //
         });
 

@@ -11,7 +11,7 @@ final class Widgets
 
     private function __construct(array $widgets)
     {
-        array_map(function (Widget $widget) {
+        array_map(function (Widget $_widget) {
             //
         }, $widgets);
 

@@ -23,7 +23,7 @@ final class TaggedKeys
     {
         $tags = (array) $tags;
 
-        return $this->filter(function ($value, $key) use ($tags) {
+        return $this->filter(function ($value) use ($tags) {
             return count(array_intersect($value, $tags)) > 0;
         });
     }
@@ -32,7 +32,7 @@ final class TaggedKeys
     {
         $tags = (array) $tags;
 
-        return $this->filter(function ($value, $key) use ($tags) {
+        return $this->filter(function ($value) use ($tags) {
             return count(array_intersect($value, $tags)) === 0;
         });
     }

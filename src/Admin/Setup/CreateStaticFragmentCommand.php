@@ -32,7 +32,6 @@ class CreateStaticFragmentCommand extends Command
         $name = null;
         $path = null;
         $namespace = null;
-        $createMigrationFile = false;
 
         while (! $name) {
             $name = $this->ask('What is the name in singular for your fragment?');

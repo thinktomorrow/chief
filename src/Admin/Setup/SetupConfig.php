@@ -15,8 +15,7 @@ final class SetupConfig
     public function namespace(string $path = null): string
     {
         if ($path) {
-            rtrim($path, '/');
-            $parts = explode('/', $path);
+            $parts = explode('/', rtrim($path, '/'));
 
             $parts = array_map(fn ($part) => ucfirst($part), $parts);
 

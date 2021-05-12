@@ -50,7 +50,7 @@ final class Registry
 
     public function managersWithTags(): array
     {
-        return collect($this->tags->get())->reject(function ($tags, $key) {
+        return collect($this->tags->get())->reject(function ($_tags, $key) {
             return ! isset($this->managers[$key]);
         })->map(function ($tags, $key) {
             return (object)[

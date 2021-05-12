@@ -15,8 +15,7 @@ final class RenderFragments
     public function render(Collection $fragmentables, FragmentsOwner $owner, array $viewData = []): string
     {
         // Validate each entry as a valid fragment object.
-        $fragmentables->each(function (Fragmentable $fragmentable) {
-        });
+        $fragmentables->each(function (Fragmentable $_fragmentable) {});
 
         // Init new loop object
         $this->loopsStack = [];

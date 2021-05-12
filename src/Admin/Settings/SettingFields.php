@@ -48,7 +48,7 @@ class SettingFields
     public function populatedFields(): Fields
     {
         return Fields::make($this->fields())->map(function (Field $field) {
-            return $field->valueResolver(function ($model = null, $locale = null, $field) {
+            return $field->valueResolver(function ($_model = null, $locale = null, $field) {
                 return $this->settings->get($field->getKey(), $locale);
             });
         });

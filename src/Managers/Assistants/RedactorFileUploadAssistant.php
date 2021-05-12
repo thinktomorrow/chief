@@ -53,7 +53,7 @@ trait RedactorFileUploadAssistant
             $filename = $filePayload['filename'];
 
             if (! $asset = AssetUploader::uploadFromBase64($base64EncodedFile, $filename)) {
-                $responseContent['file-' . rand(1 - 999)] = [
+                $responseContent['file-' . rand(1000,9999)] = [
                     'error' => true,
                     'messages' => 'Afbeelding [' . $filename . '] kan niet worden opgeladen.',
                 ];

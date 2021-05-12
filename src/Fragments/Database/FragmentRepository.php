@@ -54,7 +54,7 @@ final class FragmentRepository
     {
         $fragmentModels->mapToGroups(function (FragmentModel $fragmentModel) {
             return [ModelReference::fromString($fragmentModel->model_reference)->className() => ModelReference::fromString($fragmentModel->model_reference)->id()];
-        })->reject(function ($modelIds, $className) {
+        })->reject(function ($_modelIds, $className) {
             $reflection = new ReflectionClass($className);
 
             return ! $reflection->isSubclassOf(Model::class);
