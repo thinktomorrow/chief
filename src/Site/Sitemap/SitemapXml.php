@@ -105,7 +105,7 @@ class SitemapXml
                     unset($this->urls[$index]);
                 }
             },
-            'rejected' => function ($reason, $index) {
+            'rejected' => function ($_reason, $index) {
                 unset($this->urls[$index]);
             },
         ]);

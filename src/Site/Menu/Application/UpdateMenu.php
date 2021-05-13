@@ -92,7 +92,7 @@ class UpdateMenu
         if (MenuItem::TYPE_NOLINK == $request->input('type')) {
             $trans = $request->input('trans', []);
 
-            foreach ($trans as $locale => $translations) {
+            foreach (array_keys($trans) as $locale) {
                 $trans[$locale]['url'] = null;
             }
 

@@ -58,7 +58,7 @@ class SettingFields
     {
         $existingHomepageValue = [];
 
-        foreach ($fields as $key => $field) {
+        foreach (array_keys($fields) as $key) {
             if (!$setting = Setting::where('key', $key)->first()) {
                 Setting::create([
                     'key'   => $key,

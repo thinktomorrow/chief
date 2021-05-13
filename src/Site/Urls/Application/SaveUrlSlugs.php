@@ -44,7 +44,7 @@ final class SaveUrlSlugs
     /**
      * @return void
      */
-    private function saveRecord(ProvidesUrl $model, string $locale, ?string $slug, Collection $existingRecords, bool $strict = true)
+    private function saveRecord(ProvidesUrl $model, string $locale, ?string $slug, Collection $existingRecords)
     {
         // Existing ones for this locale?
         $nonRedirectsWithSameLocale = $existingRecords->filter(function ($record) use ($locale) {

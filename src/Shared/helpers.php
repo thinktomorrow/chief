@@ -294,7 +294,7 @@ if (! function_exists('addQueryToUrl')) {
             }
         }, $_query);
 
-        foreach ($query_params as $key => $value) {
+        foreach (array_keys($query_params) as $key) {
             if (isset($current_query[$key])) {
                 unset($current_query[$key]);
             }
