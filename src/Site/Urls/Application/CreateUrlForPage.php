@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class CreateUrlForPage
 {
@@ -20,11 +20,15 @@ class CreateUrlForPage
     {
         $model = $event->modelReference->instance();
 
-        if(!$model instanceof Visitable) return;
+        if (! $model instanceof Visitable) {
+            return;
+        }
 
         $slugs = $this->createLocalizedSlugArray($model);
 
-        if(count($slugs) < 0) return;
+        if (count($slugs) < 0) {
+            return;
+        }
 
         $this->saveUrlSlugs->handle($model, $slugs);
     }
@@ -45,6 +49,6 @@ class CreateUrlForPage
 
         app()->setLocale($currentLocale);
 
-        return array_filter($slugs, fn($item) => $item);
+        return array_filter($slugs, fn ($item) => $item);
     }
 }

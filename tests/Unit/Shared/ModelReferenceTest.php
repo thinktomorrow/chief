@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Shared;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

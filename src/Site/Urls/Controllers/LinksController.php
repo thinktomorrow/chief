@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class LinksController
 {

@@ -2,9 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
@@ -12,6 +10,7 @@ use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class ChiefResponseTest extends ChiefTestCase
 {

@@ -4,11 +4,11 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
 
 class RemoveFragmentTest extends ChiefTestCase
 {

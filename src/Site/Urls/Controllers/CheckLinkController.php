@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class CheckLinkController
 {

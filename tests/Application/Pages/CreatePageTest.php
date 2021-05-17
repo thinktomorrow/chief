@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 final class CreatePageTest extends ChiefTestCase
 {
@@ -35,7 +35,7 @@ final class CreatePageTest extends ChiefTestCase
             'trans' => [
                 'nl' => [
                     'content_trans' => 'nl content',
-                ]
+                ],
             ],
         ]);
 
@@ -58,7 +58,7 @@ final class CreatePageTest extends ChiefTestCase
             'trans' => [
                 'nl' => [
                     'content_trans' => 'nl content',
-                ]
+                ],
             ],
         ]);
 
@@ -74,7 +74,7 @@ final class CreatePageTest extends ChiefTestCase
             'trans' => [
                 'nl' => [
                     'content_trans' => 'nl content',
-                ]
+                ],
             ],
         ]);
 
@@ -83,6 +83,5 @@ final class CreatePageTest extends ChiefTestCase
         $this->assertEquals(2, UrlRecord::count());
         $this->assertEquals('new-title', UrlRecord::findByModel($article, 'nl')->slug);
         $this->assertEquals('new-title', UrlRecord::findByModel($article, 'en')->slug);
-
     }
 }

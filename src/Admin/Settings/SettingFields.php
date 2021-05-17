@@ -59,9 +59,9 @@ class SettingFields
         $existingHomepageValue = [];
 
         foreach (array_keys($fields->all()) as $key) {
-            if (!$setting = Setting::where('key', $key)->first()) {
+            if (! $setting = Setting::where('key', $key)->first()) {
                 Setting::create([
-                    'key'   => $key,
+                    'key' => $key,
                     'value' => data_get($input, $key, ''),
                 ]);
 

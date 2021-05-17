@@ -12,7 +12,6 @@ use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;

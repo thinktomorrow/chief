@@ -25,10 +25,12 @@ trait AllowsToggle
 
     public function isToggle($currentOption = null): bool
     {
-        if($currentOption === null) return count($this->fieldToggles) > 0;
+        if ($currentOption === null) {
+            return count($this->fieldToggles) > 0;
+        }
 
-        foreach(array_keys($this->fieldToggles) as $option) {
-            if($option == $currentOption) {
+        foreach (array_keys($this->fieldToggles) as $option) {
+            if ($option == $currentOption) {
                 return true;
             }
         }
@@ -38,9 +40,10 @@ trait AllowsToggle
 
     public function getToggleAttributeValue($currentOption): string
     {
-        foreach($this->fieldToggles as $option => $fieldkeys) {
-
-            if($option == $currentOption) return implode(',',$fieldkeys);
+        foreach ($this->fieldToggles as $option => $fieldkeys) {
+            if ($option == $currentOption) {
+                return implode(',', $fieldkeys);
+            }
         }
 
         return '';

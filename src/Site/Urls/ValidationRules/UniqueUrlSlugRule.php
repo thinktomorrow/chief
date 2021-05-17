@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Site\Urls\ValidationRules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class UniqueUrlSlugRule implements Rule
 {

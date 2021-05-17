@@ -56,7 +56,7 @@ final class ModelReference
     {
         $className = $this->className();
 
-        if(!class_exists($className)) {
+        if (! class_exists($className)) {
             throw new CannotInstantiateModelReference('['.$className . '] does not exist as a class.');
         }
 
@@ -119,7 +119,7 @@ final class ModelReference
 
     private static function convertToMorphedClass(string $className): string
     {
-        if($morphedModelKey = array_search($className, Relation::$morphMap)) {
+        if ($morphedModelKey = array_search($className, Relation::$morphMap)) {
             return $morphedModelKey;
         }
 
@@ -128,7 +128,7 @@ final class ModelReference
 
     private function validateClassName(string $className)
     {
-        if(!$className) {
+        if (! $className) {
             throw new InvalidModelReference('['.$className.'] is not a valid class reference.');
         }
     }

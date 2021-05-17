@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 

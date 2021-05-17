@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;

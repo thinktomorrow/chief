@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class InternalLinksController extends Controller
 {

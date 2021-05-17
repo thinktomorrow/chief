@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 trait VisitableDefaults
 {
@@ -29,7 +28,7 @@ trait VisitableDefaults
 
     public function isVisitable(): bool
     {
-        if (public_method_exists($this, 'isPublished') && !$this->isPublished()) {
+        if (public_method_exists($this, 'isPublished') && ! $this->isPublished()) {
             /** When admin is logged in and this request is in preview mode, we allow the view */
             return PreviewMode::fromRequest()->check();
         }

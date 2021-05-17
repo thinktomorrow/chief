@@ -34,7 +34,9 @@ class DeleteFragment
 
         // By now the fragment is removed from the desired owning context. Here we check
         // that if the fragment is used by another context then leave britney alone!
-        if(count($this->getOwningModels->get($fragmentable->fragmentModel())) > 0) return;
+        if (count($this->getOwningModels->get($fragmentable->fragmentModel())) > 0) {
+            return;
+        }
 
         $this->handle($event->fragmentModelId);
     }

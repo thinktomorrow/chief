@@ -5,5 +5,4 @@ namespace Thinktomorrow\Chief\Shared\ModelReferences;
 
 final class InvalidModelReference extends \Exception
 {
-
 }

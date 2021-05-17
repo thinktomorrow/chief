@@ -11,8 +11,8 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class SitemapXml
 {

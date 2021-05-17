@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 final class SaveUrlSlugs
 {

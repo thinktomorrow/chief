@@ -23,7 +23,7 @@ class HomepageAccessibleCheck implements HealthCheck
             return false;
         }
 
-        $context = stream_context_create( [
+        $context = stream_context_create([
             'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,

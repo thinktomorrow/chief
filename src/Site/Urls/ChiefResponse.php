@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
-use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
-use Thinktomorrow\Chief\Shared\Concerns\Morphable\NotFoundMorphKey;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 final class ChiefResponse
 {
     public static function fromSlug(string $slug, $locale = null): BaseResponse
     {
-        if (!$locale) {
+        if (! $locale) {
             $locale = app()->getLocale();
         }
 
@@ -49,7 +44,7 @@ final class ChiefResponse
     {
         $model = ModelReference::make($urlRecord->model_type, $urlRecord->model_id)->instance();
 
-        if(! $model->isVisitable()) {
+        if (! $model->isVisitable()) {
             throw new NotFoundHttpException('Model found for request [' . $urlRecord->slug . '] but it is not visitable.');
         }
 
