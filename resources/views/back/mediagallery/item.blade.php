@@ -1,3 +1,13 @@
+<?php
+
+    // Account for media files which are not stored on public accessible location. They throw a
+    $assetUrl = null;
+    try {
+        $assetUrl = $asset->url();
+    } catch(Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined $e) {}
+
+?>
+
 <label for="asset_{{ $index }}" class="relative block h-full bg-white rounded cursor-pointer formgroup" style="overflow: hidden;">
     <div class="absolute top-0 left-0 m-2 formgroup-input z-1">
         <input type="checkbox" name="asset_ids[]" id="asset_{{ $index }}" value="{{ $asset->id }}" hidden>
@@ -6,11 +16,11 @@
 
     <div class="relative flex items-center justify-center overflow-hidden" style="height: 12rem;">
         @if($asset->getExtensionType() == "image")
-            <div class="absolute top-0 bottom-0 left-0 right-0" style="opacity: 0.1; background-position: center; background-size: cover; background-image: url('{{ $asset->url() }}')"></div>
+            <div class="absolute top-0 bottom-0 left-0 right-0" style="opacity: 0.1; background-position: center; background-size: cover; background-image: url('{{ $assetUrl }}')"></div>
         @endif
 
         @if($asset->getExtensionType() == "image")
-            <img class="relative" src="{{ $asset->url() }}" style="max-width:100%; max-height:100%;">
+            <img class="relative" src="{{ $assetUrl }}" style="max-width:100%; max-height:100%;">
         @else
             {!! \Thinktomorrow\Chief\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
         @endif
@@ -18,9 +28,10 @@
 
     <div class="p-3">
         <div class="mb-2">
-            <a 
-                href="{{ $asset->url() }}" 
-                title="{{ $asset->filename() }}" 
+
+            <a
+                href="{{ $assetUrl }}"
+                title="{{ $asset->filename() }}"
                 target="_blank"
                 class="text-grey-600 hover:underline"
             >

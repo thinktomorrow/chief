@@ -2,8 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## 0.5.* unreleased
+## 0.5.18 - 2021-05-17
 - Fixed: Exception typehint set for sitemap crawl rejections didn't allow all exceptions
+- Fixed: non public media threw error on mediagallery index
 
 ## 0.5.17 - 2021-04-21
 - Fixed: integer overflow on sorting value when pages contains modules with large id.
