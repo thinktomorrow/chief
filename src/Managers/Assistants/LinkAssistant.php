@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait LinkAssistant
 {
@@ -25,7 +25,7 @@ trait LinkAssistant
     public function canLinkAssistant(string $action, $model = null): bool
     {
         return (in_array($action, ['links-edit', 'links-update'])
-            && ($model && $model instanceof ProvidesUrl));
+            && ($model && $model instanceof Visitable));
     }
 
     /**

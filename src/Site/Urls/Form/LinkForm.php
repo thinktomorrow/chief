@@ -6,18 +6,18 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Root;
 
 final class LinkForm
 {
-    private ProvidesUrl $model;
+    private Visitable $model;
     private Collection $urlRecords;
 
     private Collection $links;
     private Collection $formValues;
 
-    private function __construct(ProvidesUrl $model, Collection $urlRecords)
+    private function __construct(Visitable $model, Collection $urlRecords)
     {
         $this->model = $model;
         $this->urlRecords = $urlRecords;

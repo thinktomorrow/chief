@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Site\Urls\ProvidesUrl;
+namespace Thinktomorrow\Chief\Site\Visitable;
 
 class BaseUrlSegment
 {
@@ -30,14 +30,14 @@ class BaseUrlSegment
     }
 
     /**
-     * @param ProvidesUrl $model
+     * @param Visitable $model
      * @param string $slug
      * @param $locale
      * @param (int|string) $locale
      *
      * @return string
      */
-    public static function prepend(ProvidesUrl $model, string $slug, $locale): string
+    public static function prepend(Visitable $model, string $slug, $locale): string
     {
         $slugWithBaseSegment = $model->baseUrlSegment($locale) . '/' . $slug;
         $slugWithBaseSegment = trim($slugWithBaseSegment, '/');

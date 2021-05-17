@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class InternalLinksController extends Controller
@@ -18,7 +18,7 @@ class InternalLinksController extends Controller
 
         $onlineModels = UrlHelper::onlineModels();
 
-        $links = $onlineModels->reject(function (ProvidesUrl $model) {
+        $links = $onlineModels->reject(function (Visitable $model) {
             return ! $model->url();
         })->map(function ($model) {
             $name = (method_exists($model, 'menuLabel') && $model->menuLabel()) ? $model->menuLabel() : (isset($model->title) ? $model->title : $model->url());

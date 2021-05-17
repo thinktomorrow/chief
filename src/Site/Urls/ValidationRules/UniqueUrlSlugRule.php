@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Site\Urls\ValidationRules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\BaseUrlSegment;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class UniqueUrlSlugRule implements Rule
@@ -20,7 +20,7 @@ class UniqueUrlSlugRule implements Rule
 
     private $failedDetails = [];
 
-    public function __construct(ProvidesUrl $model, Model $ignoredModel = null)
+    public function __construct(Visitable $model, Model $ignoredModel = null)
     {
         $this->model = $model;
         $this->ignoredModel = $ignoredModel;

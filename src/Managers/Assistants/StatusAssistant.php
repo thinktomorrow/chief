@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController; // TODO: needs refactoring
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait StatusAssistant
 {
@@ -25,7 +25,7 @@ trait StatusAssistant
     public function canStatusAssistant(string $action, $model = null): bool
     {
         return (in_array($action, ['status-edit', 'status-update'])
-            && ($model && $model instanceof ProvidesUrl));
+            && ($model && $model instanceof Visitable));
     }
 
     /**

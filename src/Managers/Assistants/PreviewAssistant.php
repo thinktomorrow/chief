@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait PreviewAssistant
 {
@@ -13,7 +13,7 @@ trait PreviewAssistant
             return false;
         }
 
-        return $model instanceof ProvidesUrl;
+        return $model instanceof Visitable;
     }
 
     /**

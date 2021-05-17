@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class CheckLinkController
 {
     public function check(Request $request)
     {
-        /** @var ProvidesUrl|Model $model */
+        /** @var Visitable|Model $model */
         $model = ModelReference::make($request->modelClass, (string) $request->modelId)->instance();
 
         // Trim slashes if any

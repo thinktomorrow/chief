@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Site\Urls;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class UrlRecord extends Model
 {
@@ -198,7 +198,7 @@ class UrlRecord extends Model
             return Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
         })->reject(function ($model) {
             return $model == null;
-        })->reject(function (ProvidesUrl $model) {
+        })->reject(function (Visitable $model) {
             return (method_exists($model, 'isPublished') && ! $model->isPublished());
         });
     }

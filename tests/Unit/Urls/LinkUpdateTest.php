@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
@@ -98,7 +99,7 @@ class LinkUpdateTest extends ChiefTestCase
     /** @test */
     public function when_updating_an_url_it_keeps_the_old_url_as_redirect()
     {
-        $model = ArticlePage::create();
+        $model = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
 
         $this->updateLinks($model, ['nl' => 'foobar']);
         $this->updateLinks($model, ['nl' => 'foobar-updated']);

@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class DeleteModel
@@ -47,7 +47,7 @@ class DeleteModel
 
             // TODO: when deleting a model, where should the urls redirect to? Or expect here a 404?
             // Delete any related urls...
-            if ($model instanceof ProvidesUrl) {
+            if ($model instanceof Visitable) {
                 UrlRecord::getByModel($model)->each->delete();
             }
 

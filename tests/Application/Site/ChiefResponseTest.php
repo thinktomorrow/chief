@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Urls;
+namespace Thinktomorrow\Chief\Tests\Application\Site;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
@@ -29,10 +30,6 @@ class ChiefResponseTest extends ChiefTestCase
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
-        $request = new Request([], [], [], [], [], [
-            'REQUEST_URI' => '/foo/bar',
-        ]);
-
         $response = ChiefResponse::fromSlug('foo/bar');
 
         $this->assertInstanceOf(Response::class, $response);
@@ -46,25 +43,17 @@ class ChiefResponseTest extends ChiefTestCase
 
         $this->expectException(NotFoundHttpException::class);
 
-        $request = new Request([], [], [], [], [], [
-            'REQUEST_URI' => 'xxx',
-        ]);
-
         ChiefResponse::fromSlug('xxx');
     }
 
     /** @test */
-    public function if_it_cannot_find_a_matching_model_it_throws_404_exception()
+    public function if_the_model_reference_is_invalid_it_throws_a_404_exception()
     {
         config()->set('chief.strict', false);
 
         $this->expectException(NotFoundHttpException::class);
 
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => 0]);
-
-        $request = new Request([], [], [], [], [], [
-            'REQUEST_URI' => 'foo/bar',
-        ]);
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => 'xxx', 'model_id' => 0]);
 
         ChiefResponse::fromSlug('foo/bar');
     }
@@ -79,9 +68,18 @@ class ChiefResponseTest extends ChiefTestCase
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
-        $request = new Request([], [], [], [], [], [
-            'REQUEST_URI' => 'foo/bar',
-        ]);
+        ChiefResponse::fromSlug('foo/bar');
+    }
+
+    /** @test */
+    public function if_the_page_is_archived_it_throws_404_exception()
+    {
+        config()->set('chief.strict', false);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::ARCHIVED]);
+        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         ChiefResponse::fromSlug('foo/bar');
     }
@@ -137,17 +135,31 @@ class ChiefResponseTest extends ChiefTestCase
     }
 
     /** @test */
+    public function it_throws_404_when_model_does_not_provide_url()
+    {
+        config()->set('chief.strict', false);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        Quote::migrateUp();
+        $model = Quote::create();
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
+
+        $response = ChiefResponse::fromSlug('foo/bar', 'nl');
+    }
+
+    /** @test */
     public function it_can_redirect_an_archived_url()
     {
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::ARCHIVED]);
         $model2 = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
 
-        $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
-        $record2 = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar/new', 'model_type' => $model2->getMorphClass(), 'model_id' => $model2->id]);
+        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
+        $record2 = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar/new', 'model_type' => $model2->getMorphClass(), 'model_id' => $model2->id]);
 
         $record->redirectTo($record2);
 
-        $response = ChiefResponse::fromSlug('foo/bar', 'en');
+        $response = ChiefResponse::fromSlug('foo/bar');
 
         $this->assertEquals(301, $response->getStatusCode());
         $this->assertTrue($response->isRedirect('http://localhost/foo/bar/new'));

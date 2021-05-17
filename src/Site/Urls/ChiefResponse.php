@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
@@ -16,54 +20,49 @@ final class ChiefResponse
 {
     public static function fromSlug(string $slug, $locale = null): BaseResponse
     {
-        if (! $locale) {
+        if (!$locale) {
             $locale = app()->getLocale();
         }
 
         try {
             $urlRecord = UrlRecord::findBySlug($slug, $locale);
 
-            $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
-
             if ($urlRecord->isRedirect()) {
-
-                // If model is not found, it probably means it is archived or removed
-                // So we detect the model based on the redirect target url.
-                if (! $model) {
-                    $targetUrlRecord = $urlRecord->redirectTo();
-
-                    $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
-
-                    if (! $targetModel) {
-                        throw new ArchivedUrlException('Corrupt target model for this url request. Model by reference [' . $targetUrlRecord->model_type . '@' . $targetUrlRecord->model_id . '] has probably been archived or deleted.');
-                    }
-
-                    return static::createRedirect($targetModel->url($locale));
-                }
-
-                return static::createRedirect($model->url($locale));
+                return static::createRedirect(
+                    static::findModel($urlRecord->redirectTo())->url($locale)
+                );
             }
 
-            if (! $model) {
-                throw new ArchivedUrlException('Corrupt target model for this url request. Model by reference [' . $urlRecord->model_type . '@' . $urlRecord->model_id . '] has probably been archived or deleted.');
-            }
-
-            if (public_method_exists($model, 'isPublished') && ! $model->isPublished()) {
-
-                /** When admin is logged in and this request is in preview mode, we allow the view */
-                if (! PreviewMode::fromRequest()->check()) {
-                    throw new NotFoundHttpException('Model found for request [' . $slug . '] but it is not published.');
-                }
-            }
-
-            return new Response($model->renderView(), 200);
-        } catch (UrlRecordNotFound | NotFoundMorphKey | ArchivedUrlException $e) {
+            return new Response(
+                static::findModel($urlRecord)->renderView()
+            );
+        } catch (\Throwable $e) {
             if (config('chief.strict')) {
                 throw $e;
             }
         }
 
         throw new NotFoundHttpException('No url or model found for request [' . $slug . '] for locale [' . $locale . '].');
+    }
+
+    private static function findModel(UrlRecord $urlRecord): Visitable
+    {
+        $model = ModelReference::make($urlRecord->model_type, $urlRecord->model_id)->instance();
+
+        if(! $model->isVisitable()) {
+            throw new NotFoundHttpException('Model found for request [' . $urlRecord->slug . '] but it is not visitable.');
+        }
+
+        // TEST THE STUFF BELOW!
+        // v TODO: check if model isnt archived
+        // v TODO: check if model is published (and not drafted)
+        // TODO: check if model isnt softdeleted
+        // TODO: check if model ProvidesUrl
+        // TODO: check if model has url
+
+        // Check if preview mode is on - in that case non-published ones are allowed
+
+        return $model;
     }
 
     private static function createRedirect(string $url): RedirectResponse

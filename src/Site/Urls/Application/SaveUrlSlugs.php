@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\BaseUrlSegment;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 final class SaveUrlSlugs
@@ -18,7 +18,7 @@ final class SaveUrlSlugs
      * Saving urls slugs in strict mode prevents identical urls to be automatically removed.
      * When set to false, this would remove the identical url records.
      */
-    public function handle(ProvidesUrl $model, array $slugs, bool $strict = true): void
+    public function handle(Visitable $model, array $slugs, bool $strict = true): void
     {
         $this->strict = $strict;
 
@@ -36,7 +36,7 @@ final class SaveUrlSlugs
         }
     }
 
-    private function deleteEmptyRecord(ProvidesUrl $model, string $locale, Collection $existingRecords): void
+    private function deleteEmptyRecord(Visitable $model, string $locale, Collection $existingRecords): void
     {
         $this->saveRecord($model, $locale, null, $existingRecords);
     }
@@ -44,7 +44,7 @@ final class SaveUrlSlugs
     /**
      * @return void
      */
-    private function saveRecord(ProvidesUrl $model, string $locale, ?string $slug, Collection $existingRecords)
+    private function saveRecord(Visitable $model, string $locale, ?string $slug, Collection $existingRecords)
     {
         // Existing ones for this locale?
         $nonRedirectsWithSameLocale = $existingRecords->filter(function ($record) use ($locale) {
@@ -80,7 +80,7 @@ final class SaveUrlSlugs
         });
     }
 
-    private function createRecord(ProvidesUrl $model, string $locale, string $slug): void
+    private function createRecord(Visitable $model, string $locale, string $slug): void
     {
         UrlRecord::create([
             'locale' => $locale,
@@ -90,7 +90,7 @@ final class SaveUrlSlugs
         ]);
     }
 
-    private function cleanupExistingRecords(ProvidesUrl $model, string $locale, string $slug, Collection $existingRecords): void
+    private function cleanupExistingRecords(Visitable $model, string $locale, string $slug, Collection $existingRecords): void
     {
         // In the case where we have any redirects that match the given slug, we need to
         // remove the redirect record in favour of the newly added one.
@@ -128,7 +128,7 @@ final class SaveUrlSlugs
         });
     }
 
-    private function deleteIdenticalRecords(ProvidesUrl $model, $existingRecords): void
+    private function deleteIdenticalRecords(Visitable $model, $existingRecords): void
     {
         // The old homepage url should be removed since this is no longer in effect.
         // In case of any redirect to this old homepage, the last used redirect is now back in effect.
@@ -150,7 +150,7 @@ final class SaveUrlSlugs
      *
      * @return string
      */
-    private function prependBaseUrlSegment(ProvidesUrl $model, string $slug, $locale): string
+    private function prependBaseUrlSegment(Visitable $model, string $slug, $locale): string
     {
         return BaseUrlSegment::prepend($model, $slug, $locale);
     }

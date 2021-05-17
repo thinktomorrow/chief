@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Site\Urls\ProvidesUrl;
+namespace Thinktomorrow\Chief\Site\Visitable;
 
 use Closure;
 

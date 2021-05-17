@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -26,7 +26,7 @@ class ProvidesUrlTest extends ChiefTestCase
         $page = ArticlePage::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
-        $this->assertInstanceOf(ProvidesUrl::class, $page);
+        $this->assertInstanceOf(Visitable::class, $page);
         $this->assertEquals(url('/bar'), $page->url('nl'));
     }
 

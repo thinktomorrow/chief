@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Site\Urls\ProvidesUrl;
+namespace Thinktomorrow\Chief\Site\Visitable;
 
-interface ProvidesUrl
+interface Visitable
 {
     /**
      * Full url to be used in frontend navigation
@@ -13,6 +13,14 @@ interface ProvidesUrl
      * @return string
      */
     public function url(string $locale = null): string;
+
+    /**
+     * Check whether this model can be viewed
+     * by the current visitor or not.
+     *
+     * @return bool
+     */
+    public function isVisitable(): bool;
 
     /**
      * The base category uri segment for this type of model.

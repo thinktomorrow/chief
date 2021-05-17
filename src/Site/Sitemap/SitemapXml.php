@@ -11,7 +11,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class SitemapXml
@@ -75,11 +75,11 @@ class SitemapXml
         $models = UrlRecord::allOnlineModels($locale);
 
         $this->urls = $models
-            ->reject(function (ProvidesUrl $model) use ($locale) {
+            ->reject(function (Visitable $model) use ($locale) {
                 // In case the url is not found or present for given locale.
                 return ! $model->url($locale);
             })
-            ->map(function (ProvidesUrl $model) use ($locale, $alternateLocales) {
+            ->map(function (Visitable $model) use ($locale, $alternateLocales) {
                 $url = $model->url($locale);
 
                 $alternateUrls = [];

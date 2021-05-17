@@ -59,7 +59,7 @@ class UrlHelper
     }
 
 
-    public static function models(bool $onlySingles = false, Model $ignoredModel = null, bool $online = true)
+    private static function models(bool $onlySingles = false, Model $ignoredModel = null, bool $online = true)
     {
         $types = [];
 
@@ -99,7 +99,8 @@ class UrlHelper
             return $builder->get()->mapToGroups(function ($record) {
                 return [$record->model_type => $record->model_id];
             })->map(function ($record, $key) {
-                return Morphables::instance($key)->find($record->toArray());
+                // TODO: change to ModelReference instead
+                return  Morphables::instance($key)->find($record->toArray());
             })->map->reject(function ($model) use ($online) {
                 if ($online) {
                     return is_null($model) || (public_method_exists($model, 'isPublished') && ! $model->isPublished());

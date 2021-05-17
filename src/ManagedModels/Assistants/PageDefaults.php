@@ -10,14 +10,14 @@ use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\ManagedModels\States\UsesPageState;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidingUrl;
+use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait PageDefaults
 {
     use FragmentableDefaults;
     use Viewable;
-    use ProvidingUrl;
+    use VisitableDefaults;
     use OwningFragments;
 
     use UsesPageState;

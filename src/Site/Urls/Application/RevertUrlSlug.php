@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 /**
@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
  */
 final class RevertUrlSlug
 {
-    public function handle(ProvidesUrl $model, string $locale): void
+    public function handle(Visitable $model, string $locale): void
     {
         if ($recentRedirect = UrlRecord::findRecentRedirect($model, $locale)) {
             $recentRedirect->revert();

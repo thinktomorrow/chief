@@ -9,8 +9,8 @@ use Vine\NodeCollection;
 
 class ChiefMenu
 {
-    private $collection;
-    private $includeHidden = false;
+    private NodeCollection $collection;
+    private bool $includeHidden = false;
 
     final private function __construct(NodeCollection $collection)
     {
@@ -30,17 +30,6 @@ class ChiefMenu
         return new static(new NodeCollection());
     }
 
-//    public static function fromArray(array $items)
-//    {
-//        $collection = NodeCollection::fromArray($items);
-//
-//        $collection->mapRecursive(function ($node) {
-//            return $node->replaceEntry((new MenuItem())->entry($node));
-//        });
-//
-//        return new static($collection);
-//    }
-
     /**
      * @return static
      */
@@ -56,7 +45,7 @@ class ChiefMenu
         return $this->collection;
     }
 
-    public function sanitize(NodeCollection $collection): NodeCollection
+    private function sanitize(NodeCollection $collection): NodeCollection
     {
         if (! $this->includeHidden) {
             $collection = $collection->shake(function ($node) {

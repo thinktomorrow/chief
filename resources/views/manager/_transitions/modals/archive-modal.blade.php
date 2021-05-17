@@ -9,7 +9,7 @@
 
         <h2>Archiveer: @adminConfig('pageTitle')</h2>
 
-        @if(contract($model, \Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl::class))
+        @if(contract($model, \Thinktomorrow\Chief\Site\Visitable\Visitable::class))
             <p>
                 Opgelet, dit haalt deze pagina van de site en bezoekers krijgen een 404-pagina te zien.
                 Je kan ook kiezen om door te linken naar een andere pagina.

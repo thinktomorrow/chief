@@ -1,11 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Site\Urls\ProvidesUrl;
+namespace Thinktomorrow\Chief\Site\Visitable;
 
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
-trait ProvidingUrl
+trait VisitableDefaults
 {
     use ResolvingRoute;
 
@@ -23,6 +25,16 @@ trait ProvidingUrl
         } catch (UrlRecordNotFound $e) {
             return '';
         }
+    }
+
+    public function isVisitable(): bool
+    {
+        if (public_method_exists($this, 'isPublished') && !$this->isPublished()) {
+            /** When admin is logged in and this request is in preview mode, we allow the view */
+            return PreviewMode::fromRequest()->check();
+        }
+
+        return true;
     }
 
     // TODO: just used once (in url preview) so cant we just remove this?...

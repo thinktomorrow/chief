@@ -16,20 +16,20 @@ use Thinktomorrow\Chief\Migrate\Legacy\Fragments\HasFragments;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ResolvingRoute;
+use Thinktomorrow\Chief\Site\Visitable\ResolvingRoute;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\Translatable;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableContract;
 
-class Page extends Model implements TranslatableContract, HasAsset, MorphableContract, ViewableContract, ProvidesUrl, StatefulContract
+class Page extends Model implements TranslatableContract, HasAsset, MorphableContract, ViewableContract, Visitable, StatefulContract
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;

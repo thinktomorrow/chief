@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 
@@ -19,7 +19,7 @@ class LinksController
 
     public function update(Request $request)
     {
-        /** @var ProvidesUrl|Model $model */
+        /** @var Visitable|Model $model */
         $model = ModelReference::make($request->modelClass, (string) $request->modelId)->instance();
 
         $this->validate($request, ['links' => [

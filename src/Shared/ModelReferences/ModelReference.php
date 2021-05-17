@@ -13,6 +13,8 @@ final class ModelReference
 
     private function __construct(string $className, string $id)
     {
+        $this->validateClassName($className);
+
         $this->className = $className;
         $this->id = $id;
     }
@@ -46,12 +48,19 @@ final class ModelReference
      * Recreate the model instance that is referred to.
      * By default we assume an eloquent model. If the id is 0
      * the reference points to a model object instead
+     *
+     * @param array $attributes
+     * @return mixed
      */
     public function instance(array $attributes = [])
     {
         $className = $this->className();
 
-        if ($this->id === "0") {
+        if(!class_exists($className)) {
+            throw new CannotInstantiateModelReference('['.$className . '] does not exist as a class.');
+        }
+
+        if ($this->refersToStaticObject()) {
             return new $className($attributes);
         }
 
@@ -115,5 +124,12 @@ final class ModelReference
         }
 
         return $className;
+    }
+
+    private function validateClassName(string $className)
+    {
+        if(!$className) {
+            throw new InvalidModelReference('['.$className.'] is not a valid class reference.');
+        }
     }
 }

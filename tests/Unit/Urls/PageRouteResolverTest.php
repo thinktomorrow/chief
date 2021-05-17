@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\PageRouteResolver;
+use Thinktomorrow\Chief\Site\Visitable\PageRouteResolver;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PageRouteResolverTest extends ChiefTestCase

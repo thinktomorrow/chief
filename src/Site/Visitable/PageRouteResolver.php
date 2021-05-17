@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Site\Urls\ProvidesUrl;
+namespace Thinktomorrow\Chief\Site\Visitable;
 
 use Closure;
 use ReflectionClass;
@@ -36,7 +36,7 @@ final class PageRouteResolver
     {
         $ref = new ReflectionClass($modelClass);
 
-        return $ref->implementsInterface(ProvidesUrl::class)
+        return $ref->implementsInterface(Visitable::class)
             && $ref->hasMethod('setRouteResolver')
             && (new \ReflectionMethod($modelClass, 'setRouteResolver'))->isStatic();
     }
