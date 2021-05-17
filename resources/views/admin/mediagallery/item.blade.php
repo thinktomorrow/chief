@@ -1,3 +1,13 @@
+<?php
+
+    // Account for media files which are not stored on public accessible location. They throw a
+    $assetUrl = null;
+    try {
+        $assetUrl = $asset->url();
+    } catch(Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined $e) {}
+
+?>
+
 <label for="asset_{{ $index }}" class="relative block h-full overflow-hidden border cursor-pointer bg-grey-50 border-grey-200 rounded-xl">
     <div class="absolute top-0 left-0 m-2 z-1">
         <div class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
@@ -9,12 +19,12 @@
         @if($asset->getExtensionType() == "image")
             <div
                 class="absolute top-0 bottom-0 left-0 right-0 bg-center bg-cover opacity-10"
-                style="background-image: url('{{ $asset->url() }}')"
+                style="background-image: url('{{ $assetUrl }}')"
             ></div>
         @endif
 
         @if($asset->getExtensionType() == "image")
-            <img class="relative max-w-full max-h-full" src="{{ $asset->url() }}">
+            <img class="relative max-w-full max-h-full" src="{{ $assetUrl }}">
         @else
             {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
         @endif
@@ -23,7 +33,7 @@
     <div class="p-3 space-y-1">
         <div>
             <a
-                href="{{ $asset->url() }}"
+                href="{{ $assetUrl }}"
                 title="{{ $asset->filename() }}"
                 target="_blank"
             >

@@ -131,8 +131,9 @@ A manager takes care of the routing and responses. It basically acts as a contro
 - Removed: ArrayIterable interface on Filters. Filters class no longer functions as an array like object. This functionality is never used in the chief internals.
 - Removed: Custom DynamicAttributes code. We now make use of the `Thinktomorrow\DynamicAttributes` package.
 
-## 0.5.* unreleased
+## 0.5.18 - 2021-05-17
 - Fixed: Exception typehint set for sitemap crawl rejections didn't allow all exceptions
+- Fixed: non public media threw error on mediagallery index
 
 ## 0.5.17 - 2021-04-21
 - Fixed: integer overflow on sorting value when pages contains modules with large id.
