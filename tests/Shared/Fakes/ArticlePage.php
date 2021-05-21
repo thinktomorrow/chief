@@ -74,7 +74,7 @@ class ArticlePage extends Model implements Page
     {
         return [
             Quote::class,
-            SnippetStub::class
+            SnippetStub::class,
         ];
     }
 }

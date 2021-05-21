@@ -55,11 +55,11 @@ class FragmentsComponentRepository
     {
         $fragmentModelIds = $this->fragments()->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
-        return $this->fragmentRepository->getAllShared($this->owner)->map(function ($fragmentable) use($fragmentModelIds) {
+        return $this->fragmentRepository->getAllShared($this->owner)->map(function ($fragmentable) use ($fragmentModelIds) {
             return [
                 'manager' => $this->registry->manager($fragmentable::managedModelKey()),
                 'model' => $fragmentable,
-                'is_already_selected' => in_array($fragmentable->fragmentModel()->id, $fragmentModelIds)
+                'is_already_selected' => in_array($fragmentable->fragmentModel()->id, $fragmentModelIds),
             ];
         })->all();
     }

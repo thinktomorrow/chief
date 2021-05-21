@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use ReflectionClass;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -42,10 +42,10 @@ final class FragmentRepository
     {
         $allowedFragments = $this->getAllowedFragmentClasses($owner);
 
-        return FragmentModel::where(function($query) use($allowedFragments){
+        return FragmentModel::where(function ($query) use ($allowedFragments) {
             $query->where(DB::raw("1=0"));
-            foreach($allowedFragments as $fragmentModelClass){
-                $query->orWhere('model_reference','LIKE',$fragmentModelClass. '@%');
+            foreach ($allowedFragments as $fragmentModelClass) {
+                $query->orWhere('model_reference', 'LIKE', $fragmentModelClass. '@%');
             }
         })->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
@@ -54,14 +54,13 @@ final class FragmentRepository
     {
         $fragmentModelClasses = [];
 
-        foreach($owner->allowedFragments() as $allowedFragmentClass) {
+        foreach ($owner->allowedFragments() as $allowedFragmentClass) {
             $modelReference = ModelReference::fromStatic($allowedFragmentClass);
             $fragmentModelClasses[] = $modelReference->className();
             $fragmentModelClasses[] = $modelReference->shortClassName();
         }
 
         return $fragmentModelClasses;
-
     }
 
     /**

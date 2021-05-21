@@ -6,12 +6,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class SharedFragmentTest extends ChiefTestCase
 {
@@ -113,12 +113,12 @@ class SharedFragmentTest extends ChiefTestCase
         $sharedFragments = app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getSharedFragments();
 
         $checks = 0;
-        foreach($sharedFragments as $sharedFragment) {
-            if($sharedFragment['model'] instanceof Quote) {
+        foreach ($sharedFragments as $sharedFragment) {
+            if ($sharedFragment['model'] instanceof Quote) {
                 $this->assertTrue($sharedFragment['is_already_selected']);
                 $checks++;
             }
-            if($sharedFragment['model'] instanceof SnippetStub) {
+            if ($sharedFragment['model'] instanceof SnippetStub) {
                 $this->assertFalse($sharedFragment['is_already_selected']);
                 $checks++;
             }

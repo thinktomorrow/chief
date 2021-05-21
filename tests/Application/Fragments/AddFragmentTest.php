@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class AddFragmentTest extends ChiefTestCase
 {

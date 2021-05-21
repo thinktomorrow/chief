@@ -4,7 +4,6 @@
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -17,6 +16,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 trait TestingWithManagers
