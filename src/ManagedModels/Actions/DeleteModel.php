@@ -43,6 +43,8 @@ class DeleteModel
             }
 
             // TODO: soft-delete the context of this model... (=fragments)
+            // TODO: check for usage in fragments???? 
+
 //            Relation::deleteRelationsOf($model->getMorphClass(), $model->id);
 
             // TODO: when deleting a model, where should the urls redirect to? Or expect here a 404?

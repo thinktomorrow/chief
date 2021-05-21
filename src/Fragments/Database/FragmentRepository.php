@@ -56,7 +56,7 @@ final class FragmentRepository
 
         foreach ($owner->allowedFragments() as $allowedFragmentClass) {
             $modelReference = ModelReference::fromStatic($allowedFragmentClass);
-            $fragmentModelClasses[] = $modelReference->className();
+            $fragmentModelClasses[] = addSlashes($modelReference->className());
             $fragmentModelClasses[] = $modelReference->shortClassName();
         }
 
