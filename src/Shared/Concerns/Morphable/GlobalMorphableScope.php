@@ -19,7 +19,6 @@ class GlobalMorphableScope implements Scope
          * it is fine to ignore the morph scope altogether.
          */
         catch (NotFoundMorphKey $e) {
-
         }
     }
 }
