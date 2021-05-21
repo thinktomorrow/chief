@@ -70,19 +70,19 @@ class UrlHelper
         return self::modelsByType($types, $ignoredModel, $online);
     }
 
-    public static function modelsByKeys(array $keys, Model $ignoredModel = null, bool $online = true)
-    {
-        $managers = app(Managers::class);
-
-        $whitelistedDatabaseTypes = [];
-
-        foreach ($keys as $key) {
-            $manager = $managers->findByKey($key);
-            $whitelistedDatabaseTypes[] = $manager->modelInstance()->getMorphClass();
-        }
-
-        return static::modelsByType($whitelistedDatabaseTypes, $ignoredModel, $online);
-    }
+//    public static function modelsByKeys(array $keys, Model $ignoredModel = null, bool $online = true)
+//    {
+//        $managers = app(Managers::class);
+//
+//        $whitelistedDatabaseTypes = [];
+//
+//        foreach ($keys as $key) {
+//            $manager = $managers->findByKey($key);
+//            $whitelistedDatabaseTypes[] = $manager->modelInstance()->getMorphClass();
+//        }
+//
+//        return static::modelsByType($whitelistedDatabaseTypes, $ignoredModel, $online);
+//    }
 
 
     public static function modelsByType(array $types, Model $ignoredModel = null, bool $online = true)
