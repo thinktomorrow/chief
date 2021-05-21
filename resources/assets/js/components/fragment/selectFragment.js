@@ -120,6 +120,8 @@ export default class {
             this.fragmentsContainer.removeChild(element);
             // this.fragmentsContainer.replaceChild(newSelectionElement, element);
 
+            this.addOrderToExistingFragmentLink();
+
             EventBus.publish('fragmentSelectionElementCreated', newSelectionElement);
         });
     }
@@ -184,6 +186,21 @@ export default class {
             if (!panelElement.querySelector('input[name="order"]')) return;
 
             panelElement.querySelector('input[name="order"]').setAttribute('value', order);
+        }
+    }
+
+    addOrderToExistingFragmentLink() {
+        const selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
+
+        if (selectionElement) {
+            const order = this._getSelectionElementOrder(selectionElement);
+            console.log(order);
+            selectionElement.querySelectorAll('[data-sidebar-trigger]').forEach((el) => {
+                console.log(el);
+                if (el.hasAttribute('href')) {
+                    el.setAttribute('href', `${el.getAttribute('href')}?order=${order}`);
+                }
+            });
         }
     }
 

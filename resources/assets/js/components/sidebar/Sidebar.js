@@ -33,8 +33,10 @@ export default class {
         this.handleCloseReference = () => this.backOrClose();
 
         this.listenForEvents();
-        this.listenForLivewireEvents();
         this.listenForEscapeKey();
+
+        this.reloadLivewireEvents = options.reloadLivewireEvents || [];
+        this.listenForLivewireEvents();
 
         // Subscribe events via the global EventBus
         if (options.events) {
@@ -83,10 +85,10 @@ export default class {
             const componentEl = component.el(this.currentContainer());
             const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
-            EventBus.subscribe('sidebarFormSubmitted', (panelData) => {
-                if (panelData.component.key === component.key) {
+            ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
+                EventBus.subscribe(eventKey, () => {
                     livewireComponent.reload();
-                }
+                });
             });
         });
     }

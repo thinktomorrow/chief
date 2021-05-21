@@ -9,7 +9,7 @@ export default class {
         this.componentSelector = options.componentSelector || `[data-${this.key}-component]`;
 
         /**
-         * With this setting enables the component will be reloaded
+         * With this setting enabled the component will be reloaded
          * via livewire after a related sidebarFormSubmitted event.
          */
         this.livewire = options.livewire || false;
@@ -62,24 +62,4 @@ export default class {
     el(container) {
         return container.querySelector(this.componentSelector);
     }
-
-    // onSidebarFormSubmitted(panelData) {
-    //     console.log('YESSS', panelData);
-    // }
-
-    // loop over every component and check which one is active in current panel (or main (document))
-    // These are the active components and are targets for trigger refreshes
-    // On livewire reloads and such, we can trigger a 'refreshActiveComponents' type of method in Sidebar
-    //
-
-    // /**
-    //  * Helper function to capitalise a string,
-    //  * e.g. uppercase the first character of a string
-    //  * @param string
-    //  * @returns {string}
-    //  * @private
-    //  */
-    // static _ucfirst(string) {
-    //     return string.charAt(0).toUpperCase() + string.slice(1);
-    // }
 }

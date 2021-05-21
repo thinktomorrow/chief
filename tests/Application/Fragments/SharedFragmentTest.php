@@ -10,6 +10,8 @@ use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class SharedFragmentTest extends ChiefTestCase
 {
@@ -81,5 +83,46 @@ class SharedFragmentTest extends ChiefTestCase
             $this->assertInstanceOf(ArticlePage::class, $owner['model']);
             $this->assertInstanceOf(Manager::class, $owner['manager']);
         }
+    }
+
+    /** @test */
+    public function it_can_retrieve_all_shareable_fragments()
+    {
+        $this->setupAndCreateSnippet($this->owner);
+
+        $sharedFragments = app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getSharedFragments();
+
+        $this->assertCount(2, $sharedFragments);
+    }
+
+    /** @test */
+    public function it_can_retrieve_only_shareable_fragments_when_the_are_set_as_allowed_fragments()
+    {
+        $this->setupAndCreateHero(ArticlePage::create());
+
+        $sharedFragments = app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getSharedFragments();
+
+        $this->assertCount(1, $sharedFragments);
+    }
+
+    /** @test */
+    public function already_selected_fragments_are_marked_with_a_flag()
+    {
+        $this->setupAndCreateSnippet(ArticlePage::create());
+
+        $sharedFragments = app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getSharedFragments();
+
+        $checks = 0;
+        foreach($sharedFragments as $sharedFragment) {
+            if($sharedFragment['model'] instanceof Quote) {
+                $this->assertTrue($sharedFragment['is_already_selected']);
+                $checks++;
+            }
+            if($sharedFragment['model'] instanceof SnippetStub) {
+                $this->assertFalse($sharedFragment['is_already_selected']);
+                $checks++;
+            }
+        }
+        $this->assertEquals(2, $checks); // assert all fragments are checked
     }
 }

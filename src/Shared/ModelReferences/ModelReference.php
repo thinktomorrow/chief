@@ -80,6 +80,11 @@ final class ModelReference
         return $this->className;
     }
 
+    public function shortClassName(): string
+    {
+        return self::convertToMorphedClass($this->className);
+    }
+
     public function get(): string
     {
         return "$this->className@$this->id";
@@ -87,7 +92,7 @@ final class ModelReference
 
     public function getShort(): string
     {
-        $className = self::convertToMorphedClass($this->className);
+        $className = $this->shortClassName();
 
         return "$className@$this->id";
     }

@@ -4,6 +4,7 @@
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -48,9 +49,16 @@ trait TestingWithManagers
             chiefRegister()->staticFragment(SnippetStub::class);
         }
 
-        $snippet = new SnippetStub();
+        return $this->createAsFragment(new SnippetStub(), $owner, $order);
+    }
 
-        return $this->createAsFragment($snippet, $owner, $order);
+    protected function setupAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true): Hero
+    {
+        if ($withSetup) {
+            chiefRegister()->staticFragment(Hero::class);
+        }
+
+        return $this->createAsFragment(new Hero(), $owner, $order);
     }
 
     protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage

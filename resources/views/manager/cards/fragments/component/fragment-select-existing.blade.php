@@ -4,23 +4,24 @@
     <div class="row-start-center gutter-1">
 
         @if(count($sharedFragments) > 0)
-            <div>
-                <p class="font-medium text-grey-700 text-center">
-                    Favorieten
-                </p>
-            </div>
-
-            <div class="flex justify-center items-center space-x-2">
+            <div class="space-x-2">
                 @foreach($sharedFragments as $sharedFragment)
-                    <a
+                    <div
                             data-sidebar-close
-                            data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) }}"
-                            class="bg-grey-100 rounded-md p-4"
+                            data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
+                            class="mb-6 cursor-pointer"
                     >
-                            {{ ucfirst($sharedFragment['model']->adminConfig()->getPageTitle()) }}
-                        </a>
+                        <h4>{{ $sharedFragment['model']->adminConfig()->getPageTitle() }}</h4>
+                        <div class="wireframe">
+                            {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
+                        </div>
+                    </div>
                 @endforeach
             </div>
+        @else
+            <p>
+                Oei geen fragmenten meer beschikbaar voor deze pagina... <br>Je hebt alle mogelijke fragmentjes al gebruikt!
+            </p>
         @endif
 
     </div>

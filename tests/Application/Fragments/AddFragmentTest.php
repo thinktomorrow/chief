@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class AddFragmentTest extends ChiefTestCase
 {
@@ -27,6 +28,19 @@ class AddFragmentTest extends ChiefTestCase
         $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
 
         $this->assertFragmentCount($owner2, 1);
+    }
+
+    /** @test */
+    public function a_page_can_add_an_existing_fragment_with_a_given_order()
+    {
+        $owner2 = ArticlePage::create();
+        $snippet = $this->createAsFragment(new SnippetStub(), $this->owner);
+
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment) . '?order=0');
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $snippet) . '?order=0');
+
+        $this->assertFragmentCount($owner2, 2);
+        $this->assertEquals(SnippetStub::class, get_class($this->firstFragment($owner2)));
     }
 
     /** @test */

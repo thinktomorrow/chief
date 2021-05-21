@@ -11,15 +11,11 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 class FragmentsComponentRepository
 {
     private FragmentRepository $fragmentRepository;
-
     private FragmentsOwner $owner;
+    private Registry $registry;
 
     /** @var null|Collection */
     private $fragments;
-    /**
-     * @var Registry
-     */
-    private Registry $registry;
 
     public function __construct(FragmentRepository $fragmentRepository, Registry $registry, FragmentsOwner $owner)
     {
@@ -59,12 +55,11 @@ class FragmentsComponentRepository
     {
         $fragmentModelIds = $this->fragments()->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
-        return $this->fragmentRepository->shared()->reject(function ($fragmentable) use ($fragmentModelIds) {
-            return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
-        })->map(function ($fragmentable) {
+        return $this->fragmentRepository->getAllShared($this->owner)->map(function ($fragmentable) use($fragmentModelIds) {
             return [
                 'manager' => $this->registry->manager($fragmentable::managedModelKey()),
                 'model' => $fragmentable,
+                'is_already_selected' => in_array($fragmentable->fragmentModel()->id, $fragmentModelIds)
             ];
         })->all();
     }

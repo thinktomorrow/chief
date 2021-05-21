@@ -21,7 +21,6 @@ export default class {
         });
 
         EventBus.subscribe('newFragmentPanelCreated', (panel) => {
-            console.log('panel...', panel);
             this._scanForTriggersIn(panel.el);
         });
 

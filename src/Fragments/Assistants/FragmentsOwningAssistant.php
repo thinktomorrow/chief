@@ -82,22 +82,23 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner));
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner), $request->input('order', 0));
     }
 
     public function nestedFragmentsSelectExisting(Request $request, $fragmentModelId)
     {
         $owner = $this->fragmentRepository->find($fragmentModelId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner->fragmentModel()));
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner), $request->input('order', 0));
     }
 
-    private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments)
+    private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments, $order)
     {
         return view('chief::manager.cards.fragments.component.fragment-select-existing', [
             'fragments' => $fragments,
             'sharedFragments' => $sharedFragments,
             'owner' => $owner,
+            'order' => $order,
         ]);
     }
 
@@ -136,11 +137,11 @@ trait FragmentsOwningAssistant
         }, $owner->allowedFragments());
     }
 
-    private function getSharedFragments(Model $owner): array
+    private function getSharedFragments(FragmentsOwner $owner): array
     {
-        $fragmentModelIds = $this->fragmentRepository->getByOwner($owner)->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
+        $fragmentModelIds = $this->fragmentRepository->getByOwner($owner->ownerModel())->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
-        return $this->fragmentRepository->shared()->reject(function ($fragmentable) use ($fragmentModelIds) {
+        return $this->fragmentRepository->getAllShared($owner)->reject(function ($fragmentable) use ($fragmentModelIds) {
             return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
         })->map(function ($fragmentable) {
             return [

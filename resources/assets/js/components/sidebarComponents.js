@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ...fieldComponents,
         ],
         reloadEvents: ['fragmentSelectionElementCreated'],
+        reloadLivewireEvents: ['fragmentAdded'],
         events: {
             sidebarPanelCreated: () => {
                 window.registerFieldToggles();

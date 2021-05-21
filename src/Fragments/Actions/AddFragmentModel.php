@@ -43,7 +43,7 @@ final class AddFragmentModel
      */
     private function fetchSortIndices(ContextModel $context, int $order, int $fragmentModelId): array
     {
-        $indices = $context->fragments->map(function ($fragment) {
+        $indices = $context->fragments()->get()->map(function ($fragment) {
             return $fragment->pivot->fragment_id;
         })->values()->all();
 

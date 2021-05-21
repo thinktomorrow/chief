@@ -10,8 +10,6 @@ principles.
 - ✅ sortable handle zodat tekst kan worden geselecteerd
 - field toggle
 - image queue
-- bug selectFragment bij 2x back
-- Marcel kn niet worden verwijderd?
 - reloadPHP.sh steeds nodig?
 - SEO tracking en events mogelijk maken in chief
 - SEO title en description metadata rendering

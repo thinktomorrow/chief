@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
 {
@@ -67,5 +68,13 @@ class ArticlePage extends Model implements Page
     protected function dynamicLocales(): array
     {
         return config('chief.locales', []);
+    }
+
+    public function allowedFragments(): array
+    {
+        return [
+            Quote::class,
+            SnippetStub::class
+        ];
     }
 }

@@ -186,14 +186,14 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, (int) $request->input('order', 0));
     }
 
     public function nestedFragmentAdd(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentAdd($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, (int) $request->input('order', 0));
     }
 
     private function handleFragmentAdd(Model $ownerModel, int $fragmentModelId, int $order)
