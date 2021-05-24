@@ -34,29 +34,9 @@ class SharedFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function a_fragment_can_be_flagged_as_shareable()
-    {
-        $this->assertFalse($this->fragment->fragmentModel()->isShared());
-
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-share', $this->fragment));
-
-        $this->assertTrue($this->fragment->fragmentModel()->fresh()->isShared());
-    }
-
-    /** @test */
-    public function a_fragment_can_be_dropped_as_shareable()
-    {
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-share', $this->fragment));
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-unshare', $this->fragment));
-
-        $this->assertFalse($this->fragment->fragmentModel()->fresh()->isShared());
-    }
-
-    /** @test */
-    public function a_fragment_can_be_shared_by_multiple_owners()
+    public function a_fragment_can_be_shared()
     {
         $owner2 = ArticlePage::create([]);
-
         $this->asAdmin()->post($this->fragmentManager->route('fragment-add', $owner2, $this->fragment));
 
         $this->assertCount(1, DB::table('context_fragments')->get());
@@ -67,6 +47,17 @@ class SharedFragmentTest extends ChiefTestCase
 
         $this->assertEquals($ownerFragment->toArray(), $owner2Fragment->toArray());
         $this->assertEquals(Arr::except($ownerFragment->fragmentModel()->toArray(), 'pivot'), Arr::except($owner2Fragment->fragmentModel()->toArray(), 'pivot'));
+    }
+
+    /** @test */
+    public function when_a_fragment_is_shared_is_it_flagged_as_shareable()
+    {
+        $this->assertFalse($this->fragment->fragmentModel()->isShared());
+
+        $owner2 = ArticlePage::create([]);
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-add', $owner2, $this->fragment));
+
+        $this->assertTrue($this->fragment->fragmentModel()->fresh()->isShared());
     }
 
     /** @test */
@@ -96,7 +87,7 @@ class SharedFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_can_retrieve_only_shareable_fragments_when_the_are_set_as_allowed_fragments()
+    public function it_can_retrieve_only_shareable_fragments_when_they_are_allowed_fragments()
     {
         $this->setupAndCreateHero(ArticlePage::create());
 

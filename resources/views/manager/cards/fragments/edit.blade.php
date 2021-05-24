@@ -48,99 +48,75 @@
             <div data-vue-fields>
                 @adminCan('fragment-delete', $model)
                     <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
-                        Verwijderen
+                        @if($model->fragmentModel()->isShared())
+                            Verwijder op deze pagina
+                        @else
+                            Verwijder
+                        @endif
+
                     </a>
                 @endAdminCan
             </div>
         </div>
 
-        <div class="space-y-6">
-            <h4>Delen</h4>
-
-            <button
-                data-submit-form="copyFragment{{ $model->modelReference()->get() }}"
-                class="btn btn-info-outline"
-                type="submit"
-                form="copyFragment{{ $model->modelReference()->get() }}"
-            >
-                Kopieer
-            </button>
-
-            <ul>
-                @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
-                    @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
-
-                    <li>
-                        wordt ook gebruikt door
-                        <a
-                            class="underline link link-primary"
-                            href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
-                        >
-                            {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-
-            @if($model->fragmentModel()->isShared())
-                <p class="text-grey-700">
-                    Dit blok wordt gedeeld en kan worden geselecteerd door alle pagina's.
-                    Het niet langer deelbaar maken heeft enkel effect voor nieuwe pagina's.
-                    Voor de huidige pagina's blijft dit blok gedeeld.
-                </p>
-
-                <button
-                        data-submit-form="unshareFragment{{ $model->modelReference()->get() }}"
-                        class="btn btn-info-outline"
-                        type="submit"
-                        form="unshareFragment{{ $model->modelReference()->get() }}"
-                >
-                    Niet langer deelbaar maken voor toekomstige pagina's
-                </button>
-            @else
-                <p class="text-grey-700">
-                    Maak deze blok selecteerbaar op alle pagina's.
-                    Aanpassingen aan de inhoud worden op alle pagina's toegepast.
-                </p>
-
-                <button
-                        data-submit-form="shareFragment{{ $model->modelReference()->get() }}"
-                        class="btn btn-info-outline"
-                        type="submit"
-                        form="shareFragment{{ $model->modelReference()->get() }}"
-                >
-                    Deelbaar maken voor toekomstige pagina's
-                </button>
-            @endif
-        </div>
-
     </div>
 </form>
+
+@if($model->fragmentModel()->isShared())
+    <div class="bg-orange-50 p-4 p-4 text-sm text-grey-700 mb-6 mt-8">
+        <span class="text-orange-500 font-bold mb-4">Gedeeld fragment</span>
+        <p class="text-sm">
+            Aanpassingen zijn van toepassing op alle pagina's. Dit gedeelde fragment komt ook voor op:
+
+            @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
+                @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
+                <a
+                        class="underline link link-primary"
+                        href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
+                >
+                    {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                </a>@if(!$loop->last), @endif
+            @endforeach
+        </p>
+
+        <button
+                class="btn mt-4 text-sm"
+                type="submit"
+                form="detachSharedFragment{{ $model->modelReference()->get() }}"
+        >
+            Bewerk voortaan als apart fragment op deze pagina
+        </button>
+    </div>
+
+@else
+    <div class="bg-blue-50 p-4 p-4 text-sm text-grey-700 mb-6 mt-8">
+        <button
+                data-submit-form="copyFragment{{ $model->modelReference()->get() }}"
+                class="btn"
+                type="submit"
+                form="copyFragment{{ $model->modelReference()->get() }}"
+        >
+            Kopieer op deze pagina
+        </button>
+    </div>
+@endif
 
 <div data-vue-fields>
     @include('chief::manager._transitions.modals.delete-fragment-modal')
 </div>
 
 <form
-        id="shareFragment{{ $model->modelReference()->get() }}"
-        method="POST"
-        action="{{ $manager->route('fragment-share', $model) }}"
->
-    @csrf
-</form>
-
-<form
-        id="unshareFragment{{ $model->modelReference()->get() }}"
-        method="POST"
-        action="{{ $manager->route('fragment-unshare', $model) }}"
->
-    @csrf
-</form>
-
-<form
         id="copyFragment{{ $model->modelReference()->get() }}"
         method="POST"
         action="{{ $manager->route('fragment-copy', $owner, $model) }}"
+>
+    @csrf
+</form>
+
+<form
+        id="detachSharedFragment{{ $model->modelReference()->get() }}"
+        method="POST"
+        action="{{ $manager->route('fragment-detach-shared', $owner, $model) }}"
 >
     @csrf
 </form>

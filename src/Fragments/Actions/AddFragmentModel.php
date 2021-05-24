@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 
@@ -33,6 +34,8 @@ final class AddFragmentModel
         $context->fragments()->attach($fragmentModel->id);
 
         $this->sortModels->handleFragments($owner, $indices);
+
+        event(new FragmentAdded($fragmentModel->id, $context->id));
     }
 
     /**

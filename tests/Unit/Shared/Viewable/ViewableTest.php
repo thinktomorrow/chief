@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Viewable;
 
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundView;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Viewless;
 
 class ViewableTest extends ChiefTestCase
@@ -31,8 +30,7 @@ class ViewableTest extends ChiefTestCase
     /** @test */
     public function it_can_render_a_page_specific_fragment_view()
     {
-        $this->setupAndCreateArticle();
-        $owner = ArticlePageWithBaseSegments::create();
+        $owner = $this->setupAndCreateArticleWithBaseSegments();
         $this->setupAndCreateQuote($owner);
 
         $this->assertEquals("THIS IS ARTICLE PAGE VIEW\nTHIS IS ARTICLE SPECIFIC QUOTE FRAGMENT\n", $owner->renderView());

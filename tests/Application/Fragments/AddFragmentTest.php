@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -31,6 +33,16 @@ class AddFragmentTest extends ChiefTestCase
     }
 
     /** @test */
+    public function adding_a_fragment_emits_event()
+    {
+        Event::fake();
+
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', ArticlePage::create(), $this->fragment));
+
+        Event::assertDispatched(FragmentAdded::class);
+    }
+
+    /** @test */
     public function a_page_can_add_an_existing_fragment_with_a_given_order()
     {
         $owner2 = ArticlePage::create();
@@ -46,8 +58,6 @@ class AddFragmentTest extends ChiefTestCase
     /** @test */
     public function a_nested_fragment_can_add_an_existing_fragment()
     {
-        $this->disableExceptionHandling();
-
         $fragment = $this->createAsFragment(ArticlePage::create(), $this->owner);
 
         $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $this->fragment, $fragment))->assertStatus(201);

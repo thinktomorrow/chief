@@ -106,7 +106,6 @@ class DuplicateFragmentTest extends ChiefTestCase
         $newOwner = ArticlePage::create();
 
         $nestedFragment = $this->createAsFragment(ArticlePage::create(), $quote->fragmentModel());
-        $this->asAdmin()->post($this->manager($quote)->route('fragment-share', $nestedFragment));
 
         $this->asAdmin()->post($this->manager($quote)->route('fragment-copy', $newOwner, $quote));
 

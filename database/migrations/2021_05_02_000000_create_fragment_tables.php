@@ -19,7 +19,7 @@ class CreateFragmentTables extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->string('model_reference');
             $table->json('data')->nullable();
-            $table->boolean('shared')->default(0);
+            $table->json('meta')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

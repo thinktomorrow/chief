@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
+use Thinktomorrow\Chief\Fragments\Actions\DetachSharedFragment;
 use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModelFromContext;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
@@ -31,9 +32,6 @@ trait FragmentAssistant
             ManagedRoute::put('fragment-update', 'fragment/{fragment_id}/update'),
             ManagedRoute::post('fragment-status', 'fragment/{fragment_id}/status'),
 
-            ManagedRoute::post('fragment-share', 'fragment/{fragmentmodel_id}/share'),
-            ManagedRoute::post('fragment-unshare', 'fragment/{fragmentmodel_id}/unshare'),
-
             ManagedRoute::get('fragment-create', 'fragment/{fragmentowner_type}/{fragmentowner_id}/create'),
             ManagedRoute::post('fragment-store', 'fragment/{fragmentowner_type}/{fragmentowner_id}'),
 
@@ -41,6 +39,7 @@ trait FragmentAssistant
 
             ManagedRoute::post('fragment-add', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/add'),
             ManagedRoute::post('fragment-copy', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/copy'),
+            ManagedRoute::post('fragment-detach-shared', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/detach-shared'),
             ManagedRoute::delete('fragment-delete', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/remove'),
 
             // Nested routes are not used in the views, but only provided for the assistant to be able to deal with nested fragments.
@@ -49,6 +48,7 @@ trait FragmentAssistant
             ManagedRoute::get('nested-fragment-edit', 'nestedfragment/{fragmentowner_model_id}/{fragment_id}/edit'),
             ManagedRoute::post('nested-fragment-add', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/add'),
             ManagedRoute::post('nested-fragment-copy', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/copy'),
+            ManagedRoute::post('nested-fragment-detach-shared', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/detach-shared'),
             ManagedRoute::delete('nested-fragment-delete', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/remove'),
         ];
     }
@@ -64,8 +64,7 @@ trait FragmentAssistant
             'fragment-status',
             'fragment-add',
             'fragment-copy',
-            'fragment-share',
-            'fragment-unshare',
+            'fragment-detach-shared',
             'fragment-delete',
         ])) {
             return null;
@@ -74,13 +73,13 @@ trait FragmentAssistant
         $modelKey = $this->managedModelClass()::managedModelKey();
 
         // model argument is owner for create endpoints
-        if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-delete'])) {
+        if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-detach-shared', 'fragment-delete'])) {
             if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for ' . $action . ' requires a FragmentsOwner Model as second argument.');
             }
 
             // Some fragment edit/update actions have second argument as the fragmentable
-            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-delete']) && $parameters[0] instanceof Fragmentable) {
+            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-detach-shared', 'fragment-delete']) && $parameters[0] instanceof Fragmentable) {
                 $parameters[0] = $parameters[0]->fragmentModel()->id;
             }
 
@@ -114,8 +113,7 @@ trait FragmentAssistant
             'fragment-create',
             'fragment-store',
             'fragment-status',
-            'fragment-share',
-            'fragment-unshare',
+            'fragment-detach-shared',
             'fragment-delete',
         ]);
     }
@@ -241,6 +239,32 @@ trait FragmentAssistant
         ], 201);
     }
 
+    public function fragmentDetachShared(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
+    {
+        $this->guard('fragment-store');
+
+        return $this->handleFragmentDetachShared($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0));
+    }
+
+    public function nestedFragmentDetachShared(Request $request, $fragmentOwnerModelId, $fragmentModelId)
+    {
+        $this->guard('fragment-store');
+
+        return $this->handleFragmentDetachShared($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0));
+    }
+
+    private function handleFragmentDetachShared(Model $ownerModel, int $fragmentModelId, int $order)
+    {
+        $fragmentable = $this->fragmentRepository->find($fragmentModelId);
+
+        app(DetachSharedFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
+
+        return response()->json([
+            'message' => 'fragment ['.$fragmentModelId.'] detached as shared and now available as isolated fragment',
+            'data' => [],
+        ], 201);
+    }
+
     public function fragmentDelete(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
@@ -260,7 +284,7 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(RemoveFragmentModelFromContext::class)->handle($ownerModel, $fragmentable->fragmentModel(), );
+            app(RemoveFragmentModelFromContext::class)->handle($ownerModel, $fragmentable->fragmentModel());
         } catch (FragmentAlreadyRemoved $e) {
             return response()->json([
                 'message' => 'fragment ['.$fragmentModelId.'] is already removed.',
@@ -317,34 +341,6 @@ trait FragmentAssistant
             'message' => 'fragment updated',
             'data' => [],
         ], 200);
-    }
-
-    public function fragmentShare(Request $request, $fragmentId)
-    {
-        $this->guard('fragment-update');
-
-        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
-
-        $fragmentable->fragmentModel()->update(['shared' => 1]);
-
-        return response()->json([
-            'message' => 'fragment is now shared',
-            'data' => [],
-        ]);
-    }
-
-    public function fragmentUnshare(Request $request, $fragmentId)
-    {
-        $this->guard('fragment-update');
-
-        $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
-
-        $fragmentable->fragmentModel()->update(['shared' => 0]);
-
-        return response()->json([
-            'message' => 'fragment is no longer shared.',
-            'data' => [],
-        ]);
     }
 
     public function fragmentStatus(Request $request, $fragmentId)

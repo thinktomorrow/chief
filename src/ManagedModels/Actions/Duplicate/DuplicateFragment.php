@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 
 class DuplicateFragment
 {
@@ -35,14 +36,14 @@ class DuplicateFragment
      * @param int $level
      * @throws \Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded
      */
-    public function handle(Model $targetModel, FragmentModel $fragment, int $index, $level = 0): void
+    public function handle(Model $targetModel, FragmentModel $fragment, int $index, $forceDuplicateSharedFragment = false, $level = 0): void
     {
         if (! $contextModel = ContextModel::ownedBy($targetModel)) {
             $contextModel = ContextModel::createForOwner($targetModel);
         }
 
         // If it's a shareable fragment, we'll use the original
-        if ($fragment->isShared() || ($level > 0 && ! $fragment->refersToStaticObject())) {
+        if (! $forceDuplicateSharedFragment && ($fragment->isShared() || ($level > 0 && ! $fragment->refersToStaticObject()))) {
             $this->addFragmentModel->handle($targetModel, $fragment, $index);
 
             return;
@@ -68,9 +69,12 @@ class DuplicateFragment
 //            $copiedFragment->assetRelation()->attach($asset, ['type' => $asset->pivot->type, 'locale' => $asset->pivot->locale, 'order' => $asset->pivot->order]);
 //        }
 
+        event(new FragmentDuplicated($copiedFragment->id, $contextModel->id));
+
         // Handle nested fragments
+
         foreach ($this->fragmentRepository->getByOwner($fragment) as $i => $nestedFragment) {
-            $this->handle($copiedFragment, $nestedFragment->fragmentModel(), $i, ++$level);
+            $this->handle($copiedFragment, $nestedFragment->fragmentModel(), $i, false, ++$level);
         }
     }
 }

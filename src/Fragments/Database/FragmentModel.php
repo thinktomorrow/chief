@@ -32,17 +32,12 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     public $incrementing = false;
 
     // Force integer when query results come back (by default id is a string)
-    protected $casts = [ 'id' => 'integer' ];
+    protected $casts = [ 'id' => 'integer' , 'meta' => 'array' ];
 
     public $dynamicKeys = ['*'];
     public $dynamicKeysBlacklist = [
-        'id', 'model_reference', 'shared', 'created_at', 'updated_at',
+        'id', 'model_reference', 'meta', 'created_at', 'updated_at',
     ];
-
-    public function isShared(): bool
-    {
-        return ! ! $this->shared;
-    }
 
     public static function managedModelKey(): string
     {
@@ -83,5 +78,28 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     public function refersToDynamicModel(): bool
     {
         return ! $this->refersToStaticObject();
+    }
+
+    public function isShared(): bool
+    {
+        return (bool) $this->getMeta('shared');
+    }
+
+    public function setMeta(string $key, $value): void
+    {
+        if (! $this->meta) {
+            $this->meta = [];
+        }
+
+        $this->meta = array_merge($this->meta, [$key => $value]);
+    }
+
+    private function getMeta(string $key)
+    {
+        if (! $this->meta || ! array_key_exists($key, $this->meta)) {
+            return false;
+        }
+
+        return $this->meta[$key];
     }
 }

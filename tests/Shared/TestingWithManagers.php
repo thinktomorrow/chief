@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -29,6 +30,16 @@ trait TestingWithManagers
         }
 
         return ArticlePage::create($values);
+    }
+
+    protected function setupAndCreateArticleWithBaseSegments(array $values = [], bool $withSetup = true): ArticlePage
+    {
+        if ($withSetup) {
+            ArticlePageWithBaseSegments::migrateUp();
+            chiefRegister()->model(ArticlePageWithBaseSegments::class, PageManager::class);
+        }
+
+        return ArticlePageWithBaseSegments::create($values);
     }
 
     protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true): Quote

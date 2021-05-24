@@ -17,6 +17,10 @@
                 @if($model->fragmentModel()->isOffline())
                     <span class="text-sm label label-error">Offline</span>
                 @endif
+
+                @if($model->fragmentModel()->isShared())
+                    <span class="text-sm label label-warning">Gedeeld fragment</span>
+                @endif
             </div>
 
             @adminCan('fragment-edit')
