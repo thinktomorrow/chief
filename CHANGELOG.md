@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## TODO: seds
+- change statefulcontract to HasPageState.
 - ✅ refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
 - ✅ migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - ✅ nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
@@ -13,7 +14,7 @@ principles.
 - reloadPHP.sh steeds nodig?
 - SEO tracking en events mogelijk maken in chief
 - SEO title en description metadata rendering
-  
+
 - bestaande toevoegen
 - sortering bij bestaande toevoegen nog te doen
 - shared favorite UI

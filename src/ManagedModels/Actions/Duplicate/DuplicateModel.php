@@ -9,16 +9,21 @@ class DuplicateModel
 {
     public function handle(Model $model): Model
     {
-        // Otherwise do a full copy of the fragment instead
         $copiedModel = $model->replicate();
         $copiedModel->id = null;
+
+        $copiedModel->created_at = now();
+        $copiedModel->updated_at = now();
         $copiedModel->save();
 
-        return $copiedModel;
+        foreach ($model->assetRelation()->get() as $asset) {
+            $copiedModel->assetRelation()->attach($asset, [
+                'type' => $asset->pivot->type,
+                'locale' => $asset->pivot->locale,
+                'order' => $asset->pivot->order,
+            ]);
+        }
 
-        // TODO: Assets
-//        foreach ($model->assets() as $asset) {
-//            $copiedFragment->assetRelation()->attach($asset, ['type' => $asset->pivot->type, 'locale' => $asset->pivot->locale, 'order' => $asset->pivot->order]);
-//        }
+        return $copiedModel;
     }
 }

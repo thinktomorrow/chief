@@ -1,0 +1,37 @@
+<?php
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
+
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+
+class DuplicatePage
+{
+    /** @var DuplicateContext */
+    private DuplicateContext $duplicateContext;
+    /** @var DuplicateModel */
+    private DuplicateModel $duplicateModel;
+
+    public function __construct(DuplicateModel $duplicateModel, DuplicateContext $duplicateContext)
+    {
+        $this->duplicateContext = $duplicateContext;
+        $this->duplicateModel = $duplicateModel;
+    }
+
+    public function handle(Model $model): Model
+    {
+        $copiedModel = $this->duplicateModel->handle($model);
+
+        // TODO: check for HasPageState contract
+        if ($copiedModel instanceof StatefulContract) {
+            $copiedModel->setPageState(PageState::DRAFT);
+            $copiedModel->save();
+        }
+
+        $this->duplicateContext->handle($model, $copiedModel);
+
+        return $copiedModel;
+    }
+}

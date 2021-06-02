@@ -196,9 +196,11 @@ trait CrudAssistant
 
         $this->guard('update', $model);
 
-        $this->fieldValidator()->handle(Fields::make($model->fields()), $request->all());
+        $fields = Fields::make($model->fields());
 
-        $model->saveFields(Fields::make($model->fields()), $request->all(), $request->allFiles());
+        $this->fieldValidator()->handle($fields, $request->all());
+
+        $model->saveFields($fields, $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');

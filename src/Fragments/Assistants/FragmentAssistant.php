@@ -217,21 +217,21 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0), (true == $request->input('hardcopy')));
     }
 
     public function nestedFragmentCopy(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0), (true == $request->input('hardcopy')));
     }
 
-    private function handleFragmentCopy(Model $ownerModel, int $fragmentModelId, int $order)
+    private function handleFragmentCopy(Model $ownerModel, int $fragmentModelId, int $order, $hardCopy = false)
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
-        app(DuplicateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
+        app(DuplicateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order, $hardCopy);
 
         return response()->json([
             'message' => 'fragment ['.$fragmentModelId.'] added as copy',

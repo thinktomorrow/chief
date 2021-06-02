@@ -5,11 +5,11 @@ namespace __STUB_NAMESPACE__;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
+use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\ManagedModels\Fields\Presets\FieldPresets;
 
-class __STUB_CLASSNAME__ extends Model implements Page
+class __STUB_CLASSNAME__ extends Model implements PageContract
 {
     use PageDefaults;
 
@@ -17,9 +17,9 @@ class __STUB_CLASSNAME__ extends Model implements Page
 
     public function fields(): iterable
     {
-            yield InputField::make('title')->locales()->editAsPageTitle();
-            yield FieldPresets::seo();
-            __STUB_FIELDS__
+        yield InputField::make('title')->locales()->editAsPageTitle();
+        yield FieldPresets::seo();
+        __STUB_FIELDS__
     }
 
     public function allowedFragments(): array

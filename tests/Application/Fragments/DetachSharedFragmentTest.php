@@ -27,7 +27,7 @@ class DetachSharedFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function unsharing_a_fragment()
+    public function detach_a_shared_fragment()
     {
         $this->disableExceptionHandling();
         // Assert it is a shared fragment
@@ -46,7 +46,7 @@ class DetachSharedFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function a_detached_fragment_is_no_langer_considered_shared_when_its_only_used_by_one_model()
+    public function a_detached_fragment_is_no_longer_considered_shared_when_its_only_used_by_one_model()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-detach-shared', $this->owner2, $this->fragment));
 

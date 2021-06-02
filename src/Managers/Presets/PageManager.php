@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\DuplicateAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\LinkAssistant;
@@ -31,6 +32,7 @@ final class PageManager implements Manager
     use ArchiveAssistant;
     use PublishAssistant;
     use SortAssistant;
+    use DuplicateAssistant;
 
     use SlimImageUploadAssistant;
     use FileUploadAssistant;

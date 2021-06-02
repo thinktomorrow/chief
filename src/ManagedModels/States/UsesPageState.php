@@ -10,6 +10,11 @@ trait UsesPageState
         return (string) $this->stateOf(PageState::KEY);
     }
 
+    public function setPageState($state)
+    {
+        $this->{PageState::KEY} = $state;
+    }
+
     public function stateOf(string $key)
     {
         return $this->$key;
