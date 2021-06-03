@@ -22,18 +22,6 @@ return [
         'nl',
     ],
 
-    /**
-     * Domain settings.
-     *
-     * Here you should set your primary location for your models
-     * This is used in a couple of places such as the generator tools. Make
-     * sure to set in your composer.json as a PSR-4 autoloaded namespace.
-     */
-    'domain'      => [
-        'namespace' => 'Chief\\',
-        'path'      => 'src/',
-    ],
-
     'route' => [
         /**
          * By default Chief will add the pages.show routing to your app. Since this is a catch-all route, it will be loaded last.
@@ -68,44 +56,10 @@ return [
     ],
 
     /**
-     * The Viewable::viewPath() method gives the view path for that specific model.
-     * By default, we provide some sensible defaults for pages, modules and sets.
-     * Here you define the relative base view path for these resp. models.
-     */
-    'base-view-paths' => [
-        'pages'   => 'pages',
-        'modules' => 'modules',
-        'sets'    => 'sets',
-    ],
-
-    /**
-     * Here we define which models are available as children.
-     *
-     * This reflects itself in the select options of the page builder. Make note that this has no effect on already
-     * created relations, only new ones. After changing this value, make sure you flush the cached relations.
-     */
-    'relations'   => [
-        'children' => [
-            // \Thinktomorrow\Chief\Pages\Page::class,
-        ],
-    ],
-
-    /**
      * Widgets that will be shown on the dashboard
      */
     'widgets' => [
 
-    ],
-
-    /**
-     * Custom query sets.
-     */
-    'sets' => [
-//         'singles'   => [
-//             'action'     => DummyPageSetRepository::class.'@all',
-//             'parameters' => [2],
-//             'label'      => 'algemene paginas'
-//         ],
     ],
 
     /**

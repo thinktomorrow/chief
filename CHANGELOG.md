@@ -2,8 +2,11 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## TODO: seds
+## TODO:
 - change statefulcontract to HasPageState.
+- remove dynamic fragment concept altogether. Fragments will always be considered static.
+    - simplify fragmentassistant
+    - rename staticFragment -> fragment
 - ✅ refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
 - ✅ migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - ✅ nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.

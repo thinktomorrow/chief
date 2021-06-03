@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace __STUB_NAMESPACE__;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
@@ -20,6 +21,12 @@ class __STUB_CLASSNAME__ extends Model implements PageContract
         yield InputField::make('title')->locales()->editAsPageTitle();
         yield FieldPresets::seo();
         __STUB_FIELDS__
+    }
+
+    public function adminConfig(): AdminConfig
+    {
+        return AdminConfig::make()
+            ->defaults($this);
     }
 
     public function allowedFragments(): array
