@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Register;
@@ -20,62 +21,22 @@ class RenderingFragmentsTest extends ChiefTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        OwnerStub::migrateUp();
-        FragmentableStub::migrateUp();
-
-        $this->fragmentRepo = app(FragmentRepository::class);
     }
 
     /** @test */
     public function fragments_can_be_rendered()
     {
-        $owner = OwnerStub::create();
-        ManagerFactory::make()
-            ->withAssistants([FragmentAssistant::class])
-            ->withModel($owner)
-            ->create();
+        $owner = $this->setupAndCreateArticle();
+        $this->setupAndCreateSnippet($owner, 1);
+        $this->setupAndCreateSnippet($owner, 2);
 
-        $manager = ManagerFactory::make()
-            ->withAssistants([FragmentAssistant::class])
-            ->withModel(FragmentableStub::class)
-            ->create();
-
-        $this->asAdmin()->post($manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
-                'order' => 1,
-            ]);
-
-        $this->asAdmin()->post($manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
-                'order' => 2,
-            ]);
-
-        $this->assertRenderedFragments($owner, 'fragment-stub-1 fragment-stub-2 ');
-    }
-
-    /** @test */
-    public function a_model_can_render_a_static_fragmentable()
-    {
-        $owner = OwnerStub::create();
-        ManagerFactory::make()
-            ->withAssistants([FragmentAssistant::class])
-            ->withModel($owner)
-            ->create();
-
-        app(Register::class)->staticFragment(SnippetStub::class);
-
-        $manager = app(Registry::class)->manager(SnippetStub::managedModelKey());
-
-        $this->asAdmin()->post($manager->route('fragment-store', $owner, SnippetStub::managedModelKey()), [
-                'order' => 1,
-            ]);
-
-        $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW\n");
+        $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW\nTHIS IS SNIPPET STUB VIEW\n" );
     }
 
     /** @test */
     public function no_fragments_render_an_empty_string()
     {
-        $owner = OwnerStub::create();
+        $owner = $this->setupAndCreateArticle();
 
         $this->assertRenderedFragments($owner, '');
     }

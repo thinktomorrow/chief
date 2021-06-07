@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class UpdateFragmentTest extends ChiefTestCase
 {
@@ -18,9 +19,9 @@ class UpdateFragmentTest extends ChiefTestCase
         parent::setUp();
 
         $this->owner = $this->setupAndCreateArticle();
-        $this->setupAndCreateQuote($this->owner);
+        $this->setupAndCreateSnippet($this->owner);
 
-        $this->fragmentManager = app(Registry::class)->manager(Quote::managedModelKey());
+        $this->fragmentManager = app(Registry::class)->manager(SnippetStub::managedModelKey());
     }
 
     /** @test */
@@ -30,23 +31,21 @@ class UpdateFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->put($this->fragmentManager->route('fragment-update', $model), [
             'title' => 'new-title',
-            'custom' => 'custom-value',
             'trans' => [
                 'nl' => ['title_trans' => 'title_trans nl value'],
                 'en' => ['title_trans' => 'title_trans en value'],
             ],
         ]);
 
-        $quote = app(FragmentRepository::class)->getByOwner($this->owner)->first();
-        $this->assertInstanceOf(Quote::class, $quote);
-        $this->assertEquals('new-title', $quote->title);
-        $this->assertEquals('custom-value', $quote->custom);
+        $snippet = app(FragmentRepository::class)->getByOwner($this->owner)->first();
+        $this->assertInstanceOf(SnippetStub::class, $snippet);
+        $this->assertEquals('new-title', $snippet->fragmentModel()->title);
 
         app()->setLocale('nl');
-        $this->assertEquals('title_trans nl value', $quote->title_trans);
+        $this->assertEquals('title_trans nl value', $snippet->fragmentModel()->title_trans);
 
         app()->setLocale('en');
-        $this->assertEquals('title_trans en value', $quote->title_trans);
+        $this->assertEquals('title_trans en value', $snippet->fragmentModel()->title_trans);
     }
 
     /** @test */
@@ -67,7 +66,7 @@ class UpdateFragmentTest extends ChiefTestCase
 
         $response->assertStatus(200);
 
-        $quote = app(FragmentRepository::class)->getByOwner($this->owner)->first();
-        $this->assertEquals('tt-favicon.png', $quote->asset('thumb')->filename());
+        $snippet = app(FragmentRepository::class)->getByOwner($this->owner)->first();
+        $this->assertEquals('tt-favicon.png', $snippet->fragmentModel()->asset('thumb')->filename());
     }
 }

@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
-use Thinktomorrow\Chief\Fragments\Assistants\StaticFragmentableDefaults;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 
 class Hero implements Fragmentable
 {
-    use StaticFragmentableDefaults;
+    use FragmentableDefaults;
 
     public function renderAdminFragment($owner, $loop): string
     {

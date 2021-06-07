@@ -28,7 +28,7 @@ class DuplicateContextTest extends ChiefTestCase
         ArticlePage::migrateUp();
 
         app(Register::class)->model(ArticlePage::class, PageManager::class);
-        app(Register::class)->staticFragment(SnippetStub::class);
+        app(Register::class)->fragment(SnippetStub::class);
 
         $fragmentManager = app(Registry::class)->manager(ArticlePage::managedModelKey());
         $staticFragmentManager = app(Registry::class)->manager(SnippetStub::managedModelKey());

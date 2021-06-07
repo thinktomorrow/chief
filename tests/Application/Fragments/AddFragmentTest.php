@@ -58,7 +58,7 @@ class AddFragmentTest extends ChiefTestCase
     /** @test */
     public function a_nested_fragment_can_add_an_existing_fragment()
     {
-        $fragment = $this->createAsFragment(ArticlePage::create(), $this->owner);
+        $fragment = $this->createAsFragment(Quote::create(), $this->owner);
 
         $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $this->fragment, $fragment))->assertStatus(201);
 

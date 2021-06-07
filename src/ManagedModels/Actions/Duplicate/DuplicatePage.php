@@ -9,9 +9,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class DuplicatePage
 {
-    /** @var DuplicateContext */
     private DuplicateContext $duplicateContext;
-    /** @var DuplicateModel */
     private DuplicateModel $duplicateModel;
 
     public function __construct(DuplicateModel $duplicateModel, DuplicateContext $duplicateContext)

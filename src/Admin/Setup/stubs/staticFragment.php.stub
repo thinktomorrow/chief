@@ -5,11 +5,11 @@ namespace __STUB_NAMESPACE__;
 
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\Fragments\Assistants\StaticFragmentableDefaults;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 
 class __STUB_CLASSNAME__ implements Fragmentable
 {
-    use StaticFragmentableDefaults;
+    use FragmentableDefaults;
 
     private $baseViewPath = 'fragments';
 

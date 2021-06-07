@@ -175,9 +175,9 @@ trait FragmentAssistant
 
     private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): void
     {
-        $fragmentable->saveFields(Fields::make($fragmentable->fields())->notTagged('edit'), $request->all(), $request->allFiles());
-
         $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
+
+        $fragmentable->fragmentModel()->saveFields(Fields::make($fragmentable->fields())->notTagged('edit'), $request->all(), $request->allFiles());
     }
 
     public function fragmentAdd(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
@@ -323,7 +323,7 @@ trait FragmentAssistant
             'manager' => $this,
             'owner' => $ownerModel,
             'model' => $fragmentable,
-            'fields' => Fields::make($fragmentable->fields())->model($this->fragmentModel($fragmentable)),
+            'fields' => Fields::make($fragmentable->fields())->model($fragmentable->fragmentModel()),
         ]);
     }
 
@@ -335,7 +335,7 @@ trait FragmentAssistant
 
         $this->fieldValidator()->handle(Fields::make($fragmentable->fields()), $request->all());
 
-        $this->fragmentModel($fragmentable)->saveFields(Fields::make($fragmentable->fields()), $request->all(), $request->allFiles());
+        $fragmentable->fragmentModel()->saveFields(Fields::make($fragmentable->fields()), $request->all(), $request->allFiles());
 
         return response()->json([
             'message' => 'fragment updated',
@@ -367,17 +367,6 @@ trait FragmentAssistant
         $ownerClass = $this->registry->modelClass($ownerKey);
 
         return $ownerClass::withoutGlobalScopes()->find($ownerId);
-    }
-
-    /**
-     * Which fragment model will the fields be saved to? This can be overwritten so that
-     * also static fragments can store their values on the fragmentModel.
-     *
-     * @return \Thinktomorrow\Chief\Fragments\Fragmentable
-     */
-    private function fragmentModel(Fragmentable $fragmentable): \Thinktomorrow\Chief\Fragments\Fragmentable
-    {
-        return $fragmentable;
     }
 
     private function fragmentable(): Fragmentable

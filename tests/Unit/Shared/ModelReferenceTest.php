@@ -35,12 +35,12 @@ class ModelReferenceTest extends ChiefTestCase
     /** @test */
     public function it_can_create_collection_id_from_string()
     {
-        $acts_as_collection = ArticlePage::create(['title' => 'new title']);
+        $model = ArticlePage::create(['title' => 'new title']);
 
-        $this->assertInstanceOf(ModelReference::class, $acts_as_collection->modelReference());
+        $this->assertInstanceOf(ModelReference::class, $model->modelReference());
 
-        $id = ModelReference::fromString(ArticlePage::class.'@'.$acts_as_collection->id);
-        $this->assertTrue($id->equals($acts_as_collection->modelReference()));
+        $modelReference = ModelReference::fromString(ArticlePage::class.'@'.$model->id);
+        $this->assertTrue($modelReference->equals($model->modelReference()));
     }
 
     /** @test */

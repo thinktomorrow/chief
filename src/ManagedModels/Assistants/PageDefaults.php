@@ -12,10 +12,12 @@ use Thinktomorrow\Chief\ManagedModels\States\UsesPageState;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 trait PageDefaults
 {
-    use FragmentableDefaults;
+    use ReferableModelDefault;
+    use ManagedModelDefaults;
     use Viewable;
     use VisitableDefaults;
     use OwningFragments;

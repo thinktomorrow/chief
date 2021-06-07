@@ -31,9 +31,9 @@ class ViewableTest extends ChiefTestCase
     public function it_can_render_a_page_specific_fragment_view()
     {
         $owner = $this->setupAndCreateArticleWithBaseSegments();
-        $this->setupAndCreateQuote($owner);
+        $this->setupAndCreateSnippet($owner);
 
-        $this->assertEquals("THIS IS ARTICLE PAGE VIEW\nTHIS IS ARTICLE SPECIFIC QUOTE FRAGMENT\n", $owner->renderView());
+        $this->assertEquals("THIS IS ARTICLE PAGE VIEW\nTHIS IS ARTICLE SPECIFIC SNIPPET STUB VIEW\n", $owner->renderView());
     }
 
     /** @test */

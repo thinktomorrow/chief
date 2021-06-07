@@ -6,7 +6,8 @@ principles.
 - change statefulcontract to HasPageState.
 - remove dynamic fragment concept altogether. Fragments will always be considered static.
     - simplify fragmentassistant
-    - rename staticFragment -> fragment
+    - v rename staticFragment -> fragment
+    - remove FragmentManager preset (staticFragmentmanager renamed to FragmentManager)
 - ✅ refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
 - ✅ migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - ✅ nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.

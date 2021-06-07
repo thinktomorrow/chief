@@ -42,7 +42,6 @@ class DetachSharedFragmentTest extends ChiefTestCase
 
         $this->assertFalse($detachedFragment->fragmentModel()->isShared());
         $this->assertNotEquals($this->firstFragment($this->owner)->fragmentModel()->id, $detachedFragment->fragmentModel()->id);
-        $this->assertNotEquals($this->firstFragment($this->owner)->fragmentModel()->model_reference, $detachedFragment->fragmentModel()->model_reference);
     }
 
     /** @test */

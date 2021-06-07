@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Register;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\Fragments\StaticFragmentManager;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
@@ -22,9 +22,9 @@ final class Register
         $this->container = $container;
     }
 
-    public function staticFragment(string $fragmentClass, $tags = []): void
+    public function fragment(string $fragmentClass, $tags = []): void
     {
-        $this->register($fragmentClass, $this->container->makeWith(StaticFragmentManager::class, ['managedModelClass' => $fragmentClass]), $tags, );
+        $this->register($fragmentClass, $this->container->makeWith(FragmentManager::class, ['managedModelClass' => $fragmentClass]), $tags, );
     }
 
     public function model(string $modelClass, string $managerClass = PageManager::class, $tags = ['nav']): void

@@ -54,19 +54,19 @@ trait TestingWithManagers
         return $this->createAsFragment($quote, $owner, $order);
     }
 
-    protected function setupAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true): SnippetStub
+    protected function setupAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = []): SnippetStub
     {
         if ($withSetup) {
-            chiefRegister()->staticFragment(SnippetStub::class);
+            chiefRegister()->fragment(SnippetStub::class);
         }
 
-        return $this->createAsFragment(new SnippetStub(), $owner, $order);
+        return $this->createAsFragment(new SnippetStub(), $owner, $order, $values);
     }
 
     protected function setupAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true): Hero
     {
         if ($withSetup) {
-            chiefRegister()->staticFragment(Hero::class);
+            chiefRegister()->fragment(Hero::class);
         }
 
         return $this->createAsFragment(new Hero(), $owner, $order);
@@ -90,9 +90,9 @@ trait TestingWithManagers
         return ArticlePageWithImageValidation::create($values);
     }
 
-    protected function createAsFragment($model, $owner, $order = 0)
+    protected function createAsFragment($model, $owner, $order = 0, array $data = [])
     {
-        return $model->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $model, $order));
+        return $model->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $model, $order, $data));
     }
 
     protected function addFragment($fragment, $owner)

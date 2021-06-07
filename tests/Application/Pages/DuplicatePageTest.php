@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class DuplicatePageTest extends ChiefTestCase
 {
@@ -19,6 +20,7 @@ class DuplicatePageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
         chiefRegister()->model(ArticlePage::class, PageManager::class);
+        chiefRegister()->fragment(SnippetStub::class);
 
         $articlePage = ArticlePage::create([
             'current_state' => PageState::PUBLISHED,
@@ -83,26 +85,28 @@ class DuplicatePageTest extends ChiefTestCase
     /** @test */
     public function context_with_fragments_are_duplicated()
     {
-        // Add fragments
-        $quote = $this->setupAndCreateQuote($this->source, [], 0);
+        $this->disableExceptionHandling();
+        // Add shared and non-shared fragment
         $snippet = $this->setupAndCreateSnippet($this->source, 1);
+        $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
 
-        $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
+        $snippet2 = $this->setupAndCreateSnippet($this->source, 2, false);
+        $response = $this->asAdmin()-> post($this->manager($this->source)->route('duplicate', $this->source));
 
-        $copiedModel = ArticlePage::where('id', '<>', $this->source->id)->first();
+        $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();
 
         $originalFragments = app(FragmentRepository::class)->getByOwner($this->source);
         $fragments = app(FragmentRepository::class)->getByOwner($copiedModel);
 
         $this->assertCount(2, $fragments);
 
-        // Quote is dynamic so is duplicated as 'shared'
-        $this->assertEquals($originalFragments[0]->model_reference, $fragments[0]->model_reference);
-        $this->assertEquals($originalFragments[0]->id, $fragments[0]->id);
+        // First snippet is shared
+        $this->assertEquals($originalFragments[0]->fragmentModel()->model_reference, $fragments[0]->fragmentModel()->model_reference);
+        $this->assertEquals($originalFragments[0]->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
         $this->assertTrue($originalFragments[0]->fragmentModel()->isShared());
         $this->assertTrue($fragments[0]->fragmentModel()->isShared());
 
-        // Snippet is static so is copied
+        // Second Snippet is static so is copied
         $this->assertNotEquals($originalFragments[1]->fragmentModel()->id, $fragments[1]->fragmentModel()->id);
 
         // method on model to allow to duplicate e.g. duplicate(targetModel);

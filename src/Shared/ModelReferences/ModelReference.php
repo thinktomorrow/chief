@@ -14,7 +14,6 @@ final class ModelReference
     private function __construct(string $className, string $id)
     {
         $this->validateClassName($className);
-
         $this->className = $className;
         $this->id = $id;
     }
@@ -107,7 +106,7 @@ final class ModelReference
         return ($this->get() === $modelReferenceString || $this->getShort() === $modelReferenceString);
     }
 
-    public function refersToStaticObject(): bool
+    private function refersToStaticObject(): bool
     {
         return $this->id === "0";
     }
