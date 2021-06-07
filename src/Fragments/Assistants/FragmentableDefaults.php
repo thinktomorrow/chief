@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use DomainException;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 trait FragmentableDefaults

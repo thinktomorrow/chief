@@ -2,16 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\FragmentableStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\OwnerStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 class RenderingFragmentsTest extends ChiefTestCase
 {
@@ -30,7 +22,7 @@ class RenderingFragmentsTest extends ChiefTestCase
         $this->setupAndCreateSnippet($owner, 1);
         $this->setupAndCreateSnippet($owner, 2);
 
-        $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW\nTHIS IS SNIPPET STUB VIEW\n" );
+        $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW\nTHIS IS SNIPPET STUB VIEW\n");
     }
 
     /** @test */

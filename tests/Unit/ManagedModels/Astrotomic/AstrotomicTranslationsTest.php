@@ -29,8 +29,7 @@ class AstrotomicTranslationsTest extends ChiefTestCase
         $this->assertEquals(1, QuoteWithAstrotomicTranslations::count());
 
         $model = QuoteWithAstrotomicTranslations::first();
-@
-        app()->setLocale('nl');
+        @app()->setLocale('nl');
         $this->assertEquals('title_trans nl value', $model->title_trans);
 
         app()->setLocale('en');

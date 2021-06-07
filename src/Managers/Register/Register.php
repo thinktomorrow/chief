@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Managers\Register;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Request\ManagerRequestDispatcher;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
