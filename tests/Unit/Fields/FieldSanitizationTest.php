@@ -2,16 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class FieldSanitizationTest extends ChiefTestCase
 {
     /** @test */
     public function a_field_can_sanitize_its_value()
     {
-        $field = InputField::make('title')->sanitize(function(){
+        $field = InputField::make('title')->sanitize(function () {
             return 'foobar';
         });
 
@@ -58,6 +57,6 @@ class FieldSanitizationTest extends ChiefTestCase
         ]);
 
         $this->assertEquals('new-title-nl', $article->fresh()->title_sanitized_trans);
-        $this->assertEquals('title-sanitized-en', $article->fresh()->dynamic('title_sanitized_trans','en'));
+        $this->assertEquals('title-sanitized-en', $article->fresh()->dynamic('title_sanitized_trans', 'en'));
     }
 }

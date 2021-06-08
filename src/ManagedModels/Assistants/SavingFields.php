@@ -36,7 +36,7 @@ trait SavingFields
 
             if (! $field->isLocalized()) {
                 // Set standard non-localized attribute on the model
-                if(($customSetMethod = $this->detectCustomSetMethod($field))) {
+                if (($customSetMethod = $this->detectCustomSetMethod($field))) {
                     $this->$customSetMethod($field, $input);
                 } else {
                     $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);

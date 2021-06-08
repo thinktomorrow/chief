@@ -71,7 +71,7 @@ abstract class AbstractField
         $this->validation([]);
 
         $this->valueResolver($this->defaultEloquentValueResolver());
-        $this->sanitize(fn($value) => $value);
+        $this->sanitize(fn ($value) => $value);
     }
 
     public function getType(): FieldType
