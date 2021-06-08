@@ -71,6 +71,7 @@ abstract class AbstractField
         $this->validation([]);
 
         $this->valueResolver($this->defaultEloquentValueResolver());
+        $this->sanitize(fn($value) => $value);
     }
 
     public function getType(): FieldType
@@ -282,6 +283,21 @@ abstract class AbstractField
     public function valueResolver(\Closure $fn): Field
     {
         $this->valueResolver = $fn;
+
+        return $this;
+    }
+
+    public function getSanitizedValue($value, array $input = [], ?string $locale = null)
+    {
+        return call_user_func_array($this->sanitizationResolver, [$value, $input, $locale]);
+    }
+
+    /**
+     * @return Field
+     */
+    public function sanitize(\Closure $fn): Field
+    {
+        $this->sanitizationResolver = $fn;
 
         return $this;
     }

@@ -36,19 +36,24 @@ trait SavingFields
 
             if (! $field->isLocalized()) {
                 // Set standard non-localized attribute on the model
-                ($customSetMethod = $this->detectCustomSetMethod($field))
-                    ? $this->$customSetMethod($field, $input)
-                    : $this->{$field->getColumn()} = data_get($input, $field->getKey());
+                if(($customSetMethod = $this->detectCustomSetMethod($field))) {
+                    $this->$customSetMethod($field, $input);
+                } else {
+                    $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
+                    $this->{$field->getColumn()} = $value;
+                }
 
                 continue;
             }
 
             // Dynamic localized values or standard translated
             // For standard translations we set value with the colon notation, e.g. title:en
-            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field) {
+            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field, $input) {
                 if ($key !== $field->getColumn()) {
                     return;
                 }
+
+                $value = $field->getSanitizedValue($value, $input, $locale);
 
                 if ($this->isFieldForDynamicValue($field)) {
                     $this->setDynamic($key, $value, $locale);

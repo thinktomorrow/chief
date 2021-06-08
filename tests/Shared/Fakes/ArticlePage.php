@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
+use parallel\Events\Input;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
@@ -47,6 +49,17 @@ class ArticlePage extends Model implements Page
             ImageField::make('thumb_image')->tag('edit'),
             ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit'),
             ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
+
+            InputField::make('title_sanitized')->sanitize(function($value, array $input){
+                if($value) return $value;
+                if(isset($input['title'])) return Str::slug($input['title']);
+                return null;
+            }),
+            InputField::make('title_sanitized_trans')->locales()->sanitize(function($value, array $input, $locale = null){
+                if($value) return $value;
+                if(isset($input['title'])) return Str::slug($input['title']) . '-' . $locale;
+                return null;
+            }),
         ]);
     }
 
