@@ -80,6 +80,8 @@ trait CrudAssistant
      */
     public function index()
     {
+        $this->guard('index');
+
         $modelClass = $this->managedModelClass();
 
         return view('chief::manager.index', [
