@@ -27,6 +27,10 @@ class AdminToast
         // Remove the locale segment if present - we assume the first segment is the locale
         if (0 === strpos($path, $locale . '/') || $path === $locale) {
             $path = substr($path, strlen($locale . '/'));
+
+            if(!$path) {
+                $path = '/';
+            }
         }
 
         $model = $this->findModelByUrl($path, $locale);
