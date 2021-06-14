@@ -16,7 +16,7 @@ trait OwningFragments
 
     public function ownerModel(): Model
     {
-        return ($this instanceof Fragmentable && $this->isFragment())
+        return ($this instanceof Fragmentable)
             ? $this->fragmentModel()
             : $this;
     }
