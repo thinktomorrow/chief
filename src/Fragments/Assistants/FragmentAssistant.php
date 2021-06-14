@@ -84,7 +84,7 @@ trait FragmentAssistant
             }
 
             // Nested fragments routes
-            if ($model instanceof Fragmentable && $model->isFragment()) {
+            if ($model instanceof Fragmentable) {
                 return route('chief.' . $modelKey . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
             }
 

@@ -42,11 +42,6 @@ trait FragmentableDefaults
         return $this->renderView();
     }
 
-    public function isFragment(): bool
-    {
-        return isset($this->fragmentModel);
-    }
-
     public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable
     {
         $this->fragmentModel = $fragmentModel;
@@ -57,7 +52,7 @@ trait FragmentableDefaults
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
-            throw new DomainException('FragmentModel property on [' . get_class($this) . '] expected to be set, but it\'s not.');
+            return new FragmentModel();
         }
 
         return $this->fragmentModel;
