@@ -3,6 +3,7 @@
 ##########################################
 /database/testing.sqlite
 /database/testing.sqlite-journal
+database/testing.*
 _migration/uploads
 /storage/debugbar
 /storage
