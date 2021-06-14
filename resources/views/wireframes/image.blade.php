@@ -18,5 +18,7 @@
 @unless($slot->isEmpty())
     <div class="{{ $sizeClass }} bg-center bg-no-repeat bg-cover rounded-lg" style="background-image: url('{{ $slot }}');"></div>
 @else
-    <div class="h-32 rounded-lg bg-grey-300"></div>
+    <div class="{{ $sizeClass }} rounded-lg bg-grey-200 flex items-center justify-center">
+        <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>
+    </div>
 @endunless
