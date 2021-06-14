@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use DomainException;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
