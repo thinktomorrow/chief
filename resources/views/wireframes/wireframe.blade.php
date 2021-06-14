@@ -1,3 +1,3 @@
-<div class="p-6 rounded-xl bg-grey-100">
+<div class="p-6 border rounded-xl border-grey-100 bg-grey-50">
     {{ $slot }}
 </div>
