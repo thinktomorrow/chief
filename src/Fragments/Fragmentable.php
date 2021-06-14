@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 interface Fragmentable extends ReferableModel, ManagedModel, ViewableContract
 {
-    public function renderAdminFragment($owner, $loop);
+    public function renderAdminFragment($owner, $loop, $viewData = []);
 
     public function renderFragment($owner, $loop, $viewData = []): string;
 

@@ -39,6 +39,16 @@
 }
 
 .prose-dark {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    label {
+        @apply text-grey-900;
+    }
+
     html,
     body,
     ul,
@@ -52,15 +62,7 @@
     textarea {
         @apply text-grey-700;
     }
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    label {
-        @apply text-grey-900;
-    }
+
     code {
         @apply bg-grey-100 border border-grey-200 rounded;
     }
@@ -74,5 +76,18 @@
 
     a:not(.btn):not(.link) {
         @extend .link, .link-primary;
+    }
+}
+
+.prose-wireframe {
+    @apply text-xs;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6  {
+        @apply text-sm;
     }
 }

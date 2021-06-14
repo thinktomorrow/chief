@@ -52,7 +52,12 @@
     }
 
     .wireframe-content {
-        @apply leading-normal text-grey-700 text-xs line-clamp-6;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 6;
+
+        @apply leading-normal text-grey-700 text-xs;
 
         &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
             @apply font-normal;
@@ -68,9 +73,12 @@
     }
 
     .wireframe-content-sm {
-        @extend .wireframe-content;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
 
-        @apply line-clamp-3;
+        @extend .wireframe-content;
     }
 
     .wireframe-btn {

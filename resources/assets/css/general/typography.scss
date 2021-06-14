@@ -7,12 +7,7 @@
 }
 
 html,
-body,
-p,
-ul,
-ol,
-input,
-textarea {
+body {
     font-size: 15px;
     @extend .font-body;
 }

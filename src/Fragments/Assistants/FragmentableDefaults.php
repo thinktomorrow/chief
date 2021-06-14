@@ -24,9 +24,9 @@ trait FragmentableDefaults
         return ModelReference::fromStatic(static::class);
     }
 
-    public function renderAdminFragment($owner, $loop): string
+    public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
-        return $this->renderFragment($owner, $loop, []);
+        return $this->renderFragment($owner, $loop, $viewData);
     }
 
     public function renderFragment($owner, $loop, $viewData = []): string
