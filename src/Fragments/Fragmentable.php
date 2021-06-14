@@ -14,8 +14,6 @@ interface Fragmentable extends ReferableModel, ManagedModel, ViewableContract
 
     public function renderFragment($owner, $loop, $viewData = []): string;
 
-    public function isFragment(): bool;
-
     public function setFragmentModel(FragmentModel $fragmentModel): self;
 
     public function fragmentModel(): FragmentModel;

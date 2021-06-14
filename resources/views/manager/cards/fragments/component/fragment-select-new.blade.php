@@ -10,6 +10,8 @@
                     href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                 >
                     {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
+
+                    {{ $allowedFragment['model']->renderAdminFragment($owner, $loop) }}
                 </a>
             </div>
         @empty
