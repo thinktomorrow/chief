@@ -54,7 +54,7 @@ module.exports = {
     corePlugins: {
         container: false,
     },
-    plugins: [WarpaintRow, WarpaintContainer, WarpaintGutter, require('@tailwindcss/line-clamp')],
+    plugins: [WarpaintRow, WarpaintContainer, WarpaintGutter],
     variants: {
         extend: {
             scale: ['group-hover'],

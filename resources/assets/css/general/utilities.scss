@@ -38,47 +38,19 @@
     }
 }
 
-/* TODO: safelist class in purgecss */
-/*! purgecss start ignore */
-.wireframe {
-    @apply p-4 rounded-lg bg-grey-50;
+/* Wireframe preview styling for new fragment select view in sidebar */
+.wireframe-preview {
+    .wireframe-preview\:compact-wrapper {
+        @apply relative overflow-hidden h-32;
 
-    .wireframe-container {
-        @apply px-24;
-    }
-
-    .wireframe-title {
-        @apply leading-normal font-semibold text-grey-900 text-xs;
-    }
-
-    .wireframe-content {
-        @apply leading-normal text-grey-700 text-xs line-clamp-6;
-
-        &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-            @apply font-normal;
-        }
-
-        * {
-            @apply leading-normal text-grey-700 text-xs;
-
-            &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-                @apply font-normal;
-            }
+        &:after {
+            content: '';
+            box-shadow: inset 0px -12px 12px -12px theme('colors.grey.900');
+            @apply absolute bottom-0 left-0 right-0 h-4 opacity-25;
         }
     }
 
-    .wireframe-content-sm {
-        @extend .wireframe-content;
-
-        @apply line-clamp-3;
-    }
-
-    .wireframe-btn {
-        @apply bg-grey-200 text-grey-700 font-medium px-2 py-1 rounded text-xs inline-block;
-    }
-
-    .wireframe-image {
-        @apply h-24 bg-center bg-cover rounded-lg bg-grey-300;
+    .wireframe-preview\:compact-container {
+        width: 100% !important;
     }
 }
-/*! purgecss end ignore */

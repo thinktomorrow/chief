@@ -15,7 +15,7 @@ class FragmentableStub implements Fragmentable, FragmentsOwner
     use FragmentableDefaults;
     use OwningFragments;
 
-    public function renderAdminFragment($owner, $loop): string
+    public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
         return '';
     }

@@ -35,7 +35,7 @@
             @endAdminCan
         </div>
 
-        <div class="wireframe">
+        <div>
             {!! $model->renderAdminFragment($owner, $loop) !!}
         </div>
     </div>

@@ -1,5 +1,10 @@
 @if($field->getValue())
-    <div class="prose-editor line-clamp-6">
+    <div class="prose-editor" style="
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 6;
+    ">
         {!! $field->getValue() !!}
     </div>
 @else
