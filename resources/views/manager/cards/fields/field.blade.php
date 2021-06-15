@@ -6,7 +6,7 @@
 >
     @if($field->getDescription())
         <x-slot name="description">
-            <p>{{ $field->getDescription() }}</p>
+            <p>{!! $field->getDescription() !!}</p>
         </x-slot>
     @endif
 
