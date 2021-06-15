@@ -22,9 +22,13 @@ trait AllowsHtmlOptions
 
     private function redactorMapping(array $options): array
     {
-        if(count($this->htmlOptions) < 1) return [];
+        if (count($this->htmlOptions) < 1) {
+            return [];
+        }
 
-        if(isset($options['buttons'], $options['plugins'])) return $options;
+        if (isset($options['buttons'], $options['plugins'])) {
+            return $options;
+        }
 
         // Map the settings to the appropriate format, it's ok when both plugins and
         // buttons have the same values since unknown options will be ignored

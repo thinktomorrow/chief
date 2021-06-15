@@ -29,7 +29,7 @@ class InputField extends AbstractField implements Field
             'maxWidth' => '100%',
             'enterKey' => false,
             'paragraphize' => false, // don't put surrounding p tags on save
-            'toolbarExternal' => '#js-external-editor-toolbar-' . str_replace('.','_',$key),
+            'toolbarExternal' => '#js-external-editor-toolbar-' . str_replace('.', '_', $key),
         ];
 
         return array_merge($defaultInputFieldOptions, $this->redactorMapping($this->htmlOptions));
