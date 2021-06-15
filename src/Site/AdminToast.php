@@ -28,7 +28,7 @@ class AdminToast
         if (0 === strpos($path, $locale . '/') || $path === $locale) {
             $path = substr($path, strlen($locale . '/'));
 
-            if(!$path) {
+            if (! $path) {
                 $path = '/';
             }
         }

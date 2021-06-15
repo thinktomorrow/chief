@@ -28,6 +28,7 @@ principles.
 - code coverage!
 - check performance leaks (blackfire)
 - aanmaak fragment waarbij je direct verwacht ook een eerste nested fragment toe te voegen moet niet direct sluiten maar in edit blijven staan zodat je direct een nested fragment kan adden.
+- BUG: Creëer fragment in nested fragment --> ga terug via sidebar breadcrumbs zonder op te slaan --> creëer een ander fragment in dan het vorige en sla op --> een lege instance van het eerste nested fragment is opgeslagen.
 
 ## BUGS
 - article verwijderd maar context blijft nog. Als ik database reset (en dus ook primary keys) dan wordt bij de nieuwe article ongewenst de oude context aan dit artikel gelinkt.

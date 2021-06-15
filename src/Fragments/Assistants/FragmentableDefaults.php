@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use DomainException;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
@@ -24,9 +23,9 @@ trait FragmentableDefaults
         return ModelReference::fromStatic(static::class);
     }
 
-    public function renderAdminFragment($owner, $loop): string
+    public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
-        return $this->renderFragment($owner, $loop, []);
+        return $this->renderFragment($owner, $loop, $viewData);
     }
 
     public function renderFragment($owner, $loop, $viewData = []): string
