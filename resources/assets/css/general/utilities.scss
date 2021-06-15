@@ -38,71 +38,19 @@
     }
 }
 
-/* TODO: safelist class in purgecss */
-/*! purgecss start ignore */
-.wireframe {
-    @apply p-4 rounded-lg bg-grey-50;
-
-    .wireframe-container {
-        @apply px-24;
-    }
-
-    .wireframe-title {
-        @apply leading-normal font-semibold text-grey-900 text-xs;
-    }
-
-    .wireframe-content {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 6;
-
-        @apply leading-normal text-grey-700 text-xs;
-
-        &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-            @apply font-normal;
-        }
-
-        * {
-            @apply leading-normal text-grey-700 text-xs;
-
-            &:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-                @apply font-normal;
-            }
-        }
-    }
-
-    .wireframe-content-sm {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-
-        @extend .wireframe-content;
-    }
-
-    .wireframe-btn {
-        @apply bg-grey-200 text-grey-700 font-medium px-2 py-1 rounded text-xs inline-block;
-    }
-
-    .wireframe-image {
-        @apply h-24 bg-center bg-cover rounded-lg bg-grey-300;
-    }
-}
-/*! purgecss end ignore */
-
-.wireframe-icon {
-    .wireframe-wrapper {
-        @apply relative overflow-hidden h-28;
+/* Wireframe preview styling for new fragment select view in sidebar */
+.wireframe-preview {
+    .wireframe-preview\:compact-wrapper {
+        @apply relative overflow-hidden h-32;
 
         &:after {
             content: '';
-            box-shadow: inset 0px -10px 10px -10px theme('colors.grey.900');
-            @apply absolute bottom-0 left-0 right-0 h-3 opacity-25;
+            box-shadow: inset 0px -12px 12px -12px theme('colors.grey.900');
+            @apply absolute bottom-0 left-0 right-0 h-4 opacity-25;
         }
     }
 
-    .wireframe-container {
+    .wireframe-preview\:compact-container {
         width: 100% !important;
     }
 }

@@ -34,6 +34,6 @@
     }
 @endphp
 
-<div class="{{ $gapClass }} wireframe-container" style="{{ $sizeStyle }}">
+<div class="{{ $gapClass }} wireframe-preview:compact-container" style="{{ $sizeStyle }}">
     {{ $slot }}
 </div>

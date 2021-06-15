@@ -5,14 +5,16 @@
         @forelse($fragments as $allowedFragment)
             <a
                 data-sidebar-trigger="fragments"
-                class="flex flex-col w-1/3 space-y-1 overflow-hidden rounded-lg group hover:bg-primary-500 wireframe-icon"
+                class="flex flex-col w-1/3 space-y-1 overflow-hidden rounded-xl group hover:bg-primary-500"
                 href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
             >
                 <span class="font-semibold text-grey-900 group-hover:text-white">
                     {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
                 </span>
 
-                {{ $allowedFragment['model']->renderAdminFragment($owner, $loop) }}
+                <div class="wireframe-preview">
+                    {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
+                </div>
             </a>
         @empty
             No available fragments.
