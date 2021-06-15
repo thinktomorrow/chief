@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 class TextField extends AbstractField implements Field
 {
     use AllowsCharacterCount;
-    use AllowsHtmlOptions;
 
     public static function make(string $key): Field
     {

@@ -15,6 +15,8 @@ interface Field
 
     public function getKey(): string;
 
+    public function getViewKey(): string;
+
     public function getId(string $locale = null): string;
 
     public function getColumn(): string;

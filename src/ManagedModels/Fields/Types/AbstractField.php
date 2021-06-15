@@ -484,7 +484,12 @@ abstract class AbstractField
 
         return $this->isLocalized()
             ? 'chief::manager.cards.fields.formgroup_translatable'
-            : 'chief::manager.fieldtypes.' . $this->type->get();
+            : 'chief::manager.fieldtypes.' . $this->getViewKey();
+    }
+
+    public function getViewKey(): string
+    {
+        return $this->type->get();
     }
 
     /**

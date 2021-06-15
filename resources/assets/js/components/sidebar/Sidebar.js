@@ -158,12 +158,6 @@ export default class {
                 }).$mount('#' + el.getAttribute('id')); // eslint-disable-line
             });
 
-            // creating a custom event so native js like redactor js can be initiated async
-            // needs to dispatch after vue instances get created otherwise they overrides
-            // all redactor event listeners like toolbar clicks ...
-            const newPanelEvent = new Event('chief::newpanel');
-            window.dispatchEvent(newPanelEvent);
-
             Api.listenForFormSubmits(
                 newPanelElement,
                 (responseData) => {
@@ -225,6 +219,13 @@ export default class {
             );
 
             this._activate(id);
+
+            // creating a custom event so native js like redactor js can be initiated async
+            // needs to dispatch after vue instances get created otherwise they overrides
+            // all redactor event listeners like toolbar clicks ...
+            window.dispatchEvent(
+                new CustomEvent('chief::newpanel', { detail: this.panels.findActive().eventPayload() })
+            );
 
             EventBus.publish('sidebarPanelCreated', this.panels.findActive().eventPayload());
         });

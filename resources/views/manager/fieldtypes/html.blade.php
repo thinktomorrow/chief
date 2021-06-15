@@ -1,1 +1,1 @@
-@include('chief::editors.' . config('chief.editor', 'quill') . '.html')
+@include('chief::editors.' . config('chief.editor', 'redactor') . '.html')
