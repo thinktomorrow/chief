@@ -8,11 +8,9 @@ use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 trait FragmentableDefaults
 {
-    use ReferableModelDefault;
     use ManagedModelDefaults;
     use Viewable;
 

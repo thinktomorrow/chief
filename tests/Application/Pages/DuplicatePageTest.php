@@ -56,7 +56,6 @@ class DuplicatePageTest extends ChiefTestCase
     /** @test */
     public function it_can_duplicate_all_fields()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
         $this->assertCount(2, ArticlePage::all());
@@ -127,5 +126,6 @@ class DuplicatePageTest extends ChiefTestCase
     /** @test */
     public function it_can_use_a_custom_duplicator()
     {
+        $this->markTestSkipped();
     }
 }

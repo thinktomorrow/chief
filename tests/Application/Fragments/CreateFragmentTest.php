@@ -12,6 +12,7 @@ class CreateFragmentTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_fragment_create_form()
     {
+        $this->disableExceptionHandling();
         $model = $this->setupAndCreateSnippet($this->setupAndCreateArticle());
         $manager = $this->manager($model);
 

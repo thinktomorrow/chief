@@ -5,8 +5,9 @@ namespace Thinktomorrow\Chief\ManagedModels;
 
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
-interface ManagedModel
+interface ManagedModel extends ReferableModel
 {
     public static function managedModelKey(): string;
 

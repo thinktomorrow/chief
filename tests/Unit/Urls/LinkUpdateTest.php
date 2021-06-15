@@ -247,7 +247,7 @@ class LinkUpdateTest extends ChiefTestCase
 
         $this->updateLinks($model, ['nl' => 'foobar']);
 
-        UrlRecord::findBySlug('artikels/foobar', 'nl');
+        $this->assertNotNull(UrlRecord::findBySlug('artikels/foobar', 'nl'));
     }
 
     /** @test */

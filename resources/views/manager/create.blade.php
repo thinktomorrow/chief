@@ -41,15 +41,7 @@
 
                         <div class="space-y-8">
                             @foreach($fields as $field)
-                                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}">
-                                    @if($field->getDescription())
-                                        <x-slot name="description">
-                                            <p>{{ $field->getDescription() }}</p>
-                                        </x-slot>
-                                    @endif
-
-                                    {!! $field->render(get_defined_vars()) !!}
-                                </x-chief-formgroup>
+                                @include('chief::manager.cards.fields.field')
                             @endforeach
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>

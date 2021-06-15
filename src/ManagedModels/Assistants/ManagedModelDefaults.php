@@ -7,10 +7,12 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 trait ManagedModelDefaults
 {
     use SavingFields;
+    use ReferableModelDefault;
 
     public static function managedModelKey(): string
     {
