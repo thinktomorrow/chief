@@ -48,20 +48,16 @@
                 @adminCan('fields-edit', $model)
                     @if($fields->component('main')->any())
                         <div class="window window-white">
-                            <h3>Algemeen</h3>
-
-                            @foreach($fields->component('main')->groupByComponent() as $componentKey => $componentFields)
-                                <livewire:fields_component :model="$model" :componentKey="$componentKey" />
-                            @endforeach
+                            <livewire:fields_component title="Algemeen" :model="$model" componentKey="main" />
                         </div>
                     @endif
                 @endAdminCan
 
-                <div class="window window-white">
-                    @adminCan('fragments-index', $model)
+                @adminCan('fragments-index', $model)
+                    <div class="window window-white">
                         <livewire:fragments :owner="$model" />
-                    @endAdminCan
-                </div>
+                    </div>
+                @endAdminCan
             </div>
 
             <div class="w-full lg:w-1/3">
@@ -75,7 +71,7 @@
                     @endAdminCan
 
                     @adminCan('fields-edit', $model)
-                        @foreach($fields->tagged('component')->notTagged('chief-component')->groupByComponent() as $componentKey => $componentFields)
+                        @foreach($fields->tagged('component')->notTagged('chief-component')->notTagged('component-main')->groupByComponent() as $componentKey => $componentFields)
                             <livewire:fields_component
                                 :model="$model"
                                 :componentKey="$componentKey"
@@ -86,22 +82,13 @@
 
                         <!-- default fields - not assigned to a component -->
                         <livewire:fields_component
+                            inline-edit
                             :model="$model"
                             title="Algemeen"
                             class="window window-grey"
                         />
                     @endAdminCan
                 </div>
-
-                {{-- <div class="window">
-                    <div class="flex flex-col space-y-3">
-                        @foreach(['archive', 'unarchive', 'delete'] as $action)
-                            @adminCan($action, $model)
-                                @include('chief::manager._transitions.index.'. $action, [ 'style' => 'link' ])
-                            @endAdminCan
-                        @endforeach
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>

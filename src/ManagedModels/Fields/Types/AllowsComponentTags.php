@@ -14,6 +14,7 @@ trait AllowsComponentTags
     public function component($componentKey): self
     {
         $this->tag('component');
+        $this->tag('component-' . $componentKey);
         $this->componentKey = $componentKey;
 
         return $this;

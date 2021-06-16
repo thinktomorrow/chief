@@ -54,7 +54,7 @@ class CreateStaticFragmentCommand extends Command
             'namespace' => $namespace,
         ]), $this->option('force'));
 
-        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->staticFragment('.$namespacedClassName.'::class);');
+        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->fragment('.$namespacedClassName.'::class);');
     }
 
     protected function writeFrontendView(): void
