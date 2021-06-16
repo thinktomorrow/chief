@@ -16,9 +16,15 @@
 @endphp
 
 @unless($slot->isEmpty())
-    <div class="{{ $sizeClass }} bg-center bg-no-repeat bg-cover rounded-lg" style="background-image: url('{{ $slot }}');"></div>
+    <div
+        class="bg-center bg-no-repeat bg-cover rounded-lg {{ $sizeClass }}"
+        style="background-image: url('{{ $slot }}'); {{ $attributes->get('style') }}"
+    ></div>
 @else
-    <div class="{{ $sizeClass }} rounded-lg bg-grey-200 flex items-center justify-center">
+    <div
+        class="rounded-lg bg-grey-200 flex items-center justify-center {{ $sizeClass }}"
+        style="{{ $attributes->get('style') }}"
+    >
         <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>
     </div>
 @endunless
