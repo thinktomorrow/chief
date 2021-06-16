@@ -48,7 +48,9 @@ trait FragmentsOwningAssistant
 
     public function canFragmentsOwningAssistant(string $action, $model = null): bool
     {
-        if($model && !$model instanceof FragmentsOwner) return false;
+        if ($model && ! $model instanceof FragmentsOwner) {
+            return false;
+        }
 
         return in_array($action, [
             'fragments-index',
