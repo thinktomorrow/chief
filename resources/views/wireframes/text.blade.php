@@ -22,12 +22,13 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: {{ $lines }};
+            {{ $attributes->get('style') }}
         "
     >
         {{ $slot }}
     </div>
 @else
-    <div class="space-y-2 {{ $alignClass }}">
+    <div class="space-y-2 {{ $alignClass }}" style="{{ $attributes->get('style') }}">
         @for ($i = 0; $i < $lines; $i++)
             @if($i == $lines - 1 && $i > 0)
                 <div class="inline-block w-1/2 rounded bg-grey-500" style="height: 6px;"></div>

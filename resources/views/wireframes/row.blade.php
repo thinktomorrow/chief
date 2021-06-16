@@ -45,7 +45,10 @@
 
 {{-- Extra wrapper div so wireframe container vertical gap will never be in conflict with gutter negative margins --}}
 <div>
-    <div class="flex flex-wrap {{ $justifyClass }} {{ $itemsClass }} {{ $gapClass }}">
+    <div
+        class="flex flex-wrap {{ $justifyClass }} {{ $itemsClass }} {{ $gapClass }}"
+        style="{{ $attributes->get('style') }}"
+    >
         {{ $slot }}
     </div>
 </div>
