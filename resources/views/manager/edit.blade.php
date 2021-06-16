@@ -82,7 +82,6 @@
 
                         <!-- default fields - not assigned to a component -->
                         <livewire:fields_component
-                            inline-edit
                             :model="$model"
                             title="Algemeen"
                             class="window window-grey"
