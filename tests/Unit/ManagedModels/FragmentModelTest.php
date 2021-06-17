@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class FragmentModelTest extends ChiefTestCase
 {
