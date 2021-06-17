@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\Admin\Settings\Settings;
 use Thinktomorrow\Chief\Admin\Settings\SettingsServiceProvider;
 use Thinktomorrow\Chief\Admin\Setup\CreatePageCommand;
 use Thinktomorrow\Chief\Admin\Setup\CreatePageMigrationCommand;
-use Thinktomorrow\Chief\Admin\Setup\CreateStaticFragmentCommand;
+use Thinktomorrow\Chief\Admin\Setup\CreateFragmentCommand;
 use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
 use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Thinktomorrow\Chief\Admin\Users\User;
@@ -104,7 +104,7 @@ class ChiefServiceProvider extends ServiceProvider
 
             $this->app->bind('command.chief:page', CreatePageCommand::class);
             $this->app->bind('command.chief:page-migration', CreatePageMigrationCommand::class);
-            $this->app->bind('command.chief:fragment', CreateStaticFragmentCommand::class);
+            $this->app->bind('command.chief:fragment', CreateFragmentCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
         }
@@ -163,8 +163,8 @@ class ChiefServiceProvider extends ServiceProvider
             return new CreatePageCommand($app->make(FileManipulation::class), new SetupConfig(config('chief.setup', [])));
         });
 
-        $this->app->bind(CreateStaticFragmentCommand::class, function ($app) {
-            return new CreateStaticFragmentCommand($app->make(FileManipulation::class), new SetupConfig(config('chief.setup', [])));
+        $this->app->bind(CreateFragmentCommand::class, function ($app) {
+            return new CreateFragmentCommand($app->make(FileManipulation::class), new SetupConfig(config('chief.setup', [])));
         });
 
         (new MacrosServiceProvider($this->app))->register();

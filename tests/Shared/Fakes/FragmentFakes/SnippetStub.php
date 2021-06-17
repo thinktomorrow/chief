@@ -9,10 +9,12 @@ use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 
 class SnippetStub implements Fragmentable, FragmentsOwner
 {
     use FragmentableDefaults;
+    use ForwardFragmentProperties;
     use OwningFragments;
 
     public static function managedModelKey(): string

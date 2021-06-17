@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Str;
 
-class CreateStaticFragmentCommand extends Command
+class CreateFragmentCommand extends Command
 {
     protected $signature = 'chief:fragment
                         {--force : overwrite existing class if it already exists}';
@@ -49,7 +49,7 @@ class CreateStaticFragmentCommand extends Command
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
         $fullPath = base_path($path) . '/' . $className.'.php';
 
-        $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/staticFragment.php.stub'), [
+        $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/fragment.php.stub'), [
             'className' => $className,
             'namespace' => $namespace,
         ]), $this->option('force'));
