@@ -37,20 +37,3 @@
         }
     }
 }
-
-/* Wireframe preview styling for new fragment select view in sidebar */
-.wireframe-preview {
-    .wireframe-preview\:compact-wrapper {
-        @apply relative overflow-hidden h-32;
-
-        &:after {
-            content: '';
-            box-shadow: inset 0px -12px 12px -12px theme('colors.grey.900');
-            @apply absolute bottom-0 left-0 right-0 h-4 opacity-25;
-        }
-    }
-
-    .wireframe-preview\:compact-container {
-        width: 100% !important;
-    }
-}
