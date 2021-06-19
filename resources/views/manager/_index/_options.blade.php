@@ -17,5 +17,9 @@
                 @include('chief::manager._transitions.index.'. $action, [ 'style' => 'dropdown-link' ])
             @endAdminCan
         @endforeach
+
+        @adminCan('duplicate', $model)
+            @include('chief::manager._transitions.index.duplicate')
+        @endAdminCan
     </div>
 </options-dropdown>
