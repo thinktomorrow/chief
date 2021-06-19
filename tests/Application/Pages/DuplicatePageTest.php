@@ -62,7 +62,10 @@ class DuplicatePageTest extends ChiefTestCase
 
         $copiedModel = ArticlePage::where('id', '<>', $this->source->id)->first();
 
-        $this->assertEquals($this->source->values, $copiedModel->values);
+        $this->assertEquals(
+            str_replace($this->source->title, 'Kopij van ' . $this->source->title, $this->source->values),
+            $copiedModel->values
+        );
 
         // state is set to draft
         $this->assertEquals(PageState::DRAFT, $copiedModel->getPageState());

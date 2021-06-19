@@ -12,6 +12,10 @@ class DuplicateModel
         $copiedModel = $model->replicate();
         $copiedModel->id = null;
 
+        if($model->title) {
+            $copiedModel->title = 'Kopij van ' . $model->title;
+        }
+
         $copiedModel->created_at = now();
         $copiedModel->updated_at = now();
         $copiedModel->save();
