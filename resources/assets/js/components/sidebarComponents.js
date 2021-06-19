@@ -5,6 +5,7 @@ import SelectFragment from './fragment/selectFragment';
 import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
 import Collection from '../utilities/Collection';
+import generateWireframeStyles from '../utilities/wireframe-styles';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -48,10 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
         onComponentCreation: () => {
             loadedSelectFragments.clear().add({ id: 0, class: new SelectFragment(document) });
             initSortable();
+            generateWireframeStyles();
         },
         onComponentReload: () => {
             loadedSelectFragments.clear().add({ id: 0, class: new SelectFragment(document) });
             initSortable();
+            generateWireframeStyles();
         },
     });
 
@@ -59,15 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
         closeOnPanelFormSubmit: true,
         events: {
             sidebarPanelCreated: (panelData) => {
-                console.log('Select Fragments: panel created', panelData);
                 new AddFragment(panelData.panel.el);
+                generateWireframeStyles();
             },
         },
     });
-
-    // EventBus.subscribe('fragmentSelectionElementCreated', () => {
-    //     sidebar.listenForEvents();
-    // });
 
     const linksComponent = new Component('links', {
         livewire: true,

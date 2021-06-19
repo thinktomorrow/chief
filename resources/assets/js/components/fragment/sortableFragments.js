@@ -17,10 +17,6 @@ const initSortable = (selector = '[data-sortable-fragments]', container = docume
     EventBus.subscribe('fragmentSidebarPanelCreated', (panelData) => {
         initSortable(selector, panelData.panel.el);
     });
-
-    // window.Livewire.on('fragmentsReloaded', () => {
-    //     initSortable();
-    // });
 };
 
 export { initSortable as default };

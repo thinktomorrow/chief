@@ -32,19 +32,17 @@ This component should be used as a wrapper for all other wireframe components to
 
 #### Name and css
 
-The css attribute allows you to add a style attribute to the head of the document with any content you insert into it. This style is scoped to the current wireframe. For it to be possible to be scoped, you alse need to provide a name via the name attribute.
-
-<b>WIP: bug where the create style script doesn't execute if the wireframe is only rendered in sidebar.</b>
+The `css` attribute allows you to add custom styles to the head of the document with any content you insert into it. This style is scoped to the current wireframe. For it to be scoped, you always need to provide a name to the wireframe component via the `name` attribute.
 
 ```html
 <x-wireframe
-    name="blockquote"
+    name="my-custom-wireframe-name"
     css="
-    .very-pretty-class {
-        color: yellow;
-        background-color: pink;
-    }
-"
+        .very-pretty-class {
+            color: yellow;
+            background-color: pink;
+        }
+    "
 >
     ...
 </x-wireframe>
@@ -268,18 +266,19 @@ Most components already have specific attributes to change the behaviour of the 
 
 ### Class
 
-Tip: use this attribute in combination with the wireframe component css attribute. This will allow you to include custom styles, as well as Tailwindcss classes which were purged in Chief.
+Tip: use this attribute in combination with the wireframe component `css` & `name` attributes. This will allow you to include custom styles, as well as Tailwindcss classes which were purged in Chief.
 
 ```html
 <x-wireframe
+    name="my-custom-wireframe"
     css="
-    .bg-very-specific-brand-color {
-        background-color: red;
-    }
-"
+        .bg-very-specific-brand-color {
+            background-color: red;
+        }
+    "
 >
     <x-wireframe-column class="bg-very-specific-brand-color"></x-wireframe-column>
 </x-wireframe>
 ```
 
-Keep in mind that these wireframe components also contain their own specific styling. These might conflict or have more importantance than the styling passed by this attribute.
+Keep in mind that these wireframe components also contain their own specific styling. These might conflict or have more importance than the styling passed by this attribute.

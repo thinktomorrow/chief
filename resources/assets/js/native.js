@@ -1,5 +1,7 @@
+import EventBus from './utilities/EventBus';
 import IndexSorting from './utilities/sortable';
 import FormSubmit from './utilities/form-submit';
+import generateWireframeStyles from './utilities/wireframe-styles';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -24,3 +26,5 @@ if (document.getElementById('js-sortable')) {
  * Sidebar components
  */
 require('./components/sidebarComponents');
+
+EventBus.subscribe('fragmentsReloaded', generateWireframeStyles);

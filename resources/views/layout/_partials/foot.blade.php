@@ -20,12 +20,11 @@
     });
 </script>
 
-
 @stack('custom-scripts')
 
 <script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
-<script>
 
+<script>
     /**
      * Global Eventbus which allows to emit and listen to
      * events coming from components
@@ -108,10 +107,10 @@
     window.closeDropdown = function(id){
         Eventbus.$emit('close-dropdown',id);
     };
-
 </script>
 
 <script src="{{ chief_cached_asset('/chief-assets/back/js/native.js') }}"></script>
+
 @stack('custom-scripts-after-vue')
 
 </body>
