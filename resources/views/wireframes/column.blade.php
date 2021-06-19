@@ -17,6 +17,6 @@
     }
 @endphp
 
-<div class="{{ $gapClass }}" style="width: {{ $width ?? '100%' }}; {{ $attributes->get('style') }}">
+<div class="{{ $gapClass }} {{ $attributes->get('class') }}" style="width: {{ $width ?? '100%' }}; {{ $attributes->get('style') }}">
     {{ $slot }}
 </div>

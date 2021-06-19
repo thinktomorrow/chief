@@ -1,28 +1,41 @@
 @php
     switch($size ?? null) {
         case 'xs':
-            $sizeClass = 'h-8'; break;
+            $heightClass = 'h-8'; $maxHeightClass = 'max-h-8'; break;
         case 'sm':
-            $sizeClass = 'h-16'; break;
+            $heightClass = 'h-16'; $maxHeightClass = 'max-h-16'; break;
         case 'md':
-            $sizeClass = 'h-32'; break;
+            $heightClass = 'h-32'; $maxHeightClass = 'max-h-32'; break;
         case 'lg':
-            $sizeClass = 'h-48'; break;
+            $heightClass = 'h-48'; $maxHeightClass = 'max-h-48'; break;
         case 'xl':
-            $sizeClass = 'h-64'; break;
+            $heightClass = 'h-64'; $maxHeightClass = 'max-h-64'; break;
         default:
-            $sizeClass = 'h-32';
+            $heightClass = 'h-32'; $maxHeightClass = 'max-h-32'; break;
     }
 @endphp
 
 @unless($slot->isEmpty())
-    <div
-        class="bg-center bg-no-repeat bg-cover rounded-lg {{ $sizeClass }}"
-        style="background-image: url('{{ $slot }}'); {{ $attributes->get('style') }}"
-    ></div>
+    @if(isset($type) && $type == 'background')
+        <div
+            class="bg-center bg-no-repeat bg-cover rounded-lg {{ $heightClass }} {{ $attributes->get('class') }}"
+            style="background-image: url('{{ $slot }}'); {{ $attributes->get('style') }}"
+        ></div>
+    @elseif(isset($type) && $type == 'custom')
+        <div style="{{ $attributes->get('style') }}" class="{{ $attributes->get('class') }}">
+            {{ $slot }}
+        </div>
+    @else
+        <img
+            src="{{ $slot }}"
+            alt="Chief wireframe image"
+            class="rounded-lg {{ $maxHeightClass }} {{ $attributes->get('class') }}"
+            style="{{ $attributes->get('style') }}"
+        >
+    @endif
 @else
     <div
-        class="rounded-lg bg-grey-200 flex items-center justify-center {{ $sizeClass }}"
+        class="rounded-lg bg-grey-200 flex items-center justify-center {{ $heightClass }} {{ $attributes->get('class') }}"
         style="{{ $attributes->get('style') }}"
     >
         <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>

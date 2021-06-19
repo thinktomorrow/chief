@@ -3,15 +3,15 @@
         case 'none':
             $gapClass = ''; break;
         case 'xs':
-            $gapClass = 'gutter-1'; break;
+            $gapClass = 'gutter-0.5'; break;
         case 'sm':
-            $gapClass = 'gutter-2'; break;
+            $gapClass = 'gutter-1'; break;
         case 'md':
-            $gapClass = 'gutter-4'; break;
+            $gapClass = 'gutter-2'; break;
         case 'lg':
-            $gapClass = 'gutter-6'; break;
+            $gapClass = 'gutter-3'; break;
         case 'xl':
-            $gapClass = 'gutter-8'; break;
+            $gapClass = 'gutter-4'; break;
         default:
             $gapClass = 'gutter-2';
     }
@@ -23,6 +23,8 @@
             $justifyClass = 'justify-center'; break;
         case 'between':
             $justifyClass = 'justify-between'; break;
+        case 'around':
+            $justifyClass = 'justify-around'; break;
         case 'end':
             $justifyClass = 'justify-end'; break;
         default:
@@ -34,8 +36,10 @@
             $itemsClass = 'items-start'; break;
         case 'center':
             $itemsClass = 'items-center'; break;
-        case 'between':
-            $itemsClass = 'items-between'; break;
+        case 'baseline':
+            $itemsClass = 'items-baseline'; break;
+        case 'stretch':
+            $itemsClass = 'items-stretch'; break;
         case 'end':
             $itemsClass = 'items-end'; break;
         default:
@@ -46,7 +50,7 @@
 {{-- Extra wrapper div so wireframe container vertical gap will never be in conflict with gutter negative margins --}}
 <div>
     <div
-        class="flex flex-wrap {{ $justifyClass }} {{ $itemsClass }} {{ $gapClass }}"
+        class="flex flex-wrap {{ $justifyClass }} {{ $itemsClass }} {{ $gapClass }} {{ $attributes->get('class') }}"
         style="{{ $attributes->get('style') }}"
     >
         {{ $slot }}

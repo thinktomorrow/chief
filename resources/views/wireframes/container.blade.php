@@ -34,6 +34,6 @@
     }
 @endphp
 
-<div class="{{ $gapClass }}" style="{{ $sizeStyle }} {{ $attributes->get('style') }}">
+<div class="{{ $gapClass }} {{ $attributes->get('class') }}" style="{{ $sizeStyle }} {{ $attributes->get('style') }}">
     {{ $slot }}
 </div>

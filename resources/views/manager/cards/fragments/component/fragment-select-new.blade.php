@@ -12,9 +12,7 @@
                     {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
                 </span>
 
-                <div class="wireframe-preview">
-                    {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
-                </div>
+                {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
             </a>
         @empty
             No available fragments.
