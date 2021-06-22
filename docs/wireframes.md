@@ -131,7 +131,7 @@ Vertical alignment of this elements children relative to each other.
 
 ## Column
 
-This components main purpose is to add equal margins left and right of the element, to narrow down the content of the element.
+This component should be used as a direct child of wireframe rows. It's made to hold any content and takes into account the gaps applied by wireframe rows.
 
 ```html
 <!-- Wireframe column with the attributes default values -->
@@ -246,9 +246,10 @@ The size of the image. If `type` is set to background, this size will be specifi
 | ------------ | ------ |
 | xs           | 2rem   |
 | sm           | 4rem   |
-| md (default) | 8rem   |
-| lg           | 12rem  |
-| xl           | 16rem  |
+| md (default) | 6rem   |
+| lg           | 8rem   |
+| xl           | 12rem  |
+| 2xl          | 16rem  |
 
 ## Additional wireframe attributes
 
