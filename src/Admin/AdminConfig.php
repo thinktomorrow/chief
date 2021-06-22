@@ -87,7 +87,7 @@ final class AdminConfig
 
     public function getIndexTitle(): string
     {
-        return $this->get('index.title', '');
+        return strip_tags($this->get('index.title', ''));
     }
 
     public function pageTitle(string $pageTitle): self
@@ -97,7 +97,7 @@ final class AdminConfig
 
     public function getPageTitle(): string
     {
-        return $this->get('page.title', '');
+        return strip_tags($this->get('page.title', ''));
     }
 
     public function rowTitle(string $rowTitle): self

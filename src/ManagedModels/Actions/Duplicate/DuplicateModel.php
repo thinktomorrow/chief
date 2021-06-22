@@ -12,8 +12,10 @@ class DuplicateModel
         $copiedModel = $model->replicate();
         $copiedModel->id = null;
 
-        if ($model->title) {
-            $copiedModel->title = 'Kopij van ' . $model->title;
+        if ($model->title && public_method_exists($model, 'dynamic')) {
+            $locales = config('chief.locales', []);
+            $defaultLocale = reset($locales);
+            $copiedModel->setDynamic('title', '[Copy] ' . $model->dynamic('title', $defaultLocale), $defaultLocale);
         }
 
         $copiedModel->created_at = now();
