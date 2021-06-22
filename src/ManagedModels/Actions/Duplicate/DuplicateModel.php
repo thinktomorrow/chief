@@ -12,7 +12,7 @@ class DuplicateModel
         $copiedModel = $model->replicate();
         $copiedModel->id = null;
 
-        if($model->title) {
+        if ($model->title) {
             $copiedModel->title = 'Kopij van ' . $model->title;
         }
 
