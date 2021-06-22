@@ -20,7 +20,7 @@
 @unless($slot->isEmpty())
     @if(isset($type) && $type == 'background')
         <div
-            class="bg-center bg-no-repeat bg-cover rounded-lg {{ $heightClass }} {{ $attributes->get('class') }}"
+            class="w-full bg-center bg-no-repeat bg-cover rounded-lg {{ $heightClass }} {{ $attributes->get('class') }}"
             style="background-image: url('{{ $slot }}'); {{ $attributes->get('style') }}"
         ></div>
     @elseif(isset($type) && $type == 'custom')
@@ -37,7 +37,7 @@
     @endif
 @else
     <div
-        class="rounded-lg bg-grey-200 flex items-center justify-center {{ $heightClass }} {{ $attributes->get('class') }}"
+        class="w-full rounded-lg bg-grey-200 flex items-center justify-center {{ $heightClass }} {{ $attributes->get('class') }}"
         style="{{ $attributes->get('style') }}"
     >
         <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>

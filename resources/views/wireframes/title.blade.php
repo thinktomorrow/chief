@@ -15,7 +15,7 @@
 
 @unless($slot->isEmpty())
     <div
-        class="prose prose-dark prose-wireframe {{ $alignClass }} {{ $attributes->get('class') }}"
+        class="w-full prose prose-dark prose-wireframe {{ $alignClass }} {{ $attributes->get('class') }}"
         {{-- Line clamp based on tailwindcss plugin --}}
         style="
             overflow: hidden;
@@ -28,7 +28,7 @@
         <h2>{{ $slot }}</h2>
     </div>
 @else
-    <div class="space-y-2 {{ $alignClass }} {{ $attributes->get('class') }}" style="{{ $attributes->get('style') }}">
+    <div class="w-full space-y-2 {{ $alignClass }} {{ $attributes->get('class') }}" style="{{ $attributes->get('style') }}">
         @for ($i = 0; $i < $lines; $i++)
             @if($i == $lines - 1 && $i > 0)
                 <div class="inline-block w-1/2 rounded bg-grey-700" style="height: 6px;"></div>
