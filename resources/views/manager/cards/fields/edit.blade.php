@@ -10,7 +10,7 @@
     @method('put')
 
     <div class="space-y-12">
-        <h3>{{ ucfirst($componentKey) }}</h3>
+        <h3>{{ $componentTitle }}</h3>
 
         <div data-vue-fields class="space-y-8">
             @foreach($fields as $field)

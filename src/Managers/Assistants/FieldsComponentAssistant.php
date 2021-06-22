@@ -42,6 +42,7 @@ trait FieldsComponentAssistant
                 ? Fields::make($model->fields())->model($model)->component($componentKey)
                 : Fields::make($model->fields())->model($model)->notTagged('component'),
             'componentKey' => $componentKey,
+            'componentTitle' => $componentKey == 'chief-page-title' ? '' :  ucfirst($componentKey),
         ]);
     }
 

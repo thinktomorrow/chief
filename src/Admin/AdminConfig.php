@@ -67,7 +67,7 @@ final class AdminConfig
 
     public function getNavTitle(): string
     {
-        return $this->get('model.nav', $this->getModelName());
+        return $this->get('model.nav', $this->getIndexTitle());
     }
 
     public function navIcon(string $navIcon): self
