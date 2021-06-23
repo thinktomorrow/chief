@@ -63,7 +63,7 @@ class DuplicatePageTest extends ChiefTestCase
         $copiedModel = ArticlePage::where('id', '<>', $this->source->id)->first();
 
         $this->assertEquals(
-            str_replace($this->source->title, 'Kopij van ' . $this->source->title, $this->source->values),
+            str_replace($this->source->title, '[Copy] ' . $this->source->title, $this->source->values),
             $copiedModel->values
         );
 

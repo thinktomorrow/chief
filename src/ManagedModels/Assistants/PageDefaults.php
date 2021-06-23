@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\ManagedModels\States\UsesPageState;
@@ -26,6 +25,9 @@ trait PageDefaults
     use AssetTrait;
     use HasDynamicAttributes;
 
+    /** @var array */
+    private $extractedFieldKeys;
+
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for
      * proper localized values to be returned. Here we provide the default in
@@ -40,6 +42,7 @@ trait PageDefaults
      * As a default, we'll guess the dynamic keys based on the provided fields. This should give you a
      * nice and clean setup. Should you need to customize the dynamic keys, you'll be able to define
      * a dynamicKeys property on the model. This will circumvent the logic below.
+     *
      * @return array
      */
     protected function dynamicKeys(): array
@@ -48,8 +51,39 @@ trait PageDefaults
             return $this->dynamicKeys;
         }
 
-        return collect(Fields::make($this->fields())->all())->map(function ($field) {
-            return $field->getColumn();
-        })->values()->toArray();
+        if ($this->extractedFieldKeys) {
+            return $this->extractedFieldKeys;
+        }
+
+        return $this->extractedFieldKeys = $this->extractFieldKeys();
+    }
+
+    /**
+     * This automatically extract the field keys from the Field definitions.
+     *
+     * TODO: At the moment the field keys are used as the field dynamic keys. Better is to use the field::getColumn values instead.
+     * in case there is an explicit column set different from the key, this is currently not detected yet.
+     *
+     * @return array
+     * @throws \ReflectionException
+     */
+    private function extractFieldKeys(): array
+    {
+        $refMethod = new \ReflectionMethod($this, 'fields');
+        $iterator = new \LimitIterator(new \SplFileObject($refMethod->getFileName()), $refMethod->getStartLine(), $refMethod->getEndLine() - $refMethod->getStartLine());
+
+        return collect(iterator_to_array($iterator))->filter(function ($line) {
+            return false !== strpos($line, '::make(');
+        })->map(function ($line) {
+            preg_match('@make\(\'([^\']*)\'\)@', $line, $matches);
+
+            if (count($matches) < 2) {
+                return null;
+            }
+
+            return $matches[1];
+        })->reject(fn ($value) => is_null($value))
+            ->values()
+            ->toArray();
     }
 }
