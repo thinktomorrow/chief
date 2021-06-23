@@ -79,16 +79,16 @@ trait PageDefaults
             // Search for @dynamicKeys line
             preg_match('#@dynamicKeys: ([^\*]*)#', $line, $matches);
             if (count($matches) > 0) {
-                return array_map(fn($item) => trim($item), explode(',', $matches[1]));
+                return array_map(fn ($item) => trim($item), explode(',', $matches[1]));
             }
 
             // Search for Field::make line
             preg_match('@make\(\'([^\']*)\'\)@', $line, $matches);
-            return (count($matches) < 2) ? null : $matches[1];
 
+            return (count($matches) < 2) ? null : $matches[1];
         })->flatten()
             ->unique()
-            ->reject(fn($value) => is_null($value))
+            ->reject(fn ($value) => is_null($value))
             ->values()
             ->toArray();
     }
