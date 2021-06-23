@@ -18,7 +18,7 @@ class DuplicateModel
             // Is title field localized or not?
             $isTitleLocalized = ($field = Fields::make($model->fields())->find('title')) ? $field->isLocalized() : false;
 
-            if($isTitleLocalized) {
+            if ($isTitleLocalized) {
                 $locales = config('chief.locales', []);
                 $defaultLocale = reset($locales);
                 $copiedModel->setDynamic('title', '[Copy] ' . $model->dynamic('title', $defaultLocale, $model->dynamic('title')), $defaultLocale);
