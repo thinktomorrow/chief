@@ -73,16 +73,22 @@ trait PageDefaults
         $iterator = new \LimitIterator(new \SplFileObject($refMethod->getFileName()), $refMethod->getStartLine(), $refMethod->getEndLine() - $refMethod->getStartLine());
 
         return collect(iterator_to_array($iterator))->filter(function ($line) {
-            return false !== strpos($line, '::make(');
+            return false !== strpos($line, '@dynamicKeys') || false !== strpos($line, '::make(');
         })->map(function ($line) {
-            preg_match('@make\(\'([^\']*)\'\)@', $line, $matches);
 
-            if (count($matches) < 2) {
-                return null;
+            // Search for @dynamicKeys line
+            preg_match('#@dynamicKeys: ([^\*]*)#', $line, $matches);
+            if (count($matches) > 0) {
+                return array_map(fn($item) => trim($item), explode(',', $matches[1]));
             }
 
-            return $matches[1];
-        })->reject(fn ($value) => is_null($value))
+            // Search for Field::make line
+            preg_match('@make\(\'([^\']*)\'\)@', $line, $matches);
+            return (count($matches) < 2) ? null : $matches[1];
+
+        })->flatten()
+            ->unique()
+            ->reject(fn($value) => is_null($value))
             ->values()
             ->toArray();
     }
