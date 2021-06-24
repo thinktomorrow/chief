@@ -159,10 +159,8 @@ trait CrudAssistant
     {
         $this->guard('store');
 
-        $modelClass = $this->managedModelClass();
-
         /** @var ManagedModel $model */
-        $model = new $modelClass();
+        $model = new $this->managedModelClass();
 
         $fields = Fields::make($model->fields())->notTagged(['edit', 'not-on-create']);
         $this->fieldValidator()->handle($fields, $request->all());

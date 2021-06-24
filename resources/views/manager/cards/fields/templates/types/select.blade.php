@@ -1,6 +1,6 @@
 @if($field->getValue())
     @php
-        $values = gettype($field->getValue()) == 'array' ? $field->getValue() : array($field->getValue());
+        $values = gettype($field->getValue()) == 'array' ? $field->getValue() : (array) $field->getValue();
     @endphp
 
     <div class="flex flex-wrap -m-0.5">

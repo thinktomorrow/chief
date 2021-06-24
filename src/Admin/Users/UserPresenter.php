@@ -31,7 +31,7 @@ class UserPresenter
         }
 
         return $this->user->isEnabled()
-            ? ''
+            ? '<span class="label label-success">Actief</span>'
             : '<span class="label label-error">Geblokkeerd</span>';
     }
 }
