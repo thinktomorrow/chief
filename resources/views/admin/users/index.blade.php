@@ -37,11 +37,9 @@
                                         @endif
 
                                         {{-- TODO: does this work as expected? --}}
-                                        @if($user->isEnabled())
-                                            <span class="text-sm">
-                                                {!! $user->present()->enabledAsLabel() !!}
-                                            </span>
-                                        @endif
+                                        <span class="text-sm">
+                                            {!! $user->present()->enabledAsLabel() !!}
+                                        </span>
                                     </div>
 
                                     <div class="text-grey-500">
