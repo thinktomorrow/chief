@@ -1,19 +1,19 @@
 @php
     switch($size ?? null) {
         case 'xs':
-            $heightClass = 'h-8'; $maxHeightClass = 'max-h-8'; break;
+            $heightClass = 'h-8'; break;
         case 'sm':
-            $heightClass = 'h-16'; $maxHeightClass = 'max-h-16'; break;
+            $heightClass = 'h-16'; break;
         case 'md':
-            $heightClass = 'h-24'; $maxHeightClass = 'max-h-24'; break;
+            $heightClass = 'h-24'; break;
         case 'lg':
-            $heightClass = 'h-32'; $maxHeightClass = 'max-h-32'; break;
+            $heightClass = 'h-32'; break;
         case 'xl':
-            $heightClass = 'h-48'; $maxHeightClass = 'max-h-48'; break;
+            $heightClass = 'h-48'; break;
         case '2xl':
-            $heightClass = 'h-64'; $maxHeightClass = 'max-h-64'; break;
+            $heightClass = 'h-64'; break;
         default:
-            $heightClass = 'h-24'; $maxHeightClass = 'max-h-24'; break;
+            $heightClass = 'h-24'; break;
     }
 @endphp
 
@@ -31,7 +31,7 @@
         <img
             src="{{ $slot }}"
             alt="Chief wireframe image"
-            class="rounded-lg {{ $maxHeightClass }} {{ $attributes->get('class') }}"
+            class="rounded-lg w-full {{ $attributes->get('class') }}"
             style="{{ $attributes->get('style') }}"
         >
     @endif
