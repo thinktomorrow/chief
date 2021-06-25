@@ -20,4 +20,11 @@ class __STUB_CLASSNAME__ implements Fragmentable
         yield HtmlField::make('content')->locales();
         __STUB_FIELDS__
     }
+
+    public function renderAdminFragment($owner, $loop, $viewData = [])
+    {
+        return view('back.fragments.__STUB_VIEWKEY__', array_merge([
+            'model' => $this
+        ], $viewData));
+    }
 }

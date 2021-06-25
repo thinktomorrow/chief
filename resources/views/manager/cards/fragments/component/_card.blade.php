@@ -11,7 +11,7 @@
                 </span>
 
                 <span class="text-lg font-semibold text-grey-900">
-                    {{ ucfirst($model->adminConfig()->getPageTitle()) }}
+                    {{ ucfirst($model->adminConfig()->getModelName()) }}
                 </span>
 
                 @if($model->fragmentModel()->isOffline())

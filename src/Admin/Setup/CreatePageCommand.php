@@ -52,6 +52,7 @@ class CreatePageCommand extends Command
 
         $className = Str::studly($name);
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
+        $viewKey = strtolower($className);
 
         $this->fileManipulation->writeFile($this->config->path($className.'.php'), $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
                 'className' => $className,
@@ -64,14 +65,13 @@ class CreatePageCommand extends Command
             $this->call('chief:page-migration', ['table' => Str::snake(Str::plural($className))]);
         }
 
-        // If already exists: don't overwrite unless --force
-        // model in namespace
-        // registration add to AppServiceProvider
-        // add frontend viewfile
-
-        // --admin-views: add admin views
-
-//        $this->info('Class ' . $this->className . ' created');
+        /**
+         * Create view file
+         */
+        if ($this->confirm('Would you like to add a frontend view (pages.'.$viewKey.')?', true)) {
+            $fullViewPath = resource_path('views/pages/' . $viewKey . '.blade.php');
+            $this->fileManipulation->writeFile($fullViewPath, file_get_contents(__DIR__.'/stubs/pageView.blade.php.stub'), $this->option('force'));
+        }
     }
 
     protected function writeFrontendView(): void

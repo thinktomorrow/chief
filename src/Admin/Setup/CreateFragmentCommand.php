@@ -36,9 +36,8 @@ class CreateFragmentCommand extends Command
         while (! $name) {
             $name = $this->ask('What is the name in singular for your fragment?');
         }
-
         while (! $path) {
-            $path = $this->ask('Where do you want to put this class?', $this->config->path());
+            $path = $this->ask('Where do you want to put this class?', $this->config->path('Fragments/'));
         }
 
         while (! $namespace) {
@@ -48,13 +47,28 @@ class CreateFragmentCommand extends Command
         $className = Str::studly($name);
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
         $fullPath = base_path($path) . '/' . $className.'.php';
+        $viewKey = strtolower($className);
 
         $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/fragment.php.stub'), [
             'className' => $className,
             'namespace' => $namespace,
+            'viewkey' => $viewKey,
         ]), $this->option('force'));
 
         $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->fragment('.$namespacedClassName.'::class);');
+
+        /**
+         * Create view files
+         */
+        if ($this->confirm('Would you like to add a frontend view (fragments.'.$viewKey.')?', true)) {
+            $fullViewPath = resource_path('views/fragments/' . $viewKey . '.blade.php');
+            $this->fileManipulation->writeFile($fullViewPath, '<!-- fragment stuff for the frontend goes here -->', $this->option('force'));
+        }
+
+        if ($this->confirm('Would you like to add a backend view (back.fragments.'.$viewKey.')?', true)) {
+            $fullViewPath = resource_path('views/back/fragments/' . $viewKey . '.blade.php');
+            $this->fileManipulation->writeFile($fullViewPath, '<!-- The backend wireframe for the fragment goes here -->', $this->option('force'));
+        }
     }
 
     protected function writeFrontendView(): void
