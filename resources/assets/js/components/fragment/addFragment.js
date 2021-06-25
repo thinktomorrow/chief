@@ -16,10 +16,6 @@ export default class {
     init() {
         this.handle = (event) => this._handleTrigger(event);
 
-        EventBus.subscribe('fragmentSelectionElementCreated', (selectionEl) => {
-            this._scanForTriggersIn(selectionEl);
-        });
-
         EventBus.subscribe('newFragmentPanelCreated', (panel) => {
             this._scanForTriggersIn(panel.el);
         });

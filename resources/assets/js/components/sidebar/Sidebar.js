@@ -85,9 +85,16 @@ export default class {
             const componentEl = component.el(this.currentContainer());
             const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
+            /**
+             * Reload all main components when one of these events occur. The components
+             * are only reloaded when the focus is on the main page. On the nested
+             * fragment element this livewire reload will not be triggered.
+             */
             ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
-                EventBus.subscribe(eventKey, () => {
-                    livewireComponent.reload();
+                EventBus.subscribe(eventKey, (evt) => {
+                    if(!evt.panel || !evt.panel.parent) {
+                        livewireComponent.reload();
+                    }
                 });
             });
         });

@@ -15,6 +15,7 @@ class __STUB_CLASSNAME__ extends Model implements PageContract
     use PageDefaults;
 
     public $guarded = [];
+    public $baseViewPath = 'pages';
 
     public function fields(): iterable
     {

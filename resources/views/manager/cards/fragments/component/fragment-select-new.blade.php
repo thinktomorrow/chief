@@ -6,7 +6,7 @@
             <a
                 data-sidebar-trigger="fragments"
                 class="flex flex-col w-full space-y-1 overflow-hidden rounded-xl group hover:bg-primary-500"
-                href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
+                href="{{ $allowedFragment['manager']->route('fragment-create', $owner) . (isset($order) ? '?order=' . $order : '') }}"
             >
                 <span class="font-semibold text-grey-900 group-hover:text-white">
                     {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}

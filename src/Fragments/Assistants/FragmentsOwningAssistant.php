@@ -64,21 +64,22 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
 
-        return $this->showFragmentsSelectNew($owner, $this->getAllowedFragments($owner));
+        return $this->showFragmentsSelectNew($owner, $this->getAllowedFragments($owner), $request->input('order', 0));
     }
 
     public function nestedFragmentsSelectNew(Request $request, $fragmentModelId)
     {
         $owner = $this->fragmentRepository->find($fragmentModelId);
 
-        return $this->showFragmentsSelectNew($owner, $this->getAllowedFragments($owner));
+        return $this->showFragmentsSelectNew($owner, $this->getAllowedFragments($owner), $request->input('order', 0));
     }
 
-    private function showFragmentsSelectNew($owner, $fragments)
+    private function showFragmentsSelectNew($owner, $fragments, $order)
     {
         return view('chief::manager.cards.fragments.component.fragment-select-new', [
             'fragments' => $fragments,
             'owner' => $owner,
+            'order' => $order
         ]);
     }
 
