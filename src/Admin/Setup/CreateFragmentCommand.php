@@ -82,6 +82,7 @@ class CreateFragmentCommand extends Command
 
         if ($this->files->exists($path) && ! $this->option('force')) {
             $this->error('View already exists!');
+
             return;
         }
 
@@ -93,7 +94,7 @@ class CreateFragmentCommand extends Command
             '__STUB_NAMESPACE__' => $values['namespace'],
             '__STUB_CLASSNAME__' => $values['className'],
             '__STUB_FIELDS__' => '',
-            '__STUB_VIEWKEY__' => $values['viewkey']
+            '__STUB_VIEWKEY__' => $values['viewkey'],
         ];
         // --fields=name:input,online:bool,
         return str_replace(array_keys($replacements), array_values($replacements), $content);
