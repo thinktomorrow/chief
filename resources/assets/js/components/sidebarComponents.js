@@ -36,10 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // TODO: rename to addFragment component
-    const fragmentSelectionComponent = new Component('selectFragment', {
+    const fragmentAddComponent = new Component('addFragment', {
         closeOnPanelFormSubmit: true,
         events: {
-            sidebarPanelCreated: (panelData) => {
+            sidebarPanelActivated: (panelData) => {
                 new AddFragment(panelData.panel.el);
                 generateWireframeStyles();
             },
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             linksComponent,
             statusComponent,
             fragmentsComponent,
-            fragmentSelectionComponent,
+            fragmentAddComponent,
             ...fieldComponents,
         ],
         reloadLivewireEvents: ['fragmentAdded'],

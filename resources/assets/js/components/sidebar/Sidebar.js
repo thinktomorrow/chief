@@ -92,9 +92,12 @@ export default class {
              */
             ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
                 EventBus.subscribe(eventKey, (evt) => {
-                    if (evt.componentKey !== component.key) return;
 
-                    livewireComponent.reload();
+                    // Only refresh own component except for addFragment component which targets the fragments as well.
+                    if (evt.componentKey === component.key || (evt.componentKey === "addFragment" && component.key === "fragments")) {
+                        livewireComponent.reload();
+                    }
+
                 });
             });
         });
@@ -167,7 +170,7 @@ export default class {
 
             Api.listenForFormSubmits(
                 newPanelElement,
-                (responseData) => {
+                (responseData, metadata) => {
                     // Reset any error
                     newPanelElement.querySelectorAll('[data-error-placeholder]').forEach((errorElement) => {
                         errorElement.classList.add('hidden');
@@ -187,6 +190,12 @@ export default class {
                         // Show flicker of red?
                         // Show notification?
                         // Remove error on input?
+                        return;
+                    }
+
+                    // GET request stays on same page and reloads it with the given response.
+                    if (metadata && metadata.method === 'get') {
+                        this.reset(responseData);
                         return;
                     }
 
@@ -251,7 +260,7 @@ export default class {
         this.reset();
     }
 
-    reset() {
+    reset(data = null) {
         console.log('RESETTING SIDEBAR ACTIVE PANEL');
         if (this.panels.findActive()) {
             this.sidebarContainer.renderCloseButton();
@@ -264,7 +273,7 @@ export default class {
             if (this.panels.findActive()) {
                 EventBus.publish('sidebarPanelActivated', this.panels.findActive().eventPayload());
             }
-        });
+        }, data);
     }
 
     _setActiveComponents() {
@@ -318,7 +327,7 @@ export default class {
      * coming from serverside. Each component is marked by the [data-sidebar-component]
      * attribute. A unique value is required to distinguish the different components.
      */
-    replacePanelComponents(callback) {
+    replacePanelComponents(callback, data) {
         if (!this.panels.findActive()) {
             callback();
             return;
@@ -330,20 +339,38 @@ export default class {
             return;
         }
 
-        Api.get(this.panels.findActive().url, (data) => {
-            const DOM = document.createElement('div');
-            DOM.innerHTML = data;
-
-            replaceableElements.forEach((el) => {
-                const componentKey = el.getAttribute('data-sidebar-component');
-
-                this.panels.activePanel.replaceDom(
-                    `[data-sidebar-component="${componentKey}"]`,
-                    DOM.querySelector(`[data-sidebar-component="${componentKey}"]`).innerHTML
-                );
-            });
-
+        // If data is already fetched - which is the case for get requests - there is no need
+        // to refetch it for the dom update. For POST requests this is still required.
+        if (data) {
+            this.replacePanelDom(data);
             callback();
+        } else {
+            Api.get(this.panels.findActive().url, (data) => {
+                this.replacePanelDom(data);
+
+                callback();
+            });
+        }
+    }
+
+    replacePanelDom(data) {
+        const replaceableElements = this.panels.findActive().el.querySelectorAll('[data-sidebar-component]');
+        if (replaceableElements.length < 1) {
+            return;
+        }
+
+        const DOM = document.createElement('div');
+        DOM.innerHTML = data;
+
+        console.log(replaceableElements);
+
+        replaceableElements.forEach((el) => {
+            const componentKey = el.getAttribute('data-sidebar-component');
+
+            this.panels.activePanel.replaceDom(
+                `[data-sidebar-component="${componentKey}"]`,
+                DOM.querySelector(`[data-sidebar-component="${componentKey}"]`).innerHTML
+            );
         });
     }
 }

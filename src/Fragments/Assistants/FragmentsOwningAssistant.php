@@ -99,10 +99,14 @@ trait FragmentsOwningAssistant
 
     private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments, $order)
     {
+        // filtering
+        dump(request()->all());
+
         return view('chief::manager.cards.fragments.component.fragment-select-existing', [
             'fragments' => $fragments,
             'sharedFragments' => $sharedFragments,
             'owner' => $owner,
+            'ownerManager' => $this,
             'order' => $order,
         ]);
     }

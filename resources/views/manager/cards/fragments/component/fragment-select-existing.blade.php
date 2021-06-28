@@ -1,15 +1,21 @@
 <div class="space-y-12">
     <h3>Kies een bestaand fragment</h3>
 
-    <div class="row-start-center gutter-1">
+    <form action="{{ $ownerManager->route('fragments-select-existing', $owner) }}">
+        <input class="w-full p-2" type="text" name="search">
+        <button class="btn btn-primary" type="submit">Filter</button>
+    </form>
+
+    <div data-sidebar-component="existingFragments" class="row-start-center gutter-1">
+
+        <?php dump(request()->all()); ?>
 
         @if(count($sharedFragments) > 0)
             <div class="space-x-2">
                 @foreach($sharedFragments as $sharedFragment)
-                    <div
-                            data-sidebar-close
-                            data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
-                            class="mb-6 cursor-pointer"
+                    <div data-sidebar-close
+                         data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
+                         class="mb-6 cursor-pointer"
                     >
                         <h4>{{ $sharedFragment['model']->adminConfig()->getPageTitle() }}</h4>
                         <div class="wireframe">

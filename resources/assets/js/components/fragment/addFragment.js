@@ -44,8 +44,10 @@ export default class {
 
         if (!action) return;
 
-        Api.submit('POST', action, {}, (data) => {
-            EventBus.publish('fragmentAdded', data);
+        Api.post(action, {}, (data) => {
+            EventBus.publish('fragmentAdded', {
+                componentKey: 'addFragment',
+            });
         });
     }
 }

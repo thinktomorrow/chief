@@ -3,7 +3,7 @@ const Api = {
         fetch(url)
             .then((response) => response.text())
             .then((data) => {
-                if (successCallback) successCallback(data);
+                if (successCallback) successCallback(data, { method: 'get' });
             })
             .catch((error) => {
                 if (errorCallback) errorCallback(error);
@@ -11,7 +11,7 @@ const Api = {
             });
     },
 
-    submit(method, url, body, successCallback, errorCallback) {
+    post(url, body, successCallback, errorCallback, method = 'POST') {
         fetch(url, {
             method,
             body,
@@ -21,7 +21,7 @@ const Api = {
         })
             .then((response) => response.json())
             .then((data) => {
-                if (successCallback) successCallback(data);
+                if (successCallback) successCallback(data, { method: 'post' });
             })
             .catch((error) => {
                 if (errorCallback) errorCallback(error);
@@ -37,7 +37,13 @@ const Api = {
         forms.forEach((form) => {
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-                self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
+
+                if (this.method === 'get') {
+                    const searchParams = new URLSearchParams(new FormData(this)).toString();
+                    self.get(`${this.action}?${searchParams}`, successCallback, errorCallback);
+                } else {
+                    self.post(this.action, new FormData(this), successCallback, errorCallback);
+                }
             });
         });
     },
