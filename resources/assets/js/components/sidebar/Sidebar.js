@@ -92,7 +92,7 @@ export default class {
              */
             ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
                 EventBus.subscribe(eventKey, (evt) => {
-                    if(evt.componentKey !== component.key) return;
+                    if (evt.componentKey !== component.key) return;
 
                     livewireComponent.reload();
                 });

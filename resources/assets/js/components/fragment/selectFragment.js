@@ -35,8 +35,8 @@ export default class {
         });
     }
 
-    closeAll() {
-        this.container.querySelectorAll(this.elementSelector).forEach((element) => {
+    _closeAll() {
+        this.container.querySelectorAll(this.optionsSelector).forEach((element) => {
             element.classList.add('hidden');
         });
     }
@@ -47,6 +47,8 @@ export default class {
         const trigger = event.currentTarget;
         const element = trigger.closest(this.elementSelector);
         const optionsElement = element.querySelector(this.optionsSelector);
+
+        this._closeAll();
 
         optionsElement.classList.remove('hidden');
 
@@ -67,12 +69,12 @@ export default class {
 
         element.querySelectorAll('[data-sidebar-trigger]').forEach((el) => {
             if (el.hasAttribute('href')) {
-                el.setAttribute('href', this._getUriWithParam(el.getAttribute('href'), { order }));
+                el.setAttribute('href', this.constructor._getUriWithParam(el.getAttribute('href'), { order }));
             }
         });
     }
 
-    _getUriWithParam(baseUrl, params) {
+    static _getUriWithParam(baseUrl, params) {
         const Url = new URL(baseUrl);
         const urlParams = new URLSearchParams(Url.search);
         for (const key in params) {
