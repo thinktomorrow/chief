@@ -33,6 +33,11 @@ final class ContextModel extends Model
                 ->orderBy('context_fragment_lookup.order');
     }
 
+    public function findFragmentModel($fragmentModelId): ?FragmentModel
+    {
+        return $this->fragments()->firstWhere('id', $fragmentModelId);
+    }
+
     public static function owning(FragmentModel $fragmentModel): Collection
     {
         return static::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')

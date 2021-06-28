@@ -57,12 +57,20 @@
 
             @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
                 @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
-                <a
+
+                @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
+                    <span class="link">
+                        {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                    </span>
+                @else
+                    <a
                         class="underline link link-primary"
                         href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
-                >
-                    {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
-                </a>@if(!$loop->last), @endif
+                    >
+                        {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                    </a>
+                @endif
+                @if(!$loop->last), @endif
             @endforeach
         </p>
 

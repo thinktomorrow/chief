@@ -244,21 +244,21 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentDetachShared($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentDetachShared($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId);
     }
 
     public function nestedFragmentDetachShared(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentDetachShared($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0));
+        return $this->handleFragmentDetachShared($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId);
     }
 
-    private function handleFragmentDetachShared(Model $ownerModel, int $fragmentModelId, int $order)
+    private function handleFragmentDetachShared(Model $ownerModel, int $fragmentModelId)
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
-        app(DetachSharedFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
+        app(DetachSharedFragment::class)->handle($ownerModel, $fragmentable->fragmentModel());
 
         return response()->json([
             'message' => 'fragment ['.$fragmentModelId.'] detached as shared and now available as isolated fragment',
