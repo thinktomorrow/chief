@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Events\SharedFragmentDetached;
-use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 
 final class DetachSharedFragment
