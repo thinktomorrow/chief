@@ -15,7 +15,7 @@
                     </div> \
                 </form>',
         },
-        init: function (app) {
+        init(app) {
             this.app = app;
             this.lang = app.lang;
             this.opts = app.opts;
@@ -28,25 +28,25 @@
         // messages
         onmodal: {
             widget: {
-                opened: function ($modal, $form) {
+                opened($modal, $form) {
                     $form.getField('widget').focus();
 
                     if (this.$currentItem) {
-                        var code = decodeURI(this.$currentItem.attr('data-widget-code'));
+                        const code = decodeURI(this.$currentItem.attr('data-widget-code'));
                         $form.getField('widget').val(code);
                     }
                 },
-                insert: function ($modal, $form) {
-                    var data = $form.getData();
+                insert($modal, $form) {
+                    const data = $form.getData();
                     this._insert(data);
                 },
             },
         },
-        oncontextbar: function (e, contextbar) {
-            var data = this.inspector.parse(e.target);
+        oncontextbar(e, contextbar) {
+            const data = this.inspector.parse(e.target);
             if (!data.isFigcaption() && data.isComponentType('widget')) {
-                var node = data.getComponent();
-                var buttons = {
+                const node = data.getComponent();
+                const buttons = {
                     edit: {
                         title: this.lang.get('edit'),
                         api: 'plugin.widget.open',
@@ -64,27 +64,27 @@
         },
         onbutton: {
             widget: {
-                observe: function (button) {
+                observe(button) {
                     this._observeButton(button);
                 },
             },
         },
 
         // public
-        start: function () {
-            var obj = {
+        start() {
+            const obj = {
                 title: this.lang.get('widget'),
                 api: 'plugin.widget.open',
                 observe: 'widget',
             };
 
-            var $button = this.toolbar.addButton('widget', obj);
+            const $button = this.toolbar.addButton('widget', obj);
             $button.setIcon('<i class="re-icon-widget"></i>');
         },
-        open: function () {
+        open() {
             this.$currentItem = this._getCurrent();
 
-            var options = {
+            const options = {
                 title: this.lang.get('widget'),
                 width: '600px',
                 name: 'widget',
@@ -97,36 +97,36 @@
 
             this.app.api('module.modal.build', options);
         },
-        remove: function (node) {
+        remove(node) {
             this.component.remove(node);
         },
 
         // private
-        _getCurrent: function () {
-            var current = this.selection.getCurrent();
-            var data = this.inspector.parse(current);
+        _getCurrent() {
+            const current = this.selection.getCurrent();
+            const data = this.inspector.parse(current);
             if (data.isComponentType('widget')) {
                 return this.component.build(data.getComponent());
             }
         },
-        _insert: function (data) {
+        _insert(data) {
             this.app.api('module.modal.close');
 
             if (data.widget.trim() === '') {
                 return;
             }
 
-            var html = this._isHtmlString(data.widget) ? data.widget : document.createTextNode(data.widget);
-            var $component = this.component.create('widget', html);
+            const html = this._isHtmlString(data.widget) ? data.widget : document.createTextNode(data.widget);
+            const $component = this.component.create('widget', html);
             $component.attr('data-widget-code', encodeURI(data.widget.trim()));
             this.insertion.insertHtml($component);
         },
-        _isHtmlString: function (html) {
+        _isHtmlString(html) {
             return !(typeof html === 'string' && !/^\s*<(\w+|!)[^>]*>/.test(html));
         },
-        _observeButton: function (button) {
-            var current = this.selection.getCurrent();
-            var data = this.inspector.parse(current);
+        _observeButton(button) {
+            const current = this.selection.getCurrent();
+            const data = this.inspector.parse(current);
 
             if (data.isComponentType('table')) button.disable();
             else button.enable();
@@ -136,23 +136,23 @@
 (function ($R) {
     $R.add('class', 'widget.component', {
         mixins: ['dom', 'component'],
-        init: function (app, el) {
+        init(app, el) {
             this.app = app;
 
             // init
             return el && el.cmnt !== undefined ? el : this._init(el);
         },
-        getData: function () {
+        getData() {
             return {
                 html: this._getHtml(),
             };
         },
 
         // private
-        _init: function (el) {
+        _init(el) {
             if (typeof el !== 'undefined') {
-                var $node = $R.dom(el);
-                var $figure = $node.closest('figure');
+                const $node = $R.dom(el);
+                const $figure = $node.closest('figure');
                 if ($figure.length !== 0) {
                     this.parse($figure);
                 } else {
@@ -165,14 +165,14 @@
 
             this._initWrapper();
         },
-        _getHtml: function () {
-            var $wrapper = $R.dom('<div>');
+        _getHtml() {
+            const $wrapper = $R.dom('<div>');
             $wrapper.html(this.html());
             $wrapper.find('.redactor-component-caret').remove();
 
             return $wrapper.html();
         },
-        _initWrapper: function () {
+        _initWrapper() {
             this.addClass('redactor-component');
             this.attr({
                 'data-redactor-type': 'widget',

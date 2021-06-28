@@ -8,7 +8,7 @@
                 choose: 'Galerij',
             },
         },
-        init: function (app) {
+        init(app) {
             this.app = app;
             this.lang = app.lang;
             this.opts = app.opts;
@@ -16,7 +16,7 @@
         // messages
         onmodal: {
             image: {
-                open: function ($modal, $form) {
+                open($modal, $form) {
                     if (!this.opts.mediagalleryApi) return;
 
                     this._load($modal);
@@ -25,10 +25,10 @@
         },
 
         // private
-        _load: function ($modal) {
-            var $body = $modal.getBody();
+        _load($modal) {
+            const $body = $modal.getBody();
 
-            var $tab = $R.dom('<div>');
+            const $tab = $R.dom('<div>');
             $tab.attr('data-title', this.lang.get('choose'));
             $tab.addClass('redactor-modal-tab');
             $tab.hide();
@@ -60,15 +60,15 @@
                 success: this._parse.bind(this),
             });
         },
-        _parse: function (data) {
-            for (var key in data) {
-                var obj = data[key];
+        _parse(data) {
+            for (const key in data) {
+                const obj = data[key];
                 if (typeof obj !== 'object') continue;
 
-                var $div = $R.dom('<div>');
+                const $div = $R.dom('<div>');
                 $div.addClass('column-3 border rounded border-transparent hover:border-grey-100 hover:bg-grey-50 p-2');
 
-                var $imgContainer = $R.dom('<div>');
+                const $imgContainer = $R.dom('<div>');
                 $imgContainer.addClass('flex items-center justify-center');
                 $imgContainer.css({
                     width: '100%',
@@ -78,8 +78,8 @@
                     overflow: 'hidden',
                 });
 
-                var $img = $R.dom('<img>');
-                var url = obj.thumb ? obj.thumb : obj.url;
+                const $img = $R.dom('<img>');
+                const url = obj.thumb ? obj.thumb : obj.url;
                 $img.attr('src', url);
                 $img.attr('data-params', encodeURI(JSON.stringify(obj)));
                 $img.css({
@@ -104,17 +104,17 @@
                 this.$box.append($div);
             }
         },
-        _insert: function (e) {
+        _insert(e) {
             e.preventDefault();
 
-            var $el = $R.dom(e.target);
-            var data = JSON.parse(decodeURI($el.attr('data-params')));
+            const $el = $R.dom(e.target);
+            const data = JSON.parse(decodeURI($el.attr('data-params')));
 
             this.app.api('module.image.insert', { image: data });
         },
-        loadMore: function () {
+        loadMore() {
             $R.ajax.get({
-                url: this.opts.mediagalleryApi + '?offset=' + this.$box.children().length,
+                url: `${this.opts.mediagalleryApi}?offset=${this.$box.children().length}`,
                 success: this._parse.bind(this),
             });
         },

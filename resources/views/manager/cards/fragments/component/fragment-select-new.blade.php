@@ -1,21 +1,25 @@
 <div class="space-y-12">
     <h3>Voeg een nieuw fragment toe</h3>
 
-    <div class="row-start-start gutter-4">
-        @forelse($fragments as $allowedFragment)
-            <a
-                data-sidebar-trigger="fragments"
-                class="flex flex-col w-full space-y-1 overflow-hidden rounded-xl group hover:bg-primary-500"
-                href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
-            >
-                <span class="font-semibold text-grey-900 group-hover:text-white">
-                    {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
-                </span>
+    <div>
+        <div class="-m-6 divide-y divide-grey-100">
+            @forelse($fragments as $allowedFragment)
+                <div class="p-6 group hover:bg-primary-500 transition-75 rounded-xl">
+                    <a
+                        data-sidebar-trigger="fragments"
+                        class="flex flex-col w-full space-y-2 overflow-hidden"
+                        href="{{ $allowedFragment['manager']->route('fragment-create', $owner) . (isset($order) ? '?order=' . $order : '') }}"
+                    >
+                        <span class="font-semibold text-grey-900 group-hover:text-white transition-75">
+                            {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
+                        </span>
 
-                {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
-            </a>
-        @empty
-            No available fragments.
-        @endforelse
+                        {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
+                    </a>
+                </div>
+            @empty
+                No available fragments.
+            @endforelse
+        </div>
     </div>
 </div>

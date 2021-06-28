@@ -7,7 +7,7 @@
 >
     @csrf
 
-    <input type="number" name="order" value="0" hidden>
+    <input type="number" name="order" value="{{ $order ?? 0 }}" hidden>
 
     <div class="space-y-12">
         <h3>{{ ucfirst($model->adminConfig()->getPageTitle()) }}</h3>

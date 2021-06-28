@@ -73,11 +73,11 @@ trait PageDefaults
         $iterator = new \LimitIterator(new \SplFileObject($refMethod->getFileName()), $refMethod->getStartLine(), $refMethod->getEndLine() - $refMethod->getStartLine());
 
         return collect(iterator_to_array($iterator))->filter(function ($line) {
-            return false !== strpos($line, '@dynamicKeys') || false !== strpos($line, '::make(');
+            return false !== stripos($line, '@dynamicKeys') || false !== strpos($line, '::make(');
         })->map(function ($line) {
 
             // Search for @dynamicKeys line
-            preg_match('#@dynamicKeys: ([^\*]*)#', $line, $matches);
+            preg_match('#@dynamicKeys: ([^\*]*)#i', $line, $matches);
             if (count($matches) > 0) {
                 return array_map(fn ($item) => trim($item), explode(',', $matches[1]));
             }

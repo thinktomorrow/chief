@@ -36,6 +36,7 @@ class CreateFragmentCommand extends Command
         while (! $name) {
             $name = $this->ask('What is the name in singular for your fragment?');
         }
+
         while (! $path) {
             $path = $this->ask('Where do you want to put this class?', $this->config->path('Fragments/'));
         }
@@ -81,13 +82,10 @@ class CreateFragmentCommand extends Command
 
         if ($this->files->exists($path) && ! $this->option('force')) {
             $this->error('View already exists!');
-
             return;
         }
 
-        file_put_contents($path, '<div>
-    <!-- '.Inspiring::quote().' -->
-</div>');
+        file_put_contents($path, '<div> <!-- '.Inspiring::quote().' --> </div>');
     }
     protected function replacePlaceholders($content, $values): string
     {

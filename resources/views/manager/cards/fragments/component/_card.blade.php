@@ -1,9 +1,9 @@
 <div
     data-fragment
     data-sortable-id="{{ $model->fragmentModel()->id }}"
-    class="relative w-full {{ ($isNested ?? false) ? 'px-12 py-4' : 'p-6' }}"
+    class="relative w-full"
 >
-    <div class="space-y-4">
+    <div class="space-y-4 {{ ($isNested ?? false) ? 'px-12 py-4' : 'p-6' }}">
         <div class="flex items-start justify-between">
             <div class="flex items-center space-x-2">
                 <span data-sortable-handle class="cursor-pointer link link-primary">
@@ -39,4 +39,7 @@
             {!! $model->renderAdminFragment($owner, $loop) !!}
         </div>
     </div>
+
+    @include('chief::manager.cards.fragments.component.fragment-select')
+
 </div>

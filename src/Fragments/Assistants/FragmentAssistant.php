@@ -120,18 +120,18 @@ trait FragmentAssistant
 
     public function fragmentCreate(Request $request, string $ownerKey, $ownerId)
     {
-        return $this->renderFragmentCreate($this->ownerModel($ownerKey, $ownerId));
+        return $this->renderFragmentCreate($this->ownerModel($ownerKey, $ownerId), $request->input('order', 0));
     }
 
     public function nestedFragmentCreate(Request $request, $fragmentModelId)
     {
-        return $this->renderFragmentCreate($this->fragmentRepository->find($fragmentModelId));
+        return $this->renderFragmentCreate($this->fragmentRepository->find($fragmentModelId), $request->input('order', 0));
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    private function renderFragmentCreate($owner)
+    private function renderFragmentCreate($owner, $order)
     {
         $fragmentable = $this->fragmentable();
 
@@ -140,6 +140,7 @@ trait FragmentAssistant
             'owner' => $owner,
             'model' => $fragmentable,
             'fields' => Fields::make($fragmentable->fields())->notTagged('edit'),
+            'order' => $order,
         ]);
     }
 

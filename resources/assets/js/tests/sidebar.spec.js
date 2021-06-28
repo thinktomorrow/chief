@@ -1,7 +1,6 @@
-'use strict';
-global.fetch = require('jest-fetch-mock');
-
 import Sidebar2 from '../components/sidebar/Sidebar2';
+
+global.fetch = require('jest-fetch-mock');
 
 describe('a sidebar', () => {
     beforeEach(() => {
@@ -29,8 +28,9 @@ describe('a sidebar', () => {
     test('clicking trigger opens panel in sidebar', async () => {
         fetch.mockResponse('MOCKED RESPONSE');
 
-        document.body.innerHTML =
-            '<a id="trigger" href="foobar"></a>' + '<div id="js-sidebar-container"></div>' + sidebarTemplate;
+        document.body.innerHTML = `${
+            '<a id="trigger" href="foobar"></a>' + '<div id="js-sidebar-container"></div>'
+        }${sidebarTemplate}`;
 
         const sidebar = new Sidebar2({
             triggerSelector: '#trigger',

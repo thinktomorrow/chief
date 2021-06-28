@@ -15,7 +15,7 @@
                     </div> \
                 </form>',
         },
-        init: function (app) {
+        init(app) {
             this.app = app;
             this.lang = app.lang;
             this.opts = app.opts;
@@ -27,20 +27,20 @@
         // messages
         onmodal: {
             video: {
-                opened: function ($modal, $form) {
+                opened($modal, $form) {
                     $form.getField('video').focus();
                 },
-                insert: function ($modal, $form) {
-                    var data = $form.getData();
+                insert($modal, $form) {
+                    const data = $form.getData();
                     this._insert(data);
                 },
             },
         },
-        oncontextbar: function (e, contextbar) {
-            var data = this.inspector.parse(e.target);
+        oncontextbar(e, contextbar) {
+            const data = this.inspector.parse(e.target);
             if (data.isComponentType('video')) {
-                var node = data.getComponent();
-                var buttons = {
+                const node = data.getComponent();
+                const buttons = {
                     remove: {
                         title: this.lang.get('delete'),
                         api: 'plugin.video.remove',
@@ -53,17 +53,17 @@
         },
 
         // public
-        start: function () {
-            var obj = {
+        start() {
+            const obj = {
                 title: this.lang.get('video'),
                 api: 'plugin.video.open',
             };
 
-            var $button = this.toolbar.addButtonAfter('image', 'video', obj);
+            const $button = this.toolbar.addButtonAfter('image', 'video', obj);
             $button.setIcon('<i class="re-icon-video"></i>');
         },
-        open: function () {
-            var options = {
+        open() {
+            const options = {
                 title: this.lang.get('video'),
                 width: '600px',
                 name: 'video',
@@ -76,12 +76,12 @@
 
             this.app.api('module.modal.build', options);
         },
-        remove: function (node) {
+        remove(node) {
             this.component.remove(node);
         },
 
         // private
-        _insert: function (data) {
+        _insert(data) {
             this.app.api('module.modal.close');
 
             if (data.video.trim() === '') {
@@ -93,31 +93,29 @@
 
             // inserting
             if (this._isVideoIframe(data.video)) {
-                var $video = this.component.create('video', data.video);
+                const $video = this.component.create('video', data.video);
                 this.insertion.insertHtml($video);
             }
         },
 
-        _isVideoIframe: function (data) {
+        _isVideoIframe(data) {
             return data.match(/<iframe|<video/gi) !== null;
         },
-        _matchData: function (data) {
-            var iframeStart = '<iframe style="width: 500px; height: 281px;" src="';
-            var iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
+        _matchData(data) {
+            const iframeStart = '<iframe style="width: 500px; height: 281px;" src="';
+            const iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
 
             if (this._isVideoIframe(data)) {
-                var allowed = ['iframe', 'video', 'source'];
-                var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+                const allowed = ['iframe', 'video', 'source'];
+                const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
 
-                data = data.replace(tags, function ($0, $1) {
-                    return allowed.indexOf($1.toLowerCase()) === -1 ? '' : $0;
-                });
+                data = data.replace(tags, ($0, $1) => (allowed.indexOf($1.toLowerCase()) === -1 ? '' : $0));
             }
 
             if (data.match(this.opts.regex.youtube)) {
-                data = data.replace(this.opts.regex.youtube, iframeStart + '//www.youtube.com/embed/$1' + iframeEnd);
+                data = data.replace(this.opts.regex.youtube, `${iframeStart}//www.youtube.com/embed/$1${iframeEnd}`);
             } else if (data.match(this.opts.regex.vimeo)) {
-                data = data.replace(this.opts.regex.vimeo, iframeStart + '//player.vimeo.com/video/$2' + iframeEnd);
+                data = data.replace(this.opts.regex.vimeo, `${iframeStart}//player.vimeo.com/video/$2${iframeEnd}`);
             }
 
             return data;
@@ -127,7 +125,7 @@
 (function ($R) {
     $R.add('class', 'video.component', {
         mixins: ['dom', 'component'],
-        init: function (app, el) {
+        init(app, el) {
             this.app = app;
 
             // init
@@ -135,10 +133,10 @@
         },
 
         // private
-        _init: function (el) {
+        _init(el) {
             if (typeof el !== 'undefined') {
-                var $node = $R.dom(el);
-                var $wrapper = $node.closest('figure');
+                const $node = $R.dom(el);
+                const $wrapper = $node.closest('figure');
                 if ($wrapper.length !== 0) {
                     this.parse($wrapper);
                 } else {
@@ -151,7 +149,7 @@
 
             this._initWrapper();
         },
-        _initWrapper: function () {
+        _initWrapper() {
             this.addClass('redactor-component');
             this.attr({
                 'data-redactor-type': 'video',

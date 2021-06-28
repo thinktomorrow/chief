@@ -12,7 +12,7 @@
                 'columns-3': '2 kolommen',
             },
         },
-        init: function (app) {
+        init(app) {
             this.app = app;
             this.toolbar = app.toolbar;
             this.lang = app.lang;
@@ -20,9 +20,9 @@
         },
 
         /** Called when redactor instance is enabled */
-        start: function () {
-            var dropdown = {};
-            var $button = this.toolbar.addButton('column', { title: this.lang.get('columns') });
+        start() {
+            const dropdown = {};
+            const $button = this.toolbar.addButton('column', { title: this.lang.get('columns') });
 
             dropdown.two = {
                 title: this.lang.get('columns-2'),
@@ -39,17 +39,17 @@
             $button.setDropdown(dropdown);
         },
 
-        setAsTable: function (sections) {
-            var columns = [];
+        setAsTable(sections) {
+            const columns = [];
 
-            sections.forEach(function (section) {
-                columns.push('<td class="column-' + section + '"></td>');
+            sections.forEach((section) => {
+                columns.push(`<td class="column-${section}"></td>`);
             });
 
             this.app.insertion.insertHtml(
-                '<table class="block"><tbody class="block"><tr class="row gutter">' +
-                    columns.join('') +
-                    '</tr></tbody></table>'
+                `<table class="block"><tbody class="block"><tr class="row gutter">${columns.join(
+                    ''
+                )}</tr></tbody></table>`
             );
         },
     });

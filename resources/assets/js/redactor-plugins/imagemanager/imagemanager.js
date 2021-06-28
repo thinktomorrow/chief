@@ -5,7 +5,7 @@
                 choose: 'Choose',
             },
         },
-        init: function (app) {
+        init(app) {
             this.app = app;
             this.lang = app.lang;
             this.opts = app.opts;
@@ -13,7 +13,7 @@
         // messages
         onmodal: {
             image: {
-                open: function ($modal, $form) {
+                open($modal, $form) {
                     if (!this.opts.imageManagerJson) return;
                     this._load($modal);
                 },
@@ -21,8 +21,8 @@
         },
 
         // private
-        _load: function ($modal) {
-            var $body = $modal.getBody();
+        _load($modal) {
+            const $body = $modal.getBody();
 
             this.$box = $R.dom('<div>');
             this.$box.attr('data-title', this.lang.get('choose'));
@@ -41,13 +41,13 @@
                 success: this._parse.bind(this),
             });
         },
-        _parse: function (data) {
-            for (var key in data) {
-                var obj = data[key];
+        _parse(data) {
+            for (const key in data) {
+                const obj = data[key];
                 if (typeof obj !== 'object') continue;
 
-                var $img = $R.dom('<img>');
-                var url = obj.thumb ? obj.thumb : obj.url;
+                const $img = $R.dom('<img>');
+                const url = obj.thumb ? obj.thumb : obj.url;
 
                 $img.attr('src', url);
                 $img.attr('data-params', encodeURI(JSON.stringify(obj)));
@@ -63,11 +63,11 @@
                 this.$box.append($img);
             }
         },
-        _insert: function (e) {
+        _insert(e) {
             e.preventDefault();
 
-            var $el = $R.dom(e.target);
-            var data = JSON.parse(decodeURI($el.attr('data-params')));
+            const $el = $R.dom(e.target);
+            const data = JSON.parse(decodeURI($el.attr('data-params')));
 
             this.app.api('module.image.insert', { image: data });
         },
