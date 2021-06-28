@@ -229,20 +229,6 @@ var _default = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "_detectOrder",
-    value: function _detectOrder(element) {
-      var order = 0;
-      var _break = false;
-      this.container.querySelectorAll(this.elementSelector).forEach(function (item) {
-        if (item === element) _break = true;
-
-        if (!_break) {
-          order++;
-        }
-      });
-      return order;
-    }
-  }], [{
     key: "_getUriWithParam",
     value: function _getUriWithParam(baseUrl, params) {
       var Url = new URL(baseUrl);
@@ -256,6 +242,20 @@ var _default = /*#__PURE__*/function () {
 
       Url.search = urlParams.toString();
       return Url.toString();
+    }
+  }, {
+    key: "_detectOrder",
+    value: function _detectOrder(element) {
+      var order = 0;
+      var _break = false;
+      this.container.querySelectorAll(this.elementSelector).forEach(function (item) {
+        if (item === element) _break = true;
+
+        if (!_break) {
+          order++;
+        }
+      });
+      return order;
     }
   }]);
 

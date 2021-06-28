@@ -67,12 +67,12 @@ export default class {
 
         element.querySelectorAll('[data-sidebar-trigger]').forEach((el) => {
             if (el.hasAttribute('href')) {
-                el.setAttribute('href', SelectFragment._getUriWithParam(el.getAttribute('href'), { order }));
+                el.setAttribute('href', this._getUriWithParam(el.getAttribute('href'), { order }));
             }
         });
     }
 
-    static _getUriWithParam(baseUrl, params) {
+    _getUriWithParam(baseUrl, params) {
         const Url = new URL(baseUrl);
         const urlParams = new URLSearchParams(Url.search);
         for (const key in params) {
