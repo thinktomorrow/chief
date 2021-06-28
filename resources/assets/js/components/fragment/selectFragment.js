@@ -35,7 +35,7 @@ export default class {
         });
     }
 
-    closeAll(){
+    closeAll() {
         this.container.querySelectorAll(this.elementSelector).forEach((element) => {
             element.classList.add('hidden');
         });
@@ -44,9 +44,9 @@ export default class {
     _handleOpen(event) {
         event.preventDefault();
 
-        const trigger = event.currentTarget,
-            element = trigger.closest(this.elementSelector),
-            optionsElement = element.querySelector(this.optionsSelector);
+        const trigger = event.currentTarget;
+        const element = trigger.closest(this.elementSelector);
+        const optionsElement = element.querySelector(this.optionsSelector);
 
         optionsElement.classList.remove('hidden');
 
@@ -56,28 +56,27 @@ export default class {
     _handleClose(event) {
         event.preventDefault();
 
-        const trigger = event.currentTarget,
-            element = trigger.closest(this.elementSelector).querySelector(this.optionsSelector);
+        const trigger = event.currentTarget;
+        const element = trigger.closest(this.elementSelector).querySelector(this.optionsSelector);
 
         element.classList.add('hidden');
     }
 
     _addOrderToExistingFragmentLink(element) {
-
         const order = this._detectOrder(element);
 
         element.querySelectorAll('[data-sidebar-trigger]').forEach((el) => {
             if (el.hasAttribute('href')) {
-                el.setAttribute('href', this._getUriWithParam(el.getAttribute('href'), { order: order }));
+                el.setAttribute('href', this._getUriWithParam(el.getAttribute('href'), { order }));
             }
         });
     }
 
-    _getUriWithParam(baseUrl, params) {
+    static _getUriWithParam(baseUrl, params) {
         const Url = new URL(baseUrl);
         const urlParams = new URLSearchParams(Url.search);
         for (const key in params) {
-            if (params.hasOwnProperty(key) && params[key] !== undefined) {
+            if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== undefined) {
                 urlParams.set(key, params[key]);
             }
         }
@@ -85,11 +84,11 @@ export default class {
         return Url.toString();
     }
 
-    _detectOrder(element){
-        let order = 0,
-            _break = false;
+    _detectOrder(element) {
+        let order = 0;
+        let _break = false;
 
-        this.container.querySelectorAll(this.elementSelector).forEach(function (item) {
+        this.container.querySelectorAll(this.elementSelector).forEach((item) => {
             if (item === element) _break = true;
             if (!_break) {
                 order++;

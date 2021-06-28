@@ -11,15 +11,15 @@ const plugin = require('tailwindcss/plugin');
  *     width: 80%;
  *     max-width: 1440px; }
  */
-const WarpaintContainer = plugin(function ({ addUtilities, config }) {
+const WarpaintContainer = plugin(({ addUtilities, config }) => {
     const widths = config('theme.width');
     const breakpoints = config('theme.screens');
 
-    let containerUtilities = {};
+    const containerUtilities = {};
 
-    for (let [key, value] of Object.entries(widths)) {
-        let className = `.container-${key.split('/').join('\\/')}`;
-        let classProperties = {
+    for (const [key, value] of Object.entries(widths)) {
+        const className = `.container-${key.split('/').join('\\/')}`;
+        const classProperties = {
             'margin-left': 'auto',
             'margin-right': 'auto',
             width: `${value}`,

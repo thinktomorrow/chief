@@ -4,14 +4,12 @@ import AddFragment from './fragment/addFragment';
 import SelectFragment from './fragment/selectFragment';
 import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
-import Collection from '../utilities/Collection';
 import generateWireframeStyles from '../utilities/wireframe-styles';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-
     /** Fragments */
     const fragmentsComponent = new Component('fragments', {
         livewire: true,
@@ -21,17 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 EventBus.publish('fragmentSidebarPanelCreated', panelData);
             },
             sidebarPanelActivated: (panelData) => {
-                console.log('triggered sidebarPanel', panelData.panel.el);
-
                 // Todo: check if this sidebar contains fragments...
                 new SelectFragment(panelData.panel.el);
             },
         },
         onComponentCreation: () => {
-            // loadedSelectFragments.clear().add({ id: 0, class: new SelectFragment(document) });
             initSortable();
             generateWireframeStyles();
-            console.log('component creation');
             new SelectFragment(document);
         },
         onComponentReload: () => {
@@ -41,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
+    // TODO: rename to addFragment component
     const fragmentSelectionComponent = new Component('selectFragment', {
         closeOnPanelFormSubmit: true,
         events: {
@@ -54,9 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const linksComponent = new Component('links', {
         livewire: true,
         events: {
-            sidebarPanelCreated: (panelData) => {
-                console.log('special links panel created', panelData);
-            },
             sidebarFormSubmitted: () => {
                 const componentEl = statusComponent.el(document);
                 const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
@@ -69,9 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusComponent = new Component('status', {
         livewire: true,
         events: {
-            sidebarPanelCreated: (panelData) => {
-                console.log('special status panel created', panelData);
-            },
             sidebarFormSubmitted: () => {
                 const componentEl = linksComponent.el(document);
                 const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
@@ -86,11 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fieldComponents.push(
             new Component(fieldComponentEl.getAttribute('data-fields-component'), {
                 livewire: true,
-                events: {
-                    sidebarPanelCreated: (panelData) => {
-                        console.log('special fields panel created', panelData);
-                    },
-                },
             })
         );
     });
@@ -108,9 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         events: {
             sidebarPanelCreated: () => {
                 window.registerFieldToggles();
-            },
-            sidebarFormSubmitted: () => {
-                //
             },
         },
     });

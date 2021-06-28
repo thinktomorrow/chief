@@ -15,7 +15,7 @@ const plugin = require('tailwindcss/plugin');
  *     justify-content: center;
  *     align-items: flex-start; }
  */
-const WarpaintRow = plugin(function ({ addComponents }) {
+const WarpaintRow = plugin(({ addComponents }) => {
     const justifyContentValues = [
         { className: 'start', value: 'flex-start' },
         { className: 'center', value: 'center' },
@@ -30,12 +30,12 @@ const WarpaintRow = plugin(function ({ addComponents }) {
         { className: 'stretch', value: 'stretch' },
     ];
 
-    let rowUtilities = {};
+    const rowUtilities = {};
 
     justifyContentValues.forEach((justifyContent) => {
         alignItemsValues.forEach((alignItems) => {
-            let className = `.row-${justifyContent.className}-${alignItems.className}`;
-            let classProperties = {
+            const className = `.row-${justifyContent.className}-${alignItems.className}`;
+            const classProperties = {
                 display: 'flex',
                 'flex-wrap': 'wrap',
                 'justify-content': justifyContent.value,

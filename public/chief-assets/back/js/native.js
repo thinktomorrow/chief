@@ -198,9 +198,9 @@ var _default = /*#__PURE__*/function () {
     key: "_handleOpen",
     value: function _handleOpen(event) {
       event.preventDefault();
-      var trigger = event.currentTarget,
-          element = trigger.closest(this.elementSelector),
-          optionsElement = element.querySelector(this.optionsSelector);
+      var trigger = event.currentTarget;
+      var element = trigger.closest(this.elementSelector);
+      var optionsElement = element.querySelector(this.optionsSelector);
       optionsElement.classList.remove('hidden');
 
       this._addOrderToExistingFragmentLink(element);
@@ -209,8 +209,8 @@ var _default = /*#__PURE__*/function () {
     key: "_handleClose",
     value: function _handleClose(event) {
       event.preventDefault();
-      var trigger = event.currentTarget,
-          element = trigger.closest(this.elementSelector).querySelector(this.optionsSelector);
+      var trigger = event.currentTarget;
+      var element = trigger.closest(this.elementSelector).querySelector(this.optionsSelector);
       element.classList.add('hidden');
     }
   }, {
@@ -229,25 +229,10 @@ var _default = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "_getUriWithParam",
-    value: function _getUriWithParam(baseUrl, params) {
-      var Url = new URL(baseUrl);
-      var urlParams = new URLSearchParams(Url.search);
-
-      for (var key in params) {
-        if (params.hasOwnProperty(key) && params[key] !== undefined) {
-          urlParams.set(key, params[key]);
-        }
-      }
-
-      Url.search = urlParams.toString();
-      return Url.toString();
-    }
-  }, {
     key: "_detectOrder",
     value: function _detectOrder(element) {
-      var order = 0,
-          _break = false;
+      var order = 0;
+      var _break = false;
       this.container.querySelectorAll(this.elementSelector).forEach(function (item) {
         if (item === element) _break = true;
 
@@ -256,6 +241,21 @@ var _default = /*#__PURE__*/function () {
         }
       });
       return order;
+    }
+  }], [{
+    key: "_getUriWithParam",
+    value: function _getUriWithParam(baseUrl, params) {
+      var Url = new URL(baseUrl);
+      var urlParams = new URLSearchParams(Url.search);
+
+      for (var key in params) {
+        if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== undefined) {
+          urlParams.set(key, params[key]);
+        }
+      }
+
+      Url.search = urlParams.toString();
+      return Url.toString();
     }
   }]);
 
@@ -1397,9 +1397,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./fragment/selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
 /* harmony import */ var _fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./fragment/sortableFragments */ "./resources/assets/js/components/fragment/sortableFragments.js");
 /* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
-/* harmony import */ var _utilities_Collection__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utilities/Collection */ "./resources/assets/js/utilities/Collection.js");
-/* harmony import */ var _utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utilities/wireframe-styles */ "./resources/assets/js/utilities/wireframe-styles.js");
-
+/* harmony import */ var _utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utilities/wireframe-styles */ "./resources/assets/js/utilities/wireframe-styles.js");
 
 
 
@@ -1423,39 +1421,34 @@ document.addEventListener('DOMContentLoaded', function () {
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_8__.default.publish('fragmentSidebarPanelCreated', panelData);
       },
       sidebarPanelActivated: function sidebarPanelActivated(panelData) {
-        console.log('triggered sidebarPanel', panelData.panel.el); // Todo: check if this sidebar contains fragments...
-
+        // Todo: check if this sidebar contains fragments...
         new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__.default(panelData.panel.el);
       }
     },
     onComponentCreation: function onComponentCreation() {
-      // loadedSelectFragments.clear().add({ id: 0, class: new SelectFragment(document) });
       (0,_fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_7__.default)();
-      (0,_utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_10__.default)();
-      console.log('component creation');
+      (0,_utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_9__.default)();
       new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__.default(document);
     },
     onComponentReload: function onComponentReload() {
       new _fragment_selectFragment__WEBPACK_IMPORTED_MODULE_6__.default(document);
       (0,_fragment_sortableFragments__WEBPACK_IMPORTED_MODULE_7__.default)();
-      (0,_utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_10__.default)();
+      (0,_utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_9__.default)();
     }
-  });
+  }); // TODO: rename to addFragment component
+
   var fragmentSelectionComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default('selectFragment', {
     closeOnPanelFormSubmit: true,
     events: {
       sidebarPanelCreated: function sidebarPanelCreated(panelData) {
         new _fragment_addFragment__WEBPACK_IMPORTED_MODULE_5__.default(panelData.panel.el);
-        (0,_utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_10__.default)();
+        (0,_utilities_wireframe_styles__WEBPACK_IMPORTED_MODULE_9__.default)();
       }
     }
   });
   var linksComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default('links', {
     livewire: true,
     events: {
-      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-        console.log('special links panel created', panelData);
-      },
       sidebarFormSubmitted: function sidebarFormSubmitted() {
         var componentEl = statusComponent.el(document);
         var livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
@@ -1466,9 +1459,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var statusComponent = new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default('status', {
     livewire: true,
     events: {
-      sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-        console.log('special status panel created', panelData);
-      },
       sidebarFormSubmitted: function sidebarFormSubmitted() {
         var componentEl = linksComponent.el(document);
         var livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
@@ -1479,12 +1469,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var fieldComponents = [];
   document.querySelectorAll('[data-fields-component]').forEach(function (fieldComponentEl) {
     fieldComponents.push(new _sidebar_Component__WEBPACK_IMPORTED_MODULE_4__.default(fieldComponentEl.getAttribute('data-fields-component'), {
-      livewire: true,
-      events: {
-        sidebarPanelCreated: function sidebarPanelCreated(panelData) {
-          console.log('special fields panel created', panelData);
-        }
-      }
+      livewire: true
     }));
   });
   new _sidebar_Sidebar__WEBPACK_IMPORTED_MODULE_3__.default({
@@ -1494,79 +1479,10 @@ document.addEventListener('DOMContentLoaded', function () {
     events: {
       sidebarPanelCreated: function sidebarPanelCreated() {
         window.registerFieldToggles();
-      },
-      sidebarFormSubmitted: function sidebarFormSubmitted() {//
       }
     }
   });
 });
-
-/***/ }),
-
-/***/ "./resources/assets/js/utilities/Collection.js":
-/*!*****************************************************!*\
-  !*** ./resources/assets/js/utilities/Collection.js ***!
-  \*****************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ _default; }
-/* harmony export */ });
-/* harmony import */ var core_js_modules_es_array_find_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.find-index.js */ "./node_modules/core-js/modules/es.array.find-index.js");
-/* harmony import */ var core_js_modules_es_array_find_index_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_index_js__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var _default = /*#__PURE__*/function () {
-  function _default() {
-    _classCallCheck(this, _default);
-
-    this.collection = [];
-  }
-
-  _createClass(_default, [{
-    key: "findIndex",
-    value: function findIndex(id) {
-      return this.collection.findIndex(function (item) {
-        return item.id === id;
-      });
-    }
-  }, {
-    key: "findParentOf",
-    value: function findParentOf(id) {
-      var itemIndex = this.findIndex(id); // Get previous one
-
-      if (this.collection[itemIndex - 1]) {
-        return this.collection[itemIndex - 1];
-      } // If no one is found, we'll take the last one since this will probably be the parent.
-
-
-      return this.collection[this.collection.length - 1];
-    }
-  }, {
-    key: "add",
-    value: function add(item) {
-      this.collection.push(item);
-    }
-  }, {
-    key: "clear",
-    value: function clear() {
-      this.collection = [];
-      return this;
-    }
-  }]);
-
-  return _default;
-}();
-
-
 
 /***/ }),
 

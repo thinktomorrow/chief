@@ -9,7 +9,7 @@
                 'align-justify': 'Align Justify',
             },
         },
-        init: function (app) {
+        init(app) {
             this.app = app;
             this.opts = app.opts;
             this.lang = app.lang;
@@ -17,24 +17,24 @@
             this.toolbar = app.toolbar;
         },
         // public
-        start: function () {
-            var dropdown = {};
+        start() {
+            const dropdown = {};
 
             dropdown.left = { title: this.lang.get('align-left'), api: 'plugin.alignment.set', args: 'left' };
             dropdown.center = { title: this.lang.get('align-center'), api: 'plugin.alignment.set', args: 'center' };
             dropdown.right = { title: this.lang.get('align-right'), api: 'plugin.alignment.set', args: 'right' };
             dropdown.justify = { title: this.lang.get('align-justify'), api: 'plugin.alignment.set', args: 'justify' };
 
-            var $button = this.toolbar.addButton('alignment', { title: this.lang.get('align') });
+            const $button = this.toolbar.addButton('alignment', { title: this.lang.get('align') });
             $button.setIcon('<i class="re-icon-alignment"></i>');
             $button.setDropdown(dropdown);
         },
-        set: function (type) {
+        set(type) {
             if (type === 'left' && this.opts.direction === 'ltr') {
                 return this._remove();
             }
 
-            var args = {
+            const args = {
                 style: { 'text-align': type },
             };
 
@@ -42,7 +42,7 @@
         },
 
         // private
-        _remove: function () {
+        _remove() {
             this.block.remove({ style: 'text-align' });
         },
     });

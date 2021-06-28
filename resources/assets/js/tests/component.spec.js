@@ -1,5 +1,3 @@
-'use strict';
-
 import Component from '../components/sidebar/Component';
 
 describe('a component', () => {
