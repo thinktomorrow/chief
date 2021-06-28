@@ -79,7 +79,7 @@ trait FragmentsOwningAssistant
         return view('chief::manager.cards.fragments.component.fragment-select-new', [
             'fragments' => $fragments,
             'owner' => $owner,
-            'order' => $order
+            'order' => $order,
         ]);
     }
 
