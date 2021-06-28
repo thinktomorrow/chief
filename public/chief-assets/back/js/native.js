@@ -1121,9 +1121,9 @@ var _default = /*#__PURE__*/function () {
 
         ['sidebarFormSubmitted'].concat(_toConsumableArray(_this3.reloadLivewireEvents)).forEach(function (eventKey) {
           _utilities_EventBus__WEBPACK_IMPORTED_MODULE_18__.default.subscribe(eventKey, function (evt) {
-            if (!evt.panel || !evt.panel.parent) {
-              livewireComponent.reload();
-            }
+            if (evt.componentKey !== component.key) return;
+            console.log('reloading . ' + component.key);
+            livewireComponent.reload();
           });
         });
       });
