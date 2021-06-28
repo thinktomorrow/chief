@@ -3,9 +3,8 @@
         data-fragments-container
         data-sortable-fragments
         data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-        class="relative divide-y divide-grey-100 border-t border-b border-grey-100 -m-8"
+        class="relative -m-8 border-t border-b divide-y divide-grey-100 border-grey-100"
     >
-
         @include('chief::manager.cards.fragments.component.fragment-select', [
             'ownerManager' => $manager,
         ])
