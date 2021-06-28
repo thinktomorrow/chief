@@ -67,7 +67,7 @@ export default class {
 
         element.querySelectorAll('[data-sidebar-trigger]').forEach((el) => {
             if (el.hasAttribute('href')) {
-                el.setAttribute('href', this._getUriWithParam(el.getAttribute('href'), { order }));
+                el.setAttribute('href', SelectFragment._getUriWithParam(el.getAttribute('href'), { order }));
             }
         });
     }
