@@ -1,4 +1,8 @@
 .transition-150 {
+    @apply transition-all duration-75 ease-in-out;
+}
+
+.transition-150 {
     @apply transition-all duration-150 ease-in-out;
 }
 
