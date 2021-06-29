@@ -148,8 +148,8 @@ trait FragmentsOwningAssistant
         return $this->fragmentRepository->getAllShared($owner, [
             'exclude_own' => true,
             'default_top_shared' => true,
-            'owners' => array_filter($request->input('owners', []), fn($val) => $val),
-            'types' => array_filter($request->input('types', []), fn($val) => $val),
+            'owners' => array_filter($request->input('owners', []), fn ($val) => $val),
+            'types' => array_filter($request->input('types', []), fn ($val) => $val),
         ])->map(function ($fragmentable) {
             return [
                 'manager' => $this->registry->manager($fragmentable::managedModelKey()),

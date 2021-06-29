@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use ReflectionClass;
-use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -43,13 +43,13 @@ final class FragmentRepository
     {
         $builder = FragmentModel::query();
 
-        if(isset($filters['types']) && count($filters['types']) > 0) {
+        if (isset($filters['types']) && count($filters['types']) > 0) {
             $builder = $this->filterByTypes($builder, $filters['types']);
         } else {
             $builder = $this->filterByTypes($builder, $owner->allowedFragments());
         }
 
-        if(isset($filters['owners']) && count($filters['owners']) > 0) {
+        if (isset($filters['owners']) && count($filters['owners']) > 0) {
             $builder = $this->filterByOwners($builder, $filters['owners']);
         }
 
@@ -63,7 +63,7 @@ final class FragmentRepository
         $collection = $builder->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
 
         // Make sure we don't return the fragments that are already used by the owner
-        if(isset($filters['exclude_own']) && $filters['exclude_own']) {
+        if (isset($filters['exclude_own']) && $filters['exclude_own']) {
             $fragmentModelIds = $this->getByOwner($owner->ownerModel())->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
             return $collection->reject(function ($fragmentable) use ($fragmentModelIds) {
@@ -76,7 +76,7 @@ final class FragmentRepository
 
     private function filterByOwners($builder, array $modelReferences): Builder
     {
-        $modelReferences = array_map(fn($value) => ModelReference::fromString($value), $modelReferences);
+        $modelReferences = array_map(fn ($value) => ModelReference::fromString($value), $modelReferences);
 
         return $builder
             ->join('context_fragment_lookup', 'context_fragments.id', '=', 'context_fragment_lookup.fragment_id')
@@ -84,7 +84,6 @@ final class FragmentRepository
             ->select('context_fragments.*')
             ->groupBy('context_fragments.id')
             ->where(function ($query) use ($modelReferences) {
-
                 $query->where(DB::raw("1=0"));
 
                 foreach ($modelReferences as $modelReference) {
@@ -93,7 +92,7 @@ final class FragmentRepository
                         $query->where('contexts.owner_id', '=', $modelReference->id());
                     });
                 }
-        });
+            });
     }
 
     private function filterByTypes($builder, array $classReferences): Builder
