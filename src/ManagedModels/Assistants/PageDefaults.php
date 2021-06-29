@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
+use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
@@ -27,6 +28,15 @@ trait PageDefaults
 
     /** @var array */
     private $extractedFieldKeys;
+
+    /**
+     * Get all related models that have at least one fragment.
+     * @return Collection
+     */
+    public function getRelatedOwners(): Collection
+    {
+        return static::where('id', '<>', $this->id)->get();
+    }
 
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use ReflectionClass;
+use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -39,9 +39,20 @@ final class FragmentRepository
         return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
 
-    public function getAllShared(FragmentsOwner $owner): Collection
+    public function getAllShared(FragmentsOwner $owner, array $filters = []): Collection
     {
-        $builder = $this->buildSharedQuery($owner);
+        $builder = FragmentModel::query();
+
+        if(isset($filters['types']) && count($filters['types']) > 0) {
+            $builder = $this->filterByTypes($builder, $filters['types']);
+        } else {
+            $builder = $this->filterByTypes($builder, $owner->allowedFragments());
+        }
+
+        if(isset($filters['owners']) && count($filters['owners']) > 0) {
+            $builder = $this->filterByOwners($builder, $filters['owners']);
+        }
+
 
         // Filter
         // specific owning page
@@ -49,39 +60,43 @@ final class FragmentRepository
         // search by keyword...
         // Default only top shared ones
 
-        // TYPE
-        $builder->where(function ($query) use ($filters) {
+        $collection = $builder->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
 
-            $modelReference = ModelReference::fromStatic($allowedFragmentClass);
-            $fragmentModelClasses[] = addSlashes($modelReference->className());
-            $fragmentModelClasses[] = $modelReference->shortClassName();
+        // Make sure we don't return the fragments that are already used by the owner
+        if(isset($filters['exclude_own']) && $filters['exclude_own']) {
+            $fragmentModelIds = $this->getByOwner($owner->ownerModel())->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
-            $query->where('');
-            foreach ($allowedFragments as $fragmentModelClass) {
-                $query->orWhere('model_reference', 'LIKE', $fragmentModelClass. '@%');
-            }
-        })
+            return $collection->reject(function ($fragmentable) use ($fragmentModelIds) {
+                return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
+            });
+        }
 
-
-        return $builder->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
+        return $collection;
     }
 
-    private function buildSharedQuery(FragmentsOwner $owner): Builder
+    private function filterByOwners($builder, array $modelReferences): Builder
     {
-//        $allowedFragments = $this->getAllowedFragmentClasses($owner);
+        $modelReferences = array_map(fn($value) => ModelReference::fromString($value), $modelReferences);
 
-        return $this->filterByType(FragmentModel::query(), $owner->allowedFragments());
-//
-//        where(function ($query) use ($allowedFragments) {
-//            $query->where(DB::raw("1=0"));
-//            foreach ($allowedFragments as $fragmentModelClass) {
-//                $query->orWhere('model_reference', 'LIKE', $fragmentModelClass. '@%');
-//            }
-//        })
-        ;
+        return $builder
+            ->join('context_fragment_lookup', 'context_fragments.id', '=', 'context_fragment_lookup.fragment_id')
+            ->join('contexts', 'context_fragment_lookup.context_id', '=', 'contexts.id')
+            ->select('context_fragments.*')
+            ->groupBy('context_fragments.id')
+            ->where(function ($query) use ($modelReferences) {
+
+                $query->where(DB::raw("1=0"));
+
+                foreach ($modelReferences as $modelReference) {
+                    $query->orWhere(function ($query) use ($modelReference) {
+                        $query->where('contexts.owner_type', '=', $modelReference->shortClassName());
+                        $query->where('contexts.owner_id', '=', $modelReference->id());
+                    });
+                }
+        });
     }
 
-    private function filterByType($builder, array $classReferences): Builder
+    private function filterByTypes($builder, array $classReferences): Builder
     {
         $classReferences = $this->expandedClassReferences($classReferences);
 
@@ -90,7 +105,7 @@ final class FragmentRepository
             foreach ($classReferences as $classReference) {
                 $query->orWhere('model_reference', 'LIKE', $classReference. '@%');
             }
-        })
+        });
     }
 
     private function expandedClassReferences(array $classNames): array

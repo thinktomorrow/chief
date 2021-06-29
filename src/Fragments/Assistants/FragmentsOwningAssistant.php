@@ -145,11 +145,12 @@ trait FragmentsOwningAssistant
 
     private function getSharedFragments(FragmentsOwner $owner, Request $request): array
     {
-        $fragmentModelIds = $this->fragmentRepository->getByOwner($owner->ownerModel())->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
-
-        return $this->fragmentRepository->getAllShared($owner)->reject(function ($fragmentable) use ($fragmentModelIds) {
-            return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
-        })->map(function ($fragmentable) {
+        return $this->fragmentRepository->getAllShared($owner, [
+            'exclude_own' => true,
+            'default_top_shared' => true,
+            'owners' => array_filter($request->input('owners', []), fn($val) => $val),
+            'types' => array_filter($request->input('types', []), fn($val) => $val),
+        ])->map(function ($fragmentable) {
             return [
                 'manager' => $this->registry->manager($fragmentable::managedModelKey()),
                 'model' => $fragmentable,

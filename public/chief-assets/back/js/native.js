@@ -81,7 +81,6 @@ var _default = /*#__PURE__*/function () {
       event.preventDefault();
       var el = event.target.hasAttribute(this.postActionAttribute) ? event.target : event.target.closest("[".concat(this.postActionAttribute, "]"));
       var action = el ? el.getAttribute(this.postActionAttribute) : null;
-      console.log('adding ' + action);
       if (!action) return;
       _sidebar_Api__WEBPACK_IMPORTED_MODULE_3__.default.post(action, {}, function (data) {
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_4__.default.publish('fragmentAdded', {
