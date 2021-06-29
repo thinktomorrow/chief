@@ -5,7 +5,7 @@ import SelectFragment from './fragment/selectFragment';
 import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
 import generateWireframeStyles from '../utilities/wireframe-styles';
-import { submitFormOnChange } from '../utilities/submit-form-on-event';
+// import { submitFormOnChange } from '../utilities/submit-form-on-event';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------

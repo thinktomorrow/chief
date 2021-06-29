@@ -1,19 +1,19 @@
 <template>
     <transition name="pop">
         <div
-            v-show="isVisible"
+            v-show="isVisible && description"
             :ref="'notification-' + this._uid"
             class="flex items-center bg-white border border-grey-100 rounded-lg shadow-lg px-6 py-4 space-x-6 origin-right"
         >
             <div class="rounded-full" :class="color">
-                <svg width="24" height="24"><use :xlink:href="'#' + this.type"></use></svg>
+                <svg width="24" height="24"><use :xlink:href="'#' + type"></use></svg>
             </div>
 
             <div class="flex-grow">
                 <p class="font-medium text-grey-500">
                     <slot>
                         <!-- Notifications that were created asynchronously, have their content stored in description variable -->
-                        {{ this.description }}
+                        {{ description }}
                     </slot>
                 </p>
             </div>

@@ -92,12 +92,13 @@ export default class {
              */
             ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
                 EventBus.subscribe(eventKey, (evt) => {
-
                     // Only refresh own component except for addFragment component which targets the fragments as well.
-                    if (evt.componentKey === component.key || (evt.componentKey === "addFragment" && component.key === "fragments")) {
+                    if (
+                        evt.componentKey === component.key ||
+                        (evt.componentKey === 'addFragment' && component.key === 'fragments')
+                    ) {
                         livewireComponent.reload();
                     }
-
                 });
             });
         });
@@ -345,8 +346,8 @@ export default class {
             this.replacePanelDom(data);
             callback();
         } else {
-            Api.get(this.panels.findActive().url, (data) => {
-                this.replacePanelDom(data);
+            Api.get(this.panels.findActive().url, (_data) => {
+                this.replacePanelDom(_data);
 
                 callback();
             });
