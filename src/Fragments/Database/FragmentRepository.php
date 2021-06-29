@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -40,28 +41,83 @@ final class FragmentRepository
 
     public function getAllShared(FragmentsOwner $owner): Collection
     {
-        $allowedFragments = $this->getAllowedFragmentClasses($owner);
+        $builder = $this->buildSharedQuery($owner);
 
-        return FragmentModel::where(function ($query) use ($allowedFragments) {
-            $query->where(DB::raw("1=0"));
-            foreach ($allowedFragments as $fragmentModelClass) {
-                $query->orWhere('model_reference', 'LIKE', $fragmentModelClass. '@%');
-            }
-        })->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
-    }
+        // Filter
+        // specific owning page
+        // specific fragment type
+        // search by keyword...
+        // Default only top shared ones
 
-    private function getAllowedFragmentClasses(FragmentsOwner $owner): array
-    {
-        $fragmentModelClasses = [];
+        // TYPE
+        $builder->where(function ($query) use ($filters) {
 
-        foreach ($owner->allowedFragments() as $allowedFragmentClass) {
             $modelReference = ModelReference::fromStatic($allowedFragmentClass);
             $fragmentModelClasses[] = addSlashes($modelReference->className());
             $fragmentModelClasses[] = $modelReference->shortClassName();
+
+            $query->where('');
+            foreach ($allowedFragments as $fragmentModelClass) {
+                $query->orWhere('model_reference', 'LIKE', $fragmentModelClass. '@%');
+            }
+        })
+
+
+        return $builder->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
+    }
+
+    private function buildSharedQuery(FragmentsOwner $owner): Builder
+    {
+//        $allowedFragments = $this->getAllowedFragmentClasses($owner);
+
+        return $this->filterByType(FragmentModel::query(), $owner->allowedFragments());
+//
+//        where(function ($query) use ($allowedFragments) {
+//            $query->where(DB::raw("1=0"));
+//            foreach ($allowedFragments as $fragmentModelClass) {
+//                $query->orWhere('model_reference', 'LIKE', $fragmentModelClass. '@%');
+//            }
+//        })
+        ;
+    }
+
+    private function filterByType($builder, array $classReferences): Builder
+    {
+        $classReferences = $this->expandedClassReferences($classReferences);
+
+        return $builder->where(function ($query) use ($classReferences) {
+            $query->where(DB::raw("1=0"));
+            foreach ($classReferences as $classReference) {
+                $query->orWhere('model_reference', 'LIKE', $classReference. '@%');
+            }
+        })
+    }
+
+    private function expandedClassReferences(array $classNames): array
+    {
+        $expanded = [];
+
+        foreach ($classNames as $className) {
+            $modelReference = ModelReference::fromStatic($className);
+            $expanded[] = addSlashes($modelReference->className());
+            $expanded[] = $modelReference->shortClassName();
         }
 
-        return $fragmentModelClasses;
+        return $expanded;
     }
+
+//    private function getAllowedFragmentClasses(FragmentsOwner $owner): array
+//    {
+//        $fragmentModelClasses = [];
+//
+//        foreach ($owner->allowedFragments() as $allowedFragmentClass) {
+//            $modelReference = ModelReference::fromStatic($allowedFragmentClass);
+//            $fragmentModelClasses[] = addSlashes($modelReference->className());
+//            $fragmentModelClasses[] = $modelReference->shortClassName();
+//        }
+//
+//        return $fragmentModelClasses;
+//    }
 
     /**
      * @param int $id

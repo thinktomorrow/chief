@@ -87,21 +87,18 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner), $request->input('order', 0));
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner, $request), $request->input('order', 0));
     }
 
     public function nestedFragmentsSelectExisting(Request $request, $fragmentModelId)
     {
         $owner = $this->fragmentRepository->find($fragmentModelId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner), $request->input('order', 0));
+        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner, $request), $request->input('order', 0));
     }
 
     private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments, $order)
     {
-        // filtering
-        dump(request()->all());
-
         return view('chief::manager.cards.fragments.component.fragment-select-existing', [
             'fragments' => $fragments,
             'sharedFragments' => $sharedFragments,
@@ -146,7 +143,7 @@ trait FragmentsOwningAssistant
         }, $owner->allowedFragments());
     }
 
-    private function getSharedFragments(FragmentsOwner $owner): array
+    private function getSharedFragments(FragmentsOwner $owner, Request $request): array
     {
         $fragmentModelIds = $this->fragmentRepository->getByOwner($owner->ownerModel())->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
