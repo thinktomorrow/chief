@@ -5,6 +5,7 @@ import SelectFragment from './fragment/selectFragment';
 import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
 import generateWireframeStyles from '../utilities/wireframe-styles';
+import { submitFormOnChange } from '../utilities/submit-form-on-event';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -41,7 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         events: {
             sidebarPanelActivated: (panelData) => {
                 new AddFragment(panelData.panel.el);
+
                 generateWireframeStyles();
+
+                // submitFormOnChange('#fragment-select-existing-form', panelData.panel.el);
             },
         },
     });
@@ -81,13 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     new Sidebar({
         debug: true,
-        components: [
-            linksComponent,
-            statusComponent,
-            fragmentsComponent,
-            fragmentAddComponent,
-            ...fieldComponents,
-        ],
+        components: [linksComponent, statusComponent, fragmentsComponent, fragmentAddComponent, ...fieldComponents],
         reloadLivewireEvents: ['fragmentAdded'],
         events: {
             sidebarPanelCreated: () => {
