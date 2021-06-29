@@ -18,7 +18,7 @@
                     </a>
                 </div>
             @empty
-                No available fragments.
+                Geen fragmenten gevonden.
             @endforelse
         </div>
     </div>

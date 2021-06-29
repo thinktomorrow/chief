@@ -4591,7 +4591,6 @@ var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "./no
 module.exports = function (iterator, fn, value, ENTRIES) {
   try {
     return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
   } catch (error) {
     iteratorClose(iterator);
     throw error;
@@ -4922,7 +4921,7 @@ module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, I
     }
   }
 
-  // fix Array#{values, @@iterator}.name in V8 / FF
+  // fix Array.prototype.{ values, @@iterator }.name in V8 / FF
   if (DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
     INCORRECT_VALUES_NAME = true;
     defaultIterator = function values() { return nativeIterator.call(this); };
@@ -5271,47 +5270,7 @@ var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-no
 var SPECIES = wellKnownSymbol('species');
 var RegExpPrototype = RegExp.prototype;
 
-var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
-  // #replace needs built-in support for named groups.
-  // #match works fine because it just return the exec results, even if it has
-  // a "grops" property.
-  var re = /./;
-  re.exec = function () {
-    var result = [];
-    result.groups = { a: '7' };
-    return result;
-  };
-  return ''.replace(re, '$<a>') !== '7';
-});
-
-// IE <= 11 replaces $0 with the whole match, as if it was $&
-// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
-var REPLACE_KEEPS_$0 = (function () {
-  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
-  return 'a'.replace(/./, '$0') === '$0';
-})();
-
-var REPLACE = wellKnownSymbol('replace');
-// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
-var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
-  if (/./[REPLACE]) {
-    return /./[REPLACE]('a', '$0') === '';
-  }
-  return false;
-})();
-
-// Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
-// Weex JS has frozen built-in prototypes, so use try / catch wrapper
-var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
-  // eslint-disable-next-line regexp/no-empty-group -- required for testing
-  var re = /(?:)/;
-  var originalExec = re.exec;
-  re.exec = function () { return originalExec.apply(this, arguments); };
-  var result = 'ab'.split(re);
-  return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
-});
-
-module.exports = function (KEY, length, exec, sham) {
+module.exports = function (KEY, exec, FORCED, SHAM) {
   var SYMBOL = wellKnownSymbol(KEY);
 
   var DELEGATES_TO_SYMBOL = !fails(function () {
@@ -5348,12 +5307,7 @@ module.exports = function (KEY, length, exec, sham) {
   if (
     !DELEGATES_TO_SYMBOL ||
     !DELEGATES_TO_EXEC ||
-    (KEY === 'replace' && !(
-      REPLACE_SUPPORTS_NAMED_GROUPS &&
-      REPLACE_KEEPS_$0 &&
-      !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
-    )) ||
-    (KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
+    FORCED
   ) {
     var nativeRegExpMethod = /./[SYMBOL];
     var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
@@ -5368,25 +5322,13 @@ module.exports = function (KEY, length, exec, sham) {
         return { done: true, value: nativeMethod.call(str, regexp, arg2) };
       }
       return { done: false };
-    }, {
-      REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
-      REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
     });
-    var stringMethod = methods[0];
-    var regexMethod = methods[1];
 
-    redefine(String.prototype, KEY, stringMethod);
-    redefine(RegExpPrototype, SYMBOL, length == 2
-      // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
-      // 21.2.5.11 RegExp.prototype[@@split](string, limit)
-      ? function (string, arg) { return regexMethod.call(string, this, arg); }
-      // 21.2.5.6 RegExp.prototype[@@match](string)
-      // 21.2.5.9 RegExp.prototype[@@search](string)
-      : function (string) { return regexMethod.call(string, this); }
-    );
+    redefine(String.prototype, KEY, methods[0]);
+    redefine(RegExpPrototype, SYMBOL, methods[1]);
   }
 
-  if (sham) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
+  if (SHAM) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
 };
 
 
@@ -5481,6 +5423,7 @@ var replace = ''.replace;
 var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
 var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g;
 
+// `GetSubstitution` abstract operation
 // https://tc39.es/ecma262/#sec-getsubstitution
 module.exports = function (matched, str, position, captures, namedCaptures, replacement) {
   var tailPos = position + matched.length;
@@ -5552,7 +5495,7 @@ var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules
 
 var hasOwnProperty = {}.hasOwnProperty;
 
-module.exports = function hasOwn(it, key) {
+module.exports = Object.hasOwn || function hasOwn(it, key) {
   return hasOwnProperty.call(toObject(it), key);
 };
 
@@ -5682,7 +5625,7 @@ var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules
 
 var functionToString = Function.toString;
 
-// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
 if (typeof store.inspectSource != 'function') {
   store.inspectSource = function (it) {
     return functionToString.call(it);
@@ -6015,7 +5958,8 @@ var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function ()
 
 if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
 
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+// `%IteratorPrototype%[@@iterator]()` method
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
 if ((!IS_PURE || NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
   createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
 }
@@ -6156,8 +6100,10 @@ var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-j
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
-  return !String(Symbol()) ||
-    // Chrome 38 Symbol has incorrect toString conversion
+  var symbol = Symbol();
+  // Chrome 38 Symbol has incorrect toString conversion
+  // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
+  return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
     // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
     !Symbol.sham && V8_VERSION && V8_VERSION < 41;
 });
@@ -6202,7 +6148,8 @@ var PromiseCapability = function (C) {
   this.reject = aFunction(reject);
 };
 
-// 25.4.1.5 NewPromiseCapability(C)
+// `NewPromiseCapability` abstract operation
+// https://tc39.es/ecma262/#sec-newpromisecapability
 module.exports.f = function (C) {
   return new PromiseCapability(C);
 };
@@ -6806,9 +6753,13 @@ module.exports = function (R, S) {
 
 /* eslint-disable regexp/no-assertion-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
 /* eslint-disable regexp/no-useless-quantifier -- testing */
-var regexpFlags = __webpack_require__(/*! ./regexp-flags */ "./node_modules/core-js/internals/regexp-flags.js");
-var stickyHelpers = __webpack_require__(/*! ./regexp-sticky-helpers */ "./node_modules/core-js/internals/regexp-sticky-helpers.js");
-var shared = __webpack_require__(/*! ./shared */ "./node_modules/core-js/internals/shared.js");
+var regexpFlags = __webpack_require__(/*! ../internals/regexp-flags */ "./node_modules/core-js/internals/regexp-flags.js");
+var stickyHelpers = __webpack_require__(/*! ../internals/regexp-sticky-helpers */ "./node_modules/core-js/internals/regexp-sticky-helpers.js");
+var shared = __webpack_require__(/*! ../internals/shared */ "./node_modules/core-js/internals/shared.js");
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+var getInternalState = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js").get;
+var UNSUPPORTED_DOT_ALL = __webpack_require__(/*! ../internals/regexp-unsupported-dot-all */ "./node_modules/core-js/internals/regexp-unsupported-dot-all.js");
+var UNSUPPORTED_NCG = __webpack_require__(/*! ../internals/regexp-unsupported-ncg */ "./node_modules/core-js/internals/regexp-unsupported-ncg.js");
 
 var nativeExec = RegExp.prototype.exec;
 var nativeReplace = shared('native-string-replace', String.prototype.replace);
@@ -6828,12 +6779,24 @@ var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y || stickyHelpers.BROKEN_CARET;
 // nonparticipating capturing group, copied from es5-shim's String#split patch.
 var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
 
-var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y;
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG;
 
 if (PATCH) {
+  // eslint-disable-next-line max-statements -- TODO
   patchedExec = function exec(str) {
     var re = this;
-    var lastIndex, reCopy, match, i;
+    var state = getInternalState(re);
+    var raw = state.raw;
+    var result, reCopy, lastIndex, match, i, object, group;
+
+    if (raw) {
+      raw.lastIndex = re.lastIndex;
+      result = patchedExec.call(raw, str);
+      re.lastIndex = raw.lastIndex;
+      return result;
+    }
+
+    var groups = state.groups;
     var sticky = UNSUPPORTED_Y && re.sticky;
     var flags = regexpFlags.call(re);
     var source = re.source;
@@ -6885,6 +6848,14 @@ if (PATCH) {
       });
     }
 
+    if (match && groups) {
+      match.groups = object = create(null);
+      for (i = 0; i < groups.length; i++) {
+        group = groups[i];
+        object[group[0]] = match[group[1]];
+      }
+    }
+
     return match;
   };
 }
@@ -6927,19 +6898,14 @@ module.exports = function () {
   \*****************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var fails = __webpack_require__(/*! ./fails */ "./node_modules/core-js/internals/fails.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
 
 // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
-// so we use an intermediate function.
-function RE(s, f) {
+var RE = function (s, f) {
   return RegExp(s, f);
-}
+};
 
 exports.UNSUPPORTED_Y = fails(function () {
-  // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
   var re = RE('a', 'y');
   re.lastIndex = 2;
   return re.exec('abcd') != null;
@@ -6950,6 +6916,41 @@ exports.BROKEN_CARET = fails(function () {
   var re = RE('^r', 'gy');
   re.lastIndex = 2;
   return re.exec('str') != null;
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-unsupported-dot-all.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-unsupported-dot-all.js ***!
+  \**********************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(/*! ./fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = fails(function () {
+  // babel-minify transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
+  var re = RegExp('.', (typeof '').charAt(0));
+  return !(re.dotAll && re.exec('\n') && re.flags === 's');
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-unsupported-ncg.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-unsupported-ncg.js ***!
+  \******************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(/*! ./fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = fails(function () {
+  // babel-minify transpiles RegExp('.', 'g') -> /./g and it causes SyntaxError
+  var re = RegExp('(?<a>b)', (typeof '').charAt(5));
+  return re.exec('b').groups.a !== 'b' ||
+    'b'.replace(re, '$<a>c') !== 'bc';
 });
 
 
@@ -7089,7 +7090,7 @@ var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.12.1',
+  version: '3.15.1',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
@@ -8724,6 +8725,7 @@ defineIterator(String, 'String', function (iterated) {
 "use strict";
 
 var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
 var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
 var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
 var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js/internals/to-integer.js");
@@ -8731,7 +8733,9 @@ var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object
 var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
 var getSubstitution = __webpack_require__(/*! ../internals/get-substitution */ "./node_modules/core-js/internals/get-substitution.js");
 var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
 
+var REPLACE = wellKnownSymbol('replace');
 var max = Math.max;
 var min = Math.min;
 
@@ -8739,10 +8743,33 @@ var maybeToString = function (it) {
   return it === undefined ? it : String(it);
 };
 
+// IE <= 11 replaces $0 with the whole match, as if it was $&
+// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
+var REPLACE_KEEPS_$0 = (function () {
+  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
+  return 'a'.replace(/./, '$0') === '$0';
+})();
+
+// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
+var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
+  if (/./[REPLACE]) {
+    return /./[REPLACE]('a', '$0') === '';
+  }
+  return false;
+})();
+
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  var re = /./;
+  re.exec = function () {
+    var result = [];
+    result.groups = { a: '7' };
+    return result;
+  };
+  return ''.replace(re, '$<a>') !== '7';
+});
+
 // @@replace logic
-fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
-  var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
-  var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
+fixRegExpWellKnownSymbolLogic('replace', function (_, nativeReplace, maybeCallNative) {
   var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
 
   return [
@@ -8757,17 +8784,18 @@ fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, ma
     },
     // `RegExp.prototype[@@replace]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
-    function (regexp, replaceValue) {
+    function (string, replaceValue) {
       if (
-        (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0) ||
-        (typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
+        typeof replaceValue === 'string' &&
+        replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1 &&
+        replaceValue.indexOf('$<') === -1
       ) {
-        var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
+        var res = maybeCallNative(nativeReplace, this, string, replaceValue);
         if (res.done) return res.value;
       }
 
-      var rx = anObject(regexp);
-      var S = String(this);
+      var rx = anObject(this);
+      var S = String(string);
 
       var functionalReplace = typeof replaceValue === 'function';
       if (!functionalReplace) replaceValue = String(replaceValue);
@@ -8819,7 +8847,7 @@ fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, ma
       return accumulatedResult + S.slice(nextSourcePosition);
     }
   ];
-});
+}, !REPLACE_SUPPORTS_NAMED_GROUPS || !REPLACE_KEEPS_$0 || REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE);
 
 
 /***/ }),
@@ -31182,19 +31210,25 @@ var render = function() {
                     "div",
                     { staticClass: "flex items-center mt-8 space-x-4" },
                     [
-                      _vm._t("footer", [
-                        _vm._t("modal-action-buttons"),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-primary-outline",
-                            on: { click: _vm.close }
-                          },
-                          [_vm._t("modal-close-btn", [_vm._v("Annuleren")])],
-                          2
-                        )
-                      ])
+                      _vm._t("footer", function() {
+                        return [
+                          _vm._t("modal-action-buttons"),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-primary-outline",
+                              on: { click: _vm.close }
+                            },
+                            [
+                              _vm._t("modal-close-btn", function() {
+                                return [_vm._v("Annuleren")]
+                              })
+                            ],
+                            2
+                          )
+                        ]
+                      })
                     ],
                     2
                   )
@@ -31357,13 +31391,15 @@ var render = function() {
             "p",
             { staticClass: "font-medium text-grey-500" },
             [
-              _vm._t("default", [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(this.description) +
-                    "\n                "
-                )
-              ])
+              _vm._t("default", function() {
+                return [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(this.description) +
+                      "\n                "
+                  )
+                ]
+              })
             ],
             2
           )
@@ -31628,51 +31664,55 @@ var render = function() {
     [
       _vm._t(
         "tabnav",
-        [
-          !_vm.hideNav
-            ? _c(
-                "ul",
-                {
-                  staticClass:
-                    "flex w-full pl-0 mb-3 list-none border-b border-grey-200",
-                  attrs: { role: "tablist" }
-                },
-                _vm._l(_vm.tabs, function(tab) {
-                  return _c(
-                    "li",
-                    { attrs: { role: "presentation" } },
-                    [
-                      _vm._t(
-                        "tabname",
-                        [
-                          _c("a", {
-                            staticClass:
-                              "block px-3 pb-2 font-medium text-grey-500 with-bottomline",
-                            class: { active: tab.isActive },
-                            attrs: {
-                              href: tab.hash,
-                              "aria-controls": tab.hash,
-                              "aria-selected": tab.isActive,
-                              role: "tab"
-                            },
-                            domProps: { innerHTML: _vm._s(tab.name) },
-                            on: {
-                              click: function($event) {
-                                return _vm.selectTab(tab)
-                              }
-                            }
-                          })
-                        ],
-                        { tab: tab }
-                      )
-                    ],
-                    2
-                  )
-                }),
-                0
-              )
-            : _vm._e()
-        ],
+        function() {
+          return [
+            !_vm.hideNav
+              ? _c(
+                  "ul",
+                  {
+                    staticClass:
+                      "flex w-full pl-0 mb-3 list-none border-b border-grey-200",
+                    attrs: { role: "tablist" }
+                  },
+                  _vm._l(_vm.tabs, function(tab) {
+                    return _c(
+                      "li",
+                      { attrs: { role: "presentation" } },
+                      [
+                        _vm._t(
+                          "tabname",
+                          function() {
+                            return [
+                              _c("a", {
+                                staticClass:
+                                  "block px-3 pb-2 font-medium text-grey-500 with-bottomline",
+                                class: { active: tab.isActive },
+                                attrs: {
+                                  href: tab.hash,
+                                  "aria-controls": tab.hash,
+                                  "aria-selected": tab.isActive,
+                                  role: "tab"
+                                },
+                                domProps: { innerHTML: _vm._s(tab.name) },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectTab(tab)
+                                  }
+                                }
+                              })
+                            ]
+                          },
+                          { tab: tab }
+                        )
+                      ],
+                      2
+                    )
+                  }),
+                  0
+                )
+              : _vm._e()
+          ]
+        },
         { tabs: _vm.tabs }
       ),
       _vm._v(" "),
@@ -31820,8 +31860,8 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
- * Vue.js v2.6.12
- * (c) 2014-2020 Evan You
+ * Vue.js v2.6.14
+ * (c) 2014-2021 Evan You
  * Released under the MIT License.
  */
 /*  */
@@ -33523,13 +33563,14 @@ function assertProp (
       type = [type];
     }
     for (var i = 0; i < type.length && !valid; i++) {
-      var assertedType = assertType(value, type[i]);
+      var assertedType = assertType(value, type[i], vm);
       expectedTypes.push(assertedType.expectedType || '');
       valid = assertedType.valid;
     }
   }
 
-  if (!valid) {
+  var haveExpectedTypes = expectedTypes.some(function (t) { return t; });
+  if (!valid && haveExpectedTypes) {
     warn(
       getInvalidTypeMessage(name, value, expectedTypes),
       vm
@@ -33547,9 +33588,9 @@ function assertProp (
   }
 }
 
-var simpleCheckRE = /^(String|Number|Boolean|Function|Symbol)$/;
+var simpleCheckRE = /^(String|Number|Boolean|Function|Symbol|BigInt)$/;
 
-function assertType (value, type) {
+function assertType (value, type, vm) {
   var valid;
   var expectedType = getType(type);
   if (simpleCheckRE.test(expectedType)) {
@@ -33564,7 +33605,12 @@ function assertType (value, type) {
   } else if (expectedType === 'Array') {
     valid = Array.isArray(value);
   } else {
-    valid = value instanceof type;
+    try {
+      valid = value instanceof type;
+    } catch (e) {
+      warn('Invalid prop type: "' + String(type) + '" is not a constructor', vm);
+      valid = false;
+    }
   }
   return {
     valid: valid,
@@ -33572,13 +33618,15 @@ function assertType (value, type) {
   }
 }
 
+var functionTypeCheckRE = /^\s*function (\w+)/;
+
 /**
  * Use function string name to check built-in types,
  * because a simple equality check will fail when running
  * across different vms / iframes.
  */
 function getType (fn) {
-  var match = fn && fn.toString().match(/^\s*function (\w+)/);
+  var match = fn && fn.toString().match(functionTypeCheckRE);
   return match ? match[1] : ''
 }
 
@@ -33603,18 +33651,19 @@ function getInvalidTypeMessage (name, value, expectedTypes) {
     " Expected " + (expectedTypes.map(capitalize).join(', '));
   var expectedType = expectedTypes[0];
   var receivedType = toRawType(value);
-  var expectedValue = styleValue(value, expectedType);
-  var receivedValue = styleValue(value, receivedType);
   // check if we need to specify expected value
-  if (expectedTypes.length === 1 &&
-      isExplicable(expectedType) &&
-      !isBoolean(expectedType, receivedType)) {
-    message += " with value " + expectedValue;
+  if (
+    expectedTypes.length === 1 &&
+    isExplicable(expectedType) &&
+    isExplicable(typeof value) &&
+    !isBoolean(expectedType, receivedType)
+  ) {
+    message += " with value " + (styleValue(value, expectedType));
   }
   message += ", got " + receivedType + " ";
   // check if we need to specify received value
   if (isExplicable(receivedType)) {
-    message += "with value " + receivedValue + ".";
+    message += "with value " + (styleValue(value, receivedType)) + ".";
   }
   return message
 }
@@ -33629,9 +33678,9 @@ function styleValue (value, type) {
   }
 }
 
+var EXPLICABLE_TYPES = ['string', 'number', 'boolean'];
 function isExplicable (value) {
-  var explicitTypes = ['string', 'number', 'boolean'];
-  return explicitTypes.some(function (elem) { return value.toLowerCase() === elem; })
+  return EXPLICABLE_TYPES.some(function (elem) { return value.toLowerCase() === elem; })
 }
 
 function isBoolean () {
@@ -33858,7 +33907,7 @@ if (true) {
   var allowedGlobals = makeMap(
     'Infinity,undefined,NaN,isFinite,isNaN,' +
     'parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,' +
-    'Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,' +
+    'Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt,' +
     'require' // for Webpack/Browserify
   );
 
@@ -34361,6 +34410,12 @@ function isWhitespace (node) {
 
 /*  */
 
+function isAsyncPlaceholder (node) {
+  return node.isComment && node.asyncFactory
+}
+
+/*  */
+
 function normalizeScopedSlots (
   slots,
   normalSlots,
@@ -34417,9 +34472,10 @@ function normalizeScopedSlot(normalSlots, key, fn) {
     res = res && typeof res === 'object' && !Array.isArray(res)
       ? [res] // single vnode
       : normalizeChildren(res);
+    var vnode = res && res[0];
     return res && (
-      res.length === 0 ||
-      (res.length === 1 && res[0].isComment) // #9658
+      !vnode ||
+      (res.length === 1 && vnode.isComment && !isAsyncPlaceholder(vnode)) // #9658, #10391
     ) ? undefined
       : res
   };
@@ -34492,26 +34548,28 @@ function renderList (
  */
 function renderSlot (
   name,
-  fallback,
+  fallbackRender,
   props,
   bindObject
 ) {
   var scopedSlotFn = this.$scopedSlots[name];
   var nodes;
-  if (scopedSlotFn) { // scoped slot
+  if (scopedSlotFn) {
+    // scoped slot
     props = props || {};
     if (bindObject) {
       if ( true && !isObject(bindObject)) {
-        warn(
-          'slot v-bind without argument expects an Object',
-          this
-        );
+        warn('slot v-bind without argument expects an Object', this);
       }
       props = extend(extend({}, bindObject), props);
     }
-    nodes = scopedSlotFn(props) || fallback;
+    nodes =
+      scopedSlotFn(props) ||
+      (typeof fallbackRender === 'function' ? fallbackRender() : fallbackRender);
   } else {
-    nodes = this.$slots[name] || fallback;
+    nodes =
+      this.$slots[name] ||
+      (typeof fallbackRender === 'function' ? fallbackRender() : fallbackRender);
   }
 
   var target = props && props.slot;
@@ -34561,6 +34619,7 @@ function checkKeyCodes (
   } else if (eventKeyName) {
     return hyphenate(eventKeyName) !== key
   }
+  return eventKeyCode === undefined
 }
 
 /*  */
@@ -35092,8 +35151,10 @@ function createComponent (
 }
 
 function createComponentInstanceForVnode (
-  vnode, // we know it's MountedComponentVNode but flow doesn't
-  parent // activeInstance in lifecycle state
+  // we know it's MountedComponentVNode but flow doesn't
+  vnode,
+  // activeInstance in lifecycle state
+  parent
 ) {
   var options = {
     _isComponent: true,
@@ -35233,7 +35294,7 @@ function _createElement (
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
-      if ( true && isDef(data) && isDef(data.nativeOn)) {
+      if ( true && isDef(data) && isDef(data.nativeOn) && data.tag !== 'component') {
         warn(
           ("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">."),
           context
@@ -35557,12 +35618,6 @@ function resolveAsyncComponent (
       ? factory.loadingComp
       : factory.resolved
   }
-}
-
-/*  */
-
-function isAsyncPlaceholder (node) {
-  return node.isComment && node.asyncFactory
 }
 
 /*  */
@@ -35933,7 +35988,8 @@ function updateChildComponent (
   var hasDynamicScopedSlot = !!(
     (newScopedSlots && !newScopedSlots.$stable) ||
     (oldScopedSlots !== emptyObject && !oldScopedSlots.$stable) ||
-    (newScopedSlots && vm.$scopedSlots.$key !== newScopedSlots.$key)
+    (newScopedSlots && vm.$scopedSlots.$key !== newScopedSlots.$key) ||
+    (!newScopedSlots && vm.$scopedSlots.$key)
   );
 
   // Any static slot children from the parent may have changed during parent's
@@ -36387,11 +36443,8 @@ Watcher.prototype.run = function run () {
       var oldValue = this.value;
       this.value = value;
       if (this.user) {
-        try {
-          this.cb.call(this.vm, value, oldValue);
-        } catch (e) {
-          handleError(e, this.vm, ("callback for watcher \"" + (this.expression) + "\""));
-        }
+        var info = "callback for watcher \"" + (this.expression) + "\"";
+        invokeWithErrorHandling(this.cb, this.vm, [value, oldValue], this.vm, info);
       } else {
         this.cb.call(this.vm, value, oldValue);
       }
@@ -36613,6 +36666,8 @@ function initComputed (vm, computed) {
         warn(("The computed property \"" + key + "\" is already defined in data."), vm);
       } else if (vm.$options.props && key in vm.$options.props) {
         warn(("The computed property \"" + key + "\" is already defined as a prop."), vm);
+      } else if (vm.$options.methods && key in vm.$options.methods) {
+        warn(("The computed property \"" + key + "\" is already defined as a method."), vm);
       }
     }
   }
@@ -36766,11 +36821,10 @@ function stateMixin (Vue) {
     options.user = true;
     var watcher = new Watcher(vm, expOrFn, cb, options);
     if (options.immediate) {
-      try {
-        cb.call(vm, watcher.value);
-      } catch (error) {
-        handleError(error, vm, ("callback for immediate watcher \"" + (watcher.expression) + "\""));
-      }
+      var info = "callback for immediate watcher \"" + (watcher.expression) + "\"";
+      pushTarget();
+      invokeWithErrorHandling(cb, vm, [watcher.value], vm, info);
+      popTarget();
     }
     return function unwatchFn () {
       watcher.teardown();
@@ -37069,6 +37123,8 @@ function initAssetRegisters (Vue) {
 
 
 
+
+
 function getComponentName (opts) {
   return opts && (opts.Ctor.options.name || opts.tag)
 }
@@ -37090,9 +37146,9 @@ function pruneCache (keepAliveInstance, filter) {
   var keys = keepAliveInstance.keys;
   var _vnode = keepAliveInstance._vnode;
   for (var key in cache) {
-    var cachedNode = cache[key];
-    if (cachedNode) {
-      var name = getComponentName(cachedNode.componentOptions);
+    var entry = cache[key];
+    if (entry) {
+      var name = entry.name;
       if (name && !filter(name)) {
         pruneCacheEntry(cache, key, keys, _vnode);
       }
@@ -37106,9 +37162,9 @@ function pruneCacheEntry (
   keys,
   current
 ) {
-  var cached$$1 = cache[key];
-  if (cached$$1 && (!current || cached$$1.tag !== current.tag)) {
-    cached$$1.componentInstance.$destroy();
+  var entry = cache[key];
+  if (entry && (!current || entry.tag !== current.tag)) {
+    entry.componentInstance.$destroy();
   }
   cache[key] = null;
   remove(keys, key);
@@ -37126,6 +37182,32 @@ var KeepAlive = {
     max: [String, Number]
   },
 
+  methods: {
+    cacheVNode: function cacheVNode() {
+      var ref = this;
+      var cache = ref.cache;
+      var keys = ref.keys;
+      var vnodeToCache = ref.vnodeToCache;
+      var keyToCache = ref.keyToCache;
+      if (vnodeToCache) {
+        var tag = vnodeToCache.tag;
+        var componentInstance = vnodeToCache.componentInstance;
+        var componentOptions = vnodeToCache.componentOptions;
+        cache[keyToCache] = {
+          name: getComponentName(componentOptions),
+          tag: tag,
+          componentInstance: componentInstance,
+        };
+        keys.push(keyToCache);
+        // prune oldest entry
+        if (this.max && keys.length > parseInt(this.max)) {
+          pruneCacheEntry(cache, keys[0], keys, this._vnode);
+        }
+        this.vnodeToCache = null;
+      }
+    }
+  },
+
   created: function created () {
     this.cache = Object.create(null);
     this.keys = [];
@@ -37140,12 +37222,17 @@ var KeepAlive = {
   mounted: function mounted () {
     var this$1 = this;
 
+    this.cacheVNode();
     this.$watch('include', function (val) {
       pruneCache(this$1, function (name) { return matches(val, name); });
     });
     this.$watch('exclude', function (val) {
       pruneCache(this$1, function (name) { return !matches(val, name); });
     });
+  },
+
+  updated: function updated () {
+    this.cacheVNode();
   },
 
   render: function render () {
@@ -37181,12 +37268,9 @@ var KeepAlive = {
         remove(keys, key);
         keys.push(key);
       } else {
-        cache[key] = vnode;
-        keys.push(key);
-        // prune oldest entry
-        if (this.max && keys.length > parseInt(this.max)) {
-          pruneCacheEntry(cache, keys[0], keys, this._vnode);
-        }
+        // delay setting the cache until update
+        this.vnodeToCache = vnode;
+        this.keyToCache = key;
       }
 
       vnode.data.keepAlive = true;
@@ -37269,7 +37353,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.12';
+Vue.version = '2.6.14';
 
 /*  */
 
@@ -37306,7 +37390,7 @@ var isBooleanAttr = makeMap(
   'default,defaultchecked,defaultmuted,defaultselected,defer,disabled,' +
   'enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,' +
   'muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,' +
-  'required,reversed,scoped,seamless,selected,sortable,translate,' +
+  'required,reversed,scoped,seamless,selected,sortable,' +
   'truespeed,typemustmatch,visible'
 );
 
@@ -37430,7 +37514,7 @@ var isHTMLTag = makeMap(
 // contain child elements.
 var isSVG = makeMap(
   'svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,' +
-  'foreignObject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,' +
+  'foreignobject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,' +
   'polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view',
   true
 );
@@ -37635,7 +37719,8 @@ var hooks = ['create', 'activate', 'update', 'remove', 'destroy'];
 
 function sameVnode (a, b) {
   return (
-    a.key === b.key && (
+    a.key === b.key &&
+    a.asyncFactory === b.asyncFactory && (
       (
         a.tag === b.tag &&
         a.isComment === b.isComment &&
@@ -37643,7 +37728,6 @@ function sameVnode (a, b) {
         sameInputType(a, b)
       ) || (
         isTrue(a.isAsyncPlaceholder) &&
-        a.asyncFactory === b.asyncFactory &&
         isUndef(b.asyncFactory.error)
       )
     )
@@ -38533,7 +38617,7 @@ function updateAttrs (oldVnode, vnode) {
     cur = attrs[key];
     old = oldAttrs[key];
     if (old !== cur) {
-      setAttr(elm, key, cur);
+      setAttr(elm, key, cur, vnode.data.pre);
     }
   }
   // #4391: in IE9, setting type can reset value for input[type=radio]
@@ -38553,8 +38637,8 @@ function updateAttrs (oldVnode, vnode) {
   }
 }
 
-function setAttr (el, key, value) {
-  if (el.tagName.indexOf('-') > -1) {
+function setAttr (el, key, value, isInPre) {
+  if (isInPre || el.tagName.indexOf('-') > -1) {
     baseSetAttr(el, key, value);
   } else if (isBooleanAttr(key)) {
     // set attribute for blank value
@@ -41079,7 +41163,7 @@ var isNonPhrasingTag = makeMap(
 
 // Regular Expressions for parsing tags and attributes
 var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
-var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+?\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
 var ncname = "[a-zA-Z_][\\-\\.0-9_a-zA-Z" + (unicodeRegExp.source) + "]*";
 var qnameCapture = "((?:" + ncname + "\\:)?" + ncname + ")";
 var startTagOpen = new RegExp(("^<" + qnameCapture));
@@ -41385,7 +41469,7 @@ var modifierRE = /\.[^.\]]+(?=[^\]]*$)/g;
 var slotRE = /^v-slot(:|$)|^#/;
 
 var lineBreakRE = /[\r\n]/;
-var whitespaceRE$1 = /\s+/g;
+var whitespaceRE$1 = /[ \f\t\r\n]+/g;
 
 var invalidAttributeRE = /[\s"'<>\/=]/;
 
@@ -41433,8 +41517,12 @@ function parse (
   platformMustUseProp = options.mustUseProp || no;
   platformGetTagNamespace = options.getTagNamespace || no;
   var isReservedTag = options.isReservedTag || no;
-  maybeComponent = function (el) { return !!el.component || !isReservedTag(el.tag); };
-
+  maybeComponent = function (el) { return !!(
+    el.component ||
+    el.attrsMap[':is'] ||
+    el.attrsMap['v-bind:is'] ||
+    !(el.attrsMap.is ? isReservedTag(el.attrsMap.is) : isReservedTag(el.tag))
+  ); };
   transforms = pluckModuleFunction(options.modules, 'transformNode');
   preTransforms = pluckModuleFunction(options.modules, 'preTransformNode');
   postTransforms = pluckModuleFunction(options.modules, 'postTransformNode');
@@ -42685,9 +42773,9 @@ function genHandler (handler) {
       code += genModifierCode;
     }
     var handlerCode = isMethodPath
-      ? ("return " + (handler.value) + "($event)")
+      ? ("return " + (handler.value) + ".apply(null, arguments)")
       : isFunctionExpression
-        ? ("return (" + (handler.value) + ")($event)")
+        ? ("return (" + (handler.value) + ").apply(null, arguments)")
         : isFunctionInvocation
           ? ("return " + (handler.value))
           : handler.value;
@@ -42773,7 +42861,8 @@ function generate (
   options
 ) {
   var state = new CodegenState(options);
-  var code = ast ? genElement(ast, state) : '_c("div")';
+  // fix #11483, Root level <script> tags should not be rendered.
+  var code = ast ? (ast.tag === 'script' ? 'null' : genElement(ast, state)) : '_c("div")';
   return {
     render: ("with(this){return " + code + "}"),
     staticRenderFns: state.staticRenderFns
@@ -43238,7 +43327,7 @@ function genComment (comment) {
 function genSlot (el, state) {
   var slotName = el.slotName || '"default"';
   var children = genChildren(el, state);
-  var res = "_t(" + slotName + (children ? ("," + children) : '');
+  var res = "_t(" + slotName + (children ? (",function(){return " + children + "}") : '');
   var attrs = el.attrs || el.dynamicAttrs
     ? genProps((el.attrs || []).concat(el.dynamicAttrs || []).map(function (attr) { return ({
         // slot props are camelized

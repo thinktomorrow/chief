@@ -1,6 +1,5 @@
 <div data-fragments-component>
-    <div class="relative divide-y divide-grey-100 border-t border-b border-grey-100 -m-8">
-
+    <div class="relative -m-8 border-t border-b divide-y divide-grey-100 border-grey-100">
         @include('chief::manager.cards.fragments.component.fragment-select', [
             'ownerManager' => $manager,
             'inOpenState' => count($fragments) < 1
@@ -20,12 +19,5 @@
                 ])
             @endforeach
         </div>
-
-
     </div>
-
-{{--    @include('chief::manager.cards.fragments.component.fragment-select', [--}}
-{{--        'templateId' => 'js-fragment-template-select-options-main',--}}
-{{--    ])--}}
-{{--    @include('chief::manager.cards.fragments.component.fragment-select-icon')--}}
 </div>
