@@ -8,15 +8,17 @@
         </x-slot>
     @endif
 
-    @foreach($options as $option => $optionLabel)
-        <label class="block stack-xs custom-indicators" for="{{ $id.'-'.$option }}">
-            <input {{ ($option == $value) ? 'checked="checked"':'' }}
-                   name="{{ $name }}"
-                   value="{{ $option }}"
-                   id="{{ $id.'-'.$option }}"
-                   type="radio">
-            <span class="custom-radiobutton"></span>
-            <strong>{{ $optionLabel }}</strong>
-        </label>
-    @endforeach
+    <div class="space-y-1">
+        @foreach($options as $option => $optionLabel)
+            <label class="with-radio" for="{{ $id.'-'.$option }}">
+                <input {{ ($option == $value) ? 'checked="checked"':'' }}
+                       name="{{ $name }}"
+                       value="{{ $option }}"
+                       id="{{ $id.'-'.$option }}"
+                       type="radio">
+                <span>{!! $optionLabel !!}</span>
+            </label>
+        @endforeach
+    </div>
+
 </x-chief-formgroup>
