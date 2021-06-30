@@ -11,7 +11,7 @@
     }
 @endphp
 
-<a form="draftForm-{{ $model->id }}" class="{{ $styleClasses }} cursor-pointer">Haal offline</a>
+<a data-submit-form="draftForm-{{ $model->id }}" class="{{ $styleClasses }} cursor-pointer">Haal offline</a>
 
 <form class="hidden" id="draftForm-{{ $model->id }}" action="@adminRoute('unpublish', $model)" method="POST">
     {{ csrf_field() }}

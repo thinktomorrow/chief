@@ -11,7 +11,7 @@
     }
 @endphp
 
-<a form="unarchiveForm-{{ $model->id }}" class="{{ $styleClasses }} cursor-pointer">Herstellen</a>
+<a data-submit-form="unarchiveForm-{{ $model->id }}" class="{{ $styleClasses }} cursor-pointer">Herstellen</a>
 
 <form class="hidden" id="unarchiveForm-{{ $model->id }}" action="@adminRoute('unarchive', $model)" method="POST">
     {{ csrf_field() }}
