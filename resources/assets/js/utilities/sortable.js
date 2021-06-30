@@ -133,7 +133,7 @@ IndexSorting.prototype._filterSortableIndices = function (indices) {
     // This is used for instance on the plus icons in the fragments,
     // which are elements which should not impact the order numbers.
     // ex: '4w1', '5tj', '6f1', '6iq'
-    return indices.filter((index) => index.length > 3);
+    return indices.filter((index) => index.match(/^[0-9]+$/));
 };
 
 export { IndexSorting as default };

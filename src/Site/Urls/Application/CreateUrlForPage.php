@@ -30,7 +30,11 @@ class CreateUrlForPage
             return;
         }
 
-        $this->saveUrlSlugs->handle($model, $slugs);
+        try {
+            $this->saveUrlSlugs->handle($model, $slugs);
+        } catch (\Exception $e) {
+            report($e);
+        }
     }
 
     /**

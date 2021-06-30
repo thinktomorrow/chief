@@ -1,10 +1,12 @@
-<div class="stack-s">
-    @if($label)
-        <label for="{{ $id }}">{{ $label }}</label>
+<x-chief-formgroup
+        label="{{ $label ?? '' }}"
+        name="{{ $name }}"
+>
+    @if(isset($description))
+        <x-slot name="description">
+            <p>{!! $description !!}</p>
+        </x-slot>
     @endif
-    <input type="text" name="{{ $name }}" id="{{ $id }}" class="input inset-s" placeholder="{{ $placeholder }}" value="{{ $value }}">
 
-    @if($description)
-        <p class="stack-xs squished-xs font-s">{{ $description }}</p>
-    @endif
-</div>
+    <input type="text" name="{{ $name }}" id="{{ $id }}" class="input inset-s" placeholder="{{ $placeholder }}" value="{{ $value }}">
+</x-chief-formgroup>

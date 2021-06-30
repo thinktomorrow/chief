@@ -1,17 +1,18 @@
-<div class="stack-s">
-    @if($label)
-        <label for="{{ $id }}">{{ $label }}</label>
+<x-chief-formgroup
+        label="{{ $label ?? '' }}"
+        name="{{ $name }}"
+>
+    @if(isset($description))
+        <x-slot name="description">
+            <p>{!! $description !!}</p>
+        </x-slot>
     @endif
 
     <chief-multiselect id="{{ $id }}"
-        name="{{ $name }}"
-        :options='@json($options)'
-        selected='@json($value)'
-        :multiple='@json($multiple)'
+                       name="{{ $name }}"
+                       :options='@json($options)'
+                       selected='@json($value)'
+                       :multiple='@json($multiple)'
     >
     </chief-multiselect>
-
-    @if($description)
-        <p class="stack-xs squished-xs font-s">{{ $description }}</p>
-    @endif
-</div>
+</x-chief-formgroup>

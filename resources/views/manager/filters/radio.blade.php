@@ -1,6 +1,11 @@
-<div class="stack-s">
-    @if($label)
-        <label for="{{ $id }}">{{ $label }}</label>
+<x-chief-formgroup
+        label="{{ $label ?? '' }}"
+        name="{{ $name }}"
+>
+    @if(isset($description))
+        <x-slot name="description">
+            <p>{!! $description !!}</p>
+        </x-slot>
     @endif
 
     @foreach($options as $option => $optionLabel)
@@ -14,8 +19,4 @@
             <strong>{{ $optionLabel }}</strong>
         </label>
     @endforeach
-
-    @if($description)
-        <p class="stack-xs squished-xs font-s">{{ $description }}</p>
-    @endif
-</div>
+</x-chief-formgroup>

@@ -50,13 +50,14 @@
 
             <div class="w-full space-y-6 lg:w-1/3">
                 @if($manager->filters()->anyRenderable())
-                    <div class="window window-grey">
+                    <div class="window window-grey space-y-6">
                         <span class="text-xl font-semibold text-grey-900">Filtering</span>
 
-                        <form method="GET">
+                        <form method="GET" class="space-y-6">
+
                             {!! $manager->filters()->render() !!}
 
-                            <button class="btn btn-primary" type="submit">Filter</button>
+                            <button class="btn btn-primary mt-4" type="submit">Filter</button>
                         </form>
                     </div>
                 @endif
