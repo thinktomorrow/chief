@@ -11,7 +11,7 @@
                         href="{{ $allowedFragment['manager']->route('fragment-create', $owner) . (isset($order) ? '?order=' . $order : '') }}"
                     >
                         <span class="font-semibold text-grey-900 group-hover:text-white transition-75">
-                            {{ ucfirst($allowedFragment['model']->adminConfig()->getPageTitle()) }}
+                            {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}
                         </span>
 
                         {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
