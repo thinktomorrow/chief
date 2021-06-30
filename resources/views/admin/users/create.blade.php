@@ -13,7 +13,7 @@
                 </a>
             @endslot
 
-            <button data-submit-form="createForm" type="button" class="btn btn-primary">Uitnodiging versturen</button>
+            <button form="createForm" type="submit" class="btn btn-primary">Uitnodiging versturen</button>
         @endcomponent
     </div>
 @endsection

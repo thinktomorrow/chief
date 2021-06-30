@@ -16,7 +16,7 @@
 
         <div>
             <button
-                data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
+                form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
                 type="submit"
                 form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
                 class="btn btn-primary"

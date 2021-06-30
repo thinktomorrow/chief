@@ -13,7 +13,7 @@
                 </a>
             @endslot
 
-            <button data-submit-form="editForm" type="button" class="btn btn-primary">Opslaan</button>
+            <button form="editForm" type="submit" class="btn btn-primary">Opslaan</button>
         @endcomponent
     </div>
 @endsection

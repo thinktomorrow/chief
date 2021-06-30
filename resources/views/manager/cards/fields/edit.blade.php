@@ -20,7 +20,7 @@
 
         <div>
             <button
-                data-submit-form="updateFieldsForm{{ $model->modelReference()->get() }}"
+                form="updateFieldsForm{{ $model->modelReference()->get() }}"
                 type="submit"
                 form="updateFieldsForm{{ $model->modelReference()->get() }}"
                 class="btn btn-primary"

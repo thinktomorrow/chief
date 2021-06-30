@@ -13,7 +13,7 @@
                 </a>
             @endslot
 
-            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
         @endcomponent
     </div>
 @endsection
@@ -38,7 +38,7 @@
                                 </x-chief-formgroup>
                             @endforeach
 
-                            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+                            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                         </div>
                     </form>
                 </div>

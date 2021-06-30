@@ -49,7 +49,7 @@
         @endAdminCan
 
         @adminCan('unarchive', $model)
-            <a data-submit-form="unarchiveForm-{{ $model->id }}" class="cursor-pointer btn btn-primary-outline">Herstellen</a>
+            <a form="unarchiveForm-{{ $model->id }}" class="cursor-pointer btn btn-primary-outline">Herstellen</a>
 
             <form class="hidden" id="unarchiveForm-{{ $model->id }}" action="@adminRoute('unarchive', $model)" method="POST">
                 {{ csrf_field() }}

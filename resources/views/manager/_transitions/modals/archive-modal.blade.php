@@ -33,6 +33,6 @@
     </form>
 
     <div v-cloak slot="modal-action-buttons">
-        <button type="button" class="btn btn-warning" data-submit-form="archive-manager-form-{{ $model->id }}">Archiveren</button>
+        <button type="submit" class="btn btn-warning" form="archive-manager-form-{{ $model->id }}">Archiveren</button>
     </div>
 </modal>

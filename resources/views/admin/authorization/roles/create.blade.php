@@ -13,7 +13,7 @@
                 </a>
             @endslot
 
-            <button data-submit-form="createForm" type="button" class="btn btn-primary">Voeg nieuwe rol toe</button>
+            <button form="createForm" type="submit" class="btn btn-primary">Voeg nieuwe rol toe</button>
         @endcomponent
     </div>
 @endsection

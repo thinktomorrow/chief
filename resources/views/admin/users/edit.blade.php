@@ -17,7 +17,7 @@
                 {!! $user->present()->enabledAsLabel() !!}
 
                 @if($user->isEnabled())
-                    <button data-submit-form="updateForm" type="button" class="btn btn-primary">Opslaan</button>
+                    <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
                 @endif
 
                 <options-dropdown>
@@ -25,11 +25,11 @@
                         <a class="dropdown-link" href="{{ route('chief.back.invites.resend', $user->id) }}">Stuur nieuwe uitnodiging</a>
 
                         @if($user->isEnabled())
-                            <button data-submit-form="disableUserForm" form="disableUserForm" type="submit" class="dropdown-link text-left">
+                            <button form="disableUserForm" form="disableUserForm" type="submit" class="dropdown-link text-left">
                                 {{ ucfirst($user->firstname) }} blokkeren
                             </button>
                         @else
-                            <button data-submit-form="enableUserForm" form="enableUserForm" type="submit" class="dropdown-link text-left">
+                            <button form="enableUserForm" form="enableUserForm" type="submit" class="dropdown-link text-left">
                                 {{ ucfirst($user->firstname) }} deblokkeren
                             </button>
                         @endif

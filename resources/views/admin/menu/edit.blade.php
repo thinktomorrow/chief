@@ -18,7 +18,7 @@
                     Verwijderen
                 </span>
 
-                <button data-submit-form="updateForm" type="button" class="btn btn-primary">Opslaan</button>
+                <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
             </div>
         @endcomponent
     </div>

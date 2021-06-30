@@ -24,7 +24,7 @@
 
         <div class="flex space-x-4">
             <button
-                data-submit-form="updateForm{{ $model->modelReference()->get() }}"
+                form="updateForm{{ $model->modelReference()->get() }}"
                 type="submit"
                 form="updateForm{{ $model->modelReference()->get() }}"
                 class="btn btn-primary"
@@ -86,7 +86,7 @@
 @else
     <div class="bg-blue-50 p-4 p-4 text-sm text-grey-700 mb-6 mt-8">
         <button
-                data-submit-form="copyFragment{{ $model->modelReference()->get() }}"
+                form="copyFragment{{ $model->modelReference()->get() }}"
                 class="btn"
                 type="submit"
                 form="copyFragment{{ $model->modelReference()->get() }}"

@@ -13,7 +13,7 @@
     </form>
 
     <div slot="modal-action-buttons" v-cloak>
-        <button data-submit-form="deleteForm-menuitem-{{$menuitem->id}}" class="btn btn-error" type="button">
+        <button form="deleteForm-menuitem-{{$menuitem->id}}" class="btn btn-error" type="submit">
             Verwijderen
         </button>
     </div>

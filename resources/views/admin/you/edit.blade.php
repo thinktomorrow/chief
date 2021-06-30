@@ -28,7 +28,7 @@
                         <div class="space-y-6">
                             @include('chief::admin.you._form')
 
-                            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Opslaan</button>
+                            <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
                         </div>
                     </form>
                 </div>

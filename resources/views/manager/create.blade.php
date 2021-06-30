@@ -19,7 +19,7 @@
                 @endAdminCan
             @endslot
 
-            <button data-submit-form="createForm" type="button" class="btn btn-primary">Aanmaken</button>
+            <button form="createForm" type="submit" class="btn btn-primary">Aanmaken</button>
         @endcomponent
     </div>
 @endsection
