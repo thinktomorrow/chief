@@ -22,8 +22,6 @@
             </div>
         </div>
 
-        <div>
-            @adminConfig('rowContent')
-        </div>
+        @adminConfig('rowContent')
     </div>
 </div>

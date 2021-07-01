@@ -10,7 +10,7 @@
     <input type="number" name="order" value="{{ $order ?? 0 }}" hidden>
 
     <div class="space-y-12">
-        <h3>{{ ucfirst($model->adminConfig()->getPageTitle()) }}</h3>
+        <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
         <div data-vue-fields class="space-y-8">
             @foreach($fields as $field)
