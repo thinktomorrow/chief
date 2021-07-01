@@ -1,7 +1,7 @@
 <div class="flex flex-col h-screen py-8 pl-8 pr-16 bg-white divide-y shadow-sm divide-grey-100">
     <div class="py-8">
         <a href="{{ route('chief.back.dashboard') }}" class="link link-black">
-            <x-icon-label icon="icon-home" space="large">Home</x-icon-label>
+            <x-icon-label icon="icon-home" space="large">Dashboard</x-icon-label>
         </a>
     </div>
 
