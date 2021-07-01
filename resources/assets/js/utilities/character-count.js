@@ -29,10 +29,7 @@ function characterCount(panel, characterCountEl) {
 }
 
 EventBus.subscribe('sidebarPanelActivated', (data) => {
-    //     const characterCountEl = container.querySelector('[data-character-count=' + id + ']');
-
     data.panel.el.querySelectorAll('[data-character-count]').forEach((el) => {
-        console.log(el);
         characterCount(data.panel.el, el);
     });
 });
