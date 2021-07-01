@@ -44,13 +44,4 @@ final class NavItem
     {
         return count($this->tags) == 0;
     }
-
-    // public function render(): string
-    // {
-    //     $output = '<a class="link link-black' . (isActiveUrl($this->url()) ? 'active' : '') . '" href="' . $this->url() . '">';
-    //     $output .= ucfirst($this->label());
-    //     $output .= '</a>';
-
-    //     return $output;
-    // }
 }

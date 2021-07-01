@@ -1,16 +1,19 @@
 @if(!$attributes->has('inline') && $items->count() > 1)
     @php
         $showOpenDropdown = $attributes->has('open');
+        $isActive = false;
+
         foreach($items as $navItem) {
             if(isActiveUrl($navItem->url())) {
-                $showOpenDropdown = true;
+                $isActive = true;
             }
         }
     @endphp
+
     <div data-navigation-item class="space-y-4">
         <span
             data-navigation-item-label
-            class="link link-black cursor-pointer {{ $showOpenDropdown ? 'active' : '' }}"
+            class="link link-black cursor-pointer {{ $isActive ? 'active' : '' }}"
         >
             {{-- TODO: navigation group should be configurable too --}}
             <x-icon-label space="large" icon="icon-folder">{{ $title }}</x-icon-label>
