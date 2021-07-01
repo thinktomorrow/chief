@@ -8,6 +8,9 @@
                 $isActive = true;
             }
         }
+
+        $groupIcon = (($firstItem = $items->first()) && $firstItem->icon()) ? $firstItem->icon() : 'icon-folder';
+
     @endphp
 
     <div data-navigation-item class="space-y-4">
@@ -15,8 +18,7 @@
             data-navigation-item-label
             class="link link-black cursor-pointer {{ $isActive ? 'active' : '' }}"
         >
-            {{-- TODO: navigation group should be configurable too --}}
-            <x-icon-label space="large" icon="icon-folder">{{ $title }}</x-icon-label>
+            <x-icon-label space="large" icon="{{ $groupIcon }}">{{ $title }}</x-icon-label>
         </span>
 
         <div
