@@ -6,6 +6,7 @@ import FormSubmit from './utilities/form-submit';
  */
 require('./utilities/navigation');
 require('./utilities/toggle-fields');
+require('./utilities/character-count');
 
 FormSubmit.listen('[data-submit-form]');
 
