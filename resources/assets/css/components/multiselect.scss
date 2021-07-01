@@ -34,6 +34,10 @@
     }
 }
 
+.multiselect__tags-wrap {
+    @apply -ml-2;
+}
+
 .multiselect__single,
 .multiselect__placeholder {
     font-size: theme('fontSize.base') !important;
