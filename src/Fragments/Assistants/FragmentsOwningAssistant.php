@@ -124,6 +124,13 @@ trait FragmentsOwningAssistant
 
     private function handleFragmentsReorder(Model $ownerModel, array $indices)
     {
+        /**
+         * Sortable.js contains dummy indices such as 5wj, cfv and such. Here we make sure
+         * that these values are excluded. Since a fragment id consist of at least 4 digits,
+         * We can safely assume that an index with less than four characters is considered an invalid fragment id.
+         */
+        $indices = array_filter($indices, fn($index) => strlen($index) > 3);
+        
         app(SortModels::class)->handleFragments($ownerModel, $indices);
 
         return response()->json([
