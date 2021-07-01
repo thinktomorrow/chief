@@ -16,7 +16,7 @@ trait AllowsToggle
      * @param array|string $fieldKeys
      * @return Field
      */
-    public function toggleField(string $option, $fieldKeys): self
+    public function toggleField($field, $values): self
     {
         $this->fieldToggles[$option] = (array)$fieldKeys;
 
@@ -47,5 +47,15 @@ trait AllowsToggle
         }
 
         return '';
+    }
+
+    public function getFormgroupsToTrigger()
+    {
+        return 'test';
+    }
+
+    public function getValueToTriggerFormgroupsWith()
+    {
+        return null;
     }
 }

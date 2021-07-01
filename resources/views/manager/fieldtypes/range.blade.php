@@ -1,4 +1,4 @@
-<div data-toggle-field-target="{{ $field->getId($locale ?? null) }}" class="space-y-2">
+<div class="space-y-2">
     <input
         type="range"
         oninput="{{ $field->getId($locale ?? null) }}OutputId.value = {{ $field->getId($locale ?? null) }}InputId.value"

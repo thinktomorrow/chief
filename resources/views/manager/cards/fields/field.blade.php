@@ -1,8 +1,10 @@
 <x-chief-formgroup
-        label="{{ $field->getLabel() }}"
-        name="{{ $field->getName($locale ?? null) }}"
-        isRequired="{{ $field->required() }}"
-        data-toggle-field-target="{{ $field->getId($locale ?? null) }}"
+    label="{{ $field->getLabel() }}"
+    name="{{ $field->getName($locale ?? null) }}"
+    isRequired="{{ $field->required() }}"
+    data-formgroup="{{ $field->getId($locale ?? null) }}"
+    data-trigger-formgroup="{{ $field->getFormgroupsToTrigger() }}"
+    data-trigger-formgroup-with-value="{{ $field->getValueToTriggerFormgroupsWith() }}"
 >
     @if($field->getDescription())
         <x-slot name="description">

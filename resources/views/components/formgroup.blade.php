@@ -1,4 +1,9 @@
-<div {!! $attributes->has('data-toggle-field-target') ? 'data-toggle-field-target="'.$attributes->get('data-toggle-field-target').'"' : '' !!} class="{{ $attributes->get('class', '') }}">
+<div
+    {!! $attributes->has('data-formgroup') ? 'data-formgroup="' . $attributes->get('data-formgroup') . '"' : null !!}
+    {!! $attributes->get('data-trigger-formgroup') ? 'data-trigger-formgroup="' . $attributes->get('data-trigger-formgroup') . '"' : null !!}
+    {!! $attributes->get('data-trigger-formgroup-with-value') ? 'data-trigger-formgroup-with-value="' . $attributes->get('data-trigger-formgroup-with-value') . '"' : null !!}
+    class="{{ $attributes->get('class', '') }}"
+>
     @isset($label)
         <div class="mb-3 space-x-1 leading-none">
             @isset($id)
@@ -36,7 +41,7 @@
             @enderror
         </div>
 
-        <div data-error-placeholder="{{ $name }}" class="mt-2 hidden">
+        <div data-error-placeholder="{{ $name }}" class="hidden mt-2">
             <x-inline-notification type="error">
                 <div data-error-placeholder-content></div>
             </x-inline-notification>
