@@ -5,6 +5,8 @@
         id="fragment-select-existing-form"
         action="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
     >
+        <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
+
         <div data-vue-fields class="flex items-center -mx-2">
             @if(public_method_exists($owner, 'getRelatedOwners'))
                 @php
