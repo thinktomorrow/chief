@@ -11,8 +11,10 @@
             $spaceClass = 'space-x-2'; break;
     }
 
-    if(isset($icon)) {
+    if(isset($icon) && false === strpos($icon, '<svg ')) {
         $iconElement = '<svg width="' . $iconSize . '" height="' . $iconSize . '"><use xlink:href="#' . $icon . '"/></svg>';
+    } elseif(isset($icon)) {
+        $iconElement = $icon;
     } else {
         switch($type ?? null) {
             case 'back':
