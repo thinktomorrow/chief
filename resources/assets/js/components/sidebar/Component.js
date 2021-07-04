@@ -49,7 +49,6 @@ export default class {
      * Usually occurs after the livewire reload.
      */
     onComponentReload() {
-        console.log(`component reload for ${this.key}`);
         this.onComponentReloadEvent();
     }
 

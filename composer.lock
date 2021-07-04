@@ -1302,16 +1302,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.49.0",
+            "version": "v8.49.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "855a919d08b45f93cb3cf709736528c3d1531884"
+                "reference": "62aee1bfeefd82f160c7aa3b4c63cb2f053215c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/855a919d08b45f93cb3cf709736528c3d1531884",
-                "reference": "855a919d08b45f93cb3cf709736528c3d1531884",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/62aee1bfeefd82f160c7aa3b4c63cb2f053215c0",
+                "reference": "62aee1bfeefd82f160c7aa3b4c63cb2f053215c0",
                 "shasum": ""
             },
             "require": {
@@ -1466,7 +1466,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-06-29T13:50:21+00:00"
+            "time": "2021-07-02T16:50:12+00:00"
         },
         {
             "name": "laravel/ui",
@@ -2083,16 +2083,16 @@
         },
         {
             "name": "myclabs/php-enum",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "55555d31a622b4bc9662664132a0533ae6ef47b1"
+                "reference": "8bef486e885cae67ced6e43257300e8acc3f06ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/55555d31a622b4bc9662664132a0533ae6ef47b1",
-                "reference": "55555d31a622b4bc9662664132a0533ae6ef47b1",
+                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/8bef486e885cae67ced6e43257300e8acc3f06ad",
+                "reference": "8bef486e885cae67ced6e43257300e8acc3f06ad",
                 "shasum": ""
             },
             "require": {
@@ -2127,7 +2127,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/php-enum/issues",
-                "source": "https://github.com/myclabs/php-enum/tree/1.8.1"
+                "source": "https://github.com/myclabs/php-enum/tree/1.8.2"
             },
             "funding": [
                 {
@@ -2139,7 +2139,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-29T09:20:05+00:00"
+            "time": "2021-07-04T17:44:39+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -7955,16 +7955,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.10.5",
+            "version": "v4.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "4432ba399e47c66624bc73c8c0f811e5c109576f"
+                "reference": "fe14cf3672a149364fb66dfe11bf6549af899f94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4432ba399e47c66624bc73c8c0f811e5c109576f",
-                "reference": "4432ba399e47c66624bc73c8c0f811e5c109576f",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/fe14cf3672a149364fb66dfe11bf6549af899f94",
+                "reference": "fe14cf3672a149364fb66dfe11bf6549af899f94",
                 "shasum": ""
             },
             "require": {
@@ -8005,9 +8005,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.5"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.11.0"
             },
-            "time": "2021-05-03T19:11:20+00:00"
+            "time": "2021-07-03T13:36:55+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -8692,16 +8692,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.90",
+            "version": "0.12.91",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f0e4b56630fc3d4eb5be86606d07212ac212ede4"
+                "reference": "8226701cd228a0d63c2df995de7ab6070c69ac6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f0e4b56630fc3d4eb5be86606d07212ac212ede4",
-                "reference": "f0e4b56630fc3d4eb5be86606d07212ac212ede4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8226701cd228a0d63c2df995de7ab6070c69ac6a",
+                "reference": "8226701cd228a0d63c2df995de7ab6070c69ac6a",
                 "shasum": ""
             },
             "require": {
@@ -8732,7 +8732,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.90"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.91"
             },
             "funding": [
                 {
@@ -8752,7 +8752,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-18T07:15:38+00:00"
+            "time": "2021-07-04T15:31:48+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10383,16 +10383,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.27.1",
+            "version": "1.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "57880fa060c81256363b4b9706e99df447af8613"
+                "reference": "b800636fb022b93df53bd90fa52e5ed07221eb6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/57880fa060c81256363b4b9706e99df447af8613",
-                "reference": "57880fa060c81256363b4b9706e99df447af8613",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/b800636fb022b93df53bd90fa52e5ed07221eb6a",
+                "reference": "b800636fb022b93df53bd90fa52e5ed07221eb6a",
                 "shasum": ""
             },
             "require": {
@@ -10442,7 +10442,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.27.1"
+                "source": "https://github.com/spatie/ray/tree/1.28.0"
             },
             "funding": [
                 {
@@ -10454,7 +10454,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-06-24T06:58:50+00:00"
+            "time": "2021-07-04T13:21:04+00:00"
         },
         {
             "name": "symfony/debug",

@@ -63,7 +63,6 @@ window.chiefRedactorImageUpload = function (uploadUrl) {
             })
             .catch((response) => {
                 upload.complete(response);
-                alert(response.message);
             });
     };
 };
