@@ -8,6 +8,7 @@ module.exports = {
     rules: {
         // Project specific rules
         'no-use-before-define': 0,
+        'no-new': 0,
 
         // Turned this rule off because of conflict with prettier formatting operators at the end of a line.
         'operator-linebreak': 0,
@@ -29,7 +30,7 @@ module.exports = {
         'no-underscore-dangle': 0,
         'wrap-iife': ['error', 'inside'],
 
-        'no-new': process.env.NODE_ENV === 'production' ? 1 : 0,
+        // 'no-new': process.env.NODE_ENV === 'production' ? 1 : 0,
         'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
         'no-alert': process.env.NODE_ENV === 'production' ? 1 : 0,
     },

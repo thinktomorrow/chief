@@ -15,12 +15,14 @@ class FieldPresets
             ->label('Paginatitel zoals deze in zoekmachines wordt getoond.')
             ->locales()
             ->component('SEO')
+            ->characterCount(66)
             ->notOnCreate();
         yield TextField::make('seo_content')
             ->label('Korte inhoud')
             ->description('Pagina omschrijving in zoekmachines.')
             ->locales()
             ->component('SEO')
+            ->characterCount(160)
             ->notOnCreate();
         yield ImageField::make('seo_image')
             ->label('Seo afbeelding')

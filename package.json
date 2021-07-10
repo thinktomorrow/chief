@@ -5,6 +5,7 @@
         "prod": "mix --production --mix-config=webpack.mix.js",
         "test": "jest",
         "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write",
+        "lint": "eslint --fix 'resources/assets/**/*.js'",
         "prepare": "husky install"
     },
     "devDependencies": {

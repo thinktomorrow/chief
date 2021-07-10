@@ -262,7 +262,6 @@ export default class {
     }
 
     reset(data = null) {
-        console.log('RESETTING SIDEBAR ACTIVE PANEL');
         if (this.panels.findActive()) {
             this.sidebarContainer.renderCloseButton();
         }
@@ -361,9 +360,8 @@ export default class {
         }
 
         const DOM = document.createElement('div');
-        DOM.innerHTML = data;
 
-        console.log(replaceableElements);
+        DOM.innerHTML = data;
 
         replaceableElements.forEach((el) => {
             const componentKey = el.getAttribute('data-sidebar-component');

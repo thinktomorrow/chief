@@ -87,20 +87,19 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner, $request), $request->input('order', 0));
+        return $this->showFragmentsSelectExisting($owner, $this->getSharedFragments($owner, $request), $request->input('order', 0));
     }
 
     public function nestedFragmentsSelectExisting(Request $request, $fragmentModelId)
     {
         $owner = $this->fragmentRepository->find($fragmentModelId);
 
-        return $this->showFragmentsSelectExisting($owner, $this->getAllowedFragments($owner), $this->getSharedFragments($owner, $request), $request->input('order', 0));
+        return $this->showFragmentsSelectExisting($owner, $this->getSharedFragments($owner, $request), $request->input('order', 0));
     }
 
-    private function showFragmentsSelectExisting($owner, $fragments, $sharedFragments, $order)
+    private function showFragmentsSelectExisting($owner, $sharedFragments, $order)
     {
         return view('chief::manager.cards.fragments.component.fragment-select-existing', [
-            'fragments' => $fragments,
             'sharedFragments' => $sharedFragments,
             'owner' => $owner,
             'ownerManager' => $this,
@@ -124,6 +123,13 @@ trait FragmentsOwningAssistant
 
     private function handleFragmentsReorder(Model $ownerModel, array $indices)
     {
+        /**
+         * Sortable.js contains dummy indices such as 5wj, cfv and such. Here we make sure
+         * that these values are excluded. Since a fragment id consist of at least 4 digits,
+         * We can safely assume that an index with less than four characters is considered an invalid fragment id.
+         */
+        $indices = array_filter($indices, fn($index) => strlen((string) $index) > 3);
+
         app(SortModels::class)->handleFragments($ownerModel, $indices);
 
         return response()->json([

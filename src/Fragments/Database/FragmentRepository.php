@@ -43,6 +43,8 @@ final class FragmentRepository
     {
         $builder = FragmentModel::query();
 
+        $builder->limit(10);
+
         if (isset($filters['types']) && count($filters['types']) > 0) {
             $builder = $this->filterByTypes($builder, $filters['types']);
         } else {
@@ -52,7 +54,6 @@ final class FragmentRepository
         if (isset($filters['owners']) && count($filters['owners']) > 0) {
             $builder = $this->filterByOwners($builder, $filters['owners']);
         }
-
 
         // Filter
         // specific owning page
