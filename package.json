@@ -35,7 +35,7 @@
         "shelljs": "^0.8.4"
     },
     "dependencies": {
-        "autoprefixer": "^10.2.5",
+        "autoprefixer": "^10.3.0",
         "axios": "^0.21.1",
         "cross-env": "^7.0.3",
         "lodash": "^4.17.21",
