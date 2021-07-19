@@ -13,8 +13,9 @@ trait AllowsToggle
         return $this;
     }
 
-    public function getFormgroupsToTrigger() {
-        if(!empty($this->fieldsToTrigger)) {
+    public function getFormgroupsToTrigger()
+    {
+        if (! empty($this->fieldsToTrigger)) {
             return json_encode($this->fieldsToTrigger);
         }
 
