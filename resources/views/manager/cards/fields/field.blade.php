@@ -4,7 +4,7 @@
     isRequired="{{ $field->required() }}"
     data-formgroup="{{ $field->getId($locale ?? null) }}"
     data-formgroup-type="{{ $field->getType() }}"
-    data-formgroup-data="{{ $field->getConditionalFieldsData() }}"
+    data-conditional-fields-data="{{ $field->getConditionalFieldsData() }}"
 >
     @if($field->getDescription())
         <x-slot name="description">

@@ -3,7 +3,7 @@ import RadioFieldTrigger from './conditional-fields/RadioFieldTrigger';
 const initConditionalFields = (
     formgroupAttribute = 'data-formgroup',
     formgroupTypeAttribute = 'data-formgroup-type',
-    formgroupDataAttribute = 'data-formgroup-data'
+    formgroupDataAttribute = 'data-conditional-fields-data'
 ) => {
     const formgroupElements = Array.from(document.querySelectorAll(`[${formgroupAttribute}]`));
 

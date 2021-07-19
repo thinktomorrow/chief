@@ -1,7 +1,7 @@
 <div
     {!! $attributes->has('data-formgroup') ? 'data-formgroup="' . $attributes->get('data-formgroup') . '"' : null !!}
     {!! $attributes->has('data-formgroup-type') ? 'data-formgroup-type="' . $attributes->get('data-formgroup-type') . '"' : null !!}
-    {!! $attributes->get('data-formgroup-data') ? 'data-formgroup-data="' . $attributes->get('data-formgroup-data') . '"' : null !!}
+    {!! $attributes->get('data-conditional-fields-data') ? 'data-conditional-fields-data="' . $attributes->get('data-conditional-fields-data') . '"' : null !!}
     class="{{ $attributes->get('class', '') }}"
 >
     @isset($label)
