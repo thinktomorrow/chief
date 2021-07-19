@@ -128,7 +128,7 @@ trait FragmentsOwningAssistant
          * that these values are excluded. Since a fragment id consist of at least 4 digits,
          * We can safely assume that an index with less than four characters is considered an invalid fragment id.
          */
-        $indices = array_filter($indices, fn($index) => strlen((string) $index) > 3);
+        $indices = array_filter($indices, fn ($index) => strlen((string) $index) > 3);
 
         app(SortModels::class)->handleFragments($ownerModel, $indices);
 
