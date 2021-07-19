@@ -5,8 +5,6 @@ const initConditionalFields = (
     formgroupTypeAttribute = 'data-formgroup-type',
     formgroupDataAttribute = 'data-formgroup-data'
 ) => {
-    console.log('Conditional fields init ...');
-
     const formgroupElements = Array.from(document.querySelectorAll(`[${formgroupAttribute}]`));
 
     formgroupElements.forEach((formgroupElement) => {
@@ -20,7 +18,7 @@ const initConditionalFields = (
                 new RadioFieldTrigger(formgroupElement, formgroupData);
                 break;
             default:
-                console.log(`Conditional fields handler for formgroup type ${formgroupType} not implemented ...`);
+                console.error(`Conditional fields handling for formgroup type ${formgroupType} not implemented ...`);
         }
     });
 };

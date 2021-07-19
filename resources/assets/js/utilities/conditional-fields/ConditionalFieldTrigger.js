@@ -14,6 +14,8 @@ class ConditionalFieldTrigger {
         this.element.addEventListener(
             'input',
             _debounce(() => {
+                this._hideConditionalFields();
+
                 this._handle();
             }, 250)
         );
@@ -32,7 +34,7 @@ class ConditionalFieldTrigger {
             const conditionalFieldElement = document.querySelector(`[data-formgroup="${key}"]`);
 
             if (!conditionalFieldElement) {
-                console.log(`Couldn't find formgroup with key ${key}`);
+                console.error(`Couldn't find formgroup with key ${key}. Make sure this field exists on this model.`);
             } else {
                 output.push({
                     element: conditionalFieldElement,
@@ -42,6 +44,18 @@ class ConditionalFieldTrigger {
         }
 
         return output;
+    }
+
+    static _isValidRegexExpression(input) {
+        let isValid = true;
+
+        try {
+            new RegExp(input);
+        } catch (e) {
+            isValid = false;
+        }
+
+        return isValid;
     }
 }
 
