@@ -4,10 +4,10 @@ principles.
 
 ## TODO:
 - change statefulcontract to HasPageState.
-- remove dynamic fragment concept altogether. Fragments will always be considered static.
-    - simplify fragmentassistant
-    - v rename staticFragment -> fragment
-    - remove FragmentManager preset (staticFragmentmanager renamed to FragmentManager)
+- ✅ remove dynamic fragment concept altogether. Fragments will always be considered static.
+    - ✅ simplify fragmentassistant
+    - ✅ rename staticFragment -> fragment
+    - ✅ remove FragmentManager preset (staticFragmentmanager renamed to FragmentManager)
 - ✅ refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
 - ✅ migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - ✅ nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
@@ -15,12 +15,9 @@ principles.
 - ✅ sortable handle zodat tekst kan worden geselecteerd
 - field toggle
 - image queue
-- reloadPHP.sh steeds nodig?
 - SEO tracking en events mogelijk maken in chief
 - SEO title en description metadata rendering
 
-- bestaande toevoegen
-- sortering bij bestaande toevoegen nog te doen
 - shared favorite UI
 - errors in sidebar form blijven + tonen
 - Relation mapping in ModelReference + save in db as mapped value ipv volledige class
