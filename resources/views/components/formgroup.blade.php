@@ -1,7 +1,7 @@
 <div
     {!! $attributes->has('data-formgroup') ? 'data-formgroup="' . $attributes->get('data-formgroup') . '"' : null !!}
-    {!! $attributes->get('data-trigger-formgroup') ? 'data-trigger-formgroup="' . $attributes->get('data-trigger-formgroup') . '"' : null !!}
-    {!! $attributes->get('data-trigger-formgroup-with-value') ? 'data-trigger-formgroup-with-value="' . $attributes->get('data-trigger-formgroup-with-value') . '"' : null !!}
+    {!! $attributes->has('data-formgroup-type') ? 'data-formgroup-type="' . $attributes->get('data-formgroup-type') . '"' : null !!}
+    {!! $attributes->get('data-formgroup-data') ? 'data-formgroup-data="' . $attributes->get('data-formgroup-data') . '"' : null !!}
     class="{{ $attributes->get('class', '') }}"
 >
     @isset($label)

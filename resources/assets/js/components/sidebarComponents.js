@@ -6,6 +6,7 @@ import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
 import generateWireframeStyles from '../utilities/wireframe-styles';
 // import { submitFormOnChange } from '../utilities/submit-form-on-event';
+import initConditionalFields from '../utilities/conditional-fields';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -89,7 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         reloadLivewireEvents: ['fragmentAdded'],
         events: {
             sidebarPanelCreated: () => {
-                window.registerFieldToggles();
+                // window.registerFieldToggles();
+                initConditionalFields();
             },
         },
     });

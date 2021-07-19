@@ -1,5 +1,6 @@
 import IndexSorting from './utilities/sortable';
 import FormSubmit from './utilities/form-submit';
+import initConditionalFields from './utilities/conditional-fields';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -7,9 +8,9 @@ import FormSubmit from './utilities/form-submit';
 require('./utilities/navigation');
 require('./utilities/character-count');
 // require('./utilities/toggle-fields');
-require('./utilities/conditional-fields');
 
 FormSubmit.listen('[data-submit-form]');
+initConditionalFields();
 
 /**
  * Sortable

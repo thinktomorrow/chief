@@ -9,11 +9,12 @@ module.exports = {
         // Project specific rules
         'no-use-before-define': 0,
         'no-new': 0,
+        indent: ['error', 4, { SwitchCase: 1 }],
 
         // Turned this rule off because of conflict with prettier formatting operators at the end of a line.
         'operator-linebreak': 0,
 
-        indent: ['error', 4],
+        // indent: ['error', 4],
         'comma-dangle': [
             'error',
             {

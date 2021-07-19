@@ -3,8 +3,8 @@
     name="{{ $field->getName($locale ?? null) }}"
     isRequired="{{ $field->required() }}"
     data-formgroup="{{ $field->getId($locale ?? null) }}"
-    data-trigger-formgroup="{{ $field->getFormgroupsToTrigger() }}"
-    data-trigger-formgroup-with-value="{{ $field->getValueToTriggerFormgroupsWith() }}"
+    data-formgroup-type="{{ $field->getType() }}"
+    data-formgroup-data="{{ $field->getFormgroupsToTrigger() }}"
 >
     @if($field->getDescription())
         <x-slot name="description">
