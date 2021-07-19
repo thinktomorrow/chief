@@ -17,6 +17,10 @@ class ConditionalFieldTrigger {
         // Initially hide all conditional fields toggleable by this condition field trigger
         this._hideConditionalFields();
 
+        setTimeout(() => {
+            this._handle();
+        }, 1000);
+
         this.element.addEventListener(
             'input',
             _debounce(() => {
@@ -28,7 +32,7 @@ class ConditionalFieldTrigger {
     _hideConditionalFields() {
         this.conditionalFields.forEach((conditionalField) => {
             // This attribute is present on the conditional field only if it was already hidden before,
-            // or if the attribute was already present on load (e.g active selection has conditional fields)
+            // or if it was already shown by another conditional field trigger.
             if (conditionalField.element.hasAttribute(this.formgroupToggledByAttribute)) return;
 
             conditionalField.element.classList.add('hidden');

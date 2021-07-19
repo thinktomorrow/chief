@@ -5,6 +5,9 @@ class RadioFieldTrigger extends ConditionalFieldTrigger {
         const radioElements = Array.from(this.element.querySelectorAll('input[type="radio"]'));
         const checkedRadioElement = this.constructor._getCheckedRadioElement(radioElements);
 
+        // If no radio element was selected on load, return
+        if (!checkedRadioElement) return;
+
         this.conditionalFields.forEach((conditionalField) => {
             const isConditionalFieldToBeTriggered = conditionalField.values.find((value) => {
                 if (this.constructor._isValidRegexExpression(value)) {
