@@ -5,21 +5,21 @@ class RadioFieldTrigger extends ConditionalFieldTrigger {
         const radioElements = Array.from(this.element.querySelectorAll('input[type="radio"]'));
         const checkedRadioElement = this.constructor._getCheckedRadioElement(radioElements);
 
-        this.conditionalFields
-            .filter((conditionalField) => {
-                const isConditionalFieldToBeTriggered = conditionalField.values.find((value) => {
-                    if (this.constructor._isValidRegexExpression(value)) {
-                        // ...
-                    }
+        this.conditionalFields.forEach((conditionalField) => {
+            const isConditionalFieldToBeTriggered = conditionalField.values.find((value) => {
+                if (this.constructor._isValidRegexExpression(value)) {
+                    return checkedRadioElement.value.match(this.constructor._createRegexFromString(value));
+                }
 
-                    return value === checkedRadioElement.value;
-                });
-
-                return isConditionalFieldToBeTriggered;
-            })
-            .forEach((conditionalField) => {
-                conditionalField.element.classList.remove('hidden');
+                return value === checkedRadioElement.value;
             });
+
+            if (isConditionalFieldToBeTriggered) {
+                this._showConditionalField(conditionalField.element);
+            } else {
+                this._hideConditionalField(conditionalField.element);
+            }
+        });
     }
 
     static _getCheckedRadioElement(radioElements) {

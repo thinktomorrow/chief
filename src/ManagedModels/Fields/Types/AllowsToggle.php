@@ -4,56 +4,25 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsToggle
 {
-    private array $fieldsToTrigger = [];
+    private array $conditionalFields = [];
 
-    public function toggleField($fieldToBeTriggered, $triggerValues): self
+    /**
+     * Define conditional fields that should be shown/hidden based on this fields value
+     * @param fieldName: name of the conditional field
+     * @param values: values for which the conditional field should be shown
+     */
+    public function toggleField($fieldName, $values): self
     {
-        $this->fieldsToTrigger[$fieldToBeTriggered] = (array)$triggerValues;
+        $this->conditionalFields[$fieldName] = (array)$values;
 
         return $this;
     }
 
     public function getFormgroupsToTrigger() {
-        if(!empty($this->fieldsToTrigger)) {
-            return json_encode($this->fieldsToTrigger);
+        if(!empty($this->conditionalFields)) {
+            return json_encode($this->conditionalFields);
         }
 
         return null;
     }
-
-    // public function isToggle($currentOption = null): bool
-    // {
-    //     if ($currentOption === null) {
-    //         return count($this->fieldToggles) > 0;
-    //     }
-
-    //     foreach (array_keys($this->fieldToggles) as $option) {
-    //         if ($option == $currentOption) {
-    //             return true;
-    //         }
-    //     }
-
-    //     return false;
-    // }
-
-    // public function getToggleAttributeValue($currentOption): string
-    // {
-    //     foreach ($this->fieldToggles as $option => $fieldkeys) {
-    //         if ($option == $currentOption) {
-    //             return implode(',', $fieldkeys);
-    //         }
-    //     }
-
-    //     return '';
-    // }
-
-    // public function getFormgroupsToTrigger()
-    // {
-    //     return 'test';
-    // }
-
-    // public function getValueToTriggerFormgroupsWith()
-    // {
-    //     return null;
-    // }
 }
