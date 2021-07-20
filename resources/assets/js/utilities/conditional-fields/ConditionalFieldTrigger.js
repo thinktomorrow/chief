@@ -1,11 +1,18 @@
 import _isEmpty from 'lodash/isEmpty';
 import _debounce from 'lodash/debounce';
 
+/**
+ * Conditional field trigger functionality
+ * This class is to be extended with a specific handler for each field type
+ * @param name field name
+ * @param element field element
+ * @param conditionalFieldsData conditional field data (field name + trigger values)
+ */
 class ConditionalFieldTrigger {
-    constructor(name, element, formgroupData) {
+    constructor(name, element, conditionalFieldsData) {
         this.name = name;
         this.element = element;
-        this.conditionalFields = this.constructor._createConditionalFields(formgroupData);
+        this.conditionalFields = this.constructor._createConditionalFields(conditionalFieldsData);
 
         this.divider = '|';
         this.formgroupToggledByAttribute = 'data-formgroup-toggled-by';
@@ -65,10 +72,10 @@ class ConditionalFieldTrigger {
         }
     }
 
-    static _createConditionalFields(formgroupData) {
+    static _createConditionalFields(conditionalFieldsData) {
         const output = [];
 
-        for (const [key, value] of Object.entries(formgroupData)) {
+        for (const [key, value] of Object.entries(conditionalFieldsData)) {
             const conditionalFieldElement = document.querySelector(`[data-formgroup="${key}"]`);
 
             if (!conditionalFieldElement) {
