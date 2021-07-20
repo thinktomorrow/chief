@@ -41,25 +41,28 @@ final class FragmentRepository
 
     public function getAllShared(FragmentsOwner $owner, array $filters = []): Collection
     {
+        $isFilteringByType = isset($filters['types']) && count($filters['types']) > 0;
+        $isFilteringByOwner = isset($filters['owners']) && count($filters['owners']) > 0;
+
         $builder = FragmentModel::query();
 
         $builder->limit(10);
 
-        if (isset($filters['types']) && count($filters['types']) > 0) {
+        if ($isFilteringByType) {
             $builder = $this->filterByTypes($builder, $filters['types']);
         } else {
             $builder = $this->filterByTypes($builder, $owner->allowedFragments());
         }
 
-        if (isset($filters['owners']) && count($filters['owners']) > 0) {
+        if ($isFilteringByOwner) {
             $builder = $this->filterByOwners($builder, $filters['owners']);
         }
 
-        // Filter
-        // specific owning page
-        // specific fragment type
-        // search by keyword...
         // Default only top shared ones
+        if(!$isFilteringByType && !$isFilteringByOwner) {
+            // Get top used already shared ones...
+            $builder = $this->filterByUsage($builder);
+        }
 
         $collection = $builder->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
 
@@ -106,6 +109,15 @@ final class FragmentRepository
                 $query->orWhere('model_reference', 'LIKE', $classReference. '@%');
             }
         });
+    }
+
+    private function filterByUsage($builder): Builder
+    {
+        return $builder
+            ->join('context_fragment_lookup', 'context_fragments.id', '=', 'context_fragment_lookup.fragment_id')
+            ->select(['context_fragments.*', DB::raw("count('context_fragment_lookup.fragment_id') AS 'usage'")])
+            ->groupBy('context_fragments.id')
+            ->orderBy('usage', 'DESC');
     }
 
     private function expandedClassReferences(array $classNames): array
