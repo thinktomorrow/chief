@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Routes;
 
 use ArrayIterator;
-use Webmozart\Assert\Assert;
 
 final class ManagedRoutes implements \IteratorAggregate, \Countable
 {
@@ -14,7 +13,8 @@ final class ManagedRoutes implements \IteratorAggregate, \Countable
 
     private function __construct(string $managerClass, string $prefix, array $routes)
     {
-        Assert::allIsInstanceOf($routes, ManagedRoute::class);
+        // Assert all array values are a ManagedRoute instance
+        array_map(fn(ManagedRoute $route) => $route, $routes);
 
         $this->managerClass = $managerClass;
         $this->prefix = $prefix;
