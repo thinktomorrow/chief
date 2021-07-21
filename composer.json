@@ -34,7 +34,6 @@
         "brianium/paratest": "^6.3",
         "filp/whoops": "^2.9",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.4",
         "orchestra/testbench": "^6.9",
