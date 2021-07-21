@@ -32,7 +32,7 @@ class UpdateRoleTest extends ChiefTestCase
     /** @test */
     public function regular_admin_cannot_view_the_update_form()
     {
-        $response = $this->actingAs(User::factory()->create(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
+        $response = $this->actingAs($this->fakeUser(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
 
         $response->assertStatus(302)
             ->assertRedirect(route('chief.back.dashboard'))

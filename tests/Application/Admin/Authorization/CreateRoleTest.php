@@ -13,7 +13,7 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function only_developer_can_view_the_create_form()
     {
-        $developer = User::factory()->create();
+        $developer = $this->fakeUser();
         $developer->assignRole('developer');
 
         $response = $this->actingAs($developer, 'chief')->get(route('chief.back.roles.create'));
