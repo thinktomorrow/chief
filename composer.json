@@ -9,7 +9,7 @@
     "license": "none",
     "type": "chief-cms",
     "require": {
-        "php": ">=7.4",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
         "astrotomic/laravel-translatable": "^11.9",
         "doctrine/dbal": "^3.1",
@@ -30,11 +30,11 @@
         "thinktomorrow/vine": "~0.2.7"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-debugbar": "^3.6",
         "brianium/paratest": "^6.3",
         "filp/whoops": "^2.9",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "fzaninotto/faker": "~1.9",
+        "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.4",
         "orchestra/testbench": "^6.9",
