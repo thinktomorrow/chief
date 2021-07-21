@@ -30,7 +30,7 @@ principles.
 ## BUGS
 - article verwijderd maar context blijft nog. Als ik database reset (en dus ook primary keys) dan wordt bij de nieuwe article ongewenst de oude context aan dit artikel gelinkt.
 - assets blijven 'actief' omdat contexts niet verwijderd worden. Kn dus niet uit mediagallery worden verwijderd. Cleanup?, deleted_at timestamp bij context?
-- choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
+- ✅ choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
 - kopie van quote is beschikbaar maar reeds gebruikt?...
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - proper duplicate context feature (with buttons and all)
