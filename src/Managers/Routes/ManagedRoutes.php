@@ -14,7 +14,7 @@ final class ManagedRoutes implements \IteratorAggregate, \Countable
     private function __construct(string $managerClass, string $prefix, array $routes)
     {
         // Assert all array values are a ManagedRoute instance
-        array_map(fn(ManagedRoute $route) => $route, $routes);
+        array_map(fn (ManagedRoute $route) => $route, $routes);
 
         $this->managerClass = $managerClass;
         $this->prefix = $prefix;
