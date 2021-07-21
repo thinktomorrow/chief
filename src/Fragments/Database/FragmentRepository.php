@@ -59,7 +59,7 @@ final class FragmentRepository
         }
 
         // Default only top shared ones
-        if(!$isFilteringByType && !$isFilteringByOwner) {
+        if (! $isFilteringByType && ! $isFilteringByOwner) {
             // Get top used already shared ones...
             $builder = $this->filterByUsage($builder);
         }

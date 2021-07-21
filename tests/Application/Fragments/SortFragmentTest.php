@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class SortFragmentTest extends ChiefTestCase
