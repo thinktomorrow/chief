@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Authorization;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class UpdateRoleTest extends ChiefTestCase

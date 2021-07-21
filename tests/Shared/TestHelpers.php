@@ -3,11 +3,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Shared;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
