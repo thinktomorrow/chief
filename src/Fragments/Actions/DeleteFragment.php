@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
+use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
@@ -11,21 +12,22 @@ class DeleteFragment
 {
     private FragmentRepository $fragmentRepository;
     private GetOwningModels $getOwningModels;
+    private DetachAsset $detachAsset;
 
-    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels)
+    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels, DetachAsset $detachAsset)
     {
         $this->fragmentRepository = $fragmentRepository;
         $this->getOwningModels = $getOwningModels;
+        $this->detachAsset = $detachAsset;
     }
 
     public function handle(int $fragmentId): void
     {
         $fragmentModel = FragmentModel::find($fragmentId);
 
-        $fragmentModel->delete();
-        // Delete fragment
+        $this->detachAsset->detachAll($fragmentModel);
 
-        // detach any asset relations
+        $fragmentModel->delete();
     }
 
     public function onFragmentRemovedFromContext(FragmentRemovedFromContext $event)

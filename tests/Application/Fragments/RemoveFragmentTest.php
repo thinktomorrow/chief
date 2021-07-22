@@ -84,7 +84,7 @@ class RemoveFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function removing_a_static_fragment_soft_deletes_fragment_and_assets()
+    public function removing_a_static_fragment_deletes_fragment_and_assets()
     {
         // Add file to static fragment
         $this->asAdmin()->put($this->manager($this->fragment)->route('fragment-update', $this->fragment), [
@@ -106,9 +106,7 @@ class RemoveFragmentTest extends ChiefTestCase
         $this->assertTrue($deletedFragmentModel->trashed());
         $this->assertNotNull($deletedFragmentModel->deleted_at);
 
-        // TODO: unused does nothing - better is to set softdeletion on media model.
-        $asset = $deletedFragmentModel->assetRelation()->withPivot('unused')->first();
-        $this->assertTrue($asset->isUnused());
+        $this->assertEquals(0, $deletedFragmentModel->assetRelation()->count());
     }
 
     /** @test */

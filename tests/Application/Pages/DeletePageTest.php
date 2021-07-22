@@ -107,4 +107,22 @@ final class DeletePageTest extends ChiefTestCase
         // Assert asset itself is still present
         $this->assertCount(1, Asset::all());
     }
+
+    /** @test */
+    public function deleting_a_page_also_deletes_the_context()
+    {
+        $this->disableExceptionHandling();
+        $model = ArticlePage::create([
+            'title' => 'first article',
+        ]);
+
+        $this->setupAndCreateQuote($model);
+        $this->assertFragmentCount($model, 1);
+
+        $this->asAdmin()->delete($this->manager->route('delete', $model), [
+            'deleteconfirmation' => 'DELETE',
+        ]);
+
+        $this->assertFragmentCount($model, 0);
+    }
 }
