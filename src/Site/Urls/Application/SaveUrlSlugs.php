@@ -32,9 +32,12 @@ final class SaveUrlSlugs
                 continue;
             }
 
-            $this->saveRecord($model, $locale,
+            $this->saveRecord(
+                $model,
+                $locale,
                 $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $locale) : $slug,
-                $existingRecords);
+                $existingRecords
+            );
         }
     }
 
