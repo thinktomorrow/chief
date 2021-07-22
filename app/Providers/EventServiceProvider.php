@@ -13,8 +13,8 @@ use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
 use Thinktomorrow\Chief\Fragments\Actions\UpdateFragmentMetadata;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 

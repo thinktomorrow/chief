@@ -144,7 +144,7 @@ final class FragmentRepository
 
     public function exists($id): bool
     {
-        return !is_null(FragmentModel::find((int) $id));
+        return ! is_null(FragmentModel::find((int) $id));
     }
 
     private function prefetchRecords(Collection $fragmentModels): void

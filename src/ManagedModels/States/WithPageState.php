@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States;
 
-
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 interface WithPageState extends StatefulContract

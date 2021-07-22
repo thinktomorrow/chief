@@ -5,11 +5,9 @@ namespace Thinktomorrow\Chief\Fragments\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 
 class DeleteFragment
 {
