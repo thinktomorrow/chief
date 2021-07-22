@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
@@ -45,7 +45,7 @@ class DeleteModel
                 $this->detachAsset->detachAll($model);
             }
 
-            if($model instanceof FragmentsOwner) {
+            if ($model instanceof FragmentsOwner) {
                 $this->deleteContext->handle($model);
             }
 

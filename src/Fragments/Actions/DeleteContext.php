@@ -23,8 +23,8 @@ final class DeleteContext
             return;
         }
 
-        foreach($context->fragments()->get() as $fragmentModel) {
-            if($fragmentModel->isShared()) {
+        foreach ($context->fragments()->get() as $fragmentModel) {
+            if ($fragmentModel->isShared()) {
                 $this->detachSharedFragment->handle($owner, $fragmentModel);
             } else {
                 $this->deleteFragment->handle($fragmentModel->id);
