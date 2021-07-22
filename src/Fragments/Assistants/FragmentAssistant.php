@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
+use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\Actions\UnshareFragment;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;

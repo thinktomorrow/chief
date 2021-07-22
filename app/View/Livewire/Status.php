@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\App\View\Livewire;
 
 use Livewire\Component;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class Status extends Component
 {

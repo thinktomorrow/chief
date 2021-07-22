@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
-use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 
 class UpdateFragmentMetadata
@@ -36,7 +36,9 @@ class UpdateFragmentMetadata
 
     private function updateSharedState(int $fragmentModelId): void
     {
-        if(!$this->fragmentRepository->exists($fragmentModelId)) return;
+        if (! $this->fragmentRepository->exists($fragmentModelId)) {
+            return;
+        }
 
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 

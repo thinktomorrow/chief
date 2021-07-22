@@ -29,6 +29,4 @@ class DetachFragment
 
         event(new FragmentDetached($fragmentModel->id, $context->id));
     }
-
-
 }
