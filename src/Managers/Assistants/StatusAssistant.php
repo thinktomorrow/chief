@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController; // TODO: needs refactoring
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
@@ -25,7 +26,7 @@ trait StatusAssistant
     public function canStatusAssistant(string $action, $model = null): bool
     {
         return (in_array($action, ['status-edit', 'status-update'])
-            && ($model && $model instanceof Visitable));
+            && ($model && $model instanceof WithPageState));
     }
 
     /**
@@ -36,7 +37,8 @@ trait StatusAssistant
         $model = $this->fieldsModel($id);
 
         return view('chief::manager.cards.status.edit', [
-            'isAnyLinkOnline' => LinkForm::fromModel($model)->isAnyLinkOnline(),
+            'isAnyLinkOnline' => ($model instanceof Visitable && LinkForm::fromModel($model)->isAnyLinkOnline()),
+            'isVisitable' => $model instanceof Visitable,
             'manager' => app(Registry::class)->manager($model->managedModelKey()),
             'model' => $model,
         ]);

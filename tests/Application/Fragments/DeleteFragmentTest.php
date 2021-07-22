@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
-class RemoveFragmentTest extends ChiefTestCase
+class DeleteFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
     private SnippetStub $fragment;
@@ -69,7 +69,7 @@ class RemoveFragmentTest extends ChiefTestCase
         $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-delete', $this->owner, $this->fragment));
         $this->assertFragmentCount($this->owner, 0);
 
-        Event::assertDispatched(FragmentRemovedFromContext::class);
+        Event::assertDispatched(FragmentDetached::class);
     }
 
     /** @test */

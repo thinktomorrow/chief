@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Events\SharedFragmentDetached;
 
 class UpdateFragmentMetadata
 {
@@ -29,13 +29,15 @@ class UpdateFragmentMetadata
         $this->updateSharedState($event->fragmentModelId);
     }
 
-    public function onSharedFragmentDetached(SharedFragmentDetached $event): void
+    public function onFragmentDetached(FragmentDetached $event): void
     {
         $this->updateSharedState($event->fragmentModelId);
     }
 
     private function updateSharedState(int $fragmentModelId): void
     {
+        if(!$this->fragmentRepository->exists($fragmentModelId)) return;
+
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         $shared = count($this->getOwningModels->get($fragmentable->fragmentModel())) > 1;

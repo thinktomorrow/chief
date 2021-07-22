@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -47,7 +47,7 @@ trait ArchiveAssistant
             return false;
         }
 
-        if (! $model || ! $model instanceof StatefulContract) {
+        if (! $model || ! $model instanceof WithPageState) {
             return false;
         }
 

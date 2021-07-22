@@ -6,11 +6,15 @@ namespace Thinktomorrow\Chief\Fragments\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
-use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 
-final class RemoveFragmentModelFromContext
+class DetachFragment
 {
+    /**
+     * Detach a fragment from a given context.
+     * Keep the fragment model itself intact
+     */
     public function handle(Model $owner, FragmentModel $fragmentModel): void
     {
         if (! $context = ContextModel::ownedBy($owner)) {
@@ -18,11 +22,13 @@ final class RemoveFragmentModelFromContext
         }
 
         if (! $context->fragments()->where('id', $fragmentModel->id)->exists()) {
-            throw new FragmentAlreadyRemoved('Fragment [' . $fragmentModel->id . '] does not exist for owner [' . $owner->modelReference()->get().']');
+            throw new FragmentAlreadyDetached('Fragment [' . $fragmentModel->id . '] does not exist for owner [' . $owner->modelReference()->get().']');
         }
 
         $context->fragments()->detach($fragmentModel->id);
 
-        event(new FragmentRemovedFromContext($fragmentModel->id, $context->id));
+        event(new FragmentDetached($fragmentModel->id, $context->id));
     }
+
+
 }

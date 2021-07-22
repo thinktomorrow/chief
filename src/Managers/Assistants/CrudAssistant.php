@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
@@ -13,7 +14,6 @@ use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -63,7 +63,7 @@ trait CrudAssistant
             return true;
         }
 
-        if (! $model || ! $model instanceof StatefulContract) {
+        if (! $model || ! $model instanceof WithPageState) {
             return true;
         }
 

@@ -3,34 +3,41 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 
 class DeleteFragment
 {
     private FragmentRepository $fragmentRepository;
     private GetOwningModels $getOwningModels;
     private DetachAsset $detachAsset;
+    private DetachFragment $detachFragment;
 
-    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels, DetachAsset $detachAsset)
+    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels, DetachFragment $detachFragment, DetachAsset $detachAsset)
     {
         $this->fragmentRepository = $fragmentRepository;
         $this->getOwningModels = $getOwningModels;
         $this->detachAsset = $detachAsset;
+        $this->detachFragment = $detachFragment;
     }
 
-    public function handle(int $fragmentId): void
+    /**
+     * Delete the fragment from this given owner. If this fragment is not
+     * shared by other owners, it will be deleted entirely.
+     */
+    public function handle(FragmentModel $fragmentModel): void
     {
-        $fragmentModel = FragmentModel::find($fragmentId);
-
         $this->detachAsset->detachAll($fragmentModel);
 
         $fragmentModel->delete();
     }
 
-    public function onFragmentRemovedFromContext(FragmentRemovedFromContext $event)
+    public function onFragmentDetached(FragmentDetached $event)
     {
         $fragmentable = $this->fragmentRepository->find($event->fragmentModelId);
 
@@ -42,6 +49,6 @@ class DeleteFragment
             return;
         }
 
-        $this->handle($event->fragmentModelId);
+        $this->handle($fragmentable->fragmentModel());
     }
 }

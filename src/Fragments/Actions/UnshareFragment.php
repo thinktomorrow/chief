@@ -9,28 +9,26 @@ use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Events\SharedFragmentDetached;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 
-final class DetachSharedFragment
+final class UnshareFragment
 {
     private DuplicateFragment $duplicateFragment;
-    private RemoveFragmentModelFromContext $removeFragmentModelFromContext;
+    private DetachFragment $detachFragment;
 
-    public function __construct(DuplicateFragment $duplicateFragment, RemoveFragmentModelFromContext $removeFragmentModelFromContext)
+    public function __construct(DuplicateFragment $duplicateFragment, DetachFragment $detachFragment)
     {
         $this->duplicateFragment = $duplicateFragment;
-        $this->removeFragmentModelFromContext = $removeFragmentModelFromContext;
+        $this->detachFragment = $detachFragment;
     }
 
     public function handle(Model $ownerModel, FragmentModel $fragmentModel): void
     {
         $order = $this->findFragmentOrderInContext($ownerModel, $fragmentModel);
 
-        // Duplicate
+        // Duplicate the shared fragment first
         $this->duplicateFragment->handle($ownerModel, $fragmentModel, $order, true);
 
-        // And then delete
-        $this->removeFragmentModelFromContext->handle($ownerModel, $fragmentModel);
-
-        event(new SharedFragmentDetached($fragmentModel->id));
+        // Now remove the shared version from current context
+        $this->detachFragment->handle($ownerModel, $fragmentModel);
     }
 
     private function findFragmentOrderInContext(Model $owner, FragmentModel $fragmentModel): int
@@ -42,4 +40,6 @@ final class DetachSharedFragment
 
         return (int) $fragmentModel->pivot->order ?? 0;
     }
+
+
 }

@@ -9,12 +9,11 @@ use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 final class DeleteContext
 {
     private DeleteFragment $deleteFragment;
-    private DetachSharedFragment $detachSharedFragment;
 
-    public function __construct(DeleteFragment $deleteFragment, DetachSharedFragment $detachSharedFragment)
+    public function __construct(DeleteFragment $deleteFragment, DetachFragment $detachFragment)
     {
         $this->deleteFragment = $deleteFragment;
-        $this->detachSharedFragment = $detachSharedFragment;
+        $this->detachFragment = $detachFragment;
     }
 
     public function handle(Model $owner): void
@@ -24,11 +23,7 @@ final class DeleteContext
         }
 
         foreach ($context->fragments()->get() as $fragmentModel) {
-            if ($fragmentModel->isShared()) {
-                $this->detachSharedFragment->handle($owner, $fragmentModel);
-            } else {
-                $this->deleteFragment->handle($fragmentModel->id);
-            }
+            $this->detachFragment->handle($owner, $fragmentModel);
         }
 
         $context->delete();

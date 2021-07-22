@@ -120,7 +120,7 @@
 <form
     id="detachSharedFragment{{ $model->modelReference()->get() }}"
     method="POST"
-    action="{{ $manager->route('fragment-detach-shared', $owner, $model) }}"
+    action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
 >
     @csrf
 </form>

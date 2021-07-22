@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
@@ -33,7 +33,7 @@ class DeleteModel
             DB::beginTransaction();
 
             // For stateful transitions we will apply this deletion as a state
-            if ($model instanceof StatefulContract) {
+            if ($model instanceof WithPageState) {
                 PageState::make($model)->apply('delete');
                 $model->save();
             }

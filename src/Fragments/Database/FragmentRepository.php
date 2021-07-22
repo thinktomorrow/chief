@@ -133,19 +133,6 @@ final class FragmentRepository
         return $expanded;
     }
 
-//    private function getAllowedFragmentClasses(FragmentsOwner $owner): array
-//    {
-//        $fragmentModelClasses = [];
-//
-//        foreach ($owner->allowedFragments() as $allowedFragmentClass) {
-//            $modelReference = ModelReference::fromStatic($allowedFragmentClass);
-//            $fragmentModelClasses[] = addSlashes($modelReference->className());
-//            $fragmentModelClasses[] = $modelReference->shortClassName();
-//        }
-//
-//        return $fragmentModelClasses;
-//    }
-
     /**
      * @param int $id
      * @return Fragmentable
@@ -153,6 +140,11 @@ final class FragmentRepository
     public function find($id): Fragmentable
     {
         return $this->fragmentFactory(FragmentModel::findOrFail((int) $id));
+    }
+
+    public function exists($id): bool
+    {
+        return !is_null(FragmentModel::find((int) $id));
     }
 
     private function prefetchRecords(Collection $fragmentModels): void
