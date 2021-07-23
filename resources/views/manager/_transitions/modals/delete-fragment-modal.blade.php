@@ -1,14 +1,5 @@
 <modal id="delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}" title="Ben je zeker?">
 
-    {{--<form--}}
-    {{--    id="removeFragment{{ $model->modelReference()->get() }}"--}}
-    {{--    method="POST"--}}
-    {{--    action="{{ $manager->route('fragment-delete', $owner, $model) }}"--}}
-    {{-->--}}
-    {{--    @csrf--}}
-    {{--    @method('delete')--}}
-    {{--</form>--}}
-
     <form
             action="{{ $manager->route('fragment-delete', $owner, $model) }}"
             method="POST"

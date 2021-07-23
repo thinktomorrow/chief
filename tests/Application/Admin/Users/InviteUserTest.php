@@ -54,7 +54,7 @@ class InviteUserTest extends ChiefTestCase
     /** @test */
     public function it_can_render_the_invitation_mail()
     {
-        $invitee = User::factory()->create();
+        $invitee = $this->fakeUser();
         $inviter = $this->developer();
 
         $invitation = Invitation::make($invitee->id, $inviter->id);

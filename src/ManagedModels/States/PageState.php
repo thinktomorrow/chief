@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States;
 
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 
 class PageState extends StateMachine
@@ -52,9 +51,10 @@ class PageState extends StateMachine
     ];
 
     /**
+     * @param WithPageState $model
      * @return static
      */
-    public static function make(StatefulContract $model): self
+    public static function make(WithPageState $model): self
     {
         return new static($model, static::KEY);
     }

@@ -15,7 +15,7 @@ class ConditionalFieldTrigger {
         this.conditionalFields = this.constructor._createConditionalFieldsObject(conditionalFieldsData);
 
         this.divider = '|';
-        this.formgroupToggleAttribute = 'data-formgroup-toggled-by';
+        this.formgroupToggleAttribute = 'data-conditional-toggled-by';
 
         this._init();
     }
@@ -96,7 +96,7 @@ class ConditionalFieldTrigger {
         const output = [];
 
         for (const [key, value] of Object.entries(data)) {
-            const element = document.querySelector(`[data-formgroup="${key}"]`);
+            const element = document.querySelector(`[data-conditional="${key}"]`);
 
             if (!element) {
                 console.error(

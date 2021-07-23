@@ -33,7 +33,7 @@ class DetachSharedFragmentTest extends ChiefTestCase
         // Assert it is a shared fragment
         $this->assertEquals($this->firstFragment($this->owner)->fragmentModel()->id, $this->firstFragment($this->owner2)->fragmentModel()->id);
 
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-detach-shared', $this->owner2, $this->fragment));
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-unshare', $this->owner2, $this->fragment));
 
         $this->assertFragmentCount($this->owner2, 1);
 
@@ -47,7 +47,7 @@ class DetachSharedFragmentTest extends ChiefTestCase
     /** @test */
     public function a_detached_fragment_is_no_longer_considered_shared_when_its_only_used_by_one_model()
     {
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-detach-shared', $this->owner2, $this->fragment));
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-unshare', $this->owner2, $this->fragment));
 
         $this->assertFalse($this->firstFragment($this->owner)->fragmentModel()->isShared());
     }

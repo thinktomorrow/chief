@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States;
 
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-
 class PageStatePresenter
 {
-    private StatefulContract $model;
+    private WithPageState $model;
 
     private PageState $pageState;
 
-    final public function __construct(StatefulContract $model, PageState $pageState)
+    final public function __construct(WithPageState $model, PageState $pageState)
     {
         $this->model = $model;
         $this->pageState = $pageState;
     }
 
-    public static function fromModel(StatefulContract $model): self
+    public static function fromModel(WithPageState $model): self
     {
         return new static($model, PageState::make($model));
     }

@@ -3,17 +3,19 @@
 namespace Thinktomorrow\Chief\App\View\Livewire;
 
 use Livewire\Component;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class Status extends Component
 {
-    public Visitable $model;
+    public WithPageState $model;
     private $isAnyLinkOnline;
+    private $isVisitable;
     public $class;
 
-    public function mount(Visitable $model): void
+    public function mount(WithPageState $model): void
     {
         $this->model = $model;
         $this->reload();
@@ -25,15 +27,27 @@ class Status extends Component
     public function render()
     {
         return view('chief::manager.cards.status.statusComponent', [
-            'isAnyLinkOnline' => LinkForm::fromModel($this->model)->isAnyLinkOnline(),
+            'isAnyLinkOnline' => $this->isAnyLinkOnline(),
+            'isVisitable' => $this->isVisitable(),
             'manager' => app(Registry::class)->manager($this->model->managedModelKey()),
         ]);
     }
 
     public function reload(): void
     {
-        $this->isAnyLinkOnline = LinkForm::fromModel($this->model)->isAnyLinkOnline();
+        $this->isAnyLinkOnline = $this->isAnyLinkOnline();
+        $this->isVisitable = $this->isVisitable();
 
         $this->emit('statusReloaded');
+    }
+
+    private function isAnyLinkOnline(): bool
+    {
+        return ($this->isVisitable() && LinkForm::fromModel($this->model)->isAnyLinkOnline());
+    }
+
+    private function isVisitable(): bool
+    {
+        return $this->model instanceof Visitable;
     }
 }

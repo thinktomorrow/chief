@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3f3269f0b13967f681124a54b8d8d6e",
+    "content-hash": "e2f5735475a672ac35abdb39f6b7c1a7",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6206,59 +6206,6 @@
             "time": "2021-06-23T06:59:41+00:00"
         },
         {
-            "name": "thinktomorrow/trap",
-            "version": "0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thinktomorrow/trap.git",
-                "reference": "8f64cb3bc3f23fa3f93cc354c054d9ebd5f44a84"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/trap/zipball/8f64cb3bc3f23fa3f93cc354c054d9ebd5f44a84",
-                "reference": "8f64cb3bc3f23fa3f93cc354c054d9ebd5f44a84",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2",
-                "symfony/var-dumper": "^4.1|5.*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": []
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Thinktomorrow\\Trap\\": "src"
-                },
-                "files": [
-                    "src/Trap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A dump helper with extra functionality",
-            "homepage": "https://github.com/thinktomorrow/trap",
-            "keywords": [
-                "dd",
-                "think tomorrow",
-                "trap",
-                "vardump"
-            ],
-            "support": {
-                "issues": "https://github.com/thinktomorrow/trap/issues",
-                "source": "https://github.com/thinktomorrow/trap/tree/0.1.3"
-            },
-            "time": "2020-03-05T12:54:52+00:00"
-        },
-        {
             "name": "thinktomorrow/url",
             "version": "1.0.2",
             "source": {
@@ -7351,35 +7298,43 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.9.2",
+            "version": "v1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "84220cf137a9344acffb10374e781fed785ff307"
+                "reference": "89c6201c74db25fa759ff16e78a4d8f32547770e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/84220cf137a9344acffb10374e781fed785ff307",
-                "reference": "84220cf137a9344acffb10374e781fed785ff307",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/89c6201c74db25fa759ff16e78a4d8f32547770e",
+                "reference": "89c6201c74db25fa759ff16e78a4d8f32547770e",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^7.1 || ^8.0",
+                "psr/container": "^1.0",
+                "symfony/deprecation-contracts": "^2.2"
             },
             "conflict": {
-                "ergebnis/faker": "!=1.9.2",
-                "fzaninotto/faker": "!=1.9.2"
-            },
-            "replace": {
-                "ergebnis/faker": "1.9.2",
-                "fzaninotto/faker": "1.9.2"
+                "fzaninotto/faker": "*"
             },
             "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
                 "ext-intl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7",
-                "squizlabs/php_codesniffer": "^2.9.2"
+                "symfony/phpunit-bridge": "^4.4 || ^5.2"
+            },
+            "suggest": {
+                "ext-curl": "Required by Faker\\Provider\\Image to download images.",
+                "ext-dom": "Required by Faker\\Provider\\HtmlLorem for generating random HTML.",
+                "ext-iconv": "Required by Faker\\Provider\\ru_RU\\Text::realText() for generating real Russian text.",
+                "ext-mbstring": "Required for multibyte Unicode string functionality."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "v1.15-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Faker\\": "src/Faker/"
@@ -7402,9 +7357,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.9.2"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.15.0"
             },
-            "time": "2020-12-11T14:32:13+00:00"
+            "time": "2021-07-06T20:39:40+00:00"
         },
         {
             "name": "felixfbecker/advanced-json-rpc",
@@ -11218,7 +11173,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "ext-json": "*"
     },
     "platform-dev": [],

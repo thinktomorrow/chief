@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
@@ -48,7 +49,7 @@ trait TestHelpers
 
     protected function asAdminWithoutRole()
     {
-        return $this->actingAs(User::factory()->create(), 'chief');
+        return $this->actingAs($this->fakeUser(), 'chief');
     }
 
     protected function asDeveloper()
@@ -63,7 +64,7 @@ trait TestHelpers
             return $this->actingAs($admin, 'chief');
         }
 
-        $admin = User::factory()->create();
+        $admin = $this->fakeUser();
         $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 
         return $this->actingAs($admin, 'chief');
@@ -71,7 +72,7 @@ trait TestHelpers
 
     protected function asAuthor()
     {
-        $author = User::factory()->create();
+        $author = $this->fakeUser();
         $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $this->actingAs($author, 'chief');
@@ -79,15 +80,24 @@ trait TestHelpers
 
     protected function developer()
     {
-        $developer = User::factory()->create();
+        $developer = $this->fakeUser();
         $developer->assignRole(Role::firstOrCreate(['name' => 'developer']));
 
         return $developer;
     }
 
+    protected function fakeUser(array $values = []): User
+    {
+        return User::create(array_merge([
+            'firstname' => 'Ben',
+            'lastname' => Str::random(),
+            'email' => Str::random() . '@example.com',
+        ], $values));
+    }
+
     protected function admin()
     {
-        $admin = User::factory()->create();
+        $admin = $this->fakeUser();
         $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 
         return $admin;
@@ -95,7 +105,7 @@ trait TestHelpers
 
     protected function author()
     {
-        $author = User::factory()->create();
+        $author = $this->fakeUser();
         $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $author;

@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 trait ManagedModelDefaults
@@ -29,7 +29,7 @@ trait ManagedModelDefaults
 
     public function onlineStatusAsLabel(): string
     {
-        if (! $this instanceof StatefulContract) {
+        if (! $this instanceof WithPageState) {
             return '';
         }
 

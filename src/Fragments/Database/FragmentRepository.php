@@ -41,25 +41,28 @@ final class FragmentRepository
 
     public function getAllShared(FragmentsOwner $owner, array $filters = []): Collection
     {
+        $isFilteringByType = isset($filters['types']) && count($filters['types']) > 0;
+        $isFilteringByOwner = isset($filters['owners']) && count($filters['owners']) > 0;
+
         $builder = FragmentModel::query();
 
         $builder->limit(10);
 
-        if (isset($filters['types']) && count($filters['types']) > 0) {
+        if ($isFilteringByType) {
             $builder = $this->filterByTypes($builder, $filters['types']);
         } else {
             $builder = $this->filterByTypes($builder, $owner->allowedFragments());
         }
 
-        if (isset($filters['owners']) && count($filters['owners']) > 0) {
+        if ($isFilteringByOwner) {
             $builder = $this->filterByOwners($builder, $filters['owners']);
         }
 
-        // Filter
-        // specific owning page
-        // specific fragment type
-        // search by keyword...
         // Default only top shared ones
+        if (! $isFilteringByType && ! $isFilteringByOwner) {
+            // Get top used already shared ones...
+            $builder = $this->filterByUsage($builder);
+        }
 
         $collection = $builder->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
 
@@ -108,6 +111,15 @@ final class FragmentRepository
         });
     }
 
+    private function filterByUsage($builder): Builder
+    {
+        return $builder
+            ->join('context_fragment_lookup', 'context_fragments.id', '=', 'context_fragment_lookup.fragment_id')
+            ->select(['context_fragments.*', DB::raw("count('context_fragment_lookup.fragment_id') AS 'usage'")])
+            ->groupBy('context_fragments.id')
+            ->orderBy('usage', 'DESC');
+    }
+
     private function expandedClassReferences(array $classNames): array
     {
         $expanded = [];
@@ -121,19 +133,6 @@ final class FragmentRepository
         return $expanded;
     }
 
-//    private function getAllowedFragmentClasses(FragmentsOwner $owner): array
-//    {
-//        $fragmentModelClasses = [];
-//
-//        foreach ($owner->allowedFragments() as $allowedFragmentClass) {
-//            $modelReference = ModelReference::fromStatic($allowedFragmentClass);
-//            $fragmentModelClasses[] = addSlashes($modelReference->className());
-//            $fragmentModelClasses[] = $modelReference->shortClassName();
-//        }
-//
-//        return $fragmentModelClasses;
-//    }
-
     /**
      * @param int $id
      * @return Fragmentable
@@ -141,6 +140,11 @@ final class FragmentRepository
     public function find($id): Fragmentable
     {
         return $this->fragmentFactory(FragmentModel::findOrFail((int) $id));
+    }
+
+    public function exists($id): bool
+    {
+        return ! is_null(FragmentModel::find((int) $id));
     }
 
     private function prefetchRecords(Collection $fragmentModels): void

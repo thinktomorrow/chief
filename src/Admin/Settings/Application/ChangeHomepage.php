@@ -34,7 +34,7 @@ class ChangeHomepage
             }
 
             $modelReferenceInstance = ModelReference::fromString($modelReferenceString);
-            (new SaveUrlSlugs())->handle($modelReferenceInstance->instance(), [$locale => '/'], false);
+            (new SaveUrlSlugs())->handle($modelReferenceInstance->instance(), [$locale => '/'], false, false);
         }
     }
 

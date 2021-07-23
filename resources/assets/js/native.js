@@ -7,9 +7,9 @@ import initConditionalFields from './utilities/conditional-fields';
  */
 require('./utilities/navigation');
 require('./utilities/character-count');
-// require('./utilities/toggle-fields');
 
 FormSubmit.listen('[data-submit-form]');
+
 initConditionalFields();
 
 /**

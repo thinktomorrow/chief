@@ -1,7 +1,7 @@
 <div
-    {!! $attributes->has('data-formgroup') ? 'data-formgroup="' . $attributes->get('data-formgroup') . '"' : null !!}
-    {!! $attributes->has('data-formgroup-type') ? 'data-formgroup-type="' . $attributes->get('data-formgroup-type') . '"' : null !!}
-    {!! $attributes->get('data-conditional-fields-data') ? 'data-conditional-fields-data="' . $attributes->get('data-conditional-fields-data') . '"' : null !!}
+    {!! $attributes->has('data-conditional') ? 'data-conditional="' . $attributes->get('data-conditional') . '"' : null !!}
+    {!! $attributes->has('data-conditional-trigger-type') ? 'data-conditional-trigger-type="' . $attributes->get('data-conditional-trigger-type') . '"' : null !!}
+    {!! $attributes->get('data-conditional-data') ? 'data-conditional-data="' . $attributes->get('data-conditional-data') . '"' : null !!}
     class="{{ $attributes->get('class', '') }}"
 >
     @isset($label)

@@ -8,20 +8,23 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class DeleteModel
 {
-    /** @var DetachAsset */
     private DetachAsset $detachAsset;
+    private DeleteContext $deleteContext;
 
-    public function __construct(DetachAsset $detachAsset)
+    public function __construct(DetachAsset $detachAsset, DeleteContext $deleteContext)
     {
         $this->detachAsset = $detachAsset;
+        $this->deleteContext = $deleteContext;
     }
 
     public function handle(ManagedModel $model): void
@@ -30,7 +33,7 @@ class DeleteModel
             DB::beginTransaction();
 
             // For stateful transitions we will apply this deletion as a state
-            if ($model instanceof StatefulContract) {
+            if ($model instanceof WithPageState) {
                 PageState::make($model)->apply('delete');
                 $model->save();
             }
@@ -42,10 +45,9 @@ class DeleteModel
                 $this->detachAsset->detachAll($model);
             }
 
-            // TODO: soft-delete the context of this model... (=fragments)
-            // TODO: check for usage in fragments????
-
-//            Relation::deleteRelationsOf($model->getMorphClass(), $model->id);
+            if ($model instanceof FragmentsOwner) {
+                $this->deleteContext->handle($model);
+            }
 
             // TODO: when deleting a model, where should the urls redirect to? Or expect here a 404?
             // Delete any related urls...

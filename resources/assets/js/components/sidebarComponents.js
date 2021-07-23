@@ -67,10 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
         livewire: true,
         events: {
             sidebarFormSubmitted: () => {
+                // Also reload the links component if this is present
                 const componentEl = linksComponent.el(document);
-                const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
-                livewireComponent.reload();
+                if (componentEl) {
+                    const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
+
+                    livewireComponent.reload();
+                }
             },
         },
     });
@@ -89,9 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         components: [linksComponent, statusComponent, fragmentsComponent, fragmentAddComponent, ...fieldComponents],
         reloadLivewireEvents: ['fragmentAdded'],
         events: {
-            // sidebarPanelCreated: () => {
-            //     window.registerFieldToggles();
-            // },
             sidebarPanelActivated: () => {
                 initConditionalFields();
             },

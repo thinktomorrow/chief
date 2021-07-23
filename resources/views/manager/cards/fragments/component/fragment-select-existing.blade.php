@@ -43,7 +43,7 @@
 
 
         {{-- Should be deleted once the onchange/oninput submit on this form works --}}
-        <button class="mt-4 btn btn-primary" type="submit">Filter</button>
+        <button class="mt-4 btn btn-primary" type="submit">Zoek</button>
     </form>
 
     <div data-sidebar-component="existingFragments">
@@ -63,7 +63,7 @@
                     </a>
                 </div>
             @empty
-                Geen fragmenten gevonden.
+                <p class="p-6">Geen fragmenten gevonden.</p>
             @endforelse
         </div>
     </div>

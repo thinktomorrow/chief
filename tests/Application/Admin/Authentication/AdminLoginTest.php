@@ -22,7 +22,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function entering_valid_login_credentials_for_disabled_user_wont_let_you_pass()
     {
-        $admin = User::factory()->create([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
             'password' => bcrypt('foobar'),
             'enabled' => false,
@@ -40,7 +40,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
-        $admin = User::factory()->create([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
             'password' => bcrypt('foobar'),
             'enabled' => true,
@@ -60,7 +60,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function entering_invalid_login_credentials_keeps_you_out()
     {
-        User::factory()->make([
+        $this->fakeUser([
             'email' => 'foo@example.com',
         ]);
 
@@ -80,7 +80,7 @@ class AdminLoginTest extends ChiefTestCase
     {
         $this->setUpDefaultAuthorization();
 
-        $admin = User::factory()->make();
+        $admin = $this->fakeUser();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
 
         $response->assertViewIs('chief::admin.dashboard')
@@ -92,7 +92,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function it_redirects_authenticated_admin_to_intended_page()
     {
-        $admin = User::factory()->create([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
             'password' => bcrypt('foobar'),
             'enabled' => true,
@@ -115,7 +115,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function it_can_log_you_out()
     {
-        $admin = User::factory()->make();
+        $admin = $this->fakeUser();
 
         Auth::guard('chief')->login($admin);
 
@@ -133,7 +133,7 @@ class AdminLoginTest extends ChiefTestCase
     {
         Notification::fake();
 
-        $admin = User::factory()->create([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
             'password' => 'IForgotThisPassword',
             'enabled' => true,
@@ -149,7 +149,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function it_can_reset_your_password()
     {
-        $admin = User::factory()->create([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
             'password' => 'IForgotThisPassword',
             'enabled' => true,
@@ -180,7 +180,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
-        $admin = User::factory()->make([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
         ]);
 
@@ -209,7 +209,7 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function it_can_access_admin_via_helper()
     {
-        $admin = User::factory()->make([
+        $admin = $this->fakeUser([
             'email' => 'foo@example.com',
         ]);
 
