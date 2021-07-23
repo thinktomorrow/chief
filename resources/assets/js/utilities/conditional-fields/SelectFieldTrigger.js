@@ -1,5 +1,4 @@
 import _debounce from 'lodash/debounce';
-import _isEmpty from 'lodash/isEmpty';
 
 import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
@@ -7,11 +6,7 @@ class SelectFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
         const currentValues = this.constructor.getCurrentValuesFromSelect(this.element.querySelector('select'));
 
-        if (_isEmpty(currentValues)) return;
-
-        currentValues.forEach((value) => {
-            this._toggleConditionalFields(value);
-        });
+        this._toggleConditionalFields(currentValues);
     }
 
     _watch() {
@@ -21,6 +16,28 @@ class SelectFieldTrigger extends ConditionalFieldTrigger {
                 this._handle();
             }, 250)
         );
+    }
+
+    _toggleConditionalFields(currentValues) {
+        this.conditionalFields.forEach((conditionalField) => {
+            const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
+                if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {
+                    return currentValues.find((currentValue) => {
+                        const regex = this.constructor._createRegexFromString(conditionalFieldValue);
+
+                        return currentValue.match(regex);
+                    });
+                }
+
+                return currentValues.includes(conditionalFieldValue);
+            });
+
+            if (isConditionalFieldToBeTriggered) {
+                this._showConditionalField(conditionalField.element);
+            } else {
+                this._hideConditionalField(conditionalField.element);
+            }
+        });
     }
 
     static getCurrentValuesFromSelect(selectElement) {
