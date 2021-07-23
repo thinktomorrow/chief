@@ -7,7 +7,7 @@ class RadioFieldTrigger extends ConditionalFieldTrigger {
         this._toggleConditionalFields(currentValues);
     }
 
-    _getCurrentValueFromRadioElements() {
+    _getCurrentValuesFromRadioElements() {
         return Array.from(this.element.querySelectorAll('input[type="radio"]'))
             .filter((element) => element.checked)
             .map((element) => element.value);
