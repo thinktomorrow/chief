@@ -37,10 +37,7 @@ class ConditionalFieldTrigger {
         );
     }
 
-    _toggleConditionalFields(values) {
-        // If values is passed as string, convert to array
-        const currentValues = typeof values === 'string' ? [values] : values;
-
+    _toggleConditionalFields(currentValues) {
         this.conditionalFields.forEach((conditionalField) => {
             const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
                 if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {

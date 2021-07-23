@@ -2,13 +2,15 @@ import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class RadioFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
-        const currentValue = this._getCurrentValueFromRadioElements();
+        const currentValues = this._getCurrentValuesFromRadioElements();
 
-        this._toggleConditionalFields(currentValue);
+        this._toggleConditionalFields(currentValues);
     }
 
     _getCurrentValueFromRadioElements() {
-        return Array.from(this.element.querySelectorAll('input[type="radio"]')).find((element) => element.checked);
+        return Array.from(this.element.querySelectorAll('input[type="radio"]'))
+            .filter((element) => element.checked)
+            .map((element) => element.value);
     }
 }
 
