@@ -1,5 +1,6 @@
 import RadioFieldTrigger from './conditional-fields/RadioFieldTrigger';
 import SelectFieldTrigger from './conditional-fields/SelectFieldTrigger';
+import CheckboxFieldTrigger from './conditional-fields/CheckboxFieldTrigger';
 import InputFieldTrigger from './conditional-fields/InputFieldTrigger';
 
 /**
@@ -30,6 +31,9 @@ const initConditionalFields = (
                 break;
             case 'select':
                 new SelectFieldTrigger(name, element, conditionalFieldsData);
+                break;
+            case 'checkbox':
+                new CheckboxFieldTrigger(name, element, conditionalFieldsData);
                 break;
             case 'input':
                 new InputFieldTrigger(name, element, conditionalFieldsData);

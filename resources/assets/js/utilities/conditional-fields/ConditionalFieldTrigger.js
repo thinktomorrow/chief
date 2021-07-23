@@ -3,7 +3,7 @@ import _debounce from 'lodash/debounce';
 
 /**
  * Conditional field trigger functionality
- * This class is to be extended with a specific handler for each field type
+ * This class is to be extended with specific functionality for the field type
  * @param name field name
  * @param element field element
  * @param conditionalFieldsData conditional field data (field name + trigger values)
@@ -37,14 +37,21 @@ class ConditionalFieldTrigger {
         );
     }
 
-    _toggleConditionalFields(currentValue) {
+    _toggleConditionalFields(values) {
+        // If values is passed as string, convert to array
+        const currentValues = typeof values === 'string' ? [values] : values;
+
         this.conditionalFields.forEach((conditionalField) => {
             const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
                 if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {
-                    return currentValue.match(this.constructor._createRegexFromString(conditionalFieldValue));
+                    return currentValues.find((currentValue) => {
+                        const regex = this.constructor._createRegexFromString(conditionalFieldValue);
+
+                        return currentValue.match(regex);
+                    });
                 }
 
-                return conditionalFieldValue === currentValue;
+                return currentValues.includes(conditionalFieldValue);
             });
 
             if (isConditionalFieldToBeTriggered) {

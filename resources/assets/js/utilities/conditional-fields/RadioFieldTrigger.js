@@ -2,16 +2,13 @@ import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class RadioFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
-        const radioElements = Array.from(this.element.querySelectorAll('input[type="radio"]'));
-        const checkedRadioElement = this.constructor._getCurrentValueFromRadioElements(radioElements);
+        const currentValue = this._getCurrentValueFromRadioElements();
 
-        if (!checkedRadioElement) return;
-
-        this._toggleConditionalFields(checkedRadioElement.value);
+        this._toggleConditionalFields(currentValue);
     }
 
-    static _getCurrentValueFromRadioElements(elements) {
-        return elements.find((element) => element.checked);
+    _getCurrentValueFromRadioElements() {
+        return Array.from(this.element.querySelectorAll('input[type="radio"]')).find((element) => element.checked);
     }
 }
 

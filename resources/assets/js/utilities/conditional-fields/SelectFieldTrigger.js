@@ -4,7 +4,7 @@ import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class SelectFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
-        const currentValues = this.constructor.getCurrentValuesFromSelect(this.element.querySelector('select'));
+        const currentValues = this._getCurrentValuesFromSelectElement();
 
         this._toggleConditionalFields(currentValues);
     }
@@ -18,29 +18,9 @@ class SelectFieldTrigger extends ConditionalFieldTrigger {
         );
     }
 
-    _toggleConditionalFields(currentValues) {
-        this.conditionalFields.forEach((conditionalField) => {
-            const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
-                if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {
-                    return currentValues.find((currentValue) => {
-                        const regex = this.constructor._createRegexFromString(conditionalFieldValue);
+    _getCurrentValuesFromSelectElement() {
+        const selectElement = this.element.querySelector('select');
 
-                        return currentValue.match(regex);
-                    });
-                }
-
-                return currentValues.includes(conditionalFieldValue);
-            });
-
-            if (isConditionalFieldToBeTriggered) {
-                this._showConditionalField(conditionalField.element);
-            } else {
-                this._hideConditionalField(conditionalField.element);
-            }
-        });
-    }
-
-    static getCurrentValuesFromSelect(selectElement) {
         return Array.from(selectElement.querySelectorAll('option')).map((element) => element.value);
     }
 }
