@@ -2,9 +2,9 @@
     label="{{ $field->getLabel() }}"
     name="{{ $field->getName($locale ?? null) }}"
     isRequired="{{ $field->required() }}"
-    data-formgroup="{{ $field->getId($locale ?? null) }}"
-    data-formgroup-type="{{ $field->getType() }}"
-    data-conditional-fields-data="{{ $field->getConditionalFieldsData() }}"
+    data-conditional="{{ $field->getId($locale ?? null) }}"
+    data-conditional-trigger-type="{{ $field->getType() }}"
+    data-conditional-data="{{ $field->getConditionalFieldsData() }}"
 >
     @if($field->getDescription())
         <x-slot name="description">
