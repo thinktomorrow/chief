@@ -1,5 +1,6 @@
+<?php $formId = 'createForm' . \Illuminate\Support\Str::random(8); ?>
 <form
-    id="createForm"
+    id="{{ $formId }}"
     method="POST"
     action="@adminRoute('fragment-store', $owner)"
     enctype="multipart/form-data"
@@ -19,7 +20,7 @@
         </div>
 
         <div>
-            <button form="createForm" type="submit" class="btn btn-primary">
+            <button form="{{ $formId }}" type="submit" class="btn btn-primary">
                 Aanmaken
             </button>
         </div>

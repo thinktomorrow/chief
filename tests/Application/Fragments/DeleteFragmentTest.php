@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentRemovedFromContext;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
-class RemoveFragmentTest extends ChiefTestCase
+class DeleteFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
     private SnippetStub $fragment;
@@ -69,7 +69,7 @@ class RemoveFragmentTest extends ChiefTestCase
         $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-delete', $this->owner, $this->fragment));
         $this->assertFragmentCount($this->owner, 0);
 
-        Event::assertDispatched(FragmentRemovedFromContext::class);
+        Event::assertDispatched(FragmentDetached::class);
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class RemoveFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function removing_a_static_fragment_soft_deletes_fragment_and_assets()
+    public function removing_a_static_fragment_deletes_fragment_and_assets()
     {
         // Add file to static fragment
         $this->asAdmin()->put($this->manager($this->fragment)->route('fragment-update', $this->fragment), [
@@ -106,9 +106,7 @@ class RemoveFragmentTest extends ChiefTestCase
         $this->assertTrue($deletedFragmentModel->trashed());
         $this->assertNotNull($deletedFragmentModel->deleted_at);
 
-        // TODO: unused does nothing - better is to set softdeletion on media model.
-        $asset = $deletedFragmentModel->assetRelation()->withPivot('unused')->first();
-        $this->assertTrue($asset->isUnused());
+        $this->assertEquals(0, $deletedFragmentModel->assetRelation()->count());
     }
 
     /** @test */

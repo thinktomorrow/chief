@@ -10,7 +10,7 @@ trait UsesPageState
         return (string) $this->stateOf(PageState::KEY);
     }
 
-    public function setPageState($state)
+    public function setPageState($state): void
     {
         $this->{PageState::KEY} = $state;
     }

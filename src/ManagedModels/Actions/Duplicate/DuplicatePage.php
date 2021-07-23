@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 
 class DuplicatePage
 {
@@ -23,7 +23,7 @@ class DuplicatePage
         $copiedModel = $this->duplicateModel->handle($model);
 
         // TODO: check for HasPageState contract
-        if ($copiedModel instanceof StatefulContract) {
+        if ($copiedModel instanceof WithPageState) {
             $copiedModel->setPageState(PageState::DRAFT);
             $copiedModel->save();
         }

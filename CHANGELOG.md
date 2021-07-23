@@ -4,10 +4,10 @@ principles.
 
 ## TODO:
 - change statefulcontract to HasPageState.
-- remove dynamic fragment concept altogether. Fragments will always be considered static.
-    - simplify fragmentassistant
-    - v rename staticFragment -> fragment
-    - remove FragmentManager preset (staticFragmentmanager renamed to FragmentManager)
+- ✅ remove dynamic fragment concept altogether. Fragments will always be considered static.
+    - ✅ simplify fragmentassistant
+    - ✅ rename staticFragment -> fragment
+    - ✅ remove FragmentManager preset (staticFragmentmanager renamed to FragmentManager)
 - ✅ refactor Viewable: zodat fragments als folder wordt gebruikt voor fragments.
 - ✅ migrations cleanup van chief -> terug naar 1 migratie file (voor upgrade voorzien we aparte migration command)
 - ✅ nog niet duidelijk dat pagina in draft staat bij begin. Redelijk braafjes.
@@ -15,12 +15,9 @@ principles.
 - ✅ sortable handle zodat tekst kan worden geselecteerd
 - field toggle
 - image queue
-- reloadPHP.sh steeds nodig?
 - SEO tracking en events mogelijk maken in chief
 - SEO title en description metadata rendering
 
-- bestaande toevoegen
-- sortering bij bestaande toevoegen nog te doen
 - shared favorite UI
 - errors in sidebar form blijven + tonen
 - Relation mapping in ModelReference + save in db as mapped value ipv volledige class
@@ -31,21 +28,22 @@ principles.
 - BUG: Creëer fragment in nested fragment --> ga terug via sidebar breadcrumbs zonder op te slaan --> creëer een ander fragment in dan het vorige en sla op --> een lege instance van het eerste nested fragment is opgeslagen.
 
 ## BUGS
-- article verwijderd maar context blijft nog. Als ik database reset (en dus ook primary keys) dan wordt bij de nieuwe article ongewenst de oude context aan dit artikel gelinkt.
-- assets blijven 'actief' omdat contexts niet verwijderd worden. Kn dus niet uit mediagallery worden verwijderd. Cleanup?, deleted_at timestamp bij context?
-- choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
-- kopie van quote is beschikbaar maar reeds gebruikt?...
+- ✅ article verwijderd maar context blijft nog. Als ik database reset (en dus ook primary keys) dan wordt bij de nieuwe article ongewenst de oude context aan dit artikel gelinkt.
+- ✅ assets blijven 'actief' omdat contexts niet verwijderd worden. Kn dus niet uit mediagallery worden verwijderd. Cleanup?, deleted_at timestamp bij context?
+- ✅ verwijder knop in model > status werkt niet
+- ✅ choose fragment type, back to select menu, go to other fragment BUT FIRST ONE GETS ADDED!!!!!!!
+- ✅ duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
+- ✅ kopie van quote is beschikbaar maar reeds gebruikt?...
+- ✅ proper duplicate context feature (with buttons and all)
+- ✅ squanto page layouts are messed up.
+- ✅ squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
+- ✅ FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
-- proper duplicate context feature (with buttons and all)
-- duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
 - menu only connects with 'Pages', need to add model_type as well to allow other models
 - menu requires menuLabel for an owner... (internal url) try to remove this and set a title on the menu item itself
-- squanto page layouts are messed up.
-- squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
 - validation op settings page toont: 'validation.required'.
 - statusAsLabel() and statusAsPlainLabel()
-- FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
 - na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
 - UrlHelper has a lot of non-working methods now... Are all of them used?
 

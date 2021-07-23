@@ -9,7 +9,7 @@ return [
      * and is the sender address for all transaction mails such as password reset mails.
      */
     'contact_email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
-    'contact_name'  => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
+    'contact_name' => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
 
     /**
      * Client details

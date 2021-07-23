@@ -17,7 +17,7 @@
                     <p class="text-grey-700">
                         Deze pagina is gepubliceerd en zichtbaar voor de gebruiker!
                     </p>
-                @else
+                @elseif($isVisitable)
                     <x-slot name="title">
                         <span class="inline-flex items-center space-x-1">
                             <span>Status</span>
@@ -40,6 +40,13 @@
                             </a>
                         </p>
                     </div>
+                @else
+                    <x-slot name="title">
+                            <span class="inline-flex items-center space-x-1">
+                                <span>Status</span>
+                                <span class="text-xs label label-success">Online</span>
+                            </span>
+                    </x-slot>
                 @endif
 
                 @break

@@ -1,23 +1,23 @@
-name: codestyle
+name: Check & fix styling
+
 on: [push]
+
 jobs:
-  codestyle:
+  php-cs-fixer:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Code checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Fix style
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Run PHP CS Fixer
         uses: docker://oskarstark/php-cs-fixer-ga
         with:
-          args: --config=.php-cs-fixer.php --allow-risky=yes
-      - name: Extract branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-      - name: Commit fixes
-        uses: stefanzweifel/git-auto-commit-action@v2.3.0
+          args: --config=.php-cs-fixer.dist.php --allow-risky=yes
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Fix codestyle
-          branch: ${{ steps.extract_branch.outputs.branch }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Fix styling

@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Authorization;
 
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PermissionTest extends ChiefTestCase
@@ -12,7 +11,7 @@ class PermissionTest extends ChiefTestCase
     /** @test */
     public function an_user_can_be_checked_for_permission()
     {
-        $admin = User::factory()->create();
+        $admin = $this->fakeUser();
 
         $role = Role::create(['name' => 'superadmin']);
         Permission::create(['name' => 'create-article']);
@@ -27,7 +26,7 @@ class PermissionTest extends ChiefTestCase
     /** @test */
     public function an_unknown_permission_does_not_authorize()
     {
-        $admin = User::factory()->create();
+        $admin = $this->fakeUser();
 
         $this->assertFalse($admin->can('unknown-permission'));
     }
@@ -35,7 +34,7 @@ class PermissionTest extends ChiefTestCase
     /** @test */
     public function an_user_can_have_multiple_roles()
     {
-        $admin = User::factory()->create();
+        $admin = $this->fakeUser();
 
         Role::create(['name' => 'superadmin']);
         Role::create(['name' => 'editor']);

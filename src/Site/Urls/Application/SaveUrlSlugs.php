@@ -18,7 +18,7 @@ final class SaveUrlSlugs
      * Saving urls slugs in strict mode prevents identical urls to be automatically removed.
      * When set to false, this would remove the identical url records.
      */
-    public function handle(Visitable $model, array $slugs, bool $strict = true): void
+    public function handle(Visitable $model, array $slugs, bool $strict = true, bool $prependBaseUrlSegment = true): void
     {
         $this->strict = $strict;
 
@@ -32,7 +32,12 @@ final class SaveUrlSlugs
                 continue;
             }
 
-            $this->saveRecord($model, $locale, $this->prependBaseUrlSegment($model, $slug, $locale), $existingRecords);
+            $this->saveRecord(
+                $model,
+                $locale,
+                $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $locale) : $slug,
+                $existingRecords
+            );
         }
     }
 

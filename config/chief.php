@@ -69,8 +69,8 @@ return [
     'menus' => [
         'main' => [
             'label' => 'Hoofdnavigatie',
-            'view'  => 'front.menus.main'
-        ]
+            'view' => 'front.menus.main',
+        ],
     ],
 
     /**
