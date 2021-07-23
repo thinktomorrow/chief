@@ -6,7 +6,7 @@ function characterCount(panel, characterCountEl) {
     const max = characterCountEl.getAttribute('data-character-count-max');
 
     if (!formField) {
-        console.error(`Character count not initiated: No formField found by selector:#${formFieldId}`);
+        console.error(`Character count not initiated: No formField found by selector: #${formFieldId}`);
         return;
     }
 

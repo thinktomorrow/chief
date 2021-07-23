@@ -1,9 +1,10 @@
 import RadioFieldTrigger from './conditional-fields/RadioFieldTrigger';
+import SelectFieldTrigger from './conditional-fields/SelectFieldTrigger';
 import InputFieldTrigger from './conditional-fields/InputFieldTrigger';
 
 /**
  * Initialize conditional fields functionality
- * Registers all event listeners for conditional field triggers if present
+ * Registers all event listeners for conditional field triggers
  * @param {String} formgroupAttribute
  * @param {String} formgroupTypeAttribute
  * @param {String} conditionalFieldsDataAttribute
@@ -15,23 +16,29 @@ const initConditionalFields = (
 ) => {
     const formgroupElements = Array.from(document.querySelectorAll(`[${formgroupAttribute}]`));
 
-    formgroupElements.forEach((formgroupElement) => {
-        const formgroupName = formgroupElement.getAttribute(formgroupAttribute);
-        const formgroupType = formgroupElement.getAttribute(formgroupTypeAttribute);
-        const conditionalFieldsData = JSON.parse(formgroupElement.getAttribute(conditionalFieldsDataAttribute));
+    formgroupElements.forEach((element) => {
+        const name = element.getAttribute(formgroupAttribute);
+        const type = element.getAttribute(formgroupTypeAttribute);
+        const conditionalFieldsData = JSON.parse(element.getAttribute(conditionalFieldsDataAttribute));
 
         // If any of the above is not present, don't initialize a conditional field trigger for this formgroup
-        if (!formgroupName || !formgroupType || !conditionalFieldsData) return;
+        if (!name || !type || !conditionalFieldsData) return;
 
-        switch (formgroupType) {
+        switch (type) {
             case 'radio':
-                new RadioFieldTrigger(formgroupName, formgroupElement, conditionalFieldsData);
+                new RadioFieldTrigger(name, element, conditionalFieldsData);
+                break;
+            case 'select':
+                new SelectFieldTrigger(name, element, conditionalFieldsData);
                 break;
             case 'input':
-                new InputFieldTrigger(formgroupName, formgroupElement, conditionalFieldsData);
+                new InputFieldTrigger(name, element, conditionalFieldsData);
                 break;
             default:
-                console.error(`Conditional fields handling for formgroup type ${formgroupType} not implemented ...`);
+                console.error(
+                    /* eslint-disable-next-line */
+                    `Error while trying to initialise conditional fields: Trigger handling for type ${type} is not implemented yet ...`
+                );
         }
     });
 };

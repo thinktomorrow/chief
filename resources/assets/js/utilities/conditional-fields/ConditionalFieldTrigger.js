@@ -12,10 +12,10 @@ class ConditionalFieldTrigger {
     constructor(name, element, conditionalFieldsData) {
         this.name = name;
         this.element = element;
-        this.conditionalFields = this.constructor._createConditionalFields(conditionalFieldsData);
+        this.conditionalFields = this.constructor._createConditionalFieldsObject(conditionalFieldsData);
 
         this.divider = '|';
-        this.formgroupToggledByAttribute = 'data-formgroup-toggled-by';
+        this.formgroupToggleAttribute = 'data-formgroup-toggled-by';
 
         this._init();
     }
@@ -24,10 +24,11 @@ class ConditionalFieldTrigger {
         // Initially hide all conditional fields toggleable by this condition field trigger
         this._hideConditionalFields();
 
-        setTimeout(() => {
-            this._handle();
-        }, 1000);
+        this._handle();
+        this._watch();
+    }
 
+    _watch() {
         this.element.addEventListener(
             'input',
             _debounce(() => {
@@ -36,53 +37,75 @@ class ConditionalFieldTrigger {
         );
     }
 
-    _hideConditionalFields() {
+    _toggleConditionalFields(currentValue) {
         this.conditionalFields.forEach((conditionalField) => {
-            // This attribute is present on the conditional field only if it was already hidden before,
-            // or if it was already shown by another conditional field trigger.
-            if (conditionalField.element.hasAttribute(this.formgroupToggledByAttribute)) return;
+            const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
+                if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {
+                    return currentValue.match(this.constructor._createRegexFromString(conditionalFieldValue));
+                }
 
-            conditionalField.element.classList.add('hidden');
-            conditionalField.element.setAttribute(this.formgroupToggledByAttribute, '');
+                return conditionalFieldValue === currentValue;
+            });
+
+            if (isConditionalFieldToBeTriggered) {
+                this._showConditionalField(conditionalField.element);
+            } else {
+                this._hideConditionalField(conditionalField.element);
+            }
         });
     }
 
-    _showConditionalField(fieldElement) {
-        const triggers = fieldElement.getAttribute(this.formgroupToggledByAttribute);
+    _showConditionalField(element) {
+        const triggers = element.getAttribute(this.formgroupToggleAttribute);
 
         if (!triggers) {
-            fieldElement.setAttribute(this.formgroupToggledByAttribute, this.name);
+            element.setAttribute(this.formgroupToggleAttribute, this.name);
         } else if (!triggers.split(this.divider).includes(this.name)) {
-            fieldElement.setAttribute(this.formgroupToggledByAttribute, triggers + this.divider + this.name);
+            element.setAttribute(this.formgroupToggleAttribute, triggers + this.divider + this.name);
         }
 
-        fieldElement.classList.remove('hidden');
+        element.classList.remove('hidden');
     }
 
-    _hideConditionalField(fieldElement) {
-        let triggers = fieldElement.getAttribute(this.formgroupToggledByAttribute).split(this.divider);
+    _hideConditionalField(element) {
+        let triggers = element.getAttribute(this.formgroupToggleAttribute).split(this.divider);
 
         if (triggers.includes(this.name)) {
             triggers = triggers.filter((trigger) => trigger !== this.name);
-            fieldElement.setAttribute(this.formgroupToggledByAttribute, triggers.join(this.divider));
+
+            element.setAttribute(this.formgroupToggleAttribute, triggers.join(this.divider));
         }
 
         if (_isEmpty(triggers)) {
-            fieldElement.classList.add('hidden');
+            element.classList.add('hidden');
         }
     }
 
-    static _createConditionalFields(conditionalFieldsData) {
+    _hideConditionalFields() {
+        this.conditionalFields.forEach((conditionalField) => {
+            // This attribute is present on the conditional field only if it was already hidden before,
+            // or if it was shown by another conditional field trigger.
+            if (conditionalField.element.hasAttribute(this.formgroupToggleAttribute)) return;
+
+            conditionalField.element.classList.add('hidden');
+            conditionalField.element.setAttribute(this.formgroupToggleAttribute, '');
+        });
+    }
+
+    static _createConditionalFieldsObject(data) {
         const output = [];
 
-        for (const [key, value] of Object.entries(conditionalFieldsData)) {
-            const conditionalFieldElement = document.querySelector(`[data-formgroup="${key}"]`);
+        for (const [key, value] of Object.entries(data)) {
+            const element = document.querySelector(`[data-formgroup="${key}"]`);
 
-            if (!conditionalFieldElement) {
-                console.error(`Couldn't find formgroup with key ${key}. Make sure this field exists on this model.`);
+            if (!element) {
+                console.error(
+                    /* eslint-disable-next-line */
+                    `Error while trying to create conditional fields: Couldn't find formgroup with key ${key}. Make sure this field exists on this model.`
+                );
             } else {
                 output.push({
-                    element: conditionalFieldElement,
+                    element,
                     values: value,
                 });
             }

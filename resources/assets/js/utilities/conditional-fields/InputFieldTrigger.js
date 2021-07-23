@@ -6,21 +6,7 @@ class InputFieldTrigger extends ConditionalFieldTrigger {
 
         if (!inputElement) return;
 
-        this.conditionalFields.forEach((conditionalField) => {
-            const isConditionalFieldToBeTriggered = conditionalField.values.find((value) => {
-                if (this.constructor._isValidRegexExpression(value)) {
-                    return inputElement.value.match(this.constructor._createRegexFromString(value));
-                }
-
-                return value === inputElement.value;
-            });
-
-            if (isConditionalFieldToBeTriggered) {
-                this._showConditionalField(conditionalField.element);
-            } else {
-                this._hideConditionalField(conditionalField.element);
-            }
-        });
+        this._toggleConditionalFields(inputElement.value);
     }
 }
 

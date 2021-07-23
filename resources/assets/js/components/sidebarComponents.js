@@ -89,8 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
         components: [linksComponent, statusComponent, fragmentsComponent, fragmentAddComponent, ...fieldComponents],
         reloadLivewireEvents: ['fragmentAdded'],
         events: {
-            sidebarPanelCreated: () => {
-                // window.registerFieldToggles();
+            // sidebarPanelCreated: () => {
+            //     window.registerFieldToggles();
+            // },
+            sidebarPanelActivated: () => {
                 initConditionalFields();
             },
         },
