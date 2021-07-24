@@ -22,7 +22,7 @@ const initConditionalFields = (
         const type = element.getAttribute(formgroupTypeAttribute);
         const conditionalFieldsData = JSON.parse(element.getAttribute(conditionalFieldsDataAttribute));
 
-        // If any of the above is not present, don't initialize a conditional field trigger for this formgroup
+        // If any of the above is not present, don't initialize a ConditionalFieldTrigger for this formgroup
         if (!name || !type || !conditionalFieldsData) return;
 
         switch (type) {

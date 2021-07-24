@@ -2,8 +2,8 @@ import _isEmpty from 'lodash/isEmpty';
 import _debounce from 'lodash/debounce';
 
 /**
- * Conditional field trigger functionality
- * This class is to be extended with specific functionality for the field type
+ * Conditional field trigger functionality.
+ * This class is to be extended with specific functionality for the desired field type.
  * @param name field name
  * @param element field element
  * @param conditionalFieldsData conditional field data (field name + trigger values)
@@ -20,6 +20,9 @@ class ConditionalFieldTrigger {
         this._init();
     }
 
+    /**
+     * Initialise the ConditionalFieldTrigger ...
+     */
     _init() {
         // Initially hide all conditional fields toggleable by this condition field trigger
         this._hideConditionalFields();
@@ -28,6 +31,9 @@ class ConditionalFieldTrigger {
         this._watch();
     }
 
+    /**
+     * Implements how the element should be watched and trigger the _handle callback method.
+     */
     _watch() {
         this.element.addEventListener(
             'input',
@@ -37,6 +43,13 @@ class ConditionalFieldTrigger {
         );
     }
 
+    /**
+     * Checks if the current values are trigger values for this formgroups conditional fields.
+     * Based on the result, toggle the conditional fields.
+     * If one or more of the current values matches the conditional fields values, show it.
+     * Otherwise, hide the conditional field.
+     * @param {Array<String>} currentValues
+     */
     _toggleConditionalFields(currentValues) {
         this.conditionalFields.forEach((conditionalField) => {
             const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
@@ -59,6 +72,11 @@ class ConditionalFieldTrigger {
         });
     }
 
+    /**
+     * Show the conditional field to the user.
+     * Also share the triggers name by adding it to the formgroup toggle data attribute.
+     * @param {Object} element
+     */
     _showConditionalField(element) {
         const triggers = element.getAttribute(this.formgroupToggleAttribute);
 
@@ -71,6 +89,11 @@ class ConditionalFieldTrigger {
         element.classList.remove('hidden');
     }
 
+    /**
+     * Remove the triggers name from the formgroup toggle attribute if present.
+     * If after that the attribute is empty (meaning there are no more active triggers), the element will be hidden.
+     * @param {Object} element
+     */
     _hideConditionalField(element) {
         let triggers = element.getAttribute(this.formgroupToggleAttribute).split(this.divider);
 
@@ -85,6 +108,9 @@ class ConditionalFieldTrigger {
         }
     }
 
+    /**
+     * Hide all conditional fields, if the formgroup toggle attribute is not present.
+     */
     _hideConditionalFields() {
         this.conditionalFields.forEach((conditionalField) => {
             // This attribute is present on the conditional field only if it was already hidden before,
@@ -96,6 +122,11 @@ class ConditionalFieldTrigger {
         });
     }
 
+    /**
+     * Builds an Array of conditional field Objects with element and trigger values.
+     * @param {Object} data
+     * @returns {Array<Object>}
+     */
     static _createConditionalFieldsObject(data) {
         const output = [];
 
@@ -118,10 +149,20 @@ class ConditionalFieldTrigger {
         return output;
     }
 
+    /**
+     * Check if the given string can be interpreted as a regular expression.
+     * @param {String} input
+     * @returns {Boolean}
+     */
     static _isValidRegexExpression(input) {
         return input.match(/\/.*\/[dgimsuy]*/);
     }
 
+    /**
+     * Creates a regular expression from a given string.
+     * @param {String} input
+     * @returns {RegExp}
+     */
     static _createRegexFromString(input) {
         const regexParts = input.split('/');
 
