@@ -1,8 +1,8 @@
-<?php $showOpenState = !isset($inOpenState) || !$inOpenState; ?>
+<?php $hideSelectOptions = !isset($inOpenState) || !$inOpenState; ?>
 
 <div data-fragment-select data-sortable-ignore class="relative w-full">
     <!-- plus icon -->
-    @if($showOpenState)
+    @if($hideSelectOptions)
         <div
             data-fragment-select-open
             class="absolute flex justify-center w-full h-8 border-none cursor-pointer z-1 group"
@@ -16,9 +16,9 @@
 
     <!-- select options: create new or add existing -->
     <div data-fragment-select-options
-         class="{{ ($showOpenState) ? 'hidden' : '' }} relative p-6 pop border-t border-grey-100"
+         class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative p-6 pop border-t border-grey-100"
     >
-        @if($showOpenState)
+        @if($hideSelectOptions)
             <a data-fragment-select-close class="absolute top-0 right-0 m-6 cursor-pointer link link-primary">
                 <x-icon-label type="close"></x-icon-label>
             </a>

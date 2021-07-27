@@ -5,10 +5,12 @@
 
     <div class="relative -m-12 border-t border-b divide-y divide-grey-100 border-grey-100">
 
-        @include('chief::manager.cards.fragments.component.fragment-select', [
-            'ownerManager' => $manager,
-            'inOpenState' => count($fragments) < 1
-        ])
+        <div data-sidebar-component="fragments-select-nested">
+            @include('chief::manager.cards.fragments.component.fragment-select', [
+                'ownerManager' => $manager,
+                'inOpenState' => count($fragments) < 1
+            ])
+        </div>
 
         <div data-fragments-container
              data-sidebar-component="fragments"

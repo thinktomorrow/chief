@@ -267,7 +267,10 @@ if (! function_exists('isActiveUrl')) {
             return ! ! preg_match("#$pattern#", request()->path());
         }
 
-        return ($name == request()->path() || $name == request()->fullUrl());
+        $url = \Thinktomorrow\Url\Url::fromString(request()->fullUrl());
+        $fullUrlWithoutQuery = $url->getScheme(). '://' . $url->getHost() . '/' . $url->getPath();
+
+        return (request()->is($name) || $name == request()->path() || $name == request()->fullUrl() || $name == $fullUrlWithoutQuery);
     }
 }
 
