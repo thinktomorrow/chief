@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 class MediagalleryController extends Controller
 {
@@ -52,7 +52,7 @@ class MediagalleryController extends Controller
             $modelAssets = collect();
             $modelAssets = $modelAssets->merge($owner->assets());
 
-            if($owner instanceof FragmentsOwner) {
+            if ($owner instanceof FragmentsOwner) {
                 $this->fragmentRepository->getByOwner($owner)->each(function ($fragment) use ($modelAssets) {
                     $modelAssets->merge($fragment->fragmentModel()->assets());
                 });
