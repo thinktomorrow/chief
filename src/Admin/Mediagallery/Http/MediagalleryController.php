@@ -62,7 +62,9 @@ class MediagalleryController extends Controller
             $assets->whereIn('id', $modelAssets->pluck('id'));
         }
 
-        $assets = $assets->paginate(20)->appends($request->only(['search', 'unused', 'owner']));
+        $assets = $assets->paginate(2)
+            ->onEachSide(1)
+            ->appends($request->only(['search', 'unused', 'owner']));
 
         $pages = UrlHelper::allOnlineModels();
 

@@ -47,7 +47,7 @@
                     </form>
 
                     <div>
-                        {{ $assets->links('chief::manager.pagination') }}
+                        {{ $assets->links('chief::pagination.default') }}
                     </div>
                 </div>
             </div>
