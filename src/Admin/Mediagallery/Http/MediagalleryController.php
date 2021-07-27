@@ -6,12 +6,21 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 class MediagalleryController extends Controller
 {
+    private FragmentRepository $fragmentRepository;
+
+    public function __construct(FragmentRepository $fragmentRepository)
+    {
+        $this->fragmentRepository = $fragmentRepository;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
@@ -43,14 +52,17 @@ class MediagalleryController extends Controller
             $modelAssets = collect();
             $modelAssets = $modelAssets->merge($owner->assets());
 
-            $owner->children()->each(function ($module) use ($modelAssets) {
-                $modelAssets->merge($module->assets());
-            });
+            if($owner instanceof FragmentsOwner) {
+                $this->fragmentRepository->getByOwner($owner)->each(function ($fragment) use ($modelAssets) {
+                    $modelAssets->merge($fragment->fragmentModel()->assets());
+                });
+            }
+
 
             $assets->whereIn('id', $modelAssets->pluck('id'));
         }
 
-        $assets = $assets->paginate(20);
+        $assets = $assets->paginate(20)->appends($request->only(['search', 'unused', 'owner']));
 
         $pages = UrlHelper::allOnlineModels();
 
