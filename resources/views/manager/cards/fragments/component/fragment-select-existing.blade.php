@@ -28,7 +28,7 @@
             @php
                 $existingTypesOptions = [];
                 foreach($owner->allowedFragments() as $allowedFragmentClass) {
-                    $existingTypesOptions[$allowedFragmentClass] = ucfirst((new $allowedFragmentClass)->adminConfig()->getModelName());
+                    $existingTypesOptions[$allowedFragmentClass] = ucfirst(app($allowedFragmentClass)->adminConfig()->getModelName());
                 }
             @endphp
 

@@ -60,7 +60,7 @@ final class ModelReference
         }
 
         if ($this->refersToStaticObject()) {
-            return new $className($attributes);
+            return app()->make($className, $attributes);
         }
 
         $model = $className::withoutGlobalScopes()->findOrFail($this->id);

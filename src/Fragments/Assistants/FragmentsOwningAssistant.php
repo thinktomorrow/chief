@@ -144,7 +144,7 @@ trait FragmentsOwningAssistant
 
             return [
                 'manager' => $this->registry->manager($fragmentableClass::managedModelKey()),
-                'model' => new $modelClass(),
+                'model' => app($modelClass),
             ];
         }, $owner->allowedFragments());
     }

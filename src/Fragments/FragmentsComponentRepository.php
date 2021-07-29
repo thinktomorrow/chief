@@ -46,7 +46,7 @@ class FragmentsComponentRepository
 
             return [
                 'manager' => $this->registry->manager($fragmentableClass::managedModelKey()),
-                'model' => new $modelClass(),
+                'model' => app($modelClass),
             ];
         }, $this->owner->allowedFragments());
     }

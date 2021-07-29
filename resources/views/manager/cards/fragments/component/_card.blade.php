@@ -35,9 +35,11 @@
             @endAdminCan
         </div>
 
-        <div>
-            {!! $model->renderAdminFragment($owner, $loop) !!}
-        </div>
+        @if($adminFragment = $model->renderAdminFragment($owner, $loop))
+            <div>
+                {!! $adminFragment !!}
+            </div>
+        @endif
     </div>
 
     @include('chief::manager.cards.fragments.component.fragment-select')

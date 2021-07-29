@@ -372,8 +372,6 @@ trait FragmentAssistant
 
     private function fragmentable(): Fragmentable
     {
-        $modelClass = $this->managedModelClass();
-
-        return new $modelClass();
+        return app($this->managedModelClass());
     }
 }

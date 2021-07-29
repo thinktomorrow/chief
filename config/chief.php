@@ -33,7 +33,7 @@ return [
          *      })->name('pages.show')->where('slug', '(.*)?');
          *
          */
-        'autoload' => true,
+        'autoload' => env('CHIEF_ROUTE_AUTOLOAD', true),
 
         /**
          * Route name for the route that chief uses to listen and interact with

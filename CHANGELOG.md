@@ -38,14 +38,15 @@ principles.
 - ✅ squanto page layouts are messed up.
 - ✅ squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
 - ✅ FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
+- ✅ menu only connects with 'Pages', need to add model_type as well to allow other models
+- ✅ menu requires menuLabel for an owner... (internal url) try to remove this and set a title on the menu item itself
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
-- menu only connects with 'Pages', need to add model_type as well to allow other models
-- menu requires menuLabel for an owner... (internal url) try to remove this and set a title on the menu item itself
 - validation op settings page toont: 'validation.required'.
 - statusAsLabel() and statusAsPlainLabel()
 - na archiveren en terugzetten zijt ge alle links kwijt... Ik wil die terug hebben he!
 - UrlHelper has a lot of non-working methods now... Are all of them used?
+- menu sorting
 
 HOMEPAGE en FIXED PAGES
 - homepage: indien Homepage per taal geen url laten editeren maar labeltje IS HOMEPAGE TONEN (link naar settings om aan te passen). Wel mogelijk maken om redirects toe te voegen.
