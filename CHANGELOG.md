@@ -40,6 +40,7 @@ principles.
 - ✅ FIX: double value for asset ids... in pivot table NU TEMP de delete assets in DELETEMODEL uitgezet.
 - ✅ menu only connects with 'Pages', need to add model_type as well to allow other models
 - ✅ menu requires menuLabel for an owner... (internal url) try to remove this and set a title on the menu item itself
+- login prompt wordt getoond in sidebar als men niet langer is ingelogd. werkt wel maar beetje raar niet?
 - locales voor pagina (view: nl - fr ... version of the page in chief) !!
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
 - validation op settings page toont: 'validation.required'.
