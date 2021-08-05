@@ -36,7 +36,7 @@ class CreateFragmentCommand extends Command
         $path = null;
         $namespace = null;
 
-        if($this->option('no-interaction') && $this->option('name')) {
+        if ($this->option('no-interaction') && $this->option('name')) {
             $name = $this->option('name');
             $path = $this->option('path') ?: $this->config->path('Fragments/');
             $namespace = $this->option('namespace') ?: $this->config->namespace($path);
