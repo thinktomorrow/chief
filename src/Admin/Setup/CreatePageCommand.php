@@ -43,7 +43,7 @@ class CreatePageCommand extends Command
         }
 
         while (! $namespace) {
-            $namespace = $this->ask('Which namespace will be used?', $this->config->namespace());
+            $namespace = $this->ask('Which namespace will be used?', $this->config->namespace($path));
         }
 
         if ($this->confirm('Would you like to create a migration file?', true)) {
@@ -54,7 +54,7 @@ class CreatePageCommand extends Command
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
         $viewKey = strtolower($className);
 
-        $this->fileManipulation->writeFile($this->config->path($className.'.php'), $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
+        $this->fileManipulation->writeFile($path . '/' . $className.'.php', $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
                 'className' => $className,
                 'namespace' => $namespace,
             ]), $this->option('force'));
