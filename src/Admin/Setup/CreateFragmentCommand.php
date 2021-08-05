@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 class CreateFragmentCommand extends Command
 {
     protected $signature = 'chief:fragment
+                        {--name : name of the fragment}
+                        {--path : filepath of the fragment}
+                        {--namespace : namespace of the fragment}
                         {--force : overwrite existing class if it already exists}';
 
     protected $description = 'Generate a new chief fragment';
@@ -32,6 +35,12 @@ class CreateFragmentCommand extends Command
         $name = null;
         $path = null;
         $namespace = null;
+
+        if($this->option('no-interaction') && $this->option('name')) {
+            $name = $this->option('name');
+            $path = $this->option('path') ?: $this->config->path('Fragments/');
+            $namespace = $this->option('namespace') ?: $this->config->namespace($path);
+        }
 
         while (! $name) {
             $name = $this->ask('What is the name in singular for your fragment?');
