@@ -11,13 +11,13 @@
             @include('chief::editors.' . config('chief.editor', 'redactor') . '.input')
         </div>
     @else
-        <input
-            type="text"
-            name="{{ $field->getName($locale ?? null) }}"
-            id="{{ $field->getId($locale ?? null) }}"
-            placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
-            value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
-            class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"
+        <input {{ (isset($autofocus) && $autofocus) ? 'autofocus' : '' }}
+               type="text"
+               name="{{ $field->getName($locale ?? null) }}"
+               id="{{ $field->getId($locale ?? null) }}"
+               placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
+               value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
+               class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"
         >
     @endif
 

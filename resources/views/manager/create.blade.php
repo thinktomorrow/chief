@@ -41,7 +41,7 @@
 
                         <div class="space-y-8">
                             @foreach($fields as $field)
-                                @include('chief::manager.cards.fields.field')
+                                @include('chief::manager.cards.fields.field', ['autofocus' => true])
                             @endforeach
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>

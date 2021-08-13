@@ -39,8 +39,8 @@ class CreateFragmentTables extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('context_fragments');
         Schema::dropIfExists('context_fragment_lookup');
+        Schema::dropIfExists('context_fragments');
         Schema::dropIfExists('contexts');
     }
 }
