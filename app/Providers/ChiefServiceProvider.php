@@ -107,7 +107,6 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:fragment', CreateFragmentCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
-
         }
 
 
