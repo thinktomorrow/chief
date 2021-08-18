@@ -107,12 +107,10 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:fragment', CreateFragmentCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
-        }
 
-        // Register sitemap command
-        $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
-            $schedule->command('chief:sitemap')->daily();
-        });
+            // Register sitemap command
+            $this->app->make(Schedule::class)->command('chief:sitemap')->dailyAt('03:00');
+        }
 
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
@@ -125,11 +123,6 @@ class ChiefServiceProvider extends ServiceProvider
 
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
-
-        $this->app->booted(function () {
-            $schedule = $this->app->make(Schedule::class);
-            $schedule->command('chief:sitemap')->dailyAt('03:00');
-        });
 
         Relation::morphMap([
             'fragmentmodel' => FragmentModel::class,
