@@ -131,7 +131,6 @@ class ChiefServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
-                $schedule->command('chief:sitemap')->everyFifteenMinutes()->emailOutputTo('ben@thinktomorrow.be');
                 $schedule->command('chief:sitemap')->dailyAt("01:00");
             });
         }

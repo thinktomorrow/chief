@@ -29,6 +29,7 @@ build/
 ##########################################
 /public/media
 /public/uploads
+/public/sitemap*
 /storage/medialibrary
 /storage/*.key
 /tests/Shared/tmp
