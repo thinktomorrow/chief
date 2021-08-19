@@ -22,7 +22,8 @@ class PrepareMenuItemsForAdminSelect
         $menu = $this->collection->mapRecursive(function (MenuItemNode $node) {
             $node->setLabel(
                 ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())) . '>' : '') .
-                $node->getLabel());
+                $node->getLabel()
+            );
 
             return $node;
         });

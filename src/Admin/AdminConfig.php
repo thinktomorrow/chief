@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 final class AdminConfig
 {
@@ -111,7 +111,9 @@ final class AdminConfig
 
     public function getIndexBreadCrumb(): ?object
     {
-        if(!$this->get('page.indexbreadcrumb')) return null;
+        if (! $this->get('page.indexbreadcrumb')) {
+            return null;
+        }
 
         return (object) $this->get('page.indexbreadcrumb');
     }

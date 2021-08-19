@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 

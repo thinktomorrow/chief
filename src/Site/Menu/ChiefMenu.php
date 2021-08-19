@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu;
 
-use Thinktomorrow\Vine\NodeCollectionFactory;
+use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 use Thinktomorrow\Chief\Site\Menu\Tree\MenuSource;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
+use Thinktomorrow\Vine\NodeCollectionFactory;
 
 class ChiefMenu
 {
