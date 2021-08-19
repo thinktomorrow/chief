@@ -25,7 +25,7 @@
         "spatie/laravel-sitemap": "^5.6",
         "thinktomorrow/assetlibrary": "^0.7.7",
         "thinktomorrow/dynamic-attributes": "^0.3.0",
-        "thinktomorrow/squanto": "1.0.0-beta@dev",
+        "thinktomorrow/squanto": "1.0.0",
         "thinktomorrow/url": "~1.0.2",
         "thinktomorrow/vine": "~0.3.2"
     },
@@ -75,6 +75,6 @@
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
