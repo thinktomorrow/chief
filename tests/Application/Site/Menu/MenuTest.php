@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
-use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Vine\NodeCollection;
@@ -48,8 +48,8 @@ class MenuTest extends ChiefTestCase
         ]);
 
         $collection = ChiefMenu::fromMenuItems()->items();
-        $this->assertEquals($item->id, $collection->find(function($node) use($page){
-            return $node->getOwnerId() ==  $page->id;
+        $this->assertEquals($item->id, $collection->find(function ($node) use ($page) {
+            return $node->getOwnerId() == $page->id;
         })->getId());
     }
 
@@ -64,8 +64,8 @@ class MenuTest extends ChiefTestCase
 
         $collection = ChiefMenu::fromMenuItems()->items();
 
-        $this->assertNotNull($collection->find(function($node){
-            return $node->getUrl() ==  'https://google.com';
+        $this->assertNotNull($collection->find(function ($node) {
+            return $node->getUrl() == 'https://google.com';
         }));
     }
 

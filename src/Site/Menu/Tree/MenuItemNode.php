@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
-use Thinktomorrow\Vine\Node;
-use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 
 class MenuItemNode extends DefaultNode implements Node
 {
@@ -14,9 +14,9 @@ class MenuItemNode extends DefaultNode implements Node
     public function __construct(MenuItem $model)
     {
         parent::__construct([
-            'id'        => $model->id,
+            'id' => $model->id,
             'parent_id' => $model->parent_id,
-            'order'     => $model->order,
+            'order' => $model->order,
         ]);
 
         $this->model = $model;
@@ -76,11 +76,11 @@ class MenuItemNode extends DefaultNode implements Node
     // TODO: is this used?
     public function isHiddenInMenu(): bool
     {
-        return !!$this->model->hidden_in_menu;
+        return ! ! $this->model->hidden_in_menu;
     }
 
     public function isDraft(): bool
     {
-        return !!$this->model->draft;
+        return ! ! $this->model->draft;
     }
 }

@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
+use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
-use Illuminate\Support\Collection;
-use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 
 class MenuSource implements Source
 {
@@ -27,7 +26,9 @@ class MenuSource implements Source
 
     public function createNode($entry): Node
     {
-        if(!$entry instanceof MenuItem) throw new \InvalidArgumentException('Entry argument should be instance of ' . MenuItem::class);
+        if (! $entry instanceof MenuItem) {
+            throw new \InvalidArgumentException('Entry argument should be instance of ' . MenuItem::class);
+        }
 
         return new MenuItemNode($entry);
     }
