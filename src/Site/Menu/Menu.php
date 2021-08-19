@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Menu;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Menu
 {
@@ -60,7 +61,7 @@ class Menu
         return ChiefMenu::fromMenuItems($this->key);
     }
 
-    public function items(): \Vine\NodeCollection
+    public function items(): NodeCollection
     {
         return $this->menu()->items();
     }

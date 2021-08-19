@@ -11,6 +11,14 @@
                 @adminConfig('indexTitle')
             @endslot
 
+            @slot('breadcrumbs')
+                @if($model->adminConfig()->getIndexBreadCrumb())
+                    <a href="{{ $model->adminConfig()->getIndexBreadCrumb()->url }}" class="link link-primary">
+                        <x-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-icon-label>
+                    </a>
+                @endif
+            @endslot
+
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
                     <x-icon-label type="add">@adminConfig('modelName') toevoegen</x-icon-label>

@@ -3,22 +3,36 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\Source;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Vine\NodeCollection;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 
-class BuildMenuItemsTree
+class MenuSource implements Source
 {
-    /**
-     * Full array of original data rows
-     * These are the rows to be converted to the tree model
-     *
-     * @param Collection $items
-     *
-     * @return NodeCollection
-     */
-    public function build(Collection $items): NodeCollection
+    /** @var Collection */
+    private Collection $items;
+
+    public function __construct(Collection $items)
+    {
+        $this->items = $items;
+    }
+
+    public function nodeEntries(): iterable
+    {
+        return $this->filter($this->items);
+    }
+
+    public function createNode($entry): Node
+    {
+        if(!$entry instanceof MenuItem) throw new \InvalidArgumentException('Entry argument should be instance of ' . MenuItem::class);
+
+        return new MenuItemNode($entry);
+    }
+
+    private function filter(Collection $items): Collection
     {
         $collectionItems = collect([]);
 
@@ -40,17 +54,6 @@ class BuildMenuItemsTree
             }
         }
 
-        return $this->transformToNodeCollection(array_merge($items->all(), $collectionItems->all()));
-    }
-
-    private function transformToNodeCollection(array $items): NodeCollection
-    {
-        $collection = NodeCollection::fromArray($items);
-
-        $collection->mapRecursive(function ($node) {
-            return $node->replaceEntry((new MenuItem())->entry($node));
-        });
-
-        return $collection;
+        return collect(array_merge($items->all(), $collectionItems->all()));
     }
 }

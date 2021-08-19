@@ -21,6 +21,7 @@ class UpdateMenuItemTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_update_form()
     {
+        $this->disableExceptionHandling();
         $menuitem = MenuItem::create();
 
         $response = $this->asAdmin()->get(route('chief.back.menuitem.edit', $menuitem->id));

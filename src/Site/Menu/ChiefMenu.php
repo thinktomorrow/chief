@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu;
 
-use Thinktomorrow\Chief\Site\Menu\Tree\BuildMenuItemsTree;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollectionFactory;
+use Thinktomorrow\Chief\Site\Menu\Tree\MenuSource;
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 
 class ChiefMenu
 {
@@ -22,7 +24,11 @@ class ChiefMenu
      */
     public static function fromMenuItems(string $type = 'main'): self
     {
-        return new static(app(BuildMenuItemsTree::class)->build(MenuItem::where('menu_type', $type)->get()));
+        $nodeCollection = app()->make(NodeCollectionFactory::class)->fromSource(
+            new MenuSource(MenuItem::where('menu_type', $type)->get())
+        );
+
+        return new static($nodeCollection);
     }
 
     public static function empty(): self
@@ -48,8 +54,8 @@ class ChiefMenu
     private function sanitize(NodeCollection $collection): NodeCollection
     {
         if (! $this->includeHidden) {
-            $collection = $collection->shake(function ($node) {
-                return ! $node->hidden_in_menu && ! $node->draft;
+            $collection = $collection->shake(function (MenuItemNode $node) {
+                return ! $node->isHiddenInMenu() && ! $node->isDraft();
             });
         }
 

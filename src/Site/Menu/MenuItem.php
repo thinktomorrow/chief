@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Site\Menu;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
-use Vine\Node;
+use Thinktomorrow\Vine\Node;
 
 class MenuItem extends Model
 {
@@ -91,18 +91,18 @@ class MenuItem extends Model
     public function entry(Node $node): \stdClass
     {
         return (object)[
-            'id' => $node->id,
-            'type' => $node->type,
-            'label' => $node->label,
-            'page_label' => $node->page_label, // Extra info when dealing with internal links
-            'url' => $node->url(),
-            'order' => $node->order,
-            'owner_type' => $node->owner_type,
-            'owner_id' => $node->owner_id,
-            'parent_id' => $node->parent_id,
-            'morph_key' => $node->morph_key,
-            'hidden_in_menu' => $node->hidden_in_menu,
-            'draft' => $node->draft,
+            'id' => $node->getNodeEntry('id'),
+            'type' => $node->getNodeEntry('type'),
+            'label' => $node->getNodeEntry('label'),
+            'page_label' => $node->getNodeEntry('page_label'), // Extra info when dealing with internal links
+            'url' => $node->getNodeEntry()->url(),
+            'order' => $node->getNodeEntry('order'),
+            'owner_type' => $node->getNodeEntry('owner_type'),
+            'owner_id' => $node->getNodeEntry('owner_id'),
+            'parent_id' => $node->getNodeEntry('parent_id'),
+            'morph_key' => $node->getNodeEntry('morph_key'),
+            'hidden_in_menu' => $node->getNodeEntry('hidden_in_menu'),
+            'draft' => $node->getNodeEntry('draft'),
         ];
     }
 }

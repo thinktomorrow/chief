@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 final class AdminConfig
 {
@@ -100,6 +101,21 @@ final class AdminConfig
         return strip_tags($this->get('page.title', ''));
     }
 
+    public function indexBreadCrumb(string $url, string $label): self
+    {
+        return $this->set('page.indexbreadcrumb', [
+            'url' => $url,
+            'label' => $label,
+        ]);
+    }
+
+    public function getIndexBreadCrumb(): ?object
+    {
+        if(!$this->get('page.indexbreadcrumb')) return null;
+
+        return (object) $this->get('page.indexbreadcrumb');
+    }
+
     public function rowTitle(string $rowTitle): self
     {
         return $this->set('row.title', $rowTitle);
@@ -122,17 +138,13 @@ final class AdminConfig
 
     private function set(string $key, $value): self
     {
-        $this->config[$key] = $value;
+        Arr::set($this->config, $key, $value);
 
         return $this;
     }
 
     private function get(string $key, $default = null)
     {
-        if (! array_key_exists($key, $this->config)) {
-            return $default;
-        }
-
-        return $this->config[$key];
+        return Arr::get($this->config, $key, $default);
     }
 }

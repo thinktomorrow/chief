@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Menu;
 
 use Illuminate\Support\Collection;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollection;
 
 class NullMenu
 {

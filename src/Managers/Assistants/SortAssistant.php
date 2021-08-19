@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -81,10 +82,10 @@ trait SortAssistant
         ]);
     }
 
-    protected function indexModelsForSorting(): Collection
+    protected function indexModelsForSorting(): LengthAwarePaginator
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        return $builder->get();
+        return $builder->paginate(1000);
     }
 }

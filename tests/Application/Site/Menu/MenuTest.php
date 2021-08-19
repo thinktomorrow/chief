@@ -2,13 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
+use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollection;
 
 class MenuTest extends ChiefTestCase
 {
@@ -47,7 +48,9 @@ class MenuTest extends ChiefTestCase
         ]);
 
         $collection = ChiefMenu::fromMenuItems()->items();
-        $this->assertEquals($item->id, $collection->find('owner_id', $page->id)->id);
+        $this->assertEquals($item->id, $collection->find(function($node) use($page){
+            return $node->getOwnerId() ==  $page->id;
+        })->getId());
     }
 
     /** @test */
@@ -59,9 +62,11 @@ class MenuTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $tree = ChiefMenu::fromMenuItems()->items();
+        $collection = ChiefMenu::fromMenuItems()->items();
 
-        $this->assertNotNull($tree->find('url', 'https://google.com'));
+        $this->assertNotNull($collection->find(function($node){
+            return $node->getUrl() ==  'https://google.com';
+        }));
     }
 
     /** @test */
@@ -84,9 +89,9 @@ class MenuTest extends ChiefTestCase
 
         $this->assertCount(2, $collection);
         $check = 0;
-        $collection->each(function ($node) use (&$check) {
-            $this->assertNotNull($node->label);
-            $this->assertNotNull($node->url);
+        $collection->each(function (MenuItemNode $node) use (&$check) {
+            $this->assertNotNull($node->getLabel());
+            $this->assertNotNull($node->getUrl());
             $check++;
         });
 
@@ -117,7 +122,7 @@ class MenuTest extends ChiefTestCase
         $collection = ChiefMenu::fromMenuItems()->items();
 
         $this->assertInstanceof(NodeCollection::class, $collection);
-        $this->assertEquals('last item', $collection->first()->children()->first()->label);
+        $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getLabel());
     }
 
     /** @test */
@@ -139,7 +144,7 @@ class MenuTest extends ChiefTestCase
         $collection = ChiefMenu::fromMenuItems()->items();
         $this->assertInstanceof(NodeCollection::class, $collection);
 
-        $this->assertEquals("last item", $collection->first()->children()->first()->label);
+        $this->assertEquals("last item", $collection->first()->getChildNodes()->first()->getLabel());
 
         $second->order = 1;
         $second->save();
@@ -148,7 +153,7 @@ class MenuTest extends ChiefTestCase
         $third->save();
 
         $collection = ChiefMenu::fromMenuItems()->items();
-        $this->assertEquals("second item", $collection->first()->children()->first()->label);
+        $this->assertEquals("second item", $collection->first()->getChildNodes()->first()->getLabel());
     }
 
     /** @test */

@@ -29,6 +29,10 @@
                         @endforeach
                     </div>
                 </div>
+
+                @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+                    {!! $models->links() !!}
+                @endif
             </div>
             <div class="w-full lg:w-1/3">
                 <div class="window window-grey space-y-4">

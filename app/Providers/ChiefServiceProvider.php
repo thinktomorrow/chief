@@ -135,7 +135,6 @@ class ChiefServiceProvider extends ServiceProvider
             });
         }
 
-
         $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'chief');
         $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'chief-settings');
 

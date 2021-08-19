@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollection;
 
 class PrepareMenuItemsForAdminSelect
 {
@@ -14,25 +14,24 @@ class PrepareMenuItemsForAdminSelect
         $this->collection = $items;
 
         if ($model) {
-            $this->collection = $this->collection->prune(function ($node) use ($model) {
-                return ! in_array($model->id, $node->pluckAncestors('id'));
+            $this->collection = $this->collection->prune(function (MenuItemNode $node) use ($model) {
+                return ! in_array($model->id, $node->pluckAncestorNodes('id'));
             });
         }
 
-        $menu = $this->collection->mapRecursive(function ($node) {
-            $entry = $node->entry();
-            $label = $entry->label;
-            $entry->label = $node->depth() != 0 ? (str_repeat('-', $node->depth())) . '>' : '';
-            $entry->label .= $label;
+        $menu = $this->collection->mapRecursive(function (MenuItemNode $node) {
+            $node->setLabel(
+                ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())) . '>' : '') .
+                $node->getLabel());
 
-            return $node->replaceEntry($entry);
+            return $node;
         });
 
         $menuitems = collect();
-        $menu->flatten()->each(function ($node) use ($menuitems) {
+        $menu->flatten()->each(function (MenuItemNode $node) use ($menuitems) {
             $menuitems[] = [
-                'label' => $node->label,
-                'id' => $node->id,
+                'label' => $node->getLabel(),
+                'id' => $node->getId(),
             ];
         });
 
