@@ -1,7 +1,7 @@
 <div data-links-component>
     <x-chief-card
         class="{{ isset($class) ? $class : '' }}"
-        title="Permalink"
+        title="Links"
         :editRequestUrl="$manager->route('links-edit', $model)"
         type="links"
     >

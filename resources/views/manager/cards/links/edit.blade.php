@@ -1,5 +1,5 @@
 <div class="space-y-8">
-    <h3>Permalinks beheren</h3>
+    <h3>Links beheren</h3>
 
     <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST">
         @csrf
