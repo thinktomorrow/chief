@@ -25,7 +25,7 @@
             <div class="w-full lg:w-2/3">
                 <div class="window window-white space-y-12">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
-                        <div class="flex justify-between items-center mb-0">
+                        <div class="flex justify-between items-center mb-4">
                             <label for="select-all" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
                                 <input type="checkbox" name="select_all" id="select-all">
                                 <span>Alles selecteren</span>
