@@ -53,8 +53,8 @@ class MediagalleryController extends Controller
             $modelAssets = $modelAssets->merge($owner->assets());
 
             if ($owner instanceof FragmentsOwner) {
-                $this->fragmentRepository->getByOwner($owner)->each(function ($fragment) use ($modelAssets) {
-                    $modelAssets->merge($fragment->fragmentModel()->assets());
+                $this->fragmentRepository->getByOwner($owner)->each(function ($fragment) use (&$modelAssets) {
+                    $modelAssets = $modelAssets->merge($fragment->fragmentModel()->assets());
                 });
             }
 
