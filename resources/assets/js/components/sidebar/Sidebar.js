@@ -108,6 +108,13 @@ export default class {
         event.preventDefault();
 
         const trigger = event.currentTarget;
+
+        // Avoid double click - Check if already has been clicked
+        if (trigger.classList.contains('is-clicked')) {
+            return;
+        }
+        trigger.classList.add('is-clicked', 'animate-pulse');
+
         const link = trigger.getAttribute('href');
         const componentKey = trigger.getAttribute(this.componentKeyAttribute);
 
@@ -121,6 +128,10 @@ export default class {
             key: componentKey,
             component: this.components.find(componentKey),
             closeOnPanelFormSubmit: this.components.find(componentKey).closeOnPanelFormSubmit,
+        }, () => {
+            setTimeout(() => {
+                trigger.classList.remove('is-clicked', 'animate-pulse');
+            }, 600);
         });
     }
 
@@ -132,7 +143,7 @@ export default class {
      * @param url
      * @param triggerData
      */
-    show(url, triggerData) {
+    show(url, triggerData, onActivatedCallback) {
         const id = Panels.createId(url);
 
         // if present in panels, than show the existing panel.
@@ -141,10 +152,10 @@ export default class {
             return;
         }
 
-        this._activateNewPanel(id, url, triggerData);
+        this._activateNewPanel(id, url, triggerData, onActivatedCallback);
     }
 
-    _activateNewPanel(id, url, triggerData) {
+    _activateNewPanel(id, url, triggerData, onActivatedCallback) {
         /** Add a new panel element to dom */
         const newPanelElement = document.createElement('div');
         newPanelElement.setAttribute('data-panel-id', id);
@@ -236,6 +247,10 @@ export default class {
             );
 
             this._activate(id);
+
+            if (onActivatedCallback) {
+                onActivatedCallback(id);
+            }
 
             // creating a custom event so native js like redactor js can be initiated async
             // needs to dispatch after vue instances get created otherwise they overrides
