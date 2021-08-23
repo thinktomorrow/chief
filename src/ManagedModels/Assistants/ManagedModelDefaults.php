@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
+use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
@@ -33,12 +35,22 @@ trait ManagedModelDefaults
             return '';
         }
 
+        if($this instanceof Visitable) {
+            if(LinkForm::fromModel($this)->isAnyLinkOnline()) {
+                return '<span class="label label-success text-sm">Online</span>';
+            } elseif($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
+                return '<span class="label label-info text-sm">Nog niet online. Er ontbreekt nog een link</span>';
+            } elseif ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
+                return '<span class="label label-error text-sm">offline</span>';
+            }
+        }
+
         if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
-            return '<span class="label label-success text-sm">Online</span>';
+            return '<span class="label label-success text-sm">gepubliceerd</span>';
         }
 
         if ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
-            return '<span class="label label-error text-sm">Offline</span>';
+            return '<span class="label label-error text-sm">in draft</span>';
         }
 
         if ($this->stateOf(PageState::KEY) === PageState::ARCHIVED) {
