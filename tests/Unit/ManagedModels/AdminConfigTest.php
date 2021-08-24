@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels;
 
 use Thinktomorrow\Chief\Admin\AdminConfig;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\TestCase;
 
-class AdminConfigTest extends TestCase
+class AdminConfigTest extends ChiefTestCase
 {
     /** @test */
     public function it_contains_values_for_admin_views()

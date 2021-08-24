@@ -69,7 +69,7 @@ trait CrudAssistant
 
         // Model cannot be in deleted state for editing purposes.
         if (in_array($action, ['edit', 'update'])) {
-            return ! ($model->stateOf(PageState::KEY) == PageState::DELETED);
+            return ! ($model->getPageState() == PageState::DELETED);
         }
 
         return PageState::make($model)->can($action);

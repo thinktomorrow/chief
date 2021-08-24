@@ -15,17 +15,17 @@ trait Archivable
 
     public function isArchived(): bool
     {
-        return $this->stateOf(PageState::KEY) === PageState::ARCHIVED;
+        return $this->getPageState() === PageState::ARCHIVED;
     }
 
     public function scopeArchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where(PageState::KEY, PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where($this->getPageStateAttribute(), PageState::ARCHIVED);
     }
 
     public function scopeUnarchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where(PageState::KEY, '<>', PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where($this->getPageStateAttribute(), '<>', PageState::ARCHIVED);
     }
 
     public function scopeWithArchived($query)

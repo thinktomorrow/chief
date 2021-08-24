@@ -29,13 +29,9 @@ class PageUrlTest extends ChiefTestCase
         $this->model = ArticlePageWithBaseSegments::create();
 
         // Add links for this model
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($this->model),
-            'modelId' => $this->model->id,
-            'links' => [
-                'nl' => 'foobar',
-                'en' => 'foobar',
-            ],
+        $this->updateLinks($this->model, [
+            'nl' => 'foobar',
+            'en' => 'foobar',
         ]);
     }
 

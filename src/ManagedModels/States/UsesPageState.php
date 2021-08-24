@@ -7,12 +7,17 @@ trait UsesPageState
 {
     public function getPageState(): string
     {
-        return (string) $this->stateOf(PageState::KEY);
+        return (string) $this->stateOf($this->getPageStateAttribute());
     }
 
     public function setPageState($state): void
     {
-        $this->{PageState::KEY} = $state;
+        $this->{$this->getPageStateAttribute()} = $state;
+    }
+
+    public function getPageStateAttribute(): string
+    {
+        return property_exists($this, 'pageStateAttribute') ? $this->pageStateAttribute : PageState::KEY;
     }
 
     public function stateOf(string $key)

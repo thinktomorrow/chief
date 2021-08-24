@@ -10,12 +10,12 @@ trait Publishable
 {
     public function isPublished(): bool
     {
-        return $this->stateOf(PageState::KEY) === PageState::PUBLISHED;
+        return $this->getPageState() === PageState::PUBLISHED;
     }
 
     public function isDraft(): bool
     {
-        return $this->stateOf(PageState::KEY) === PageState::DRAFT;
+        return $this->getPageState() === PageState::DRAFT;
     }
 
     public function scopePublished($query)
@@ -25,12 +25,12 @@ trait Publishable
             return;
         }
 
-        $query->where(PageState::KEY, PageState::PUBLISHED);
+        $query->where($this->getPageStateAttribute(), PageState::PUBLISHED);
     }
 
     public function scopeDrafted($query)
     {
-        $query->where(PageState::KEY, PageState::DRAFT);
+        $query->where($this->getPageStateAttribute(), PageState::DRAFT);
     }
 
     public static function getAllPublished()

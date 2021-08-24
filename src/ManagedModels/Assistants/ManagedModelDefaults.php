@@ -38,22 +38,22 @@ trait ManagedModelDefaults
         if ($this instanceof Visitable) {
             if (LinkForm::fromModel($this)->isAnyLinkOnline()) {
                 return '<span class="label label-success text-sm">Online</span>';
-            } elseif ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
+            } elseif ($this->getPageState() === PageState::PUBLISHED) {
                 return '<span class="label label-info text-sm">Nog niet online. Er ontbreekt nog een link</span>';
-            } elseif ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
+            } elseif ($this->getPageState() === PageState::DRAFT) {
                 return '<span class="label label-error text-sm">offline</span>';
             }
         }
 
-        if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
+        if ($this->getPageState() === PageState::PUBLISHED) {
             return '<span class="label label-success text-sm">gepubliceerd</span>';
         }
 
-        if ($this->stateOf(PageState::KEY) === PageState::DRAFT) {
+        if ($this->getPageState() === PageState::DRAFT) {
             return '<span class="label label-error text-sm">in draft</span>';
         }
 
-        if ($this->stateOf(PageState::KEY) === PageState::ARCHIVED) {
+        if ($this->getPageState() === PageState::ARCHIVED) {
             return '<span class="label label-warning text-sm">Gearchiveerd</span>';
         }
 

@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 
 class PageState extends StateMachine
 {
-    // column key that refers to the current state in db
+    // default column key that refers to the current state in db
     const KEY = 'current_state';
 
     // Offline states
@@ -56,12 +56,12 @@ class PageState extends StateMachine
      */
     public static function make(WithPageState $model): self
     {
-        return new static($model, static::KEY);
+        return new static($model, $model->getPageStateAttribute());
     }
 
     public function isOffline(): bool
     {
-        return in_array($this->statefulContract->stateOf(static::KEY), [
+        return in_array($this->statefulContract->stateOf($this->statefulContract->getPageStateAttribute()), [
             static::DRAFT,
             static::ARCHIVED,
             static::DELETED,
@@ -70,7 +70,7 @@ class PageState extends StateMachine
 
     public function isOnline(): bool
     {
-        return in_array($this->statefulContract->stateOf(static::KEY), [
+        return in_array($this->statefulContract->stateOf($this->statefulContract->getPageStateAttribute()), [
             static::PUBLISHED,
         ]);
     }

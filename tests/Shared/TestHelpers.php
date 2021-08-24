@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
@@ -137,11 +138,15 @@ trait TestHelpers
 
     protected function updateLinks(Model $model, array $links): TestResponse
     {
-        return $this->asAdmin()->put(route('chief.back.links.update'), [
+        $response = $this->asAdmin()->put(route('chief.back.links.update'), [
             'modelClass' => get_class($model),
             'modelId' => $model->id,
             'links' => $links,
         ]);
+
+        MemoizedUrlRecord::clearCachedRecords();
+
+        return $response;
     }
 
     protected function setUpDefaultAuthorization()

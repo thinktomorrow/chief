@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 
 class DuplicateModel
@@ -31,12 +32,14 @@ class DuplicateModel
         $copiedModel->updated_at = now();
         $copiedModel->save();
 
-        foreach ($model->assetRelation()->get() as $asset) {
-            $copiedModel->assetRelation()->attach($asset, [
-                'type' => $asset->pivot->type,
-                'locale' => $asset->pivot->locale,
-                'order' => $asset->pivot->order,
-            ]);
+        if($model instanceof HasAsset) {
+            foreach ($model->assetRelation()->get() as $asset) {
+                $copiedModel->assetRelation()->attach($asset, [
+                    'type' => $asset->pivot->type,
+                    'locale' => $asset->pivot->locale,
+                    'order' => $asset->pivot->order,
+                ]);
+            }
         }
 
         return $copiedModel;
