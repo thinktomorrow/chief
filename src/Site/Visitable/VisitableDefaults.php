@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;

@@ -32,7 +32,7 @@ class DuplicateModel
         $copiedModel->updated_at = now();
         $copiedModel->save();
 
-        if($model instanceof HasAsset) {
+        if ($model instanceof HasAsset) {
             foreach ($model->assetRelation()->get() as $asset) {
                 $copiedModel->assetRelation()->attach($asset, [
                     'type' => $asset->pivot->type,

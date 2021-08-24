@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 
 trait TestHelpers
 {
