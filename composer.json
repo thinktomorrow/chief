@@ -52,7 +52,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Thinktomorrow\\Chief\\Tests\\Shared\\Tmp\\": "tests/Shared/tmp",
             "Thinktomorrow\\Chief\\Tests\\": "tests/",
             "Thinktomorrow\\Chief\\Migrate\\": "migrate/"
         }
