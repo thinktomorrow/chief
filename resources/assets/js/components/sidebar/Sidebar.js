@@ -109,30 +109,40 @@ export default class {
 
         const trigger = event.currentTarget;
 
+        const link = trigger.getAttribute('href');
+        const componentKey = trigger.getAttribute(this.componentKeyAttribute);
+
         // Avoid double click - Check if already has been clicked
         if (trigger.classList.contains('is-clicked')) {
             return;
         }
         trigger.classList.add('is-clicked', 'animate-pulse');
 
-        const link = trigger.getAttribute('href');
-        const componentKey = trigger.getAttribute(this.componentKeyAttribute);
-
         if (!link) {
             if (this.debug) console.error('Not showing a new panel because the trigger has no href value provided.');
             return;
         }
 
-        this.show(link, {
-            el: trigger,
-            key: componentKey,
-            component: this.components.find(componentKey),
-            closeOnPanelFormSubmit: this.components.find(componentKey).closeOnPanelFormSubmit,
-        }, () => {
-            setTimeout(() => {
-                trigger.classList.remove('is-clicked', 'animate-pulse');
-            }, 600);
-        });
+        // If a component key is not found the Sidebar will ignore this specific trigger handle.
+        if (!this.components.find(componentKey)) {
+            if (this.debug) console.error(`There is no component registered by key [${componentKey}].`);
+            return;
+        }
+
+        this.show(
+            link,
+            {
+                el: trigger,
+                key: componentKey,
+                component: this.components.find(componentKey),
+                closeOnPanelFormSubmit: this.components.find(componentKey).closeOnPanelFormSubmit,
+            },
+            () => {
+                setTimeout(() => {
+                    trigger.classList.remove('is-clicked', 'animate-pulse');
+                }, 600);
+            }
+        );
     }
 
     /**
