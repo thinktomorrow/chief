@@ -8,11 +8,10 @@ use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 
 final class DeleteContext
 {
-    private DeleteFragment $deleteFragment;
+    private DetachFragment $detachFragment;
 
-    public function __construct(DeleteFragment $deleteFragment, DetachFragment $detachFragment)
+    public function __construct(DetachFragment $detachFragment)
     {
-        $this->deleteFragment = $deleteFragment;
         $this->detachFragment = $detachFragment;
     }
 

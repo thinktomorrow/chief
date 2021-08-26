@@ -46,7 +46,7 @@ class PageField extends SelectField
             return $this;
         }
 
-        $this->setModelsAsOptions(UrlHelper::modelsByKeys($whitelistedKeys, $excludedPage, $online));
+        $this->setModelsAsOptions(UrlHelper::modelsByType($whitelistedKeys, $excludedPage, $online));
 
         return $this;
     }

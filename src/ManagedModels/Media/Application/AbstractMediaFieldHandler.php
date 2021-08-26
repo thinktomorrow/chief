@@ -147,11 +147,15 @@ abstract class AbstractMediaFieldHandler
      */
     protected function newExistingAsset(HasAsset $model, string $locale, string $type, $assetId): Asset
     {
-        $existingAsset = Asset::find($assetId);
-
-        if ($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($existingAsset)) {
+        if ($model->assetRelation()
+            ->where('asset_pivots.type', $type)
+            ->where('asset_pivots.locale', $locale)
+            ->where('assets.id', $assetId)
+            ->exists()) {
             throw new DuplicateAssetException();
         }
+
+        $existingAsset = Asset::find($assetId);
 
         return $this->addAsset->add($model, $existingAsset, $type, $locale, null, $this->getCollection(), $this->getDisk());
     }

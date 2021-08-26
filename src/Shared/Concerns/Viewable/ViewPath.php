@@ -34,7 +34,7 @@ class ViewPath
             $this->parseToPath([$this->baseFolder, $this->filePath]),
             $this->parseToPath([$this->filePath, 'show']),
             $this->filePath,
-        ], fn ($value) => $value);
+        ], fn ($value) => $value); // removes null values due to the parsing
 
         foreach ($viewPaths as $path) {
             if (! view()->exists($path)) {
@@ -44,9 +44,7 @@ class ViewPath
             return $path;
         }
 
-        if (! view()->exists(last($viewPaths))) {
-            throw new NotFoundView('View file not found for [' . $this->filePath . ']. Make sure to create one of the following views: [' . implode(', ', $viewPaths) . '].');
-        }
+        throw new NotFoundView('View file not found for [' . $this->filePath . ']. Make sure to create one of the following views: [' . implode(', ', $viewPaths) . '].');
     }
 
     private function parseToPath(array $parts): ?string

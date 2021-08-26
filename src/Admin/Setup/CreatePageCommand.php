@@ -74,24 +74,6 @@ class CreatePageCommand extends Command
         }
     }
 
-    protected function writeFrontendView(): void
-    {
-        $path = $this->viewPath(str_replace('.', '/', 'components.'.$this->getView()).'.blade.php');
-
-        if (! $this->files->isDirectory(dirname($path))) {
-            $this->files->makeDirectory(dirname($path), 0777, true, true);
-        }
-
-        if ($this->files->exists($path) && ! $this->option('force')) {
-            $this->error('View already exists!');
-
-            return;
-        }
-
-        file_put_contents($path, '<div>
-    <!-- '.Inspiring::quote().' -->
-</div>');
-    }
     protected function replacePlaceholders($content, $values): string
     {
         $replacements = [

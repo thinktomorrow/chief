@@ -59,6 +59,7 @@ abstract class AbstractField
     protected array $viewData = [];
     protected array $locales = [];
     protected ValidationParameters $validation;
+    protected \Closure $sanitizationResolver;
 
     protected string $localizedFormat = 'trans.:locale.:name';
 

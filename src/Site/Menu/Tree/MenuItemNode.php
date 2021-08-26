@@ -10,6 +10,7 @@ use Thinktomorrow\Vine\Node;
 class MenuItemNode extends DefaultNode implements Node
 {
     private MenuItem $model;
+    private ?string $label;
 
     public function __construct(MenuItem $model)
     {
@@ -20,6 +21,7 @@ class MenuItemNode extends DefaultNode implements Node
         ]);
 
         $this->model = $model;
+        $this->label = $this->model->label;
     }
 
     public function getId()
@@ -39,7 +41,7 @@ class MenuItemNode extends DefaultNode implements Node
 
     public function getLabel()
     {
-        return $this->model->label;
+        return $this->label;
     }
 
     public function setLabel(string $label)

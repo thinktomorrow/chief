@@ -12,15 +12,14 @@ abstract class AbstractFilter
     protected string $type;
     protected string $queryKey;
     protected Closure $query;
+    protected ?string $view = null;
 
     protected string $label;
 
-    /** @var string|null */
-    protected $description;
+    protected ?string $description = null;
+    protected ?string $placeholder = null;
 
-    /** @var string|null */
-    protected $placeholder;
-
+    /** @var null|mixed */
     protected $value;
 
     final public function __construct(string $type, string $queryKey, Closure $query)
