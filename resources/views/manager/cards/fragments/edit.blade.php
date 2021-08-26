@@ -69,7 +69,6 @@
 
         <div class="flex flex-wrap space-x-4">
             <button
-                form="updateForm{{ $model->modelReference()->get() }}"
                 type="submit"
                 form="updateForm{{ $model->modelReference()->get() }}"
                 class="btn btn-primary"
@@ -93,7 +92,6 @@
         @if(!$model->fragmentModel()->isShared())
             <div>
                 <button
-                    form="copyFragment{{ $model->modelReference()->get() }}"
                     class="btn btn-primary-outline"
                     type="submit"
                     form="copyFragment{{ $model->modelReference()->get() }}"
