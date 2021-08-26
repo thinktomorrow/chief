@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Admin\Setup;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Str;
 
 class CreatePageCommand extends Command
