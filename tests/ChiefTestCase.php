@@ -196,7 +196,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function getTempDirectory($dir = null)
     {
-        return __DIR__ . '/Shared/tmp/' . $dir;
+        return __DIR__ . '/Shared/Tmp/' . $dir;
     }
 
     public function getMediaDirectory($suffix = '')

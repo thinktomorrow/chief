@@ -15,7 +15,7 @@ final class ManagedTranslationModelFactory
     private $namespace;
 
     /** @var string */
-    private static $directory = __DIR__ . '/tmp/ManagedModels';
+    private static $directory = __DIR__ . '/Tmp/ManagedModels';
 
     private $withoutDatabaseInsert = false;
 

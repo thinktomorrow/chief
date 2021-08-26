@@ -27,7 +27,7 @@ final class ManagerFactory
     private $namespace;
 
     /** @var string */
-    private static $directory = __DIR__ . '/tmp/Managers';
+    private static $directory = __DIR__ . '/Tmp/Managers';
 
     private function __construct(string $managerClass)
     {
