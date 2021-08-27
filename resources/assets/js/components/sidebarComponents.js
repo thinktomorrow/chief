@@ -2,10 +2,10 @@ import Sidebar from './sidebar/Sidebar';
 import Component from './sidebar/Component';
 import AddFragment from './fragment/addFragment';
 import SelectFragment from './fragment/selectFragment';
-import initSortable from './fragment/sortableFragments';
 import EventBus from '../utilities/EventBus';
 import generateWireframeStyles from '../utilities/wireframe-styles';
 import initConditionalFields from '../utilities/conditional-fields';
+import initSortableGroup from '../utilities/sortable-group';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebarPanelCreated: (panelData) => {
                 // Trigger the sortable script to load for this panel
                 EventBus.publish('fragmentSidebarPanelCreated', panelData);
+
+                initSortableGroup('[data-sortable-fragments]', panelData.panel.el);
             },
             sidebarPanelActivated: (panelData) => {
                 // Todo: check if this sidebar contains fragments...
@@ -25,13 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         },
         onComponentCreation: () => {
-            initSortable();
+            initSortableGroup('[data-sortable-fragments]');
             generateWireframeStyles();
             new SelectFragment(document);
         },
         onComponentReload: () => {
             new SelectFragment(document);
-            initSortable();
+            initSortableGroup('[data-sortable-fragments]');
             generateWireframeStyles();
         },
     });
