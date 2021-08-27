@@ -14,9 +14,7 @@
 
 @section('header')
     <div class="container">
-        @component('chief::layout._partials.header', [
-            'hasDefaultTitle' => false,
-       ])
+        @component('chief::layout._partials.header')
             @if(!$fields->component('chief-page-title')->isEmpty())
                 @slot('title')
                     <livewire:fields_component
@@ -27,7 +25,9 @@
                 @endslot
             @else
                 @slot('title')
-                    <h1>@adminConfig('pageTitle')</h1>
+                    <h1 class="text-grey-900">
+                        @adminConfig('pageTitle')
+                    </h1>
                 @endslot
             @endif
 

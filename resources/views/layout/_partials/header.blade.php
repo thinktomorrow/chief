@@ -1,6 +1,5 @@
 @php
     $isDefaultSlotEmpty = ($slot == '');
-    $hasDefaultTitle = $hasDefaultTitle ?? true;
 @endphp
 
 <div class="row-between-center gutter-2">
@@ -11,17 +10,11 @@
     @endisset
 
     <div class="{{ $isDefaultSlotEmpty ? 'w-full' : 'w-full lg:w-1/2' }}">
-        @if($hasDefaultTitle)
-            <h1 class="text-grey-900">
-                {!! ucfirst($title) !!}
-            </h1>
-        @else
-            {{ $title }}
-        @endif
+        {!! $title !!}
     </div>
 
     @if(!$isDefaultSlotEmpty)
-        <div class="w-full lg:w-1/2 flex justify-end items-center flex-shrink-0">
+        <div class="flex items-center justify-end flex-shrink-0 w-full lg:w-1/2">
             {{ $slot }}
         </div>
     @endif
