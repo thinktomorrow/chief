@@ -27,7 +27,7 @@
                 @endslot
             @else
                 @slot('title')
-                    @adminConfig('pageTitle')
+                    <h1>@adminConfig('pageTitle')</h1>
                 @endslot
             @endif
 
