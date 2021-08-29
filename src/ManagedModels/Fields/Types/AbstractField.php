@@ -62,6 +62,7 @@ abstract class AbstractField
     protected \Closure $sanitizationResolver;
 
     protected string $localizedFormat = 'trans.:locale.:name';
+    private ?string $customSaveMethod = null;
 
     final public function __construct(FieldType $type, string $key)
     {
@@ -523,6 +524,21 @@ abstract class AbstractField
     {
         $this->tag('chief-component');
         $this->component('chief-page-title');
+
+        return $this;
+    }
+
+    public function getCustomSaveMethod(): ?string
+    {
+        return $this->customSaveMethod;
+    }
+
+    /**
+     * @return Field
+     */
+    public function customSaveMethod(string $method): Field
+    {
+        $this->customSaveMethod = $method;
 
         return $this;
     }

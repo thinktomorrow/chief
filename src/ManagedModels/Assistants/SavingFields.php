@@ -80,6 +80,10 @@ trait SavingFields
 
     private function detectCustomSaveMethod(Field $field): ?string
     {
+        if($field->getCustomSaveMethod()) {
+            return $field->getCustomSaveMethod();
+        }
+
         $saveMethodByKey = 'save' . ucfirst(Str::camel($field->getKey())) . 'Field';
         $saveMethodByType = 'save' . ucfirst(Str::camel($field->getType()->get())) . 'Fields';
 
