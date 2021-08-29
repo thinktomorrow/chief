@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
-use Closure;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationParameters;
 

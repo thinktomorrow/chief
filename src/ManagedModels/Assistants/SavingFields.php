@@ -80,7 +80,7 @@ trait SavingFields
 
     private function detectCustomSaveMethod(Field $field): ?string
     {
-        if($field->getCustomSaveMethod()) {
+        if ($field->getCustomSaveMethod()) {
             return $field->getCustomSaveMethod();
         }
 
