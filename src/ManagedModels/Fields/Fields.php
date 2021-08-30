@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
+use Illuminate\Support\Collection;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    private array $fields;
+    private Collection $fieldGroups;
 
-    final public function __construct(array $fields = [])
+    final public function __construct(array $fieldGroups = [])
     {
-        $this->validateFields($fields);
+        $fieldGroups = $this->giveNomadFieldsAFieldGroup($fieldGroups);
+        $this->validateFieldGroups($fieldGroups);
 
-        $this->fields = $this->convertToKeyedArray($fields);
+        $fieldGroups = $this->removeEmptyFieldGroups($fieldGroups);
+        $this->fieldGroups = collect($fieldGroups);
     }
 
     /**
@@ -22,6 +25,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public static function make(iterable $generator): self
     {
+        // TODO: convert to fieldgroup if not present
         $fields = new static();
 
         foreach ($generator as $field) {
@@ -35,74 +39,87 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return $fields;
     }
 
-    public function all(): array
+    public function all(): Collection
     {
-        return $this->fields;
+        return $this->fieldGroups;
+    }
+
+    public function allFields(): Collection
+    {
+        $fields = collect();
+
+        $this->fieldGroups->each(function($fieldGroup) use(&$fields) {
+            $fields = $fields->merge($fieldGroup->all());
+        });
+
+        return $fields;
     }
 
     public function first(): ?Field
     {
-        if (! $this->any()) {
+        if ($this->fieldGroups->isEmpty()) {
             return null;
         }
 
-        return reset($this->fields);
+        return $this->fieldGroups->first()->first();
     }
 
     public function find(string $key): Field
     {
-        if (! isset($this->fields[$key])) {
-            throw new \InvalidArgumentException('No field found by key ' . $key);
+        foreach($this->fieldGroups as $fieldGroup) {
+            if($field = $fieldGroup->find($key)) {
+                return $field;
+            }
         }
 
-        return $this->fields[$key];
+        throw new \InvalidArgumentException('No field found by key ' . $key);
     }
 
     public function any(): bool
     {
-        return count($this->all()) > 0;
+        return !$this->fieldGroups->isEmpty();
     }
 
     public function isEmpty(): bool
     {
-        return ! $this->any();
+        return $this->fieldGroups->isEmpty();
     }
 
     public function keys(): array
     {
-        return array_keys($this->fields);
+        $fieldKeys = [];
+
+        $this->fieldGroups->each(function($fieldGroup) use(&$fieldKeys) {
+            $fieldKeys = array_merge($fieldKeys, $fieldGroup->keys());
+        });
+
+        return $fieldKeys;
+    }
+
+    private function map(callable $callback): Fields
+    {
+        return new static($this->fieldGroups->map($callback)->all());
     }
 
     /**
-     * Clone method is needed because Field as an object has mutable state. This is something that we
-     * should try to avoid and fix the field object to an object of immutable state instead.
+     * @param \Closure|string $key
+     * @param null|mixed $value
      *
-     * @return Fields
+     * @return static
      */
-    public function clone(): Fields
+    public function filterBy($key, $value = null): self
     {
-        $clonedFields = [];
-
-        foreach ($this->fields as $field) {
-            $clonedFields[] = clone $field;
-        }
-
-        return new static($clonedFields);
-    }
-
-    public function map(callable $callback): Fields
-    {
-        $keys = array_keys($this->fields);
-
-        $items = array_map($callback, $this->fields, $keys);
-
-        return new static(array_combine($keys, $items));
+        return new static($this->fieldGroups->map(function($fieldGroup) use($key,$value){
+            return $fieldGroup->filterBy($key,$value);
+        })->all());
     }
 
     public function model($model): self
     {
-        return $this->map(function ($field) use ($model) {
-            return $field->model($model);
+        return $this->map(function ($fieldGroup) use ($model) {
+            return $fieldGroup->map(function($field) use($model) {
+                return $field->model($model);
+            });
         });
     }
 
@@ -117,53 +134,20 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $fields = [];
 
-        foreach ($this->fields as $field) {
-            if (! isset($fields[$field->componentKey()])) {
-                $fields[$field->componentKey()] = new static();
+        foreach ($this->fieldGroups as $fieldGroup) {
+            if (! isset($fields[$fieldGroup->componentKey()])) {
+                $fields[$fieldGroup->componentKey()] = new static();
             }
 
-            $fields[$field->componentKey()] = $fields[$field->componentKey()]->add($field);
+            $fields[$fieldGroup->componentKey()] = $fields[$fieldGroup->componentKey()]->add($fieldGroup);
         }
 
         return $fields;
     }
 
-    /**
-     * @param \Closure|string $key
-     * @param null|mixed $value
-     *
-     * @return static
-     */
-    public function filterBy($key, $value = null): self
-    {
-        $fields = [];
-
-        foreach ($this->fields as $field) {
-            if ($key instanceof \Closure) {
-                if (true == $key($field)) {
-                    $fields[] = $field;
-                }
-
-                continue;
-            }
-
-            $method = 'get' . ucfirst($key);
-
-            // Reject from list if value does not match expected one
-            if ($value && $value == $field->$method()) {
-                $fields[] = $field;
-            } // Reject from list if key returns null (key not present on field)
-            elseif (! $value && ! is_null($field->$method())) {
-                $fields[] = $field;
-            }
-        }
-
-        return new static($fields);
-    }
-
     public function render(): string
     {
-        return array_reduce($this->fields, function (string $carry, Field $field) {
+        return $this->fieldGroups->reduce(function (string $carry, Field $field) {
             return $carry . $field->render();
         }, '');
     }
@@ -172,118 +156,120 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $keys = (array) $key;
 
-        return new static(array_filter($this->fields, function (Field $field) use ($keys) {
+        return $this->filterBy(function (Field $field) use ($keys) {
             return in_array($field->getKey(), $keys);
-        }));
+        });
     }
 
     public function tagged($tag): Fields
     {
-        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
+        return $this->filterBy(function (Field $field) use ($tag) {
             return $field->tagged($tag);
-        }));
+        });
     }
 
     public function notTagged($tag): Fields
     {
-        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
+        return $this->filterBy(function (Field $field) use ($tag) {
             return ! $field->tagged($tag);
-        }));
+        });
     }
 
     public function untagged(): Fields
     {
-        return new static(array_filter($this->fields, function (Field $field) {
+        return $this->filterBy(function (Field $field) {
             return $field->untagged();
-        }));
+        });
     }
 
-    public function add(Field ...$fields): Fields
+    public function add(FieldGroup ...$fieldGroups): Fields
     {
-        return new Fields(array_merge($this->fields, $fields));
+        return new static($this->fieldGroups->merge($fieldGroups)->all());
     }
 
     public function merge(Fields $fields): Fields
     {
-        return new Fields(array_merge($this->fields, $fields->all()));
+        $purgedFieldGroups = $this->remove($fields->keys())->all();
+
+        return new static($purgedFieldGroups->merge($fields->all())->all());
     }
 
-    /**
-     * @return static
-     */
+    /** @return static */
     public function remove($keys = null): self
     {
-        if (! $keys) {
-            return $this;
-        }
-
-        if (is_string($keys)) {
-            $keys = func_get_args();
-        }
-
-        foreach ($this->fields as $k => $field) {
-            if (in_array($field->getKey(), $keys)) {
-                unset($this->fields[$k]);
-            }
-        }
-
-        return $this;
+        return $this->filterBy(function (Field $field) use ($keys) {
+            return !in_array($field->getKey(), $keys);
+        });
     }
 
     public function offsetExists($offset)
     {
-        return isset($this->fields[$offset]);
+        return isset($this->fieldGroups[$offset]);
     }
 
     public function offsetGet($offset)
     {
-        if (! isset($this->fields[$offset])) {
-            throw new \RuntimeException('No field found by key [' . $offset . ']');
+        if (! isset($this->fieldGroups[$offset])) {
+            throw new \RuntimeException('No fieldgroup found by key [' . $offset . ']');
         }
 
-        return $this->fields[$offset];
+        return $this->fieldGroups[$offset];
     }
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Field) {
-            throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
+        if (! $value instanceof FieldGroup) {
+            throw new \InvalidArgumentException('Passed value must be of type ' . FieldGroup::class);
         }
 
-        $this->fields[$offset] = $value;
+        $this->fieldGroups[$offset] = $value;
     }
 
     public function offsetUnset($offset)
     {
-        unset($this->fields[$offset]);
+        unset($this->fieldGroups[$offset]);
     }
 
     public function getIterator()
     {
-        return new ArrayIterator($this->fields);
+        return new ArrayIterator($this->fieldGroups);
     }
 
-    private function convertToKeyedArray(array $fields): array
+    private function giveNomadFieldsAFieldGroup(array $fieldGroups): array
     {
-        $keyedFields = [];
+        $result = [];
 
-        /** @var Field */
-        foreach ($fields as $field) {
-            $keyedFields[$field->getKey()] = $field;
+        foreach($fieldGroups as $fieldGroup) {
+            if($fieldGroup instanceof FieldGroup) {
+                $result[] = $fieldGroup;
+            } elseif($fieldGroup instanceof Field) {
+                $result[] = new FieldGroup([$fieldGroup]);
+            } else {
+                throw new \InvalidArgumentException('Only FieldGroup of Field instances should be passed.');
+            }
         }
 
-        return $keyedFields;
+        return $result;
     }
 
-    private function validateFields(array $fields): void
+    private function validateFieldGroups(array $fieldGroups): void
     {
-        array_map(function (Field $field) {
-            return $field;
-        }, $fields);
+        array_map(fn(FieldGroup $fieldGroup) => $fieldGroup, $fieldGroups);
     }
 
     public function count()
     {
-        return count($this->fields);
+        return count($this->fieldGroups);
+    }
+
+    private function removeEmptyFieldGroups(array $fieldGroups): array
+    {
+        foreach($fieldGroups as $k => $fieldGroup) {
+            if($fieldGroup->isEmpty()) {
+                unset($fieldGroups[$k]);
+            }
+        }
+
+        return array_values($fieldGroups);
     }
 }
