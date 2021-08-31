@@ -118,7 +118,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function getWindowsByPosition(string $position): Collection
     {
-        return $this->allWindows()->filter(fn($window) => $window->getPosition() === $position);
+        return $this->allWindows()->filter(fn ($window) => $window->getPosition() === $position);
     }
 
     public function onlyFieldsWithoutWindow(): Fields
