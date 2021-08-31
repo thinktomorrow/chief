@@ -13,20 +13,20 @@ class FieldPresets
     public static function seo(): iterable
     {
         yield FieldWindow::open('SEO');
-            yield InputField::make('seo_title')
+        yield InputField::make('seo_title')
                 ->label('Paginatitel zoals deze in zoekmachines wordt getoond.')
                 ->locales()
                 ->component('SEO')
                 ->characterCount(66)
                 ->notOnCreate();
-            yield TextField::make('seo_content')
+        yield TextField::make('seo_content')
                 ->label('Korte inhoud')
                 ->description('Pagina omschrijving in zoekmachines.')
                 ->locales()
                 ->component('SEO')
                 ->characterCount(160)
                 ->notOnCreate();
-            yield ImageField::make('seo_image')
+        yield ImageField::make('seo_image')
                 ->label('Seo afbeelding')
                 ->locales()
                 ->component('SEO')
