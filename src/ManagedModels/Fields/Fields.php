@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
+    public const PAGE_TITLE_TAG = 'chief-page-title';
+
     private Collection $fieldGroups;
     private Collection $fieldWindows;
 
@@ -36,7 +38,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $values = [];
 
         foreach ($generator as $fieldGroup) {
-            if (is_iterable($fieldGroup)) {
+            if (!$fieldGroup instanceof FieldGroup && is_iterable($fieldGroup)) {
                 $values = array_merge($values, [...$fieldGroup]);
             } else {
                 $values[] = $fieldGroup;
@@ -49,11 +51,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function filterByWindowId(string $windowId): Fields
     {
         if($windowId === "default") {
-            return $this->onlyFieldsWithoutWindow()->untagged('chief-page-title');
+            return $this->onlyFieldsWithoutWindow()->untagged(static::PAGE_TITLE_TAG);
         }
 
-        if($windowId === 'chief-page-title') {
-            return $this->tagged('chief-page-title');
+        if($windowId === static::PAGE_TITLE_TAG) {
+            return $this->tagged(static::PAGE_TITLE_TAG);
         }
 
         if($this->findWindow($windowId)) {
@@ -345,6 +347,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
                     $result[$openFieldGroupIndex] = $result[$openFieldGroupIndex]->add($fieldGroup);
                 } else {
                     $fieldGroup = FieldGroup::make([$fieldGroup]);
+                    $openFieldGroupIndex = false;
 
                     if (false !== $openFieldWindowId) {
                         $indexKey = $this->fieldWindows->search(fn ($window) => $window->getId() === $openFieldWindowId);

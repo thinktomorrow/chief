@@ -15,10 +15,10 @@
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header', [ 'hasDefaultTitle' => false ])
-            @if($fields->tagged('chief-page-title'))
+            @if($fields->tagged(\Thinktomorrow\Chief\ManagedModels\Fields\Fields::PAGE_TITLE_TAG)->any())
                 @slot('title')
                     <livewire:fields_component
-                        componentKey="chief-page-title"
+                        componentKey="{{ \Thinktomorrow\Chief\ManagedModels\Fields\Fields::PAGE_TITLE_TAG }}"
                         :model="$model"
                         template="chief::manager.windows.fields.templates.pagetitle"
                     />
