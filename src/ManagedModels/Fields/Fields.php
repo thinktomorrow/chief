@@ -38,7 +38,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $values = [];
 
         foreach ($generator as $fieldGroup) {
-            if (!$fieldGroup instanceof FieldGroup && is_iterable($fieldGroup)) {
+            if (! $fieldGroup instanceof FieldGroup && is_iterable($fieldGroup)) {
                 $values = array_merge($values, [...$fieldGroup]);
             } else {
                 $values[] = $fieldGroup;
