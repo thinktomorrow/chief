@@ -77,7 +77,7 @@ class FieldName
 
     private function replacePlaceholders(string $name): string
     {
-        foreach($this->placeholders as $placeholderKey => $value) {
+        foreach ($this->placeholders as $placeholderKey => $value) {
             $name = str_replace(':' . $placeholderKey, $value, $name);
         }
 
