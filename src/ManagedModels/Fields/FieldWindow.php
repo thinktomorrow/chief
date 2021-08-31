@@ -46,11 +46,11 @@ class FieldWindow
         );
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->data['title'] ?? '';
     }
-    
+
     public function position(string $position)
     {
         return new static(
@@ -62,9 +62,9 @@ class FieldWindow
         );
     }
 
-    public function getPosition(): ?string
+    public function getPosition(): string
     {
-        return $this->data['position'] ?? '';
+        return $this->data['position'] ?? 'sidebar';
     }
 
     public function isOpen(): bool

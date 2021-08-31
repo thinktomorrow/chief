@@ -47,7 +47,7 @@
         <div class="row gutter-3">
             <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
-                    @foreach($fields->allWindows()->filter(fn($window) => $window->getPosition() === 'top') as $fieldWindow)
+                    @foreach($fields->getWindowsByPosition('top') as $fieldWindow)
                         <div class="window window-white">
                             <livewire:fields_component
                                 :model="$model"
@@ -64,7 +64,7 @@
                     </div>
                 @endAdminCan
 
-                @foreach($fields->allWindows()->filter(fn($window) => $window->getPosition() === 'bottom') as $fieldWindow)
+                @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
                     <div class="window window-white">
                         <livewire:fields_component
                             :model="$model"
@@ -86,8 +86,8 @@
                     @endAdminCan
 
                     @adminCan('fields-edit', $model)
-                        {{-- FieldWindows without a specific position --}}
-                        @foreach($fields->allWindows()->filter(fn($window) => $window->getPosition() === '') as $fieldWindow)
+                        {{-- FieldWindows without a specific position (default position: sidebar)  --}}
+                        @foreach($fields->getWindowsByPosition('sidebar') as $fieldWindow)
                             <div class="window window-grey">
                                 <livewire:fields_component
                                     :model="$model"
