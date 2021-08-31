@@ -26,12 +26,12 @@ class FieldsComponent extends Component
      */
     public function render()
     {
-        $fields = Fields::make($this->model->fields())->model($this->model);
+        $fields = Fields::make($this->model->fields())
+            ->model($this->model)
+            ->filterByWindowId($this->componentKey);
 
         return view('chief::manager.windows.fields.fieldsComponent', [
-            'fields' => $this->componentKey !== "default"
-                ? $fields->findWindow($this->componentKey) ? $fields->findWindow($this->componentKey)->getFields() : new Fields()
-                : $fields->onlyFieldsWithoutWindow(),
+            'fields' => $fields,
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),
         ]);
     }

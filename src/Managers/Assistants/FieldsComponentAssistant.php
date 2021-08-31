@@ -35,14 +35,14 @@ trait FieldsComponentAssistant
 
         $this->guard('fields-edit', $model);
 
-        $fields = Fields::make($model->fields())->model($model);
+        $fields = Fields::make($model->fields())
+            ->model($model)
+            ->filterByWindowId($componentKey);
 
         return view('chief::manager.windows.fields.edit', [
             'manager' => $this,
             'model' => $model,
-            'fields' => $componentKey !== "default"
-                ? $fields->findWindow($componentKey) ? $fields->findWindow($componentKey)->getFields() : new Fields()
-                : $fields->onlyFieldsWithoutWindow(),
+            'fields' => $fields,
             'componentKey' => $componentKey,
             'componentTitle' => $componentKey == 'chief-page-title' ? '' :  ucfirst($componentKey),
         ]);
@@ -54,11 +54,9 @@ trait FieldsComponentAssistant
 
         $this->guard('fields-update', $model);
 
-        $fields = Fields::make($model->fields())->model($model);
-
-        $fields = $componentKey !== "default"
-            ? $fields->findWindow($componentKey) ? $fields->findWindow($componentKey)->getFields() : new Fields()
-            : $fields->onlyFieldsWithoutWindow();
+        $fields = Fields::make($model->fields())
+            ->model($model)
+            ->filterByWindowId($componentKey);
 
         $this->fieldValidator()->handle($fields, $request->all());
 
