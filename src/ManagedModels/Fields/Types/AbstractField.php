@@ -60,6 +60,8 @@ abstract class AbstractField
 
     protected string $localizedFormat = 'trans.:locale.:name';
 
+    private array $fieldNamePlaceholders = [];
+
     /** @var FieldType */
     private $type;
     private ?string $customSaveMethod = null;
@@ -74,6 +76,13 @@ abstract class AbstractField
 
         $this->valueResolver($this->defaultEloquentValueResolver());
         $this->sanitize(fn ($value) => $value);
+    }
+
+    public function placeholders(string $placeholder, $value): Field
+    {
+        $this->fieldNamePlaceholders[$placeholder] = $value;
+
+        return $this;
     }
 
     public function getType(): FieldType
@@ -428,6 +437,7 @@ abstract class AbstractField
     protected function fieldName(): FieldName
     {
         return FieldName::fromString($this->name)
+            ->placeholders($this->fieldNamePlaceholders)
             ->localizedFormat($this->getLocalizedNameFormat())
         ;
     }

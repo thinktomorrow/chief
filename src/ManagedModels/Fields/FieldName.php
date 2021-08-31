@@ -13,9 +13,18 @@ class FieldName
 
     private bool $withBrackets = false;
 
+    private array $placeholders = [];
+
     final private function __construct(string $name)
     {
         $this->name = $this->replaceBracketsByDots($name);
+    }
+
+    public function placeholders(array $placeholders): self
+    {
+        $this->placeholders = $placeholders;
+
+        return $this;
     }
 
     /**
@@ -28,7 +37,7 @@ class FieldName
 
     public function get(?string $locale = null): string
     {
-        $name = $this->name;
+        $name = $this->replacePlaceholders($this->name);
 
         if ($locale) {
             $name = $this->getLocalized($name, $locale);
@@ -64,6 +73,15 @@ class FieldName
         }
 
         return str_replace(':locale', $locale, $name);
+    }
+
+    private function replacePlaceholders(string $name): string
+    {
+        foreach($this->placeholders as $placeholderKey => $value) {
+            $name = str_replace(':' . $placeholderKey, $value, $name);
+        }
+
+        return $name;
     }
 
     /**

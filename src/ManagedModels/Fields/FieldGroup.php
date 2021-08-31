@@ -64,7 +64,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($this->id, $this->fields, array_merge($this->data, ['multiple' => true]));
     }
 
-    public function allowedToMultiply(): bool
+    public function allowsMultiple(): bool
     {
         return $this->data['multiple'] ?? false;
     }
