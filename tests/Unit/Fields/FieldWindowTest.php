@@ -80,6 +80,21 @@ class FieldWindowTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_all_fieldgroups_not_belonging_to_a_window()
+    {
+        $fields = new Fields([
+            FieldWindow::open(),
+            InputField::make('input-one'),
+            FieldWindow::close(),
+            InputField::make('input-two'),
+            InputField::make('input-three'),
+        ]);
+
+        $this->assertCount(2, $fields->onlyFieldsWithoutWindow()->all());
+        $this->assertCount(2, $fields->onlyFieldsWithoutWindow()->allFields());
+    }
+
+    /** @test */
     public function it_can_return_all_fields_that_dont_belong_to_a_fieldwindow()
     {
         $this->markTestIncomplete();

@@ -19,7 +19,7 @@ class FieldWindow
     public function __construct(string $id, array $data, Fields $fields, array $fieldGroupIds, bool $isOpen = false)
     {
         $this->id = $id;
-        $this->data = $data;
+        $this->data = array_merge(['title' => $id], $data);
         $this->fields = $fields;
         $this->fieldGroupIds = $fieldGroupIds;
         $this->isOpen = $isOpen;

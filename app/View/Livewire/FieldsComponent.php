@@ -31,7 +31,7 @@ class FieldsComponent extends Component
         return view('chief::manager.windows.fields.fieldsComponent', [
             'fields' => $this->componentKey !== "default"
                 ? $fields->findWindow($this->componentKey) ? $fields->findWindow($this->componentKey)->getFields() : new Fields()
-                : $fields->notTagged('component'),
+                : $fields->onlyFieldsWithoutWindow(),
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),
         ]);
     }

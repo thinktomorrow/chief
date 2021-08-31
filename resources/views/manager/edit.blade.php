@@ -72,7 +72,7 @@
                     @endAdminCan
 
                     @adminCan('fields-edit', $model)
-                        @foreach($fields->tagged('component')->notTagged('chief-component')->notTagged('component-main')->allWindows() as $fieldWindow)
+                        @foreach($fields->allWindows()->reject(fn($window) => $window->getId() === 'main') as $fieldWindow)
                             <livewire:fields_component
                                 :model="$model"
                                 :componentKey="$fieldWindow->getId()"

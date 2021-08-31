@@ -42,7 +42,7 @@ trait FieldsComponentAssistant
             'model' => $model,
             'fields' => $componentKey !== "default"
                 ? $fields->findWindow($componentKey) ? $fields->findWindow($componentKey)->getFields() : new Fields()
-                : $fields->notTagged('component'),
+                : $fields->onlyFieldsWithoutWindow(),
             'componentKey' => $componentKey,
             'componentTitle' => $componentKey == 'chief-page-title' ? '' :  ucfirst($componentKey),
         ]);
@@ -58,7 +58,7 @@ trait FieldsComponentAssistant
 
         $fields = $componentKey !== "default"
             ? $fields->findWindow($componentKey) ? $fields->findWindow($componentKey)->getFields() : new Fields()
-            : $fields->notTagged('component');
+            : $fields->onlyFieldsWithoutWindow();
 
         $this->fieldValidator()->handle($fields, $request->all());
 
