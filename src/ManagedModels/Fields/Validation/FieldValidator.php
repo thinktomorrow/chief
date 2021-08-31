@@ -21,7 +21,7 @@ class FieldValidator
 
     public function handle(Fields $fields, array $payload): void
     {
-        foreach ($fields as $field) {
+        foreach ($fields->allFields() as $field) {
             if ($field->hasValidation()) {
                 $this->createValidator($field, $payload)->validate();
             }

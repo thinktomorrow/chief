@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldGroup;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldsTest extends TestCase
@@ -112,7 +112,7 @@ class FieldsTest extends TestCase
 
         $this->assertEquals(new Fields([
             InputField::make('input-two'),
-        ]), $fields->filterBy(function($field){
+        ]), $fields->filterBy(function ($field) {
             return $field->getKey() == 'input-two';
         }));
     }
@@ -128,7 +128,7 @@ class FieldsTest extends TestCase
             FieldGroup::make([
                 $inputTwo = InputField::make('input-three')->tag('foobar'),
                 InputField::make('input-four'),
-            ])
+            ]),
         ]);
 
         $this->assertEquals(new Fields([
@@ -148,7 +148,7 @@ class FieldsTest extends TestCase
             FieldGroup::make([
                 InputField::make('input-three')->tag('foobar'),
                 $inputFour = InputField::make('input-four'),
-            ])
+            ]),
         ]);
 
         $this->assertEquals(new Fields([
@@ -168,7 +168,7 @@ class FieldsTest extends TestCase
             FieldGroup::make([
                 InputField::make('input-three')->tag('foobar'),
                 $inputFour = InputField::make('input-four'),
-            ])
+            ]),
         ]);
 
         $this->assertEquals(new Fields([
@@ -184,7 +184,7 @@ class FieldsTest extends TestCase
 
         $fields = $fields->model($articlePage = new ArticlePage());
 
-        foreach($fields->allFields() as $field){
+        foreach ($fields->allFields() as $field) {
             $ref = new \ReflectionClass($field);
             $method = $ref->getMethod('getModel');
             $method->setAccessible(true);
@@ -241,6 +241,73 @@ class FieldsTest extends TestCase
         $this->assertEquals(['input-two', 'input-one'], $mergedFields->keys());
     }
 
+    /** @test */
+    public function it_can_create_field_group_via_yield()
+    {
+        $fields = new Fields([
+            FieldGroup::open(),
+            InputField::make('input-one'),
+            InputField::make('input-two'),
+            FieldGroup::close(),
+        ]);
+
+        $this->assertCount(1, $fields->all());
+        $this->assertCount(2, $fields->allFields());
+    }
+
+    /** @test */
+    public function it_can_create_multiple_field_groups_via_yield()
+    {
+        $fields = new Fields([
+            FieldGroup::open(),
+            InputField::make('input-one'),
+            InputField::make('input-two'),
+            FieldGroup::close(),
+            InputField::make('input-three'),
+            FieldGroup::open(),
+            InputField::make('input-four'),
+            InputField::make('input-five'),
+            FieldGroup::close(),
+        ]);
+
+        $this->assertCount(3, $fields->all());
+        $this->assertCount(5, $fields->allFields());
+    }
+
+    /** @test */
+    public function obsolete_open_and_close_fieldgroups_are_ignored()
+    {
+        $fields = new Fields([
+            FieldGroup::close(),
+            FieldGroup::open(),
+            FieldGroup::open(),
+            InputField::make('input-one'),
+            InputField::make('input-two'),
+            FieldGroup::close(),
+            FieldGroup::close(),
+        ]);
+
+        $this->assertCount(1, $fields->all());
+        $this->assertCount(2, $fields->allFields());
+    }
+
+    /** @test */
+    public function it_can_create_field_groups_via_yield_in_method()
+    {
+        $owner = new class(){
+            public function fields(){
+                yield FieldGroup::open();
+                    yield InputField::make('input-one');
+                yield FieldGroup::close();
+            }
+        };
+
+        $fields = Fields::make($owner->fields());
+
+        $this->assertCount(1, $fields->all());
+        $this->assertCount(1, $fields->allFields());
+    }
+
     private function createFields(): Fields
     {
         return new Fields($this->values());
@@ -256,7 +323,7 @@ class FieldsTest extends TestCase
             FieldGroup::make([
                 InputField::make('input-three'),
                 InputField::make('input-four'),
-            ])
+            ]),
         ];
     }
 }

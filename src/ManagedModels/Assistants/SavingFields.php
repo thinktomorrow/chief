@@ -29,7 +29,7 @@ trait SavingFields
     {
         [$input, $files] = $this->removeDuplicateFilePayload($input, $files);
 
-        foreach ($fields as $field) {
+        foreach ($fields->allFields() as $field) {
             if ($this->detectCustomSaveMethod($field)) {
                 continue;
             }
@@ -66,7 +66,7 @@ trait SavingFields
         $this->save();
 
         // Custom save methods
-        foreach ($fields as $field) {
+        foreach ($fields->allFields() as $field) {
             if ($customSaveMethod = $this->detectCustomSaveMethod($field)) {
                 $this->$customSaveMethod($field, $input, $files);
             }

@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Settings;
 
 use Thinktomorrow\Chief\Admin\Settings\Setting;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class SettingsTest extends ChiefTestCase
@@ -77,34 +75,5 @@ class SettingsTest extends ChiefTestCase
 
         $this->assertEquals('nl value', chiefSetting('foo'));
         $this->assertEquals('en value', chiefSetting('foo', 'en'));
-    }
-
-    /** @test */
-    public function it_has_a_default_input_field_for_admin()
-    {
-        $setting = Setting::create([
-            'key' => 'foo',
-            'value' => 'bar',
-        ]);
-
-        $this->assertInstanceOf(InputField::class, $setting->field);
-        $this->assertEquals('Foo', $setting->field->getLabel());
-    }
-
-    /** @test */
-    public function it_can_have_a_custom_field_for_the_admin()
-    {
-        Setting::refreshFieldsFromConfig();
-
-        $this->app['config']->set('chief.settingFields', [
-            HtmlField::make('foo')->label('Foobar'),
-        ]);
-
-        $setting = Setting::create([
-            'key' => 'foo',
-            'value' => 'bar',
-        ]);
-
-        $this->assertInstanceOf(HtmlField::class, $setting->field);
     }
 }
