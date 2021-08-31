@@ -30,12 +30,8 @@ class FieldWindow
         return new static(static::EMPTY_ID, [], new Fields(), [],false);
     }
 
-    public static function open(?string $id = null): FieldWindow
+    public static function open(string $id): FieldWindow
     {
-        if (null === $id) {
-            $id = Str::random(8);
-        }
-
         return new static($id, [], new Fields(), [],true);
     }
 
