@@ -99,7 +99,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function onlyFieldsWithoutWindow(): Fields
     {
-        $fieldGroupIds = $this->allWindows()->reduce(function($carry, FieldWindow $window) {
+        $fieldGroupIds = $this->allWindows()->reduce(function ($carry, FieldWindow $window) {
             return array_merge($carry, $window->getFieldGroupIds());
         }, []);
 
