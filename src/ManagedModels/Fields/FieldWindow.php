@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
-use Illuminate\Support\Str;
-
 class FieldWindow
 {
     private const EMPTY_ID = 'empty';
