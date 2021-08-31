@@ -4,16 +4,14 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 final class EditPageTest extends ChiefTestCase
 {
@@ -49,7 +47,6 @@ final class EditPageTest extends ChiefTestCase
     {
         $this->asAdmin()->get($this->manager->route('edit', ArticlePage::first()))
                         ->assertStatus(200);
-
     }
 
     /** @test */

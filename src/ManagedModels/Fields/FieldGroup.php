@@ -71,7 +71,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function first(): ?Field
     {
-        if (!$this->any()) {
+        if (! $this->any()) {
             return null;
         }
 
@@ -80,7 +80,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function find(string $key): ?Field
     {
-        if (!isset($this->fields[$key])) {
+        if (! isset($this->fields[$key])) {
             return null;
         }
 
@@ -94,7 +94,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function isEmpty(): bool
     {
-        return !$this->any();
+        return ! $this->any();
     }
 
     public function keys(): array
@@ -158,7 +158,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
             if ($value && $field->{$method}() == $value) {
                 $fields[] = $field;
             } // Reject from list if key returns null (key not present on field)
-            elseif (!$value && !is_null($field->{$method}())) {
+            elseif (! $value && ! is_null($field->{$method}())) {
                 $fields[] = $field;
             }
         }
@@ -243,7 +243,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (!isset($this->fields[$offset])) {
+        if (! isset($this->fields[$offset])) {
             throw new \RuntimeException('No field found by key ['.$offset.']');
         }
 
@@ -252,7 +252,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (!$value instanceof Field) {
+        if (! $value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type '.Field::class);
         }
 

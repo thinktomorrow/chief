@@ -12,7 +12,7 @@ class FieldGroupTest extends TestCase
     /** @test */
     public function it_can_return_all_keys()
     {
-        $fields = new FieldGroup('xxx',[
+        $fields = new FieldGroup('xxx', [
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);

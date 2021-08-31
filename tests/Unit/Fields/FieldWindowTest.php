@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\ManagedModels\Fields\FieldGroup;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldWindow;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldWindowTest extends TestCase
@@ -70,7 +69,6 @@ class FieldWindowTest extends TestCase
     /** @test */
     public function it_can_find_window_by_id()
     {
-
         $fields = new Fields([
             $foobarWindow = FieldWindow::open('foobar'),
             InputField::make('input-one'),

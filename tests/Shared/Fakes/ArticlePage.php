@@ -36,39 +36,39 @@ class ArticlePage extends Model implements Page
 
     public function fields(): iterable
     {
-            yield InputField::make('title')->validation(['min:4']);
-            yield InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']);
-            yield InputField::make('title_trans')->locales(['nl', 'en']);
-            yield InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale');
+        yield InputField::make('title')->validation(['min:4']);
+        yield InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']);
+        yield InputField::make('title_trans')->locales(['nl', 'en']);
+        yield InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale');
 
-            yield FileField::make('thumb')->tag('edit');
-            yield FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
-            yield FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
-            yield ImageField::make('thumb_image')->tag('edit');
-            yield ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
-            yield ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
+        yield FileField::make('thumb')->tag('edit');
+        yield FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
+        yield FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
+        yield ImageField::make('thumb_image')->tag('edit');
+        yield ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
+        yield ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
 
-            yield InputField::make('title_sanitized')->sanitize(function ($value, array $input) {
-                if ($value) {
-                    return $value;
-                }
-                if (isset($input['title'])) {
-                    return Str::slug($input['title']);
-                }
+        yield InputField::make('title_sanitized')->sanitize(function ($value, array $input) {
+            if ($value) {
+                return $value;
+            }
+            if (isset($input['title'])) {
+                return Str::slug($input['title']);
+            }
 
-                return null;
-            });
+            return null;
+        });
 
-            yield InputField::make('title_sanitized_trans')->locales()->sanitize(function ($value, array $input, $locale = null) {
-                if ($value) {
-                    return $value;
-                }
-                if (isset($input['title'])) {
-                    return Str::slug($input['title']) . '-' . $locale;
-                }
+        yield InputField::make('title_sanitized_trans')->locales()->sanitize(function ($value, array $input, $locale = null) {
+            if ($value) {
+                return $value;
+            }
+            if (isset($input['title'])) {
+                return Str::slug($input['title']) . '-' . $locale;
+            }
 
-                return null;
-            });
+            return null;
+        });
     }
 
     public static function migrateUp()

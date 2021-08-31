@@ -294,10 +294,11 @@ class FieldsTest extends TestCase
     /** @test */
     public function it_can_create_field_groups_via_yield_in_method()
     {
-        $owner = new class(){
-            public function fields(){
+        $owner = new class() {
+            public function fields()
+            {
                 yield FieldGroup::open();
-                    yield InputField::make('input-one');
+                yield InputField::make('input-one');
                 yield FieldGroup::close();
             }
         };

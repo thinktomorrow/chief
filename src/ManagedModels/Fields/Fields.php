@@ -82,8 +82,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function allWindows(): Collection
     {
         foreach ($this->fieldWindows as $index => $fieldWindow) {
-            foreach($this->fieldGroups as $fieldGroup) {
-                if(in_array($fieldGroup->getId(), $fieldWindow->getFieldGroupIds())) {
+            foreach ($this->fieldGroups as $fieldGroup) {
+                if (in_array($fieldGroup->getId(), $fieldWindow->getFieldGroupIds())) {
                     $this->fieldWindows[$index] = $this->fieldWindows[$index]->addFieldGroup($fieldGroup);
                 }
             }
@@ -94,7 +94,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function findWindow(string $windowId): ?FieldWindow
     {
-        return $this->allWindows()->first(fn($window) => $window->getId() === $windowId);
+        return $this->allWindows()->first(fn ($window) => $window->getId() === $windowId);
     }
 
     public function first(): ?Field
@@ -119,7 +119,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function any(): bool
     {
-        return !$this->fieldGroups->isEmpty();
+        return ! $this->fieldGroups->isEmpty();
     }
 
     public function isEmpty(): bool
@@ -213,7 +213,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function notTagged($tag): Fields
     {
         return $this->filterBy(function (Field $field) use ($tag) {
-            return !$field->tagged($tag);
+            return ! $field->tagged($tag);
         });
     }
 
@@ -227,7 +227,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($keys = null): Fields
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return !in_array($field->getKey(), $keys);
+            return ! in_array($field->getKey(), $keys);
         });
     }
 
@@ -235,8 +235,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $fieldGroups = $this->all();
 
-        foreach($fieldGroups as $index => $existingFieldGroup) {
-            if($existingFieldGroup->getId() === $fieldGroupId) {
+        foreach ($fieldGroups as $index => $existingFieldGroup) {
+            if ($existingFieldGroup->getId() === $fieldGroupId) {
                 unset($fieldGroups[$index]);
             }
         }
@@ -251,7 +251,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (!isset($this->fieldGroups[$offset])) {
+        if (! isset($this->fieldGroups[$offset])) {
             throw new \RuntimeException('No fieldgroup found by key ['.$offset.']');
         }
 
@@ -260,7 +260,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (!$value instanceof FieldGroup) {
+        if (! $value instanceof FieldGroup) {
             throw new \InvalidArgumentException('Passed value must be of type '.FieldGroup::class);
         }
 
