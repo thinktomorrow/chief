@@ -50,15 +50,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function filterByWindowId(string $windowId): Fields
     {
-        if($windowId === "default") {
+        if ($windowId === "default") {
             return $this->onlyFieldsWithoutWindow()->untagged(static::PAGE_TITLE_TAG);
         }
 
-        if($windowId === static::PAGE_TITLE_TAG) {
+        if ($windowId === static::PAGE_TITLE_TAG) {
             return $this->tagged(static::PAGE_TITLE_TAG);
         }
 
-        if($this->findWindow($windowId)) {
+        if ($this->findWindow($windowId)) {
             return $this->findWindow($windowId)->getFields();
         }
 
