@@ -9,38 +9,35 @@ class FieldWindow
     private const EMPTY_ID = 'empty';
 
     private string $id;
-    private array $data;
     private Fields $fields;
     private array $fieldGroupIds;
-    private bool $isOpen;
+    private array $data;
 
-    public function __construct(string $id, array $data, Fields $fields, array $fieldGroupIds, bool $isOpen = false)
+    public function __construct(string $id, Fields $fields, array $fieldGroupIds, array $data)
     {
         $this->id = $id;
-        $this->data = array_merge(['title' => $id], $data);
         $this->fields = $fields;
         $this->fieldGroupIds = $fieldGroupIds;
-        $this->isOpen = $isOpen;
+        $this->data = array_merge(['title' => $id], $data);
     }
 
     public static function empty(): FieldWindow
     {
-        return new static(static::EMPTY_ID, [], new Fields(), [],false);
+        return new static(static::EMPTY_ID, new Fields(), [], ['is_open' => false]);
     }
 
     public static function open(string $id): FieldWindow
     {
-        return new static($id, [], new Fields(), [],true);
+        return new static($id, new Fields(), [], ['is_open' => true]);
     }
 
     public function title(string $title): FieldWindow
     {
         return new static(
             $this->id,
-            array_merge($this->data, ['title' => $title]),
             $this->fields,
             $this->fieldGroupIds,
-            $this->isOpen
+            array_merge($this->data, ['title' => $title]),
         );
     }
 
@@ -53,10 +50,9 @@ class FieldWindow
     {
         return new static(
             $this->id,
-            array_merge($this->data, ['position' => $position]),
             $this->fields,
             $this->fieldGroupIds,
-            $this->isOpen
+            array_merge($this->data, ['position' => $position]),
         );
     }
 
@@ -67,7 +63,7 @@ class FieldWindow
 
     public function isOpen(): bool
     {
-        return $this->isOpen;
+        return $this->data['is_open'] ?? false;
     }
 
     public static function close(): FieldWindow
@@ -89,7 +85,7 @@ class FieldWindow
     {
         $fields = $this->fields->removeFieldGroup($fieldGroup->getId());
 
-        return new static($this->id, $this->data, $fields->add($fieldGroup), $this->fieldGroupIds, $this->isOpen);
+        return new static($this->id, $fields->add($fieldGroup), $this->fieldGroupIds, $this->data);
     }
 
     public function getFields(): Fields
@@ -99,7 +95,7 @@ class FieldWindow
 
     public function addFieldGroupId(string $fieldGroupId): FieldWindow
     {
-        return new static($this->id, $this->data, $this->fields, array_merge($this->fieldGroupIds, [$fieldGroupId]), $this->isOpen);
+        return new static($this->id, $this->fields, array_merge($this->fieldGroupIds, [$fieldGroupId]), $this->data);
     }
 
     public function getFieldGroupIds(): array

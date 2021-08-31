@@ -13,20 +13,15 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     private string $id;
     private array $fields;
+    private array $data;
 
-    /**
-     * Flag to indicate that this fieldGroup is set 'open' and allows to be added fields dynamically.
-     * The 'close' method will stop the behaviour.
-     */
-    private bool $isOpen = false;
-
-    final public function __construct(string $id, array $fields = [], bool $isOpen = false)
+    final public function __construct(string $id, array $fields = [], array $data = [])
     {
         $this->id = $id;
         $this->validateFields($fields);
 
         $this->fields = $this->convertToKeyedArray($fields);
-        $this->isOpen = $isOpen;
+        $this->data = $data;
     }
 
     public static function make(iterable $generator): FieldGroup
@@ -46,12 +41,12 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public static function open(): FieldGroup
     {
-        return new static(static::randomId(), [],true);
+        return new static(static::randomId(), [], ['is_open' => true]);
     }
 
     public static function close(): FieldGroup
     {
-        return new static(static::randomId(), [], false);
+        return new static(static::randomId(), [], ['is_open' => false]);
     }
 
     public function getId(): string
@@ -61,7 +56,17 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function isOpen(): bool
     {
-        return $this->isOpen;
+        return $this->data['is_open'] ?? false;
+    }
+
+    public function multiple(): FieldGroup
+    {
+        return new static($this->id, $this->fields, array_merge($this->data, ['multiple' => true]));
+    }
+
+    public function allowedToMultiply(): bool
+    {
+        return $this->data['multiple'] ?? false;
     }
 
     public function all(): array
@@ -108,7 +113,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
         $items = array_map($callback, $this->fields, $keys);
 
-        return new static($this->id, array_combine($keys, $items), $this->isOpen);
+        return new static($this->id, array_combine($keys, $items), $this->data);
     }
 
     /**
@@ -141,78 +146,18 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
             }
         }
 
-        return new static($this->id, $fields, $this->isOpen);
+        return new static($this->id, $fields, $this->data);
     }
-
-//    public function render(): string
-//    {
-//        return array_reduce($this->fields, function (string $carry, Field $field) {
-//            return $carry . $field->render();
-//        }, '');
-//    }
-
-//    public function keyed($key): FieldGroup
-//    {
-//        $keys = (array) $key;
-//
-//        return new static(array_filter($this->fields, function (Field $field) use ($keys) {
-//            return in_array($field->getKey(), $keys);
-//        }));
-//    }
-//
-//    public function tagged($tag): FieldGroup
-//    {
-//        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
-//            return $field->tagged($tag);
-//        }));
-//    }
-//
-//    public function notTagged($tag): FieldGroup
-//    {
-//        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
-//            return ! $field->tagged($tag);
-//        }));
-//    }
-//
-//    public function untagged(): FieldGroup
-//    {
-//        return new static(array_filter($this->fields, function (Field $field) {
-//            return $field->untagged();
-//        }));
-//    }
 
     public function add(Field ...$fields): FieldGroup
     {
-        return new static($this->id, array_merge($this->fields, $fields), $this->isOpen);
+        return new static($this->id, array_merge($this->fields, $fields), $this->data);
     }
 
     public function merge(FieldGroup $fieldGroup): FieldGroup
     {
-        return new static($this->id, array_merge($this->fields, $fieldGroup->all()), $this->isOpen);
+        return new static($this->id, array_merge($this->fields, $fieldGroup->all()), $this->data);
     }
-
-//    /**
-//     * @return static
-//     */
-//    public function remove($keys = null): self
-//    {
-//        // TODO: MAKE IMMUTABLE
-//        if (! $keys) {
-//            return $this;
-//        }
-//
-//        if (is_string($keys)) {
-//            $keys = func_get_args();
-//        }
-//
-//        foreach ($this->fields as $k => $field) {
-//            if (in_array($field->getKey(), $keys)) {
-//                unset($this->fields[$k]);
-//            }
-//        }
-//
-//        return $this;
-//    }
 
     public function offsetExists($offset)
     {
