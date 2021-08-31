@@ -29,5 +29,5 @@
 </div>
 
 @if($field->hasCharacterCount())
-    @include('chief::manager.fieldtypes.charactercount')
+    @include('chief::manager.fields.form.types.charactercount')
 @endif

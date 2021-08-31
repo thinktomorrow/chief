@@ -26,10 +26,12 @@ class FieldsComponent extends Component
      */
     public function render()
     {
-        return view('chief::manager.cards.fields.fieldsComponent', [
+        $fields = Fields::make($this->model->fields())->model($this->model);
+
+        return view('chief::manager.windows.fields.fieldsComponent', [
             'fields' => $this->componentKey !== "default"
-                ? Fields::make($this->model->fields())->model($this->model)->component($this->componentKey)
-                : Fields::make($this->model->fields())->model($this->model)->notTagged('component'),
+                ? $fields->findWindow($this->componentKey) ? $fields->findWindow($this->componentKey)->getFields() : new Fields()
+                : $fields->notTagged('component'),
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),
         ]);
     }

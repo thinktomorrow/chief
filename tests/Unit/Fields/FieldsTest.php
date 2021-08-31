@@ -24,12 +24,12 @@ class FieldsTest extends TestCase
     }
 
     /** @test */
-    public function it_accepts_a_formgroup()
+    public function it_accepts_a_fieldgroup()
     {
-        $fields = $this->createFields();
+        $fields = $this->createFields($values = $this->values());
 
         $this->assertCount(2, $fields);
-        $this->assertEquals(collect($this->values()), $fields->all());
+        $this->assertEquals(collect($values), $fields->all());
     }
 
     /** @test */
@@ -99,10 +99,10 @@ class FieldsTest extends TestCase
     {
         $fields = $this->createFields();
 
-        $this->assertEquals(new Fields([
-            InputField::make('input-two'),
-            InputField::make('input-four'),
-        ]), $fields->keyed(['input-two', 'input-four']));
+        $this->assertEquals(collect([
+            'input-two' => InputField::make('input-two'),
+            'input-four' => InputField::make('input-four'),
+        ]), $fields->keyed(['input-two', 'input-four'])->allFields());
     }
 
     /** @test */
@@ -110,11 +110,11 @@ class FieldsTest extends TestCase
     {
         $fields = $this->createFields();
 
-        $this->assertEquals(new Fields([
-            InputField::make('input-two'),
+        $this->assertEquals(collect([
+            'input-two' => InputField::make('input-two'),
         ]), $fields->filterBy(function ($field) {
             return $field->getKey() == 'input-two';
-        }));
+        })->allFields());
     }
 
     /** @test */
@@ -126,15 +126,15 @@ class FieldsTest extends TestCase
                 InputField::make('input-two'),
             ]),
             FieldGroup::make([
-                $inputTwo = InputField::make('input-three')->tag('foobar'),
+                $inputThree = InputField::make('input-three')->tag('foobar'),
                 InputField::make('input-four'),
             ]),
         ]);
 
-        $this->assertEquals(new Fields([
-            $inputOne,
-            $inputTwo,
-        ]), $fields->tagged('foobar'));
+        $this->assertEquals(collect([
+            'input-one' => $inputOne,
+            'input-three' => $inputThree,
+        ]), $fields->tagged('foobar')->allFields());
     }
 
     /** @test */
@@ -151,10 +151,10 @@ class FieldsTest extends TestCase
             ]),
         ]);
 
-        $this->assertEquals(new Fields([
-            $inputTwo,
-            $inputFour,
-        ]), $fields->notTagged('foobar'));
+        $this->assertEquals(collect([
+            'input-two' => $inputTwo,
+            'input-four' => $inputFour,
+        ]), $fields->notTagged('foobar')->allFields());
     }
 
     /** @test */
@@ -171,10 +171,10 @@ class FieldsTest extends TestCase
             ]),
         ]);
 
-        $this->assertEquals(new Fields([
-            $inputTwo,
-            $inputFour,
-        ]), $fields->untagged());
+        $this->assertEquals(collect([
+            'input-two' => $inputTwo,
+            'input-four' => $inputFour,
+        ]), $fields->untagged()->allFields());
     }
 
     /** @test */
@@ -308,9 +308,9 @@ class FieldsTest extends TestCase
         $this->assertCount(1, $fields->allFields());
     }
 
-    private function createFields(): Fields
+    private function createFields(array $values = null): Fields
     {
-        return new Fields($this->values());
+        return new Fields($values ?: $this->values());
     }
 
     private function values(): array

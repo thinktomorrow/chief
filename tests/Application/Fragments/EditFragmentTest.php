@@ -43,7 +43,7 @@ class EditFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->get($this->fragmentManager->route('fragment-edit', $this->owner, $model))
             ->assertStatus(200)
-            ->assertViewIs('chief::manager.cards.fragments.edit');
+            ->assertViewIs('chief::manager.windows.fragments.edit');
     }
 
     /** @test */

@@ -1,23 +1,28 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
+use Illuminate\Support\Str;
 
 class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 {
+    private const EMPTY_ID = 'empty';
+
+    private string $id;
     private array $fields;
 
     /**
      * Flag to indicate that this fieldGroup is set 'open' and allows to be added fields dynamically.
      * The 'close' method will stop the behaviour.
-     * @var bool
      */
     private bool $isOpen = false;
 
-    final public function __construct(array $fields = [], bool $isOpen = false)
+    final public function __construct(string $id, array $fields = [], bool $isOpen = false)
     {
+        $this->id = $id;
         $this->validateFields($fields);
 
         $this->fields = $this->convertToKeyedArray($fields);
@@ -26,7 +31,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public static function make(iterable $generator): FieldGroup
     {
-        $fields = new static();
+        $fields = new static(static::randomId());
 
         foreach ($generator as $field) {
             if (is_iterable($field)) {
@@ -41,17 +46,22 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public static function open(): FieldGroup
     {
-        return new static([], true);
+        return new static(static::randomId(), [],true);
+    }
+
+    public static function close(): FieldGroup
+    {
+        return new static(static::randomId(), [], false);
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function isOpen(): bool
     {
         return $this->isOpen;
-    }
-
-    public static function close(): FieldGroup
-    {
-        return new static([], false);
     }
 
     public function all(): array
@@ -61,7 +71,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function first(): ?Field
     {
-        if (! $this->any()) {
+        if (!$this->any()) {
             return null;
         }
 
@@ -70,7 +80,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function find(string $key): ?Field
     {
-        if (! isset($this->fields[$key])) {
+        if (!isset($this->fields[$key])) {
             return null;
         }
 
@@ -84,7 +94,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function isEmpty(): bool
     {
-        return ! $this->any();
+        return !$this->any();
     }
 
     public function keys(): array
@@ -98,7 +108,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
         $items = array_map($callback, $this->fields, $keys);
 
-        return new static(array_combine($keys, $items), $this->isOpen);
+        return new static($this->id, array_combine($keys, $items), $this->isOpen);
     }
 
 //    public function component($componentKey): FieldGroup
@@ -125,7 +135,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * @param \Closure|string $key
-     * @param null|mixed $value
+     * @param null|mixed      $value
      *
      * @return static
      */
@@ -142,18 +152,18 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
                 continue;
             }
 
-            $method = 'get' . ucfirst($key);
+            $method = 'get'.ucfirst($key);
 
             // Reject from list if value does not match expected one
-            if ($value && $value == $field->$method()) {
+            if ($value && $field->{$method}() == $value) {
                 $fields[] = $field;
             } // Reject from list if key returns null (key not present on field)
-            elseif (! $value && ! is_null($field->$method())) {
+            elseif (!$value && !is_null($field->{$method}())) {
                 $fields[] = $field;
             }
         }
 
-        return new static($fields, $this->isOpen);
+        return new static($this->id, $fields, $this->isOpen);
     }
 
 //    public function render(): string
@@ -195,12 +205,12 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function add(Field ...$fields): FieldGroup
     {
-        return new static(array_merge($this->fields, $fields), $this->isOpen);
+        return new static($this->id, array_merge($this->fields, $fields), $this->isOpen);
     }
 
     public function merge(FieldGroup $fieldGroup): FieldGroup
     {
-        return new static(array_merge($this->fields, $fieldGroup->all()), $this->isOpen);
+        return new static($this->id, array_merge($this->fields, $fieldGroup->all()), $this->isOpen);
     }
 
 //    /**
@@ -233,8 +243,8 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (! isset($this->fields[$offset])) {
-            throw new \RuntimeException('No field found by key [' . $offset . ']');
+        if (!isset($this->fields[$offset])) {
+            throw new \RuntimeException('No field found by key ['.$offset.']');
         }
 
         return $this->fields[$offset];
@@ -242,8 +252,8 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Field) {
-            throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
+        if (!$value instanceof Field) {
+            throw new \InvalidArgumentException('Passed value must be of type '.Field::class);
         }
 
         $this->fields[$offset] = $value;
@@ -260,11 +270,21 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         return new ArrayIterator($this->fields);
     }
 
+    public function count()
+    {
+        return count($this->fields);
+    }
+
+    private static function randomId(): string
+    {
+        return Str::random(8);
+    }
+
     private function convertToKeyedArray(array $fields): array
     {
         $keyedFields = [];
 
-        /** @var Field */
+        // @var Field
         foreach ($fields as $field) {
             $keyedFields[$field->getKey()] = $field;
         }
@@ -277,10 +297,5 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         array_map(function (Field $field) {
             return $field;
         }, $fields);
-    }
-
-    public function count()
-    {
-        return count($this->fields);
     }
 }

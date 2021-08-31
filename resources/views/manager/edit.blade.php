@@ -15,12 +15,12 @@
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header', [ 'hasDefaultTitle' => false ])
-            @if(!$fields->component('chief-page-title')->isEmpty())
+            @if($fields->findWindow('chief-page-title'))
                 @slot('title')
                     <livewire:fields_component
                         componentKey="chief-page-title"
                         :model="$model"
-                        template="chief::manager.cards.fields.templates.pagetitle"
+                        template="chief::manager.windows.fields.templates.pagetitle"
                     />
                 @endslot
             @else
@@ -47,7 +47,7 @@
         <div class="row gutter-3">
             <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
-                    @if($fields->component('main')->any())
+                    @if($fieldWindows->contains(fn($window) => $window->getId() === 'main'))
                         <div class="window window-white">
                             <livewire:fields_component title="Algemeen" :model="$model" componentKey="main" />
                         </div>
@@ -72,11 +72,11 @@
                     @endAdminCan
 
                     @adminCan('fields-edit', $model)
-                        @foreach($fields->tagged('component')->notTagged('chief-component')->notTagged('component-main')->groupByComponent() as $componentKey => $componentFields)
+                        @foreach($fields->tagged('component')->notTagged('chief-component')->notTagged('component-main')->allWindows() as $fieldWindow)
                             <livewire:fields_component
                                 :model="$model"
-                                :componentKey="$componentKey"
-                                :title="$componentKey"
+                                :componentKey="$fieldWindow->getId()"
+                                :title="$fieldWindow->getTitle()"
                                 class="window window-grey"
                             />
                         @endforeach

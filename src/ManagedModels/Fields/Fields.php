@@ -10,15 +10,18 @@ use Illuminate\Support\Collection;
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     private Collection $fieldGroups;
+    private Collection $fieldWindows;
 
-    final public function __construct(array $fieldGroups = [])
+    final public function __construct(array $fieldGroups = [], ?Collection $fieldWindows = null)
     {
-        $fieldGroups = $this->addLonelyFieldsToOpenFieldGroups($fieldGroups);
-        $fieldGroups = $this->giveLonelyFieldsAHome($fieldGroups);
-        $this->validateFieldGroups($fieldGroups);
+        $this->fieldWindows = $fieldWindows ?: collect([]);
 
-        $fieldGroups = $this->removeEmptyFieldGroups($fieldGroups);
+        $fieldGroups = $this->structureFieldGroups($fieldGroups);
+
+        $this->validateFieldGroups($fieldGroups);
         $this->fieldGroups = collect($fieldGroups);
+
+        $this->cleanupEmptyValues();
     }
 
     /**
@@ -26,13 +29,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public static function make(iterable $generator): self
     {
-        if($generator instanceof Fields) return $generator;
+        if ($generator instanceof Fields) {
+            return $generator;
+        }
 
         $values = [];
 
         foreach ($generator as $fieldGroup) {
             if (is_iterable($fieldGroup)) {
-                $values = array_merge($values, ...$fieldGroup);
+                $values = array_merge($values, [...$fieldGroup]);
             } else {
                 $values[] = $fieldGroup;
             }
@@ -43,14 +48,14 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function add(FieldGroup ...$fieldGroups): Fields
     {
-        return new static($this->fieldGroups->merge($fieldGroups)->all());
+        return new static($this->fieldGroups->merge($fieldGroups)->all(), $this->fieldWindows);
     }
 
     public function merge(Fields $fields): Fields
     {
         $purgedFieldGroups = $this->remove($fields->keys())->all();
 
-        return new static($purgedFieldGroups->merge($fields->all())->all());
+        return new static($purgedFieldGroups->merge($fields->all())->all(), $this->fieldWindows);
     }
 
     public function all(): Collection
@@ -67,6 +72,29 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         });
 
         return $fields;
+    }
+
+    /**
+     * Populate the windows with their Fields.
+     *
+     * @return Collection
+     */
+    public function allWindows(): Collection
+    {
+        foreach ($this->fieldWindows as $index => $fieldWindow) {
+            foreach($this->fieldGroups as $fieldGroup) {
+                if(in_array($fieldGroup->getId(), $fieldWindow->getFieldGroupIds())) {
+                    $this->fieldWindows[$index] = $this->fieldWindows[$index]->addFieldGroup($fieldGroup);
+                }
+            }
+        }
+
+        return $this->fieldWindows;
+    }
+
+    public function findWindow(string $windowId): ?FieldWindow
+    {
+        return $this->allWindows()->first(fn($window) => $window->getId() === $windowId);
     }
 
     public function first(): ?Field
@@ -86,12 +114,12 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             }
         }
 
-        throw new \InvalidArgumentException('No field found by key ' . $key);
+        throw new \InvalidArgumentException('No field found by key '.$key);
     }
 
     public function any(): bool
     {
-        return ! $this->fieldGroups->isEmpty();
+        return !$this->fieldGroups->isEmpty();
     }
 
     public function isEmpty(): bool
@@ -115,14 +143,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return $this->map(fn ($fieldGroup) => $fieldGroup->map($callback));
     }
 
-    private function map(callable $callback): Fields
-    {
-        return new static($this->fieldGroups->map($callback)->all());
-    }
-
     /**
      * @param \Closure|string $key
-     * @param null|mixed $value
+     * @param null|mixed      $value
      *
      * @return static
      */
@@ -130,7 +153,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         return new static($this->fieldGroups->map(function ($fieldGroup) use ($key, $value) {
             return $fieldGroup->filterBy($key, $value);
-        })->all());
+        })->all(), $this->fieldWindows);
     }
 
     public function model($model): self
@@ -149,20 +172,20 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         });
     }
 
-    public function groupByComponent(): array
-    {
-        $fields = [];
-
-        foreach ($this->fieldGroups as $fieldGroup) {
-            if (! isset($fields[$fieldGroup->componentKey()])) {
-                $fields[$fieldGroup->componentKey()] = new static();
-            }
-
-            $fields[$fieldGroup->componentKey()] = $fields[$fieldGroup->componentKey()]->add($fieldGroup);
-        }
-
-        return $fields;
-    }
+//    public function groupByComponent(): Fields
+//    {
+//        $fields = new static();
+//
+//        foreach ($this->allFields() as $field) {
+//            if (!isset($fields[$field->componentKey()])) {
+//                $fields[$field->componentKey()] = new FieldGroup();
+//            }
+//
+//            $fields[$field->componentKey()] = $fields[$field->componentKey()]->add($field);
+//        }
+//
+//        return $fields;
+//    }
 
 //    public function render(): string
 //    {
@@ -190,7 +213,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function notTagged($tag): Fields
     {
         return $this->filterBy(function (Field $field) use ($tag) {
-            return ! $field->tagged($tag);
+            return !$field->tagged($tag);
         });
     }
 
@@ -204,8 +227,21 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($keys = null): Fields
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return ! in_array($field->getKey(), $keys);
+            return !in_array($field->getKey(), $keys);
         });
+    }
+
+    public function removeFieldGroup(string $fieldGroupId): Fields
+    {
+        $fieldGroups = $this->all();
+
+        foreach($fieldGroups as $index => $existingFieldGroup) {
+            if($existingFieldGroup->getId() === $fieldGroupId) {
+                unset($fieldGroups[$index]);
+            }
+        }
+
+        return new static($fieldGroups->all(), $this->fieldWindows);
     }
 
     public function offsetExists($offset)
@@ -215,8 +251,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (! isset($this->fieldGroups[$offset])) {
-            throw new \RuntimeException('No fieldgroup found by key [' . $offset . ']');
+        if (!isset($this->fieldGroups[$offset])) {
+            throw new \RuntimeException('No fieldgroup found by key ['.$offset.']');
         }
 
         return $this->fieldGroups[$offset];
@@ -224,8 +260,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof FieldGroup) {
-            throw new \InvalidArgumentException('Passed value must be of type ' . FieldGroup::class);
+        if (!$value instanceof FieldGroup) {
+            throw new \InvalidArgumentException('Passed value must be of type '.FieldGroup::class);
         }
 
         $this->fieldGroups[$offset] = $value;
@@ -241,75 +277,133 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new ArrayIterator($this->fieldGroups);
     }
 
-    /**
-     * Add fields that aren't in a fieldGroup, inside their own FieldGroup.
-     * @param array $fieldGroups
-     * @return array
-     */
-    private function addLonelyFieldsToOpenFieldGroups(array $fieldGroups): array
+    public function count()
     {
-        $result = [];
-        $lastFieldGroupIndex = null;
+        return count($this->fieldGroups);
+    }
 
-        foreach ($fieldGroups as $fieldGroup) {
-            if ($fieldGroup instanceof FieldGroup) {
-                $result[] = $fieldGroup;
-                $lastFieldGroupIndex = array_key_last($result);
-            } elseif ($fieldGroup instanceof Field) {
-                // If there is an open fieldgroup, we'll add this field to that one dynamically
-                if(null !== $lastFieldGroupIndex && $result[$lastFieldGroupIndex]->isOpen()) {
-                    $result[$lastFieldGroupIndex] = $result[$lastFieldGroupIndex]->add($fieldGroup);
-                } else {
-                    $result[] = new FieldGroup([$fieldGroup]);
-                }
-            } else {
-                throw new \InvalidArgumentException('Only FieldGroup of Field instances should be passed.');
-            }
-        }
-
-        return $result;
+    private function map(callable $callback): Fields
+    {
+        return new static($this->fieldGroups->map($callback)->all(), $this->fieldWindows);
     }
 
     /**
      * Add fields that aren't in a fieldGroup, inside their own FieldGroup.
-     * @param array $fieldGroups
-     * @return array
      */
-    private function giveLonelyFieldsAHome(array $fieldGroups): array
-    {
-        $result = [];
-
-        foreach ($fieldGroups as $fieldGroup) {
-            if ($fieldGroup instanceof FieldGroup) {
-                $result[] = $fieldGroup;
-            } elseif ($fieldGroup instanceof Field) {
-                $result[] = new FieldGroup([$fieldGroup]);
-            } else {
-                throw new \InvalidArgumentException('Only FieldGroup of Field instances should be passed.');
-            }
-        }
-
-        return $result;
-    }
+//    private function giveLonelyFieldsAHome(array $fieldGroups): array
+//    {
+//        $result = [];
+//
+//        foreach ($fieldGroups as $fieldGroup) {
+//           if ($fieldGroup instanceof Field) {
+//                $result[] = new FieldGroup([$fieldGroup]);
+//            } else {
+//                $result[] = $fieldGroup;
+//            }
+//        }
+//
+//        return $result;
+//    }
 
     private function validateFieldGroups(array $fieldGroups): void
     {
         array_map(fn (FieldGroup $fieldGroup) => $fieldGroup, $fieldGroups);
     }
 
-    public function count()
+    private function structureFieldGroups(array $fieldGroups): array
     {
-        return count($this->fieldGroups);
-    }
+        $result = [];
+        $openFieldWindowId = false;
+        $openFieldGroupIndex = false;
 
-    private function removeEmptyFieldGroups(array $fieldGroups): array
-    {
-        foreach ($fieldGroups as $k => $fieldGroup) {
-            if ($fieldGroup->isEmpty()) {
-                unset($fieldGroups[$k]);
+        foreach ($fieldGroups as $fieldGroup) {
+            // A fieldWindow is added to our list of windows and no longer included in the array of fieldgroups
+            if ($fieldGroup instanceof FieldWindow) {
+                if ($fieldGroup->isOpen()) {
+                    $openFieldWindowId = $fieldGroup->getId();
+                    $this->fieldWindows->push($fieldGroup);
+                } else {
+                    $openFieldWindowId = false;
+                }
+            } elseif ($fieldGroup instanceof FieldGroup) {
+                // Add this fieldgroup to an open window
+                if (false !== $openFieldWindowId) {
+                    $indexKey = $this->fieldWindows->search(fn ($window) => $window->getId() === $openFieldWindowId);
+                    $this->fieldWindows[$indexKey] = $this->fieldWindows[$indexKey]->addFieldGroupId($fieldGroup->getId());
+                }
+
+                $result[] = $fieldGroup;
+
+                if ($fieldGroup->isOpen()) {
+                    $openFieldGroupIndex = array_key_last($result);
+                } else {
+                    $openFieldGroupIndex = false;
+                }
+            }
+
+            // Give lonely fields as fieldGroup home
+            elseif ($fieldGroup instanceof Field) {
+                // Is fieldgroup open?
+                if (false !== $openFieldGroupIndex) {
+                    $result[$openFieldGroupIndex] = $result[$openFieldGroupIndex]->add($fieldGroup);
+                } else {
+                    $fieldGroup = FieldGroup::make([$fieldGroup]);
+
+                    if (false !== $openFieldWindowId) {
+                        $indexKey = $this->fieldWindows->search(fn ($window) => $window->getId() === $openFieldWindowId);
+                        $this->fieldWindows[$indexKey] = $this->fieldWindows[$indexKey]->addFieldGroupId($fieldGroup->getId());
+                    }
+
+                    $result[] = $fieldGroup;
+                }
+            } else {
+                throw new \InvalidArgumentException('Only FieldGroup instances should be passed.');
             }
         }
 
-        return array_values($fieldGroups);
+        return $result;
     }
+
+    private function cleanupEmptyValues(): void
+    {
+        foreach ($this->fieldGroups as $k => $fieldGroup) {
+            if ($fieldGroup->isEmpty()) {
+                unset($this->fieldGroups[$k]);
+                // TODO: remove from fieldWindow as well? Not required but is cleaner
+            }
+        }
+
+        foreach ($this->fieldWindows as $k => $fieldWindow) {
+            if ($fieldWindow->isEmpty()) {
+                unset($this->fieldWindows[$k]);
+            }
+        }
+    }
+
+    // Add fields that aren't in a fieldGroup, inside their own FieldGroup.
+//    private function addLonelyFieldsToOpenFieldGroups(array $fieldGroups): array
+//    {
+//        $result = [];
+//        $lastFieldGroupIndex = null;
+//
+//        foreach ($fieldGroups as $fieldGroup) {
+//            if ($fieldGroup instanceof FieldWindow) {
+//                $result[] = $fieldGroup;
+//            } elseif ($fieldGroup instanceof FieldGroup) {
+//                $result[] = $fieldGroup;
+//                $lastFieldGroupIndex = array_key_last($result);
+//            } elseif ($fieldGroup instanceof Field) {
+//                // If there is an open fieldgroup, we'll add this field to that one dynamically
+//                if (null !== $lastFieldGroupIndex && $result[$lastFieldGroupIndex]->isOpen()) {
+//                    $result[$lastFieldGroupIndex] = $result[$lastFieldGroupIndex]->add($fieldGroup);
+//                } else {
+//                    $result[] = new FieldGroup([$fieldGroup]);
+//                }
+//            } else {
+//                throw new \InvalidArgumentException('Only FieldGroup of Field instances should be passed.');
+//            }
+//        }
+//
+//        return $result;
+//    }
 }

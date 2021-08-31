@@ -36,7 +36,7 @@ trait StatusAssistant
     {
         $model = $this->fieldsModel($id);
 
-        return view('chief::manager.cards.status.edit', [
+        return view('chief::manager.windows.status.edit', [
             'isAnyLinkOnline' => ($model instanceof Visitable && LinkForm::fromModel($model)->isAnyLinkOnline()),
             'isVisitable' => $model instanceof Visitable,
             'manager' => app(Registry::class)->manager($model->managedModelKey()),

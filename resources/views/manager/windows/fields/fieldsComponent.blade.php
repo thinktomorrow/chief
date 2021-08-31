@@ -5,11 +5,11 @@
         @elseif(isset($template))
             @include($template)
         @else
-            @include('chief::manager.cards.fields.templates.default')
+            @include('chief::manager.windows.fields.templates.default')
         @endif
     </div>
 @else
     <div>
-        @include('chief::manager.cards.fields.inline-edit')
+        @include('chief::manager.windows.fields.templates.inline-edit')
     </div>
 @endunless

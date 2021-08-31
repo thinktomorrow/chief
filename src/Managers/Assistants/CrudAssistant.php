@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
@@ -183,10 +184,13 @@ trait CrudAssistant
 
         $this->guard('edit', $model);
 
+        $fields = Fields::make($model->fields())->model($model);
+
         return view('chief::manager.edit', [
             'manager' => $this,
             'model' => $model,
-            'fields' => Fields::make($model->fields())->model($model),
+            'fieldWindows' => $fields->allWindows(),
+            'fields' => $fields,
         ]);
     }
 
@@ -201,6 +205,8 @@ trait CrudAssistant
         $this->fieldValidator()->handle($fields, $request->all());
 
         $model->saveFields($fields, $request->all(), $request->allFiles());
+
+        event(new ManagedModelUpdated($model->modelReference()));
 
         return redirect()->to($this->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');

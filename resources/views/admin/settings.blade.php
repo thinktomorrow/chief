@@ -28,7 +28,7 @@
                         @method('put')
 
                         <div class="space-y-8">
-                            @foreach($fields as $field)
+                            @foreach($fields->allFields() as $field)
                                 <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}" name="{{ $field->getName($locale ?? null) }}">
                                     @if($field->getDescription())
                                         <x-slot name="{{ $field->getDescription() }}"></x-slot>

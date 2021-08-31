@@ -34,22 +34,21 @@ class ArticlePage extends Model implements Page
     public $table = 'article_pages';
     public $guarded = [];
 
-    public function fields(): Fields
+    public function fields(): iterable
     {
-        return new Fields([
-            InputField::make('title')->validation(['min:4']),
-            InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']),
-            InputField::make('title_trans')->locales(['nl', 'en']),
-            InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale'),
+            yield InputField::make('title')->validation(['min:4']);
+            yield InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']);
+            yield InputField::make('title_trans')->locales(['nl', 'en']);
+            yield InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale');
 
-            FileField::make('thumb')->tag('edit'),
-            FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit'),
-            FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
-            ImageField::make('thumb_image')->tag('edit'),
-            ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit'),
-            ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit'),
+            yield FileField::make('thumb')->tag('edit');
+            yield FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
+            yield FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
+            yield ImageField::make('thumb_image')->tag('edit');
+            yield ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
+            yield ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
 
-            InputField::make('title_sanitized')->sanitize(function ($value, array $input) {
+            yield InputField::make('title_sanitized')->sanitize(function ($value, array $input) {
                 if ($value) {
                     return $value;
                 }
@@ -58,8 +57,9 @@ class ArticlePage extends Model implements Page
                 }
 
                 return null;
-            }),
-            InputField::make('title_sanitized_trans')->locales()->sanitize(function ($value, array $input, $locale = null) {
+            });
+
+            yield InputField::make('title_sanitized_trans')->locales()->sanitize(function ($value, array $input, $locale = null) {
                 if ($value) {
                     return $value;
                 }
@@ -68,8 +68,7 @@ class ArticlePage extends Model implements Page
                 }
 
                 return null;
-            }),
-        ]);
+            });
     }
 
     public static function migrateUp()

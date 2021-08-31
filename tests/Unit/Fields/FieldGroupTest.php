@@ -12,7 +12,7 @@ class FieldGroupTest extends TestCase
     /** @test */
     public function it_can_return_all_keys()
     {
-        $fields = new FieldGroup([
+        $fields = new FieldGroup('xxx',[
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
@@ -23,12 +23,12 @@ class FieldGroupTest extends TestCase
     /** @test */
     public function it_can_merge_two_fields_objects()
     {
-        $fields = new FieldGroup([
+        $fields = new FieldGroup('xxx', [
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
 
-        $fields2 = new FieldGroup([
+        $fields2 = new FieldGroup('xxx', [
             InputField::make('input-three'),
             InputField::make('input-four'),
         ]);
@@ -43,12 +43,12 @@ class FieldGroupTest extends TestCase
     /** @test */
     public function similar_keys_are_overwritten_with_the_latter()
     {
-        $fields = new FieldGroup([
+        $fields = new FieldGroup('xxx', [
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
 
-        $fields2 = new FieldGroup([
+        $fields2 = new FieldGroup('xxx', [
             InputField::make('input-one'),
         ]);
 
