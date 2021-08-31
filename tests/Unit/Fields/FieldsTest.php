@@ -295,10 +295,11 @@ class FieldsTest extends TestCase
     public function it_can_create_field_groups_via_yield_in_method()
     {
         $owner = new class() {
-            public function fields()
+            public function fields(): iterable
             {
                 yield FieldGroup::open();
                 yield InputField::make('input-one');
+                yield InputField::make('input-two');
                 yield FieldGroup::close();
             }
         };
@@ -306,7 +307,7 @@ class FieldsTest extends TestCase
         $fields = Fields::make($owner->fields());
 
         $this->assertCount(1, $fields->all());
-        $this->assertCount(1, $fields->allFields());
+        $this->assertCount(2, $fields->allFields());
     }
 
     private function createFields(array $values = null): Fields

@@ -44,7 +44,7 @@ trait FieldsComponentAssistant
             'model' => $model,
             'fields' => $fields,
             'componentKey' => $componentKey,
-            'componentTitle' => $componentKey == 'chief-page-title' ? '' :  ucfirst($componentKey),
+            'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' :  ucfirst($componentKey),
         ]);
     }
 
