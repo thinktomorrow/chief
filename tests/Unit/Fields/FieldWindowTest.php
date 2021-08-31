@@ -14,7 +14,7 @@ class FieldWindowTest extends TestCase
     public function it_can_define_a_field_window()
     {
         $fields = new Fields([
-            FieldWindow::open(),
+            FieldWindow::open('xxx'),
                 FieldGroup::open(),
                     InputField::make('input-one'),
                     InputField::make('input-two'),
@@ -31,7 +31,7 @@ class FieldWindowTest extends TestCase
     public function it_can_define_a_field_window_with_dynamically_added_fieldgroups()
     {
         $fields = new Fields([
-            FieldWindow::open(),
+            FieldWindow::open('xxx'),
                 InputField::make('input-one'),
                 InputField::make('input-two'),
             FieldWindow::close(),
@@ -46,7 +46,7 @@ class FieldWindowTest extends TestCase
     public function it_can_group_fieldgroups_per_window()
     {
         $fields = new Fields([
-            FieldWindow::open(),
+            FieldWindow::open('xxx'),
             FieldGroup::open(),
             InputField::make('input-one'),
             InputField::make('input-two'),
@@ -83,7 +83,7 @@ class FieldWindowTest extends TestCase
     public function it_can_get_all_fieldgroups_not_belonging_to_a_window()
     {
         $fields = new Fields([
-            FieldWindow::open(),
+            FieldWindow::open('xxx'),
             InputField::make('input-one'),
             FieldWindow::close(),
             InputField::make('input-two'),
