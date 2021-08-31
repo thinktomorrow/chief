@@ -41,12 +41,34 @@ class FieldWindow
 
     public function title(string $title): FieldWindow
     {
-        return new static($this->id, array_merge($this->data, ['title' => $title]), $this->fields,$this->fieldGroupIds, $this->isOpen);
+        return new static(
+            $this->id,
+            array_merge($this->data, ['title' => $title]),
+            $this->fields,
+            $this->fieldGroupIds,
+            $this->isOpen
+        );
     }
 
     public function getTitle(): ?string
     {
         return $this->data['title'] ?? '';
+    }
+    
+    public function position(string $position)
+    {
+        return new static(
+            $this->id,
+            array_merge($this->data, ['position' => $position]),
+            $this->fields,
+            $this->fieldGroupIds,
+            $this->isOpen
+        );
+    }
+
+    public function getPosition(): ?string
+    {
+        return $this->data['position'] ?? '';
     }
 
     public function isOpen(): bool
