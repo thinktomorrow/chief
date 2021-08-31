@@ -58,6 +58,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::wireframes.title', 'wireframe-title');
         Blade::component('chief::wireframes.text', 'wireframe-text');
         Blade::component('chief::wireframes.image', 'wireframe-image');
+        Blade::component('chief::wireframes.video', 'wireframe-video');
 
         Blade::aliasComponent('chief::back._layouts._partials.header', 'chiefheader');
         Blade::aliasComponent('chief::components.formgroup', 'formgroup');

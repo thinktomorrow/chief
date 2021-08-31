@@ -1,5 +1,8 @@
 @unless($inlineEdit)
-    <div data-fields-component="{{ $componentKey }}" data-{{ $componentKey }}-component>
+    <div 
+        data-fields-component="{{ $componentKey }}" 
+        data-{{ $componentKey }}-component
+    >
         @if(public_method_exists($model, 'render'.ucfirst($componentKey).'Component'))
             {!! $model->{'render'.ucfirst($componentKey).'Component'}() !!}
         @elseif(isset($template))

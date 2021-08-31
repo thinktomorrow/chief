@@ -273,12 +273,12 @@ abstract class AbstractField
 
     public function hasValidation(): bool
     {
-        return isset($this->validation) && !$this->validation->isEmpty();
+        return isset($this->validation) && ! $this->validation->isEmpty();
     }
 
     public function required(): bool
     {
-        if (!$this->hasValidation()) {
+        if (! $this->hasValidation()) {
             return false;
         }
 
@@ -295,7 +295,7 @@ abstract class AbstractField
 
     public function optional(): bool
     {
-        return !$this->required();
+        return ! $this->required();
     }
 
     public function getValidationNames(array $payload = []): array
@@ -437,7 +437,7 @@ abstract class AbstractField
      */
     protected function extractLocalizedItem($items, ?string $locale = null): ?string
     {
-        if (!is_array($items)) {
+        if (! is_array($items)) {
             return $items;
         }
 
@@ -484,7 +484,7 @@ abstract class AbstractField
                 return $this->value;
             }
 
-            if (!$model) {
+            if (! $model) {
                 return $this->default;
             }
 
