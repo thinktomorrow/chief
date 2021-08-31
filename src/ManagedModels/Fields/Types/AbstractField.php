@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationParameters;
 abstract class AbstractField
 {
     use AllowsTags;
-    use AllowsComponentTags;
     use AllowsConditionalFields;
 
     /** @var FieldType */
@@ -522,8 +521,7 @@ abstract class AbstractField
 
     public function editAsPageTitle(): Field
     {
-        $this->tag('chief-component');
-        $this->component('chief-page-title');
+        $this->tag('chief-page-title');
 
         return $this;
     }

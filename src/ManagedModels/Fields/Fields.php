@@ -46,6 +46,23 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($values);
     }
 
+    public function filterByWindowId(string $windowId): Fields
+    {
+        if ($windowId === "default") {
+            return $this->onlyFieldsWithoutWindow()->untagged('chief-page-title');
+        }
+
+        if ($windowId === 'chief-page-title') {
+            return $this->tagged('chief-page-title');
+        }
+
+        if ($this->findWindow($windowId)) {
+            return $this->findWindow($windowId)->getFields();
+        }
+
+        return new Fields();
+    }
+
     public function add(FieldGroup ...$fieldGroups): Fields
     {
         return new static($this->fieldGroups->merge($fieldGroups)->all(), $this->fieldWindows);
@@ -173,35 +190,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             });
         });
     }
-
-    public function component($componentKey): Fields
-    {
-        return $this->filterBy(function ($field) use ($componentKey) {
-            return $field->componentKey() === $componentKey;
-        });
-    }
-
-//    public function groupByComponent(): Fields
-//    {
-//        $fields = new static();
-//
-//        foreach ($this->allFields() as $field) {
-//            if (!isset($fields[$field->componentKey()])) {
-//                $fields[$field->componentKey()] = new FieldGroup();
-//            }
-//
-//            $fields[$field->componentKey()] = $fields[$field->componentKey()]->add($field);
-//        }
-//
-//        return $fields;
-//    }
-
-//    public function render(): string
-//    {
-//        return $this->fieldGroups->reduce(function (string $carry, Field $field) {
-//            return $carry . $field->render();
-//        }, '');
-//    }
 
     public function keyed($key): Fields
     {

@@ -15,7 +15,7 @@
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header', [ 'hasDefaultTitle' => false ])
-            @if($fields->findWindow('chief-page-title'))
+            @if($fields->tagged('chief-page-title'))
                 @slot('title')
                     <livewire:fields_component
                         componentKey="chief-page-title"
