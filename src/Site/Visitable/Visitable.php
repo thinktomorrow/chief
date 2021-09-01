@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Symfony\Component\HttpFoundation\Response;
+
 interface Visitable
 {
     /**
@@ -39,4 +41,6 @@ interface Visitable
      * @return string
      */
     public function resolveUrl(string $locale = null, $parameters = null): string;
+
+    public function response(): Response;
 }

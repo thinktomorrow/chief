@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 
 class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    private const EMPTY_ID = 'empty';
-
     private string $id;
     private array $fields;
     private array $data;

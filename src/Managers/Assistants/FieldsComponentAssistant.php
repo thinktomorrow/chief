@@ -50,7 +50,6 @@ trait FieldsComponentAssistant
 
     public function fieldsUpdate(Request $request, $id, string $componentKey)
     {
-        trap($request->all());
         $model = $this->fieldsModel($id);
 
         $this->guard('fields-update', $model);

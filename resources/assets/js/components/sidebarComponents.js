@@ -57,9 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
         events: {
             sidebarFormSubmitted: () => {
                 const componentEl = statusComponent.el(document);
-                const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
-                livewireComponent.reload();
+                if (componentEl) {
+                    const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
+                    livewireComponent.reload();
+                }
             },
         },
     });

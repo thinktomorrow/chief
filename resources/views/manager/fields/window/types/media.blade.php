@@ -16,10 +16,15 @@
                         @break
                     {{-- TODO: maybe some nice previews / icons, easy video / audio playback who knows? --}}
                     @case('pdf')
-                        <a href="{{ $url }}">{{ $asset->filename() }} ($asset->getSize())</a>
+                        <img src="{{ $asset->url('thumb') }}" title="{{ $asset->filename() }}">
+                        <a href="{{ $asset->url() }}">{{ $asset->filename() }} ({{ $asset->getSize() }})</a>
+                        @break
+                    @case('pdf')
+                        <img src="{{ $asset->url('thumb') }}" title="{{ $asset->filename() }}">
+                        <a href="{{ $asset->url() }}">{{ $asset->filename() }} ({{ $asset->getSize() }})</a>
                         @break
                     @default
-                        <a href="{{ $url }}">{{ $asset->filename() }} ($asset->getSize())</a>
+                        <a href="{{ $url }}">{{ $asset->filename() }} ({{ $asset->getSize() }})</a>
                 @endswitch
             </div>
         @endforeach

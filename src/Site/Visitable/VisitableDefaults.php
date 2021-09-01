@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
@@ -48,5 +49,12 @@ trait VisitableDefaults
     public function baseUrlSegment(string $locale = null): string
     {
         return BaseUrlSegment::find(isset(static::$baseUrlSegment) ? (array) static::$baseUrlSegment : [], $locale);
+    }
+
+    public function response(): Response
+    {
+        return new \Illuminate\Http\Response(
+            $this->renderView()
+        );
     }
 }
