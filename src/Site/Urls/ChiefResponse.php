@@ -28,9 +28,8 @@ final class ChiefResponse
                 );
             }
 
-            return new Response(
-                static::findModel($urlRecord)->renderView()
-            );
+            return static::findModel($urlRecord)->response();
+
         } catch (\Throwable $e) {
             if (config('chief.strict')) {
                 throw $e;

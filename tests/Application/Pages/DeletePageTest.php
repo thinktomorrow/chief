@@ -111,7 +111,6 @@ final class DeletePageTest extends ChiefTestCase
     /** @test */
     public function deleting_a_page_also_deletes_the_context()
     {
-        $this->disableExceptionHandling();
         $model = ArticlePage::create([
             'title' => 'first article',
         ]);

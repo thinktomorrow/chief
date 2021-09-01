@@ -40,8 +40,8 @@
                         @csrf
 
                         <div class="space-y-8">
-                            @foreach($fields as $field)
-                                @include('chief::manager.cards.fields.field', ['autofocus' => true])
+                            @foreach($fields->all() as $i => $fieldSet)
+                                @include('chief::manager.fields.form.fieldset', ['index' => $i])
                             @endforeach
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>

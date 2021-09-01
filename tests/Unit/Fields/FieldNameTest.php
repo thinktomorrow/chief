@@ -30,6 +30,22 @@ class FieldNameTest extends TestCase
     }
 
     /** @test */
+    public function dots_as_name_are_converted_to_array_syntax()
+    {
+        $field = InputField::make('address.street');
+
+        $this->assertEquals('address[street]', $field->getName());
+    }
+
+    /** @test */
+    public function it_can_use_a_custom_placeholder()
+    {
+        $field = InputField::make('address.:multiple.street');
+
+        $this->assertEquals('address[1][street]', $field->placeholders('multiple', '1')->getName());
+    }
+
+    /** @test */
     public function when_name_is_set_explicitly_this_is_used_instead_of_key()
     {
         $field = InputField::make('title')->name('custom-title');

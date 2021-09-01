@@ -7,17 +7,14 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldName;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationParameters;
 
 abstract class AbstractField
 {
     use AllowsTags;
-    use AllowsComponentTags;
     use AllowsConditionalFields;
-
-    /** @var FieldType */
-    private $type;
 
     /** @var string */
     protected $key;
@@ -34,26 +31,26 @@ abstract class AbstractField
     /** @var null|string */
     protected $description;
 
-    /** @var null|string|array */
+    /** @var null|array|string */
     protected $placeholder;
 
-    /** @var null|string|array */
+    /** @var null|array|string */
     protected $prepend;
 
-    /** @var null|string|array */
+    /** @var null|array|string */
     protected $append;
 
     /** @var null|mixed */
     protected $value;
 
     /** @var null|mixed */
-    protected $default = null;
+    protected $default;
 
     /** @var callable */
     protected $valueResolver;
 
     /** @var null|mixed */
-    protected $model = null;
+    protected $model;
 
     protected string $view;
     protected array $viewData = [];
@@ -62,6 +59,11 @@ abstract class AbstractField
     protected \Closure $sanitizationResolver;
 
     protected string $localizedFormat = 'trans.:locale.:name';
+
+    private array $fieldNamePlaceholders = [];
+
+    /** @var FieldType */
+    private $type;
     private ?string $customSaveMethod = null;
 
     final public function __construct(FieldType $type, string $key)
@@ -74,6 +76,13 @@ abstract class AbstractField
 
         $this->valueResolver($this->defaultEloquentValueResolver());
         $this->sanitize(fn ($value) => $value);
+    }
+
+    public function placeholders(string $placeholder, $value): Field
+    {
+        $this->fieldNamePlaceholders[$placeholder] = $value;
+
+        return $this;
     }
 
     public function getType(): FieldType
@@ -91,9 +100,6 @@ abstract class AbstractField
         return $this->key;
     }
 
-    /**
-     * @return Field
-     */
     public function name(string $name): Field
     {
         $this->name = $name;
@@ -108,7 +114,8 @@ abstract class AbstractField
     {
         return $this->fieldName()
             ->withBrackets()
-            ->get($locale);
+            ->get($locale)
+        ;
     }
 
     public function getId(string $locale = null): string
@@ -121,27 +128,6 @@ abstract class AbstractField
         return $this->fieldName()->get($locale);
     }
 
-    protected function getValidationNameFormat(): string
-    {
-        if ($this->isLocalized()) {
-            return $this->getLocalizedNameFormat();
-        }
-
-        return $this->fieldName()->get();
-    }
-
-    protected function getLocalizedNameFormat(): string
-    {
-        if (false !== strpos($this->name, ':locale')) {
-            return $this->name;
-        }
-
-        return $this->localizedFormat;
-    }
-
-    /**
-     * @return Field
-     */
     public function localizedFormat(string $format): Field
     {
         $this->localizedFormat = $format;
@@ -149,15 +135,6 @@ abstract class AbstractField
         return $this;
     }
 
-    protected function fieldName(): FieldName
-    {
-        return FieldName::fromString($this->name)
-            ->localizedFormat($this->getLocalizedNameFormat());
-    }
-
-    /**
-     * @return Field
-     */
     public function column(string $column): Field
     {
         $this->column = $column;
@@ -170,9 +147,6 @@ abstract class AbstractField
         return $this->column;
     }
 
-    /**
-     * @return Field
-     */
     public function label(string $label): Field
     {
         $this->label = $label;
@@ -185,9 +159,6 @@ abstract class AbstractField
         return $this->label;
     }
 
-    /**
-     * @return Field
-     */
     public function description(string $description): Field
     {
         $this->description = $description;
@@ -201,7 +172,7 @@ abstract class AbstractField
     }
 
     /**
-     * @return Field
+     * @param mixed $prepend
      */
     public function prepend($prepend): Field
     {
@@ -216,7 +187,7 @@ abstract class AbstractField
     }
 
     /**
-     * @return Field
+     * @param mixed $append
      */
     public function append($append): Field
     {
@@ -231,7 +202,7 @@ abstract class AbstractField
     }
 
     /**
-     * @return Field
+     * @param mixed $placeholder
      */
     public function placeholder($placeholder): Field
     {
@@ -250,8 +221,6 @@ abstract class AbstractField
      * the model record does not have a value provided, use the default() method instead.
      *
      * @param $value
-     *
-     * @return Field
      */
     public function value($value): Field
     {
@@ -264,8 +233,6 @@ abstract class AbstractField
      * A default value in case the model does not provide the value itself.
      *
      * @param $default
-     *
-     * @return Field
      */
     public function default($default): Field
     {
@@ -279,9 +246,6 @@ abstract class AbstractField
         return call_user_func_array($this->valueResolver, [$this->getModel(), $locale, $this]);
     }
 
-    /**
-     * @return Field
-     */
     public function valueResolver(\Closure $fn): Field
     {
         $this->valueResolver = $fn;
@@ -294,9 +258,6 @@ abstract class AbstractField
         return call_user_func_array($this->sanitizationResolver, [$value, $input, $locale]);
     }
 
-    /**
-     * @return Field
-     */
     public function sanitize(\Closure $fn): Field
     {
         $this->sanitizationResolver = $fn;
@@ -305,37 +266,7 @@ abstract class AbstractField
     }
 
     /**
-     * Default value retrieval. If the model has the property, this value will be used.
-     * Otherwise the passed value will be used instead.
-     *
-     * @return \Closure
-     */
-    private function defaultEloquentValueResolver(): \Closure
-    {
-        return function (Model $model = null, $locale = null) {
-            if ($this->value) {
-                return $this->value;
-            }
-
-            if (! $model) {
-                return $this->default;
-            }
-
-            if ($locale && $this->isLocalized()) {
-                if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumn())) {
-                    return $model->dynamic($this->getColumn(), $locale);
-                }
-
-                // Astrotomic translatable
-                return $model->{$this->getColumn() . ':' . $locale};
-            }
-
-            return $model->{$this->getColumn()} ?: $this->default;
-        };
-    }
-
-    /**
-     * @return Field
+     * @param mixed $rules
      */
     public function validation($rules, array $messages = [], array $attributes = []): Field
     {
@@ -344,9 +275,6 @@ abstract class AbstractField
         return $this;
     }
 
-    /**
-     * @return ValidationParameters
-     */
     public function getValidationParameters(): ValidationParameters
     {
         return $this->validation;
@@ -386,12 +314,10 @@ abstract class AbstractField
             ->replace('locale', $this->getLocales())
             ->replace('name', [$this->getName()])
             ->removeKeysContaining(['files.*.detach', 'images.*.detach'])
-            ->get();
+            ->get()
+        ;
     }
 
-    /**
-     * @return Field
-     */
     public function locales(array $locales = null): Field
     {
         $this->locales = (null === $locales)
@@ -420,7 +346,6 @@ abstract class AbstractField
     }
 
     /**
-     * @return bool
      * @deprecated use isLocalized() instead
      */
     public function isTranslatable(): bool
@@ -428,8 +353,97 @@ abstract class AbstractField
         return $this->isLocalized();
     }
 
+    public function render(array $viewData = []): string
+    {
+        return view($this->getView(), array_merge($viewData, $this->getViewData()))->render();
+    }
+
     /**
-     * @param array|null|string $items
+     * @param mixed $model
+     */
+    public function model($model): Field
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * The view path to the full formgroup for this field.
+     */
+    public function view(string $view): Field
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    public function getViewKey(): string
+    {
+        return $this->type->get();
+    }
+
+    public function viewData(array $viewData = []): Field
+    {
+        $this->viewData = array_merge($this->viewData, $viewData);
+
+        return $this;
+    }
+
+    public function notOnCreate(): Field
+    {
+        $this->tag('not-on-create');
+
+        return $this;
+    }
+
+    public function editAsPageTitle(): Field
+    {
+        $this->tag(Fields::PAGE_TITLE_TAG);
+
+        return $this;
+    }
+
+    public function getCustomSaveMethod(): ?string
+    {
+        return $this->customSaveMethod;
+    }
+
+    public function customSaveMethod(string $method): Field
+    {
+        $this->customSaveMethod = $method;
+
+        return $this;
+    }
+
+    protected function getValidationNameFormat(): string
+    {
+        if ($this->isLocalized()) {
+            return $this->getLocalizedNameFormat();
+        }
+
+        return $this->fieldName()->get();
+    }
+
+    protected function getLocalizedNameFormat(): string
+    {
+        if (false !== strpos($this->name, ':locale')) {
+            return $this->name;
+        }
+
+        return $this->localizedFormat;
+    }
+
+    protected function fieldName(): FieldName
+    {
+        return FieldName::fromString($this->name)
+            ->placeholders($this->fieldNamePlaceholders)
+            ->localizedFormat($this->getLocalizedNameFormat())
+        ;
+    }
+
+    /**
+     * @param null|array|string $items
      */
     protected function extractLocalizedItem($items, ?string $locale = null): ?string
     {
@@ -444,38 +458,9 @@ abstract class AbstractField
         return reset($items);
     }
 
-    public function render(array $viewData = []): string
-    {
-        return view($this->getView(), array_merge($viewData, $this->getViewData()))->render();
-    }
-
-    /**
-     * @return Field
-     */
-    public function model($model): Field
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
     protected function getModel()
     {
         return $this->model;
-    }
-
-    /**
-     * The view path to the full formgroup for this field.
-     *
-     * @param string $view
-     *
-     * @return Field
-     */
-    public function view(string $view): Field
-    {
-        $this->view = $view;
-
-        return $this;
     }
 
     protected function getView(): string
@@ -485,23 +470,8 @@ abstract class AbstractField
         }
 
         return $this->isLocalized()
-            ? 'chief::manager.cards.fields.formgroup_translatable'
-            : 'chief::manager.fieldtypes.' . $this->getViewKey();
-    }
-
-    public function getViewKey(): string
-    {
-        return $this->type->get();
-    }
-
-    /**
-     * @return Field
-     */
-    public function viewData(array $viewData = []): Field
-    {
-        $this->viewData = array_merge($this->viewData, $viewData);
-
-        return $this;
+            ? 'chief::manager.fields.form.field_localized'
+            : 'chief::manager.fields.form.types.'.$this->getViewKey();
     }
 
     protected function getViewData(): array
@@ -513,33 +483,31 @@ abstract class AbstractField
         ], $this->viewData);
     }
 
-    public function notOnCreate(): Field
-    {
-        $this->tag('not-on-create');
-
-        return $this;
-    }
-
-    public function editAsPageTitle(): Field
-    {
-        $this->tag('chief-component');
-        $this->component('chief-page-title');
-
-        return $this;
-    }
-
-    public function getCustomSaveMethod(): ?string
-    {
-        return $this->customSaveMethod;
-    }
-
     /**
-     * @return Field
+     * Default value retrieval. If the model has the property, this value will be used.
+     * Otherwise the passed value will be used instead.
      */
-    public function customSaveMethod(string $method): Field
+    private function defaultEloquentValueResolver(): \Closure
     {
-        $this->customSaveMethod = $method;
+        return function (Model $model = null, $locale = null) {
+            if ($this->value) {
+                return $this->value;
+            }
 
-        return $this;
+            if (! $model) {
+                return $this->default;
+            }
+
+            if ($locale && $this->isLocalized()) {
+                if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumn())) {
+                    return $model->dynamic($this->getColumn(), $locale);
+                }
+
+                // Astrotomic translatable
+                return $model->{$this->getColumn().':'.$locale};
+            }
+
+            return $model->{$this->getColumn()} ?: $this->default;
+        };
     }
 }

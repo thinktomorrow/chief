@@ -135,7 +135,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        return view('chief::manager.cards.fragments.create', [
+        return view('chief::manager.windows.fragments.create', [
             'manager' => $this,
             'owner' => $owner,
             'model' => $fragmentable,
@@ -320,7 +320,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-edit', $fragmentable);
 
-        return view('chief::manager.cards.fragments.edit', [
+        return view('chief::manager.windows.fragments.edit', [
             'manager' => $this,
             'owner' => $ownerModel,
             'model' => $fragmentable,

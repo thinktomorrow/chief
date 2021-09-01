@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Root;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 
 final class LinkForm
 {
@@ -152,7 +153,9 @@ final class LinkForm
 
     public function getPageState(): ?string
     {
-        return (public_method_exists($this->model, 'getPageState')) ? $this->model->getPageState() : null;
+        return $this->model instanceof WithPageState
+            ? $this->model->getPageState()
+            : PageState::PUBLISHED; // Without pageState behaviour we consider a model to be always published.
     }
 
     /**

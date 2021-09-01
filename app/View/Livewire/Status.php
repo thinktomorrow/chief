@@ -26,7 +26,7 @@ class Status extends Component
      */
     public function render()
     {
-        return view('chief::manager.cards.status.statusComponent', [
+        return view('chief::manager.windows.status.statusComponent', [
             'isAnyLinkOnline' => $this->isAnyLinkOnline(),
             'isVisitable' => $this->isVisitable(),
             'manager' => app(Registry::class)->manager($this->model->managedModelKey()),

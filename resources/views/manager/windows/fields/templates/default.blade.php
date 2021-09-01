@@ -6,12 +6,12 @@
         type="{{ $componentKey }}"
     >
         <div class="space-y-6">
-            @foreach($fields as $field)
+            @foreach($fields->allFields() as $field)
                 <div class="space-y-1">
                     <span class="font-medium text-grey-900">{{ ucfirst($field->getLabel()) }}</span>
 
                     <div class="prose prose-dark">
-                        @include('chief::manager.cards.fields.templates.types.' . $field->getType(), ['field' => $field])
+                        @include('chief::manager.fields.window.types.' . $field->getType(), ['field' => $field])
                     </div>
                 </div>
             @endforeach

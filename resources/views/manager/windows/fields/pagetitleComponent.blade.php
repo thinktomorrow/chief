@@ -8,7 +8,7 @@
             type="fields-{{ $componentKey }}"
         >
             <div class="space-y-6">
-                @foreach($fields as $field)
+                @foreach($fields->allFields() as $field)
                     <div class="space-y-2">
                         <h6 class="mb-0">{{ $field->getLabel() }}</h6>
 

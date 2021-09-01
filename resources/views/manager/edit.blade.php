@@ -1,7 +1,7 @@
 @extends('chief::layout.master')
 
 @push('custom-styles')
-    <livewire:styles />
+    @livewireStyles
 @endpush
 
 @push('custom-scripts')
@@ -15,12 +15,12 @@
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header', [ 'hasDefaultTitle' => false ])
-            @if(!$fields->component('chief-page-title')->isEmpty())
+            @if($fields->tagged(\Thinktomorrow\Chief\ManagedModels\Fields\Fields::PAGE_TITLE_TAG)->any())
                 @slot('title')
                     <livewire:fields_component
-                        componentKey="chief-page-title"
+                        componentKey="{{ \Thinktomorrow\Chief\ManagedModels\Fields\Fields::PAGE_TITLE_TAG }}"
                         :model="$model"
-                        template="chief::manager.cards.fields.templates.pagetitle"
+                        template="chief::manager.windows.fields.templates.pagetitle"
                     />
                 @endslot
             @else
@@ -47,11 +47,15 @@
         <div class="row gutter-3">
             <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
-                    @if($fields->component('main')->any())
+                    @foreach($fields->getWindowsByPosition('top') as $fieldWindow)
                         <div class="window window-white">
-                            <livewire:fields_component title="Algemeen" :model="$model" componentKey="main" />
+                            <livewire:fields_component
+                                :model="$model"
+                                :componentKey="$fieldWindow->getId()"
+                                :title="$fieldWindow->getTitle()"
+                            />
                         </div>
-                    @endif
+                    @endforeach
                 @endAdminCan
 
                 @adminCan('fragments-index', $model)
@@ -59,6 +63,16 @@
                         <livewire:fragments :owner="$model" />
                     </div>
                 @endAdminCan
+
+                @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
+                    <div class="window window-white">
+                        <livewire:fields_component
+                            :model="$model"
+                            :componentKey="$fieldWindow->getId()"
+                            :title="$fieldWindow->getTitle()"
+                        />
+                    </div>
+                @endforeach
             </div>
 
             <div class="w-full lg:w-1/3">
@@ -72,21 +86,24 @@
                     @endAdminCan
 
                     @adminCan('fields-edit', $model)
-                        @foreach($fields->tagged('component')->notTagged('chief-component')->notTagged('component-main')->groupByComponent() as $componentKey => $componentFields)
-                            <livewire:fields_component
-                                :model="$model"
-                                :componentKey="$componentKey"
-                                :title="$componentKey"
-                                class="window window-grey"
-                            />
+                        {{-- FieldWindows without a specific position (default position: sidebar)  --}}
+                        @foreach($fields->getWindowsByPosition('sidebar') as $fieldWindow)
+                            <div class="window window-grey">
+                                <livewire:fields_component
+                                    :model="$model"
+                                    :componentKey="$fieldWindow->getId()"
+                                    :title="$fieldWindow->getTitle()"
+                                />
+                            </div>
                         @endforeach
 
-                        <!-- default fields - not assigned to a component -->
-                        <livewire:fields_component
-                            :model="$model"
-                            title="Algemeen"
-                            class="window window-grey"
-                        />
+                        {{-- Fields without a dedicated FieldWindow --}}
+                        <div class="window window-grey">
+                            <livewire:fields_component
+                                :model="$model"
+                                title="Algemeen"
+                            />
+                        </div>
                     @endAdminCan
                 </div>
             </div>

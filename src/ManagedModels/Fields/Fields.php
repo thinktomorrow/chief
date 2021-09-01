@@ -5,16 +5,25 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
+use Illuminate\Support\Collection;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    private array $fields;
+    public const PAGE_TITLE_TAG = 'chief-page-title';
 
-    final public function __construct(array $fields = [])
+    private Collection $fieldSets;
+    private Collection $fieldWindows;
+
+    final public function __construct(array $fieldSets = [], ?Collection $fieldWindows = null)
     {
-        $this->validateFields($fields);
+        $this->fieldWindows = $fieldWindows ?: collect([]);
 
-        $this->fields = $this->convertToKeyedArray($fields);
+        $fieldSets = $this->structureFieldSets($fieldSets);
+
+        $this->validateFieldSets($fieldSets);
+        $this->fieldSets = collect($fieldSets);
+
+        $this->cleanupEmptyValues();
     }
 
     /**
@@ -22,268 +31,384 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public static function make(iterable $generator): self
     {
-        $fields = new static();
+        if ($generator instanceof Fields) {
+            return $generator;
+        }
 
-        foreach ($generator as $field) {
-            if (is_iterable($field)) {
-                $fields = $fields->add(...$field);
+        $values = [];
+
+        foreach ($generator as $fieldSet) {
+            if (! $fieldSet instanceof FieldSet && is_iterable($fieldSet)) {
+                $values = array_merge($values, [...$fieldSet]);
             } else {
-                $fields = $fields->add($field);
+                $values[] = $fieldSet;
             }
         }
+
+        return new static($values);
+    }
+
+    public function filterByWindowId(string $windowId): Fields
+    {
+        if ($windowId === "default") {
+            return $this->onlyFieldsWithoutWindow()->untagged(static::PAGE_TITLE_TAG);
+        }
+
+        if ($windowId === static::PAGE_TITLE_TAG) {
+            return $this->tagged(static::PAGE_TITLE_TAG);
+        }
+
+        if ($this->findWindow($windowId)) {
+            return $this->findWindow($windowId)->getFields();
+        }
+
+        return new Fields();
+    }
+
+    public function add(FieldSet ...$fieldSets): Fields
+    {
+        return new static($this->fieldSets->merge($fieldSets)->all(), $this->fieldWindows);
+    }
+
+    public function merge(Fields $fields): Fields
+    {
+        $purgedFieldSets = $this->remove($fields->keys())->all();
+
+        return new static($purgedFieldSets->merge($fields->all())->all(), $this->fieldWindows);
+    }
+
+    public function all(): Collection
+    {
+        return $this->fieldSets;
+    }
+
+    public function allFields(): Collection
+    {
+        $fields = collect();
+
+        $this->fieldSets->each(function ($fieldSet) use (&$fields) {
+            $fields = $fields->merge($fieldSet->all());
+        });
 
         return $fields;
     }
 
-    public function all(): array
+    /**
+     * Populate the windows with their Fields.
+     *
+     * @return Collection
+     */
+    public function allWindows(): Collection
     {
-        return $this->fields;
+        foreach ($this->fieldWindows as $index => $fieldWindow) {
+            foreach ($this->fieldSets as $fieldSet) {
+                if (in_array($fieldSet->getId(), $fieldWindow->getFieldSetIds())) {
+                    $this->fieldWindows[$index] = $this->fieldWindows[$index]->addFieldSet($fieldSet);
+                }
+            }
+        }
+
+        return $this->fieldWindows;
+    }
+
+    public function findWindow(string $windowId): ?FieldWindow
+    {
+        return $this->allWindows()->first(fn ($window) => $window->getId() === $windowId);
+    }
+
+    public function getWindowsByPosition(string $position): Collection
+    {
+        return $this->allWindows()->filter(fn ($window) => $window->getPosition() === $position);
+    }
+
+    public function onlyFieldsWithoutWindow(): Fields
+    {
+        $fieldSetIds = $this->allWindows()->reduce(function ($carry, FieldWindow $window) {
+            return array_merge($carry, $window->getFieldSetIds());
+        }, []);
+
+        return new static($this->fieldSets->reject(fn ($fieldSet) => in_array($fieldSet->getId(), $fieldSetIds))->all(), $this->fieldWindows);
     }
 
     public function first(): ?Field
     {
-        if (! $this->any()) {
+        if ($this->fieldSets->isEmpty()) {
             return null;
         }
 
-        return reset($this->fields);
+        return $this->fieldSets->first()->first();
     }
 
     public function find(string $key): Field
     {
-        if (! isset($this->fields[$key])) {
-            throw new \InvalidArgumentException('No field found by key ' . $key);
+        foreach ($this->fieldSets as $fieldSet) {
+            if ($field = $fieldSet->find($key)) {
+                return $field;
+            }
         }
 
-        return $this->fields[$key];
+        throw new \InvalidArgumentException('No field found by key '.$key);
     }
 
     public function any(): bool
     {
-        return count($this->all()) > 0;
+        return ! $this->fieldSets->isEmpty();
     }
 
     public function isEmpty(): bool
     {
-        return ! $this->any();
+        return $this->fieldSets->isEmpty();
     }
 
     public function keys(): array
     {
-        return array_keys($this->fields);
-    }
+        $fieldKeys = [];
 
-    /**
-     * Clone method is needed because Field as an object has mutable state. This is something that we
-     * should try to avoid and fix the field object to an object of immutable state instead.
-     *
-     * @return Fields
-     */
-    public function clone(): Fields
-    {
-        $clonedFields = [];
-
-        foreach ($this->fields as $field) {
-            $clonedFields[] = clone $field;
-        }
-
-        return new static($clonedFields);
-    }
-
-    public function map(callable $callback): Fields
-    {
-        $keys = array_keys($this->fields);
-
-        $items = array_map($callback, $this->fields, $keys);
-
-        return new static(array_combine($keys, $items));
-    }
-
-    public function model($model): self
-    {
-        return $this->map(function ($field) use ($model) {
-            return $field->model($model);
+        $this->fieldSets->each(function ($fieldSet) use (&$fieldKeys) {
+            $fieldKeys = array_merge($fieldKeys, $fieldSet->keys());
         });
+
+        return $fieldKeys;
     }
 
-    public function component($componentKey): Fields
+    public function mapFields(callable $callback): Fields
     {
-        return $this->filterBy(function ($field) use ($componentKey) {
-            return $field->componentKey() === $componentKey;
-        });
-    }
-
-    public function groupByComponent(): array
-    {
-        $fields = [];
-
-        foreach ($this->fields as $field) {
-            if (! isset($fields[$field->componentKey()])) {
-                $fields[$field->componentKey()] = new static();
-            }
-
-            $fields[$field->componentKey()] = $fields[$field->componentKey()]->add($field);
-        }
-
-        return $fields;
+        return $this->map(fn ($fieldSet) => $fieldSet->map($callback));
     }
 
     /**
      * @param \Closure|string $key
-     * @param null|mixed $value
+     * @param null|mixed      $value
      *
      * @return static
      */
     public function filterBy($key, $value = null): self
     {
-        $fields = [];
-
-        foreach ($this->fields as $field) {
-            if ($key instanceof \Closure) {
-                if (true == $key($field)) {
-                    $fields[] = $field;
-                }
-
-                continue;
-            }
-
-            $method = 'get' . ucfirst($key);
-
-            // Reject from list if value does not match expected one
-            if ($value && $value == $field->$method()) {
-                $fields[] = $field;
-            } // Reject from list if key returns null (key not present on field)
-            elseif (! $value && ! is_null($field->$method())) {
-                $fields[] = $field;
-            }
-        }
-
-        return new static($fields);
+        return new static($this->fieldSets->map(function ($fieldSet) use ($key, $value) {
+            return $fieldSet->filterBy($key, $value);
+        })->all(), $this->fieldWindows);
     }
 
-    public function render(): string
+    public function model($model): self
     {
-        return array_reduce($this->fields, function (string $carry, Field $field) {
-            return $carry . $field->render();
-        }, '');
+        return $this->map(function ($fieldSet) use ($model) {
+            return $fieldSet->map(function ($field) use ($model) {
+                return $field->model($model);
+            });
+        });
     }
 
     public function keyed($key): Fields
     {
         $keys = (array) $key;
 
-        return new static(array_filter($this->fields, function (Field $field) use ($keys) {
+        return $this->filterBy(function (Field $field) use ($keys) {
             return in_array($field->getKey(), $keys);
-        }));
+        });
     }
 
     public function tagged($tag): Fields
     {
-        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
+        return $this->filterBy(function (Field $field) use ($tag) {
             return $field->tagged($tag);
-        }));
+        });
     }
 
     public function notTagged($tag): Fields
     {
-        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
+        return $this->filterBy(function (Field $field) use ($tag) {
             return ! $field->tagged($tag);
-        }));
+        });
     }
 
     public function untagged(): Fields
     {
-        return new static(array_filter($this->fields, function (Field $field) {
+        return $this->filterBy(function (Field $field) {
             return $field->untagged();
-        }));
+        });
     }
 
-    public function add(Field ...$fields): Fields
+    public function remove($keys = null): Fields
     {
-        return new Fields(array_merge($this->fields, $fields));
+        return $this->filterBy(function (Field $field) use ($keys) {
+            return ! in_array($field->getKey(), $keys);
+        });
     }
 
-    public function merge(Fields $fields): Fields
+    public function removeFieldSet(string $fieldSetId): Fields
     {
-        return new Fields(array_merge($this->fields, $fields->all()));
-    }
+        $fieldSets = $this->all();
 
-    /**
-     * @return static
-     */
-    public function remove($keys = null): self
-    {
-        if (! $keys) {
-            return $this;
-        }
-
-        if (is_string($keys)) {
-            $keys = func_get_args();
-        }
-
-        foreach ($this->fields as $k => $field) {
-            if (in_array($field->getKey(), $keys)) {
-                unset($this->fields[$k]);
+        foreach ($fieldSets as $index => $existingFieldSet) {
+            if ($existingFieldSet->getId() === $fieldSetId) {
+                unset($fieldSets[$index]);
             }
         }
 
-        return $this;
+        return new static($fieldSets->all(), $this->fieldWindows);
     }
 
     public function offsetExists($offset)
     {
-        return isset($this->fields[$offset]);
+        return isset($this->fieldSets[$offset]);
     }
 
     public function offsetGet($offset)
     {
-        if (! isset($this->fields[$offset])) {
-            throw new \RuntimeException('No field found by key [' . $offset . ']');
+        if (! isset($this->fieldSets[$offset])) {
+            throw new \RuntimeException('No fieldSet found by key ['.$offset.']');
         }
 
-        return $this->fields[$offset];
+        return $this->fieldSets[$offset];
     }
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Field) {
-            throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
+        if (! $value instanceof FieldSet) {
+            throw new \InvalidArgumentException('Passed value must be of type '.FieldSet::class);
         }
 
-        $this->fields[$offset] = $value;
+        $this->fieldSets[$offset] = $value;
     }
 
     public function offsetUnset($offset)
     {
-        unset($this->fields[$offset]);
+        unset($this->fieldSets[$offset]);
     }
 
     public function getIterator()
     {
-        return new ArrayIterator($this->fields);
-    }
-
-    private function convertToKeyedArray(array $fields): array
-    {
-        $keyedFields = [];
-
-        /** @var Field */
-        foreach ($fields as $field) {
-            $keyedFields[$field->getKey()] = $field;
-        }
-
-        return $keyedFields;
-    }
-
-    private function validateFields(array $fields): void
-    {
-        array_map(function (Field $field) {
-            return $field;
-        }, $fields);
+        return new ArrayIterator($this->fieldSets);
     }
 
     public function count()
     {
-        return count($this->fields);
+        return count($this->fieldSets);
     }
+
+    private function map(callable $callback): Fields
+    {
+        return new static($this->fieldSets->map($callback)->all(), $this->fieldWindows);
+    }
+
+    /**
+     * Add fields that aren't in a fieldSet, inside their own FieldSet.
+     */
+//    private function giveLonelyFieldsAHome(array $fieldSets): array
+//    {
+//        $result = [];
+//
+//        foreach ($fieldSets as $fieldSet) {
+//           if ($fieldSet instanceof Field) {
+//                $result[] = new FieldSet([$fieldSet]);
+//            } else {
+//                $result[] = $fieldSet;
+//            }
+//        }
+//
+//        return $result;
+//    }
+
+    private function validateFieldSets(array $fieldSets): void
+    {
+        array_map(fn (FieldSet $fieldSet) => $fieldSet, $fieldSets);
+    }
+
+    private function structureFieldSets(array $fieldSets): array
+    {
+        $result = [];
+        $openFieldWindowId = false;
+        $openFieldSetIndex = false;
+
+        foreach ($fieldSets as $fieldSet) {
+            // A fieldWindow is added to our list of windows and no longer included in the array of fieldSets
+            if ($fieldSet instanceof FieldWindow) {
+                if ($fieldSet->isOpen()) {
+                    $openFieldWindowId = $fieldSet->getId();
+                    $this->fieldWindows->push($fieldSet);
+                } else {
+                    $openFieldWindowId = false;
+                }
+            } elseif ($fieldSet instanceof FieldSet) {
+                // Add this fieldSet to an open window
+                if (false !== $openFieldWindowId) {
+                    $indexKey = $this->fieldWindows->search(fn ($window) => $window->getId() === $openFieldWindowId);
+                    $this->fieldWindows[$indexKey] = $this->fieldWindows[$indexKey]->addFieldSetId($fieldSet->getId());
+                }
+
+                $result[] = $fieldSet;
+
+                if ($fieldSet->isOpen()) {
+                    $openFieldSetIndex = array_key_last($result);
+                } else {
+                    $openFieldSetIndex = false;
+                }
+            }
+
+            // Give lonely fields as fieldSet home
+            elseif ($fieldSet instanceof Field) {
+                // Is fieldSet open?
+                if (false !== $openFieldSetIndex) {
+                    $result[$openFieldSetIndex] = $result[$openFieldSetIndex]->add($fieldSet);
+                } else {
+                    $fieldSet = FieldSet::make([$fieldSet]);
+                    $openFieldSetIndex = false;
+
+                    if (false !== $openFieldWindowId) {
+                        $indexKey = $this->fieldWindows->search(fn ($window) => $window->getId() === $openFieldWindowId);
+                        $this->fieldWindows[$indexKey] = $this->fieldWindows[$indexKey]->addFieldSetId($fieldSet->getId());
+                    }
+
+                    $result[] = $fieldSet;
+                }
+            } else {
+                throw new \InvalidArgumentException('Only FieldSet instances should be passed.');
+            }
+        }
+
+        return $result;
+    }
+
+    private function cleanupEmptyValues(): void
+    {
+        foreach ($this->fieldSets as $k => $fieldSet) {
+            if ($fieldSet->isEmpty()) {
+                unset($this->fieldSets[$k]);
+                // TODO: remove from fieldWindow as well? Not required but is cleaner
+            }
+        }
+
+        foreach ($this->fieldWindows as $k => $fieldWindow) {
+            if ($fieldWindow->isEmpty()) {
+                unset($this->fieldWindows[$k]);
+            }
+        }
+    }
+
+    // Add fields that aren't in a fieldSet, inside their own FieldSet.
+//    private function addLonelyFieldsToOpenFieldSets(array $fieldSets): array
+//    {
+//        $result = [];
+//        $lastFieldSetIndex = null;
+//
+//        foreach ($fieldSets as $fieldSet) {
+//            if ($fieldSet instanceof FieldWindow) {
+//                $result[] = $fieldSet;
+//            } elseif ($fieldSet instanceof FieldSet) {
+//                $result[] = $fieldSet;
+//                $lastFieldSetIndex = array_key_last($result);
+//            } elseif ($fieldSet instanceof Field) {
+//                // If there is an open fieldSet, we'll add this field to that one dynamically
+//                if (null !== $lastFieldSetIndex && $result[$lastFieldSetIndex]->isOpen()) {
+//                    $result[$lastFieldSetIndex] = $result[$lastFieldSetIndex]->add($fieldSet);
+//                } else {
+//                    $result[] = new FieldSet([$fieldSet]);
+//                }
+//            } else {
+//                throw new \InvalidArgumentException('Only FieldSet of Field instances should be passed.');
+//            }
+//        }
+//
+//        return $result;
+//    }
 }

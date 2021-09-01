@@ -18,7 +18,7 @@ class CreateFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->get($manager->route('fragment-create', $model))
             ->assertStatus(200)
-            ->assertViewIs('chief::manager.cards.fragments.create');
+            ->assertViewIs('chief::manager.windows.fragments.create');
     }
 
     /** @test */

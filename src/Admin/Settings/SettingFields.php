@@ -47,7 +47,7 @@ class SettingFields
 
     public function populatedFields(): Fields
     {
-        return Fields::make($this->fields())->map(function (Field $field) {
+        return Fields::make($this->fields())->mapFields(function (Field $field) {
             return $field->valueResolver(function ($_model = null, $locale = null, $field) {
                 return $this->settings->get($field->getKey(), $locale);
             });
@@ -58,7 +58,7 @@ class SettingFields
     {
         $existingHomepageValue = [];
 
-        foreach (array_keys($fields->all()) as $key) {
+        foreach ($fields->allFields()->keys() as $key) {
             if (! $setting = Setting::where('key', $key)->first()) {
                 Setting::create([
                     'key' => $key,

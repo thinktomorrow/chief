@@ -35,14 +35,16 @@ trait FieldsComponentAssistant
 
         $this->guard('fields-edit', $model);
 
-        return view('chief::manager.cards.fields.edit', [
+        $fields = Fields::make($model->fields())
+            ->model($model)
+            ->filterByWindowId($componentKey);
+
+        return view('chief::manager.windows.fields.edit', [
             'manager' => $this,
             'model' => $model,
-            'fields' => $componentKey !== "default"
-                ? Fields::make($model->fields())->model($model)->component($componentKey)
-                : Fields::make($model->fields())->model($model)->notTagged('component'),
+            'fields' => $fields,
             'componentKey' => $componentKey,
-            'componentTitle' => $componentKey == 'chief-page-title' ? '' :  ucfirst($componentKey),
+            'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' :  ucfirst($componentKey),
         ]);
     }
 
@@ -52,9 +54,9 @@ trait FieldsComponentAssistant
 
         $this->guard('fields-update', $model);
 
-        $fields = $componentKey !== "default"
-            ? Fields::make($model->fields())->model($model)->component($componentKey)
-            : Fields::make($model->fields())->model($model)->notTagged('component');
+        $fields = Fields::make($model->fields())
+            ->model($model)
+            ->filterByWindowId($componentKey);
 
         $this->fieldValidator()->handle($fields, $request->all());
 

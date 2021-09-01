@@ -27,6 +27,13 @@ final class CreatePageTest extends ChiefTestCase
     }
 
     /** @test */
+    public function it_can_visit_the_create_page()
+    {
+        $this->asAdmin()->get($this->manager->route('create'))
+             ->assertStatus(200);
+    }
+
+    /** @test */
     public function it_can_create_a_page()
     {
         $this->asAdmin()->post($this->manager->route('store'), [

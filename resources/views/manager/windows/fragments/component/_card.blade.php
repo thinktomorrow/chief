@@ -42,6 +42,6 @@
         @endif
     </div>
 
-    @include('chief::manager.cards.fragments.component.fragment-select')
+    @include('chief::manager.windows.fragments.component.fragment-select')
 
 </div>

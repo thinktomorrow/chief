@@ -10,13 +10,12 @@
     @method('put')
 
     <div class="space-y-6">
-        @foreach($fields->notTagged('component') as $field)
-            @include('chief::manager.cards.fields.field')
+        @foreach($fields->notTagged('component')->all() as $i => $fieldSet)
+            @include('chief::manager.fields.form.fieldset')
         @endforeach
 
         <div>
             <button
-                form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
                 type="submit"
                 form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
                 class="btn btn-primary"

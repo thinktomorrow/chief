@@ -6,7 +6,7 @@
     <div class="relative -m-12 border-t border-b divide-y divide-grey-100 border-grey-100">
 
         <div data-sidebar-component="fragments-select-nested">
-            @include('chief::manager.cards.fragments.component.fragment-select', [
+            @include('chief::manager.windows.fragments.component.fragment-select', [
                 'ownerManager' => $manager,
                 'inOpenState' => count($fragments) < 1
             ])
@@ -19,7 +19,7 @@
              class="divide-y divide-grey-100"
         >
             @foreach($fragments as $fragment)
-                @include('chief::manager.cards.fragments.component._card', [
+                @include('chief::manager.windows.fragments.component._card', [
                     'model' => $fragment['model'],
                     'manager' => $fragment['manager'],
                     'owner' => $owner,

@@ -76,7 +76,7 @@ trait FragmentsOwningAssistant
 
     private function showFragmentsSelectNew($owner, $fragments, $order)
     {
-        return view('chief::manager.cards.fragments.component.fragment-select-new', [
+        return view('chief::manager.windows.fragments.component.fragment-select-new', [
             'fragments' => $fragments,
             'owner' => $owner,
             'order' => $order,
@@ -99,7 +99,7 @@ trait FragmentsOwningAssistant
 
     private function showFragmentsSelectExisting($owner, $sharedFragments, $order)
     {
-        return view('chief::manager.cards.fragments.component.fragment-select-existing', [
+        return view('chief::manager.windows.fragments.component.fragment-select-existing', [
             'sharedFragments' => $sharedFragments,
             'owner' => $owner,
             'ownerManager' => $this,

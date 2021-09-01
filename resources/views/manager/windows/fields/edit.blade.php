@@ -13,8 +13,8 @@
         <h3>{{ $componentTitle }}</h3>
 
         <div data-vue-fields class="space-y-8">
-            @foreach($fields as $field)
-                @include('chief::manager.cards.fields.field')
+            @foreach($fields->all() as $i => $fieldSet)
+                @include('chief::manager.fields.form.fieldset', ['index' => $i])
             @endforeach
         </div>
 
