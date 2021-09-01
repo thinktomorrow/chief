@@ -40,8 +40,8 @@
                         @csrf
 
                         <div class="space-y-8">
-                            @foreach($fields->all() as $i => $fieldGroup)
-                                @include('chief::manager.fields.form.fieldgroup', ['index' => $i])
+                            @foreach($fields->all() as $i => $fieldSet)
+                                @include('chief::manager.fields.form.fieldSet', ['index' => $i])
                             @endforeach
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>

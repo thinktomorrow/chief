@@ -10,8 +10,8 @@
     @method('put')
 
     <div class="space-y-6">
-        @foreach($fields->notTagged('component')->all() as $i => $fieldGroup)
-            @include('chief::manager.fields.form.fieldgroup')
+        @foreach($fields->notTagged('component')->all() as $i => $fieldSet)
+            @include('chief::manager.fields.form.fieldSet')
         @endforeach
 
         <div>

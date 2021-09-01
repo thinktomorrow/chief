@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields;
 use ArrayIterator;
 use Illuminate\Support\Str;
 
-class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
+class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     private string $id;
     private array $fields;
@@ -22,7 +22,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->data = $data;
     }
 
-    public static function make(iterable $generator): FieldGroup
+    public static function make(iterable $generator): FieldSet
     {
         $fields = new static(static::randomId());
 
@@ -37,12 +37,12 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         return $fields;
     }
 
-    public static function open(): FieldGroup
+    public static function open(): FieldSet
     {
         return new static(static::randomId(), [], ['is_open' => true]);
     }
 
-    public static function close(): FieldGroup
+    public static function close(): FieldSet
     {
         return new static(static::randomId(), [], ['is_open' => false]);
     }
@@ -57,7 +57,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         return $this->data['is_open'] ?? false;
     }
 
-    public function multiple(): FieldGroup
+    public function multiple(): FieldSet
     {
         return new static($this->id, $this->fields, array_merge($this->data, ['multiple' => true]));
     }
@@ -105,7 +105,7 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         return array_keys($this->fields);
     }
 
-    public function map(callable $callback): FieldGroup
+    public function map(callable $callback): FieldSet
     {
         $keys = array_keys($this->fields);
 
@@ -147,14 +147,14 @@ class FieldGroup implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($this->id, $fields, $this->data);
     }
 
-    public function add(Field ...$fields): FieldGroup
+    public function add(Field ...$fields): FieldSet
     {
         return new static($this->id, array_merge($this->fields, $fields), $this->data);
     }
 
-    public function merge(FieldGroup $fieldGroup): FieldGroup
+    public function merge(FieldSet $fieldSet): FieldSet
     {
-        return new static($this->id, array_merge($this->fields, $fieldGroup->all()), $this->data);
+        return new static($this->id, array_merge($this->fields, $fieldSet->all()), $this->data);
     }
 
     public function offsetExists($offset)

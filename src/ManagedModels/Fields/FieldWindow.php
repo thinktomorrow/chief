@@ -10,14 +10,14 @@ class FieldWindow
 
     private string $id;
     private Fields $fields;
-    private array $fieldGroupIds;
+    private array $fieldSetIds;
     private array $data;
 
-    public function __construct(string $id, Fields $fields, array $fieldGroupIds, array $data)
+    public function __construct(string $id, Fields $fields, array $fieldSetIds, array $data)
     {
         $this->id = $id;
         $this->fields = $fields;
-        $this->fieldGroupIds = $fieldGroupIds;
+        $this->fieldSetIds = $fieldSetIds;
         $this->data = array_merge(['title' => $id], $data);
     }
 
@@ -36,7 +36,7 @@ class FieldWindow
         return new static(
             $this->id,
             $this->fields,
-            $this->fieldGroupIds,
+            $this->fieldSetIds,
             array_merge($this->data, ['title' => $title]),
         );
     }
@@ -51,7 +51,7 @@ class FieldWindow
         return new static(
             $this->id,
             $this->fields,
-            $this->fieldGroupIds,
+            $this->fieldSetIds,
             array_merge($this->data, ['position' => $position]),
         );
     }
@@ -81,11 +81,11 @@ class FieldWindow
         return $this->getId() === static::EMPTY_ID;
     }
 
-    public function addFieldGroup(FieldGroup $fieldGroup): FieldWindow
+    public function addFieldSet(FieldSet $fieldSet): FieldWindow
     {
-        $fields = $this->fields->removeFieldGroup($fieldGroup->getId());
+        $fields = $this->fields->removeFieldSet($fieldSet->getId());
 
-        return new static($this->id, $fields->add($fieldGroup), $this->fieldGroupIds, $this->data);
+        return new static($this->id, $fields->add($fieldSet), $this->fieldSetIds, $this->data);
     }
 
     public function getFields(): Fields
@@ -93,13 +93,13 @@ class FieldWindow
         return $this->fields;
     }
 
-    public function addFieldGroupId(string $fieldGroupId): FieldWindow
+    public function addFieldSetId(string $fieldSetId): FieldWindow
     {
-        return new static($this->id, $this->fields, array_merge($this->fieldGroupIds, [$fieldGroupId]), $this->data);
+        return new static($this->id, $this->fields, array_merge($this->fieldSetIds, [$fieldSetId]), $this->data);
     }
 
-    public function getFieldGroupIds(): array
+    public function getFieldSetIds(): array
     {
-        return $this->fieldGroupIds;
+        return $this->fieldSetIds;
     }
 }

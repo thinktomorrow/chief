@@ -12,8 +12,8 @@
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
         <div data-vue-fields class="space-y-8">
-            @foreach($fields->all() as $i => $fieldGroup)
-                @include('chief::manager.fields.form.fieldgroup', ['index' => $i])
+            @foreach($fields->all() as $i => $fieldSet)
+                @include('chief::manager.fields.form.fieldSet', ['index' => $i])
             @endforeach
         </div>
 

@@ -2,17 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldGroup;
+use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\TestCase;
 
-class FieldGroupTest extends TestCase
+class FieldSetTest extends TestCase
 {
     /** @test */
     public function it_can_return_all_keys()
     {
-        $fields = new FieldGroup('xxx', [
+        $fields = new FieldSet('xxx', [
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
@@ -23,40 +23,40 @@ class FieldGroupTest extends TestCase
     /** @test */
     public function it_can_merge_two_fields_objects()
     {
-        $fields = new FieldGroup('xxx', [
+        $fields = new FieldSet('xxx', [
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
 
-        $fields2 = new FieldGroup('xxx', [
+        $fields2 = new FieldSet('xxx', [
             InputField::make('input-three'),
             InputField::make('input-four'),
         ]);
 
-        $mergedFieldGroup = $fields->merge($fields2);
+        $mergedFieldSet = $fields->merge($fields2);
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
-        $this->assertCount(4, $mergedFieldGroup->all());
-        $this->assertEquals(['input-one','input-two','input-three','input-four'], $mergedFieldGroup->keys());
+        $this->assertCount(4, $mergedFieldSet->all());
+        $this->assertEquals(['input-one','input-two','input-three','input-four'], $mergedFieldSet->keys());
     }
 
     /** @test */
     public function similar_keys_are_overwritten_with_the_latter()
     {
-        $fields = new FieldGroup('xxx', [
+        $fields = new FieldSet('xxx', [
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
 
-        $fields2 = new FieldGroup('xxx', [
+        $fields2 = new FieldSet('xxx', [
             InputField::make('input-one'),
         ]);
 
-        $mergedFieldGroup = $fields->merge($fields2);
+        $mergedFieldSet = $fields->merge($fields2);
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
-        $this->assertCount(2, $mergedFieldGroup->all());
-        $this->assertEquals(['input-one','input-two'], $mergedFieldGroup->keys());
+        $this->assertCount(2, $mergedFieldSet->all());
+        $this->assertEquals(['input-one','input-two'], $mergedFieldSet->keys());
     }
 
     /** @test */

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Presets;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldGroup;
+use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldWindow;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
@@ -14,7 +14,7 @@ class FieldPresets
     public static function seo(): iterable
     {
         yield FieldWindow::open('SEO');
-        yield FieldGroup::open();
+        yield FieldSet::open();
         yield InputField::make('seo_title')
                         ->label('Paginatitel zoals deze in zoekmachines wordt getoond.')
                         ->locales()
@@ -30,7 +30,7 @@ class FieldPresets
                         ->label('Seo afbeelding')
                         ->locales()
                         ->notOnCreate();
-        yield FieldGroup::close();
+        yield FieldSet::close();
         yield FieldWindow::close();
     }
 }

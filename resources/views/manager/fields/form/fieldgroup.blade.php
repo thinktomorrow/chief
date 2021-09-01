@@ -1,5 +1,5 @@
 
-@if($fieldGroup->allowsMultiple())
+@if($fieldSet->allowsMultiple())
     MULTIPLYYY
 
     // Array of values
@@ -11,14 +11,14 @@
 
     // Numbers of existing values ...
     <?php
-        //$existingEntriesCount = $fieldGroup->first()-> ?>
+        //$existingEntriesCount = $fieldSet->first()-> ?>
 
-    @foreach($fieldGroup->all() as $i => $field)
+    @foreach($fieldSet->all() as $i => $field)
         <?php $field->placeholders('index', $i); ?>
         @include('chief::manager.fields.form.field', ['autofocus' => (isset($index) && $index === 0)])
     @endforeach
 @else
-    @foreach($fieldGroup->all() as $field)
+    @foreach($fieldSet->all() as $field)
         @include('chief::manager.fields.form.field', ['autofocus' => (isset($index) && $index === 0)])
     @endforeach
 @endif

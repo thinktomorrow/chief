@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldGroup;
+use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -19,12 +19,12 @@ class FieldsTest extends TestCase
         ]);
 
         $this->assertCount(2, $fields);
-        $this->assertInstanceOf(FieldGroup::class, $fields[0]);
-        $this->assertInstanceOf(FieldGroup::class, $fields[1]);
+        $this->assertInstanceOf(FieldSet::class, $fields[0]);
+        $this->assertInstanceOf(FieldSet::class, $fields[1]);
     }
 
     /** @test */
-    public function it_accepts_a_fieldgroup()
+    public function it_accepts_a_fieldSet()
     {
         $fields = $this->createFields($values = $this->values());
 
@@ -121,11 +121,11 @@ class FieldsTest extends TestCase
     public function it_can_filter_fields_by_tag()
     {
         $fields = new Fields([
-            FieldGroup::make([
+            FieldSet::make([
                 $inputOne = InputField::make('input-one')->tag('foobar'),
                 InputField::make('input-two'),
             ]),
-            FieldGroup::make([
+            FieldSet::make([
                 $inputThree = InputField::make('input-three')->tag('foobar'),
                 InputField::make('input-four'),
             ]),
@@ -141,11 +141,11 @@ class FieldsTest extends TestCase
     public function it_can_filter_fields_not_belonging_by_tag()
     {
         $fields = new Fields([
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-one')->tag('foobar'),
                 $inputTwo = InputField::make('input-two'),
             ]),
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-three')->tag('foobar'),
                 $inputFour = InputField::make('input-four'),
             ]),
@@ -161,11 +161,11 @@ class FieldsTest extends TestCase
     public function it_can_filter_by_untagged_fields()
     {
         $fields = new Fields([
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-one')->tag('foobar'),
                 $inputTwo = InputField::make('input-two'),
             ]),
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-three')->tag('foobar'),
                 $inputFour = InputField::make('input-four'),
             ]),
@@ -245,10 +245,10 @@ class FieldsTest extends TestCase
     public function it_can_create_field_group_via_yield()
     {
         $fields = new Fields([
-            FieldGroup::open(),
+            FieldSet::open(),
             InputField::make('input-one'),
             InputField::make('input-two'),
-            FieldGroup::close(),
+            FieldSet::close(),
         ]);
 
         $this->assertCount(1, $fields->all());
@@ -259,15 +259,15 @@ class FieldsTest extends TestCase
     public function it_can_create_multiple_field_groups_via_yield()
     {
         $fields = new Fields([
-            FieldGroup::open(),
+            FieldSet::open(),
             InputField::make('input-one'),
             InputField::make('input-two'),
-            FieldGroup::close(),
+            FieldSet::close(),
             InputField::make('input-three'),
-            FieldGroup::open(),
+            FieldSet::open(),
             InputField::make('input-four'),
             InputField::make('input-five'),
-            FieldGroup::close(),
+            FieldSet::close(),
         ]);
 
         $this->assertCount(3, $fields->all());
@@ -275,16 +275,16 @@ class FieldsTest extends TestCase
     }
 
     /** @test */
-    public function obsolete_open_and_close_fieldgroups_are_ignored()
+    public function obsolete_open_and_close_fieldSets_are_ignored()
     {
         $fields = new Fields([
-            FieldGroup::close(),
-            FieldGroup::open(),
-            FieldGroup::open(),
+            FieldSet::close(),
+            FieldSet::open(),
+            FieldSet::open(),
             InputField::make('input-one'),
             InputField::make('input-two'),
-            FieldGroup::close(),
-            FieldGroup::close(),
+            FieldSet::close(),
+            FieldSet::close(),
         ]);
 
         $this->assertCount(1, $fields->all());
@@ -297,10 +297,10 @@ class FieldsTest extends TestCase
         $owner = new class() {
             public function fields(): iterable
             {
-                yield FieldGroup::open();
+                yield FieldSet::open();
                 yield InputField::make('input-one');
                 yield InputField::make('input-two');
-                yield FieldGroup::close();
+                yield FieldSet::close();
             }
         };
 
@@ -318,11 +318,11 @@ class FieldsTest extends TestCase
     private function values(): array
     {
         return [
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-one'),
                 InputField::make('input-two'),
             ]),
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-three'),
                 InputField::make('input-four'),
             ]),

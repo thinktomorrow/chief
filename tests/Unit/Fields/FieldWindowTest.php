@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldGroup;
+use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldWindow;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
@@ -15,10 +15,10 @@ class FieldWindowTest extends TestCase
     {
         $fields = new Fields([
             FieldWindow::open('xxx'),
-                FieldGroup::open(),
+                FieldSet::open(),
                     InputField::make('input-one'),
                     InputField::make('input-two'),
-                FieldGroup::close(),
+                FieldSet::close(),
             FieldWindow::close(),
         ]);
 
@@ -28,7 +28,7 @@ class FieldWindowTest extends TestCase
     }
 
     /** @test */
-    public function it_can_define_a_field_window_with_dynamically_added_fieldgroups()
+    public function it_can_define_a_field_window_with_dynamically_added_fieldSets()
     {
         $fields = new Fields([
             FieldWindow::open('xxx'),
@@ -43,18 +43,18 @@ class FieldWindowTest extends TestCase
     }
 
     /** @test */
-    public function it_can_group_fieldgroups_per_window()
+    public function it_can_group_fieldSets_per_window()
     {
         $fields = new Fields([
             FieldWindow::open('xxx'),
-            FieldGroup::open(),
+            FieldSet::open(),
             InputField::make('input-one'),
             InputField::make('input-two'),
-            FieldGroup::close(),
-            FieldGroup::open(),
+            FieldSet::close(),
+            FieldSet::open(),
             InputField::make('input-three'),
             InputField::make('input-four'),
-            FieldGroup::close(),
+            FieldSet::close(),
             FieldWindow::close(),
         ]);
 
@@ -80,7 +80,7 @@ class FieldWindowTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_all_fieldgroups_not_belonging_to_a_window()
+    public function it_can_get_all_fieldSets_not_belonging_to_a_window()
     {
         $fields = new Fields([
             FieldWindow::open('xxx'),
@@ -120,11 +120,11 @@ class FieldWindowTest extends TestCase
     private function values(): array
     {
         return [
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-one'),
                 InputField::make('input-two'),
             ]),
-            FieldGroup::make([
+            FieldSet::make([
                 InputField::make('input-three'),
                 InputField::make('input-four'),
             ]),
