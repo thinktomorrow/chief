@@ -11,7 +11,7 @@
 
     <div class="space-y-6">
         @foreach($fields->notTagged('component')->all() as $i => $fieldSet)
-            @include('chief::manager.fields.form.fieldSet')
+            @include('chief::manager.fields.form.fieldset')
         @endforeach
 
         <div>

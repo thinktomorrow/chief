@@ -14,7 +14,7 @@
 
         <div data-vue-fields class="space-y-8">
             @foreach($fields->all() as $i => $fieldSet)
-                @include('chief::manager.fields.form.fieldSet', ['index' => $i])
+                @include('chief::manager.fields.form.fieldset', ['index' => $i])
             @endforeach
         </div>
 
