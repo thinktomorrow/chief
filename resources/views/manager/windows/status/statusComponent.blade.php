@@ -36,7 +36,7 @@
                                 data-sidebar-trigger="links"
                                 href="{{ $manager->route('links-edit', $model) }}"
                             >
-                                <x-icon-label type="add">Voeg een eerste link toe</x-icon-label>
+                                <x-chief-icon-label type="add">Voeg een eerste link toe</x-chief-icon-label>
                             </a>
                         </p>
                     </div>

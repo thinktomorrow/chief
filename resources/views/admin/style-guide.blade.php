@@ -13,7 +13,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
+                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
         @endcomponent
@@ -24,7 +24,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full space-y-6">
-                <div class="space-y-8 overflow-hidden prose window window-white prose-dark">
+                <div class="overflow-hidden space-y-8 prose window window-white prose-dark">
                     <div class="-mx-8 -mt-8">
                         <div class="px-8 pt-8 pb-4 border-b border-grey-100">
                             <span class="window-title">General typography</span>

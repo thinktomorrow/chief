@@ -22,18 +22,18 @@
             </div>
 
             @if($item->getType() == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_INTERNAL)
-                <x-icon-label type="forward" class="mr-3 text-primary-500"></x-icon-label>
+                <x-chief-icon-label type="forward" class="mr-3 text-primary-500"></x-chief-icon-label>
 
                 <a class="inline-block label label-primary" href="{{ $item->getUrl() }}" target="_blank">
                     {{-- Todo: show internal page title --}}
                     {{ $item->getPageLabel() }}
                 </a>
             @elseif($item->getType() == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
-                <x-icon-label type="forward" class="mr-3 text-grey-300"></x-icon-label>
+                <x-chief-icon-label type="forward" class="mr-3 text-grey-300"></x-chief-icon-label>
 
                 <span class="font-medium text-grey-300">Geen link</span>
             @else
-                <x-icon-label type="forward" class="mr-3 text-primary-500"></x-icon-label>
+                <x-chief-icon-label type="forward" class="mr-3 text-primary-500"></x-chief-icon-label>
 
                 <a class="link link-primary" href="{{ $item->getUrl() }}" target="_blank">
                     {{ $item->getUrl() }}
@@ -46,7 +46,7 @@
                 href="{{ route('chief.back.menuitem.edit', $item->getId()) }}"
                 class="link link-primary"
             >
-                <x-icon-label type="edit"></x-icon-label>
+                <x-chief-icon-label type="edit"></x-chief-icon-label>
             </a>
         </div>
     </div>

@@ -7,6 +7,6 @@
     <h1>{!! $fields->first()->getValue() !!}</h1>
 
     <a data-sidebar-trigger="{{ $type ?: '' }}" href="{{ $editRequestUrl }}" class="mt-3 link link-primary">
-        <x-icon-label type="edit"></x-icon-label>
+        <x-chief-icon-label type="edit"></x-chief-icon-label>
     </a>
 </div>

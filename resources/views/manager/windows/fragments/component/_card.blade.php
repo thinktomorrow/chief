@@ -7,7 +7,7 @@
         <div class="flex items-start justify-between">
             <div class="flex items-center space-x-2">
                 <span data-sortable-handle class="cursor-pointer link link-primary">
-                    <x-icon-label icon="icon-drag"></x-icon-label>
+                    <x-chief-icon-label icon="icon-drag"></x-chief-icon-label>
                 </span>
 
                 <span class="text-lg font-semibold text-grey-900">
@@ -30,7 +30,7 @@
                     href="@adminRoute('fragment-edit', $owner, $model)"
                     class="flex-shrink-0 link link-primary"
                 >
-                    <x-icon-label type="edit"></x-icon-label>
+                    <x-chief-icon-label type="edit"></x-chief-icon-label>
                 </a>
             @endAdminCan
         </div>

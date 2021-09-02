@@ -34,7 +34,7 @@
             @slot('breadcrumbs')
                 @adminCan('index')
                     <a href="@adminRoute('index')" class="link link-primary">
-                        <x-icon-label type="back">Terug naar overzicht</x-icon-label>
+                        <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
                     </a>
                 @endAdminCan
             @endslot
@@ -64,14 +64,16 @@
                     />
                 @endAdminCan
 
-                @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
-                    <livewire:fields_component
-                        :model="$model"
-                        :componentKey="$fieldWindow->getId()"
-                        :title="$fieldWindow->getTitle()"
-                        class="window window-white"
-                    />
-                @endforeach
+                @adminCan('fields-edit', $model)
+                    @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
+                        <livewire:fields_component
+                            :model="$model"
+                            :componentKey="$fieldWindow->getId()"
+                            :title="$fieldWindow->getTitle()"
+                            class="window window-white"
+                        />
+                    @endforeach
+                @endAdminCan
             </div>
 
             <div class="w-full lg:w-1/3">

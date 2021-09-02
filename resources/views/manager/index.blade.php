@@ -14,14 +14,14 @@
             @slot('breadcrumbs')
                 @if($model->adminConfig()->getIndexBreadCrumb())
                     <a href="{{ $model->adminConfig()->getIndexBreadCrumb()->url }}" class="link link-primary">
-                        <x-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-icon-label>
+                        <x-chief-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-chief-icon-label>
                     </a>
                 @endif
             @endslot
 
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
-                    <x-icon-label type="add">@adminConfig('modelName') toevoegen</x-icon-label>
+                    <x-chief-icon-label type="add">@adminConfig('modelName') toevoegen</x-chief-icon-label>
                 </a>
             @endAdminCan
         @endcomponent
@@ -65,7 +65,7 @@
 
                             {!! $manager->filters()->render() !!}
 
-                            <button class="btn btn-primary mt-4" type="submit">Filter</button>
+                            <button class="mt-4 btn btn-primary" type="submit">Filter</button>
                         </form>
                     </div>
                 @endif

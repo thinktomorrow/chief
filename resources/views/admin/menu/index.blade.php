@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
+                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
         @endcomponent
@@ -21,16 +21,16 @@
         <div class="row">
             <div class="w-full">
                 <div class="window window-white">
-                    <div class="divide-y divide-grey-100 -m-8">
+                    <div class="-m-8 divide-y divide-grey-100">
                         @foreach($menus as $menu)
                             <div class="px-8 py-4">
-                                <div class="flex justify-between items-center">
+                                <div class="flex items-center justify-between">
                                     <a href="{{ route('chief.back.menus.show', $menu->key()) }}">
                                         <span class="text-lg font-medium text-grey-900">{{ $menu->label() }}</span>
                                     </a>
 
                                     <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="link link-primary">
-                                        <x-icon-label type="edit"></x-icon-label>
+                                        <x-chief-icon-label type="edit"></x-chief-icon-label>
                                     </a>
                                 </div>
                             </div>

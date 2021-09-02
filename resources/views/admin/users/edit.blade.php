@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.users.index') }}" class="link link-primary">
-                    <x-icon-label type="back">Terug naar admins</x-icon-label>
+                    <x-chief-icon-label type="back">Terug naar admins</x-chief-icon-label>
                 </a>
             @endslot
 
@@ -25,11 +25,11 @@
                         <a class="dropdown-link" href="{{ route('chief.back.invites.resend', $user->id) }}">Stuur nieuwe uitnodiging</a>
 
                         @if($user->isEnabled())
-                            <button form="disableUserForm" form="disableUserForm" type="submit" class="dropdown-link text-left">
+                            <button form="disableUserForm" form="disableUserForm" type="submit" class="text-left dropdown-link">
                                 {{ ucfirst($user->firstname) }} blokkeren
                             </button>
                         @else
-                            <button form="enableUserForm" form="enableUserForm" type="submit" class="dropdown-link text-left">
+                            <button form="enableUserForm" form="enableUserForm" type="submit" class="text-left dropdown-link">
                                 {{ ucfirst($user->firstname) }} deblokkeren
                             </button>
                         @endif

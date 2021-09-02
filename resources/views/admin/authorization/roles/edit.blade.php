@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.roles.index') }}" class="link link-primary">
-                    <x-icon-label type="back">Terug naar rechten</x-icon-label>
+                    <x-chief-icon-label type="back">Terug naar rechten</x-chief-icon-label>
                 </a>
             @endslot
 
