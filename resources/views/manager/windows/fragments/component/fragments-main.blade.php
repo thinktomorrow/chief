@@ -1,4 +1,7 @@
-<div data-fragments-component>
+<div 
+    data-fragments-component
+    class="{{ isset($class) ? $class : '' }}"
+>
     <div class="relative -m-8 border-t border-b divide-y divide-grey-100 border-grey-100">
         @include('chief::manager.windows.fragments.component.fragment-select', [
             'ownerManager' => $manager,

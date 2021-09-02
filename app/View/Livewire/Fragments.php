@@ -15,6 +15,7 @@ class Fragments extends Component
     private $repository;
 
     public FragmentsOwner $owner;
+    public $class;
     private Collection $fragments;
     private array $allowedFragments;
     private array $sharedFragments;

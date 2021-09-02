@@ -16,7 +16,7 @@ trait FieldsComponentAssistant
     public function routesFieldsComponentAssistant(): array
     {
         return [
-            ManagedRoute::get('fields-edit', '{id}/fields/{componentKey}/edit'),
+            ManagedRoute::get('fields-edit', '{id}/fields/{componentKey}/{componentTitle}/edit'),
             ManagedRoute::put('fields-update', '{id}/fields/{componentKey}/update'),
         ];
     }
@@ -29,7 +29,7 @@ trait FieldsComponentAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function fieldsEdit(Request $request, $id, string $componentKey)
+    public function fieldsEdit(Request $request, $id, string $componentKey, ?string $componentTitle = null)
     {
         $model = $this->fieldsModel($id);
 
@@ -44,7 +44,8 @@ trait FieldsComponentAssistant
             'model' => $model,
             'fields' => $fields,
             'componentKey' => $componentKey,
-            'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' :  ucfirst($componentKey),
+            /* 'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' :  ucfirst($componentKey), */
+            'componentTitle' => $componentTitle ?? $componentKey,
         ]);
     }
 

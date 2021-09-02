@@ -2,7 +2,7 @@
     <x-chief-card
         class="{{ isset($class) ? $class : '' }}"
         title="{{ $title ?? null }}"
-        :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
+        :editRequestUrl="$manager->route('fields-edit', $model, $componentKey, $title)"
         type="{{ $componentKey }}"
     >
         <div class="space-y-6">
