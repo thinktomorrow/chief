@@ -38,7 +38,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $values = [];
 
         foreach ($generator as $fieldSet) {
-            if (!$fieldSet instanceof FieldSet && is_iterable($fieldSet)) {
+            if (! $fieldSet instanceof FieldSet && is_iterable($fieldSet)) {
                 $values = array_merge($values, [...$fieldSet]);
             } else {
                 $values[] = $fieldSet;
@@ -150,7 +150,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function any(): bool
     {
-        return !$this->fieldSets->isEmpty();
+        return ! $this->fieldSets->isEmpty();
     }
 
     public function isEmpty(): bool
@@ -215,7 +215,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function notTagged($tag): Fields
     {
         return $this->filterBy(function (Field $field) use ($tag) {
-            return !$field->tagged($tag);
+            return ! $field->tagged($tag);
         });
     }
 
@@ -229,7 +229,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($keys = null): Fields
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return !in_array($field->getKey(), $keys);
+            return ! in_array($field->getKey(), $keys);
         });
     }
 
@@ -253,7 +253,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (!isset($this->fieldSets[$offset])) {
+        if (! isset($this->fieldSets[$offset])) {
             throw new \RuntimeException('No fieldSet found by key ['.$offset.']');
         }
 
@@ -262,7 +262,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (!$value instanceof FieldSet) {
+        if (! $value instanceof FieldSet) {
             throw new \InvalidArgumentException('Passed value must be of type '.FieldSet::class);
         }
 
