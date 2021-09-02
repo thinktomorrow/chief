@@ -38,7 +38,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $values = [];
 
         foreach ($generator as $fieldSet) {
-            if (! $fieldSet instanceof FieldSet && is_iterable($fieldSet)) {
+            if (!$fieldSet instanceof FieldSet && is_iterable($fieldSet)) {
                 $values = array_merge($values, [...$fieldSet]);
             } else {
                 $values[] = $fieldSet;
@@ -50,7 +50,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function filterByWindowId(string $windowId): Fields
     {
-        if ($windowId === "default") {
+        if ('default' === $windowId) {
             return $this->onlyFieldsWithoutWindow()->untagged(static::PAGE_TITLE_TAG);
         }
 
@@ -95,8 +95,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * Populate the windows with their Fields.
-     *
-     * @return Collection
      */
     public function allWindows(): Collection
     {
@@ -152,7 +150,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function any(): bool
     {
-        return ! $this->fieldSets->isEmpty();
+        return !$this->fieldSets->isEmpty();
     }
 
     public function isEmpty(): bool
@@ -217,7 +215,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function notTagged($tag): Fields
     {
         return $this->filterBy(function (Field $field) use ($tag) {
-            return ! $field->tagged($tag);
+            return !$field->tagged($tag);
         });
     }
 
@@ -231,7 +229,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($keys = null): Fields
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return ! in_array($field->getKey(), $keys);
+            return !in_array($field->getKey(), $keys);
         });
     }
 
@@ -255,7 +253,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (! isset($this->fieldSets[$offset])) {
+        if (!isset($this->fieldSets[$offset])) {
             throw new \RuntimeException('No fieldSet found by key ['.$offset.']');
         }
 
@@ -264,7 +262,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof FieldSet) {
+        if (!$value instanceof FieldSet) {
             throw new \InvalidArgumentException('Passed value must be of type '.FieldSet::class);
         }
 
@@ -323,12 +321,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         foreach ($fieldSets as $fieldSet) {
             // A fieldWindow is added to our list of windows and no longer included in the array of fieldSets
             if ($fieldSet instanceof FieldWindow) {
-                if ($fieldSet->isOpen()) {
-                    $openFieldWindowId = $fieldSet->getId();
-                    $this->fieldWindows->push($fieldSet);
-                } else {
-                    $openFieldWindowId = false;
-                }
+                $this->fieldWindows->push($fieldSet);
+                $openFieldWindowId = $fieldSet->isOpen()
+                    ? $fieldSet->getId()
+                    : false;
             } elseif ($fieldSet instanceof FieldSet) {
                 // Add this fieldSet to an open window
                 if (false !== $openFieldWindowId) {
@@ -384,31 +380,4 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             }
         }
     }
-
-    // Add fields that aren't in a fieldSet, inside their own FieldSet.
-//    private function addLonelyFieldsToOpenFieldSets(array $fieldSets): array
-//    {
-//        $result = [];
-//        $lastFieldSetIndex = null;
-//
-//        foreach ($fieldSets as $fieldSet) {
-//            if ($fieldSet instanceof FieldWindow) {
-//                $result[] = $fieldSet;
-//            } elseif ($fieldSet instanceof FieldSet) {
-//                $result[] = $fieldSet;
-//                $lastFieldSetIndex = array_key_last($result);
-//            } elseif ($fieldSet instanceof Field) {
-//                // If there is an open fieldSet, we'll add this field to that one dynamically
-//                if (null !== $lastFieldSetIndex && $result[$lastFieldSetIndex]->isOpen()) {
-//                    $result[$lastFieldSetIndex] = $result[$lastFieldSetIndex]->add($fieldSet);
-//                } else {
-//                    $result[] = new FieldSet([$fieldSet]);
-//                }
-//            } else {
-//                throw new \InvalidArgumentException('Only FieldSet of Field instances should be passed.');
-//            }
-//        }
-//
-//        return $result;
-//    }
 }

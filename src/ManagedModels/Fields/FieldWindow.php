@@ -26,6 +26,11 @@ class FieldWindow
         return new static(static::EMPTY_ID, new Fields(), [], ['is_open' => false]);
     }
 
+    public static function make(string $id): FieldWindow
+    {
+        return new static($id, new Fields(), [], []);
+    }
+
     public static function open(string $id): FieldWindow
     {
         return new static($id, new Fields(), [], ['is_open' => true]);
@@ -59,6 +64,28 @@ class FieldWindow
     public function getPosition(): string
     {
         return $this->data['position'] ?? 'sidebar';
+    }
+
+    public function view(string $view)
+    {
+        return new static(
+            $this->id,
+            $this->fields,
+            $this->fieldSetIds,
+            array_merge($this->data, [
+                'viewPath' => $view,
+            ]),
+        );
+    }
+
+    public function hasView(): bool
+    {
+        return (isset($this->data['viewPath']) && $this->data['viewPath']);
+    }
+
+    public function getView(): string
+    {
+        return $this->data['viewPath'];
     }
 
     public function isOpen(): bool

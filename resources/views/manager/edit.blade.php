@@ -48,13 +48,17 @@
             <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
                     @foreach($fields->getWindowsByPosition('top') as $fieldWindow)
+                        @if($fieldWindow->hasView())
+                            @include($fieldWindow->getView())
+                        @else
                         <div class="window window-white">
                             <livewire:fields_component
-                                :model="$model"
-                                :componentKey="$fieldWindow->getId()"
-                                :title="$fieldWindow->getTitle()"
+                                    :model="$model"
+                                    :componentKey="$fieldWindow->getId()"
+                                    :title="$fieldWindow->getTitle()"
                             />
                         </div>
+                        @endif
                     @endforeach
                 @endAdminCan
 
