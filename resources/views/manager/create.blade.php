@@ -14,7 +14,7 @@
             @slot('breadcrumbs')
                 @adminCan('index')
                     <a href="@adminRoute('index')" class="link link-primary">
-                        <x-icon-label type="back">Terug naar overzicht</x-icon-label>
+                        <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
                     </a>
                 @endAdminCan
             @endslot

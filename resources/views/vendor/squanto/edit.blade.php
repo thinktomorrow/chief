@@ -8,7 +8,7 @@
 
                 @slot('breadcrumbs')
                     <a href="{{ route('squanto.index') }}" class="link link-primary">
-                        <x-icon-label type="back">Vaste teksten</x-icon-label>
+                        <x-chief-icon-label type="back">Vaste teksten</x-chief-icon-label>
                     </a>
                 @endslot
 
@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="w-full lg:w-3/4">
-                                    <div class="space-y-6 mt-1">
+                                    <div class="mt-1 space-y-6">
                                         @foreach($groupedLines as $lineViewModel)
                                             @include('squanto::_field')
                                         @endforeach

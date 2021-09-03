@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row-center-center min-h-screen">
+        <div class="min-h-screen row-center-center">
             <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-6">
                 <h1 class="text-grey-900">
                     @if($new_password)
@@ -21,13 +21,13 @@
                 </h1>
 
                 @if($errors and count($errors) > 0)
-                    <x-inline-notification type="error" size="large">
+                    <x-chief-inline-notification type="error" size="large">
                         <ul>
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                    </x-inline-notification>
+                    </x-chief-inline-notification>
                 @endif
 
                 <form role="form" method="POST" action="{{ route('chief.back.password.update') }}" class="prose prose-dark">

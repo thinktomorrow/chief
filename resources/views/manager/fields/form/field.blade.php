@@ -5,6 +5,7 @@
     data-conditional="{{ $field->getId($locale ?? null) }}"
     data-conditional-trigger-type="{{ $field->getType() }}"
     data-conditional-data="{{ $field->getConditionalFieldsData() }}"
+    class="{{ $field->getWidthStyle() }}"
 >
     @if($field->getDescription())
         <x-slot name="description">

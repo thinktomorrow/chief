@@ -1,28 +1,103 @@
 .window {
-    @apply rounded-xl;
-    @extend .window-sm;
+    @apply rounded-lg shadow-sm;
+}
+
+.window:not(.window-sm):not(.window-md):not(.window-lg) {
+    @extend .window-md;
+}
+
+.window-white {
+    @apply bg-white;
+}
+
+.window-grey {
+    @apply bg-grey-50;
 }
 
 .window-sm {
+    @apply p-6;
+
+    .window-spacing-x {
+        @apply px-6;
+    }
+
+    .window-spacing-y {
+        @apply py-6;
+    }
+
+    .window-spacing {
+        @apply p-6;
+    }
+
+    .-window-spacing-x {
+        @apply -mx-6;
+    }
+
+    .-window-spacing-y {
+        @apply -my-6;
+    }
+
+    .-window-spacing {
+        @apply -m-6;
+    }
+}
+
+.window-md {
     @apply p-8;
+
+    .window-spacing-x {
+        @apply px-8;
+    }
+
+    .window-spacing-y {
+        @apply py-8;
+    }
+
+    .window-spacing {
+        @apply p-8;
+    }
+
+    .-window-spacing-x {
+        @apply -mx-8;
+    }
+
+    .-window-spacing-y {
+        @apply -my-8;
+    }
+
+    .-window-spacing {
+        @apply -m-8;
+    }
 }
 
 .window-lg {
     @apply p-12;
+
+    .window-spacing-x {
+        @apply px-12;
+    }
+
+    .window-spacing-y {
+        @apply py-12;
+    }
+
+    .window-spacing {
+        @apply p-12;
+    }
+
+    .-window-spacing-x {
+        @apply -mx-12;
+    }
+
+    .-window-spacing-y {
+        @apply -my-12;
+    }
+
+    .-window-spacing {
+        @apply -m-12;
+    }
 }
 
-.window-white {
-    @apply bg-white shadow-sm;
-}
-
-.window-grey {
-    @apply bg-grey-50 shadow-sm;
-}
-
-.window-title {
-    @apply text-xl font-semibold text-grey-900;
-}
-
-.window-subtitle {
-    @apply text-lg font-semibold text-grey-900;
+.window-heading {
+    @apply font-semibold text-grey-900;
 }

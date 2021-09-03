@@ -4,7 +4,7 @@ import Panels from './Panels';
 import EventBus from '../../utilities/EventBus';
 import Components from './Components';
 import Container from './Container';
-import { vueFields } from '../../fields/vue-fields';
+import vueFields from '../../fields/vue-fields';
 
 export default class {
     constructor(options = {}) {

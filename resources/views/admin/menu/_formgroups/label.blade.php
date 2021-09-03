@@ -17,9 +17,9 @@
                         >
 
                         @error('trans.' . $locale . '.label')
-                            <x-inline-notification type="error">
+                            <x-chief-inline-notification type="error">
                                 {{ $message}}
-                            </x-inline-notification>
+                            </x-chief-inline-notification>
                         @enderror
                     </div>
                 </tab>
@@ -37,9 +37,9 @@
                 >
 
                 @error('trans.' . $locale . '.label')
-                    <x-inline-notification type="error">
+                    <x-chief-inline-notification type="error">
                         {{ $message}}
-                    </x-inline-notification>
+                    </x-chief-inline-notification>
                 @enderror
             </div>
         @endforeach
