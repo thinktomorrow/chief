@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 
 class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
 {

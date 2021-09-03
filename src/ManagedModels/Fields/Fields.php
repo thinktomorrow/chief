@@ -67,8 +67,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function findFieldSet(string $fieldSetId): ?FieldSet
     {
-        foreach($this->fieldSets as $fieldSet) {
-            if($fieldSet->getId() === $fieldSetId) return $fieldSet;
+        foreach ($this->fieldSets as $fieldSet) {
+            if ($fieldSet->getId() === $fieldSetId) {
+                return $fieldSet;
+            }
         }
 
         return null;
