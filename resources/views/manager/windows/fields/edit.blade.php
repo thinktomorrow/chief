@@ -4,28 +4,27 @@
     action="@adminRoute('fields-update', $model, $componentKey)"
     enctype="multipart/form-data"
     role="form"
-    class="mb-0"
 >
     @csrf
     @method('put')
 
-    <div class="space-y-12">
-        <h3>{{ $componentTitle }}</h3>
+    <div class="space-y-8">
+        <h2 class="text-2xl font-bold text-grey-900">{{ ucfirst($componentTitle) }}</h2>
 
-        <div data-vue-fields class="space-y-8">
-            @foreach($fields->all() as $i => $fieldSet)
-                @include('chief::manager.fields.form.fieldset', ['index' => $i])
-            @endforeach
-        </div>
+        <hr class="-window-spacing-x text-grey-100">
 
-        <div>
-            <button
-                type="submit"
-                form="updateFieldsForm{{ $model->modelReference()->get() }}"
-                class="btn btn-primary"
-            >
-                Wijzigingen opslaan
-            </button>
-        </div>
+        @foreach($fields->all() as $i => $fieldSet)
+            @include('chief::manager.fields.form.fieldset', ['index' => $i])
+
+            <hr class="-window-spacing-x text-grey-100">
+        @endforeach
+
+        <button
+            type="submit"
+            form="updateFieldsForm{{ $model->modelReference()->get() }}"
+            class="btn btn-primary"
+        >
+            Wijzigingen opslaan
+        </button>
     </div>
 </form>

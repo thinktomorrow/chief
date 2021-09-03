@@ -21,7 +21,7 @@ module.exports = {
             transparent: colors.transparent,
 
             white: colors.white,
-            grey: colors.coolGray,
+            grey: colors.blueGray,
             black: colors.black,
 
             primary: colors.blue,
@@ -33,6 +33,12 @@ module.exports = {
             orange: colors.orange,
         },
         extend: {
+            spacing: {
+                96: '24rem',
+                128: '32rem',
+                160: '40rem',
+                192: '48rem',
+            },
             zIndex: {
                 1: '1',
             },

@@ -4,7 +4,7 @@
             @php
                 // fallback - If the queued conversions haven't run yet,
                 // we'll use the original image until they are uploaded
-                $url = file_exists($asset->getFirstMediaPath('default','thumb'))
+                $url = file_exists($asset->getFirstMediaPath('default', 'thumb'))
                     ? $asset->url('thumb')
                     : $asset->url();
             @endphp
@@ -15,10 +15,6 @@
                         <img src="{{ $url }}" title="{{ $asset->filename() }}">
                         @break
                     {{-- TODO: maybe some nice previews / icons, easy video / audio playback who knows? --}}
-                    @case('pdf')
-                        <img src="{{ $asset->url('thumb') }}" title="{{ $asset->filename() }}">
-                        <a href="{{ $asset->url() }}">{{ $asset->filename() }} ({{ $asset->getSize() }})</a>
-                        @break
                     @case('pdf')
                         <img src="{{ $asset->url('thumb') }}" title="{{ $asset->filename() }}">
                         <a href="{{ $asset->url() }}">{{ $asset->filename() }} ({{ $asset->getSize() }})</a>

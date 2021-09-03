@@ -18,7 +18,7 @@
             data-navigation-item-label
             class="link link-black cursor-pointer {{ $isActive ? 'active' : '' }}"
         >
-            <x-icon-label space="large" icon="{!! $groupIcon !!}">{{ $title }}</x-icon-label>
+            <x-chief-icon-label space="large" icon="{!! $groupIcon !!}">{{ $title }}</x-chief-icon-label>
         </span>
 
         <div
@@ -41,7 +41,7 @@
             href="{{ $navItem->url() }}"
             class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
         >
-            <x-icon-label space="large" icon="{!! $navItem->icon()  !!}">{{ ucfirst($navItem->label()) }}</x-icon-label>
+            <x-chief-icon-label space="large" icon="{!! $navItem->icon()  !!}">{{ ucfirst($navItem->label()) }}</x-chief-icon-label>
         </a>
     @endforeach
 @endif

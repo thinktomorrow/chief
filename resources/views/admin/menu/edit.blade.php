@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}" class="link link-primary">
-                    <x-icon-label type="back">Ga terug</x-icon-label>
+                    <x-chief-icon-label type="back">Ga terug</x-chief-icon-label>
                 </a>
             @endslot
 

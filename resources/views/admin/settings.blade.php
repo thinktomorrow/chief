@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
+                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
 

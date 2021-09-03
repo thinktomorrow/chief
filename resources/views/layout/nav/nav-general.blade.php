@@ -8,7 +8,7 @@
             data-navigation-item-label
             class="link link-black cursor-pointer {{ $hasActiveChildren ? 'active' : '' }}"
         >
-            <x-icon-label space="large" icon="logo">Site</x-icon-label>
+            <x-chief-icon-label space="large" icon="logo">Site</x-chief-icon-label>
         </span>
 
         <div

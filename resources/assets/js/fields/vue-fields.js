@@ -5,7 +5,7 @@
  * @param container
  * @param selector
  */
-export function vueFields(container, selector = '[data-vue-fields]') {
+const vueFields = function (container, selector = '[data-vue-fields]') {
     Array.from(container.querySelectorAll(selector)).forEach((el) => {
         // Add an id for vue because this is required
         if (!el.hasAttribute('id')) {
@@ -19,4 +19,6 @@ export function vueFields(container, selector = '[data-vue-fields]') {
             staticRenderFns: res.staticRenderFns,
         }).$mount('#' + el.getAttribute('id')); // eslint-disable-line
     });
-}
+};
+
+export { vueFields as default };

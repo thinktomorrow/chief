@@ -68,7 +68,7 @@
                             @endif
 
                             <div class="w-full px-4 py-3">
-                                <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
+                                <div data-vue-fields class="-mx-4 -my-3 border rounded-lg divide-y border-grey-200 divide-grey-200">
                                     @foreach($links->redirects as $urlRecord)
                                         <url-redirect
                                             inline-template
@@ -81,7 +81,7 @@
                                                 <div>{{ $urlRecord->slug }}</div>
 
                                                 <span class="cursor-pointer link link-error" @click="remove">
-                                                    <x-icon-label type="delete"></x-icon-label>
+                                                    <x-chief-icon-label type="delete"></x-chief-icon-label>
                                                 </span>
                                             </div>
                                         </url-redirect>

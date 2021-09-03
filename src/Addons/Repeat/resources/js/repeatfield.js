@@ -1,4 +1,4 @@
-import { vueFields } from '../../../../../resources/assets/js/fields/vue-fields';
+import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
 
 export default class {
     constructor(key, container = document) {

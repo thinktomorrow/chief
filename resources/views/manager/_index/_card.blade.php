@@ -1,15 +1,15 @@
-<div class="w-full p-6" data-sortable-id="{{ $model->id }}">
+<div class="window-spacing" data-sortable-id="{{ $model->id }}">
     <div class="space-y-2">
         <div class="flex justify-between">
             @adminCan('edit')
                 <a href="@adminRoute('edit', $model)" class="flex items-center space-x-2">
             @endAdminCan
-                    <span class="text-lg font-medium text-grey-900">
+                    <span class="text-lg font-bold text-grey-900">
                         @adminConfig('rowTitle')
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                        <span class="text-sm label label-info">
+                        <span class="text-sm label label-info label-xs">
                             Homepage
                         </span>
                     @endif

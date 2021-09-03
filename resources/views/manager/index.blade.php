@@ -14,14 +14,14 @@
             @slot('breadcrumbs')
                 @if($model->adminConfig()->getIndexBreadCrumb())
                     <a href="{{ $model->adminConfig()->getIndexBreadCrumb()->url }}" class="link link-primary">
-                        <x-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-icon-label>
+                        <x-chief-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-chief-icon-label>
                     </a>
                 @endif
             @endslot
 
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
-                    <x-icon-label type="add">@adminConfig('modelName') toevoegen</x-icon-label>
+                    <x-chief-icon-label type="add">@adminConfig('modelName') toevoegen</x-chief-icon-label>
                 </a>
             @endAdminCan
         @endcomponent
@@ -33,21 +33,22 @@
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 @if($models->count())
-                    <div class="window window-white">
+                    <div class="window window-white window-sm">
                         @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative -m-8 divide-y divide-grey-100"
+                                class="relative -window-spacing divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative -m-8 divide-y divide-grey-100">
+                            <div class="relative -window-spacing divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include('chief::manager._index._card')
                                 @endforeach
                             </div>
                     </div>
+
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                         {!! $models->links() !!}
                     @endif
@@ -65,7 +66,7 @@
 
                             {!! $manager->filters()->render() !!}
 
-                            <button class="btn btn-primary mt-4" type="submit">Filter</button>
+                            <button class="mt-4 btn btn-primary" type="submit">Filter</button>
                         </form>
                     </div>
                 @endif
