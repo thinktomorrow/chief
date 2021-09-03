@@ -62,15 +62,39 @@ export default class {
         if (!this._checkMax()) return;
 
         const fieldSet = this._cloneFieldSet(
-            this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset'))
+            this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset') + ':last-child')
         );
 
+        // TODO: clear values...
+
         this.fieldsContainer.appendChild(fieldSet);
+        const firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
+
+        let repeatKey = firstField.getAttribute('data-repeat-field-key');
+
+        let repeatKeyArray = repeatKey.split('.');
+        const originalKey = repeatKeyArray.filter((element, index) => index < repeatKeyArray.length - 1).join('.');
+
+        const replacementKeyArray = originalKey.split('.');
+        replacementKeyArray.splice(
+            replacementKeyArray.length - 1,
+            1,
+            parseInt(replacementKeyArray[replacementKeyArray.length - 1], 10) + 1
+        );
+
+        const replacementKey = replacementKeyArray.join('.');
+        console.log(originalKey, replacementKey);
 
         // Key nodig!!!
 
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(/\[0\]/g, `[${this._amountOfFieldSets() - 1}[`);
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(/\.0\./g, `.${this._amountOfFieldSets() - 1}.`);
+        // Get last key
+        // Change index + 1
+
+        fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(`/[${originalKey}]/`, 'g'), `[${replacementKey}]`);
+        fieldSet.innerHTML = fieldSet.innerHTML.replace(
+            new RegExp('/.' + originalKey + './', 'g'),
+            `.${replacementKey}.`
+        );
 
         vueFields(fieldSet);
 

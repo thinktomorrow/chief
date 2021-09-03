@@ -12,7 +12,7 @@
             <fieldset id="{{ $fieldSet->getId() }}" data-repeat-fieldset="{{ $uniqueContainerId }}" class="border bg-white border-grey-100 rounded mb-4 p-4">
                 <div class="flex" style="margin-bottom:-3px;">
                     <span>{{ $repeatField->getLabel() }}</span>
-                    <div data-repeat-delete="{{ $uniqueContainerId }}" class="squished-s text-error hover:bg-grey-50 rounded center-y cursor-pointer {{ (count($repeatedFields) == 1) ? 'hidden' : '' }}" style="margin-left:auto;">
+                    <div data-repeat-delete="{{ $uniqueContainerId }}" class="squished-s text-error hover:bg-grey-50 rounded center-y cursor-pointer" style="margin-left:auto;">
                         <svg class="mr-2" width="18" height="18"><use data-v-3997f6a0="" xlink:href="#trash"></use></svg>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     @foreach($fieldSet->all() as $field)
                         <div class="mb-4">
                             <label for="{{ $field->getDottedName() }}">{{ $field->getLabel() }}</label>
-                            <div data-repeat-field="{{ $field->getKey() }}">
+                            <div data-repeat-field="{{ $uniqueContainerId }}" data-repeat-field-key="{{ $field->getDottedName() }}">
                                 {!! $field->render() !!}
                             </div>
                         </div>
