@@ -1217,7 +1217,11 @@ var _default = /*#__PURE__*/function () {
           _this4.backOrClose(false);
         }, function (error) {
           if (_this4.debug) console.error("error on form submit: ".concat(error));
-        });
+        }); // only mount Vue on our vue specific fields and not on the form element itself so
+        // that the submit event still works. I know this is kinda hacky. Make sure that
+        // vue mount occurs before a sidebar activation so native js can do its thing
+
+        (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_20__.vueFields)(newPanelElement);
 
         if (!_this4.sidebarContainer.isOpen()) {
           _this4.sidebarContainer.open();
@@ -1229,13 +1233,10 @@ var _default = /*#__PURE__*/function () {
 
         if (onActivatedCallback) {
           onActivatedCallback(id);
-        } // only mount Vue on our vue specific fields and not on the form element itself
-        // so that the submit event still works. I know this is kinda hacky.
-
-
-        (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_20__.vueFields)(_this4.panels.findActive().el); // creating a custom event so native js like redactor js can be initiated async
+        } // creating a custom event so native js like redactor js can be initiated async
         // needs to dispatch after vue instances get created otherwise they overrides
         // all redactor event listeners like toolbar clicks ...
+
 
         window.dispatchEvent(new CustomEvent('chief::newpanel', {
           detail: _this4.panels.findActive().eventPayload()
@@ -2901,8 +2902,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 _resources_assets_js_utilities_EventBus__WEBPACK_IMPORTED_MODULE_1__.default.subscribe('sidebarPanelActivated', function (data) {
-  console.log('soo far..');
   data.panel.el.querySelectorAll('[data-repeat-container]').forEach(function (el) {
+    console.log('setting up repeatfield for ', el.getAttribute('data-repeat-container'));
     new _repeatfield__WEBPACK_IMPORTED_MODULE_2__.default(el.getAttribute('data-repeat-container'));
   });
 });
@@ -2944,15 +2945,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var _default = /*#__PURE__*/function () {
   function _default(key) {
+    var _this = this;
+
     var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
     _classCallCheck(this, _default);
 
-    console.log('soo good', key);
     this.key = key;
     this.container = container.querySelector(this._attributeKey('data-repeat-container'));
     this.fieldsContainer = this.container.querySelector(this._attributeKey('data-repeat-fields'));
-    this.addTrigger = this.container.querySelector(this._attributeKey('data-repeat-add')); // TODO: this could be set via a field::max() or something
+    this.addTrigger = this.container.querySelector(this._attributeKey('data-repeat-add'));
+    /**
+     * Register unique trigger handlers
+     *
+     * if we'd call the method directly as callback, it cannot be
+     * removed as it is regarded to be a different function.
+     */
+
+    this.addFieldSetReference = function (event) {
+      return _this._addFieldSet(event);
+    };
+
+    this.deleteFieldSetReference = function (event) {
+      return _this._deleteFieldSet(event);
+    }; // TODO: this could be set via a field::max() or something
+
 
     this.maxFieldSets = 50;
 
@@ -2964,13 +2981,13 @@ var _default = /*#__PURE__*/function () {
   _createClass(_default, [{
     key: "_registerEventListeners",
     value: function _registerEventListeners() {
-      var _this = this;
+      var _this2 = this;
 
-      // this.addTrigger.removeEventListener('click', this._addFieldSet);
-      this.addTrigger.addEventListener('click', this._addFieldSet);
+      this.addTrigger.removeEventListener('click', this.addFieldSetReference);
+      this.addTrigger.addEventListener('click', this.addFieldSetReference);
       this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-delete')).forEach(function (trigger) {
-        // trigger.removeEventListener('click', this._deleteFieldSet);
-        trigger.addEventListener('click', _this._deleteFieldSet);
+        trigger.removeEventListener('click', _this2.deleteFieldSetReference);
+        trigger.addEventListener('click', _this2.deleteFieldSetReference);
       });
     }
   }, {
@@ -2996,7 +3013,6 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "_deleteFieldSet",
     value: function _deleteFieldSet(event) {
-      console.log('deleting...');
       var fieldSet = event.target.closest(this._attributeKey('data-repeat-fieldset'));
       this.fieldsContainer.removeChild(fieldSet);
 
@@ -3005,13 +3021,14 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "_addFieldSet",
     value: function _addFieldSet() {
-      console.log('adding...');
       if (!this._checkMax()) return;
 
-      var fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector());
+      var fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset')));
 
-      fieldSet.innerHTML = fieldSet.innerHTML.replace(/\]\[0\]\[/g, "][".concat(this._amountOfFieldSets() + 1, "]["));
-      this.fieldsContainer.appendChild(fieldSet);
+      this.fieldsContainer.appendChild(fieldSet); // Key nodig!!!
+
+      fieldSet.innerHTML = fieldSet.innerHTML.replace(/\[0\]/g, "[".concat(this._amountOfFieldSets() - 1, "["));
+      fieldSet.innerHTML = fieldSet.innerHTML.replace(/\.0\./g, ".".concat(this._amountOfFieldSets() - 1, "."));
       (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_4__.vueFields)(fieldSet); // TODO: trigger redactor...
       // $R('[data-editor]');
 

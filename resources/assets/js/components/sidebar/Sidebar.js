@@ -228,6 +228,11 @@ export default class {
                 }
             );
 
+            // only mount Vue on our vue specific fields and not on the form element itself so
+            // that the submit event still works. I know this is kinda hacky. Make sure that
+            // vue mount occurs before a sidebar activation so native js can do its thing
+            vueFields(newPanelElement);
+
             if (!this.sidebarContainer.isOpen()) {
                 this.sidebarContainer.open();
             }
@@ -247,10 +252,6 @@ export default class {
             if (onActivatedCallback) {
                 onActivatedCallback(id);
             }
-
-            // only mount Vue on our vue specific fields and not on the form element itself
-            // so that the submit event still works. I know this is kinda hacky.
-            vueFields(this.panels.findActive().el);
 
             // creating a custom event so native js like redactor js can be initiated async
             // needs to dispatch after vue instances get created otherwise they overrides

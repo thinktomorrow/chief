@@ -2,11 +2,19 @@ import { vueFields } from '../../../../../resources/assets/js/fields/vue-fields'
 
 export default class {
     constructor(key, container = document) {
-        console.log('soo good', key);
         this.key = key;
         this.container = container.querySelector(this._attributeKey('data-repeat-container'));
         this.fieldsContainer = this.container.querySelector(this._attributeKey('data-repeat-fields'));
         this.addTrigger = this.container.querySelector(this._attributeKey('data-repeat-add'));
+
+        /**
+         * Register unique trigger handlers
+         *
+         * if we'd call the method directly as callback, it cannot be
+         * removed as it is regarded to be a different function.
+         */
+        this.addFieldSetReference = (event) => this._addFieldSet(event);
+        this.deleteFieldSetReference = (event) => this._deleteFieldSet(event);
 
         // TODO: this could be set via a field::max() or something
         this.maxFieldSets = 50;
@@ -16,12 +24,12 @@ export default class {
     }
 
     _registerEventListeners() {
-        // this.addTrigger.removeEventListener('click', this._addFieldSet);
-        this.addTrigger.addEventListener('click', this._addFieldSet);
+        this.addTrigger.removeEventListener('click', this.addFieldSetReference);
+        this.addTrigger.addEventListener('click', this.addFieldSetReference);
 
         this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-delete')).forEach((trigger) => {
-            // trigger.removeEventListener('click', this._deleteFieldSet);
-            trigger.addEventListener('click', this._deleteFieldSet);
+            trigger.removeEventListener('click', this.deleteFieldSetReference);
+            trigger.addEventListener('click', this.deleteFieldSetReference);
         });
     }
 
@@ -43,7 +51,6 @@ export default class {
     }
 
     _deleteFieldSet(event) {
-        console.log('deleting...');
         const fieldSet = event.target.closest(this._attributeKey('data-repeat-fieldset'));
 
         this.fieldsContainer.removeChild(fieldSet);
@@ -52,14 +59,18 @@ export default class {
     }
 
     _addFieldSet() {
-        console.log('adding...');
         if (!this._checkMax()) return;
 
-        const fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector());
-
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(/\]\[0\]\[/g, `][${this._amountOfFieldSets() + 1}][`);
+        const fieldSet = this._cloneFieldSet(
+            this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset'))
+        );
 
         this.fieldsContainer.appendChild(fieldSet);
+
+        // Key nodig!!!
+
+        fieldSet.innerHTML = fieldSet.innerHTML.replace(/\[0\]/g, `[${this._amountOfFieldSets() - 1}[`);
+        fieldSet.innerHTML = fieldSet.innerHTML.replace(/\.0\./g, `.${this._amountOfFieldSets() - 1}.`);
 
         vueFields(fieldSet);
 

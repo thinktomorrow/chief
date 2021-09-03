@@ -20,7 +20,7 @@
                     @foreach($fieldSet->all() as $field)
                         <div class="mb-4">
                             <label for="{{ $field->getDottedName() }}">{{ $field->getLabel() }}</label>
-                            <div data-vue-fields data-repeat-field="{{ $field->getKey() }}">
+                            <div data-repeat-field="{{ $field->getKey() }}">
                                 {!! $field->render() !!}
                             </div>
                         </div>
