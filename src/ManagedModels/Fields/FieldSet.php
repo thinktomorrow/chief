@@ -47,6 +47,34 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static(static::randomId(), [], ['is_open' => false]);
     }
 
+    public function title(string $title): FieldSet
+    {
+        return new static(
+            $this->id,
+            $this->fields,
+            array_merge($this->data, ['title' => $title]),
+        );
+    }
+
+    public function getTitle(): string
+    {
+        return $this->data['title'] ?? '';
+    }
+
+    public function description(string $description): FieldSet
+    {
+        return new static(
+            $this->id,
+            $this->fields,
+            array_merge($this->data, ['description' => $description]),
+        );
+    }
+
+    public function getDescription(): string
+    {
+        return $this->data['description'] ?? '';
+    }
+
     public function getId(): string
     {
         return $this->id;

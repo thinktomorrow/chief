@@ -1,6 +1,6 @@
 @php
     $type = $componentKey;
-    $editRequestUrl = $manager->route('fields-edit', $model, $componentKey, 'Titel');
+    $editRequestUrl = $manager->route('fields-edit', $model, $componentKey);
 @endphp
 
 <div class="flex items-start space-x-4">

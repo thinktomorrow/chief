@@ -31,6 +31,16 @@ class FieldWindow
         return new static($id, new Fields(), [], ['is_open' => true]);
     }
 
+    public function isOpen(): bool
+    {
+        return $this->data['is_open'] ?? false;
+    }
+
+    public static function close(): FieldWindow
+    {
+        return static::empty();
+    }
+
     public function title(string $title): FieldWindow
     {
         return new static(
@@ -59,16 +69,6 @@ class FieldWindow
     public function getPosition(): string
     {
         return $this->data['position'] ?? 'sidebar';
-    }
-
-    public function isOpen(): bool
-    {
-        return $this->data['is_open'] ?? false;
-    }
-
-    public static function close(): FieldWindow
-    {
-        return static::empty();
     }
 
     public function getId(): string

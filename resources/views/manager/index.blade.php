@@ -33,21 +33,22 @@
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 @if($models->count())
-                    <div class="window window-white">
+                    <div class="window window-white window-sm">
                         @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative -m-8 divide-y divide-grey-100"
+                                class="relative -window-spacing divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative -m-8 divide-y divide-grey-100">
+                            <div class="relative -window-spacing divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include('chief::manager._index._card')
                                 @endforeach
                             </div>
                     </div>
+
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                         {!! $models->links() !!}
                     @endif

@@ -5,13 +5,13 @@
     class="{{ $attributes->get('class', '') }}"
 >
     @isset($label)
-        <div class="mb-3 leading-none space-x-1">
+        <div class="mb-2 leading-none space-x-1">
             @isset($id)
-                <label for="{{ $id }}" class="font-medium leading-none cursor-pointer text-grey-900">
+                <label for="{{ $id }}" class="font-medium cursor-pointer text-grey-800">
                     {{ ucfirst($label) }}
                 </label>
             @else
-                <span class="font-medium leading-none text-grey-900">
+                <span class="font-medium text-grey-700">
                     {{ ucfirst($label) }}
                 </span>
             @endisset
@@ -23,12 +23,12 @@
     @endisset
 
     @isset($description)
-        <div class="mb-4 prose prose-dark prose-editor">
-            {{ $description }}
+        <div class="prose prose-dark prose-editor">
+            {!! $description !!}
         </div>
     @endisset
 
-    <div>
+    <div class="mt-3">
         {{ $slot }}
     </div>
 

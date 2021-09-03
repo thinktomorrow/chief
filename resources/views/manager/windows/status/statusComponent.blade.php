@@ -8,20 +8,23 @@
             @case('published')
                 @if($isAnyLinkOnline)
                     <x-slot name="title">
-                        <span class="inline-flex items-center space-x-1">
+                        <span class="space-x-1">
                             <span>Status</span>
                             <span class="text-xs label label-success">Online</span>
                         </span>
                     </x-slot>
 
-                    <p class="text-grey-700">
-                        Deze pagina is gepubliceerd en zichtbaar voor de gebruiker!
-                    </p>
+                    <div class="prose prose-dark">
+                        <p>
+                            Deze pagina is gepubliceerd en zichtbaar voor de gebruiker!
+                        </p>
+                    </div>
+
                 @elseif($isVisitable)
                     <x-slot name="title">
                         <span class="inline-flex items-center space-x-1">
                             <span>Status</span>
-                            <span class="text-xs label label-info">Nog niet gepubliceerd</span>
+                            <span class="text-xs label label-info">Nog niet online</span>
                         </span>
                     </x-slot>
 
