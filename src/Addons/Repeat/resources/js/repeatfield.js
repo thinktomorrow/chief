@@ -90,11 +90,17 @@ export default class {
         // Get last key
         // Change index + 1
 
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(`/[${originalKey}]/`, 'g'), `[${replacementKey}]`);
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(
-            new RegExp('/.' + originalKey + './', 'g'),
-            `.${replacementKey}.`
-        );
+        // const regexString = 'options[0]'
+
+        console.log(this._escapeRegExp(originalKey));
+        const regexString = `/${this._escapeRegExp(originalKey)}/`;
+
+        fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(regexString, 'g'), replacementKey);
+
+        // fieldSet.innerHTML = fieldSet.innerHTML.replace(
+        //     new RegExp('/.' + originalKey + './', 'g'),
+        //     `.${replacementKey}.`
+        // );
 
         vueFields(fieldSet);
 
@@ -113,6 +119,10 @@ export default class {
         copiedFieldSet.id = fieldSetId;
 
         return copiedFieldSet;
+    }
+
+    _escapeRegExp(stringToGoIntoTheRegex) {
+        return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     }
 
     // Specific attribute selectors for this repeatField. This allows for nested functionality
