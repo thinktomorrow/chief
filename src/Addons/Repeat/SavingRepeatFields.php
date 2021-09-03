@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Addons\Repeat;
 
-use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
-
 trait SavingRepeatFields
 {
     public function saveRepeatField(RepeatField $field, $input, $files)

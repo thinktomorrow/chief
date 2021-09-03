@@ -58,7 +58,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new ChiefRoutesServiceProvider($this->app))->boot();
 
         // Addons
-        foreach(config('chief.addons', []) as $addonServiceProvider) {
+        foreach (config('chief.addons', []) as $addonServiceProvider) {
             (new $addonServiceProvider($this->app))->boot();
         }
 
@@ -187,7 +187,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new ChiefRoutesServiceProvider($this->app))->register();
 
         // Addons
-        foreach(config('chief.addons', []) as $addonServiceProvider) {
+        foreach (config('chief.addons', []) as $addonServiceProvider) {
             (new $addonServiceProvider($this->app))->register();
         }
     }

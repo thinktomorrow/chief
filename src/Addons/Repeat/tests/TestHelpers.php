@@ -13,9 +13,10 @@ trait TestHelpers
         return RepeatField::make('foobar', [
             InputField::make('title')->locales($locales),
             InputField::make('content')->locales($locales),
-        ])->valueResolver(function () use($values) {
-
-            if(is_array($values)) return $values;
+        ])->valueResolver(function () use ($values) {
+            if (is_array($values)) {
+                return $values;
+            }
 
             // Default values
             return [

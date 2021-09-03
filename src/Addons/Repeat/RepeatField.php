@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Addons\Repeat;
 
-use Illuminate\Support\Str;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
@@ -36,7 +35,7 @@ class RepeatField extends AbstractField implements Field
     {
         $existingFieldSets = [];
 
-        if (!($values = $this->getValue()) || !is_array($values)) {
+        if (! ($values = $this->getValue()) || ! is_array($values)) {
             $values = [null];
         }
 
@@ -45,7 +44,7 @@ class RepeatField extends AbstractField implements Field
                 return $field->name($this->getName().'['.$index.']['.$field->getName().']')
                     ->localizedFormat(':name.:locale')
                     ->valueResolver(function ($model = null, $locale = null, $field) use ($value) {
-                        if (!$value || !isset($value[$field->getColumn()])) {
+                        if (! $value || ! isset($value[$field->getColumn()])) {
                             return null;
                         }
 

@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Addons\Repeat;
 
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Addons\Repeat\tests\PageStub;
 use Thinktomorrow\Chief\Addons\Repeat\tests\TestHelpers;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class RepeatUnitTest extends TestCase
 {
@@ -32,7 +31,7 @@ class RepeatUnitTest extends TestCase
         $this->assertCount(2, $field->getRepeatedFields()->all()); // 2 filled in sets
 
         // Count total of all fields. Cannot use allFields because due to similar keys of repeated fields these would get merged out.
-        $this->assertEquals(4, array_reduce($field->getRepeatedFields()->all()->all(), fn($carry, $fieldSet) => $carry + $fieldSet->count(), 0));
+        $this->assertEquals(4, array_reduce($field->getRepeatedFields()->all()->all(), fn ($carry, $fieldSet) => $carry + $fieldSet->count(), 0));
 
         $this->assertEquals('first title', $field->getRepeatedFields()->first()->first()->getValue());
         $this->assertEquals('first content', $field->getRepeatedFields()->first()->find('content')->getValue());
@@ -48,7 +47,7 @@ class RepeatUnitTest extends TestCase
             [
                 'title' => ['nl' => 'nl title', 'en' => 'en title'],
                 'content' => ['nl' => 'nl content', 'en' => 'en content'],
-            ]
+            ],
         ], ['nl' ,'en']);
 
         app()->setLocale('nl');
