@@ -199,7 +199,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function model($model): self
     {
         return $this->map(function (FieldSet $fieldSet) use ($model) {
-            return $fieldSet->model($model)->map(function ($field) use ($model) {
+            return $fieldSet->map(function ($field) use ($model) {
                 return $field->model($model);
             });
         });
