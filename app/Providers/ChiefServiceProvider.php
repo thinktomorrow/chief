@@ -57,6 +57,11 @@ class ChiefServiceProvider extends ServiceProvider
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->boot();
 
+        // Addons
+        foreach(config('chief.addons', []) as $addonServiceProvider) {
+            (new $addonServiceProvider($this->app))->boot();
+        }
+
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
@@ -180,6 +185,11 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->register();
+
+        // Addons
+        foreach(config('chief.addons', []) as $addonServiceProvider) {
+            (new $addonServiceProvider($this->app))->register();
+        }
     }
 
     /**

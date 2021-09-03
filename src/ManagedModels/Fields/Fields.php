@@ -65,6 +65,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new Fields();
     }
 
+    public function findFieldSet(string $fieldSetId): ?FieldSet
+    {
+        foreach($this->fieldSets as $fieldSet) {
+            if($fieldSet->getId() === $fieldSetId) return $fieldSet;
+        }
+
+        return null;
+    }
+
     public function add(FieldSet ...$fieldSets): Fields
     {
         return new static($this->fieldSets->merge($fieldSets)->all(), $this->fieldWindows);
@@ -128,13 +137,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($this->fieldSets->reject(fn ($fieldSet) => in_array($fieldSet->getId(), $fieldSetIds))->all(), $this->fieldWindows);
     }
 
-    public function first(): ?Field
+    public function first(): ?FieldSet
     {
         if ($this->fieldSets->isEmpty()) {
             return null;
         }
 
-        return $this->fieldSets->first()->first();
+        return $this->fieldSets->first();
     }
 
     public function find(string $key): Field
@@ -189,8 +198,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function model($model): self
     {
-        return $this->map(function ($fieldSet) use ($model) {
-            return $fieldSet->map(function ($field) use ($model) {
+        return $this->map(function (FieldSet $fieldSet) use ($model) {
+            return $fieldSet->model($model)->map(function ($field) use ($model) {
                 return $field->model($model);
             });
         });

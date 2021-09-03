@@ -8,6 +8,9 @@ import initConditionalFields from './utilities/conditional-fields';
 require('./utilities/navigation');
 require('./utilities/character-count');
 
+// TODO: how to load addons js without changing this file?
+require('../../../src/Addons/Repeat/resources/js/init-repeat-fields');
+
 FormSubmit.listen('[data-submit-form]');
 
 initConditionalFields();

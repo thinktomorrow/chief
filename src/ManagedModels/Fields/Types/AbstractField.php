@@ -53,6 +53,7 @@ abstract class AbstractField
     protected $model;
 
     protected string $view;
+    protected string $windowView;
     protected array $viewData = [];
     protected array $locales = [];
     protected ValidationParameters $validation;
@@ -358,6 +359,11 @@ abstract class AbstractField
         return view($this->getView(), array_merge($viewData, $this->getViewData()))->render();
     }
 
+    public function renderWindow(array $viewData = []): string
+    {
+        return view($this->getWindowView(), array_merge($viewData, $this->getViewData()))->render();
+    }
+
     /**
      * @param mixed $model
      */
@@ -374,6 +380,16 @@ abstract class AbstractField
     public function view(string $view): Field
     {
         $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * The view path to the full formgroup for this field.
+     */
+    public function windowView(string $windowView): Field
+    {
+        $this->windowView = $windowView;
 
         return $this;
     }
@@ -481,6 +497,15 @@ abstract class AbstractField
             'field' => $this,
             'key' => $this->getKey(),
         ], $this->viewData);
+    }
+
+    protected function getWindowView(): string
+    {
+        if (isset($this->windowView)) {
+            return $this->windowView;
+        }
+
+        return 'chief::manager.fields.window.types.'.$this->getViewKey();
     }
 
     /**

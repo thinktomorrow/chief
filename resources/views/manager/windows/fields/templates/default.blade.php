@@ -11,7 +11,7 @@
                     <span class="font-medium text-grey-900">{{ ucfirst($field->getLabel()) }}</span>
 
                     <div class="prose prose-dark">
-                        @include('chief::manager.fields.window.types.' . $field->getType(), ['field' => $field])
+                        {!! $field->renderWindow() !!}
                     </div>
                 </div>
             @endforeach

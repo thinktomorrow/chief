@@ -4,6 +4,7 @@ import Panels from './Panels';
 import EventBus from '../../utilities/EventBus';
 import Components from './Components';
 import Container from './Container';
+import { vueFields } from '../../fields/vue-fields';
 
 export default class {
     constructor(options = {}) {
@@ -175,21 +176,6 @@ export default class {
         Api.get(url, (data) => {
             newPanelElement.innerHTML = data;
 
-            // only mount Vue on our vue specific fields and not on the form element itself
-            // so that the submit event still works. I know this is kinda hacky.
-            Array.from(newPanelElement.querySelectorAll('[data-vue-fields]')).forEach((el) => {
-                // Add an id for vue
-                if (!el.hasAttribute('id')) {
-                    el.setAttribute('id', `vue_${Math.random().toString(16).substr(2, 8)}`);
-                }
-
-                const res = window.Vue.compile(el.outerHTML);
-                new window.Vue({
-                    render: res.render,
-                    staticRenderFns: res.staticRenderFns,
-                }).$mount('#' + el.getAttribute('id')); // eslint-disable-line
-            });
-
             Api.listenForFormSubmits(
                 newPanelElement,
                 (responseData, metadata) => {
@@ -261,6 +247,10 @@ export default class {
             if (onActivatedCallback) {
                 onActivatedCallback(id);
             }
+
+            // only mount Vue on our vue specific fields and not on the form element itself
+            // so that the submit event still works. I know this is kinda hacky.
+            vueFields(this.panels.findActive().el);
 
             // creating a custom event so native js like redactor js can be initiated async
             // needs to dispatch after vue instances get created otherwise they overrides

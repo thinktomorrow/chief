@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
 
 class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
 {
@@ -37,9 +38,10 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
         return $fields;
     }
 
-    public static function open(): FieldSet
+    public static function open(?string $id = null): FieldSet
     {
-        return new static(static::randomId(), [], ['is_open' => true]);
+        // We set column only when an explicit id has been set.
+        return new static($id ?: static::randomId(), [], ['is_open' => true]);
     }
 
     public static function close(): FieldSet
@@ -55,16 +57,6 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
     public function isOpen(): bool
     {
         return $this->data['is_open'] ?? false;
-    }
-
-    public function multiple(): FieldSet
-    {
-        return new static($this->id, $this->fields, array_merge($this->data, ['multiple' => true]));
-    }
-
-    public function allowsMultiple(): bool
-    {
-        return $this->data['multiple'] ?? false;
     }
 
     public function all(): array
@@ -108,7 +100,6 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
     public function map(callable $callback): FieldSet
     {
         $keys = array_keys($this->fields);
-
         $items = array_map($callback, $this->fields, $keys);
 
         return new static($this->id, array_combine($keys, $items), $this->data);
