@@ -7,7 +7,7 @@
     @isset($label)
         <div class="mb-2 leading-none space-x-1">
             @isset($id)
-                <label for="{{ $id }}" class="font-medium cursor-pointer text-grey-800">
+                <label for="{{ $id }}" class="font-medium cursor-pointer text-grey-700">
                     {{ ucfirst($label) }}
                 </label>
             @else

@@ -1,6 +1,7 @@
 <x-chief-formgroup
     label="{{ $field->getLabel() }}"
     name="{{ $field->getName($locale ?? null) }}"
+    id="{{ $field->getId($locale ?? null) }}"
     isRequired="{{ $field->required() }}"
     data-conditional="{{ $field->getId($locale ?? null) }}"
     data-conditional-trigger-type="{{ $field->getType() }}"
@@ -14,5 +15,4 @@
     @endif
 
     {!! $field->render(get_defined_vars()) !!}
-
 </x-chief-formgroup>

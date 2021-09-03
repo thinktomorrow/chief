@@ -2927,6 +2927,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
 /* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__);
+<<<<<<< Updated upstream
 /* harmony import */ var core_js_modules_es_string_split_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.string.split.js */ "./node_modules/core-js/modules/es.string.split.js");
 /* harmony import */ var core_js_modules_es_string_split_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_split_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var core_js_modules_es_array_join_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.join.js */ "./node_modules/core-js/modules/es.array.join.js");
@@ -2950,6 +2951,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+=======
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../resources/assets/js/fields/vue-fields */ "./resources/assets/js/fields/vue-fields.js");
+>>>>>>> Stashed changes
 
 
 
@@ -3043,6 +3051,7 @@ var _default = /*#__PURE__*/function () {
     value: function _addFieldSet() {
       if (!this._checkMax()) return;
 
+<<<<<<< Updated upstream
       var fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset') + ':last-child')); // TODO: clear values...
 
 
@@ -3063,6 +3072,15 @@ var _default = /*#__PURE__*/function () {
       fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp("/[".concat(originalKey, "]/"), 'g'), "[".concat(replacementKey, "]"));
       fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp('/.' + originalKey + './', 'g'), ".".concat(replacementKey, "."));
       (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_10__["default"])(fieldSet); // TODO: trigger redactor...
+=======
+      var fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset')));
+
+      this.fieldsContainer.appendChild(fieldSet); // Key nodig!!!
+
+      fieldSet.innerHTML = fieldSet.innerHTML.replace(/\[0\]/g, "[".concat(this._amountOfFieldSets() - 1, "["));
+      fieldSet.innerHTML = fieldSet.innerHTML.replace(/\.0\./g, ".".concat(this._amountOfFieldSets() - 1, "."));
+      (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_4__["default"])(fieldSet); // TODO: trigger redactor...
+>>>>>>> Stashed changes
       // $R('[data-editor]');
 
       this._registerEventListeners();
