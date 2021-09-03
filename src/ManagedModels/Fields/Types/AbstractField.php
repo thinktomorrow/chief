@@ -173,7 +173,7 @@ abstract class AbstractField
 
     public function width(string $size): Field
     {
-        if(in_array($size, ['1', '1/2', '1/3'])) {
+        if (in_array($size, ['1', '1/2', '1/3'])) {
             $this->size = $size;
         } else {
             $this->size = '1';
@@ -189,7 +189,7 @@ abstract class AbstractField
 
     public function getWidthStyle(): string
     {
-        switch($this->size ?? '1') {
+        switch ($this->size ?? '1') {
             case '1':
                 return 'w-full';
             case '1/2':
