@@ -62,45 +62,14 @@ export default class {
         if (!this._checkMax()) return;
 
         const fieldSet = this._cloneFieldSet(
-            this.fieldsContainer.querySelector(this._attributeKey('data-repeat-fieldset') + ':last-child')
+            this.fieldsContainer.querySelector(`${this._attributeKey('data-repeat-fieldset')}:last-child`)
         );
 
         // TODO: clear values...
 
         this.fieldsContainer.appendChild(fieldSet);
-        const firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
 
-        let repeatKey = firstField.getAttribute('data-repeat-field-key');
-
-        let repeatKeyArray = repeatKey.split('.');
-        const originalKey = repeatKeyArray.filter((element, index) => index < repeatKeyArray.length - 1).join('.');
-
-        const replacementKeyArray = originalKey.split('.');
-        replacementKeyArray.splice(
-            replacementKeyArray.length - 1,
-            1,
-            parseInt(replacementKeyArray[replacementKeyArray.length - 1], 10) + 1
-        );
-
-        const replacementKey = replacementKeyArray.join('.');
-        console.log(originalKey, replacementKey);
-
-        // Key nodig!!!
-
-        // Get last key
-        // Change index + 1
-
-        // const regexString = 'options[0]'
-
-        console.log(this._escapeRegExp(originalKey));
-        const regexString = `/${this._escapeRegExp(originalKey)}/`;
-
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(regexString, 'g'), replacementKey);
-
-        // fieldSet.innerHTML = fieldSet.innerHTML.replace(
-        //     new RegExp('/.' + originalKey + './', 'g'),
-        //     `.${replacementKey}.`
-        // );
+        fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
 
         vueFields(fieldSet);
 
@@ -121,8 +90,38 @@ export default class {
         return copiedFieldSet;
     }
 
+    _increaseRepeatIndex(fieldSet) {
+        const firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
+        const repeatKey = firstField.getAttribute('data-repeat-field-key');
+
+        // Search pattern - Remove last part of key (e.g. options.0.value => options.0)
+        const regexLastPart = /\.([^.]*)$/;
+        const originalDottedKey = repeatKey.replace(regexLastPart, '');
+
+        // Replace pattern - Increase last number of key (e.g. options.0 => options.1)
+        const regexLastNumber = /([^.]*)$/;
+        const newDottedKey = originalDottedKey.replace(regexLastNumber, (match) => parseInt(match, 10) + 1);
+
+        // Replace dotted keys like options.0.value
+        const replacedHtml = fieldSet.innerHTML.replace(
+            new RegExp(this._escapeRegExp(originalDottedKey), 'g'),
+            newDottedKey
+        );
+
+        // Replace square brackets keys like options[0][value]
+        return replacedHtml.replace(
+            new RegExp(this._escapeRegExp(this._replaceDotsWithSquareBrackets(originalDottedKey)), 'g'),
+            this._replaceDotsWithSquareBrackets(newDottedKey)
+        );
+    }
+
     _escapeRegExp(stringToGoIntoTheRegex) {
         return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+
+    // E.g. foobar.0.test => foobar[0][test]
+    _replaceDotsWithSquareBrackets(string) {
+        return string.replace(/\.(.+?)(?=\.|$)/g, (match, value) => `[${value}]`);
     }
 
     // Specific attribute selectors for this repeatField. This allows for nested functionality
