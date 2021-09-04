@@ -1,4 +1,5 @@
 import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
+import { increaseRepeatIndex } from './utils';
 
 export default class {
     constructor(key, container = document) {
@@ -94,34 +95,7 @@ export default class {
         const firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
         const repeatKey = firstField.getAttribute('data-repeat-field-key');
 
-        // Search pattern - Remove last part of key (e.g. options.0.value => options.0)
-        const regexLastPart = /\.([^.]*)$/;
-        const originalDottedKey = repeatKey.replace(regexLastPart, '');
-
-        // Replace pattern - Increase last number of key (e.g. options.0 => options.1)
-        const regexLastNumber = /([^.]*)$/;
-        const newDottedKey = originalDottedKey.replace(regexLastNumber, (match) => parseInt(match, 10) + 1);
-
-        // Replace dotted keys like options.0.value
-        const replacedHtml = fieldSet.innerHTML.replace(
-            new RegExp(this._escapeRegExp(originalDottedKey), 'g'),
-            newDottedKey
-        );
-
-        // Replace square brackets keys like options[0][value]
-        return replacedHtml.replace(
-            new RegExp(this._escapeRegExp(this._replaceDotsWithSquareBrackets(originalDottedKey)), 'g'),
-            this._replaceDotsWithSquareBrackets(newDottedKey)
-        );
-    }
-
-    _escapeRegExp(stringToGoIntoTheRegex) {
-        return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    }
-
-    // E.g. foobar.0.test => foobar[0][test]
-    _replaceDotsWithSquareBrackets(string) {
-        return string.replace(/\.(.+?)(?=\.|$)/g, (match, value) => `[${value}]`);
+        return increaseRepeatIndex(fieldSet.innerHTML, repeatKey);
     }
 
     // Specific attribute selectors for this repeatField. This allows for nested functionality

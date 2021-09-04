@@ -2925,21 +2925,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
-/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
-/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_regexp_constructor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.regexp.constructor.js */ "./node_modules/core-js/modules/es.regexp.constructor.js");
-/* harmony import */ var core_js_modules_es_regexp_constructor_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_constructor_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string.js */ "./node_modules/core-js/modules/es.regexp.to-string.js");
-/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
-/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../resources/assets/js/fields/vue-fields */ "./resources/assets/js/fields/vue-fields.js");
-
-
-
-
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../resources/assets/js/fields/vue-fields */ "./resources/assets/js/fields/vue-fields.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./src/Addons/Repeat/resources/js/utils.js");
 
 
 
@@ -2948,6 +2937,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -3036,7 +3026,7 @@ var _default = /*#__PURE__*/function () {
 
       this.fieldsContainer.appendChild(fieldSet);
       fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
-      (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_6__.default)(fieldSet); // TODO: trigger redactor...
+      (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_2__.default)(fieldSet); // TODO: trigger redactor...
       // $R('[data-editor]');
 
       this._registerEventListeners();
@@ -3056,32 +3046,8 @@ var _default = /*#__PURE__*/function () {
     key: "_increaseRepeatIndex",
     value: function _increaseRepeatIndex(fieldSet) {
       var firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
-      var repeatKey = firstField.getAttribute('data-repeat-field-key'); // Search pattern - Remove last part of key (e.g. options.0.value => options.0)
-
-      var regexLastPart = /\.([^.]*)$/;
-      var originalDottedKey = repeatKey.replace(regexLastPart, ''); // Replace pattern - Increase last number of key (e.g. options.0 => options.1)
-
-      var regexLastNumber = /([^.]*)$/;
-      var newDottedKey = originalDottedKey.replace(regexLastNumber, function (match) {
-        return parseInt(match, 10) + 1;
-      }); // Replace dotted keys like options.0.value
-
-      var replacedHtml = fieldSet.innerHTML.replace(new RegExp(this._escapeRegExp(originalDottedKey), 'g'), newDottedKey); // Replace square brackets keys like options[0][value]
-
-      return replacedHtml.replace(new RegExp(this._escapeRegExp(this._replaceDotsWithSquareBrackets(originalDottedKey)), 'g'), this._replaceDotsWithSquareBrackets(newDottedKey));
-    }
-  }, {
-    key: "_escapeRegExp",
-    value: function _escapeRegExp(stringToGoIntoTheRegex) {
-      return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    } // E.g. foobar.0.test => foobar[0][test]
-
-  }, {
-    key: "_replaceDotsWithSquareBrackets",
-    value: function _replaceDotsWithSquareBrackets(string) {
-      return string.replace(/\.(.+?)(?=\.|$)/g, function (match, value) {
-        return "[".concat(value, "]");
-      });
+      var repeatKey = firstField.getAttribute('data-repeat-field-key');
+      return (0,_utils__WEBPACK_IMPORTED_MODULE_3__.increaseRepeatIndex)(fieldSet.innerHTML, repeatKey);
     } // Specific attribute selectors for this repeatField. This allows for nested functionality
 
   }, {
@@ -3093,6 +3059,60 @@ var _default = /*#__PURE__*/function () {
 
   return _default;
 }();
+
+
+
+/***/ }),
+
+/***/ "./src/Addons/Repeat/resources/js/utils.js":
+/*!*************************************************!*\
+  !*** ./src/Addons/Repeat/resources/js/utils.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "increaseRepeatIndex": function() { return /* binding */ increaseRepeatIndex; }
+/* harmony export */ });
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_regexp_constructor_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.regexp.constructor.js */ "./node_modules/core-js/modules/es.regexp.constructor.js");
+/* harmony import */ var core_js_modules_es_regexp_constructor_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_constructor_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string.js */ "./node_modules/core-js/modules/es.regexp.to-string.js");
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+function increaseRepeatIndex(string, repeatKey) {
+  // Search pattern - Remove last part of key (e.g. options.0.value => options.0)
+  var regexLastPart = /\.([^.]*)$/;
+  var originalDottedKey = repeatKey.replace(regexLastPart, ''); // Replace pattern - Increase last number of key (e.g. options.0 => options.1)
+
+  var regexLastNumber = /([^.]*)$/;
+  var newDottedKey = originalDottedKey.replace(regexLastNumber, function (match) {
+    return parseInt(match, 10) + 1;
+  }); // Replace dotted keys like options.0.value
+
+  var replacedString = string.replace(new RegExp(_escapeRegExp(originalDottedKey), 'g'), newDottedKey); // Replace square brackets keys like options[0][value]
+
+  return replacedString.replace(new RegExp(_escapeRegExp(_replaceDotsWithSquareBrackets(originalDottedKey)), 'g'), _replaceDotsWithSquareBrackets(newDottedKey));
+}
+
+function _escapeRegExp(stringToGoIntoTheRegex) {
+  return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+} // E.g. foobar.0.test => foobar[0][test]
+
+
+function _replaceDotsWithSquareBrackets(string) {
+  return string.replace(/\.(.+?)(?=\.|$)/g, function (match, value) {
+    return "[".concat(value, "]");
+  });
+}
 
 
 
