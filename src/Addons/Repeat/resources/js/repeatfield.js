@@ -1,5 +1,5 @@
 import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
-import { increaseRepeatIndex } from './utils';
+import { increaseDeepestIndex } from './utils';
 
 export default class {
     constructor(key, container = document) {
@@ -66,16 +66,16 @@ export default class {
             this.fieldsContainer.querySelector(`${this._attributeKey('data-repeat-fieldset')}:last-child`)
         );
 
-        // TODO: clear values...
-
         this.fieldsContainer.appendChild(fieldSet);
 
         fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
 
-        vueFields(fieldSet);
+        // Clear existing values
+        fieldSet.querySelectorAll('[name]').forEach((el) => {
+            el.value = null;
+        });
 
-        // TODO: trigger redactor...
-        // $R('[data-editor]');
+        vueFields(fieldSet);
 
         this._registerEventListeners();
         this._checkMax();
@@ -95,7 +95,7 @@ export default class {
         const firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
         const repeatKey = firstField.getAttribute('data-repeat-field-key');
 
-        return increaseRepeatIndex(fieldSet.innerHTML, repeatKey);
+        return increaseDeepestIndex(fieldSet.innerHTML, repeatKey);
     }
 
     // Specific attribute selectors for this repeatField. This allows for nested functionality

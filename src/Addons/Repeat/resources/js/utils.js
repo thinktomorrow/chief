@@ -1,4 +1,16 @@
-function increaseRepeatIndex(string, repeatKey) {
+/**
+ * Increase the deepest index by 1. Both square brackets as dotted syntax
+ * e.g.
+ * foobar[0][test] will be foobar[1][test]
+ * foobar[0][values][0][test] will be foobar[0][values][1][test]
+ * foobar.0.test will be foobar1.test
+ * foobar.0.values.0.test will be foobar.0.values.1.test
+ *
+ * @param string
+ * @param repeatKey
+ * @returns {*}
+ */
+function increaseDeepestIndex(string, repeatKey) {
     // Search pattern - Remove last part of key (e.g. options.0.value => options.0)
     const regexLastPart = /\.([^.]*)$/;
     const originalDottedKey = repeatKey.replace(regexLastPart, '');
@@ -26,4 +38,4 @@ function _replaceDotsWithSquareBrackets(string) {
     return string.replace(/\.(.+?)(?=\.|$)/g, (match, value) => `[${value}]`);
 }
 
-export { increaseRepeatIndex };
+export { increaseDeepestIndex };

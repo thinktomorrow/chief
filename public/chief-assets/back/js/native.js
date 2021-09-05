@@ -3021,13 +3021,15 @@ var _default = /*#__PURE__*/function () {
     value: function _addFieldSet() {
       if (!this._checkMax()) return;
 
-      var fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector("".concat(this._attributeKey('data-repeat-fieldset'), ":last-child"))); // TODO: clear values...
-
+      var fieldSet = this._cloneFieldSet(this.fieldsContainer.querySelector("".concat(this._attributeKey('data-repeat-fieldset'), ":last-child")));
 
       this.fieldsContainer.appendChild(fieldSet);
-      fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
-      (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_2__.default)(fieldSet); // TODO: trigger redactor...
-      // $R('[data-editor]');
+      fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet); // Clear existing values
+
+      fieldSet.querySelectorAll('[name]').forEach(function (el) {
+        el.value = null;
+      });
+      (0,_resources_assets_js_fields_vue_fields__WEBPACK_IMPORTED_MODULE_2__.default)(fieldSet);
 
       this._registerEventListeners();
 
@@ -3047,7 +3049,7 @@ var _default = /*#__PURE__*/function () {
     value: function _increaseRepeatIndex(fieldSet) {
       var firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
       var repeatKey = firstField.getAttribute('data-repeat-field-key');
-      return (0,_utils__WEBPACK_IMPORTED_MODULE_3__.increaseRepeatIndex)(fieldSet.innerHTML, repeatKey);
+      return (0,_utils__WEBPACK_IMPORTED_MODULE_3__.increaseDeepestIndex)(fieldSet.innerHTML, repeatKey);
     } // Specific attribute selectors for this repeatField. This allows for nested functionality
 
   }, {
@@ -3073,7 +3075,7 @@ var _default = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "increaseRepeatIndex": function() { return /* binding */ increaseRepeatIndex; }
+/* harmony export */   "increaseDeepestIndex": function() { return /* binding */ increaseDeepestIndex; }
 /* harmony export */ });
 /* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
 /* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -3088,7 +3090,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function increaseRepeatIndex(string, repeatKey) {
+/**
+ * Increase the deepest index by 1. Both square brackets as dotted syntax
+ * e.g.
+ * foobar[0][test] will be foobar[1][test]
+ * foobar[0][values][0][test] will be foobar[0][values][1][test]
+ * foobar.0.test will be foobar1.test
+ * foobar.0.values.0.test will be foobar.0.values.1.test
+ *
+ * @param string
+ * @param repeatKey
+ * @returns {*}
+ */
+function increaseDeepestIndex(string, repeatKey) {
   // Search pattern - Remove last part of key (e.g. options.0.value => options.0)
   var regexLastPart = /\.([^.]*)$/;
   var originalDottedKey = repeatKey.replace(regexLastPart, ''); // Replace pattern - Increase last number of key (e.g. options.0 => options.1)
