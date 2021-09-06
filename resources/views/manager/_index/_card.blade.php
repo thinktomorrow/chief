@@ -4,7 +4,7 @@
             @adminCan('edit')
                 <a href="@adminRoute('edit', $model)" class="flex items-center space-x-2">
             @endAdminCan
-                    <span class="text-lg font-bold text-grey-900">
+                    <span class="text-lg window-heading">
                         @adminConfig('rowTitle')
                     </span>
 

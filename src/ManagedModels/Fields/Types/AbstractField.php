@@ -71,7 +71,7 @@ abstract class AbstractField
     {
         $this->type = $type;
         $this->key = $this->column = $this->name = $key;
-        $this->label = str_replace('_', ' ', $key);
+        $this->label = null;
 
         $this->validation([]);
 

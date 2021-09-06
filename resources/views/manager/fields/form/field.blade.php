@@ -14,5 +14,9 @@
         </x-slot>
     @endif
 
-    {!! $field->render(get_defined_vars()) !!}
+    @isset($slot)
+        {{ $slot }}
+    @else
+        {!! $field->render(get_defined_vars()) !!}
+    @endisset
 </x-chief-formgroup>

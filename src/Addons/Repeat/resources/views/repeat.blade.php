@@ -6,42 +6,59 @@
     $uniqueContainerId = $repeatField->getKey() . \Illuminate\Support\Str::random(8);
 @endphp
 
-<div data-repeat-container="{{ $uniqueContainerId }}">
-    <div data-repeat-fields="{{ $uniqueContainerId }}" class="rounded-lg bg-grey-100">
-        @foreach($repeatedFields as $i => $fieldSet)
-            <fieldset 
-                id="{{ $fieldSet->getId() }}" 
-                data-repeat-fieldset="{{ $uniqueContainerId }}" 
-                class="p-4 bg-white rounded-lg"
+<div data-repeat-container="{{ $uniqueContainerId }}" class="relative">
+        <div class="window window-white window-sm">
+            <div 
+                class="border rounded-lg -window-spacing divide-y divide-grey-100 border-grey-100" 
+                data-repeat-fields="{{ $uniqueContainerId }}"
             >
-                <div class="flex" style="margin-bottom:-3px;">
-                    <span>{{ $repeatField->getLabel() }}</span>
-                    <div data-repeat-delete="{{ $uniqueContainerId }}" class="rounded cursor-pointer squished-s text-error hover:bg-grey-50 center-y" style="margin-left:auto;">
-                        <svg class="mr-2" width="18" height="18"><use data-v-3997f6a0="" xlink:href="#trash"></use></svg>
-                    </div>
-                </div>
-                <div class="inset space-y-4">
-                    @foreach($fieldSet->all() as $field)
-                        <div class="mb-4">
-                            <x-chief-formgroup
-                                label="{{ $field->getLabel() }}"
-                                name="{{ $field->getName($locale ?? null) }}"
-                                id="{{ $field->getDottedName() }}"
-                            >
-                                <div data-repeat-field="{{ $uniqueContainerId }}" data-repeat-field-key="{{ $field->getDottedName() }}">
-                                    {!! $field->render() !!}
+                @foreach($repeatedFields as $i => $fieldSet)
+                    <fieldset 
+                        id="{{ $fieldSet->getId() }}" 
+                        data-repeat-fieldset="{{ $uniqueContainerId }}" 
+                        class="window-spacing"
+                    >
+                        <div class="flex">
+                            <div class="w-full">
+                                <div class="row-start-start gutter-3">
+                                    @foreach($fieldSet->all() as $field)
+                                        @component('chief::manager.fields.form.field', [
+                                            'field' => $field,
+                                            'autofocus' => (isset($index) && $index === 0),
+                                        ])
+                                            <div 
+                                                data-repeat-field="{{ $uniqueContainerId }}" 
+                                                data-repeat-field-key="{{ $field->getDottedName() }}"
+                                            >
+                                                {!! $field->render() !!}
+                                            </div>
+                                        @endcomponent
+                                    @endforeach
                                 </div>
-                            </x-chief-formgroup>
+                            </div>
+
+                            <span 
+                                data-repeat-delete="{{ $uniqueContainerId }}" 
+                                class="flex-shrink-0 ml-6 cursor-pointer link link-error"
+                                style="margin-top: -3px;"
+                            >
+                                <x-chief-icon-label type="delete"></x-chief-icon-label>
+                            </span>
                         </div>
-                    @endforeach
-                </div>
-            </fieldset>
-        @endforeach
-    </div>
-    <div class="relative flex items-center justify-center w-full h-8 center-y z-1">
-        <span data-repeat-add="{{ $uniqueContainerId }}" class="block mx-auto rounded-full cursor-pointer menu-trigger bg-secondary-50 hover:text-secondary-600">
-            <svg width="24" height="24" class="fill-current"><use xlink:href="#plus"/></svg>
-        </span>
+                    </fieldset>
+                @endforeach
+            </div>
+        </div>
+
+    <!-- plus icon -->
+    <div
+        data-repeat-add="{{ $uniqueContainerId }}"
+        class="absolute left-0 right-0 flex justify-center h-8 border-none cursor-pointer z-1 icon-label"
+        style="margin-top: -12px;"
+    >
+        <div class="absolute bg-white rounded-full link link-black icon-label-icon">
+            <svg width="24" height="24"> <use xlink:href="#icon-add-circle"/> </svg>
+        </div>
     </div>
 </div>
 
