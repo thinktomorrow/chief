@@ -1,5 +1,5 @@
 import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
-import { increaseDeepestIndex } from './utils';
+import increaseDeepestIndex from './utils';
 
 export default class {
     constructor(key, container = document) {

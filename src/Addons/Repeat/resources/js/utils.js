@@ -30,6 +30,7 @@ function increaseDeepestIndex(string, repeatKey) {
 }
 
 function _escapeRegExp(stringToGoIntoTheRegex) {
+    // eslint-disable-next-line
     return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
@@ -38,4 +39,4 @@ function _replaceDotsWithSquareBrackets(string) {
     return string.replace(/\.(.+?)(?=\.|$)/g, (match, value) => `[${value}]`);
 }
 
-export { increaseDeepestIndex };
+export { increaseDeepestIndex as default };
