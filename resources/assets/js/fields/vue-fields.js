@@ -11,9 +11,11 @@ const vueFields = function (container, selector = '[data-vue-fields]') {
         if (!el.hasAttribute('id')) {
             el.setAttribute('id', `vue_${Math.random().toString(16).substr(2, 8)}`);
         }
+
         console.log(el, el.id);
 
         const res = window.Vue.compile(el.outerHTML);
+
         new window.Vue({
             render: res.render,
             staticRenderFns: res.staticRenderFns,

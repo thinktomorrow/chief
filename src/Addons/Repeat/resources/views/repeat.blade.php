@@ -7,44 +7,42 @@
 @endphp
 
 <div data-repeat-container="{{ $uniqueContainerId }}" class="relative">
-        <div class="window window-white window-sm">
+        <div class="window window-white window-xs">
             <div 
-                class="border rounded-lg -window-spacing divide-y divide-grey-100 border-grey-100" 
+                class="border rounded-lg -window-spacing divide-y divide-grey-100 border-grey-100"
                 data-repeat-fields="{{ $uniqueContainerId }}"
             >
                 @foreach($repeatedFields as $i => $fieldSet)
-                    <fieldset 
-                        id="{{ $fieldSet->getId() }}" 
-                        data-repeat-fieldset="{{ $uniqueContainerId }}" 
-                        class="window-spacing"
+                    <fieldset
+                        id="{{ $fieldSet->getId() }}"
+                        data-repeat-fieldset="{{ $uniqueContainerId }}"
+                        class="flex window-spacing"
                     >
-                        <div class="flex">
-                            <div class="w-full">
-                                <div class="row-start-start gutter-3">
-                                    @foreach($fieldSet->all() as $field)
-                                        @component('chief::manager.fields.form.field', [
-                                            'field' => $field,
-                                            'autofocus' => (isset($index) && $index === 0),
-                                        ])
-                                            <div 
-                                                data-repeat-field="{{ $uniqueContainerId }}" 
-                                                data-repeat-field-key="{{ $field->getDottedName() }}"
-                                            >
-                                                {!! $field->render() !!}
-                                            </div>
-                                        @endcomponent
-                                    @endforeach
-                                </div>
+                        <div class="w-full">
+                            <div class="row-start-start gutter-3">
+                                @foreach($fieldSet->all() as $field)
+                                    @component('chief::manager.fields.form.field', [
+                                        'field' => $field,
+                                        'autofocus' => (isset($index) && $index === 0),
+                                    ])
+                                        <div
+                                            data-repeat-field="{{ $uniqueContainerId }}" 
+                                            data-repeat-field-key="{{ $field->getDottedName() }}"
+                                        >
+                                            {!! $field->render() !!}
+                                        </div>
+                                    @endcomponent
+                                @endforeach
                             </div>
-
-                            <span 
-                                data-repeat-delete="{{ $uniqueContainerId }}" 
-                                class="flex-shrink-0 ml-6 cursor-pointer link link-error"
-                                style="margin-top: -3px;"
-                            >
-                                <x-chief-icon-label type="delete"></x-chief-icon-label>
-                            </span>
                         </div>
+
+                        <span 
+                            data-repeat-delete="{{ $uniqueContainerId }}" 
+                            class="flex-shrink-0 ml-6 cursor-pointer link link-error"
+                            style="margin-top: -3px;"
+                        >
+                            <x-chief-icon-label type="delete"></x-chief-icon-label>
+                        </span>
                     </fieldset>
                 @endforeach
             </div>
