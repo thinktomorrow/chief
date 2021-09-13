@@ -46,6 +46,9 @@ module.exports = {
                 lg: '32rem',
                 xl: '36rem',
             },
+            maxHeight: {
+                '1/2': '50%',
+            },
             scale: {
                 65: '0.65',
             },
