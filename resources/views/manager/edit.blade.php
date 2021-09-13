@@ -48,16 +48,7 @@
             <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
                     @foreach($fields->getWindowsByPosition('top') as $fieldWindow)
-                        @if($fieldWindow->hasView())
-                            @include($fieldWindow->getView())
-                        @else
-                            <livewire:fields_component
-                                :model="$model"
-                                :componentKey="$fieldWindow->getId()"
-                                :title="$fieldWindow->getTitle()"
-                                class="window window-white"
-                            />
-                        @endif
+                        @include('chief::manager.windows.show')
                     @endforeach
                 @endAdminCan
 
@@ -70,12 +61,7 @@
 
                 @adminCan('fields-edit', $model)
                     @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
-                        <livewire:fields_component
-                            :model="$model"
-                            :componentKey="$fieldWindow->getId()"
-                            :title="$fieldWindow->getTitle()"
-                            class="window window-white"
-                        />
+                        @include('chief::manager.windows.show')
                     @endforeach
                 @endAdminCan
             </div>
@@ -93,12 +79,7 @@
                     @adminCan('fields-edit', $model)
                         {{-- FieldWindows without a specific position (default position: sidebar)  --}}
                         @foreach($fields->getWindowsByPosition('sidebar') as $fieldWindow)
-                            <livewire:fields_component
-                                :model="$model"
-                                :componentKey="$fieldWindow->getId()"
-                                :title="$fieldWindow->getTitle()"
-                                class="window window-grey"
-                            />
+                            @include('chief::manager.windows.show')
                         @endforeach
 
                         {{-- Fields without a dedicated FieldWindow --}}
