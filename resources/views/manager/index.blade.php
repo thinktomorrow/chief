@@ -38,10 +38,10 @@
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative -window-spacing divide-y divide-grey-100"
+                                class="relative -window-sm divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative -window-spacing divide-y divide-grey-100">
+                            <div class="relative -window-sm divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include('chief::manager._index._card')

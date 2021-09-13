@@ -7,46 +7,46 @@
 @endphp
 
 <div data-repeat-container="{{ $uniqueContainerId }}" class="relative">
-        <div class="window window-white window-xs">
-            <div 
-                class="border rounded-lg -window-spacing divide-y divide-grey-100 border-grey-100"
-                data-repeat-fields="{{ $uniqueContainerId }}"
-            >
-                @foreach($repeatedFields as $i => $fieldSet)
-                    <fieldset
-                        id="{{ $fieldSet->getId() }}"
-                        data-repeat-fieldset="{{ $uniqueContainerId }}"
-                        class="flex window-spacing"
-                    >
-                        <div class="w-full">
-                            <div class="row-start-start gutter-3">
-                                @foreach($fieldSet->all() as $field)
-                                    @component('chief::manager.fields.form.field', [
-                                        'field' => $field,
-                                        'autofocus' => (isset($index) && $index === 0),
-                                    ])
-                                        <div
-                                            data-repeat-field="{{ $uniqueContainerId }}" 
-                                            data-repeat-field-key="{{ $field->getDottedName() }}"
-                                        >
-                                            {!! $field->render() !!}
-                                        </div>
-                                    @endcomponent
-                                @endforeach
-                            </div>
+    <div class="window window-white window-xs">
+        <div 
+            class="border rounded-lg -window-xs divide-y divide-grey-100 border-grey-100"
+            data-repeat-fields="{{ $uniqueContainerId }}"
+        >
+            @foreach($repeatedFields as $i => $fieldSet)
+                <fieldset
+                    id="{{ $fieldSet->getId() }}"
+                    data-repeat-fieldset="{{ $uniqueContainerId }}"
+                    class="flex window-xs"
+                >
+                    <div class="w-full">
+                        <div class="row-start-start gutter-3">
+                            @foreach($fieldSet->all() as $field)
+                                @component('chief::manager.fields.form.field', [
+                                    'field' => $field,
+                                    'autofocus' => (isset($index) && $index === 0),
+                                ])
+                                    <div
+                                        data-repeat-field="{{ $uniqueContainerId }}" 
+                                        data-repeat-field-key="{{ $field->getDottedName() }}"
+                                    >
+                                        {!! $field->render() !!}
+                                    </div>
+                                @endcomponent
+                            @endforeach
                         </div>
+                    </div>
 
-                        <span 
-                            data-repeat-delete="{{ $uniqueContainerId }}" 
-                            class="flex-shrink-0 ml-6 cursor-pointer link link-error"
-                            style="margin-top: -3px;"
-                        >
-                            <x-chief-icon-label type="delete"></x-chief-icon-label>
-                        </span>
-                    </fieldset>
-                @endforeach
-            </div>
+                    <span 
+                        data-repeat-delete="{{ $uniqueContainerId }}" 
+                        class="flex-shrink-0 ml-6 cursor-pointer link link-error"
+                        style="margin-top: -3px;"
+                    >
+                        <x-chief-icon-label type="delete"></x-chief-icon-label>
+                    </span>
+                </fieldset>
+            @endforeach
         </div>
+    </div>
 
     <!-- plus icon -->
     <div
@@ -59,9 +59,3 @@
         </div>
     </div>
 </div>
-
-@push('custom-scripts-after-vue')
-    <script>
-        new RepeatField('{{ $uniqueContainerId }}');
-    </script>
-@endpush

@@ -16,114 +16,98 @@
 
 .window-lg {
     @apply p-12;
+}
 
-    .window-spacing-x {
-        @apply px-12;
-    }
+.-window-lg {
+    @apply -m-12;
+}
 
-    .window-spacing-y {
-        @apply py-12;
-    }
+.window-lg-x {
+    @apply px-12;
+}
 
-    .window-spacing {
-        @apply p-12;
-    }
+.-window-lg-x {
+    @apply -mx-12;
+}
 
-    .-window-spacing-x {
-        @apply -mx-12;
-    }
+.window-lg-y {
+    @apply py-12;
+}
 
-    .-window-spacing-y {
-        @apply -my-12;
-    }
-
-    .-window-spacing {
-        @apply -m-12;
-    }
+.-window-lg-y {
+    @apply -my-12;
 }
 
 .window-md {
     @apply p-8;
+}
 
-    .window-spacing-x {
-        @apply px-8;
-    }
+.-window-md {
+    @apply -m-8;
+}
 
-    .window-spacing-y {
-        @apply py-8;
-    }
+.window-md-x {
+    @apply px-8;
+}
 
-    .window-spacing {
-        @apply p-8;
-    }
+.-window-md-x {
+    @apply -mx-8;
+}
 
-    .-window-spacing-x {
-        @apply -mx-8;
-    }
+.window-md-y {
+    @apply py-8;
+}
 
-    .-window-spacing-y {
-        @apply -my-8;
-    }
-
-    .-window-spacing {
-        @apply -m-8;
-    }
+.-window-md-y {
+    @apply -my-8;
 }
 
 .window-sm {
     @apply p-6;
+}
 
-    .window-spacing-x {
-        @apply px-6;
-    }
+.-window-sm {
+    @apply -m-6;
+}
 
-    .window-spacing-y {
-        @apply py-6;
-    }
+.window-sm-x {
+    @apply px-6;
+}
 
-    .window-spacing {
-        @apply p-6;
-    }
+.-window-sm-x {
+    @apply -mx-6;
+}
 
-    .-window-spacing-x {
-        @apply -mx-6;
-    }
+.window-sm-y {
+    @apply py-6;
+}
 
-    .-window-spacing-y {
-        @apply -my-6;
-    }
-
-    .-window-spacing {
-        @apply -m-6;
-    }
+.-window-sm-y {
+    @apply -my-6;
 }
 
 .window-xs {
     @apply p-4;
+}
 
-    .window-spacing-x {
-        @apply px-4;
-    }
+.-window-xs {
+    @apply -m-4;
+}
 
-    .window-spacing-y {
-        @apply py-4;
-    }
+.window-xs-x {
+    @apply px-4;
+}
 
-    .window-spacing {
-        @apply p-4;
-    }
+.-window-xs-x {
+    @apply -mx-4;
+}
 
-    .-window-spacing-x {
-        @apply -mx-4;
-    }
+.window-xs-y {
+    @apply py-4;
+}
 
-    .-window-spacing-y {
-        @apply -my-4;
-    }
-
-    .-window-spacing {
-        @apply -m-4;
-    }
+.-window-xs-y {
+    @apply -my-4;
 }
 
 .window-heading {

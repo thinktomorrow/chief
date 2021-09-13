@@ -11,12 +11,12 @@
     <div class="space-y-8">
         <h2 class="text-2xl font-bold text-grey-900">{{ ucfirst($componentTitle) }}</h2>
 
-        <hr class="-window-spacing-x text-grey-100">
+        <hr class="-window-lg-x text-grey-100">
 
         @foreach($fields->all() as $i => $fieldSet)
             @include('chief::manager.fields.form.fieldset', ['index' => $i])
 
-            <hr class="-window-spacing-x text-grey-100">
+            <hr class="-window-lg-x text-grey-100">
         @endforeach
 
         <button
