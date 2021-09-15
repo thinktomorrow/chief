@@ -174,29 +174,26 @@ abstract class AbstractField
 
     public function width(string $size): Field
     {
-        if (in_array($size, ['1', '1/2', '1/3'])) {
-            $this->size = $size;
-        } else {
-            $this->size = '1';
-        }
+        $this->size = $size;
 
         return $this;
     }
 
-    public function getWidth(): ?string
+    public function getWidth(): string
     {
         return $this->size ?? '1';
     }
 
     public function getWidthStyle(): string
     {
-        switch ($this->size ?? '1') {
-            case '1':
-                return 'w-full';
+        switch ($this->getWidth()) {
             case '1/2':
                 return 'w-full sm:w-1/2';
             case '1/3':
                 return 'w-full sm:w-1/2 lg:w-1/3';
+            case '2/3':
+                return 'w-full sm:w-1/2 lg:w-2/3';
+            case 1:
             default:
                 return 'w-full';
         }
