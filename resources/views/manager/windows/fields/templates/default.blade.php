@@ -6,14 +6,16 @@
         sidebarTrigger="data-sidebar-trigger={{ $componentKey }}"
     >
         <div class="row-start-start gutter-3">
-            @foreach($fields->allFields() as $field)
-                <div class="{{ $field->getWidthStyle() }} space-y-2">
-                    <span class="text-xs font-semibold uppercase text-grey-700">
-                        {{ ucfirst($field->getLabel()) }}
-                    </span>
+            @foreach($fields->all() as $fieldSet)
+                @foreach($fieldSet->all() as $field)
+                    <div class="{{ $field->getWidthStyle() }} space-y-2">
+                        <span class="text-xs font-semibold uppercase text-grey-700">
+                            {{ ucfirst($field->getLabel()) }}
+                        </span>
 
-                    {!! $field->renderWindow() !!}
-                </div>
+                        {!! $field->renderWindow() !!}
+                    </div>
+                @endforeach
             @endforeach
         </div>
     </x-chief-card>
