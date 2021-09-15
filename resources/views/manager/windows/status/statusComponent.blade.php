@@ -2,7 +2,7 @@
     <x-chief-card
         class="{{ isset($class) ? $class : '' }}"
         :editRequestUrl="$manager->route('status-edit', $model)"
-        type="status"
+        sidebarTrigger="data-sidebar-trigger=status"
     >
         @switch($model->getPageState())
             @case('published')

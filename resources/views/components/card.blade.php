@@ -5,9 +5,10 @@
         @endif
 
         @if(isset($editRequestUrl))
-            <a 
-                data-sidebar-trigger="{{ $type ?? '' }}" 
-                href="{{ $editRequestUrl }}" 
+            <a
+                {{ $sidebarTrigger ?? '' }}
+{{--                data-sidebar-trigger="{{ $type ?? '' }}"--}}
+                href="{{ $editRequestUrl }}"
                 class="flex-shrink-0 link link-primary"
                 style="margin-top: -3px"
             >
@@ -18,7 +19,7 @@
 
     @if($slot)
         <hr class="mt-4 mb-8 text-white -window-md-x bg-grey-100" style="height: 2px">
-        
+
         <div>
             {{ $slot }}
         </div>

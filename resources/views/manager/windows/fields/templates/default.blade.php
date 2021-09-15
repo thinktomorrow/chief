@@ -3,7 +3,7 @@
         class="{{ isset($class) ? $class : '' }}"
         title="{{ $title ?? null }}"
         :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
-        type="{{ $componentKey }}"
+        sidebarTrigger="data-sidebar-trigger={{ $componentKey }}"
     >
         <div class="row-start-start gutter-3">
             @foreach($fields->allFields() as $field)

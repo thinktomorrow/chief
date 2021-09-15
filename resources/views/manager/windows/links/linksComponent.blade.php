@@ -3,7 +3,7 @@
         class="{{ isset($class) ? $class : '' }}"
         title="Links"
         :editRequestUrl="$manager->route('links-edit', $model)"
-        type="links"
+        sidebarTrigger="data-sidebar-trigger=links"
     >
         <div class="space-y-2">
             @unless($linkForm->exist())
