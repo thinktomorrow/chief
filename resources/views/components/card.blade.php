@@ -7,7 +7,6 @@
         @if(isset($editRequestUrl))
             <a
                 {{ $sidebarTrigger ?? '' }}
-{{--                data-sidebar-trigger="{{ $type ?? '' }}"--}}
                 href="{{ $editRequestUrl }}"
                 class="flex-shrink-0 link link-primary"
                 style="margin-top: -3px"
