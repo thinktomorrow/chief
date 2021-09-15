@@ -6,6 +6,7 @@
         foreach($items as $navItem) {
             if(isActiveUrl($navItem->url())) {
                 $isActive = true;
+                $showOpenDropdown = true;
             }
         }
 
