@@ -51,6 +51,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.inline-notification', 'chief-inline-notification');
         Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.formgroup', 'chief-formgroup');
+        Blade::component('chief::components.hierarchy', 'chief-hierarchy');
 
         /* Wireframe components */
         Blade::component('chief::wireframes.wireframe', 'wireframe');

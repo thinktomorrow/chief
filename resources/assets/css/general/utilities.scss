@@ -37,3 +37,9 @@
         }
     }
 }
+
+.hierarchy-sub-level {
+    .hierarchy-sub-level\:block {
+        @apply block;
+    }
+}
