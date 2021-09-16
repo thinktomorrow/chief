@@ -31,8 +31,8 @@
                 </div>
             @else
                 <div class="w-full">
-                    <div class="window window-white window-xs">
-                        <div class="-window-xs divide-y divide-grey-100">
+                    <div class="window window-white window-sm">
+                        <div class="-my-3 divide-y divide-grey-100">
                             @foreach($menuItems as $item)
                                 <x-chief-hierarchy 
                                     :item="$item"
