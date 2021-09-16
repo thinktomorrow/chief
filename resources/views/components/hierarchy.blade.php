@@ -1,4 +1,5 @@
 @php 
+    $manager = $manager ?? null;
     $level = $level ?? 0; 
     $isFirstLevel = ($level == 0);
     $iconMarginTop = $iconMarginTop ?? '0px';
@@ -26,6 +27,7 @@
 
     @foreach($item->getChildNodes() as $subItem)
         <x-chief-hierarchy 
+            :manager="$manager"
             :item="$subItem" 
             :level="$level" 
             viewPath="{{ $viewPath }}"
