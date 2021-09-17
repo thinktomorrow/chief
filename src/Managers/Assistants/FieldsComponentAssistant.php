@@ -36,16 +36,17 @@ trait FieldsComponentAssistant
         $this->guard('fields-edit', $model);
 
         $fields = Fields::make($model->fields())
-            ->model($model)
-            ->filterByWindowId($componentKey);
+            ->model($model);
+
+        $fieldWindow = $fields->findWindow($componentKey);
+        $fields = $fields->filterByWindowId($componentKey);
 
         return view('chief::manager.windows.fields.edit', [
             'manager' => $this,
             'model' => $model,
             'fields' => $fields,
             'componentKey' => $componentKey,
-            /* TODO: use componentTitle instead of componentKey */
-            'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' :  ucfirst($componentKey),
+            'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' : $fieldWindow->getTitle(),
         ]);
     }
 
