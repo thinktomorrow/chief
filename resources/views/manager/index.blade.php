@@ -44,7 +44,7 @@
                             <div class="relative -window-sm divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
-                                    @include('chief::manager._index._card')
+                                    @include($model->adminConfig()->getIndexCardView())
                                 @endforeach
                             </div>
                     </div>
