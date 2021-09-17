@@ -50,7 +50,7 @@
                     </div>
 
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                        {!! $models->links() !!}
+                        {!! $models->links('chief::pagination.default') !!}
                     @endif
                 @else
                     @include('chief::manager._index._empty')

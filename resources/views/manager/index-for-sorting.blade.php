@@ -31,7 +31,7 @@
                 </div>
 
                 @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                    {!! $models->links() !!}
+                    {!! $models->links('chief::pagination.default') !!}
                 @endif
             </div>
             <div class="w-full lg:w-1/3">

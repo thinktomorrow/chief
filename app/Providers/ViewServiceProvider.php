@@ -19,9 +19,6 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Paginator::defaultView('chief::pagination.default');
-        Paginator::defaultSimpleView('chief::pagination.simple-default');
-
         View::composer([
             'chief::manager._transitions.modals.archive-modal',
         ], function ($view) {
