@@ -11,7 +11,7 @@ class ArticlePageWithImageValidation extends ArticlePage
     public function fields(): Fields
     {
         return new Fields([
-            ImageField::make('thumb_image_trans')->translatable(['nl', 'en'])->validation([
+            ImageField::make('thumb_image_trans')->label('thumb image trans')->locales(['nl', 'en'])->validation([
                 'required',
                 'mimetypes:image/png,text/plain',
                 'dimensions:min_width=100,min_height=100',
