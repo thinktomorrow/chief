@@ -3,6 +3,7 @@ form {
 }
 
 textarea,
+select,
 input[type='text'],
 input[type='date'],
 input[type='email'],
@@ -25,6 +26,7 @@ input[type='file'] {
 }
 
 textarea,
+select,
 input[type='text'],
 input[type='date'],
 input[type='email'],
@@ -97,4 +99,12 @@ input[type='date'].with-prepend {
 input[type='text'].with-append,
 input[type='date'].with-append {
     @apply rounded-r-none;
+}
+
+select.select {
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+
+    @apply pr-7 cursor-pointer;
 }
