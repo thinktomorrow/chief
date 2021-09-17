@@ -1,5 +1,5 @@
 @php
-    $selected =  (array) $field->getSelected() ?? $field->getValue($locale ?? null);
+    $selected = (array) $field->getSelected() ?? $field->getValue($locale ?? null);
 @endphp
 
 @if(count($selected) > 0)
