@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
