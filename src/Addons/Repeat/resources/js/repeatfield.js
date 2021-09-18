@@ -69,7 +69,7 @@ class RepeatField {
         this.fieldsContainer.appendChild(fieldSet);
 
         fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
-        this._makeNestedRepeatElsUnique(fieldSet);
+        RepeatField._makeNestedRepeatElsUnique(fieldSet);
 
         // Clear existing values
         fieldSet.querySelectorAll('[name]').forEach((el) => {
