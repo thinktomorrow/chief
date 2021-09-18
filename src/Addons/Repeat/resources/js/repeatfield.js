@@ -1,7 +1,7 @@
 import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
 import increaseDeepestIndex from './utils';
 
-export default class {
+class RepeatField {
     constructor(key, container = document) {
         this.key = key;
         this.container = container.querySelector(this._attributeKey('data-repeat-container'));
@@ -69,6 +69,7 @@ export default class {
         this.fieldsContainer.appendChild(fieldSet);
 
         fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
+        this._makeNestedRepeatElsUnique(fieldSet);
 
         // Clear existing values
         fieldSet.querySelectorAll('[name]').forEach((el) => {
@@ -79,6 +80,9 @@ export default class {
 
         this._registerEventListeners();
         this._checkMax();
+
+        // Allow for nested repeat
+        initRepeatFields(fieldSet);
     }
 
     _cloneFieldSet(fieldSet) {
@@ -98,8 +102,27 @@ export default class {
         return increaseDeepestIndex(fieldSet.innerHTML, repeatKey);
     }
 
+    static _makeNestedRepeatElsUnique(fieldSet) {
+        fieldSet.querySelectorAll('[data-repeat-container]').forEach((el) => {
+            const existingRepeatId = el.getAttribute('data-repeat-container');
+            el.outerHTML = el.outerHTML.replace(new RegExp(existingRepeatId, 'g'), existingRepeatId + fieldSet.id);
+        });
+    }
+
     // Specific attribute selectors for this repeatField. This allows for nested functionality
     _attributeKey(attributeKey) {
         return `[${attributeKey}="${this.key}"]`;
     }
 }
+
+function initRepeatFields(container) {
+    const repeatContainerAttribute = 'data-repeat-container';
+    const repeatContainers = Array.from(container.querySelectorAll(`[${repeatContainerAttribute}]`));
+
+    repeatContainers.forEach((repeatContainer) => {
+        const repeatContainerId = repeatContainer.getAttribute(repeatContainerAttribute);
+        new RepeatField(repeatContainerId);
+    });
+}
+
+export { RepeatField, initRepeatFields };
