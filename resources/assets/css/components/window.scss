@@ -1,6 +1,5 @@
 .window {
-    // TODO(Tijs): no overflow-hidden because it cuts of dropdown menu
-    @apply rounded-lg shadow-sm overflow-hidden;
+    @apply rounded-lg shadow-sm;
 }
 
 .window-white {
