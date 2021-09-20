@@ -16,7 +16,7 @@
                 <fieldset
                     id="{{ $fieldSet->getId() }}"
                     data-repeat-fieldset="{{ $uniqueContainerId }}"
-                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-2' : 'mb-16 p-4' }} {{ $fieldSet->count() == 1 ? 'items-center' : '' }}"
+                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-2' : 'p-4' }} {{ $fieldSet->count() == 1 ? 'items-center' : '' }}"
                 >
                     <div class="w-full">
                         <div class="row-start-start gutter-3">
@@ -38,7 +38,7 @@
 
                     <span
                         data-repeat-delete="{{ $uniqueContainerId }}"
-                        class="flex-shrink-0 ml-3 cursor-pointer link link-grey"
+                        class="flex-shrink-0 ml-3 cursor-pointer link link-grey-light"
                         style="margin-top: -3px;"
                     >
                         <x-chief-icon-label type="delete"></x-chief-icon-label>
@@ -48,14 +48,10 @@
         </div>
     </div>
 
-    <!-- plus icon -->
-    <div
+    <span
         data-repeat-add="{{ $uniqueContainerId }}"
-        class="absolute left-0 right-0 flex justify-center h-8 border-none cursor-pointer z-1 icon-label"
-        style="margin-top: -12px;"
+        class="cursor-pointer link link-primary {{ $repeatField->prefersCompactLayout() ? 'mt-2' : 'mt-6' }}"
     >
-        <div class="absolute bg-white rounded-full link link-black icon-label-icon">
-            <svg width="24" height="24"> <use xlink:href="#icon-add-circle"/> </svg>
-        </div>
-    </div>
+        <x-chief-icon-label type="add">Nieuw veld toevoegen</x-chief-icon-label>
+    </span>
 </div>
