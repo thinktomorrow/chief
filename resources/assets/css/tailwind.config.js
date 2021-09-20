@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors');
+const defaultColors = require('tailwindcss/colors');
 
 const PurgeCssConfig = require('../../../purgecss.config.js');
 const WarpaintRow = require('./warpaint/utilities/WarpaintRow.js');
@@ -6,7 +6,16 @@ const WarpaintContainer = require('./warpaint/utilities/WarpaintContainer.js');
 const WarpaintGutter = require('./warpaint/utilities/WarpaintGutter.js');
 
 module.exports = {
-    purge: PurgeCssConfig,
+    mode: 'jit',
+    purge: [
+        'resources/views/**/*.blade.php',
+        'resources/assets/**/*.js',
+        'resources/assets/**/*.vue',
+        'resources/assets/css/components/slim.scss',
+        'resources/assets/css/components/multiselect.scss',
+        'node_modules/vue-multiselect/dist/vue-multiselect.min.css',
+        'resources/assets/css/components/redactor.scss',
+    ],
     theme: {
         screens: {
             xs: '480px',
@@ -16,21 +25,52 @@ module.exports = {
             xl: '1280px',
             '2xl': '1536px',
         },
+        fontFamily: {
+            display: ['Inter'],
+            body: ['Inter'],
+        },
         colors: {
             current: 'currentColor',
-            transparent: colors.transparent,
+            transparent: 'transparent',
 
-            white: colors.white,
-            grey: colors.coolGray,
-            black: colors.black,
+            white: defaultColors.white,
+            // grey: defaultColors.coolGray,
+            grey: defaultColors.blueGray,
+            black: defaultColors.black,
 
-            primary: colors.blue,
-            secondary: colors.teal,
+            // primary: defaultColors.blue,
+            // secondary: defaultColors.teal,
+            //
+            primary: {
+                50: '#f6f9fb',
+                100: '#e3effd',
+                200: '#c8d6fb',
+                300: '#a2b2f5',
+                400: '#848aed',
+                500: '#6d66e8',
+                600: '#5a49dd',
+                700: '#4537c0',
+                800: '#302693',
+                900: '#1b185e',
+            },
+            secondary: {
+                50: '#fdfcfb',
+                100: '#fcf0ed',
+                200: '#f9cdda',
+                300: '#f09fb6',
+                400: '#ee6e8e',
+                500: '#e44a6e',
+                600: '#cf314e',
+                700: '#a92539',
+                800: '#7d1a25',
+                900: '#4d1114',
+            },
 
-            red: colors.red,
-            green: colors.green,
-            blue: colors.lightBlue,
-            orange: colors.orange,
+            // For notifications, warnings, errors ...
+            red: defaultColors.red,
+            green: defaultColors.green,
+            blue: defaultColors.lightBlue,
+            orange: defaultColors.orange,
         },
         extend: {
             zIndex: {

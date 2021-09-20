@@ -1,61 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-.font-body,
-.font-heading {
-    font-family: 'Inter', sans-serif;
-    @apply antialiased;
-}
-
 html,
 body {
-    font-size: 15px;
-    @extend .font-body;
+    @apply font-body antialiased;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    @apply leading-tight;
-    @extend .font-heading;
-}
+// .font-body,
+// .font-heading {
+//     font-family: 'Inter', sans-serif;
+//     @apply antialiased;
+// }
 
-h1 {
-    @apply text-4xl font-extrabold;
-}
+// html,
+// body {
+//     font-size: 15px;
+//     @extend .font-body;
+// }
 
-h2 {
-    @apply text-3xl font-bold;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     @apply leading-tight;
+//     @extend .font-heading;
+// }
 
-h3 {
-    @apply text-2xl font-bold;
-}
+// h1 {
+//     @apply text-4xl font-extrabold;
+// }
 
-h4 {
-    @apply text-xl font-semibold;
-}
+// h2 {
+//     @apply text-3xl font-bold;
+// }
 
-h5 {
-    @apply text-lg font-semibold;
-}
+// h3 {
+//     @apply text-2xl font-bold;
+// }
 
-h6 {
-    @apply text-base font-semibold;
-}
+// h4 {
+//     @apply text-xl font-semibold;
+// }
 
-p,
-ul,
-ol {
-    @apply leading-relaxed;
-}
+// h5 {
+//     @apply text-lg font-semibold;
+// }
 
-ul {
-    @apply list-disc pl-5;
-}
+// h6 {
+//     @apply text-base font-semibold;
+// }
 
-ul li {
-    @apply list-outside;
-}
+// p,
+// ul,
+// ol {
+//     @apply leading-relaxed;
+// }
+
+// ul {
+//     @apply list-disc pl-5;
+// }
+
+// ul li {
+//     @apply list-outside;
+// }

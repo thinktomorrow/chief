@@ -127,4 +127,4 @@ Route::get('translations', [\Thinktomorrow\Chief\App\Http\Controllers\Back\Trans
 * STYLE GUIDE ROUTES
 * -----------------------------------------------------------------
 */
-Route::get('/style-guide', [\Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController::class, 'show'])->name('chief.back.style-guide');
+Route::get('/design-system', [\Thinktomorrow\Chief\App\Http\Controllers\Back\DesignSystemController::class, 'show'])->name('chief.back.design-system');

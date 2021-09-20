@@ -1,7 +1,8 @@
 .btn {
-    @apply inline-block border-2 px-4 py-2 rounded-lg cursor-pointer;
-    @apply font-bold leading-normal;
+    @apply inline-flex items-center border-2 cursor-pointer leading-normal px-4 py-1.5 font-medium;
     @apply transition duration-75 ease-in-out;
+
+    border-radius: 0.4rem;
 
     &:focus {
         @apply outline-none;
@@ -23,6 +24,24 @@
     &:hover,
     &:focus {
         @apply bg-primary-500 border-primary-500 text-white;
+    }
+}
+
+.btn-secondary {
+    @apply bg-secondary-500 border-secondary-500 text-white;
+
+    &:hover,
+    &:focus {
+        @apply bg-secondary-600 border-secondary-600;
+    }
+}
+
+.btn-secondary-outline {
+    @apply bg-transparent border-secondary-500 text-secondary-500;
+
+    &:hover,
+    &:focus {
+        @apply bg-secondary-500 border-secondary-500 text-white;
     }
 }
 
