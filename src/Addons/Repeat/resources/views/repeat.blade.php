@@ -7,16 +7,16 @@
 @endphp
 
 <div data-repeat-container="{{ $uniqueContainerId }}" class="relative">
-    <div class="window window-white window-xs">
-        <div 
-            class="border rounded-lg -window-xs divide-y divide-grey-100 border-grey-100"
+    <div class="p-4">
+        <div
+            class="{{ $repeatField->prefersCompactLayout() ? '' : 'border divide-y divide-grey-100 border-grey-100' }} rounded-lg -window-xs"
             data-repeat-fields="{{ $uniqueContainerId }}"
         >
             @foreach($repeatedFields as $i => $fieldSet)
                 <fieldset
                     id="{{ $fieldSet->getId() }}"
                     data-repeat-fieldset="{{ $uniqueContainerId }}"
-                    class="flex window-xs"
+                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-2' : 'mb-16 p-4' }} {{ $fieldSet->count() == 1 ? 'items-center' : '' }}"
                 >
                     <div class="w-full">
                         <div class="row-start-start gutter-3">
@@ -26,7 +26,7 @@
                                     'autofocus' => (isset($index) && $index === 0),
                                 ])
                                     <div
-                                        data-repeat-field="{{ $uniqueContainerId }}" 
+                                        data-repeat-field="{{ $uniqueContainerId }}"
                                         data-repeat-field-key="{{ $field->getDottedName() }}"
                                     >
                                         {!! $field->render() !!}
@@ -36,9 +36,9 @@
                         </div>
                     </div>
 
-                    <span 
-                        data-repeat-delete="{{ $uniqueContainerId }}" 
-                        class="flex-shrink-0 ml-6 cursor-pointer link link-error"
+                    <span
+                        data-repeat-delete="{{ $uniqueContainerId }}"
+                        class="flex-shrink-0 ml-3 cursor-pointer link link-grey"
                         style="margin-top: -3px;"
                     >
                         <x-chief-icon-label type="delete"></x-chief-icon-label>

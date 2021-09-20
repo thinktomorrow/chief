@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 class RepeatField extends AbstractField implements Field
 {
     private ?Fields $fields = null;
+    private bool $prefersCompactLayout = false;
 
     public static function make(string $key, iterable $fields): Field
     {
@@ -82,5 +83,17 @@ class RepeatField extends AbstractField implements Field
         $this->fields = $fields;
 
         return $this;
+    }
+
+    public function preferCompactLayout(): self
+    {
+        $this->prefersCompactLayout = true;
+
+        return $this;
+    }
+
+    public function prefersCompactLayout(): bool
+    {
+        return $this->prefersCompactLayout;
     }
 }
