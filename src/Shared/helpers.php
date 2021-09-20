@@ -262,7 +262,6 @@ if (! function_exists('isActiveUrl')) {
         $name = ltrim($name, '/');
 
         if (false !== strpos($name, '*')) {
-
             $name = str_replace(request()->getSchemeAndHttpHost() .'/', '', $name);
             $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
 
