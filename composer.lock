@@ -2479,16 +2479,16 @@
         },
         {
             "name": "nette/utils",
-            "version": "v3.2.4",
+            "version": "v3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "8b90ef7f5d02df449e632aff4d4a3ba5fc5b4312"
+                "reference": "9cd80396ca58d7969ab44fc7afcf03624dfa526e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/8b90ef7f5d02df449e632aff4d4a3ba5fc5b4312",
-                "reference": "8b90ef7f5d02df449e632aff4d4a3ba5fc5b4312",
+                "url": "https://api.github.com/repos/nette/utils/zipball/9cd80396ca58d7969ab44fc7afcf03624dfa526e",
+                "reference": "9cd80396ca58d7969ab44fc7afcf03624dfa526e",
                 "shasum": ""
             },
             "require": {
@@ -2558,9 +2558,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v3.2.4"
+                "source": "https://github.com/nette/utils/tree/v3.2.5"
             },
-            "time": "2021-09-19T23:30:35+00:00"
+            "time": "2021-09-20T10:50:11+00:00"
         },
         {
             "name": "nicmart/tree",
