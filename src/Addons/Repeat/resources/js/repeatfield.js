@@ -20,6 +20,10 @@ class RepeatField {
         // TODO: this could be set via a field::max() or something
         this.maxFieldSets = 50;
 
+        this._refresh();
+    }
+
+    _refresh() {
         this._checkMax();
         this._registerEventListeners();
     }
@@ -29,6 +33,13 @@ class RepeatField {
         this.addTrigger.addEventListener('click', this.addFieldSetReference);
 
         this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-delete')).forEach((trigger) => {
+            // Hide delete option when there is only one left
+            if (this._amountOfFieldSets() === 1) {
+                trigger.classList.add('hidden');
+            } else {
+                trigger.classList.remove('hidden');
+            }
+
             trigger.removeEventListener('click', this.deleteFieldSetReference);
             trigger.addEventListener('click', this.deleteFieldSetReference);
         });
@@ -56,7 +67,7 @@ class RepeatField {
 
         this.fieldsContainer.removeChild(fieldSet);
 
-        this._checkMax();
+        this._refresh();
     }
 
     _addFieldSet() {
@@ -78,8 +89,7 @@ class RepeatField {
 
         vueFields(fieldSet);
 
-        this._registerEventListeners();
-        this._checkMax();
+        this._refresh();
 
         // Allow for nested repeat
         initRepeatFields(fieldSet);
