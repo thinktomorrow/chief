@@ -109,7 +109,6 @@ export default class {
         event.preventDefault();
 
         const trigger = event.currentTarget;
-
         const link = trigger.getAttribute('href');
         const componentKey = trigger.getAttribute(this.componentKeyAttribute);
 
@@ -117,6 +116,7 @@ export default class {
         if (trigger.classList.contains('is-clicked')) {
             return;
         }
+
         trigger.classList.add('is-clicked', 'animate-pulse');
 
         if (!link) {
@@ -157,9 +157,10 @@ export default class {
     show(url, triggerData, onActivatedCallback) {
         const id = Panels.createId(url);
 
-        // if present in panels, than show the existing panel.
+        // If present in panels, than show the existing panel.
         if (this.panels.find(id)) {
             this._activate(id);
+
             return;
         }
 
@@ -167,12 +168,14 @@ export default class {
     }
 
     _activateNewPanel(id, url, triggerData, onActivatedCallback) {
-        /** Add a new panel element to dom */
+        // Add a new panel element to dom
         const newPanelElement = document.createElement('div');
+
         newPanelElement.setAttribute('data-panel-id', id);
+
         this.sidebarContainer.dom().appendChild(newPanelElement);
 
-        /** Fetch the html content from the given url and insert it in the panel element */
+        // Fetch the html content from the given url and insert it in the panel element
         Api.get(url, (data) => {
             newPanelElement.innerHTML = data;
 
@@ -253,8 +256,8 @@ export default class {
                 onActivatedCallback(id);
             }
 
-            // creating a custom event so native js like redactor js can be initiated async
-            // needs to dispatch after vue instances get created otherwise they overrides
+            // Creating a custom event so native js like redactor js can be initiated async
+            // needs to dispatch after vue instances get created otherwise they override
             // all redactor event listeners like toolbar clicks ...
             window.dispatchEvent(
                 new CustomEvent('chief::newpanel', { detail: this.panels.findActive().eventPayload() })
@@ -350,6 +353,7 @@ export default class {
         }
 
         const replaceableElements = this.panels.findActive().el.querySelectorAll('[data-sidebar-component]');
+
         if (replaceableElements.length < 1) {
             callback();
             return;
@@ -359,6 +363,7 @@ export default class {
         // to refetch it for the dom update. For POST requests this is still required.
         if (data) {
             this.replacePanelDom(data);
+
             callback();
         } else {
             Api.get(this.panels.findActive().url, (_data) => {
@@ -371,9 +376,8 @@ export default class {
 
     replacePanelDom(data) {
         const replaceableElements = this.panels.findActive().el.querySelectorAll('[data-sidebar-component]');
-        if (replaceableElements.length < 1) {
-            return;
-        }
+
+        if (replaceableElements.length < 1) return;
 
         const DOM = document.createElement('div');
 
