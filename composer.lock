@@ -6668,16 +6668,16 @@
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "0.3.2",
+            "version": "0.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "d88637f07b6dc853ce0433e6be9f8a328434b204"
+                "reference": "d3f89ea4de8af8fd391b657f6b8c540620e37b0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/d88637f07b6dc853ce0433e6be9f8a328434b204",
-                "reference": "d88637f07b6dc853ce0433e6be9f8a328434b204",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/d3f89ea4de8af8fd391b657f6b8c540620e37b0b",
+                "reference": "d3f89ea4de8af8fd391b657f6b8c540620e37b0b",
                 "shasum": ""
             },
             "require": {
@@ -6707,9 +6707,9 @@
             "description": "Generate a tree from an adjacent database structure",
             "support": {
                 "issues": "https://github.com/thinktomorrow/vine/issues",
-                "source": "https://github.com/thinktomorrow/vine/tree/0.3.2"
+                "source": "https://github.com/thinktomorrow/vine/tree/0.3.5"
             },
-            "time": "2021-08-19T14:05:13+00:00"
+            "time": "2021-09-16T19:44:06+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
