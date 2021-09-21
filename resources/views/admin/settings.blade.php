@@ -31,7 +31,7 @@
                             @foreach($fields->allFields() as $field)
                                 <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}" name="{{ $field->getName($locale ?? null) }}">
                                     @if($field->getDescription())
-                                        <x-slot name="{{ $field->getDescription() }}"></x-slot>
+                                        <x-slot name="description">{!! $field->getDescription() !!}</x-slot>
                                     @endif
 
                                     {!! $field->render() !!}
