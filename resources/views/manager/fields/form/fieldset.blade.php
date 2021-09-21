@@ -14,7 +14,7 @@
     @endif
 
     <div>
-        <div class="row-start-start gutter-3">
+        <div class="row-start-start gutter-3 rounded {{ $fieldSet->getClass() }}">
             @foreach($fieldSet->all() as $field)
                 @include('chief::manager.fields.form.field', ['autofocus' => (isset($index) && $index === 0)])
             @endforeach

@@ -67,6 +67,9 @@ abstract class AbstractField
     private $type;
     private ?string $customSaveMethod = null;
 
+    // Custom width
+    private string $size = '1';
+
     final public function __construct(FieldType $type, string $key)
     {
         $this->type = $type;
