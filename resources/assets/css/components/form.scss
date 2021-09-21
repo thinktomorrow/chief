@@ -36,12 +36,9 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'],
-input[type='range'] {
-    @apply w-full;
-}
-
+input[type='range'],
 input[type='number'] {
-    min-width: theme('spacing.12');
+    @apply w-full;
 }
 
 input[type='checkbox'],
@@ -102,8 +99,6 @@ input[type='date'].with-append {
 }
 
 select.select {
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Safari and Chrome */
     appearance: none;
 
     @apply pr-7 cursor-pointer;
