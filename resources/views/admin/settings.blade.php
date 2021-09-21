@@ -28,17 +28,19 @@
                         @method('put')
 
                         <div class="space-y-8">
-                            @foreach($fields->allFields() as $field)
-                                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}" name="{{ $field->getName($locale ?? null) }}">
-                                    @if($field->getDescription())
-                                        <x-slot name="description">{!! $field->getDescription() !!}</x-slot>
-                                    @endif
-
-                                    {!! $field->render() !!}
-                                </x-chief-formgroup>
+                            @foreach($fields->all() as $i => $fieldSet)
+                                @include('chief::manager.fields.form.fieldset', ['index' => $i])
                             @endforeach
 
-                            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                            <div>
+                                <div class="-window-lg-x -window-md-y bg-white">
+                                    <div class="window-lg-x window-md-y">
+                                        <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </form>
                 </div>
