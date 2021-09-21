@@ -214,16 +214,32 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
         return $this->data['description'] ?? '';
     }
 
-    public function class(string $class): self
+    public function type(string $type): self
     {
-        $this->data['class'] = $class;
+        $this->data['type'] = $type;
 
         return $this;
     }
 
-    public function getClass(): string
+    public function getType(): string
     {
-        return $this->data['class'] ?? '';
+        return $this->data['type'] ?? 'none';
+    }
+
+    public function getTypeStyle(): string
+    {
+        switch ($this->getType()) {
+            case 'error':
+                return 'bg-red-50';
+            case 'success':
+                return 'bg-green-50';
+            case 'info':
+                return 'bg-blue-50';
+            case 'warning':
+                return 'bg-orange-50';
+            default:
+                return 'bg-white';
+        }
     }
 
     private static function randomId(): string
