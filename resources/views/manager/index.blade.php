@@ -32,7 +32,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                @if($models->count())
+                @if(count($models))
                     <div class="window window-white window-sm">
                         @adminCan('sort-index', $models->first())
                             <div
