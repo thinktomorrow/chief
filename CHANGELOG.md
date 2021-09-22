@@ -10,6 +10,7 @@ principles.
 - Added: FieldWindow and FieldSet models that allow for more control on your field structure.
 - Added: File thumbnail is now shown in the field window for pdf files.
 - Fixed: Link window could not be used without a State window.
+- Changed: Updated thinktomorrow/vine dependency. This requires some changes in the projects menu views.
 - Removed: Field::component() to select the window where this field should be placed in. You should now use the FieldWindow syntax instead.
 
 ## 0.6.0
