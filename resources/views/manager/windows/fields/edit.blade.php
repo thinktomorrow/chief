@@ -8,7 +8,7 @@
     @csrf
     @method('put')
 
-    <div class="space-y-8">
+    <div data-vue-fields class="space-y-8">
         <h2 class="text-2xl font-bold text-grey-900">{{ ucfirst($componentTitle) }}</h2>
 
         <hr class="-window-x text-grey-100">
