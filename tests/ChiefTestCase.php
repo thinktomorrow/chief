@@ -8,7 +8,6 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Image;
@@ -40,7 +39,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            LivewireServiceProvider::class,
             PermissionServiceProvider::class,
             TranslatableServiceProvider::class,
             ActivitylogServiceProvider::class,
