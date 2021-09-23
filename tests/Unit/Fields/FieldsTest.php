@@ -65,7 +65,7 @@ class FieldsTest extends TestCase
     {
         $fields = $this->createFields();
 
-        $this->assertEquals(InputField::make('input-one'), $fields->first());
+        $this->assertEquals(InputField::make('input-one'), $fields->first()->first());
     }
 
     /** @test */

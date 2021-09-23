@@ -3,6 +3,7 @@ form {
 }
 
 textarea,
+select,
 input[type='text'],
 input[type='date'],
 input[type='email'],
@@ -25,6 +26,7 @@ input[type='file'] {
 }
 
 textarea,
+select,
 input[type='text'],
 input[type='date'],
 input[type='email'],
@@ -34,12 +36,9 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'],
-input[type='range'] {
-    @apply w-full;
-}
-
+input[type='range'],
 input[type='number'] {
-    min-width: theme('spacing.12');
+    @apply w-full;
 }
 
 input[type='checkbox'],
@@ -97,4 +96,10 @@ input[type='date'].with-prepend {
 input[type='text'].with-append,
 input[type='date'].with-append {
     @apply rounded-r-none;
+}
+
+select.select {
+    appearance: none;
+
+    @apply pr-7 cursor-pointer;
 }

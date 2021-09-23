@@ -1,4 +1,5 @@
-<div class="external-editor-toolbar w-full" id="js-external-editor-toolbar-{{ str_replace('.','_',$key) }}"></div>
+<div class="w-full external-editor-toolbar" id="js-external-editor-toolbar-{{ str_replace('.','_',$key) }}"></div>
+
 <div class="flex">
     @if($field->getPrepend())
         <div class="prepend-to-input">
@@ -11,13 +12,14 @@
             @include('chief::editors.' . config('chief.editor', 'redactor') . '.input')
         </div>
     @else
-        <input {{ (isset($autofocus) && $autofocus) ? 'autofocus' : '' }}
-               type="text"
-               name="{{ $field->getName($locale ?? null) }}"
-               id="{{ $field->getId($locale ?? null) }}"
-               placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
-               value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
-               class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"
+        <input 
+            type="text"
+            name="{{ $field->getName($locale ?? null) }}"
+            id="{{ $field->getId($locale ?? null) }}"
+            placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
+            value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
+            class="{{ $field->getPrepend() ? 'with-prepend' : null }} {{ $field->getAppend() ? 'with-append' : null }}"
+            {{ (isset($autofocus) && $autofocus) ? 'autofocus' : '' }}
         >
     @endif
 

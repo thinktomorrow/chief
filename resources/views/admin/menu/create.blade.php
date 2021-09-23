@@ -10,7 +10,7 @@
             @slot('breadcrumbs')
                 {{-- TODO: use correct route --}}
                 <a href="/admin/menus" class="link link-primary">
-                    <x-icon-label type="back">Ga terug</x-icon-label>
+                    <x-chief-icon-label type="back">Ga terug</x-chief-icon-label>
                 </a>
             @endslot
 

@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
+                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
 
@@ -22,23 +22,21 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                {{--TODO(tijs): rounded corners on top not visible (due to first element's neg. margins) --}}
+                {{--TODO(tijs): submit button container now has double bottom margins --}}
+                <div class="window window-white window-md">
                     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="mb-0">
                         @csrf
                         @method('put')
 
                         <div class="space-y-8">
-                            @foreach($fields->allFields() as $field)
-                                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}" name="{{ $field->getName($locale ?? null) }}">
-                                    @if($field->getDescription())
-                                        <x-slot name="{{ $field->getDescription() }}"></x-slot>
-                                    @endif
-
-                                    {!! $field->render() !!}
-                                </x-chief-formgroup>
+                            @foreach($fields->all() as $i => $fieldSet)
+                                @include('chief::manager.fields.form.fieldset', ['index' => $i])
                             @endforeach
 
-                            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                            <div class="window-y">
+                                <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                            </div>
                         </div>
                     </form>
                 </div>

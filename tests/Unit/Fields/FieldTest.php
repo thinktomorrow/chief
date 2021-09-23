@@ -37,8 +37,9 @@ class FieldTest extends TestCase
 
         $this->assertEquals('title', $field->getKey());
         $this->assertEquals('title', $field->getName());
-        $this->assertEquals('title', $field->getLabel());
         $this->assertEquals('title', $field->getColumn());
+
+        $this->assertNull($field->getLabel());
     }
 
     /** @test */

@@ -20,7 +20,7 @@
                     Nog niet veel soeps hier... Better start your writing!
                 @endforelse
 
-                {{ $audit->links() }}
+                {{ $audit->links('chief::pagination.default') }}
             </div>
         </div>
     </div>

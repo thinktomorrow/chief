@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -19,9 +18,6 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Paginator::defaultView('chief::pagination.default');
-        Paginator::defaultSimpleView('chief::pagination.simple-default');
-
         View::composer([
             'chief::manager._transitions.modals.archive-modal',
         ], function ($view) {
@@ -43,14 +39,17 @@ class ViewServiceProvider extends ServiceProvider
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
+        /* Chief components */
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
         Blade::component('chief::components.card', 'chief-card');
         Blade::component('chief::components.sidebar', 'chief-sidebar');
-        Blade::component('chief::components.inline-notification', 'inline-notification');
-        Blade::component('chief::components.icon-label', 'icon-label');
+        Blade::component('chief::components.inline-notification', 'chief-inline-notification');
+        Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.formgroup', 'chief-formgroup');
+        Blade::component('chief::components.hierarchy', 'chief-hierarchy');
 
+        /* Wireframe components */
         Blade::component('chief::wireframes.wireframe', 'wireframe');
         Blade::component('chief::wireframes.container', 'wireframe-container');
         Blade::component('chief::wireframes.row', 'wireframe-row');
@@ -60,9 +59,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::wireframes.image', 'wireframe-image');
         Blade::component('chief::wireframes.video', 'wireframe-video');
         Blade::component('chief::wireframes.rect', 'wireframe-rect');
-
-        Blade::aliasComponent('chief::back._layouts._partials.header', 'chiefheader');
-        Blade::aliasComponent('chief::components.formgroup', 'formgroup');
 
         Blade::directive('fragments', function () {
             return "<?php echo app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->render(\$model, get_defined_vars()); ?>";

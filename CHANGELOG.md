@@ -2,14 +2,26 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## upcoming release
+## next release
 ...
+
+## 0.6.3 - 2021-09-23
+- Added: RepeatField as Addon which allows to duplicate input fields.
+- Added: vueFields js function to init vue fields based on the \[data-vue-fields].
+- Added: width option for Fields to set custom width: 1/2, 1/3, 2/3.
+- Added: Model::adminConfig()->setIndexCardView() method to set a custom card view for the admin index.
+- Changed: AbstractField default label value was changed from using the field key to null. If a label is not specifically given, the field will display without it.
+- Fixed: After focussing a sidebar input, there was no scroll back to top.
+- Fixed: Chief pagination used the project default pagination which is just weird.
+- Changed: Prefixed all chief blade components with chief-. E.g. <x-icon-label> is now <x-chief-icon-label>. 
 
 ## 0.6.2 - 2021-09-22
 - Added: Visitable::response() which renders the page view by default but also allows for custom handling a frontend request of the model.
 - Added: FieldWindow and FieldSet models that allow for more control on your field structure.
 - Added: File thumbnail is now shown in the field window for pdf files.
+- Added: Hierarchy component to visually show a model hierarchy by adding an indent
 - Fixed: Link window could not be used without a State window.
+- Changed: Updated thinktomorrow/vine dependency. This requires some changes in the projects menu views.
 - Removed: Field::component() to select the window where this field should be placed in. You should now use the FieldWindow syntax instead.
 
 ## 0.6.0

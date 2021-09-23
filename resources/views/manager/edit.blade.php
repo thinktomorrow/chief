@@ -34,7 +34,7 @@
             @slot('breadcrumbs')
                 @adminCan('index')
                     <a href="@adminRoute('index')" class="link link-primary">
-                        <x-icon-label type="back">Terug naar overzicht</x-icon-label>
+                        <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
                     </a>
                 @endAdminCan
             @endslot
@@ -48,31 +48,22 @@
             <div class="w-full space-y-6 lg:w-2/3">
                 @adminCan('fields-edit', $model)
                     @foreach($fields->getWindowsByPosition('top') as $fieldWindow)
-                        <div class="window window-white">
-                            <livewire:fields_component
-                                :model="$model"
-                                :componentKey="$fieldWindow->getId()"
-                                :title="$fieldWindow->getTitle()"
-                            />
-                        </div>
+                        @include('chief::manager.windows.show')
                     @endforeach
                 @endAdminCan
 
                 @adminCan('fragments-index', $model)
-                    <div class="window window-white">
-                        <livewire:fragments :owner="$model" />
-                    </div>
+                    <livewire:fragments
+                        :owner="$model"
+                        class="window window-white window-sm"
+                    />
                 @endAdminCan
 
-                @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
-                    <div class="window window-white">
-                        <livewire:fields_component
-                            :model="$model"
-                            :componentKey="$fieldWindow->getId()"
-                            :title="$fieldWindow->getTitle()"
-                        />
-                    </div>
-                @endforeach
+                @adminCan('fields-edit', $model)
+                    @foreach($fields->getWindowsByPosition('bottom') as $fieldWindow)
+                        @include('chief::manager.windows.show')
+                    @endforeach
+                @endAdminCan
             </div>
 
             <div class="w-full lg:w-1/3">
@@ -88,22 +79,15 @@
                     @adminCan('fields-edit', $model)
                         {{-- FieldWindows without a specific position (default position: sidebar)  --}}
                         @foreach($fields->getWindowsByPosition('sidebar') as $fieldWindow)
-                            <div class="window window-grey">
-                                <livewire:fields_component
-                                    :model="$model"
-                                    :componentKey="$fieldWindow->getId()"
-                                    :title="$fieldWindow->getTitle()"
-                                />
-                            </div>
+                            @include('chief::manager.windows.show')
                         @endforeach
 
                         {{-- Fields without a dedicated FieldWindow --}}
-                        <div class="window window-grey">
-                            <livewire:fields_component
-                                :model="$model"
-                                title="Algemeen"
-                            />
-                        </div>
+                        <livewire:fields_component
+                            :model="$model"
+                            title="Algemeen"
+                            class="window window-grey"
+                        />
                     @endAdminCan
                 </div>
             </div>

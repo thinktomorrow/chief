@@ -1,28 +1,83 @@
 .window {
-    @apply rounded-xl;
-    @extend .window-sm;
+    @apply rounded-lg shadow-sm;
 }
 
-.window-sm {
-    @apply p-8;
+.window-white {
+    @apply bg-white;
+}
+
+.window-grey {
+    @apply bg-grey-50;
+}
+
+.window:not(.window-xs):not(.window-sm):not(.window-md):not(.window-lg):not(.window-none) {
+    @extend .window-md;
 }
 
 .window-lg {
     @apply p-12;
+    .window-x {
+        @apply px-12;
+    }
+    .window-y {
+        @apply py-12;
+    }
+    .-window-x {
+        @apply -mx-12;
+    }
+    .-window-y {
+        @apply -my-12;
+    }
 }
 
-.window-white {
-    @apply bg-white shadow-sm;
+.window-md {
+    @apply p-8;
+    .window-x {
+        @apply px-8;
+    }
+    .window-y {
+        @apply py-8;
+    }
+    .-window-x {
+        @apply -mx-8;
+    }
+    .-window-y {
+        @apply -my-8;
+    }
 }
 
-.window-grey {
-    @apply bg-grey-50 shadow-sm;
+.window-sm {
+    @apply p-6;
+    .window-x {
+        @apply px-6;
+    }
+    .window-y {
+        @apply py-6;
+    }
+    .-window-x {
+        @apply -mx-6;
+    }
+    .-window-y {
+        @apply -my-6;
+    }
 }
 
-.window-title {
-    @apply text-xl font-semibold text-grey-900;
+.window-xs {
+    @apply p-4;
+    .window-x {
+        @apply px-4;
+    }
+    .window-y {
+        @apply py-4;
+    }
+    .-window-x {
+        @apply -mx-4;
+    }
+    .-window-y {
+        @apply -my-4;
+    }
 }
 
-.window-subtitle {
-    @apply text-lg font-semibold text-grey-900;
+.window-heading {
+    @apply font-bold text-grey-900;
 }

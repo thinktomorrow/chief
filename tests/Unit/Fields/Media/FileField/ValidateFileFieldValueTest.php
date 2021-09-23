@@ -57,7 +57,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb trans'.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.thumb_trans.nl'));
+        $this->assertStringContainsString('thumb trans heeft niet de juiste afmetingen', session()->get('errors')->first('files.thumb_trans.nl'));
 
         $this->assertCount(0, $this->page->assets('thumb_trans'));
     }

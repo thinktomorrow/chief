@@ -57,10 +57,8 @@
     p,
     cite,
     blockquote,
-    figcaption,
-    input,
-    textarea {
-        @apply text-grey-700;
+    figcaption {
+        @apply text-grey-500;
     }
 
     code {

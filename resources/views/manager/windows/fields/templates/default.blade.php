@@ -3,17 +3,19 @@
         class="{{ isset($class) ? $class : '' }}"
         title="{{ $title ?? null }}"
         :editRequestUrl="$manager->route('fields-edit', $model, $componentKey)"
-        type="{{ $componentKey }}"
+        sidebarTrigger="data-sidebar-trigger={{ $componentKey }}"
     >
-        <div class="space-y-6">
-            @foreach($fields->allFields() as $field)
-                <div class="space-y-1">
-                    <span class="font-medium text-grey-900">{{ ucfirst($field->getLabel()) }}</span>
+        <div class="row-start-start gutter-3">
+            @foreach($fields->all() as $fieldSet)
+                @foreach($fieldSet->all() as $field)
+                    <div class="{{ $field->getWidthStyle() }} space-y-2">
+                        <span class="text-xs font-semibold uppercase text-grey-700">
+                            {{ ucfirst($field->getLabel()) }}
+                        </span>
 
-                    <div class="prose prose-dark">
-                        @include('chief::manager.fields.window.types.' . $field->getType(), ['field' => $field])
+                        {!! $field->renderWindow() !!}
                     </div>
-                </div>
+                @endforeach
             @endforeach
         </div>
     </x-chief-card>

@@ -13,6 +13,9 @@ class SelectField extends AbstractField implements Field
 
     protected bool $grouped = false;
 
+    // Use regular select instead of vue multi-select
+    private bool $prefersNativeSelect = false;
+
     public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::SELECT), $key);
@@ -31,5 +34,17 @@ class SelectField extends AbstractField implements Field
     public function isGrouped(): bool
     {
         return $this->grouped;
+    }
+
+    public function preferNativeSelect(): self
+    {
+        $this->prefersNativeSelect = true;
+
+        return $this;
+    }
+
+    public function prefersNativeSelect(): bool
+    {
+        return $this->prefersNativeSelect;
     }
 }
