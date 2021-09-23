@@ -22,6 +22,8 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
+                {{--TODO(tijs): rounded corners on top not visible (due to first element's neg. margins) --}}
+                {{--TODO(tijs): submit button container now has double bottom margins --}}
                 <div class="window window-white window-md">
                     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="mb-0">
                         @csrf
@@ -32,12 +34,8 @@
                                 @include('chief::manager.fields.form.fieldset', ['index' => $i])
                             @endforeach
 
-                            <div>
-                                <div class="bg-white -window-x -window-y">
-                                    <div class="window-x window-y">
-                                        <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-                                    </div>
-                                </div>
+                            <div class="window-y">
+                                <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                             </div>
                         </div>
                     </form>

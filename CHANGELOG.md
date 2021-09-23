@@ -5,7 +5,7 @@ principles.
 ## next release
 ...
 
-## 0.6.3 - 2021-09)23
+## 0.6.3 - 2021-09-23
 - Added: RepeatField as Addon which allows to duplicate input fields.
 - Added: vueFields js function to init vue fields based on the \[data-vue-fields].
 - Added: width option for Fields to set custom width: 1/2, 1/3, 2/3.
@@ -14,7 +14,6 @@ principles.
 - Fixed: After focussing a sidebar input, there was no scroll back to top.
 - Fixed: Chief pagination used the project default pagination which is just weird.
 - Changed: Prefixed all chief blade components with chief-. E.g. <x-icon-label> is now <x-chief-icon-label>. 
-
 
 ## 0.6.2 - 2021-09-22
 - Added: Visitable::response() which renders the page view by default but also allows for custom handling a frontend request of the model.
