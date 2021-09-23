@@ -40,11 +40,11 @@ abstract class ChiefTestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
+            LivewireServiceProvider::class,
             PermissionServiceProvider::class,
             TranslatableServiceProvider::class,
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
-            LivewireServiceProvider::class,
         ];
     }
 
