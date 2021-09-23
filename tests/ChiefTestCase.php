@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
+use Livewire\LivewireServiceProvider;
 use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -43,6 +44,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
             TranslatableServiceProvider::class,
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 
