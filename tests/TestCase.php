@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
@@ -23,6 +24,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
+            LivewireServiceProvider::class,
             ChiefServiceProvider::class,
         ];
     }
