@@ -23,7 +23,7 @@
 
     </div>
     @if(!empty(trim($slot)))
-        <hr class="mt-4 mb-6 text-white -window-md-x bg-grey-100" style="height: 2px">
+        <hr class="mt-4 mb-6 -mx-8 text-white bg-grey-100" style="height: 2px">
 
         <div>
             {{ $slot }}

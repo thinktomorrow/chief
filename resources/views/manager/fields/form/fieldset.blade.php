@@ -1,6 +1,6 @@
 <div>
-    <div class="-window-lg-x -window-md-y">
-        <div class="window-lg-x window-md-y space-y-6 {{ $fieldSet->getTypeStyle() }}">
+    <div class="-my-8 -window-x">
+        <div class="window-x py-8 space-y-6 {{ $fieldSet->getTypeStyle() }}">
             @if($fieldSet->getTitle() || $fieldSet->getDescription())
                 <div class="space-y-1">
                     @if($fieldSet->getTitle())

@@ -2,7 +2,7 @@
     data-fragments-component
     class="{{ isset($class) ? $class : '' }}"
 >
-    <div class="relative -window-md divide-y divide-grey-100">
+    <div class="relative -window-x -window-y divide-y divide-grey-100">
         @include('chief::manager.windows.fragments.component.fragment-select', [
             'ownerManager' => $manager,
             'inOpenState' => count($fragments) < 1

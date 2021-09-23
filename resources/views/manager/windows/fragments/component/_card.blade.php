@@ -3,7 +3,7 @@
     data-sortable-id="{{ $model->fragmentModel()->id }}"
     class="relative w-full"
 >
-    <div class="space-y-4 {{ ($isNested ?? false) ? 'window-md-x py-4' : 'window-md' }}">
+    <div class="space-y-4 {{ ($isNested ?? false) ? 'px-8 py-4' : 'p-8' }}">
         <div class="flex items-start justify-between">
             <div class="flex items-center space-x-2">
                 <span data-sortable-handle class="cursor-pointer link link-primary">

@@ -38,10 +38,10 @@
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative -window-sm divide-y divide-grey-100"
+                                class="relative -window-x -window-y divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative -window-sm divide-y divide-grey-100">
+                            <div class="relative -window-x -window-y divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include($model->adminConfig()->getIndexCardView())

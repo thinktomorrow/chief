@@ -9,7 +9,7 @@
 <div data-repeat-container="{{ $uniqueContainerId }}" class="relative">
     <div class="p-4">
         <div
-            class="{{ $repeatField->prefersCompactLayout() ? '' : 'border divide-y divide-grey-100 border-grey-100' }} rounded-lg -window-xs"
+            class="{{ $repeatField->prefersCompactLayout() ? '' : 'border divide-y divide-grey-100 border-grey-100' }} rounded-lg -m-4"
             data-repeat-fields="{{ $uniqueContainerId }}"
         >
             @foreach($repeatedFields as $i => $fieldSet)

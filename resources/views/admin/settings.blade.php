@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                <div class="window window-white window-md">
                     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="mb-0">
                         @csrf
                         @method('put')
@@ -33,14 +33,12 @@
                             @endforeach
 
                             <div>
-                                <div class="-window-lg-x -window-md-y bg-white">
-                                    <div class="window-lg-x window-md-y">
+                                <div class="bg-white -window-x -window-y">
+                                    <div class="window-x window-y">
                                         <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </form>
                 </div>

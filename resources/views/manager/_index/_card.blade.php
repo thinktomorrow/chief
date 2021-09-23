@@ -1,4 +1,4 @@
-<div class="window-xs-y window-sm-x" data-sortable-id="{{ $model->id }}">
+<div class="px-6 py-4" data-sortable-id="{{ $model->id }}">
     <div class="space-y-1">
         <div class="flex justify-between">
             @adminCan('edit')
