@@ -5,6 +5,11 @@ principles.
 ## next release
 ...
 
+## 0.6.4 - 2021-09-24
+- Fixed: fieldSets loops are more consistent across the admin forms
+- Fixed: fragment deletion returned non async response
+- Changed: window padding should be given explicitly on a window: window-xs, window-md
+
 ## 0.6.3 - 2021-09-23
 - Added: RepeatField as Addon which allows to duplicate input fields.
 - Added: vueFields js function to init vue fields based on the \[data-vue-fields].
