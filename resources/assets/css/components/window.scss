@@ -1,5 +1,5 @@
 .window {
-    @apply rounded-lg shadow-sm;
+    @apply rounded-window shadow-sm;
 }
 
 .window-white {
@@ -10,17 +10,25 @@
     @apply bg-grey-50;
 }
 
-.window:not(.window-xs):not(.window-sm):not(.window-md):not(.window-lg):not(.window-none) {
-    @extend .window-md;
-}
-
 .window-lg {
     @apply p-12;
+    .window-t {
+        @apply pt-12;
+    }
+    .window-b {
+        @apply pb-12;
+    }
     .window-x {
         @apply px-12;
     }
     .window-y {
         @apply py-12;
+    }
+    .-window-t {
+        @apply -mt-12;
+    }
+    .-window-b {
+        @apply -mb-12;
     }
     .-window-x {
         @apply -mx-12;
@@ -32,11 +40,23 @@
 
 .window-md {
     @apply p-8;
+    .window-t {
+        @apply pt-8;
+    }
+    .window-b {
+        @apply pb-8;
+    }
     .window-x {
         @apply px-8;
     }
     .window-y {
         @apply py-8;
+    }
+    .-window-t {
+        @apply -mt-8;
+    }
+    .window-b {
+        @apply -mb-8;
     }
     .-window-x {
         @apply -mx-8;
@@ -48,11 +68,23 @@
 
 .window-sm {
     @apply p-6;
+    .window-t {
+        @apply pt-6;
+    }
+    .window-b {
+        @apply pb-6;
+    }
     .window-x {
         @apply px-6;
     }
     .window-y {
         @apply py-6;
+    }
+    .-window-t {
+        @apply -mt-6;
+    }
+    .window-b {
+        @apply -mb-6;
     }
     .-window-x {
         @apply -mx-6;
@@ -64,11 +96,23 @@
 
 .window-xs {
     @apply p-4;
+    .window-t {
+        @apply pt-4;
+    }
+    .window-b {
+        @apply pb-4;
+    }
     .window-x {
         @apply px-4;
     }
     .window-y {
         @apply py-4;
+    }
+    .-window-t {
+        @apply -mt-4;
+    }
+    .window-b {
+        @apply -mb-4;
     }
     .-window-x {
         @apply -mx-4;

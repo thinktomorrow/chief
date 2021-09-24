@@ -7,7 +7,7 @@
 @section('content')
         {{-- TODO: check text --}}
         <div class="min-h-screen row-center-center">
-            <div class="max-w-lg space-y-6 window window-white prose-dark">
+            <div class="max-w-lg space-y-6 window window-white window-md prose-dark">
                 <h1>Er ging iets fout</h1>
 
                 <p>

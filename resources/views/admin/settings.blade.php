@@ -25,19 +25,17 @@
                 {{--TODO(tijs): rounded corners on top not visible (due to first element's neg. margins) --}}
                 {{--TODO(tijs): submit button container now has double bottom margins --}}
                 <div class="window window-white window-md">
-                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="mb-0">
+                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
                         @csrf
                         @method('put')
 
-                        <div class="space-y-8">
-                            @foreach($fields->all() as $i => $fieldSet)
-                                @include('chief::manager.fields.form.fieldset', ['index' => $i])
-                            @endforeach
+                        @include('chief::manager.fields.form.fieldsets', [
+                            'fieldsets' => $fields->all(),
+                            'hasFirstWindowItem' => true,
+                            'hasLastWindowItem' => false,
+                        ])
 
-                            <div class="window-y">
-                                <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-                            </div>
-                        </div>
+                        <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                     </form>
                 </div>
             </div>

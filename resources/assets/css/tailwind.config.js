@@ -33,17 +33,14 @@ module.exports = {
             orange: colors.orange,
         },
         extend: {
-            spacing: {
-                96: '24rem',
-                128: '32rem',
-                160: '40rem',
-                192: '48rem',
-            },
-            zIndex: {
-                1: '1',
+            borderRadius: {
+                window: '0.5rem',
             },
             lineHeight: {
                 0: '0',
+            },
+            maxHeight: {
+                '1/2': '50vh',
             },
             minWidth: {
                 xs: '20rem',
@@ -52,11 +49,17 @@ module.exports = {
                 lg: '32rem',
                 xl: '36rem',
             },
-            maxHeight: {
-                '1/2': '50vh',
-            },
             scale: {
                 65: '0.65',
+            },
+            spacing: {
+                96: '24rem',
+                128: '32rem',
+                160: '40rem',
+                192: '48rem',
+            },
+            zIndex: {
+                1: '1',
             },
         },
     },

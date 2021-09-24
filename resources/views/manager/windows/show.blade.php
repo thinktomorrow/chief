@@ -5,6 +5,6 @@
         :model="$model"
         :componentKey="$fieldWindow->getId()"
         :title="$fieldWindow->getTitle()"
-        class="window window-md window-white"
+        class="window window-white window-md"
     />
 @endif

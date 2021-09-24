@@ -11,7 +11,7 @@
 @section('content')
     <div class="container">
         <div class="min-h-screen row-center-center">
-            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-6">
+            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white window-md space-y-6">
                 <h1 class="text-grey-900">
                     @if($new_password)
                         Maak een wachtwoord aan

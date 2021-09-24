@@ -56,8 +56,8 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
-                    <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST" class="mb-0">
+                <div class="window window-white window-md">
+                    <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST">
                         @csrf
                         @method('put')
 

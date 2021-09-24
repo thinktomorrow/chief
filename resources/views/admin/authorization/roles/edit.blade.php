@@ -22,12 +22,11 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                <div class="window window-white window-md">
                     <form
                         id="editForm"
                         action="{{ route('chief.back.roles.update', $role->id) }}"
                         method="POST"
-                        class="mb-0"
                     >
                         @csrf
                         @method('put')
