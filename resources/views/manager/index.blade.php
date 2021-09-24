@@ -59,7 +59,7 @@
 
             <div class="w-full space-y-6 lg:w-1/3">
                 @if($manager->filters()->anyRenderable())
-                    <div class="window window-grey space-y-6">
+                    <div class="window window-grey space-y-6 window-md">
                         <span class="text-xl font-semibold text-grey-900">Filtering</span>
 
                         <form method="GET" class="space-y-6">
@@ -72,7 +72,7 @@
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <div class="space-y-6 window window-grey">
+                    <div class="space-y-6 window window-grey window-md">
                         <div class="space-y-4">
                             <span class="text-xl font-semibold text-grey-900">Sortering</span>
 
@@ -98,7 +98,7 @@
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    <div class="window window-grey">
+                    <div class="window window-grey window-md">
                         @if(Route::currentRouteName() == 'chief.single.archive_index')
                             <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
                         @else
