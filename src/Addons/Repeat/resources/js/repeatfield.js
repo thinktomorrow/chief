@@ -35,9 +35,9 @@ class RepeatField {
         this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-delete')).forEach((trigger) => {
             // Hide delete option when there is only one left
             if (this._amountOfFieldSets() === 1) {
-                trigger.classList.add('hidden');
+                trigger.classList.add('opacity-0', 'scale-0');
             } else {
-                trigger.classList.remove('hidden');
+                trigger.classList.remove('opacity-0', 'scale-0');
             }
 
             trigger.removeEventListener('click', this.deleteFieldSetReference);

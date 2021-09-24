@@ -193,9 +193,9 @@ abstract class AbstractField
             case '1/2':
                 return 'w-full sm:w-1/2';
             case '1/3':
-                return 'w-full sm:w-1/2 lg:w-1/3';
+                return 'w-full sm:w-1/2 md:w-1/3';
             case '2/3':
-                return 'w-full sm:w-1/2 lg:w-2/3';
+                return 'w-full sm:w-1/2 md:w-2/3';
             case 1:
             default:
                 return 'w-full';

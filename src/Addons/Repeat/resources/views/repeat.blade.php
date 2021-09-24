@@ -16,7 +16,7 @@
                 <fieldset
                     id="{{ $fieldSet->getId() }}"
                     data-repeat-fieldset="{{ $uniqueContainerId }}"
-                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-2' : 'p-4' }} {{ $fieldSet->count() == 1 ? 'items-center' : '' }}"
+                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-4' : 'p-4' }} {{ $fieldSet->count() == 1 ? 'items-center' : '' }}"
                 >
                     <div class="w-full">
                         <div class="row-start-start gutter-3">
@@ -38,7 +38,7 @@
 
                     <span
                         data-repeat-delete="{{ $uniqueContainerId }}"
-                        class="flex-shrink-0 ml-3 cursor-pointer link link-grey-light"
+                        class="flex-shrink-0 ml-3 cursor-pointer link link-grey-light transform transition-150"
                         style="margin-top: -3px;"
                     >
                         <x-chief-icon-label type="delete"></x-chief-icon-label>
