@@ -179,6 +179,11 @@ export default class {
         Api.get(url, (data) => {
             newPanelElement.innerHTML = data;
 
+            // only mount Vue on our vue specific fields and not on the form element itself so
+            // that the submit event still works. I know this is kinda hacky. Make sure that
+            // vue mount occurs before a sidebar activation so native js can do its thing
+            vueFields(newPanelElement);
+
             Api.listenForFormSubmits(
                 newPanelElement,
                 (responseData, metadata) => {
@@ -230,11 +235,6 @@ export default class {
                     if (this.debug) console.error(`error on form submit: ${error}`);
                 }
             );
-
-            // only mount Vue on our vue specific fields and not on the form element itself so
-            // that the submit event still works. I know this is kinda hacky. Make sure that
-            // vue mount occurs before a sidebar activation so native js can do its thing
-            vueFields(newPanelElement);
 
             if (!this.sidebarContainer.isOpen()) {
                 this.sidebarContainer.open();
