@@ -11,7 +11,7 @@
     <div class="space-y-12">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
-        <div data-vue-fields class="space-y-8">
+        <div class="space-y-8">
             @foreach($fields->all() as $i => $fieldSet)
                 @include('chief::manager.fields.form.fieldset', ['index' => $i])
             @endforeach
