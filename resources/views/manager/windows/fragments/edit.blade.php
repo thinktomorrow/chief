@@ -8,7 +8,7 @@
     @csrf
     @method('put')
 
-    <div data-vue-fields class="space-y-8">
+    <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
         @include('chief::manager.fields.form.fieldsets', [

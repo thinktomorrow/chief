@@ -23,7 +23,7 @@
             @endif
 
             <div>
-                <div class="row-start-start gutter-3">
+                <div class="row-start-start gutter-4">
                     @php 
                         $index = $loop->index;
                     @endphp

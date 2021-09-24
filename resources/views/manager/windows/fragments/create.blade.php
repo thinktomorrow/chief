@@ -1,4 +1,4 @@
-@php 
+@php
     $formId = 'createForm' . \Illuminate\Support\Str::random(8);
 @endphp
 
@@ -13,7 +13,7 @@
 
     <input type="number" name="order" value="{{ $order ?? 0 }}" hidden>
 
-    <div data-vue-fields class="space-y-12">
+    <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
         @include('chief::manager.fields.form.fieldsets', [
@@ -28,9 +28,8 @@
     </div>
 </form>
 
-
 @push('custom-scripts-after-vue')
-    {{-- TODO: we need a better implementation for this --}}
+    {{-- TODO: Do we still need this? Images aren't typically available in redactor anymore. --}}
     <script>
         // Display a warning message to tell the user that adding images to redactor is only possible after page creation.
         var editors = document.querySelectorAll('[data-editor]');
