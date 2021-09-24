@@ -69,11 +69,11 @@
             <div class="w-full lg:w-1/3">
                 <div class="space-y-6">
                     @adminCan('status-edit', $model)
-                        <livewire:status :model="$model" class="window window-grey" />
+                        <livewire:status :model="$model" class="window window-grey window-md" />
                     @endAdminCan
 
                     @adminCan('links-edit', $model)
-                        <livewire:links :model="$model" class="window window-grey" />
+                        <livewire:links :model="$model" class="window window-grey window-md" />
                     @endAdminCan
 
                     @adminCan('fields-edit', $model)
@@ -86,7 +86,7 @@
                         <livewire:fields_component
                             :model="$model"
                             title="Algemeen"
-                            class="window window-grey"
+                            class="window window-grey window-md"
                         />
                     @endAdminCan
                 </div>

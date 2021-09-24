@@ -22,15 +22,14 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                <div class="window window-white window-md">
                     <div class="-m-8 divide-y divide-grey-100">
                         @foreach($roles as $role)
                             <a
                                 href="{{ route('chief.back.roles.edit', $role->id) }}"
+                                title="Edit {{ $role->name }}"
                                 class="block px-6 py-4 font-medium text-grey-900"
-                            >
-                                {{ $role->name }}
-                            </a>
+                            >{{ $role->name }}</a>
                         @endforeach
                     </div>
                 </div>

@@ -22,8 +22,8 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
-                    <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST" class="mb-0">
+                <div class="window window-white window-md">
+                    <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">
                         @csrf
 
                         <div class="space-y-8">

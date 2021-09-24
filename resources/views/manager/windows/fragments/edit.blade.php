@@ -8,14 +8,14 @@
     @csrf
     @method('put')
 
-    <div class="space-y-12">
+    <div data-vue-fields class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
-        <div class="space-y-8">
-            @foreach($fields->all() as $i => $fieldSet)
-                @include('chief::manager.fields.form.fieldset', ['index' => $i])
-            @endforeach
-        </div>
+        @include('chief::manager.fields.form.fieldsets', [
+            'fieldsets' => $fields->all(),
+            'hasFirstWindowItem' => false,
+            'hasLastWindowItem' => false,
+        ])
 
         @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
             <x-chief::fragments :owner="$model"/>

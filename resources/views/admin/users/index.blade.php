@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                <div class="window window-white window-md">
                     <div class="-m-8 divide-y divide-grey-100">
                         @foreach($users as $user)
                             <div class="flex items-center justify-between px-6 py-4">

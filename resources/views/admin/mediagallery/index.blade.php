@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row gutter-6">
             <div class="w-full lg:w-2/3">
-                <div class="window window-white space-y-12">
+                <div class="window window-white window-md space-y-8">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
                             <label for="select-all" class="flex items-center cursor-pointer text-grey-700 space-x-2 with-custom-checkbox">
@@ -53,7 +53,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="window window-white space-y-8">
+                <div class="window window-white window-md space-y-8">
                     <div>
                         <h3>Filteren</h3>
 

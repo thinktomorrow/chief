@@ -28,21 +28,22 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                <div class="window window-white window-md">
                     <form
                         id="createForm"
                         method="POST"
                         action="@adminRoute('store')"
                         enctype="multipart/form-data"
                         role="form"
-                        class="mb-0"
                     >
                         @csrf
 
                         <div class="space-y-8">
-                            @foreach($fields->all() as $i => $fieldSet)
-                                @include('chief::manager.fields.form.fieldset', ['index' => $i])
-                            @endforeach
+                            @include('chief::manager.fields.form.fieldsets', [
+                                'fieldsets' => $fields->all(),
+                                'hasFirstWindowItem' => true,
+                                'hasLastWindowItem' => false,
+                            ])
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>

@@ -8,10 +8,12 @@
             'inOpenState' => count($fragments) < 1
         ])
 
-        <div data-fragments-container
-             data-sortable-fragments
-             data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-             class="divide-y divide-grey-100">
+        <div 
+            data-fragments-container
+            data-sortable-fragments
+            data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
+            class="divide-y divide-grey-100"
+        >
             @foreach($fragments as $fragment)
                 @include('chief::manager.windows.fragments.component._card', [
                     'model' => $fragment['model'],
