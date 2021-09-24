@@ -22,8 +22,6 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                {{--TODO(tijs): rounded corners on top not visible (due to first element's neg. margins) --}}
-                {{--TODO(tijs): submit button container now has double bottom margins --}}
                 <div class="window window-white window-md">
                     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
                         @csrf
