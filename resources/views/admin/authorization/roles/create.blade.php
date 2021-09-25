@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.roles.index') }}" class="link link-primary">
-                    <x-icon-label type="back">Terug naar rechten</x-icon-label>
+                    <x-chief-icon-label type="back">Terug naar rechten</x-chief-icon-label>
                 </a>
             @endslot
 
@@ -22,13 +22,8 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
-                    <form
-                        id="createForm"
-                        action="{{ route('chief.back.roles.store') }}"
-                        method="POST"
-                        class="mb-0"
-                    >
+                <div class="window window-white window-md">
+                    <form id="createForm" action="{{ route('chief.back.roles.store') }}" method="POST">
                         @csrf
 
                         <div class="space-y-8">

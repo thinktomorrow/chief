@@ -50,7 +50,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function filterByWindowId(string $windowId): Fields
     {
-        if ($windowId === "default") {
+        if ('default' === $windowId) {
             return $this->onlyFieldsWithoutWindow()->untagged(static::PAGE_TITLE_TAG);
         }
 
@@ -63,6 +63,17 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         }
 
         return new Fields();
+    }
+
+    public function findFieldSet(string $fieldSetId): ?FieldSet
+    {
+        foreach ($this->fieldSets as $fieldSet) {
+            if ($fieldSet->getId() === $fieldSetId) {
+                return $fieldSet;
+            }
+        }
+
+        return null;
     }
 
     public function add(FieldSet ...$fieldSets): Fields
@@ -95,8 +106,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     /**
      * Populate the windows with their Fields.
-     *
-     * @return Collection
      */
     public function allWindows(): Collection
     {
@@ -130,13 +139,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($this->fieldSets->reject(fn ($fieldSet) => in_array($fieldSet->getId(), $fieldSetIds))->all(), $this->fieldWindows);
     }
 
-    public function first(): ?Field
+    public function first(): ?FieldSet
     {
         if ($this->fieldSets->isEmpty()) {
             return null;
         }
 
-        return $this->fieldSets->first()->first();
+        return $this->fieldSets->first();
     }
 
     public function find(string $key): Field
@@ -191,7 +200,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function model($model): self
     {
-        return $this->map(function ($fieldSet) use ($model) {
+        return $this->map(function (FieldSet $fieldSet) use ($model) {
             return $fieldSet->map(function ($field) use ($model) {
                 return $field->model($model);
             });
@@ -323,12 +332,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         foreach ($fieldSets as $fieldSet) {
             // A fieldWindow is added to our list of windows and no longer included in the array of fieldSets
             if ($fieldSet instanceof FieldWindow) {
-                if ($fieldSet->isOpen()) {
-                    $openFieldWindowId = $fieldSet->getId();
-                    $this->fieldWindows->push($fieldSet);
-                } else {
-                    $openFieldWindowId = false;
-                }
+                $this->fieldWindows->push($fieldSet);
+                $openFieldWindowId = $fieldSet->isOpen()
+                    ? $fieldSet->getId()
+                    : false;
             } elseif ($fieldSet instanceof FieldSet) {
                 // Add this fieldSet to an open window
                 if (false !== $openFieldWindowId) {
@@ -384,31 +391,4 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             }
         }
     }
-
-    // Add fields that aren't in a fieldSet, inside their own FieldSet.
-//    private function addLonelyFieldsToOpenFieldSets(array $fieldSets): array
-//    {
-//        $result = [];
-//        $lastFieldSetIndex = null;
-//
-//        foreach ($fieldSets as $fieldSet) {
-//            if ($fieldSet instanceof FieldWindow) {
-//                $result[] = $fieldSet;
-//            } elseif ($fieldSet instanceof FieldSet) {
-//                $result[] = $fieldSet;
-//                $lastFieldSetIndex = array_key_last($result);
-//            } elseif ($fieldSet instanceof Field) {
-//                // If there is an open fieldSet, we'll add this field to that one dynamically
-//                if (null !== $lastFieldSetIndex && $result[$lastFieldSetIndex]->isOpen()) {
-//                    $result[$lastFieldSetIndex] = $result[$lastFieldSetIndex]->add($fieldSet);
-//                } else {
-//                    $result[] = new FieldSet([$fieldSet]);
-//                }
-//            } else {
-//                throw new \InvalidArgumentException('Only FieldSet of Field instances should be passed.');
-//            }
-//        }
-//
-//        return $result;
-//    }
 }

@@ -37,9 +37,10 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
         return $fields;
     }
 
-    public static function open(): FieldSet
+    public static function open(?string $id = null): FieldSet
     {
-        return new static(static::randomId(), [], ['is_open' => true]);
+        // We set column only when an explicit id has been set.
+        return new static($id ?: static::randomId(), [], ['is_open' => true]);
     }
 
     public static function close(): FieldSet
@@ -55,16 +56,6 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
     public function isOpen(): bool
     {
         return $this->data['is_open'] ?? false;
-    }
-
-    public function multiple(): FieldSet
-    {
-        return new static($this->id, $this->fields, array_merge($this->data, ['multiple' => true]));
-    }
-
-    public function allowsMultiple(): bool
-    {
-        return $this->data['multiple'] ?? false;
     }
 
     public function all(): array
@@ -108,7 +99,6 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
     public function map(callable $callback): FieldSet
     {
         $keys = array_keys($this->fields);
-
         $items = array_map($callback, $this->fields, $keys);
 
         return new static($this->id, array_combine($keys, $items), $this->data);
@@ -194,6 +184,62 @@ class FieldSet implements \ArrayAccess, \IteratorAggregate, \Countable
     public function count()
     {
         return count($this->fields);
+    }
+
+    public function title(string $title): FieldSet
+    {
+        return new static(
+            $this->id,
+            $this->fields,
+            array_merge($this->data, ['title' => $title]),
+        );
+    }
+
+    public function getTitle(): string
+    {
+        return $this->data['title'] ?? '';
+    }
+
+    public function description(string $description): FieldSet
+    {
+        return new static(
+            $this->id,
+            $this->fields,
+            array_merge($this->data, ['description' => $description]),
+        );
+    }
+
+    public function getDescription(): string
+    {
+        return $this->data['description'] ?? '';
+    }
+
+    public function type(string $type): self
+    {
+        $this->data['type'] = $type;
+
+        return $this;
+    }
+
+    public function getType(): string
+    {
+        return $this->data['type'] ?? 'none';
+    }
+
+    public function getTypeStyle(): string
+    {
+        switch ($this->getType()) {
+            case 'error':
+                return 'bg-red-50';
+            case 'success':
+                return 'bg-green-50';
+            case 'info':
+                return 'bg-blue-50';
+            case 'warning':
+                return 'bg-orange-50';
+            default:
+                return 'bg-white';
+        }
     }
 
     private static function randomId(): string

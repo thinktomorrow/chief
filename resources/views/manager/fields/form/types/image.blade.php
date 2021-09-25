@@ -10,7 +10,7 @@
         'multiple' => $field->allowMultiple(),
     ]);
 ?>
-
+<div data-vue-fields>
 <imagesupload
     reference="{{ \Illuminate\Support\Str::random(10) }}"
     :settings="{{ $imagesUploadSettings }}"
@@ -102,3 +102,4 @@
         </div>
     </div>
 </imagesupload>
+</div>

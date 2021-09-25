@@ -35,6 +35,8 @@ interface Field
 
     public function render(array $viewData = []): string;
 
+    public function renderWindow(array $viewData = []): string;
+
     public function getLabel(): ?string;
 
     public function getDescription(): ?string;

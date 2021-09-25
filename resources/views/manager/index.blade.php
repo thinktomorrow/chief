@@ -14,14 +14,14 @@
             @slot('breadcrumbs')
                 @if($model->adminConfig()->getIndexBreadCrumb())
                     <a href="{{ $model->adminConfig()->getIndexBreadCrumb()->url }}" class="link link-primary">
-                        <x-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-icon-label>
+                        <x-chief-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-chief-icon-label>
                     </a>
                 @endif
             @endslot
 
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
-                    <x-icon-label type="add">@adminConfig('modelName') toevoegen</x-icon-label>
+                    <x-chief-icon-label type="add">@adminConfig('modelName') toevoegen</x-chief-icon-label>
                 </a>
             @endAdminCan
         @endcomponent
@@ -32,24 +32,25 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                @if($models->count())
-                    <div class="window window-white">
+                @if(count($models))
+                    <div class="window window-white window-sm">
                         @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative -m-8 divide-y divide-grey-100"
+                                class="relative -window-x -window-y divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative -m-8 divide-y divide-grey-100">
+                            <div class="relative -window-x -window-y divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
-                                    @include('chief::manager._index._card')
+                                    @include($model->adminConfig()->getIndexCardView())
                                 @endforeach
                             </div>
                     </div>
+
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                        {!! $models->links() !!}
+                        {!! $models->links('chief::pagination.default') !!}
                     @endif
                 @else
                     @include('chief::manager._index._empty')
@@ -58,20 +59,20 @@
 
             <div class="w-full space-y-6 lg:w-1/3">
                 @if($manager->filters()->anyRenderable())
-                    <div class="window window-grey space-y-6">
+                    <div class="window window-grey space-y-6 window-md">
                         <span class="text-xl font-semibold text-grey-900">Filtering</span>
 
                         <form method="GET" class="space-y-6">
 
                             {!! $manager->filters()->render() !!}
 
-                            <button class="btn btn-primary mt-4" type="submit">Filter</button>
+                            <button class="mt-4 btn btn-primary" type="submit">Filter</button>
                         </form>
                     </div>
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <div class="space-y-6 window window-grey">
+                    <div class="space-y-6 window window-grey window-md">
                         <div class="space-y-4">
                             <span class="text-xl font-semibold text-grey-900">Sortering</span>
 
@@ -97,7 +98,7 @@
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    <div class="window window-grey">
+                    <div class="window window-grey window-md">
                         @if(Route::currentRouteName() == 'chief.single.archive_index')
                             <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
                         @else

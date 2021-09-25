@@ -92,8 +92,8 @@ trait PageDefaults
                 return array_map(fn ($item) => trim($item), explode(',', $matches[1]));
             }
 
-            // Search for Field::make line
-            preg_match('@make\(\'([^\']*)\'\)@', $line, $matches);
+            // Search for Field::make('foobar') or Field::make('foobar', [...]) lines
+            preg_match('@make\(\'([^\']*)\'[\,)]@', $line, $matches);
 
             return (count($matches) < 2) ? null : $matches[1];
         })->flatten()

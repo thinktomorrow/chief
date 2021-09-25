@@ -9,6 +9,7 @@ const WarpaintGutter = plugin(({ addUtilities, config }) => {
     const gutterUtilities = {};
 
     for (const [key, value] of Object.entries(spacing)) {
+        // gutter-* classes
         const className = `.gutter-${key}`;
         const classProperties = {
             'margin-top': `-${value}`,
@@ -25,6 +26,34 @@ const WarpaintGutter = plugin(({ addUtilities, config }) => {
         };
         gutterUtilities[className] = classProperties;
         gutterUtilities[classNameChildren] = classPropertiesChildren;
+
+        // gutter-x-* classes
+        const classNameX = `.gutter-x-${key}`;
+        const classPropertiesX = {
+            'margin-right': `-${value}`,
+            'margin-left': `-${value}`,
+        };
+        const classNameChildrenX = `.gutter-x-${key} > *`;
+        const classPropertiesChildrenX = {
+            'padding-right': value,
+            'padding-left': value,
+        };
+        gutterUtilities[classNameX] = classPropertiesX;
+        gutterUtilities[classNameChildrenX] = classPropertiesChildrenX;
+
+        // gutter-y-* classes
+        const classNameY = `.gutter-y-${key}`;
+        const classPropertiesY = {
+            'margin-top': `-${value}`,
+            'margin-bottom': `-${value}`,
+        };
+        const classNameChildrenY = `.gutter-y-${key} > *`;
+        const classPropertiesChildrenY = {
+            'padding-top': value,
+            'padding-bottom': value,
+        };
+        gutterUtilities[classNameY] = classPropertiesY;
+        gutterUtilities[classNameChildrenY] = classPropertiesChildrenY;
     }
 
     addUtilities(gutterUtilities, ['responsive']);

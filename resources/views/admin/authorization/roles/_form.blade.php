@@ -20,9 +20,9 @@
         ></chief-multiselect>
 
         @if($errors->has('permission_names.0'))
-            <x-inline-notification type="error">
+            <x-chief-inline-notification type="error">
                 {{ $errors->first('permission_names.0') }}
-            </x-inline-notification>
+            </x-chief-inline-notification>
         @endif
     </div>
 </x-chief-formgroup>

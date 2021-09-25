@@ -38,7 +38,7 @@
 
                         <div v-if="!deletion" class="mr-4">
                             <span @click="markForDeletion">
-                                <x-icon-label type="delete" class="text-red-500"></x-icon-label>
+                                <x-chief-icon-label type="delete" class="text-red-500"></x-chief-icon-label>
                             </span>
                         </div>
                     </div>

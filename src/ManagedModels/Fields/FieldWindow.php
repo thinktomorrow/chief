@@ -26,9 +26,24 @@ class FieldWindow
         return new static(static::EMPTY_ID, new Fields(), [], ['is_open' => false]);
     }
 
+    public static function make(string $id): FieldWindow
+    {
+        return new static($id, new Fields(), [], []);
+    }
+
     public static function open(string $id): FieldWindow
     {
         return new static($id, new Fields(), [], ['is_open' => true]);
+    }
+
+    public function isOpen(): bool
+    {
+        return $this->data['is_open'] ?? false;
+    }
+
+    public static function close(): FieldWindow
+    {
+        return static::empty();
     }
 
     public function title(string $title): FieldWindow
@@ -61,14 +76,26 @@ class FieldWindow
         return $this->data['position'] ?? 'sidebar';
     }
 
-    public function isOpen(): bool
+    public function view(string $view)
     {
-        return $this->data['is_open'] ?? false;
+        return new static(
+            $this->id,
+            $this->fields,
+            $this->fieldSetIds,
+            array_merge($this->data, [
+                'viewPath' => $view,
+            ]),
+        );
     }
 
-    public static function close(): FieldWindow
+    public function hasView(): bool
     {
-        return static::empty();
+        return (isset($this->data['viewPath']) && $this->data['viewPath']);
+    }
+
+    public function getView(): string
+    {
+        return $this->data['viewPath'];
     }
 
     public function getId(): string

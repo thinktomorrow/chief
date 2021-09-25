@@ -1,4 +1,7 @@
-<?php $formId = 'createForm' . \Illuminate\Support\Str::random(8); ?>
+@php
+    $formId = 'createForm' . \Illuminate\Support\Str::random(8);
+@endphp
+
 <form
     id="{{ $formId }}"
     method="POST"
@@ -10,29 +13,27 @@
 
     <input type="number" name="order" value="{{ $order ?? 0 }}" hidden>
 
-    <div class="space-y-12">
+    <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
-        <div data-vue-fields class="space-y-8">
-            @foreach($fields->all() as $i => $fieldSet)
-                @include('chief::manager.fields.form.fieldset', ['index' => $i])
-            @endforeach
-        </div>
+        @include('chief::manager.fields.form.fieldsets', [
+            'fieldsets' => $fields->all(),
+            'hasFirstWindowItem' => false,
+            'hasLastWindowItem' => false,
+        ])
 
-        <div>
-            <button form="{{ $formId }}" type="submit" class="btn btn-primary">
-                Aanmaken
-            </button>
-        </div>
+        <button form="{{ $formId }}" type="submit" class="btn btn-primary">
+            Aanmaken
+        </button>
     </div>
 </form>
 
-
 @push('custom-scripts-after-vue')
-    {{-- TODO: we need a better implementation for this --}}
+    {{-- TODO: Do we still need this? Images aren't typically available in redactor anymore. --}}
     <script>
         // Display a warning message to tell the user that adding images to redactor is only possible after page creation.
         var editors = document.querySelectorAll('[data-editor]');
+
         for(var i = 0; i < editors.length; i++) {
             var message = document.createElement('p');
             message.style = "font-style: italic; opacity: 0.3; margin-top: 1rem;";

@@ -10,7 +10,7 @@
             @slot('breadcrumbs')
                 {{-- TODO: use correct route --}}
                 <a href="/admin/menus" class="link link-primary">
-                    <x-icon-label type="back">Ga terug</x-icon-label>
+                    <x-chief-icon-label type="back">Ga terug</x-chief-icon-label>
                 </a>
             @endslot
 
@@ -23,14 +23,13 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
+                <div class="window window-white window-md">
                     <form
                         id="createForm"
                         method="POST"
                         action="{{ route('chief.back.menuitem.store') }}"
                         enctype="multipart/form-data"
                         role="form"
-                        class="mb-0"
                     >
                         @csrf
 

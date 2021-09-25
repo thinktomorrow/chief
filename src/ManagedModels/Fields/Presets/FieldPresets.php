@@ -16,13 +16,13 @@ class FieldPresets
         yield FieldWindow::open('SEO');
         yield FieldSet::open();
         yield InputField::make('seo_title')
-                        ->label('Paginatitel zoals deze in zoekmachines wordt getoond.')
+                        ->label('Paginatitel in zoekmachines')
                         ->locales()
                         ->characterCount(66)
                         ->notOnCreate();
         yield TextField::make('seo_content')
-                        ->label('Korte inhoud')
-                        ->description('Pagina omschrijving in zoekmachines.')
+                        ->label('Omschrijving')
+                        ->description('Korte omschrijving in zoekmachines.')
                         ->locales()
                         ->characterCount(160)
                         ->notOnCreate();

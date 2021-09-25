@@ -38,6 +38,9 @@ export default class {
         this.el.style.display = 'block';
 
         this.sidebarContent.focus();
+
+        // Scroll back to top of sidebar after focussing the content area
+        this.sidebarAside.scrollTop = 0;
     }
 
     isOpen() {

@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
+                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
 
@@ -22,24 +22,18 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white">
-                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="mb-0">
+                <div class="window window-white window-md">
+                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
                         @csrf
                         @method('put')
 
-                        <div class="space-y-8">
-                            @foreach($fields->allFields() as $field)
-                                <x-chief-formgroup label="{{ $field->getLabel() }}" isRequired="{{ $field->required() }}" name="{{ $field->getName($locale ?? null) }}">
-                                    @if($field->getDescription())
-                                        <x-slot name="{{ $field->getDescription() }}"></x-slot>
-                                    @endif
+                        @include('chief::manager.fields.form.fieldsets', [
+                            'fieldsets' => $fields->all(),
+                            'hasFirstWindowItem' => true,
+                            'hasLastWindowItem' => false,
+                        ])
 
-                                    {!! $field->render() !!}
-                                </x-chief-formgroup>
-                            @endforeach
-
-                            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-                        </div>
+                        <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                     </form>
                 </div>
             </div>

@@ -3,7 +3,7 @@
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative shadow-xl window window-white" :class="sizeClass">
+            <div class="relative shadow-xl window window-white window-md" :class="sizeClass">
                 <div class="space-y-6">
                     <div v-if="title">
                         <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">

@@ -4,8 +4,9 @@
         $isActive = false;
 
         foreach($items as $navItem) {
-            if(isActiveUrl($navItem->url())) {
+            if(isActiveUrl($navItem->url()) || isActiveUrl($navItem->url() .'/*')) {
                 $isActive = true;
+                $showOpenDropdown = true;
             }
         }
 
@@ -18,7 +19,7 @@
             data-navigation-item-label
             class="link link-black cursor-pointer {{ $isActive ? 'active' : '' }}"
         >
-            <x-icon-label space="large" icon="{!! $groupIcon !!}">{{ $title }}</x-icon-label>
+            <x-chief-icon-label space="large" icon="{!! $groupIcon !!}">{{ $title }}</x-chief-icon-label>
         </span>
 
         <div
@@ -28,7 +29,7 @@
         >
             @foreach($items as $navItem)
                 <a
-                    class="link link-grey font-medium {{ isActiveUrl($navItem->url()) ? 'active' : '' }}"
+                    class="link link-grey font-medium {{ (isActiveUrl($navItem->url()) || isActiveUrl($navItem->url().'/*')) ? 'active' : '' }}"
                     href="{{ $navItem->url() }}"
                     title="{{ ucfirst($navItem->label()) }}"
                 > {{ ucfirst($navItem->label()) }} </a>
@@ -39,9 +40,9 @@
     @foreach($items as $navItem)
         <a
             href="{{ $navItem->url() }}"
-            class="{{ isActiveUrl($navItem->url()) ? 'link link-black active' : 'link link-black' }}"
+            class="{{ (isActiveUrl($navItem->url()) || isActiveUrl($navItem->url().'/*')) ? 'link link-black active' : 'link link-black' }}"
         >
-            <x-icon-label space="large" icon="{!! $navItem->icon()  !!}">{{ ucfirst($navItem->label()) }}</x-icon-label>
+            <x-chief-icon-label space="large" icon="{!! $navItem->icon()  !!}">{{ ucfirst($navItem->label()) }}</x-chief-icon-label>
         </a>
     @endforeach
 @endif

@@ -38,6 +38,7 @@ trait AllowsOptions
 
     public function getSelected()
     {
-        return $this->selected;
+        // TODO: why not use getValue() ?
+        return $this->selected ?: $this->getValue();
     }
 }

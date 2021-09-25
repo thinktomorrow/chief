@@ -2,6 +2,14 @@
     @apply font-medium rounded px-2 py-1 bg-grey-100 text-grey-700;
 }
 
+.label-xs {
+    @apply px-2 py-1 rounded-sm;
+}
+
+.label-sm {
+    @apply px-3 py-2 rounded-md;
+}
+
 .label-lg {
     @apply px-4 py-3 rounded-lg;
 }
@@ -27,7 +35,7 @@
 }
 
 .label-grey-light {
-    @apply bg-grey-100 text-grey-600;
+    @apply bg-grey-100 text-grey-500;
 }
 
 .label-warning {

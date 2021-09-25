@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row-center-center min-h-screen">
-            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-6 prose prose-dark">
+        <div class="min-h-screen row-center-center">
+            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white window-md space-y-6 prose prose-dark">
                 <h1>Jouw uitnodiging is afgewezen.</h1>
 
                 <div>

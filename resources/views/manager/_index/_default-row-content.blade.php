@@ -1,4 +1,4 @@
-<div class="flex justify-between items-center">
+<div class="flex items-center justify-between">
     @if(isset($model->created_at) && $model->created_at)
         <span class="font-medium text-grey-300">Aangemaakt op {{ $model->created_at->format('d/m/Y') }}</span>
     @endif

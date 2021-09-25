@@ -68,7 +68,7 @@ class FieldSetTest extends TestCase
         ]);
 
         $this->assertCount(1, $fields->filterBy('name', 'input-one'));
-        $this->assertEquals('input-one', $fields->filterBy('name', 'input-one')->first()->getKey());
+        $this->assertEquals('input-one', $fields->filterBy('name', 'input-one')->first()->first()->getKey());
     }
 
     /** @test */
@@ -84,6 +84,6 @@ class FieldSetTest extends TestCase
         });
 
         $this->assertCount(1, $filtered);
-        $this->assertEquals('input-one', $filtered->first()->getKey());
+        $this->assertEquals('input-one', $filtered->first()->first()->getKey());
     }
 }

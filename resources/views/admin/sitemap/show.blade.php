@@ -9,7 +9,7 @@
 
             @slot('breadcrumbs')
                 <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-icon-label type="back">Dashboard</x-icon-label>
+                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
 
@@ -24,9 +24,9 @@
             <div class="w-full prose prose-dark">
                 <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 
-                <div class="space-y-2 my-6">
+                <div class="my-6 space-y-2">
                     @foreach($sitemapFiles as $sitemapFile)
-                        <div class="bg-white rounded-xl p-6 flex justify-between items-center">
+                        <div class="flex items-center justify-between p-6 bg-white rounded-xl">
                             <div class="flex flex-col space-y-1">
                                 <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
 

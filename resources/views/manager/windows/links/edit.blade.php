@@ -45,9 +45,11 @@
                                 >
                             </div>
 
-                            {{-- TODO: test how this looks --}}
-                            {{-- Same styling as inline-notifications but laravel component can't asynchronously be rendered by vue --}}
-                            <div class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" v-if="hint" v-html="hint"></div>
+                            <div 
+                                class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" 
+                                v-if="hint" 
+                                v-html="hint"
+                            ></div>
                         </div>
                     </x-chief-formgroup>
                 </link-input>
@@ -68,7 +70,7 @@
                             @endif
 
                             <div class="w-full px-4 py-3">
-                                <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
+                                <div data-vue-fields class="-mx-4 -my-3 border rounded-lg divide-y border-grey-200 divide-grey-200">
                                     @foreach($links->redirects as $urlRecord)
                                         <url-redirect
                                             inline-template
@@ -81,7 +83,7 @@
                                                 <div>{{ $urlRecord->slug }}</div>
 
                                                 <span class="cursor-pointer link link-error" @click="remove">
-                                                    <x-icon-label type="delete"></x-icon-label>
+                                                    <x-chief-icon-label type="delete"></x-chief-icon-label>
                                                 </span>
                                             </div>
                                         </url-redirect>

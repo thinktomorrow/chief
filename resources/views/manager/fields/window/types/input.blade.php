@@ -1,5 +1,7 @@
-@if($field->getValue())
-    <p>{{ mb_strimwidth($field->getValue(), 0, 40, '...') }}</p>
-@else
-    <p><span class="text-grey-400">...</span></p>
-@endif
+<div class="prose prose-editor prose-dark">
+    @if($field->getValue())
+        <p>{{ teaser($field->getValue(), 120, '...') }}</p>
+    @else
+        <p>...</p>
+    @endif
+</div>

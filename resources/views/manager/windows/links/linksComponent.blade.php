@@ -3,7 +3,7 @@
         class="{{ isset($class) ? $class : '' }}"
         title="Links"
         :editRequestUrl="$manager->route('links-edit', $model)"
-        type="links"
+        sidebarTrigger="data-sidebar-trigger=links"
     >
         <div class="space-y-2">
             @unless($linkForm->exist())
@@ -12,7 +12,7 @@
                     data-sidebar-trigger="links"
                     href="{{ $manager->route('links-edit', $model) }}"
                 >
-                    <x-icon-label type="add">Voeg een eerste link toe</x-icon-label>
+                    <x-chief-icon-label type="add">Voeg een eerste link toe</x-chief-icon-label>
                 </a>
             @else
                 @foreach($linkForm->links() as $locale => $link)
