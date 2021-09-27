@@ -3,7 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
-...
+- Add: option to set custom from email address. Via chief setting from_email and from_name values
 
 ## 0.6.4 - 2021-09-24
 - Fixed: fieldSets loops are more consistent across the admin forms
@@ -18,7 +18,7 @@ principles.
 - Changed: AbstractField default label value was changed from using the field key to null. If a label is not specifically given, the field will display without it.
 - Fixed: After focussing a sidebar input, there was no scroll back to top.
 - Fixed: Chief pagination used the project default pagination which is just weird.
-- Changed: Prefixed all chief blade components with chief-. E.g. <x-icon-label> is now <x-chief-icon-label>. 
+- Changed: Prefixed all chief blade components with chief-. E.g. <x-icon-label> is now <x-chief-icon-label>.
 
 ## 0.6.2 - 2021-09-22
 - Added: Visitable::response() which renders the page view by default but also allows for custom handling a frontend request of the model.
