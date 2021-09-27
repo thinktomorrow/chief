@@ -1,4 +1,4 @@
-<div class="w-full external-editor-toolbar" id="js-external-editor-toolbar-{{ str_replace('.','_',$key) }}"></div>
+<div class="w-full external-editor-toolbar" id="js-external-editor-toolbar-{{ str_replace('.','_',$field->getId($locale ?? null)) }}"></div>
 
 <div class="flex">
     @if($field->getPrepend())
@@ -12,7 +12,7 @@
             @include('chief::editors.' . config('chief.editor', 'redactor') . '.input')
         </div>
     @else
-        <input 
+        <input
             type="text"
             name="{{ $field->getName($locale ?? null) }}"
             id="{{ $field->getId($locale ?? null) }}"
