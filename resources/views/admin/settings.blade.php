@@ -27,13 +27,15 @@
                         @csrf
                         @method('put')
 
-                        @include('chief::manager.fields.form.fieldsets', [
-                            'fieldsets' => $fields->all(),
-                            'hasFirstWindowItem' => true,
-                            'hasLastWindowItem' => false,
-                        ])
+                        <div class="space-y-8">
+                            @include('chief::manager.fields.form.fieldsets', [
+                                'fieldsets' => $fields->all(),
+                                'hasFirstWindowItem' => true,
+                                'hasLastWindowItem' => false,
+                            ])
 
-                        <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                        </div>
                     </form>
                 </div>
             </div>
