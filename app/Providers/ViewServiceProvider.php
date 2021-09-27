@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\App\View\Components\Label;
 use Thinktomorrow\Chief\App\View\Livewire\FieldsComponent;
 use Thinktomorrow\Chief\App\View\Livewire\Fragments;
 use Thinktomorrow\Chief\App\View\Livewire\Links;
@@ -49,6 +50,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.formgroup', 'chief-formgroup');
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
         Blade::component('chief::components.window', 'chief-window');
+        Blade::component('chief-label', Label::class);
 
         /* Wireframe components */
         Blade::component('chief::wireframes.wireframe', 'wireframe');

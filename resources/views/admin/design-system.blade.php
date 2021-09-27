@@ -18,7 +18,7 @@
                             <h2 class="text-lg font-semibold tracking-tight text-grey-900">Title of a window</h2>
 
                             <span class="p-2 -m-2 rounded-full link link-primary bg-primary-50 hover:bg-primary-100">
-                                <x-icon-label type="edit"></x-icon-label>
+                                <x-chief-icon-label type="edit"></x-chief-icon-label>
                             </span>
                         </div>
 
@@ -52,6 +52,8 @@
                     <p class="text-grey-700">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </p>
+
+                    <x-chief-label>test</x-chief-label>
                 </x-chief-window>
             </div>
 
@@ -70,7 +72,20 @@
             <div class="w-1/3">
                 <x-chief-window title="Your own window title explaining what is it inside of it">
                     <x-slot name="labels">
-                        <span class="inline-block text-xs leading-tight label label-info">Done</span>
+                        <x-chief-label size="sm">Done</x-chief-label>
+                        {{-- <span class="inline-block text-xs leading-tight label label-info">Done</span> --}}
+                    </x-slot>
+
+                    <p class="text-grey-700">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                </x-chief-window>
+            </div>
+
+            <div class="w-1/3">
+                <x-chief-window title="Status">
+                    <x-slot name="labels">
+                        <span class="inline-block text-xs leading-tight label label-success">Online</span>
                     </x-slot>
 
                     <p class="text-grey-700">
@@ -89,7 +104,7 @@
 
                             <div>
                                 <span class="flex-shrink-0 p-2 -m-2 rounded-xl link link-primary bg-primary-50 hover:bg-primary-100">
-                                    <x-icon-label type="edit" size="20"></x-icon-label>
+                                    <x-chief-icon-label type="edit" size="20"></x-chief-icon-label>
                                 </span>
                             </div>
                         </div>
