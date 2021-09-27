@@ -41,7 +41,7 @@ class ResetAdminPassword extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->subject('Herstel jouw wachtwoord.')
-            ->from(chiefSetting('contact_email'), chiefSetting('contact_name'))
+            ->from(chiefSetting('from_email', null, chiefSetting('contact_email')), chiefSetting('from_name', null, chiefSetting('contact_name')))
             ->view('chief::mails.password-reset', [
                 'reset_url' => route('chief.back.password.reset', $this->token),
             ]);
