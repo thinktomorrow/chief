@@ -4,6 +4,8 @@ principles.
 
 ## next release
 - Add: option to set custom from email address. Via chief setting from_email and from_name values
+- Added: sidebar component::onComponentReloading and component::onComponentReloaded listeners.
+- Removed: sidebar component::onComponentReload event listener. use the onComponentReloaded instead
 
 ## 0.6.4 - 2021-09-24
 - Fixed: fieldSets loops are more consistent across the admin forms

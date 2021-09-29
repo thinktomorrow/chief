@@ -79,8 +79,9 @@ export default class {
 
             // Event when livewire is reloaded on server
             window.Livewire.on(component.livewireEventKey, () => {
+                component.onComponentReloading();
                 this.listenForEvents();
-                component.onComponentReload();
+                component.onComponentReloaded();
             });
 
             const componentEl = component.el(this.currentContainer());
