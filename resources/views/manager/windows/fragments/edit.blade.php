@@ -76,6 +76,22 @@
                 Wijzigingen opslaan
             </button>
 
+            <button
+                type="submit"
+                form="updateForm{{ $model->modelReference()->get() }}"
+                class="btn btn-primary btn-disabled"
+            >
+                Wijzigingen opslaan
+            </button>
+
+            <button
+                type="submit"
+                form="updateForm{{ $model->modelReference()->get() }}"
+                class="btn btn-primary btn-disabled-outline"
+            >
+                Wijzigingen opslaan
+            </button>
+
             <div data-vue-fields>
                 @adminCan('fragment-delete', $model)
                     <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
