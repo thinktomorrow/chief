@@ -116,6 +116,7 @@
     }
 }
 
+/* purgecss start ignore */
 .btn-disabled {
     @apply bg-grey-100 border-grey-100 text-grey-400 pointer-events-none;
 }
@@ -123,3 +124,4 @@
 .btn-disabled-outline {
     @apply bg-transparent border-grey-200 text-grey-400 pointer-events-none;
 }
+/* purgecss enkd ignore */

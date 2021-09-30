@@ -94,6 +94,11 @@ export default class {
              */
             ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
                 EventBus.subscribe(eventKey, (evt) => {
+                    // If the response has a flag that explicitly requests no livewire, we will not reload livewire
+                    if (undefined !== evt.responseData.livewire && evt.responseData.livewire === false) {
+                        return;
+                    }
+
                     // Only refresh own component except for addFragment component which targets the fragments as well.
                     if (
                         evt.componentKey === component.key ||
@@ -216,7 +221,10 @@ export default class {
                         return;
                     }
 
-                    EventBus.publish('sidebarFormSubmitted', this.panels.findActive().eventPayload());
+                    EventBus.publish('sidebarFormSubmitted', {
+                        ...this.panels.findActive().eventPayload(),
+                        responseData,
+                    });
 
                     // We remove the parent if this parent should not be displayed after form submit of the child panel.
                     if (
