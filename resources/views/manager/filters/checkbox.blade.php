@@ -1,6 +1,6 @@
 <x-chief-formgroup
-        label="{{ $label ?? '' }}"
-        name="{{ $name }}"
+    label="{{ $label ?? '' }}"
+    name="{{ $name }}"
 >
     @if(isset($description))
         <x-slot name="description">
