@@ -101,6 +101,23 @@ final class AdminConfig
         return strip_tags($this->get('page.title', ''));
     }
 
+    public function breadCrumb(string $url, string $label): self
+    {
+        return $this->set('page.breadcrumb', [
+            'url' => $url,
+            'label' => $label,
+        ]);
+    }
+
+    public function getBreadCrumb(): ?object
+    {
+        if (! $this->get('page.breadcrumb')) {
+            return null;
+        }
+
+        return (object) $this->get('page.breadcrumb');
+    }
+
     public function getIndexCardView(): string
     {
         return $this->get('page.indexcardview', 'chief::manager._index._card');
