@@ -115,3 +115,13 @@
         @apply bg-green-500 border-green-500 text-white;
     }
 }
+
+/* purgecss start ignore */
+.btn-disabled {
+    @apply bg-grey-100 border-grey-100 text-grey-400 pointer-events-none select-none;
+}
+
+.btn-disabled-outline {
+    @apply bg-transparent border-grey-200 text-grey-400 pointer-events-none select-none;
+}
+/* purgecss enkd ignore */

@@ -43,7 +43,8 @@ input[type='number'] {
 
 input[type='checkbox'],
 input[type='radio'] {
-    @apply appearance-none relative w-5 h-5 bg-grey-50 border border-grey-200 overflow-hidden mr-1 cursor-pointer;
+    margin-top: 0.1rem;
+    @apply appearance-none relative w-5 h-5 bg-grey-50 border border-grey-200 overflow-hidden mr-1 cursor-pointer flex-shrink-0;
 
     &:focus {
         @apply ring-2 ring-primary-500;
@@ -77,7 +78,7 @@ input[type='checkbox'] {
 
 label.with-checkbox,
 label.with-radio {
-    @apply flex items-center space-x-2 cursor-pointer;
+    @apply flex items-start space-x-2 cursor-pointer;
 }
 
 .prepend-to-input {
