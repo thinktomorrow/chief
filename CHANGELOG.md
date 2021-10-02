@@ -7,6 +7,9 @@ principles.
 - Added: sidebar component::onComponentReloading and component::onComponentReloaded listeners.
 - Added: option to disable livewire reload after sidebar component submission by passing livewire=false in response data.
 - Added: response data to sidebar event payload data
+- Added: option to set breadcrumb on edit page
+- Added: seperate handleStore and handleUpdate methods
+- Fixed: repeatfield type would overwrite existing field indices so only last one would get stored. Therefore disabled vue fields for repeatfield.
 - Removed: sidebar component::onComponentReload event listener. use the onComponentReloaded instead
 
 ## 0.6.4 - 2021-09-24
