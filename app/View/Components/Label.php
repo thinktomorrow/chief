@@ -15,13 +15,13 @@ class Label extends Component
     public function render()
     {
         return view('chief::components.label', [
-            'sizeStyle' => $this->getSizeStyle()
+            'sizeStyle' => $this->getSizeStyle(),
         ]);
     }
 
     public function getSizeStyle(): string
     {
-        switch($this->size ?? null) {
+        switch ($this->size ?? null) {
             case 'xs':
                 return 'label-xs';
             case 'sm':
