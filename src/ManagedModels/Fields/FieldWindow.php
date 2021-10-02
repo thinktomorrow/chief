@@ -76,7 +76,7 @@ class FieldWindow
         return $this->data['position'] ?? 'sidebar';
     }
 
-    public function view(string $view)
+    public function view(string $view, array $viewData = [])
     {
         return new static(
             $this->id,
@@ -84,6 +84,7 @@ class FieldWindow
             $this->fieldSetIds,
             array_merge($this->data, [
                 'viewPath' => $view,
+                'viewData' => $viewData,
             ]),
         );
     }
@@ -96,6 +97,11 @@ class FieldWindow
     public function getView(): string
     {
         return $this->data['viewPath'];
+    }
+
+    public function getViewData(): array
+    {
+        return $this->data['viewData'] ?? [];
     }
 
     public function getId(): string

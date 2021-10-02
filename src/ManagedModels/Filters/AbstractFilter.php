@@ -14,7 +14,7 @@ abstract class AbstractFilter
     protected Closure $query;
     protected ?string $view = null;
 
-    protected string $label;
+    protected ?string $label;
 
     protected ?string $description = null;
     protected ?string $placeholder = null;
@@ -28,7 +28,7 @@ abstract class AbstractFilter
         $this->queryKey = $queryKey;
         $this->query = $query;
 
-        $this->label = $queryKey;
+        $this->label = null;
         $this->description = $this->placeholder = $this->value = null;
     }
 

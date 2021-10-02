@@ -12,6 +12,13 @@ return [
     'contact_name' => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
 
     /**
+     * From which email should the chief transactional mails be sent.
+     * By default the webmaster mail address and name will be used.
+     */
+    'from_email' => null,
+    'from_name' => null,
+
+    /**
      * Client details
      *
      * This is mainly a backend thing but it can occur in a

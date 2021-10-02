@@ -1,9 +1,9 @@
 <x-chief-formgroup
     label="{{ $field->getLabel() }}"
-    name="{{ $field->getName($locale ?? null) }}"
-    id="{{ $field->getId($locale ?? null) }}"
+    :field="$field"
+    name="{{ $field->getName() }}"
     isRequired="{{ $field->required() }}"
-    data-conditional="{{ $field->getId($locale ?? null) }}"
+    data-conditional="{{ $field->getId() }}"
     data-conditional-trigger-type="{{ $field->getType() }}"
     data-conditional-data="{{ $field->getConditionalFieldsData() }}"
     class="{{ $field->getWidthStyle() }}"

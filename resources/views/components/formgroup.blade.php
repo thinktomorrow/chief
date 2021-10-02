@@ -7,16 +7,9 @@
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
         <div class="mb-2 leading-none space-x-1">
-            @isset($id)
-                <label for="{{ $id }}" class="font-medium cursor-pointer text-grey-700">
-                    {{ ucfirst($label) }}
-                </label>
-            @else
-                <span class="font-medium text-grey-700">
-                    {{ ucfirst($label) }}
-                </span>
-            @endisset
-
+            <span class="font-medium text-grey-700">
+                {{ ucfirst($label) }}
+            </span>
             @if(isset($isRequired) && ($isRequired == 'true') | $isRequired == '1')
                 <span class="text-sm leading-none label label-warning">Verplicht</span>
             @endif
@@ -32,8 +25,23 @@
     <div class="{{ isset($label) && $label ? 'mt-3' : null }}">
         {{ $slot }}
     </div>
+    @if(isset($field) && count($field->getLocales()) > 0)
+        @foreach($field->getLocales() as $locale)
+            @error($field->getId($locale))
+                <div class="mt-2">
+                    <x-chief-inline-notification type="error">
+                        {{ $message }}
+                    </x-chief-inline-notification>
+                </div>
+            @enderror
 
-    @isset($name)
+            <div data-error-placeholder="{{ $field->getId($locale) }}" class="hidden mt-2">
+                <x-chief-inline-notification type="error">
+                    <div data-error-placeholder-content></div>
+                </x-chief-inline-notification>
+            </div>
+        @endforeach
+    @elseif( isset($name) )
         @error($name)
             <div class="mt-2">
                 <x-chief-inline-notification type="error">
@@ -47,5 +55,5 @@
                 <div data-error-placeholder-content></div>
             </x-chief-inline-notification>
         </div>
-    @endisset
+    @endif
 </div>

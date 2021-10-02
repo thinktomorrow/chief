@@ -41,15 +41,24 @@ export default class {
             options.onComponentCreation();
         }
 
-        this.onComponentReloadEvent = options.onComponentReload || function () {};
+        this.onComponentReloadingEvent = options.onComponentReloading || function () {};
+        this.onComponentReloadedEvent = options.onComponentReloaded || function () {};
+    }
+
+    /**
+     * Triggered after component reload but before the native events are reattached.
+     * This is a good place to attach any vue related scripts.
+     */
+    onComponentReloading() {
+        this.onComponentReloadingEvent();
     }
 
     /**
      * Triggered by the sidebar after reload of the component.
      * Usually occurs after the livewire reload.
      */
-    onComponentReload() {
-        this.onComponentReloadEvent();
+    onComponentReloaded() {
+        this.onComponentReloadedEvent();
     }
 
     /**
