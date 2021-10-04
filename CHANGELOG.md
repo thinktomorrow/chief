@@ -4,12 +4,13 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
-- Add: option to set custom from email address. Via chief setting from_email and from_name values
+- Added: option to set custom from email address. Via chief setting from_email and from_name values
 - Added: sidebar component::onComponentReloading and component::onComponentReloaded listeners.
 - Added: option to disable livewire reload after sidebar component submission by passing livewire=false in response data.
 - Added: response data to sidebar event payload data
 - Added: option to set breadcrumb on edit page
 - Added: seperate handleStore and handleUpdate methods
+- Added: HasBookMark interface to allow for bookmarks on fragments
 - Fixed: repeatfield type would overwrite existing field indices so only last one would get stored. Therefore disabled vue fields for repeatfield.
 - Changed: AbstractFilter default label value was changed from using the query key to null. If a label is not specifically given, the filter will display without it.
 - Removed: sidebar component::onComponentReload event listener. use the onComponentReloaded instead

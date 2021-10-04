@@ -11,6 +11,15 @@
     <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
+        {{-- bookmark for this fragment --}}
+        @if($model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookMark)
+            @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
+                <a href="{{ $owner->url() }}#{{ $model->getBookMark() }}" target="_blank">{{ $model->getBookMark() }}</a>
+            @else
+                <span>{{ $model->getBookMark() }}</span>
+            @endif
+        @endif
+
         @include('chief::manager.fields.form.fieldsets', [
             'fieldsets' => $fields->all(),
             'hasFirstWindowItem' => false,
