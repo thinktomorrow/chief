@@ -25,12 +25,13 @@
                         class="row-start-stretch gutter-4"
                     >
                         @foreach($models as $model)
-                            <div class="w-full border sm:w-1/2 md:w-1/3 lg:w-1/4 border-grey-100" data-sortable-id="{{ $model->id }}">
-                                <div class="rounded-lg cursor-move">
-                                    <p class="text-sm font-semibold text-grey-900">
-                                        @adminConfig('pageTitle')
-                                    </p>
-                                </div>
+                            <div
+                                class="w-full border cursor-move sm:w-1/2 md:w-1/3 lg:w-1/4 border-grey-100"
+                                data-sortable-id="{{ $model->id }}"
+                            >
+                                <p class="text-sm font-semibold text-grey-900">
+                                    @adminConfig('pageTitle')
+                                </p>
                             </div>
                         @endforeach
                     </div>
