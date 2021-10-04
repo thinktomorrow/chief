@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-interface HasBookMark
+interface HasBookmark
 {
-    public function getBookMark(): string;
+    public function getBookmark(): string;
 }
