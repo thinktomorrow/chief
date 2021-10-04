@@ -6,16 +6,17 @@ use Illuminate\View\Component;
 
 class Label extends Component
 {
-    public function __construct($size = 'md')
+    public function __construct($size = 'sm', $type = 'info')
     {
-        /* FIXME: Attribute not being passed to model */
         $this->size = $size;
+        $this->type = $type;
     }
 
     public function render()
     {
         return view('chief::components.label', [
-            'sizeStyle' => $this->getSizeStyle()
+            'sizeStyle' => $this->getSizeStyle(),
+            'typeStyle' => $this->getTypeStyle()
         ]);
     }
 
@@ -28,12 +29,24 @@ class Label extends Component
                 return 'label-sm';
             case 'md':
                 return 'label-md';
-            case 'lg':
-                return 'label-lg';
-            case 'xl':
-                return 'label-xl';
             default:
-                return 'label-md';
+                return 'label-sm';
+        }
+    }
+
+    public function getTypeStyle(): string
+    {
+        switch($this->type ?? null) {
+            case 'error':
+                return 'label-error';
+            case 'success':
+                return 'label-success';
+            case 'info':
+                return 'label-info';
+            case 'warning':
+                return 'label-warning';
+            default:
+                return 'label-info';
         }
     }
 }

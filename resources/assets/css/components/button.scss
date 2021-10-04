@@ -1,8 +1,6 @@
 .btn {
-    @apply inline-flex items-center border-2 cursor-pointer leading-normal px-4 py-1.5 font-medium;
+    @apply inline-flex items-center border-2 cursor-pointer leading-normal px-4 py-1.5 font-medium rounded-xl;
     @apply transition duration-75 ease-in-out;
-
-    border-radius: 0.4rem;
 
     &:focus {
         @apply outline-none;

@@ -49,7 +49,9 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.formgroup', 'chief-formgroup');
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
+
         Blade::component('chief::components.window', 'chief-window');
+        Blade::component('chief::components.icon-button', 'chief-icon-button');
         Blade::component('chief-label', Label::class);
 
         /* Wireframe components */

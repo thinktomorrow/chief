@@ -1,22 +1,22 @@
 .label {
-    @apply font-semibold rounded px-2 py-1 bg-grey-100 text-grey-700;
+    @apply inline-block font-semibold leading-tight;
 }
 
 .label-xs {
-    @apply px-2 py-1 rounded-sm;
+    @apply px-2 py-1 text-xs rounded;
 }
 
 .label-sm {
-    @apply px-3 py-2 rounded-md;
+    @apply px-3 py-1 text-sm rounded;
 }
 
-.label-lg {
-    @apply px-4 py-3 rounded-lg;
+.label-md {
+    @apply px-3 py-1 text-base rounded-md;
 }
 
-.label-xl {
-    @apply px-8 py-4 rounded-xl;
-}
+// .label-xl {
+//     @apply px-8 py-4 rounded-xl;
+// }
 
 .label-primary {
     @apply bg-primary-50 text-primary-500;
@@ -51,5 +51,5 @@
 }
 
 .label-info {
-    @apply bg-blue-100 text-blue-500;
+    @apply bg-blue-50 text-blue-500;
 }
