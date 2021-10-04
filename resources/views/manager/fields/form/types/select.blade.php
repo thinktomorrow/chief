@@ -1,4 +1,4 @@
-<div @if($field->prefersNativeSelect()) data-vue-fields @endif>
+<div @if(!$field->prefersNativeSelect()) data-vue-fields @endif>
     @if($field->isGrouped())
         <chief-multiselect
             name="{{ isset($locale) ? $field->getName($locale) : $field->getName() }}"
