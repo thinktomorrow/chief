@@ -38,10 +38,10 @@
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative -window-x -window-y divide-y divide-grey-100"
+                                class="relative divide-y -window-x -window-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative -window-x -window-y divide-y divide-grey-100">
+                            <div class="relative divide-y -window-x -window-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include($model->adminConfig()->getIndexCardView())
@@ -59,7 +59,7 @@
 
             <div class="w-full space-y-6 lg:w-1/3">
                 @if($manager->filters()->anyRenderable())
-                    <div class="window window-grey space-y-6 window-md">
+                    <div class="space-y-6 window window-grey window-md">
                         <span class="text-xl font-semibold text-grey-900">Filtering</span>
 
                         <form method="GET" class="space-y-6">
@@ -81,7 +81,9 @@
                                     Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
                                 </p>
 
-                                <button data-sortable-toggle class="btn btn-primary">Sorteer handmatig</button>
+                                <button data-sortable-toggle class="btn btn-primary">
+                                    Pas volgorde aan
+                                </button>
 
                                 <p class="text-grey-700 font-xs" data-sortable-show-when-sorting>
                                     Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
