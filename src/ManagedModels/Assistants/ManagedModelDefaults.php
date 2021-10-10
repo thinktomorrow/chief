@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
@@ -15,6 +17,11 @@ trait ManagedModelDefaults
 {
     use SavingFields;
     use ReferableModelDefault;
+
+    public function field(string $key): Field
+    {
+        return Fields::make($this->fields())->find($key);
+    }
 
     public static function managedModelKey(): string
     {
