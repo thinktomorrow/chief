@@ -52,6 +52,23 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full space-y-6 lg:w-2/3">
+
+                <!-- full render of field -->
+{{--                <x-chief::formgroup key="title" />--}}
+{{--                <x-chief::field.multiple tagged="top" />--}}
+
+{{--                <x-chief::field.set>--}}
+{{--                    <x-chief::field.multiple tagged="top" />--}}
+{{--                </x-chief::field.set>--}}
+
+                <x-chief::field.window tagged="top" title="example">
+                    <x-chief::field.multiple tagged="top" />
+                </x-chief::field.window>
+
+{{--                <!-- the input element -->--}}
+{{--                <x-chief::field key="title" />--}}
+{{--                <x-chief::field.show key="title" />--}}
+
                 @adminCan('fields-edit', $model)
                     @foreach($fields->getWindowsByPosition('top') as $fieldWindow)
                         @include('chief::manager.windows.show')
