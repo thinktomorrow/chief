@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
@@ -193,6 +194,9 @@ trait CrudAssistant
         $this->guard('edit', $model);
 
         $fields = Fields::make($model->fields())->model($model);
+
+        View::share('model', $model);
+        View::share('manager', $this);
 
         return view('chief::manager.edit', [
             'manager' => $this,

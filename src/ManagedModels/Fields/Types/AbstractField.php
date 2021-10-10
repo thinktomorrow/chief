@@ -389,7 +389,17 @@ abstract class AbstractField
         return view($this->getView(), array_merge($viewData, $this->getViewData()))->render();
     }
 
+    /**
+     * @deprecated use renderShow instead
+     * @param array $viewData
+     * @return string
+     */
     public function renderWindow(array $viewData = []): string
+    {
+        return view($this->getWindowView(), array_merge($viewData, $this->getViewData()))->render();
+    }
+
+    public function renderRead(array $viewData = []): string
     {
         return view($this->getWindowView(), array_merge($viewData, $this->getViewData()))->render();
     }
@@ -529,6 +539,7 @@ abstract class AbstractField
         ], $this->viewData);
     }
 
+    // TODO: rename to getShowView() / getEditView
     protected function getWindowView(): string
     {
         if (isset($this->windowView)) {
