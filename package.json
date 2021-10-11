@@ -23,7 +23,7 @@
         "eslint-webpack-plugin": "^2.5.4",
         "expect": "^26.6.2",
         "husky": "^6.0.0",
-        "jest": "^26.6.3",
+        "jest": "^27.2.5",
         "jest-fetch-mock": "^3.0.3",
         "laravel-mix": "^6.0.19",
         "laravel-mix-eslint": "^0.2.0",
