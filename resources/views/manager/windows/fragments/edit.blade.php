@@ -28,19 +28,18 @@
                                     <x-chief-icon-label icon="icon-external-link" size="18"></x-chief-icon-label>
                                 </a>
                             </span>
-                        @endif
-
-                        <span class="transform scale-0 group-hover:scale-100 transition-150">
-                            <span
-                                data-copy-to-clipboard="bookmark"
-                                data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"
-                                data-copy-success-content="Gekopiëerd!"
-                                title="copy link"
-                                class="leading-none cursor-pointer link link-primary"
-                            >
-                                <x-chief-icon-label icon="icon-link" size="18"></x-chief-icon-label>
+                            <span class="transform scale-0 group-hover:scale-100 transition-150">
+                                <span
+                                        data-copy-to-clipboard="bookmark"
+                                        data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"
+                                        data-copy-success-content="Gekopiëerd!"
+                                        title="copy link"
+                                        class="leading-none cursor-pointer link link-primary"
+                                >
+                                    <x-chief-icon-label icon="icon-link" size="18"></x-chief-icon-label>
+                                </span>
                             </span>
-                        </span>
+                        @endif
                     </div>
                 @endif
             </div>
