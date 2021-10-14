@@ -17,5 +17,4 @@ class HiddenField extends AbstractField implements Field
     {
         return '';
     }
-
 }
