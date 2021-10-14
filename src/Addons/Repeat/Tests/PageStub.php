@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
+namespace Thinktomorrow\Chief\Addons\Repeat\tests;
 
 use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;

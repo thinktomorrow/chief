@@ -5,9 +5,8 @@ principles.
 
 ## next release
 
-## 0.6.5 - 2021-10-14
+## 0.6.6 - 2021-10-14
 
-- Added: option to set custom from email address. Via chief setting from_email and from_name values
 - Added: sidebar component::onComponentReloading and component::onComponentReloaded listeners. This is a breaking change since onComponentReload is now removed.
 - Added: option to disable livewire reload after sidebar component submission by passing livewire=false in response data.
 - Added: response data to sidebar event payload data
@@ -18,6 +17,10 @@ principles.
 - Fixed: repeatfield type would overwrite existing field indices so only last one would get stored. Therefore disabled vue fields for repeatfield.
 - Changed: AbstractFilter default label value was changed from using the query key to null. If a label is not specifically given, the filter will display without it.
 - Removed: sidebar component::onComponentReload event listener. use the onComponentReloaded instead
+
+## 0.6.5 - 2021-09-27
+
+- Added: option to set custom from email address. Via chief setting from_email and from_name values
 
 ## 0.6.4 - 2021-09-24
 

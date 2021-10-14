@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
+namespace Thinktomorrow\Chief\Addons\Repeat\tests;
 
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
