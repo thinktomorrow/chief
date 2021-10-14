@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
+use Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant;
 
 class EditActionTest extends ChiefTestCase
 {
@@ -19,7 +20,7 @@ class EditActionTest extends ChiefTestCase
         ])->create(['title' => 'Original titel']);
 
         $manager = ManagerFactory::make()
-            ->withAssistants([CrudAssistant::class])
+            ->withAssistants([CrudAssistant::class, FieldsComponentAssistant::class])
             ->withModel($model)
             ->create();
 

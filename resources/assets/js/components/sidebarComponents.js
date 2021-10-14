@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             generateWireframeStyles();
             new SelectFragment(document);
         },
-        onComponentReload: () => {
+        onComponentReloaded: () => {
             new SelectFragment(document);
             initSortableGroup('[data-sortable-fragments]');
             generateWireframeStyles();
