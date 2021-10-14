@@ -9,16 +9,16 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 class FieldsComponent extends Component
 {
     public $model;
-    public string $componentKey;
+    public string $tag;
     public bool $inlineEdit;
     public $title;
     public $class;
     public $template;
 
-    public function mount($model, ?string $componentKey = null): void
+    public function mount($model, ?string $tag = null): void
     {
         $this->model = $model;
-        $this->componentKey = $componentKey ?? 'default';
+        $this->tag = $tag ?? 'default';
     }
 
     /**
@@ -27,8 +27,8 @@ class FieldsComponent extends Component
     public function render()
     {
         $fields = Fields::make($this->model->fields())
-            ->model($this->model)
-            ->filterByWindowId($this->componentKey);
+            ->tagged($this->tag)
+            ->model($this->model);
 
         return view('chief::manager.windows.fields.fieldsComponent', [
             'fields' => $fields,
@@ -38,6 +38,6 @@ class FieldsComponent extends Component
 
     public function reload(): void
     {
-        $this->emit($this->componentKey. 'Reloaded');
+        $this->emit($this->tag. 'Reloaded');
     }
 }
