@@ -42,13 +42,15 @@
             </div>
         @endforeach
     @elseif( isset($name) )
-        @error($name)
-            <div class="mt-2">
-                <x-chief-inline-notification type="error">
-                    {{ $message }}
-                </x-chief-inline-notification>
-            </div>
-        @enderror
+        @if(isset($errors))
+            @error($name)
+                <div class="mt-2">
+                    <x-chief-inline-notification type="error">
+                        {{ $message }}
+                    </x-chief-inline-notification>
+                </div>
+            @enderror
+        @endif
 
         <div data-error-placeholder="{{ $name }}" class="hidden mt-2">
             <x-chief-inline-notification type="error">
