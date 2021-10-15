@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
