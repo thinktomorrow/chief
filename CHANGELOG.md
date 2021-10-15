@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
+- Fixed: performance issues with menu
 
 ## 0.6.6 - 2021-10-14
 
