@@ -20,7 +20,7 @@ use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
@@ -73,7 +73,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         // Clear out any memoized values
         Memoize::clear();
-        MemoizedUrlRecord::clearCachedRecords();
+        MemoizedUrlRecords::clearCachedRecords();
 
         parent::tearDown();
     }

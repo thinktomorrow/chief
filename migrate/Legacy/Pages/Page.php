@@ -160,7 +160,7 @@ class Page extends Model implements TranslatableContract, HasAsset, MorphableCon
                 return static::$cachedUrls[$memoizedKey];
             }
 
-            $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
+            $slug = MemoizedUrlRecords::findByModel($this, $locale)->slug;
 
             return static::$cachedUrls[$memoizedKey] = $this->resolveUrl($locale, [$slug]);
         } catch (UrlRecordNotFound $e) {

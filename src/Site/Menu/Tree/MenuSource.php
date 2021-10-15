@@ -46,7 +46,7 @@ class MenuSource implements Source
                     $item->url = $item->url();
 
                     // Extra info on admin page.
-                    $item->page_label = $owner instanceof ManagedModel ? $owner->adminConfig()->getPageTitle() : '-';
+                    $item->page_label = $item->label ?: '-';
 
                     $item->hidden_in_menu = $owner->hidden_in_menu;
                     $item->draft = (public_method_exists($owner, 'isDraft') && $owner->isDraft());
