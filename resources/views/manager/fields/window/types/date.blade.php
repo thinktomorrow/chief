@@ -1,5 +1,5 @@
 @if($field->getValue())
-    <p>{{ $field->getValue() }}</p>
+    <p>{{ optional($field->getValue())->format('Y-m-d') }}</p>
 @else
     <p><span class="text-grey-400">...</span></p>
 @endif
