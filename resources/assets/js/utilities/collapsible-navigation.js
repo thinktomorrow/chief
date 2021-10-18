@@ -5,7 +5,7 @@
 // The navigation in expanded state has a fixed width
 // If collapsed, clicking a navigation item with children will open a dropdown to the right
 // If expanded, clicking a navigation item will show the underlying items under it (without dropdown)
-// On mobile, the navigation is always expanded (full width) and works like a normal mobile navigation with hamburger icon
+// On mobile, the navigation is always expanded and works like a normal mobile navigation with hamburger icon
 const initCollapsibleNavigation = (
     containerSelector = '[data-collapsible-navigation]',
     toggleSelector = '[data-toggle-collapsible-navigation]',
