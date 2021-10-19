@@ -45,13 +45,15 @@
     </div>
 
     @foreach($errorIds as $errorId)
-        @error($errorId)
-            <div class="mt-2">
-                <x-chief-inline-notification type="error">
-                    {{ $message }}
-                </x-chief-inline-notification>
-            </div>
-        @enderror
+        @if(isset($errors))
+            @error($errorId)
+                <div class="mt-2">
+                    <x-chief-inline-notification type="error">
+                        {{ $message }}
+                    </x-chief-inline-notification>
+                </div>
+            @enderror
+        @endif
 
         <div data-error-placeholder="{{ $errorId }}" class="hidden mt-2">
             <x-chief-inline-notification type="error">
