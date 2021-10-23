@@ -58,6 +58,9 @@
             </div>
 
             <div class="w-full space-y-6 lg:w-1/3">
+                @if($model->adminConfig()->getIndexSidebar())
+                    {!! $model->adminConfig()->getIndexSidebar() !!}
+                @endif
                 @if($manager->filters()->anyRenderable())
                     <div class="space-y-6 window window-grey window-md">
                         <span class="text-xl font-semibold text-grey-900">Filtering</span>

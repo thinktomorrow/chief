@@ -1,3 +1,21 @@
+<?php
+
+    $errorIds = [];
+
+    if(isset($field)) {
+        if(count($field->getLocales()) > 0) {
+            foreach($field->getLocales() as $locale) {
+                $errorIds[] = $field->getId($locale);
+            }
+        } else {
+            $errorIds = [$field->getId()];
+        }
+    } else {
+        $errorIds = isset($name) ? [$name] : [];
+    }
+
+?>
+
 <div
     {!! $attributes->has('data-conditional') ? 'data-conditional="' . $attributes->get('data-conditional') . '"' : null !!}
     {!! $attributes->has('data-conditional-trigger-type') ? 'data-conditional-trigger-type="' . $attributes->get('data-conditional-trigger-type') . '"' : null !!}
@@ -25,25 +43,10 @@
     <div class="{{ isset($label) && $label ? 'mt-3' : null }}">
         {{ $slot }}
     </div>
-    @if(isset($field) && count($field->getLocales()) > 0)
-        @foreach($field->getLocales() as $locale)
-            @error($field->getId($locale))
-                <div class="mt-2">
-                    <x-chief-inline-notification type="error">
-                        {{ $message }}
-                    </x-chief-inline-notification>
-                </div>
-            @enderror
 
-            <div data-error-placeholder="{{ $field->getId($locale) }}" class="hidden mt-2">
-                <x-chief-inline-notification type="error">
-                    <div data-error-placeholder-content></div>
-                </x-chief-inline-notification>
-            </div>
-        @endforeach
-    @elseif( isset($name) )
+    @foreach($errorIds as $errorId)
         @if(isset($errors))
-            @error($name)
+            @error($errorId)
                 <div class="mt-2">
                     <x-chief-inline-notification type="error">
                         {{ $message }}
@@ -52,10 +55,10 @@
             @enderror
         @endif
 
-        <div data-error-placeholder="{{ $name }}" class="hidden mt-2">
+        <div data-error-placeholder="{{ $errorId }}" class="hidden mt-2">
             <x-chief-inline-notification type="error">
                 <div data-error-placeholder-content></div>
             </x-chief-inline-notification>
         </div>
-    @endif
+    @endforeach
 </div>
