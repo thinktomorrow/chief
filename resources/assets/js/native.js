@@ -4,8 +4,10 @@ import initConditionalFields from './utilities/conditional-fields';
 import initRepeatFieldsOnPageLoad from '../../../src/Addons/Repeat/resources/js/init-repeat-fields-on-pageload';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
+import initDropdowns from './utilities/dropdown';
 
 initCollapsibleNavigation();
+initDropdowns();
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation

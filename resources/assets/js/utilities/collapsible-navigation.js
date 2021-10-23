@@ -1,3 +1,5 @@
+import EventBus from './EventBus';
+
 // Make navigation collapsible
 // Toggle to switch between collapsed and open state (default is collapsed, so maybe rename to expandable instead?)
 // --> normal state and collapsed state
@@ -9,18 +11,39 @@
 const initCollapsibleNavigation = (
     containerSelector = '[data-collapsible-navigation]',
     toggleSelector = '[data-toggle-collapsible-navigation]',
-    collapsingElementSelector = '[data-hide-on-collapse]'
+    collapsingElementSelector = '[data-hide-on-collapse]',
+    changingElementsAttribute = 'data-class-on-collapse'
 ) => {
     const container = document.querySelector(containerSelector);
     const toggle = document.querySelector(toggleSelector);
     const collapsingElements = Array.from(document.querySelectorAll(collapsingElementSelector));
+    const changingElements = Array.from(document.querySelectorAll(`[${changingElementsAttribute}]`));
+    let isCollapsed = false;
 
     toggle.addEventListener('click', () => {
         container.classList.toggle('w-64');
 
-        collapsingElements.forEach((element) => {
-            element.classList.toggle('hidden');
+        if (isCollapsed) {
+            collapsingElements.forEach((element) => {
+                element.classList.remove('hidden');
+            });
+        } else {
+            collapsingElements.forEach((element) => {
+                element.classList.add('hidden');
+            });
+
+            EventBus.publish('collapsedNavigation');
+        }
+
+        changingElements.forEach((element) => {
+            const classNames = element.getAttribute(changingElementsAttribute).split(' ');
+
+            classNames.forEach((className) => {
+                element.classList.toggle(className);
+            });
         });
+
+        isCollapsed = !isCollapsed;
     });
 
     console.log(container, toggle, collapsingElements);

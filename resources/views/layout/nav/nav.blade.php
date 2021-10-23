@@ -1,21 +1,65 @@
-<div data-collapsible-navigation class="w-64 h-screen p-4 bg-white">
-    <div data-toggle-collapsible-navigation class="px-4 py-2 rounded-lg cursor-pointer hover:bg-grey-100">
-        <div class="flex items-center justify-start space-x-4">
-            <div class="flex-shrink-0">
-                <svg width="20" height="20"><use xlink:href="#icon-home"></use></svg>
+<div data-collapsible-navigation class="w-64 h-screen p-4 bg-white shadow-sm select-none">
+    <div data-toggle-collapsible-navigation data-hide-all-dropdowns class="pb-6 mb-6 border-b border-grey-100">
+        <div class="flex items-center justify-start">
+            <div class="flex-shrink-0 px-3 py-2 rounded-lg cursor-pointer hover:bg-primary-50">
+                <svg width="22" height="22" class="text-grey-700"><use xlink:href="#menu"></use></svg>
             </div>
 
-            <span data-hide-on-collapse class="link link-black pop"> Dashboard </span>
+            <span data-hide-on-collapse class="ml-2 leading-tight link link-black pop"> Chief </span>
         </div>
     </div>
 
-    <div class="px-4 py-2 rounded-lg cursor-pointer hover:bg-grey-100">
-        <div class="flex items-center justify-start space-x-4">
+    <div class="px-3 py-2 rounded-lg cursor-pointer hover:bg-primary-50">
+        <div class="flex items-center justify-start space-x-6">
             <div class="flex-shrink-0">
-                <svg width="20" height="20"><use xlink:href="#icon-collection"></use></svg>
+                <svg width="22" height="22" class="text-grey-700"><use xlink:href="#icon-home"></use></svg>
             </div>
 
-            <span data-hide-on-collapse class="link link-black pop"> Pagina's </span>
+            <span data-hide-on-collapse class="leading-tight link link-black pop"> Dashboard </span>
+        </div>
+    </div>
+
+    @include('chief::layout.nav.nav-item')
+
+    <div class="px-3 py-2 rounded-lg cursor-pointer hover:bg-primary-50">
+        <div class="flex items-center justify-start space-x-6">
+            <div class="flex-shrink-0">
+                <svg width="22" height="22" class="text-grey-700"><use xlink:href="#icon-book-open"></use></svg>
+            </div>
+
+            <span data-hide-on-collapse class="leading-tight link link-black pop"> Blog </span>
+        </div>
+    </div>
+
+    <div class="pt-6 mt-6 border-t border-grey-100">
+        <div class="px-3 py-2 rounded-lg cursor-pointer hover:bg-primary-50">
+            <div class="flex items-center justify-start space-x-6">
+                <div class="flex-shrink-0">
+                    <svg width="22" height="22" class="text-grey-700"><use xlink:href="#icon-settings"></use></svg>
+                </div>
+
+                <span data-hide-on-collapse class="leading-tight link link-black pop"> Instellingen </span>
+            </div>
+        </div>
+
+        <div class="px-3 py-2 rounded-lg cursor-pointer hover:bg-primary-50">
+            <div class="flex items-center justify-start space-x-6">
+                <div class="flex-shrink-0">
+                    <svg width="22" height="22" class="text-grey-700"><use xlink:href="#icon-user"></use></svg>
+                </div>
+
+                <span data-hide-on-collapse class="leading-tight link link-black pop"> Tijs </span>
+            </div>
+        </div>
+
+        <div class="px-3 py-2 rounded-lg cursor-pointer hover:bg-primary-50">
+            <div class="flex items-center justify-start space-x-6">
+                <div class="flex-shrink-0">
+                    <svg width="22" height="22" class="text-grey-700"><use xlink:href="#icon-logout"></use></svg>
+                </div>
+
+                <span data-hide-on-collapse class="leading-tight link link-black pop"> Logout </span>
+            </div>
         </div>
     </div>
 </div>
