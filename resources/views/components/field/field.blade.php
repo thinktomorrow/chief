@@ -18,7 +18,7 @@
 
         $slot = $field->render(get_defined_vars());
 
-        // TODO/ conditional defaults for field
+        // TODO(tijs): conditional defaults for field
         // data-conditional="{{ $field->getId() }}"
 //        data-conditional-trigger-type="{{ $field->getType() }}"
 //        data-conditional-data="{{ $field->getConditionalFieldsData() }}"
