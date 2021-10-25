@@ -95,7 +95,11 @@ export default class {
             ['sidebarFormSubmitted', ...this.reloadLivewireEvents].forEach((eventKey) => {
                 EventBus.subscribe(eventKey, (evt) => {
                     // If the response has a flag that explicitly requests no livewire, we will not reload livewire
-                    if (undefined !== evt.responseData.livewire && evt.responseData.livewire === false) {
+                    if (
+                        undefined !== evt.responseData &&
+                        undefined !== evt.responseData.livewire &&
+                        evt.responseData.livewire === false
+                    ) {
                         return;
                     }
 

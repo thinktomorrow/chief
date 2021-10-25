@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Site\Visitable;
 
 use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 
 trait VisitableDefaults
@@ -19,7 +19,7 @@ trait VisitableDefaults
         }
 
         try {
-            $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
+            $slug = MemoizedUrlRecords::findByModel($this, $locale)->slug;
 
             return $this->resolveUrl($locale, [$slug]);
         } catch (UrlRecordNotFound $e) {

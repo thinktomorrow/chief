@@ -22,6 +22,9 @@ class MenuItem extends Model
 
     public $timestamps = false;
     public $guarded = [];
+    public $with = [
+        'owner',
+    ];
 
     public function dynamicLocales(): array
     {

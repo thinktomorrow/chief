@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
@@ -49,7 +49,7 @@ abstract class TestCase extends OrchestraTestCase
 
         // Clear out any memoized values
         Memoize::clear();
-        MemoizedUrlRecord::clearCachedRecords();
+        MemoizedUrlRecords::clearCachedRecords();
 
         parent::tearDown();
     }
