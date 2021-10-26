@@ -9,8 +9,6 @@ use Illuminate\Support\Collection;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    public const PAGE_TITLE_TAG = 'chief-page-title';
-
     private Collection $fieldSets;
     private Collection $fieldWindows;
 
@@ -218,6 +216,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function tagged($tag): Fields
     {
+        if(is_string($tag) && $tag === 'untagged') {
+            return $this->untagged();
+        }
+
         return $this->filterBy(function (Field $field) use ($tag) {
             return $field->tagged($tag);
         });

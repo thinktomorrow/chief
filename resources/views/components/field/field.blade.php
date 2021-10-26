@@ -1,11 +1,13 @@
 <?php
 
+    $class = $attributes->get('class', '');
+
     /**
      * If a key is given the field element is populated with the
      * field values such as label, description, input value, ...
      */
-    if(isset($key)) {
-        $field = $model->field($key);
+    if(isset($key) || isset($field)) {
+        $field = $field ?: $model->field($key);
 
         $label = $field->getLabel();
         $name = $field->getName();
@@ -16,7 +18,7 @@
             $description = '<p>' . $field->getDescription() . '</p>';
         }
 
-        $slot = $field->render(get_defined_vars());
+        $slot = !$slot ? $field->render(get_defined_vars()) : $slot;
 
         // TODO(tijs): conditional defaults for field
         // data-conditional="{{ $field->getId() }}"
@@ -29,7 +31,7 @@
     {!! $attributes->has('data-conditional') ? 'data-conditional="' . $attributes->get('data-conditional') . '"' : null !!}
     {!! $attributes->has('data-conditional-trigger-type') ? 'data-conditional-trigger-type="' . $attributes->get('data-conditional-trigger-type') . '"' : null !!}
     {!! $attributes->get('data-conditional-data') ? 'data-conditional-data="' . $attributes->get('data-conditional-data') . '"' : null !!}
-    class="{{ $attributes->get('class', $class) }}"
+    class="{{ $class }}"
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
@@ -55,8 +57,8 @@
 
     @if(isset($field))
         <x-chief::field.error :field="$field" />
-    @else
-        <x-chief::field.error :error="$name" />
+    @elseif(isset($error))
+        <x-chief::field.error :error="$error" />
     @endif
 
 </div>

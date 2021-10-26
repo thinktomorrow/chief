@@ -1,4 +1,4 @@
-<x-chief-formgroup
+<x-chief::field
     label="{{ $label ?? '' }}"
     name="{{ $name }}"
 >
@@ -20,4 +20,4 @@
                 </label>
             @endforeach
         </div>
-</x-chief-formgroup>
+</x-chief::field>

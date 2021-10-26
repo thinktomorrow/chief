@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\App\View\Livewire\FieldsComponent;
+use Thinktomorrow\Chief\App\View\Livewire\FieldsWindow;
 use Thinktomorrow\Chief\App\View\Livewire\Fragments;
 use Thinktomorrow\Chief\App\View\Livewire\Links;
 use Thinktomorrow\Chief\App\View\Livewire\Status;
@@ -34,7 +34,7 @@ class ViewServiceProvider extends ServiceProvider
 
         Livewire::component('fragments', Fragments::class);
         Livewire::component('links', Links::class);
-        Livewire::component('fields_component', FieldsComponent::class);
+        Livewire::component('fields-window', FieldsWindow::class);
         Livewire::component('status', Status::class);
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
@@ -45,6 +45,10 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.field.input', 'chief::field.input');
         Blade::component('chief::components.field.multiple', 'chief::field.multiple');
 
+        Blade::component('chief::components.page.fragments-window', 'chief::fragments.window');
+        Blade::component('chief::components.page.status-window', 'chief::status.window');
+        Blade::component('chief::components.page.links-window', 'chief::links.window');
+
 
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
@@ -52,7 +56,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.sidebar', 'chief-sidebar');
         Blade::component('chief::components.inline-notification', 'chief-inline-notification');
         Blade::component('chief::components.icon-label', 'chief-icon-label');
-        Blade::component('chief::components.formgroup', 'chief-formgroup');
+//        Blade::component('chief::components.formgroup', 'chief-formgroup');
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
 
         /* Wireframe components */

@@ -15,7 +15,7 @@
                     model-class="{{ get_class($model) }}"
                     model-id="{{ $model->id }}"
                 >
-                    <x-chief-formgroup label="{{ strtoupper($locale) }} link">
+                    <x-chief::field label="{{ strtoupper($locale) }} link">
                         <div class="space-y-2">
                             <div class="flex w-full">
                                 <div class="prepend-to-input">
@@ -45,13 +45,13 @@
                                 >
                             </div>
 
-                            <div 
-                                class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" 
-                                v-if="hint" 
+                            <div
+                                class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50"
+                                v-if="hint"
                                 v-html="hint"
                             ></div>
                         </div>
-                    </x-chief-formgroup>
+                    </x-chief::field>
                 </link-input>
             @endforeach
         </div>

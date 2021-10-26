@@ -126,27 +126,27 @@
                     <div>
                         <div class="row gutter-4">
                             <div class="w-full lg:w-1/2">
-                                <x-chief-formgroup label="First name" id="firstname" name="firstname" isRequired>
+                                <x-chief::field label="First name" id="firstname" error="firstname" isRequired>
                                     <input type="text" id="firstname" name="firstname" placeholder="John">
-                                </x-chief-formgroup>
+                                </x-chief::field>
                             </div>
 
                             <div class="w-full lg:w-1/2">
-                                <x-chief-formgroup label="Last name" id="lastname" name="lastname" isRequired>
+                                <x-chief::field label="Last name" id="lastname" error="lastname" isRequired>
                                     <input type="text" id="lastname" name="lastname" placeholder="Doe">
-                                </x-chief-formgroup>
+                                </x-chief::field>
                             </div>
 
-                            <x-chief-formgroup class="w-full">
+                            <x-chief::field class="w-full">
                                 <label for="rememberCheckbox" class="with-checkbox">
                                     <input id="rememberCheckbox" name="remember" type="checkbox" {{ old('remember') ? 'checked=checked' : null  }}>
                                     <span>Houd me ingelogd</span>
                                 </label>
-                            </x-chief-formgroup>
+                            </x-chief::field>
 
-                            <x-chief-formgroup label="Message" class="w-full">
+                            <x-chief::field label="Message" class="w-full">
                                 <textarea id="message" name="message" placeholder="Type your message here ..."></textarea>
-                            </x-chief-formgroup>
+                            </x-chief::field>
 
                             <div>
                                 <button type="submit" class="btn btn-primary">Submit</button>

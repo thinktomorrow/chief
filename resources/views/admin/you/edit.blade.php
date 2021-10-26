@@ -36,13 +36,13 @@
 
             <div class="w-full">
                 <div class="window window-white window-md">
-                    <x-chief-formgroup label="Wachtwoord">
+                    <x-chief::field label="Wachtwoord">
                         <x-slot name="description">
                             <p>Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>
                         </x-slot>
 
                         <a class="btn btn-warning-outline" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
-                    </x-chief-formgroup>
+                    </x-chief::field>
                 </div>
             </div>
         </div>

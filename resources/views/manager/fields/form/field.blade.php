@@ -1,4 +1,4 @@
-<x-chief-formgroup
+<x-chief::field
     label="{{ $field->getLabel() }}"
     :field="$field"
     name="{{ $field->getName() }}"
@@ -19,4 +19,4 @@
     @else
         {!! $field->render(get_defined_vars()) !!}
     @endisset
-</x-chief-formgroup>
+</x-chief::field>

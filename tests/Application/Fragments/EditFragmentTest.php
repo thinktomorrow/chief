@@ -38,12 +38,10 @@ class EditFragmentTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_fragment_edit_form()
     {
-        $this->disableExceptionHandling();
         $model = app(FragmentRepository::class)->getByOwner($this->owner)->first();
 
         $this->asAdmin()->get($this->fragmentManager->route('fragment-edit', $this->owner, $model))
-            ->assertStatus(200)
-            ->assertViewIs('chief::manager.windows.fragments.edit');
+            ->assertStatus(200);
     }
 
     /** @test */

@@ -61,17 +61,17 @@
                     </div>
 
                     <form method="GET" id="filtering" class="space-y-8">
-                        <x-chief-formgroup label="Bestandsnaam">
+                        <x-chief::field label="Bestandsnaam">
                             <input
                                 type="text"
                                 name="search"
                                 placeholder="Zoek op bestandsnaam ..."
                                 value="{{ old('search', request()->input('search'))}}"
                             >
-                        </x-chief-formgroup>
+                        </x-chief::field>
 
                         {{-- TODO: fix multiselect --}}
-                        <x-chief-formgroup label="Pagina">
+                        <x-chief::field label="Pagina">
                             <chief-multiselect
                                 name="owner"
                                 :options='@json($pages)'
@@ -82,15 +82,15 @@
                                 labelkey="label"
                                 valuekey="id"
                             ></chief-multiselect>
-                        </x-chief-formgroup>
+                        </x-chief::field>
 
-                        <x-chief-formgroup>
+                        <x-chief::field>
                             <label for="unused" class="with-checkbox">
                                 <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
-                        </x-chief-formgroup>
+                        </x-chief::field>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>

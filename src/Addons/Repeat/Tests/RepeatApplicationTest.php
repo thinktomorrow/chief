@@ -41,11 +41,6 @@ class RepeatApplicationTest extends ChiefTestCase
         $this->assertEquals($this->authorsValues(), PageStub::first()->authors);
     }
 
-    /** @test */
-    public function it_can_save_a_nested_repeatfield()
-    {
-    }
-
     /**
      * @return array[]
      */

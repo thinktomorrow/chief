@@ -6,21 +6,21 @@
 
 @section('header')
     <div class="container-sm">
-        @component('chief::layout._partials.header')
+        <x-chief::page.header>
             @slot('title')
                 @adminConfig('modelName')
             @endslot
 
             @slot('breadcrumbs')
                 @adminCan('index')
-                    <a href="@adminRoute('index')" class="link link-primary">
-                        <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
-                    </a>
+                <a href="@adminRoute('index')" class="link link-primary">
+                    <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
+                </a>
                 @endAdminCan
             @endslot
 
             <button form="createForm" type="submit" class="btn btn-primary">Aanmaken</button>
-        @endcomponent
+        </x-chief::page.header>
     </div>
 @endsection
 
@@ -39,11 +39,7 @@
                         @csrf
 
                         <div class="space-y-8">
-                            @include('chief::manager.fields.form.fieldsets', [
-                                'fieldsets' => $fields->all(),
-                                'hasFirstWindowItem' => true,
-                                'hasLastWindowItem' => false,
-                            ])
+                            <x-chief::field.multiple not-tagged="edit,not-on-create" />
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>

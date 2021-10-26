@@ -24,20 +24,15 @@
                                 @if($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\HiddenField)
                                     {!! $field->render() !!}
                                 @else
-                                    @component('chief::manager.fields.form.field', [
-                                    'field' => $field,
-                                    'autofocus' => (isset($index) && $index === 0),
-                                ])
+                                    <x-chief::field :field="$field">
                                         <div
                                                 data-repeat-field="{{ $uniqueContainerId }}"
                                                 data-repeat-field-key="{{ $field->getDottedName() }}"
                                         >
                                             {!! $field->render() !!}
                                         </div>
-                                    @endcomponent
+                                    </x-chief::field>
                                 @endif
-
-
                             @endforeach
                         </div>
                     </div>

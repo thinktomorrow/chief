@@ -15,17 +15,17 @@
                 <input type="hidden" name="token" value="{{ $token }}">
 
                 <div class="space-y-6">
-                    <x-chief-formgroup label="E-mail" id="identity" name="email">
+                    <x-chief::field label="E-mail" id="identity" error="email">
                         <input id="identity" name="email" type="email" placeholder="E-mail" value="{{ old('email') }}">
-                    </x-chief-formgroup>
+                    </x-chief::field>
 
-                    <x-chief-formgroup label="Nieuw wachtwoord" id="password" name="password">
+                    <x-chief::field label="Nieuw wachtwoord" id="password" error="password">
                         <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
-                    </x-chief-formgroup>
+                    </x-chief::field>
 
-                    <x-chief-formgroup label="Herhaal wachtwoord" id="password_confirmation" name="password_confirmation">
+                    <x-chief::field label="Herhaal wachtwoord" id="password_confirmation" error="password_confirmation">
                         <input type="password" id="password-confirm" name="password_confirmation" placeholder="Herhaal wachtwoord">
-                    </x-chief-formgroup>
+                    </x-chief::field>
 
                     <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
                 </div>

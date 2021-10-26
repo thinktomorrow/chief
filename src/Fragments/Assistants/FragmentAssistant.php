@@ -136,11 +136,11 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
+        \Illuminate\Support\Facades\View::share('manager', $this);
+        \Illuminate\Support\Facades\View::share('model', $fragmentable);
+
         return view('chief::manager.windows.fragments.create', [
-            'manager' => $this,
             'owner' => $owner,
-            'model' => $fragmentable,
-            'fields' => Fields::make($fragmentable->fields())->notTagged('edit'),
             'order' => $order,
         ]);
     }
@@ -319,13 +319,14 @@ trait FragmentAssistant
      */
     public function handleFragmentEdit(Request $request, FragmentsOwner $ownerModel, Fragmentable $fragmentable)
     {
-        View::share('manager', $this);
-        View::share('model', $fragmentable);
-        View::share('owner', $ownerModel);
-
-        return view('chief::manager.windows.fragments.show');
-
         $this->guard('fragment-edit', $fragmentable);
+
+        \Illuminate\Support\Facades\View::share('manager', $this);
+        \Illuminate\Support\Facades\View::share('model', $fragmentable);
+        \Illuminate\Support\Facades\View::share('owner', $ownerModel);
+
+        return $fragmentable->renderForm();
+        return view('chief::manager.windows.fragments.show');
 
         return view('chief::manager.windows.fragments.edit', [
             'manager' => $this,

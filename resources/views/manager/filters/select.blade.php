@@ -1,4 +1,4 @@
-<x-chief-formgroup
+<x-chief::field
         label="{{ $label ?? '' }}"
         name="{{ $name }}"
 >
@@ -15,4 +15,4 @@
                        :multiple='@json($multiple)'
     >
     </chief-multiselect>
-</x-chief-formgroup>
+</x-chief::field>

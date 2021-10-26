@@ -32,21 +32,21 @@
                             </x-chief-inline-notification>
                         @endif
 
-                        <x-chief-formgroup label="E-mail" id="identity" name="email">
+                        <x-chief::field label="E-mail" id="identity" error="email">
                             <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
-                        </x-chief-formgroup>
+                        </x-chief::field>
 
-                        <x-chief-formgroup label="Wachtwoord" id="password" name="password">
+                        <x-chief::field label="Wachtwoord" id="password" error="password">
                             <input id="password" name="password" type="password">
-                        </x-chief-formgroup>
+                        </x-chief::field>
 
-                        <x-chief-formgroup>
+                        <x-chief::field>
                             <label for="rememberCheckbox" class="with-checkbox">
                                 <input id="rememberCheckbox" name="remember" type="checkbox" {{ old('remember') ? 'checked=checked' : null  }}>
 
                                 <span>Hou me ingelogd</span>
                             </label>
-                        </x-chief-formgroup>
+                        </x-chief::field>
 
                         <div class="space-x-4">
                             <button type="submit" form="valid" class="btn btn-primary">Inloggen</button>

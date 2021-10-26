@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
 
+use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -61,6 +63,8 @@ class RepeatUnitTest extends TestCase
     public function it_can_be_rendered()
     {
         $field = $this->createRepeatField();
+
+//        View::share('model', new ArticlePage());
 
         $this->assertStringContainsStringIgnoringCase('first title', $field->render());
         $this->assertStringContainsStringIgnoringCase('second content', $field->render());

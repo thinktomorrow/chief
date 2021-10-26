@@ -1,7 +1,7 @@
 <form
     id="updateFieldsForm{{ $model->modelReference()->get() }}"
     method="POST"
-    action="@adminRoute('fields-update', $model, $componentKey)"
+    action="@adminRoute('fields-update', $model, $tag)"
     enctype="multipart/form-data"
     role="form"
 >
@@ -11,11 +11,7 @@
     <div class="space-y-8">
         <h2 class="text-2xl font-bold text-grey-900">{{ ucfirst($componentTitle) }}</h2>
 
-        @include('chief::manager.fields.form.fieldsets', [
-            'fieldsets' => $fields->all(),
-            'hasFirstWindowItem' => false,
-            'hasLastWindowItem' => false,
-        ])
+        <x-chief::field.multiple :tagged="$tag" />
 
         <button type="submit" form="updateFieldsForm{{ $model->modelReference()->get() }}" class="btn btn-primary">
             Wijzigingen opslaan

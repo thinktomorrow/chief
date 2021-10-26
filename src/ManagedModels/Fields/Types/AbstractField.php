@@ -555,7 +555,7 @@ abstract class AbstractField
      */
     private function defaultEloquentValueResolver(): \Closure
     {
-        return function (Model $model = null, $locale = null) {
+        return function ($model = null, $locale = null) {
             if ($this->value) {
                 return $this->value;
             }

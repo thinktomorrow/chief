@@ -16,11 +16,12 @@
     <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
-        @include('chief::manager.fields.form.fieldsets', [
-            'fieldsets' => $fields->all(),
-            'hasFirstWindowItem' => false,
-            'hasLastWindowItem' => false,
-        ])
+        <x-chief::field.multiple />
+{{--        @include('chief::manager.fields.form.fieldsets', [--}}
+{{--            'fieldsets' => $fields->all(),--}}
+{{--            'hasFirstWindowItem' => false,--}}
+{{--            'hasLastWindowItem' => false,--}}
+{{--        ])--}}
 
         <button form="{{ $formId }}" type="submit" class="btn btn-primary">
             Aanmaken

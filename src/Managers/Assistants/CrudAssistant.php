@@ -147,14 +147,12 @@ trait CrudAssistant
      */
     public function create()
     {
-        $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        $model = new $this->managedModelClass();
 
-        return view('chief::manager.create', [
-            'manager' => $this,
-            'model' => $model,
-            'fields' => Fields::make($model->fields())->notTagged(['edit', 'not-on-create']),
-        ]);
+        View::share('manager', $this);
+        View::share('model', $model);
+
+        return view('chief::manager.create');
     }
 
     public function store(Request $request)
@@ -191,24 +189,12 @@ trait CrudAssistant
     {
         $model = $this->fieldsModel($id);
 
-        View::share('manager', $this);
-        View::share('model', $model);
-
-        return view('chief::manager.show');
-
         $this->guard('edit', $model);
 
-        $fields = Fields::make($model->fields())->model($model);
-
-        View::share('model', $model);
         View::share('manager', $this);
+        View::share('model', $model);
 
-        return view('chief::manager.edit', [
-            'manager' => $this,
-            'model' => $model,
-            'fieldWindows' => $fields->allWindows(),
-            'fields' => $fields,
-        ]);
+        return $model->renderAdminPage();
     }
 
     public function update(Request $request, $id)

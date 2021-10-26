@@ -39,6 +39,11 @@ trait FragmentableDefaults
         return $this->renderView();
     }
 
+    public function renderForm(): string
+    {
+        return view('chief::manager.windows.fragments.edit')->render();
+    }
+
     public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable
     {
         $this->fragmentModel = $fragmentModel;

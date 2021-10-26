@@ -1,4 +1,4 @@
-<x-chief-formgroup
+<x-chief::field
         label="{{ $label ?? '' }}"
         name="{{ $name }}"
 >
@@ -9,4 +9,4 @@
     @endif
 
     <input type="text" name="{{ $name }}" id="{{ $id }}" class="input inset-s" placeholder="{{ $placeholder }}" value="{{ $value }}">
-</x-chief-formgroup>
+</x-chief::field>

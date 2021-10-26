@@ -6,11 +6,10 @@ use Livewire\Component;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
-class FieldsComponent extends Component
+class FieldsWindow extends Component
 {
     public $model;
     public string $tag;
-    public bool $inlineEdit;
     public $title;
     public $class;
     public $template;
@@ -26,11 +25,13 @@ class FieldsComponent extends Component
      */
     public function render()
     {
-        $fields = Fields::make($this->model->fields())
-            ->tagged($this->tag)
-            ->model($this->model);
+        $fields = Fields::make($this->model->fields());
+        $fields = ($this->tag === "untagged") ? $fields->untagged() : $fields->tagged($this->tag);
 
-        return view('chief::manager.windows.fields.fieldsComponent', [
+        $fields = $fields->model($this->model);
+
+        return view('chief::components.field.window-livewire', [
+            'key' => $this->tag,
             'fields' => $fields,
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),
         ]);

@@ -1,7 +1,7 @@
-@if(isset($tagged))
-    <livewire:fields_component
+@if(isset($tagged) || isset($untagged))
+    <livewire:fields-window
         :model="$model"
-        :componentKey="$tagged"
+        :tag="$tagged ?? 'untagged'"
         :title="$title ?? ''"
         class="window window-white window-md"
     />

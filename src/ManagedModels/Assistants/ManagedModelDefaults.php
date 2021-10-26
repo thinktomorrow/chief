@@ -5,9 +5,11 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
@@ -20,7 +22,9 @@ trait ManagedModelDefaults
 
     public function field(string $key): Field
     {
-        return Fields::make($this->fields())->find($key);
+        $fieldModel = $this instanceof Fragmentable ? $this->fragmentModel() : $this;
+
+        return Fields::make($this->fields())->find($key)->model($fieldModel);
     }
 
     public static function managedModelKey(): string
@@ -34,6 +38,11 @@ trait ManagedModelDefaults
     {
         return AdminConfig::make()
             ->defaults($this);
+    }
+
+    public function renderAdminPage(): string
+    {
+        return view('chief::manager.edit')->render();
     }
 
     public function onlineStatusAsLabel(): string

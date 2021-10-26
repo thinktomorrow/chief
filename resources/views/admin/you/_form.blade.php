@@ -1,15 +1,15 @@
-<x-chief-formgroup label="Voornaam" id="firstname" name="firstname" isRequired>
+<x-chief::field label="Voornaam" id="firstname" error="firstname" isRequired>
     <input id="firstname" type="text" name="firstname" value="{{ old('firstname', $user->firstname) }}">
-</x-chief-formgroup>
+</x-chief::field>
 
-<x-chief-formgroup label="Achternaam" id="lastname" name="lastname" isRequired>
+<x-chief::field label="Achternaam" id="lastname" error="lastname" isRequired>
     <input id="lastname" type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}">
-</x-chief-formgroup>
+</x-chief::field>
 
-<x-chief-formgroup label="E-mail" id="email" name="email" isRequired>
+<x-chief::field label="E-mail" id="email" error="email" isRequired>
     <x-slot name="description">
         <p>Dit e-mailadres geldt tevens als jouw login.</p>
     </x-slot>
 
     <input id="email" type="email" name="email" value="{{ old('email',$user->email) }}">
-</x-chief-formgroup>
+</x-chief::field>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -29,28 +30,24 @@ trait FieldsComponentAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function fieldsEdit(Request $request, $id, string $componentKey)
+    public function fieldsEdit(Request $request, $id, string $tag)
     {
         $model = $this->fieldsModel($id);
 
         $this->guard('fields-edit', $model);
 
-        $fields = Fields::make($model->fields())
-            ->model($model);
-
-        $fieldWindow = $fields->findWindow($componentKey);
-        $fields = $fields->filterByWindowId($componentKey);
+        View::share('manager', $this);
+        View::share('model', $model);
 
         return view('chief::manager.windows.fields.edit', [
-            'manager' => $this,
-            'model' => $model,
-            'fields' => $fields,
-            'componentKey' => $componentKey,
-            'componentTitle' => $componentKey == Fields::PAGE_TITLE_TAG ? '' : $fieldWindow->getTitle(),
+            'tag' => $tag,
+            // TODO: fix title
+            'componentTitle' => 'test',
+//            'componentTitle' => $tag == Fields::PAGE_TITLE_TAG ? '' : $fieldWindow->getTitle(),
         ]);
     }
 
-    public function fieldsUpdate(Request $request, $id, string $componentKey)
+    public function fieldsUpdate(Request $request, $id, string $tag)
     {
         $model = $this->fieldsModel($id);
 
@@ -58,7 +55,7 @@ trait FieldsComponentAssistant
 
         $fields = Fields::make($model->fields())
             ->model($model)
-            ->filterByWindowId($componentKey);
+            ->tagged($tag);
 
         $this->fieldValidator()->handle($fields, $request->all());
 

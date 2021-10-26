@@ -14,6 +14,8 @@ interface ManagedModel extends ReferableModel
 
     public function adminConfig(): AdminConfig;
 
+    public function renderAdminPage(): string;
+
     public function fields(): iterable;
 
     public function field(string $key): Field;

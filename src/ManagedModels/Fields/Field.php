@@ -33,8 +33,14 @@ interface Field
 
     public function isLocalized(): bool;
 
+    /**
+     * Render the field in a form.
+     */
     public function render(array $viewData = []): string;
 
+    /**
+     * Render the field display on the page.
+     */
     public function renderWindow(array $viewData = []): string;
 
     public function getLabel(): ?string;
@@ -60,4 +66,6 @@ interface Field
     public function customSaveMethod(string $method): Field;
 
     public function getCustomSaveMethod(): ?string;
+
+    public function model($model): Field;
 }
