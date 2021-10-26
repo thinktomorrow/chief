@@ -216,7 +216,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function tagged($tag): Fields
     {
-        if(is_string($tag) && $tag === 'untagged') {
+        if (is_string($tag) && $tag === 'untagged') {
             return $this->untagged();
         }
 

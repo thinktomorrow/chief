@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
 
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class RepeatUnitTest extends TestCase

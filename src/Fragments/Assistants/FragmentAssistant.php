@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
@@ -326,6 +325,7 @@ trait FragmentAssistant
         \Illuminate\Support\Facades\View::share('owner', $ownerModel);
 
         return $fragmentable->renderForm();
+
         return view('chief::manager.windows.fragments.show');
 
         return view('chief::manager.windows.fragments.edit', [
