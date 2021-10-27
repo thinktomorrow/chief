@@ -21,7 +21,7 @@ if(isset($type)) {
 
 ?>
 
-{{-- TODO(tijs): can be cleanup these first set classes? a :nth-child solution perhaps? --}}
+{{-- TODO(tijs): can we cleanup these first set classes? a :nth-child solution perhaps? --}}
 <div class="-window-x {{ isset($isFirstWindowItem) ? '-mt-8' : null }} {{ isset($isLastWindowItem) ? '-mb-8' : null }}">
     <div class="
         window-x py-8 border-grey-100

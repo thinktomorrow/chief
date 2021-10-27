@@ -8,7 +8,7 @@
                     </span>
                 @endif
 
-                {!! $field->renderWindow() !!}
+                {!! $field->renderOnPage() !!}
             </div>
         @endforeach
     </div>

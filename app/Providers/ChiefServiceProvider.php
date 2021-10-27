@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
+use Thinktomorrow\Chief\Admin\Setup\CreateViewCommand;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
@@ -99,6 +100,7 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:page',
                 'command.chief:page-migration',
                 'command.chief:fragment',
+                'command.chief:view',
             ]);
 
             // Bind our commands to the container
@@ -109,6 +111,7 @@ class ChiefServiceProvider extends ServiceProvider
 
             $this->app->bind('command.chief:page', CreatePageCommand::class);
             $this->app->bind('command.chief:page-migration', CreatePageMigrationCommand::class);
+            $this->app->bind('command.chief:view', CreateViewCommand::class);
             $this->app->bind('command.chief:fragment', CreateFragmentCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);

@@ -5,6 +5,8 @@ principles.
 
 ## next release
 - Fixed: performance issues with menu
+- Removed: Field->editAsPagetitle. Use Field->tag('pagetitle') instead.
+- Removed: Field->renderWindow. Use Field->renderOnPage instead
 
 ## 0.6.6 - 2021-10-14
 

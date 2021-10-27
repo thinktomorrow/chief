@@ -13,7 +13,7 @@ class HiddenField extends AbstractField implements Field
         return new static(new FieldType(FieldType::HIDDEN), $key);
     }
 
-    public function renderWindow(array $viewData = []): string
+    public function renderOnPage(array $viewData = []): string
     {
         return '';
     }

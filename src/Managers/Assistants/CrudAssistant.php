@@ -194,7 +194,7 @@ trait CrudAssistant
         View::share('manager', $this);
         View::share('model', $model);
 
-        return $model->renderAdminPage();
+        return $model->adminView();
     }
 
     public function update(Request $request, $id)

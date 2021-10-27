@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels;
 
+use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
@@ -14,7 +15,7 @@ interface ManagedModel extends ReferableModel
 
     public function adminConfig(): AdminConfig;
 
-    public function renderAdminPage(): string;
+    public function adminView(): View;
 
     public function fields(): iterable;
 

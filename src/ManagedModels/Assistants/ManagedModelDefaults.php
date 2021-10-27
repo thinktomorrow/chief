@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Str;
+use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
@@ -39,9 +40,9 @@ trait ManagedModelDefaults
             ->defaults($this);
     }
 
-    public function renderAdminPage(): string
+    public function adminView(): View
     {
-        return view('chief::manager.edit')->render();
+        return view('chief::manager.edit');
     }
 
     public function onlineStatusAsLabel(): string

@@ -1,11 +1,11 @@
 <x-chief::page>
 
     <x-slot name="header">
+        <x-chief::page.breadcrumbs />
         <x-chief::field.window tagged="pagetitle" />
-        <!-- TODO: header comp. -->
     </x-slot>
 
-    <x-chief::field.window untagged />
+    <x-chief::field.window title="Gegevens" untagged />
 
     <x-chief::fragments.window />
 

@@ -26,7 +26,7 @@
                         <span class="text-xs font-semibold uppercase text-grey-700">
                             {{ ucfirst($field->getLabel()) }}
                         </span>
-                        {!! $field->renderWindow() !!}
+                        {!! $field->renderOnPage() !!}
                     </div>
                 @endforeach
             @endforeach

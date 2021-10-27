@@ -7,7 +7,7 @@
      * field values such as label, description, input value, ...
      */
     if(isset($key) || isset($field)) {
-        $field = $field ?: $model->field($key);
+        $field = $field ?? $model->field($key);
 
         $label = $field->getLabel();
         $name = $field->getName();
@@ -18,7 +18,7 @@
             $description = '<p>' . $field->getDescription() . '</p>';
         }
 
-        $slot = !$slot ? $field->render(get_defined_vars()) : $slot;
+        $slot = ($slot == "") ? $field->render(get_defined_vars()) : $slot;
 
         // TODO(tijs): conditional defaults for field
         // data-conditional="{{ $field->getId() }}"

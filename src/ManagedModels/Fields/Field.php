@@ -41,7 +41,7 @@ interface Field
     /**
      * Render the field display on the page.
      */
-    public function renderWindow(array $viewData = []): string;
+    public function renderOnPage(array $viewData = []): string;
 
     public function getLabel(): ?string;
 

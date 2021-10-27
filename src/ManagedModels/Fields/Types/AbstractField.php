@@ -390,16 +390,16 @@ abstract class AbstractField
     }
 
     /**
-     * @deprecated use renderShow instead
+     * @deprecated use renderOnPage instead
      * @param array $viewData
      * @return string
      */
     public function renderWindow(array $viewData = []): string
     {
-        return view($this->getWindowView(), array_merge($viewData, $this->getViewData()))->render();
+        throw new \Exception('Field->renderWindow is no longer being used. Use Field->renderOnPage instead');
     }
 
-    public function renderRead(array $viewData = []): string
+    public function renderOnPage(array $viewData = []): string
     {
         return view($this->getWindowView(), array_merge($viewData, $this->getViewData()))->render();
     }
@@ -453,11 +453,14 @@ abstract class AbstractField
         return $this;
     }
 
+    /**
+     * @deprecated use Field->tag('pagetitle') instead
+     * @return Field
+     * @throws \Exception
+     */
     public function editAsPageTitle(): Field
     {
-        $this->tag(Fields::PAGE_TITLE_TAG);
-
-        return $this;
+        throw new \Exception('editAsPagetitle is no longer being used. Please replace your method with Field->tag(\'pagetitle\') instead.');
     }
 
     public function getCustomSaveMethod(): ?string
