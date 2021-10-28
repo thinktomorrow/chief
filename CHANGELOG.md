@@ -4,9 +4,11 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
+- Added: _chief:view command <MANAGED_MODELKEY>_ to generate a custom admin view for a page or fragment e.g. `php artisan chief:view article`
 - Fixed: performance issues with menu
 - Removed: Field->editAsPagetitle. Use Field->tag('pagetitle') instead.
 - Removed: Field->renderWindow. Use Field->renderOnPage instead
+- Removed: FieldWindow and FieldSet models. Only fields should be set in your models' fields method now. In order to change the page layout and structure, use a custom page/fragment view.
 
 ## 0.6.6 - 2021-10-14
 

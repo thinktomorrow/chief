@@ -34,12 +34,12 @@ class Fragment
 
     public static function fromModel(FragmentModel $fragmentModel): self
     {
-        return new static($fragmentModel->key, $fragmentModel->values->all(), new Fields(), (int) $fragmentModel->id);
+        return new static($fragmentModel->key, $fragmentModel->values->all(), Fields::make(), (int) $fragmentModel->id);
     }
 
     public static function fromNew(string $key, array $values): self
     {
-        return new static($key, $values, new Fields());
+        return new static($key, $values, Fields::make());
     }
 
     public static function empty(string $key): self
@@ -56,7 +56,7 @@ class Fragment
         $modelId = $payload['modelId'];
         unset($payload['modelId']);
 
-        return new static($key, $payload, new Fields(), (int) $modelId);
+        return new static($key, $payload, Fields::make(), (int) $modelId);
     }
 
     public function setFields(Fields $fields): self

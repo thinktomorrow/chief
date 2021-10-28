@@ -42,8 +42,7 @@ trait FieldsComponentAssistant
         return view('chief::manager.windows.fields.edit', [
             'tag' => $tag,
             // TODO: fix title
-            'componentTitle' => 'test',
-//            'componentTitle' => $tag == Fields::PAGE_TITLE_TAG ? '' : $fieldWindow->getTitle(),
+            'componentTitle' => 'Bewerk de velden',
         ]);
     }
 

@@ -10,7 +10,7 @@ class ArticlePageWithImageValidation extends ArticlePage
 {
     public function fields(): Fields
     {
-        return new Fields([
+        return Fields::make([
             ImageField::make('thumb_image_trans')->label('thumb image trans')->locales(['nl', 'en'])->validation([
                 'required',
                 'mimetypes:image/png,text/plain',

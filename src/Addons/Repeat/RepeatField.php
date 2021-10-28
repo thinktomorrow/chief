@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Addons\Repeat;
 
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\AbstractField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 
@@ -24,24 +23,24 @@ class RepeatField extends AbstractField implements Field
     }
 
     /**
-     * Get the fieldSet as a clone so it can be repeated.
+     * Get the fields as a clone so it can be repeated per existing entry
      * The clone element should / could be removed once the Field object is IMMUTABLE.
      */
-    public function getFieldSet(): FieldSet
+    public function getFields(): Fields
     {
-        return $this->cloneFieldSet();
+        return $this->cloneFields();
     }
 
-    public function getRepeatedFields(): Fields
+    public function getRepeatedFields(): array
     {
-        $existingFieldSets = [];
+        $existingFields = [];
 
         if (! ($values = $this->getValue()) || ! is_array($values)) {
             $values = [null];
         }
 
         foreach ($values as $index => $value) {
-            $existingFieldSets[] = $this->getFieldSet()->map(function (Field $field) use ($index, $value) {
+            $existingFields[] = $this->getFields()->map(function (Field $field) use ($index, $value) {
                 return $field->name($this->getName().'['.$index.']['.$field->getName().']')
                     ->localizedFormat(':name.:locale')
                     ->valueResolver(function ($model = null, $locale = null, $field) use ($value) {
@@ -63,22 +62,22 @@ class RepeatField extends AbstractField implements Field
             });
         }
 
-        return Fields::make($existingFieldSets);
+        return $existingFields;
     }
 
-    // TEMP: this should be removed once the Field object is IMMUTABLE
-    private function cloneFieldSet(): FieldSet
+    // TODO: once the Field object is IMMUTABLE this is no longer needed and should be removed
+    private function cloneFields(): Fields
     {
         $fields = [];
 
-        foreach ($this->fields->allFields() as $key => $field) {
+        foreach ($this->fields->all() as $key => $field) {
             $fields[$key] = clone $field;
         }
 
-        return FieldSet::make($fields);
+        return Fields::make($fields);
     }
 
-    private function setFields(Fields $fields): Field
+    private function setFields(Fields $fields): self
     {
         $this->fields = $fields;
 

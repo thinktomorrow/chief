@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
+use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
@@ -39,9 +40,9 @@ trait FragmentableDefaults
         return $this->renderView();
     }
 
-    public function renderForm(): string
+    public function adminView(): View
     {
-        return view('chief::manager.windows.fragments.edit')->render();
+        return view('chief::manager.windows.fragments.edit');
     }
 
     public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable

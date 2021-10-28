@@ -1,5 +1,5 @@
 @if(isset($tagged))
-    @foreach(\Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields())->tagged($tagged)->allFields() as $field)
+    @foreach(\Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields())->tagged($tagged)->all() as $field)
         <x-chief::field.show :key="$field->getKey()" />
     @endforeach
 @else

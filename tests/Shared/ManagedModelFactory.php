@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 
 final class ManagedModelFactory
 {
@@ -39,7 +40,8 @@ final class ManagedModelFactory
         $this->namespace = "Thinktomorrow\\Chief\\Tests\\Shared\\Tmp\\ManagedModels";
 
         $this->traits = [
-            FragmentableDefaults::class,
+            ManagedModelDefaults::class,
+            //FragmentableDefaults::class,
         ];
     }
 
@@ -180,7 +182,7 @@ use \Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 
-class $this->modelClass extends Model implements ManagedModel, HasAsset, StatefulContract, Fragmentable, Visitable
+class $this->modelClass extends Model implements ManagedModel, HasAsset, StatefulContract, Visitable
 {
     public \$table = 'articles';
     public \$timestamps = false;
@@ -221,7 +223,7 @@ class $this->modelClass extends Model implements ManagedModel, HasAsset, Statefu
 
     public function fields(): Fields
     {
-        return new Fields(static::\$fields);
+        return Fields::make(static::\$fields);
     }
 
     public function adminLabel(string \$key, \$default = null, array \$replace = []): ?string

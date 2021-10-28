@@ -28,11 +28,9 @@
                         @method('put')
 
                         <div class="space-y-8">
-                            @include('chief::manager.fields.form.fieldsets', [
-                                'fieldsets' => $fields->all(),
-                                'hasFirstWindowItem' => true,
-                                'hasLastWindowItem' => false,
-                            ])
+                            @foreach($fields as $field)
+                                <x-chief::field :field="$field" />
+                            @endforeach
 
                             <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                         </div>

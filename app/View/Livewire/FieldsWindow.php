@@ -26,8 +26,8 @@ class FieldsWindow extends Component
     public function render()
     {
         $fields = Fields::make($this->model->fields());
-        $fields = ($this->tag === "untagged") ? $fields->untagged() : $fields->tagged($this->tag);
 
+        $fields = ($this->tag === "untagged") ? $fields->untagged() : $fields->tagged($this->tag);
         $fields = $fields->model($this->model);
 
         return view('chief::components.field.window-livewire', [

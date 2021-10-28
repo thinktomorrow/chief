@@ -1,7 +1,7 @@
 @php
     // Avoid confusion in foreach loop below.
     $repeatField = $field;
-    $repeatedFields = $repeatField->getRepeatedFields()->all();
+    $repeatedFields = $repeatField->getRepeatedFields();
 
     $uniqueContainerId = $repeatField->getKey() . \Illuminate\Support\Str::random(8);
 @endphp
@@ -12,15 +12,15 @@
             class="{{ $repeatField->prefersCompactLayout() ? '' : 'border divide-y divide-grey-100 border-grey-100' }} rounded-lg -m-4"
             data-repeat-fields="{{ $uniqueContainerId }}"
         >
-            @foreach($repeatedFields as $i => $fieldSet)
+            @foreach($repeatedFields as $i => $fields)
                 <fieldset
-                    id="{{ $fieldSet->getId() }}"
+                    id="{{ \Illuminate\Support\Str::random(8) }}"
                     data-repeat-fieldset="{{ $uniqueContainerId }}"
-                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-4' : 'p-4' }} {{ $fieldSet->count() == 1 ? 'items-center' : '' }}"
+                    class="flex {{ $repeatField->prefersCompactLayout() ? 'mb-4' : 'p-4' }} {{ $fields->count() == 1 ? 'items-center' : '' }}"
                 >
                     <div class="w-full">
                         <div class="row-start-start gutter-3">
-                            @foreach($fieldSet->all() as $field)
+                            @foreach($fields->all() as $field)
                                 @if($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\HiddenField)
                                     {!! $field->render() !!}
                                 @else

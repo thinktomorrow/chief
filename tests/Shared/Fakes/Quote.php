@@ -35,7 +35,7 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
 
     public function fields(): Fields
     {
-        return new Fields([
+        return Fields::make([
             InputField::make('title')->validation(['min:4']),
             InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']),
             InputField::make('title_trans')->translatable(['nl', 'en']),

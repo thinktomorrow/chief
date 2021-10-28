@@ -23,7 +23,7 @@ class __STUB_CLASSNAME__ implements Fragmentable
 
     public function renderAdminFragment($owner, $loop, $viewData = [])
     {
-        return view('back.fragments.__STUB_VIEWKEY__', array_merge([
+        return view('back.fragments.__STUB_VIEWKEY__'.wireframe, array_merge([
             'model' => $this
         ], $viewData));
     }

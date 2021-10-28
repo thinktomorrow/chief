@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
 
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -20,9 +21,9 @@ class RepeatUnitTest extends TestCase
             InputField::make('content'),
         ]);
 
-        $this->assertCount(2, $field->getFieldSet());
+        $this->assertCount(2, $field->getFields());
         $this->assertCount(1, $field->getRepeatedFields());
-        $this->assertCount(2, $field->getRepeatedFields()->allFields());
+        $this->assertCount(2, $field->getRepeatedFields()[0]);
     }
 
     /** @test */
@@ -30,15 +31,15 @@ class RepeatUnitTest extends TestCase
     {
         $field = $this->createRepeatField();
 
-        $this->assertCount(2, $field->getRepeatedFields()->all()); // 2 filled in sets
+        $this->assertCount(2, $field->getRepeatedFields()); // 2 filled in sets
 
-        // Count total of all fields. Cannot use allFields because due to similar keys of repeated fields these would get merged out.
-        $this->assertEquals(4, array_reduce($field->getRepeatedFields()->all()->all(), fn ($carry, $fieldSet) => $carry + $fieldSet->count(), 0));
+        // Count total of all fields.
+        $this->assertEquals(4, array_reduce($field->getRepeatedFields(), fn ($carry, Fields $fields) => $carry + $fields->count(), 0));
 
-        $this->assertEquals('first title', $field->getRepeatedFields()->first()->first()->getValue());
-        $this->assertEquals('first content', $field->getRepeatedFields()->first()->find('content')->getValue());
+        $this->assertEquals('first title', $field->getRepeatedFields()[0]->first()->getValue());
+        $this->assertEquals('first content', $field->getRepeatedFields()[0]->find('content')->getValue());
 
-        $this->assertEquals('second title', $field->getRepeatedFields()[1]->first()->getValue());
+        $this->assertEquals('second title', $field->getRepeatedFields()[1]->find('title')->getValue());
         $this->assertEquals('second content', $field->getRepeatedFields()[1]->find('content')->getValue());
     }
 
@@ -53,10 +54,10 @@ class RepeatUnitTest extends TestCase
         ], ['nl' ,'en']);
 
         app()->setLocale('nl');
-        $this->assertEquals('nl title', $field->getRepeatedFields()->first()->first()->getValue());
-        $this->assertEquals('en title', $field->getRepeatedFields()->first()->first()->getValue('en'));
-        $this->assertEquals('nl content', $field->getRepeatedFields()->first()->find('content')->getValue());
-        $this->assertEquals('en content', $field->getRepeatedFields()->first()->find('content')->getValue('en'));
+        $this->assertEquals('nl title', $field->getRepeatedFields()[0]->first()->getValue());
+        $this->assertEquals('en title', $field->getRepeatedFields()[0]->first()->getValue('en'));
+        $this->assertEquals('nl content', $field->getRepeatedFields()[0]->find('content')->getValue());
+        $this->assertEquals('en content', $field->getRepeatedFields()[0]->find('content')->getValue('en'));
     }
 
     /** @test */

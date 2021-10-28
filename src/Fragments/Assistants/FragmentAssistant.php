@@ -324,16 +324,7 @@ trait FragmentAssistant
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
         \Illuminate\Support\Facades\View::share('owner', $ownerModel);
 
-        return $fragmentable->renderForm();
-
-        return view('chief::manager.windows.fragments.show');
-
-        return view('chief::manager.windows.fragments.edit', [
-            'manager' => $this,
-            'owner' => $ownerModel,
-            'model' => $fragmentable,
-            'fields' => Fields::make($fragmentable->fields())->model($fragmentable->fragmentModel()),
-        ]);
+        return $fragmentable->adminView();
     }
 
     public function fragmentUpdate(Request $request, $fragmentId)
