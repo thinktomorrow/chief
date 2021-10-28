@@ -22,7 +22,7 @@ class Label extends Component
 
     public function getSizeStyle(): string
     {
-        switch($this->size ?? null) {
+        switch ($this->size ?? null) {
             case 'xs':
                 return 'label-xs';
             case 'sm':
