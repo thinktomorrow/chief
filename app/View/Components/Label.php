@@ -16,7 +16,7 @@ class Label extends Component
     {
         return view('chief::components.label', [
             'sizeStyle' => $this->getSizeStyle(),
-            'typeStyle' => $this->getTypeStyle()
+            'typeStyle' => $this->getTypeStyle(),
         ]);
     }
 
@@ -36,7 +36,7 @@ class Label extends Component
 
     public function getTypeStyle(): string
     {
-        switch($this->type ?? null) {
+        switch ($this->type ?? null) {
             case 'error':
                 return 'label-error';
             case 'success':
