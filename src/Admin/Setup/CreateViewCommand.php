@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Admin\Setup;
 
 use Illuminate\Console\Command;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingModelRegistration;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class CreateViewCommand extends Command
 {
@@ -31,10 +31,11 @@ class CreateViewCommand extends Command
 
         $managedModelKey = strtolower($this->argument('managedModelKey'));
 
-        try{
+        try {
             $modelClass = $this->registry->modelClass($managedModelKey);
-        } catch(MissingModelRegistration $e) {
+        } catch (MissingModelRegistration $e) {
             $this->error('No model registrered via ' . $managedModelKey);
+
             return;
         }
 
@@ -61,8 +62,8 @@ class CreateViewCommand extends Command
         return 'back/' . $path . '/' . $modelClass::managedModelKey() . '/edit.blade.php';
     }
 
-    private function addMethod(string $modelClass) {
-
+    private function addMethod(string $modelClass)
+    {
         $path = str_replace('\\', '/', $modelClass) . '.php';
 
         $this->fileManipulation->addMethodToClass(base_path($path), $this->adminStub($modelClass));

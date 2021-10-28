@@ -8,10 +8,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
+use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 
 final class ManagedModelFactory
 {

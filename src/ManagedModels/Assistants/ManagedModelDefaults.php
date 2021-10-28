@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
-use Illuminate\Support\Str;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
