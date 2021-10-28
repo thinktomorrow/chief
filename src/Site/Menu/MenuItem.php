@@ -22,6 +22,9 @@ class MenuItem extends Model
 
     public $timestamps = false;
     public $guarded = [];
+    public $with = [
+        'owner',
+    ];
 
     public function dynamicLocales(): array
     {
@@ -55,12 +58,12 @@ class MenuItem extends Model
 
     public function siblings()
     {
-        return static:: where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->where('id', '<>', $this->id)->orderBy('order', 'ASC')->get();
+        return static::where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->where('id', '<>', $this->id)->orderBy('order', 'ASC')->get();
     }
 
     public function siblingsIncludingSelf()
     {
-        return static:: where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->orderBy('order', 'ASC')->get();
+        return static::where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->orderBy('order', 'ASC')->get();
     }
 
     public function scopeOnlyGrandParents($query)

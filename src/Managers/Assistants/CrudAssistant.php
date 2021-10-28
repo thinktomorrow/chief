@@ -160,10 +160,19 @@ trait CrudAssistant
     {
         $this->guard('store');
 
+        $model = $this->handleStore($request);
+
+        return redirect()->to($this->route('edit', $model))
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
+    }
+
+    private function handleStore(Request $request)
+    {
         /** @var ManagedModel $model */
         $model = new $this->managedModelClass();
 
         $fields = Fields::make($model->fields())->notTagged(['edit', 'not-on-create']);
+
         $this->fieldValidator()->handle($fields, $request->all());
 
         // TODO: extract all uploadedFile instances from the input...
@@ -171,8 +180,7 @@ trait CrudAssistant
 
         event(new ManagedModelCreated($model->modelReference()));
 
-        return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
+        return $model;
     }
 
     /**
@@ -196,6 +204,14 @@ trait CrudAssistant
 
     public function update(Request $request, $id)
     {
+        $model = $this->handleUpdate($request, $id);
+
+        return redirect()->to($this->route('index'))
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');
+    }
+
+    private function handleUpdate(Request $request, $id)
+    {
         $model = $this->fieldsModel($id);
 
         $this->guard('update', $model);
@@ -208,8 +224,7 @@ trait CrudAssistant
 
         event(new ManagedModelUpdated($model->modelReference()));
 
-        return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');
+        return $model;
     }
 
     public function delete(Request $request, $id)

@@ -1,4 +1,3 @@
-import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
 import increaseDeepestIndex from './utils';
 
 class RepeatField {
@@ -77,8 +76,6 @@ class RepeatField {
             this.fieldsContainer.querySelector(`${this._attributeKey('data-repeat-fieldset')}:last-child`)
         );
 
-        this.fieldsContainer.appendChild(fieldSet);
-
         fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
         RepeatField._makeNestedRepeatElsUnique(fieldSet);
 
@@ -87,7 +84,7 @@ class RepeatField {
             el.value = null;
         });
 
-        vueFields(fieldSet);
+        this.fieldsContainer.appendChild(fieldSet);
 
         this._refresh();
 

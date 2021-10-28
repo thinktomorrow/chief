@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Site\Urls;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MemoizedUrlRecord extends UrlRecord
+class MemoizedUrlRecords
 {
-    public static $cachedRecords;
+    private static $cachedRecords;
 
     public static function clearCachedRecords(): void
     {
@@ -26,13 +26,7 @@ class MemoizedUrlRecord extends UrlRecord
      */
     public static function findByModel(Model $model, string $locale = null): UrlRecord
     {
-        if (! static::$cachedRecords) {
-            static::$cachedRecords = parent::all();
-        }
-
-        $record = static::$cachedRecords
-            ->where('model_type', $model->getMorphClass())
-            ->where('model_id', $model->id)
+        $record = static::getByModel($model)
             ->where('locale', $locale)
             ->sortBy('redirect_id')
             ->first();
@@ -46,8 +40,12 @@ class MemoizedUrlRecord extends UrlRecord
 
     public static function getByModel(Model $model)
     {
-        return chiefMemoize('url-records-get-by-model', function ($model) {
-            return parent::getByModel($model);
-        }, [$model]);
+        if (! static::$cachedRecords) {
+            static::$cachedRecords = UrlRecord::all();
+        }
+
+        return static::$cachedRecords
+            ->where('model_type', $model->getMorphClass())
+            ->where('model_id', $model->id);
     }
 }

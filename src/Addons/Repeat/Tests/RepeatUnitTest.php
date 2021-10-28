@@ -1,8 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Addons\Repeat;
+namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
 
-use Thinktomorrow\Chief\Addons\Repeat\tests\TestHelpers;
+use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\TestCase;
 

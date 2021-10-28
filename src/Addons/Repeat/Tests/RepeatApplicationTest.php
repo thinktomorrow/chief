@@ -1,8 +1,7 @@
 <?php
 
-namespace Thinktomorrow\Chief\Addons\Repeat;
+namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
 
-use Thinktomorrow\Chief\Addons\Repeat\tests\PageStub;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

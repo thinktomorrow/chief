@@ -1,5 +1,6 @@
 import Sortable from 'sortablejs';
 import EventBus from './EventBus';
+import SortableToggle from './sortable-toggle';
 
 const IndexSorting = function (options) {
     this.Sortables = [];
@@ -14,57 +15,13 @@ const IndexSorting = function (options) {
     // Optional draggable handle instead of entire element
     this.handle = options.handle || null;
 
-    // Toggle
-    this.isSorting = options.isSorting || false;
-    this.sortToggles = Array.from(document.querySelectorAll('[data-sortable-toggle]'));
-    this.hiddenWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-hide-when-sorting]'));
-    this.showWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-show-when-sorting]'));
-
     this._init();
+
+    new SortableToggle(this.Sortables, { isSorting: options.isSorting || false });
 };
 
 IndexSorting.prototype.destroy = function () {
     this.Sortables.forEach((sortable) => sortable.destroy());
-};
-
-IndexSorting.prototype.toggle = function (e) {
-    this.isSorting = !this.isSorting;
-
-    if (this.isSorting) {
-        e.target.innerText = 'Stop met sorteren';
-        this.showSorting();
-    } else {
-        e.target.innerText = 'Sorteer handmatig';
-        this.hideSorting();
-    }
-};
-
-IndexSorting.prototype.showSorting = function () {
-    this.hiddenWhenSortingEls.forEach((el) => {
-        el.classList.add('hidden');
-    });
-
-    this.showWhenSortingEls.forEach((el) => {
-        el.classList.remove('hidden');
-    });
-
-    this.Sortables.forEach((sortableInstance) => {
-        sortableInstance.option('disabled', false);
-    });
-};
-
-IndexSorting.prototype.hideSorting = function () {
-    this.hiddenWhenSortingEls.forEach((el) => {
-        el.classList.remove('hidden');
-    });
-
-    this.showWhenSortingEls.forEach((el) => {
-        el.classList.add('hidden');
-    });
-
-    this.Sortables.forEach((sortableInstance) => {
-        sortableInstance.option('disabled', true);
-    });
 };
 
 IndexSorting.prototype._init = function () {
@@ -115,17 +72,6 @@ IndexSorting.prototype._init = function () {
             },
         })
     );
-
-    this.sortToggles.forEach((toggle) => {
-        toggle.addEventListener('click', this.toggle.bind(this));
-    });
-
-    // Default view
-    if (this.isSorting) {
-        this.showSorting();
-    } else {
-        this.hideSorting();
-    }
 };
 
 IndexSorting.prototype._filterSortableIndices = function (indices) {

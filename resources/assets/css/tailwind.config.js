@@ -1,8 +1,7 @@
 const defaultColors = require('tailwindcss/colors');
 
-const PurgeCssConfig = require('../../../purgecss.config.js');
-const WarpaintRow = require('./warpaint/utilities/WarpaintRow.js');
 const WarpaintContainer = require('./warpaint/utilities/WarpaintContainer.js');
+const WarpaintRow = require('./warpaint/utilities/WarpaintRow.js');
 const WarpaintGutter = require('./warpaint/utilities/WarpaintGutter.js');
 
 module.exports = {
@@ -15,6 +14,7 @@ module.exports = {
         'resources/assets/css/components/multiselect.scss',
         'node_modules/vue-multiselect/dist/vue-multiselect.min.css',
         'resources/assets/css/components/redactor.scss',
+        'src/Addons/Repeat/resources/views/**/*.blade.php',
     ],
     theme: {
         screens: {

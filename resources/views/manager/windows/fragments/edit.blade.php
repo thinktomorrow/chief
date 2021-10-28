@@ -9,7 +9,41 @@
     @method('put')
 
     <div class="space-y-8">
-        <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
+        <div class="space-y-2">
+            <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
+
+            <div class="flex items-center group">
+                {{-- bookmark for this fragment --}}
+                @if($model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+                    <span class="mr-2 label label-grey-light">#{{ $model->getBookmark() }}</span>
+
+                    <div class="inline-flex items-center gutter-1">
+                        @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
+                            <span class="transform scale-0 group-hover:scale-100 transition-150">
+                                <a
+                                    href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
+                                    target="_blank"
+                                    class="link link-primary -mt-0.5"
+                                >
+                                    <x-chief-icon-label icon="icon-external-link" size="18"></x-chief-icon-label>
+                                </a>
+                            </span>
+                            <span class="transform scale-0 group-hover:scale-100 transition-150">
+                                <span
+                                        data-copy-to-clipboard="bookmark"
+                                        data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"
+                                        data-copy-success-content="Gekopiëerd!"
+                                        title="copy link"
+                                        class="leading-none cursor-pointer link link-primary"
+                                >
+                                    <x-chief-icon-label icon="icon-link" size="18"></x-chief-icon-label>
+                                </span>
+                            </span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
 
         @include('chief::manager.fields.form.fieldsets', [
             'fieldsets' => $fields->all(),
@@ -61,9 +95,7 @@
                     class="btn btn-warning-outline"
                     type="submit"
                     form="detachSharedFragment{{ $model->modelReference()->get() }}"
-                >
-                    Fragment niet meer delen en voortaan afzonderlijk bewerken op deze pagina
-                </button>
+                > Fragment niet meer delen en voortaan afzonderlijk bewerken op deze pagina </button>
             </div>
         @endif
 
@@ -72,9 +104,7 @@
                 type="submit"
                 form="updateForm{{ $model->modelReference()->get() }}"
                 class="btn btn-primary"
-            >
-                Wijzigingen opslaan
-            </button>
+            > Wijzigingen opslaan </button>
 
             <div data-vue-fields>
                 @adminCan('fragment-delete', $model)
@@ -95,9 +125,7 @@
                     class="btn btn-primary-outline"
                     type="submit"
                     form="copyFragment{{ $model->modelReference()->get() }}"
-                >
-                    Fragment dupliceren op deze pagina
-                </button>
+                > Fragment dupliceren op deze pagina </button>
             </div>
         @endif
     </div>
@@ -111,14 +139,10 @@
     id="copyFragment{{ $model->modelReference()->get() }}"
     method="POST"
     action="{{ $manager->route('fragment-copy', $owner, $model) }}"
->
-    @csrf
-</form>
+> @csrf </form>
 
 <form
     id="detachSharedFragment{{ $model->modelReference()->get() }}"
     method="POST"
     action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
->
-    @csrf
-</form>
+> @csrf </form>

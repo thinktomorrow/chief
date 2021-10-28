@@ -1,8 +1,4 @@
 @foreach($field->getRepeatedFields()->all() as $fieldSet)
-    {{-- @foreach($fieldSet->all() as $field) --}}
-    {{--     {!! $field->renderWindow() !!} --}}
-    {{-- @endforeach --}}
-    
     <div class="p-3 border rounded-lg border-grey-100 space-y-3">
         @foreach($fieldSet->all() as $field)
             <div class="{{ $field->getWidthStyle() }} space-y-2">

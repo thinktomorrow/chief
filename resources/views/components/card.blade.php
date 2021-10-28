@@ -9,7 +9,7 @@
                 {!! $actions !!}
             @endif
 
-            @if(isset($editRequestUrl))
+            @if(isset($editRequestUrl) && $editRequestUrl)
                 <a
                     {{ $sidebarTrigger ?? '' }}
                     href="{{ $editRequestUrl }}"

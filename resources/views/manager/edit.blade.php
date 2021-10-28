@@ -32,11 +32,17 @@
             @endif
 
             @slot('breadcrumbs')
-                @adminCan('index')
-                    <a href="@adminRoute('index')" class="link link-primary">
-                        <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
+                @if($model->adminConfig()->getBreadCrumb())
+                    <a href="{{ $model->adminConfig()->getBreadCrumb()->url }}" class="link link-primary">
+                        <x-chief-icon-label type="back">{{ $model->adminConfig()->getBreadCrumb()->label }}</x-chief-icon-label>
                     </a>
-                @endAdminCan
+                @else
+                    @adminCan('index')
+                        <a href="@adminRoute('index')" class="link link-primary">
+                            <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
+                        </a>
+                    @endAdminCan
+                @endif
             @endslot
         @endcomponent
     </div>
@@ -76,7 +82,7 @@
                         <livewire:links :model="$model" class="window window-grey window-md" />
                     @endAdminCan
 
-                    @adminCan('fields-edit', $model)
+                    @if($manager->can('fields-edit', $model))
                         {{-- FieldWindows without a specific position (default position: sidebar)  --}}
                         @foreach($fields->getWindowsByPosition('sidebar') as $fieldWindow)
                             @include('chief::manager.windows.show')
@@ -88,7 +94,14 @@
                             title="Algemeen"
                             class="window window-grey window-md"
                         />
-                    @endAdminCan
+                    @else
+                        {{-- Fields without a dedicated FieldWindow --}}
+                        <livewire:fields_component
+                            :model="$model"
+                            title="Algemeen"
+                            class="window window-grey window-md"
+                        />
+                    @endif
                 </div>
             </div>
         </div>

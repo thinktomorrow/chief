@@ -5,6 +5,7 @@ import SelectFragment from './fragment/selectFragment';
 import EventBus from '../utilities/EventBus';
 import generateWireframeStyles from '../utilities/wireframe-styles';
 import initConditionalFields from '../utilities/conditional-fields';
+import initCopyToClipboard from '../utilities/copy-to-clipboard';
 import initSortableGroup from '../utilities/sortable-group';
 
 // --------------------------------------------------------------------------------
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             generateWireframeStyles();
             new SelectFragment(document);
         },
-        onComponentReload: () => {
+        onComponentReloaded: () => {
             new SelectFragment(document);
             initSortableGroup('[data-sortable-fragments]');
             generateWireframeStyles();
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         events: {
             sidebarPanelActivated: () => {
                 initConditionalFields();
+                initCopyToClipboard();
             },
         },
     });

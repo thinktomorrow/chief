@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 
 trait TestHelpers
 {
@@ -144,7 +144,7 @@ trait TestHelpers
             'links' => $links,
         ]);
 
-        MemoizedUrlRecord::clearCachedRecords();
+        MemoizedUrlRecords::clearCachedRecords();
 
         return $response;
     }

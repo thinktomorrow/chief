@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
@@ -46,7 +45,7 @@ class MenuSource implements Source
                     $item->url = $item->url();
 
                     // Extra info on admin page.
-                    $item->page_label = $owner instanceof ManagedModel ? $owner->adminConfig()->getPageTitle() : '-';
+                    $item->page_label = $item->label ?: '-';
 
                     $item->hidden_in_menu = $owner->hidden_in_menu;
                     $item->draft = (public_method_exists($owner, 'isDraft') && $owner->isDraft());

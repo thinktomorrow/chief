@@ -91,6 +91,16 @@ final class AdminConfig
         return strip_tags($this->get('index.title', ''));
     }
 
+    public function setIndexSidebar(string $content): self
+    {
+        return $this->set('index.sidebar', $content);
+    }
+
+    public function getIndexSidebar(): string
+    {
+        return $this->get('index.sidebar', '');
+    }
+
     public function pageTitle(string $pageTitle): self
     {
         return $this->set('page.title', $pageTitle);
@@ -99,6 +109,23 @@ final class AdminConfig
     public function getPageTitle(): string
     {
         return strip_tags($this->get('page.title', ''));
+    }
+
+    public function breadCrumb(string $url, string $label): self
+    {
+        return $this->set('page.breadcrumb', [
+            'url' => $url,
+            'label' => $label,
+        ]);
+    }
+
+    public function getBreadCrumb(): ?object
+    {
+        if (! $this->get('page.breadcrumb')) {
+            return null;
+        }
+
+        return (object) $this->get('page.breadcrumb');
     }
 
     public function getIndexCardView(): string

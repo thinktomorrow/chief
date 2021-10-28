@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 class FieldType
 {
+    const HIDDEN = 'hidden';
     const INPUT = 'input';   // oneliner text (input)
     const TEXT = 'text';    // Plain text (textarea)
     const NUMBER = 'number'; // number

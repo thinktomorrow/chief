@@ -10,7 +10,6 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
     .js('resources/assets/js/main.js', 'public/chief-assets/back/js')
     .vue({ version: 2 })
     .js('resources/assets/js/native.js', 'public/chief-assets/back/js')
-
     .eslint({
         extensions: ['js'],
     })

@@ -21,17 +21,23 @@
                     <div class="w-full">
                         <div class="row-start-start gutter-3">
                             @foreach($fieldSet->all() as $field)
-                                @component('chief::manager.fields.form.field', [
+                                @if($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\HiddenField)
+                                    {!! $field->render() !!}
+                                @else
+                                    @component('chief::manager.fields.form.field', [
                                     'field' => $field,
                                     'autofocus' => (isset($index) && $index === 0),
                                 ])
-                                    <div
-                                        data-repeat-field="{{ $uniqueContainerId }}"
-                                        data-repeat-field-key="{{ $field->getDottedName() }}"
-                                    >
-                                        {!! $field->render() !!}
-                                    </div>
-                                @endcomponent
+                                        <div
+                                                data-repeat-field="{{ $uniqueContainerId }}"
+                                                data-repeat-field-key="{{ $field->getDottedName() }}"
+                                        >
+                                            {!! $field->render() !!}
+                                        </div>
+                                    @endcomponent
+                                @endif
+
+
                             @endforeach
                         </div>
                     </div>
