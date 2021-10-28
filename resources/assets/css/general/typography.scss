@@ -1,15 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-.font-body,
-.font-heading {
-    font-family: 'Inter', sans-serif;
-    @apply antialiased;
-}
-
 html,
 body {
     font-size: 15px;
-    @extend .font-body;
+    @apply font-body antialiased;
 }
 
 h1,
@@ -18,8 +10,7 @@ h3,
 h4,
 h5,
 h6 {
-    @apply leading-tight;
-    @extend .font-heading;
+    @apply font-display leading-tight;
 }
 
 h1 {

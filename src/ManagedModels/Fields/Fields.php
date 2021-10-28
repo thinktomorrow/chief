@@ -27,7 +27,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             if ($field instanceof self) {
                 $fields = $fields->add(...$field->values());
             } elseif (is_iterable($field)) {
-                trap($field);
                 $fields = $fields->add(...$field);
             } else {
                 $fields = $fields->add($field);

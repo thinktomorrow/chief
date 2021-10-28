@@ -40,6 +40,10 @@ module.exports = {
             blue: colors.lightBlue,
             orange: colors.orange,
         },
+        fontFamily: {
+            display: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+            body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+        },
         extend: {
             borderRadius: {
                 window: '0.5rem',

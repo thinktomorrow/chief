@@ -49,6 +49,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.page.status-window', 'chief::status.window');
         Blade::component('chief::components.page.links-window', 'chief::links.window');
 
+        Blade::component('chief::components.window', 'chief::window');
 
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
