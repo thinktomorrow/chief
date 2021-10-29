@@ -72,8 +72,7 @@
 /* Icon label hover effect */
 .icon-label {
     .icon-label-icon {
-        @apply inline-block transform;
-        @extend .transition-150;
+        @apply inline-block transform transition-all ease-in-out duration-75;
     }
 
     &:hover {

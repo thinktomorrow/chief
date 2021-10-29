@@ -4,28 +4,30 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
-- Added: _chief:view command <MANAGED_MODELKEY>_ to generate a custom admin view for a page or fragment e.g. `php artisan chief:view article`
-- Fixed: performance issues with menu
-- Removed: Field->editAsPagetitle. Use Field->tag('pagetitle') instead.
-- Removed: Field->renderWindow. Use Field->renderOnPage instead
-- Removed: FieldWindow and FieldSet models. Only fields should be set in your models' fields method now. In order to change the page layout and structure, use a custom page/fragment view.
+
+-   Added: _chief:view command <MANAGED_MODELKEY>_ to generate a custom admin view for a page or fragment e.g. `php artisan chief:view article`
+-   Fixed: performance issues with menu
+-   Removed: Field->editAsPagetitle. Use Field->tag('pagetitle') instead.
+-   Removed: Field->renderWindow. Use Field->renderOnPage instead
+-   Removed: FieldWindow and FieldSet models. Only fields should be set in your models' fields method now. In order to change the page layout and structure, use a custom page/fragment view.
+-   Removed: AbstractField $size variable + width, getWidth and getWidthStyle methods as individual fields are no longer required to have specific styling/width.
 
 ## 0.6.6 - 2021-10-14
 
-- Added: sidebar component::onComponentReloading and component::onComponentReloaded listeners. This is a breaking change since onComponentReload is now removed.
-- Added: option to disable livewire reload after sidebar component submission by passing livewire=false in response data.
-- Added: response data to sidebar event payload data
-- Added: option to set breadcrumb on edit page
-- Added: seperate handleStore and handleUpdate methods
-- Added: HasBookmark interface to allow for bookmarks on fragments
-- Added: HiddenField
-- Fixed: repeatfield type would overwrite existing field indices so only last one would get stored. Therefore disabled vue fields for repeatfield.
-- Changed: AbstractFilter default label value was changed from using the query key to null. If a label is not specifically given, the filter will display without it.
-- Removed: sidebar component::onComponentReload event listener. use the onComponentReloaded instead
+-   Added: sidebar component::onComponentReloading and component::onComponentReloaded listeners. This is a breaking change since onComponentReload is now removed.
+-   Added: option to disable livewire reload after sidebar component submission by passing livewire=false in response data.
+-   Added: response data to sidebar event payload data
+-   Added: option to set breadcrumb on edit page
+-   Added: seperate handleStore and handleUpdate methods
+-   Added: HasBookmark interface to allow for bookmarks on fragments
+-   Added: HiddenField
+-   Fixed: repeatfield type would overwrite existing field indices so only last one would get stored. Therefore disabled vue fields for repeatfield.
+-   Changed: AbstractFilter default label value was changed from using the query key to null. If a label is not specifically given, the filter will display without it.
+-   Removed: sidebar component::onComponentReload event listener. use the onComponentReloaded instead
 
 ## 0.6.5 - 2021-09-27
 
-- Added: option to set custom from email address. Via chief setting from_email and from_name values
+-   Added: option to set custom from email address. Via chief setting from_email and from_name values
 
 ## 0.6.4 - 2021-09-24
 

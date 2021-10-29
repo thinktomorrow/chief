@@ -1,5 +1,5 @@
 .window {
-    @apply rounded-lg shadow-sm;
+    @apply rounded-xl shadow-sm;
 }
 
 .window-white {

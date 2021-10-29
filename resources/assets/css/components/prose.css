@@ -9,7 +9,7 @@
         h5,
         h6,
         label {
-            @apply text-grey-900;
+            @apply text-black;
         }
 
         html,
@@ -21,7 +21,7 @@
         cite,
         blockquote,
         figcaption {
-            @apply text-grey-500;
+            @apply text-grey-700;
         }
 
         code {

@@ -5,7 +5,7 @@
         @include('chief::layout.partials.healthbar')
         @include('chief::layout.partials.svg-symbols')
 
-        <main id="main" class="min-h-screen bg-grey-100">
+        <main id="main" class="min-h-screen bg-grey-100 bg-gradient-to-r from-grey-50 to-grey-100">
             <div class="flex items-start">
                 <aside class="sticky top-0 flex-shrink-0">
                     @include('chief::layout.nav.nav')

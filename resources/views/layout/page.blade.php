@@ -16,7 +16,9 @@
 @section('header')
     @isset($header)
         <div class="container">
-            {!! $header !!}
+            <div class="space-y-4">
+                {!! $header !!}
+            </div>
         </div>
     @endisset
 @endsection
@@ -24,8 +26,10 @@
 @section('content')
     <div class="container">
         <div class="row gutter-3">
-            <div class="w-full space-y-6 lg:w-2/3">
-                {!! $slot !!}
+            <div class="w-full lg:w-2/3">
+                <div class="space-y-6">
+                    {!! $slot !!}
+                </div>
             </div>
 
             <div class="w-full lg:w-1/3">
@@ -43,6 +47,7 @@
     @adminCan('delete', $model)
         @include('chief::manager._transitions.modals.delete-modal')
     @endAdminCan
+
     @adminCan('archive', $model)
         @include('chief::manager._transitions.modals.archive-modal')
     @endAdminCan

@@ -12,7 +12,6 @@
         $label = $field->getLabel();
         $name = $field->getName();
         $isRequired = $field->required();
-        $class = $field->getWidthStyle();
 
         if($field->getDescription()) {
             $description = '<p>' . $field->getDescription() . '</p>';
@@ -35,7 +34,7 @@
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
-        <div class="mb-2 leading-none space-x-1">
+        <div class="mb-2 space-x-1 leading-none">
             <span class="font-medium text-grey-700">
                 {{ ucfirst($label) }}
             </span>

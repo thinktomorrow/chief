@@ -26,10 +26,10 @@ module.exports = {
             transparent: 'transparent',
 
             white: colors.white,
-            grey: colors.blueGray,
+            grey: colors.trueGray,
             black: colors.black,
 
-            primary: colors.blue,
+            primary: colors.indigo,
             secondary: colors.teal,
 
             red: colors.red,

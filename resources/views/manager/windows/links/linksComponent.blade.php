@@ -1,10 +1,5 @@
 <div data-links-component>
-    <x-chief-card
-        class="{{ isset($class) ? $class : '' }}"
-        title="Links"
-        :editRequestUrl="$manager->route('links-edit', $model)"
-        sidebarTrigger="data-sidebar-trigger=links"
-    >
+    <x-chief::window title="Links" :url="$manager->route('links-edit', $model)" sidebar="links">
         <div class="space-y-2">
             @unless($linkForm->exist())
                 <a
@@ -30,5 +25,5 @@
                 @endforeach
             @endunless
         </div>
-    </x-chief-card>
+    </x-chief::window>
 </div>

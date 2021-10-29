@@ -9,15 +9,15 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 class FieldsWindow extends Component
 {
     public $model;
-    public string $tag;
+    public $tag;
     public $title;
     public $class;
     public $template;
 
-    public function mount($model, ?string $tag = null): void
+    public function mount($model, $tag): void
     {
         $this->model = $model;
-        $this->tag = $tag ?? 'default';
+        $this->tag = $tag;
     }
 
     /**

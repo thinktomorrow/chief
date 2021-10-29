@@ -66,9 +66,6 @@ abstract class AbstractField
     private $type;
     private ?string $customSaveMethod = null;
 
-    // Custom width
-    private string $size = '1';
-
     final public function __construct(FieldType $type, string $key)
     {
         $this->type = $type;
@@ -172,33 +169,6 @@ abstract class AbstractField
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function width(string $size): Field
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function getWidth(): string
-    {
-        return $this->size ?? '1';
-    }
-
-    public function getWidthStyle(): string
-    {
-        switch ($this->getWidth()) {
-            case '1/2':
-                return 'w-full sm:w-1/2';
-            case '1/3':
-                return 'w-full sm:w-1/2 md:w-1/3';
-            case '2/3':
-                return 'w-full sm:w-1/2 md:w-2/3';
-            case 1:
-            default:
-                return 'w-full';
-        }
     }
 
     /**
