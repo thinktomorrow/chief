@@ -19,7 +19,9 @@ class __STUB_CLASSNAME__ extends Model implements PageContract
 
     public function fields(): iterable
     {
-        yield InputField::make('title')->locales()->editAsPageTitle();
+        yield InputField::make('title')
+            ->tag('pagetitle')
+            ->locales();
         __STUB_FIELDS__
         /** @dynamicKeys: seo_title, seo_content, seo_image */
         yield FieldPresets::seo();
