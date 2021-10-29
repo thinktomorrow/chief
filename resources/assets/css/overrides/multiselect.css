@@ -2,6 +2,7 @@
     font-size: theme('fontSize.base') !important;
     font-weight: theme('fontWeight.medium') !important;
 }
+
 .multiselect__tags {
     background: theme('colors.grey.50') !important;
     border-radius: theme('borderRadius.md') !important;

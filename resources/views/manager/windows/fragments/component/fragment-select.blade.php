@@ -5,10 +5,10 @@
     @if($hideSelectOptions)
         <div
             data-fragment-select-open
-            class="absolute flex justify-center w-full h-8 border-none cursor-pointer z-1 group"
-            style="margin-top: -12px;"
+            class="absolute flex justify-center w-full h-8 border-none cursor-pointer group"
+            style="margin-top: -12px; z-index: 1;"
         >
-            <div class="absolute bg-white rounded-full transform scale-0 link link-black transition-150 group-hover:scale-100">
+            <div class="absolute transform scale-0 bg-white rounded-full link link-black transition-150 group-hover:scale-100">
                 <svg width="24" height="24"> <use xlink:href="#icon-add-circle"/> </svg>
             </div>
         </div>

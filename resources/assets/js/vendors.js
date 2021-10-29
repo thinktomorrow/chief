@@ -26,9 +26,6 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-// Stickyfill
-window.Stickyfill = require('stickyfilljs');
-
 // /**
 //  * Tippy tooltip library
 //  * @url https://atomiks.github.io/tippyjs/
