@@ -30,5 +30,3 @@ window.Vue.component('link-input', require('./components-vue/LinkInput.vue').def
 
 window.Vue.component('notifications', require('./components-vue/Notifications/Notifications.vue').default);
 window.Vue.component('notification', require('./components-vue/Notifications/Notification.vue').default);
-
-window.Stickyfill.add(document.querySelectorAll('.sticky'));

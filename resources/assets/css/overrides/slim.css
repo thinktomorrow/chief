@@ -45,13 +45,15 @@
 .slim .slim-area .slim-upload-status[data-state='error'] {
     left: 0.5rem !important;
     right: 0.5rem !important;
-    @apply text-white bg-red-500 #{!important};
+    color: theme('colors.white') !important;
+    background-color: theme('colors.red.500') !important;
 }
 
 .slim .slim-area .slim-upload-status[data-state='success'] {
     left: 0.5rem !important;
     right: 0.5rem !important;
-    @apply text-white bg-green-500 #{!important};
+    color: theme('colors.white') !important;
+    background-color: theme('colors.green.500') !important;
 }
 
 /* product thumbs and image uploads */
@@ -92,7 +94,7 @@
     .slim .slim-area .slim-loader {
         right: 50%;
         top: 50%;
-        margin-right: -12.5px; // width and height of loader is 23px
+        margin-right: -12.5px; /* width and height of loader is 23px */
         margin-top: -12.5px;
     }
 }

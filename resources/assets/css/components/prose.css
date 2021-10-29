@@ -1,0 +1,56 @@
+@import './link.css';
+
+@layer components {
+    .prose-dark {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        label {
+            @apply text-grey-900;
+        }
+
+        html,
+        body,
+        ul,
+        ol,
+        li,
+        p,
+        cite,
+        blockquote,
+        figcaption {
+            @apply text-grey-500;
+        }
+
+        code {
+            @apply bg-grey-100 border border-grey-200 rounded;
+        }
+    }
+
+    .prose-editor,
+    .editor-content {
+        img {
+            @apply !h-auto;
+        }
+
+        a:not(.btn):not(.link) {
+            @extend .link;
+            @extend .link-primary;
+        }
+    }
+
+    .prose-wireframe {
+        @apply text-xs;
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6  {
+            @apply text-sm;
+        }
+    }
+}

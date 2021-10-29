@@ -1,11 +1,14 @@
-let mix = require('laravel-mix');
-let path = require('path');
-let shell = require('shelljs');
+const mix = require('laravel-mix');
+const path = require('path');
+const shell = require('shelljs');
 
 require('laravel-mix-polyfill');
 require('laravel-mix-eslint');
 
-mix.setPublicPath(path.normalize('public/chief-assets/back'))
+mix.webpackConfig({
+    stats: { children: true },
+})
+    .setPublicPath(path.normalize('public/chief-assets/back'))
 
     .js('resources/assets/js/main.js', 'public/chief-assets/back/js')
     .vue({ version: 2 })
@@ -13,30 +16,30 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
     .eslint({
         extensions: ['js'],
     })
-
-    .sass('resources/assets/css/main.scss', 'public/chief-assets/back/css')
-
     .polyfill({
         enabled: true,
         targets: 'firefox 50, IE 11',
     })
 
+    .postCss('resources/assets/css/main.css', 'public/chief-assets/back/css', [
+        require('postcss-import'),
+        require('tailwindcss/nesting'),
+        require('postcss-extend'),
+        require('tailwindcss')('./resources/assets/css/tailwind.config.js'),
+        require('autoprefixer'),
+    ])
+
+    .options({ processCssUrls: false })
+
     .version()
-
-    .options({
-        postCss: [require('tailwindcss')('./resources/assets/css/tailwind.config.js'), require('autoprefixer')],
-
-        // Ignore Sass loader to follow url() paths
-        processCssUrls: false,
-    })
 
     // Imagine not having to publish chief assets manually every time webpack recompiles them.
     // Sounds like a dream right? Not anymore.
     .then(() => {
         if (mix.inProduction()) return;
 
-        let currentDir = process.cwd();
-        let symlinkedProjectDir = process.env.SYMLINKED_PROJECT_PATH;
+        const currentDir = process.cwd();
+        const symlinkedProjectDir = process.env.SYMLINKED_PROJECT_PATH;
 
         // If SYMLINKED_PROJECT_PATH is defined but empty, do nothing.
         if (symlinkedProjectDir === '') return;

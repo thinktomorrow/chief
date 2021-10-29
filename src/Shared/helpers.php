@@ -4,7 +4,7 @@
  * Wrapper around the dd helper from Symfony. This function provides the file from where the
  * dd function has been called so you won't be in the dark when finding it again.
  */
-if (!function_exists('trap')) {
+if (! function_exists('trap')) {
     function trap($var, ...$moreVars): void
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
@@ -20,7 +20,7 @@ if (!function_exists('trap')) {
 }
 
 // Retrieve the logged in admin
-if (!function_exists('chiefAdmin')) {
+if (! function_exists('chiefAdmin')) {
     function chiefAdmin(): ?Illuminate\Contracts\Auth\Authenticatable
     {
         return \Illuminate\Support\Facades\Auth::guard('chief')->user();
@@ -28,7 +28,7 @@ if (!function_exists('chiefAdmin')) {
 }
 
 // Retrieve the online fragments of the current owning model
-if (!function_exists('getFragments')) {
+if (! function_exists('getFragments')) {
     function getFragments($owner): Illuminate\Support\Collection
     {
         return app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->getFragments($owner);
@@ -39,7 +39,7 @@ if (!function_exists('getFragments')) {
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
  */
-if (!function_exists('chief_cached_asset')) {
+if (! function_exists('chief_cached_asset')) {
     function chief_cached_asset($filepath): string
     {
         $manifestPath = '/chief-assets/back';
@@ -58,7 +58,7 @@ if (!function_exists('chief_cached_asset')) {
     }
 }
 
-if (!function_exists('chiefSetting')) {
+if (! function_exists('chiefSetting')) {
     function chiefSetting($key = null, $locale = null, $default = null)
     {
         $settings = app(\Thinktomorrow\Chief\Admin\Settings\Settings::class);
@@ -72,14 +72,14 @@ if (!function_exists('chiefSetting')) {
 }
 
 // global access to Register singleton
-if (!function_exists('chiefRegister')) {
+if (! function_exists('chiefRegister')) {
     function chiefRegister()
     {
         return app(\Thinktomorrow\Chief\Managers\Register\Register::class);
     }
 }
 
-if (!function_exists('chiefmenu')) {
+if (! function_exists('chiefmenu')) {
     /**
      * @param mixed $key
      *
@@ -93,7 +93,7 @@ if (!function_exists('chiefmenu')) {
     }
 }
 
-if (!function_exists('str_slug_slashed')) {
+if (! function_exists('str_slug_slashed')) {
     function str_slug_slashed($title, $separator = '-', $language = 'en'): string
     {
         $parts = explode('/', $title);
@@ -106,13 +106,13 @@ if (!function_exists('str_slug_slashed')) {
     }
 }
 
-if (!function_exists('is_array_empty')) {
+if (! function_exists('is_array_empty')) {
     function is_array_empty(array $values): bool
     {
         $empty = true;
 
         foreach ($values as $value) {
-            if (!$value || !trim($value)) {
+            if (! $value || ! trim($value)) {
                 continue;
             }
             $empty = false;
@@ -122,7 +122,7 @@ if (!function_exists('is_array_empty')) {
     }
 }
 
-if (!function_exists('contract')) {
+if (! function_exists('contract')) {
     function contract($instance, $contract): bool
     {
         return $instance instanceof $contract;
@@ -134,7 +134,7 @@ if (!function_exists('contract')) {
  * in the public api. method_exists also checks the existence of private methods so we'll
  * need an extra assurance that the method has in fact public accessibility.
  */
-if (!function_exists('public_method_exists')) {
+if (! function_exists('public_method_exists')) {
     function public_method_exists($class, $method): bool
     {
         $reflection = new ReflectionClass($class);
@@ -152,7 +152,7 @@ if (!function_exists('public_method_exists')) {
  * Helper: Teaser
  * --------------------------------------------------------------------------
  */
-if (!function_exists('teaser')) {
+if (! function_exists('teaser')) {
     /**
      * @param $text
      * @param null   $max
@@ -167,7 +167,7 @@ if (!function_exists('teaser')) {
             return $text;
         }
 
-        if (!is_null($clean)) {
+        if (! is_null($clean)) {
             $text = cleanupHTML($text, $clean);
         }
 
@@ -187,7 +187,7 @@ if (!function_exists('teaser')) {
  * @param string $value
  * @return    string
  */
-if (!function_exists('cleanupString')) {
+if (! function_exists('cleanupString')) {
     function cleanupString($value): string
     {
         $value = strip_tags($value);
@@ -207,7 +207,7 @@ if (!function_exists('cleanupString')) {
  * @param string $whitelist - if false no tagstripping will occur - other than HTMLPurifier
  * @return    string
  */
-if (!function_exists('cleanupHTML')) {
+if (! function_exists('cleanupHTML')) {
     function cleanupHTML($value, $whitelist = null): string
     {
         if (is_null($whitelist)) {
@@ -234,7 +234,7 @@ if (!function_exists('cleanupHTML')) {
  * @param array $parameters
  * @return bool
  */
-if (!function_exists('isActiveUrl')) {
+if (! function_exists('isActiveUrl')) {
     function isActiveUrl($name, $parameters = []): bool
     {
         if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
@@ -245,7 +245,7 @@ if (!function_exists('isActiveUrl')) {
              * If a single parameter is passed as string, we will convert this to
              * the proper array keyed by the first uri parameter
              */
-            if (!is_array($parameters)) {
+            if (! is_array($parameters)) {
                 $names = $current->parameterNames();
                 $parameters = [reset($names) => $parameters];
             }
@@ -284,7 +284,7 @@ if (!function_exists('isActiveUrl')) {
  * @param array $overrides
  * @return string
  */
-if (!function_exists('addQueryToUrl')) {
+if (! function_exists('addQueryToUrl')) {
     function addQueryToUrl($url, array $query_params = [], $overrides = []): string
     {
         $parsed_url = parse_url($url);
@@ -308,7 +308,7 @@ if (!function_exists('addQueryToUrl')) {
         $_query = explode('&', $parsed_url['query']);
 
         array_map(function ($v) use (&$current_query) {
-            if (!$v) {
+            if (! $v) {
                 return;
             }
             $split = explode('=', $v);
@@ -329,7 +329,7 @@ if (!function_exists('addQueryToUrl')) {
     }
 }
 
-if (!function_exists('chiefMemoize')) {
+if (! function_exists('chiefMemoize')) {
     /**
      * Memoize a function.
      *
