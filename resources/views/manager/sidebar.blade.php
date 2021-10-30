@@ -16,7 +16,7 @@
                 <div
                     data-sidebar-close
                     data-sidebar-close-button
-                    class="inline-block mb-4 cursor-pointer"
+                    class="inline-block mb-2 cursor-pointer"
                 ></div>
 
                 <div data-sidebar-content tabindex="0" class="outline-none">

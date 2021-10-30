@@ -61,5 +61,5 @@
                     <p> ... </p>
                 </div>
         @endswitch
-    </x-chief-card>
+    </x-chief::window>
 </div>

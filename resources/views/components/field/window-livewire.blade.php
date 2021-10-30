@@ -16,8 +16,8 @@
             >
                 <div class="space-y-4">
                     @foreach($fields->all() as $field)
-                        <div class="space-y-2">
-                            <span class="text-xs font-semibold uppercase text-grey-700">
+                        <div class="space-y-1">
+                            <span class="font-medium text-black">
                                 {{ ucfirst($field->getLabel()) }}
                             </span>
 

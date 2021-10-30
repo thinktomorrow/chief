@@ -4,14 +4,14 @@
 @endphp
 
 <div>
-    <div class="bg-white shadow-sm rounded-xl">
+    <div class="bg-white rounded-xl shadow-window">
         <div class="p-6">
             @if(isset($title) || isset($label) || isset($url) || isset($sidebar))
-                <div class="{{ isset($slot) ? 'pb-5 mb-6 border-b border-grey-100' : null }}">
-                    <div class="flex items-stretch justify-end space-x-5">
-                        <div class="w-full -mt-0.5 space-x-1">
+                <div class="{{ isset($slot) ? 'mb-6' : null }}">
+                    <div class="flex items-stretch justify-end space-x-4">
+                        <div class="w-full space-x-1 mt-0.5">
                             @isset($title)
-                                <span class="text-lg font-semibold leading-normal tracking-tight text-black">
+                                <span class="text-lg font-semibold leading-normal text-black">
                                     {!! $title !!}
                                 </span>
                             @endisset
@@ -29,7 +29,7 @@
                                     data-sidebar-trigger="{{ $sidebar }}"
                                     href="{{ $url }}"
                                     title="Aanpassen"
-                                    class="inline-block p-2 -m-2 rounded-xl bg-primary-50 bg-gradient-to-br from-primary-50 to-primary-100 icon-label link link-primary"
+                                    class="inline-block p-1.5 rounded-xl bg-primary-50 icon-label link link-primary"
                                 >
                                     <x-chief-icon-label type="edit" size="18"></x-chief-icon-label>
                                 </a>

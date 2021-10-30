@@ -1,6 +1,6 @@
 <div data-fragments-component>
     <x-chief::window>
-        <div class="relative -my-6 border-b divide-y divide-grey-100 border-grey-100">
+        <div class="relative -my-6">
             @include('chief::manager.windows.fragments.component.fragment-select', [
                 'ownerManager' => $manager,
                 'inOpenState' => count($fragments) < 1
@@ -10,7 +10,7 @@
                 data-fragments-container
                 data-sortable-fragments
                 data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-                class="divide-y divide-grey-100"
+                class="divide-y-2 divide-dashed divide-primary-50"
             >
                 @foreach($fragments as $fragment)
                     @include('chief::manager.windows.fragments.component._card', [

@@ -55,7 +55,7 @@
     .-window-t {
         @apply -mt-8;
     }
-    .window-b {
+    .-window-b {
         @apply -mb-8;
     }
     .-window-x {

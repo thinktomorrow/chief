@@ -5,7 +5,7 @@
 @layer components {
     .link {
         @apply inline-block rounded-sm;
-        @apply font-semibold no-underline;
+        @apply font-medium no-underline;
         @apply transition duration-75 ease-in-out;
 
         &:focus {
@@ -22,7 +22,11 @@
     }
 
     .link-black {
-        @apply text-grey-900 hover:text-grey-700;
+        @apply text-black hover:text-grey-800;
+    }
+
+    .link-white {
+        @apply text-white hover:text-grey-200;
     }
 
     .link-grey {

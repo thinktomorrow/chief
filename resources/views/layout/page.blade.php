@@ -16,7 +16,7 @@
 @section('header')
     @isset($header)
         <div class="container">
-            <div class="space-y-4">
+            <div class="space-y-2">
                 {!! $header !!}
             </div>
         </div>

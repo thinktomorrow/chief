@@ -5,13 +5,13 @@
         @include('chief::layout.partials.healthbar')
         @include('chief::layout.partials.svg-symbols')
 
-        <main id="main" class="min-h-screen bg-grey-100 bg-gradient-to-r from-grey-50 to-grey-100">
+        <main id="main" class="min-h-screen bg-grey-50 bg-gradient-to-r from-grey-50 to-grey-100">
             <div class="flex items-start">
                 <aside class="sticky top-0 flex-shrink-0">
                     @include('chief::layout.nav.nav')
                 </aside>
 
-                <div class="w-full py-12 space-y-12">
+                <div class="w-full py-12 space-y-8">
                     @yield('header')
 
                     <section id="content">
