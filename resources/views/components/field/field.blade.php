@@ -1,7 +1,4 @@
-<?php
-
-    $class = $attributes->get('class', '');
-
+@php
     /**
      * If a key is given the field element is populated with the
      * field values such as label, description, input value, ...
@@ -21,25 +18,26 @@
 
         // TODO(tijs): conditional defaults for field
         // data-conditional="{{ $field->getId() }}"
-//        data-conditional-trigger-type="{{ $field->getType() }}"
-//        data-conditional-data="{{ $field->getConditionalFieldsData() }}"
+        // data-conditional-trigger-type="{{ $field->getType() }}"
+        // data-conditional-data="{{ $field->getConditionalFieldsData() }}"
     }
-?>
+@endphp
 
 <div
     {!! $attributes->has('data-conditional') ? 'data-conditional="' . $attributes->get('data-conditional') . '"' : null !!}
     {!! $attributes->has('data-conditional-trigger-type') ? 'data-conditional-trigger-type="' . $attributes->get('data-conditional-trigger-type') . '"' : null !!}
     {!! $attributes->get('data-conditional-data') ? 'data-conditional-data="' . $attributes->get('data-conditional-data') . '"' : null !!}
-    class="{{ $class }}"
+    class="{{ $attributes->get('class', '') }}"
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
         <div class="mb-2 space-x-1 leading-none">
-            <span class="font-medium text-grey-700">
+            <span class="font-medium text-black">
                 {{ ucfirst($label) }}
             </span>
+
             @if(isset($isRequired) && ($isRequired == 'true') | $isRequired == '1')
-                <span class="text-sm leading-none label label-warning">Verplicht</span>
+                <span class="leading-none label label-xs label-warning">Verplicht</span>
             @endif
         </div>
     @endif

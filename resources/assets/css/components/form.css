@@ -14,7 +14,7 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'] {
-    @apply bg-grey-50 border border-grey-200 rounded-md px-4 py-3 font-medium text-grey-700;
+    @apply border-2 border-grey-200 rounded-lg px-4 py-3 text-grey-700 bg-white;
 
     &:focus {
         @apply border-primary-500 bg-white;
@@ -44,7 +44,7 @@ input[type='number'] {
 input[type='checkbox'],
 input[type='radio'] {
     margin-top: 0.1rem;
-    @apply appearance-none relative w-5 h-5 bg-grey-50 border border-grey-200 overflow-hidden mr-1 cursor-pointer flex-shrink-0;
+    @apply appearance-none relative w-5 h-5 border-2 border-grey-200 overflow-hidden mr-1 cursor-pointer flex-shrink-0 bg-white;
 
     &:focus {
         @apply ring-2 ring-primary-500;

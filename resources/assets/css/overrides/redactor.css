@@ -4,11 +4,16 @@
 
 .redactor-box {
     overflow: hidden !important;
-    border-radius: theme('borderRadius.md') !important;
+    border-radius: theme('borderRadius.lg') !important;
+    border-width: 2px !important;
     border-color: theme('borderColor.grey.200') !important;
     &:focus {
         border-color: theme('borderColor.primary.500') !important;
     }
+}
+
+.redactor-statusbar {
+    background-color: theme('colors.grey.50') !important;
 }
 
 .redactor-component[data-redactor-type='video'] {

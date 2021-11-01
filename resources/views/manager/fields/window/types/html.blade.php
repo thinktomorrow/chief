@@ -1,15 +1,7 @@
-<div
-    class="prose prose-dark prose-editor"
-    style="
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-    "
->
+<div class="overflow-hidden max-h-20">
     @if($field->getValue())
-        {!! $field->getValue() !!}
+        <p class="text-grey-500">{{ teaser($field->getValue(), 120, '...') }}</p>
     @else
-        <p><span class="text-grey-400">...</span></p>
+        <p class="text-grey-500">...</p>
     @endif
 </div>

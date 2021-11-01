@@ -42,7 +42,7 @@
     }
 
     .prose-wireframe {
-        @apply text-xs;
+        @apply text-xs text-grey-500;
 
         h1,
         h2,
@@ -50,7 +50,7 @@
         h4,
         h5,
         h6  {
-            @apply text-sm;
+            @apply text-xs text-grey-700;
         }
     }
 }

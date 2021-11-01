@@ -4,7 +4,7 @@
 @endphp
 
 <div>
-    <div class="bg-white rounded-xl shadow-window">
+    <div class="bg-white rounded-2xl shadow-window">
         <div class="p-6">
             @if(isset($title) || isset($label) || isset($url) || isset($sidebar))
                 <div class="{{ isset($slot) ? 'mb-6' : null }}">

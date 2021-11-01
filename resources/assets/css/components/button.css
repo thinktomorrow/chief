@@ -5,7 +5,7 @@
 @layer components {
     .btn {
         @apply inline-block border-2 px-4 py-2 rounded-lg cursor-pointer;
-        @apply font-bold leading-normal;
+        @apply font-semibold leading-normal;
         @apply transition duration-75 ease-in-out;
 
         &:focus {

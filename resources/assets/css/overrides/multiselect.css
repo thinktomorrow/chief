@@ -4,8 +4,9 @@
 }
 
 .multiselect__tags {
-    background: theme('colors.grey.50') !important;
+    background: theme('colors.white') !important;
     border-radius: theme('borderRadius.md') !important;
+    border-width: 2px !important;
     border-color: theme('colors.grey.200') !important;
     padding-left: 1rem !important;
     padding-bottom: 0.25rem !important;
@@ -47,7 +48,7 @@
 .multiselect__placeholder {
     font-size: theme('fontSize.base') !important;
     font-weight: theme('fontWeight.medium') !important;
-    background: theme('colors.grey.50') !important;
+    /* background: theme('colors.white') !important; */
     line-height: theme('lineHeight.normal') !important;
     padding-left: 0 !important;
     margin-top: 0.25rem !important;

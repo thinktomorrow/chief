@@ -11,13 +11,9 @@
 
             <aside
                 data-sidebar-aside
-                class="absolute top-0 bottom-0 right-0 w-full overflow-auto bg-white shadow-sm window-lg md:w-192 sidebar-slide-from-right"
+                class="absolute top-0 bottom-0 right-0 w-full px-8 py-12 overflow-auto bg-white shadow-window md:w-192 sidebar-slide-from-right"
             >
-                <div
-                    data-sidebar-close
-                    data-sidebar-close-button
-                    class="inline-block mb-2 cursor-pointer"
-                ></div>
+                <div data-sidebar-close data-sidebar-close-button class="mb-2"></div>
 
                 <div data-sidebar-content tabindex="0" class="outline-none">
                     <!-- panel content -->
@@ -27,7 +23,7 @@
     </template>
 
     <template id="js-sidebar-close-button">
-        <div class="link link-primary">
+        <div class="cursor-pointer link link-primary">
             <x-chief-icon-label type="back">Ga terug</x-chief-icon-label>
         </div>
     </template>

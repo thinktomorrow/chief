@@ -19,6 +19,6 @@
         <x-chief::links.window />
 
         <x-chief::field.window tagged="sidebar" />
-        <x-chief::field.window title="Seo" tagged="seo" />
+        <x-chief::field.window title="SEO" tagged="seo" />
     </x-slot>
 </x-chief::page>
