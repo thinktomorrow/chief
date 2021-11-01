@@ -24,16 +24,14 @@
                         </div>
 
                         @if($url)
-                            <div class="flex-shrink-0">
-                                <a
-                                    data-sidebar-trigger="{{ $sidebar }}"
-                                    href="{{ $url }}"
-                                    title="Aanpassen"
-                                    class="inline-block p-1.5 rounded-xl bg-primary-50 icon-label link link-primary"
-                                >
-                                    <x-chief-icon-label type="edit" size="18"></x-chief-icon-label>
-                                </a>
-                            </div>
+                            <a
+                                data-sidebar-trigger="{{ $sidebar }}"
+                                href="{{ $url }}"
+                                title="Aanpassen"
+                                class="flex-shrink-0"
+                            >
+                                <x-chief-icon-button icon="icon-edit" />
+                            </a>
                         @endif
                     </div>
                 </div>

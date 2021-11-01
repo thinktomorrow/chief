@@ -98,3 +98,13 @@
         @apply border-t-0 border-b-2;
     }
 }
+
+.hover\:child-svg-scale-110 {
+    svg {
+        @apply inline-block transform transition-all ease-in-out duration-75;
+    }
+
+    &:hover svg {
+        @apply scale-110;
+    }
+}
