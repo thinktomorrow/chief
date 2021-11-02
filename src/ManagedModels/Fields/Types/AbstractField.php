@@ -45,9 +45,6 @@ abstract class AbstractField
     /** @var null|mixed */
     protected $default;
 
-    /** @var callable */
-    protected $valueResolver;
-
     /** @var null|mixed */
     protected $model;
 
@@ -56,7 +53,10 @@ abstract class AbstractField
     protected array $viewData = [];
     protected array $locales = [];
     protected ValidationParameters $validation;
+
+    protected \Closure $valueResolver;
     protected \Closure $sanitizationResolver;
+    private \Closure $saveResolver;
 
     protected string $localizedFormat = 'trans.:locale.:name';
 
@@ -65,6 +65,8 @@ abstract class AbstractField
     /** @var FieldType */
     private $type;
     private ?string $customSaveMethod = null;
+
+    private array $whenModelIsSetCallbacks = [];
 
     final public function __construct(FieldType $type, string $key)
     {
@@ -253,6 +255,40 @@ abstract class AbstractField
         return $this;
     }
 
+//    public function save(?string $locale = null)
+//    {
+//        return call_user_func_array($this->valueResolver, [$this->getModel(), $locale, $this]);
+//    }
+
+    public function customSave(\Closure $fn): Field
+    {
+        $this->saveResolver = $fn;
+
+        return $this;
+    }
+
+    public function hasCustomSave(): bool
+    {
+        return !!$this->saveResolver;
+    }
+
+    public function handleCustomSave($field, $input, $files)
+    {
+        return call_user_func_array($this->saveResolver, [$field, $input, $files]);
+    }
+
+    public function getCustomSaveMethod(): ?string
+    {
+        return $this->customSaveMethod;
+    }
+
+    public function customSaveMethod(string $method): Field
+    {
+        $this->customSaveMethod = $method;
+
+        return $this;
+    }
+
     public function getSanitizedValue($value, array $input = [], ?string $locale = null)
     {
         return call_user_func_array($this->sanitizationResolver, [$value, $input, $locale]);
@@ -380,6 +416,17 @@ abstract class AbstractField
     {
         $this->model = $model;
 
+        foreach($this->whenModelIsSetCallbacks as $callback) {
+            call_user_func_array($callback, [$model]);
+        }
+
+        return $this;
+    }
+
+    public function whenModelIsSet(\Closure $callback): Field
+    {
+        $this->whenModelIsSetCallbacks[] = $callback;
+
         return $this;
     }
 
@@ -430,18 +477,6 @@ abstract class AbstractField
     public function editAsPageTitle(): Field
     {
         throw new \Exception('editAsPagetitle is no longer being used. Please replace your method with Field->tag(\'pagetitle\') instead.');
-    }
-
-    public function getCustomSaveMethod(): ?string
-    {
-        return $this->customSaveMethod;
-    }
-
-    public function customSaveMethod(string $method): Field
-    {
-        $this->customSaveMethod = $method;
-
-        return $this;
     }
 
     protected function getValidationNameFormat(): string
