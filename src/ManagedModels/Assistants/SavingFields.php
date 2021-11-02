@@ -30,7 +30,7 @@ trait SavingFields
                 continue;
             }
 
-            if (!$field->isLocalized()) {
+            if (! $field->isLocalized()) {
                 // Set standard non-localized attribute on the model
                 if (($customSetMethod = $this->detectCustomSetMethod($field))) {
                     $this->{$customSetMethod}($field, $input);

@@ -264,7 +264,7 @@ abstract class AbstractField
 
     public function hasCustomSave(): bool
     {
-        return !!$this->saveResolver;
+        return ! ! $this->saveResolver;
     }
 
     public function handleCustomSave($field, $input, $files)
@@ -411,7 +411,7 @@ abstract class AbstractField
     {
         $this->model = $model;
 
-        foreach($this->whenModelIsSetCallbacks as $callback) {
+        foreach ($this->whenModelIsSetCallbacks as $callback) {
             call_user_func_array($callback, [$model]);
         }
 
