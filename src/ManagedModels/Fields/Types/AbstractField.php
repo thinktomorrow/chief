@@ -56,7 +56,7 @@ abstract class AbstractField
 
     protected \Closure $valueResolver;
     protected \Closure $sanitizationResolver;
-    private \Closure $saveResolver;
+    private ?\Closure $saveResolver = null;
 
     protected string $localizedFormat = 'trans.:locale.:name';
 
@@ -254,11 +254,6 @@ abstract class AbstractField
 
         return $this;
     }
-
-//    public function save(?string $locale = null)
-//    {
-//        return call_user_func_array($this->valueResolver, [$this->getModel(), $locale, $this]);
-//    }
 
     public function customSave(\Closure $fn): Field
     {
@@ -533,7 +528,7 @@ abstract class AbstractField
         }
 
         return $this->isLocalized()
-            ? 'chief::manager.fields.form.field_localized'
+            ? 'chief::manager.fields.form.localized'
             : 'chief::manager.fields.form.types.'.$this->getViewKey();
     }
 

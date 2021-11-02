@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Routes;
@@ -14,7 +15,6 @@ final class RegisterManagedRoutes
     /** @var string[] */
     private array $routeMiddleware;
 
-    /** @var Router */
     private Router $router;
 
     public function __construct(Router $router)
@@ -30,7 +30,7 @@ final class RegisterManagedRoutes
 
         $this->router->group(['prefix' => $this->routePrefix, 'middleware' => $this->routeMiddleware], function () use ($managedRoutes, $controllerClass) {
             foreach ($managedRoutes as $route) {
-                $this->router->addRoute($route->method, $managedRoutes->getPrefix() .'/'. $route->uri, [$controllerClass, Str::camel($route->action)])->name('chief.' . $managedRoutes->getPrefix() . '.' . $route->action);
+                $this->router->addRoute($route->method, $managedRoutes->getPrefix().'/'.$route->uri, [$controllerClass, Str::camel($route->action)])->name('chief.'.$managedRoutes->getPrefix().'.'.$route->action);
             }
         });
     }
@@ -40,7 +40,7 @@ final class RegisterManagedRoutes
         foreach (class_uses_recursive($manager) as $trait) {
             $method = 'routes'.class_basename($trait);
             if (public_method_exists($manager, $method)) {
-                $managedRoutes = $managedRoutes->push($manager->$method());
+                $managedRoutes = $managedRoutes->push($manager->{$method}());
             }
         }
 

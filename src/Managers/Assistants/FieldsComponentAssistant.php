@@ -1,19 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FieldsComponentAssistant
 {
-    abstract protected function fieldsModel($id);
-
-    abstract protected function guard(string $action, $model = null);
-
     public function routesFieldsComponentAssistant(): array
     {
         return [
@@ -28,6 +26,8 @@ trait FieldsComponentAssistant
     }
 
     /**
+     * @param mixed $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function fieldsEdit(Request $request, $id, string $tag)
@@ -38,12 +38,15 @@ trait FieldsComponentAssistant
 
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('tag', $tag);
+        View::share('fields', Fields::make($model->fields())->tagged($tag));
 
-        return view('chief::manager.windows.fields.edit', [
-            'tag' => $tag,
-            // TODO: fix title
-            'componentTitle' => 'Bewerk de velden',
-        ]);
+        $method = Str::camel($tag).'AdminView';
+        if (public_method_exists($model, $method)) {
+            return $model->{$method}();
+        }
+
+        return view('chief::manager.fields.edit');
     }
 
     public function fieldsUpdate(Request $request, $id, string $tag)
@@ -54,7 +57,8 @@ trait FieldsComponentAssistant
 
         $fields = Fields::make($model->fields())
             ->model($model)
-            ->tagged($tag);
+            ->tagged($tag)
+        ;
 
         $this->fieldValidator()->handle($fields, $request->all());
 
@@ -65,4 +69,8 @@ trait FieldsComponentAssistant
             'data' => [],
         ], 200);
     }
+
+    abstract protected function fieldsModel($id);
+
+    abstract protected function guard(string $action, $model = null);
 }
