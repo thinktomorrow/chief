@@ -47,4 +47,23 @@ class SelectField extends AbstractField implements Field
     {
         return $this->prefersNativeSelect;
     }
+
+    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title'): self
+    {
+        if (! $relation) {
+            $relation = $this->getKey();
+        }
+
+        $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey) {
+            $relationModel = $model->{$relation}()->getModel();
+
+            $this->options($relationModel::all()->pluck($labelKey, $valueKey)->toArray())
+                ->selected($model->{$relation}->pluck($valueKey)->toArray())
+                ->customSave(function ($field, $input, $files) use ($model, $relation) {
+                    $model->{$relation}()->sync($input[$relation] ?: []);
+                });
+        });
+
+        return $this;
+    }
 }

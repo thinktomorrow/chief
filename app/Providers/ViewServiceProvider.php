@@ -42,7 +42,6 @@ class ViewServiceProvider extends ServiceProvider
         /* Chief components */
         Blade::component('chief::components.field.field', 'chief::field');
         Blade::component('chief::components.field.error', 'chief::field.error');
-        Blade::component('chief::components.field.input', 'chief::field.input');
         Blade::component('chief::components.field.multiple', 'chief::field.multiple');
 
         Blade::component('chief::components.page.fragments-window', 'chief::fragments.window');

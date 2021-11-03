@@ -1,4 +1,4 @@
-@foreach($field->getRepeatedFields()->all() as $fieldSet)
+@foreach($field->getRepeatedFields() as $fieldSet)
     <div class="p-3 space-y-3 border rounded-lg border-grey-100">
         @foreach($fieldSet->all() as $field)
             <div class="space-y-2">

@@ -31,7 +31,6 @@ trait PageDefaults
 
     /**
      * Get all related models that have at least one fragment.
-     * @return Collection
      */
     public function getRelatedOwners(): Collection
     {
@@ -52,8 +51,6 @@ trait PageDefaults
      * As a default, we'll guess the dynamic keys based on the provided fields. This should give you a
      * nice and clean setup. Should you need to customize the dynamic keys, you'll be able to define
      * a dynamicKeys property on the model. This will circumvent the logic below.
-     *
-     * @return array
      */
     protected function dynamicKeys(): array
     {
@@ -74,7 +71,6 @@ trait PageDefaults
      * TODO: At the moment the field keys are used as the field dynamic keys. Better is to use the field::getColumn values instead.
      * in case there is an explicit column set different from the key, this is currently not detected yet.
      *
-     * @return array
      * @throws \ReflectionException
      */
     private function extractFieldKeys(): array
@@ -85,7 +81,6 @@ trait PageDefaults
         return collect(iterator_to_array($iterator))->filter(function ($line) {
             return false !== stripos($line, '@dynamicKeys') || false !== strpos($line, '::make(');
         })->map(function ($line) {
-
             // Search for @dynamicKeys line
             preg_match('#@dynamicKeys: ([^\*]*)#i', $line, $matches);
             if (count($matches) > 0) {
@@ -99,7 +94,9 @@ trait PageDefaults
         })->flatten()
             ->unique()
             ->reject(fn ($value) => is_null($value))
+            ->reject(fn ($value) => method_exists($this, $value))
             ->values()
-            ->toArray();
+            ->toArray()
+        ;
     }
 }

@@ -20,10 +20,6 @@ trait SavingFields
     /**
      * Default method to save Field values for Eloquent models. This provides
      * support for regular columns, localized ones and dynamic attributes.
-     *
-     * @param Fields $fields
-     * @param array $input
-     * @param array $files
      */
     public function saveFields(Fields $fields, array $input, array $files): void
     {
@@ -37,7 +33,7 @@ trait SavingFields
             if (! $field->isLocalized()) {
                 // Set standard non-localized attribute on the model
                 if (($customSetMethod = $this->detectCustomSetMethod($field))) {
-                    $this->$customSetMethod($field, $input);
+                    $this->{$customSetMethod}($field, $input);
                 } else {
                     $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
                     $this->{$field->getColumn()} = $value;
@@ -67,15 +63,22 @@ trait SavingFields
 
         // Custom save methods
         foreach ($fields->all() as $field) {
-            if ($customSaveMethod = $this->detectCustomSaveMethod($field)) {
-                $this->$customSaveMethod($field, $input, $files);
+            if ($field->hasCustomSave()) {
+                $field->handleCustomSave($field, $input, $files);
+            } elseif ($customSaveMethod = $this->detectCustomSaveMethod($field)) {
+                $this->{$customSaveMethod}($field, $input, $files);
             }
         }
     }
 
+    protected function isValidFile($file): bool
+    {
+        return $file instanceof SplFileInfo && '' !== $file->getPath();
+    }
+
     private function isFieldForDynamicValue(Field $field): bool
     {
-        return (method_exists($this, 'isDynamic') && $this->isDynamic($field->getColumn()));
+        return method_exists($this, 'isDynamic') && $this->isDynamic($field->getColumn());
     }
 
     private function detectCustomSaveMethod(Field $field): ?string
@@ -84,8 +87,12 @@ trait SavingFields
             return $field->getCustomSaveMethod();
         }
 
-        $saveMethodByKey = 'save' . ucfirst(Str::camel($field->getKey())) . 'Field';
-        $saveMethodByType = 'save' . ucfirst(Str::camel($field->getType()->get())) . 'Fields';
+        if ($field->hasCustomSave()) {
+            return 'customSave';
+        }
+
+        $saveMethodByKey = 'save'.ucfirst(Str::camel($field->getKey())).'Field';
+        $saveMethodByType = 'save'.ucfirst(Str::camel($field->getType()->get())).'Fields';
 
         foreach ([$saveMethodByKey, $saveMethodByType] as $saveMethod) {
             if (method_exists($this, $saveMethod)) {
@@ -98,7 +105,7 @@ trait SavingFields
 
     private function detectCustomSetMethod(Field $field): ?string
     {
-        $methodName = 'set' . ucfirst(Str::camel($field->getKey())) . 'Field';
+        $methodName = 'set'.ucfirst(Str::camel($field->getKey())).'Field';
 
         return (method_exists($this, $methodName)) ? $methodName : null;
     }
@@ -125,10 +132,5 @@ trait SavingFields
         }
 
         return [$input, $files];
-    }
-
-    protected function isValidFile($file): bool
-    {
-        return $file instanceof SplFileInfo && $file->getPath() !== '';
     }
 }

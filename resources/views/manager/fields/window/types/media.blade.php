@@ -1,4 +1,4 @@
-<div class="pt-1 row-start-start gutter-1">
+<div class="row-start-start gutter-1">
     @if($model instanceof \Thinktomorrow\AssetLibrary\HasAsset && count($assets = $model->assets($field->getKey())) > 0)
         @foreach ($assets as $asset)
             @php
@@ -31,8 +31,10 @@
             </div>
         @endforeach
     @else
-        <div class="flex items-center justify-center w-32 rounded-xl h-[4.5rem] bg-grey-200 bg-gradient-to-br from-grey-100 to-grey-200">
-            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>
+        <div>
+            <div class="flex items-center justify-center w-32 rounded-xl h-[4.5rem] bg-grey-200 bg-gradient-to-br from-grey-100 to-grey-200">
+                <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>
+            </div>
         </div>
     @endif
 </div>
