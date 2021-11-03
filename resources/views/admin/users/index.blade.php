@@ -22,33 +22,37 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
-                    <div class="-m-8 divide-y divide-grey-100">
+                <x-chief::window>
+                    <div class="-my-4 divide-y divide-grey-100">
                         @foreach($users as $user)
-                            <div class="flex items-center justify-between px-6 py-4">
+                            <div class="flex justify-between py-4">
                                 <div class="space-y-1">
-                                    <div class="space-x-2">
+                                    <div class="space-x-1">
                                         @if(!chiefAdmin()->can('update-user') || ($user->hasRole('developer') && !chiefAdmin()->hasRole('developer')) )
-                                            <span class="text-lg font-medium text-grey-900">{{ $user->fullname }}</span>
+                                            <span class="display-base display-dark">
+                                                {{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}
+                                            </span>
                                         @else
-                                            <a class="text-lg font-medium text-grey-900" href="{{ route('chief.back.users.edit', $user->id) }}">
+                                            <a
+                                                href="{{ route('chief.back.users.edit', $user->id) }}"
+                                                title="Aanpassen"
+                                                class="display-base display-dark"
+                                            >
                                                 {{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}
                                             </a>
                                         @endif
 
                                         {{-- TODO: does this work as expected? --}}
-                                        <span class="text-sm">
-                                            {!! $user->present()->enabledAsLabel() !!}
-                                        </span>
+                                        {!! $user->present()->enabledAsLabel() !!}
                                     </div>
 
-                                    <div class="text-grey-500">
-                                        {{ implode(', ', $user->roleNames()) }}
+                                    <div class="text-grey-400">
+                                        {{ ucfirst(implode(', ', $user->roleNames())) }}
                                     </div>
                                 </div>
 
                                 @if(chiefAdmin()->can('update-user') && (!$user->hasRole('developer') || chiefAdmin()->hasRole('developer')) )
-                                    <options-dropdown>
+                                    <options-dropdown class="link link-primary">
                                         <div v-cloak class="dropdown-content">
                                             <a class="dropdown-link" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
                                         </div>
@@ -57,7 +61,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

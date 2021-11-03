@@ -1,6 +1,6 @@
 .multiselect {
     font-size: theme('fontSize.base') !important;
-    font-weight: theme('fontWeight.medium') !important;
+    /* font-weight: theme('fontWeight.medium') !important; */
 }
 
 .multiselect__tags {
@@ -47,7 +47,7 @@
 .multiselect__single,
 .multiselect__placeholder {
     font-size: theme('fontSize.base') !important;
-    font-weight: theme('fontWeight.medium') !important;
+    /* font-weight: theme('fontWeight.medium') !important; */
     /* background: theme('colors.white') !important; */
     line-height: theme('lineHeight.normal') !important;
     padding-left: 0 !important;
@@ -70,7 +70,7 @@
 
 .multiselect__input {
     font-size: theme('fontSize.base') !important;
-    font-weight: theme('fontWeight.medium') !important;
+    /* font-weight: theme('fontWeight.medium') !important; */
     color: theme('colors.grey.400') !important;
 }
 

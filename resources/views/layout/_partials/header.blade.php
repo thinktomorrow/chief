@@ -3,7 +3,7 @@
     $hasDefaultTitle = $hasDefaultTitle ?? true;
 @endphp
 
-<div class="row-between-center gutter-2">
+<div class="row-between-center gutter-1">
     @isset($breadcrumbs)
         <div class="w-full">
             {!! $breadcrumbs !!}

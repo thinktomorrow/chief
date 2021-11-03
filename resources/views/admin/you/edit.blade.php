@@ -20,30 +20,34 @@
     <div class="container-sm">
         <div class="row gutter-3">
             <div class="w-full">
-                <div class="window window-white window-md">
-                    <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST" class="mb-0">
+                <x-chief::window>
+                    <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
                         {!! csrf_field() !!}
                         <input type="hidden" name="_method" value="PUT">
 
                         <div class="space-y-6">
                             @include('chief::admin.you._form')
 
-                            <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
+                            <button form="updateForm" type="submit" class="btn btn-primary"> Opslaan </button>
                         </div>
                     </form>
-                </div>
+                </x-chief::window>
             </div>
 
             <div class="w-full">
-                <div class="window window-white window-md">
+                <x-chief::window>
                     <x-chief::field label="Wachtwoord">
                         <x-slot name="description">
                             <p>Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>
                         </x-slot>
 
-                        <a class="btn btn-warning-outline" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
+                        <a
+                            class="btn btn-warning-outline"
+                            title="Wijzig wachtwoord"
+                            href="{{ route('chief.back.password.edit') }}"
+                        > Wijzig wachtwoord </a>
                     </x-chief::field>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

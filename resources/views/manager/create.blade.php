@@ -28,23 +28,17 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
-                    <form
-                        id="createForm"
-                        method="POST"
-                        action="@adminRoute('store')"
-                        enctype="multipart/form-data"
-                        role="form"
-                    >
+                <x-chief::window>
+                    <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                         @csrf
 
-                        <div class="space-y-8">
+                        <div class="space-y-6">
                             <x-chief::field.multiple not-tagged="edit,not-on-create" />
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

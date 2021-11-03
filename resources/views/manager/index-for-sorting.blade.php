@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <div class="overflow-hidden window window-white window-xs">
+                <x-chief::window>
                     <div
                         id="js-sortable"
                         data-sort-on-load data-sort-route="{{ $manager->route('sort-index') }}"
@@ -35,7 +35,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </x-chief::window>
 
                 @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                     {!! $models->links('chief::pagination.default') !!}
@@ -43,7 +43,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="window window-grey window-md">
+                <x-chief::window>
                     <div class="space-y-4">
                         <a class="btn btn-primary" href="{{ $manager->route('index') }}">
                             Terug naar overzicht
@@ -53,7 +53,7 @@
                             Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
                         </p>
                     </div>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

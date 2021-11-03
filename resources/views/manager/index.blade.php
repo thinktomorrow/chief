@@ -33,21 +33,21 @@
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 @if(count($models))
-                    <div class="window window-white window-sm">
+                    <x-chief::window>
                         @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
                                 data-sort-route="{{ $manager->route('sort-index') }}"
-                                class="relative divide-y -window-x -window-y divide-grey-100"
+                                class="-my-4 divide-y divide-grey-100"
                             >
                         @elseAdminCan
-                            <div class="relative divide-y -window-x -window-y divide-grey-100">
+                            <div class="-my-4 divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
                                     @include($model->adminConfig()->getIndexCardView())
                                 @endforeach
                             </div>
-                    </div>
+                    </x-chief::window>
 
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                         {!! $models->links('chief::pagination.default') !!}
@@ -61,55 +61,51 @@
                 @if($model->adminConfig()->getIndexSidebar())
                     {!! $model->adminConfig()->getIndexSidebar() !!}
                 @endif
+
                 @if($manager->filters()->anyRenderable())
-                    <div class="space-y-6 window window-grey window-md">
-                        <span class="text-xl font-semibold text-grey-900">Filtering</span>
-
+                    <x-chief::window title="Filtering">
                         <form method="GET" class="space-y-6">
-
                             {!! $manager->filters()->render() !!}
 
-                            <button class="mt-4 btn btn-primary" type="submit">Filter</button>
+                            <div>
+                                <button class="btn btn-primary" type="submit">Filter</button>
+                            </div>
                         </form>
-                    </div>
+                    </x-chief::window>
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <div class="space-y-6 window window-grey window-md">
-                        <div class="space-y-4">
-                            <span class="text-xl font-semibold text-grey-900">Sortering</span>
+                    <x-chief::window title="Sortering">
+                        @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
+                            <p class="text-grey-700">
+                                Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
+                            </p>
 
-                            @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
-                                <p class="text-grey-700">
-                                    Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
-                                </p>
+                            <button data-sortable-toggle class="btn btn-primary">
+                                Pas volgorde aan
+                            </button>
 
-                                <button data-sortable-toggle class="btn btn-primary">
-                                    Pas volgorde aan
-                                </button>
+                            <p class="text-grey-700 font-xs" data-sortable-show-when-sorting>
+                                Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
+                            </p>
+                        @else
+                            <p class="text-sm text-grey-700">
+                                Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
+                            </p>
 
-                                <p class="text-grey-700 font-xs" data-sortable-show-when-sorting>
-                                    Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
-                                </p>
-                            @else
-                                <p class="text-sm text-grey-700">
-                                    Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
-                                </p>
-
-                                <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
-                            @endif
-                        </div>
-                    </div>
+                            <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
+                        @endif
+                    </x-chief::window>
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    <div class="window window-grey window-md">
+                    <x-chief::window title="Sortering">
                         @if(Route::currentRouteName() == 'chief.single.archive_index')
                             <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
                         @else
                             <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
                         @endif
-                    </div>
+                    </x-chief::window>
                 @endAdminCan
             </div>
         </div>

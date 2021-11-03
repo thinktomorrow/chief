@@ -22,20 +22,16 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
-                    <form
-                        id="editForm"
-                        action="{{ route('chief.back.roles.update', $role->id) }}"
-                        method="POST"
-                    >
+                <x-chief::window>
+                    <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
                         @csrf
                         @method('put')
 
-                        <div class="space-y-8">
+                        <div class="space-y-6">
                             @include('chief::admin.authorization.roles._form')
                         </div>
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

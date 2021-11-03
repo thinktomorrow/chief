@@ -28,7 +28,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
+                <x-chief::window>
                     <form
                         id="updateForm"
                         method="POST"
@@ -41,7 +41,7 @@
 
                         @include('chief::admin.menu._partials.form')
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

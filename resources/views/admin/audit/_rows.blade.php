@@ -1,11 +1,13 @@
 <div class="row">
     <div class="w-full">
-        <div class="window window-white window-md">
-            <div class="-m-8 divide-y divide-grey-100">
+        <x-chief::window>
+            <div class="-my-4 divide-y divide-grey-100">
                 @forelse($audit as $event)
-                    <div class="px-6 py-4 space-y-1">
+                    <div class="py-4 space-y-1">
                         <div>
-                            <span class="font-medium text-grey-900">{{ $event->description }} {{ $event->getReadableSubject() }}</span>
+                            <span class="font-medium text-grey-900">
+                                {{ $event->description }} {{ $event->getReadableSubject() }}
+                            </span>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -22,6 +24,6 @@
 
                 {{ $audit->links('chief::pagination.default') }}
             </div>
-        </div>
+        </x-chief::window>
     </div>
 </div>

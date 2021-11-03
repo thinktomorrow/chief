@@ -12,7 +12,6 @@
     @adminConfig('pageTitle')
 @endsection
 
-
 @section('header')
     @isset($header)
         <div class="container">

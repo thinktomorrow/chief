@@ -31,8 +31,8 @@
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
-        <div class="mb-2 space-x-1 leading-none">
-            <span class="font-medium text-black">
+        <div class="mb-1 space-x-1 leading-none">
+            <span class="display-base display-dark">
                 {{ ucfirst($label) }}
             </span>
 
@@ -43,12 +43,12 @@
     @endif
 
     @isset($description)
-        <div class="prose prose-dark prose-editor">
+        <div class="mb-3 prose prose-dark prose-editor">
             {!! $description !!}
         </div>
     @endisset
 
-    <div class="{{ isset($label) && $label ? 'mt-3' : null }}">
+    <div class="{{ isset($label) && $label ? 'mt-2' : null }}">
         {!! $slot !!}
     </div>
 

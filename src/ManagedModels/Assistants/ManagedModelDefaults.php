@@ -53,24 +53,24 @@ trait ManagedModelDefaults
 
         if ($this instanceof Visitable) {
             if (LinkForm::fromModel($this)->isAnyLinkOnline()) {
-                return '<span class="text-sm label label-success">Online</span>';
+                return '<span class="label label-xs label-success">Online</span>';
             } elseif ($this->getPageState() === PageState::PUBLISHED) {
-                return '<span class="text-sm label label-info">Nog niet online. Er ontbreekt nog een link.</span>';
+                return '<span class="label label-xs label-info">Nog niet online. Er ontbreekt nog een link.</span>';
             } elseif ($this->getPageState() === PageState::DRAFT) {
-                return '<span class="text-sm label label-error">Offline</span>';
+                return '<span class="label label-xs label-error">Offline</span>';
             }
         }
 
         if ($this->getPageState() === PageState::PUBLISHED) {
-            return '<span class="text-sm label label-success">Gepubliceerd</span>';
+            return '<span class="label label-xs label-success">Gepubliceerd</span>';
         }
 
         if ($this->getPageState() === PageState::DRAFT) {
-            return '<span class="text-sm label label-error">In draft</span>';
+            return '<span class="label label-xs label-error">In draft</span>';
         }
 
         if ($this->getPageState() === PageState::ARCHIVED) {
-            return '<span class="text-sm label label-warning">Gearchiveerd</span>';
+            return '<span class="label label-xs label-warning">Gearchiveerd</span>';
         }
 
         return '';

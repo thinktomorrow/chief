@@ -7,12 +7,12 @@
 
     <x-chief::field key="title" />
 
-    <div class="window window-md window-white">
+    <x-chief::window>
         <x-chief::field.set type="error">
             <x-chief::field.show key="title" />
             <x-chief::field.show key="content" />
         </x-chief::field.set>
-    </div>
+    </x-chief::window>
 
     <x-chief::field.window title="Categorieën" tagged="top">
         <x-chief::field.multiple tagged="top" />
@@ -24,10 +24,12 @@
     <x-header>
         <pagetitle-edit></pagetitle-edit>
     </x-header>
+
     <x-main>
         <x-window-fields untagged></x-window-fields>
         <x-window-fragments></x-window-fragments>
     </x-main>
+
     <x-sidebar>
         <x-window-status></x-window-status>
         <x-window-links></x-window-links>

@@ -44,7 +44,7 @@ input[type='number'] {
 input[type='checkbox'],
 input[type='radio'] {
     margin-top: 0.1rem;
-    @apply appearance-none relative w-5 h-5 border-2 border-grey-200 overflow-hidden mr-1 cursor-pointer flex-shrink-0 bg-white;
+    @apply appearance-none relative w-5 h-5 border-2 border-grey-200 overflow-hidden mr-1 cursor-pointer flex-shrink;
 
     &:focus {
         @apply ring-2 ring-primary-500;

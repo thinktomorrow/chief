@@ -8,10 +8,12 @@
     @csrf
     @method('put')
 
-    <div class="space-y-8">
-        <h2 class="text-2xl font-bold text-grey-900">{{ ucfirst($componentTitle) }}</h2>
+    <div class="space-y-12">
+        <p class="text-2xl display-base display-dark">{{ ucfirst($componentTitle) }}</p>
 
-        <x-chief::field.multiple :tagged="$tag" />
+        <div class="space-y-8">
+            <x-chief::field.multiple :tagged="$tag" />
+        </div>
 
         <button type="submit" form="updateFieldsForm{{ $model->modelReference()->get() }}" class="btn btn-primary">
             Wijzigingen opslaan

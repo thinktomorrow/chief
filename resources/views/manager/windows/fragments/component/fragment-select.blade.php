@@ -23,7 +23,7 @@
     <!-- select options: create new or add existing -->
     <div
         data-fragment-select-options
-        class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative p-6 pop border-t-2 border-dashed border-primary-50 fragment-select-options"
+        class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative py-6 pop border-t-2 border-dashed border-primary-50 fragment-select-options"
     >
         @if($hideSelectOptions)
             <a data-fragment-select-close class="absolute top-0 right-0 m-6 cursor-pointer link link-primary">

@@ -1,4 +1,8 @@
-.window {
+.window-title {
+    @apply text-lg font-semibold leading-normal text-black;
+}
+
+/* .window {
     @apply rounded-xl shadow-sm;
 }
 
@@ -121,7 +125,4 @@
         @apply -my-4;
     }
 }
-
-.window-heading {
-    @apply font-bold text-grey-900;
-}
+ */
