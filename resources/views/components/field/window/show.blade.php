@@ -1,0 +1,1 @@
+{!! $model->field('ingredients')->renderOnPage() !!}

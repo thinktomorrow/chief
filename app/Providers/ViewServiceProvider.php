@@ -40,9 +40,11 @@ class ViewServiceProvider extends ServiceProvider
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
         /* Chief components */
-        Blade::component('chief::components.field.field', 'chief::field');
-        Blade::component('chief::components.field.error', 'chief::field.error');
-        Blade::component('chief::components.field.multiple', 'chief::field.multiple');
+        Blade::component('chief::components.field.form.field', 'chief::field');
+        Blade::component('chief::components.field.form.error', 'chief::field.error');
+        Blade::component('chief::components.field.form.multiple', 'chief::field.multiple');
+        Blade::component('chief::components.field.window.window', 'chief::field.window');
+        Blade::component('chief::components.field.window.show', 'chief::field.show');
 
         Blade::component('chief::components.page.fragments-window', 'chief::fragments.window');
         Blade::component('chief::components.page.status-window', 'chief::status.window');

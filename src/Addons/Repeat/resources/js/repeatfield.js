@@ -1,4 +1,5 @@
 import increaseDeepestIndex from './utils';
+import vueFields from '../../../../../resources/assets/js/fields/vue-fields';
 
 class RepeatField {
     constructor(key, container = document) {
@@ -85,6 +86,8 @@ class RepeatField {
         });
 
         this.fieldsContainer.appendChild(fieldSet);
+
+        vueFields(fieldSet);
 
         this._refresh();
 

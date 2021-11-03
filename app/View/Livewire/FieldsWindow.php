@@ -11,8 +11,8 @@ class FieldsWindow extends Component
     public $model;
     public $tag;
     public $title;
-    public $class;
     public $template;
+    public $slot;
 
     public function mount($model, $tag): void
     {
@@ -30,7 +30,7 @@ class FieldsWindow extends Component
         $fields = ($this->tag === "untagged") ? $fields->untagged() : $fields->tagged($this->tag);
         $fields = $fields->model($this->model);
 
-        return view('chief::components.field.window-livewire', [
+        return view('chief::components.field.window.window-livewire', [
             'key' => $this->tag,
             'fields' => $fields,
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),

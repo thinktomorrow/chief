@@ -41,7 +41,11 @@ trait FieldsComponentAssistant
         View::share('tag', $tag);
         View::share('fields', Fields::make($model->fields())->tagged($tag));
 
-        $method = Str::camel($tag).'AdminView';
+        /**
+         * Custom view for tagged fieldgroups. e.g. tag sidebar can have
+         * a custom sidebar view via method sidebarFieldsAdminView.
+         */
+        $method = Str::camel($tag).'FieldsAdminView';
         if (public_method_exists($model, $method)) {
             return $model->{$method}();
         }
