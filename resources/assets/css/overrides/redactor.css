@@ -1,15 +1,16 @@
 .redactor-toolbar {
-    z-index: 10 !important;
+    z-index: 1 !important;
 }
 
 .redactor-box {
     overflow: hidden !important;
     border-radius: theme('borderRadius.lg') !important;
-    border-width: 2px !important;
-    border-color: theme('borderColor.grey.200') !important;
-    &:focus {
-        border-color: theme('borderColor.primary.500') !important;
-    }
+    /* border-width: 2px !important; */
+    border-color: theme('borderColor.grey.300') !important;
+}
+
+.redactor-box.redactor-focus.redactor-styles-on {
+    border-color: theme('borderColor.primary.500') !important;
 }
 
 .redactor-statusbar {

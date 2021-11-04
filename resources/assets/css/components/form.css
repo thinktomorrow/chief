@@ -14,10 +14,10 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'] {
-    @apply border-2 border-grey-200 rounded-lg px-4 py-3 text-grey-700 bg-white;
+    @apply border border-grey-300 rounded-lg px-4 py-3 leading-normal text-grey-700 bg-white;
 
     &:focus {
-        @apply border-primary-500 bg-white;
+        @apply border-primary-500;
     }
 
     &::placeholder {
@@ -44,7 +44,7 @@ input[type='number'] {
 input[type='checkbox'],
 input[type='radio'] {
     margin-top: 0.1rem;
-    @apply appearance-none relative w-5 h-5 border-2 border-grey-200 overflow-hidden mr-1 cursor-pointer flex-shrink;
+    @apply appearance-none relative w-5 h-5 border border-grey-300 overflow-hidden mr-1 cursor-pointer flex-shrink;
 
     &:focus {
         @apply ring-2 ring-primary-500;
@@ -79,6 +79,10 @@ input[type='checkbox'] {
 label.with-checkbox,
 label.with-radio {
     @apply flex items-start space-x-2 cursor-pointer;
+
+    span {
+        @apply text-grey-600;
+    }
 }
 
 .prepend-to-input {

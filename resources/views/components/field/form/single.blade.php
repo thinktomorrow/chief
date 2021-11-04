@@ -32,7 +32,7 @@
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
         <div class="mb-1 space-x-1 leading-none">
-            <span class="display-base display-dark">
+            <span class="font-medium display-base display-dark">
                 {{ ucfirst($label) }}
             </span>
 

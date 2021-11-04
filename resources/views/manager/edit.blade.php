@@ -9,7 +9,7 @@
     <x-slot name="sidebar">
         <x-chief::window.status />
         <x-chief::window.links />
-        <x-chief::window.fields tagged="sidebar" />
+        <x-chief::window.fields title="Algemeen" tagged="sidebar" />
         <x-chief::window.fields title="SEO" tagged="seo" />
     </x-slot>
 </x-chief::page>

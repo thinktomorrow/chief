@@ -1,3 +1,4 @@
+@import './format.css';
 @import './link.css';
 
 @layer components {
@@ -9,7 +10,7 @@
         h5,
         h6,
         label {
-            @apply text-black;
+            @extend .display-dark;
         }
 
         html,
@@ -21,7 +22,7 @@
         cite,
         blockquote,
         figcaption {
-            @apply text-grey-700;
+            @extend .body-dark;
         }
 
         code {
@@ -42,7 +43,8 @@
     }
 
     .prose-wireframe {
-        @apply text-xs text-grey-500;
+        @apply text-xs;
+        @extend .body-dark;
 
         h1,
         h2,
@@ -50,7 +52,8 @@
         h4,
         h5,
         h6  {
-            @apply text-xs text-grey-700;
+            @apply text-xs;
+            @extend .body-dark;
         }
     }
 }

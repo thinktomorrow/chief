@@ -17,7 +17,7 @@
             @include('chief::layout._partials.fragment_bookmarks')
         </div>
 
-        <div class="space-y-8">
+        <div class="space-y-6">
             {!! $slot !!}
 
             @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))

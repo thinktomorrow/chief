@@ -1,29 +1,27 @@
-<?php
+@php
+    $errorIds = [];
 
-$errorIds = [];
-
-if (isset($field)) {
-    if (count($field->getLocales()) > 0) {
-        foreach ($field->getLocales() as $locale) {
-            $errorIds[] = $field->getId($locale);
+    if (isset($field)) {
+        if (count($field->getLocales()) > 0) {
+            foreach ($field->getLocales() as $locale) {
+                $errorIds[] = $field->getId($locale);
+            }
+        } else {
+            $errorIds = [$field->getId()];
         }
     } else {
-        $errorIds = [$field->getId()];
+        $errorIds = isset($name) ? [$name] : [];
     }
-} else {
-    $errorIds = isset($name) ? [$name] : [];
-}
-
-?>
+@endphp
 
 @foreach($errorIds as $errorId)
     @if(isset($errors))
         @error($errorId)
-        <div class="mt-2">
-            <x-chief-inline-notification type="error">
-                {{ $message }}
-            </x-chief-inline-notification>
-        </div>
+            <div class="mt-2">
+                <x-chief-inline-notification type="error">
+                    {{ $message }}
+                </x-chief-inline-notification>
+            </div>
         @enderror
     @endif
 

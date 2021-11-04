@@ -1,25 +1,23 @@
-<?php
+@php
+    $backgroundClass = 'bg-white';
 
-$backgroundClass = 'bg-white';
-
-if(isset($type)) {
-    switch($type){
-        case 'error':
-            $backgroundClass = 'bg-red-50';
-            break;
-        case 'success':
-            $backgroundClass = 'bg-green-50';
-            break;
-        case 'info':
-            $backgroundClass = 'bg-blue-50';
-            break;
-        case 'warning':
-            $backgroundClass = 'bg-orange-50';
-            break;
+    if(isset($type)) {
+        switch($type){
+            case 'error':
+                $backgroundClass = 'bg-red-50';
+                break;
+            case 'success':
+                $backgroundClass = 'bg-green-50';
+                break;
+            case 'info':
+                $backgroundClass = 'bg-blue-50';
+                break;
+            case 'warning':
+                $backgroundClass = 'bg-orange-50';
+                break;
+        }
     }
-}
-
-?>
+@endphp
 
 {{-- TODO(tijs): can we cleanup these first set classes? a :nth-child solution perhaps? --}}
 <div class="-window-x {{ isset($isFirstWindowItem) ? '-mt-8' : null }} {{ isset($isLastWindowItem) ? '-mb-8' : null }}">
