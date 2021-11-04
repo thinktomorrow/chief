@@ -31,8 +31,7 @@ trait SavingFields
             }
 
             // Set standard non-localized attribute on the model
-            if (!$field->isLocalized()) {
-
+            if (! $field->isLocalized()) {
                 $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
 
                 if ($field->hasCustomSet()) {
