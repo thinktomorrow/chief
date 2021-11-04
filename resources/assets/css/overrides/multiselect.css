@@ -6,8 +6,8 @@
 .multiselect__tags {
     background: theme('colors.white') !important;
     border-radius: theme('borderRadius.md') !important;
-    border-width: 2px !important;
-    border-color: theme('colors.grey.200') !important;
+    /* border-width: 2px !important; */
+    border-color: theme('colors.grey.300') !important;
     padding-left: 1rem !important;
     padding-bottom: 0.25rem !important;
 }

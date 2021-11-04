@@ -6,4 +6,8 @@
     .display-dark {
         @apply text-black;
     }
+
+    .body-dark {
+        @apply text-grey-600;
+    }
 }
