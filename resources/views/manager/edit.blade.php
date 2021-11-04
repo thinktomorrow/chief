@@ -4,15 +4,6 @@
     </x-slot>
 
     <x-chief::window.fields title="Algemeen" untagged />
-
-    <x-chief::window>
-        <div class="space-y-4">
-            <x-chief::fields key="intro" />
-            <x-chief::fields tagged="seo" />
-            <x-chief::fields.form key="title" />
-        </div>
-    </x-chief::window>
-
     <x-chief::window.fragments />
 
     <x-slot name="sidebar">

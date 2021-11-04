@@ -60,7 +60,7 @@ class SelectField extends AbstractField implements Field
             $this->options($relationModel::all()->pluck($labelKey, $valueKey)->toArray())
                 ->selected($model->{$relation}->pluck($valueKey)->toArray())
                 ->customSave(function ($field, $input, $files) use ($model, $relation) {
-                    $model->{$relation}()->sync($input[$relation] ?: []);
+                    $model->{$relation}()->sync($input[$relation] ?? []);
                 });
         });
 
