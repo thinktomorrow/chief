@@ -18,13 +18,13 @@
 
                         <div class="space-y-6">
                             {{-- TODO: mail confirmation message also shows as error --}}
-                            <x-chief::field error="email">
+                            <x-chief::field.form error="email">
                                 <x-slot name="description">
                                     <p>Geef je e-mailadres in om je wachtwoord te opnieuw in te stellen.</p>
                                 </x-slot>
 
                                 <input id="identity" name="email" type="email" placeholder="E-mail" value="{{ old('email') }}">
-                            </x-chief::field>
+                            </x-chief::field.form>
 
                             <div class="space-x-4">
                                 <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>

@@ -24,14 +24,14 @@
                                 @if($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\HiddenField)
                                     {!! $field->render() !!}
                                 @else
-                                    <x-chief::field :field="$field">
+                                    <x-chief::field.form :field="$field">
                                         <div
-                                                data-repeat-field="{{ $uniqueContainerId }}"
-                                                data-repeat-field-key="{{ $field->getDottedName() }}"
+                                            data-repeat-field="{{ $uniqueContainerId }}"
+                                            data-repeat-field-key="{{ $field->getDottedName() }}"
                                         >
                                             {!! $field->render() !!}
                                         </div>
-                                    </x-chief::field>
+                                    </x-chief::field.form>
                                 @endif
                             @endforeach
                         </div>
@@ -39,7 +39,7 @@
 
                     <span
                         data-repeat-delete="{{ $uniqueContainerId }}"
-                        class="flex-shrink-0 ml-3 cursor-pointer link link-grey-light transform transition-150"
+                        class="flex-shrink-0 ml-3 transform cursor-pointer link link-grey-light transition-150"
                         style="margin-top: -3px;"
                     >
                         <x-chief-icon-label type="delete"></x-chief-icon-label>

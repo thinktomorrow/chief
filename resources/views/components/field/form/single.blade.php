@@ -53,9 +53,8 @@
     </div>
 
     @if(isset($field))
-        <x-chief::field.error :field="$field" />
+        <x-chief::field.form.error :field="$field" />
     @elseif(isset($error))
-        <x-chief::field.error :error="$error" />
+        <x-chief::field.form.error :error="$error" />
     @endif
-
 </div>

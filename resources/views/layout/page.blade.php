@@ -15,9 +15,15 @@
 @section('header')
     @isset($header)
         <div class="container">
-            <div class="space-y-2">
+            @isset($breadcrumbs)
+                {!! $breadcrumbs !!}
                 {!! $header !!}
-            </div>
+            @else
+                <div class="space-y-2">
+                    <x-chief::page.breadcrumbs />
+                    {!! $header !!}
+                </div>
+            @endisset
         </div>
     @endisset
 @endsection

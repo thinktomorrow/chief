@@ -33,15 +33,15 @@
                                 </x-chief-inline-notification>
                             @endif
 
-                            <x-chief::field label="E-mail" id="identity" error="email">
+                            <x-chief::field.form label="E-mail" id="identity" error="email">
                                 <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
-                            </x-chief::field>
+                            </x-chief::field.form>
 
-                            <x-chief::field label="Wachtwoord" id="password" error="password">
+                            <x-chief::field.form label="Wachtwoord" id="password" error="password">
                                 <input id="password" name="password" type="password">
-                            </x-chief::field>
+                            </x-chief::field.form>
 
-                            <x-chief::field>
+                            <x-chief::field.form>
                                 <label for="rememberCheckbox" class="with-checkbox">
                                     <input
                                         id="rememberCheckbox"
@@ -52,7 +52,7 @@
 
                                     <span>Hou me ingelogd</span>
                                 </label>
-                            </x-chief::field>
+                            </x-chief::field.form>
 
                             <div class="space-x-2">
                                 <button type="submit" form="valid" class="btn btn-primary">Inloggen</button>

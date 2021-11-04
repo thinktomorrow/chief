@@ -16,7 +16,7 @@
     <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
-        <x-chief::field.multiple />
+        <x-chief::fields.form />
 
         <button form="{{ $formId }}" type="submit" class="btn btn-primary">
             Aanmaken

@@ -30,7 +30,8 @@ class FieldsWindow extends Component
         $fields = ($this->tag === "untagged") ? $fields->untagged() : $fields->tagged($this->tag);
         $fields = $fields->model($this->model);
 
-        return view('chief::components.field.window.window-livewire', [
+        // return view('chief::components.field.window.window-livewire', [
+        return view('chief::manager.windows.fields.component', [
             'key' => $this->tag,
             'fields' => $fields,
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),

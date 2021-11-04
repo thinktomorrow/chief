@@ -1,6 +1,6 @@
-<x-chief::field
-        label="{{ $label ?? '' }}"
-        name="{{ $name }}"
+<x-chief::fields.form
+    label="{{ $label ?? '' }}"
+    name="{{ $name }}"
 >
     @if(isset($description))
         <x-slot name="description">
@@ -9,4 +9,4 @@
     @endif
 
     <input type="text" name="{{ $name }}" id="{{ $id }}" class="input inset-s" placeholder="{{ $placeholder }}" value="{{ $value }}">
-</x-chief::field>
+</x-chief::field.form>

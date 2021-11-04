@@ -37,13 +37,13 @@
                         <input type="hidden" name="_method" value="PUT">
 
                         <div class="space-y-6">
-                            <x-chief::field label="Wachtwoord" id="password" error="password">
+                            <x-chief::field.form label="Wachtwoord" id="password" error="password">
                                 <input type="password" name="password" placeholder="Wachtwoord" id="password" value="{{ old('password') }}">
-                            </x-chief::field>
+                            </x-chief::field.form>
 
-                            <x-chief::field label="Herhaal wachtwoord" id="password-confirm" error="password_confirmation">
+                            <x-chief::field.form label="Herhaal wachtwoord" id="password-confirm" error="password_confirmation">
                                 <input type="password" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm">
-                            </x-chief::field>
+                            </x-chief::field.form>
 
                             <div class="space-x-2">
                                 @if($new_password)

@@ -1,4 +1,4 @@
-<x-chief::field label="Niveau">
+<x-chief::field.form label="Niveau">
     <x-slot name="description">
         <p>Zet dit item op het hoogste niveau of plaats het onder een bestaand.</p>
     </x-slot>
@@ -31,7 +31,7 @@
                 </label>
 
                 <div v-if="type == '1'">
-                    <x-chief::field error="parent_id">
+                    <x-chief::field.form error="parent_id">
                         <chief-multiselect
                             name="parent_id"
                             :options='@json($parents)'
@@ -40,9 +40,9 @@
                             valuekey="id"
                             placeholder="Kies het bovenliggende menu item"
                         ></chief-multiselect>
-                    </x-chief::field>
+                    </x-chief::field.form>
                 </div>
             </div>
         </div>
     </radio-options>
-</x-chief::field>
+</x-chief::field.form>

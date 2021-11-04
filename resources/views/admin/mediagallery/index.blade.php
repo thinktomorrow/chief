@@ -54,16 +54,16 @@
                     <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
-                        <x-chief::field label="Bestandsnaam">
+                        <x-chief::field.form label="Bestandsnaam">
                             <input
                                 type="text"
                                 name="search"
                                 placeholder="Zoek op bestandsnaam ..."
                                 value="{{ old('search', request()->input('search'))}}"
                             >
-                        </x-chief::field>
+                        </x-chief::field.form>
 
-                        <x-chief::field label="Pagina">
+                        <x-chief::field.form label="Pagina">
                             <chief-multiselect
                                 name="owner"
                                 :options='@json($pages)'
@@ -74,15 +74,15 @@
                                 labelkey="label"
                                 valuekey="id"
                             ></chief-multiselect>
-                        </x-chief::field>
+                        </x-chief::field.form>
 
-                        <x-chief::field>
+                        <x-chief::field.form>
                             <label for="unused" class="with-checkbox">
                                 <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
-                        </x-chief::field>
+                        </x-chief::field.form>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>

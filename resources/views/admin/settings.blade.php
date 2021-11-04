@@ -30,7 +30,7 @@
                         <div class="-my-6 divide-y divide-grey-100">
                             @foreach($fields as $field)
                                 <div class="py-6">
-                                    <x-chief::field :field="$field" />
+                                    <x-chief::field.form :field="$field" />
                                 </div>
                             @endforeach
                         </div>

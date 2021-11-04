@@ -1,6 +1,6 @@
-<x-chief::field
-        label="{{ $label ?? '' }}"
-        name="{{ $name }}"
+<x-chief::field.form
+    label="{{ $label ?? '' }}"
+    name="{{ $name }}"
 >
     @if(isset($description))
         <x-slot name="description">
@@ -20,5 +20,4 @@
             </label>
         @endforeach
     </div>
-
-</x-chief::field>
+</x-chief::field.form>
