@@ -1,5 +1,5 @@
 @if(isset($key))
-    <x-chief::field.form :key="$key" />
+    <x-chief::field :key="$key" />
 @else
     @php
         $fields = $fields ?? \Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields());
@@ -14,6 +14,6 @@
     @endphp
 
     @foreach($fields->all() as $field)
-        <x-chief::field.form :key="$field->getKey()" />
+        <x-chief::field :key="$field->getKey()" />
     @endforeach
 @endisset
