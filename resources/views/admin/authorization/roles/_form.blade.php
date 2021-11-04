@@ -1,12 +1,12 @@
-<x-chief::field label="Naam" error="name" isRequired>
+<x-chief::field.form label="Naam" error="name" isRequired>
     <x-slot name="description">
         <p>Unieke benaming van de rol.</p>
     </x-slot>
 
     <input type="text" name="name" value="{{ old('name', $role->name) }}">
-</x-chief::field>
+</x-chief::field.form>
 
-<x-chief::field label="Rechten" error="permission_names.0" isRequired>
+<x-chief::field.form label="Rechten" error="permission_names.0" isRequired>
     <x-slot name="description">
         <p>Met welke rechten heeft deze rol toegang tot de admin.</p>
     </x-slot>
@@ -19,4 +19,4 @@
             :multiple="true"
         ></chief-multiselect>
     </div>
-</x-chief::field>
+</x-chief::field.form>

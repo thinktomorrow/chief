@@ -12,7 +12,7 @@
 
     <div class="{{ $isDefaultSlotEmpty ? 'w-full' : 'w-full lg:w-1/2' }}">
         @if($hasDefaultTitle)
-            <h1 class="text-grey-900">
+            <h1 class="text-black">
                 {{ ucfirst($title) }}
             </h1>
         @else

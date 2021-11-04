@@ -1,3 +1,3 @@
 <x-chief::sidebar-fragment>
-    <x-chief::field.multiple />
+    <x-chief::fields.form />
 </x-chief::sidebar-fragment>

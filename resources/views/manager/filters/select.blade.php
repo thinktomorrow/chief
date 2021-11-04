@@ -1,6 +1,6 @@
-<x-chief::field
-        label="{{ $label ?? '' }}"
-        name="{{ $name }}"
+<x-chief::field.form
+    label="{{ $label ?? '' }}"
+    name="{{ $name }}"
 >
     @if(isset($description))
         <x-slot name="description">
@@ -8,11 +8,11 @@
         </x-slot>
     @endif
 
-    <chief-multiselect id="{{ $id }}"
-                       name="{{ $name }}"
-                       :options='@json($options)'
-                       selected='@json($value)'
-                       :multiple='@json($multiple)'
-    >
-    </chief-multiselect>
-</x-chief::field>
+    <chief-multiselect
+        id="{{ $id }}"
+        name="{{ $name }}"
+        :options='@json($options)'
+        selected='@json($value)'
+        :multiple='@json($multiple)'
+    ></chief-multiselect>
+</x-chief::field.form>

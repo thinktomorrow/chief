@@ -1,4 +1,4 @@
-<x-chief::field label="Sortering" error="order">
+<x-chief::field.form label="Sortering" error="order">
     <x-slot name="description">
         <p>Sortering van dit menu item op het huidige niveau.</p>
     </x-slot>
@@ -15,7 +15,7 @@
         <div class="space-y-4">
             <p class="text-grey-700">Huidige sortering op dit niveau</p>
 
-            <div class="border border-grey-200 divide-y divide-grey-200 rounded-lg overflow-hidden">
+            <div class="overflow-hidden border divide-y rounded-lg border-grey-200 divide-grey-200">
                 @foreach($menuitem->siblingsIncludingSelf() as $sibling)
                     <div class="px-6 py-3 space-x-6 {{ $sibling->id == $menuitem->id ? 'bg-primary-50 text-primary-900 font-medium' : 'bg-white text-grey-800' }}">
                         <span class="font-semibold">{{ $sibling->order }}</span>
@@ -26,4 +26,4 @@
             </div>
         </div>
     </div>
-</x-chief::field>
+</x-chief::field.form>

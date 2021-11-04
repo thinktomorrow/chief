@@ -40,15 +40,16 @@ class ViewServiceProvider extends ServiceProvider
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
         /* Chief components */
-        Blade::component('chief::components.field.form.field', 'chief::field');
-        Blade::component('chief::components.field.form.error', 'chief::field.error');
-        Blade::component('chief::components.field.form.multiple', 'chief::field.multiple');
-        Blade::component('chief::components.field.window.window', 'chief::field.window');
-        Blade::component('chief::components.field.window.show', 'chief::field.show');
+        Blade::component('chief::components.field.window.single', 'chief::field');
+        Blade::component('chief::components.field.window.multiple', 'chief::fields');
+        Blade::component('chief::components.field.form.single', 'chief::field.form');
+        Blade::component('chief::components.field.form.multiple', 'chief::fields.form');
+        Blade::component('chief::components.field.form.error', 'chief::field.form.error');
 
-        Blade::component('chief::components.page.fragments-window', 'chief::fragments.window');
-        Blade::component('chief::components.page.status-window', 'chief::status.window');
-        Blade::component('chief::components.page.links-window', 'chief::links.window');
+        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
+        Blade::component('chief::manager.windows.fragments.window', 'chief::window.fragments');
+        Blade::component('chief::manager.windows.status.window', 'chief::window.status');
+        Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
         Blade::component('chief::components.window', 'chief::window');
 
@@ -59,7 +60,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.inline-notification', 'chief-inline-notification');
         Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.icon-button', 'chief-icon-button');
-//        Blade::component('chief::components.formgroup', 'chief-formgroup');
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
 
         /* Wireframe components */

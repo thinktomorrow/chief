@@ -15,7 +15,7 @@
                     model-class="{{ get_class($model) }}"
                     model-id="{{ $model->id }}"
                 >
-                    <x-chief::field label="{{ strtoupper($locale) }} link">
+                    <x-chief::field.form label="{{ strtoupper($locale) }} link">
                         <div class="space-y-2">
                             <div class="flex w-full">
                                 <div class="prepend-to-input">
@@ -51,7 +51,7 @@
                                 v-html="hint"
                             ></div>
                         </div>
-                    </x-chief::field>
+                    </x-chief::field.form>
                 </link-input>
             @endforeach
         </div>
@@ -70,7 +70,7 @@
                             @endif
 
                             <div class="w-full px-4 py-3">
-                                <div data-vue-fields class="-mx-4 -my-3 border rounded-lg divide-y border-grey-200 divide-grey-200">
+                                <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
                                     @foreach($links->redirects as $urlRecord)
                                         <url-redirect
                                             inline-template

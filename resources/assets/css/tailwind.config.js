@@ -34,7 +34,7 @@ module.exports = {
 
             red: colors.red,
             green: colors.green,
-            blue: colors.lightBlue,
+            blue: colors.sky,
             orange: colors.orange,
         },
         fontFamily: {

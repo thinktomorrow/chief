@@ -1,4 +1,4 @@
-<x-chief::field label="Link" isRequired>
+<x-chief::field.form label="Link" isRequired>
     <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
         <div class="space-y-3">
             {{-- Internal type --}}
@@ -17,7 +17,7 @@
                 </label>
 
                 <div v-if="type == 'internal'">
-                    <x-chief::field error="owner_reference">
+                    <x-chief::field.form error="owner_reference">
                         <chief-multiselect
                             name="owner_reference"
                             :options='@json($pages)'
@@ -27,7 +27,7 @@
                             labelkey="label"
                             valuekey="id"
                         ></chief-multiselect>
-                    </x-chief::field>
+                    </x-chief::field.form>
                 </div>
             </div>
 
@@ -107,4 +107,4 @@
             </label>
         </div>
     </radio-options>
-</x-chief::field>
+</x-chief::field.form>
