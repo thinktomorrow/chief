@@ -30,12 +30,15 @@ trait SavingFields
                 continue;
             }
 
+            // Set standard non-localized attribute on the model
             if (! $field->isLocalized()) {
-                // Set standard non-localized attribute on the model
-                if (($customSetMethod = $this->detectCustomSetMethod($field))) {
-                    $this->{$customSetMethod}($field, $input);
+                $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
+
+                if ($field->hasCustomSet()) {
+                    $field->handleCustomSet($value, $input, $files);
+                } elseif (($customSetMethod = $this->detectCustomSetMethod($field))) {
+                    $this->{$customSetMethod}($field, $input, $files);
                 } else {
-                    $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
                     $this->{$field->getColumn()} = $value;
                 }
 
@@ -44,14 +47,16 @@ trait SavingFields
 
             // Dynamic localized values or standard translated
             // For standard translations we set value with the colon notation, e.g. title:en
-            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field, $input) {
+            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field, $input, $files) {
                 if ($key !== $field->getColumn()) {
                     return;
                 }
 
                 $value = $field->getSanitizedValue($value, $input, $locale);
 
-                if ($this->isFieldForDynamicValue($field)) {
+                if ($field->hasCustomSet()) {
+                    $field->handleCustomSet($value, $input, $files, $locale);
+                } elseif ($this->isFieldForDynamicValue($field)) {
                     $this->setDynamic($key, $value, $locale);
                 } else {
                     $this->{$field->getColumn().':'.$locale} = $value;

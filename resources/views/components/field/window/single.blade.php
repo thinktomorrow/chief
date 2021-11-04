@@ -1,18 +1,9 @@
-@php
-    if(isset($key) || isset($field)) {
-        $field = $field ?? $model->field($key);
-        $label = $field->getLabel();
-    }
-@endphp
+<div class="space-y-1">
+    @if($field->getLabel())
+        <span class="font-medium text-black">
+            {{ ucfirst($field->getLabel()) }}
+        </span>
+    @endif
 
-@isset($field)
-    <div class="space-y-1">
-        @isset($label)
-            <span class="font-medium text-black">
-                {{ ucfirst($label) }}
-            </span>
-        @endisset
-
-        {!! $field->renderOnPage() !!}
-    </div>
-@endisset
+    {!! $field->renderOnPage() !!}
+</div>

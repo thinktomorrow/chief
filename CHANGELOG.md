@@ -8,6 +8,7 @@ principles.
 - Added: _chief:view command <MANAGED_MODELKEY>_ to generate a custom admin view for a page or fragment e.g. `php artisan chief:view article`
 - Added: Field components for a cleaner custom setup of page or fragment view
 - Added: Field::customSave and sync methods
+- Added: Field::customSet method
 - Fixed: performance issues with menu
 - Fixed: public_method_exists on PHP8 (is_callable no longer works on classnames)
 - Removed: Field->editAsPagetitle. Use Field->tag('pagetitle') instead.

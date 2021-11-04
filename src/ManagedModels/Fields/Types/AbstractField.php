@@ -56,6 +56,7 @@ abstract class AbstractField
 
     protected \Closure $valueResolver;
     protected \Closure $sanitizationResolver;
+    private ?\Closure $setResolver = null;
     private ?\Closure $saveResolver = null;
 
     protected string $localizedFormat = 'trans.:locale.:name';
@@ -270,6 +271,23 @@ abstract class AbstractField
     public function handleCustomSave($field, $input, $files)
     {
         return call_user_func_array($this->saveResolver, [$field, $input, $files]);
+    }
+
+    public function customSet(\Closure $fn): Field
+    {
+        $this->setResolver = $fn;
+
+        return $this;
+    }
+
+    public function hasCustomSet(): bool
+    {
+        return ! ! $this->setResolver;
+    }
+
+    public function handleCustomSet($field, $input, $files, $locale = null)
+    {
+        return call_user_func_array($this->setResolver, [$field, $input, $files, $locale]);
     }
 
     public function getCustomSaveMethod(): ?string
