@@ -75,8 +75,8 @@ class CreateFragmentCommand extends Command
             $this->fileManipulation->writeFile($fullViewPath, '<!-- ' . Inspiring::quote() . ' -->', $this->option('force'));
         }
 
-        if ($this->confirm('Would you like to add a backend view (back.fragments.'.$viewKey.'.wireframe)?', true)) {
-            $fullViewPath = resource_path('views/back/fragments/' . $viewKey . '/wireframe.blade.php');
+        if ($this->confirm('Would you like to add a backend view (back.fragments.'.$viewKey.')?', true)) {
+            $fullViewPath = resource_path('views/back/fragments/' . $viewKey . '.blade.php');
             $this->fileManipulation->writeFile($fullViewPath, '<!-- ' . Inspiring::quote() . ' -->', $this->option('force'));
         }
     }

@@ -332,10 +332,11 @@ trait FragmentAssistant
         $this->guard('fragment-update');
 
         $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
+        $fields = Fields::make($fragmentable->fields())->model($fragmentable->fragmentModel());
 
-        $this->fieldValidator()->handle(Fields::make($fragmentable->fields()), $request->all());
+        $this->fieldValidator()->handle($fields, $request->all());
 
-        $fragmentable->fragmentModel()->saveFields(Fields::make($fragmentable->fields()), $request->all(), $request->allFiles());
+        $fragmentable->fragmentModel()->saveFields($fields, $request->all(), $request->allFiles());
 
         return response()->json([
             'message' => 'fragment updated',

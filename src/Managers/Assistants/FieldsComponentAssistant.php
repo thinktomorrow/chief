@@ -39,7 +39,7 @@ trait FieldsComponentAssistant
         View::share('manager', $this);
         View::share('model', $model);
         View::share('tag', $tag);
-        View::share('fields', Fields::make($model->fields())->tagged($tag));
+        View::share('fields', Fields::make($model->fields())->tagged($tag)->model($model));
 
         /**
          * Custom view for tagged fieldgroups. e.g. tag sidebar can have
