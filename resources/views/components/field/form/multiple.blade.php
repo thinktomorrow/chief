@@ -17,6 +17,7 @@
         if(isset($notTagged)) {
             $fields = $fields->notTagged(explode(',', $notTagged));
         }
+
     @endphp
 
     @foreach($fields->all() as $field)
