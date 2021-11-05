@@ -14,7 +14,9 @@ input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'] {
-    @apply border border-grey-300 rounded-lg px-4 py-3 leading-normal text-grey-700 bg-white;
+    @apply border border-grey-300 rounded-lg px-3 py-2.5 leading-normal text-grey-700 bg-white;
+
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.1);
 
     &:focus {
         @apply border-primary-500;

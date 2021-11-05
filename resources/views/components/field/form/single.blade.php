@@ -27,7 +27,7 @@
     {!! $attributes->has('data-conditional') ? 'data-conditional="' . $attributes->get('data-conditional') . '"' : null !!}
     {!! $attributes->has('data-conditional-trigger-type') ? 'data-conditional-trigger-type="' . $attributes->get('data-conditional-trigger-type') . '"' : null !!}
     {!! $attributes->get('data-conditional-data') ? 'data-conditional-data="' . $attributes->get('data-conditional-data') . '"' : null !!}
-    class="{{ $attributes->get('class', '') }}"
+    class="w-full {{ $attributes->get('class', '') }}"
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
