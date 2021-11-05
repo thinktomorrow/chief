@@ -8,6 +8,10 @@
             $fields = $fields->keyed(explode(',', $key));
         }
 
+        if(isset($tagged)) {
+            $fields = $fields->tagged(explode(',', $tagged));
+        }
+
         if(isset($notTagged)) {
             $fields = $fields->notTagged(explode(',', $notTagged));
         }
