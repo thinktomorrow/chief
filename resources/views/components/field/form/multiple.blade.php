@@ -2,7 +2,9 @@
     <x-chief::field.form :key="$key" />
 @else
     @php
-        $fields = $fields ?? \Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields());
+        $fields = $fields ?? \Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields())->model(
+            $model instanceof \Thinktomorrow\Chief\Fragments\Fragmentable ? $model->fragmentModel() : $model
+        );
 
         if(isset($key)) {
             $fields = $fields->keyed(explode(',', $key));
