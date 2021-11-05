@@ -27,11 +27,9 @@
                         @csrf
                         @method('put')
 
-                        <div class="-my-6 divide-y divide-grey-100">
+                        <div class="space-y-6">
                             @foreach($fields as $field)
-                                <div class="py-6">
-                                    <x-chief::field.form :field="$field" />
-                                </div>
+                                <x-chief::field.form :field="$field" />
                             @endforeach
                         </div>
                     </form>

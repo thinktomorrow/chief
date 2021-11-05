@@ -131,7 +131,7 @@ class ConditionalFieldTrigger {
         const output = [];
 
         for (const [key, value] of Object.entries(data)) {
-            const element = document.querySelector(`[data-conditional="${key}"]`);
+            const element = document.querySelector(`[data-field-key="${key}"]`);
 
             if (!element) {
                 console.error(

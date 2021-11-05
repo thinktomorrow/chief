@@ -15,15 +15,16 @@
         }
 
         $slot = ($slot == "") ? $field->render(get_defined_vars()) : $slot;
-
-        // TODO(tijs): conditional defaults for field
-        // data-conditional="{{ $field->getId() }}"
-        // data-conditional-trigger-type="{{ $field->getType() }}"
-        // data-conditional-data="{{ $field->getConditionalFieldsData() }}"
     }
+
+    $data = $toggle ?? $field->getConditionalFieldsData();
 @endphp
 
-<div class="w-full">
+<div
+    data-field-key="{{ $key ?? $field->getKey() }}"
+    data-field-type="{{ $field->getType() }}"
+    {!! $data ? "data-conditional-toggle='" . json_encode($data) . "'" : null !!}
+>
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
         <div class="mb-1 space-x-1 leading-none">

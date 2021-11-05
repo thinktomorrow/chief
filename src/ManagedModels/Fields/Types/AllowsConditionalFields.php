@@ -23,7 +23,7 @@ trait AllowsConditionalFields
     public function getConditionalFieldsData()
     {
         if (! empty($this->conditionalFields)) {
-            return json_encode($this->conditionalFields);
+            return $this->conditionalFields;
         }
 
         return null;
