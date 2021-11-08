@@ -38,7 +38,7 @@
                 {{ ucfirst($label) }}
             </span>
 
-            @if(isset($isRequired) && ($isRequired == 'true') | $isRequired == '1')
+            @if(isset($isRequired) && ($isRequired == 'true') || $isRequired == '1')
                 <span class="leading-none label label-xs label-warning">Verplicht</span>
             @endif
         </div>
