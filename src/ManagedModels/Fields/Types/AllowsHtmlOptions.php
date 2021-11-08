@@ -18,7 +18,7 @@ trait AllowsHtmlOptions
     public function getHtmlOptions(string $key, ?string $locale = null): array
     {
         // Provide rtl direction
-        if($locale && in_array($locale, ['ar'])) {
+        if ($locale && in_array($locale, ['ar'])) {
             $this->htmlOptions = array_merge($this->htmlOptions, ['direction' => 'rtl']);
         }
 
