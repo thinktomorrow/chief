@@ -5,7 +5,7 @@
 <div
     data-fragment-select
     data-sortable-ignore
-    class="relative w-full {{ $hideSelectOptions ? 'first:with-fragment-select-options' : null }}"
+    class="relative w-full {{ $hideSelectOptions ? 'with-fragment-select-options' : null }}"
 >
     <!-- plus icon -->
     @if($hideSelectOptions)
@@ -23,7 +23,7 @@
     <!-- select options: create new or add existing -->
     <div
         data-fragment-select-options
-        class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative py-6 pop border-t-2 border-dashed border-primary-50 fragment-select-options"
+        class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative py-6 pop fragment-select-options"
     >
         @if($hideSelectOptions)
             <a data-fragment-select-close class="absolute top-0 right-0 m-6 cursor-pointer link link-primary">
