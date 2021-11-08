@@ -1,4 +1,8 @@
 @php
+    $key = $key ?? null;
+    $type = $type ?? null;
+    $conditionalData = $toggle ?? null;
+
     /**
      * If a key is given the field element is populated with the
      * field values such as label, description, input value, ...
@@ -8,6 +12,8 @@
 
         $label = $field->getLabel();
         $name = $field->getName();
+        $type = $field->getType();
+        $key = $field->getKey();
         $isRequired = $field->required();
 
         if($field->getDescription()) {
@@ -15,19 +21,19 @@
         }
 
         $slot = ($slot == "") ? $field->render(get_defined_vars()) : $slot;
-    }
 
-    $data = $toggle ?? $field->getConditionalFieldsData();
+        $conditionalData = $field->getConditionalFieldsData();
+    }
 @endphp
 
 <div
-    data-field-key="{{ $key ?? $field->getKey() }}"
-    data-field-type="{{ $field->getType() }}"
-    {!! $data ? "data-conditional-toggle='" . json_encode($data) . "'" : null !!}
+    data-field-key="{{ $key }}"
+    data-field-type="{{ $type }}"
+    {!! $conditionalData ? "data-conditional-toggle='" . json_encode($conditionalData) . "'" : null !!}
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
-        <div class="mb-1 space-x-1 leading-none">
+        <div class="mb-1 leading-none space-x-1">
             <span class="font-medium display-base display-dark">
                 {{ ucfirst($label) }}
             </span>
