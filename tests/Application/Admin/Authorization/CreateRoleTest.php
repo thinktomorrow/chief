@@ -12,6 +12,7 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function only_developer_can_view_the_create_form()
     {
+        $this->disableExceptionHandling();
         $developer = $this->fakeUser();
         $developer->assignRole('developer');
 

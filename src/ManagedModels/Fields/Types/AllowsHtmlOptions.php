@@ -15,8 +15,13 @@ trait AllowsHtmlOptions
         return $this;
     }
 
-    public function getHtmlOptions(string $key): array
+    public function getHtmlOptions(string $key, ?string $locale = null): array
     {
+        // Provide rtl direction
+        if($locale && in_array($locale, ['ar'])) {
+            $this->htmlOptions = array_merge($this->htmlOptions, ['direction' => 'rtl']);
+        }
+
         return $this->redactorMapping($this->htmlOptions);
     }
 
@@ -26,12 +31,14 @@ trait AllowsHtmlOptions
             return [];
         }
 
-        if (isset($options['buttons'], $options['plugins'])) {
-            return $options;
-        }
-
-        // Map the settings to the appropriate format, it's ok when both plugins and
-        // buttons have the same values since unknown options will be ignored
-        return ['plugins' => $options, 'buttons' => $options];
+        /*
+         * We expect the options to be of following format.
+         * [
+         *      ... options
+         *      buttons => [...],
+         *      plugins => [...],
+         * ]
+         */
+        return $options;
     }
 }
