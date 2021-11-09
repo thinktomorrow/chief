@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
@@ -24,11 +25,25 @@ final class Register
 
     public function fragment(string $fragmentClass, $tags = []): void
     {
+        // TODO: this reduces memory with around 1MB which is nice for frontend visits. But this removes the possibility to use the chief toast on frontend to get the admin edit url
+        // option is to load up the url async when logged in... Is there a better way to isolate this route loading only when logged in as chief admin?
+        // If the request isn't an chief admin request - we don't load up the managers and routes.
+//        if(!Request::is(['admin', 'admin/*'])) {
+//            $this->registerMorphMap($fragmentClass);
+//            return;
+//        }
+
         $this->register($fragmentClass, $this->container->makeWith(FragmentManager::class, ['managedModelClass' => $fragmentClass]), $tags, );
     }
 
     public function model(string $modelClass, string $managerClass = PageManager::class, $tags = ['nav']): void
     {
+        // If the request isn't an chief admin request - we don't load up the managers and routes.
+//        if(!Request::is(['admin', 'admin/*'])) {
+//            $this->registerMorphMap($modelClass);
+//            return;
+//        }
+
         $this->register($modelClass, $this->container->makeWith($managerClass, ['managedModelClass' => $modelClass]), $tags);
     }
 
@@ -36,17 +51,20 @@ final class Register
     {
         // Check if model class implements ManagedModel interface
         $ref = new \ReflectionClass($modelClass);
-        if (! $ref->implementsInterface(ManagedModel::class)) {
-            throw new \DomainException('Class ' . $modelClass . ' should implement contract ' . ManagedModel::class);
+        if (!$ref->implementsInterface(ManagedModel::class)) {
+            throw new \DomainException('Class '.$modelClass.' should implement contract '.ManagedModel::class);
         }
 
         $managedModelKey = $modelClass::managedModelKey();
 
+        // Only load up the admin routes and managers when in admin...
+//        if(chiefAdmin()) {
         // Add to chief registry
         $this->container->make(Registry::class)
             ->registerModel($managedModelKey, $modelClass)
             ->registerManager($managedModelKey, $manager)
-            ->registerTags($managedModelKey, (array)$tags);
+            ->registerTags($managedModelKey, (array) $tags)
+        ;
 
         // Register routes
         $this->container->make(RegisterManagedRoutes::class)(
@@ -54,6 +72,14 @@ final class Register
             ManagedRoutes::empty(get_class($manager), $managedModelKey),
             ManagerRequestDispatcher::class,
         );
+//        }
+
+        $this->registerMorphMap($modelClass);
+    }
+
+    private function registerMorphMap(string $modelClass)
+    {
+        $managedModelKey = $modelClass::managedModelKey();
 
         // Add to eloquent db morph map
         Relation::morphMap([
