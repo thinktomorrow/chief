@@ -51,7 +51,7 @@ final class Register
     {
         // Check if model class implements ManagedModel interface
         $ref = new \ReflectionClass($modelClass);
-        if (!$ref->implementsInterface(ManagedModel::class)) {
+        if (! $ref->implementsInterface(ManagedModel::class)) {
             throw new \DomainException('Class '.$modelClass.' should implement contract '.ManagedModel::class);
         }
 
