@@ -9,7 +9,9 @@ parameters:
     # The level 8 is the highest level
     level: 0
 
+    noModelMake: false
+    checkMissingIterableValueType: false
+
     ignoreErrors:
         - '#Unsafe usage of new static#'
 
-    checkMissingIterableValueType: false

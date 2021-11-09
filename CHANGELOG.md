@@ -11,6 +11,7 @@ principles.
 - Added: Field::customSet method
 - Fixed: performance issues with menu
 - Fixed: public_method_exists on PHP8 (is_callable no longer works on classnames)
+- Changed: password translations now use the projects lang/passwords file instead of the chief specific one.
 - Changed: htmlOptions on Inputfield used to convert options to buttons/plugins. They now need to have the raw redactor options. e.g. [...options, 'plugins' => [...], 'buttons' => [...]]
 - Removed: Field->editAsPagetitle. Use Field->tag('pagetitle') instead.
 - Removed: Field->renderWindow. Use Field->renderOnPage instead

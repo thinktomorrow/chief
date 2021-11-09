@@ -10,8 +10,9 @@
             $errorIds = [$field->getId()];
         }
     } else {
-        $errorIds = isset($name) ? [$name] : [];
+        $errorIds = isset($error) ? [$error] : (isset($name) ? [$name] : []);
     }
+
 @endphp
 
 @foreach($errorIds as $errorId)

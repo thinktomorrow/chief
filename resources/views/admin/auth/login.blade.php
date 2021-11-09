@@ -25,11 +25,9 @@
                             {{-- TODO: field errors are handled but still need to show error if login credentials are incorrect --}}
                             @if($errors && count($errors) > 0)
                                 <x-chief-inline-notification type="error" size="large">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
+                                        @foreach ($errors->all() as $_error)
+                                            <p>{{ $_error }}</p>
                                         @endforeach
-                                    </ul>
                                 </x-chief-inline-notification>
                             @endif
 
@@ -55,7 +53,7 @@
                             </x-chief::field.form>
 
                             <div class="space-x-2">
-                                <button type="submit" form="valid" class="btn btn-primary">Inloggen</button>
+                                <button type="submit" form="valid" class="btn btn-primary">Log in</button>
 
                                 <a
                                     href="{{ route('chief.back.password.request') }}"
