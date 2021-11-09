@@ -9,5 +9,4 @@ use Illuminate\Auth\Passwords\PasswordBroker;
 /** {@inheritDoc} */
 class ChiefPasswordBroker extends PasswordBroker
 {
-
 }
