@@ -7,5 +7,6 @@ return [
     'sent' => 'We hebben je de wachtwoord reset link toegestuurd.',
     'token' => 'Het ingevulde wachtwoord reset token is niet geldig.',
     'user' => "We kunnen geen gebruiker terugvinden met dit e-mail address.",
+    'throttled' => "Teveel gefaalde loginpogingen na elkaar. Gelieve even te wachten.",
 
 ];

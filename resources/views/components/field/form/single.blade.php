@@ -2,6 +2,7 @@
     $key = $key ?? null;
     $type = $type ?? null;
     $conditionalData = $toggle ?? null;
+    $isRequired = $isRequired ?? false;
 
     /**
      * If a key is given the field element is populated with the
