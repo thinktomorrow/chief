@@ -28,7 +28,7 @@
 
                         <div class="my-6 space-y-2">
                             @foreach($sitemapFiles as $sitemapFile)
-                                <div class="flex items-center justify-between p-6 bg-white rounded-xl">
+                                <div class="flex items-center justify-between">
                                     <div class="flex flex-col space-y-1">
                                         <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
 
