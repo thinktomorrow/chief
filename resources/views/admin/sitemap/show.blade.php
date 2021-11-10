@@ -28,17 +28,23 @@
 
                         <div class="my-6 space-y-2">
                             @foreach($sitemapFiles as $sitemapFile)
-                                <div class="flex items-center justify-between p-6 bg-white rounded-xl">
+                                <div class="flex items-center justify-between">
                                     <div class="flex flex-col space-y-1">
                                         <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
 
-                                        <a class="link link-primary" href="{{ url($sitemapFile->getFileName()) }}" download>
+                                        <a 
+                                            href="{{ url($sitemapFile->getFileName()) }}" 
+                                            title="Download sitemap"
+                                            class="link link-primary" 
+                                            download
+                                        >
                                             {{ url($sitemapFile->getFileName()) }}
                                         </a>
                                     </div>
 
                                     <span class="text-grey-500">
-                                        {{ \Carbon\Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }} vernieuwd
+                                        {{ \Carbon\Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }} 
+                                        vernieuwd
                                     </span>
                                 </div>
                             @endforeach
@@ -46,7 +52,14 @@
 
                         <p>
                             De sitemaps worden automatisch gebruikt door de zoekpagina's zoals Google en Bing.
-                            U kan ook de links toevoegen aan jouw <a class="link link-primary" target="_blank" rel="noopener" href="https://search.google.com/search-console">search console</a>.
+                            U kan ook de links toevoegen aan jouw 
+                            <a 
+                                href="https://search.google.com/search-console"
+                                title="Google search console"
+                                target="_blank" 
+                                rel="noopener" 
+                                class="link link-primary" 
+                            > search console </a>.
                         </p>
 
                         <h3>Waarom is een sitemap van belang?</h3>
@@ -58,7 +71,13 @@
                         </p>
 
                         <p>
-                            <a class="link link-primary" target="_blank" rel="noopener" href="https://support.google.com/webmasters/answer/156184?hl=nl">
+                            <a 
+                                href="https://support.google.com/webmasters/answer/156184?hl=nl"
+                                title="Meer lezen over Google sitemaps"
+                                target="_blank" 
+                                rel="noopener" 
+                                class="link link-primary" 
+                            >
                                 Meer lezen over Google sitemaps
                             </a>
                         </p>
@@ -68,7 +87,9 @@
         </div>
     </div>
 
-    <modal id="generate-sitemap" class="large-modal" :active="false" title=''>
-        Bezig met het maken van de sitemaps
+    <modal id="generate-sitemap" title="Sitemap genereren ..." size="large" :active="false">
+        <div class="prose prose-dark">
+            Bezig met het genereren van een sitemap. Dit kan eventjes duren. 
+        </div>
     </modal>
 @stop
