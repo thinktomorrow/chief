@@ -33,12 +33,12 @@
 >
     {{-- Check if label exists and if it has a useful value --}}
     @if(isset($label) && $label)
-        <div class="mb-1 leading-none space-x-1">
+        <div class="mb-1 space-x-1 leading-none">
             <span class="font-medium display-base display-dark">
                 {{ ucfirst($label) }}
             </span>
 
-            @if(isset($isRequired) && ($isRequired == 'true') || $isRequired == '1')
+            @if(isset($isRequired) && $isRequired)
                 <span class="leading-none label label-xs label-warning">Verplicht</span>
             @endif
         </div>
