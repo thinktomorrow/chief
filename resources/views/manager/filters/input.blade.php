@@ -1,4 +1,4 @@
-<x-chief::fields.form
+<x-chief::field.form
     label="{{ $label ?? '' }}"
     name="{{ $name }}"
 >
