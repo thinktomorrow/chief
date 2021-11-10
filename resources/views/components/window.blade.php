@@ -1,6 +1,7 @@
 @php
     $url = $url ?? null;
     $sidebar = $sidebar ?? null;
+    $sidebarTriggerAttribute = $sidebarTriggerAttribute ?? 'data-sidebar-trigger';
 @endphp
 
 <div>
@@ -25,7 +26,7 @@
 
                         @if($url)
                             <a
-                                data-sidebar-trigger="{{ $sidebar }}"
+                                {{ $sidebarTriggerAttribute }}="{{ $sidebar }}"
                                 href="{{ $url }}"
                                 title="Aanpassen"
                                 class="flex-shrink-0"
