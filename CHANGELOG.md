@@ -5,6 +5,9 @@ principles.
 
 ## next release
 
+## 0.6.7 - 2021-11-10
+Removed FieldWindow and FieldSets; customize admin views via blade components
+
 - Added: _chief:view command <MANAGED_MODELKEY>_ to generate a custom admin view for a page or fragment e.g. `php artisan chief:view article`
 - Added: Field blade components to allow a custom setup for a page or fragment view
 - Added: Field::customSave and sync methods
