@@ -23,7 +23,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
+                <x-chief::window>
                     <form
                         id="createForm"
                         method="POST"
@@ -33,9 +33,11 @@
                     >
                         @csrf
 
+                        <input type="hidden" name="menu_type" value="{{ $menuitem->menu_type }}">
+
                         @include('chief::admin.menu._partials.form')
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

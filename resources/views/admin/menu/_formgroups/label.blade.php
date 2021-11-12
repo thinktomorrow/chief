@@ -1,4 +1,4 @@
-<x-chief-formgroup label="Label" isRequired>
+<x-chief::field.form label="Label" isRequired>
     <x-slot name="description">
         <p>Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.</p>
     </x-slot>
@@ -44,4 +44,4 @@
             </div>
         @endforeach
     @endif
-</x-chief-formgroup>
+</x-chief::field.form>

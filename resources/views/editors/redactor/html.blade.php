@@ -2,7 +2,7 @@
     data-editor
     data-locale="{{ $locale ?? app()->getLocale() }}"
     name="{{ $field->getName($locale ?? null) }}"
-    data-custom-redactor-options='@json($field->getHtmlOptions($key))'
+    data-custom-redactor-options='@json($field->getHtmlOptions($key, $locale ?? null))'
     id="{{ $key }}"
     cols="10"
     rows="5"

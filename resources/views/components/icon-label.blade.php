@@ -1,5 +1,5 @@
 @php
-    $iconSize = $size ?? 20;
+    $iconSize = (int)($size ?? 20);
     $position = $position ?? 'prepend';
 
     switch($space ?? null) {

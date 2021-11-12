@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <main class="relative min-h-screen bg-gradient-to-br from-grey-100 to-grey-200">
+        <main class="min-h-screen bg-grey-50 bg-gradient-to-r from-grey-50 to-grey-100">
             @yield('content')
         </main>
     </body>

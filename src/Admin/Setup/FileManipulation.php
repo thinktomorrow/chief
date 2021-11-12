@@ -24,7 +24,7 @@ final class FileManipulation
         }
 
         if ($this->files->exists($path) && ! $overwriteIfExists) {
-            $this->error('Class already exists at '.str_replace(base_path(), '', $path.''));
+            $this->error('File already exists at '.str_replace(base_path(), '', $path.''));
 
             return;
         }
@@ -33,10 +33,24 @@ final class FileManipulation
         $this->info('File '.str_replace(base_path(), '', $path.'').' created.');
     }
 
+    public function addMethodToClass($filepath, $method)
+    {
+        if (! $this->files->exists($filepath)) {
+            $this->error('File ' . $filepath .' does not exist.');
+
+            return;
+        }
+
+        $originalContent = file_get_contents($filepath);
+        $replacedContent = preg_replace('#(}$)#', $method . "$1", $originalContent);
+
+        file_put_contents($filepath, $replacedContent);
+    }
+
     public function addToMethod($filepath, $method, $content)
     {
         if (! $this->files->exists($filepath)) {
-            $this->error('Class ' . $filepath .' does not exist.');
+            $this->error('File ' . $filepath .' does not exist.');
 
             return;
         }

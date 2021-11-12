@@ -16,11 +16,7 @@
     <div class="space-y-8">
         <h3>{{ ucfirst($model->adminConfig()->getModelName()) }}</h3>
 
-        @include('chief::manager.fields.form.fieldsets', [
-            'fieldsets' => $fields->all(),
-            'hasFirstWindowItem' => false,
-            'hasLastWindowItem' => false,
-        ])
+        <x-chief::fields.form />
 
         <button form="{{ $formId }}" type="submit" class="btn btn-primary">
             Aanmaken
@@ -36,7 +32,11 @@
 
         for(var i = 0; i < editors.length; i++) {
             var message = document.createElement('p');
-            message.style = "font-style: italic; opacity: 0.3; margin-top: 1rem;";
+            message.classList.add('text-sm');
+            message.classList.add('italic');
+            message.classList.add('opacity-30');
+            message.classList.add('px-4');
+            message.classList.add('py-2');
             message.innerHTML = "Het toevoegen van afbeeldingen aan de wysiwyg is pas mogelijk na het aanmaken van dit item.";
             editors[i].parentElement.appendChild(message);
         }

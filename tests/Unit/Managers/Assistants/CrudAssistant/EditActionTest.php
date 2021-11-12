@@ -14,7 +14,6 @@ class EditActionTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->disableExceptionHandling();
         $model = ManagedModelFactory::make()->fields([
             InputField::make('title'),
         ])->create(['title' => 'Original titel']);
@@ -25,8 +24,7 @@ class EditActionTest extends ChiefTestCase
             ->create();
 
         $this->asAdmin()->get($manager->route('edit', $model))
-            ->assertStatus(200)
-            ->assertViewIs('chief::manager.edit');
+            ->assertStatus(200);
     }
 
     /** @test */

@@ -22,15 +22,15 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
+                <x-chief::window>
                     <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">
                         @csrf
 
-                        <div class="space-y-8">
+                        <div class="space-y-6">
                             @include('chief::admin.users._form')
                         </div>
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

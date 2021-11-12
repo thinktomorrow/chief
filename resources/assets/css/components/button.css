@@ -1,0 +1,155 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .btn {
+        @apply relative inline-flex items-center border-2 cursor-pointer leading-normal px-4 py-1.5 font-semibold rounded-lg;
+        @apply transition-all ease-in-out duration-75;
+
+        &:after {
+            content: '';
+            @apply block absolute inset-0 bg-white opacity-0;
+            @apply transition-all ease-in-out duration-75;
+        }
+    }
+
+    .btn-primary {
+        @apply bg-primary-500 border-primary-500 text-white;
+        @apply bg-gradient-to-br from-primary-500 to-primary-600;
+
+        &:hover,
+        &:focus {
+            &:after {
+                @apply opacity-10;
+            }
+        }
+    }
+
+    .btn-primary-outline {
+        @apply bg-transparent border-primary-500 text-primary-500;
+
+        &:hover,
+        &:focus {
+            @apply bg-primary-500 border-primary-500 text-white;
+        }
+    }
+
+    .btn-grey {
+        @apply bg-grey-100 border-grey-100 text-grey-500;
+
+        &:hover,
+        &:focus {
+            &:after {
+                @apply opacity-10;
+            }
+        }
+    }
+
+    .btn-grey-outline {
+        @apply bg-transparent border-grey-500 text-grey-500;
+
+        &:hover,
+        &:focus {
+            @apply bg-grey-500 border-grey-500 text-white;
+        }
+    }
+
+    .btn-error {
+        @apply bg-red-500 border-red-500 text-white;
+        @apply bg-gradient-to-br from-red-500 to-red-600;
+
+        &:hover,
+        &:focus {
+            &:after {
+                @apply opacity-10;
+            }
+        }
+    }
+
+    .btn-error-outline {
+        @apply bg-transparent border-red-500 text-red-500;
+
+        &:hover,
+        &:focus {
+            @apply bg-red-500 border-red-500 text-white;
+            @apply bg-gradient-to-br from-red-500 to-red-600;
+        }
+    }
+
+    .btn-warning {
+        @apply bg-orange-500 border-orange-500 text-white;
+        @apply bg-gradient-to-br from-orange-500 to-orange-600;
+
+        &:hover,
+        &:focus {
+            &:after {
+                @apply opacity-10;
+            }
+        }
+    }
+
+    .btn-warning-outline {
+        @apply bg-transparent border-orange-500 text-orange-500;
+
+        &:hover,
+        &:focus {
+            @apply bg-orange-500 border-orange-500 text-white;
+            @apply bg-gradient-to-br from-orange-500 to-orange-600;
+        }
+    }
+
+    .btn-info {
+        @apply bg-blue-500 border-blue-500 text-white;
+        @apply bg-gradient-to-br from-blue-500 to-blue-600;
+
+        &:hover,
+        &:focus {
+            &:after {
+                @apply opacity-10;
+            }
+        }
+    }
+
+    .btn-info-outline {
+        @apply bg-transparent border-blue-500 text-blue-500;
+
+        &:hover,
+        &:focus {
+            @apply bg-blue-500 border-blue-500 text-white;
+            @apply bg-gradient-to-br from-blue-500 to-blue-600;
+        }
+    }
+
+    .btn-success {
+        @apply bg-green-500 border-green-500 text-white;
+        @apply bg-gradient-to-br from-green-500 to-green-600;
+
+        &:hover,
+        &:focus {
+            &:after {
+                @apply opacity-10;
+            }
+        }
+    }
+
+    .btn-success-outline {
+        @apply bg-transparent border-green-500 text-green-500;
+
+        &:hover,
+        &:focus {
+            @apply bg-green-500 border-green-500 text-white;
+            @apply bg-gradient-to-br from-green-500 to-green-600;
+        }
+    }
+
+    /* purgecss start ignore */
+    .btn-disabled {
+        @apply bg-grey-100 border-grey-100 text-grey-400 pointer-events-none select-none;
+    }
+
+    .btn-disabled-outline {
+        @apply bg-transparent border-grey-200 text-grey-400 pointer-events-none select-none;
+    }
+    /* purgecss enkd ignore */
+}

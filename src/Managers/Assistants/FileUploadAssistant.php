@@ -93,6 +93,6 @@ trait FileUploadAssistant
         $dottedFieldName = FieldName::fromString($field->getName($locale))->get();
         Arr::set($validationPayload, $dottedFieldName, [$uploadedFile]);
 
-        $this->fieldValidator()->handle(new Fields([$field]), $validationPayload);
+        $this->fieldValidator()->handle(Fields::make([$field]), $validationPayload);
     }
 }

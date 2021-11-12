@@ -1,17 +1,14 @@
-{{-- TODO: needs revision --}}
 @extends('chief::layout.master')
 
 @section('page-title', 'Media galerij')
 
 @section('header')
     <div class="container">
-        @component('chief::layout._partials.header')
-            @slot('title')
-                Media galerij
-            @endslot
-
+        @component('chief::layout._partials.header', [
+            'title' => 'Media galerij'
+        ])
             @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
+                <a href="{{ route('chief.back.dashboard') }}" title="Ga naar het dashboard" class="link link-primary">
                     <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
                 </a>
             @endslot
@@ -21,12 +18,12 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-6">
+        <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <div class="window window-white window-md space-y-8">
+                <x-chief::window>
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
-                            <label for="select-all" class="flex items-center cursor-pointer text-grey-700 space-x-2 with-custom-checkbox">
+                            <label for="select-all" class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
                                 <input type="checkbox" name="select_all" id="select-all">
                                 <span>Alles selecteren</span>
                             </label>
@@ -46,32 +43,27 @@
                         </div>
                     </form>
 
-                    <div>
+                    <div class="mt-8">
                         {{ $assets->links('chief::pagination.default') }}
                     </div>
-                </div>
+                </x-chief::window>
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="window window-white window-md space-y-8">
-                    <div>
-                        <h3>Filteren</h3>
-
+                <x-chief::window title="Filteren">
+                    <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
-                    </div>
 
-                    <form method="GET" id="filtering" class="space-y-8">
-                        <x-chief-formgroup label="Bestandsnaam">
+                        <x-chief::field.form label="Bestandsnaam">
                             <input
                                 type="text"
                                 name="search"
                                 placeholder="Zoek op bestandsnaam ..."
                                 value="{{ old('search', request()->input('search'))}}"
                             >
-                        </x-chief-formgroup>
+                        </x-chief::field.form>
 
-                        {{-- TODO: fix multiselect --}}
-                        <x-chief-formgroup label="Pagina">
+                        <x-chief::field.form label="Pagina">
                             <chief-multiselect
                                 name="owner"
                                 :options='@json($pages)'
@@ -82,19 +74,19 @@
                                 labelkey="label"
                                 valuekey="id"
                             ></chief-multiselect>
-                        </x-chief-formgroup>
+                        </x-chief::field.form>
 
-                        <x-chief-formgroup>
+                        <x-chief::field.form>
                             <label for="unused" class="with-checkbox">
                                 <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
-                        </x-chief-formgroup>
+                        </x-chief::field.form>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

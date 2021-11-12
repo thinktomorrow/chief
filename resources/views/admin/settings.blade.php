@@ -22,22 +22,18 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
+                <x-chief::window>
                     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
                         @csrf
                         @method('put')
 
-                        <div class="space-y-8">
-                            @include('chief::manager.fields.form.fieldsets', [
-                                'fieldsets' => $fields->all(),
-                                'hasFirstWindowItem' => true,
-                                'hasLastWindowItem' => false,
-                            ])
-
-                            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+                        <div class="space-y-6">
+                            @foreach($fields as $field)
+                                <x-chief::field.form :field="$field" />
+                            @endforeach
                         </div>
                     </form>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

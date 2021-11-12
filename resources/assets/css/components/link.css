@@ -1,0 +1,61 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .link {
+        @apply inline-block rounded-sm;
+        @apply font-semibold no-underline;
+        @apply transition duration-75 ease-in-out;
+
+        &:focus {
+            @apply text-primary-600;
+        }
+
+        &.active {
+            @apply text-primary-500;
+        }
+    }
+
+    .link-primary {
+        @apply text-primary-500 hover:text-primary-600;
+    }
+
+    .link-black {
+        @apply text-black hover:text-grey-800;
+    }
+
+    .link-white {
+        @apply text-white hover:text-grey-200;
+    }
+
+    .link-grey {
+        @apply text-grey-700 hover:text-grey-500;
+    }
+
+    .link-grey-light {
+        @apply text-grey-500 hover:text-grey-400;
+    }
+
+    .link-success {
+        @apply text-green-500 hover:text-green-400;
+    }
+
+    .link-info {
+        @apply text-blue-500 hover:text-blue-400;
+    }
+
+    .link-warning {
+        @apply text-orange-500 hover:text-orange-400;
+    }
+
+    .link-error {
+        @apply text-red-500 hover:text-red-400;
+    }
+
+    .with-inside-link-warning {
+        a.link {
+            @extend .link-warning;
+        }
+    }
+}

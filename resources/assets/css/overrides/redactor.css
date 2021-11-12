@@ -1,0 +1,32 @@
+.redactor-toolbar {
+    z-index: 1 !important;
+}
+
+.redactor-box {
+    overflow: hidden !important;
+    border-radius: theme('borderRadius.lg') !important;
+    /* border-width: 2px !important; */
+    border-color: theme('borderColor.grey.300') !important;
+}
+
+.redactor-box.redactor-focus.redactor-styles-on {
+    border-color: theme('borderColor.primary.500') !important;
+}
+
+.redactor-statusbar {
+    background-color: theme('colors.grey.50') !important;
+}
+
+.redactor-component[data-redactor-type='video'] {
+    overflow: scroll !important;
+}
+
+.redactor-dropdown [class*='redactor-dropdown-item-'] {
+    font-size: 1rem !important;
+}
+
+.redactor-modal input[type='checkbox'],
+.redactor-modal input[type='radio'] {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+}

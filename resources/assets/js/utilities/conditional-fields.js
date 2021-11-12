@@ -11,9 +11,9 @@ import InputFieldTrigger from './conditional-fields/InputFieldTrigger';
  * @param {String} conditionalFieldsDataAttribute
  */
 const initConditionalFields = (
-    formgroupAttribute = 'data-conditional',
-    formgroupTypeAttribute = 'data-conditional-trigger-type',
-    conditionalFieldsDataAttribute = 'data-conditional-data'
+    formgroupAttribute = 'data-field-key',
+    formgroupTypeAttribute = 'data-field-type',
+    conditionalFieldsDataAttribute = 'data-conditional-toggle'
 ) => {
     const formgroupElements = Array.from(document.querySelectorAll(`[${formgroupAttribute}]`));
 

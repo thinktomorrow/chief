@@ -3,7 +3,7 @@
     $hasDefaultTitle = $hasDefaultTitle ?? true;
 @endphp
 
-<div class="row-between-center gutter-2">
+<div class="row-between-center gutter-1">
     @isset($breadcrumbs)
         <div class="w-full">
             {!! $breadcrumbs !!}
@@ -12,7 +12,7 @@
 
     <div class="{{ $isDefaultSlotEmpty ? 'w-full' : 'w-full lg:w-1/2' }}">
         @if($hasDefaultTitle)
-            <h1 class="text-grey-900">
+            <h1 class="text-black">
                 {{ ucfirst($title) }}
             </h1>
         @else

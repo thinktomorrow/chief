@@ -24,7 +24,7 @@ class Hero implements Fragmentable
 
     public function fields(): Fields
     {
-        return new Fields([
+        return Fields::make([
             InputField::make('title'),
         ]);
     }

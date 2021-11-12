@@ -7,7 +7,6 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldName;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationParameters;
 
@@ -46,9 +45,6 @@ abstract class AbstractField
     /** @var null|mixed */
     protected $default;
 
-    /** @var callable */
-    protected $valueResolver;
-
     /** @var null|mixed */
     protected $model;
 
@@ -57,7 +53,11 @@ abstract class AbstractField
     protected array $viewData = [];
     protected array $locales = [];
     protected ValidationParameters $validation;
+
+    protected \Closure $valueResolver;
     protected \Closure $sanitizationResolver;
+    private ?\Closure $setResolver = null;
+    private ?\Closure $saveResolver = null;
 
     protected string $localizedFormat = 'trans.:locale.:name';
 
@@ -67,8 +67,7 @@ abstract class AbstractField
     private $type;
     private ?string $customSaveMethod = null;
 
-    // Custom width
-    private string $size = '1';
+    private array $whenModelIsSetCallbacks = [];
 
     final public function __construct(FieldType $type, string $key)
     {
@@ -175,33 +174,6 @@ abstract class AbstractField
         return $this->description;
     }
 
-    public function width(string $size): Field
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function getWidth(): string
-    {
-        return $this->size ?? '1';
-    }
-
-    public function getWidthStyle(): string
-    {
-        switch ($this->getWidth()) {
-            case '1/2':
-                return 'w-full sm:w-1/2';
-            case '1/3':
-                return 'w-full sm:w-1/2 md:w-1/3';
-            case '2/3':
-                return 'w-full sm:w-1/2 md:w-2/3';
-            case 1:
-            default:
-                return 'w-full';
-        }
-    }
-
     /**
      * @param mixed $prepend
      */
@@ -280,6 +252,52 @@ abstract class AbstractField
     public function valueResolver(\Closure $fn): Field
     {
         $this->valueResolver = $fn;
+
+        return $this;
+    }
+
+    public function customSave(\Closure $fn): Field
+    {
+        $this->saveResolver = $fn;
+
+        return $this;
+    }
+
+    public function hasCustomSave(): bool
+    {
+        return ! ! $this->saveResolver;
+    }
+
+    public function handleCustomSave($field, $input, $files)
+    {
+        return call_user_func_array($this->saveResolver, [$field, $input, $files]);
+    }
+
+    public function customSet(\Closure $fn): Field
+    {
+        $this->setResolver = $fn;
+
+        return $this;
+    }
+
+    public function hasCustomSet(): bool
+    {
+        return ! ! $this->setResolver;
+    }
+
+    public function handleCustomSet($field, $input, $files, $locale = null)
+    {
+        return call_user_func_array($this->setResolver, [$field, $input, $files, $locale]);
+    }
+
+    public function getCustomSaveMethod(): ?string
+    {
+        return $this->customSaveMethod;
+    }
+
+    public function customSaveMethod(string $method): Field
+    {
+        $this->customSaveMethod = $method;
 
         return $this;
     }
@@ -389,7 +407,17 @@ abstract class AbstractField
         return view($this->getView(), array_merge($viewData, $this->getViewData()))->render();
     }
 
+    /**
+     * @deprecated use renderOnPage instead
+     * @param array $viewData
+     * @return string
+     */
     public function renderWindow(array $viewData = []): string
+    {
+        throw new \Exception('Field->renderWindow is no longer being used. Use Field->renderOnPage instead');
+    }
+
+    public function renderOnPage(array $viewData = []): string
     {
         return view($this->getWindowView(), array_merge($viewData, $this->getViewData()))->render();
     }
@@ -400,6 +428,17 @@ abstract class AbstractField
     public function model($model): Field
     {
         $this->model = $model;
+
+        foreach ($this->whenModelIsSetCallbacks as $callback) {
+            call_user_func_array($callback, [$model]);
+        }
+
+        return $this;
+    }
+
+    public function whenModelIsSet(\Closure $callback): Field
+    {
+        $this->whenModelIsSetCallbacks[] = $callback;
 
         return $this;
     }
@@ -443,23 +482,14 @@ abstract class AbstractField
         return $this;
     }
 
+    /**
+     * @deprecated use Field->tag('pagetitle') instead
+     * @return Field
+     * @throws \Exception
+     */
     public function editAsPageTitle(): Field
     {
-        $this->tag(Fields::PAGE_TITLE_TAG);
-
-        return $this;
-    }
-
-    public function getCustomSaveMethod(): ?string
-    {
-        return $this->customSaveMethod;
-    }
-
-    public function customSaveMethod(string $method): Field
-    {
-        $this->customSaveMethod = $method;
-
-        return $this;
+        throw new \Exception('editAsPagetitle is no longer being used. Please replace your method with Field->tag(\'pagetitle\') instead.');
     }
 
     protected function getValidationNameFormat(): string
@@ -516,7 +546,7 @@ abstract class AbstractField
         }
 
         return $this->isLocalized()
-            ? 'chief::manager.fields.form.field_localized'
+            ? 'chief::manager.fields.form.localized'
             : 'chief::manager.fields.form.types.'.$this->getViewKey();
     }
 
@@ -529,6 +559,7 @@ abstract class AbstractField
         ], $this->viewData);
     }
 
+    // TODO: rename to getShowView() / getEditView
     protected function getWindowView(): string
     {
         if (isset($this->windowView)) {
@@ -544,7 +575,7 @@ abstract class AbstractField
      */
     private function defaultEloquentValueResolver(): \Closure
     {
-        return function (Model $model = null, $locale = null) {
+        return function ($model = null, $locale = null) {
             if ($this->value) {
                 return $this->value;
             }

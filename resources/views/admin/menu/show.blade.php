@@ -31,17 +31,17 @@
                 </div>
             @else
                 <div class="w-full">
-                    <div class="window window-white window-sm">
+                    <x-chief::window>
                         <div class="-my-3 divide-y divide-grey-100">
                             @foreach($menuItems as $item)
-                                <x-chief-hierarchy 
+                                <x-chief-hierarchy
                                     :item="$item"
                                     view-path="chief::admin.menu._partials.menu-item"
                                     iconMarginTop="0.2rem"
                                 ></x-chief-hierarchy>
                             @endforeach
                         </div>
-                    </div>
+                    </x-chief::window>
                 </div>
             @endif
         </div>

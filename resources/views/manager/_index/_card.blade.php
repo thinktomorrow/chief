@@ -1,23 +1,23 @@
-<div class="px-6 py-4" data-sortable-id="{{ $model->id }}">
-    <div class="space-y-1">
+<div data-sortable-id="{{ $model->id }}" class="py-4">
+    <div class="space-y-2">
         <div class="flex justify-between">
             @adminCan('edit')
-                <a href="@adminRoute('edit', $model)" class="flex items-center space-x-2">
+                <a href="@adminRoute('edit', $model)" class="w-full mt-0.5 space-x-1">
             @endAdminCan
-                    <span class="text-lg font-semibold text-grey-900">
+                    <span class="text-lg display-dark display-base">
                         @adminConfig('rowTitle')
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                        <span class="text-sm label label-info label-xs">
-                            Homepage
+                        <span class="align-bottom with-xs-labels">
+                            <span class="label label-info"> Homepage </span>
                         </span>
                     @endif
             @adminCan('edit')
                 </a>
             @endAdminCan
 
-            <div>
+            <div class="flex-shrink-0">
                 @include('chief::manager._index._options')
             </div>
         </div>

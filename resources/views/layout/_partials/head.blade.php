@@ -21,6 +21,10 @@
         [v-cloak] { display: none !important; }
     </style>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
 

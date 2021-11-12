@@ -1,0 +1,72 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .label {
+        @apply inline-block font-semibold leading-tight px-2.5 py-1 rounded;
+    }
+
+    .label-xs {
+        @apply px-2 py-1 text-xs rounded;
+    }
+
+    .label-sm {
+        @apply px-2.5 py-1 text-sm rounded;
+    }
+
+    .label-md {
+        @apply px-3 py-1 text-base rounded-md;
+    }
+
+    .label-lg {
+        @apply px-4 py-3 rounded-lg;
+    }
+
+    .label-xl {
+        @apply px-8 py-4 rounded-xl;
+    }
+
+    .with-xs-labels {
+        .label {
+            @apply mr-1;
+            @extend .label-xs;
+        }
+    }
+
+    .label-primary {
+        @apply bg-primary-50 text-primary-500;
+    }
+
+    .label-secondary {
+        @apply bg-secondary-50 text-secondary-500;
+    }
+
+    .label-grey {
+        @apply bg-grey-200 text-grey-600;
+    }
+
+    .label-grey-dark {
+        @apply bg-grey-700 text-white;
+    }
+
+    .label-grey-light {
+        @apply bg-grey-100 text-grey-500;
+    }
+
+    .label-warning {
+        @apply bg-orange-100 text-orange-500;
+    }
+
+    .label-error {
+        @apply bg-red-100 text-red-500;
+    }
+
+    .label-success {
+        @apply bg-green-100 text-green-500;
+    }
+
+    .label-info {
+        @apply bg-blue-50 text-blue-500;
+    }
+}

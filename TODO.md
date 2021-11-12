@@ -23,7 +23,7 @@
 -   [ ] Sorting handle fragments
 -   [ ] What happens if you want 2 different types of fragments at the start and end of fragment with 'static' fields in between
 -   [ ] Component overview
--   [ ] When rendering a form field, the id passed to chief-formgroup component is not localized, while the input field id is
+-   [ ] When rendering a form field, the id passed to chief::field component is not localized, while the input field id is
 
 ### Fragments
 

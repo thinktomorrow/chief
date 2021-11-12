@@ -1,0 +1,13 @@
+@layer components {
+    .display-base {
+        @apply leading-normal font-semibold;
+    }
+
+    .display-dark {
+        @apply text-black;
+    }
+
+    .body-dark {
+        @apply text-grey-600;
+    }
+}

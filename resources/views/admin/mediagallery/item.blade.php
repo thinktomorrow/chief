@@ -9,7 +9,7 @@
 ?>
 
 <label for="asset_{{ $index }}" class="relative block h-full overflow-hidden border cursor-pointer bg-grey-50 border-grey-200 rounded-xl">
-    <div class="absolute top-0 left-0 m-2 z-1">
+    <div class="absolute top-0 left-0 m-2" style="z-index: 1;">
         <div class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
             <input type="checkbox" name="asset_ids[]" id="asset_{{ $index }}" value="{{ $asset->id }}">
         </div>

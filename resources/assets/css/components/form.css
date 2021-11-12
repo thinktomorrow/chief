@@ -1,0 +1,112 @@
+form {
+    @apply mb-0;
+}
+
+textarea,
+select,
+input[type='text'],
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='tel'],
+input[type='number'],
+input[type='search'],
+input[type='phone'],
+input[type='password'],
+input[type='file'] {
+    @apply border border-grey-300 rounded-lg px-3 py-2.5 leading-normal text-grey-700 bg-white;
+
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.1);
+
+    &:focus {
+        @apply border-primary-500;
+    }
+
+    &::placeholder {
+        @apply text-grey-400;
+    }
+}
+
+textarea,
+select,
+input[type='text'],
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='tel'],
+input[type='search'],
+input[type='phone'],
+input[type='password'],
+input[type='file'],
+input[type='range'],
+input[type='number'] {
+    @apply w-full;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+    margin-top: 0.1rem;
+    @apply appearance-none relative w-5 h-5 border border-grey-300 overflow-hidden mr-1 cursor-pointer flex-shrink;
+
+    &:focus {
+        @apply ring-2 ring-primary-500;
+    }
+
+    &:before {
+        content: '';
+        @apply absolute inset-0 bg-primary-500 transform scale-0 z-10 transition-all duration-150 ease-in-out;
+    }
+
+    &:checked:before {
+        @apply transform scale-50;
+    }
+}
+
+input[type='radio'] {
+    @apply rounded-full;
+
+    &:before {
+        @apply rounded-full;
+    }
+}
+
+input[type='checkbox'] {
+    @apply rounded;
+
+    &:before {
+        @apply rounded;
+    }
+}
+
+label.with-checkbox,
+label.with-radio {
+    @apply flex items-start space-x-2 cursor-pointer;
+
+    span {
+        @apply text-grey-600;
+    }
+}
+
+.prepend-to-input {
+    @apply px-4 py-3 font-medium border border-r-0 bg-primary-50 border-primary-100 rounded-l-md text-primary-500;
+}
+
+.append-to-input {
+    @apply px-4 py-3 font-medium border border-l-0 bg-primary-50 border-primary-100 rounded-r-md text-primary-500;
+}
+
+input[type='text'].with-prepend,
+input[type='date'].with-prepend {
+    @apply rounded-l-none;
+}
+
+input[type='text'].with-append,
+input[type='date'].with-append {
+    @apply rounded-r-none;
+}
+
+select.select {
+    appearance: none;
+
+    @apply pr-7 cursor-pointer;
+}

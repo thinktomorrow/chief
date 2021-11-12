@@ -108,6 +108,6 @@ trait SlimImageUploadAssistant
         $dottedFieldName = FieldName::fromString($field->getName($locale))->get();
         Arr::set($validationPayload, $dottedFieldName, [json_encode($imagePayload)]);
 
-        $this->fieldValidator()->handle(new Fields([$field]), $validationPayload);
+        $this->fieldValidator()->handle(Fields::make([$field]), $validationPayload);
     }
 }

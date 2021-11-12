@@ -20,23 +20,19 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-sm">
-                    <div class="-my-4 -window-x divide-y divide-grey-100">
+                <x-chief::window>
+                    <div class="-my-4 divide-y divide-grey-100">
                         @foreach($menus as $menu)
-                            <div class="py-4 window-x">
-                                <div class="flex items-center justify-between">
-                                    <a href="{{ route('chief.back.menus.show', $menu->key()) }}">
-                                        <span class="text-lg font-semibold text-grey-900">{{ $menu->label() }}</span>
-                                    </a>
-
-                                    <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="link link-primary -mt-0.5">
-                                        <x-chief-icon-label type="edit"></x-chief-icon-label>
-                                    </a>
-                                </div>
-                            </div>
+                            <a
+                                href="{{ route('chief.back.menus.show', $menu->key()) }}"
+                                title="{{ ucfirst($menu->label()) }}"
+                                class="block py-4 text-lg display-base display-dark"
+                            >
+                                {{ ucfirst($menu->label()) }}
+                            </a>
                         @endforeach
                     </div>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

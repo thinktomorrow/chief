@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
@@ -146,14 +147,12 @@ trait CrudAssistant
      */
     public function create()
     {
-        $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        $model = new $this->managedModelClass();
 
-        return view('chief::manager.create', [
-            'manager' => $this,
-            'model' => $model,
-            'fields' => Fields::make($model->fields())->notTagged(['edit', 'not-on-create']),
-        ]);
+        View::share('manager', $this);
+        View::share('model', $model);
+
+        return view('chief::manager.create');
     }
 
     public function store(Request $request)
@@ -171,7 +170,9 @@ trait CrudAssistant
         /** @var ManagedModel $model */
         $model = new $this->managedModelClass();
 
-        $fields = Fields::make($model->fields())->notTagged(['edit', 'not-on-create']);
+        $fields = Fields::make($model->fields())
+            ->notTagged(['edit', 'not-on-create'])
+            ->model($model);
 
         $this->fieldValidator()->handle($fields, $request->all());
 
@@ -192,14 +193,10 @@ trait CrudAssistant
 
         $this->guard('edit', $model);
 
-        $fields = Fields::make($model->fields())->model($model);
+        View::share('manager', $this);
+        View::share('model', $model);
 
-        return view('chief::manager.edit', [
-            'manager' => $this,
-            'model' => $model,
-            'fieldWindows' => $fields->allWindows(),
-            'fields' => $fields,
-        ]);
+        return $model->adminView();
     }
 
     public function update(Request $request, $id)

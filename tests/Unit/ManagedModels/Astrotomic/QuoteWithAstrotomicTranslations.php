@@ -26,7 +26,7 @@ class QuoteWithAstrotomicTranslations extends Model implements ManagedModel
 
     public function fields(): Fields
     {
-        return new Fields([
+        return Fields::make([
             InputField::make('title_trans')->locales(['nl', 'en']),
         ]);
     }

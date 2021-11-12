@@ -15,8 +15,14 @@
                     model-class="{{ get_class($model) }}"
                     model-id="{{ $model->id }}"
                 >
-                    <x-chief-formgroup label="{{ strtoupper($locale) }} link">
-                        <div class="space-y-2">
+                    <div>
+                        <div class="mb-1 space-x-1 leading-none">
+                            <span class="font-medium display-base display-dark">
+                                {{ strtoupper($locale) }} link
+                            </span>
+                        </div>
+
+                        <div class="space-y-2 mt-2">
                             <div class="flex w-full">
                                 <div class="prepend-to-input">
                                     <span v-if="fixedSegment !== '/'" class="flex items-center space-x-1">
@@ -36,22 +42,23 @@
                                 </div>
 
                                 <input
-                                    @keyup="onInput"
-                                    id="links.{{ $locale }}"
-                                    type="text"
-                                    name="links[{{ $locale }}]"
-                                    v-model="value"
-                                    class="with-prepend"
+                                        @keyup="onInput"
+                                        id="links.{{ $locale }}"
+                                        type="text"
+                                        name="links[{{ $locale }}]"
+                                        v-model="value"
+                                        class="with-prepend"
                                 >
                             </div>
 
-                            <div 
-                                class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50" 
-                                v-if="hint" 
-                                v-html="hint"
+                            <div
+                                    class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50"
+                                    v-if="hint"
+                                    v-html="hint"
                             ></div>
                         </div>
-                    </x-chief-formgroup>
+                    </div>
+
                 </link-input>
             @endforeach
         </div>
@@ -70,7 +77,7 @@
                             @endif
 
                             <div class="w-full px-4 py-3">
-                                <div data-vue-fields class="-mx-4 -my-3 border rounded-lg divide-y border-grey-200 divide-grey-200">
+                                <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
                                     @foreach($links->redirects as $urlRecord)
                                         <url-redirect
                                             inline-template

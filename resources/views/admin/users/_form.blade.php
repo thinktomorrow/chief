@@ -1,24 +1,24 @@
 <div>
     <div class="row gutter-4">
-        <x-chief-formgroup label="Voornaam" id="firstname" name="firstname" class="w-full lg:w-1/2" isRequired>
+        <x-chief::field.form label="Voornaam" id="firstname" error="firstname" class="w-full lg:w-1/2" isRequired>
             <input id="firstname" type="text" name="firstname" value="{{ old('firstname', $user->firstname) }}">
-        </x-chief-formgroup>
+        </x-chief::field.form>
 
-        <x-chief-formgroup label="Achternaam" id="lastname" name="lastname" class="w-full lg:w-1/2" isRequired>
+        <x-chief::field.form label="Achternaam" id="lastname" error="lastname" class="w-full lg:w-1/2" isRequired>
             <input id="lastname" type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}">
-        </x-chief-formgroup>
+        </x-chief::field.form>
     </div>
 </div>
 
-<x-chief-formgroup label="E-mail" id="email" name="email" isRequired>
+<x-chief::field.form label="E-mail" id="email" error="email" isRequired>
     <x-slot name="description">
         <p>Dit e-mail adres geldt tevens als login.</p>
     </x-slot>
 
     <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}">
-</x-chief-formgroup>
+</x-chief::field.form>
 
-<x-chief-formgroup label="Rechten" isRequired>
+<x-chief::field.form label="Rechten" error="roles.0" isRequired>
     <x-slot name="description">
         <p>Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.</p>
     </x-slot>
@@ -29,10 +29,4 @@
         selected='@json(old('roles', $user->roleNames()))'
         :multiple="true"
     ></chief-multiselect>
-
-    @if($errors->has('roles.0'))
-        <x-chief-inline-notification type="error">
-            {{ $errors->first('roles.0') }}
-        </x-chief-inline-notification>
-    @endif
-</x-chief-formgroup>
+</x-chief::field.form>

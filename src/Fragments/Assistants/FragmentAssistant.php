@@ -135,11 +135,11 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
+        \Illuminate\Support\Facades\View::share('manager', $this);
+        \Illuminate\Support\Facades\View::share('model', $fragmentable);
+
         return view('chief::manager.windows.fragments.create', [
-            'manager' => $this,
             'owner' => $owner,
-            'model' => $fragmentable,
-            'fields' => Fields::make($fragmentable->fields())->notTagged('edit'),
             'order' => $order,
         ]);
     }
@@ -320,12 +320,11 @@ trait FragmentAssistant
     {
         $this->guard('fragment-edit', $fragmentable);
 
-        return view('chief::manager.windows.fragments.edit', [
-            'manager' => $this,
-            'owner' => $ownerModel,
-            'model' => $fragmentable,
-            'fields' => Fields::make($fragmentable->fields())->model($fragmentable->fragmentModel()),
-        ]);
+        \Illuminate\Support\Facades\View::share('manager', $this);
+        \Illuminate\Support\Facades\View::share('model', $fragmentable);
+        \Illuminate\Support\Facades\View::share('owner', $ownerModel);
+
+        return $fragmentable->adminView();
     }
 
     public function fragmentUpdate(Request $request, $fragmentId)
@@ -333,10 +332,11 @@ trait FragmentAssistant
         $this->guard('fragment-update');
 
         $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
+        $fields = Fields::make($fragmentable->fields())->model($fragmentable->fragmentModel());
 
-        $this->fieldValidator()->handle(Fields::make($fragmentable->fields()), $request->all());
+        $this->fieldValidator()->handle($fields, $request->all());
 
-        $fragmentable->fragmentModel()->saveFields(Fields::make($fragmentable->fields()), $request->all(), $request->allFiles());
+        $fragmentable->fragmentModel()->saveFields($fields, $request->all(), $request->allFiles());
 
         return response()->json([
             'message' => 'fragment updated',

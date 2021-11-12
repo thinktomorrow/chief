@@ -1,36 +1,34 @@
-<div
-    data-fragment
-    data-sortable-id="{{ $model->fragmentModel()->id }}"
-    class="relative w-full"
->
-    <div class="space-y-4 {{ ($isNested ?? false) ? 'px-8 py-4' : 'p-8' }}">
-        <div class="flex items-start justify-between">
-            <div class="flex items-center space-x-2">
-                <span data-sortable-handle class="cursor-pointer link link-primary">
-                    <x-chief-icon-label icon="icon-drag"></x-chief-icon-label>
-                </span>
+<div data-fragment data-sortable-id="{{ $model->fragmentModel()->id }}" class="w-full">
+    <div class="py-6 space-y-4">
+        <div class="flex items-stretch justify-end space-x-3">
+            <div data-sortable-handle class="flex-shrink-0 cursor-pointer">
+                <x-chief-icon-button icon="icon-drag" />
+            </div>
 
-                <span class="text-lg font-bold text-grey-900">
+            <div class="w-full mt-0.5 space-x-1">
+                <span class="text-lg display-base display-dark">
                     {{ ucfirst($model->adminConfig()->getModelName()) }}
                 </span>
 
-                @if($model->fragmentModel()->isOffline())
-                    <span class="text-sm label label-error">Offline</span>
-                @endif
+                <span class="align-bottom with-xs-labels">
+                    @if($model->fragmentModel()->isOffline())
+                        <span class="label label-error"> Offline </span>
+                    @endif
 
-                @if($model->fragmentModel()->isShared())
-                    <span class="text-sm label label-warning">Gedeeld fragment</span>
-                @endif
+                    @if($model->fragmentModel()->isShared())
+                        <span class="label label-warning"> Gedeeld fragment </span>
+                    @endif
+                </span>
             </div>
 
             @adminCan('fragment-edit')
                 <a
                     data-sidebar-trigger="fragments"
-                    data-sortable-ignore
                     href="@adminRoute('fragment-edit', $owner, $model)"
-                    class="flex-shrink-0 link link-primary"
+                    title="Fragment aanpassen"
+                    class="flex-shrink-0"
                 >
-                    <x-chief-icon-label type="edit"></x-chief-icon-label>
+                    <x-chief-icon-button icon="icon-edit" />
                 </a>
             @endAdminCan
         </div>
@@ -43,5 +41,4 @@
     </div>
 
     @include('chief::manager.windows.fragments.component.fragment-select')
-
 </div>

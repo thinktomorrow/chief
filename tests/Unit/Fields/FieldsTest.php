@@ -3,28 +3,15 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldSet;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\TextField;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldsTest extends TestCase
 {
     /** @test */
-    public function it_wraps_all_fields_in_a_formgroup()
-    {
-        $fields = new Fields([
-            InputField::make('input-one'),
-            InputField::make('input-two'),
-        ]);
-
-        $this->assertCount(2, $fields);
-        $this->assertInstanceOf(FieldSet::class, $fields[0]);
-        $this->assertInstanceOf(FieldSet::class, $fields[1]);
-    }
-
-    /** @test */
-    public function it_accepts_a_fieldSet()
+    public function it_accepts_a_field()
     {
         $fields = $this->createFields($values = $this->values());
 
@@ -35,7 +22,7 @@ class FieldsTest extends TestCase
     /** @test */
     public function it_can_check_if_there_is_any_field()
     {
-        $fields = new Fields();
+        $fields = Fields::make();
 
         $this->assertFalse($fields->any());
         $this->assertTrue($fields->isEmpty());
@@ -55,9 +42,7 @@ class FieldsTest extends TestCase
         $this->assertEquals(collect([
             'input-one' => InputField::make('input-one'),
             'input-two' => InputField::make('input-two'),
-            'input-three' => InputField::make('input-three'),
-            'input-four' => InputField::make('input-four'),
-        ]), $fields->allFields());
+        ]), $fields->all());
     }
 
     /** @test */
@@ -65,7 +50,7 @@ class FieldsTest extends TestCase
     {
         $fields = $this->createFields();
 
-        $this->assertEquals(InputField::make('input-one'), $fields->first()->first());
+        $this->assertEquals(InputField::make('input-one'), $fields->first());
     }
 
     /** @test */
@@ -74,7 +59,7 @@ class FieldsTest extends TestCase
         $fields = $this->createFields();
 
         $this->assertEquals(InputField::make('input-one'), $fields->find('input-one'));
-        $this->assertEquals(InputField::make('input-three'), $fields->find('input-three'));
+        $this->assertEquals(InputField::make('input-two'), $fields->find('input-two'));
     }
 
     /** @test */
@@ -91,7 +76,7 @@ class FieldsTest extends TestCase
     {
         $fields = $this->createFields();
 
-        $this->assertEquals(['input-one','input-two', 'input-three', 'input-four'], $fields->keys());
+        $this->assertEquals(['input-one','input-two'], $fields->keys());
     }
 
     /** @test */
@@ -101,8 +86,7 @@ class FieldsTest extends TestCase
 
         $this->assertEquals(collect([
             'input-two' => InputField::make('input-two'),
-            'input-four' => InputField::make('input-four'),
-        ]), $fields->keyed(['input-two', 'input-four'])->allFields());
+        ]), $fields->keyed(['input-two'])->all());
     }
 
     /** @test */
@@ -114,67 +98,55 @@ class FieldsTest extends TestCase
             'input-two' => InputField::make('input-two'),
         ]), $fields->filterBy(function ($field) {
             return $field->getKey() == 'input-two';
-        })->allFields());
+        })->all());
     }
 
     /** @test */
     public function it_can_filter_fields_by_tag()
     {
-        $fields = new Fields([
-            FieldSet::make([
-                $inputOne = InputField::make('input-one')->tag('foobar'),
-                InputField::make('input-two'),
-            ]),
-            FieldSet::make([
-                $inputThree = InputField::make('input-three')->tag('foobar'),
-                InputField::make('input-four'),
-            ]),
+        $fields = Fields::make([
+            $inputOne = InputField::make('input-one')->tag('foobar'),
+            InputField::make('input-two'),
+            $inputThree = InputField::make('input-three')->tag('foobar'),
+            InputField::make('input-four'),
         ]);
 
         $this->assertEquals(collect([
             'input-one' => $inputOne,
             'input-three' => $inputThree,
-        ]), $fields->tagged('foobar')->allFields());
+        ]), $fields->tagged('foobar')->all());
     }
 
     /** @test */
     public function it_can_filter_fields_not_belonging_by_tag()
     {
-        $fields = new Fields([
-            FieldSet::make([
-                InputField::make('input-one')->tag('foobar'),
-                $inputTwo = InputField::make('input-two'),
-            ]),
-            FieldSet::make([
-                InputField::make('input-three')->tag('foobar'),
-                $inputFour = InputField::make('input-four'),
-            ]),
+        $fields = Fields::make([
+            InputField::make('input-one')->tag('foobar'),
+            $inputTwo = InputField::make('input-two'),
+            InputField::make('input-three')->tag('foobar'),
+            $inputFour = InputField::make('input-four'),
         ]);
 
         $this->assertEquals(collect([
             'input-two' => $inputTwo,
             'input-four' => $inputFour,
-        ]), $fields->notTagged('foobar')->allFields());
+        ]), $fields->notTagged('foobar')->all());
     }
 
     /** @test */
     public function it_can_filter_by_untagged_fields()
     {
-        $fields = new Fields([
-            FieldSet::make([
-                InputField::make('input-one')->tag('foobar'),
-                $inputTwo = InputField::make('input-two'),
-            ]),
-            FieldSet::make([
-                InputField::make('input-three')->tag('foobar'),
-                $inputFour = InputField::make('input-four'),
-            ]),
+        $fields = Fields::make([
+            InputField::make('input-one')->tag('foobar'),
+            $inputTwo = InputField::make('input-two'),
+            InputField::make('input-three')->tag('foobar'),
+            $inputFour = InputField::make('input-four'),
         ]);
 
         $this->assertEquals(collect([
             'input-two' => $inputTwo,
             'input-four' => $inputFour,
-        ]), $fields->untagged()->allFields());
+        ]), $fields->untagged()->all());
     }
 
     /** @test */
@@ -184,7 +156,7 @@ class FieldsTest extends TestCase
 
         $fields = $fields->model($articlePage = new ArticlePage());
 
-        foreach ($fields->allFields() as $field) {
+        foreach ($fields->all() as $field) {
             $ref = new \ReflectionClass($field);
             $method = $ref->getMethod('getModel');
             $method->setAccessible(true);
@@ -197,20 +169,20 @@ class FieldsTest extends TestCase
     public function it_can_remove_by_keys()
     {
         $fields = $this->createFields();
-        $fields = $fields->remove(['input-two','input-four']);
+        $fields = $fields->remove(['input-two']);
 
-        $this->assertCount(2, $fields->allFields());
+        $this->assertCount(1, $fields->all());
     }
 
     /** @test */
     public function it_can_merge_two_fields_objects()
     {
-        $fields = new Fields([
+        $fields = Fields::make([
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
 
-        $fields2 = new Fields([
+        $fields2 = Fields::make([
             InputField::make('input-three'),
             InputField::make('input-four'),
         ]);
@@ -225,107 +197,35 @@ class FieldsTest extends TestCase
     /** @test */
     public function similar_keys_are_overwritten_with_the_latter()
     {
-        $fields = new Fields([
+        $fields = Fields::make([
             InputField::make('input-one'),
             InputField::make('input-two'),
         ]);
 
-        $fields2 = new Fields([
-            InputField::make('input-one'),
+        $fields2 = Fields::make([
+            TextField::make('input-one'),
         ]);
 
         $mergedFields = $fields->merge($fields2);
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
         $this->assertCount(2, $mergedFields->all());
-        $this->assertEquals(['input-two', 'input-one'], $mergedFields->keys());
-    }
+        $this->assertEquals(['input-one','input-two'], $mergedFields->keys());
 
-    /** @test */
-    public function it_can_create_field_group_via_yield()
-    {
-        $fields = new Fields([
-            FieldSet::open(),
-            InputField::make('input-one'),
-            InputField::make('input-two'),
-            FieldSet::close(),
-        ]);
-
-        $this->assertCount(1, $fields->all());
-        $this->assertCount(2, $fields->allFields());
-    }
-
-    /** @test */
-    public function it_can_create_multiple_field_groups_via_yield()
-    {
-        $fields = new Fields([
-            FieldSet::open(),
-            InputField::make('input-one'),
-            InputField::make('input-two'),
-            FieldSet::close(),
-            InputField::make('input-three'),
-            FieldSet::open(),
-            InputField::make('input-four'),
-            InputField::make('input-five'),
-            FieldSet::close(),
-        ]);
-
-        $this->assertCount(3, $fields->all());
-        $this->assertCount(5, $fields->allFields());
-    }
-
-    /** @test */
-    public function obsolete_open_and_close_fieldSets_are_ignored()
-    {
-        $fields = new Fields([
-            FieldSet::close(),
-            FieldSet::open(),
-            FieldSet::open(),
-            InputField::make('input-one'),
-            InputField::make('input-two'),
-            FieldSet::close(),
-            FieldSet::close(),
-        ]);
-
-        $this->assertCount(1, $fields->all());
-        $this->assertCount(2, $fields->allFields());
-    }
-
-    /** @test */
-    public function it_can_create_field_groups_via_yield_in_method()
-    {
-        $owner = new class() {
-            public function fields(): iterable
-            {
-                yield FieldSet::open();
-                yield InputField::make('input-one');
-                yield InputField::make('input-two');
-                yield FieldSet::close();
-            }
-        };
-
-        $fields = Fields::make($owner->fields());
-
-        $this->assertCount(1, $fields->all());
-        $this->assertCount(2, $fields->allFields());
+        // Assert the first input is overwritten
+        $this->assertInstanceOf(TextField::class, $mergedFields->first());
     }
 
     private function createFields(array $values = null): Fields
     {
-        return new Fields($values ?: $this->values());
+        return Fields::make($values ?: $this->values());
     }
 
     private function values(): array
     {
         return [
-            FieldSet::make([
-                InputField::make('input-one'),
-                InputField::make('input-two'),
-            ]),
-            FieldSet::make([
-                InputField::make('input-three'),
-                InputField::make('input-four'),
-            ]),
+            'input-one' => InputField::make('input-one'),
+            'input-two' => InputField::make('input-two'),
         ];
     }
 }

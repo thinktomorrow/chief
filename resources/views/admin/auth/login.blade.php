@@ -14,49 +14,58 @@
         </div>
 
         <div class="relative min-h-screen row-center-center">
-            <div class="w-full space-y-8 lg:w-1/2 2xl:w-1/3 window window-white window-lg">
-                <h1 class="text-grey-900">Welkom terug, Chief!</h1>
+            <div class="space-y-6 w-128">
+                <h1 class="text-center text-black">Welkom terug, Chief!</h1>
 
-                <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
-                    {{ csrf_field() }}
+                <x-chief::window>
+                    <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
+                        {{ csrf_field() }}
 
-                    <div class="space-y-6">
-                        {{-- TODO: field errors are handled but still need to show error if login credentials are incorrect --}}
-                        @if($errors && count($errors) > 0)
-                            <x-chief-inline-notification type="error" size="large">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </x-chief-inline-notification>
-                        @endif
+                        <div class="space-y-6">
+                            {{-- TODO: field errors are handled but still need to show error if login credentials are incorrect --}}
+                            @if($errors && count($errors) > 0)
+                                <x-chief-inline-notification type="error" size="large">
+                                        @foreach ($errors->all() as $_error)
+                                            <p>{{ $_error }}</p>
+                                        @endforeach
+                                </x-chief-inline-notification>
+                            @endif
 
-                        <x-chief-formgroup label="E-mail" id="identity" name="email">
-                            <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
-                        </x-chief-formgroup>
+                            <x-chief::field.form label="E-mail" id="identity" error="email">
+                                <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
+                            </x-chief::field.form>
 
-                        <x-chief-formgroup label="Wachtwoord" id="password" name="password">
-                            <input id="password" name="password" type="password">
-                        </x-chief-formgroup>
+                            <x-chief::field.form label="Wachtwoord" id="password" error="password">
+                                <input id="password" name="password" type="password">
+                            </x-chief::field.form>
 
-                        <x-chief-formgroup>
-                            <label for="rememberCheckbox" class="with-checkbox">
-                                <input id="rememberCheckbox" name="remember" type="checkbox" {{ old('remember') ? 'checked=checked' : null  }}>
+                            <x-chief::field.form>
+                                <label for="rememberCheckbox" class="with-checkbox">
+                                    <input
+                                        id="rememberCheckbox"
+                                        name="remember"
+                                        type="checkbox"
+                                        {{ old('remember') ? 'checked=checked' : null  }}
+                                    >
 
-                                <span>Hou me ingelogd</span>
-                            </label>
-                        </x-chief-formgroup>
+                                    <span>Hou me ingelogd</span>
+                                </label>
+                            </x-chief::field.form>
 
-                        <div class="space-x-4">
-                            <button type="submit" form="valid" class="btn btn-primary">Inloggen</button>
+                            <div class="space-x-2">
+                                <button type="submit" form="valid" class="btn btn-primary">Log in</button>
 
-                            <a href="{{ route('chief.back.password.request') }}" title="Password forgotten" class="link link-primary">
-                                Wachtwoord vergeten?
-                            </a>
+                                <a
+                                    href="{{ route('chief.back.password.request') }}"
+                                    title="Wachtwoord vergeten"
+                                    class="btn btn-primary-outline"
+                                >
+                                    Wachtwoord vergeten?
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </x-chief::window>
             </div>
         </div>
     </div>

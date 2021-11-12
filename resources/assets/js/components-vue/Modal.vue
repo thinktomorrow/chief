@@ -3,7 +3,7 @@
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative shadow-xl window window-white window-md" :class="sizeClass">
+            <div class="relative p-6 bg-white rounded-2xl shadow-window w-full" :class="sizeClass">
                 <div class="space-y-6">
                     <div v-if="title">
                         <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">
@@ -29,7 +29,7 @@
                 <button
                     type="button"
                     @click="close"
-                    class="absolute top-0 right-0 p-1 bg-white rounded-full link link-grey icon-label m-7"
+                    class="absolute -top-3 -right-3 p-1 bg-white rounded-full link link-grey icon-label m-7"
                 >
                     <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#x" /></svg>
                 </button>
@@ -72,7 +72,7 @@ export default {
                 case 'large':
                     return 'max-w-3xl';
                 case 'xl':
-                    return 'w-full lg:w-3/4 2xl:w-1/2';
+                    return 'lg:w-3/4 2xl:w-1/2';
                 case 'max':
                     return 'max-w-full';
                 default:

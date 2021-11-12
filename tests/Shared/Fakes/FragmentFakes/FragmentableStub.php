@@ -37,7 +37,7 @@ class FragmentableStub implements Fragmentable, FragmentsOwner
 
     public function fields(): Fields
     {
-        return new Fields([
+        return Fields::make([
             InputField::make('title')->tag('create'),
         ]);
     }

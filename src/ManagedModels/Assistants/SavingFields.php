@@ -20,26 +20,25 @@ trait SavingFields
     /**
      * Default method to save Field values for Eloquent models. This provides
      * support for regular columns, localized ones and dynamic attributes.
-     *
-     * @param Fields $fields
-     * @param array $input
-     * @param array $files
      */
     public function saveFields(Fields $fields, array $input, array $files): void
     {
         [$input, $files] = $this->removeDuplicateFilePayload($input, $files);
 
-        foreach ($fields->allFields() as $field) {
+        foreach ($fields->all() as $field) {
             if ($this->detectCustomSaveMethod($field)) {
                 continue;
             }
 
+            // Set standard non-localized attribute on the model
             if (! $field->isLocalized()) {
-                // Set standard non-localized attribute on the model
-                if (($customSetMethod = $this->detectCustomSetMethod($field))) {
-                    $this->$customSetMethod($field, $input);
+                $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
+
+                if ($field->hasCustomSet()) {
+                    $field->handleCustomSet($value, $input, $files);
+                } elseif (($customSetMethod = $this->detectCustomSetMethod($field))) {
+                    $this->{$customSetMethod}($field, $input, $files);
                 } else {
-                    $value = $field->getSanitizedValue(data_get($input, $field->getKey()), $input);
                     $this->{$field->getColumn()} = $value;
                 }
 
@@ -48,14 +47,16 @@ trait SavingFields
 
             // Dynamic localized values or standard translated
             // For standard translations we set value with the colon notation, e.g. title:en
-            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field, $input) {
+            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field, $input, $files) {
                 if ($key !== $field->getColumn()) {
                     return;
                 }
 
                 $value = $field->getSanitizedValue($value, $input, $locale);
 
-                if ($this->isFieldForDynamicValue($field)) {
+                if ($field->hasCustomSet()) {
+                    $field->handleCustomSet($value, $input, $files, $locale);
+                } elseif ($this->isFieldForDynamicValue($field)) {
                     $this->setDynamic($key, $value, $locale);
                 } else {
                     $this->{$field->getColumn().':'.$locale} = $value;
@@ -66,16 +67,23 @@ trait SavingFields
         $this->save();
 
         // Custom save methods
-        foreach ($fields->allFields() as $field) {
-            if ($customSaveMethod = $this->detectCustomSaveMethod($field)) {
-                $this->$customSaveMethod($field, $input, $files);
+        foreach ($fields->all() as $field) {
+            if ($field->hasCustomSave()) {
+                $field->handleCustomSave($field, $input, $files);
+            } elseif ($customSaveMethod = $this->detectCustomSaveMethod($field)) {
+                $this->{$customSaveMethod}($field, $input, $files);
             }
         }
     }
 
+    protected function isValidFile($file): bool
+    {
+        return $file instanceof SplFileInfo && '' !== $file->getPath();
+    }
+
     private function isFieldForDynamicValue(Field $field): bool
     {
-        return (method_exists($this, 'isDynamic') && $this->isDynamic($field->getColumn()));
+        return method_exists($this, 'isDynamic') && $this->isDynamic($field->getColumn());
     }
 
     private function detectCustomSaveMethod(Field $field): ?string
@@ -84,8 +92,12 @@ trait SavingFields
             return $field->getCustomSaveMethod();
         }
 
-        $saveMethodByKey = 'save' . ucfirst(Str::camel($field->getKey())) . 'Field';
-        $saveMethodByType = 'save' . ucfirst(Str::camel($field->getType()->get())) . 'Fields';
+        if ($field->hasCustomSave()) {
+            return 'customSave';
+        }
+
+        $saveMethodByKey = 'save'.ucfirst(Str::camel($field->getKey())).'Field';
+        $saveMethodByType = 'save'.ucfirst(Str::camel($field->getType()->get())).'Fields';
 
         foreach ([$saveMethodByKey, $saveMethodByType] as $saveMethod) {
             if (method_exists($this, $saveMethod)) {
@@ -98,7 +110,7 @@ trait SavingFields
 
     private function detectCustomSetMethod(Field $field): ?string
     {
-        $methodName = 'set' . ucfirst(Str::camel($field->getKey())) . 'Field';
+        $methodName = 'set'.ucfirst(Str::camel($field->getKey())).'Field';
 
         return (method_exists($this, $methodName)) ? $methodName : null;
     }
@@ -125,10 +137,5 @@ trait SavingFields
         }
 
         return [$input, $files];
-    }
-
-    protected function isValidFile($file): bool
-    {
-        return $file instanceof SplFileInfo && $file->getPath() !== '';
     }
 }

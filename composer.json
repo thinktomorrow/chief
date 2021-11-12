@@ -36,9 +36,8 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.4",
-        "nunomaduro/larastan": "^0.7.12",
+        "nunomaduro/larastan": "^1.0",
         "orchestra/testbench": "^6.19",
-        "phpstan/phpstan": "^0.12.18",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
