@@ -18,8 +18,8 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window window-white window-md">
-                    <div class="-m-8 divide-y divide-grey-100">
+                <x-chief::window>
+                    <div class="divide-y divide-grey-100">
                         @foreach($pages as $page)
                             @php
                                 $completionPercentage = $page->completionPercentage();
@@ -44,7 +44,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </x-chief::window>
             </div>
         </div>
     </div>

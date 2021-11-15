@@ -6,13 +6,13 @@
             @endphp
 
             @if($loop->first)
-                @slot('label', ucfirst($lineViewModel->label()))
+                @slot('label', ucfirst( str_replace('_', ' ', $lineViewModel->label()) ))
                 @slot('description', $lineViewModel->description())
             @endif
 
             <div class="flex w-full space-x-4">
                 @if(count(config('chief.locales')) > 1)
-                    <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                    <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light h-full">{{ $locale }}</span>
                 @endif
 
                 <div class="w-full">

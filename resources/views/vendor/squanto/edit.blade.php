@@ -36,11 +36,11 @@
             <div class="row">
                 <div class="w-full space-y-6">
                     @foreach($collectedLines as $sectionKey => $groupedLines)
-                        <div class="window window-white window-md">
+                        <x-chief::window>
                             <div class="row gutter-3">
                                 <div class="w-full lg:w-1/4">
                                     <span class="text-xl font-semibold text-grey-900">
-                                        {{ ucfirst($sectionKey) }}
+                                        {{ ucfirst(str_replace('_', ' ', $sectionKey)) }}
                                     </span>
                                 </div>
 
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </x-chief::window>
                     @endforeach
                 </div>
             </div>
