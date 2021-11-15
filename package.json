@@ -41,6 +41,7 @@
         "popper.js": "^1.16.1",
         "sortablejs": "^1.13.0",
         "tailwindcss": "^2.2.19",
+        "tailwindcss-children": "^2.1.0",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.7",
         "vue-multiselect": "^2.1.6",

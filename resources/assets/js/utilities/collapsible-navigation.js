@@ -1,37 +1,20 @@
 import EventBus from './EventBus';
 
-// Make navigation collapsible
-// Toggle to switch between collapsed and open state (default is collapsed, so maybe rename to expandable instead?)
-// --> normal state and collapsed state
-// Icons are always visible, other elements are hidden and showing them expands the navigation
-// The navigation in expanded state has a fixed width
-// If collapsed, clicking a navigation item with children will open a dropdown to the right
-// If expanded, clicking a navigation item will show the underlying items under it (without dropdown)
-// On mobile, the navigation is always expanded and works like a normal mobile navigation with hamburger icon
+// TODO(tijs): on mobile the navigation is always expanded and works like a normal mobile navigation with hamburger icon
 const initCollapsibleNavigation = (
     containerSelector = '[data-collapsible-navigation]',
     toggleSelector = '[data-toggle-collapsible-navigation]',
-    collapsingElementSelector = '[data-hide-on-collapse]',
     changingElementsAttribute = 'data-class-on-collapse'
 ) => {
     const container = document.querySelector(containerSelector);
     const toggle = document.querySelector(toggleSelector);
-    const collapsingElements = Array.from(document.querySelectorAll(collapsingElementSelector));
     const changingElements = Array.from(document.querySelectorAll(`[${changingElementsAttribute}]`));
     let isCollapsed = false;
 
     toggle.addEventListener('click', () => {
         container.classList.toggle('w-64');
 
-        if (isCollapsed) {
-            collapsingElements.forEach((element) => {
-                element.classList.remove('hidden');
-            });
-        } else {
-            collapsingElements.forEach((element) => {
-                element.classList.add('hidden');
-            });
-
+        if (!isCollapsed) {
             EventBus.publish('collapsedNavigation');
         }
 
@@ -39,14 +22,13 @@ const initCollapsibleNavigation = (
             const classNames = element.getAttribute(changingElementsAttribute).split(' ');
 
             classNames.forEach((className) => {
+                if (className === '') return;
                 element.classList.toggle(className);
             });
         });
 
         isCollapsed = !isCollapsed;
     });
-
-    console.log(container, toggle, collapsingElements);
 };
 
 export { initCollapsibleNavigation as default };

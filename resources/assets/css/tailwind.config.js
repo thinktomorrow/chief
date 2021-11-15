@@ -46,6 +46,9 @@ module.exports = {
                 '1/2': '50vh',
             },
             minWidth: {
+                32: '8rem',
+                48: '12rem',
+                64: '16rem',
                 xs: '20rem',
                 sm: '24rem',
                 md: '28rem',
@@ -64,6 +67,7 @@ module.exports = {
         container: false,
     },
     plugins: [
+        require('tailwindcss-children'),
         require('./warpaint/ProseSpacing'),
         require('./warpaint/WarpaintSpacing'),
         require('./warpaint/WarpaintContainer'),

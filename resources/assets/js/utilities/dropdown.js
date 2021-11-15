@@ -1,9 +1,10 @@
 import EventBus from './EventBus';
 
 class Dropdown {
-    constructor(toggleElement, dropdownElement) {
+    constructor(toggleElement, dropdownElement, nested) {
         this.toggleElement = toggleElement;
         this.dropdownElement = dropdownElement;
+        this.nested = nested;
 
         this._init();
     }
@@ -17,13 +18,17 @@ class Dropdown {
     close() {
         this.dropdownElement.classList.add('hidden');
     }
+
+    isNested() {
+        return this.nested;
+    }
 }
 
 const initDropdowns = function (toggleAttribute = 'data-toggle-dropdown', dropdownAttribute = 'data-dropdown') {
     const toggleElements = Array.from(document.querySelectorAll(`[${toggleAttribute}]`));
 
     const dropdowns = toggleElements
-        // Filter out dropdown toggles with on corresponding dropdown element
+        // Filter out dropdown toggles without a corresponding dropdown element
         .filter((toggleElement) => {
             const dropdownElementSelector = `[${dropdownAttribute}="${toggleElement.getAttribute(toggleAttribute)}"]`;
             return document.querySelector(dropdownElementSelector);
@@ -34,13 +39,33 @@ const initDropdowns = function (toggleAttribute = 'data-toggle-dropdown', dropdo
                 `[${dropdownAttribute}="${toggleElement.getAttribute(toggleAttribute)}"]`
             );
 
-            return new Dropdown(toggleElement, dropdownElement);
+            return new Dropdown(
+                toggleElement,
+                dropdownElement,
+                ancestorHasAttribute(dropdownElement, dropdownAttribute)
+            );
         });
 
     // If navigation is collapsed, close all dropdowns
     EventBus.subscribe('collapsedNavigation', () => {
-        dropdowns.forEach((dropdown) => dropdown.close());
+        dropdowns.forEach((dropdown) => {
+            if (!dropdown.isNested()) {
+                dropdown.close();
+            }
+        });
     });
+};
+
+const ancestorHasAttribute = (element, attribute) => {
+    const parent = element.parentElement;
+
+    if (!parent) return false;
+
+    if (parent.hasAttribute(attribute)) {
+        return true;
+    }
+
+    return ancestorHasAttribute(parent, attribute);
 };
 
 export { initDropdowns as default };

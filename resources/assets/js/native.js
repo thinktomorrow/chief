@@ -12,7 +12,6 @@ initDropdowns();
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
  */
-require('./utilities/navigation');
 require('./utilities/character-count');
 
 initRepeatFieldsOnPageLoad();
