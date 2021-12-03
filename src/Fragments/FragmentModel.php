@@ -20,4 +20,5 @@ class FragmentModel extends Model implements HasAsset
     public $table = 'fragments';
     public $timestamps = false;
     public $guarded = [];
+    public $with = ['assetRelation','assetRelation.media'];
 }
