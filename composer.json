@@ -9,7 +9,7 @@
     "license": "none",
     "type": "chief-cms",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "astrotomic/laravel-translatable": "^11.9",
         "doctrine/dbal": "^3.1",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92dd28f45ed69eb0bc2b5af77f58bb52",
+    "content-hash": "87b35bbbec8327e2115ae6211c766b14",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -2472,16 +2472,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.55.0",
+            "version": "2.55.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b46249911cba301e9eb3f05af68cf2aacc1f9d05"
+                "reference": "67f34dc7a8a97fcb9b26e60ec3819b856764d60f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b46249911cba301e9eb3f05af68cf2aacc1f9d05",
-                "reference": "b46249911cba301e9eb3f05af68cf2aacc1f9d05",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/67f34dc7a8a97fcb9b26e60ec3819b856764d60f",
+                "reference": "67f34dc7a8a97fcb9b26e60ec3819b856764d60f",
                 "shasum": ""
             },
             "require": {
@@ -2564,7 +2564,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-02T16:53:55+00:00"
+            "time": "2021-12-03T13:47:17+00:00"
         },
         {
             "name": "nette/schema",
@@ -11823,7 +11823,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4|^8.0",
+        "php": "^8.1",
         "ext-json": "*"
     },
     "platform-dev": [],
