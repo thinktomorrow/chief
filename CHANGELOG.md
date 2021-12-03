@@ -2,6 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
+## 0.5.19 - 2021-12-03
+- Changed: Memoized urls are now cached as array instead of models to reduce memory overhead when having large number of urls.
+
 ## 0.5.18 - 2021-05-17
 - Fixed: Exception typehint set for sitemap crawl rejections didn't allow all exceptions
 - Fixed: non public media threw error on mediagallery index

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Urls;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class MemoizedUrlRecord extends UrlRecord
@@ -27,7 +28,8 @@ class MemoizedUrlRecord extends UrlRecord
     public static function findByModel(Model $model, string $locale = null): UrlRecord
     {
         if (!static::$cachedRecords) {
-            static::$cachedRecords = parent::all();
+            static::$cachedRecords = DB::table('chief_urls')->select(['id','redirect_id','locale','slug','model_type','model_id'])->get();
+            // TODO: make simple array map of values instead of collection of models...
         }
 
         $record = static::$cachedRecords
@@ -41,7 +43,7 @@ class MemoizedUrlRecord extends UrlRecord
             throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 
-        return $record;
+        return UrlRecord::make((array) $record);
     }
 
     public static function getByModel(Model $model)
