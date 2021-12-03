@@ -123,6 +123,9 @@ abstract class AbstractMediaFieldHandler
      */
     protected function shouldNotBeProcessed($value, $key, bool $keyIsAttachedAssetId): bool
     {
+        // If value is a File instance than we allow to process it - this probably means we want to upload a new asset.
+        if(is_object($value)) return false;
+
         // If the async upload is not finished yet and the user already uploads, the slim passes an "undefined" as value.
         if ($value === "undefined") {
             return true;
