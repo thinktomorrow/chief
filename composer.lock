@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87b35bbbec8327e2115ae6211c766b14",
+    "content-hash": "9e87d380ae15c7b5b6fde9dca187d832",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -2170,16 +2170,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.5.1",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "a4ffb135693e7982e5b982ca203f5dc7a7ae1126"
+                "reference": "0f846a93369109e445f0e5009741b1e19e6fa6f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/a4ffb135693e7982e5b982ca203f5dc7a7ae1126",
-                "reference": "a4ffb135693e7982e5b982ca203f5dc7a7ae1126",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/0f846a93369109e445f0e5009741b1e19e6fa6f6",
+                "reference": "0f846a93369109e445f0e5009741b1e19e6fa6f6",
                 "shasum": ""
             },
             "require": {
@@ -2230,15 +2230,15 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.5.1"
+                "source": "https://github.com/livewire/livewire/tree/v2.8.1"
             },
             "funding": [
                 {
-                    "url": "https://github.com/calebporzio",
+                    "url": "https://github.com/livewire",
                     "type": "github"
                 }
             ],
-            "time": "2021-06-15T13:24:48+00:00"
+            "time": "2021-12-02T01:31:26+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -11827,5 +11827,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
