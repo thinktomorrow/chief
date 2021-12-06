@@ -78,8 +78,6 @@ class AdminLoginTest extends ChiefTestCase
     /** @test */
     public function it_displays_admin_page_for_authenticated()
     {
-        $this->setUpDefaultAuthorization();
-
         $admin = $this->fakeUser();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
 

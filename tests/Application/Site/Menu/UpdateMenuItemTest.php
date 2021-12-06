@@ -13,8 +13,6 @@ class UpdateMenuItemTest extends ChiefTestCase
     {
         parent::setUp();
 
-        $this->setUpDefaultAuthorization();
-
         app()->setLocale('nl');
     }
 

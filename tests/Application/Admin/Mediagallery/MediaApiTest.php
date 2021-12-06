@@ -12,8 +12,6 @@ class MediaApiTest extends ChiefTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->setUpDefaultAuthorization();
     }
 
     /** @test */
