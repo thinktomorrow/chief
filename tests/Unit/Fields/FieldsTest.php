@@ -216,6 +216,29 @@ class FieldsTest extends TestCase
         $this->assertInstanceOf(TextField::class, $mergedFields->first());
     }
 
+    /** @test */
+    public function similar_keys_are_overwritten_with_the_latter_when_setting_custom_key()
+    {
+        $fields = Fields::make([
+            InputField::make('first'),
+            InputField::make('xxx'),
+        ]);
+
+        $fields2 = Fields::make([
+            TextField::make('first')->key('xxx'),
+        ]);
+
+        $mergedFields = $fields->merge($fields2);
+
+        // Explicitly check for 'key' because this is also a reserved callable in php: key();
+        $this->assertCount(2, $mergedFields->all());
+        $this->assertEquals(['first','xxx'], $mergedFields->keys());
+
+        // Assert the last input is overwritten
+        $this->assertInstanceOf(InputField::class, $mergedFields['first']);
+        $this->assertInstanceOf(TextField::class, $mergedFields['xxx']);
+    }
+
     private function createFields(array $values = null): Fields
     {
         return Fields::make($values ?: $this->values());

@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
+- Add: Field::key() to set custom key
 
 ## 0.6.7 - 2021-11-10
 Removed FieldWindow and FieldSets; customize admin views via blade components
