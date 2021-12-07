@@ -19,13 +19,13 @@
         <div class="row">
             <div class="w-full">
                 <x-chief::window>
-                    <div class="divide-y divide-grey-100">
+                    <div class="-my-4 divide-y divide-grey-100">
                         @foreach($pages as $page)
                             @php
                                 $completionPercentage = $page->completionPercentage();
                             @endphp
 
-                            <div class="px-8 py-4">
+                            <div class="py-4">
                                 <div class="flex items-center justify-between space-x-4">
                                     <span class="space-x-2">
                                         <span class="text-lg font-semibold text-grey-900">
