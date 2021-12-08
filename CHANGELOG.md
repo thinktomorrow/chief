@@ -5,6 +5,9 @@ principles.
 
 ## next release
 
+## 0.6.9 - 2021-12-08
+- Added: option to set dynamicKeysBlacklist property on a managed model to exclude fields from being dynamic.
+
 ## 0.6.8 - 2021-12-06
 - Fixed: squanto window backgrounds layout
 - Added: Field::key() to set custom key
