@@ -41,12 +41,12 @@ final class ManagedRoutes implements \IteratorAggregate, \Countable
         return $this->prefix;
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->routes);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->routes);
     }

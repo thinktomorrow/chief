@@ -32,7 +32,6 @@ final class Register
 //            $this->registerMorphMap($fragmentClass);
 //            return;
 //        }
-
         $this->register($fragmentClass, $this->container->makeWith(FragmentManager::class, ['managedModelClass' => $fragmentClass]), $tags, );
     }
 
