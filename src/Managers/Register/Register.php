@@ -28,6 +28,7 @@ final class Register
         // TODO: this reduces memory with around 1MB which is nice for frontend visits. But this removes the possibility to use the chief toast on frontend to get the admin edit url
         // option is to load up the url async when logged in... Is there a better way to isolate this route loading only when logged in as chief admin?
         // If the request isn't an chief admin request - we don't load up the managers and routes.
+        // option 2: only after event: allowedAdminVisit
 //        if(!Request::is(['admin', 'admin/*'])) {
 //            $this->registerMorphMap($fragmentClass);
 //            return;
