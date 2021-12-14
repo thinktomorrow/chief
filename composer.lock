@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cf4dfdfdd4ddedfaf02dcb6d852908d",
+    "content-hash": "ca376190b2176781d82482d869f46a09",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6518,16 +6518,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.8.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "4ccb825bf0c75e4288f5d6c1a809bd58d37a9c84"
+                "reference": "fdfcccb77e5af4d7395573ff54f14fc70c639999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/4ccb825bf0c75e4288f5d6c1a809bd58d37a9c84",
-                "reference": "4ccb825bf0c75e4288f5d6c1a809bd58d37a9c84",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/fdfcccb77e5af4d7395573ff54f14fc70c639999",
+                "reference": "fdfcccb77e5af4d7395573ff54f14fc70c639999",
                 "shasum": ""
             },
             "require": {
@@ -6579,9 +6579,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.0"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.1"
             },
-            "time": "2021-12-14T11:53:20+00:00"
+            "time": "2021-12-14T13:57:08+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
