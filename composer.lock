@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87b35bbbec8327e2115ae6211c766b14",
+    "content-hash": "e35c6ab4857242089ba86a767f2169b7",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6629,23 +6629,23 @@
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
-            "version": "0.3.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/dynamic-attributes.git",
-                "reference": "c4d13de838a9933377d8bf6359b4e005809ced22"
+                "reference": "8b9bd9cbd3b66a7e59806fa31350af7333677d86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/c4d13de838a9933377d8bf6359b4e005809ced22",
-                "reference": "c4d13de838a9933377d8bf6359b4e005809ced22",
+                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/8b9bd9cbd3b66a7e59806fa31350af7333677d86",
+                "reference": "8b9bd9cbd3b66a7e59806fa31350af7333677d86",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^3.1",
                 "ext-json": "*",
                 "illuminate/database": "^8.12",
-                "php": "^7.4|^8.0"
+                "php": "^8.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16",
@@ -6673,22 +6673,22 @@
             "description": "easily store and retrieve document values of an eloquent model",
             "support": {
                 "issues": "https://github.com/thinktomorrow/dynamic-attributes/issues",
-                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/0.3.1"
+                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/0.4.0"
             },
-            "time": "2021-10-12T20:40:44+00:00"
+            "time": "2021-12-14T08:58:15+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "f6bf4ff55ee0af28e2d0e31b93de5aff01283308"
+                "reference": "169fc65962619f9782eeb1bab6779367925f85c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/f6bf4ff55ee0af28e2d0e31b93de5aff01283308",
-                "reference": "f6bf4ff55ee0af28e2d0e31b93de5aff01283308",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/169fc65962619f9782eeb1bab6779367925f85c3",
+                "reference": "169fc65962619f9782eeb1bab6779367925f85c3",
                 "shasum": ""
             },
             "require": {
@@ -6697,8 +6697,8 @@
                 "illuminate/database": "~8.12",
                 "illuminate/support": "~8.12",
                 "league/flysystem": "~1.0",
-                "php": ">=7.4.7",
-                "thinktomorrow/dynamic-attributes": "^0.3.0"
+                "php": ">=8.1",
+                "thinktomorrow/dynamic-attributes": "^0.4.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
@@ -6743,26 +6743,26 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/squanto/issues",
-                "source": "https://github.com/thinktomorrow/squanto/tree/1.0.0"
+                "source": "https://github.com/thinktomorrow/squanto/tree/2.0.0"
             },
-            "time": "2021-07-27T14:45:30+00:00"
+            "time": "2021-12-14T12:32:18+00:00"
         },
         {
             "name": "thinktomorrow/url",
-            "version": "1.0.3",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/url.git",
-                "reference": "66d97553d8d5803c49da62735fd1de7913291e01"
+                "reference": "0620b2f75441ec08b26344f12a595ce3c6dd6a16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/url/zipball/66d97553d8d5803c49da62735fd1de7913291e01",
-                "reference": "66d97553d8d5803c49da62735fd1de7913291e01",
+                "url": "https://api.github.com/repos/thinktomorrow/url/zipball/0620b2f75441ec08b26344f12a595ce3c6dd6a16",
+                "reference": "0620b2f75441ec08b26344f12a595ce3c6dd6a16",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "9.*"
@@ -6796,30 +6796,30 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/url/issues",
-                "source": "https://github.com/thinktomorrow/url/tree/1.0.3"
+                "source": "https://github.com/thinktomorrow/url/tree/2.0.0"
             },
-            "time": "2021-12-03T15:21:05+00:00"
+            "time": "2021-12-14T07:44:32+00:00"
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "0.3.5",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "d3f89ea4de8af8fd391b657f6b8c540620e37b0b"
+                "reference": "0b9d2ec1095a3aa6c6b31a7e46462aedf8bd88d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/d3f89ea4de8af8fd391b657f6b8c540620e37b0b",
-                "reference": "d3f89ea4de8af8fd391b657f6b8c540620e37b0b",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/0b9d2ec1095a3aa6c6b31a7e46462aedf8bd88d0",
+                "reference": "0b9d2ec1095a3aa6c6b31a7e46462aedf8bd88d0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/phpstan": "^0.12.94",
+                "phpstan/phpstan": "^1.2.0",
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
@@ -6841,9 +6841,9 @@
             "description": "Generate a tree from an adjacent database structure",
             "support": {
                 "issues": "https://github.com/thinktomorrow/vine/issues",
-                "source": "https://github.com/thinktomorrow/vine/tree/0.3.5"
+                "source": "https://github.com/thinktomorrow/vine/tree/0.4.0"
             },
-            "time": "2021-09-16T19:44:06+00:00"
+            "time": "2021-12-14T08:46:15+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

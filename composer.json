@@ -24,10 +24,10 @@
         "spatie/laravel-permission": "^4.0",
         "spatie/laravel-sitemap": "^5.9",
         "thinktomorrow/assetlibrary": "^0.7.7",
-        "thinktomorrow/dynamic-attributes": "^0.3.1",
-        "thinktomorrow/squanto": "^1.0.0",
-        "thinktomorrow/url": "~1.0.2",
-        "thinktomorrow/vine": "~0.3.5"
+        "thinktomorrow/dynamic-attributes": "^0.4.0",
+        "thinktomorrow/squanto": "^2.0.0",
+        "thinktomorrow/url": "~2.0.0",
+        "thinktomorrow/vine": "^0.4.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
