@@ -2,8 +2,8 @@
     @include('chief::layout._partials.head')
 
     <body>
-        @include('chief::layout.partials.healthbar')
-        @include('chief::layout.partials.svg-symbols')
+        @include('chief::layout._partials.healthbar')
+        @include('chief::layout._partials.svg-symbols')
 
         <main id="main" class="min-h-screen bg-grey-50 bg-gradient-to-r from-grey-50 to-grey-100">
             <div class="flex items-start">
@@ -20,7 +20,7 @@
                         </div>
 
                         <div v-cloak>
-                            @include('chief::layout.partials.notifications')
+                            @include('chief::layout._partials.notifications')
                             @include('chief::manager.sidebar')
 
                             @yield('content')

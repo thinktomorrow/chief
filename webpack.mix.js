@@ -31,7 +31,8 @@ mix.webpackConfig({
 
     .options({ processCssUrls: false })
 
-    .version()
+    .copy('resources/assets/img', 'public/chief-assets/back/img')
+    .version(['public/chief-assets/back/img/**/*'])
 
     // Imagine not having to publish chief assets manually every time webpack recompiles them.
     // Sounds like a dream right? Not anymore.
