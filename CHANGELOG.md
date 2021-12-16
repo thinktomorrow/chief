@@ -5,6 +5,10 @@ principles.
 
 ## next release
 
+## 0.6.12 - 2021-12-14
+- Require php 8.1.
+- Upgraded assetlibrary and medialibrary to version 9. This requires a migration to be run.
+
 ## 0.6.9 - 2021-12-08
 - Added: option to set dynamicKeysBlacklist property on a managed model to exclude fields from being dynamic.
 
