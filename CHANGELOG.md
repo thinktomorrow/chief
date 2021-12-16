@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## next release
+- Improved repeatfield to better support custom elements. Now repeat ids are passed to each field so fields can use these unique ids.
 
 ## 0.6.12 - 2021-12-14
 - Require php 8.1.

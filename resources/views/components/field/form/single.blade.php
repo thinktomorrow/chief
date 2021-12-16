@@ -28,6 +28,7 @@
 @endphp
 
 <div
+    class="w-full"
     data-field-key="{{ $key }}"
     data-field-type="{{ $type }}"
     {!! $conditionalData ? "data-conditional-toggle='" . json_encode($conditionalData) . "'" : null !!}

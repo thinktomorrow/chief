@@ -14,7 +14,7 @@
         >
             @foreach($repeatedFields as $i => $fields)
                 <fieldset
-                    id="{{ \Illuminate\Support\Str::random(8) }}"
+                    id="{{ $fieldSetId = \Illuminate\Support\Str::random(8) }}"
                     data-repeat-fieldset="{{ $uniqueContainerId }}"
                     class="flex items-center {{ $repeatField->prefersCompactLayout() ? 'py-2' : 'p-4' }}"
                 >
@@ -29,7 +29,10 @@
                                             data-repeat-field="{{ $uniqueContainerId }}"
                                             data-repeat-field-key="{{ $field->getDottedName() }}"
                                         >
-                                            {!! $field->render() !!}
+                                            {!! $field->render(['repeat' => [
+                                                'unique_container_id' => $uniqueContainerId,
+                                                'fieldset_id' => $fieldSetId,
+                                            ]]) !!}
                                         </div>
                                     </x-chief::field.form>
                                 @endif
