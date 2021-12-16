@@ -1,5 +1,5 @@
 @if(session('alertbarmessage'))
-    <div class="bg-orange-50 shadow-sm">
+    <div class="shadow-sm bg-orange-50">
         <div class="container-sm">
             <div class="row">
                 <div class="w-full">

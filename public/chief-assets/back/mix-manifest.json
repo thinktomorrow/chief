@@ -1,5 +1,15 @@
 {
     "/js/main.js": "/js/main.js?id=5edace3da428ef7ab8cb",
     "/js/native.js": "/js/native.js?id=fb245cc1e1cd991e2d0f",
-    "/css/main.css": "/css/main.css?id=29973cac9df17b82bb0b"
+    "/css/main.css": "/css/main.css?id=f2f93ae08fd2eac09e5d",
+    "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72b",
+    "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc",
+    "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc1116213",
+    "/img/favicon/browserconfig.xml": "/img/favicon/browserconfig.xml?id=88cae93a2e0fdbd948a5",
+    "/img/favicon/favicon-16x16.png": "/img/favicon/favicon-16x16.png?id=131364fc0cde247dc310",
+    "/img/favicon/favicon-32x32.png": "/img/favicon/favicon-32x32.png?id=8ad5f436058d5dbc0316",
+    "/img/favicon/favicon.ico": "/img/favicon/favicon.ico?id=7816506d12dd1a41d723",
+    "/img/favicon/mstile-150x150.png": "/img/favicon/mstile-150x150.png?id=30ba963f7cdbf9a41b2a",
+    "/img/favicon/safari-pinned-tab.svg": "/img/favicon/safari-pinned-tab.svg?id=2f23ace895c126784332",
+    "/img/favicon/site.webmanifest": "/img/favicon/site.webmanifest?id=d1439a86db8574277a77"
 }
