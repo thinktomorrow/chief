@@ -13,6 +13,7 @@
     @elseif($field->prefersNativeSelect())
         <div class="relative flex items-center justify-end cursor-pointer">
             <select
+                {{ $field->allowMultiple() ? 'multiple' : '' }}
                 name="{{ isset($locale) ? $field->getName($locale) : $field->getName() }}"
                 id="{{ $field->getId($locale ?? null) }}"
                 class="select"
