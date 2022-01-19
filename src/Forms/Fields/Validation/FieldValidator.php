@@ -7,7 +7,6 @@ namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
 use Thinktomorrow\Chief\Forms\Fields;
-use Illuminate\Validation\ValidationException;
 use Thinktomorrow\Chief\Forms\Fields\Locale\Localizable;
 
 class FieldValidator

@@ -16,5 +16,4 @@ class Number extends Component implements Field
 
     protected string $view = 'chief-forms::fields.number';
     protected string $windowView = 'chief-forms::fields.text-window';
-
 }

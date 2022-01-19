@@ -4,24 +4,21 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Forms\Fields\Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
-use Thinktomorrow\Chief\Forms\Fields\Types\ImageField;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 
 class ArticlePage extends Model implements Page
 {

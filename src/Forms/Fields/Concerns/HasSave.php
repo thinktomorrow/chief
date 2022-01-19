@@ -17,12 +17,12 @@ trait HasSave
 
     public function hasSave(): bool
     {
-        return !is_null($this->save);
+        return ! is_null($this->save);
     }
 
     public function getSave(): ?\Closure
     {
-        if (!$this->hasSave()) {
+        if (! $this->hasSave()) {
             return null;
         }
 

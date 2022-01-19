@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\App\View\Components\Fragments;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\App\View\Components\Fragments;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -194,7 +194,7 @@ trait FragmentsOwningAssistant
 
     private function owner($ownerId): FragmentsOwner
     {
-        if((new \ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
+        if ((new \ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
             return $this->fragmentRepository->find($ownerId);
         }
 

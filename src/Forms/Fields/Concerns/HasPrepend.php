@@ -18,7 +18,7 @@ trait HasPrepend
 
     public function hasPrepend(): bool
     {
-        return !is_null($this->prepend);
+        return ! is_null($this->prepend);
     }
 
     public function getPrepend(?string $locale = null): null|string|int|array

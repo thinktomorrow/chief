@@ -18,12 +18,12 @@ trait HasModelValuePreparation
 
     public function hasSetModelValue(): bool
     {
-        return !is_null($this->setModelValue);
+        return ! is_null($this->setModelValue);
     }
 
     public function getSetModelValue(): ?\Closure
     {
-        if (!$this->hasSetModelValue()) {
+        if (! $this->hasSetModelValue()) {
             return null;
         }
 
@@ -39,12 +39,12 @@ trait HasModelValuePreparation
 
     public function hasPrepareModelValue(): bool
     {
-        return !is_null($this->prepareModelValue);
+        return ! is_null($this->prepareModelValue);
     }
 
     public function getPrepareModelValue(): ?\Closure
     {
-        if (!$this->hasPrepareModelValue()) {
+        if (! $this->hasPrepareModelValue()) {
             return null;
         }
 

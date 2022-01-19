@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\ManagedModels;
 
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\AdminConfig;
-use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 interface ManagedModel extends ReferableModel

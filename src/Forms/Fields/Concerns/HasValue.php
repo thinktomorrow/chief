@@ -25,8 +25,8 @@ trait HasValue
 
     public function getValue(?string $locale = null): mixed
     {
-        if (!isset($this->value)) {
-            if (!$this->getModel()) {
+        if (! isset($this->value)) {
+            if (! $this->getModel()) {
                 return $this->getDefault($locale);
             }
 

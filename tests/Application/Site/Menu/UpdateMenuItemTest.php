@@ -37,7 +37,7 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function editing_a_new_menuItem()
+    public function editing_a_new_menu_item()
     {
         $menuitem = MenuItem::create(['menu_type' => 'main']);
 
@@ -56,7 +56,7 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function only_authenticated_admin_can_update_a_menuItem()
+    public function only_authenticated_admin_can_update_a_menu_item()
     {
         $menuitem = MenuItem::create(['label' => ['nl' => 'existing label']]);
 
@@ -67,7 +67,7 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function editing_an_internal_menuItem()
+    public function editing_an_internal_menu_item()
     {
         ArticlePage::migrateUp();
 

@@ -13,7 +13,7 @@ trait HasCustomUrl
 
     public function generatesCustomUrl(): bool
     {
-        return !is_null($this->customUrlGenerator) && is_callable($this->customUrlGenerator);
+        return ! is_null($this->customUrlGenerator) && is_callable($this->customUrlGenerator);
     }
 
     public function generateCustomUrl(Asset $asset, Model $model = null): string

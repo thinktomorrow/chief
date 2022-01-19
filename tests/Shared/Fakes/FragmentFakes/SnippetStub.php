@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 
 class SnippetStub implements Fragmentable, FragmentsOwner
 {

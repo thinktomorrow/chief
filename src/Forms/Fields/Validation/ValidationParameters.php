@@ -33,7 +33,7 @@ class ValidationParameters
 
     public function getAttributes(): array
     {
-        if (!$attribute = $this->source->getValidationAttribute()) {
+        if (! $attribute = $this->source->getValidationAttribute()) {
             $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
             $attribute .= $this->source->hasLocales() ? ' :locale' : '';
         }
@@ -59,7 +59,7 @@ class ValidationParameters
             }
         }
 
-        if (!$this->source->hasLocales()) {
+        if (! $this->source->hasLocales()) {
             return [FormKey::replaceBracketsByDots($this->source->getName()) => $value];
         }
 
@@ -71,12 +71,12 @@ class ValidationParameters
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
-                LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn($locale) => strtoupper($locale), $this->source->getLocales()))
+                LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
             );
     }
 
     private function isAlreadyKeyed(array $value): bool
     {
-        return !array_is_list($value) && is_array(reset($value));
+        return ! array_is_list($value) && is_array(reset($value));
     }
 }

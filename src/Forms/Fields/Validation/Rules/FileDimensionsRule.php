@@ -25,7 +25,7 @@ class FileDimensionsRule extends FileRule
             return $this->validateAssetDimensions($this->existingAsset($value), $parameters);
         }
 
-        if (!$this->isValidFileInstance($value)) {
+        if (! $this->isValidFileInstance($value)) {
             return $this->validateSlimOutputDimensions($value, $parameters);
         }
 

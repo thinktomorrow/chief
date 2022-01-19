@@ -18,7 +18,7 @@ trait HasAppend
 
     public function hasAppend(): bool
     {
-        return !is_null($this->append);
+        return ! is_null($this->append);
     }
 
     public function getAppend(?string $locale = null): null|string|int|array

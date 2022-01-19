@@ -4,33 +4,33 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Managers\Manager;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Forms\Concerns\HasTags;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAutofocus;
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
+use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasId;
+use Thinktomorrow\Chief\Forms\Concerns\HasTags;
 use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAutofocus;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasColumnName;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasDefault;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocales;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
-use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasFieldToggle;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocales;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModelValuePreparation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasName;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
+use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable
 {

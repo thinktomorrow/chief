@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;

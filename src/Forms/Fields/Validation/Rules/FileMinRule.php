@@ -25,8 +25,9 @@ class FileMinRule extends FileRule
             return $this->validateAssetMin($this->existingAsset($value), $parameters);
         }
 
-        if (!$this->isValidFileInstance($value)) {
+        if (! $this->isValidFileInstance($value)) {
             $this->requireParameterCount(1, $parameters, 'min');
+
             return $this->getSlimImageSize($value) >= $parameters[0];
         }
 

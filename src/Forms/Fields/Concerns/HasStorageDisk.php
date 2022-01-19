@@ -26,7 +26,8 @@ trait HasStorageDisk
 
     public function isStoredOnPublicDisk(): bool
     {
-        $fileSettings = config('filesystems.disks.'.
+        $fileSettings = config(
+            'filesystems.disks.'.
             ($this->getStorageDisk() ?: config('filesystems.default'))
         );
 

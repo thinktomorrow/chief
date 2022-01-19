@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
-use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use function app;
+use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class UpdateFragmentTest extends ChiefTestCase
 {

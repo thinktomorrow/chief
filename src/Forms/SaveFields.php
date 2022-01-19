@@ -36,7 +36,7 @@ class SaveFields
             }
 
             // Set standard non-localized attribute on the model
-            if (!$field->hasLocales()) {
+            if (! $field->hasLocales()) {
                 $value = $field->hasPrepareModelValue()
                     ? call_user_func_array($field->getPrepareModelValue(), [data_get($input, $field->getKey()), $input])
                     : data_get($input, $field->getKey());

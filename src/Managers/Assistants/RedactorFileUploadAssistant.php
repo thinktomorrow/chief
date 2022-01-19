@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Fields\Media\MediaType;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait RedactorFileUploadAssistant

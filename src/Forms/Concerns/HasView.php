@@ -27,7 +27,9 @@ trait HasView
     {
         $this->displayInWindow = true;
 
-        if($windowView) $this->windowView = $windowView;
+        if ($windowView) {
+            $this->windowView = $windowView;
+        }
 
         return $this;
     }

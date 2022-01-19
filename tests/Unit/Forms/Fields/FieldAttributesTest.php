@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Number;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldAttributesTest extends TestCase
 {
@@ -28,7 +28,7 @@ class FieldAttributesTest extends TestCase
     }
 
     /** @test */
-    public function itHasDefaultAttributes()
+    public function it_has_default_attributes()
     {
         foreach ($this->classes as $class) {
 

@@ -44,11 +44,11 @@ trait HasValidation
 
     public function getRules(): array
     {
-        if (!$this->hasValidation()) {
+        if (! $this->hasValidation()) {
             return [];
         }
 
-        $rules = !$this->hasDefinitionInRules('required', 'nullable')
+        $rules = ! $this->hasDefinitionInRules('required', 'nullable')
             ? [$this->isRequired ? 'required' : 'nullable']
             : [];
 
@@ -81,7 +81,7 @@ trait HasValidation
 
     private function isAlreadyKeyed(array $value): bool
     {
-        return !array_is_list($value);
+        return ! array_is_list($value);
     }
 
     private function hasDefinitionInRules(string ...$definitions): bool

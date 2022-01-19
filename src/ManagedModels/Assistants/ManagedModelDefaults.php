@@ -48,7 +48,7 @@ trait ManagedModelDefaults
 
     public function onlineStatusAsLabel(): string
     {
-        if (!$this instanceof WithPageState) {
+        if (! $this instanceof WithPageState) {
             return '';
         }
 

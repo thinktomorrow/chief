@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Fields\Types\ImageField;
 
 class ArticlePageWithImageValidation extends ArticlePage
 {

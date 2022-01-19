@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use function auth;
 use function route;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class EditFragmentTest extends ChiefTestCase
 {

@@ -2,14 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 /**
  * @internal
@@ -24,21 +21,21 @@ class RenderFileFieldTest extends TestCase
         parent::setUp();
 
         $this->classes = [
-            File::class  => [$this->payload()],
+            File::class => [$this->payload()],
             Image::class => [
                 $this->payload([
                     'filename' => 'testfile.jpg',
-                    'url'      => '/media/testfile.jpg',
+                    'url' => '/media/testfile.jpg',
                     'thumbUrl' => '/media/testfile-thumb.jpg',
                     'mimetype' => 'image/jpeg',
-                    'isImage'  => true,
+                    'isImage' => true,
                 ]),
             ],
         ];
     }
 
     /** @test */
-    public function itCanRenderAllFields()
+    public function it_can_render_all_fields()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
@@ -49,7 +46,7 @@ class RenderFileFieldTest extends TestCase
     }
 
     /** @test */
-    public function itCanRenderLocalizedFields()
+    public function it_can_render_localized_fields()
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
@@ -68,7 +65,7 @@ class RenderFileFieldTest extends TestCase
     }
 
     /** @test */
-    public function itCanRenderAllFieldsInAWindow()
+    public function it_can_render_all_fields_in_a_window()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
@@ -80,13 +77,13 @@ class RenderFileFieldTest extends TestCase
     private function payload(array $values = []): FileDTO
     {
         extract(array_merge([
-            'id'        => 1,
-            'filename'  => 'testfile.pdf',
-            'url'       => '/media/testfile.pdf',
-            'thumbUrl'  => '/media/testfile-thumb.pdf',
-            'mimetype'  => 'application/pdf',
-            'isImage'   => false,
-            'size'      => 1054,
+            'id' => 1,
+            'filename' => 'testfile.pdf',
+            'url' => '/media/testfile.pdf',
+            'thumbUrl' => '/media/testfile-thumb.pdf',
+            'mimetype' => 'application/pdf',
+            'isImage' => false,
+            'size' => 1054,
             'extension' => 'jpg',
         ], $values));
 

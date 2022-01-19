@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Managers\Presets;
 
 use Thinktomorrow\Chief\Managers\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
-use Thinktomorrow\Chief\Managers\Assistants\FormsAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\FormsAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\PublishAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant;

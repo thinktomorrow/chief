@@ -4,12 +4,12 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
-use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 
 class ValidationServiceProvider extends ServiceProvider
 {

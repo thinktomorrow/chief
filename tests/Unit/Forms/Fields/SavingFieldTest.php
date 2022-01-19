@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -99,7 +99,7 @@ class SavingFieldTest extends ChiefTestCase
             ],
         ], []);
 
-        $this->assertEquals('xxx-nl-foobar', $article->fresh()->dynamic('title_trans','nl'));
-        $this->assertEquals('xxx-en-foobar', $article->fresh()->dynamic('title_trans','en'));
+        $this->assertEquals('xxx-nl-foobar', $article->fresh()->dynamic('title_trans', 'nl'));
+        $this->assertEquals('xxx-en-foobar', $article->fresh()->dynamic('title_trans', 'en'));
     }
 }

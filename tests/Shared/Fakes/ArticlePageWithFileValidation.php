@@ -9,7 +9,7 @@ class ArticlePageWithFileValidation extends ArticlePage
 {
     public function fields(): iterable
     {
-            yield File::make('thumb_trans')
+        yield File::make('thumb_trans')
                 ->label('thumb trans')
                 ->locales(['nl', 'en'])
                 ->rules([

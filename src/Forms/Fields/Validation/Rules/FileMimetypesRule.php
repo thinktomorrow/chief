@@ -25,7 +25,7 @@ class FileMimetypesRule extends FileRule
             return $this->validateAssetMimetypes($this->existingAsset($value), $parameters);
         }
 
-        if (!$this->isValidFileInstance($value)) {
+        if (! $this->isValidFileInstance($value)) {
             return $this->validateSlimMimetypes($value, $parameters);
         }
 

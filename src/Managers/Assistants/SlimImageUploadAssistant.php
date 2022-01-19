@@ -45,7 +45,7 @@ trait SlimImageUploadAssistant
          * Default payload is set as: files[images-hero][nl][new_67lpsJ] where Fragment fields have
          * a different setup: e.g. files[fragment][0][avatar][nl][new_f0O9Am]
          */
-        if (!is_string($locale)) {
+        if (! is_string($locale)) {
             $rawImagePayload = reset($rawImagePayload);
             $rawImagePayload = reset($rawImagePayload);
             $locale = key($rawImagePayload);

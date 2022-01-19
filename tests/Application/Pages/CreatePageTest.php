@@ -55,7 +55,7 @@ final class CreatePageTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_emits_an_modelCreated_event()
+    public function it_emits_an_model_created_event()
     {
         Event::fake();
 

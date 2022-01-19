@@ -12,13 +12,13 @@ use Thinktomorrow\Chief\Forms\Fields\Locale\LocalizedFormKey;
 class LocalizedFormKeyTest extends TestCase
 {
     /** @test */
-    public function itReturnsTheDefaultLocalizedFormat()
+    public function it_returns_the_default_localized_format()
     {
         $this->assertEquals('trans.nl.xxx', LocalizedFormKey::make()->get('xxx', 'nl'));
     }
 
     /** @test */
-    public function itReturnsTheMatrixOfDifferentLocales()
+    public function it_returns_the_matrix_of_different_locales()
     {
         $this->assertEquals(
             ['trans.nl.xxx', 'trans.en.xxx'],
@@ -27,7 +27,7 @@ class LocalizedFormKeyTest extends TestCase
     }
 
     /** @test */
-    public function itReturnsTheKeyWithBrackets()
+    public function it_returns_the_key_with_brackets()
     {
         $this->assertEquals(
             'trans[nl][xxx]',
@@ -38,7 +38,7 @@ class LocalizedFormKeyTest extends TestCase
     }
 
     /** @test */
-    public function itCanUseACustomTemplate()
+    public function it_can_use_a_custom_template()
     {
         $this->assertEquals('custom_nl_xxx', LocalizedFormKey::make()
             ->template('custom_:locale_:name')
@@ -46,7 +46,7 @@ class LocalizedFormKeyTest extends TestCase
     }
 
     /** @test */
-    public function itCanReplaceAPlaceholderValueInTheKey()
+    public function it_can_replace_a_placeholder_value_in_the_key()
     {
         $this->assertEquals(
             'trans.nl.foobar',
@@ -57,12 +57,14 @@ class LocalizedFormKeyTest extends TestCase
     }
 
     /** @test */
-    public function itCanCrossJoinMultipleLocaleKeys()
+    public function it_can_cross_join_multiple_locale_keys()
     {
-        $this->assertEquals([
+        $this->assertEquals(
+            [
             'trans.nl.foobar',
             'trans.fr.foobar',
-            ], LocalizedFormKey::make()->matrix('foobar',['nl','fr'])
+            ],
+            LocalizedFormKey::make()->matrix('foobar', ['nl','fr'])
         );
     }
 }

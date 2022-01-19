@@ -40,7 +40,7 @@ class FileDTO
             : '';
 
         // If the conversions haven't run yet, we'll use the original image until they are uploaded
-        if ($field->isStoredOnPublicDisk() && !file_exists(public_path($thumbUrl))) {
+        if ($field->isStoredOnPublicDisk() && ! file_exists(public_path($thumbUrl))) {
             $thumbUrl = $asset->url();
         }
 

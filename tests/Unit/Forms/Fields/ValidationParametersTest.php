@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -14,13 +14,13 @@ use Thinktomorrow\Chief\Tests\TestCase;
 class ValidationParametersTest extends TestCase
 {
     /** @test */
-    public function fieldWithoutRulesReturnsEmptyArray()
+    public function field_without_rules_returns_empty_array()
     {
         $this->assertEmpty(ValidationParameters::make(Text::make('xxx'))->getRules());
     }
 
     /** @test */
-    public function itCanCreateTheRulesArray()
+    public function it_can_create_the_rules_array()
     {
         $field = Text::make('xxx')->rules('email');
 
@@ -31,7 +31,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function fieldWithBracketedNameHasExpectedDottedKeyFormat()
+    public function field_with_bracketed_name_has_expected_dotted_key_format()
     {
         $field = Text::make('form[title]')->rules('email');
 
@@ -42,7 +42,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateTheRulesArrayPerLocale()
+    public function it_can_create_the_rules_array_per_locale()
     {
         $field = Text::make('xxx')
             ->locales(['nl', 'en'])
@@ -59,7 +59,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itForcesFileRules()
+    public function it_forces_file_rules()
     {
         $field = File::make('xxx')->rules('mimetypes:image/png,text/plain');
 
@@ -72,7 +72,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateTheRulesArrayPerLocaleForFiles()
+    public function it_can_create_the_rules_array_per_locale_for_files()
     {
         $field = File::make('xxx')
             ->locales(['nl', 'en'])
@@ -89,7 +89,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateTheAttributesArray()
+    public function it_can_create_the_attributes_array()
     {
         $field = Text::make('xxx')->rules('email');
 
@@ -100,7 +100,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateACustomAttributesArray()
+    public function it_can_create_a_custom_attributes_array()
     {
         $field = Text::make('xxx')
             ->validationAttribute('foobar')
@@ -114,7 +114,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateTheLocalizedAttributesArray()
+    public function it_can_create_the_localized_attributes_array()
     {
         $field = Text::make('xxx')
             ->locales(['nl', 'en'])
@@ -131,7 +131,7 @@ class ValidationParametersTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateACustomLocalizedAttributesArray()
+    public function it_can_create_a_custom_localized_attributes_array()
     {
         $field = Text::make('xxx')
             ->validationAttribute('foobar')

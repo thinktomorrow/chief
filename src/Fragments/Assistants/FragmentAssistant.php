@@ -53,7 +53,7 @@ trait FragmentAssistant
 
     public function routeFragmentAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if (!in_array($action, [
+        if (! in_array($action, [
             'fragment-edit',
             'fragment-update',
             'fragment-delete',
@@ -72,7 +72,7 @@ trait FragmentAssistant
 
         // model argument is owner for create endpoints
         if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-unshare', 'fragment-delete'])) {
-            if (!$model || !$model instanceof FragmentsOwner) {
+            if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for '.$action.' requires a FragmentsOwner Model as second argument.');
             }
 
@@ -92,7 +92,7 @@ trait FragmentAssistant
             ], $parameters));
         }
 
-        if (!$model) {
+        if (! $model) {
             throw new \Exception('Fragment route definition for '.$action.' requires a Model or Fragmentable as second argument.');
         }
 

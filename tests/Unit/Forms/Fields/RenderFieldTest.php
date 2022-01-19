@@ -2,13 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Number;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 /**
  * @internal
@@ -30,7 +28,7 @@ class RenderFieldTest extends TestCase
     }
 
     /** @test */
-    public function itCanRenderAllFields()
+    public function it_can_render_all_fields()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
@@ -41,7 +39,7 @@ class RenderFieldTest extends TestCase
     }
 
     /** @test */
-    public function itCanRenderLocalizedFields()
+    public function it_can_render_localized_fields()
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
@@ -60,7 +58,7 @@ class RenderFieldTest extends TestCase
     }
 
     /** @test */
-    public function itCanRenderAllFieldsInAWindow()
+    public function it_can_render_all_fields_in_a_window()
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
@@ -70,7 +68,7 @@ class RenderFieldTest extends TestCase
     }
 
     /** @test */
-    public function itCanRenderACustomView()
+    public function it_can_render_a_custom_view()
     {
         $this->app['view']->addNamespace('test-views', __DIR__.'/../stubs/views');
 

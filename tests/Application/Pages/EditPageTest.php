@@ -71,7 +71,7 @@ final class EditPageTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_emits_an_modelUpdated_event()
+    public function it_emits_an_model_updated_event()
     {
         Event::fake();
 

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms;
 
 use ArrayIterator;
+use function collect;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use function collect;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {

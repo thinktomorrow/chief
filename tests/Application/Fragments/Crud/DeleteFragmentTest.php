@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class DeleteFragmentTest extends ChiefTestCase

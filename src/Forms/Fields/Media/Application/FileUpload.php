@@ -240,7 +240,7 @@ class FileUpload
         foreach ($filesOrder as $locale => $fileIdInput) {
             $fileIds = $this->getFileIdsFromInput($field->getKey(), $fileIdInput);
 
-            if (!empty($fileIds)) {
+            if (! empty($fileIds)) {
                 $this->sortAssets->handle($model, $fileIds, $field->getKey(), $locale);
             }
         }
@@ -250,7 +250,7 @@ class FileUpload
     {
         $values = $fileIdInput[$key] ?? ($fileIdInput['files-'.$key] ?? '');
 
-        if (!$values) {
+        if (! $values) {
             return [];
         }
 

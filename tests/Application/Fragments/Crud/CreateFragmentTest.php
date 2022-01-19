@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
+use function chiefRegister;
+use function route;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use function route;
-use function chiefRegister;
 
 class CreateFragmentTest extends ChiefTestCase
 {

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Layouts;
 
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Forms\Layouts\Card;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Forms\Layouts\Card;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class CardTest extends TestCase
 {

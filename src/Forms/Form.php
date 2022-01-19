@@ -130,9 +130,9 @@ class Form extends Component
      */
     public function fillFields(Manager $manager, Model $model): self
     {
-        $this->recursiveEach(function($component) use($manager,$model){
-            if($component instanceof Field) {
-                $component->fill($manager,$model);
+        $this->recursiveEach(function ($component) use ($manager, $model) {
+            if ($component instanceof Field) {
+                $component->fill($manager, $model);
             }
         });
 

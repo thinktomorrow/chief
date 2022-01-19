@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Forms;
 
-use Illuminate\Support\Arr;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use function app;
 use function config;
+use Illuminate\Support\Arr;
 use function session;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 final class ValidateFormTest extends ChiefTestCase
 {
@@ -44,7 +44,6 @@ final class ValidateFormTest extends ChiefTestCase
             1,
             'put'
         );
-
     }
 
     /** @test */

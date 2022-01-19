@@ -25,8 +25,9 @@ class FileMaxRule extends FileRule
             return $this->validateAssetMax($this->existingAsset($value), $parameters);
         }
 
-        if (!$this->isValidFileInstance($value)) {
+        if (! $this->isValidFileInstance($value)) {
             $this->requireParameterCount(1, $parameters, 'max');
+
             return $this->getSlimImageSize($value) <= $parameters[0];
         }
 

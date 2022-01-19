@@ -27,7 +27,7 @@ class CreateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function only_authenticated_admin_can_create_a_menuItem()
+    public function only_authenticated_admin_can_create_a_menu_item()
     {
         $response = $this->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url' => 'https://thinktomorrow.be']));
 
@@ -36,7 +36,7 @@ class CreateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function creating_a_new_menuItem()
+    public function creating_a_new_menu_item()
     {
         $response = $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
@@ -82,7 +82,7 @@ class CreateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function creating_a_new_internal_menuItem()
+    public function creating_a_new_internal_menu_item()
     {
         ArticlePage::migrateUp();
         $page = ArticlePage::create();
