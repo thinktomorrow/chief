@@ -166,9 +166,7 @@ trait FragmentAssistant
             ->fillModel($fragmentable->fragmentModel())
             ->fillFields($this, $fragmentable->fragmentModel())
             ->eachForm(function (Form $form) use ($fragmentable, $ownerModel) {
-                $form->action($this->route('fragment-update', $fragmentable->fragmentModel(), $ownerModel), 'PUT')
-                    ->refreshUrl('') // Refresh url is expected on form element, yet this is not used by fragment edit in sidebar
-                ;
+                $form->action($this->route('fragment-update', $fragmentable->fragmentModel(), $ownerModel), 'PUT');
             })
         ;
 

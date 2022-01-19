@@ -91,7 +91,7 @@ class Form extends Component
         return $this;
     }
 
-    public function getRefreshUrl(): string
+    public function getRefreshUrl(): ?string
     {
         return $this->refreshUrl;
     }

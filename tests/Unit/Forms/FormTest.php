@@ -27,9 +27,8 @@ class FormTest extends TestCase
         $this->app['view']->addNamespace('test-views', __DIR__.'/stubs/views');
 
         $this->assertStringContainsString(
-            'this is a custom field view',
+            'general form view',
             Form::make('general')
-                ->model(new ArticlePage())
                 ->view('test-views::custom-form')
                 ->toHtml()
         );
