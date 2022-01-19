@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Unit\Forms;
 
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Form;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FormTest extends TestCase
