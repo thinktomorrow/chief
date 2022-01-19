@@ -3,7 +3,7 @@
 
     <a
         data-sidebar-trigger="{{ $tag ?: '' }}"
-        href="{{ $manager->route('fields-edit', $model, $tag) }}"
+        href="{{ $manager->route('form-edit', $model, $tag) }}"
         title="Titel aanpassen"
         class="flex-shrink-0"
     >

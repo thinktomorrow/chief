@@ -7,7 +7,7 @@
         @else
             <x-chief::window
                 :title="$title"
-                :url="$manager->route('fields-edit', $model, $tag)"
+                :url="$manager->route('form-edit', $model, $tag)"
                 :sidebar="$tag"
             >
                 @if($slot)

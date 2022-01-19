@@ -18,6 +18,9 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->app['view']->addNamespace('chief-forms', __DIR__ . '/../../src/Forms/resources');
+        $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
+
         View::composer([
             'chief::manager._transitions.modals.archive-modal',
         ], function ($view) {
@@ -35,14 +38,15 @@ class ViewServiceProvider extends ServiceProvider
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
         // Livewire components
-        Livewire::component('fragments', Fragments::class);
-        Livewire::component('links', Links::class);
-        Livewire::component('fields-window', FieldsWindow::class);
-        Livewire::component('status', Status::class);
+//        Livewire::component('fragments', Fragments::class);
+//        Livewire::component('links', Links::class);
+//        Livewire::component('fields-window', FieldsWindow::class);
+//        Livewire::component('status', Status::class);
 
         /* Livewire component wrappers */
+//        Blade::component('chief-fragments::window', 'chief-fragments::window');
+//        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
         Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
-        Blade::component('chief::manager.windows.fragments.window', 'chief::window.fragments');
         Blade::component('chief::manager.windows.status.window', 'chief::window.status');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 

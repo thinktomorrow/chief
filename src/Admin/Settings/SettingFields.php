@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin\Settings;
 
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
-use Thinktomorrow\Chief\ManagedModels\Fields\Field;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\SelectField;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class SettingFields

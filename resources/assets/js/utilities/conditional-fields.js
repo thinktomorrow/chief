@@ -35,6 +35,7 @@ const initConditionalFields = (
             case 'checkbox':
                 new CheckboxFieldTrigger(name, element, conditionalFieldsData);
                 break;
+            case 'textinput':
             case 'input':
                 new InputFieldTrigger(name, element, conditionalFieldsData);
                 break;

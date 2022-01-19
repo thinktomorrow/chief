@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Migrate\Legacy\Fragments;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
-use Thinktomorrow\Chief\ManagedModels\Media\Application\ImageFieldHandler;
+use Thinktomorrow\Chief\Forms\Fields\Types\ImageField;
+use Thinktomorrow\Chief\Forms\Fields\Media\Application\ImageFieldHandler;
 
 trait ManagesFragments
 {

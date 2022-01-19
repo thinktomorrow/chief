@@ -28,6 +28,12 @@ function characterCount(panel, characterCountEl) {
     characterCountEl.innerHTML = formField.value.length;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-character-count]').forEach((el) => {
+        characterCount(document, el);
+    });
+});
+
 EventBus.subscribe('sidebarPanelActivated', (data) => {
     data.panel.el.querySelectorAll('[data-character-count]').forEach((el) => {
         characterCount(data.panel.el, el);

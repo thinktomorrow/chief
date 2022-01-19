@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 

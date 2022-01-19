@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 class OwnerStub extends Model implements FragmentsOwner

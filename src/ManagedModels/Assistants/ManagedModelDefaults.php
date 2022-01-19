@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
@@ -6,9 +7,9 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\AdminConfig;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Fields\Field;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
@@ -17,7 +18,6 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait ManagedModelDefaults
 {
-    use SavingFields;
     use ReferableModelDefault;
 
     public function field(string $key): Field
@@ -37,7 +37,8 @@ trait ManagedModelDefaults
     public function adminConfig(): AdminConfig
     {
         return AdminConfig::make()
-            ->defaults($this);
+            ->defaults($this)
+        ;
     }
 
     public function adminView(): View
@@ -47,29 +48,31 @@ trait ManagedModelDefaults
 
     public function onlineStatusAsLabel(): string
     {
-        if (! $this instanceof WithPageState) {
+        if (!$this instanceof WithPageState) {
             return '';
         }
 
         if ($this instanceof Visitable) {
             if (LinkForm::fromModel($this)->isAnyLinkOnline()) {
                 return '<span class="label label-xs label-success">Online</span>';
-            } elseif ($this->getPageState() === PageState::PUBLISHED) {
+            }
+            if (PageState::PUBLISHED === $this->getPageState()) {
                 return '<span class="label label-xs label-info">Nog niet online. Er ontbreekt nog een link.</span>';
-            } elseif ($this->getPageState() === PageState::DRAFT) {
+            }
+            if (PageState::DRAFT === $this->getPageState()) {
                 return '<span class="label label-xs label-error">Offline</span>';
             }
         }
 
-        if ($this->getPageState() === PageState::PUBLISHED) {
+        if (PageState::PUBLISHED === $this->getPageState()) {
             return '<span class="label label-xs label-success">Gepubliceerd</span>';
         }
 
-        if ($this->getPageState() === PageState::DRAFT) {
+        if (PageState::DRAFT === $this->getPageState()) {
             return '<span class="label label-xs label-error">In draft</span>';
         }
 
-        if ($this->getPageState() === PageState::ARCHIVED) {
+        if (PageState::ARCHIVED === $this->getPageState()) {
             return '<span class="label label-xs label-warning">Gearchiveerd</span>';
         }
 

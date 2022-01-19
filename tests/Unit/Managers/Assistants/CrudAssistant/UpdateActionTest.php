@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
+use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;

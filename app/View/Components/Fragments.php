@@ -31,11 +31,12 @@ class Fragments extends Component
      */
     public function render()
     {
-        return view('chief::manager.windows.fragments.component.fragments-nested', [
+        return view('chief-fragments::window', [
             'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
             'sharedFragments' => $this->sharedFragments,
             'manager' => $this->repository->getManager(),
+            'owner' => $this->owner,
         ]);
     }
 

@@ -1,0 +1,82 @@
+<?php
+
+namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
+
+use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\Image;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Fields\Number;
+
+/**
+ * @internal
+ * @coversNothing
+ */
+class RenderFieldTest extends TestCase
+{
+    private array $classes;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->classes = [
+            Textarea::class => 'given value',
+            Text::class => 'given value',
+            Number::class => 'given value',
+        ];
+    }
+
+    /** @test */
+    public function itCanRenderAllFields()
+    {
+        /** @var Field $class */
+        foreach ($this->classes as $class => $value) {
+            $component = $class::make('xxx')->value($value);
+            $this->assertStringContainsString('name="xxx"', $component->toHtml());
+            $this->assertStringContainsString($value, $component->toHtml());
+        }
+    }
+
+    /** @test */
+    public function itCanRenderLocalizedFields()
+    {
+        /** @var Field $class */
+        foreach (array_keys($this->classes) as $class) {
+            $component = $class::make('xxx')->locales(['nl', 'en'])->value([
+                'nl' => $valueNL = 'value-nl',
+                'en' => $valueEN = 'value-en',
+            ]);
+
+            $render = $component->toHtml();
+
+            $this->assertStringContainsString('trans[nl][xxx]', $render);
+            $this->assertStringContainsString('trans[en][xxx]', $render);
+            $this->assertStringContainsString($valueNL, $render);
+            $this->assertStringContainsString($valueEN, $render);
+        }
+    }
+
+    /** @test */
+    public function itCanRenderAllFieldsInAWindow()
+    {
+        /** @var Field $class */
+        foreach (array_keys($this->classes) as $class) {
+            $component = $class::make('xxx')->displayInWindow()->value($value = 'given value');
+            $this->assertStringContainsString($value, $component->toHtml());
+        }
+    }
+
+    /** @test */
+    public function itCanRenderACustomView()
+    {
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../stubs/views');
+
+        $this->assertStringContainsString(
+            'this is a custom field view',
+            Text::make('xxx')->view('test-views::custom-field')->render()
+        );
+    }
+}

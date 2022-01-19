@@ -13,24 +13,11 @@ trait UploadsFile
             'files' => [
                 $fieldkey => $payload,
             ],
-            'custom' => 'xxx',
+            'title' => 'title value',
+            'custom' => 'custom value',
             'trans' => [
-                'nl' => ['content_trans' => 'xxx'],
-                'en' => ['content_trans' => 'yyy'],
-            ],
-        ]);
-    }
-
-    private function uploadImage(string $fieldkey, $payload): TestResponse
-    {
-        return $this->asAdmin()->put($this->manager->route('update', $this->page), [
-            'images' => [
-                $fieldkey => $payload,
-            ],
-            'custom' => 'xxx',
-            'trans' => [
-                'nl' => ['content_trans' => 'xxx'],
-                'en' => ['content_trans' => 'yyy'],
+                'nl' => ['content_trans' => 'content nl'],
+                'en' => ['content_trans' => 'content en'],
             ],
         ]);
     }
@@ -39,6 +26,7 @@ trait UploadsFile
     {
         return $this->asAdmin()->put($this->manager->route('update', $this->page), [
             'filesOrder' => $payload,
+            'title' => 'title value',
             'custom' => 'xxx',
             'trans' => [
                 'nl' => ['content_trans' => 'xxx'],

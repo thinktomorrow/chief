@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace __STUB_NAMESPACE__;
 
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Forms\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 

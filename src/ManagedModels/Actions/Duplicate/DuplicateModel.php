@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Forms\Fields;
 
 class DuplicateModel
 {

@@ -1,3 +1,3 @@
 <x-chief::sidebar-fields>
-    <x-chief::fields.form :fields="$fields" />
+    {{ $form->displayInForm()->render() }}
 </x-chief::sidebar-fields>

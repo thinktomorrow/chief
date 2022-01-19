@@ -117,19 +117,6 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
         }
 
-
-        // Custom validator for requiring on translations only the fallback locale
-        // this is called in the validation as required-fallback-locale
-        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value) {
-            $fallbackLocale = config('app.fallback_locale');
-
-            if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
-                return ! ! trim($value);
-            }
-
-            return true;
-        }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
-
         Relation::morphMap([
             'fragmentmodel' => FragmentModel::class,
         ]);

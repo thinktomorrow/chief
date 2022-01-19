@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
 
+use Thinktomorrow\Chief\Managers\Assistants\FormsAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;

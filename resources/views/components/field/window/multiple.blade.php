@@ -2,7 +2,7 @@
     <x-chief::field :key="$key" />
 @else
     @php
-        $fields = $fields ?? \Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields());
+        $fields = $fields ?? \Thinktomorrow\Chief\Forms\Fields::make($model->fields());
 
         if(isset($key)) {
             $fields = $fields->keyed(explode(',', $key));

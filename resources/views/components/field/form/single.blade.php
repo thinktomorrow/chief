@@ -13,9 +13,10 @@
 
         $label = $field->getLabel();
         $name = $field->getName();
+
         $type = $field->getType();
         $key = $field->getKey();
-        $isRequired = $field->required();
+        $isRequired = $field->isRequired();
 
         if($field->getDescription()) {
             $description = '<p>' . $field->getDescription() . '</p>';

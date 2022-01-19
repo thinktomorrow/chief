@@ -1,24 +1,16 @@
-<form
-    id="updateForm{{ $model->modelReference()->get() }}"
-    method="POST"
-    action="@adminRoute('fragment-update', $model)"
-    enctype="multipart/form-data"
-    role="form"
->
-    @csrf
-    @method('put')
+<div class="space-y-12">
+    <div class="space-y-2">
+        <p class="text-2xl display-base display-dark">
+            {{ ucfirst($model->adminConfig()->getModelName()) }}
+        </p>
 
-    <div class="space-y-12">
-        <div class="space-y-2">
-            <p class="text-2xl display-base display-dark">
-                {{ ucfirst($model->adminConfig()->getModelName()) }}
-            </p>
+        @include('chief::layout._partials.fragment_bookmarks')
+    </div>
 
-            @include('chief::layout._partials.fragment_bookmarks')
-        </div>
+    <div class="space-y-6">
+        {!! $slot !!}
 
-        <div class="space-y-6">
-            {!! $slot !!}
+        @if($model->fragmentModel()->exists)
 
             @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
                 <x-chief::fragments :owner="$model"/>
@@ -42,8 +34,8 @@
 
                                 @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
                                     <span class="link">
-                                        {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
-                                    </span>
+                                    {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                                </span>
                                 @else
                                     <a
                                             class="underline link link-primary"
@@ -59,9 +51,9 @@
                     </div>
 
                     <button
-                        class="btn btn-warning-outline"
-                        type="submit"
-                        form="detachSharedFragment{{ $model->modelReference()->get() }}"
+                            class="btn btn-warning-outline"
+                            type="submit"
+                            form="detachSharedFragment{{ $model->modelReference()->get() }}"
                     >
                         Fragment niet meer delen en voortaan afzonderlijk bewerken op deze pagina
                     </button>
@@ -69,12 +61,6 @@
             @endif
 
             <div class="flex flex-wrap space-x-4">
-                <button
-                        type="submit"
-                        form="updateForm{{ $model->modelReference()->get() }}"
-                        class="btn btn-primary"
-                > Wijzigingen opslaan </button>
-
                 <div data-vue-fields>
                     @adminCan('fragment-delete', $model)
                     <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
@@ -87,18 +73,20 @@
                     @endAdminCan
                 </div>
             </div>
-        </div>
+        @endif
     </div>
-</form>
-
-<div data-vue-fields>
-    @include('chief::manager._transitions.modals.delete-fragment-modal')
 </div>
 
-<form
-    id="detachSharedFragment{{ $model->modelReference()->get() }}"
-    method="POST"
-    action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
->
-    @csrf
-</form>
+@if($model->fragmentModel()->exists)
+    <div data-vue-fields>
+        @include('chief::manager._transitions.modals.delete-fragment-modal')
+    </div>
+
+    <form
+        id="detachSharedFragment{{ $model->modelReference()->get() }}"
+        method="POST"
+        action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
+    >
+        @csrf
+    </form>
+@endif

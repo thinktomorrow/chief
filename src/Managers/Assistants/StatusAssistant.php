@@ -18,6 +18,7 @@ trait StatusAssistant
     public function routesStatusAssistant(): array
     {
         return [
+            ManagedRoute::get('status-window', '{id}/status/window'),
             ManagedRoute::get('status-edit', '{id}/status'),
             ManagedRoute::put('status-update', '{id}/status'),
         ];
@@ -50,5 +51,15 @@ trait StatusAssistant
             'modelClass' => $this->managedModelClass(),
             'modelId' => $id,
         ]));
+    }
+
+    public function statusWindow(Request $request, $id)
+    {
+        $model = $this->fieldsModel($id);
+
+        return view('chief::manager.windows.status.window', [
+            'manager' => app(Registry::class)->manager($model->managedModelKey()),
+            'model' => $model,
+        ]);
     }
 }

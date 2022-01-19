@@ -34,7 +34,7 @@
         <div class="flex items-center justify-center gutter-3">
             <div>
                 <a
-                    data-sidebar-trigger="addFragment"
+                    data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-new', $owner) }}"
                     class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
                 >
@@ -46,7 +46,7 @@
 
             <div>
                 <a
-                    data-sidebar-trigger="addFragment"
+                    data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
                     class="flex flex-col items-center justify-center space-y-1 label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
                 >

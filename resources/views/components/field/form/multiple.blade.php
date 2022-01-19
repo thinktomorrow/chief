@@ -2,7 +2,7 @@
     <x-chief::field.form :key="$key" :toggle="$toggle ?? null" />
 @else
     @php
-        $fields = $fields ?? \Thinktomorrow\Chief\ManagedModels\Fields\Fields::make($model->fields())->model(
+        $fields = $fields ?? \Thinktomorrow\Chief\Forms\Fields::make($model->fields())->model(
             $model instanceof \Thinktomorrow\Chief\Fragments\Fragmentable ? $model->fragmentModel() : $model
         );
 

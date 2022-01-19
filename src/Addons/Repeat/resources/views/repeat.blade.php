@@ -21,7 +21,7 @@
                     <div class="w-full">
                         <div class="row-start-start gutter-3">
                             @foreach($fields->all() as $field)
-                                @if($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\HiddenField)
+                                @if($field instanceof \Thinktomorrow\Chief\Forms\Fields\Types\HiddenField)
                                     {!! $field->render() !!}
                                 @else
                                     <x-chief::field.form :field="$field">

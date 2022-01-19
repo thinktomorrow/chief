@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\SaveFields;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -10,8 +12,8 @@ use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
@@ -180,7 +182,7 @@ trait CrudAssistant
         $this->fieldValidator()->handle($fields, $request->all());
 
         // TODO: extract all uploadedFile instances from the input...
-        $model->saveFields($fields, $request->all(), $request->allFiles());
+        (new SaveFields())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelCreated($model->modelReference()));
 
@@ -196,8 +198,10 @@ trait CrudAssistant
 
         $this->guard('edit', $model);
 
+        // TODO/ remove share??
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('forms', Forms::make($model->fields())->fill($this, $model));
 
         return $model->adminView();
     }
@@ -216,11 +220,13 @@ trait CrudAssistant
 
         $this->guard('update', $model);
 
-        $fields = Fields::make($model->fields());
+        $fields = Forms::make($model->fields())
+            ->fillModel($model)
+            ->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());
 
-        $model->saveFields($fields, $request->all(), $request->allFiles());
+        (new SaveFields())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelUpdated($model->modelReference()));
 

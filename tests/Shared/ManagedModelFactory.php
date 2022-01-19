@@ -172,9 +172,9 @@ namespace $this->namespace;
 
 use \Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use \Thinktomorrow\Chief\Fragments\Fragmentable;
-use \Thinktomorrow\Chief\ManagedModels\Assistants\SavingFields;
+use Thinktomorrow\Chief\Forms\SaveFields;
 use \Thinktomorrow\Chief\ManagedModels\States\PageState;
-use \Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;;
 use Illuminate\Database\Eloquent\Model;
 use \Thinktomorrow\AssetLibrary\HasAsset;

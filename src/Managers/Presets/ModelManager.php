@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Presets;
 
 use Thinktomorrow\Chief\Managers\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
-use Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\FormsAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\PublishAssistant;
@@ -20,7 +20,7 @@ final class ModelManager implements Manager
     use ManagerDefaults;
     use CrudAssistant;
     use StatusAssistant;
-    use FieldsComponentAssistant;
+    use FormsAssistant;
 
     use ArchiveAssistant;
     use PublishAssistant;

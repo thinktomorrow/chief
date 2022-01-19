@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 
 class Hero implements Fragmentable
 {

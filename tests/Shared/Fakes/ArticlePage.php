@@ -4,20 +4,24 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
+use Thinktomorrow\Chief\Forms\Fields\Types\ImageField;
+use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 
 class ArticlePage extends Model implements Page
 {
@@ -35,19 +39,22 @@ class ArticlePage extends Model implements Page
 
     public function fields(): iterable
     {
-        yield InputField::make('title')->validation(['min:4']);
-        yield InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']);
-        yield InputField::make('title_trans')->locales(['nl', 'en']);
-        yield InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale');
+        yield Text::make('title')->required()->rules(['min:4']);
+        yield Text::make('custom')
+            ->rules(['required'])
+            ->validationAttribute('custom attribute')
+            ->validationMessages(['custom.required' => 'custom error for :attribute']);
+        yield Text::make('title_trans')->locales(['nl', 'en']);
+        yield Text::make('content_trans')->locales(['nl', 'en'])->rules(FallbackLocaleRequiredRule::RULE);
 
-        yield FileField::make('thumb')->tag('edit');
-        yield FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
-        yield FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
-        yield ImageField::make('thumb_image')->tag('edit');
-        yield ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
-        yield ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
+        yield File::make('thumb')->tag('edit');
+        yield File::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
+        yield File::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
+        yield Image::make('thumb_image')->tag('edit');
+        yield Image::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
+        yield Image::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
 
-        yield InputField::make('title_sanitized')->sanitize(function ($value, array $input) {
+        yield Text::make('title_sanitized')->prepare(function ($value, array $input) {
             if ($value) {
                 return $value;
             }
@@ -58,7 +65,7 @@ class ArticlePage extends Model implements Page
             return null;
         });
 
-        yield InputField::make('title_sanitized_trans')->locales()->sanitize(function ($value, array $input, $locale = null) {
+        yield Text::make('title_sanitized_trans')->locales()->prepare(function ($value, array $input, $locale = null) {
             if ($value) {
                 return $value;
             }

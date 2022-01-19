@@ -1,15 +1,31 @@
 <x-chief::page>
     <x-slot name="header">
-        <x-chief::window.fields tagged="pagetitle" />
+        TITLE
+{{--        <x-chief::window.fields tagged="pagetitle" />--}}
     </x-slot>
 
-    <x-chief::window.fields title="Algemeen" untagged />
-    <x-chief::window.fragments />
+    <!-- can be either form or window display -->
+{{--    <x-chief-forms::form id='intro' />--}}
+{{--    <x-chief-forms::form id='intro2' />--}}
+
+{{--    <x-chief::window>--}}
+{{--        <div class="space-y-6">--}}
+{{--            <x-chief-forms::field tagged='intro' />--}}
+{{--        </div>--}}
+{{--    </x-chief::window>--}}
+
+    @foreach($forms->get() as $form)
+        {{ $form->render() }}
+    @endforeach
+
+
+{{--    <x-chief::window.fields title="Algemeen" untagged />--}}
+    <x-chief::fragments :owner="$model" />
 
     <x-slot name="sidebar">
         <x-chief::window.status />
         <x-chief::window.links />
-        <x-chief::window.fields title="Algemeen" tagged="sidebar" />
-        <x-chief::window.fields title="SEO" tagged="seo" />
+{{--        <x-chief::window.fields title="Algemeen" tagged="sidebar" />--}}
+{{--        <x-chief::window.fields title="SEO" tagged="seo" />--}}
     </x-slot>
 </x-chief::page>

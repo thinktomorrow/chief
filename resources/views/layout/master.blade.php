@@ -11,22 +11,23 @@
                     @include('chief::layout.nav.nav')
                 </aside>
 
-                <div class="w-full py-12 space-y-8">
+                <section role="sidebar">
+                    @include('chief::manager.sidebar')
+                </section>
+
+                <section id="content" class="w-full py-12 space-y-8">
                     @yield('header')
 
-                    <section id="content">
-                        <div v-cloak class="container v-loading">
-                            <p class="text-grey-500">loading...</p>
-                        </div>
+                    <div v-cloak class="container v-loading">
+                        <p class="text-grey-500">loading...</p>
+                    </div>
 
-                        <div v-cloak>
-                            @include('chief::layout._partials.notifications')
-                            @include('chief::manager.sidebar')
+                    <div v-cloak>
+                        @include('chief::layout._partials.notifications')
 
-                            @yield('content')
-                        </div>
-                    </section>
-                </div>
+                        @yield('content')
+                    </div>
+                </section>
             </div>
 
             <!-- place outside the main content area as a place for modals, secondary forms, ... -->

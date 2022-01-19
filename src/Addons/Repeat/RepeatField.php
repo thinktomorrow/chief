@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Addons\Repeat;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Field;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\AbstractField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Types\AbstractField;
+use Thinktomorrow\Chief\Forms\Fields\Types\FieldType;
 
 class RepeatField extends AbstractField implements Field
 {

@@ -1,10 +1,14 @@
-<textarea
+<textarea {{ $attributes->merge($getCustomAttributes())->merge([
+        'cols' => '5',
+        'rows' => '5',
+        'style' => 'resize: vertical',
+        'v-pre' => 'v-pre',
+    ])->class([
+        'w-full',
+    ]) }}
         data-editor
         data-locale="{{ $locale ?? app()->getLocale() }}"
-        name="{{ $field->getName($locale ?? null) }}"
-        data-custom-redactor-options='@json($field->getHtmlOptions($key))'
-        id="{{ $key }}"
-        cols="10"
-        rows="1"
-        v-pre
->{{ old($key, $field->getValue($locale ?? null)) }}</textarea>
+        name="{{ $getName($locale ?? null) }}"
+        data-custom-redactor-options='@json($getRedactorOptions($getId($locale ?? null), $locale ?? app()->getLocale()))'
+        id="{{ $getId($locale ?? null) }}"
+>{{ old($getId($locale ?? null), $getValue($locale ?? null)) }}</textarea>

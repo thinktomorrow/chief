@@ -4,16 +4,12 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldDimensionsRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMaxRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMimetypesRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMinRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldRequiredRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldDimensionsRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMaxRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMimetypesRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMinRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldRequiredRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 
 class ValidationServiceProvider extends ServiceProvider
 {
@@ -21,31 +17,32 @@ class ValidationServiceProvider extends ServiceProvider
     {
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
-        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value) {
-            $fallbackLocale = config('app.fallback_locale');
+//        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value) {
+//            $fallbackLocale = config('app.fallback_locale');
+//
+//            if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
+//                return (bool) trim($value);
+//            }
+//
+//            return true;
+//        }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
 
-            if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
-                return ! ! trim($value);
-            }
+        Validator::extendImplicit(FallbackLocaleRequiredRule::RULE, FallbackLocaleRequiredRule::class.'@validate');
+        Validator::extendImplicit('file_required', FileRequiredRule::class.'@validate');
+        Validator::extend('file_mimetypes', FileMimetypesRule::class.'@validate');
+        Validator::extend('file_dimensions', FileDimensionsRule::class.'@validate');
+        Validator::extend('file_min', FileMinRule::class.'@validate');
+        Validator::extend('file_max', FileMaxRule::class.'@validate');
 
-            return true;
-        }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
-
-        $this->bootMediaValidationRules();
+//        $this->bootMediaValidationRules();
     }
 
     private function bootMediaValidationRules(): void
     {
-        Validator::extendImplicit('filefield_required', FileFieldRequiredRule::class . '@validate');
-        Validator::extend('filefield_mimetypes', FileFieldMimetypesRule::class . '@validate');
-        Validator::extend('filefield_dimensions', FileFieldDimensionsRule::class . '@validate');
-        Validator::extend('filefield_min', FileFieldMinRule::class . '@validate');
-        Validator::extend('filefield_max', FileFieldMaxRule::class . '@validate');
-
-        Validator::extendImplicit('imagefield_required', ImageFieldRequiredRule::class . '@validate');
-        Validator::extend('imagefield_mimetypes', ImageFieldMimetypesRule::class . '@validate');
-        Validator::extend('imagefield_dimensions', ImageFieldDimensionsRule::class . '@validate');
-        Validator::extend('imagefield_max', ImageFieldMaxRule::class . '@validate');
-        Validator::extend('imagefield_min', ImageFieldMinRule::class . '@validate');
+        Validator::extendImplicit('file_required', FileRequiredRule::class.'@validate');
+        Validator::extend('file_mimetypes', FileMimetypesRule::class.'@validate');
+        Validator::extend('file_dimensions', FileDimensionsRule::class.'@validate');
+        Validator::extend('file_min', FileMinRule::class.'@validate');
+        Validator::extend('file_max', FileMaxRule::class.'@validate');
     }
 }

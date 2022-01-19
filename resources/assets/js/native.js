@@ -28,7 +28,5 @@ if (document.getElementById('js-sortable')) {
     });
 }
 
-/**
- * Sidebar components
- */
-require('./components/sidebarComponents');
+/** Form logic - submit forms async or via sidebar */
+require('./forms/index');

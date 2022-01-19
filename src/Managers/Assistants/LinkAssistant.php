@@ -17,6 +17,7 @@ trait LinkAssistant
     public function routesLinkAssistant(): array
     {
         return [
+            ManagedRoute::get('links-window', '{id}/links/window'),
             ManagedRoute::get('links-edit', '{id}/links'),
             ManagedRoute::put('links-update', '{id}/links'),
         ];
@@ -48,5 +49,15 @@ trait LinkAssistant
             'modelClass' => $this->managedModelClass(),
             'modelId' => $id,
         ]));
+    }
+
+    public function linksWindow(Request $request, $id)
+    {
+        $model = $this->fieldsModel($id);
+
+        return view('chief::manager.windows.links.window', [
+            'manager' => app(Registry::class)->manager($model->managedModelKey()),
+            'model' => $model,
+        ]);
     }
 }

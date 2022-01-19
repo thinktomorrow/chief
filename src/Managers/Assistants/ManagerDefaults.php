@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -87,7 +87,6 @@ trait ManagerDefaults
 
     /**
      * Which model contains the fields.
-     * This is set as a method so the static fragment can also benefit from our assistants.
      */
     private function fieldsModel($id)
     {
