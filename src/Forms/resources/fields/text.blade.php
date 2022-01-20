@@ -1,5 +1,5 @@
 @if(isset($hasRedactorOptions) && $hasRedactorOptions())
-        <div class="w-full external-editor-toolbar" id="js-external-editor-toolbar-{{ str_replace('.','_',$getId($locale ?? null)) }}"></div>
+        <div class="w-full external-editor-toolbar" id="js-external-editor-toolbar-{{ str_replace('.','_',$getElementId($locale ?? null)) }}"></div>
 @endif
 
 <div class="flex">
@@ -17,7 +17,7 @@
         <input
                 type="{{ $inputType ?? 'text' }}"
                 name="{{ $getName($locale ?? null) }}"
-                id="{{ $getId($locale ?? null) }}"
+                id="{{ $getElementId($locale ?? null) }}"
                 placeholder="{{ $getPlaceholder($locale ?? null) }}"
                 value="{{ $getActiveValue($locale ?? null) }}"
                 class="{{ $hasPrepend() ? 'with-prepend' : null }} {{ $hasAppend() ? 'with-append' : null }}"

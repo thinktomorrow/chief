@@ -9,6 +9,7 @@
     @if(!$hasLocales())
         @include($getView())
         @include('chief-forms::components.formgroup.error')
+        @include('chief-forms::fields._partials.charactercount')
     @elseif(count($getLocales()) == 1)
         @foreach($getLocales() as $locale)
             @include($getView(), ['component' => $component, 'locale' => $locale])

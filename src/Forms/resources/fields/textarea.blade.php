@@ -7,5 +7,5 @@
         'w-full',
     ]) }}
     name="{{ $getName($locale ?? null) }}"
-    id="{{ $getId($locale ?? null) }}"
+    id="{{ $getElementId($locale ?? null) }}"
 >{{ $getActiveValue($locale ?? null) }}</textarea>

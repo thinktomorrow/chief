@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Forms\Concerns\HasUniqueTagId;
+use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
@@ -16,7 +16,7 @@ class Form extends Component
 {
     use HasModel;
     use HasFields;
-    use HasUniqueTagId;
+    use HasElementId;
 
     protected string $action;
     protected string $actionMethod;
@@ -39,7 +39,7 @@ class Form extends Component
     {
         parent::__construct($id);
 
-        $this->uniqueTagId($id.'_'.Str::random());
+        $this->elementId($id.'_'.Str::random());
     }
 
     public function getView(): string

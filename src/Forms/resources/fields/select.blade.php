@@ -3,7 +3,7 @@
         <select
                 {{ $allowMultiple() ? 'multiple' : '' }}
                 name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
-                id="{{ $getId($locale ?? null) }}"
+                id="{{ $getElementId($locale ?? null) }}"
                 class="select"
         >
             <option value="">---</option>

@@ -5,7 +5,7 @@
 >
     <div class="space-y-4">
         <form {{ $attributes->merge($getCustomAttributes()) }}
-              id="{{ $getUniqueTagId() }}"
+              id="{{ $getElementId() }}"
               method="POST"
               enctype="multipart/form-data"
               role="form"
