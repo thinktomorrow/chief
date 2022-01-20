@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
@@ -28,6 +27,7 @@ use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
+use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Register\TaggedKeys;

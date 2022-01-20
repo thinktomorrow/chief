@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasOptions;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasOptions;
 
 class Select extends Component implements Field
 {
@@ -17,7 +17,7 @@ class Select extends Component implements Field
 
     public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title'): self
     {
-        if (!$relation) {
+        if (! $relation) {
             $relation = $this->getKey();
         }
 

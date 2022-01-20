@@ -32,7 +32,7 @@ trait HasOptions
      */
     private function sanitizeOptions(array|Closure $options): array|Closure
     {
-        if (!is_array($options) || !array_is_list($options)) {
+        if (! is_array($options) || ! array_is_list($options)) {
             return $options;
         }
 
