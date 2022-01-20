@@ -64,7 +64,7 @@ trait HasValue
                 return $model->{$this->getColumnName().':'.$locale};
             }
 
-            return $model->{$this->getColumnName()} ?: $this->getDefault($locale);
+            return $model->{$this->getColumnName()} ?? $this->getDefault($locale);
         };
     }
 }

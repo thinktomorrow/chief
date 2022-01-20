@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\Forms\Fields;
+
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasOptions;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
+
+class Select extends Component implements Field
+{
+    use HasMultiple;
+    use HasOptions;
+
+    protected string $view = 'chief-forms::fields.select';
+    protected string $windowView = 'chief-forms::fields.select-window';
+
+    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title'): self
+    {
+        if (!$relation) {
+            $relation = $this->getKey();
+        }
+
+        $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey) {
+            $relationModel = $model->{$relation}()->getModel();
+
+            $this->options($relationModel::all()->pluck($labelKey, $valueKey)->toArray())
+                ->value($model->{$relation}->pluck($valueKey)->toArray())
+                ->save(function ($field, $input, $files) use ($model, $relation) {
+                    $model->{$relation}()->sync($input[$relation] ?? []);
+                });
+        });
+
+        return $this;
+    }
+}

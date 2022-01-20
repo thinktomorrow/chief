@@ -18,7 +18,6 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-forms', __DIR__ . '/../../src/Forms/resources');
         $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
 
         View::composer([
@@ -60,14 +59,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.icon-button', 'chief-icon-button');
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
-
-        /* Chief field components */
-        Blade::component('chief::components.field.window.multiple', 'chief::fields');
-        Blade::component('chief::components.field.window.single', 'chief::field');
-        Blade::component('chief::components.field.form.single', 'chief::field.form');
-        Blade::component('chief::components.field.form.multiple', 'chief::fields.form');
-        Blade::component('chief::components.field.form.error', 'chief::field.form.error');
-        Blade::component('chief::components.field.set', 'chief::field.set');
 
         /* Wireframe components */
         Blade::component('chief::wireframes.wireframe', 'wireframe');

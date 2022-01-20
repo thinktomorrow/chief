@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
  * @internal
  * @coversNothing
  */
-class RenderFieldTest extends TestCase
+class RenderTextualFieldsTest extends TestCase
 {
     private array $classes;
 
