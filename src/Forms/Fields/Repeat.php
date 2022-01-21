@@ -11,6 +11,6 @@ class Repeat extends Component implements Field
 
     public function elementView()
     {
-        // index 
+        // index
     }
 }
