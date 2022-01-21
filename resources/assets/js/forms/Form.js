@@ -4,6 +4,7 @@ import vueFields from './fields/vue-fields';
 import initSortableGroup from '../utilities/sortable-group';
 import SelectFragment from '../fragments/selectFragment';
 import Submit from './Submit';
+import EventBus from '../utilities/EventBus';
 
 const Form = function (el, sidebar) {
     this.el = el;
@@ -75,8 +76,14 @@ Form.prototype.refresh = function () {
         // before vanilla event listeners so native js can do its thing
         vueFields(this.el);
 
+        $R('[data-editor]');
+
         // Re-init event listeners
         this.listen();
+
+        EventBus.publish('form-refreshed', {
+            element: this.el,
+        });
 
         this.refreshCallback();
     });

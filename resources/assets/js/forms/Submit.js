@@ -24,9 +24,6 @@ const Submit = {
             currentElement: currentElement,
             targetElement: targetElement,
             tags: tags,
-            // tags: e.panel.getTags(),
-            // panel: currentElement, // TODO: rename to currentElement
-            // container: targetElement, // TODO: rename to targetElement
             response: responseData,
         });
     },

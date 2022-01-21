@@ -1,8 +1,8 @@
 import EventBus from './EventBus';
 
-function characterCount(panel, characterCountEl) {
+function characterCount(container, characterCountEl) {
     const formFieldId = characterCountEl.getAttribute('data-character-count');
-    const formField = panel.querySelector(`#${formFieldId.replaceAll('.', '\\.')}`);
+    const formField = container.querySelector(`#${formFieldId.replaceAll('.', '\\.')}`);
     const max = characterCountEl.getAttribute('data-character-count-max');
 
     if (!formField) {
@@ -25,12 +25,18 @@ function characterCount(panel, characterCountEl) {
     });
 
     // Default
-    characterCountEl.innerHTML = formField.value.length;
+    formField.dispatchEvent(new Event('input'));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-character-count]').forEach((el) => {
         characterCount(document, el);
+    });
+});
+
+EventBus.subscribe('form-refreshed', (data) => {
+    data.element.querySelectorAll('[data-character-count]').forEach((el) => {
+        characterCount(data.element, el);
     });
 });
 

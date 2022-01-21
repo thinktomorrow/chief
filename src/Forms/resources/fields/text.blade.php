@@ -11,7 +11,7 @@
 
     @if(isset($hasRedactorOptions) && $hasRedactorOptions())
         <div class="w-full {{ $hasPrepend() ? 'with-prepend' : null }} {{ $hasAppend() ? 'with-append' : null }}">
-            @include('chief::editors.' . config('chief.editor', 'redactor') . '.input')
+            @include('chief-forms::fields.html')
         </div>
     @else
         <input

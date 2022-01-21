@@ -30,7 +30,7 @@ class Text extends Component implements Field
             'maxWidth' => '100%',
             'enterKey' => false,
             'paragraphize' => false, // don't put surrounding p tags on save
-            'toolbarExternal' => '#js-external-editor-toolbar-'.str_replace('.', '_', $this->getId($locale)),
+            'toolbarExternal' => '#js-external-editor-toolbar-'.str_replace('.', '_', $this->getElementId($locale)),
         ];
     }
 }

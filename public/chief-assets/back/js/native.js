@@ -146,6 +146,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_sortable_group__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utilities/sortable-group */ "./resources/assets/js/utilities/sortable-group.js");
 /* harmony import */ var _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../fragments/selectFragment */ "./resources/assets/js/fragments/selectFragment.js");
 /* harmony import */ var _Submit__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Submit */ "./resources/assets/js/forms/Submit.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+
 
 
 
@@ -233,9 +235,14 @@ Form.prototype.refresh = function () {
     _this2.el.innerHTML = DOM.firstElementChild.innerHTML; // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
     // before vanilla event listeners so native js can do its thing
 
-    (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_9__["default"])(_this2.el); // Re-init event listeners
+    (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_9__["default"])(_this2.el);
+    $R('[data-editor]'); // Re-init event listeners
 
     _this2.listen();
+
+    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_13__["default"].publish('form-refreshed', {
+      element: _this2.el
+    });
 
     _this2.refreshCallback();
   });
@@ -294,9 +301,6 @@ var Submit = {
       currentElement: currentElement,
       targetElement: targetElement,
       tags: tags,
-      // tags: e.panel.getTags(),
-      // panel: currentElement, // TODO: rename to currentElement
-      // container: targetElement, // TODO: rename to targetElement
       response: responseData
     });
   }
@@ -1430,9 +1434,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function characterCount(panel, characterCountEl) {
+function characterCount(container, characterCountEl) {
   var formFieldId = characterCountEl.getAttribute('data-character-count');
-  var formField = panel.querySelector("#".concat(formFieldId.replaceAll('.', '\\.')));
+  var formField = container.querySelector("#".concat(formFieldId.replaceAll('.', '\\.')));
   var max = characterCountEl.getAttribute('data-character-count-max');
 
   if (!formField) {
@@ -1453,12 +1457,17 @@ function characterCount(panel, characterCountEl) {
     characterCountEl.innerHTML = currentLength;
   }); // Default
 
-  characterCountEl.innerHTML = formField.value.length;
+  formField.dispatchEvent(new Event('input'));
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-character-count]').forEach(function (el) {
     characterCount(document, el);
+  });
+});
+_EventBus__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe('form-refreshed', function (data) {
+  data.element.querySelectorAll('[data-character-count]').forEach(function (el) {
+    characterCount(data.element, el);
   });
 });
 _EventBus__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe('sidebarPanelActivated', function (data) {
