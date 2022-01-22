@@ -34,7 +34,7 @@ trait HasRedactorToolbar
         return count($this->redactorOptions) > 0;
     }
 
-    public function getRedactorOptions(string $key, ?string $locale = null): array
+    public function getRedactorOptions(?string $locale = null): array
     {
         // Provide rtl direction
         if ($locale && in_array($locale, ['ar'])) {

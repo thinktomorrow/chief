@@ -7,6 +7,10 @@ principles.
 ## 0.7.0 - ...
 This release brings a major refactor of the forms and fields api. Its aim is to ease the layout setup of admin forms and simplify the logic around its view composition.
 
+### TODO:
+- UI: prepend-append is now a component view and input no longer has 'with-prepend' and 'with-append' classes on its element, rather on a parent div. Currently the layout is broken: borders do not align with prepend and append borders.
+- UI: same as above but for the text with redactor view. 
+
 ### Impactful
 - Changed: Restructured Fields files and classes under a dedicated `src/Forms` directory. Rename all your field namespaces from `Thinktomorrow\Chief\ManagedModels\Fields\Types\<Field>` to `Thinktomorrow\Chief\Forms\Fields\<Field>`.
 - Removed: field method `customSaveMethod`. Replace any occurrences with the save() method. See below.

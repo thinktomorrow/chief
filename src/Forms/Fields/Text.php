@@ -18,6 +18,16 @@ class Text extends Component implements Field
 
     protected string $view = 'chief-forms::fields.text';
     protected string $windowView = 'chief-forms::fields.text-window';
+    protected string $viewWithRedactor = 'chief-forms::fields.text-with-redactor';
+
+    public function getView(): string
+    {
+        if ($this->hasRedactorOptions()) {
+            return $this->viewWithRedactor;
+        }
+
+        return parent::getView();
+    }
 
     /**
      * For input we have extra fixed set of options to make
