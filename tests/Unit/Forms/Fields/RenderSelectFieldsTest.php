@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\Radio;
+use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Select;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -23,6 +25,8 @@ class RenderSelectFieldsTest extends TestCase
         $this->classes = [
             Select::class => 'one',
             MultiSelect::class => 'two',
+            Radio::class => 'one',
+            Checkbox::class => 'two',
         ];
     }
 

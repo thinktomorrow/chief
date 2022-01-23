@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAppend;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPrependAppend;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCharacterCount;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPrepend;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasRedactorToolbar;
 
 class Text extends Component implements Field
 {
     use HasCharacterCount;
-    use HasPrepend;
-    use HasAppend;
+    use HasPrependAppend;
     use HasRedactorToolbar;
 
     protected string $view = 'chief-forms::fields.text';

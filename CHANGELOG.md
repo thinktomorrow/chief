@@ -10,6 +10,7 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 ### TODO:
 - UI: prepend-append is now a component view and input no longer has 'with-prepend' and 'with-append' classes on its element, rather on a parent div. Currently the layout is broken: borders do not align with prepend and append borders.
 - UI: same as above but for the text with redactor view. 
+- js: redactor's loadRedactorInstances method is now coming from project code (project skeleton), we should however provide this from chief
 
 ### Impactful
 - Changed: Restructured Fields files and classes under a dedicated `src/Forms` directory. Rename all your field namespaces from `Thinktomorrow\Chief\ManagedModels\Fields\Types\<Field>` to `Thinktomorrow\Chief\Forms\Fields\<Field>`.
