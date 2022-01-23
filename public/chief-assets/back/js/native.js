@@ -235,8 +235,9 @@ Form.prototype.refresh = function () {
     _this2.el.innerHTML = DOM.firstElementChild.innerHTML; // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
     // before vanilla event listeners so native js can do its thing
 
-    (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_9__["default"])(_this2.el);
-    $R('[data-editor]'); // Re-init event listeners
+    (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_9__["default"])(_this2.el); // TODO: this method is now coming from project code (project skeleton), we should however provide this from chief
+
+    loadRedactorInstances(document); // Re-init event listeners
 
     _this2.listen();
 

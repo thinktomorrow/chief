@@ -76,7 +76,8 @@ Form.prototype.refresh = function () {
         // before vanilla event listeners so native js can do its thing
         vueFields(this.el);
 
-        $R('[data-editor]');
+        // TODO: this method is now coming from project code (project skeleton), we should however provide this from chief
+        loadRedactorInstances(document);
 
         // Re-init event listeners
         this.listen();
