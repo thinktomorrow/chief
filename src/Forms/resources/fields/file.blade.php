@@ -1,7 +1,7 @@
 <?php
 
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
-    $files = $getValue($locale);
+    $files = $getActiveValue($locale);
 
 ?>
 
