@@ -1,9 +1,14 @@
+
 # Changelog
 
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## next release
+# 0.6.15 - 2022-01-27
+- Fixed: pagination on index didn't preserved any filtering or sorting
+- Added: Going back from a detailpage to the index will now preserve any filtering, sorting or paginating on that index page.
+
+## 0.6.14 - 2021-12-24
 - Improved repeatfield to better support custom elements. Now repeat ids are passed to each field so fields can use these unique ids.
 
 ## 0.6.12 - 2021-12-14
