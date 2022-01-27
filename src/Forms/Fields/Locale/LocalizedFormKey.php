@@ -92,7 +92,7 @@ class LocalizedFormKey
         }
 
         // Cleanup up any non-replaced placeholders
-        if($cleanupUnusedPlaceholders) {
+        if ($cleanupUnusedPlaceholders) {
             $value = preg_replace('#:([a-zA-Z]*)#', '', $value);
             $value = str_replace('..', '.', trim($value, '.'));
         }

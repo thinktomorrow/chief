@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Radio;
 use Thinktomorrow\Chief\Forms\Fields\Select;
-use Thinktomorrow\Chief\Forms\Fields\Checkbox;
-use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 /**
  * @internal
