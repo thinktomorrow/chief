@@ -85,6 +85,6 @@ trait SortAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        return $builder->paginate(1000);
+        return $builder->paginate(1000)->withQueryString();
     }
 }
