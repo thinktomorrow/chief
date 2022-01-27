@@ -29,11 +29,15 @@ class LocalizedFormKey
         return new static();
     }
 
-    public function get(string $value, ?string $locale = null): string
+    public function get(string $value, ?string $locale = null, bool $cleanupUnusedPlaceholders = true): string
     {
+        $replacements = $this->replacements;
+
         if ($locale) {
-            $value = $this->handleReplacements($value, $locale);
+            $replacements = array_merge(['locale' => $locale], $replacements);
         }
+
+        $value = $this->handleReplacements($value, $replacements, $cleanupUnusedPlaceholders);
 
         return ($this->bracketed)
             ? $this->replaceDotsByBrackets($value)
@@ -45,7 +49,7 @@ class LocalizedFormKey
         $keys = [];
 
         foreach ($locales as $locale) {
-            $keys[] = $this->get($value, $locale);
+            $keys[] = $this->get($value, $locale, false);
         }
 
         return $keys;
@@ -79,19 +83,29 @@ class LocalizedFormKey
         return $this;
     }
 
-    private function handleReplacements(string $value, string $locale): string
+    private function handleReplacements(string $value, array $replacements, bool $cleanupUnusedPlaceholders = true): string
     {
         $value = $this->replaceName($value);
-
-        $replacements = array_merge([
-            'locale' => $locale,
-        ], $this->replacements);
 
         foreach ($replacements as $from => $to) {
             $value = str_replace(':'.$from, $to, $value);
         }
 
+        // Cleanup up any non-replaced placeholders
+        if($cleanupUnusedPlaceholders) {
+            $value = preg_replace('#:([a-zA-Z]*)#', '', $value);
+            $value = str_replace('..', '.', trim($value, '.'));
+        }
+
+
         return $value;
+    }
+
+    private function addLocaleReplacement(string $locale): void
+    {
+        $this->replacements = array_merge([
+            'locale' => $locale,
+        ], $this->replacements);
     }
 
     private function replaceName(string $value): string

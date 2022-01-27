@@ -1,44 +1,43 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
+namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
-use Thinktomorrow\Chief\Forms\Fields\Checkbox;
-use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Forms\Fields\Radio;
-use Thinktomorrow\Chief\Forms\Fields\Select;
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\Number;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
 
 /**
  * @internal
  * @coversNothing
  */
-class RenderSelectFieldsTest extends TestCase
+class RenderRepeatFieldTest extends TestCase
 {
-    private array $classes;
-
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->classes = [
-            Select::class => 'one',
-            MultiSelect::class => 'two',
-            Radio::class => 'one',
-            Checkbox::class => 'two',
-        ];
     }
 
     /** @test */
     public function it_can_render_all_fields()
     {
-        /** @var Field $class */
-        foreach ($this->classes as $class => $value) {
-            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->value($value);
-            $this->assertStringContainsString('name="xxx"', $component->toHtml());
-            $this->assertStringContainsString($value, $component->toHtml());
-        }
+        $component = Repeat::make('xxx')->items([
+            Text::make('title'),
+            Text::make('function'),
+        ])->value([
+            [
+                'title' => 'first title',
+                'function' => 'writer',
+            ],
+            [
+                'title' => 'second title',
+                'function' => 'author',
+            ],
+        ]);
+        trap($component->toHtml());
+        $this->assertStringContainsString('name="xxx"', $component->toHtml());
     }
 
     /** @test */
@@ -46,9 +45,9 @@ class RenderSelectFieldsTest extends TestCase
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
-            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->locales(['nl', 'en'])->value([
-                'nl' => $valueNL = 'one',
-                'en' => $valueEN = 'two',
+            $component = $class::make('xxx')->locales(['nl', 'en'])->value([
+                'nl' => $valueNL = 'value-nl',
+                'en' => $valueEN = 'value-en',
             ]);
 
             $render = $component->toHtml();
@@ -65,7 +64,7 @@ class RenderSelectFieldsTest extends TestCase
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
-            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->displayInWindow()->value($value = 'one');
+            $component = $class::make('xxx')->displayInWindow()->value($value = 'given value');
             $this->assertStringContainsString($value, $component->toHtml());
         }
     }

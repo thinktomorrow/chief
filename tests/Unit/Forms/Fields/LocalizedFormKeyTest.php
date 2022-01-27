@@ -46,6 +46,26 @@ class LocalizedFormKeyTest extends TestCase
     }
 
     /** @test */
+    public function unused_placeholders_are_removed()
+    {
+        $this->assertEquals('custom.xxx', LocalizedFormKey::make()
+            ->template('custom.:locale.:name')
+            ->get('xxx'));
+
+        $this->assertEquals('custom.xxx', LocalizedFormKey::make()
+            ->template('custom.:name.:random')
+            ->get('xxx', 'nl'));
+    }
+
+    /** @test */
+    public function unused_placeholders_can_be_preserved()
+    {
+        $this->assertEquals('custom.:locale.xxx', LocalizedFormKey::make()
+            ->template('custom.:locale.:name')
+            ->get('xxx', null, false));
+    }
+
+    /** @test */
     public function it_can_replace_a_placeholder_value_in_the_key()
     {
         $this->assertEquals(

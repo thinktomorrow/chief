@@ -39,6 +39,26 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return $fields;
     }
 
+    public static function extract(array $components): static
+    {
+        return new static(static::extractRecursive($components));
+    }
+
+    private static function extractRecursive(array $components): array
+    {
+        $fields = [];
+
+        foreach ($components as $component) {
+            if ($component instanceof Field) {
+                $fields[] = $component;
+            }
+
+            $fields = array_merge($fields, static::extractRecursive($component->getComponents()));
+        }
+
+        return $fields;
+    }
+
     public function first(): ?Field
     {
         return $this->items->first();
@@ -71,6 +91,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function map(callable $callback): self
     {
         return new static($this->items->map($callback)->all());
+    }
+
+    public function each(callable $callback): self
+    {
+        foreach($this->items as $item) {
+            call_user_func($callback, $item);
+        }
+
+        return $this;
     }
 
     /**

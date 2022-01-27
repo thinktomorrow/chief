@@ -10,9 +10,16 @@ trait HasValue
 {
     protected $value;
 
+    /**
+     * Flag to indicate internally that a value has been explicitly set (via value()).
+     * This makes it possible to also set null value as well.
+     */
+    protected bool $valueGiven = false;
+
     public function value(mixed $value): static
     {
         $this->value = $value;
+        $this->valueGiven = true;
 
         return $this;
     }
@@ -25,8 +32,8 @@ trait HasValue
 
     public function getValue(?string $locale = null): mixed
     {
-        if (! isset($this->value)) {
-            if (! $this->getModel()) {
+        if (!$this->valueGiven) {
+            if (!$this->getModel()) {
                 return $this->getDefault($locale);
             }
 
