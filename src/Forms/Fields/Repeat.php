@@ -22,65 +22,34 @@ class Repeat extends Component implements Field
         $components = [];
 
         foreach ($this->getActiveValue($locale) ?? [[]] as $index => $values) {
-            $clonedComponents = (new DeepCopy())
-                ->skipUncloneable()
-                ->copy($this->components);
-
-            Fields::extract($clonedComponents)
-                ->each(function ($field) use ($index, $locale, $values) {
-                    $fieldName = Fields\Locale\LocalizedFormKey::make()
-                        ->template(':prefix['.$index.'].:name.:locale')
-                        ->replace('prefix', $this->getName())
-                        ->bracketed()
-                        ->get($field->getName(), $locale)
-                    ;
-
-                    $field->name($fieldName)
-                        ->value($values[$field->getColumnName()] ?? null)
-                    ;
-                })
-            ;
-
-            // TODO: wrap this in a repeatCard component
-            $components[] = $clonedComponents;
+            $components[] = $this->getRepeatCard($index, $values, $locale);
         }
 
         return $components;
     }
 
-    public function getRepeatCard(array $values = [], ?string $locale = null): array
+    public function getRepeatCard(int $index, array $values = [], ?string $locale = null): array
     {
-        // Loop over fields and populate them with the value...
+        $clonedComponents = (new DeepCopy())
+            ->skipUncloneable()
+            ->copy($this->components);
 
-        // Group every components stack into a 'card' component. In order to group it.
-        // Multiply it with the values - keep in mind the startWithAmount value
-        // Populate the fields of each group with the values given.
-        $components = [];
+        // Populate fields with the correct name and the given values
+        Fields::extract($clonedComponents)
+            ->each(function ($field) use ($index, $locale, $values) {
+                $fieldName = Fields\Locale\LocalizedFormKey::make()
+                    ->template(':prefix['.$index.'].:name.:locale')
+                    ->replace('prefix', $this->getName())
+                    ->bracketed()
+                    ->get($field->getName(), $locale)
+                ;
 
-        foreach ($this->getActiveValue($locale) ?? [[]] as $index => $values) {
-            $clonedComponents = (new DeepCopy())
-                ->skipUncloneable()
-                ->copy($this->components);
+                $field->name($fieldName)
+                    ->value($values[$field->getColumnName()] ?? null)
+                ;
+            })
+        ;
 
-            Fields::extract($clonedComponents)
-                ->each(function ($field) use ($index, $locale, $values) {
-                    $fieldName = Fields\Locale\LocalizedFormKey::make()
-                        ->template(':prefix['.$index.'].:name.:locale')
-                        ->replace('prefix', $this->getName())
-                        ->bracketed()
-                        ->get($field->getName(), $locale)
-                    ;
-
-                    $field->name($fieldName)
-                        ->value($values[$field->getColumnName()] ?? null)
-                    ;
-                })
-            ;
-
-            // TODO: wrap this in a repeatCard component
-            $components[] = $clonedComponents;
-        }
-
-        return $components;
+        return $clonedComponents;
     }
 }
