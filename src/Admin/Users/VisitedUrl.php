@@ -28,7 +28,7 @@ class VisitedUrl
     public function add(string $reference, string $url = null): void
     {
         // With only one argument given, we assume the specific url is passed, so we clean it up to use as our base reference.
-        if (!$url) {
+        if (! $url) {
             $url = $reference;
             $reference = Url::fromString($reference)->getScheme().'://'.
                 Url::fromString($reference)->getHost().

@@ -95,7 +95,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function each(callable $callback): self
     {
-        foreach($this->items as $item) {
+        foreach ($this->items as $item) {
             call_user_func($callback, $item);
         }
 
