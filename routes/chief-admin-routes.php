@@ -128,3 +128,13 @@ Route::get('translations', [\Thinktomorrow\Chief\App\Http\Controllers\Back\Trans
 * -----------------------------------------------------------------
 */
 Route::get('/style-guide', [\Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController::class, 'show'])->name('chief.back.style-guide');
+
+/**
+* -----------------------------------------------------------------
+* SEARCH ROUTES
+* -----------------------------------------------------------------
+*/
+Route::get('/search/{term?}', [
+    \Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette\CommandPaletteController::class,
+    'search'
+])->name('chief.back.command-palette');

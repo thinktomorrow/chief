@@ -3,6 +3,7 @@ import FormSubmit from './utilities/form-submit';
 import initConditionalFields from './utilities/conditional-fields';
 import initRepeatFieldsOnPageLoad from '../../../src/Addons/Repeat/resources/js/init-repeat-fields-on-pageload';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
+import initCommandPalette from './command-palette/command-palette';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -16,6 +17,7 @@ FormSubmit.listen('[data-submit-form]');
 
 initConditionalFields();
 initCopyToClipboard();
+initCommandPalette();
 
 /**
  * Sortable

@@ -33,6 +33,8 @@
             @stack('portals')
         </main>
 
+        @include('chief::layout.nav.command-palette.command-palette')
+
         @include('chief::layout._partials.foot')
     </body>
 </html>
