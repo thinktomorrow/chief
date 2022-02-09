@@ -136,5 +136,5 @@ Route::get('/style-guide', [\Thinktomorrow\Chief\App\Http\Controllers\Back\Style
 */
 Route::get('/search/{term?}', [
     \Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette\CommandPaletteController::class,
-    'search'
+    'search',
 ])->name('chief.back.command-palette');

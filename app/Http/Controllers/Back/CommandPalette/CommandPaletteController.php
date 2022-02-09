@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class CommandPaletteController extends Controller
 {
@@ -26,7 +26,7 @@ class CommandPaletteController extends Controller
             $resultGroup = [];
 
             foreach ($modelGroup['models'] as $model) {
-                if(
+                if (
                     Str::contains(Str::lower($model->adminConfig()->getModelName()), $lowercaseTerm) ||
                     Str::contains(Str::lower($model->adminConfig()->getIndexTitle()), $lowercaseTerm) ||
                     Str::contains(Str::lower($model->adminConfig()->getNavTitle()), $lowercaseTerm) ||
@@ -50,7 +50,7 @@ class CommandPaletteController extends Controller
 
         return response()->view('chief::layout.nav.command-palette._result', [
             'term' => $term,
-            'results' => $results
+            'results' => $results,
         ]);
     }
 
@@ -58,10 +58,10 @@ class CommandPaletteController extends Controller
     {
         return collect(app(Registry::class)->models())
             // Filter out fragment models
-            ->filter(function($model) {
-                return !in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
+            ->filter(function ($model) {
+                return ! in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
             // Return all instances of the models
-            })->map(function($model) {
+            })->map(function ($model) {
                 $models = $model::all();
 
                 return [
