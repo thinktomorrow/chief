@@ -2,9 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
@@ -40,10 +39,10 @@ class CommandPaletteController extends Controller
                 }
             }
 
-            if(count($resultGroup) !== 0) {
+            if (count($resultGroup) !== 0) {
                 array_push($results, [
                     'label' => $modelGroup['label'],
-                    'models' => $resultGroup
+                    'models' => $resultGroup,
                 ]);
             }
         }
@@ -60,13 +59,13 @@ class CommandPaletteController extends Controller
             // Filter out fragment models
             ->filter(function ($model) {
                 return ! in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
-            // Return all instances of the models
+                // Return all instances of the models
             })->map(function ($model) {
                 $models = $model::all();
 
                 return [
                     'label' => $model::make()->adminConfig()->getModelName(),
-                    'models' => $models
+                    'models' => $models,
                 ];
             });
     }
@@ -75,15 +74,15 @@ class CommandPaletteController extends Controller
     {
         return collect(app(Registry::class)->models())
             // Filter out fragment models
-            ->filter(function($model) {
-                return !in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
-            // Return all instances of the models
-            })->map(function($model) {
+            ->filter(function ($model) {
+                return ! in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
+                // Return all instances of the models
+            })->map(function ($model) {
                 $model = $model::make();
 
                 return [
                     'label' => $model->adminConfig()->getNavTitle(),
-                    'url' => '/admin/' . $model->managedModelKey()
+                    'url' => '/admin/' . $model->managedModelKey(),
                 ];
             });
     }
