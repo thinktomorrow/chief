@@ -24,6 +24,11 @@ const initCommandPalette = () => {
             }
         }
 
+        // Register command palette close keybind
+        if (e.key === 'Escape') {
+            container.classList.add('hidden');
+        }
+
         // Add all element selectors here that should be focusable
         const allTargets = [searchElement, ...Array.from(container.querySelectorAll('[href]'))];
 
