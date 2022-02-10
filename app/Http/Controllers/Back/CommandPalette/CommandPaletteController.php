@@ -61,7 +61,7 @@ class CommandPaletteController extends Controller
 
                 array_push($results, [
                     'label' => $modelGroup['label'],
-                    'models' => $resultGroup
+                    'models' => $resultGroup,
                 ]);
             }
         }
@@ -163,13 +163,13 @@ class CommandPaletteController extends Controller
             // Filter out fragment models
             ->filter(function ($model) {
                 return ! in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
-            // Return all instances of the models
+                // Return all instances of the models
             })->map(function ($model) {
                 $models = $model::all();
 
                 return [
                     'label' => $model::make()->adminConfig()->getModelName(),
-                    'models' => $models
+                    'models' => $models,
                 ];
             });
     }
@@ -179,15 +179,15 @@ class CommandPaletteController extends Controller
     {
         return collect(app(Registry::class)->models())
             // Filter out fragment models
-            ->filter(function($model) {
-                return !in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
-            // Return all instances of the models
-            })->map(function($model) {
+            ->filter(function ($model) {
+                return ! in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
+                // Return all instances of the models
+            })->map(function ($model) {
                 $model = $model::make();
 
                 return [
                     'label' => $model->adminConfig()->getNavTitle(),
-                    'url' => '/admin/' . $model->managedModelKey()
+                    'url' => '/admin/' . $model->managedModelKey(),
                 ];
             });
     }
