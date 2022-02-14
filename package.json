@@ -33,7 +33,7 @@
         "shelljs": "^0.8.4"
     },
     "dependencies": {
-        "axios": "^0.21.1",
+        "axios": "^0.26.0",
         "core-js": "^3.19.1",
         "cross-env": "^7.0.3",
         "lodash": "^4.17.21",
