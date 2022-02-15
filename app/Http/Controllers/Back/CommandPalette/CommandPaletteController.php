@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Managers\Register\Registry;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class CommandPaletteController extends Controller
 {
@@ -32,7 +32,8 @@ class CommandPaletteController extends Controller
         ]);
     }
 
-    public function searchThroughPageModels($term) {
+    public function searchThroughPageModels($term)
+    {
         $results = [];
 
         foreach ($this->pageModels as $modelGroup) {
@@ -53,7 +54,7 @@ class CommandPaletteController extends Controller
                 }
             }
 
-            if(count($resultGroup) !== 0) {
+            if (count($resultGroup) !== 0) {
                 $firstModel = $modelGroup['models']->first();
 
                 array_push($resultGroup, [
@@ -71,7 +72,8 @@ class CommandPaletteController extends Controller
         return $results;
     }
 
-    public function searchThroughAdminPages($term) {
+    public function searchThroughAdminPages($term)
+    {
         $adminPages = collect([
             [
                 'label' => 'Dashboard',
@@ -82,63 +84,63 @@ class CommandPaletteController extends Controller
                 'label' => 'Menu',
                 'url' => route('chief.back.menus.index'),
                 'permission' => 'update-page',
-                'tags' => ['navigatie']
+                'tags' => ['navigatie'],
             ], [
                 'label' => 'Media',
                 'url' => route('chief.mediagallery.index'),
                 'permission' => 'update-page',
-                'tags' => ['mediagalerij', 'mediabibliotheek', 'assets']
+                'tags' => ['mediagalerij', 'mediabibliotheek', 'assets'],
             ], [
                 'label' => 'Teksten',
                 'url' => route('squanto.index'),
                 'permission' => 'view-squanto',
-                'tags' => ['squanto', 'mediagalerij', 'mediabibliotheek', 'assets']
+                'tags' => ['squanto', 'mediagalerij', 'mediabibliotheek', 'assets'],
             ], [
                 'label' => 'Sitemap',
                 'url' => route('chief.back.sitemap.show'),
                 'permission' => null,
-                'tags' => []
+                'tags' => [],
             ], [
                 'label' => 'Admins',
                 'url' => route('chief.back.users.index'),
                 'permission' => 'view-user',
-                'tags' => []
+                'tags' => [],
             ], [
                 'label' => 'Rechten',
                 'url' => route('chief.back.roles.index'),
                 'permission' => 'view-role',
-                'tags' => ['roles']
+                'tags' => ['roles'],
             ], [
                 'label' => 'Settings',
                 'url' => route('chief.back.settings.edit'),
                 'permission' => 'update-setting',
-                'tags' => ['instellingen']
+                'tags' => ['instellingen'],
             ], [
                 'label' => 'Audit',
                 'url' => route('chief.back.audit.index'),
                 'permission' => 'view-audit',
-                'tags' => []
+                'tags' => [],
             ], [
                 'label' => chiefAdmin()->firstname,
                 'url' => route('chief.back.you.edit'),
                 'permission' => 'update-you',
-                'tags' => ['account']
+                'tags' => ['account'],
             ], [
                 'label' => 'Logout',
                 'url' => route('chief.back.logout'),
                 'permission' => null,
-                'tags' => []
-            ]
+                'tags' => [],
+            ],
         ]);
 
         $models = $adminPages->filter(function ($adminPage) use ($term) {
             // Check if label contains search term
-            if(Str::contains(Str::lower($adminPage['label']), $term)) {
+            if (Str::contains(Str::lower($adminPage['label']), $term)) {
                 return true;
             }
 
             // Check if any of tags contain search term
-            if(collect($adminPage['tags'])->contains(function ($tag) use ($term) {
+            if (collect($adminPage['tags'])->contains(function ($tag) use ($term) {
                 return Str::contains(Str::lower($tag), $term);
             })) {
                 return true;
@@ -152,15 +154,15 @@ class CommandPaletteController extends Controller
             ];
         })->toArray();
 
-        if(count($models) === 0) {
+        if (count($models) === 0) {
             return [];
         }
 
         return [
             [
                 'label' => 'Chief',
-                'models' => $models
-            ]
+                'models' => $models,
+            ],
         ];
     }
 
