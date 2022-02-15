@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -79,7 +78,7 @@ class CommandPaletteController extends Controller
                 'label' => 'Dashboard',
                 'url' => route('chief.back.dashboard'),
                 'permission' => null,
-                'tags' => ['home']
+                'tags' => ['home'],
             ], [
                 'label' => 'Menu',
                 'url' => route('chief.back.menus.index'),
