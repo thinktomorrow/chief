@@ -32,23 +32,26 @@ const initCommandPalette = () => {
         // Add all element selectors here that should be focusable
         const allTargets = [searchElement, ...Array.from(container.querySelectorAll('[href]'))];
 
-        if (e.keyCode === 40 || (e.ctrlKey && e.keyCode === 74)) {
-            const targetIndex = allTargets.indexOf(e.target);
+        // Move with arrow up/down, ctrl + j/k or tab (+ shift)
+        if (e.keyCode === 38 || (e.ctrlKey && e.keyCode === 75) || (e.shiftKey && e.keyCode === 9)) {
+            e.preventDefault();
 
-            if (targetIndex === allTargets.length - 1) {
-                allTargets[0].focus();
-            } else {
-                allTargets[targetIndex + 1].focus();
-            }
-        }
-
-        if (e.keyCode === 38 || (e.ctrlKey && e.keyCode === 75)) {
             const targetIndex = allTargets.indexOf(e.target);
 
             if (targetIndex === 0) {
                 allTargets[allTargets.length - 1].focus();
             } else {
                 allTargets[targetIndex - 1].focus();
+            }
+        } else if (e.keyCode === 40 || (e.ctrlKey && e.keyCode === 74) || e.keyCode === 9) {
+            e.preventDefault();
+
+            const targetIndex = allTargets.indexOf(e.target);
+
+            if (targetIndex === allTargets.length - 1) {
+                allTargets[0].focus();
+            } else {
+                allTargets[targetIndex + 1].focus();
             }
         }
     });
