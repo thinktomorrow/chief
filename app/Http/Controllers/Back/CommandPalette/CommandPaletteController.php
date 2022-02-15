@@ -15,10 +15,12 @@ class CommandPaletteController extends Controller
         $this->pageModels = $this->getAllPageModels();
     }
 
-    public function search(Request $request, string $term = '')
+    public function search(string $term = '')
     {
         $lowercaseTerm = Str::lower($term);
 
+        // Is it possible to generate results based on visitable routes,
+        // instead of getting models and keeping a static list of admin pages?
         $results = [
             ...$this->searchThroughPageModels($lowercaseTerm),
             ...$this->searchThroughAdminPages($lowercaseTerm),
@@ -72,6 +74,11 @@ class CommandPaletteController extends Controller
     public function searchThroughAdminPages($term) {
         $adminPages = collect([
             [
+                'label' => 'Dashboard',
+                'url' => route('chief.back.dashboard'),
+                'permission' => null,
+                'tags' => ['home']
+            ], [
                 'label' => 'Menu',
                 'url' => route('chief.back.menus.index'),
                 'permission' => 'update-page',

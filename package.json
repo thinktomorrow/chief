@@ -4,11 +4,12 @@
         "watch": "mix watch --mix-config=webpack.mix.js",
         "prod": "mix --production --mix-config=webpack.mix.js",
         "test": "jest",
-        "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write",
+        "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write --plugin-search-dir=./node_modules --plugin=./@ryangjchandler/prettier-plugin-blade",
         "lint": "eslint --fix 'resources/assets/**/*.js'",
         "prepare": "husky install"
     },
     "devDependencies": {
+        "@ryangjchandler/prettier-plugin-blade": "github:ryangjchandler/prettier-plugin-blade",
         "autoprefixer": "^10.4.0",
         "babel-jest": "^26.6.3",
         "cross-env": "^7.0.3",
