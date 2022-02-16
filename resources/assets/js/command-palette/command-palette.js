@@ -14,7 +14,7 @@ const initCommandPalette = () => {
                 DOM.innerHTML = data;
                 resultElement.innerHTML = DOM.innerHTML;
             });
-        }, 250)
+        }, 100)
     );
 
     document.addEventListener('keydown', (e) => {
