@@ -24,7 +24,7 @@
 
         <div
             data-navigation-item-content
-            class="flex flex-col space-y-3 animate-navigation-item-content-slide-in"
+            class="flex flex-col space-y-3 animate-slide-in"
             style="margin-left: calc(20px + 1rem); {{ $showOpenDropdown ? '' : 'display: none;' }}"
         >
             @foreach($items as $navItem)

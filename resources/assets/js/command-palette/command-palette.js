@@ -1,3 +1,4 @@
+import _debounce from 'lodash/debounce';
 import Api from '../components/sidebar/Api';
 
 const initCommandPalette = () => {
@@ -5,13 +6,16 @@ const initCommandPalette = () => {
     const searchElement = container.querySelector('#search');
     const resultElement = container.querySelector('#result');
 
-    searchElement.addEventListener('input', () => {
-        Api.get(`/admin/search/${searchElement.value}`, (data) => {
-            const DOM = document.createElement('div');
-            DOM.innerHTML = data;
-            resultElement.innerHTML = DOM.innerHTML;
-        });
-    });
+    searchElement.addEventListener(
+        'input',
+        _debounce(() => {
+            Api.get(`/admin/search/${searchElement.value}`, (data) => {
+                const DOM = document.createElement('div');
+                DOM.innerHTML = data;
+                resultElement.innerHTML = DOM.innerHTML;
+            });
+        }, 250)
+    );
 
     document.addEventListener('keydown', (e) => {
         // Register command palette toggle keybind

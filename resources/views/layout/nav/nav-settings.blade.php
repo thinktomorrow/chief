@@ -13,7 +13,7 @@
 
         <div
             data-navigation-item-content
-            class="flex flex-col space-y-3 animate-navigation-item-content-slide-in"
+            class="flex flex-col space-y-3 animate-slide-in"
             style="margin-left: calc(20px + 1rem); {{ $hasActiveChildren ? '' : 'display: none;' }}"
         >
             @can('view-user')
