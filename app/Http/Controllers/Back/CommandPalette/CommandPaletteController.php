@@ -123,7 +123,7 @@ class CommandPaletteController extends Controller
 
         return [
             [
-                'label' => 'Chief',
+                'label' => 'Admin',
                 'results' => $results,
             ],
         ];
@@ -140,7 +140,7 @@ class CommandPaletteController extends Controller
                 $models = $model::all();
 
                 return [
-                    'label' => $model::make()->adminConfig()->getModelName(),
+                    'label' => $model::make()->adminConfig()->getIndexTitle(),
                     'models' => $models,
                 ];
             });
