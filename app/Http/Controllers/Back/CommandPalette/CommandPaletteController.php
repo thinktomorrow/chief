@@ -88,7 +88,7 @@ class CommandPaletteController extends Controller
             [ 'label' => 'Settings', 'url' => route('chief.back.settings.edit'), 'permission' => 'update-setting', 'tags' => ['instellingen'], ],
             [ 'label' => 'Audit', 'url' => route('chief.back.audit.index'), 'permission' => 'view-audit', 'tags' => [], ],
             [ 'label' => chiefAdmin()->firstname, 'url' => route('chief.back.you.edit'), 'permission' => 'update-you', 'tags' => ['account'], ],
-            [ 'label' => 'Logout', 'url' => route('chief.back.logout'), 'permission' => null, 'tags' => [], ]
+            [ 'label' => 'Logout', 'url' => route('chief.back.logout'), 'permission' => null, 'tags' => [], ],
         ]);
 
         $results = $adminPages->filter(function ($adminPage) use ($term) {
