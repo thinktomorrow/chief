@@ -42,6 +42,15 @@ module.exports = {
             body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
         },
         extend: {
+            animation: {
+                'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
+            },
+            keyframes: {
+                slideInNavigation: {
+                    '0%': { transform: 'translateX(100vw)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+            },
             maxHeight: {
                 '1/2': '50vh',
             },

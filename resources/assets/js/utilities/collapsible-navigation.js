@@ -9,12 +9,13 @@ const initCollapsibleNavigation = (
     const container = document.querySelector(containerSelector);
     const toggle = document.querySelector(toggleSelector);
     const changingElements = Array.from(document.querySelectorAll(`[${changingElementsAttribute}]`));
-    let isCollapsed = false;
+    let isCollapsed = localStorage.getItem('isNavigationCollapsed') || false;
 
     toggle.addEventListener('click', () => {
-        container.classList.toggle('w-64');
+        container.classList.toggle('w-navigation');
 
         if (!isCollapsed) {
+            // Publish event so dropdown.js will close all dropdowns
             EventBus.publish('collapsedNavigation');
         }
 
@@ -28,6 +29,8 @@ const initCollapsibleNavigation = (
         });
 
         isCollapsed = !isCollapsed;
+
+        localStorage.setItem('isNavigationCollapsed', isCollapsed);
     });
 };
 

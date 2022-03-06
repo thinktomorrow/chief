@@ -10,33 +10,33 @@
             <div class="flex space-x-1">
                 @isset($icon)
                     @isset($url)
-                        <a 
+                        <a
                             href="{{ $url }}"
                             title="{!! $label !!}"
-                            class="flex-shrink-0 p-2 pop children:w-6 children:h-6 children:text-grey-700"
+                            class="flex-shrink-0 p-2 children:w-6 children:h-6 children:text-grey-700"
                         >
                             {!! $icon !!}
                         </a>
                     @else
-                        <div class="flex-shrink-0 p-2 pop children:w-6 children:h-6 children:text-grey-700">
+                        <div class="flex-shrink-0 p-2 children:w-6 children:h-6 children:text-grey-700">
                             {!! $icon !!}
                         </div>
                     @endisset
                 @endisset
 
                 @isset($url)
-                    <a 
-                        data-class-on-collapse="{{ $collapsible ? 'hidden' : null }}" 
+                    <a
+                        data-class-on-collapse="{{ $collapsible ? 'hidden' : null }}"
                         href="{{ $url }}"
                         title="{!! $label !!}"
-                        class="px-3 py-2 link link-black pop"
+                        class="px-3 py-2 link link-black"
                     >
                         {!! $label !!}
                     </a>
                 @else
-                    <span 
-                        data-class-on-collapse="{{ $collapsible ? 'hidden' : null }}" 
-                        class="px-3 py-2 link link-black pop"
+                    <span
+                        data-class-on-collapse="{{ $collapsible ? 'hidden' : null }}"
+                        class="px-3 py-2 link link-black"
                     >
                         {!! $label !!}
                     </span>
@@ -52,11 +52,11 @@
             @endif
         </div>
     </div>
-    
+
     @if(!$slot->isEmpty())
-        <div 
+        <div
             data-dropdown="{{ $dropdownIdentifier }}"
-            data-class-on-collapse="absolute left-6 top-0 bg-white rounded-lg shadow-window p-2 min-w-48" 
+            data-class-on-collapse="absolute left-6 top-0 bg-white rounded-lg shadow-window p-2 min-w-48"
             class="ml-11 {{ $open ? '' : 'hidden' }}"
         >
             {!! $slot !!}
