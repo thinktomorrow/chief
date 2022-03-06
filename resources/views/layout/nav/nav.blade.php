@@ -1,31 +1,35 @@
 {{--
     TODO(tijs):
     - It should be visible to the user which navigation item is active
-    - working with the collapsible attribute feels weird (top level nav items should collapse, nested items shouldn't)
-    - Collapsed state of the sidebar should be remembered between pageloads
-    - On mobile the navigation is always expanded and works like a normal mobile navigation with hamburger icon
+    - In collapsed state, multiple dropdowns shouldn't be open at the same time
+    - Bug: if page loads in collapsed state, dropdowns won't open
 --}}
 
 <div
     data-collapsible-navigation
-    class="h-screen px-3 divide-y shadow-sm select-none w-navigation divide-grey-100"
+    class="h-screen px-3 divide-y shadow-sm select-none divide-grey-100"
 >
     {{-- Desktop Chief title --}}
     <div class="items-center justify-start hidden py-6 lg:flex">
         <div
-            data-hide-all-dropdowns
-            data-toggle-collapsible-navigation
+            data-toggle-navigation
             class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50"
         >
             <svg class="w-6 h-6 text-grey-700"><use xlink:href="#menu"></use></svg>
         </div>
 
-        <span data-class-on-collapse="hidden" class="px-3 py-2 link link-black"> Chief </span>
+        <span
+            data-toggle-classes="hidden"
+            class="px-3 py-2 link link-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
+        > Chief </span>
     </div>
 
     {{-- Mobile Chief title --}}
     <div class="flex items-center justify-start py-6 lg:hidden">
-        <div data-mobile-navigation-toggle class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50">
+        <div
+            data-mobile-navigation-toggle
+            class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50"
+        >
             <svg class="w-6 h-6 text-grey-700"><use xlink:href="#icon-arrow-rtl"></use></svg>
         </div>
 

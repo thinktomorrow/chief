@@ -46,8 +46,8 @@ const initDropdowns = function (toggleAttribute = 'data-toggle-dropdown', dropdo
             );
         });
 
-    // If navigation is collapsed, close all dropdowns
-    EventBus.subscribe('collapsedNavigation', () => {
+    // When event is published, close all dropdowns
+    EventBus.subscribe('closeAllDropdowns', () => {
         dropdowns.forEach((dropdown) => {
             if (!dropdown.isNested()) {
                 dropdown.close();

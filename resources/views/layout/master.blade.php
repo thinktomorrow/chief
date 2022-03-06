@@ -11,7 +11,11 @@
                 <div class="relative top-0 z-50 flex-shrink-0 w-full lg:sticky lg:w-auto">
                     <div class="container block lg:hidden">
                         <div class="flex items-center justify-start pt-6 -ml-2 lg:hidden">
-                            <div data-mobile-navigation-toggle class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50">
+                            <div
+                                data-mobile-navigation-toggle
+                                data-expand-navigation
+                                class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50"
+                            >
                                 <svg class="w-6 h-6 text-grey-700"><use xlink:href="#menu"></use></svg>
                             </div>
 
