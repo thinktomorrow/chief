@@ -93,6 +93,14 @@ if (! function_exists('chiefmenu')) {
     }
 }
 
+// Retrieve the logged in admin
+if (! function_exists('visitedUrl')) {
+    function visitedUrl(string $url): string
+    {
+        return app(\Thinktomorrow\Chief\Admin\Users\VisitedUrl::class)->get($url);
+    }
+}
+
 if (! function_exists('str_slug_slashed')) {
     function str_slug_slashed($title, $separator = '-', $language = 'en'): string
     {

@@ -95,8 +95,9 @@ trait PageDefaults
             ->unique()
             ->reject(fn ($value) => is_null($value))
             ->reject(fn ($value) => method_exists($this, $value))
+            ->reject(fn ($value) => in_array($value, $this->dynamicKeysBlacklist()))
             ->values()
             ->toArray()
-        ;
+            ;
     }
 }

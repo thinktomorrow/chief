@@ -22,10 +22,10 @@
             <template v-if="Object.keys(valuesAsSelectedOptions).length > 0">
                 <option
                     selected="selected"
-                    v-for="(label, index) in valuesAsSelectedOptions"
-                    :value="index"
+                    v-for="(entry, index) in valuesAsSelectedOptions"
+                    :value="entry.index"
                     :key="index"
-                    v-text="label"
+                    v-text="entry.label"
                 ></option>
             </template>
 
@@ -83,7 +83,7 @@ export default {
             if (this.value === null) return [];
 
             if (this.isPrimitive(this.value)) {
-                return { [this.value]: this.value };
+                return [{ index: this.value,  label: this.value }];
             }
 
             return this.pluck(this.value, this.valuekey, this.labelkey);
@@ -222,15 +222,15 @@ export default {
             if (!value) value = key;
 
             if (Array.isArray(values)) {
-                let result = {};
+                let result = [];
                 values.forEach((val) => {
                     if (this.isPrimitive(val)) {
-                        result[val] = val;
+                        result.push({index: val,  label: val});
                     } else {
                         if (!key)
                             throw '[Multiselect::pluck()] A key parameter is required for the pluck method. None given. You can set a :valuekey on the component element.';
 
-                        result[val[key]] = val[value];
+                      result.push({index: val[key],  label: val[value]});
                     }
                 });
 
@@ -241,7 +241,7 @@ export default {
                 throw '[Multiselect::pluck()] A key parameter is required for the pluck method. None given. You can set a :valuekey on the component element.';
 
             // Object
-            return { [values[key]]: values[value] };
+            return [{ index: [values[key]], label: values[value] }];
         },
         // This assumes a group setup
         flattenGroupedValues(values, key) {

@@ -9,7 +9,6 @@
     <title>Chief • @yield('page-title', 'Admin')</title>
     <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('chief-assets/back/img/favicon.png')}}" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,30 +20,14 @@
         [v-cloak] { display: none !important; }
     </style>
 
+    @include('chief::layout._partials.favicon')
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
-
-    <style type="text/css">
-        .slim { max-height: 250px; }
-        .slim-error { min-height: 60px; }
-        .slim-upload-status { padding: .3em; }
-        .slim .slim-area .slim-upload-status[data-state=error] {
-            right: .5em;
-            left: .5em;
-            line-height: 1.1;
-            padding: .3em;
-            white-space: normal;
-        }
-        .slim .slim-area .slim-result img {
-            height: 100%;
-            object-fit: cover;
-        }
-        .thumb [data-state=empty] { height: 80px; }
-    </style>
 
     @stack('custom-styles')
 </head>

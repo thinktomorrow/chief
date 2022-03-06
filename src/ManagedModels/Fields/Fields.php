@@ -142,12 +142,12 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         unset($this->items[$offset]);
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->items->all());
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }

@@ -13,6 +13,8 @@ interface Field
 
     public function ofType(...$type): bool;
 
+    public function key(string $key): Field;
+
     public function getKey(): string;
 
     public function getViewKey(): string;

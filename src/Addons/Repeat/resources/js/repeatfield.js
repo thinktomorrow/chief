@@ -72,11 +72,11 @@ class RepeatField {
     _addFieldSet() {
         if (!this._checkMax()) return;
 
-        const fieldSet = this._cloneFieldSet(
+        const fieldSet = RepeatField._cloneFieldSet(
             this.fieldsContainer.querySelector(`${this._attributeKey('data-repeat-fieldset')}:last-child`)
         );
-
         fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
+        RepeatField._makeFieldSetIdUnique(fieldSet);
         RepeatField._makeNestedRepeatElsUnique(fieldSet);
 
         // Clear existing values
@@ -92,14 +92,8 @@ class RepeatField {
         initRepeatFields(fieldSet);
     }
 
-    _cloneFieldSet(fieldSet) {
-        const copiedFieldSet = fieldSet.cloneNode(true);
-        const nextIndex = this.fieldsContainer.childElementCount;
-        const fieldSetId = copiedFieldSet.id + nextIndex;
-
-        copiedFieldSet.id = fieldSetId;
-
-        return copiedFieldSet;
+    static _cloneFieldSet(fieldSet) {
+        return fieldSet.cloneNode(true);
     }
 
     _increaseRepeatIndex(fieldSet) {
@@ -107,6 +101,15 @@ class RepeatField {
         const repeatKey = firstField.getAttribute('data-repeat-field-key');
 
         return increaseDeepestIndex(fieldSet.innerHTML, repeatKey);
+    }
+
+    static _makeFieldSetIdUnique(fieldSet) {
+        const fieldSetId = fieldSet.getAttribute('id');
+        const randomString = Math.random().toString(36).substr(2, 10);
+
+        console.log(fieldSetId, randomString);
+        fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(fieldSetId, 'g'), randomString);
+        fieldSet.setAttribute('id', randomString);
     }
 
     static _makeNestedRepeatElsUnique(fieldSet) {

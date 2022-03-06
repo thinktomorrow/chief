@@ -5,7 +5,7 @@
 @endphp
 
 <div>
-    <div class="bg-white rounded-2xl shadow-window">
+    <div class="h-full bg-white rounded-2xl shadow-window">
         <div class="p-6">
             @if(isset($title) || isset($label) || isset($url) || isset($sidebar))
                 <div class="{{ $slot->isNotEmpty() ? 'mb-6' : null }}">

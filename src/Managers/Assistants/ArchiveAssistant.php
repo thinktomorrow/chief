@@ -114,7 +114,7 @@ trait ArchiveAssistant
         return view('chief::manager.index', [
             'manager' => $this,
             'model' => $model,
-            'models' => $this->managedModelClass()::archived()->paginate(20),
+            'models' => $this->managedModelClass()::archived()->paginate(20)->withQueryString(),
         ]);
     }
 }

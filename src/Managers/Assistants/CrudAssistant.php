@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
@@ -86,6 +87,8 @@ trait CrudAssistant
 
         $modelClass = $this->managedModelClass();
 
+        app(VisitedUrl::class)->add(request()->fullUrl());
+
         return view('chief::manager.index', [
             'manager' => $this,
             'model' => new $modelClass(),
@@ -103,7 +106,7 @@ trait CrudAssistant
             return $builder->get();
         }
 
-        return $builder->paginate($pagination);
+        return $builder->paginate($pagination)->withQueryString();
     }
 
     public function filters(): Filters
