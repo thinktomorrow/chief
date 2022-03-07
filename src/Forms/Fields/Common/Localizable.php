@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\Locale;
+namespace Thinktomorrow\Chief\Forms\Fields\Common;
 
 interface Localizable
 {

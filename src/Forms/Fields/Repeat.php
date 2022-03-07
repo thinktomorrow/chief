@@ -16,7 +16,7 @@ class Repeat extends Component implements Field
     {
         // Loop over fields and populate them with the value...
 
-        // Group every components stack into a 'card' component. In order to group it.
+        // Group every component stack into a 'card' component. In order to group it.
         // Multiply it with the values - keep in mind the startWithAmount value
         // Populate the fields of each group with the values given.
         $components = [];
@@ -37,7 +37,7 @@ class Repeat extends Component implements Field
         // Populate fields with the correct name and the given values
         Fields::extract($clonedComponents)
             ->each(function ($field) use ($index, $locale, $values) {
-                $fieldName = Fields\Locale\LocalizedFormKey::make()
+                $fieldName = Common\LocalizedFormKey::make()
                     ->template(':prefix['.$index.'].:name.:locale')
                     ->replace('prefix', $this->getName())
                     ->bracketed()

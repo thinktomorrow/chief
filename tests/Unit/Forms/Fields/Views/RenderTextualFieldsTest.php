@@ -70,7 +70,7 @@ class RenderTextualFieldsTest extends TestCase
     /** @test */
     public function it_can_render_a_custom_view()
     {
-        $this->app['view']->addNamespace('test-views', __DIR__.'/../stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../../stubs/views');
 
         $this->assertStringContainsString(
             'this is a custom field view',

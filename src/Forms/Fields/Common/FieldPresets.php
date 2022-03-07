@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields\Helpers;
+namespace Thinktomorrow\Chief\Forms\Fields\Common;
 
-use Thinktomorrow\Chief\Forms\Fields\Types\ImageField;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\Forms\Fields\Types\TextField;
+use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Types\ImageField;
 
 class FieldPresets
 {

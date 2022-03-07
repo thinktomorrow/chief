@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
-use Thinktomorrow\Chief\Forms\Fields\Helpers\FormKey;
-use Thinktomorrow\Chief\Forms\Fields\Locale\Localizable;
-use Thinktomorrow\Chief\Forms\Fields\Locale\LocalizedFormKey;
+use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 
 class ValidationParameters
 {

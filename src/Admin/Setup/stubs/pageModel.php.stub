@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Admin\AdminConfig;
 use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\Forms\Fields\Helpers\FieldPresets;
+use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 
 class __STUB_CLASSNAME__ extends Model implements PageContract
 {

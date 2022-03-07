@@ -53,7 +53,7 @@ class ChiefServiceProvider extends ServiceProvider
         // Packages
         (new AssetLibraryServiceProvider($this->app))->boot();
         (new SitemapServiceProvider($this->app))->boot();
-        (new LivewireServiceProvider($this->app))->boot();
+//        (new LivewireServiceProvider($this->app))->boot();
 
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->boot();
@@ -169,7 +169,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new SettingsServiceProvider($this->app))->register();
 
         // Packages
-        (new LivewireServiceProvider($this->app))->register();
+//        (new LivewireServiceProvider($this->app))->register();
         (new AssetLibraryServiceProvider($this->app))->register();
         (new SitemapServiceProvider($this->app))->register();
 

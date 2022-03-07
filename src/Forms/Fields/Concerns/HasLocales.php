@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
-use Thinktomorrow\Chief\Forms\Fields\Locale\LocalizedFormKey;
+use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 
 trait HasLocales
 {

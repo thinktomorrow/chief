@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Media\Application;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Exceptions\PostTooLargeException;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
+use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Fields;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Forms;
 
 class AsyncFileUpload
 {
@@ -93,7 +93,7 @@ class AsyncFileUpload
         // validation rules expects something as [files.avatar.nl => [payload]]
         $payload = [];
 
-        $dottedFieldName = Fields\Helpers\FormKey::replaceBracketsByDots($field->getName($locale));
+        $dottedFieldName = Fields\Common\FormKey::replaceBracketsByDots($field->getName($locale));
         Arr::set($payload, $dottedFieldName, [$input]);
 
         $this->fieldValidator->handle(Fields::make([$field]), $payload);

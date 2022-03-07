@@ -10,10 +10,6 @@ use Thinktomorrow\Chief\Forms\Fields\Select;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class RenderSelectFieldsTest extends TestCase
 {
     private array $classes;
@@ -36,7 +32,7 @@ class RenderSelectFieldsTest extends TestCase
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
             $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->value($value);
-            $this->assertStringContainsString('name="xxx"', $component->toHtml());
+            $this->assertStringContainsString('name="xxx', $component->toHtml());
             $this->assertStringContainsString($value, $component->toHtml());
         }
     }
@@ -73,7 +69,7 @@ class RenderSelectFieldsTest extends TestCase
     /** @test */
     public function it_can_render_a_custom_view()
     {
-        $this->app['view']->addNamespace('test-views', __DIR__.'/../stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../../stubs/views');
 
         $this->assertStringContainsString(
             'this is a custom field view',

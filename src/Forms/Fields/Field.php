@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Forms\Fields\Locale\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
 
 interface Field extends Validatable, Localizable
