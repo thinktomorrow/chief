@@ -21,9 +21,9 @@ const Submit = {
         }
 
         EventBus.publish('chief-form-submitted', {
-            currentElement: currentElement,
-            targetElement: targetElement,
-            tags: tags,
+            currentElement,
+            targetElement,
+            tags,
             response: responseData,
         });
     },

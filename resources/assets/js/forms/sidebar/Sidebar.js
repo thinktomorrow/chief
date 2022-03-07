@@ -73,7 +73,6 @@ export default class {
     }
 
     fetchUrl(url, options = {}) {
-        console.log('fetch panel url: ' + url);
         const panelId = Panels.createId(url);
 
         // Add a new panel element to dom
