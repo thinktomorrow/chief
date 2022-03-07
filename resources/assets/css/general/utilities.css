@@ -121,12 +121,8 @@
     }
 }
 
-@responsive {
-    .w-navigation {
-        @apply w-full;
+.collapsed-dropdown {
+    box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.05);
 
-        @screen lg {
-            @apply w-64;
-        }
-    }
+    @apply absolute left-6 top-0 bg-white rounded-lg p-2 min-w-48 shadow-lg;
 }

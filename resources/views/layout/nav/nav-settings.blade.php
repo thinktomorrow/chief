@@ -3,8 +3,8 @@
         $hasActiveChildren = (isActiveUrl('admin/users*') || isActiveUrl('admin/settings*') || isActiveUrl('admin/audit*') || isActiveUrl('admin/roles*'));
     @endphp
 
-    <x-chief::nav.item 
-        label="Instellingen" 
+    <x-chief::nav.item
+        label="Instellingen"
         icon="<svg><use xlink:href='#icon-settings'></use></svg>"
         collapsible
     >

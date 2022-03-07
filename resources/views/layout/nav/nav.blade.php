@@ -1,10 +1,3 @@
-{{--
-    TODO(tijs):
-    - It should be visible to the user which navigation item is active
-    - In collapsed state, multiple dropdowns shouldn't be open at the same time
-    - Bug: if page loads in collapsed state, dropdowns won't open
---}}
-
 <div
     data-collapsible-navigation
     class="h-screen px-3 divide-y shadow-sm select-none divide-grey-100"

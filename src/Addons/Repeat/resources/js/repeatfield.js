@@ -107,7 +107,6 @@ class RepeatField {
         const fieldSetId = fieldSet.getAttribute('id');
         const randomString = Math.random().toString(36).substr(2, 10);
 
-        console.log(fieldSetId, randomString);
         fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(fieldSetId, 'g'), randomString);
         fieldSet.setAttribute('id', randomString);
     }

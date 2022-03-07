@@ -1,3 +1,5 @@
+import EventBus from './EventBus';
+
 class CollapsibleNavigation {
     constructor(
         containerSelector = '[data-collapsible-navigation]',
@@ -41,7 +43,7 @@ class CollapsibleNavigation {
     }
 
     _collapse() {
-        console.log('Collapsing ...');
+        EventBus.publish('closeAllDropdowns');
 
         this.toggleClassesElements.forEach((element) => {
             const classNames = element.getAttribute(this.toggleClassesAttribute).split(' ');
@@ -58,8 +60,6 @@ class CollapsibleNavigation {
     }
 
     _expand() {
-        console.log('Expanding ...');
-
         this.toggleClassesElements.forEach((element) => {
             const classNames = element.getAttribute(this.toggleClassesAttribute).split(' ');
 

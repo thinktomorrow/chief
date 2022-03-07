@@ -10,7 +10,14 @@ class Dropdown {
     }
 
     _init() {
-        this.toggleElement.addEventListener('click', () => {
+        this.toggleElement.addEventListener('click', (e) => {
+            // So elements link anchors can be ignored as toggle target
+            if (e.target.hasAttribute('data-toggle-dropdown-ignore')) return;
+
+            if (this.dropdownElement.classList.contains('collapsed-dropdown') && !this.nested) {
+                EventBus.publish('closeAllDropdowns');
+            }
+
             this.dropdownElement.classList.toggle('hidden');
         });
     }
@@ -49,9 +56,7 @@ const initDropdowns = function (toggleAttribute = 'data-toggle-dropdown', dropdo
     // When event is published, close all dropdowns
     EventBus.subscribe('closeAllDropdowns', () => {
         dropdowns.forEach((dropdown) => {
-            if (!dropdown.isNested()) {
-                dropdown.close();
-            }
+            dropdown.close();
         });
     });
 };
