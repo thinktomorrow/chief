@@ -4,6 +4,11 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
+# unreleased
+
+# 0.6.16 - 2022-03-09
+- Added: fields tagged with 'content' are placed in default edit view without need to create own edit view
+
 # 0.6.15 - 2022-01-27
 - Fixed: pagination on index didn't preserved any filtering or sorting
 - Added: Going back from a detailpage to the index will now preserve any filtering, sorting or paginating on that index page.
