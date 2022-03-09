@@ -12,7 +12,7 @@ trait HasValue
 
     /**
      * Flag to indicate internally that a value has been explicitly set (via value()).
-     * This makes it possible to also set null value as well.
+     * This makes it possible to purposely set null as a value.
      */
     protected bool $valueGiven = false;
 

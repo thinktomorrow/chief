@@ -10,6 +10,7 @@ trait PageFormParams
     protected function validPageParams($overrides = [])
     {
         $params = [
+            'title' => 'title',
             'trans' => [
                 'nl' => [
                     'title_trans' => 'new title',
@@ -37,6 +38,7 @@ trait PageFormParams
     protected function validUpdatePageParams($overrides = [])
     {
         $params = [
+            'title' => 'title',
             'trans' => [
                 'nl' => [
                     'title' => 'aangepaste title',

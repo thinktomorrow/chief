@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
@@ -27,7 +27,7 @@ class QuoteWithAstrotomicTranslations extends Model implements ManagedModel
     public function fields(): Fields
     {
         return Fields::make([
-            InputField::make('title_trans')->locales(['nl', 'en']),
+            Text::make('title_trans')->locales(['nl', 'en']),
         ]);
     }
 

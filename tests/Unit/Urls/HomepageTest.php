@@ -159,7 +159,6 @@ class HomepageTest extends ChiefTestCase
                 'en' => 'foobar',
             ],
         ]);
-        $other = ArticlePage::create();
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
@@ -168,12 +167,13 @@ class HomepageTest extends ChiefTestCase
             ],
         ]));
 
-        $this->assertEquals(4, UrlRecord::count());
+        $this->assertEquals(6, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($model, 'nl')->slug);
         $this->assertEquals('/', UrlRecord::findByModel($model, 'en')->slug);
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
 
+        $other = ArticlePage::create();
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $other->modelReference()->getShort(),
@@ -181,7 +181,7 @@ class HomepageTest extends ChiefTestCase
             ],
         ]));
 
-        $this->assertEquals(4, UrlRecord::count());
+        $this->assertEquals(6, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($other, 'nl')->slug);
         $this->assertEquals('/', UrlRecord::findByModel($other, 'en')->slug);
         $this->assertEquals('foobar', UrlRecord::findByModel($model, 'nl')->slug);
