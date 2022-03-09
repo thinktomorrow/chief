@@ -2,7 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
 
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FormsAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -14,32 +15,24 @@ class EditActionTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $model = ManagedModelFactory::make()->fields([
-            InputField::make('title'),
-        ])->create(['title' => 'Original titel']);
+        $model = $this->setupAndCreateArticle();
 
-        $manager = ManagerFactory::make()
-            ->withAssistants([CrudAssistant::class, FormsAssistant::class])
-            ->withModel($model)
-            ->create();
+        $this->setupAndCreateQuote($model);
+        $this->setupAndCreateSnippet($model);
 
-        $this->asAdmin()->get($manager->route('edit', $model))
+        $this->asAdmin()->get($this->manager($model)->route('edit', $model))
             ->assertStatus(200);
     }
 
     /** @test */
     public function guests_cannot_view_the_edit_form()
     {
-        $model = ManagedModelFactory::make()->fields([
-            InputField::make('title'),
-        ])->create(['title' => 'Original titel']);
+        $model = $this->setupAndCreateArticle();
 
-        $manager = ManagerFactory::make()
-            ->withAssistants([CrudAssistant::class])
-            ->withModel($model)
-            ->create();
+        $this->setupAndCreateQuote($model);
+        $this->setupAndCreateSnippet($model);
 
-        $this->get($manager->route('edit', $model))
+        $this->get($this->manager($model)->route('edit', $model))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }

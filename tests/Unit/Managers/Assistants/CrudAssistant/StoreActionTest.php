@@ -3,8 +3,13 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
@@ -12,28 +17,25 @@ use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 class StoreActionTest extends ChiefTestCase
 {
+    use PageFormParams;
+
     /** @test */
     public function it_can_create_a_model()
     {
-        $model = ManagedModelFactory::make()->fields([
-            InputField::make('title')->tag('create'),
-        ])->withoutDatabaseInsert()->create();
+        ArticlePage::migrateUp();
+        chiefRegister()->model(ArticlePage::class, PageManager::class);
 
-        $manager = ManagerFactory::make()->withAssistants([CrudAssistant::class])->withModel($model)->create();
+        $this->asAdmin()->post($this->manager(ArticlePage::managedModelKey())->route('store'), $this->validPageParams(['title' => 'new-title']));
 
-        $this->asAdmin()->post($manager->route('store'), [
-            'title' => 'new-title',
-        ]);
-
-        $this->assertEquals(1, $model::count());
-        $this->assertEquals('new-title', $model::first()->title);
+        $this->assertEquals(1, ArticlePage::count());
+        $this->assertEquals('new-title', ArticlePage::first()->title);
     }
 
     /** @test */
     public function it_can_create_a_model_with_dynamic_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('dynamic_title')->tag('create'),
+            Text::make('dynamic_title')->tag('create'),
         ])->dynamicKeys(['dynamic_title'])->withoutDatabaseInsert()->create();
 
         $manager = ManagerFactory::make()->withAssistants([CrudAssistant::class])->withModel($model)->create();
@@ -50,7 +52,7 @@ class StoreActionTest extends ChiefTestCase
     public function it_can_create_a_model_with_dynamic_localized_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('dynamic_localized_title')->locales(['nl', 'en'])->tag('create'),
+            Text::make('dynamic_localized_title')->locales(['nl', 'en'])->tag('create'),
         ])->dynamicKeys(['dynamic_localized_title'])->withoutDatabaseInsert()->create();
 
         $manager = ManagerFactory::make()->withAssistants([CrudAssistant::class])->withModel($model)->create();
@@ -75,7 +77,7 @@ class StoreActionTest extends ChiefTestCase
     public function it_can_create_a_model_with_localized_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('title_trans')->locales(['nl', 'en'])->tag('create'),
+            Text::make('title_trans')->locales(['nl', 'en'])->tag('create'),
         ])->translatedAttributes(['title_trans'])
             ->withoutDatabaseInsert()
             ->create();
@@ -102,7 +104,7 @@ class StoreActionTest extends ChiefTestCase
     public function it_can_upload_a_file_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            FileField::make('hero')->tag('create'),
+            File::make('hero')->tag('create'),
         ])->withoutDatabaseInsert()->create();
 
         $manager = ManagerFactory::make()->withAssistants([CrudAssistant::class])->withModel($model)->create();

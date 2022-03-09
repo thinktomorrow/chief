@@ -193,7 +193,6 @@ class $this->modelClass extends Model implements ManagedModel, HasAsset, Statefu
     public static \$fields = [];
 
     use AssetTrait;
-    use SavingFields;
     use VisitableDefaults;
     $traitStrings
 

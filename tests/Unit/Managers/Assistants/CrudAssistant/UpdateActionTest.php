@@ -3,8 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
@@ -16,7 +17,7 @@ class UpdateActionTest extends ChiefTestCase
     public function it_can_update_a_model()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('title'),
+            Text::make('title'),
         ])->create(['title' => 'Originele titel']);
 
         $manager = ManagerFactory::make()
@@ -35,7 +36,7 @@ class UpdateActionTest extends ChiefTestCase
     public function a_non_admin_cannot_update_a_model()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('title'),
+            Text::make('title'),
         ])->create(['title' => 'Originele titel']);
 
         $manager = ManagerFactory::make()
@@ -55,7 +56,7 @@ class UpdateActionTest extends ChiefTestCase
     public function it_can_update_a_model_with_dynamic_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('title'),
+            Text::make('title'),
         ])->dynamicKeys(['title'])->create(['title' => 'Originele titel']);
 
         $manager = ManagerFactory::make()
@@ -74,7 +75,7 @@ class UpdateActionTest extends ChiefTestCase
     public function it_can_update_a_model_with_dynamic_localized_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('title')->locales(['nl','en']),
+            Text::make('title')->locales(['nl','en']),
         ])->dynamicKeys(['title'])->create(['title.nl' => 'Originele titel', 'title.en' => 'Original title']);
 
         $manager = ManagerFactory::make()
@@ -98,7 +99,7 @@ class UpdateActionTest extends ChiefTestCase
     public function it_can_update_a_model_with_localized_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            InputField::make('title_trans')->locales(['nl', 'en'])->tag('create'),
+            Text::make('title_trans')->locales(['nl', 'en'])->tag('create'),
         ])->translatedAttributes(['title_trans'])
             ->withoutDatabaseInsert()
             ->create();
@@ -125,7 +126,7 @@ class UpdateActionTest extends ChiefTestCase
     public function it_can_upload_a_file_field()
     {
         $model = ManagedModelFactory::make()->fields([
-            FileField::make('hero')->tag('create'),
+            File::make('hero')->tag('create'),
         ])->withoutDatabaseInsert()->create();
 
         $manager = ManagerFactory::make()->withAssistants([CrudAssistant::class])->withModel($model)->create();

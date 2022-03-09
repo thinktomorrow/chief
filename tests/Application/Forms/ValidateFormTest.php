@@ -75,6 +75,20 @@ final class ValidateFormTest extends ChiefTestCase
     }
 
     /** @test */
+    public function a_required_translatable_field_can_be_validated_when_null_is_passed()
+    {
+        $this->assertValidation(
+            new ArticlePage(),
+            'trans.nl.content_trans',
+            $this->payload(['trans.nl.content_trans' => null]),
+            $this->manager->route('edit', $this->model),
+            $this->manager->route('update', $this->model),
+            1,
+            'put'
+        );
+    }
+
+    /** @test */
     public function a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
     {
         $response = $this->actingAs($this->developer(), 'chief')

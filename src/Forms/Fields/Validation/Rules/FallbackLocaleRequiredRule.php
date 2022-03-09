@@ -17,7 +17,7 @@ class FallbackLocaleRequiredRule
         $fallbackLocale = config('app.fallback_locale');
 
         if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
-            return (bool) trim($value);
+            return is_null($value) ? false : (bool) trim($value);
         }
 
         return true;
