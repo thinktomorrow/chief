@@ -43,7 +43,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function find(string $key): Field
     {
-        if (!isset($this->items[$key])) {
+        if (! isset($this->items[$key])) {
             throw new \InvalidArgumentException('No field found by key '.$key);
         }
 
@@ -57,7 +57,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function isEmpty(): bool
     {
-        return !$this->any();
+        return ! $this->any();
     }
 
     public function keys(): array
@@ -95,7 +95,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             if ($value && $field->{$method}() == $value) {
                 $fields[] = $field;
             } // Reject from list if key returns null (key not present on field)
-            elseif (!$value && !is_null($field->{$method}())) {
+            elseif (! $value && ! is_null($field->{$method}())) {
                 $fields[] = $field;
             }
         }
@@ -120,7 +120,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset): mixed
     {
-        if (!isset($this->items[$offset])) {
+        if (! isset($this->items[$offset])) {
             throw new \RuntimeException('No field found by key ['.$offset.']');
         }
 
@@ -129,7 +129,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value): void
     {
-        if (!$value instanceof Field) {
+        if (! $value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type '.Field::class);
         }
 
@@ -187,7 +187,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function notTagged($tag): self
     {
         return $this->filterBy(function (Field $field) use ($tag) {
-            return !$field->tagged($tag);
+            return ! $field->tagged($tag);
         });
     }
 
@@ -201,7 +201,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($keys = null): self
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return !in_array($field->getKey(), $keys);
+            return ! in_array($field->getKey(), $keys);
         });
     }
 
