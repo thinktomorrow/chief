@@ -37,7 +37,7 @@ trait HasValidation
             throw new \InvalidArgumentException('Validation rules should be declared without a key. Keys are automatically added.');
         }
 
-        if(is_string($rules)) {
+        if (is_string($rules)) {
             $rules = explode('|', $rules);
         }
 
