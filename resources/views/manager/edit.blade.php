@@ -4,6 +4,7 @@
     </x-slot>
 
     <x-chief::window.fields title="Algemeen" untagged />
+    <x-chief::window.fields title="Inhoud" tagged="content" />
     <x-chief::window.fragments />
 
     <x-slot name="sidebar">
