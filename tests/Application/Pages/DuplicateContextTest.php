@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
@@ -26,28 +27,30 @@ class DuplicateContextTest extends ChiefTestCase
         parent::setUp();
 
         ArticlePage::migrateUp();
+        Quote::migrateUp();
 
         app(Register::class)->model(ArticlePage::class, PageManager::class);
+        app(Register::class)->fragment(Quote::class);
         app(Register::class)->fragment(SnippetStub::class);
 
-        $fragmentManager = app(Registry::class)->manager(ArticlePage::managedModelKey());
-        $staticFragmentManager = app(Registry::class)->manager(SnippetStub::managedModelKey());
+        $fragmentManager = $this->manager(Quote::managedModelKey());
+        $staticFragmentManager = $this->manager(SnippetStub::managedModelKey());
 
         $this->source = ArticlePage::create();
         $this->target = ArticlePage::create();
         $this->staticFragment = new SnippetStub();
-        $this->fragment = ArticlePage::create();
+        $this->fragment = Quote::create();
 
         // Add fragments
         $this->asAdmin()->post($staticFragmentManager->route('fragment-store', $this->source));
-        $this->asAdmin()->post($fragmentManager->route('fragment-store', $this->source));
+        $this->asAdmin()->post($fragmentManager->route('fragment-store', $this->source), [
+            'custom' => 'custom value',
+        ]);
     }
 
     /** @test */
     public function fragments_can_be_duplicated()
     {
-        $this->markTestSkipped();
-
         $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
 
@@ -81,9 +84,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->markTestSkipped();
 
         $asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
-        $this->staticFragment->assetRelation()->attach($asset);
-
-        trap('sksk');
+        $this->staticFragment->fragmentModel()->assetRelation()->attach($asset);
 
         app(DuplicateContext::class)->handle($this->source, $this->target);
 

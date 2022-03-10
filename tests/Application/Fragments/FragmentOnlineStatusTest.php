@@ -62,11 +62,11 @@ class FragmentOnlineStatusTest extends ChiefTestCase
     public function it_only_renders_children_that_are_online()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner, $this->fragment), [
-            'custom' => 'xx',
+            'custom' => 'xxxxx',
         ]);
 
         $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner, $this->fragment), [
-            'custom' => 'xx',
+            'custom' => 'xxxxx',
         ]);
 
         // First one will be offline

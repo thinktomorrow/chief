@@ -28,12 +28,13 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
+
                 <x-chief::window>
                     <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                         @csrf
 
                         <div class="space-y-6">
-                            <x-chief::fields.form not-tagged="edit,not-on-create" />
+                            <x-chief-forms::field not-tagged="edit,not-on-create" />
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>

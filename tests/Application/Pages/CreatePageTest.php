@@ -29,6 +29,7 @@ final class CreatePageTest extends ChiefTestCase
     /** @test */
     public function it_can_visit_the_create_page()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('create'))
              ->assertStatus(200);
     }

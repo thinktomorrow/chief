@@ -17,7 +17,7 @@ class DuplicateModel
         if ($model->title && public_method_exists($model, 'dynamic') && $model->isDynamic('title')) {
 
             // Is title field localized or not?
-            $isTitleLocalized = ($field = Fields::make($model->fields())->find('title')) ? $field->isLocalized() : false;
+            $isTitleLocalized = ($field = Fields::make($model->fields())->find('title')) ? $field->hasLocales() : false;
 
             if ($isTitleLocalized) {
                 $locales = config('chief.locales', []);

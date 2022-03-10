@@ -156,6 +156,7 @@ trait CrudAssistant
 
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('forms', Forms::make($model->fields()));
 
         return view('chief::manager.create');
     }
