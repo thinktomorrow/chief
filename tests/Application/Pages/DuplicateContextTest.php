@@ -3,17 +3,16 @@
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateContext;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class DuplicateContextTest extends ChiefTestCase
 {
