@@ -46,7 +46,6 @@ class DeleteFragmentTest extends ChiefTestCase
     /** @test */
     public function it_can_check_if_a_model_allows_for_removing_a_fragment()
     {
-        $this->assertTrue($this->manager($this->owner)->can('fragment-delete'));
         $this->assertTrue($this->manager($this->fragment)->can('fragment-delete'));
     }
 

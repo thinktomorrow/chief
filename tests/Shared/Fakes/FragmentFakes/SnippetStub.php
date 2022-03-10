@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Fields\Types\FileField;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
@@ -26,7 +26,7 @@ class SnippetStub implements Fragmentable, FragmentsOwner
     {
         yield Text::make('title');
         yield Text::make('title_trans')->locales();
-//        yield FileField::make('thumb')->locales();
+        yield File::make('thumb')->locales();
     }
 
     public function getTitle()

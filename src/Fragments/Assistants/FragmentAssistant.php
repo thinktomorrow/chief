@@ -286,11 +286,20 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        $forms = Forms::make($fragmentable->fields())
-            ->eachForm(function ($form) use ($owner) {
-                $form->action($this->route('fragment-store', $owner))
-                    ->refreshUrl('');
-            });
+         $forms = Forms::make($fragmentable->fields())
+                    ->fillModel($fragmentable->fragmentModel())
+                    ->fillFields($this, $fragmentable->fragmentModel())
+                    ->eachForm(function (Form $form) use ($fragmentable, $owner) {
+                        $form->action($this->route('fragment-store', $owner))
+                             ->refreshUrl('');
+                    })
+                ;
+
+//        $forms = Forms::make($fragmentable->fields())
+//            ->eachForm(function ($form) use ($owner) {
+//                $form->action($this->route('fragment-store', $owner))
+//                    ->refreshUrl('');
+//            });
 
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
