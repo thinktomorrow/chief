@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\Fragmentable;

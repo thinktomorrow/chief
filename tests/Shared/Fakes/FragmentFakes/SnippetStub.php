@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;

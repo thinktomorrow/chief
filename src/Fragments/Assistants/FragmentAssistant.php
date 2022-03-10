@@ -286,7 +286,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-         $forms = Forms::make($fragmentable->fields())
+        $forms = Forms::make($fragmentable->fields())
                     ->fillModel($fragmentable->fragmentModel())
                     ->fillFields($this, $fragmentable->fragmentModel())
                     ->eachForm(function (Form $form) use ($fragmentable, $owner) {
