@@ -78,7 +78,7 @@ final class AdminConfig
 
     public function getNavIcon(): string
     {
-        return $this->get('model.navIcon', 'icon-collection');
+        return $this->get('model.navIcon', '<svg><use xlink:href="#icon-collection"></use></svg>');
     }
 
     public function indexTitle(string $indexTitle): self

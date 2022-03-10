@@ -8,7 +8,7 @@
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes }}>
-    <div class="bg-white rounded-2xl shadow-window">
+    <div class="h-full bg-white rounded-2xl shadow-window">
         <div class="p-6">
             <div class="{{ $slot->isNotEmpty() ? 'mb-6' : null }}">
                 <div class="flex justify-end space-x-4">

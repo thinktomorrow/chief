@@ -3,50 +3,25 @@
         $hasActiveChildren = (isActiveUrl('admin/users*') || isActiveUrl('admin/settings*') || isActiveUrl('admin/audit*') || isActiveUrl('admin/roles*'));
     @endphp
 
-    <div data-navigation-item class="space-y-4">
-        <span
-            data-navigation-item-label
-            class="link link-black cursor-pointer {{ $hasActiveChildren ? 'active' : '' }}"
-        >
-            <x-chief-icon-label space="large" icon="icon-settings">Instellingen</x-chief-icon-label>
-        </span>
+    <x-chief::nav.item
+        label="Instellingen"
+        icon="<svg><use xlink:href='#icon-settings'></use></svg>"
+        collapsible
+    >
+        @can('view-user')
+            <x-chief::nav.item label="Admins" url="{{ route('chief.back.users.index') }}" />
+        @endcan
 
-        <div
-            data-navigation-item-content
-            class="flex flex-col space-y-3 animate-navigation-item-content-slide-in"
-            style="margin-left: calc(20px + 1rem); {{ $hasActiveChildren ? '' : 'display: none;' }}"
-        >
-            @can('view-user')
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/users*') ? 'active' : '' }}"
-                    href="{{ route('chief.back.users.index') }}"
-                    title="Admins"
-                > Admins </a>
-            @endcan
+        @can('view-role')
+            <x-chief::nav.item label="Rechten" url="{{ route('chief.back.roles.index') }}" />
+        @endcan
 
-            @can('view-role')
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/roles*') ? 'active' : '' }}"
-                    href="{{ route('chief.back.roles.index') }}"
-                    title="Rechten"
-                > Rechten </a>
-            @endcan
+        @can('update-setting')
+            <x-chief::nav.item label="Settings" url="{{ route('chief.back.settings.edit') }}" />
+        @endcan
 
-            @can('update-setting')
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/settings*') ? 'active' : '' }}"
-                    href="{{ route('chief.back.settings.edit') }}"
-                    title="Settings"
-                > Settings </a>
-            @endcan
-
-            @can('view-audit')
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/audit*') ? 'active' : '' }}"
-                    href="{{ route('chief.back.audit.index') }}"
-                    title="Audit"
-                > Audit </a>
-            @endcan
-        </div>
-    </div>
+        @can('view-audit')
+            <x-chief::nav.item label="Audit" url="{{ route('chief.back.audit.index') }}" />
+        @endcan
+    </x-chief::nav.item>
 @endif
