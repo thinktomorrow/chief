@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class FieldAttributesTest extends TestCase
 {

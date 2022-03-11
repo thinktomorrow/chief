@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 
@@ -25,7 +24,7 @@ class Hero implements Fragmentable
     public function fields(): Fields
     {
         return Fields::make([
-            InputField::make('title'),
+            Fields\Text::make('title'),
         ]);
     }
 

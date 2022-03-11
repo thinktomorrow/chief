@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -41,7 +42,7 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
             ->validationAttribute('custom attribute')
             ->rules('min:4');
 
-//        FileField::make('thumb'),
+        yield File::make('thumb');
     }
 
     public static function migrateUp()

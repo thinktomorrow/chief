@@ -1,8 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Astrotomic;
+namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use function app;
+use function chiefRegister;
 
 class AstrotomicTranslationsTest extends ChiefTestCase
 {

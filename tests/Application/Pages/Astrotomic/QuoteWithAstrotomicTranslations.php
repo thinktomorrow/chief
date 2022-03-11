@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Astrotomic;
+namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 
+use Thinktomorrow\Chief\Forms\Fields;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 
 class QuoteWithAstrotomicTranslations extends Model implements ManagedModel
 {

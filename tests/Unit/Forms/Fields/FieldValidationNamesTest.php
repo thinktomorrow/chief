@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationNames;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldValidationNamesTest extends TestCase
 {

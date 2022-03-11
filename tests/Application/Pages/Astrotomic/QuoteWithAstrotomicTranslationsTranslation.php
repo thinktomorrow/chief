@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Astrotomic;
+namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 
 use Illuminate\Database\Eloquent\Model;
 

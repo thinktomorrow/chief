@@ -15,12 +15,11 @@
     </report>
   </coverage>
   <testsuites>
-    <testsuite name="Application tests">
-      <directory suffix="Test.php">./tests/Application</directory>
-      <directory suffix="Test.php">./src/Addons</directory>
-    </testsuite>
     <testsuite name="Unit Tests">
       <directory suffix="Test.php">./tests/Unit</directory>
+    </testsuite>
+    <testsuite name="Application tests">
+      <directory suffix="Test.php">./tests/Application</directory>
     </testsuite>
   </testsuites>
   <logging>

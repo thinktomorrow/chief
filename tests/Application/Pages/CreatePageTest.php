@@ -29,9 +29,16 @@ final class CreatePageTest extends ChiefTestCase
     /** @test */
     public function it_can_visit_the_create_page()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('create'))
              ->assertStatus(200);
+    }
+
+    /** @test */
+    public function guests_cannot_view_the_create_form()
+    {
+        $this->get($this->manager->route('create'))
+            ->assertStatus(302)
+            ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */

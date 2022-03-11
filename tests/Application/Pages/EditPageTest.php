@@ -50,6 +50,16 @@ final class EditPageTest extends ChiefTestCase
     }
 
     /** @test */
+    public function guests_cannot_visit_the_edit_form()
+    {
+        auth('chief')->logout();
+
+        $this->get($this->manager->route('edit', ArticlePage::first()))
+            ->assertStatus(302)
+            ->assertRedirect(route('chief.back.login'));
+    }
+
+    /** @test */
     public function it_can_update_a_page()
     {
         $this->asAdmin()->put($this->manager->route('update', ArticlePage::first()), [

@@ -4,13 +4,9 @@ namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class ValidationParametersTest extends TestCase
 {
     /** @test */

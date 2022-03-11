@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\File;
+namespace Thinktomorrow\Chief\Tests\Application\Forms\File;
 
-use function app;
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
+use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use function app;
 
 class SortFilesTest extends ChiefTestCase
 {

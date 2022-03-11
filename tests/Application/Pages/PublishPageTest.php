@@ -43,7 +43,6 @@ final class PublishPageTest extends ChiefTestCase
     /** @test */
     public function an_admin_can_publish_a_page()
     {
-        $this->disableExceptionHandling();
         $model = ArticlePage::create([
             'title' => 'first article',
             'current_state' => PageState::DRAFT,

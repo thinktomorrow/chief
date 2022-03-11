@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldValidationTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\States;
 
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageStateTest extends TestCase
 {

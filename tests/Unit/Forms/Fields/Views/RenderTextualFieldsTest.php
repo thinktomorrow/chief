@@ -6,12 +6,8 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class RenderTextualFieldsTest extends TestCase
 {
     private array $classes;

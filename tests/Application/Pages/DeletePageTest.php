@@ -57,6 +57,23 @@ final class DeletePageTest extends ChiefTestCase
     }
 
     /** @test */
+    public function it_cannot_delete_a_model_without_confirmation()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::DRAFT,
+        ]);
+
+        $this->asAdmin()->delete($this->manager->route('delete', $model), [
+            'deleteconfirmation' => 'FALSE',
+        ])
+            ->assertStatus(302);
+
+        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(1, $model::count());
+    }
+
+    /** @test */
     public function an_admin_can_delete_a_page()
     {
         $model = ArticlePage::create([

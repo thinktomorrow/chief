@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\States\StateMachine;
 
+use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class StateMachineIntegrityTest extends ChiefTestCase
+class StateMachineIntegrityTest extends TestCase
 {
     private $dummyStatefulContract;
     private $machine;

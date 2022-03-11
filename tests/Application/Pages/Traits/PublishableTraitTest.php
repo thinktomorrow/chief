@@ -1,9 +1,9 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Traits;
+namespace Thinktomorrow\Chief\Tests\Application\Pages\Traits;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class PublishableTraitTest extends ChiefTestCase

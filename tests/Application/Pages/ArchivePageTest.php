@@ -127,4 +127,24 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertEquals('first-nl', UrlRecord::findRecentRedirect($redirectModel, 'nl')->slug);
         $this->assertEquals('first-en', UrlRecord::findRecentRedirect($redirectModel, 'en')->slug);
     }
+
+    /** @test */
+    public function the_archive_index_can_be_visited_when_there_is_an_archived_model()
+    {
+        $model = ArticlePage::create([PageState::KEY => PageState::ARCHIVED]);
+
+        auth('chief')->login($this->admin());
+
+        $this->assertTrue($this->manager($model)->can('archive_index'));
+    }
+
+    /** @test */
+    public function the_archive_index_cannot_be_visited_when_there_are_no_archived_models()
+    {
+        $model = ArticlePage::create();
+
+        auth('chief')->login($this->admin());
+
+        $this->assertFalse($this->manager($model)->can('archive_index'));
+    }
 }

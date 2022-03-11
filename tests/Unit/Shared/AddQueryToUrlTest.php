@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared;
 
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class AddQueryToUrlTest extends TestCase
 {

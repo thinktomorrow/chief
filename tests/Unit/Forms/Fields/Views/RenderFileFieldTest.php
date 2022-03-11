@@ -2,11 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 /**
  * @internal
@@ -19,6 +20,9 @@ class RenderFileFieldTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        // Required route for image - gallery image picker.
+        Route::get('api/media', 'example@handle')->name('chief.api.media');
 
         $this->classes = [
             File::class => [$this->payload()],

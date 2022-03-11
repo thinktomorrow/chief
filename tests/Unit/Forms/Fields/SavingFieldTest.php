@@ -6,9 +6,11 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class SavingFieldTest extends ChiefTestCase
+//class SavingFieldTest extends ChiefTestCase
+class SavingFieldTest extends TestCase
 {
     /** @test */
     public function a_field_can_have_custom_save_logic()

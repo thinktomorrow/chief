@@ -1,10 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels;
+namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
-class FragmentModelTest extends ChiefTestCase
+class FragmentTest extends ChiefTestCase
 {
     /** @test */
     public function it_cascade_calls_to_fragmentmodel()
@@ -17,11 +20,4 @@ class FragmentModelTest extends ChiefTestCase
         $this->assertEquals('foobar', $snippet->title);
     }
 
-    /** @test */
-    public function uknown_call_to_fragmentmodel_results_in_null()
-    {
-        $snippet = $this->setupAndCreateSnippet($this->setupAndCreateArticle());
-
-        $this->assertNull($snippet->unknown_value);
-    }
 }

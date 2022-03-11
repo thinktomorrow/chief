@@ -1,16 +1,17 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
+namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
+use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
+use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
+use function route;
 
-class UpdateActionTest extends ChiefTestCase
+class UpdatePageTest extends ChiefTestCase
 {
     /** @test */
     public function it_can_update_a_model()

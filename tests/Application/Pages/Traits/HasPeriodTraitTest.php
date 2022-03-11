@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Traits;
+namespace Thinktomorrow\Chief\Tests\Application\Pages\Traits;
 
 use Illuminate\Support\Carbon;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

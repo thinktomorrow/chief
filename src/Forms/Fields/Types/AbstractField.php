@@ -98,7 +98,7 @@ abstract class AbstractField
         return $this->type->equalsAny($type);
     }
 
-    public function key(string $key): Field
+    public function key(string $key): static
     {
         $this->key = $key;
 
