@@ -2,10 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class FragmentTest extends ChiefTestCase
 {
@@ -19,5 +16,4 @@ class FragmentTest extends ChiefTestCase
         $this->assertEquals($snippet->fragmentModel()->title, $snippet->title);
         $this->assertEquals('foobar', $snippet->title);
     }
-
 }

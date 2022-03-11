@@ -2,17 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
+use function chiefRegister;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
-use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
-use function chiefRegister;
+use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
+use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
 class StorePageTest extends ChiefTestCase
 {
