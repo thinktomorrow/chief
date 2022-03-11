@@ -59,6 +59,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.icon-button', 'chief-icon-button');
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
+        Blade::component('chief::components.nav-item', 'chief::nav.item');
 
         /* Wireframe components */
         Blade::component('chief::wireframes.wireframe', 'wireframe');
@@ -96,6 +97,13 @@ class ViewServiceProvider extends ServiceProvider
         Blade::directive('endAdminCan', function () {
             return "<?php } ?>";
         });
+
+        // TODO(ben): better solution for this ugly mess
+        $isCollapsedOnPageLoad =
+            isset($_COOKIE['is-navigation-collapsed'])
+            ? filter_var($_COOKIE['is-navigation-collapsed'], FILTER_VALIDATE_BOOLEAN)
+            : false;
+        view()->share('isCollapsedOnPageLoad', $isCollapsedOnPageLoad);
     }
 
     public function register()

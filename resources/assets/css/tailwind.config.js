@@ -42,10 +42,22 @@ module.exports = {
             body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
         },
         extend: {
+            animation: {
+                'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
+            },
+            keyframes: {
+                slideInNavigation: {
+                    '0%': { transform: 'translateX(100vw)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+            },
             maxHeight: {
                 '1/2': '50vh',
             },
             minWidth: {
+                32: '8rem',
+                48: '12rem',
+                64: '16rem',
                 xs: '20rem',
                 sm: '24rem',
                 md: '28rem',
@@ -64,6 +76,7 @@ module.exports = {
         container: false,
     },
     plugins: [
+        require('tailwindcss-children'),
         require('./warpaint/ProseSpacing'),
         require('./warpaint/WarpaintSpacing'),
         require('./warpaint/WarpaintContainer'),
