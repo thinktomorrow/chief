@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
-use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;

@@ -43,7 +43,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
                 [
                     'first' => 'first value',
                     'second' => 'second value',
-                ]
+                ],
             ],
         ]);
 
@@ -66,9 +66,9 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
                         [
                             'nested-first' => 'first value',
                             'nested-second' => 'second value',
-                        ]
+                        ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -91,9 +91,9 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
                         [
                             'nested-first' => 'first value',
                             'nested-second' => 'second value',
-                        ]
+                        ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -101,6 +101,5 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
 
         $this->assertStringContainsString('value="first value"', $html);
         $this->assertStringContainsString('value="second value"', $html);
-
     }
 }
