@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Addons\Repeat\Tests;
 
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Addons\Repeat\RepeatField;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 
 trait TestHelpers
 {

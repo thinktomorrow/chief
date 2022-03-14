@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use DeepCopy\DeepCopy;
-use Thinktomorrow\Chief\Forms\Fields;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Managers\Manager;
 
 class Repeat extends Component implements Field
@@ -41,9 +41,8 @@ class Repeat extends Component implements Field
         ;
 
         // Populate fields with the correct name and the given values
-        Fields::extract($clonedComponents, fn($field) => !$field instanceof self)
+        Fields::extract($clonedComponents, fn ($field) => ! $field instanceof self)
             ->each(function (Field $field) use ($index, $locale, $values) {
-
                 $fieldName = Common\LocalizedFormKey::make()
                     ->template(':prefix.'.$index.'.:name.:locale')
                     ->replace('prefix', $this->getName())

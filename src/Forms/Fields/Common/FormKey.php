@@ -8,7 +8,7 @@ class FormKey
 {
     public static function replaceDotsByBrackets(string $value): string
     {
-        if (!str_contains($value, '.')) {
+        if (! str_contains($value, '.')) {
             return $value;
         }
 

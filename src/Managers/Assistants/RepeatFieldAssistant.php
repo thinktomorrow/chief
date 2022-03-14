@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 
 trait RepeatFieldAssistant
 {
@@ -21,7 +20,7 @@ trait RepeatFieldAssistant
 
     public function repeatSection(Request $request, $id, $fieldKey)
     {
-        if(!$request->filled('index')) {
+        if (! $request->filled('index')) {
             throw new \InvalidArgumentException('Required query value [index] missing.');
         }
 

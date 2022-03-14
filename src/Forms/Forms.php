@@ -33,7 +33,7 @@ class Forms
                 continue;
             }
 
-            if (!$createdForm) {
+            if (! $createdForm) {
                 $forms = $forms->add(
                     $createdForm = Form::make('form_'.$i)
                 );
@@ -97,7 +97,7 @@ class Forms
 
         foreach ($iterable as $entry) {
             if (is_iterable($entry)) {
-                foreach($entry as $_entry){
+                foreach ($entry as $_entry) {
                     $flattened[] = $_entry;
                 }
             } else {

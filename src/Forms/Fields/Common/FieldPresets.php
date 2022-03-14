@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Common;
 
-use Thinktomorrow\Chief\Forms\Form;
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Image;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Forms\Form;
 
 class FieldPresets
 {
@@ -29,7 +29,5 @@ class FieldPresets
                 ->locales()
                 ->tag(['seo', 'not-on-create']),
         ]);
-
-
     }
 }
