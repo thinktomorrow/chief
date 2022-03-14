@@ -22,8 +22,8 @@ class FieldsTest extends TestCase
     /** @test */
     public function it_can_check_if_there_is_any_field()
     {
-        $this->assertFalse(Fields::make()->any());
-        $this->assertTrue(Fields::make()->isEmpty());
+        $this->assertFalse(Fields::make([])->any());
+        $this->assertTrue(Fields::make([])->isEmpty());
 
         $fields = Fields::make([
             Fields\Text::make('xxx'),

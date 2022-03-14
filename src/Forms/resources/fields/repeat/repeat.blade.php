@@ -12,6 +12,8 @@
         @include($getSectionView())
     @endforeach
 
-    <button type="button" data-add-repeat-section class="btn mt-4 w-full text-center">+ voeg nieuwe blok toe</button>
+    <button type="button" data-add-repeat-section class="btn btn-grey w-full">
+        <span class="inline-block w-full text-center">Voeg een extra blok toe</span>
+    </button>
 </div>
 

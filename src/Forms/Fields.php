@@ -22,27 +22,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         });
     }
 
-    public static function make(iterable $generator = []): self
-    {
-        // TODO: rename extract to make
-        return static::extract($generator);
-
-//        $fields = new static();
-
-//        foreach ($generator as $field) {
-//            if ($field instanceof self) {
-//                $fields = $fields->add(...$field->values());
-//            } elseif (is_iterable($field)) {
-//                $fields = $fields->add(...$field);
-//            } else {
-//                $fields = $fields->add($field);
-//            }
-//        }
-
-//        return $fields;
-    }
-
-    public static function extract(iterable $components, ?callable $stopRecursiveCallback = null): static
+    public static function make(iterable $components, ?callable $stopRecursiveCallback = null): static
     {
         return new static(static::extractRecursive($components, $stopRecursiveCallback));
     }

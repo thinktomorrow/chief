@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Forms\Repeat;
 
+use Thinktomorrow\Chief\Forms\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,21 +17,27 @@ class PageStub extends Model implements ManagedModel
 {
     use ManagedModelDefaults;
 
+    public $casts = [
+        'repeat_values' => 'array',
+    ];
+
     public $timestamps = false;
 
     public function fields(): iterable
     {
-        yield Repeat::make('repeat_values')->items([
-            Text::make('first'),
-            Repeat::make('nested')->items([
-                Text::make('nested-first'),
-                Text::make('nested-second'),
-            ]),
-            Grid::make('grid')->items([
-                Text::make('grid-first'),
-                Text::make('grid-second'),
-            ]),
-            Text::make('second'),
+        yield Form::make('repeat_form')->items([
+            Repeat::make('repeat_values')->items([
+                Text::make('first'),
+                Text::make('second'),
+                Repeat::make('nested')->items([
+                    Text::make('nested-first'),
+                    Text::make('nested-second'),
+                ]),
+                Grid::make('grid')->items([
+                    Text::make('grid-first'),
+                    Text::make('grid-second'),
+                ]),
+            ])
         ]);
     }
 
