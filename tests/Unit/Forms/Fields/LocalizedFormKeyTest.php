@@ -73,6 +73,18 @@ class LocalizedFormKeyTest extends TestCase
     }
 
     /** @test */
+    public function it_can_replace_a_placeholder_value_that_contains_brackets()
+    {
+        $formKey = LocalizedFormKey::make()
+            ->template(':prefix.:name.:locale')
+            ->replace('prefix', 'repeat_values[2][repeat_values_nested]')
+            ->bracketed()
+            ->get('nested-value');
+
+        $this->assertEquals('repeat_values[2][repeat_values_nested][nested-value]', $formKey);
+    }
+
+    /** @test */
     public function it_can_cross_join_multiple_locale_keys()
     {
         $this->assertEquals(

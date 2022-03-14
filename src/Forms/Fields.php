@@ -24,39 +24,27 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public static function make(iterable $generator = []): self
     {
-        $fields = new static();
+        // TODO: rename extract to make
+        return static::extract($generator);
 
-        foreach ($generator as $field) {
-            if ($field instanceof self) {
-                $fields = $fields->add(...$field->values());
-            } elseif (is_iterable($field)) {
-                $fields = $fields->add(...$field);
-            } else {
-                $fields = $fields->add($field);
-            }
-        }
+//        $fields = new static();
 
-        return $fields;
+//        foreach ($generator as $field) {
+//            if ($field instanceof self) {
+//                $fields = $fields->add(...$field->values());
+//            } elseif (is_iterable($field)) {
+//                $fields = $fields->add(...$field);
+//            } else {
+//                $fields = $fields->add($field);
+//            }
+//        }
+
+//        return $fields;
     }
 
-    public static function extract(array $components): static
+    public static function extract(iterable $components, ?callable $stopRecursiveCallback = null): static
     {
-        return new static(static::extractRecursive($components));
-    }
-
-    private static function extractRecursive(array $components): array
-    {
-        $fields = [];
-
-        foreach ($components as $component) {
-            if ($component instanceof Field) {
-                $fields[] = $component;
-            }
-
-            $fields = array_merge($fields, static::extractRecursive($component->getComponents()));
-        }
-
-        return $fields;
+        return new static(static::extractRecursive($components, $stopRecursiveCallback));
     }
 
     public function first(): ?Field
@@ -66,7 +54,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function find(string $key): Field
     {
-        if (! isset($this->items[$key])) {
+        if (!isset($this->items[$key])) {
             throw new \InvalidArgumentException('No field found by key '.$key);
         }
 
@@ -80,7 +68,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function isEmpty(): bool
     {
-        return ! $this->any();
+        return !$this->any();
     }
 
     public function keys(): array
@@ -127,7 +115,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             if ($value && $field->{$method}() == $value) {
                 $fields[] = $field;
             } // Reject from list if key returns null (key not present on field)
-            elseif (! $value && ! is_null($field->{$method}())) {
+            elseif (!$value && !is_null($field->{$method}())) {
                 $fields[] = $field;
             }
         }
@@ -152,7 +140,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset): mixed
     {
-        if (! isset($this->items[$offset])) {
+        if (!isset($this->items[$offset])) {
             throw new \RuntimeException('No field found by key ['.$offset.']');
         }
 
@@ -161,7 +149,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value): void
     {
-        if (! $value instanceof Field) {
+        if (!$value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type '.Field::class);
         }
 
@@ -219,7 +207,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function notTagged($tag): self
     {
         return $this->filterBy(function (Field $field) use ($tag) {
-            return ! $field->tagged($tag);
+            return !$field->tagged($tag);
         });
     }
 
@@ -233,8 +221,35 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($keys = null): self
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return ! in_array($field->getKey(), $keys);
+            return !in_array($field->getKey(), $keys);
         });
+    }
+
+    /**
+     * The stopRecursiveCallback callable is set for when to stop the recursive when this function returns false.
+     * This is used internally for explicitly stop nested fields detection such as a nested repeat field.
+     *
+     * @param array $components
+     * @param callable|null $stopRecursiveCallback
+     * @return array
+     */
+    private static function extractRecursive(iterable $components, ?callable $stopRecursiveCallback = null): array
+    {
+        $fields = [];
+
+        foreach ($components as $component) {
+            if ($component instanceof Field) {
+                $fields[] = $component;
+            }
+
+            if ($stopRecursiveCallback && false === call_user_func($stopRecursiveCallback, $component)) {
+                continue;
+            }
+
+            $fields = array_merge($fields, static::extractRecursive($component->getComponents()));
+        }
+
+        return $fields;
     }
 
     private function values(): array

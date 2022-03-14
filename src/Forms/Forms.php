@@ -24,13 +24,22 @@ class Forms
     public static function make(iterable $generator = []): self
     {
         $forms = new static([]);
+        $createdForm = null;
 
-        foreach ($generator as $i => $form) {
-            $forms = $forms->add(
-                ($form instanceof Form)
-                ? $form
-                : static::createForm('form_'.$i, [$form])
-            );
+        foreach (static::flattenIterable($generator) as $i => $form) {
+            if ($form instanceof Form) {
+                $forms = $forms->add($form);
+
+                continue;
+            }
+
+            if (!$createdForm) {
+                $forms = $forms->add(
+                    $createdForm = Form::make('form_'.$i)
+                );
+            }
+
+            $createdForm->addComponent($form);
         }
 
         return $forms;
@@ -79,14 +88,29 @@ class Forms
         throw new InvalidArgumentException('No Form found by id: '.$formId);
     }
 
+    /**
+     * First expand all fields so that any generators are resolved as well.
+     */
+    private static function flattenIterable(iterable $iterable): iterable
+    {
+        $flattened = null;
+
+        foreach ($iterable as $entry) {
+            if (is_iterable($entry)) {
+                foreach($entry as $_entry){
+                    $flattened[] = $_entry;
+                }
+            } else {
+                $flattened[] = $entry;
+            }
+        }
+
+        return $flattened;
+    }
+
     private function add(Form $form): self
     {
         return new static(array_merge($this->components, [$form]));
-    }
-
-    private static function createForm(string $id, array $children): Form
-    {
-        return Form::make($id)->components($children);
     }
 
     private function assertUniqueIds(array $components): void
@@ -96,7 +120,7 @@ class Forms
         /** @var Form $component */
         foreach ($components as $component) {
             if (in_array($component->getId(), $ids)) {
-                throw new InvalidArgumentException('Form ids should be unique. Form id ['.$component->getId(). '] is used more than once.');
+                throw new InvalidArgumentException('Form ids should be unique. Form id ['.$component->getId().'] is used more than once.');
             }
 
             $ids[] = $component->getId();

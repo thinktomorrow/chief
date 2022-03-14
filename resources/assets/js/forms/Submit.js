@@ -20,6 +20,11 @@ const Submit = {
             return;
         }
 
+        if (responseData.redirect_to) {
+            window.location.href = responseData.redirect_to;
+            return;
+        }
+
         EventBus.publish('chief-form-submitted', {
             currentElement,
             targetElement,

@@ -41,7 +41,7 @@ Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\
 
 /**
 * -----------------------------------------------------------------
-* EDITOR API & MEDIA MANAGEMENT (used by editor)
+* EDITOR API & MEDIA MANAGEMENT
 * -----------------------------------------------------------------
 */
 Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');

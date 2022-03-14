@@ -37,10 +37,10 @@ Forms.prototype.listenIn = function (container = document) {
 Forms.prototype.refreshIn = function (container = document, tags) {
     console.log('windows refresh in ', container, 'for tags: ', tags);
     container.querySelectorAll(this.selector).forEach((el) => {
-        const window = new Form(el, this.sidebar);
+        const form = new Form(el, this.sidebar);
 
-        if (window.hasTag(tags)) {
-            window.refresh();
+        if (form.hasTag(tags)) {
+            form.refresh();
         }
     });
 };

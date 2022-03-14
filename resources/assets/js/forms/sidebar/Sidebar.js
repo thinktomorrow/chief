@@ -121,26 +121,6 @@ export default class {
 
         Submit.handle(responseData, activePanel.el, targetPanel ? targetPanel.el : document, activePanel.getTags());
 
-        // const panelElement = this.panels.findActive().el;
-        //
-        // // Reset any error
-        // panelElement.querySelectorAll('[data-error-placeholder]').forEach((errorElement) => {
-        //     errorElement.classList.add('hidden');
-        // });
-        //
-        // if (responseData.errors) {
-        //     Object.keys(responseData.errors).forEach((name) => {
-        //         const errorElement = panelElement.querySelector(`[data-error-placeholder="${name}"]`);
-        //
-        //         if (!errorElement) return;
-        //
-        //         errorElement.classList.remove('hidden');
-        //         errorElement.querySelector('[data-error-placeholder-content]').innerHTML = responseData.errors[name];
-        //     });
-        //
-        //     return;
-        // }
-
         // GET request stays on same page and reloads it with the given response.
         if (metadata.method === 'get') {
             this.refresh(responseData);

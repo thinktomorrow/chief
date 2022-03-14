@@ -15,6 +15,11 @@ trait HasComponents
         return $this;
     }
 
+    public function addComponent($component): void
+    {
+        $this->components[] = $component;
+    }
+
     /**
      * Short convenience alternative to components().
      * Helps with a bit cleaner form definition on the resource.

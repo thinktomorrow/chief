@@ -10,7 +10,7 @@ module.exports = {
         'resources/assets/css/components/redactor.scss',
         'resources/assets/css/components/multiselect.scss',
         'node_modules/vue-multiselect/dist/vue-multiselect.min.css',
-        'src/Addons/Repeat/resources/views/**/*.blade.php',
+        'src/Forms/resources/views/**/*.blade.php',
     ],
     theme: {
         screens: {

@@ -167,8 +167,12 @@ trait CrudAssistant
 
         $model = $this->handleStore($request);
 
-        return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
+        return response()->json([
+            'redirect_to' => $this->route('edit', $model),
+        ]);
+
+//        return redirect()->to($this->route('edit', $model))
+//            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
     }
 
     private function handleStore(Request $request)
@@ -176,9 +180,10 @@ trait CrudAssistant
         /** @var ManagedModel $model */
         $model = new $this->managedModelClass();
 
-        $fields = Fields::make($model->fields())
-            ->notTagged(['edit', 'not-on-create'])
-            ->model($model);
+        $fields = Forms::make($model->fields())
+            ->fillModel($model)
+            ->getFields()
+            ->notTagged(['edit', 'not-on-create']);
 
         $this->fieldValidator()->handle($fields, $request->all());
 

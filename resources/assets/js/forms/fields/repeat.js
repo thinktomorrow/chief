@@ -1,172 +1,137 @@
-const Repeat = function (container) {
-    this.container = container;
-    this.max = 50;
+import Sortable from 'sortablejs';
+import EventBus from '../../utilities/EventBus';
+import vueFields from './vue-fields';
 
-    this.addTrigger = this.container.querySelector(this._attributeKey('data-repeat-add'));
-    this.handleAdd = (event) => this.add(event);
-    this.handleDelete = (event) => this.delete(event);
+const Repeat = function (endpoint, containerId, sectionSelector, sectionName) {
+    this.endpoint = endpoint;
+    this.containerId = containerId;
+    this.sectionSelector = sectionSelector;
+    this.sectionName = sectionName;
+    this.handleAddSection = () => this.addSection();
+    this.handleDeleteSection = (e) => this.deleteSection(e);
 
-    // use template ID
-    // with identifier to be replaced
-    // Replace it with an index that is kept here in the js...
+    this.container = document.getElementById(this.containerId);
+    this.init();
 };
 
-Repeat.prototype.add = function () {};
+Repeat.prototype.init = function () {
+    this.order();
+    this.initSortable();
+    this.eventListeners();
 
-Repeat.prototype.delete = function () {};
+    EventBus.subscribe('form-refreshed', (e) => {
+        // Refetch the container because of refresh it is a new DOM reference.
+        this.container = document.getElementById(this.containerId);
 
-Repeat.prototype.refresh = function () {
-    this.addTrigger.removeEventListener('click', this.addFieldSetReference);
-    this.addTrigger.addEventListener('click', this.addFieldSetReference);
-
-    this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-delete')).forEach((trigger) => {
-        // Hide delete option when there is only one left
-        if (this._amountOfFieldSets() === 1) {
-            trigger.classList.add('opacity-0', 'scale-0');
-        } else {
-            trigger.classList.remove('opacity-0', 'scale-0');
+        if (!e.element.contains(this.container)) {
+            return;
         }
 
-        trigger.removeEventListener('click', this.deleteFieldSetReference);
-        trigger.addEventListener('click', this.deleteFieldSetReference);
+        this.init();
+    });
+
+    // EventBus.subscribe('sidebarPanelActivated', () => {
+    //     console.log('sisisi');
+    //
+    //     this.init();
+    //
+    //     // TODO: also clear events subscriptions when panel closed...
+    //     // EventBus.subscribe('chief-form-submitted', (e) => {
+    //     //         this.refreshIn(e.container, e.panel.getTags());
+    //     //     });
+    // });
+};
+
+Repeat.prototype.eventListeners = function () {
+    this.container.querySelectorAll('[data-add-repeat-section]').forEach((el) => {
+        el.removeEventListener('click', this.handleAddSection);
+        el.addEventListener('click', this.handleAddSection);
+    });
+
+    this.container.querySelectorAll('[data-delete-repeat-section]').forEach((el) => {
+        el.removeEventListener('click', this.handleDeleteSection);
+        el.addEventListener('click', this.handleDeleteSection);
     });
 };
 
-Repeat.prototype.checkMax = function () {};
+Repeat.prototype.addSection = function () {
+    const nextIndex = this.container.querySelectorAll(this.sectionSelector).length;
+    const url = `${this.endpoint}?index=${nextIndex}`;
 
-class Repeat {
-    constructor(key, container = document) {
-        this.key = key;
-        this.container = container.querySelector(this._attributeKey('data-repeat-container'));
-        this.fieldsContainer = this.container.querySelector(this._attributeKey('data-repeat-fields'));
-        this.addTrigger = this.container.querySelector(this._attributeKey('data-repeat-add'));
+    fetch(url)
+        .then((response) => response.json())
+        .then((json) => {
+            this.insertSection(json.data);
 
-        /**
-         * Register unique trigger handlers
-         *
-         * if we'd call the method directly as callback, it cannot be
-         * removed as it is regarded to be a different function.
-         */
-        this.addFieldSetReference = (event) => this._addFieldSet(event);
-        this.deleteFieldSetReference = (event) => this._deleteFieldSet(event);
-
-        // TODO: this could be set via a field::max() or something
-        this.maxFieldSets = 50;
-
-        this._refresh();
-    }
-
-    _refresh() {
-        this._checkMax();
-        this._registerEventListeners();
-    }
-
-    _registerEventListeners() {
-        this.addTrigger.removeEventListener('click', this.addFieldSetReference);
-        this.addTrigger.addEventListener('click', this.addFieldSetReference);
-
-        this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-delete')).forEach((trigger) => {
-            // Hide delete option when there is only one left
-            if (this._amountOfFieldSets() === 1) {
-                trigger.classList.add('opacity-0', 'scale-0');
-            } else {
-                trigger.classList.remove('opacity-0', 'scale-0');
-            }
-
-            trigger.removeEventListener('click', this.deleteFieldSetReference);
-            trigger.addEventListener('click', this.deleteFieldSetReference);
+            this.eventListeners();
+        })
+        .catch((error) => {
+            console.error(error);
         });
+};
+
+Repeat.prototype.insertSection = function (sectionHtml) {
+    const DOM = document.createElement('div');
+    DOM.innerHTML = sectionHtml;
+
+    const sectionElement = DOM.firstChild;
+    const sections = this.container.querySelectorAll(this.sectionSelector);
+    const lastSection = sections[sections.length - 1];
+
+    this.container.insertBefore(sectionElement, lastSection.nextSibling);
+
+    vueFields(sectionElement);
+};
+
+Repeat.prototype.deleteSection = function (e) {
+    const section = e.currentTarget.closest(this.sectionSelector);
+
+    if (section) {
+        section.parentNode.removeChild(section);
+    }
+};
+
+/**
+ * Order every element query index by setting the index
+ * according to its position in the DOM tree.
+ */
+Repeat.prototype.order = function () {
+    let index = 0;
+
+    if (!this.container) {
+        console.error('container by id ' + this.containerId + ' not found.');
+        return;
     }
 
-    _checkMax() {
-        const underMax = this._amountOfFieldSets() < this.maxFieldSets;
+    this.container.querySelectorAll(this.sectionSelector).forEach((el) => {
+        el.querySelectorAll(`[name^="${this.sectionName}["]`).forEach((node) => {
+            const indexedName = node
+                .getAttribute('name')
+                .replace(new RegExp(`${this.sectionName}\\[([0-9]+)\\]`, 'g'), `${this.sectionName}[${index}]`);
 
-        if (underMax) {
-            this.addTrigger.classList.remove('hidden');
-        } else {
-            this.addTrigger.classList.add('hidden');
-        }
-
-        return underMax;
-    }
-
-    /** Current count of fieldsets */
-    _amountOfFieldSets() {
-        return this.fieldsContainer.querySelectorAll(this._attributeKey('data-repeat-fieldset')).length;
-    }
-
-    _deleteFieldSet(event) {
-        const fieldSet = event.target.closest(this._attributeKey('data-repeat-fieldset'));
-
-        this.fieldsContainer.removeChild(fieldSet);
-
-        this._refresh();
-    }
-
-    _addFieldSet() {
-        if (!this._checkMax()) return;
-
-        const fieldSet = RepeatField._cloneFieldSet(
-            this.fieldsContainer.querySelector(`${this._attributeKey('data-repeat-fieldset')}:last-child`)
-        );
-        fieldSet.innerHTML = this._increaseRepeatIndex(fieldSet);
-        RepeatField._makeFieldSetIdUnique(fieldSet);
-        RepeatField._makeNestedRepeatElsUnique(fieldSet);
-
-        // Clear existing values
-        fieldSet.querySelectorAll('[name]').forEach((el) => {
-            el.value = null;
+            node.setAttribute('name', indexedName);
         });
 
-        this.fieldsContainer.appendChild(fieldSet);
-
-        this._refresh();
-
-        // Allow for nested repeat
-        initRepeatFields(fieldSet);
-    }
-
-    static _cloneFieldSet(fieldSet) {
-        return fieldSet.cloneNode(true);
-    }
-
-    _increaseRepeatIndex(fieldSet) {
-        const firstField = fieldSet.querySelector(this._attributeKey('data-repeat-field'));
-        const repeatKey = firstField.getAttribute('data-repeat-field-key');
-
-        return increaseDeepestIndex(fieldSet.innerHTML, repeatKey);
-    }
-
-    static _makeFieldSetIdUnique(fieldSet) {
-        const fieldSetId = fieldSet.getAttribute('id');
-        const randomString = Math.random().toString(36).substr(2, 10);
-
-        console.log(fieldSetId, randomString);
-        fieldSet.innerHTML = fieldSet.innerHTML.replace(new RegExp(fieldSetId, 'g'), randomString);
-        fieldSet.setAttribute('id', randomString);
-    }
-
-    static _makeNestedRepeatElsUnique(fieldSet) {
-        fieldSet.querySelectorAll('[data-repeat-container]').forEach((el) => {
-            const existingRepeatId = el.getAttribute('data-repeat-container');
-            el.outerHTML = el.outerHTML.replace(new RegExp(existingRepeatId, 'g'), existingRepeatId + fieldSet.id);
-        });
-    }
-
-    // Specific attribute selectors for this repeatField. This allows for nested functionality
-    _attributeKey(attributeKey) {
-        return `[${attributeKey}="${this.key}"]`;
-    }
-}
-
-function initRepeatFields(container) {
-    const repeatContainerAttribute = 'data-repeat-container';
-    const repeatContainers = Array.from(container.querySelectorAll(`[${repeatContainerAttribute}]`));
-
-    repeatContainers.forEach((repeatContainer) => {
-        const repeatContainerId = repeatContainer.getAttribute(repeatContainerAttribute);
-        new RepeatField(repeatContainerId);
+        index++;
     });
-}
+};
 
-export { RepeatField, initRepeatFields };
+Repeat.prototype.initSortable = function () {
+    // As a best practise we make sure we destroy any existing sortable instance first.
+    const existingSortable = Sortable.get(this.container);
+    if (existingSortable) {
+        existingSortable.destroy();
+    }
+
+    Sortable.create(this.container, {
+        group: this.containerId,
+        handle: '[data-sortable-handle]',
+        animation: 200,
+        easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
+        onEnd: () => {
+            this.order();
+        },
+    });
+};
+
+export { Repeat as default };

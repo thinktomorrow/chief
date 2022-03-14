@@ -10,5 +10,7 @@ interface Localizable
 
     public function hasLocales(): bool;
 
+    public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static;
+
     public function getLocalizedFormKey(): LocalizedFormKey;
 }

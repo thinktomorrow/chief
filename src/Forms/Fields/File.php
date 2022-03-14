@@ -52,7 +52,7 @@ class File extends Component implements Field
 
     public function fill(Manager $manager, Model $model): void
     {
-        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $this->getModel()?->id));
+        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $model->id));
     }
 
     public function getRules(): array

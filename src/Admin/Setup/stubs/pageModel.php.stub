@@ -5,7 +5,7 @@ namespace __STUB_NAMESPACE__;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Admin\AdminConfig;
-use Thinktomorrow\Chief\Forms\Fields\Types\InputField;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
@@ -19,7 +19,7 @@ class __STUB_CLASSNAME__ extends Model implements PageContract
 
     public function fields(): iterable
     {
-        yield InputField::make('title')
+        yield Text::make('title')
             ->tag('pagetitle')
             ->locales();
         __STUB_FIELDS__

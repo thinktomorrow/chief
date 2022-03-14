@@ -21,6 +21,7 @@ class StorePageTest extends ChiefTestCase
     /** @test */
     public function it_can_create_a_model()
     {
+        $this->disableExceptionHandling();
         ArticlePage::migrateUp();
         chiefRegister()->model(ArticlePage::class, PageManager::class);
 

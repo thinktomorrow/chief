@@ -1,23 +1,23 @@
 import IndexSorting from './utilities/sortable';
 import FormSubmit from './utilities/form-submit';
 import initConditionalFields from './utilities/conditional-fields';
-import initRepeatFieldsOnPageLoad from '../../../src/Addons/Repeat/resources/js/init-repeat-fields-on-pageload';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
 import initAnimatedToggle from './utilities/animated-toggle';
+import initRepeatFields from './forms/fields/init-repeat-fields';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
  */
 initCollapsibleNavigation();
 initDropdowns();
-initRepeatFieldsOnPageLoad();
 initConditionalFields();
 initCopyToClipboard();
 initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]', {
     animationClass: 'animate-slide-in-nav lg:animate-none',
 });
+initRepeatFields();
 
 require('./utilities/character-count');
 

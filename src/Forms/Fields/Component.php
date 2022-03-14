@@ -99,6 +99,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
 
     public function fill(Manager $manager, Model $model): void
     {
-        //
+        // Override this method so you can fill in a component with custom endpoint routes.
+        // This is an empty fill and acts as the component default.
     }
 }

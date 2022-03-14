@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Presets;
 
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\RepeatFieldAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
@@ -17,6 +18,7 @@ final class FragmentManager implements Manager
     use FragmentsOwningAssistant;
     use FileUploadAssistant;
     use SlimImageUploadAssistant;
+    use RepeatFieldAssistant;
 
     private function fieldsModel($id)
     {

@@ -30,6 +30,13 @@ trait HasLocales
         return count($this->locales) > 0;
     }
 
+    public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static
+    {
+        $this->localizedFormKeyTemplate = $localizedFormKeyTemplate;
+
+        return $this;
+    }
+
     public function getLocalizedFormKey(): LocalizedFormKey
     {
         return LocalizedFormKey::make()
