@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms;
 
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Tests\Unit\UnitTestHelpers;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {

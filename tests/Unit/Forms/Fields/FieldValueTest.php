@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
 use Carbon\Carbon;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class FieldValueTest extends TestCase
 {
