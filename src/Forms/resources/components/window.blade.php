@@ -28,10 +28,10 @@
 
                     @if($editUrl)
                         <a
-                            data-sidebar-trigger
-                            href="{{ $editUrl }}"
-                            title="Aanpassen"
-                            class="flex-shrink-0"
+                                data-sidebar-trigger
+                                href="{{ $editUrl }}"
+                                title="Aanpassen"
+                                class="flex-shrink-0"
                         >
                             @isset($icon)
                                 {!! $icon !!}

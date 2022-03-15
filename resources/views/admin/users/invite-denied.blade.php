@@ -8,7 +8,7 @@
             <div class="space-y-6 w-128">
                 <h1 class="text-center text-black">Jouw uitnodiging is afgewezen</h1>
 
-                <x-chief::window>
+                <x-chief-forms::window>
                     <div class="prose prose-dark">
                         <p>Ok. Je hebt je uitnodiging tot {{ chiefSetting('app_name') }} afgewezen.</p>
                         <p>Mocht je toch opnieuw toegang wensen, kan je je wenden tot de beheerder ({{ chiefSetting('contact_name') }}).</p>
@@ -27,7 +27,7 @@
                             class="btn btn-primary-outline"
                         > Ga naar login pagina </a>
                     </div>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
         </div>
     </div>

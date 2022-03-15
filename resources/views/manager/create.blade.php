@@ -29,7 +29,7 @@
         <div class="row">
             <div class="w-full">
 
-                <x-chief::window>
+                <x-chief-forms::window>
                     <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                         @csrf
 
@@ -39,7 +39,7 @@
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>
                     </form>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
         </div>
     </div>

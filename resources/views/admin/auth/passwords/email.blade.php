@@ -9,7 +9,7 @@
         <div class="space-y-6 w-128">
             <h1 class="text-center text-black">Je wachtwoord vergeten?</h1>
 
-            <x-chief::window>
+            <x-chief-forms::window>
                 {{-- The status session value holds the passwords.sent message when an reset email has been succesfully requested. --}}
                 @if(session('status'))
                     <div>
@@ -48,7 +48,7 @@
                         </div>
                     </form>
                 @endif
-            </x-chief::window>
+            </x-chief-forms::window>
         </div>
     </div>
 @endsection

@@ -5,7 +5,7 @@
         @elseif($tag === 'pagetitle')
             @include('chief::manager.windows.fields._partials.pagetitle')
         @else
-            <x-chief::window
+            <x-chief-forms::window
                 :title="$title"
                 :url="$manager->route('form-edit', $model, $tag)"
                 :sidebar="$tag"
@@ -17,7 +17,7 @@
                         <x-chief::fields :fields="$fields" />
                     </div>
                 @endif
-            </x-chief::window>
+            </x-chief-forms::window>
         @endif
     </div>
 @endif

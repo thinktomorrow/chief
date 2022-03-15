@@ -31,7 +31,7 @@
                 </div>
             @else
                 <div class="w-full">
-                    <x-chief::window>
+                    <x-chief-forms::window>
                         <div class="-my-3 divide-y divide-grey-100">
                             @foreach($menuItems as $item)
                                 <x-chief-hierarchy
@@ -41,7 +41,7 @@
                                 ></x-chief-hierarchy>
                             @endforeach
                         </div>
-                    </x-chief::window>
+                    </x-chief-forms::window>
                 </div>
             @endif
         </div>
