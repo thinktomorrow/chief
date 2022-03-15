@@ -78,7 +78,7 @@ Form.prototype.refresh = function () {
 
         // TODO: this method is now coming from project code (project skeleton),
         // we should however provide this from chief
-        loadRedactorInstances(document);
+        loadRedactorInstances(document); // eslint-disable-line
 
         // Re-init event listeners
         this.listen();

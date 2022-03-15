@@ -5,11 +5,6 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
-use Thinktomorrow\Chief\App\View\Livewire\FieldsWindow;
-use Thinktomorrow\Chief\App\View\Livewire\Fragments;
-use Thinktomorrow\Chief\App\View\Livewire\Links;
-use Thinktomorrow\Chief\App\View\Livewire\Status;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class ViewServiceProvider extends ServiceProvider

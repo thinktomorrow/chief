@@ -22,9 +22,9 @@
                             </span>
                         </div>
 
-                        <div class="space-y-2 mt-2">
+                        <div class="mt-2 space-y-2">
                             <div class="flex w-full">
-                                <div class="prepend-to-input">
+                                <div class="border border-r-0 bg-primary-50 border-grey-300 rounded-l-md shrink-0 font-medium text-primary-500 px-3 py-2.5">
                                     <span v-if="fixedSegment !== '/'" class="flex items-center space-x-1">
                                         {{-- TODO: better icon --}}
                                         <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
@@ -42,12 +42,12 @@
                                 </div>
 
                                 <input
-                                        @keyup="onInput"
-                                        id="links.{{ $locale }}"
-                                        type="text"
-                                        name="links[{{ $locale }}]"
-                                        v-model="value"
-                                        class="with-prepend"
+                                    @keyup="onInput"
+                                    id="links.{{ $locale }}"
+                                    type="text"
+                                    name="links[{{ $locale }}]"
+                                    v-model="value"
+                                    class="with-prepend"
                                 >
                             </div>
 
@@ -73,7 +73,7 @@
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
                             @if(count(config('chief.locales')) > 1)
-                                <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey-light">{{ $locale }}</span>
                             @endif
 
                             <div class="w-full px-4 py-3">

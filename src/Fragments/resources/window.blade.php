@@ -1,6 +1,6 @@
 <x-chief-forms::window
-        :refresh-url="$manager->route('fragments-show', $owner)"
-        tags="fragments"
+    :refresh-url="$manager->route('fragments-show', $owner)"
+    tags="fragments"
 >
     <div class="relative -my-6">
         @include('chief::manager.windows.fragments.component.fragment-select', [

@@ -6,14 +6,14 @@
     <div class="items-center justify-start hidden py-6 lg:flex">
         <div
             data-toggle-navigation
-            class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50"
+            class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
         >
-            <svg class="w-6 h-6 text-grey-700"><use xlink:href="#menu"></use></svg>
+            <svg class="w-6 h-6 text-black"><use xlink:href="#menu"></use></svg>
         </div>
 
         <span
             data-toggle-classes="hidden"
-            class="px-3 py-2 link link-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
+            class="inline-block px-3 py-2 font-medium text-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
         > Chief </span>
     </div>
 
@@ -21,12 +21,12 @@
     <div class="flex items-center justify-start py-6 lg:hidden">
         <div
             data-mobile-navigation-toggle
-            class="flex-shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50"
+            class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
         >
-            <svg class="w-6 h-6 text-grey-700"><use xlink:href="#icon-arrow-rtl"></use></svg>
+            <svg class="w-6 h-6 text-black"><use xlink:href="#icon-arrow-rtl"></use></svg>
         </div>
 
-        <span class="px-3 py-2 link link-black"> Chief </span>
+        <span class="inline-block px-3 py-2 font-medium text-black"> Chief </span>
     </div>
 
     <div class="py-6">

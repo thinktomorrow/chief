@@ -1,8 +1,7 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-    mode: 'jit',
-    purge: [
+    content: [
         'resources/views/**/*.blade.php',
         'resources/assets/**/*.js',
         'resources/assets/**/*.vue',
@@ -26,7 +25,7 @@ module.exports = {
             transparent: 'transparent',
 
             white: colors.white,
-            grey: colors.blueGray,
+            grey: colors.slate,
             black: colors.black,
 
             primary: colors.indigo,
@@ -76,7 +75,6 @@ module.exports = {
         container: false,
     },
     plugins: [
-        require('tailwindcss-children'),
         require('./warpaint/ProseSpacing'),
         require('./warpaint/WarpaintSpacing'),
         require('./warpaint/WarpaintContainer'),

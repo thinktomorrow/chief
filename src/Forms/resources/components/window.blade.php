@@ -8,41 +8,38 @@
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes }}>
-    <div class="h-full bg-white rounded-2xl shadow-window">
-        <div class="p-6">
-            <div class="{{ $slot->isNotEmpty() ? 'mb-6' : null }}">
+    <div class="h-full bg-white rounded-xl shadow-window">
+        <div class="p-6 space-y-6">
+            {{-- Window header --}}
+            @if($title || $labels || $editUrl)
                 <div class="flex justify-end space-x-4">
                     <div class="w-full space-x-1 mt-0.5">
-                        @isset($title)
+                        @if($title)
                             <span class="text-lg display-base display-dark">
                                 {!! $title !!}
                             </span>
-                        @endisset
+                        @endif
 
-                        @isset($labels)
+                        @if($labels)
                             <span class="align-bottom with-xs-labels">
                                 {!! $labels !!}
                             </span>
-                        @endisset
+                        @endif
                     </div>
 
                     @if($editUrl)
-                        <a
-                                data-sidebar-trigger
-                                href="{{ $editUrl }}"
-                                title="Aanpassen"
-                                class="flex-shrink-0"
-                        >
-                            @isset($icon)
+                        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="shrink-0">
+                            @if($icon)
                                 {!! $icon !!}
                             @else
                                 <x-chief-icon-button icon="icon-edit" />
-                            @endisset
+                            @endif
                         </a>
                     @endif
                 </div>
-            </div>
+            @endif
 
+            {{-- Window content --}}
             @if($slot->isNotEmpty())
                 <div>
                     {!! $slot !!}

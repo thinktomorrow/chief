@@ -14,7 +14,7 @@
             class="absolute flex justify-center w-full h-8 border-none cursor-pointer group"
             style="margin-top: -14px; z-index: 1;"
         >
-            <div class="absolute transition-all duration-75 ease-in transform scale-0 group-hover:scale-100">
+            <div class="absolute transition-all duration-75 ease-in scale-0 group-hover:scale-100">
                 <x-chief-icon-button icon="icon-add" />
             </div>
         </div>

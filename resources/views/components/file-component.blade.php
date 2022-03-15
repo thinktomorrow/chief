@@ -9,7 +9,7 @@
                     <div class="flex items-center p-4 bg-white border rounded-lg border-grey-100">
                         <input ref="hiddenInput" type="hidden" :name="hiddenInputKey" :value="hiddenInputValue"/>
 
-                        <div v-if="isImage" class="flex-shrink-0 w-1/6">
+                        <div v-if="isImage" class="shrink-0 w-1/6">
                              <img loading="lazy" :src="thumbUrl" :alt="filename" class="rounded" />
                         </div>
 

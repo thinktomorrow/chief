@@ -21,7 +21,7 @@
     </div>
 
     @if(!$isDefaultSlotEmpty)
-        <div class="flex items-center justify-end flex-shrink-0 w-full lg:w-1/2">
+        <div class="flex items-center justify-end shrink-0 w-full lg:w-1/2">
             {{ $slot }}
         </div>
     @endif
