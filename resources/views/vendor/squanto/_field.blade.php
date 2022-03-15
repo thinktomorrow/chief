@@ -1,37 +1,35 @@
-<x-chief::field.form>
-    <div class="space-y-2">
-        @foreach($locales as $i => $locale)
-            @php
-                $fieldId = $lineViewModel->id() . '_' . $locale;
-            @endphp
+<div class="space-y-2">
+    @foreach($locales as $i => $locale)
+        @php
+            $fieldId = $lineViewModel->id() . '_' . $locale;
+        @endphp
 
-            @if($loop->first)
-                @slot('label', ucfirst( str_replace('_', ' ', $lineViewModel->label()) ))
-                @slot('description', $lineViewModel->description())
+        @if($loop->first)
+            @slot('label', ucfirst( str_replace('_', ' ', $lineViewModel->label()) ))
+            @slot('description', $lineViewModel->description())
+        @endif
+
+        <div class="flex w-full space-x-4">
+            @if(count(config('chief.locales')) > 1)
+                <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light h-full">{{ $locale }}</span>
             @endif
 
-            <div class="flex w-full space-x-4">
-                @if(count(config('chief.locales')) > 1)
-                    <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light h-full">{{ $locale }}</span>
+            <div class="w-full">
+                @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
+                    <textarea
+                        name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
+                        id="{{ $fieldId }}"
+                        class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
+                    >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</textarea>
+                @else
+                    <input
+                        type="text"
+                        name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
+                        id="{{ $fieldId }}"
+                        value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
+                    >
                 @endif
-
-                <div class="w-full">
-                    @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
-                        <textarea
-                            name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
-                            id="{{ $fieldId }}"
-                            class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
-                        >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</textarea>
-                    @else
-                        <input
-                            type="text"
-                            name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
-                            id="{{ $fieldId }}"
-                            value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
-                        >
-                    @endif
-                </div>
             </div>
-        @endforeach
-    </div>
-</x-chief::field.form>
+        </div>
+    @endforeach
+</div>

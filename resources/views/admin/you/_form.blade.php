@@ -1,15 +1,18 @@
-<x-chief::field.form label="Voornaam" id="firstname" error="firstname" isRequired>
+<x-chief-forms::formgroup.wrapper id="firstname" label="Voornaam" required>
     <input id="firstname" type="text" name="firstname" value="{{ old('firstname', $user->firstname) }}">
-</x-chief::field.form>
+    <x-chief-forms::formgroup.error error-ids="firstname"></x-chief-forms::formgroup.error>
+</x-chief-forms::formgroup.wrapper>
 
-<x-chief::field.form label="Achternaam" id="lastname" error="lastname" isRequired>
+<x-chief-forms::formgroup.wrapper id="lastname" label="Achternaam" required>
     <input id="lastname" type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}">
-</x-chief::field.form>
+    <x-chief-forms::formgroup.error error-ids="lastname"></x-chief-forms::formgroup.error>
+</x-chief-forms::formgroup.wrapper>
 
-<x-chief::field.form label="E-mail" id="email" error="email" isRequired>
+<x-chief-forms::formgroup.wrapper id="email" label="E-mail (tevens login)" required>
     <x-slot name="description">
-        <p>Dit e-mailadres geldt tevens als jouw login.</p>
+        <p>Dit e-mail adres geldt tevens als login.</p>
     </x-slot>
 
-    <input id="email" type="email" name="email" value="{{ old('email',$user->email) }}">
-</x-chief::field.form>
+    <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}">
+    <x-chief-forms::formgroup.error error-ids="email"></x-chief-forms::formgroup.error>
+</x-chief-forms::formgroup.wrapper>

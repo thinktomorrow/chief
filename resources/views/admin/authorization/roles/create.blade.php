@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief-forms::window>
+                <div class="window">
                     <form id="createForm" action="{{ route('chief.back.roles.store') }}" method="POST">
                         @csrf
 
@@ -30,7 +30,7 @@
                             @include('chief::admin.authorization.roles._form')
                         </div>
                     </form>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>

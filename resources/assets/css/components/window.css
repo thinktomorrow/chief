@@ -1,5 +1,17 @@
+@layer components {
+    /* Nice tool to create shadows: https://box-shadow.dev/ */
+    .shadow-window {
+        box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.05);
+    }
+}
+
 .window-title {
     @apply text-lg font-semibold leading-normal text-black;
+}
+
+/* standard window layout */
+.window {
+    @apply h-full bg-white rounded-2xl shadow-window p-6;
 }
 
 /* .window {

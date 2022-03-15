@@ -8,8 +8,7 @@
     'fieldToggles' => [],
 ])
 
-<div
-        class="w-full"
+<div    {{ $attributes->class('w-full') }}
         data-field-key="{{ $id }}"
         data-field-type="{{ $fieldType }}"
         {!! $fieldToggles ? "data-conditional-toggle='" . json_encode($fieldToggles) . "'" : null !!}

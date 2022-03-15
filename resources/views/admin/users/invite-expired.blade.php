@@ -8,7 +8,7 @@
             <div class="space-y-6 w-128">
                 <h1 class="text-center text-black">Uitnodiging niet langer geldig</h1>
 
-                <x-chief-forms::window>
+                <div class="window">
                     <div class="prose prose-dark">
                         <p>Deze link is jammer genoeg ongeldig. Mogelijk is de reden een van de volgende:</p>
 
@@ -33,7 +33,7 @@
                             class="btn btn-primary-outline"
                         > Ga naar login pagina </a>
                     </div>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>

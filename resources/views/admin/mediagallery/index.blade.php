@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <x-chief-forms::window>
+                <div class="window">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
                             <label for="select-all" class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
@@ -46,47 +46,49 @@
                     <div class="mt-8">
                         {{ $assets->links('chief::pagination.default') }}
                     </div>
-                </x-chief-forms::window>
+                </div>
             </div>
 
             <div class="w-full lg:w-1/3">
-                <x-chief-forms::window title="Filteren">
+                <div class="window">
+
+                    <div class="w-full space-x-1 mt-0.5">
+                        <span class="text-lg display-base display-dark">
+                            Filter
+                        </span>
+                    </div>
+
                     <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
-                        <x-chief::field.form label="Bestandsnaam">
-                            <input
-                                type="text"
-                                name="search"
-                                placeholder="Zoek op bestandsnaam ..."
-                                value="{{ old('search', request()->input('search'))}}"
-                            >
-                        </x-chief::field.form>
+                        <x-chief-forms::formgroup.wrapper id="name" label="Bestandsnaam">
+                            <input type="text" name="search" placeholder="Zoek op bestandsnaam ..." value="{{ old('search', request()->input('search'))}}">
+                        </x-chief-forms::formgroup.wrapper>
 
-                        <x-chief::field.form label="Pagina">
+                        <x-chief-forms::formgroup.wrapper id="owner" label="Pagina">
                             <chief-multiselect
-                                name="owner"
-                                :options='@json($pages)'
-                                selected='@json(old('owner', request()->input('owner')))'
-                                :multiple='false'
-                                grouplabel="group"
-                                groupvalues="values"
-                                labelkey="label"
-                                valuekey="id"
+                                    name="owner"
+                                    :options='@json($pages)'
+                                    selected='@json(old('owner', request()->input('owner')))'
+                                    :multiple='false'
+                                    grouplabel="group"
+                                    groupvalues="values"
+                                    labelkey="label"
+                                    valuekey="id"
                             ></chief-multiselect>
-                        </x-chief::field.form>
+                        </x-chief-forms::formgroup.wrapper>
 
-                        <x-chief::field.form>
+                        <x-chief-forms::formgroup.wrapper id="unused">
                             <label for="unused" class="with-checkbox">
                                 <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
-                        </x-chief::field.form>
+                        </x-chief-forms::formgroup.wrapper>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>

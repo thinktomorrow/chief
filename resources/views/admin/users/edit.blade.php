@@ -56,7 +56,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief-forms::window>
+                <div class="window">
                     <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST">
                         @csrf
                         @method('put')
@@ -65,7 +65,7 @@
                             @include('chief::admin.users._form')
                         </div>
                     </form>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>

@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief-forms::window>
+                <div class="window">
                     <div class="-my-4 divide-y divide-grey-100">
                         @foreach($roles as $role)
                             <a
@@ -32,7 +32,7 @@
                             > {{ ucfirst($role->name) }} </a>
                         @endforeach
                     </div>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>

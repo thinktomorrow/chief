@@ -1,12 +1,20 @@
-@php
-    $errorIds = [];
+@props([
+    'errorIds' => [],
+])
 
-    if ($hasLocales()) {
-        foreach ($getLocales() as $locale) {
-            $errorIds[] = $getId($locale);
+@php
+
+    $errorIds = (array) $errorIds;
+
+    // When no errorIds are passed, we assume this formgroup is used by a form component.
+    if(count($errorIds) < 1) {
+        if ($hasLocales()) {
+            foreach ($getLocales() as $locale) {
+                $errorIds[] = $getId($locale);
+            }
+        } else {
+            $errorIds = [$getId()];
         }
-    } else {
-        $errorIds = [$getId()];
     }
 
 @endphp
