@@ -25,15 +25,5 @@ class FormsServiceProvider extends ServiceProvider
         Validator::extend('file_dimensions', FileDimensionsRule::class.'@validate');
         Validator::extend('file_min', FileMinRule::class.'@validate');
         Validator::extend('file_max', FileMaxRule::class.'@validate');
-
-        /* Chief field components */
-//        Blade::component('chief::components.window', 'chief::window'); chief-forms::window
-
-//        Blade::component('chief::components.field.window.multiple', 'chief::fields');
-//        Blade::component('chief::components.field.window.single', 'chief::field');
-//        Blade::component('chief::components.field.form.single', 'chief::field.form');
-//        Blade::component('chief::components.field.form.multiple', 'chief::fields.form');
-//        Blade::component('chief::components.field.form.error', 'chief::field.form.error');
-//        Blade::component('chief::components.field.set', 'chief::field.set');
     }
 }
