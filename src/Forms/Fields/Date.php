@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStep;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMinMax;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStep;
 
 class Date extends Component implements Field
 {
