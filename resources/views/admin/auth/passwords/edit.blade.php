@@ -20,7 +20,7 @@
                     @endif
                 </h1>
 
-                <x-chief-forms::window>
+                <div class="window">
                     @if($errors and count($errors) > 0)
                         <x-chief-inline-notification type="error" size="large">
                             <ul>
@@ -37,13 +37,16 @@
                         <input type="hidden" name="_method" value="PUT">
 
                         <div class="space-y-6">
-                            <x-chief::field.form label="Wachtwoord" id="password" error="password">
-                                <input type="password" name="password" placeholder="Wachtwoord" id="password" value="{{ old('password') }}">
-                            </x-chief::field.form>
 
-                            <x-chief::field.form label="Herhaal wachtwoord" id="password-confirm" error="password_confirmation">
-                                <input type="password" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm">
-                            </x-chief::field.form>
+                            <x-chief-forms::formgroup.wrapper id="password" label="Nieuw wachtwoord" required>
+                                <input id="password" type="password" name="password">
+                                <x-chief-forms::formgroup.error error-ids="password"></x-chief-forms::formgroup.error>
+                            </x-chief-forms::formgroup.wrapper>
+
+                            <x-chief-forms::formgroup.wrapper id="password_confirmation" label="Herhaal wachtwoord" required>
+                                <input id="password_confirmation" type="password" name="password_confirmation">
+                                <x-chief-forms::formgroup.error error-ids="password_confirmation"></x-chief-forms::formgroup.error>
+                            </x-chief-forms::formgroup.wrapper>
 
                             <div class="space-x-2">
                                 @if($new_password)
@@ -60,7 +63,7 @@
                             </div>
                         </div>
                     </form>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>

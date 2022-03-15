@@ -9,7 +9,7 @@
         <div class="space-y-6 w-128">
             <h1 class="text-center text-black">Je wachtwoord vergeten?</h1>
 
-            <x-chief-forms::window>
+            <div class="window">
                 {{-- The status session value holds the passwords.sent message when an reset email has been succesfully requested. --}}
                 @if(session('status'))
                     <div>
@@ -28,13 +28,16 @@
 
                         <div class="space-y-6">
                             {{-- TODO: mail confirmation message also shows as error --}}
-                            <x-chief::field.form error="email">
+
+                            <x-chief-forms::formgroup.wrapper id="identity" label="E-mail" required>
+
                                 <x-slot name="description">
                                     <p>Geef je e-mailadres in om je wachtwoord opnieuw in te stellen.</p>
                                 </x-slot>
 
-                                <input id="identity" name="email" type="email" placeholder="E-mail" value="{{ old('email') }}">
-                            </x-chief::field.form>
+                                <input id="identity" type="email" name="email" value="{{ old('email') }}">
+                                <x-chief-forms::formgroup.error error-ids="email"></x-chief-forms::formgroup.error>
+                            </x-chief-forms::formgroup.wrapper>
 
                             <div class="space-x-4">
                                 <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
@@ -48,7 +51,7 @@
                         </div>
                     </form>
                 @endif
-            </x-chief-forms::window>
+            </div>
         </div>
     </div>
 @endsection

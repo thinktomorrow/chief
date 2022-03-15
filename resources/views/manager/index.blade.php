@@ -33,7 +33,7 @@
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 @if(count($models))
-                    <x-chief-forms::window>
+                    <div class="window">
                         @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
@@ -47,7 +47,7 @@
                                     @include($model->adminConfig()->getIndexCardView())
                                 @endforeach
                             </div>
-                    </x-chief-forms::window>
+                    </div>
 
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                         {!! $models->links('chief::pagination.default') !!}
@@ -63,7 +63,13 @@
                 @endif
 
                 @if($manager->filters()->anyRenderable())
-                    <x-chief-forms::window title="Filtering">
+                    <div class="window">
+                        <div class="w-full space-x-1 mt-0.5">
+                            <span class="text-lg display-base display-dark">
+                                Filter
+                            </span>
+                        </div>
+
                         <form method="GET" class="space-y-6">
                             {!! $manager->filters()->render() !!}
 
@@ -71,11 +77,18 @@
                                 <button class="btn btn-primary" type="submit">Filter</button>
                             </div>
                         </form>
-                    </x-chief-forms::window>
+                    </div>
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <x-chief-forms::window title="Sortering">
+                    <div class="window">
+
+                        <div class="w-full space-x-1 mt-0.5">
+                            <span class="text-lg display-base display-dark">
+                                Sortering
+                            </span>
+                        </div>
+
                         @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
                             <p class="text-grey-700">
                                 Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
@@ -95,17 +108,24 @@
 
                             <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
                         @endif
-                    </x-chief-forms::window>
+                    </div>
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    <x-chief-forms::window title="Sortering">
+                    <div class="window">
+
+                        <div class="w-full space-x-1 mt-0.5">
+                            <span class="text-lg display-base display-dark">
+                                Archief
+                            </span>
+                        </div>
+
                         @if(Route::currentRouteName() == 'chief.single.archive_index')
                             <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
                         @else
                             <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
                         @endif
-                    </x-chief-forms::window>
+                    </div>
                 @endAdminCan
             </div>
         </div>

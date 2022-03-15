@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="w-full space-y-6">
                     @foreach($collectedLines as $sectionKey => $groupedLines)
-                        <x-chief-forms::window>
+                        <div class="window">
                             <div class="row gutter-3">
                                 <div class="w-full lg:w-1/4">
                                     <span class="text-xl font-semibold text-grey-900">
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </x-chief-forms::window>
+                        </div>
                     @endforeach
                 </div>
             </div>

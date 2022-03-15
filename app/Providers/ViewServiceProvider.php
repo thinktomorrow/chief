@@ -42,7 +42,7 @@ class ViewServiceProvider extends ServiceProvider
         /* Livewire component wrappers */
 //        Blade::component('chief-fragments::window', 'chief-fragments::window');
 //        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
-        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
+//        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
         Blade::component('chief::manager.windows.status.window', 'chief::window.status');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 

@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief-forms::window>
+                <div class="window">
                     <div class="prose prose-dark">
                         <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 
@@ -82,7 +82,7 @@
                             </a>
                         </p>
                     </div>
-                </x-chief-forms::window>
+                </div>
             </div>
         </div>
     </div>
