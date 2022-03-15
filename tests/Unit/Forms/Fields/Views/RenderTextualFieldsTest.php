@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Number;
-use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Hidden;
+use Thinktomorrow\Chief\Forms\Fields\Number;
+use Thinktomorrow\Chief\Forms\Fields\Slider;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
@@ -64,12 +64,11 @@ class RenderTextualFieldsTest extends TestCase
         foreach (array_keys($this->classes) as $class) {
             $component = $class::make('xxx')->displayInWindow()->value($value = 'given value');
 
-            if($component instanceof Hidden) {
+            if ($component instanceof Hidden) {
                 $this->assertStringNotContainsString($value, $component->toHtml());
             } else {
                 $this->assertStringContainsString($value, $component->toHtml());
             }
-
         }
     }
 
