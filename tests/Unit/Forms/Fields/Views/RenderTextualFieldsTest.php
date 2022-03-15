@@ -68,10 +68,9 @@ class RenderTextualFieldsTest extends TestCase
 
             if ($component instanceof Hidden) {
                 $this->assertStringNotContainsString($value, $component->toHtml());
-            } else if ($component instanceof Date) {
+            } elseif ($component instanceof Date) {
                 $this->assertStringContainsString('02/02/2022', $component->toHtml());
-            }
-            else {
+            } else {
                 $this->assertStringContainsString($value, $component->toHtml());
             }
         }
