@@ -63,12 +63,15 @@ class RenderTextualFieldsTest extends TestCase
     public function it_can_render_all_fields_in_a_window()
     {
         /** @var Field $class */
-        foreach (array_keys($this->classes) as $class) {
-            $component = $class::make('xxx')->displayInWindow()->value($value = 'given value');
+        foreach ($this->classes as $class => $value) {
+            $component = $class::make('xxx')->displayInWindow()->value($value);
 
             if ($component instanceof Hidden) {
                 $this->assertStringNotContainsString($value, $component->toHtml());
-            } else {
+            } else if ($component instanceof Date) {
+                $this->assertStringContainsString('02/02/2022', $component->toHtml());
+            }
+            else {
                 $this->assertStringContainsString($value, $component->toHtml());
             }
         }
