@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
+                <x-chief-forms::window>
                     <div class="-my-4 divide-y divide-grey-100">
                         @foreach($users as $user)
                             <div class="flex justify-between py-4">
@@ -61,7 +61,7 @@
                             </div>
                         @endforeach
                     </div>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
         </div>
     </div>

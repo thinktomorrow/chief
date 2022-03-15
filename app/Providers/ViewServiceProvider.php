@@ -52,7 +52,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
         /* Chief components */
-        Blade::component('chief::components.window', 'chief::window');
+//        Blade::component('chief::components.window', 'chief::window');
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
         Blade::component('chief::components.card', 'chief-card');

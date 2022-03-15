@@ -10,7 +10,7 @@
             <div class="space-y-6 w-128">
                 <h1 class="text-center text-black">Er ging iets fout</h1>
 
-                <x-chief::window>
+                <x-chief-forms::window>
                     <div class="prose prose-dark">
                         <p>
                             Onze developers werden op de hoogte gebracht en zullen uitzoeken wat er fout liep.<br>
@@ -31,7 +31,7 @@
                             > Contacteer ons </a>
                         </p>
                     </div>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
         </div>
     </div>

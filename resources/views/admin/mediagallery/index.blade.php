@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <x-chief::window>
+                <x-chief-forms::window>
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
                             <label for="select-all" class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
@@ -46,11 +46,11 @@
                     <div class="mt-8">
                         {{ $assets->links('chief::pagination.default') }}
                     </div>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
 
             <div class="w-full lg:w-1/3">
-                <x-chief::window title="Filteren">
+                <x-chief-forms::window title="Filteren">
                     <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
@@ -86,7 +86,7 @@
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
         </div>
     </div>

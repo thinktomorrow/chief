@@ -20,7 +20,7 @@
                     @endif
                 </h1>
 
-                <x-chief::window>
+                <x-chief-forms::window>
                     @if($errors and count($errors) > 0)
                         <x-chief-inline-notification type="error" size="large">
                             <ul>
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </form>
-                </x-chief::window>
+                </x-chief-forms::window>
             </div>
         </div>
     </div>

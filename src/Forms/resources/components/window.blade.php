@@ -27,12 +27,7 @@
                     </div>
 
                     @if($editUrl)
-                        <a
-                            data-sidebar-trigger
-                            href="{{ $editUrl }}"
-                            title="Aanpassen"
-                            class="shrink-0"
-                        >
+                        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="shrink-0">
                             @isset($icon)
                                 {!! $icon !!}
                             @else
