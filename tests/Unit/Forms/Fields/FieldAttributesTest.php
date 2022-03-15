@@ -6,9 +6,9 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Number;
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Hidden;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
