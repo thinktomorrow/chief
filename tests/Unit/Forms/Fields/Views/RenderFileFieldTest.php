@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
-use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class RenderFileFieldTest extends TestCase
 {
