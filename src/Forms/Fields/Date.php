@@ -12,5 +12,5 @@ class Date extends Component implements Field
     use HasStep;
 
     protected string $view = 'chief-forms::fields.date';
-    protected string $windowView = 'chief-forms::fields.text-window';
+    protected string $windowView = 'chief-forms::fields.date-window';
 }
