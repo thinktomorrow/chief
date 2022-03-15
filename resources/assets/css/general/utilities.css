@@ -1,4 +1,4 @@
-@responsive {
+@layer utilities {
     .row {
         @apply row-start-start;
     }
@@ -72,7 +72,7 @@
 /* Icon label hover effect */
 .icon-label {
     .icon-label-icon {
-        @apply inline-block transform transition-all ease-in-out duration-75;
+        @apply inline-block transition-all ease-in-out duration-75;
     }
 
     &:hover {
@@ -113,7 +113,7 @@
 
 .hover\:child-svg-scale-110 {
     svg {
-        @apply inline-block transform transition-all ease-in-out duration-75;
+        @apply inline-block transition-all ease-in-out duration-75;
     }
 
     &:hover svg {
@@ -125,4 +125,16 @@
     box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.05);
 
     @apply absolute left-6 top-0 bg-white rounded-lg p-2 min-w-48 shadow-lg;
+}
+
+.children\:w-6 > * {
+    @apply w-6;
+}
+
+.children\:h-6 > * {
+    @apply h-6;
+}
+
+.children\:text-grey-700 > * {
+    @apply text-grey-700;
 }

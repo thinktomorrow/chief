@@ -5,7 +5,7 @@
         data-sidebar-trigger="{{ $tag ?: '' }}"
         href="{{ $manager->route('form-edit', $model, $tag) }}"
         title="Titel aanpassen"
-        class="flex-shrink-0"
+        class="shrink-0"
     >
         <x-chief-icon-button icon="icon-edit" />
     </a>

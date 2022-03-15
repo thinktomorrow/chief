@@ -31,7 +31,7 @@
                             data-sidebar-trigger
                             href="{{ $editUrl }}"
                             title="Aanpassen"
-                            class="flex-shrink-0"
+                            class="shrink-0"
                         >
                             @isset($icon)
                                 {!! $icon !!}

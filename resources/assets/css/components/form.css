@@ -46,7 +46,7 @@ input[type='number'] {
 input[type='checkbox'],
 input[type='radio'] {
     margin-top: 0.1rem;
-    @apply appearance-none relative w-5 h-5 border border-grey-300 overflow-hidden mr-1 cursor-pointer flex-shrink;
+    @apply appearance-none relative w-5 h-5 border border-grey-300 overflow-hidden mr-1 cursor-pointer shrink;
 
     &:focus {
         @apply ring-2 ring-primary-500;
@@ -54,11 +54,11 @@ input[type='radio'] {
 
     &:before {
         content: '';
-        @apply absolute inset-0 bg-primary-500 transform scale-0 z-10 transition-all duration-150 ease-in-out;
+        @apply absolute inset-0 bg-primary-500 scale-0 z-10 transition-all duration-150 ease-in-out;
     }
 
     &:checked:before {
-        @apply transform scale-50;
+        @apply scale-50;
     }
 }
 

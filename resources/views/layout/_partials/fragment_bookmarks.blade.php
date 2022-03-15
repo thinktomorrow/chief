@@ -5,7 +5,7 @@
 
         <div class="inline-flex items-center gutter-1">
             @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
-                <span class="transform scale-0 group-hover:scale-100 transition-150">
+                <span class="scale-0 group-hover:scale-100 transition-150">
                     <a
                         href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
                         target="_blank"
@@ -15,7 +15,7 @@
                     </a>
                 </span>
 
-                <span class="transform scale-0 group-hover:scale-100 transition-150">
+                <span class="scale-0 group-hover:scale-100 transition-150">
                     <span
                         data-copy-to-clipboard="bookmark"
                         data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"

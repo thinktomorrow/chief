@@ -1,9 +1,9 @@
 <x-chief::window
-        :title="$getTitle()"
-        :refresh-url="$getRefreshUrl()"
-        :tags="$getId()"
+    :title="$getTitle()"
+    :refresh-url="$getRefreshUrl()"
+    :tags="$getId()"
 >
-    <div class="space-y-4">
+    <div class="relative space-y-4">
         <form {{ $attributes->merge($getCustomAttributes()) }}
               id="{{ $getElementId() }}"
               method="POST"
@@ -16,7 +16,7 @@
                 @method('put')
             @endif
 
-            <p>{{ time() }}</p>
+            <p class="absolute bottom-0 right-0 opacity-50">{{ time() }}</p>
 
             <div class="space-y-6">
                 @foreach($getComponents() as $childComponent)

@@ -32,7 +32,7 @@
         @endif
     </div>
 
-    <div data-sortable-ignore class="flex items-center flex-shrink-0 cursor-pointer -my-0.5">
+    <div data-sortable-ignore class="flex items-center shrink-0 cursor-pointer -my-0.5">
         <a
             href="{{ route('chief.back.menuitem.edit', $item->getId()) }}"
             title="Aanpassen"

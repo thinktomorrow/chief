@@ -13,7 +13,7 @@
                 <a
                     {{ $sidebarTrigger ?? '' }}
                     href="{{ $editRequestUrl }}"
-                    class="flex-shrink-0 link link-primary"
+                    class="shrink-0 link link-primary"
                     style="margin-top: -3px"
                 >
                     <x-chief-icon-label type="edit"></x-chief-icon-label>

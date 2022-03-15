@@ -17,7 +17,7 @@
                 </a>
             @endAdminCan
 
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 @include('chief::manager._index._options')
             </div>
         </div>
