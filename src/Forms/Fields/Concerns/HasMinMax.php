@@ -5,29 +5,29 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 trait HasMinMax
 {
-    protected ?int $min = null;
-    protected ?int $max = null;
+    protected ?string $min = null;
+    protected ?string $max = null;
 
-    public function min(int $min): static
+    public function min(string|int $min): static
     {
-        $this->min = $min;
+        $this->min = (string) $min;
 
         return $this;
     }
 
-    public function getMin(): ?int
+    public function getMin(): ?string
     {
         return $this->min;
     }
 
-    public function max(int $max): static
+    public function max(string|int $max): static
     {
-        $this->max = $max;
+        $this->max = (string) $max;
 
         return $this;
     }
 
-    public function getMax(): ?int
+    public function getMax(): ?string
     {
         return $this->max;
     }

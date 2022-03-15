@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
+use Thinktomorrow\Chief\Forms\Fields\Date;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -23,6 +24,7 @@ class RenderTextualFieldsTest extends TestCase
             Text::class => 'given value',
             Number::class => 'given value',
             Slider::class => 5,
+            Date::class => '2022-02-02',
             Hidden::class => 'given value',
         ];
     }
