@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <div class="w-full {{ $prepend ? 'with-prepend' : null }} {{ $append ? 'with-append' : null }}">
+    <div class="w-full {{ $prepend ? 'children:with-prepend' : null }} {{ $append ? 'children:with-append' : null }}">
         {{ $slot }}
     </div>
 
