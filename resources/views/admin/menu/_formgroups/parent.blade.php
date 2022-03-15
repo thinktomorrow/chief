@@ -1,4 +1,4 @@
-<x-chief-form::formgroup.wrapper id="niveau" label="Niveau" required>
+<x-chief-form::formgroup id="niveau" label="Niveau" required>
 
     <x-slot name="description">
         <p>Zet dit item op het hoogste niveau of plaats het onder een bestaand.</p>
@@ -45,4 +45,4 @@
             </div>
         </div>
     </radio-options>
-</x-chief-form::formgroup.wrapper>
+</x-chief-form::formgroup>

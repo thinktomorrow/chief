@@ -1,4 +1,4 @@
-<x-chief-form::formgroup-window.wrapper
+<x-chief-form::formgroup.window
     :label="$getLabel()"
 >
     @if(!$hasLocales())
@@ -18,4 +18,4 @@
             </tabs>
         </div>
     @endif
-</x-chief-form::formgroup-window.wrapper>
+</x-chief-form::formgroup.window>

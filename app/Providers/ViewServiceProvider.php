@@ -32,22 +32,10 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
-
-        // Livewire components
-//        Livewire::component('fragments', Fragments::class);
-//        Livewire::component('links', Links::class);
-//        Livewire::component('fields-window', FieldsWindow::class);
-//        Livewire::component('status', Status::class);
-
-        /* Livewire component wrappers */
-//        Blade::component('chief-fragments::window', 'chief-fragments::window');
-//        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
-//        Blade::component('chief::manager.windows.fields.window', 'chief::window.fields');
         Blade::component('chief::manager.windows.status.window', 'chief::window.status');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
         /* Chief components */
-//        Blade::component('chief::components.window', 'chief::window');
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
         Blade::component('chief::components.card', 'chief-card');

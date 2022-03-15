@@ -1,4 +1,4 @@
-<x-chief-form::formgroup.wrapper id="link" label="Link" required>
+<x-chief-form::formgroup id="link" label="Link" required>
     <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
         <div class="space-y-3">
             {{-- Internal type --}}
@@ -106,4 +106,4 @@
             </label>
         </div>
     </radio-options>
-</x-chief-form::formgroup.wrapper>
+</x-chief-form::formgroup>

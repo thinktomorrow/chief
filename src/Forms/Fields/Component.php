@@ -68,8 +68,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
      * Every field is rendered in a formgroup container view,
      * this view takes care of the localization of the field.
      */
-    protected string $formgroupView = 'chief-form::components.formgroup.index';
-    protected string $formgroupWindowView = 'chief-form::components.formgroup-window.index';
+    protected string $fieldFormView = 'chief-form::components.field.formgroup';
+    protected string $fieldWindowView = 'chief-form::components.field.window';
 
     public function __construct(string $key)
     {
@@ -89,8 +89,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
     public function render(): View
     {
         $view = $this->displayInWindow
-            ? $this->formgroupWindowView
-            : $this->formgroupView;
+            ? $this->fieldWindowView
+            : $this->fieldFormView;
 
         return view($view, array_merge($this->data(), [
             'component' => $this,

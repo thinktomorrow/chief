@@ -1,4 +1,4 @@
-<x-chief-form::formgroup.wrapper id="order" label="Sortering" required>
+<x-chief-form::formgroup id="order" label="Sortering" required>
     <x-slot name="description">
         <p>Sortering van dit menu item op het huidige niveau.</p>
     </x-slot>
@@ -26,4 +26,4 @@
             </div>
         </div>
     </div>
-</x-chief-form::formgroup.wrapper>
+</x-chief-form::formgroup>

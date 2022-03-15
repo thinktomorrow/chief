@@ -36,13 +36,10 @@ trait FormsAssistant
 
         $this->guard('form-edit', $model);
 
-//        View::share('manager', $this);
-//        View::share('model', $model);
-
         // TODO: unify default form routes to the form itself...
         View::share('form', Forms::make($model->fields())->find($formId)->fill($this, $model));
 
-        return view('chief::manager.fields.edit');
+        return view('chief-form::forms.form-sidebar');
     }
 
     public function formUpdate(Request $request, $id, string $formId)

@@ -1,32 +1,38 @@
-<x-chief-form::formgroup.wrapper
-        :id="$getId($locale ?? null)"
-        :label="$getLabel()"
-        :description="$getDescription()"
-        :required="$isRequired()"
-        :fieldToggles="$getFieldToggles()"
-        :fieldType="strtolower(class_basename($component))"
+@props([
+    'id',
+    'label' => null,
+    'description' => null,
+    'required' => false,
+
+    'fieldType' => null,
+    'fieldToggles' => [],
+])
+
+<div
+    {{ $attributes->class('w-full') }}
+    data-field-key="{{ $id }}"
+    data-field-type="{{ $fieldType }}"
+    {!! $fieldToggles ? "data-conditional-toggle='" . json_encode($fieldToggles) . "'" : null !!}
 >
-    @if(!$hasLocales())
-        @include($getView())
-        @include('chief-form::components.formgroup.error')
-        @include('chief-form::fields._partials.charactercount')
-    @elseif(count($getLocales()) == 1)
-        @foreach($getLocales() as $locale)
-            @include($getView(), ['component' => $component, 'locale' => $locale])
-            @include('chief-form::fields._partials.charactercount')
-            @include('chief-form::components.formgroup.error')
-        @endforeach
-    @else
-        <div data-vue-fields>
-            <tabs>
-                @foreach($getLocales() as $locale)
-                    <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}">
-                        @include($getView(), ['component' => $component, 'locale' => $locale])
-                        @include('chief-form::fields._partials.charactercount')
-                        @include('chief-form::components.formgroup.error')
-                    </tab>
-                @endforeach
-            </tabs>
+    @if($label)
+        <div class="mb-1 space-x-1 leading-none">
+            <span class="font-medium display-base display-dark">
+                {{ ucfirst($label) }}
+            </span>
+
+            @if($required)
+                <span class="leading-none text-orange-400" title="Verplicht in te vullen">*</span>
+            @endif
         </div>
     @endif
-</x-chief-form::formgroup.wrapper>
+
+    @if($description)
+        <div class="mb-3 prose prose-dark prose-editor text-grey-600">
+            {!! $description !!}
+        </div>
+    @endif
+
+    <div class="{{ $label ? 'mt-2' : null }}">
+        {!! $slot !!}
+    </div>
+</div>
