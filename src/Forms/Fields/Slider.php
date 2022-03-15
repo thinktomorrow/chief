@@ -11,6 +11,6 @@ class Slider extends Component implements Field
     use HasMinMax;
     use HasStep;
 
-    protected string $view = 'chief-forms::fields.slider';
-    protected string $windowView = 'chief-forms::fields.text-window';
+    protected string $view = 'chief-form::fields.slider';
+    protected string $windowView = 'chief-form::fields.text-window';
 }

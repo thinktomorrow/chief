@@ -5,12 +5,12 @@
     </x-slot>
 
     <!-- can be either form or window display -->
-{{--    <x-chief-forms::form id='intro' />--}}
-{{--    <x-chief-forms::form id='intro2' />--}}
+{{--    <x-chief-form::form id='intro' />--}}
+{{--    <x-chief-form::form id='intro2' />--}}
 
 {{--    <x-chief::window>--}}
 {{--        <div class="space-y-6">--}}
-{{--            <x-chief-forms::field tagged='intro' />--}}
+{{--            <x-chief-form::field tagged='intro' />--}}
 {{--        </div>--}}
 {{--    </x-chief::window>--}}
 

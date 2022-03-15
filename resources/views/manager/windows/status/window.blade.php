@@ -5,7 +5,7 @@
         $isAnyLinkOnline = ($isVisitable && Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model)->isAnyLinkOnline());
     ?>
 
-    <x-chief-forms::window
+    <x-chief-form::window
             title="Status"
             :edit-url="$manager->route('status-edit', $model)"
             :refresh-url="$manager->route('status-window', $model)"
@@ -71,5 +71,5 @@
                     <p> ... </p>
                 </div>
         @endswitch
-    </x-chief-forms::window>
+    </x-chief-form::window>
 @endAdminCan

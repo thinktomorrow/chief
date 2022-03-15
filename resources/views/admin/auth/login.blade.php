@@ -31,17 +31,17 @@
                                 </x-chief-inline-notification>
                             @endif
 
-                            <x-chief-forms::formgroup.wrapper id="email" label="E-mail" required>
+                            <x-chief-form::formgroup.wrapper id="email" label="E-mail" required>
                                 <input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
-                                <x-chief-forms::formgroup.error error-ids="email"></x-chief-forms::formgroup.error>
-                            </x-chief-forms::formgroup.wrapper>
+                                <x-chief-form::formgroup.error error-ids="email"></x-chief-form::formgroup.error>
+                            </x-chief-form::formgroup.wrapper>
 
-                            <x-chief-forms::formgroup.wrapper id="password" label="Wachtwoord" required>
+                            <x-chief-form::formgroup.wrapper id="password" label="Wachtwoord" required>
                                 <input id="password" name="password" type="password">
-                                <x-chief-forms::formgroup.error error-ids="password"></x-chief-forms::formgroup.error>
-                            </x-chief-forms::formgroup.wrapper>
+                                <x-chief-form::formgroup.error error-ids="password"></x-chief-form::formgroup.error>
+                            </x-chief-form::formgroup.wrapper>
 
-                            <x-chief-forms::formgroup.wrapper id="remember">
+                            <x-chief-form::formgroup.wrapper id="remember">
                                 <label for="rememberCheckbox" class="with-checkbox">
                                     <input
                                             id="rememberCheckbox"
@@ -52,7 +52,7 @@
 
                                     <span>Hou me ingelogd</span>
                                 </label>
-                            </x-chief-forms::formgroup.wrapper>
+                            </x-chief-form::formgroup.wrapper>
 
                             <div class="space-x-2">
                                 <button type="submit" form="valid" class="btn btn-primary">Log in</button>

@@ -12,8 +12,8 @@ class Select extends Component implements Field
     use HasMultiple;
     use HasOptions;
 
-    protected string $view = 'chief-forms::fields.select';
-    protected string $windowView = 'chief-forms::fields.select-window';
+    protected string $view = 'chief-form::fields.select';
+    protected string $windowView = 'chief-form::fields.select-window';
 
     public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title'): self
     {

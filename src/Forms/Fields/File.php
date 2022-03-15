@@ -29,8 +29,8 @@ class File extends Component implements Field
     use HasUploadButtonLabel;
     use HasEndpoint;
 
-    protected string $view = 'chief-forms::fields.file';
-    protected string $windowView = 'chief-forms::fields.file-window';
+    protected string $view = 'chief-form::fields.file';
+    protected string $windowView = 'chief-form::fields.file-window';
     protected string $localizedFormKeyTemplate = 'files.:name.:locale';
 
     public function __construct(string $key)

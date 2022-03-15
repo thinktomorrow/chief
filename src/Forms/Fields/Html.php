@@ -10,6 +10,6 @@ class Html extends Component implements Field
 {
     use HasRedactorToolbar;
 
-    protected string $view = 'chief-forms::fields.html';
-    protected string $windowView = 'chief-forms::fields.html-window';
+    protected string $view = 'chief-form::fields.html';
+    protected string $windowView = 'chief-form::fields.html-window';
 }

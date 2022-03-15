@@ -14,6 +14,6 @@ class Number extends Component implements Field
     use HasPrependAppend;
     use HasMinMax;
 
-    protected string $view = 'chief-forms::fields.number';
-    protected string $windowView = 'chief-forms::fields.text-window';
+    protected string $view = 'chief-form::fields.number';
+    protected string $windowView = 'chief-form::fields.text-window';
 }

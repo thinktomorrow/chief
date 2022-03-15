@@ -1,4 +1,4 @@
-@include('chief-forms::fields.text', [
+@include('chief-form::fields.text', [
     'passedAttributes' => [
         'type' => 'date',
         'min' => $getMin() ?? null,

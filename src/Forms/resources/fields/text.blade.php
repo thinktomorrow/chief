@@ -1,4 +1,4 @@
-<x-chief-forms::formgroup.prepend-append
+<x-chief-form::formgroup.prepend-append
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
@@ -12,4 +12,4 @@
             'type' => 'text',
         ]) }}
     >
-</x-chief-forms::formgroup.prepend-append>
+</x-chief-form::formgroup.prepend-append>

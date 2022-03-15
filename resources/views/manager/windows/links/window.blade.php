@@ -2,7 +2,7 @@
 
     <?php $linkForm = \Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model); ?>
 
-    <x-chief-forms::window
+    <x-chief-form::window
             title="Links"
             :edit-url="$manager->route('links-edit', $model)"
             :refresh-url="$manager->route('links-window', $model)"
@@ -33,5 +33,5 @@
                 @endforeach
             @endunless
         </div>
-    </x-chief-forms::window>
+    </x-chief-form::window>
 @endAdminCan

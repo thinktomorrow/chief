@@ -29,17 +29,17 @@
         <div class="row">
             <div class="w-full">
 
-                <x-chief-forms::window>
+                <x-chief-form::window>
                     <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                         @csrf
 
                         <div class="space-y-6">
-                            <x-chief-forms::field not-tagged="edit,not-on-create" />
+                            <x-chief-form::field not-tagged="edit,not-on-create" />
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>
                     </form>
-                </x-chief-forms::window>
+                </x-chief-form::window>
             </div>
         </div>
     </div>

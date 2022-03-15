@@ -9,6 +9,6 @@ class Textarea extends Component implements Field
 {
     use HasCharacterCount;
 
-    protected string $view = 'chief-forms::fields.textarea';
-    protected string $windowView = 'chief-forms::fields.textarea-window';
+    protected string $view = 'chief-form::fields.textarea';
+    protected string $windowView = 'chief-form::fields.textarea-window';
 }

@@ -10,6 +10,6 @@ class Checkbox extends Component implements Field
 {
     use HasOptions;
 
-    protected string $view = 'chief-forms::fields.checkbox';
-    protected string $windowView = 'chief-forms::fields.select-window';
+    protected string $view = 'chief-form::fields.checkbox';
+    protected string $windowView = 'chief-form::fields.select-window';
 }

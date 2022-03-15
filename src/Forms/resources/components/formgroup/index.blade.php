@@ -1,4 +1,4 @@
-<x-chief-forms::formgroup.wrapper
+<x-chief-form::formgroup.wrapper
         :id="$getId($locale ?? null)"
         :label="$getLabel()"
         :description="$getDescription()"
@@ -8,13 +8,13 @@
 >
     @if(!$hasLocales())
         @include($getView())
-        @include('chief-forms::components.formgroup.error')
-        @include('chief-forms::fields._partials.charactercount')
+        @include('chief-form::components.formgroup.error')
+        @include('chief-form::fields._partials.charactercount')
     @elseif(count($getLocales()) == 1)
         @foreach($getLocales() as $locale)
             @include($getView(), ['component' => $component, 'locale' => $locale])
-            @include('chief-forms::fields._partials.charactercount')
-            @include('chief-forms::components.formgroup.error')
+            @include('chief-form::fields._partials.charactercount')
+            @include('chief-form::components.formgroup.error')
         @endforeach
     @else
         <div data-vue-fields>
@@ -22,11 +22,11 @@
                 @foreach($getLocales() as $locale)
                     <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}">
                         @include($getView(), ['component' => $component, 'locale' => $locale])
-                        @include('chief-forms::fields._partials.charactercount')
-                        @include('chief-forms::components.formgroup.error')
+                        @include('chief-form::fields._partials.charactercount')
+                        @include('chief-form::components.formgroup.error')
                     </tab>
                 @endforeach
             </tabs>
         </div>
     @endif
-</x-chief-forms::formgroup.wrapper>
+</x-chief-form::formgroup.wrapper>

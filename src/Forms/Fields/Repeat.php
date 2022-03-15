@@ -13,9 +13,9 @@ class Repeat extends Component implements Field
 {
     use Fields\Concerns\HasEndpoint;
 
-    protected string $view = 'chief-forms::fields.repeat.repeat';
-    protected string $sectionView = 'chief-forms::fields.repeat.repeat-section';
-    protected string $windowView = 'chief-forms::fields.repeat.repeat-window';
+    protected string $view = 'chief-form::fields.repeat.repeat';
+    protected string $sectionView = 'chief-form::fields.repeat.repeat-section';
+    protected string $windowView = 'chief-form::fields.repeat.repeat-window';
 
     public function getRepeatedComponents(?string $locale = null): array
     {

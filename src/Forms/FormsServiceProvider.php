@@ -15,7 +15,7 @@ class FormsServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-forms', __DIR__ . '/resources');
+        $this->app['view']->addNamespace('chief-form', __DIR__ . '/resources');
 
         // Custom validation rules
         Validator::extendImplicit(FallbackLocaleRequiredRule::RULE, FallbackLocaleRequiredRule::class.'@validate');

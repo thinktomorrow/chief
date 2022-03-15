@@ -14,9 +14,9 @@ class Text extends Component implements Field
     use HasPrependAppend;
     use HasRedactorToolbar;
 
-    protected string $view = 'chief-forms::fields.text';
-    protected string $windowView = 'chief-forms::fields.text-window';
-    protected string $viewWithRedactor = 'chief-forms::fields.text-with-redactor';
+    protected string $view = 'chief-form::fields.text';
+    protected string $windowView = 'chief-form::fields.text-window';
+    protected string $viewWithRedactor = 'chief-form::fields.text-with-redactor';
 
     public function getView(): string
     {

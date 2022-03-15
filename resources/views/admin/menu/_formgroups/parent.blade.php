@@ -1,4 +1,4 @@
-<x-chief-forms::formgroup.wrapper id="niveau" label="Niveau" required>
+<x-chief-form::formgroup.wrapper id="niveau" label="Niveau" required>
 
     <x-slot name="description">
         <p>Zet dit item op het hoogste niveau of plaats het onder een bestaand.</p>
@@ -40,9 +40,9 @@
                             valuekey="id"
                             placeholder="Kies het bovenliggende menu item"
                         ></chief-multiselect>
-                        <x-chief-forms::formgroup.error error-ids="parent_id"></x-chief-forms::formgroup.error>
+                        <x-chief-form::formgroup.error error-ids="parent_id"></x-chief-form::formgroup.error>
                 </div>
             </div>
         </div>
     </radio-options>
-</x-chief-forms::formgroup.wrapper>
+</x-chief-form::formgroup.wrapper>

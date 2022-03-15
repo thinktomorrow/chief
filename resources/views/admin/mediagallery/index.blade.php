@@ -61,11 +61,11 @@
                     <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
-                        <x-chief-forms::formgroup.wrapper id="name" label="Bestandsnaam">
+                        <x-chief-form::formgroup.wrapper id="name" label="Bestandsnaam">
                             <input type="text" name="search" placeholder="Zoek op bestandsnaam ..." value="{{ old('search', request()->input('search'))}}">
-                        </x-chief-forms::formgroup.wrapper>
+                        </x-chief-form::formgroup.wrapper>
 
-                        <x-chief-forms::formgroup.wrapper id="owner" label="Pagina">
+                        <x-chief-form::formgroup.wrapper id="owner" label="Pagina">
                             <chief-multiselect
                                     name="owner"
                                     :options='@json($pages)'
@@ -76,15 +76,15 @@
                                     labelkey="label"
                                     valuekey="id"
                             ></chief-multiselect>
-                        </x-chief-forms::formgroup.wrapper>
+                        </x-chief-form::formgroup.wrapper>
 
-                        <x-chief-forms::formgroup.wrapper id="unused">
+                        <x-chief-form::formgroup.wrapper id="unused">
                             <label for="unused" class="with-checkbox">
                                 <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
-                        </x-chief-forms::formgroup.wrapper>
+                        </x-chief-form::formgroup.wrapper>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>

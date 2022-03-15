@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 
 class MultiSelect extends Select
 {
-    protected string $view = 'chief-forms::fields.multiselect';
+    protected string $view = 'chief-form::fields.multiselect';
 
     private bool $grouped = false;
 

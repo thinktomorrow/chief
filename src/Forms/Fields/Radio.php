@@ -10,6 +10,6 @@ class Radio extends Component implements Field
 {
     use HasOptions;
 
-    protected string $view = 'chief-forms::fields.radio';
-    protected string $windowView = 'chief-forms::fields.select-window';
+    protected string $view = 'chief-form::fields.radio';
+    protected string $windowView = 'chief-form::fields.select-window';
 }

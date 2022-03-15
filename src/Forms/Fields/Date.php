@@ -11,6 +11,6 @@ class Date extends Component implements Field
     use HasMinMax;
     use HasStep;
 
-    protected string $view = 'chief-forms::fields.date';
-    protected string $windowView = 'chief-forms::fields.date-window';
+    protected string $view = 'chief-form::fields.date';
+    protected string $windowView = 'chief-form::fields.date-window';
 }

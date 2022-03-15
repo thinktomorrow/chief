@@ -37,7 +37,7 @@
             <div class="w-full">
                 <div class="window">
 
-                    <x-chief-forms::formgroup.wrapper id="password" label="Wachtwoord">
+                    <x-chief-form::formgroup.wrapper id="password" label="Wachtwoord">
                         <x-slot name="description">
                             <p>Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>
                         </x-slot>
@@ -47,7 +47,7 @@
                             title="Wijzig wachtwoord"
                             href="{{ route('chief.back.password.edit') }}"
                         > Wijzig wachtwoord </a>
-                    </x-chief-forms::formgroup.wrapper>
+                    </x-chief-form::formgroup.wrapper>
                 </div>
             </div>
         </div>

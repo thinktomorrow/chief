@@ -1,4 +1,4 @@
-<x-chief-forms::formgroup.wrapper id="link" label="Link" required>
+<x-chief-form::formgroup.wrapper id="link" label="Link" required>
     <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
         <div class="space-y-3">
             {{-- Internal type --}}
@@ -26,7 +26,7 @@
                             labelkey="label"
                             valuekey="id"
                         ></chief-multiselect>
-                        <x-chief-forms::formgroup.error error-ids="owner_reference"></x-chief-forms::formgroup.error>
+                        <x-chief-form::formgroup.error error-ids="owner_reference"></x-chief-form::formgroup.error>
                 </div>
             </div>
 
@@ -106,4 +106,4 @@
             </label>
         </div>
     </radio-options>
-</x-chief-forms::formgroup.wrapper>
+</x-chief-form::formgroup.wrapper>

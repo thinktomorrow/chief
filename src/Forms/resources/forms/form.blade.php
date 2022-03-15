@@ -1,4 +1,4 @@
-<x-chief-forms::window
+<x-chief-form::window
     :title="$getTitle()"
     :refresh-url="$getRefreshUrl()"
     :tags="$getId()"
@@ -29,4 +29,4 @@
             </div>
         </form>
     </div>
-</x-chief-forms::window>
+</x-chief-form::window>

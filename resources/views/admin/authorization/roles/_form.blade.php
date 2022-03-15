@@ -1,12 +1,12 @@
-<x-chief-forms::formgroup.wrapper id="name" label="Naam" required>
+<x-chief-form::formgroup.wrapper id="name" label="Naam" required>
     <x-slot name="description">
         <p>Unieke benaming van de rol.</p>
     </x-slot>
     <input id="name" type="text" name="name" value="{{ old('name', $role->name) }}">
-    <x-chief-forms::formgroup.error error-ids="name"></x-chief-forms::formgroup.error>
-</x-chief-forms::formgroup.wrapper>
+    <x-chief-form::formgroup.error error-ids="name"></x-chief-form::formgroup.error>
+</x-chief-form::formgroup.wrapper>
 
-<x-chief-forms::formgroup.wrapper id="roles" label="Toestemmingen" required>
+<x-chief-form::formgroup.wrapper id="roles" label="Toestemmingen" required>
     <x-slot name="description">
         <p>Met welke rechten heeft deze rol toegang tot de admin.</p>
     </x-slot>
@@ -20,5 +20,5 @@
         ></chief-multiselect>
     </div>
 
-    <x-chief-forms::formgroup.error error-ids="roles"></x-chief-forms::formgroup.error>
-</x-chief-forms::formgroup.wrapper>
+    <x-chief-form::formgroup.error error-ids="roles"></x-chief-form::formgroup.error>
+</x-chief-form::formgroup.wrapper>

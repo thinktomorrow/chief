@@ -1,4 +1,4 @@
-<x-chief-forms::window
+<x-chief-form::window
     :refresh-url="$manager->route('fragments-show', $owner)"
     tags="fragments"
 >
@@ -25,4 +25,4 @@
             @endforeach
         </div>
     </div>
-</x-chief-forms::window>
+</x-chief-form::window>

@@ -29,15 +29,15 @@
                         <div class="space-y-6">
                             {{-- TODO: mail confirmation message also shows as error --}}
 
-                            <x-chief-forms::formgroup.wrapper id="identity" label="E-mail" required>
+                            <x-chief-form::formgroup.wrapper id="identity" label="E-mail" required>
 
                                 <x-slot name="description">
                                     <p>Geef je e-mailadres in om je wachtwoord opnieuw in te stellen.</p>
                                 </x-slot>
 
                                 <input id="identity" type="email" name="email" value="{{ old('email') }}">
-                                <x-chief-forms::formgroup.error error-ids="email"></x-chief-forms::formgroup.error>
-                            </x-chief-forms::formgroup.wrapper>
+                                <x-chief-form::formgroup.error error-ids="email"></x-chief-form::formgroup.error>
+                            </x-chief-form::formgroup.wrapper>
 
                             <div class="space-x-4">
                                 <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
