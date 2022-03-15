@@ -1,9 +1,8 @@
 <x-chief-forms::formgroup.prepend-append
-    :prepend="$getPrepend($locale ?? null)"
-    :append="$getAppend($locale ?? null)"
+    :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
+    :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
     <input
-{{--        type="{{ $inputType ?? 'text' }}"--}}
         name="{{ $getName($locale ?? null) }}"
         id="{{ $getElementId($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"

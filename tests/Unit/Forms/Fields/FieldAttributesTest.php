@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
@@ -22,6 +23,7 @@ class FieldAttributesTest extends TestCase
             Textarea::class,
             Text::class,
             Number::class,
+            Slider::class,
             File::class,
             Image::class,
         ];
