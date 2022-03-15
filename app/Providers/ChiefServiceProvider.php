@@ -58,7 +58,6 @@ class ChiefServiceProvider extends ServiceProvider
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->boot();
 
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
 

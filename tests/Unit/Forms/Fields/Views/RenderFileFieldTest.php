@@ -6,11 +6,10 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
-class RenderFileFieldTest extends ChiefTestCase
+class RenderFileFieldTest extends TestCase
 {
     private array $classes;
 

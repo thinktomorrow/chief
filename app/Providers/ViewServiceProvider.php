@@ -18,6 +18,8 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
+
         $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
 
         View::composer([
