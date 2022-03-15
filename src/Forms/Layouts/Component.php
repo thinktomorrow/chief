@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasId;
-use Thinktomorrow\Chief\Forms\Concerns\HasLayoutType;
 use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
 
@@ -23,7 +22,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
     use HasColumns;
     use HasTitle;
     use HasDescription;
-    use HasLayoutType;
     use HasCustomAttributes;
     use HasId;
 

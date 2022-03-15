@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 enum LayoutType: string
 {
     case none = 'none';
+    case grey = 'grey';
     case success = 'success';
     case info = 'info';
     case warning = 'warning';
@@ -15,6 +16,7 @@ enum LayoutType: string
     {
         return match ($this) {
             self::none => '',
+            self::grey => 'bg-grey-50 bg-gradient-to-br from-grey-50 to-grey-100',
             self::success => 'bg-green-50 bg-gradient-to-br from-green-50 to-green-100',
             self::info => 'bg-blue-50 bg-gradient-to-br from-blue-50 to-blue-100',
             self::warning => 'bg-orange-50 bg-gradient-to-br from-orange-50 to-orange-100',

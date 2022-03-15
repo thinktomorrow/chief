@@ -10,6 +10,7 @@ module.exports = {
         'resources/assets/css/components/multiselect.scss',
         'node_modules/vue-multiselect/dist/vue-multiselect.min.css',
         'src/Forms/resources/**/*.blade.php',
+        'src/Forms/Layouts/**/*.php',
     ],
     theme: {
         screens: {
