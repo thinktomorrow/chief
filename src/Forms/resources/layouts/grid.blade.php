@@ -1,4 +1,4 @@
-<div {{ $attributes->merge($getCustomAttributes())->class('row-start-end gutter-3') }}>
+<div {{ $attributes->merge($getCustomAttributes())->class('row-start-start gutter-3') }}>
     <div class="w-full">
         @include('chief-forms::layouts._partials.title')
     </div>

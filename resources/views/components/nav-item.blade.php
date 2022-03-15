@@ -16,12 +16,12 @@
                             href="{{ $url }}"
                             title="{!! $label !!}"
                             data-toggle-dropdown-ignore
-                            class="p-2 shrink-0 children:w-6 children:h-6 children:text-grey-700"
+                            class="p-2 shrink-0 children:w-6 children:h-6 children:text-black"
                         >
                             {!! $icon !!}
                         </a>
                     @else
-                        <div class="p-2 shrink-0 children:w-6 children:h-6 children:text-grey-700">
+                        <div class="p-2 shrink-0 children:w-6 children:h-6 children:text-black">
                             {!! $icon !!}
                         </div>
                     @endisset
@@ -33,14 +33,14 @@
                         title="{!! $label !!}"
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="px-3 py-2 inline-block font-semibold text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="px-3 py-2 inline-block font-medium text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </a>
                 @else
                     <span
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="px-3 py-2 inline-block font-semibold text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="px-3 py-2 inline-block font-medium text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </span>

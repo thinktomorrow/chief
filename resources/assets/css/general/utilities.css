@@ -135,6 +135,6 @@
     @apply h-6;
 }
 
-.children\:text-grey-700 > * {
-    @apply text-grey-700;
+.children\:text-black > * {
+    @apply text-black;
 }

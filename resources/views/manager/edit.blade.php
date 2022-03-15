@@ -1,7 +1,7 @@
 <x-chief::page>
     <x-slot name="header">
         TITLE
-{{--        <x-chief-forms::window.fields tagged="pagetitle" />--}}
+       {{-- <x-chief::window.fields tagged="pagetitle" /> --}}
     </x-slot>
 
     <!-- can be either form or window display -->
