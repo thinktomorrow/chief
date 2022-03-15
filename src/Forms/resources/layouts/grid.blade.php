@@ -1,6 +1,6 @@
 <div {{ $attributes->merge($getCustomAttributes())->class('row-start-start gutter-3') }}>
     <div class="w-full">
-        @include('chief-form::layouts._partials.title')
+        @include('chief-form::layouts._partials.header')
     </div>
 
     @foreach($getComponents() as $childComponent)

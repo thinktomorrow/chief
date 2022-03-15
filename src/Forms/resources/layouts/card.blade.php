@@ -1,13 +1,13 @@
 <div {{ $attributes->merge($getCustomAttributes())->class([
-        '-mx-3 p-3 rounded-lg bg-white',
-        $getLayoutType()->class(),
+    'p-6 rounded-lg',
+    $getLayoutType()->class(),
 ]) }}>
     <div class="space-y-6">
-        @include('chief-form::layouts._partials.title')
-        <div class="space-y-6">
-            @foreach($getComponents() as $childComponent)
-                {{ $childComponent }}
-            @endforeach
-        </div>
+
+        @include('chief-form::layouts._partials.header')
+
+        @foreach($getComponents() as $childComponent)
+            {{ $childComponent }}
+        @endforeach
     </div>
 </div>

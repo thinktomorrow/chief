@@ -5,7 +5,7 @@
 @layer components {
     .link {
         @apply inline-block rounded-sm;
-        @apply font-semibold no-underline;
+        @apply font-medium no-underline;
         @apply transition duration-75 ease-in-out;
 
         &:focus {

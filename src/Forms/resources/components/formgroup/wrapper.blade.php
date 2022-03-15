@@ -8,10 +8,11 @@
     'fieldToggles' => [],
 ])
 
-<div    {{ $attributes->class('w-full') }}
-        data-field-key="{{ $id }}"
-        data-field-type="{{ $fieldType }}"
-        {!! $fieldToggles ? "data-conditional-toggle='" . json_encode($fieldToggles) . "'" : null !!}
+<div
+    {{ $attributes->class('w-full') }}
+    data-field-key="{{ $id }}"
+    data-field-type="{{ $fieldType }}"
+    {!! $fieldToggles ? "data-conditional-toggle='" . json_encode($fieldToggles) . "'" : null !!}
 >
     @if($label)
         <div class="mb-1 space-x-1 leading-none">

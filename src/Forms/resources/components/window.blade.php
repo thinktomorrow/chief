@@ -13,9 +13,9 @@
             {{-- Window header --}}
             @if($title || $labels || $editUrl)
                 <div class="flex justify-end space-x-4">
-                    <div class="w-full space-x-1 mt-0.5">
+                    <div class="w-full space-x-1">
                         @if($title)
-                            <span class="text-lg display-base display-dark">
+                            <span class="text-xl display-base display-dark">
                                 {!! $title !!}
                             </span>
                         @endif
