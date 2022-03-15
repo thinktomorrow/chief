@@ -2882,6 +2882,12 @@ video {
 .-ml-2 {
 	margin-left: -0.5rem;
 }
+.mt-0\.5 {
+	margin-top: 0.125rem;
+}
+.mt-0 {
+	margin-top: 0px;
+}
 .ml-10 {
 	margin-left: 2.5rem;
 }
@@ -2914,12 +2920,6 @@ video {
 }
 .mb-16 {
 	margin-bottom: 4rem;
-}
-.mt-0\.5 {
-	margin-top: 0.125rem;
-}
-.mt-0 {
-	margin-top: 0px;
 }
 .mt-1 {
 	margin-top: 0.25rem;
@@ -4684,111 +4684,6 @@ ul {
 }
 ul li {
 	list-style-position: outside;
-}
-@responsive {
-    .row {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		align-items: flex-start;
-	}
-
-    .gutter {
-		margin-top: -1rem;
-		margin-right: -1rem;
-		margin-bottom: -1rem;
-		margin-left: -1rem;
-	}
-
-    .gutter > * {
-		padding-top: 1rem;
-		padding-right: 1rem;
-		padding-bottom: 1rem;
-		padding-left: 1rem;
-	}
-        .gutter > * {
-		padding: 1rem;
-	}
-        @media (min-width: 1024px) {
-
-    .gutter {
-			margin-top: -1.5rem;
-			margin-right: -1.5rem;
-			margin-bottom: -1.5rem;
-			margin-left: -1.5rem;
-		}
-
-    .gutter > * {
-			padding-top: 1.5rem;
-			padding-right: 1.5rem;
-			padding-bottom: 1.5rem;
-			padding-left: 1.5rem;
-		}
-            .gutter > * {
-			padding: 1.5rem;
-		}
-        }
-
-    .container, .container-lg {
-		margin-left: auto;
-		margin-right: auto;
-		width: 91.666667%;
-		max-width: 1536px;
-	}
-
-        @media (min-width: 1280px) {
-
-    .container, .container-lg {
-			margin-left: auto;
-			margin-right: auto;
-			width: 83.333333%;
-			max-width: 1536px;
-		}
-        }
-
-        @media (min-width: 1536px) {
-
-    .container, .container-lg {
-			margin-left: auto;
-			margin-right: auto;
-			width: 80%;
-			max-width: 1536px;
-		}
-        }
-
-    .container-sm {
-		margin-left: auto;
-		margin-right: auto;
-		width: 91.666667%;
-		max-width: 1536px;
-	}
-        @media (min-width: 1024px) {
-
-    .container-sm {
-			margin-left: auto;
-			margin-right: auto;
-			width: 66.666667%;
-			max-width: 1536px;
-		}
-        }
-        @media (min-width: 1280px) {
-
-    .container-sm {
-			margin-left: auto;
-			margin-right: auto;
-			width: 50%;
-			max-width: 1536px;
-		}
-        }
-        @media (min-width: 1536px) {
-
-    .container-sm {
-			margin-left: auto;
-			margin-right: auto;
-			width: 40%;
-			max-width: 1536px;
-		}
-        }
 }
 /* Nice bottom border hover effect; mostly used for navigation */
 .with-bottomline {
