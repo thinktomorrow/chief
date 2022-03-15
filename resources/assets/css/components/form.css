@@ -87,22 +87,20 @@ label.with-radio {
     }
 }
 
-.prepend-to-input {
-    @apply px-4 py-3 font-medium border border-r-0 bg-primary-50 border-primary-100 rounded-l-md text-primary-500;
+.with-prepend {
+    @apply !rounded-l-none;
 }
 
-.append-to-input {
-    @apply px-4 py-3 font-medium border border-l-0 bg-primary-50 border-primary-100 rounded-r-md text-primary-500;
+.with-append {
+    @apply !rounded-l-none;
 }
 
-input[type='text'].with-prepend,
-input[type='date'].with-prepend {
-    @apply rounded-l-none;
+.children\:with-prepend > * {
+    @apply !rounded-l-none;
 }
 
-input[type='text'].with-append,
-input[type='date'].with-append {
-    @apply rounded-r-none;
+.children\:with-append > * {
+    @apply !rounded-r-none;
 }
 
 select.select {
