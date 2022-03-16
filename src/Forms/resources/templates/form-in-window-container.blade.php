@@ -2,6 +2,7 @@
     :title="$getTitle()"
     :edit-url="$getWindowAction()"
     :refresh-url="$getRefreshUrl()"
+    :class="$getLayout()->class()"
 >
     <div class="space-y-4">
         @include($getWindowView())

@@ -1,3 +1,3 @@
 @foreach($getComponents() as $childComponent)
-    {{ $childComponent->displayInWindow() }}
+    {{ $childComponent->editInSidebar() }}
 @endforeach

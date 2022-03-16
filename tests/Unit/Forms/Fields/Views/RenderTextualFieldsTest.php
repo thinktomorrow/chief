@@ -64,7 +64,7 @@ class RenderTextualFieldsTest extends TestCase
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
-            $component = $class::make('xxx')->displayInWindow()->value($value);
+            $component = $class::make('xxx')->editInSidebar()->value($value);
 
             if ($component instanceof Hidden) {
                 $this->assertStringNotContainsString($value, $component->toHtml());

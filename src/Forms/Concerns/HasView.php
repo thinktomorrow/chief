@@ -7,7 +7,7 @@ trait HasView
     protected string $view;
     protected string $windowView;
 
-    protected bool $displayInWindow = false;
+    protected bool $editInSidebar = false;
 
     public function view(string $view): static
     {
@@ -18,14 +18,14 @@ trait HasView
 
     public function getView(): string
     {
-        return ($this->displayInWindow && isset($this->windowView))
+        return ($this->editInSidebar && isset($this->windowView))
             ? $this->windowView
             : $this->view;
     }
 
-    public function displayInWindow(?string $windowView = null): static
+    public function editInSidebar(?string $windowView = null): static
     {
-        $this->displayInWindow = true;
+        $this->editInSidebar = true;
 
         if ($windowView) {
             $this->windowView = $windowView;
@@ -34,9 +34,9 @@ trait HasView
         return $this;
     }
 
-    public function displayInForm(): static
+    public function editInline(): static
     {
-        $this->displayInWindow = false;
+        $this->editInSidebar = false;
 
         return $this;
     }

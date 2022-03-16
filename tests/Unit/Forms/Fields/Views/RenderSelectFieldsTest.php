@@ -61,7 +61,7 @@ class RenderSelectFieldsTest extends TestCase
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
-            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->displayInWindow()->value($value = 'one');
+            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->editInSidebar()->value($value = 'one');
             $this->assertStringContainsString($value, $component->toHtml());
         }
     }

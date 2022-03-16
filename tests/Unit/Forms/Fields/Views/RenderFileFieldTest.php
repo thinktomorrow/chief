@@ -69,7 +69,7 @@ class RenderFileFieldTest extends TestCase
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
-            $component = $class::make('xxx')->displayInWindow()->value($value);
+            $component = $class::make('xxx')->editInSidebar()->value($value);
             $this->assertStringContainsString($value[0]->filename, $component->toHtml());
         }
     }

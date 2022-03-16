@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
@@ -17,6 +18,7 @@ class Form extends Component
     use HasModel;
     use HasFields;
     use HasElementId;
+    use HasLayout;
 
     protected string $action;
     protected string $actionMethod;
@@ -30,7 +32,7 @@ class Form extends Component
     /**
      * Form component has a fixed window container and a customizable view inside of it.
      *
-     * The optional custom view via displayInWindow(<custom view>) will always be rendered
+     * The optional custom view via editInSidebar(<custom view>) will always be rendered
      * inside this fixed container view. This way the outer edit logic remains intact.
      */
     protected string $windowContainerView = 'chief-form::templates.form-in-window-container';
@@ -44,7 +46,7 @@ class Form extends Component
 
     public function getView(): string
     {
-        return $this->displayInWindow
+        return $this->editInSidebar
             ? $this->windowContainerView
             : $this->view;
     }
@@ -54,9 +56,9 @@ class Form extends Component
         return $this->windowView;
     }
 
-    public function displayInWindow(?string $windowView = null, ?string $windowContainerView = null): static
+    public function editInSidebar(?string $windowView = null, ?string $windowContainerView = null): static
     {
-        parent::displayInWindow($windowView);
+        parent::editInSidebar($windowView);
 
         if ($windowContainerView) {
             $this->windowContainerView = $windowContainerView;

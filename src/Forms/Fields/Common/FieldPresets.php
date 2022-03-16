@@ -13,7 +13,7 @@ class FieldPresets
 {
     public static function pagetitle(?Field $field = null): iterable
     {
-        yield Form::make('pagetitle')->displayInWindow(
+        yield Form::make('pagetitle')->editInSidebar(
             'chief-form::templates.pagetitle.form-in-pagetitle',
             'chief-form::templates.pagetitle.form-in-inline-container',
         )->items([
@@ -23,7 +23,7 @@ class FieldPresets
 
     public static function seo(): iterable
     {
-        yield Form::make('form_seo')->displayInWindow()->items([
+        yield Form::make('form_seo')->editInSidebar()->items([
             Text::make('seo_title')
                 ->label('Paginatitel in zoekmachines')
                 ->locales()

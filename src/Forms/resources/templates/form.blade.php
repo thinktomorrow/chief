@@ -2,6 +2,7 @@
     :title="$getTitle()"
     :refresh-url="$getRefreshUrl()"
     :tags="$getId()"
+    :class="$getLayout()->class()"
 >
     <form {{ $attributes->merge($getCustomAttributes()) }}
             id="{{ $getElementId() }}"

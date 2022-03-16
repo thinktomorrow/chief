@@ -8,6 +8,6 @@
     @endif
 
     <div class="space-y-6">
-        {{ $form->displayInForm()->render() }}
+        {{ $form->editInline()->showAsBlank()->render() }}
     </div>
 </div>

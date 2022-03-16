@@ -88,7 +88,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
 
     public function render(): View
     {
-        $view = $this->displayInWindow
+        $view = $this->editInSidebar
             ? $this->fieldWindowView
             : $this->fieldFormView;
 
