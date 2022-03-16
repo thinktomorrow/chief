@@ -1,3 +1,1 @@
-<div class="mt-12">
-    {{ $form->editInline()->showAsBlank()->render() }}
-</div>
+{{ $form->editInline()->showAsBlank()->render() }}

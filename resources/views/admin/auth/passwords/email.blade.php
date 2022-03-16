@@ -7,7 +7,7 @@
 @section('content')
     <div class="relative min-h-screen row-center-center">
         <div class="space-y-6 w-128">
-            <h1 class="text-center text-black">Je wachtwoord vergeten?</h1>
+            <h1 class="text-center h1 display-dark">Je wachtwoord vergeten?</h1>
 
             <div class="card">
                 {{-- The status session value holds the passwords.sent message when an reset email has been succesfully requested. --}}

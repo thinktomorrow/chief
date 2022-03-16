@@ -6,7 +6,7 @@
         {{ $attributes->get('style') }}
     "
 >
-    <div class="p-2 prose prose-dark prose-editor prose-wireframe">
+    <div class="p-2 prose prose-spacing prose-dark prose-wireframe">
         {{ $slot }}
     </div>
 </div>

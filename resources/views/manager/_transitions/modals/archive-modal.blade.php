@@ -7,7 +7,7 @@
     >
         @csrf
 
-        <h2>Archiveer: @adminConfig('pageTitle')</h2>
+        <h2 class="h2 display-dark">Archiveer: @adminConfig('pageTitle')</h2>
 
         @if(contract($model, \Thinktomorrow\Chief\Site\Visitable\Visitable::class))
             <p>

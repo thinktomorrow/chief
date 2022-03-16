@@ -1,4 +1,4 @@
-<div class="space-y-3 prose prose-dark">
+<div class="space-y-3 prose prose-spacing prose-dark">
     @if($linkForm->isAnyLinkOnline())
         <p>De pagina staat online. 👍</p>
 

@@ -1,13 +1,9 @@
 @if(session('alertbarmessage'))
-    <div class="border-b border-grey-100 bg-orange-50">
-        <div class="container-sm">
-            <div class="row">
-                <div class="w-full">
-                    <div class="py-4 font-medium text-center text-orange-500 with-inside-link-warning">
-                        <x-chief-icon-label icon="home" space="large">{!! session('alertbarmessage') !!}</x-chief-icon-label>
-                    </div>
-                </div>
-            </div>
+    <div class="p-4 border-b border-grey-100 bg-orange-50">
+        <div class="text-center text-orange-500 with-inside-link-warning">
+            <x-chief-icon-label icon="home" space="large">
+                {!! session('alertbarmessage') !!}
+            </x-chief-icon-label>
         </div>
     </div>
 @endif

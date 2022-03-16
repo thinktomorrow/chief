@@ -5,8 +5,12 @@
     'icon' => null,
 ])
 
-<div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes->class('inline-flex items-center') }}>
-
+<div
+    data-form
+    data-form-url="{{ $refreshUrl }}"
+    data-form-tags="{{ $tags }}"
+    {{ $attributes->class('inline-flex items-center') }}
+>
     {!! $slot !!}
 
     @if($editUrl)

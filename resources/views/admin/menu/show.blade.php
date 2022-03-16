@@ -26,7 +26,7 @@
     <div class="container-sm">
         <div class="row">
             @if($menuItems->isEmpty() )
-                <div class="w-full prose prose-dark">
+                <div class="w-full prose prose-spacing prose-dark">
                     <p>Momenteel zijn er nog geen menu items toegevoegd.</p>
                 </div>
             @else

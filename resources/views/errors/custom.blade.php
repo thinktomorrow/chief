@@ -8,10 +8,10 @@
     <div class="container">
         <div class="min-h-screen row-center-center">
             <div class="space-y-6 w-128">
-                <h1 class="text-center text-black">Er ging iets fout</h1>
+                <h1 class="text-center h1 display-dark">Er ging iets fout</h1>
 
                 <div class="card">
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <p>
                             Onze developers werden op de hoogte gebracht en zullen uitzoeken wat er fout liep.<br>
                             Indien je dringend hulp nodig hebt bij dit probleem, kan je ons best contacteren.

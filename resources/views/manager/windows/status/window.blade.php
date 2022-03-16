@@ -18,7 +18,7 @@
                         <span class="label label-success">Online</span>
                     </x-slot>
 
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <p> Deze pagina is gepubliceerd en zichtbaar voor de gebruiker! </p>
                     </div>
                 @elseif($isVisitable)
@@ -26,7 +26,7 @@
                         <span class="label label-info">Nog niet online</span>
                     </x-slot>
 
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <p> Let op! De pagina is zonder link nog niet zichtbaar op de site. </p>
 
                         <p>
@@ -52,7 +52,7 @@
                     <span class="label label-warning">Draft</span>
                 </x-slot>
 
-                <div class="prose prose-dark">
+                <div class="prose prose-spacing prose-dark">
                     <p> Deze pagina is nog niet gepubliceerd en niet zichtbaar voor de gebruiker. </p>
                 </div>
 
@@ -62,13 +62,13 @@
                     <span class="label label-warning">Gearchiveerd</span>
                 </x-slot>
 
-                <div class="prose prose-dark">
+                <div class="prose prose-spacing prose-dark">
                     <p> Deze pagina is gearchiveerd. </p>
                 </div>
 
                 @break
             @default
-                <div class="prose prose-dark">
+                <div class="prose prose-spacing prose-dark">
                     <p> ... </p>
                 </div>
         @endswitch

@@ -3,7 +3,7 @@
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative card w-full" :class="sizeClass">
+            <div class="relative w-full card" :class="sizeClass">
                 <div class="space-y-6">
                     <div v-if="title">
                         <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">
@@ -11,7 +11,7 @@
                         </span>
                     </div>
 
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <slot></slot>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <button
                     type="button"
                     @click="close"
-                    class="absolute -top-3 -right-3 p-1 bg-white rounded-full link link-grey icon-label m-7"
+                    class="absolute p-1 bg-white rounded-full -top-3 -right-3 link link-grey icon-label m-7"
                 >
                     <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#x" /></svg>
                 </button>

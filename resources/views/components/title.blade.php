@@ -1,15 +1,15 @@
 <header class="bg-grey-50">
     <div class="container">
-        <div class="row stack flex justify-between">
+        <div class="flex justify-between row stack">
             <div class="column-9">
-                <h1 class="flex items-center mb-0">
+                <h1 class="flex items-center">
                     <span>{!! $subtitle ?? '' !!}</span>
                     <span>{!! ucfirst($title ?? '') !!}</span>
                 </h1>
                 {{ $extra ??  '' }}
             </div>
 
-            <div class="column-3 text-right justify-end center-y">
+            <div class="justify-end text-right column-3 center-y">
                 {{ $slot }}
             </div>
         </div>

@@ -13,7 +13,6 @@
 
 @import './general/base';
 @import './general/animations';
-@import './general/typography';
 @import './general/utilities';
 
 @import './../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';

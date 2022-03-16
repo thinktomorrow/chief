@@ -46,7 +46,7 @@ const ProseSpacing = plugin(({ addComponents, theme }) => {
     });
 
     addComponents({
-        '.prose': {
+        '.prose-spacing': {
             ...output,
         },
     });

@@ -1,8 +1,8 @@
 <div class="space-y-8">
-    <h3>Status beheren</h3>
+    <h3 class="h3 display-dark">Status beheren</h3>
 
     @adminCan('publish', $model)
-        <div class="space-y-3 prose prose-dark">
+        <div class="space-y-3 prose prose-spacing prose-dark">
             <p>De pagina staat nog in draft.</p>
 
             <form action="@adminRoute('publish', $model)" method="POST">
@@ -14,7 +14,7 @@
     @endAdminCan
 
     @adminCan('unpublish', $model)
-        <div class="space-y-3 prose prose-dark">
+        <div class="space-y-3 prose prose-spacing prose-dark">
             @if($isAnyLinkOnline)
                 <p>De pagina staat online. 👍</p>
 

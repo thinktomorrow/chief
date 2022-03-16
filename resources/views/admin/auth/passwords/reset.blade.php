@@ -7,7 +7,7 @@
 @section('content')
     <div class="relative min-h-screen row-center-center">
         <div class="space-y-6 w-128">
-            <h1 class="text-center text-black">Reset jouw wachtwoord</h1>
+            <h1 class="text-center h1 display-dark">Reset jouw wachtwoord</h1>
 
             <div class="card">
                 <form role="form" method="POST" action="{{ route('chief.back.password.request') }}">

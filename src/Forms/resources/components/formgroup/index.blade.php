@@ -27,8 +27,12 @@
     @endif
 
     @if($description)
-        <div class="mb-3 prose prose-dark prose-editor text-grey-600">
-            {!! $description !!}
+        <div class="mb-3 prose prose-spacing prose-dark">
+            @if($description != strip_tags($description))
+                {!! $description !!}
+            @else
+                <p>{{ $description }}</p>
+            @endif
         </div>
     @endif
 

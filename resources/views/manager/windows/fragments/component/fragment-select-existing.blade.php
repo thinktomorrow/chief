@@ -1,5 +1,5 @@
 <div class="space-y-12">
-    <h3>Kies een bestaand fragment</h3>
+    <h3 class="h3 display-dark">Kies een bestaand fragment</h3>
 
     <form
         id="fragment-select-existing-form"

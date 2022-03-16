@@ -1,5 +1,5 @@
 <div class="space-y-8">
-    <h3>Links beheren</h3>
+    <h3 class="h3 display-dark">Links beheren</h3>
 
     <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST">
         @csrf
@@ -66,7 +66,7 @@
 
     @if($linkForm->hasAnyRedirects())
         <div class="space-y-3">
-            <h4 class="text-grey-900">Redirects</h4>
+            <h4 class="h4 display-dark">Redirects</h4>
 
             <div class="space-y-3">
                 @foreach($linkForm->links() as $locale => $links)

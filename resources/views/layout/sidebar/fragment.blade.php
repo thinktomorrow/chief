@@ -20,7 +20,7 @@
                 <div class="p-6 space-y-4 bg-orange-50 rounded-xl">
                     <p class="text-xl display-base display-dark">Gedeeld fragment</p>
 
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <p>
                             Dit is een gedeeld fragment. Dit betekent dat het ook toegevoegd werd op een andere plaats op de website.
                             Elke aanpassing aan dit fragment zal dus op elke pagina doorgevoerd worden.

@@ -6,10 +6,10 @@
     <div class="container">
         <div class="min-h-screen row-center-center">
             <div class="space-y-6 w-128">
-                <h1 class="text-center text-black">Jouw uitnodiging is afgewezen</h1>
+                <h1 class="text-center h1 display-dark">Jouw uitnodiging is afgewezen</h1>
 
                 <div class="card">
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <p>Ok. Je hebt je uitnodiging tot {{ chiefSetting('app_name') }} afgewezen.</p>
                         <p>Mocht je toch opnieuw toegang wensen, kan je je wenden tot de beheerder ({{ chiefSetting('contact_name') }}).</p>
                     </div>

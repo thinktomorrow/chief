@@ -23,7 +23,7 @@
         <div class="row">
             <div class="w-full">
                 <div class="card">
-                    <div class="prose prose-dark">
+                    <div class="prose prose-spacing prose-dark">
                         <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 
                         <div class="my-6 space-y-2">
@@ -88,7 +88,7 @@
     </div>
 
     <modal id="generate-sitemap" title="Sitemap genereren ..." size="large" :active="false">
-        <div class="prose prose-dark">
+        <div class="prose prose-spacing prose-dark">
             Bezig met het genereren van een sitemap. Dit kan eventjes duren.
         </div>
     </modal>

@@ -8,7 +8,7 @@
         @method('DELETE')
         @csrf
 
-        <h2>Verwijder: @adminConfig('pageTitle')</h2>
+        <h2 class="h2 display-dark">Verwijder: @adminConfig('pageTitle')</h2>
 
         <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
 

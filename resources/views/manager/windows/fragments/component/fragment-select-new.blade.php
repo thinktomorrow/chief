@@ -1,5 +1,5 @@
 <div data-form data-form-tags="fragments" class="space-y-12">
-    <h3>Voeg een nieuw fragment toe</h3>
+    <h3 class="h3 display-dark">Voeg een nieuw fragment toe</h3>
 
     <div>
         <div class="-m-6 divide-y divide-grey-100">
@@ -18,7 +18,9 @@
                     </a>
                 </div>
             @empty
-                Geen fragmenten gevonden.
+                <div class="p-6">
+                    <p class="body-base body-dark">Geen fragmenten gevonden.</p>
+                </div>
             @endforelse
         </div>
     </div>
