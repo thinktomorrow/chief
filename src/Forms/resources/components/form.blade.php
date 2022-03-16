@@ -1,1 +1,3 @@
-{{ $forms->find($id)->render() }}
+@if($forms->has($id))
+    {{ $forms->find($id)->render() }}
+@endif

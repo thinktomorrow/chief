@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms;
 
-use function data_get;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use SplFileInfo;

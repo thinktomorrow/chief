@@ -5,11 +5,22 @@ namespace Thinktomorrow\Chief\Forms\Fields\Common;
 
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Form;
 
 class FieldPresets
 {
+    public static function pagetitle(?Field $field = null): iterable
+    {
+        yield Form::make('pagetitle')->displayInWindow(
+            'chief-form::templates.pagetitle.form-in-pagetitle',
+            'chief-form::templates.pagetitle.form-in-inline-container',
+        )->items([
+            $field ?? Text::make('title')->locales(),
+        ]);
+    }
+
     public static function seo(): iterable
     {
         yield Form::make('form_seo')->displayInWindow()->items([

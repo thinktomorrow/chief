@@ -54,6 +54,17 @@ class Form extends Component
         return $this->windowView;
     }
 
+    public function displayInWindow(?string $windowView = null, ?string $windowContainerView = null): static
+    {
+        parent::displayInWindow($windowView);
+
+        if ($windowContainerView) {
+            $this->windowContainerView = $windowContainerView;
+        }
+
+        return $this;
+    }
+
     public function action(string $action, string $method = 'POST'): static
     {
         $this->action = $action;
@@ -124,8 +135,6 @@ class Form extends Component
      * Allow any of the fields to consume the active
      * manager and model for their setup.
      *
-     * @param Manager $manager
-     * @param Model $model
      * @return $this
      */
     public function fillFields(Manager $manager, Model $model): self
