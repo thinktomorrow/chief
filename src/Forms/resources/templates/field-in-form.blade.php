@@ -1,10 +1,10 @@
 <x-chief-form::formgroup
-        :id="$getId($locale ?? null)"
-        :label="$getLabel()"
-        :description="$getDescription()"
-        :required="$isRequired()"
-        :fieldToggles="$getFieldToggles()"
-        :fieldType="strtolower(class_basename($component))"
+    :id="$getId($locale ?? null)"
+    :label="$getLabel()"
+    :description="$getDescription()"
+    :required="$isRequired()"
+    :fieldToggles="$getFieldToggles()"
+    :fieldType="strtolower(class_basename($component))"
 >
     @if(!$hasLocales())
         @include($getView())
