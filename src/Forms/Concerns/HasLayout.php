@@ -32,6 +32,4 @@ trait HasLayout
     {
         return $this->showAsCard();
     }
-
-
 }
