@@ -39,8 +39,8 @@
 
             <div class="w-full lg:w-1/3">
                 <div class="space-y-6">
-                    @isset($sidebar)
-                        {!! $sidebar !!}
+                    @isset($aside)
+                        {!! $aside !!}
                     @endisset
                 </div>
             </div>
