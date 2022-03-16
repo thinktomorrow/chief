@@ -8,43 +8,41 @@
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes }}>
-    <div class="h-full bg-white border rounded-xl shadow-window border-grey-100">
-        <div class="p-6 space-y-6">
-            {{-- Window header --}}
-            @if($title || $labels || $editUrl)
-                <div class="flex justify-end space-x-4">
-                    <div class="w-full space-x-1">
-                        @if($title)
-                            <span class="text-xl display-base display-dark">
-                                {!! $title !!}
-                            </span>
-                        @endif
+    <div class="space-y-6 window">
+        {{-- Window header --}}
+        @if($title || $labels || $editUrl)
+            <div class="flex justify-end space-x-4">
+                <div class="w-full space-x-1">
+                    @if($title)
+                        <span class="text-xl display-base display-dark">
+                            {!! $title !!}
+                        </span>
+                    @endif
 
-                        @if($labels)
-                            <span class="align-bottom with-xs-labels">
-                                {!! $labels !!}
-                            </span>
-                        @endif
-                    </div>
-
-                    @if($editUrl)
-                        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="shrink-0">
-                            @if($icon)
-                                {!! $icon !!}
-                            @else
-                                <x-chief-icon-button icon="icon-edit" />
-                            @endif
-                        </a>
+                    @if($labels)
+                        <span class="align-bottom with-xs-labels">
+                            {!! $labels !!}
+                        </span>
                     @endif
                 </div>
-            @endif
 
-            {{-- Window content --}}
-            @if($slot->isNotEmpty())
-                <div>
-                    {!! $slot !!}
-                </div>
-            @endisset
-        </div>
+                @if($editUrl)
+                    <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="shrink-0">
+                        @if($icon)
+                            {!! $icon !!}
+                        @else
+                            <x-chief-icon-button icon="icon-edit" />
+                        @endif
+                    </a>
+                @endif
+            </div>
+        @endif
+
+        {{-- Window content --}}
+        @if($slot->isNotEmpty())
+            <div>
+                {!! $slot !!}
+            </div>
+        @endisset
     </div>
 </div>

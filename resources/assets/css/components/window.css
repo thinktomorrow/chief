@@ -7,5 +7,5 @@
 
 /* Standard window layout */
 .window {
-    @apply h-full bg-white rounded-xl shadow-window p-6 border border-grey-100;
+    @apply h-full bg-white border shadow-md rounded-xl shadow-grey-100 border-grey-100 p-6;
 }
