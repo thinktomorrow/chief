@@ -29,7 +29,7 @@ trait HasColumns
 
     public function getSpan(int $index = 0): int
     {
-        if($index === 0) {
+        if ($index === 0) {
             return $this->span[0];
         }
 
@@ -38,7 +38,7 @@ trait HasColumns
 
     public function getColumnSpanStyle($span): string
     {
-        switch($span . '/' . $this->columns) {
+        switch ($span . '/' . $this->columns) {
             case '1/2':
                 return 'w-full sm:w-1/2';
             case '1/3':
