@@ -15,7 +15,7 @@
     {!! $fieldToggles ? "data-conditional-toggle='" . json_encode($fieldToggles) . "'" : null !!}
 >
     @if($label)
-        <div class="mb-1 space-x-1 leading-none">
+        <div class="mb-1 leading-none">
             <span class="font-medium display-base display-dark">
                 {{ ucfirst($label) }}
             </span>
