@@ -1,5 +1,5 @@
 <div {{ $attributes->merge($getCustomAttributes())->class([
-    'p-6 rounded-lg',
+    '-mx-6 p-6',
     $getLayoutType()->class(),
 ]) }}>
     <div class="space-y-6">

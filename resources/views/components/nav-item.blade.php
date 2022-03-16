@@ -33,14 +33,14 @@
                         title="{!! $label !!}"
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="px-3 py-2 inline-block font-medium text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="px-3 py-2 inline-block font-semibold text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </a>
                 @else
                     <span
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="px-3 py-2 inline-block font-medium text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="px-3 py-2 inline-block font-semibold text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </span>

@@ -33,7 +33,7 @@ module.exports = {
             secondary: colors.teal,
 
             red: colors.red,
-            green: colors.green,
+            green: colors.emerald,
             blue: colors.sky,
             orange: colors.orange,
         },

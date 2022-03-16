@@ -9,10 +9,10 @@
         ])
 
         <div
-                data-fragments-container
-                data-sortable-fragments
-                data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-                class="divide-y-2 divide-dashed divide-primary-50"
+            data-fragments-container
+            data-sortable-fragments
+            data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
+            class="divide-y-2 divide-dashed divide-primary-50"
         >
             @foreach($fragments as $fragment)
                 @include('chief-fragments::window-item', [

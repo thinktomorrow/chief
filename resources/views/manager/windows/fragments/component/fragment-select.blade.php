@@ -32,7 +32,7 @@
         @endif
 
         <div class="flex items-center justify-center gutter-3">
-            <div>
+            <div class="w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-new', $owner) }}"
@@ -44,7 +44,7 @@
                 </a>
             </div>
 
-            <div>
+            <div class="w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-existing', $owner) }}"

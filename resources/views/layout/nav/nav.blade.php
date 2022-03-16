@@ -1,6 +1,6 @@
 <div
     data-collapsible-navigation
-    class="h-screen px-3 divide-y shadow-sm select-none divide-grey-100"
+    class="h-screen px-3 border-r divide-y select-none shadow-window divide-grey-100 border-grey-100"
 >
     {{-- Desktop Chief title --}}
     <div class="items-center justify-start hidden py-6 lg:flex">
@@ -13,7 +13,7 @@
 
         <span
             data-toggle-classes="hidden"
-            class="inline-block px-3 py-2 font-medium text-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
+            class="inline-block px-3 py-2 font-semibold text-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
         > Chief </span>
     </div>
 
@@ -26,7 +26,7 @@
             <svg class="w-6 h-6 text-black"><use xlink:href="#icon-arrow-rtl"></use></svg>
         </div>
 
-        <span class="inline-block px-3 py-2 font-medium text-black"> Chief </span>
+        <span class="inline-block px-3 py-2 font-semibold text-black"> Chief </span>
     </div>
 
     <div class="py-6">
