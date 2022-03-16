@@ -34,7 +34,7 @@
                         @csrf
 
                         <div class="space-y-6">
-                            <x-chief-form::field not-tagged="edit,not-on-create" />
+                            <x-chief-form::fields not-tagged="edit,not-on-create" />
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>

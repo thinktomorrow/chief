@@ -7,11 +7,6 @@ principles.
 ## 0.7.0 - ...
 This release brings a major refactor of the forms and fields api. Its aim is to ease the layout setup of admin forms and simplify the logic around its view composition.
 
-### TODO:
-- UI: prepend-append is now a component view and input no longer has 'with-prepend' and 'with-append' classes on its element, rather on a parent div. Currently the layout is broken: borders do not align with prepend and append borders.
-- UI: same as above but for the text with redactor view. 
-- js: redactor's loadRedactorInstances method is now coming from project code (project skeleton), we should however provide this from chief
-
 ### Impactful
 - Changed: Restructured Fields files and classes under a dedicated `src/Forms` directory. Rename all your field namespaces from `Thinktomorrow\Chief\ManagedModels\Fields\Types\<Field>` to `Thinktomorrow\Chief\Forms\Fields\<Field>`.
 - Removed: field method `customSaveMethod`. Replace any occurrences with the save() method. See below.
@@ -20,10 +15,9 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 - Changed: `InputField` is renamed to `TextInput`.
 - Changed: Field rules method only accepts an array. A pipe separated string is no longer valid, e.g. email|max:100 should now be passed as ['email','max:100].
 - Changed: `Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant` to `Thinktomorrow\Chief\Managers\Assistants\FormsAssistant`.
-- Changed: `fields-edit` route to `form-edit`.
-- Changed: `fields-update` route to `form-update`.
+- Removed: custom sidebar form views are removed. These are the methods ending with `*FieldsAdminView()`. You can now add a custom view to a form instead.
 
-- Sidebar event payload has changed.
+
 
 ### Keep an eye out for possible impact
 - Changed: Validation of localized fields will now validate each localized entry. Before if an entire locale entry array was empty, it was regarded as a request input and the validation on these locales would get skipped. This is no longer the case.
@@ -33,6 +27,8 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 ### Probably not so impactful
 - Changed: `Field::getColumn()` has been renamed to `Field::getColumnName()`.
 - Changed: `Field::required()` has been renamed to `Field::isRequired()`.
+- Changed: `fields-edit` route to `form-edit`.
+- Changed: `fields-update` route to `form-update`.
 - Removed: `saveFields` is removed from the ManagedModel interface. Saving fields is done via a dedicated class and no longer via the model->saveFields() method.
 - Removed: `Field::optional()`
 - Removed: `Field::getType()`.
