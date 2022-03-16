@@ -23,7 +23,7 @@ class FieldPresets
 
     public static function seo(): iterable
     {
-        yield Form::make('form_seo')->title('Seo')->position('sidebar')->editInSidebar()->items([
+        yield Form::make('form_seo')->title('Seo')->position('aside')->editInSidebar()->items([
             Text::make('seo_title')
                 ->label('Titel')
                 ->locales()

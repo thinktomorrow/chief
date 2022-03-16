@@ -101,13 +101,15 @@ class Forms
 
     public function filterByPosition(string $position): static
     {
-        return $this->filter(fn ($form) => $form->getPosition() == $position);
+        return $this
+            ->exclude(['pagetitle'])
+            ->filter(fn ($form) => $form->getPosition() == $position);
     }
 
-//    private function exclude(array $formIds): static
-//    {
-//        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
-//    }
+    private function exclude(array $formIds): static
+    {
+        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
+    }
 
     private function filter(callable $filter): static
     {

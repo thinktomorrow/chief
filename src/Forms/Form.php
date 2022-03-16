@@ -44,6 +44,7 @@ class Form extends Component
         parent::__construct($id);
 
         $this->elementId($id.'_'.Str::random());
+        $this->position('main');
     }
 
     public function getView(): string

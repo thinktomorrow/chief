@@ -13,7 +13,7 @@
         <x-chief::window.status />
         <x-chief::window.links />
 
-        @foreach($forms->filterByPosition('sidebar')->get() as $form)
+        @foreach($forms->filterByPosition('aside')->get() as $form)
             {{ $form->render() }}
         @endforeach
     </x-slot>
