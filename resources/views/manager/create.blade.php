@@ -29,7 +29,7 @@
         <div class="row">
             <div class="w-full">
 
-                <x-chief-form::window>
+                <x-chief-form::window class="card">
                     <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                         @csrf
 

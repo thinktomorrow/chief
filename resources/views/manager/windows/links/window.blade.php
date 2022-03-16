@@ -6,7 +6,7 @@
             title="Links"
             :edit-url="$manager->route('links-edit', $model)"
             :refresh-url="$manager->route('links-window', $model)"
-            tags="testje"
+            class="card"
         >
         <div class="space-y-2">
             @unless($linkForm->exist())

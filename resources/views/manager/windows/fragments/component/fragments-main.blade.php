@@ -1,5 +1,5 @@
 <div data-fragments-component>
-    <x-chief-form::window>
+    <x-chief-form::window class="card">
         <div class="relative -my-6">
             @include('chief::manager.windows.fragments.component.fragment-select', [
                 'ownerManager' => $manager,
@@ -23,5 +23,5 @@
                 @endforeach
             </div>
         </div>
-    </x-chief:window>
+    </x-chief-form::window>
 </div>

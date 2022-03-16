@@ -9,6 +9,7 @@
             title="Status"
             :edit-url="$manager->route('status-edit', $model)"
             :refresh-url="$manager->route('status-window', $model)"
+            class="card"
         >
         @switch($model->getPageState())
             @case('published')

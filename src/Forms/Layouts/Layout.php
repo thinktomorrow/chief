@@ -11,7 +11,7 @@ enum Layout: string
     public function class(): string
     {
         return match ($this) {
-            self::card => 'window',
+            self::card => 'card',
             self::blank => '',
         };
     }
