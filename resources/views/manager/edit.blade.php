@@ -1,20 +1,16 @@
 <x-chief::page>
     <x-slot name="header">
-        <x-chief-form::form id="pagetitle" />
+        <x-chief-form::forms id="pagetitle" />
     </x-slot>
 
-    @foreach($forms->filterByPosition('main')->get() as $form)
-        {{ $form->render() }}
-    @endforeach
-
+    <x-chief-form::forms position="main" />
     <x-chief::fragments :owner="$model" />
+    <x-chief-form::forms position="main-bottom" />
 
-    <x-slot name="sidebar">
+    <x-slot name="aside">
+        <x-chief-form::forms position="aside-top" />
         <x-chief::window.status />
         <x-chief::window.links />
-
-        @foreach($forms->filterByPosition('aside')->get() as $form)
-            {{ $form->render() }}
-        @endforeach
+        <x-chief-form::forms position="aside" />
     </x-slot>
 </x-chief::page>
