@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window">
+                <div class="card">
                     <div class="-my-4 divide-y divide-grey-100">
                         @foreach($roles as $role)
                             <a

@@ -8,7 +8,7 @@
             <div class="space-y-6 w-128">
                 <h1 class="text-center text-black">Jouw uitnodiging is afgewezen</h1>
 
-                <div class="window">
+                <div class="card">
                     <div class="prose prose-dark">
                         <p>Ok. Je hebt je uitnodiging tot {{ chiefSetting('app_name') }} afgewezen.</p>
                         <p>Mocht je toch opnieuw toegang wensen, kan je je wenden tot de beheerder ({{ chiefSetting('contact_name') }}).</p>

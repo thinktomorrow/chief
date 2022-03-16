@@ -38,7 +38,6 @@ class ViewServiceProvider extends ServiceProvider
         /* Chief components */
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
-        Blade::component('chief::components.card', 'chief-card');
         Blade::component('chief::components.sidebar', 'chief-sidebar');
         Blade::component('chief::components.inline-notification', 'chief-inline-notification');
         Blade::component('chief::components.icon-label', 'chief-icon-label');

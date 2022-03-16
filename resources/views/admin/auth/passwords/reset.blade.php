@@ -9,7 +9,7 @@
         <div class="space-y-6 w-128">
             <h1 class="text-center text-black">Reset jouw wachtwoord</h1>
 
-            <div class="window">
+            <div class="card">
                 <form role="form" method="POST" action="{{ route('chief.back.password.request') }}">
                     @csrf
 

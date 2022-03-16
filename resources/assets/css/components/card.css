@@ -1,0 +1,3 @@
+.card {
+    @apply h-full bg-white border shadow-md rounded-xl shadow-grey-100 border-grey-100 p-6;
+}

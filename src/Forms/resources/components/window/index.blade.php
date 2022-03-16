@@ -8,7 +8,7 @@
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes }}>
-    <div class="space-y-6 window">
+    <div class="space-y-6 card">
         {{-- Window header --}}
         @if($title || $labels || $editUrl)
             <div class="flex justify-end space-x-4">

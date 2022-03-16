@@ -1,6 +1,6 @@
 <div class="row">
     <div class="w-full">
-        <div class="window">
+        <div class="card">
             <div class="-my-4 divide-y divide-grey-100">
                 @forelse($audit as $event)
                     <div class="py-4 space-y-1">
