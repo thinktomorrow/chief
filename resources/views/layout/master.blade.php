@@ -5,15 +5,15 @@
         @include('chief::layout._partials.healthbar')
         @include('chief::layout._partials.svg-symbols')
 
-        <main id="main" class="min-h-screen bg-grey-50 bg-gradient-to-r from-grey-50 to-grey-100">
+        <main id="main" class="min-h-screen bg-grey-50">
             <div class="flex flex-wrap items-start lg:flex-nowrap">
-                <div class="relative top-0 z-50 shrink-0 w-full lg:sticky lg:w-auto">
+                <div class="relative top-0 z-50 w-full shrink-0 lg:sticky lg:w-auto">
                     <div class="container block lg:hidden">
                         <div class="flex items-center justify-start pt-6 -ml-2 lg:hidden">
                             <div
                                 data-mobile-navigation-toggle
                                 data-expand-navigation
-                                class="shrink-0 p-2 rounded-lg cursor-pointer hover:bg-primary-50"
+                                class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
                             >
                                 <svg class="w-6 h-6 text-grey-700"><use xlink:href="#menu"></use></svg>
                             </div>

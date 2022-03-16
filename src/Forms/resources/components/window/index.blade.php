@@ -8,7 +8,7 @@
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes }}>
-    <div class="h-full bg-white rounded-xl shadow-window">
+    <div class="h-full bg-white border rounded-xl shadow-window border-grey-100">
         <div class="p-6 space-y-6">
             {{-- Window header --}}
             @if($title || $labels || $editUrl)

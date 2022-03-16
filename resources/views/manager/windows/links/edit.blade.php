@@ -24,7 +24,7 @@
 
                         <div class="mt-2 space-y-2">
                             <div class="flex w-full">
-                                <div class="border border-r-0 bg-primary-50 border-grey-300 rounded-l-md shrink-0 font-medium text-primary-500 px-3 py-2.5">
+                                <div class="prepend">
                                     <span v-if="fixedSegment !== '/'" class="flex items-center space-x-1">
                                         {{-- TODO: better icon --}}
                                         <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
