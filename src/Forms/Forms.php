@@ -101,7 +101,7 @@ class Forms
 
     public function exclude(array $formIds): static
     {
-        return $this->filter(fn($form) => !in_array($form->getId(),$formIds));
+        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
     }
 
     private function filter(callable $filter): static
