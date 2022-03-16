@@ -13,7 +13,7 @@
 {{--        </div>--}}
 {{--    </x-chief::window>--}}
 
-    @foreach($forms->filter(fn($form) => !in_array($form->getId(),['pagetitle']))->get() as $form)
+    @foreach($forms->exclude(['pagetitle'])->get() as $form)
         {{ $form->render() }}
     @endforeach
 
