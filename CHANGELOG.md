@@ -16,7 +16,7 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 - Changed: Field rules method only accepts an array. A pipe separated string is no longer valid, e.g. email|max:100 should now be passed as ['email','max:100].
 - Changed: `Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant` to `Thinktomorrow\Chief\Managers\Assistants\FormsAssistant`.
 - Removed: custom sidebar form views are removed. These are the methods ending with `*FieldsAdminView()`. You can now add a custom view to a form instead.
-
+- Removed: `selected()` method for option fields such as select, checkbox or radio. Use `value()` instead.
 
 
 ### Keep an eye out for possible impact
