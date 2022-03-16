@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Concerns;
@@ -20,8 +21,14 @@ trait HasColumns
         return $this->columns;
     }
 
-    public function span(array $span): static
+    public function span(): static
     {
+        $span = func_get_args();
+
+        if (1 == count($span)) {
+            $span = (array) $span[0];
+        }
+
         $this->span = $span;
 
         return $this;
@@ -34,13 +41,16 @@ trait HasColumns
 
     public function getColumnSpanStyle($span): string
     {
-        switch ($span . '/' . $this->columns) {
+        switch ($span.'/'.$this->columns) {
             case '1/2':
                 return 'w-full sm:w-1/2';
+
             case '1/3':
                 return 'w-full sm:w-1/3';
+
             case '2/3':
                 return 'w-full sm:w-2/3';
+
             default:
                 return 'w-full';
         }
