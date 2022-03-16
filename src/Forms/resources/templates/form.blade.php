@@ -4,12 +4,13 @@
     :tags="$getId()"
     :class="$getLayout()->class()"
 >
-    <form {{ $attributes->merge($getCustomAttributes()) }}
-            id="{{ $getElementId() }}"
-            method="POST"
-            enctype="multipart/form-data"
-            role="form"
-            action="{{ $getAction() }}"
+    <form
+        {{ $attributes->merge($getCustomAttributes()) }}
+        id="{{ $getElementId() }}"
+        method="POST"
+        enctype="multipart/form-data"
+        role="form"
+        action="{{ $getAction() }}"
     >
         @csrf
         @if($getActionMethod() == 'PUT')

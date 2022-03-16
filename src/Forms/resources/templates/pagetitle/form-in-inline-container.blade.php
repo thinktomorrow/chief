@@ -2,8 +2,5 @@
     :edit-url="$getWindowAction()"
     :refresh-url="$getRefreshUrl()"
 >
-    <div class="space-y-4">
-        @include($getWindowView())
-    </div>
+    @include($getWindowView())
 </x-chief-form::window.inline>
-
