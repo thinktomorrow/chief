@@ -1,5 +1,5 @@
 @if($getTitle() || $getDescription())
-    <div class="space-y-1">
+    <div class="w-full space-y-1">
         @if($getTitle())
             <span class="text-lg display-base display-dark">{{ $getTitle() }}</span>
         @endif

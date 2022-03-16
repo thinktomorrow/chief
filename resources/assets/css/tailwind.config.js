@@ -11,6 +11,7 @@ module.exports = {
         'node_modules/vue-multiselect/dist/vue-multiselect.min.css',
         'src/Forms/resources/**/*.blade.php',
         'src/Forms/Layouts/**/*.php',
+        'src/Forms/Concerns/**/*.php',
     ],
     theme: {
         screens: {
