@@ -39,7 +39,7 @@ trait FormsAssistant
         // TODO: unify default form routes to the form itself...
         View::share('form', Forms::make($model->fields())->find($formId)->fill($this, $model));
 
-        return view('chief-form::forms.form-sidebar');
+        return view('chief-form::templates.form-in-sidebar');
     }
 
     public function formUpdate(Request $request, $id, string $formId)

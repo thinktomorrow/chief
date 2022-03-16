@@ -1,1 +1,0 @@
-{{ $forms->find($id)->render() }}

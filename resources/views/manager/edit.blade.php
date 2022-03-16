@@ -1,7 +1,6 @@
 <x-chief::page>
     <x-slot name="header">
-        TITLE
-       {{-- <x-chief::window.fields tagged="pagetitle" /> --}}
+        <x-chief-form::form id="pagetitle" />
     </x-slot>
 
     <!-- can be either form or window display -->
@@ -14,7 +13,7 @@
 {{--        </div>--}}
 {{--    </x-chief::window>--}}
 
-    @foreach($forms->get() as $form)
+    @foreach($forms->exclude(['pagetitle'])->get() as $form)
         {{ $form->render() }}
     @endforeach
 

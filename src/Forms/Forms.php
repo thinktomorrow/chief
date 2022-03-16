@@ -77,6 +77,17 @@ class Forms
         return $this->components;
     }
 
+    public function has(string $formId): bool
+    {
+        foreach ($this->components as $form) {
+            if ($form->getId() == $formId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function find(string $formId): Form
     {
         foreach ($this->components as $form) {
@@ -86,6 +97,24 @@ class Forms
         }
 
         throw new InvalidArgumentException('No Form found by id: '.$formId);
+    }
+
+    public function exclude(array $formIds): static
+    {
+        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
+    }
+
+    private function filter(callable $filter): static
+    {
+        $forms = [];
+
+        foreach ($this->components as $form) {
+            if (true == $filter($form)) {
+                $forms[] = $form;
+            }
+        }
+
+        return new static($forms);
     }
 
     /**

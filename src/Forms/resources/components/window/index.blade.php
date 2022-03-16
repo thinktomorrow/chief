@@ -1,10 +1,10 @@
 @props([
-    'title' => null,
-    'labels' => null,
     'editUrl' => null,
     'refreshUrl' => null,
-    'icon' => null,
     'tags' => null,
+    'title' => null,
+    'labels' => null,
+    'icon' => null,
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes }}>

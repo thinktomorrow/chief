@@ -68,8 +68,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
      * Every field is rendered in a formgroup container view,
      * this view takes care of the localization of the field.
      */
-    protected string $fieldFormView = 'chief-form::components.field.formgroup';
-    protected string $fieldWindowView = 'chief-form::components.field.window';
+    protected string $fieldFormView = 'chief-form::templates.field-in-form';
+    protected string $fieldWindowView = 'chief-form::templates.field-in-window';
 
     public function __construct(string $key)
     {
