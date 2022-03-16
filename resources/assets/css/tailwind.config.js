@@ -91,11 +91,17 @@ module.exports = {
         extend: {
             animation: {
                 'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
+                'pop-in-out': 'popInOut 2000ms cubic-bezier(0.83, 0, 0.17, 1)',
             },
             keyframes: {
                 slideInNavigation: {
                     '0%': { transform: 'translateX(100vw)' },
                     '100%': { transform: 'translateX(0)' },
+                },
+                popInOut: {
+                    '0%': { transform: 'scale(0)' },
+                    '10%, 90%': { transform: 'scale(1)' },
+                    '100%': { transform: 'scale(0)' },
                 },
             },
             maxHeight: {

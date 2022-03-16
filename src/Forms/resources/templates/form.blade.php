@@ -22,11 +22,17 @@
                 {{ $childComponent }}
             @endforeach
 
-            <button type="submit" class="btn btn-primary">
-                Opslaan
-            </button>
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <button type="submit" class="btn btn-primary">
+                    Opslaan
+                </button>
 
-            <p class="text-grey-500">{{ time() }}</p>
+                <div data-form-refreshed-notification class="hidden scale-0 animate-pop-in-out">
+                    <div class="label label-success label-sm">
+                        Opgeslagen
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </x-chief-form::window>

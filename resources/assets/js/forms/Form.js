@@ -65,10 +65,15 @@ Form.prototype.refresh = function () {
         console.error('no refresh url defined on this form.');
         return;
     }
+
     console.log('refreshing: ', url);
+
     Api.get(url, (data) => {
         const DOM = document.createElement('div');
         DOM.innerHTML = data;
+
+        // Removing 'hidden' triggers the CSS animation
+        DOM.querySelector('[data-form-refreshed-notification]').classList.remove('hidden');
 
         this.el.innerHTML = DOM.firstElementChild.innerHTML;
 
@@ -95,12 +100,14 @@ Form.prototype.refresh = function () {
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
     console.log(this.getTags());
+
     if (this.getTags().includes('fragments')) {
         initSortableGroup('[data-sortable-fragments]', this.el);
         new SelectFragment(this.el);
     }
 
     // Specific callbacks...
+    // window.Eventbus.$emit('create-notification', 'success', '️Opgeslagen!', 2000);
 };
 
 export { Form as default };
