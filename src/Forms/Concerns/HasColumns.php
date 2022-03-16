@@ -29,10 +29,6 @@ trait HasColumns
 
     public function getSpan(int $index = 0): int
     {
-        if ($index === 0) {
-            return $this->span[0];
-        }
-
         return $this->span[$index % count($this->span)];
     }
 
