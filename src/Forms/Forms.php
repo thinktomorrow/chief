@@ -99,10 +99,15 @@ class Forms
         throw new InvalidArgumentException('No Form found by id: '.$formId);
     }
 
-    public function exclude(array $formIds): static
+    public function filterByPosition(string $position): static
     {
-        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
+        return $this->filter(fn ($form) => $form->getPosition() == $position);
     }
+
+//    private function exclude(array $formIds): static
+//    {
+//        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
+//    }
 
     private function filter(callable $filter): static
     {

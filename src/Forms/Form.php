@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Forms\Concerns\HasPosition;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
@@ -19,6 +20,7 @@ class Form extends Component
     use HasFields;
     use HasElementId;
     use HasLayout;
+    use HasPosition;
 
     protected string $action;
     protected string $actionMethod;

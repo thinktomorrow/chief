@@ -3,28 +3,18 @@
         <x-chief-form::form id="pagetitle" />
     </x-slot>
 
-    <!-- can be either form or window display -->
-{{--    <x-chief-form::form id='intro' />--}}
-{{--    <x-chief-form::form id='intro2' />--}}
-
-{{--    <x-chief::window>--}}
-{{--        <div class="space-y-6">--}}
-{{--            <x-chief-form::field tagged='intro' />--}}
-{{--        </div>--}}
-{{--    </x-chief::window>--}}
-
-    @foreach($forms->exclude(['pagetitle'])->get() as $form)
+    @foreach($forms->filterByPosition('main')->get() as $form)
         {{ $form->render() }}
     @endforeach
 
-
-{{--    <x-chief::window.fields title="Algemeen" untagged />--}}
     <x-chief::fragments :owner="$model" />
 
     <x-slot name="sidebar">
         <x-chief::window.status />
         <x-chief::window.links />
-{{--        <x-chief::window.fields title="Algemeen" tagged="sidebar" />--}}
-{{--        <x-chief::window.fields title="SEO" tagged="seo" />--}}
+
+        @foreach($forms->filterByPosition('sidebar')->get() as $form)
+            {{ $form->render() }}
+        @endforeach
     </x-slot>
 </x-chief::page>

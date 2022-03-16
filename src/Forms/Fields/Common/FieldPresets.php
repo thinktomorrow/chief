@@ -23,9 +23,9 @@ class FieldPresets
 
     public static function seo(): iterable
     {
-        yield Form::make('form_seo')->editInSidebar()->items([
+        yield Form::make('form_seo')->title('Seo')->position('sidebar')->editInSidebar()->items([
             Text::make('seo_title')
-                ->label('Paginatitel in zoekmachines')
+                ->label('Titel')
                 ->locales()
                 ->characterCount(66)
                 ->tag(['seo', 'not-on-create']),
@@ -36,7 +36,7 @@ class FieldPresets
                 ->characterCount(160)
                 ->tag(['seo', 'not-on-create']),
             Image::make('seo_image')
-                ->label('Seo afbeelding')
+                ->label('Afbeelding')
                 ->locales()
                 ->tag(['seo', 'not-on-create']),
         ]);
