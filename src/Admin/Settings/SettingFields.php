@@ -25,22 +25,23 @@ class SettingFields
     {
         yield MultiSelect::make('homepage')
             ->name('homepage.:locale')
+            ->id('homepage.:locale')
             ->options(UrlHelper::allOnlineModels())
             ->locales()
-            ->rules('required')
+            ->required()
             ->grouped()
             ->label('Homepagina')
             ->description('Geef hier de homepagina voor de site op.');
         yield Text::make('app_name')
             ->label('Site naam')
-            ->rules('required')
+            ->required()
             ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.');
         yield Text::make('contact_email')
             ->rules('required|email')
             ->label('Webmaster email')
             ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.');
         yield Text::make('contact_name')
-            ->rules('required')
+            ->required()
             ->label('Webmaster naam')
             ->description('Voor en achternaam van de webmaster.');
     }
