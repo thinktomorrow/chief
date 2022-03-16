@@ -24,8 +24,8 @@ class Form extends Component
     protected string $windowAction;
     protected ?string $refreshUrl = null;
 
-    protected string $view = 'chief-form::forms.form';
-    protected string $windowView = 'chief-form::forms.form-window';
+    protected string $view = 'chief-form::templates.form';
+    protected string $windowView = 'chief-form::templates.form-in-window';
 
     /**
      * Form component has a fixed window container and a customizable view inside of it.
@@ -33,7 +33,7 @@ class Form extends Component
      * The optional custom view via displayInWindow(<custom view>) will always be rendered
      * inside this fixed container view. This way the outer edit logic remains intact.
      */
-    protected string $windowContainerView = 'chief-form::forms.form-window-container';
+    protected string $windowContainerView = 'chief-form::templates.form-in-window-container';
 
     public function __construct(string $id)
     {
