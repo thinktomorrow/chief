@@ -33,8 +33,6 @@ trait HasColumns
             return $this->span[0];
         }
 
-        // dd($this->span[$index % count($this->span)]);
-
         return $this->span[$index % count($this->span)];
     }
 

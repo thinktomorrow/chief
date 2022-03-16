@@ -12,5 +12,5 @@ class Card extends Component
     protected string $view = 'chief-form::layouts.card';
     protected string $windowView = 'chief-form::layouts.default-window';
 
-    // protected LayoutType $type = LayoutType::subtle;
+    // protected LayoutType $type = LayoutType::default;
 }
