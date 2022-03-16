@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 enum LayoutType: string
 {
     case none = 'none';
-    case default = 'grey';
+    case default = 'default';
     case success = 'success';
     case info = 'info';
     case warning = 'warning';
@@ -16,23 +16,11 @@ enum LayoutType: string
     {
         return match ($this) {
             self::none => '',
-            self::default => 'bg-grey-500 bg-opacity-5',
-            self::success => 'bg-green-500 bg-opacity-5',
-            self::info => 'bg-blue-500 bg-opacity-5',
-            self::warning => 'bg-orange-500 bg-opacity-5',
-            self::error => 'bg-red-500 bg-opacity-5',
-        };
-    }
-
-    public function titleClass(): string
-    {
-        return match ($this) {
-            self::none => '',
-            self::default => 'text-grey-500',
-            self::success => 'text-green-500',
-            self::info => 'text-blue-500',
-            self::warning => 'text-orange-500',
-            self::error => 'text-red-500',
+            self::default => 'bg-primary-50 border border-primary-100',
+            self::success => 'bg-green-50 border border-green-100',
+            self::info => 'bg-blue-50 border border-blue-100',
+            self::warning => 'bg-orange-50 border border-orange-100',
+            self::error => 'bg-red-50 border border-red-100',
         };
     }
 }

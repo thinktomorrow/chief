@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Forms\Concerns\HasColumns;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
@@ -19,7 +18,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
     use HasComponentRendering;
     use HasView;
     use HasComponents;
-    use HasColumns;
     use HasTitle;
     use HasDescription;
     use HasCustomAttributes;
