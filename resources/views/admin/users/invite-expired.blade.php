@@ -8,7 +8,7 @@
             <div class="space-y-6 w-128">
                 <h1 class="text-center text-black">Uitnodiging niet langer geldig</h1>
 
-                <div class="window">
+                <div class="card">
                     <div class="prose prose-dark">
                         <p>Deze link is jammer genoeg ongeldig. Mogelijk is de reden een van de volgende:</p>
 

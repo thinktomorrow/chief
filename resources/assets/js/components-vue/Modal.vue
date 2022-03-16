@@ -3,7 +3,7 @@
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative p-6 bg-white rounded-2xl shadow-window w-full" :class="sizeClass">
+            <div class="relative card w-full" :class="sizeClass">
                 <div class="space-y-6">
                     <div v-if="title">
                         <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">

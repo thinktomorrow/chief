@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <div class="window">
+                <div class="card">
                     <div
                         id="js-sortable"
                         data-sort-on-load data-sort-route="{{ $manager->route('sort-index') }}"
@@ -43,7 +43,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="window">
+                <div class="card">
                     <div class="space-y-4">
                         <a class="btn btn-primary" href="{{ $manager->route('index') }}">
                             Terug naar overzicht

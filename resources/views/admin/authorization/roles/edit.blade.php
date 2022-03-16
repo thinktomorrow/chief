@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window">
+                <div class="card">
                     <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
                         @csrf
                         @method('put')

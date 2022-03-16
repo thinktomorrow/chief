@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <div class="window">
+                <div class="card">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
                             <label for="select-all" class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
@@ -50,8 +50,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="window">
-
+                <div class="card">
                     <div class="w-full space-x-1 mt-0.5">
                         <span class="text-lg display-base display-dark">
                             Filter

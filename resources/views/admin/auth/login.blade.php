@@ -17,7 +17,7 @@
             <div class="space-y-6 w-128">
                 <h1 class="text-center text-black">Welkom terug, Chief!</h1>
 
-                <div class="window">
+                <div class="card">
                     <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
                         {{ csrf_field() }}
 

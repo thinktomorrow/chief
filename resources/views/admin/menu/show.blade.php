@@ -31,7 +31,7 @@
                 </div>
             @else
                 <div class="w-full">
-                    <div class="window">
+                    <div class="card">
                         <div class="-my-3 divide-y divide-grey-100">
                             @foreach($menuItems as $item)
                                 <x-chief-hierarchy

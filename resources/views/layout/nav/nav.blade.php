@@ -1,6 +1,6 @@
 <div
     data-collapsible-navigation
-    class="h-screen px-3 border-r divide-y select-none shadow-window divide-grey-100 border-grey-100"
+    class="h-screen px-3 border-r divide-y shadow-md select-none shadow-grey-100 divide-grey-100 border-grey-100"
 >
     {{-- Desktop Chief title --}}
     <div class="items-center justify-start hidden py-6 lg:flex">

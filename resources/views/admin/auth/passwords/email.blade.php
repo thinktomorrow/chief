@@ -9,12 +9,12 @@
         <div class="space-y-6 w-128">
             <h1 class="text-center text-black">Je wachtwoord vergeten?</h1>
 
-            <div class="window">
+            <div class="card">
                 {{-- The status session value holds the passwords.sent message when an reset email has been succesfully requested. --}}
                 @if(session('status'))
                     <div>
                         <p>{{ session('status') }}</p>
-                        <div class="space-x-4 mt-4">
+                        <div class="mt-4 space-x-4">
                             <a
                                     href="{{ route('chief.back.login') }}"
                                     title="Terug naar login"

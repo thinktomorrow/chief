@@ -20,7 +20,7 @@
     <div class="container-sm">
         <div class="row gutter-3">
             <div class="w-full">
-                <div class="window">
+                <div class="card">
                     <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
                         {!! csrf_field() !!}
                         <input type="hidden" name="_method" value="PUT">
@@ -35,8 +35,7 @@
             </div>
 
             <div class="w-full">
-                <div class="window">
-
+                <div class="card">
                     <x-chief-form::formgroup id="password" label="Wachtwoord">
                         <x-slot name="description">
                             <p>Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>

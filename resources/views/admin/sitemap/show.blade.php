@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <div class="window">
+                <div class="card">
                     <div class="prose prose-dark">
                         <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 
