@@ -68,6 +68,9 @@ Form.prototype.refresh = function () {
         const DOM = document.createElement('div');
         DOM.innerHTML = data;
 
+        // Removing 'hidden' triggers the CSS animation
+        DOM.querySelector('[data-form-refreshed-notification]').classList.remove('hidden');
+
         this.el.innerHTML = DOM.firstElementChild.innerHTML;
 
         // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
@@ -98,6 +101,7 @@ Form.prototype.refreshCallback = function () {
     }
 
     // Specific callbacks...
+    // window.Eventbus.$emit('create-notification', 'success', '️Opgeslagen!', 2000);
 };
 
 export { Form as default };
