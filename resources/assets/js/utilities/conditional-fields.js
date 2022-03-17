@@ -1,3 +1,4 @@
+import EventBus from './EventBus';
 import RadioFieldTrigger from './conditional-fields/RadioFieldTrigger';
 import SelectFieldTrigger from './conditional-fields/SelectFieldTrigger';
 import CheckboxFieldTrigger from './conditional-fields/CheckboxFieldTrigger';
@@ -10,12 +11,13 @@ import InputFieldTrigger from './conditional-fields/InputFieldTrigger';
  * @param {String} formgroupTypeAttribute
  * @param {String} conditionalFieldsDataAttribute
  */
-const initConditionalFields = (
+const initConditionalFieldsInContainer = (
+    container = document,
     formgroupAttribute = 'data-field-key',
     formgroupTypeAttribute = 'data-field-type',
     conditionalFieldsDataAttribute = 'data-conditional-toggle'
 ) => {
-    const formgroupElements = Array.from(document.querySelectorAll(`[${formgroupAttribute}]`));
+    const formgroupElements = Array.from(container.querySelectorAll(`[${formgroupAttribute}]`));
 
     formgroupElements.forEach((element) => {
         const name = element.getAttribute(formgroupAttribute);
@@ -35,7 +37,6 @@ const initConditionalFields = (
             case 'checkbox':
                 new CheckboxFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'textinput':
             case 'input':
                 new InputFieldTrigger(name, element, conditionalFieldsData);
                 break;
@@ -45,6 +46,14 @@ const initConditionalFields = (
                     `Error while trying to initialise conditional fields: Trigger handling for type ${type} is not implemented yet ...`
                 );
         }
+    });
+};
+
+const initConditionalFields = () => {
+    initConditionalFieldsInContainer(document);
+
+    EventBus.subscribe('sidebarPanelActivated', (e) => {
+        initConditionalFieldsInContainer(e.panel.el);
     });
 };
 
