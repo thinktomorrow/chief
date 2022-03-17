@@ -69,7 +69,11 @@ Form.prototype.refresh = function () {
         DOM.innerHTML = data;
 
         // Removing 'hidden' triggers the CSS animation
-        DOM.querySelector('[data-form-refreshed-notification]').classList.remove('hidden');
+        const notification = DOM.querySelector('[data-form-refreshed-notification]');
+
+        if (notification) {
+            notification.classList.remove('hidden');
+        }
 
         this.el.innerHTML = DOM.firstElementChild.innerHTML;
 
