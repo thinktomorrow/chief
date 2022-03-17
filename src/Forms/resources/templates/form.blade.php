@@ -17,21 +17,17 @@
             @method('put')
         @endif
 
-        <div class="space-y-6">
+        <div class="relative space-y-6">
             @foreach($getComponents() as $childComponent)
                 {{ $childComponent }}
             @endforeach
 
-            <div class="flex flex-wrap items-end justify-between gap-3">
-                <button type="submit" class="btn btn-primary">
-                    Opslaan
-                </button>
+            <button type="submit" class="btn btn-primary">
+                Opslaan
+            </button>
 
-                <div data-form-refreshed-notification class="hidden scale-0 animate-pop-in-out">
-                    <div class="label label-success label-sm">
-                        Opgeslagen
-                    </div>
-                </div>
+            <div data-form-refreshed-notification class="absolute bottom-0 right-0 hidden scale-0 animate-pop-in-out">
+                <span class="label label-success label-xs"> Opgeslagen </span>
             </div>
         </div>
     </form>

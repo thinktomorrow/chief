@@ -4,5 +4,7 @@
     :refresh-url="$getRefreshUrl()"
     :class="$getLayout()->class()"
 >
-    @include($getWindowView())
+    <div class="space-y-4">
+        @include($getWindowView())
+    </div>
 </x-chief-form::window>

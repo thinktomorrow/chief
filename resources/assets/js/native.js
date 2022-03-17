@@ -6,6 +6,7 @@ import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
 import initAnimatedToggle from './utilities/animated-toggle';
 import initRepeatFields from './forms/fields/init-repeat-fields';
+import initFormRefreshedNotifications from './utilities/form-refreshed-notification';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -18,6 +19,7 @@ initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]'
     animationClass: 'animate-slide-in-nav lg:animate-none',
 });
 initRepeatFields();
+initFormRefreshedNotifications();
 
 require('./utilities/character-count');
 
