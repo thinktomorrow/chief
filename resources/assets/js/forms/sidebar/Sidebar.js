@@ -55,7 +55,6 @@ export default class {
     }
 
     showPanel(id) {
-        console.log('show panel');
         if (!this.sidebarContainer.isOpen()) {
             this.sidebarContainer.open();
         }
@@ -68,8 +67,6 @@ export default class {
         // Set new panel as active and show it
         this.panels.markAsActive(id);
         this.panels.findActive().show();
-
-        console.log(this.panels.findActive());
     }
 
     fetchUrl(url, options = {}) {
@@ -119,33 +116,25 @@ export default class {
         const activePanel = this.panels.findActive();
         const targetPanel = this.panels.findFirstSubmitTarget(activePanel.parent);
 
-        Submit.handle(responseData, activePanel.el, targetPanel ? targetPanel.el : document, activePanel.getTags());
+        Submit.handle(
+            responseData,
+            activePanel.el,
+            targetPanel ? targetPanel.el : document,
+            activePanel.getTags(),
+            () => {
+                // GET request stays on same page and reloads it with the given response.
+                if (metadata.method === 'get') {
+                    this.refresh(responseData);
+                    return;
+                }
 
-        // GET request stays on same page and reloads it with the given response.
-        if (metadata.method === 'get') {
-            this.refresh(responseData);
-            return;
-        }
-
-        this.backAfterSubmit();
+                this.backAfterSubmit();
+            }
+        );
     }
 
     backAfterSubmit() {
         const targetPanel = this.panels.findFirstSubmitTarget(this.panels.findActive().parent);
-
-        // EventBus.publish('panel-form-submitted', {
-        //     panel: this.panels.findActive(),
-        //     container: targetPanel ? targetPanel.el : this.mainContainer,
-        //     response: responseData,
-        // });
-        //
-        // // TODO: remove this duplicate event
-        // EventBus.publish('sidebarFormSubmitted', {
-        //     panel: this.panels.findActive(),
-        //     responseData,
-        // });
-
-        console.log('TARGET PANEL FOUND: ', targetPanel);
 
         if (!targetPanel) {
             this.close();
@@ -179,7 +168,6 @@ export default class {
     }
 
     close() {
-        console.log('closing...');
         // At top level so close entire sidebar which also clears out the panels
         // TODO: Check for unsaved content before clicking submit...
         this.sidebarContainer.close();
@@ -188,13 +176,9 @@ export default class {
         setTimeout(() => {
             this.panels.clear();
         }, 400);
-
-        // TODO: is this needed?
-        // this.refresh();
     }
 
     refresh(data = null) {
-        console.log('sidebar refresh');
         if (this.panels.findActive()) {
             this.sidebarContainer.renderCloseButton();
         }
@@ -207,25 +191,6 @@ export default class {
             }
         }, data);
     }
-
-    // backOrClose(keepPreviousPanel = true) {
-    //     console.log('back or close');
-    //     // Back to parent
-    //     if (this.panels.findActive() && this.panels.findActive().parent) {
-    //         console.log('parent stuff');
-    //         const previousPanel = this.panels.findActive();
-    //
-    //         this.show(this.panels.findActive().parent.url);
-    //
-    //         if (!keepPreviousPanel) {
-    //             this.panels.remove(previousPanel.id);
-    //         }
-    //
-    //         return;
-    //     }
-    //
-    //     this.close();
-    // }
 
     listenForEscapeKey() {
         window.addEventListener('keydown', (e) => {
