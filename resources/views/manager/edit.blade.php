@@ -1,18 +1,14 @@
 <x-chief::page>
     <x-slot name="header">
-
-        <div class="flex justify-between">
+        <div class="flex items-end justify-between gap-6">
             <x-chief-form::forms id="pagetitle" />
 
-            <div class="">
-                <tabs>
-                    @foreach(config('chief.locales') as $locale)
-                        <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}"></tab>
-                    @endforeach
-                </tabs>
-            </div>
+            <tabs class="-mb-3">
+                @foreach(config('chief.locales') as $locale)
+                    <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}"></tab>
+                @endforeach
+            </tabs>
         </div>
-
     </x-slot>
 
     <x-chief-form::forms position="main" />

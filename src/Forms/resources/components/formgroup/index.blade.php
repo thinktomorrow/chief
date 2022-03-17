@@ -3,7 +3,6 @@
     'label' => null,
     'description' => null,
     'required' => false,
-
     'fieldType' => null,
     'fieldToggles' => [],
 ])
