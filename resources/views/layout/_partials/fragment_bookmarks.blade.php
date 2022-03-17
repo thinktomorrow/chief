@@ -1,6 +1,6 @@
-<div class="flex items-center group">
-    {{-- bookmark for this fragment --}}
-    @if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+    <div class="flex items-center group">
+        {{-- bookmark for this fragment --}}
         <span class="mr-2 label label-grey-light">#{{ $model->getBookmark() }}</span>
 
         <div class="inline-flex items-center gutter-1">
@@ -28,5 +28,5 @@
                 </span>
             @endif
         </div>
-    @endif
-</div>
+    </div>
+@endif

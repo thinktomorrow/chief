@@ -41,47 +41,72 @@ input[type='number'] {
     @apply w-full;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-    margin-top: 0.1rem;
-    @apply appearance-none relative w-5 h-5 border border-grey-300 overflow-hidden mr-1 cursor-pointer shrink;
-
-    &:focus {
-        @apply ring-2 ring-primary-500;
-    }
-
-    &:before {
-        content: '';
-        @apply absolute inset-0 bg-primary-500 scale-0 z-10 transition-all duration-150 ease-in-out;
-    }
-
-    &:checked:before {
-        @apply scale-50;
-    }
-}
-
-input[type='radio'] {
-    @apply rounded-full;
-
-    &:before {
-        @apply rounded-full;
-    }
-}
-
+input[type='radio'],
 input[type='checkbox'] {
-    @apply rounded;
-
-    &:before {
-        @apply rounded;
-    }
+    @apply absolute opacity-0 z-[-1];
 }
 
-label.with-checkbox,
-label.with-radio {
-    @apply flex items-start space-x-2 cursor-pointer;
+.with-radio,
+.with-checkbox {
+    @apply relative text-grey-700 cursor-pointer inline-flex;
 
     span {
-        @apply text-grey-600;
+        @apply inline-block pl-8;
+    }
+
+    span:before {
+        content: '';
+        @apply inline-block w-5 h-5 border border-grey-200;
+    }
+
+    span:before,
+    span:after {
+        @apply transition duration-75 ease-in-out absolute left-0 top-[0.1rem];
+    }
+
+    input:focus + span:before {
+        @apply border-primary-500;
+    }
+
+    input:disabled + span:before {
+        @apply opacity-25;
+    }
+}
+
+.with-radio {
+    span:before,
+    span:after {
+        @apply rounded-full;
+    }
+
+    span:after {
+        content: '';
+        @apply inline-block w-5 h-5 border-2 border-primary-500;
+        @apply bg-primary-500 transform scale-0;
+    }
+
+    input:checked + span:after {
+        @apply scale-[0.5];
+    }
+}
+
+.with-checkbox {
+    span:before {
+        @apply rounded-sm;
+    }
+
+    span:after {
+        content: url('data:image/svg+xml; utf8, <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23FFFFFF"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /> </svg>');
+        @apply inline-block left-0 top-[0.1rem];
+        @apply transform scale-0;
+    }
+
+    input:checked + span:before {
+        @apply bg-primary-500 border-primary-500;
+    }
+
+    input:checked + span:after {
+        @apply scale-100;
     }
 }
 
