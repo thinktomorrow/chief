@@ -12,7 +12,7 @@ trait HasLocalizableProperties
      */
     protected function getLocalizableProperty(mixed $value, ?string $locale = null): mixed
     {
-        if (!is_string($value) && is_callable($value)) {
+        if (! is_string($value) && is_callable($value)) {
             return call_user_func_array($value, [$locale]);
         }
 
