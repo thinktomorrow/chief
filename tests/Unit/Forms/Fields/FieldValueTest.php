@@ -31,6 +31,48 @@ class FieldValueTest extends TestCase
     }
 
     /** @test */
+    public function it_can_set_a_localized_default()
+    {
+        $field = Text::make('title')->locales(['nl','en'])->default(['nl' => 'foobar-nl','en' => 'foobar-en']);
+
+        $this->assertEquals('foobar-nl', $field->getValue('nl'));
+        $this->assertEquals('foobar-en', $field->getValue('en'));
+        $this->assertEquals(['nl' => 'foobar-nl','en' => 'foobar-en'], $field->getValue());
+    }
+
+    /** @test */
+    public function when_value_is_set_default_is_not_used()
+    {
+        $field = Text::make('title')->locales(['nl','en'])->default(['nl' => 'foobar-nl','en' => 'foobar-en']);
+        $field->value(['nl' => null, 'en' => 'value-en']);
+
+        $this->assertEquals(null, $field->getValue('nl'));
+        $this->assertEquals('value-en', $field->getValue('en'));
+        $this->assertEquals(['nl' => null, 'en' => 'value-en'], $field->getValue());
+    }
+
+    /** @test */
+    public function it_can_set_a_default_which_is_used_when_no_value_is_given()
+    {
+        $field = Text::make('title')->default('foobar');
+
+        $this->assertEquals('foobar', $field->getValue());
+
+        $field->value('some-value');
+        $this->assertEquals('some-value', $field->getValue());
+    }
+
+    /** @test */
+    public function default_value_can_be_a_php_reserved_keyword()
+    {
+        $this->expectNotToPerformAssertions();
+
+        $field = Text::make('title')->default('end');
+
+        $field->getValue();
+    }
+
+    /** @test */
     public function it_can_get_the_existing_model_value()
     {
         $model = ArticlePage::make(['updated_at' => Carbon::yesterday()]);
