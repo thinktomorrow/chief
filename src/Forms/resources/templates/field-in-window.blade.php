@@ -10,7 +10,7 @@
         @endforeach
     @else
         <div data-vue-fields>
-            <tabs>
+            <tabs :hide_nav="true">
                 @foreach($getLocales() as $locale)
                     <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}">
                         @include($getView(), ['component' => $component, 'locale' => $locale])

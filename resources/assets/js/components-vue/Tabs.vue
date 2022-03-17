@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-3">
         <slot name="tabnav" :tabs="tabs">
-            <ul v-if="!hideNav" role="tablist" class="flex w-full pl-0 list-none border-b border-grey-100">
+              <ul v-if="!hideNav" role="tablist" class="flex w-full pl-0 list-none border-b border-grey-100">
                 <li v-for="tab in tabs" role="presentation">
                     <slot name="tabname" :tab="tab">
                         <a
@@ -27,13 +27,13 @@
 <script>
 export default {
     props: {
-        external_nav: { default: false, type: Boolean },
+        hide_nav: { default: false, type: Boolean },
     },
 
     data() {
         return {
             tabs: [],
-            hideNav: this.external_nav,
+            hideNav: this.hide_nav,
         };
     },
 

@@ -11,7 +11,7 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 - Changed: Restructured Fields files and classes under a dedicated `src/Forms` directory. Rename all your field namespaces from `Thinktomorrow\Chief\ManagedModels\Fields\Types\<Field>` to `Thinktomorrow\Chief\Forms\Fields\<Field>`.
 - Removed: field method `customSaveMethod`. Replace any occurrences with the save() method. See below.
 - Removed: magic model methods for saving a field. Replace any `save<FIELDKEY>Field()` and `save<FIELDTYPE>Fields()` methods on your model. View next item how to do this:
-- Changed: Because these methods are removed, A custom save for a field can now only be set via a Closure passed via the Field::save(Closure) method. e.g. Field::save(fn($field, $input, $files) => $this->customSave())
+- Changed: Because these methods are removed, A custom save for a field can now only be set via a Closure passed via the Field::save(Closure) method. e.g. Field::save(fn($model, $field, $input, $files) => $this->customSave())
 - Changed: `InputField` is renamed to `TextInput`.
 - Changed: Field rules method only accepts an array. A pipe separated string is no longer valid, e.g. email|max:100 should now be passed as ['email','max:100].
 - Changed: `Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant` to `Thinktomorrow\Chief\Managers\Assistants\FormsAssistant`.

@@ -9,13 +9,6 @@ trait HasView
 
     protected bool $editInSidebar = false;
 
-    public function view(string $view): static
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
     public function getView(): string
     {
         return ($this->editInSidebar && isset($this->windowView))
@@ -23,12 +16,26 @@ trait HasView
             : $this->view;
     }
 
+    public function view(string $view): static
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    public function windowView(string $windowView): static
+    {
+        $this->windowView = $windowView;
+
+        return $this;
+    }
+
     public function editInSidebar(?string $windowView = null): static
     {
         $this->editInSidebar = true;
 
         if ($windowView) {
-            $this->windowView = $windowView;
+            $this->windowView($windowView);
         }
 
         return $this;
