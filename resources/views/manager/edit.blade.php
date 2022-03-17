@@ -7,7 +7,7 @@
             <div class="">
                 <tabs>
                     @foreach(config('chief.locales') as $locale)
-                        <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}"></tab>
+                        <tab v-cloak id="{{ $locale }}" name="{{ $locale }}"></tab>
                     @endforeach
                 </tabs>
             </div>
@@ -16,7 +16,11 @@
     </x-slot>
 
     <x-chief-form::forms position="main" />
-    <x-chief::fragments :owner="$model" />
+
+    @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner)
+        <x-chief::fragments :owner="$model" />
+    @endif
+
     <x-chief-form::forms position="main-bottom" />
 
     <x-slot name="aside">

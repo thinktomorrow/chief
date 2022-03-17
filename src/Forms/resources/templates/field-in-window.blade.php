@@ -12,7 +12,7 @@
         <div data-vue-fields>
             <tabs :hide_nav="true">
                 @foreach($getLocales() as $locale)
-                    <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}">
+                    <tab v-cloak id="{{ $locale }}" name="{{ $locale }}">
                         @include($getView(), ['component' => $component, 'locale' => $locale])
                     </tab>
                 @endforeach
