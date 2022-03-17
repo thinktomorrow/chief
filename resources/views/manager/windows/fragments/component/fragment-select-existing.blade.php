@@ -1,5 +1,5 @@
-<div class="space-y-12">
-    <h3 class="h3 display-dark">Kies een bestaand fragment</h3>
+<div class="space-y-6">
+    <p class="text-xl display-base display-dark">Kies een bestaand fragment</p>
 
     <form
         id="fragment-select-existing-form"
@@ -7,7 +7,7 @@
     >
         <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
 
-        <div data-vue-fields class="flex items-center -mx-2">
+        <div data-vue-fields class="flex items-center gap-4">
             @if(public_method_exists($owner, 'getRelatedOwners'))
                 @php
                     $existingOwnersOptions = [];
@@ -21,7 +21,7 @@
                     name="owners[]"
                     placeholder="Kies een pagina"
                     :options='@json($existingOwnersOptions)'
-                    class="w-1/2 px-2"
+                    class="w-full"
                 ></chief-multiselect>
             @endif
 
@@ -37,34 +37,33 @@
                 name="types[]"
                 placeholder="Kies een type"
                 :options='@json($existingTypesOptions)'
-                class="w-1/2 px-2"
+                class="w-full"
             ></chief-multiselect>
+
+            {{-- Should be deleted once the onchange/oninput submit on this form works --}}
+            <button class="btn btn-primary" type="submit">Zoek</button>
         </div>
-
-
-        {{-- Should be deleted once the onchange/oninput submit on this form works --}}
-        <button class="mt-4 btn btn-primary" type="submit">Zoek</button>
     </form>
 
-    <div data-sidebar-component="existingFragments">
-        <div class="-m-6 divide-y divide-grey-100">
-            @forelse($sharedFragments as $sharedFragment)
-                <div class="p-6 group hover:bg-primary-500 transition-75 rounded-xl">
-                    <a
-                        data-sidebar-close
-                        data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
-                        class="flex flex-col w-full space-y-2 overflow-hidden"
-                    >
-                        <span class="font-semibold text-grey-900 group-hover:text-white transition-75">
-                            {{ ucfirst($sharedFragment['model']->adminConfig()->getModelName()) }}
-                        </span>
-
-                        {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
-                    </a>
+    <div data-sidebar-component="existingFragments" class="-mx-6 divide-y-2 divide-dashed divide-primary-50">
+        @forelse($sharedFragments as $sharedFragment)
+            <div
+                data-sidebar-close
+                data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
+                class="p-6 space-y-2 overflow-hidden cursor-pointer group hover:bg-primary-500 transition-75"
+            >
+                <div>
+                    <span class="display-dark display-base group-hover:text-white transition-75">
+                        {{ ucfirst($sharedFragment['model']->adminConfig()->getModelName()) }}
+                    </span>
                 </div>
-            @empty
-                <p class="p-6">Geen fragmenten gevonden.</p>
-            @endforelse
-        </div>
+
+                {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
+            </div>
+        @empty
+            <p class="p-6">
+                Geen fragmenten gevonden.
+            </p>
+        @endforelse
     </div>
 </div>
