@@ -11,7 +11,6 @@
         {!! $slot !!}
 
         @if($model->fragmentModel()->exists)
-
             @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
                 <x-chief::fragments :owner="$model"/>
             @endif
@@ -34,8 +33,8 @@
 
                                 @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
                                     <span class="link">
-                                    {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
-                                </span>
+                                        {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                                    </span>
                                 @else
                                     <a
                                             class="underline link link-primary"
