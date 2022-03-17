@@ -33,7 +33,6 @@ Form.prototype.addTag = function (tag) {
 
 // Triggers to open sidebar
 Form.prototype.listen = function () {
-    console.log('listen');
     // Sidebar form
     this.el.querySelectorAll(this.triggerSelector).forEach((trigger) => {
         // Provide panel id as default tag.
@@ -61,11 +60,10 @@ Form.prototype.refresh = function () {
     const url = this.el.dataset.formUrl;
 
     if (!url) {
-        console.log(this, this.el.dataset);
         console.error('no refresh url defined on this form.');
         return;
     }
-    console.log('refreshing: ', url);
+
     Api.get(url, (data) => {
         const DOM = document.createElement('div');
         DOM.innerHTML = data;
@@ -94,7 +92,6 @@ Form.prototype.refresh = function () {
 // TODO: better design pattern than this. Now we set custom logic here per type,
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
-    console.log(this.getTags());
     if (this.getTags().includes('fragments')) {
         initSortableGroup('[data-sortable-fragments]', this.el);
         new SelectFragment(this.el);

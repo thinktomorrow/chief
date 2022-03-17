@@ -15,15 +15,11 @@
             @case('published')
                 @if($isAnyLinkOnline)
                     <x-slot name="labels">
-                        <span class="label label-success">Online</span>
+                        <span title="Deze pagina is gepubliceerd en zichtbaar voor de gebruiker!" class="label label-success">Online</span>
                     </x-slot>
-
-                    <div class="prose prose-spacing prose-dark">
-                        <p> Deze pagina is gepubliceerd en zichtbaar voor de gebruiker! </p>
-                    </div>
                 @elseif($isVisitable)
                     <x-slot name="labels">
-                        <span class="label label-info">Nog niet online</span>
+                        <span class="label label-warning">Nog niet online</span>
                     </x-slot>
 
                     <div class="prose prose-spacing prose-dark">
