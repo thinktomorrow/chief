@@ -14,7 +14,7 @@
 
         @if($model->fragmentModel()->isShared())
             <div class="p-6 space-y-4 bg-orange-50 rounded-xl">
-                <p class="text-xl display-base display-dark">Gedeeld fragment</p>
+                <p class="text-lg display-base display-dark">Gedeeld fragment</p>
 
                 <div class="prose prose-spacing prose-dark">
                     <p>

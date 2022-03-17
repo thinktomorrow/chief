@@ -1,6 +1,6 @@
 <div data-fragments-component class="space-y-4">
     <div>
-        <span class="text-xl font-semibold leading-tight text-black">Fragmenten</span>
+        <span class="text-lg font-semibold leading-tight text-black">Fragmenten</span>
     </div>
 
     <div class="relative -my-6 border-t-2 border-b-2 border-dashed border-primary-50">

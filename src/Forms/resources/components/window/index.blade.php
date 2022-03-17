@@ -13,7 +13,7 @@
         <div class="flex justify-end space-x-4">
             <div class="w-full space-x-1">
                 @if($title)
-                    <span class="text-xl display-base display-dark">
+                    <span class="text-lg display-base display-dark">
                         {!! $title !!}
                     </span>
                 @endif
