@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <div class="w-128">
+    <div class="w-full sm:w-128">
         {!! $slot !!}
     </div>
 </div>

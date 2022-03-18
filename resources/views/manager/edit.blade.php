@@ -1,6 +1,6 @@
 <x-chief::page>
     <x-slot name="header">
-        <div class="flex items-end justify-between gap-6">
+        <div class="flex flex-wrap items-end justify-between gap-6">
             <x-chief-form::forms id="pagetitle" />
 
             <tabs class="-mb-3">
