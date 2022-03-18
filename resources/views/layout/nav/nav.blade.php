@@ -16,7 +16,7 @@
 {{-- Navigation --}}
 <div
     data-mobile-navigation
-    class="fixed inset-0 hidden bg-white lg:static lg:block animate-slide-in-nav lg:animate-none"
+    class="fixed inset-0 hidden bg-white lg:static lg:block animate-slide-in-nav lg:animate-none lg:shadow-card"
 >
     <div
         data-collapsible-navigation

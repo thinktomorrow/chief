@@ -114,6 +114,6 @@
     }
 
     .body-dark {
-        @apply text-grey-600;
+        @apply text-grey-700;
     }
 }

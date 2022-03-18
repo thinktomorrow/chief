@@ -1,22 +1,15 @@
-@props([
-    'label' => null,
-    'required' => false,
-])
+@props(['label' => null])
 
-<div class="w-full">
+<div class="flex flex-wrap justify-between w-full gap-y-1 gap-x-3">
     @if($label)
-        <div class="mb-1 leading-none">
-            <span class="font-medium display-base display-dark">
+        <div class="w-48">
+            <span class="font-medium display-base body-dark">
                 {{ ucfirst($label) }}
             </span>
-
-            @if($required)
-                <span class="leading-none text-orange-400" title="Verplicht in te vullen">*</span>
-            @endif
         </div>
     @endif
 
-    <div class="{{ $label ? 'mt-2' : null }}">
+    <div class="w-128">
         {!! $slot !!}
     </div>
 </div>

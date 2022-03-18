@@ -1,4 +1,7 @@
-<div class="w-full external-editor-toolbar" id="js-external-editor-toolbar-{{ str_replace('.','_',$getElementId($locale ?? null)) }}"></div>
+<div
+    class="w-full external-editor-toolbar"
+    id="js-external-editor-toolbar-{{ str_replace('.','_',$getElementId($locale ?? null)) }}"
+></div>
 
 <x-chief-form::formgroup.prepend-append
     :prepend="$getPrepend($locale ?? null)"
