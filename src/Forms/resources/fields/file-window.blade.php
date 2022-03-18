@@ -1,59 +1,52 @@
 @php
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
     $files = $getValue($locale);
+    $count = count($files);
 @endphp
 
-<div class="row-start-start gutter-1">
-    @if(count($files) > 0)
+<div class="flex flex-wrap gap-4">
+    @if($count > 0)
         @foreach ($files as $file)
-            <div>
-                <div class="w-32">
-                    @switch($file->extension)
-                        @case('image')
-                            <a href="{{ $file->url }}" title="{{ $file->filename }}" target="_blank" rel="noopener">
-                                <img
-                                    src="{{ $file->thumbUrl }}"
-                                    alt="{{ $file->filename }}"
-                                    class="w-full h-[4.5rem] rounded-xl object-contain bg-grey-200 bg-gradient-to-br from-grey-100 to-grey-200"
-                                >
-                            </a>
-                            @break
-                        @case('pdf')
-                            <img
-                                src="{{ $file->url }}"
-                                alt="{{ $file->filename }}"
-                                class="w-full h-[4.5rem] rounded-xl object-contain bg-grey-200 bg-gradient-to-br from-grey-100 to-grey-200"
-                            >
+            <div class="flex items-center gap-4">
+                <a href="{{ $file->url }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
+                    <div class="flex items-center justify-center w-32 h-20 rounded-lg bg-grey-100">
+                        <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
+                    </div>
+                </a>
 
-                            <a
-                                href="{{ $file->url }}"
-                                title="{{ $file->filename }}"
-                                target="_blank"
-                                rel="noopener"
-                                class="mt-1 text-sm link link-primary"
+                @if($count === 1)
+                    <div class="space-y-0.5 text-sm">
+                        <div>
+                            <p>
+                                <span class="font-medium display-base body-dark">Bestandsnaam:</span>
+                                <span class="body-base body-dark" style="word-break: break-all;">
+                                    {{ $file->filename }}
+                                </span>
+                            </p>
+
+                            <p>
+                                <span class="font-medium display-base body-dark">Bestandsgrootte:</span>
+                                <span class="body-base body-dark">{{ $file->size }} </span>
+                            </p>
+                        </div>
+
+                        <a href="{{ $file->url }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
+                            <x-chief-icon-label
+                                icon="icon-external-link"
+                                position="append"
+                                size="18"
+                                class="link link-primary"
                             >
-                                {{ $file->filename }} ({{ $file->size }})
-                            </a>
-                            @break
-                        @default
-                            <a
-                                href="{{ $file->url }}"
-                                title="{{ $file->filename }}"
-                                target="_blank"
-                                rel="noopener"
-                                class="mt-1 text-sm link link-primary"
-                            >
-                                {{ $file->filename }} ({{ $file->size }})
-                            </a>
-                    @endswitch
-                </div>
+                                Document bekijken
+                            </x-chief-icon-label>
+                        </a>
+                    </div>
+                @endif
             </div>
         @endforeach
     @else
-        <div class="w-32">
-            <div class="flex items-center justify-center w-full rounded-xl h-[4.5rem] bg-grey-100">
-                <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>
-            </div>
+        <div class="flex items-center justify-center w-32 h-20 rounded-lg bg-grey-100">
+            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
         </div>
     @endif
 </div>
