@@ -16,7 +16,7 @@
             data-sidebar-component="fragments"
             data-sortable-fragments
             data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-            class="divide-y-2 divide-dashed divide-primary-50"
+            class="divide-y divide-grey-100"
         >
             @foreach($fragments as $fragment)
                 @include('chief::manager.windows.fragments.component._card', [

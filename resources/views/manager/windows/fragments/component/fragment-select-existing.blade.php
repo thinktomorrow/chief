@@ -45,7 +45,7 @@
         </div>
     </form>
 
-    <div data-sidebar-component="existingFragments" class="-mx-6 divide-y-2 divide-dashed divide-primary-50">
+    <div data-sidebar-component="existingFragments" class="-mx-6 divide-y divide-grey-100">
         @forelse($sharedFragments as $sharedFragment)
             <div
                 data-sidebar-close
