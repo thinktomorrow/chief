@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Site;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AdminToastTest extends ChiefTestCase
 {
@@ -39,7 +38,6 @@ class AdminToastTest extends ChiefTestCase
     /** @test */
     public function it_returns_nothing_when_something_went_wrong()
     {
-
     }
 
     /** @test */

@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Site\AdminToast;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
+use Thinktomorrow\Chief\Site\AdminToast;
 
 final class ToastController extends Controller
 {
@@ -25,7 +25,7 @@ final class ToastController extends Controller
 
     public function get(Request $request)
     {
-        if(!chiefAdmin()) {
+        if (! chiefAdmin()) {
             return response()->json(['data' => null]);
         }
 
@@ -39,7 +39,7 @@ final class ToastController extends Controller
                 'editUrl' => $editUrl,
                 'toggleUrl' => route('chief.toast.toggle'),
                 'inPreviewMode' => (bool) $request->input('preview_mode', false),
-            ])->render()
+            ])->render(),
         ]);
     }
 }
