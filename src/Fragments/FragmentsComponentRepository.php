@@ -30,7 +30,7 @@ class FragmentsComponentRepository
             return [
                 'model' => $model,
                 'manager' => $this->registry->findManagerByModel($model::class),
-                'resource' => $this->registry->findResourceByModel($model::class)
+                'resource' => $this->registry->findResourceByModel($model::class),
             ];
         });
     }

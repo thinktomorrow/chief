@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
-use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 
 class QuoteWithAstrotomicTranslations extends Model implements PageResource
 {

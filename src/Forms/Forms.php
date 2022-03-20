@@ -7,8 +7,8 @@ namespace Thinktomorrow\Chief\Forms;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
-use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
+use Thinktomorrow\Chief\Managers\Manager;
 
 class Forms
 {

@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
 
-use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
+use Thinktomorrow\Chief\Resource\Resource;
 
 final class Registry
 {
@@ -41,10 +41,9 @@ final class Registry
 
     public function findResourceByModel(string $modelClass): Resource
     {
-        try{
-            return $this->filter(fn(Resource $resource) => $resource::modelClassName() == $modelClass)->first();
-        } catch(MissingResourceRegistration $e)
-        {
+        try {
+            return $this->filter(fn (Resource $resource) => $resource::modelClassName() == $modelClass)->first();
+        } catch (MissingResourceRegistration $e) {
             throw new MissingResourceRegistration('No registered resource found for ['.$modelClass.'].');
         }
     }
@@ -61,7 +60,7 @@ final class Registry
      */
     public function pageResources(): array
     {
-        return $this->filter(fn($resource) => $resource instanceof PageResource)->all();
+        return $this->filter(fn ($resource) => $resource instanceof PageResource)->all();
     }
 
     private function all(): array
@@ -71,7 +70,7 @@ final class Registry
 
     private function first(): Resource
     {
-        if(count($this->resources) < 1) {
+        if (count($this->resources) < 1) {
             throw new MissingResourceRegistration('No resource found in the registry.');
         }
 

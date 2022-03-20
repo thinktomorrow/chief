@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use function app;
 use function chiefRegister;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AstrotomicTranslationsTest extends ChiefTestCase

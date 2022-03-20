@@ -24,7 +24,6 @@ final class PageRouteResolver
     public function define(?Closure $resolver = null): void
     {
         foreach ($this->registry->pageResources() as $pageResource) {
-
             $modelClass = $pageResource::modelClassName();
 
             if (! $this->providesUrlAndAllowsForCustomRouteResolver($modelClass)) {

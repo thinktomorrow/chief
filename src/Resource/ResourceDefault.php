@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Resource;
 
-use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Managers\Manager;
 
 trait ResourceDefault
 {

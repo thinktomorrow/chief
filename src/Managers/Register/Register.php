@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
 
-use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Resource\Resource;
 use Illuminate\Contracts\Container\Container;
-use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
@@ -15,6 +12,8 @@ use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Request\ManagerRequestDispatcher;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
 use Thinktomorrow\Chief\Managers\Routes\RegisterManagedRoutes;
+use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Shared\AdminEnvironment;
 
 final class Register
 {
@@ -45,7 +44,9 @@ final class Register
         $this->registerMorphMap($resource::resourceKey(), $resource::modelClassName());
 
         // Only load up the admin routes and managers when in admin...
-        if(! $this->adminEnvironment->check()) return;
+        if (! $this->adminEnvironment->check()) {
+            return;
+        }
 
         $resource->setManager($manager);
 

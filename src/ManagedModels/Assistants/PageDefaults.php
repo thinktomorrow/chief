@@ -4,15 +4,15 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\AssetTrait;
-use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\ManagedModels\States\UsesPageState;
+use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 trait PageDefaults
 {
