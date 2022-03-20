@@ -10,7 +10,7 @@ class ResolveIterables
      */
     public static function resolve(iterable $iterable): iterable
     {
-        $flattened = null;
+        $flattened = [];
 
         foreach ($iterable as $entry) {
             if (is_iterable($entry)) {
