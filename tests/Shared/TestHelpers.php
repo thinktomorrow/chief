@@ -141,7 +141,7 @@ trait TestHelpers
     protected function updateLinks(Model $model, array $links): TestResponse
     {
         $response = $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => $links,
         ]);

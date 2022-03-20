@@ -22,6 +22,7 @@
                 @include('chief::manager.windows.fragments.component._card', [
                     'model' => $fragment['model'],
                     'manager' => $fragment['manager'],
+                    'resource' => $fragment['resource'],
                     'owner' => $owner,
                     'ownerManager' => $manager,
                     'loop' => $loop,

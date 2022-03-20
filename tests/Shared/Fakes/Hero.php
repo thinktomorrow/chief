@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundViewKey;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 
@@ -21,7 +22,7 @@ class Hero implements Fragmentable
         return 'hero-fragment';
     }
 
-    public function fields(): Fields
+    public function fields($model): Fields
     {
         return Fields::make([
             Fields\Text::make('title'),
@@ -31,5 +32,10 @@ class Hero implements Fragmentable
     public function getTitle()
     {
         return $this->fragmentModel()->title;
+    }
+
+    public function viewKey(): string
+    {
+        return 'hero';
     }
 }

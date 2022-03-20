@@ -37,7 +37,7 @@ trait FormsAssistant
         $this->guard('form-edit', $model);
 
         // TODO: unify default form routes to the form itself...
-        View::share('form', Forms::make($model->fields())->find($formId)->fill($this, $model));
+        View::share('form', Forms::make($this->resource->fields($model))->find($formId)->fill($this, $model));
 
         return view('chief-form::templates.form-in-sidebar');
     }
@@ -48,7 +48,7 @@ trait FormsAssistant
 
         $this->guard('form-update', $model);
 
-        $fields = Forms::make($model->fields())
+        $fields = Forms::make($this->resource->fields($model))
             ->fillModel($model)
             ->find($formId)
             ->getFields();
@@ -70,7 +70,7 @@ trait FormsAssistant
 
         $this->guard('form-show', $model);
 
-        return Forms::make($model->fields())->find($formId)->fill($this, $model)->toHtml();
+        return Forms::make($this->resource->fields($model))->find($formId)->fill($this, $model)->toHtml();
     }
 
     abstract protected function fieldsModel($id);

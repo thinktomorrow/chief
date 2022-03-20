@@ -112,7 +112,7 @@ class UrlHelper
 
         if ($ignoredModel) {
             $models = $models->reject(function ($model) use ($ignoredModel) {
-                return (get_class($model) === get_class($ignoredModel) && $model->id === $ignoredModel->id);
+                return ($model::class === get_class($ignoredModel) && $model->id === $ignoredModel->id);
             });
         }
 

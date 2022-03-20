@@ -34,7 +34,7 @@ class AdminToast
         }
 
         $model = $this->findModelByUrl($path, $locale);
-        $manager = $this->registry->manager($model::managedModelKey());
+        $manager = $this->registry->manager($model::resourceKey());
 
         if (! $manager->can('edit', $model)) {
             return null;

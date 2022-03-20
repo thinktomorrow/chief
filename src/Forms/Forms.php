@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 
 class Forms
 {
@@ -26,7 +27,7 @@ class Forms
         $forms = new static([]);
         $createdForm = null;
 
-        foreach (static::flattenIterable($generator) as $i => $form) {
+        foreach (ResolveIterables::resolve($generator) as $i => $form) {
             if ($form instanceof Form) {
                 $forms = $forms->add($form);
 
@@ -122,26 +123,6 @@ class Forms
         }
 
         return new static($forms);
-    }
-
-    /**
-     * First expand all fields so that any generators are resolved as well.
-     */
-    private static function flattenIterable(iterable $iterable): iterable
-    {
-        $flattened = null;
-
-        foreach ($iterable as $entry) {
-            if (is_iterable($entry)) {
-                foreach ($entry as $_entry) {
-                    $flattened[] = $_entry;
-                }
-            } else {
-                $flattened[] = $entry;
-            }
-        }
-
-        return $flattened;
     }
 
     private function add(Form $form): self

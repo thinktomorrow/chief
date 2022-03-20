@@ -10,12 +10,12 @@ use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\PageResourceDefault;
 
-class PageStub extends Model implements ManagedModel
+class PageStub extends Model implements PageResource
 {
-    use ManagedModelDefaults;
+    use PageResourceDefault;
 
     public $casts = [
         'repeat_values' => 'array',
@@ -23,7 +23,12 @@ class PageStub extends Model implements ManagedModel
 
     public $timestamps = false;
 
-    public function fields(): iterable
+    public static function modelClassName(): string
+    {
+        return static::class;
+    }
+
+    public function fields($model): iterable
     {
         yield Form::make('repeat_form')->items([
             Repeat::make('repeat_values')->items([

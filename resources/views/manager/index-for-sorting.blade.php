@@ -1,14 +1,14 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('indexTitle')
+    {{ $resource->getIndexTitle() }}
 @endsection
 
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header')
             @slot('title')
-                Volgorde van {{ strtolower($model->adminConfig()->getIndexTitle()) }} aanpassen
+                Volgorde aanpassen
             @endslot
         @endcomponent
     </div>
@@ -30,7 +30,7 @@
                                 data-sortable-id="{{ $model->id }}"
                             >
                                 <p class="text-sm font-semibold text-grey-900">
-                                    @adminConfig('pageTitle')
+                                    {{ $resource->getPageTitle($model) }}
                                 </p>
                             </div>
                         @endforeach

@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithBaseSegments;
 
 class LinkFormTest extends ChiefTestCase
 {
@@ -18,9 +19,7 @@ class LinkFormTest extends ChiefTestCase
     /** @test */
     public function the_fixed_base_segment_is_prepended_to_the_slug()
     {
-        ArticlePageWithBaseSegments::migrateUp();
-        app(Register::class)->model(ArticlePageWithBaseSegments::class, PageManager::class);
-        $model = ArticlePageWithBaseSegments::create();
+        $model = $this->setupAndCreateArticleWithBaseSegments();
 
         $this->updateLinks($model, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 

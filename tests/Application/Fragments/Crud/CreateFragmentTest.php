@@ -15,7 +15,7 @@ class CreateFragmentTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
 
         $model = $this->setupAndCreateArticle();
-        $manager = $this->manager(SnippetStub::managedModelKey());
+        $manager = $this->manager(SnippetStub::class);
 
         $this->asAdmin()->get($manager->route('fragment-create', $model))
             ->assertStatus(200)

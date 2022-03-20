@@ -22,7 +22,7 @@
                         @yield('header')
 
                         <div v-cloak class="container v-loading">
-                            <p class="text-grey-500">loading...</p>
+                            <!-- loading -->
                         </div>
 
                         <div v-cloak>

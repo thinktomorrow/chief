@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use function app;
 use function chiefRegister;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -15,13 +16,13 @@ class AstrotomicTranslationsTest extends ChiefTestCase
         parent::setUp();
 
         QuoteWithAstrotomicTranslations::migrateUp();
-        chiefRegister()->model(QuoteWithAstrotomicTranslations::class);
+        chiefRegister()->resource(QuoteWithAstrotomicTranslations::class, PageManager::class);
     }
 
     /** @test */
     public function it_can_store_a_model_with_astrotomic_translations()
     {
-        $this->asAdmin()->post($this->manager(QuoteWithAstrotomicTranslations::managedModelKey())->route('store'), [
+        $this->asAdmin()->post($this->manager(QuoteWithAstrotomicTranslations::class)->route('store'), [
             'trans' => [
                 'nl' => ['title_trans' => 'title_trans nl value'],
                 'en' => ['title_trans' => 'title_trans en value'],
@@ -46,7 +47,7 @@ class AstrotomicTranslationsTest extends ChiefTestCase
             'title_trans:en' => 'existing en value',
         ]);
 
-        $this->asAdmin()->put($this->manager(QuoteWithAstrotomicTranslations::managedModelKey())->route('update', $model), [
+        $this->asAdmin()->put($this->manager(QuoteWithAstrotomicTranslations::class)->route('update', $model), [
             'trans' => [
                 'nl' => ['title_trans' => 'title_trans nl value'],
                 'en' => ['title_trans' => 'title_trans en value'],

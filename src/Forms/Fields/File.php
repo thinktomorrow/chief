@@ -42,6 +42,8 @@ class File extends Component implements Field
         $this->uploadButtonLabel('Bestand opladen');
 
         $this->value(function ($model, $locale, self $field) {
+            if(!$model) return [];
+
             return $field->getMedia($model, $locale);
         });
 

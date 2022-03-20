@@ -80,11 +80,11 @@ trait PublishAssistant
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => $model->adminConfig()->getPageTitle() . ' is online geplaatst.',
+                'message' => $this->resource->getPageTitle($model) . ' is online geplaatst.',
             ]);
         }
 
-        return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is online geplaatst.');
+        return redirect()->to($this->route('index'))->with('messages.success', $this->resource->getPageTitle($model) . ' is online geplaatst.');
     }
 
     public function unpublish(Request $request, $id)
@@ -99,10 +99,10 @@ trait PublishAssistant
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => $model->adminConfig()->getPageTitle() . ' is offline gehaald.',
+                'message' => $this->resource->getPageTitle($model) . ' is offline gehaald.',
             ]);
         }
 
-        return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is offline gehaald.');
+        return redirect()->to($this->route('index'))->with('messages.success', $this->resource->getPageTitle($model) . ' is offline gehaald.');
     }
 }

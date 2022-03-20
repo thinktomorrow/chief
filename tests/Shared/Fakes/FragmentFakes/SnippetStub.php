@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundViewKey;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
@@ -17,12 +18,12 @@ class SnippetStub implements Fragmentable, FragmentsOwner
     use ForwardFragmentProperties;
     use OwningFragments;
 
-    public static function managedModelKey(): string
+    public static function resourceKey(): string
     {
         return 'snippet-stub';
     }
 
-    public function fields(): iterable
+    public function fields($model): iterable
     {
         yield Text::make('title');
         yield Text::make('title_trans')->locales();
@@ -32,5 +33,10 @@ class SnippetStub implements Fragmentable, FragmentsOwner
     public function getTitle()
     {
         return $this->fragmentModel()->title;
+    }
+
+    public function viewKey(): string
+    {
+        return 'snippet_stub';
     }
 }

@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 class OwnerStub extends Model implements FragmentsOwner
 {
-    use ManagedModelDefaults;
     use OwningFragments;
     use ReferableModelDefault;
 
@@ -33,13 +31,13 @@ class OwnerStub extends Model implements FragmentsOwner
         // TODO: Implement allowedFragments() method.
     }
 
-    public static function managedModelKey(): string
-    {
-        return 'owner-stub';
-    }
+//    public static function resourceKey(): string
+//    {
+//        return 'owner-stub';
+//    }
 
-    public function fields(): Fields
-    {
-        // TODO: Implement fields() method.
-    }
+//    public function fields(): Fields
+//    {
+//        // TODO: Implement fields() method.
+//    }
 }

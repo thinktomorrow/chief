@@ -39,8 +39,10 @@ trait PageFormParams
     {
         $params = [
             'title' => 'title',
+            'custom' => 'custom',
             'trans' => [
                 'nl' => [
+                    'content_trans' => 'aangepaste content trans',
                     'title' => 'aangepaste title',
                     'seo_title' => 'aangepaste seo title',
                     'seo_description' => 'aangepaste seo description',

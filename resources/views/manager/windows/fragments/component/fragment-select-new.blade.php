@@ -6,12 +6,12 @@
             <a
                 data-sidebar-trigger
                 href="{{ $allowedFragment['manager']->route('fragment-create', $owner) . (isset($order) ? '?order=' . $order : '') }}"
-                title="{{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}"
+                title="{{ ucfirst($allowedFragment['resource']->getLabel()) }}"
                 class="block p-6 space-y-2 overflow-hidden group hover:bg-primary-500 transition-75"
             >
                 <div>
                     <span class="display-dark display-base group-hover:text-white transition-75">
-                        {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}
+                        {{ ucfirst($allowedFragment['resource']->getLabel()) }}
                     </span>
                 </div>
 

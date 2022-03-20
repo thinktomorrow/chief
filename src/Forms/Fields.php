@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms;
 
 use ArrayIterator;
+use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use function collect;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Field;
@@ -24,7 +25,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public static function make(iterable $components, ?callable $stopRecursiveCallback = null): static
     {
-        return new static(static::extractRecursive($components, $stopRecursiveCallback));
+        return new static(static::extractRecursive(ResolveIterables::resolve($components), $stopRecursiveCallback));
     }
 
     public function first(): ?Field

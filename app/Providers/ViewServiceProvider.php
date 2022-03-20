@@ -9,13 +9,11 @@ use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class ViewServiceProvider extends ServiceProvider
 {
-    protected $defer = false;
-
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
 
-        $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
+        $this->app['view']->addNamespace('chief-fragments', __DIR__.'/../../src/Fragments/resources');
 
         View::composer([
             'chief::manager._transitions.modals.archive-modal',
@@ -27,7 +25,6 @@ class ViewServiceProvider extends ServiceProvider
                 : null;
 
             $onlineModels = UrlHelper::allOnlineModels(false, $ignoredModel);
-
             $view->with('targetModels', $onlineModels);
         });
 
@@ -35,7 +32,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::manager.windows.status.window', 'chief::window.status');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
-        /* Chief components */
+        // Chief components
         Blade::component('chief::components.title', 'chief-title');
         Blade::component('chief::components.content', 'chief-content');
         Blade::component('chief::components.sidebar', 'chief-sidebar');
@@ -45,7 +42,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
         Blade::component('chief::components.nav-item', 'chief::nav.item');
 
-        /* Wireframe components */
+        // Wireframe components
         Blade::component('chief::wireframes.wireframe', 'wireframe');
         Blade::component('chief::wireframes.container', 'wireframe-container');
         Blade::component('chief::wireframes.row', 'wireframe-row');
@@ -56,33 +53,29 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::wireframes.video', 'wireframe-video');
         Blade::component('chief::wireframes.rect', 'wireframe-rect');
 
-        /* Chief directives */
+        // Chief directives
         Blade::directive('fragments', function () {
-            return "<?php echo app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->render(\$model, get_defined_vars()); ?>";
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model, get_defined_vars()); ?>';
         });
-        Blade::directive('adminConfig', function ($expression = null) {
-            if ($expression) {
-                $method = "get".ucfirst(str_replace("'", '', $expression));
 
-                return "<?php echo \$model->adminConfig()->$method(); ?>";
-            }
-
-            return "<?php echo \$model->adminConfig(); ?>";
-        });
         Blade::directive('adminRoute', function ($expression) {
-            return "<?php echo \$manager->route($expression); ?>";
+            return "<?php echo \$manager->route({$expression}); ?>";
         });
+
         Blade::directive('adminCan', function ($expression) {
-            return "<?php if (\$manager->can($expression)) { ?>";
+            return "<?php if (\$manager->can({$expression})) { ?>";
         });
+
         Blade::directive('elseAdminCan', function () {
-            return "<?php } else { ?>";
+            return '<?php } else { ?>';
         });
+
         Blade::directive('endAdminCan', function () {
-            return "<?php } ?>";
+            return '<?php } ?>';
         });
 
         // TODO(ben): better solution for this ugly mess
+        // Hello Tijs. We meet again
         $isCollapsedOnPageLoad =
             isset($_COOKIE['is-navigation-collapsed'])
             ? filter_var($_COOKIE['is-navigation-collapsed'], FILTER_VALIDATE_BOOLEAN)
@@ -92,6 +85,5 @@ class ViewServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
     }
 }

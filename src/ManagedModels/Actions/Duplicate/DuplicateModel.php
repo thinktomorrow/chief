@@ -6,25 +6,34 @@ namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class DuplicateModel
 {
-    public function handle(Model $model): Model
+    private Registry $registry;
+
+    public function __construct(Registry $registry)
+    {
+        $this->registry = $registry;
+    }
+
+    public function handle(Model $model, string $titleKey = 'title'): Model
     {
         $copiedModel = $model->replicate();
         $copiedModel->id = null;
 
-        if ($model->title && public_method_exists($model, 'dynamic') && $model->isDynamic('title')) {
+        if ($model->$titleKey && public_method_exists($model, 'dynamic') && $model->isDynamic($titleKey)) {
 
             // Is title field localized or not?
-            $isTitleLocalized = ($field = Fields::make($model->fields())->find('title')) ? $field->hasLocales() : false;
+            $field = $this->registry->findResourceByModel($model::class)->field($model, $titleKey);
+            $isTitleLocalized = $field ? $field->hasLocales() : false;
 
             if ($isTitleLocalized) {
                 $locales = config('chief.locales', []);
                 $defaultLocale = reset($locales);
-                $copiedModel->setDynamic('title', '[Copy] ' . $model->dynamic('title', $defaultLocale, $model->dynamic('title')), $defaultLocale);
+                $copiedModel->setDynamic($titleKey, '[Copy] ' . $model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)), $defaultLocale);
             } else {
-                $copiedModel->setDynamic('title', '[Copy] ' . $model->title);
+                $copiedModel->setDynamic($titleKey, '[Copy] ' . $model->$titleKey);
             }
         }
 

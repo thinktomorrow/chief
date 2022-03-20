@@ -21,8 +21,6 @@ use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
-use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
@@ -68,9 +66,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function tearDown(): void
     {
-        ManagerFactory::clearTemporaryFiles();
-        ManagedModelFactory::clearTemporaryFiles();
-
         // Clear out any memoized values
         Memoize::clear();
         MemoizedUrlRecords::clearCachedRecords();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
@@ -23,13 +24,13 @@ final class EditPageTest extends ChiefTestCase
         parent::setUp();
 
         ArticlePage::migrateUp();
-        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
         Quote::migrateUp();
-        chiefRegister()->model(Quote::class, FragmentManager::class);
-        chiefRegister()->model(SnippetStub::class, FragmentManager::class);
+        chiefRegister()->fragment(Quote::class);
+        chiefRegister()->fragment(SnippetStub::class);
 
-        $this->manager = $this->manager(ArticlePage::managedModelKey());
+        $this->manager = $this->manager(ArticlePage::class);
 
         $this->asAdmin()->post($this->manager->route('store'), [
             'title' => 'new title',

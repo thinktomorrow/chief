@@ -13,7 +13,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
         parent::setUp();
 
         PageStub::migrateUp();
-        chiefRegister()->model(PageStub::class, PageManager::class);
+        chiefRegister()->resource(PageStub::class, PageManager::class);
     }
 
     /** @test */
@@ -82,6 +82,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     /** @test */
     public function it_can_populate_nested_repeat_sections()
     {
+        $this->disableExceptionHandling();
         $pageStub = PageStub::create();
 
         $this->asAdmin()->put($this->manager($pageStub)->route('form-update', $pageStub, 'repeat_form'), [
@@ -97,7 +98,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
             ],
         ]);
 
-        $html = $pageStub->fresh()->field('repeat_values')->toHtml();
+        $html = $pageStub->field($pageStub->fresh(), 'repeat_values')->toHtml();
 
         $this->assertStringContainsString('value="first value"', $html);
         $this->assertStringContainsString('value="second value"', $html);

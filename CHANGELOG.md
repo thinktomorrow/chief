@@ -8,6 +8,10 @@ principles.
 This release brings a major refactor of the forms and fields api. Its aim is to ease the layout setup of admin forms and simplify the logic around its view composition.
 
 ### Impactful
+- Removed: extract dynamic fields based on field definitions.
+- Removed: chiefRegister()->model() is removed. Use chiefRegister()->resource().
+- Changed: Each viewable model needs to have a `viewKey()` method to determine the frontend view path.
+
 - Changed: Restructured Fields files and classes under a dedicated `src/Forms` directory. Rename all your field namespaces from `Thinktomorrow\Chief\ManagedModels\Fields\Types\<Field>` to `Thinktomorrow\Chief\Forms\Fields\<Field>`.
 - Removed: field method `customSaveMethod`. Replace any occurrences with the save() method. See below.
 - Removed: magic model methods for saving a field. Replace any `save<FIELDKEY>Field()` and `save<FIELDTYPE>Fields()` methods on your model. View next item how to do this:
@@ -18,7 +22,7 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 - Removed: custom sidebar form views are removed. These are the methods ending with `*FieldsAdminView()`. You can now add a custom view to a form instead.
 - Removed: `selected()` method for option fields such as select, checkbox or radio. Use `value()` instead.
 - Removed: `notOnCreate()` method. Use `tag('not-on-create')` instead.
-
+- Removed: Fragment views no longer have owner specific view paths. Fragment has only one view. Less magic.
 
 ### Keep an eye out for possible impact
 - Changed: Validation of localized fields will now validate each localized entry. Before if an entire locale entry array was empty, it was regarded as a request input and the validation on these locales would get skipped. This is no longer the case.

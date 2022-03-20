@@ -6,6 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateContext;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
@@ -28,12 +29,14 @@ class DuplicateContextTest extends ChiefTestCase
         ArticlePage::migrateUp();
         Quote::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
+        $this->disableExceptionHandling();
+
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
         app(Register::class)->fragment(Quote::class);
         app(Register::class)->fragment(SnippetStub::class);
 
-        $fragmentManager = $this->manager(Quote::managedModelKey());
-        $staticFragmentManager = $this->manager(SnippetStub::managedModelKey());
+        $fragmentManager = $this->manager(Quote::class);
+        $staticFragmentManager = $this->manager(SnippetStub::class);
 
         $this->source = ArticlePage::create();
         $this->target = ArticlePage::create();

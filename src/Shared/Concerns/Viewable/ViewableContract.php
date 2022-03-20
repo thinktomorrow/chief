@@ -14,9 +14,8 @@ interface ViewableContract
     public function renderView(): string;
 
     /**
-     * The view key identifies the view file for this model.
-     * By default this will be the managedModelKey but
-     * this can basically be any key.
+     * This is the model's view identifier. This key is used to determine the full view
+     * path of the model. By default this is based on the resourceKey of the model.
      *
      * @return string
      */

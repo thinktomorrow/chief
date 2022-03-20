@@ -12,5 +12,4 @@
                 selected='@json($value)'
                 :multiple='@json($multiple)'
         ></chief-multiselect>
-    <x-chief-form::formgroup.error error-ids="{{ $id }}"></x-chief-form::formgroup.error>
 </x-chief-form::formgroup>

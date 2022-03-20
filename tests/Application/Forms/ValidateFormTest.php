@@ -15,19 +15,13 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 final class ValidateFormTest extends ChiefTestCase
 {
-    private $model;
-    private $manager;
+    private ArticlePage $model;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        ArticlePage::migrateUp();
-
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-
-        $this->model = ArticlePage::create(['title' => 'Foobar']);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        $this->model = $this->setupAndCreateArticle(['title' => 'Foobar']);
 
         config()->set('app.fallback_locale', 'nl');
     }
@@ -39,8 +33,8 @@ final class ValidateFormTest extends ChiefTestCase
             new ArticlePage(),
             ['title' => 'The title field is required.'],
             $this->payload(['title' => '']),
-            $this->manager->route('edit', $this->model),
-            $this->manager->route('update', $this->model),
+            $this->manager($this->model)->route('edit', $this->model),
+            $this->manager($this->model)->route('update', $this->model),
             1,
             'put'
         );
@@ -53,8 +47,8 @@ final class ValidateFormTest extends ChiefTestCase
             new ArticlePage(),
             ['title' => 'The title must be at least 4 characters.'],
             $this->payload(['title' => 'xx']),
-            $this->manager->route('edit', $this->model),
-            $this->manager->route('update', $this->model),
+            $this->manager($this->model)->route('edit', $this->model),
+            $this->manager($this->model)->route('update', $this->model),
             1,
             'put'
         );
@@ -67,8 +61,8 @@ final class ValidateFormTest extends ChiefTestCase
             new ArticlePage(),
             'trans.nl.content_trans',
             $this->payload(['trans.nl.content_trans' => '', 'trans.en.content_trans' => '']),
-            $this->manager->route('edit', $this->model),
-            $this->manager->route('update', $this->model),
+            $this->manager($this->model)->route('edit', $this->model),
+            $this->manager($this->model)->route('update', $this->model),
             1,
             'put'
         );
@@ -81,8 +75,8 @@ final class ValidateFormTest extends ChiefTestCase
             new ArticlePage(),
             'trans.nl.content_trans',
             $this->payload(['trans.nl.content_trans' => null]),
-            $this->manager->route('edit', $this->model),
-            $this->manager->route('update', $this->model),
+            $this->manager($this->model)->route('edit', $this->model),
+            $this->manager($this->model)->route('update', $this->model),
             1,
             'put'
         );
@@ -92,7 +86,7 @@ final class ValidateFormTest extends ChiefTestCase
     public function a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
     {
         $response = $this->actingAs($this->developer(), 'chief')
-            ->put($this->manager->route('update', $this->model), $this->payload(['trans.en.content_trans' => '']));
+            ->put($this->manager($this->model)->route('update', $this->model), $this->payload(['trans.en.content_trans' => '']));
 
         $this->assertNull(session('errors'));
     }

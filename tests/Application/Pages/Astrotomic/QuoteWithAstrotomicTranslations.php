@@ -8,14 +8,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\FragmentResource;
+use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 
-class QuoteWithAstrotomicTranslations extends Model implements ManagedModel
+class QuoteWithAstrotomicTranslations extends Model implements PageResource
 {
-    use ManagedModelDefaults;
-    use ReferableModelDefault;
+    use PageResourceDefault;
     use \Astrotomic\Translatable\Translatable;
 
     public $table = 'quotes';
@@ -24,7 +24,12 @@ class QuoteWithAstrotomicTranslations extends Model implements ManagedModel
         'title_trans',
     ];
 
-    public function fields(): Fields
+    public static function modelClassName(): string
+    {
+        return static::class;
+    }
+
+    public function fields($model): Fields
     {
         return Fields::make([
             Text::make('title_trans')->locales(['nl', 'en']),

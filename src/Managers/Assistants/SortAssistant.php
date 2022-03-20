@@ -28,7 +28,9 @@ trait SortAssistant
 
     public function filtersSortAssistant(): Filters
     {
-        $model = new $this->managedModelClass();
+        $modelClass = $this->managedModelClass();
+        $model = new $modelClass();
+
         if (! $this->can('sort-index', $model)) {
             return new Filters();
         }
@@ -46,7 +48,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle((new $this->managedModelClass()), $request->indices, (new $this->managedModelClass())->sortableAttribute());
+        app(SortModels::class)->handle($this->managedModelClassInstance(), $request->indices, $this->managedModelClassInstance()->sortableAttribute());
 
         return response()->json([
             'message' => 'models sorted.',
@@ -59,7 +61,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [index] for item sorting request.');
         }
 
-        app(SortModels::class)->handleItem((new $this->managedModelClass()), $request->index, (new $this->managedModelClass())->sortableAttribute());
+        app(SortModels::class)->handleItem($this->managedModelClassInstance(), $request->index, $this->managedModelClassInstance()->sortableAttribute());
 
         return response()->json([
             'message' => 'models sorted.',

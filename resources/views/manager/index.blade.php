@@ -1,27 +1,27 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('indexTitle')
+    {{ $resource->getIndexTitle() }}
 @endsection
 
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header')
             @slot('title')
-                @adminConfig('indexTitle')
+                {{ $resource->getIndexTitle() }}
             @endslot
 
             @slot('breadcrumbs')
-                @if($model->adminConfig()->getIndexBreadCrumb())
-                    <a href="{{ $model->adminConfig()->getIndexBreadCrumb()->url }}" class="link link-primary">
-                        <x-chief-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-chief-icon-label>
+                @if($indexBreadCrumb = $resource->getIndexBreadCrumb())
+                    <a href="{{ $indexBreadCrumb->url }}" class="link link-primary">
+                        <x-chief-icon-label type="back">{{ $indexBreadCrumb->label }}</x-chief-icon-label>
                     </a>
                 @endif
             @endslot
 
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
-                    <x-chief-icon-label type="add">@adminConfig('modelName') toevoegen</x-chief-icon-label>
+                    <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
                 </a>
             @endAdminCan
         @endcomponent
@@ -44,7 +44,7 @@
                             <div class="-my-4 divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
-                                    @include($model->adminConfig()->getIndexCardView())
+                                    @include($resource->getIndexCardView())
                                 @endforeach
                             </div>
                     </div>
@@ -58,8 +58,8 @@
             </div>
 
             <div class="w-full space-y-6 lg:w-1/3">
-                @if($model->adminConfig()->getIndexSidebar())
-                    {!! $model->adminConfig()->getIndexSidebar() !!}
+                @if($resource->getIndexSidebar())
+                    {!! $resource->getIndexSidebar() !!}
                 @endif
 
                 @if($manager->filters()->anyRenderable())
@@ -93,7 +93,7 @@
                                 Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
                             </p>
 
-                            <button data-sortable-toggle class="btn btn-primary">
+                            <button data-sortable-toggle class="btn btn-primary mt-4 mb-4">
                                 Pas volgorde aan
                             </button>
 

@@ -28,7 +28,7 @@ trait RepeatFieldAssistant
         $locale = $request->input('locale', null);
         $model = $this->managedModelClass()::findOrFail($id);
 
-        $field = $model->field($fieldKey);
+        $field = $this->resource->field($model, $fieldKey);
         $repeatSection = $field->getRepeatSection((int) $index, [], $locale);
 
         return response()->json([

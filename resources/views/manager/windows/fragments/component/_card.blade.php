@@ -7,7 +7,7 @@
 
             <div class="w-full mt-0.5 space-x-1">
                 <span class="text-lg display-base display-dark">
-                    {{ ucfirst($model->adminConfig()->getModelName()) }}
+                    {{ ucfirst($resource->getLabel()) }}
                 </span>
 
                 <span class="align-bottom with-xs-labels">

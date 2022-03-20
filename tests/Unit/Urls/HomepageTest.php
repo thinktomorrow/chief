@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 class HomepageTest extends ChiefTestCase
 {
@@ -27,8 +28,8 @@ class HomepageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
@@ -55,7 +56,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => 'foobar',
@@ -98,7 +99,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => 'foobar',
@@ -152,7 +153,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => 'foobar',
@@ -195,7 +196,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => '/',
@@ -214,7 +215,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => '/',

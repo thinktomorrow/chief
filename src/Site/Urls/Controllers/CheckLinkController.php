@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Site\Urls\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
@@ -46,9 +45,8 @@ class CheckLinkController
 
     private function editRouteOfOtherModel(UrlRecord $urlRecord): string
     {
-        /** @var ManagedModel $model */
         $model = $urlRecord->model;
 
-        return app(Registry::class)->manager($model::managedModelKey())->route('edit', $model);
+        return app(Registry::class)->findManagerByModel($model::class)->route('edit', $model);
     }
 }

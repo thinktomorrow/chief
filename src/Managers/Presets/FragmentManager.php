@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
 
+use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
@@ -19,6 +24,20 @@ final class FragmentManager implements Manager
     use FileUploadAssistant;
     use SlimImageUploadAssistant;
     use RepeatFieldAssistant;
+
+//    private Resource $resource;
+    private FragmentRepository $fragmentRepository;
+    private FieldValidator $fieldValidator;
+    private Registry $registry;
+
+    public function __construct(Resource $resource, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator, Registry $registry)
+    {
+        $this->resource = $resource;
+        $this->fragmentRepository = $fragmentRepository;
+        $this->fieldValidator = $fieldValidator;
+        $this->registry = $registry;
+    }
+
 
     private function fieldsModel($id)
     {

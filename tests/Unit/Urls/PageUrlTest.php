@@ -13,7 +13,7 @@ class PageUrlTest extends ChiefTestCase
 {
     use PageFormParams;
 
-    private $model;
+    private ArticlePageWithBaseSegments $model;
 
     protected function setUp(): void
     {
@@ -21,12 +21,7 @@ class PageUrlTest extends ChiefTestCase
 
         $this->setUpChiefEnvironment();
 
-        ArticlePageWithBaseSegments::migrateUp();
-
-        app(Register::class)->model(ArticlePageWithBaseSegments::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePageWithBaseSegments::managedModelKey());
-
-        $this->model = ArticlePageWithBaseSegments::create();
+        $this->model = $this->setupAndCreateArticleWithBaseSegments();
 
         // Add links for this model
         $this->updateLinks($this->model, [

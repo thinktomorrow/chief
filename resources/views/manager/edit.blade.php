@@ -13,9 +13,9 @@
 
     <x-chief-form::forms position="main" />
 
-    @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner)
+    @adminCan('fragments-index', $model)
         <x-chief::fragments :owner="$model" />
-    @endif
+    @endAdminCan
 
     <x-chief-form::forms position="main-bottom" />
 

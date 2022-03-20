@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
@@ -21,14 +22,15 @@ final class CreatePageTest extends ChiefTestCase
         parent::setUp();
 
         ArticlePage::migrateUp();
-        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
-        $this->manager = $this->manager(ArticlePage::managedModelKey());
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
     public function it_can_visit_the_create_page()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('create'))
              ->assertStatus(200);
     }

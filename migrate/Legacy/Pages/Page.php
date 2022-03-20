@@ -82,13 +82,13 @@ class Page extends Model implements TranslatableContract, HasAsset, MorphableCon
         parent::__construct($attributes);
     }
 
-    public static function managedModelKey(): string
+    public static function resourceKey(): string
     {
-        if (isset(static::$managedModelKey)) {
-            return static::$managedModelKey;
+        if (isset(static::$resourceKey)) {
+            return static::$resourceKey;
         }
 
-        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class . '.');
+        throw new \Exception('Missing required static property \'resourceKey\' on ' . static::class . '.');
     }
 
     /**

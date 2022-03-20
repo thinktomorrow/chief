@@ -86,13 +86,11 @@ trait CrudAssistant
     {
         $this->guard('index');
 
-        $modelClass = $this->managedModelClass();
-
         app(VisitedUrl::class)->add(request()->fullUrl());
 
         return view('chief::manager.index', [
             'manager' => $this,
-            'model' => new $modelClass(),
+            'resource' => $this->resource,
             'models' => $this->indexModels(),
         ]);
     }
@@ -101,9 +99,7 @@ trait CrudAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        $pagination = (new $this->managedModelClass())->adminConfig()->getPagination();
-
-        if (! $pagination) {
+        if (! $pagination = $this->resource->getIndexPagination()) {
             return $builder->get();
         }
 
@@ -151,11 +147,12 @@ trait CrudAssistant
      */
     public function create()
     {
-        $model = new $this->managedModelClass();
+        $model = $this->managedModelClassInstance();
 
         View::share('manager', $this);
         View::share('model', $model);
-        View::share('forms', Forms::make($model->fields()));
+        View::share('resource', $this->resource);
+        View::share('forms', Forms::make($this->resource->fields($model)));
 
         return view('chief::manager.create');
     }
@@ -169,17 +166,13 @@ trait CrudAssistant
         return response()->json([
             'redirect_to' => $this->route('edit', $model),
         ]);
-
-//        return redirect()->to($this->route('edit', $model))
-//            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
     }
 
     private function handleStore(Request $request)
     {
-        /** @var ManagedModel $model */
-        $model = new $this->managedModelClass();
+        $model = $this->managedModelClassInstance();
 
-        $fields = Forms::make($model->fields())
+        $fields = Forms::make($this->resource->fields($model))
             ->fillModel($model)
             ->getFields()
             ->notTagged(['edit', 'not-on-create']);
@@ -206,9 +199,10 @@ trait CrudAssistant
         // TODO/ remove share??
         View::share('manager', $this);
         View::share('model', $model);
-        View::share('forms', Forms::make($model->fields())->fill($this, $model));
+        View::share('resource', $this->resource);
+        View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
 
-        return $model->adminView();
+        return $this->resource->getPageView();
     }
 
     public function update(Request $request, $id)
@@ -216,7 +210,7 @@ trait CrudAssistant
         $model = $this->handleUpdate($request, $id);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $this->resource->getPageTitle($model) . '</a> is aangepast');
     }
 
     private function handleUpdate(Request $request, $id)
@@ -225,7 +219,7 @@ trait CrudAssistant
 
         $this->guard('update', $model);
 
-        $fields = Forms::make($model->fields())
+        $fields = Forms::make($this->resource->fields($model))
             ->fillModel($model)
             ->getFields();
 
@@ -245,12 +239,12 @@ trait CrudAssistant
         $this->guard('delete', $model);
 
         if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $this->resource->getPageTitle($model) . ' is niet verwijderd.');
         }
 
         app(DeleteModel::class)->handle($model);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $this->resource->getPageTitle($model) . '" is verwijderd.');
     }
 }

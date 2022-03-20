@@ -23,7 +23,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
 
         chiefRegister()->fragment(SnippetStub::class);
-        $this->fragmentManager = $this->manager(SnippetStub::managedModelKey());
+        $this->fragmentManager = $this->manager(SnippetStub::class);
     }
 
     /** @test */

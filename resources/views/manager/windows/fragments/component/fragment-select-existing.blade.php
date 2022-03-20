@@ -9,13 +9,6 @@
 
         <div data-vue-fields class="flex items-center gap-4">
             @if(public_method_exists($owner, 'getRelatedOwners'))
-                @php
-                    $existingOwnersOptions = [];
-                    foreach($owner->getRelatedOwners() as $relatedOwner) {
-                        $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $relatedOwner->adminConfig()->getPageTitle();
-                    }
-                @endphp
-
                 <chief-multiselect
                     id="selectExistingOwners"
                     name="owners[]"
@@ -24,13 +17,6 @@
                     class="w-full"
                 ></chief-multiselect>
             @endif
-
-            @php
-                $existingTypesOptions = [];
-                foreach($owner->allowedFragments() as $allowedFragmentClass) {
-                    $existingTypesOptions[$allowedFragmentClass] = ucfirst(app($allowedFragmentClass)->adminConfig()->getModelName());
-                }
-            @endphp
 
             <chief-multiselect
                 id="selectExistingTypes"
@@ -54,7 +40,7 @@
             >
                 <div>
                     <span class="display-dark display-base group-hover:text-white transition-75">
-                        {{ ucfirst($sharedFragment['model']->adminConfig()->getModelName()) }}
+                        {{ ucfirst($sharedFragment['resource']->getLabel()) }}
                     </span>
                 </div>
 

@@ -25,7 +25,7 @@ class GetOwningModels
         return $models->map(function ($model) {
             return [
                 'model' => $model,
-                'manager' => $this->registry->manager($model::managedModelKey()),
+                'manager' => $this->registry->findManagerByModel($model::class),
             ];
         })->all();
     }

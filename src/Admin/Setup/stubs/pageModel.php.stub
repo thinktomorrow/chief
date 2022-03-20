@@ -4,11 +4,8 @@ declare(strict_types=1);
 namespace __STUB_NAMESPACE__;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Admin\AdminConfig;
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 
 class __STUB_CLASSNAME__ extends Model implements PageContract
 {
@@ -16,23 +13,9 @@ class __STUB_CLASSNAME__ extends Model implements PageContract
 
     public $guarded = [];
     public $baseViewPath = 'pages';
-
-    public function fields(): iterable
-    {
-        /** @dynamickeys: title */
-        yield FieldPresets::pagetitle();
-
-        __STUB_FIELDS__
-
-        /** @dynamicKeys: seo_title, seo_content, seo_image */
-        yield FieldPresets::seo();
-    }
-
-    public function adminConfig(): AdminConfig
-    {
-        return AdminConfig::make()
-            ->defaults($this);
-    }
+    public $dynamicKeys = [
+        'title', 'seo_title', 'seo_content',
+    ];
 
     public function allowedFragments(): array
     {

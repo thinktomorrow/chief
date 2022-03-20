@@ -15,7 +15,7 @@ class __STUB_CLASSNAME__ implements Fragmentable
 
     private $baseViewPath = 'fragments';
 
-    public function fields(): iterable
+    public function fields($model): iterable
     {
         yield Html::make('content')->locales();
         __STUB_FIELDS__

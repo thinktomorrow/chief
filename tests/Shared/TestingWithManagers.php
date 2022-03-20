@@ -13,9 +13,11 @@ use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithBaseSegments;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithFileValidation;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithImageValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
@@ -26,17 +28,17 @@ trait TestingWithManagers
     {
         if ($withSetup) {
             ArticlePage::migrateUp();
-            chiefRegister()->model(ArticlePage::class, PageManager::class);
+            chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
         }
 
         return ArticlePage::create($values);
     }
 
-    protected function setupAndCreateArticleWithBaseSegments(array $values = [], bool $withSetup = true): ArticlePage
+    protected function setupAndCreateArticleWithBaseSegments(array $values = [], bool $withSetup = true): ArticlePageWithBaseSegments
     {
         if ($withSetup) {
             ArticlePageWithBaseSegments::migrateUp();
-            chiefRegister()->model(ArticlePageWithBaseSegments::class, PageManager::class);
+            chiefRegister()->resource(ArticlePageResourceWithBaseSegments::class, PageManager::class);
         }
 
         return ArticlePageWithBaseSegments::create($values);
@@ -46,7 +48,7 @@ trait TestingWithManagers
     {
         if ($withSetup) {
             Quote::migrateUp();
-            chiefRegister()->model(Quote::class, FragmentManager::class);
+            chiefRegister()->resource(Quote::class, FragmentManager::class);
         }
 
         $quote = Quote::create($values);
@@ -74,20 +76,20 @@ trait TestingWithManagers
 
     protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
     {
-        ArticlePageWithFileValidation::migrateUp();
+        ArticlePage::migrateUp();
 
-        chiefRegister()->model(ArticlePageWithFileValidation::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResourceWithFileValidation::class, PageManager::class);
 
-        return ArticlePageWithFileValidation::create($values);
+        return ArticlePage::create($values);
     }
 
     protected function setupAndCreateArticleWithRequiredImage(array $values = []): ArticlePage
     {
-        ArticlePageWithImageValidation::migrateUp();
+        ArticlePage::migrateUp();
 
-        chiefRegister()->model(ArticlePageWithImageValidation::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResourceWithImageValidation::class, PageManager::class);
 
-        return ArticlePageWithImageValidation::create($values);
+        return ArticlePage::create($values);
     }
 
     protected function createAsFragment($model, $owner, $order = 0, array $data = [])
@@ -103,10 +105,10 @@ trait TestingWithManagers
     protected function manager($managedModel): Manager
     {
         if (is_object($managedModel)) {
-            $managedModel = $managedModel::managedModelKey();
+            $managedModel = $managedModel::class;
         }
 
-        return app(Registry::class)->manager($managedModel);
+        return app(Registry::class)->findManagerByModel($managedModel);
     }
 
     protected function assertFragmentCount(Model $owner, int $count)

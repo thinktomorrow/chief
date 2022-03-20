@@ -12,7 +12,7 @@
                     checkurl="{{ route('chief.back.links.check') }}"
                     initial-value="{{ old('links.'.$locale, $formValues->value) }}"
                     fixed-segment="{{ $formValues->fixedSegment }}"
-                    model-class="{{ get_class($model) }}"
+                    model-class="{{ $model::class }}"
                     model-id="{{ $model->id }}"
                 >
                     <div>

@@ -18,9 +18,9 @@ class DuplicatePage
         $this->duplicateModel = $duplicateModel;
     }
 
-    public function handle(Model $model): Model
+    public function handle(Model $model, string $titleKey = 'title'): Model
     {
-        $copiedModel = $this->duplicateModel->handle($model);
+        $copiedModel = $this->duplicateModel->handle($model, $titleKey);
 
         // TODO: check for HasPageState contract
         if ($copiedModel instanceof WithPageState) {

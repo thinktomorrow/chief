@@ -68,7 +68,7 @@ trait FragmentAssistant
             return null;
         }
 
-        $modelKey = $this->managedModelClass()::managedModelKey();
+        $modelKey = $this->resource::resourceKey();
 
         // model argument is owner for create endpoints
         if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-unshare', 'fragment-delete'])) {
@@ -87,7 +87,7 @@ trait FragmentAssistant
             }
 
             return route('chief.'.$modelKey.'.'.$action, array_merge([
-                $model::managedModelKey(),
+                $this->registry->findResourceByModel($model::class)::resourceKey(),
                 $model->modelReference()->id(),
             ], $parameters));
         }
@@ -162,7 +162,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-edit', $fragmentable);
 
-        $forms = Forms::make($fragmentable->fields())
+        $forms = Forms::make($fragmentable->fields($fragmentable))
             ->fillModel($fragmentable->fragmentModel())
             ->fillFields($this, $fragmentable->fragmentModel())
             ->eachForm(function (Form $form) use ($fragmentable, $ownerModel) {
@@ -173,6 +173,7 @@ trait FragmentAssistant
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
         \Illuminate\Support\Facades\View::share('owner', $ownerModel);
+        \Illuminate\Support\Facades\View::share('resource', $this->resource);
         \Illuminate\Support\Facades\View::share('forms', $forms);
 
         return $fragmentable->adminView();
@@ -184,7 +185,7 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
-        $fields = Forms::make($fragmentable->fields())
+        $fields = Forms::make($fragmentable->fields($fragmentable))
             ->fillModel($fragmentable->fragmentModel())
 //            ->find($tag) // TODO: use FormsAssistant for Fragments as well...
             ->getFields()
@@ -286,7 +287,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        $forms = Forms::make($fragmentable->fields())
+        $forms = Forms::make($fragmentable->fields($fragmentable))
                     ->fillModel($fragmentable->fragmentModel())
                     ->fillFields($this, $fragmentable->fragmentModel())
                     ->eachForm(function (Form $form) use ($fragmentable, $owner) {
@@ -303,6 +304,7 @@ trait FragmentAssistant
 
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
+        \Illuminate\Support\Facades\View::share('resource', $this->resource);
         \Illuminate\Support\Facades\View::share('owner', $owner);
         \Illuminate\Support\Facades\View::share('forms', $forms);
 
@@ -316,7 +318,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        $this->fieldValidator()->handle(Fields::make($fragmentable->fields())->notTagged('edit'), $request->all());
+        $this->fieldValidator()->handle(Fields::make($fragmentable->fields($fragmentable))->notTagged('edit'), $request->all());
 
         $request->merge(['order' => (int) $request->input('order', 0)]);
 
@@ -334,7 +336,7 @@ trait FragmentAssistant
 
         app(SaveFields::class)->save(
             $fragmentable->fragmentModel(),
-            Fields::make($fragmentable->fields())->notTagged('edit'),
+            Fields::make($fragmentable->fields($fragmentable))->notTagged('edit'),
             $request->all(),
             $request->allFiles()
         );
@@ -409,7 +411,7 @@ trait FragmentAssistant
      */
     private function ownerModel(string $ownerKey, $ownerId): Model
     {
-        $ownerClass = $this->registry->modelClass($ownerKey);
+        $ownerClass = $this->registry->resource($ownerKey)::modelClassName();
 
         return $ownerClass::withoutGlobalScopes()->find($ownerId);
     }

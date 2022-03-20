@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
@@ -11,14 +13,14 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 
 trait ManagerDefaults
 {
-    private string $managedModelClass;
+    private Resource $resource;
     private FragmentRepository $fragmentRepository;
     private FieldValidator $fieldValidator;
     private Registry $registry;
 
-    public function __construct(string $managedModelClass, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator, Registry $registry)
+    public function __construct(PageResource $resource, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator, Registry $registry)
     {
-        $this->managedModelClass = $managedModelClass;
+        $this->resource = $resource;
         $this->fragmentRepository = $fragmentRepository;
         $this->fieldValidator = $fieldValidator;
         $this->registry = $registry;
@@ -26,7 +28,7 @@ trait ManagerDefaults
 
     public function managedModelClass(): string
     {
-        return $this->managedModelClass;
+        return $this->resource::modelClassName();
     }
 
     public function route(string $action, $model = null, ...$parameters): string
@@ -59,7 +61,7 @@ trait ManagerDefaults
             $parameters = array_merge((array)$modelId, $parameters);
         }
 
-        return route('chief.' . $this->managedModelClass()::managedModelKey() . '.' . $action, $parameters);
+        return route('chief.' . $this->resource::resourceKey() . '.' . $action, $parameters);
     }
 
     /**
@@ -68,7 +70,7 @@ trait ManagerDefaults
     private function guard(string $action, $model = null)
     {
         if (! $this->can($action, $model)) {
-            throw NotAllowedManagerAction::notAllowedAction($action, $this->managedModelClass()::managedModelKey());
+            throw NotAllowedManagerAction::notAllowedAction($action, $this->resource::resourceKey());
         }
     }
 
@@ -83,6 +85,13 @@ trait ManagerDefaults
         if (! chiefAdmin() || ! chiefAdmin()->hasPermissionTo($permission)) {
             throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
         }
+    }
+
+    private function managedModelClassInstance()
+    {
+        $modelClass = $this->managedModelClass();
+
+        return new $modelClass();
     }
 
     /**

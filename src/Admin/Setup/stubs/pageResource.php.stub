@@ -1,0 +1,20 @@
+<?php
+declare(strict_types=1);
+
+namespace __STUB_NAMESPACE__;
+
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
+
+class __STUB_CLASSNAME__ implements PageResource
+{
+    use PageResourceDefault;
+
+    public function fields($model): iterable
+    {
+        yield FieldPresets::pagetitle();
+        __STUB_FIELDS__
+        yield FieldPresets::seo();
+    }
+}

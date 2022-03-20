@@ -1,15 +1,15 @@
 @extends('chief::layout.master')
 
-@push('custom-styles')
-    @livewireStyles
-@endpush
+{{--@push('custom-styles')--}}
+{{--    @livewireStyles--}}
+{{--@endpush--}}
 
-@push('custom-scripts')
-    @livewireScripts
-@endpush
+{{--@push('custom-scripts')--}}
+{{--    @livewireScripts--}}
+{{--@endpush--}}
 
 @section('page-title')
-    @adminConfig('pageTitle')
+    {{ $resource->getPageTitle($model) }}
 @endsection
 
 @section('header')

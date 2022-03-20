@@ -40,7 +40,7 @@ trait StatusAssistant
         return view('chief::manager.windows.status.edit', [
             'isAnyLinkOnline' => ($model instanceof Visitable && LinkForm::fromModel($model)->isAnyLinkOnline()),
             'isVisitable' => $model instanceof Visitable,
-            'manager' => app(Registry::class)->manager($model->managedModelKey()),
+            'manager' => app(Registry::class)->findManagerByModel($model::class),
             'model' => $model,
         ]);
     }
@@ -58,7 +58,7 @@ trait StatusAssistant
         $model = $this->fieldsModel($id);
 
         return view('chief::manager.windows.status.window', [
-            'manager' => app(Registry::class)->manager($model->managedModelKey()),
+            'manager' => app(Registry::class)->findManagerByModel($model::class),
             'model' => $model,
         ]);
     }

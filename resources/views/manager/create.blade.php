@@ -1,14 +1,14 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('modelName')
+    {{ $resource->getLabel() }}
 @endsection
 
 @section('header')
     <div class="container-sm">
         <x-chief::page.header>
             @slot('title')
-                @adminConfig('modelName')
+                {{ $resource->getLabel() }}
             @endslot
 
             @slot('breadcrumbs')

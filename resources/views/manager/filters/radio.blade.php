@@ -17,5 +17,4 @@
                 </label>
             @endforeach
         </div>
-    <x-chief-form::formgroup.error error-ids="{{ $id }}"></x-chief-form::formgroup.error>
 </x-chief-form::formgroup>

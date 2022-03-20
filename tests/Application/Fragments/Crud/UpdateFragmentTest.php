@@ -21,7 +21,7 @@ class UpdateFragmentTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->setupAndCreateSnippet($this->owner);
 
-        $this->fragmentManager = app(Registry::class)->manager(SnippetStub::managedModelKey());
+        $this->fragmentManager = $this->manager(SnippetStub::class);
     }
 
     /** @test */

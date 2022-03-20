@@ -11,6 +11,7 @@ use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Shared\Concerns\Viewable\NotFoundViewKey;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -32,7 +33,7 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
         'title', 'custom', 'title_trans', 'content_trans',
     ];
 
-    public function fields(): iterable
+    public function fields($model): iterable
     {
         yield Fields\Text::make('title')->rules('min:4');
         yield Fields\Text::make('title_trans')->locales(['nl','en']);
@@ -60,5 +61,10 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     protected function dynamicLocales(): array
     {
         return config('chief.locales', []);
+    }
+
+    public function viewKey(): string
+    {
+        return 'quote';
     }
 }

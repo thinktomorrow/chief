@@ -1,6 +1,6 @@
 <div class="space-y-6">
     <p class="text-2xl display-base display-dark">
-        {{ ucfirst($model->adminConfig()->getModelName()) }}
+        {{ $resource->getLabel() }}
     </p>
 
     @include('chief::layout._partials.fragment_bookmarks')
@@ -30,7 +30,7 @@
 
                             @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
                                 <span class="link">
-                                    {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                                    {{ $otherOwner['resource']->getPageTitle($otherOwner['model']) }}
                                 </span>
                             @else
                                 <a
@@ -38,7 +38,7 @@
                                     title="{{ $otherOwner['model']->adminConfig()->getPageTitle() }}"
                                     class="underline link link-primary"
                                 >
-                                    {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
+                                    {{ $otherOwner['resource']->getPageTitle($otherOwner['model']) }}
                                 </a>
                             @endif
 
