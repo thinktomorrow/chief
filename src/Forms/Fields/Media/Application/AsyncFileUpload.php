@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Media\Application;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -13,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class AsyncFileUpload
 {
