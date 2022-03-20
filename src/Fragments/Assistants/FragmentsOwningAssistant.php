@@ -88,13 +88,13 @@ trait FragmentsOwningAssistant
     {
         // Select filter by owner
         $existingOwnersOptions = [];
-        foreach($owner->getRelatedOwners() as $relatedOwner) {
+        foreach ($owner->getRelatedOwners() as $relatedOwner) {
             $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $this->registry->findResourceByModel($relatedOwner::class)->getPageTitle($relatedOwner);
         }
 
         // Select filter by fragment class
         $existingTypesOptions = [];
-        foreach($owner->allowedFragments() as $allowedFragmentClass) {
+        foreach ($owner->allowedFragments() as $allowedFragmentClass) {
             $existingTypesOptions[$allowedFragmentClass] = $this->registry->findResourceByModel($allowedFragmentClass)->getLabel();
         }
 
@@ -218,5 +218,4 @@ trait FragmentsOwningAssistant
 //            'message' => 'models sorted.',
 //        ]);
 //    }
-
 }

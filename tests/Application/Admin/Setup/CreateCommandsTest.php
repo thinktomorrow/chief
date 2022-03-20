@@ -12,11 +12,11 @@ class CreateCommandsTest extends ChiefTestCase
         $filepath = $this->getTempDirectory() .'/' . 'Article.php';
         $resourceFilepath = $this->getTempDirectory() .'/' . 'ArticleResource.php';
 
-        if(file_exists($filepath)) {
+        if (file_exists($filepath)) {
             unlink($filepath);
         }
 
-        if(file_exists($resourceFilepath)) {
+        if (file_exists($resourceFilepath)) {
             unlink($resourceFilepath);
         }
 
@@ -37,7 +37,7 @@ class CreateCommandsTest extends ChiefTestCase
     {
         $filepath = $this->getTempDirectory() .'/' . 'Quote.php';
 
-        if(file_exists($filepath)) {
+        if (file_exists($filepath)) {
             unlink($filepath);
         }
 
@@ -59,7 +59,7 @@ class CreateCommandsTest extends ChiefTestCase
 
         $filepath = resource_path('views/back/pages/article_page/edit.blade.php');
 
-        if(file_exists($filepath)) {
+        if (file_exists($filepath)) {
             unlink($filepath);
         }
 

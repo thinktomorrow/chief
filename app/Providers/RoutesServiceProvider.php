@@ -5,13 +5,13 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Middleware\MonitorMiddleware;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefNavigation;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
+use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
 
 class RoutesServiceProvider extends ServiceProvider
@@ -21,7 +21,7 @@ class RoutesServiceProvider extends ServiceProvider
         $this->autoloadFrontendRoute();
         $this->loadOpenAdminRoutes();
 
-        if(app(AdminEnvironment::class)->check()) {
+        if (app(AdminEnvironment::class)->check()) {
             $this->loadAdminRoutes();
             $this->autoloadAdminMiddleware();
         }

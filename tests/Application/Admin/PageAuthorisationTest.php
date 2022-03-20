@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 

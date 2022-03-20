@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Admin\Setup;
 
 use Illuminate\Console\Command;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class CreateViewCommand extends Command
 {

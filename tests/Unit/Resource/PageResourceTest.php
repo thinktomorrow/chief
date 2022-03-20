@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Resource;
 
-use Thinktomorrow\Chief\Admin\AdminConfig;
-use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class PageResourceTest extends TestCase
 {

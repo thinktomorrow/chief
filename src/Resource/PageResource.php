@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
+use Thinktomorrow\Chief\Admin\Nav\NavItem;
 
 interface PageResource extends Resource
 {
@@ -24,5 +24,4 @@ interface PageResource extends Resource
     public function getIndexCardContent($model): string;
     public function getIndexSidebar(): string; // content in sidebar.
     public function getIndexPagination(): int;
-
 }

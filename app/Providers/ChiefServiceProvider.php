@@ -49,7 +49,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
 
-        if (!$this->app->make(AdminEnvironment::class)->check()) {
+        if (! $this->app->make(AdminEnvironment::class)->check()) {
             return;
         }
 

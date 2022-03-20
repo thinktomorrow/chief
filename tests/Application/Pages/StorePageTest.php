@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
-use Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic\QuoteWithAstrotomicTranslations;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic\QuoteWithAstrotomicTranslations;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
 class StorePageTest extends ChiefTestCase
