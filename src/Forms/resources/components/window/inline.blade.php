@@ -9,12 +9,14 @@
     data-form
     data-form-url="{{ $refreshUrl }}"
     data-form-tags="{{ $tags }}"
-    {{ $attributes->class('inline-flex items-center') }}
+    {{ $attributes->class('flex flex-wrap sm:flex-nowrap items-start gap-3') }}
 >
-    {!! $slot !!}
+    <div class="w-full">
+        {!! $slot !!}
+    </div>
 
     @if($editUrl)
-        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="ml-3 shrink-0">
+        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="inline-block mt-2 shrink-0">
             @if($icon)
                 {!! $icon !!}
             @else

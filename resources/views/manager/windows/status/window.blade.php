@@ -1,16 +1,15 @@
 @adminCan('status-edit', $model)
-
-    <?php
+    @php
         $isVisitable = ($model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable);
         $isAnyLinkOnline = ($isVisitable && Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model)->isAnyLinkOnline());
-    ?>
+    @endphp
 
     <x-chief-form::window
-            title="Status"
-            :edit-url="$manager->route('status-edit', $model)"
-            :refresh-url="$manager->route('status-window', $model)"
-            class="card"
-        >
+        title="Status"
+        :edit-url="$manager->route('status-edit', $model)"
+        :refresh-url="$manager->route('status-window', $model)"
+        class="card"
+    >
         @switch($model->getPageState())
             @case('published')
                 @if($isAnyLinkOnline)

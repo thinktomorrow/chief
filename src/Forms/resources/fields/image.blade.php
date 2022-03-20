@@ -1,45 +1,43 @@
-<?php
+@php
+    /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
+    $files = $getValue($locale);
 
-/** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
-$files = $getValue($locale);
-
-$imagesUploadSettings = json_encode([
-    'group' => $getKey(),
-    'locale' => $locale,
-    'name' => $getName($locale),
-    'multiple' => $allowMultiple(),
-]);
-
-?>
+    $imagesUploadSettings = json_encode([
+        'group' => $getKey(),
+        'locale' => $locale,
+        'name' => $getName($locale),
+        'multiple' => $allowMultiple(),
+    ]);
+@endphp
 
 <div data-vue-fields>
     <imagesupload
-            reference="{{ \Illuminate\Support\Str::random(10) }}"
-            :settings="{{ $imagesUploadSettings }}"
-            preselected="{{ count($files) ? json_encode($files) : '[]' }}"
-            v-cloak
+        reference="{{ \Illuminate\Support\Str::random(10) }}"
+        :settings="{{ $imagesUploadSettings }}"
+        preselected="{{ count($files) ? json_encode($files) : '[]' }}"
+        v-cloak
     >
         <div
-                slot-scope="{items, sort, drag, settings, gallery, reference}"
-                :id="'filegroup-' + reference + '-' + settings.locale"
-                :class="{'sorting-mode' : sort.isReordering}"
+            slot-scope="{items, sort, drag, settings, gallery, reference}"
+            :id="'filegroup-' + reference + '-' + settings.locale"
+            :class="{'sorting-mode' : sort.isReordering}"
         >
             <div class="row gutter-2">
                 <div
-                        v-for="(item, index) in items"
-                        class="w-1/3 draggable-item"
-                        :key="item.key"
-                        :draggable="sort.isReordering"
-                        :data-item-id="item.id"
-                        @dragstart="sort.handleSortingStart"
-                        @dragenter.prevent="sort.handleSortingEnter"
+                    v-for="(item, index) in items"
+                    class="w-1/3 draggable-item"
+                    :key="item.key"
+                    :draggable="sort.isReordering"
+                    :data-item-id="item.id"
+                    @dragstart="sort.handleSortingStart"
+                    @dragenter.prevent="sort.handleSortingEnter"
                 >
                     <image-component
-                            upload-url="{{ $getEndpoint() }}"
-                            :item="item"
-                            :name="settings.name"
-                            :group="settings.group"
-                            @input="(prop, value) => { items[index][prop] = value; }"
+                        upload-url="{{ $getEndpoint() }}"
+                        :item="item"
+                        :name="settings.name"
+                        :group="settings.group"
+                        @input="(prop, value) => { items[index][prop] = value; }"
                     >
                         <div class="thumb" slot-scope="{hiddenInputName, hiddenInputValue, name}">
                             <div>
@@ -53,28 +51,28 @@ $imagesUploadSettings = json_encode([
 
                 <div v-if="settings.multiple == true || items.length < 1">
                     <div
-                            class="thumb thumb-new"
-                            :class="{ 'is-dropped' : drag.isDropped, 'is-dragging-over' : drag.isDraggingOver }"
-                            :id="'file-drop-area-' + settings.group"
-                            @dragover.prevent="drag.handleDraggingOver"
-                            @dragleave.prevent="drag.handleDraggingLeave"
-                            @drop.prevent="drag.handleDrop"
+                        class="thumb thumb-new"
+                        :class="{ 'is-dropped' : drag.isDropped, 'is-dragging-over' : drag.isDraggingOver }"
+                        :id="'file-drop-area-' + settings.group"
+                        @dragover.prevent="drag.handleDraggingOver"
+                        @dragleave.prevent="drag.handleDraggingLeave"
+                        @drop.prevent="drag.handleDrop"
                     >
                         <!-- allow to click for upload -->
                         <input
-                                v-if="drag.isSupported"
-                                type="file"
-                                @change="drag.handleFileSelect" {{ $allowMultiple() ? 'multiple' : '' }}
-                                accept="image/jpeg, image/png, image/svg+xml, image/webp"
+                            v-if="drag.isSupported"
+                            type="file"
+                            @change="drag.handleFileSelect" {{ $allowMultiple() ? 'multiple' : '' }}
+                            accept="image/jpeg, image/png, image/svg+xml, image/webp"
                         >
 
                         <!-- if not supported, a file can still be passed along -->
                         <input
-                                v-else
-                                type="file"
-                                name="{{ $getName($locale) }}[]"
-                                {{ $allowMultiple() ? 'multiple' : '' }}
-                                accept="image/jpeg, image/png, image/svg+xml, image/webp"
+                            v-else
+                            type="file"
+                            name="{{ $getName($locale) }}[]"
+                            {{ $allowMultiple() ? 'multiple' : '' }}
+                            accept="image/jpeg, image/png, image/svg+xml, image/webp"
                         >
                         <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                     </div>
@@ -88,11 +86,11 @@ $imagesUploadSettings = json_encode([
                     </div>
 
                     <mediagallery
-                            url="{{ route('chief.api.media') }}"
-                            :reference="reference"
-                            :locale="settings.locale"
-                            :uploaded="items.map(o=>o.id)"
-                            :multiple="{{ $allowMultiple() ? 'true' : 'false' }}"
+                        url="{{ route('chief.api.media') }}"
+                        :reference="reference"
+                        :locale="settings.locale"
+                        :uploaded="items.map(o=>o.id)"
+                        :multiple="{{ $allowMultiple() ? 'true' : 'false' }}"
                     ></mediagallery>
                 </div>
 

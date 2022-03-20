@@ -1,45 +1,43 @@
-<?php
-
+@php
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
     $files = $getActiveValue($locale);
-
-?>
+@endphp
 
 <div data-vue-fields>
     <filesupload
-            inline-template
-            group="{{ $getKey() }}"
-            locale="{{ $locale }}"
-            preselected="{{ count($files) ? json_encode($files) : '[]'  }}"
-            v-cloak
+        inline-template
+        group="{{ $getKey() }}"
+        locale="{{ $locale }}"
+        preselected="{{ count($files) ? json_encode($files) : '[]'  }}"
+        v-cloak
     >
         <div id="filegroup-{{ $getKey() }}-{{$locale}}" :class="{'sorting-mode' : reorder}" class="space-y-4">
             <div v-show="items.length > 0" class="row gutter-2">
                 <div
-                        v-for="(item, index) in items"
-                        class="w-full draggable-item"
-                        :draggable="reorder"
-                        :data-item-id="item.id"
-                        @dragstart="handleSortingStart"
-                        @dragenter.prevent="handleSortingEnter"
-                        v-show="!item.deleted || ({{ json_encode($allowMultiple()) }} != true && !hasValidUpload && index == 0)"
+                    v-for="(item, index) in items"
+                    class="w-full draggable-item"
+                    :draggable="reorder"
+                    :data-item-id="item.id"
+                    @dragstart="handleSortingStart"
+                    @dragenter.prevent="handleSortingEnter"
+                    v-show="!item.deleted || ({{ json_encode($allowMultiple()) }} != true && !hasValidUpload && index == 0)"
                 >
                     <file
-                            name="{{ $getName($locale) }}"
-                            group="{{ $getKey() }}"
-                            locale="{{$locale}}"
-                            upload-url="{{ $getEndpoint() }}"
-                            :options="{
-                        id: item.id,
-                        filename: item.filename,
-                        url: item.url,
-                        isImage: item.isImage,
-                        thumbUrl: item.thumbUrl,
-                        mimetype: item.mimetype || null,
-                        size: item.size || null,
-                        file: item.file,
-                        addedFromGallery: item.addedFromGallery,
-                    }"
+                        name="{{ $getName($locale) }}"
+                        group="{{ $getKey() }}"
+                        locale="{{$locale}}"
+                        upload-url="{{ $getEndpoint() }}"
+                        :options="{
+                            id: item.id,
+                            filename: item.filename,
+                            url: item.url,
+                            isImage: item.isImage,
+                            thumbUrl: item.thumbUrl,
+                            mimetype: item.mimetype || null,
+                            size: item.size || null,
+                            file: item.file,
+                            addedFromGallery: item.addedFromGallery,
+                        }"
                     ></file>
                 </div>
             </div>

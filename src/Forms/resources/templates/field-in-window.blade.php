@@ -1,7 +1,4 @@
-<x-chief-form::formgroup.window
-    :label="$getLabel()"
->
-
+<x-chief-form::formgroup.window :label="$getLabel()">
     @if(!$hasLocales())
         @include($getView())
     @elseif(count($getLocales()) == 1)

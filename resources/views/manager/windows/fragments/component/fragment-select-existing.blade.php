@@ -1,5 +1,5 @@
 <div class="space-y-6">
-    <p class="text-xl display-base display-dark">Kies een bestaand fragment</p>
+    <p class="text-lg display-base display-dark">Kies een bestaand fragment</p>
 
     <form
         id="fragment-select-existing-form"
@@ -45,7 +45,7 @@
         </div>
     </form>
 
-    <div data-sidebar-component="existingFragments" class="-mx-6 divide-y-2 divide-dashed divide-primary-50">
+    <div data-sidebar-component="existingFragments" class="-mx-6 divide-y divide-grey-100">
         @forelse($sharedFragments as $sharedFragment)
             <div
                 data-sidebar-close

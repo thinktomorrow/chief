@@ -14,7 +14,7 @@
 
         @if($model->fragmentModel()->isShared())
             <div class="p-6 space-y-4 bg-orange-50 rounded-xl">
-                <p class="text-xl display-base display-dark">Gedeeld fragment</p>
+                <p class="text-lg display-base display-dark">Gedeeld fragment</p>
 
                 <div class="prose prose-spacing prose-dark">
                     <p>
@@ -34,8 +34,9 @@
                                 </span>
                             @else
                                 <a
-                                        class="underline link link-primary"
-                                        href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
+                                    href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
+                                    title="{{ $otherOwner['model']->adminConfig()->getPageTitle() }}"
+                                    class="underline link link-primary"
                                 >
                                     {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
                                 </a>
@@ -47,25 +48,25 @@
                 </div>
 
                 <button
-                        class="btn btn-warning-outline"
-                        type="submit"
-                        form="detachSharedFragment{{ $model->modelReference()->get() }}"
+                    type="submit"
+                    form="detachSharedFragment{{ $model->modelReference()->get() }}"
+                    class="btn btn-warning-outline"
                 >
                     Fragment niet meer delen en voortaan afzonderlijk bewerken op deze pagina
                 </button>
             </div>
         @endif
 
-        <div class="flex flex-wrap space-x-4">
+        <div class="flex flex-wrap gap-4">
             <div data-vue-fields>
                 @adminCan('fragment-delete', $model)
-                <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
-                    @if($model->fragmentModel()->isShared())
-                        Fragment verwijderen op deze pagina
-                    @else
-                        Fragment verwijderen
-                    @endif
-                </a>
+                    <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
+                        @if($model->fragmentModel()->isShared())
+                            Fragment verwijderen op deze pagina
+                        @else
+                            Fragment verwijderen
+                        @endif
+                    </a>
                 @endAdminCan
             </div>
         </div>

@@ -1,7 +1,7 @@
 <div data-form data-form-tags="fragments" class="space-y-6">
-    <p class="text-xl display-base display-dark">Voeg een nieuw fragment toe</p>
+    <p class="text-lg display-base display-dark">Voeg een nieuw fragment toe</p>
 
-    <div class="-mx-6 divide-y-2 divide-dashed divide-primary-50">
+    <div class="-mx-6 divide-y divide-grey-100">
         @forelse($fragments as $allowedFragment)
             <a
                 data-sidebar-trigger

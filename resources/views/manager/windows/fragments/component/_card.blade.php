@@ -1,7 +1,7 @@
 <div data-fragment data-sortable-id="{{ $model->fragmentModel()->id }}" class="w-full">
     <div class="py-6 space-y-4">
         <div class="flex items-stretch justify-end space-x-3">
-            <div data-sortable-handle class="shrink-0 cursor-pointer">
+            <div data-sortable-handle class="cursor-pointer shrink-0">
                 <x-chief-icon-button icon="icon-drag" />
             </div>
 

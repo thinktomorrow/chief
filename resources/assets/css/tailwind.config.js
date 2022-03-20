@@ -91,12 +91,20 @@ module.exports = {
         extend: {
             animation: {
                 'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
+                'pop-in': 'popIn 200ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in-out': 'popInOut 2000ms cubic-bezier(0.83, 0, 0.17, 1)',
+            },
+            boxShadow: {
+                card: '0 4px 6px -1px rgba(0, 0, 0, 0.025)',
             },
             keyframes: {
                 slideInNavigation: {
                     '0%': { transform: 'translateX(100vw)' },
                     '100%': { transform: 'translateX(0)' },
+                },
+                popIn: {
+                    '0%': { transform: 'scale(0)' },
+                    '100%': { transform: 'scale(1)' },
                 },
                 popInOut: {
                     '0%': { transform: 'scale(0)' },

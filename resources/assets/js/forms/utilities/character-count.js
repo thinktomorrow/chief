@@ -1,6 +1,6 @@
-import EventBus from './EventBus';
+import EventBus from '../../utilities/EventBus';
 
-function characterCount(container, characterCountEl) {
+const characterCount = (container, characterCountEl) => {
     const formFieldId = characterCountEl.getAttribute('data-character-count');
     const formField = container.querySelector(`#${formFieldId.replaceAll('.', '\\.')}`);
     const max = characterCountEl.getAttribute('data-character-count-max');
@@ -26,22 +26,26 @@ function characterCount(container, characterCountEl) {
 
     // Default
     formField.dispatchEvent(new Event('input'));
-}
+};
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-character-count]').forEach((el) => {
-        characterCount(document, el);
+const initCharacterCount = (selector = '[data-character-count]') => {
+    document.addEventListener('DOMContentLoaded', () => {
+        Array.from(document.querySelectorAll(selector)).forEach((el) => {
+            characterCount(document, el);
+        });
     });
-});
 
-EventBus.subscribe('form-refreshed', (data) => {
-    data.element.querySelectorAll('[data-character-count]').forEach((el) => {
-        characterCount(data.element, el);
+    EventBus.subscribe('form-refreshed', (data) => {
+        Array.from(data.element.querySelectorAll(selector)).forEach((el) => {
+            characterCount(data.element, el);
+        });
     });
-});
 
-EventBus.subscribe('sidebarPanelActivated', (data) => {
-    data.panel.el.querySelectorAll('[data-character-count]').forEach((el) => {
-        characterCount(data.panel.el, el);
+    EventBus.subscribe('sidebarPanelActivated', (data) => {
+        Array.from(data.panel.el.querySelectorAll(selector)).forEach((el) => {
+            characterCount(data.panel.el, el);
+        });
     });
-});
+};
+
+export { initCharacterCount as default };

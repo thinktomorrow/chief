@@ -3,7 +3,6 @@
     'label' => null,
     'description' => null,
     'required' => false,
-
     'fieldType' => null,
     'fieldToggles' => [],
 ])
@@ -16,7 +15,7 @@
 >
     @if($label)
         <div class="mb-1 leading-none">
-            <span class="font-medium display-base display-dark">
+            <span class="font-medium display-base body-dark">
                 {{ ucfirst($label) }}
             </span>
 
@@ -28,11 +27,7 @@
 
     @if($description)
         <div class="mb-3 prose prose-spacing prose-dark">
-            @if($description != strip_tags($description))
-                {!! $description !!}
-            @else
-                <p>{{ $description }}</p>
-            @endif
+            <p>{!! $description !!}</p>
         </div>
     @endif
 

@@ -1,8 +1,8 @@
-import EventBus from './EventBus';
-import RadioFieldTrigger from './conditional-fields/RadioFieldTrigger';
-import SelectFieldTrigger from './conditional-fields/SelectFieldTrigger';
-import CheckboxFieldTrigger from './conditional-fields/CheckboxFieldTrigger';
-import InputFieldTrigger from './conditional-fields/InputFieldTrigger';
+import EventBus from '../../utilities/EventBus';
+import RadioFieldTrigger from './RadioFieldTrigger';
+import SelectFieldTrigger from './SelectFieldTrigger';
+import CheckboxFieldTrigger from './CheckboxFieldTrigger';
+import InputFieldTrigger from './InputFieldTrigger';
 
 /**
  * Initialize conditional fields functionality
