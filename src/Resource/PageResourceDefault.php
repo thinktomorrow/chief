@@ -10,11 +10,6 @@ trait PageResourceDefault
 {
     use ResourceDefault;
 
-    public static function modelClassName(): string
-    {
-        return static::class;
-    }
-
     public function getNavItem(): ?NavItem
     {
         $this->assertManager();

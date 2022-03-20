@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Media\Application;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -17,10 +18,12 @@ use Thinktomorrow\Chief\Forms\Forms;
 class AsyncFileUpload
 {
     private Fields\Validation\FieldValidator $fieldValidator;
+    private Registry $registry;
 
-    public function __construct(Fields\Validation\FieldValidator $fieldValidator)
+    public function __construct(Registry $registry, Fields\Validation\FieldValidator $fieldValidator)
     {
         $this->fieldValidator = $fieldValidator;
+        $this->registry = $registry;
     }
 
     /**
@@ -31,11 +34,7 @@ class AsyncFileUpload
     public function upload(Model $model, string $fieldKey, UploadedFile|\stdClass $input, string $locale): Response
     {
         try {
-            $field = Forms::make($model->fields())
-                ->fillModel($model)
-                ->getFields()
-                ->find($fieldKey)
-            ;
+            $field = $this->registry->findResourceByModel($model::class)->field($model, $fieldKey);
 
             if ($input instanceof UploadedFile) {
                 $this->validateAsyncFileUpload($field, $locale, $input);

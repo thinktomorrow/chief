@@ -54,7 +54,7 @@ trait SlimImageUploadAssistant
         // With the async upload, only one item is uploaded at a time.
         $imagePayload = json_decode(reset($rawImagePayload[$locale]));
 
-        $model = $id ? $this->fieldsModel($id) : new $this->managedModelClass();
+        $model = $id ? $this->fieldsModel($id) : $this->managedModelClassInstance();
 
         return app(Fields\Media\Application\AsyncFileUpload::class)->upload($model, $fieldKey, $imagePayload, $locale);
     }

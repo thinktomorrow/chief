@@ -26,11 +26,6 @@ trait ManagerDefaults
         $this->registry = $registry;
     }
 
-    public function managedModelClass(): string
-    {
-        return $this->resource::modelClassName();
-    }
-
     public function route(string $action, $model = null, ...$parameters): string
     {
         foreach (DiscoverTraitMethods::belongingTo(static::class, 'route') as $method) {
@@ -85,6 +80,11 @@ trait ManagerDefaults
         if (! chiefAdmin() || ! chiefAdmin()->hasPermissionTo($permission)) {
             throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
         }
+    }
+
+    public function managedModelClass(): string
+    {
+        return $this->resource::modelClassName();
     }
 
     private function managedModelClassInstance()
