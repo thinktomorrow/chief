@@ -7,9 +7,7 @@
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header')
-            @slot('title')
-                {{ $resource->getIndexTitle() }}
-            @endslot
+            @slot('title', $resource->getIndexTitle())
 
             @slot('breadcrumbs')
                 @if($indexBreadCrumb = $resource->getIndexBreadCrumb())

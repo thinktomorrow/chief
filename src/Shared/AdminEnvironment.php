@@ -24,6 +24,8 @@ class AdminEnvironment
             return true;
         }
 
-        return (Str::startsWith($this->request->path(), 'admin/'));
+        $adminPrefix = config('chief.route.prefix', 'admin');
+
+        return (Str::startsWith($this->request->path(), $adminPrefix . '/')) || $this->request->path() == $adminPrefix;
     }
 }

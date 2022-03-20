@@ -1,5 +1,21 @@
 <?php
 
+
+/**
+ * -----------------------------------------------------------------
+ * AUTHENTICATED SITE ROUTES
+ * -----------------------------------------------------------------
+ */
+
+// Toggle toast mode on frontend chief admin toast
+Route::get('toast/toggle', [\Thinktomorrow\Chief\App\Http\Controllers\ToastController::class, 'toggle'])
+    ->middleware(['web-chief', 'auth:chief'])
+    ->name('chief.toast.toggle');
+
+Route::get('toast', [\Thinktomorrow\Chief\App\Http\Controllers\ToastController::class, 'get'])
+    ->middleware(['web'])
+    ->name('chief.toast.get');
+
 /**
  * -----------------------------------------------------------------
  * NON-AUTHENTICATED ADMIN ROUTES

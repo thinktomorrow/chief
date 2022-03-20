@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
 
-// Toggle preview mode on frontend chief admin toast
-Route::get('toggle-preview', [\Thinktomorrow\Chief\App\Http\Controllers\TogglePreviewController::class, 'toggle'])->name('chief.front.preview');
-
 // Sitemap
 Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@index')->name('chief.back.sitemap.show');
 Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@generate')->name('chief.back.sitemap.generate');

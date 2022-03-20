@@ -47,7 +47,11 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoServiceProvider($this->app))->boot();
         (new RoutesServiceProvider($this->app))->boot();
 
+        $this->bootChiefAuth();
+
         Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
+
+        $this->app['view']->addNamespace('chief-site', __DIR__.'/../../resources/views/site');
 
         if (! $this->app->make(AdminEnvironment::class)->check()) {
             return;
@@ -58,7 +62,6 @@ class ChiefServiceProvider extends ServiceProvider
          * Boot required for admin
          * ------------------------------------
          */
-        $this->bootChiefAuth();
         $this->bootChiefSquanto();
         $this->bootEvents();
 

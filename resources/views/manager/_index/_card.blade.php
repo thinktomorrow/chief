@@ -5,7 +5,7 @@
                 <a href="@adminRoute('edit', $model)" class="w-full mt-0.5 space-x-1">
             @endAdminCan
                     <span class="text-lg display-dark display-base">
-                        {{ ucfirst($resource->getPageTitle($model)) }}
+                        {!! $resource->getIndexCardTitle($model) !!}
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))

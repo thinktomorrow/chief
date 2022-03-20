@@ -19,11 +19,9 @@ class AdminToast
         $this->registry = $registry;
     }
 
-    public function getEditUrlOfCurrentPage(): ?string
+//    public function getEditUrlOfCurrentPage(): ?string
+    public function discoverEditUrl(string $path, string $locale): ?string
     {
-        $path = $this->request->path();
-        $locale = app()->getLocale();
-
         // Remove the locale segment if present - we assume the first segment is the locale
         if (0 === strpos($path, $locale . '/') || $path === $locale) {
             $path = substr($path, strlen($locale . '/'));
@@ -34,7 +32,7 @@ class AdminToast
         }
 
         $model = $this->findModelByUrl($path, $locale);
-        $manager = $this->registry->manager($model::resourceKey());
+        $manager = $this->registry->findManagerByModel($model::class);
 
         if (! $manager->can('edit', $model)) {
             return null;

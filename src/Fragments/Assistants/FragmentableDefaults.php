@@ -25,9 +25,9 @@ trait FragmentableDefaults
 
     public function viewKey(): string
     {
-        $key = (new ResourceKeyFormat(static::modelClassName()))->getKey();
+        $key = (new ResourceKeyFormat(static::class))->getKey();
 
-        return Str::of($key)->remove('fragment')->remove('_')->trim()->__toString();
+        return Str::of($key)->remove('_fragment')->trim()->__toString();
     }
 
     public function renderAdminFragment($owner, $loop, $viewData = []): string

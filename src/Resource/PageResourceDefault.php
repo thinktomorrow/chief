@@ -66,11 +66,15 @@ trait PageResourceDefault
         return 'chief::manager._index._card';
     }
 
+    public function getIndexCardTitle($model): string
+    {
+        return $this->getPageTitle($model);
+    }
+
     public function getIndexCardContent($model): string
     {
         return view('chief::manager._index._card-content', ['model' => $model])->render();
     }
-
 
     public function getIndexSidebar(): string
     {

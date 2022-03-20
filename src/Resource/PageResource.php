@@ -21,6 +21,7 @@ interface PageResource extends Resource
     public function getIndexTitle(): string;
     public function getIndexBreadcrumb(): ?BreadCrumb;
     public function getIndexCardView(): string;
+    public function getIndexCardTitle($model): string;
     public function getIndexCardContent($model): string;
     public function getIndexSidebar(): string; // content in sidebar.
     public function getIndexPagination(): int;

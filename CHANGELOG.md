@@ -12,6 +12,7 @@ This release brings a major refactor of the forms and fields api. Its aim is to 
 - Removed: chiefRegister()->model() is removed. Use chiefRegister()->resource().
 - Changed: Each viewable model needs to have a `viewKey()` method to determine the frontend view path.
 - Changed: Nav tags are no longer added via the register method, chiefRegister()->resource(). Instead on the page resource you should set the `protected function getNavTags(): array` method to provide the nav tags.
+- Changed: chief admin toast is no longer accessible via `chief::site.admin-toast`. It should now be referred to via: `chief-site::admin-toast`.
 
 - Changed: Restructured Fields files and classes under a dedicated `src/Forms` directory. Rename all your field namespaces from `Thinktomorrow\Chief\ManagedModels\Fields\Types\<Field>` to `Thinktomorrow\Chief\Forms\Fields\<Field>`.
 - Removed: field method `customSaveMethod`. Replace any occurrences with the save() method. See below.
