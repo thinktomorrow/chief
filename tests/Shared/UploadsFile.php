@@ -10,6 +10,7 @@ trait UploadsFile
     private function uploadFile(string $fieldkey, $payload): TestResponse
     {
         $model = $this->page ?? $this->model;
+
         return $this->asAdmin()->put($this->manager($model)->route('update', $model), [
             'files' => [
                 $fieldkey => $payload,
