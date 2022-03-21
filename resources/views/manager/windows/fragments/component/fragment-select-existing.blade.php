@@ -31,20 +31,20 @@
         </div>
     </form>
 
-    <div data-sidebar-component="existingFragments" class="-mx-6 divide-y divide-grey-100">
+    <div class="-mx-6 divide-y divide-grey-100">
         @forelse($sharedFragments as $sharedFragment)
-            <div
-                data-sidebar-close
-                data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
-                class="p-6 space-y-2 overflow-hidden cursor-pointer group hover:bg-primary-500 transition-75"
-            >
-                <div>
-                    <span class="display-dark display-base group-hover:text-white transition-75">
-                        {{ ucfirst($sharedFragment['resource']->getLabel()) }}
-                    </span>
-                </div>
 
-                {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
+            <div data-form data-form-tags="fragments">
+                <form method="POST" action="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}">
+                    <button class="block w-full text-left p-6 space-y-2 overflow-hidden cursor-pointer group hover:bg-primary-500 transition-75" type="submit">
+                        <div>
+                            <span class="display-dark display-base group-hover:text-white transition-75">
+                                {{ ucfirst($sharedFragment['resource']->getLabel()) }}
+                            </span>
+                        </div>
+                        {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
+                    </button>
+                </form>
             </div>
         @empty
             <p class="p-6">

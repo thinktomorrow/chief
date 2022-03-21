@@ -30,15 +30,15 @@
 
                             @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
                                 <span class="link">
-                                    {{ $otherOwner['resource']->getPageTitle($otherOwner['model']) }}
+                                    {{ $otherOwner['pageTitle'] }}
                                 </span>
                             @else
                                 <a
                                     href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
-                                    title="{{ $otherOwner['model']->adminConfig()->getPageTitle() }}"
+                                    title="{{ $otherOwner['pageTitle'] }}"
                                     class="underline link link-primary"
                                 >
-                                    {{ $otherOwner['resource']->getPageTitle($otherOwner['model']) }}
+                                    {{ $otherOwner['pageTitle'] }}
                                 </a>
                             @endif
 

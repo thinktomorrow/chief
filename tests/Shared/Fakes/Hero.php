@@ -25,6 +25,7 @@ class Hero implements Fragmentable
     {
         return Fields::make([
             Fields\Text::make('title'),
+            Fields\Image::make('thumb'),
         ]);
     }
 

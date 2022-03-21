@@ -30,7 +30,7 @@ class AsyncFileUpload
      * is upload asynchronously. This can be either a json object representing
      * base64 encoded image or a regular UploadedFile
      */
-    public function upload(Model $model, string $fieldKey, UploadedFile|\stdClass $input, string $locale): Response
+    public function upload($model, string $fieldKey, UploadedFile|\stdClass $input, string $locale): Response
     {
         try {
             $field = $this->registry->findResourceByModel($model::class)->field($model, $fieldKey);

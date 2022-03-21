@@ -60,7 +60,6 @@ Form.prototype.refresh = function () {
     const url = this.el.dataset.formUrl;
 
     if (!url) {
-        console.error('no refresh url defined on this form.');
         return;
     }
 

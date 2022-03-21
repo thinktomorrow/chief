@@ -296,22 +296,14 @@ trait FragmentAssistant
                     })
                 ;
 
-//        $forms = Forms::make($fragmentable->fields())
-//            ->eachForm(function ($form) use ($owner) {
-//                $form->action($this->route('fragment-store', $owner))
-//                    ->refreshUrl('');
-//            });
-
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
         \Illuminate\Support\Facades\View::share('resource', $this->resource);
         \Illuminate\Support\Facades\View::share('owner', $owner);
         \Illuminate\Support\Facades\View::share('forms', $forms);
+        \Illuminate\Support\Facades\View::share('order', $order);
 
-        return view('chief::manager.windows.fragments.create', [
-            'owner' => $owner,
-            'order' => $order,
-        ]);
+        return view('chief::manager.windows.fragments.create');
     }
 
     private function handleFragmentStore($ownerModel, Request $request)

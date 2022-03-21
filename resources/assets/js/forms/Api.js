@@ -37,7 +37,6 @@ const Api = {
     listenForFormSubmits(container, successCallback, errorCallback) {
         const self = this;
         const forms = Array.from(container.querySelectorAll('form'));
-
         if (forms.length < 1) return;
 
         forms.forEach((form) => {

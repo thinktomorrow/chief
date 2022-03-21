@@ -4,26 +4,33 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            const toast = document.getElementById('jsChiefToast');
 
-            fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
-                .then((response) => response.json())
-                .then((data) => {
-                    toast.innerHTML = data.data;
-                    listenForClose();
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+            try{
+                const toasts = document.getElementById('jsChiefToast');
 
-            function listenForClose()
+                fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        toast.innerHTML = data.data;
+                        listenForClose();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+
+                function listenForClose()
+                {
+                    const toastClose = toast.querySelector('[data-admin-toast-close]');
+
+                    toastClose.addEventListener('click', function() {
+                        toast.style.display = "none";
+                    });
+                }
+            } catch(error)
             {
-                const toastClose = toast.querySelector('[data-admin-toast-close]');
-
-                toastClose.addEventListener('click', function() {
-                    toast.style.display = "none";
-                });
+                console.log(error);
             }
+
         })
 
     </script>

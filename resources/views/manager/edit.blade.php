@@ -5,7 +5,7 @@
 
             <tabs class="-mb-3">
                 @foreach(config('chief.locales') as $locale)
-                    <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}"></tab>
+                    <tab v-cloak id="{{ $locale }}" name="{{ $locale }}"></tab>
                 @endforeach
             </tabs>
         </div>

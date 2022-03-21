@@ -43,6 +43,19 @@ class EditFragmentTest extends ChiefTestCase
     }
 
     /** @test */
+    public function admin_can_view_the_edit_form_of_a_shared_fragment()
+    {
+        $model = $this->setupAndCreateQuote($this->model, [], 0, false);
+
+        // Make fragment shareable
+        $this->addFragment($model, $this->owner);
+
+        $this->asAdmin()
+            ->get($this->manager($model)->route('fragment-edit', $this->model, $model))
+            ->assertStatus(200);
+    }
+
+    /** @test */
     public function guests_cannot_view_the_edit_form()
     {
         // Make sure that this admin is logged out

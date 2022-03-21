@@ -17,6 +17,10 @@
             @method('put')
         @endif
 
+        @if(isset($order))
+            <input type="hidden" name="order" value="{{ $order ?? 0 }}">
+        @endif
+
         <div class="relative space-y-6">
             @foreach($getComponents() as $childComponent)
                 {{ $childComponent }}
