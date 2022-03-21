@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResource;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 interface Fragmentable extends FragmentResource, ViewableContract, ReferableModel
 {
