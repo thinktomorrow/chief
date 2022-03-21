@@ -12,10 +12,13 @@ use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
-class PageStub extends Model implements PageResource
+class PageStub extends Model implements PageResource, ReferableModel
 {
     use PageResourceDefault;
+    use ReferableModelDefault;
 
     public $casts = [
         'repeat_values' => 'array',
