@@ -101,10 +101,6 @@ export default class {
             this.showPanel(panelId);
             this.refresh();
 
-            // if (afterShowCallback) {
-            //     afterShowCallback(panelId);
-            // }
-
             // Creating a custom event so native js like redactor js can be initiated async
             // needs to dispatch after vue instances get created otherwise they override
             // all redactor event listeners like toolbar clicks ...
