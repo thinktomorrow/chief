@@ -1,7 +1,11 @@
 <x-chief::page>
     <x-slot name="header">
         <div class="flex flex-wrap items-end justify-between gap-6">
-            <x-chief-form::forms id="pagetitle" />
+            @if($forms->has('pagetitle'))
+                <x-chief-form::forms id="pagetitle" />
+            @else
+                <h1 class="h1 display-dark">{{ $resource->getPageTitle($model) }}</h1>
+            @endif
 
             <tabs class="-mb-3">
                 @foreach(config('chief.locales') as $locale)
