@@ -73,9 +73,8 @@ Form.prototype.refresh = function () {
         // before vanilla event listeners so native js can do its thing
         vueFields(this.el);
 
-        // TODO: this method is now coming from project code (project skeleton),
-        // we should however provide this from chief
-        loadRedactorInstances(document); // eslint-disable-line
+        // So Redactor can be reinitialised when the form is refreshed
+        window.dispatchEvent(new CustomEvent('chief::formrefreshed', { detail: { container: this.el } }));
 
         // Re-init event listeners
         this.listen();
