@@ -102,4 +102,18 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
         // Override this method so you can fill in a component with custom endpoint routes.
         // This is an empty fill and acts as the component default.
     }
+
+    public function fieldFormView(string $fieldFormView): static
+    {
+        $this->fieldFormView = $fieldFormView;
+
+        return $this;
+    }
+
+    public function fieldWindowView(string $fieldWindowView): static
+    {
+        $this->fieldWindowView = $fieldWindowView;
+
+        return $this;
+    }
 }

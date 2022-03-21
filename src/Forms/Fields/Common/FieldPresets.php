@@ -17,7 +17,7 @@ class FieldPresets
             'chief-form::templates.pagetitle.form-in-pagetitle',
             'chief-form::templates.pagetitle.form-in-inline-container',
         )->items([
-            $field ?? Text::make('title')->locales()->required()->windowView('chief-form::templates.pagetitle.text-in-pagetitle'),
+            $field ?? Text::make('title')->locales()->required()
         ]);
     }
 
