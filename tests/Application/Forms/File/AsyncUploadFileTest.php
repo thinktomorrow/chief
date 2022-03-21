@@ -8,7 +8,6 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 
 class AsyncUploadFileTest extends ChiefTestCase
 {

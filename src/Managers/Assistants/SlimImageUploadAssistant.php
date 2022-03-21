@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait SlimImageUploadAssistant
