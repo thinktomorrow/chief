@@ -1,11 +1,11 @@
-<div class="flex items-center group">
-    {{-- bookmark for this fragment --}}
-    @if($model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+    <div class="flex items-center group">
+        {{-- bookmark for this fragment --}}
         <span class="mr-2 label label-grey-light">#{{ $model->getBookmark() }}</span>
 
         <div class="inline-flex items-center gutter-1">
             @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
-                <span class="transform scale-0 group-hover:scale-100 transition-150">
+                <span class="scale-0 group-hover:scale-100 transition-150">
                     <a
                         href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
                         target="_blank"
@@ -15,7 +15,7 @@
                     </a>
                 </span>
 
-                <span class="transform scale-0 group-hover:scale-100 transition-150">
+                <span class="scale-0 group-hover:scale-100 transition-150">
                     <span
                         data-copy-to-clipboard="bookmark"
                         data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"
@@ -28,5 +28,5 @@
                 </span>
             @endif
         </div>
-    @endif
-</div>
+    </div>
+@endif

@@ -2,9 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
@@ -13,7 +10,7 @@ class PageUrlTest extends ChiefTestCase
 {
     use PageFormParams;
 
-    private $model;
+    private ArticlePageWithBaseSegments $model;
 
     protected function setUp(): void
     {
@@ -21,12 +18,7 @@ class PageUrlTest extends ChiefTestCase
 
         $this->setUpChiefEnvironment();
 
-        ArticlePageWithBaseSegments::migrateUp();
-
-        app(Register::class)->model(ArticlePageWithBaseSegments::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePageWithBaseSegments::managedModelKey());
-
-        $this->model = ArticlePageWithBaseSegments::create();
+        $this->model = $this->setupAndCreateArticleWithBaseSegments();
 
         // Add links for this model
         $this->updateLinks($this->model, [

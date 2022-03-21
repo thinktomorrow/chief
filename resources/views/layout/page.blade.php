@@ -1,15 +1,7 @@
 @extends('chief::layout.master')
 
-@push('custom-styles')
-    @livewireStyles
-@endpush
-
-@push('custom-scripts')
-    @livewireScripts
-@endpush
-
 @section('page-title')
-    @adminConfig('pageTitle')
+    {{ $resource->getPageTitle($model) }}
 @endsection
 
 @section('header')
@@ -39,8 +31,8 @@
 
             <div class="w-full lg:w-1/3">
                 <div class="space-y-6">
-                    @isset($sidebar)
-                        {!! $sidebar !!}
+                    @isset($aside)
+                        {!! $aside !!}
                     @endisset
                 </div>
             </div>

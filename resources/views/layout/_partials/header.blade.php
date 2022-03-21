@@ -12,7 +12,7 @@
 
     <div class="{{ $isDefaultSlotEmpty ? 'w-full' : 'w-full lg:w-1/2' }}">
         @if($hasDefaultTitle)
-            <h1 class="text-black">
+            <h1 class="h1 display-dark">
                 {{ ucfirst($title) }}
             </h1>
         @else
@@ -21,7 +21,7 @@
     </div>
 
     @if(!$isDefaultSlotEmpty)
-        <div class="flex items-center justify-end flex-shrink-0 w-full lg:w-1/2">
+        <div class="flex items-center justify-end w-full shrink-0 lg:w-1/2">
             {{ $slot }}
         </div>
     @endif

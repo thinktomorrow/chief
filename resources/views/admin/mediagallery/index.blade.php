@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <x-chief::window>
+                <div class="card">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
                             <label for="select-all" class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
@@ -46,53 +46,54 @@
                     <div class="mt-8">
                         {{ $assets->links('chief::pagination.default') }}
                     </div>
-                </x-chief::window>
+                </div>
             </div>
 
             <div class="w-full lg:w-1/3">
-                <x-chief::window title="Filteren">
+                <div class="card">
+                    <div class="w-full space-x-1 mt-0.5">
+                        <span class="text-lg display-base display-dark">
+                            Filter
+                        </span>
+                    </div>
+
                     <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
-                        <x-chief::field.form label="Bestandsnaam">
-                            <input
-                                type="text"
-                                name="search"
-                                placeholder="Zoek op bestandsnaam ..."
-                                value="{{ old('search', request()->input('search'))}}"
-                            >
-                        </x-chief::field.form>
+                        <x-chief-form::formgroup id="name" label="Bestandsnaam">
+                            <input type="text" name="search" placeholder="Zoek op bestandsnaam ..." value="{{ old('search', request()->input('search'))}}">
+                        </x-chief-form::formgroup>
 
-                        <x-chief::field.form label="Pagina">
+                        <x-chief-form::formgroup id="owner" label="Pagina">
                             <chief-multiselect
-                                name="owner"
-                                :options='@json($pages)'
-                                selected='@json(old('owner', request()->input('owner')))'
-                                :multiple='false'
-                                grouplabel="group"
-                                groupvalues="values"
-                                labelkey="label"
-                                valuekey="id"
+                                    name="owner"
+                                    :options='@json($pages)'
+                                    selected='@json(old('owner', request()->input('owner')))'
+                                    :multiple='false'
+                                    grouplabel="group"
+                                    groupvalues="values"
+                                    labelkey="label"
+                                    valuekey="id"
                             ></chief-multiselect>
-                        </x-chief::field.form>
+                        </x-chief-form::formgroup>
 
-                        <x-chief::field.form>
+                        <x-chief-form::formgroup id="unused">
                             <label for="unused" class="with-checkbox">
                                 <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
-                        </x-chief::field.form>
+                        </x-chief-form::formgroup>
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>
 
     <modal id="mediagallery-bulk-delete-modal" title="Selectie verwijderen">
-        <h2>Bent u zeker?</h2>
+        <h2 class="h2 display-dark">Bent u zeker?</h2>
 
         <p>Je staat op het punt om de geselecteerde bestanden op te ruimen. Enkel ongebruikte bestanden zullen worden verwijderd.</p>
 

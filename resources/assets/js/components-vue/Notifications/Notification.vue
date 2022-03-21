@@ -3,13 +3,13 @@
         <div
             v-show="isVisible && description"
             :ref="'notification-' + this._uid"
-            class="flex items-center bg-white border border-grey-100 rounded-lg shadow-lg px-6 py-4 space-x-6 origin-right"
+            class="flex items-center px-6 py-4 space-x-6 origin-right bg-white border rounded-lg shadow-lg border-grey-100"
         >
             <div class="rounded-full" :class="color">
                 <svg width="24" height="24"><use :xlink:href="'#' + type"></use></svg>
             </div>
 
-            <div class="flex-grow">
+            <div class="grow">
                 <p class="font-medium text-grey-500">
                     <slot>
                         <!-- Notifications that were created asynchronously, have their content stored in description variable -->
@@ -18,7 +18,7 @@
                 </p>
             </div>
 
-            <div @click="hideNotification" class="link link-grey icon-label cursor-pointer">
+            <div @click="hideNotification" class="cursor-pointer link link-grey icon-label">
                 <svg width="18" height="18" class="icon-label-icon"><use xlink:href="#x"></use></svg>
             </div>
         </div>

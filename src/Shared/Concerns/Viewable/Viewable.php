@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-
 trait Viewable
 {
     private array $viewData = [];
@@ -22,30 +20,6 @@ trait Viewable
         }
 
         return '<!-- no view found for model ['.static::class.'] -->';
-    }
-
-    /**
-     * This is the model's view identifier. This key is used to determine the full view
-     * path of the model. By default this is based on the managedModelKey of the model.
-     *
-     * @return string
-     * @throws NotFoundViewKey
-     */
-    public function viewKey(): string
-    {
-        if (property_exists($this, 'viewKey') && isset($this->viewKey)) {
-            return $this->viewKey;
-        }
-
-        if ($this instanceof ManagedModel) {
-            return static::managedModelKey();
-        }
-
-        if (config('chief.strict')) {
-            throw new NotFoundViewKey('Missing view key. Please add a [viewKey] property to ' . static::class);
-        }
-
-        return '';
     }
 
     public function setViewData(array $viewData): void

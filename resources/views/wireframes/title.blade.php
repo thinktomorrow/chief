@@ -15,7 +15,7 @@
 
 @unless($slot->isEmpty())
     <div
-        class="w-full prose prose-dark prose-wireframe {{ $alignClass }} {{ $attributes->get('class') }}"
+        class="w-full prose prose-spacing prose-dark prose-wireframe {{ $alignClass }} {{ $attributes->get('class') }}"
         {{-- Line clamp based on tailwindcss plugin --}}
         style="
             overflow: hidden;

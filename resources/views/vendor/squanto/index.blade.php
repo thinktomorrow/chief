@@ -18,7 +18,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
+                <div class="window">
                     <div class="-my-4 divide-y divide-grey-100">
                         @foreach($pages as $page)
                             @php
@@ -44,7 +44,7 @@
                             </div>
                         @endforeach
                     </div>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

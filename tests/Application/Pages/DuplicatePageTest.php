@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class DuplicatePageTest extends ChiefTestCase
@@ -19,7 +20,7 @@ class DuplicatePageTest extends ChiefTestCase
         parent::setUp();
 
         ArticlePage::migrateUp();
-        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
         chiefRegister()->fragment(SnippetStub::class);
 
         $articlePage = ArticlePage::create([
@@ -56,14 +57,18 @@ class DuplicatePageTest extends ChiefTestCase
     /** @test */
     public function it_can_duplicate_all_fields()
     {
+        $this->disableExceptionHandling();
+        $this->assertCount(1, ArticlePage::all());
+
         $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
         $this->assertCount(2, ArticlePage::all());
 
         $copiedModel = ArticlePage::where('id', '<>', $this->source->id)->first();
 
+        // 'custom' is the title attribute in this test
         $this->assertEquals(
-            str_replace($this->source->title, '[Copy] ' . $this->source->title, $this->source->values),
+            str_replace($this->source->custom, '[Copy] ' . $this->source->custom, $this->source->values),
             $copiedModel->values
         );
 
@@ -87,7 +92,6 @@ class DuplicatePageTest extends ChiefTestCase
     /** @test */
     public function context_with_fragments_are_duplicated()
     {
-        $this->disableExceptionHandling();
         // Add shared and non-shared fragment
         $snippet = $this->setupAndCreateSnippet($this->source, 1);
         $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
@@ -124,11 +128,5 @@ class DuplicatePageTest extends ChiefTestCase
 
         $this->assertCount(1, $copiedModel->assets());
         $this->assertEquals($this->source->asset('thumb')->id, $copiedModel->asset('thumb')->id);
-    }
-
-    /** @test */
-    public function it_can_use_a_custom_duplicator()
-    {
-        $this->markTestSkipped();
     }
 }

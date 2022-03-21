@@ -5,7 +5,7 @@
                 <a href="@adminRoute('edit', $model)" class="w-full mt-0.5 space-x-1">
             @endAdminCan
                     <span class="text-lg display-dark display-base">
-                        @adminConfig('rowTitle')
+                        {!! $resource->getIndexCardTitle($model) !!}
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
@@ -17,11 +17,11 @@
                 </a>
             @endAdminCan
 
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 @include('chief::manager._index._options')
             </div>
         </div>
 
-        @adminConfig('rowContent')
+        {!! $resource->getIndexCardContent($model) !!}
     </div>
 </div>

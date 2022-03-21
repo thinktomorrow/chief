@@ -6,84 +6,78 @@ namespace Thinktomorrow\Chief\Managers\Register;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Request\ManagerRequestDispatcher;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
 use Thinktomorrow\Chief\Managers\Routes\RegisterManagedRoutes;
+use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Shared\AdminEnvironment;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 final class Register
 {
     private Container $container;
+    private AdminEnvironment $adminEnvironment;
 
-    public function __construct(Container $container)
+    public function __construct(Container $container, AdminEnvironment $adminEnvironment)
     {
         $this->container = $container;
+        $this->adminEnvironment = $adminEnvironment;
     }
 
-    public function fragment(string $fragmentClass, $tags = []): void
+    public function fragment(string $fragmentClass): void
     {
-        // TODO: this reduces memory with around 1MB which is nice for frontend visits. But this removes the possibility to use the chief toast on frontend to get the admin edit url
-        // option is to load up the url async when logged in... Is there a better way to isolate this route loading only when logged in as chief admin?
-        // If the request isn't an chief admin request - we don't load up the managers and routes.
-        // option 2: only after event: allowedAdminVisit
-//        if(!Request::is(['admin', 'admin/*'])) {
-//            $this->registerMorphMap($fragmentClass);
-//            return;
-//        }
-        $this->register($fragmentClass, $this->container->makeWith(FragmentManager::class, ['managedModelClass' => $fragmentClass]), $tags, );
+        $this->resource($fragmentClass, FragmentManager::class);
     }
 
-    public function model(string $modelClass, string $managerClass = PageManager::class, $tags = ['nav']): void
+    public function resource(string $resourceClass, string $managerClass = PageManager::class): void
     {
-        // If the request isn't an chief admin request - we don't load up the managers and routes.
-//        if(!Request::is(['admin', 'admin/*'])) {
-//            $this->registerMorphMap($modelClass);
-//            return;
-//        }
-
-        $this->register($modelClass, $this->container->makeWith($managerClass, ['managedModelClass' => $modelClass]), $tags);
+        $this->register(
+            $resource = $this->container->makeWith($resourceClass),
+            $this->container->makeWith($managerClass, ['resource' => $resource])
+        );
     }
 
-    private function register(string $modelClass, Manager $manager, $tags = []): void
+    private function register(Resource $resource, Manager $manager): void
     {
-        // Check if model class implements ManagedModel interface
-        $ref = new \ReflectionClass($modelClass);
-        if (! $ref->implementsInterface(ManagedModel::class)) {
-            throw new \DomainException('Class '.$modelClass.' should implement contract '.ManagedModel::class);
-        }
+        $this->assertModelIsReferable($resource::modelClassName());
 
-        $managedModelKey = $modelClass::managedModelKey();
+        $this->registerMorphMap($resource::resourceKey(), $resource::modelClassName());
 
         // Only load up the admin routes and managers when in admin...
-//        if(chiefAdmin()) {
+        if (! $this->adminEnvironment->check()) {
+            return;
+        }
+
+        $resource->setManager($manager);
+
         // Add to chief registry
         $this->container->make(Registry::class)
-            ->registerModel($managedModelKey, $modelClass)
-            ->registerManager($managedModelKey, $manager)
-            ->registerTags($managedModelKey, (array) $tags)
+            ->registerResource($resource::resourceKey(), $resource, $manager)
         ;
 
         // Register routes
         $this->container->make(RegisterManagedRoutes::class)(
             $manager,
-            ManagedRoutes::empty(get_class($manager), $managedModelKey),
+            ManagedRoutes::empty($manager::class, $resource::resourceKey()),
             ManagerRequestDispatcher::class,
         );
-//        }
-
-        $this->registerMorphMap($modelClass);
     }
 
-    private function registerMorphMap(string $modelClass)
+    // Add to eloquent db morph map
+    private function registerMorphMap(string $key, string $modelClass)
     {
-        $managedModelKey = $modelClass::managedModelKey();
-
-        // Add to eloquent db morph map
         Relation::morphMap([
-            $managedModelKey => $modelClass,
+            $key => $modelClass,
         ]);
+    }
+
+    private function assertModelIsReferable(string $modelClass): void
+    {
+        if (! (new \ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
+            throw new \InvalidArgumentException($modelClass.' should implement '.ReferableModel::class);
+        }
     }
 }

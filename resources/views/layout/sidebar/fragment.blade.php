@@ -1,82 +1,69 @@
-<form
-    id="updateForm{{ $model->modelReference()->get() }}"
-    method="POST"
-    action="@adminRoute('fragment-update', $model)"
-    enctype="multipart/form-data"
-    role="form"
->
-    @csrf
-    @method('put')
+<div class="space-y-6">
+    <p class="text-lg display-base display-dark">
+        {{ ucfirst($resource->getLabel()) }}
+    </p>
 
-    <div class="space-y-12">
-        <div class="space-y-2">
-            <p class="text-2xl display-base display-dark">
-                {{ ucfirst($model->adminConfig()->getModelName()) }}
-            </p>
+    @include('chief::layout._partials.fragment_bookmarks')
 
-            @include('chief::layout._partials.fragment_bookmarks')
-        </div>
+    {!! $slot !!}
 
-        <div class="space-y-6">
-            {!! $slot !!}
+    @if($model->fragmentModel()->exists)
+        @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
+            <x-chief::fragments :owner="$model"/>
+        @endif
 
-            @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
-                <x-chief::fragments :owner="$model"/>
-            @endif
+        @if($model->fragmentModel()->isShared())
+            <div class="p-6 border border-orange-100 rounded-xl bg-orange-50">
+                <p class="text-lg display-base display-dark">Gedeeld fragment</p>
 
-            @if($model->fragmentModel()->isShared())
-                <div class="p-6 space-y-4 bg-orange-50 rounded-xl">
-                    <p class="text-xl display-base display-dark">Gedeeld fragment</p>
+                <div class="mt-4 prose prose-dark prose-spacing">
+                    <p>
+                        Dit is een gedeeld fragment. Dat betekent dat het ook toegevoegd werd op een andere plaats op de website.
+                        Elke aanpassing aan dit fragment zal dus doorgevoerd worden op de volgende pagina's:
 
-                    <div class="prose prose-dark">
-                        <p>
-                            Dit is een gedeeld fragment. Dit betekent dat het ook toegevoegd werd op een andere plaats op de website.
-                            Elke aanpassing aan dit fragment zal dus op elke pagina doorgevoerd worden.
-                        </p>
+                        @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
+                            @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
 
-                        <p>
-                            Dit fragment komt ook voor op:
+                            @if(!$loop->first), @endif
 
-                            @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
-                                @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
+                            @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
+                                <span class="link">
+                                    {{ $otherOwner['pageTitle'] }}
+                                </span>
+                            @else
+                                <a
+                                    href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
+                                    title="{{ $otherOwner['pageTitle'] }}"
+                                    class="underline link link-primary"
+                                >
+                                    {{ $otherOwner['pageTitle'] }}
+                                </a>
+                            @endif
+                        @endforeach
+                    </p>
 
-                                @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
-                                    <span class="link">
-                                        {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
-                                    </span>
-                                @else
-                                    <a
-                                            class="underline link link-primary"
-                                            href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
-                                    >
-                                        {{ $otherOwner['model']->adminConfig()->getPageTitle() }}
-                                    </a>
-                                @endif
+                    <p>
+                        Wil je een aanpassing maken aan dit fragment zonder dat je die doorvoert op de andere pagina's?
+                        Koppel het fragment dan los op deze pagina.
+                    </p>
 
-                                @if(!$loop->last), @endif
-                            @endforeach
-                        </p>
-                    </div>
+                    <p>
 
-                    <button
-                        class="btn btn-warning-outline"
-                        type="submit"
-                        form="detachSharedFragment{{ $model->modelReference()->get() }}"
-                    >
-                        Fragment niet meer delen en voortaan afzonderlijk bewerken op deze pagina
-                    </button>
+                        <button
+                            type="submit"
+                            form="detachSharedFragment{{ $model->modelReference()->get() }}"
+                            class="btn btn-warning-outline"
+                        >
+                            Fragment loskoppelen en afzonderlijk bewerken
+                        </button>
+                    </p>
                 </div>
-            @endif
+            </div>
+        @endif
 
-            <div class="flex flex-wrap space-x-4">
-                <button
-                        type="submit"
-                        form="updateForm{{ $model->modelReference()->get() }}"
-                        class="btn btn-primary"
-                > Wijzigingen opslaan </button>
-
-                <div data-vue-fields>
-                    @adminCan('fragment-delete', $model)
+        <div class="flex flex-wrap gap-4">
+            <div data-vue-fields>
+                @adminCan('fragment-delete', $model)
                     <a v-cloak @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')" class="cursor-pointer btn btn-error-outline">
                         @if($model->fragmentModel()->isShared())
                             Fragment verwijderen op deze pagina
@@ -84,21 +71,22 @@
                             Fragment verwijderen
                         @endif
                     </a>
-                    @endAdminCan
-                </div>
+                @endAdminCan
             </div>
         </div>
-    </div>
-</form>
+    @endif
 
-<div data-vue-fields>
-    @include('chief::manager._transitions.modals.delete-fragment-modal')
+    @if($model->fragmentModel()->exists)
+        <div data-vue-fields>
+            @include('chief::manager._transitions.modals.delete-fragment-modal')
+        </div>
+
+        <form
+            id="detachSharedFragment{{ $model->modelReference()->get() }}"
+            method="POST"
+            action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
+        >
+            @csrf
+        </form>
+    @endif
 </div>
-
-<form
-    id="detachSharedFragment{{ $model->modelReference()->get() }}"
-    method="POST"
-    action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
->
-    @csrf
-</form>

@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 
 class SettingsController extends Controller
 {

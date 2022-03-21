@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin\Settings;
 
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
-use Thinktomorrow\Chief\ManagedModels\Fields\Field;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\SelectField;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class SettingFields
@@ -23,24 +23,25 @@ class SettingFields
 
     protected function fields(): iterable
     {
-        yield SelectField::make('homepage')
+        yield MultiSelect::make('homepage')
             ->name('homepage.:locale')
+            ->id('homepage.:locale')
             ->options(UrlHelper::allOnlineModels())
             ->locales()
-            ->validation('required')
+            ->required()
             ->grouped()
             ->label('Homepagina')
             ->description('Geef hier de homepagina voor de site op.');
-        yield InputField::make('app_name')
+        yield Text::make('app_name')
             ->label('Site naam')
-            ->validation('required')
+            ->required()
             ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.');
-        yield InputField::make('contact_email')
-            ->validation('required|email')
+        yield Text::make('contact_email')
+            ->rules('required|email')
             ->label('Webmaster email')
             ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.');
-        yield InputField::make('contact_name')
-            ->validation('required')
+        yield Text::make('contact_name')
+            ->required()
             ->label('Webmaster naam')
             ->description('Voor en achternaam van de webmaster.');
     }
@@ -48,7 +49,7 @@ class SettingFields
     public function populatedFields(): Fields
     {
         return Fields::make($this->fields())->map(function (Field $field) {
-            return $field->valueResolver(function ($_model = null, $locale = null, $field) {
+            return $field->value(function ($model, $locale, $field) {
                 return $this->settings->get($field->getKey(), $locale);
             });
         });

@@ -1,14 +1,14 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('indexTitle')
+    {{ $resource->getIndexTitle() }}
 @endsection
 
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header')
             @slot('title')
-                Volgorde van {{ strtolower($model->adminConfig()->getIndexTitle()) }} aanpassen
+                Volgorde aanpassen
             @endslot
         @endcomponent
     </div>
@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <x-chief::window>
+                <div class="card">
                     <div
                         id="js-sortable"
                         data-sort-on-load data-sort-route="{{ $manager->route('sort-index') }}"
@@ -30,12 +30,12 @@
                                 data-sortable-id="{{ $model->id }}"
                             >
                                 <p class="text-sm font-semibold text-grey-900">
-                                    @adminConfig('pageTitle')
+                                    {{ $resource->getPageTitle($model) }}
                                 </p>
                             </div>
                         @endforeach
                     </div>
-                </x-chief::window>
+                </div>
 
                 @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                     {!! $models->links('chief::pagination.default') !!}
@@ -43,7 +43,7 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <x-chief::window>
+                <div class="card">
                     <div class="space-y-4">
                         <a class="btn btn-primary" href="{{ $manager->route('index') }}">
                             Terug naar overzicht
@@ -53,7 +53,7 @@
                             Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
                         </p>
                     </div>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

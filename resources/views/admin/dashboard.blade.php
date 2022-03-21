@@ -5,13 +5,13 @@
 @stop
 
 @section('content')
-    <div class="container my">
-        <div class="row gutter-6">
-            <div class="w-full space-y-6 prose lg:w-1/2 prose-dark">
-                <h1 class="text-5xl">Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}</h1>
+    <div class="container">
+        <div class="row gutter-3">
+            <div class="w-full prose-spacing lg:w-1/2">
+                <h1 class="h1 display-dark"> Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }} </h1>
 
-                <p class="text-lg font-medium">
-                    <span class="text-grey-500">Don't try to follow trends. Create them.</span>
+                <p class="font-medium text-grey-500">
+                    Don't try to follow trends. Create them.
                 </p>
             </div>
 

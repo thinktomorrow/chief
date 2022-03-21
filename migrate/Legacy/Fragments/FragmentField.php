@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Migrate\Legacy\Fragments;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\AbstractField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Field;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Types\AbstractField;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\Types\FieldType;
+use Thinktomorrow\Chief\Forms\Fields\Types\MediaField;
 
 class FragmentField extends AbstractField implements Field
 {
@@ -113,9 +113,9 @@ class FragmentField extends AbstractField implements Field
         }
 
         // Take the fields from the first fragment as a starting point for duplication
-        return array_map(function (\Thinktomorrow\Chief\ManagedModels\Fields\Field $field) {
+        return array_map(function (\Thinktomorrow\Chief\Forms\Fields\Field $field) {
             return $field->valueResolver(function ($model = null, $locale = null, $field) {
-                if ($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField) {
+                if ($field instanceof \Thinktomorrow\Chief\Forms\Fields\Types\MediaField) {
                     return [];
                 }
                 return null;

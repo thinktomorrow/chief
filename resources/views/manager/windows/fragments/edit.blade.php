@@ -1,3 +1,5 @@
 <x-chief::sidebar-fragment>
-    <x-chief::fields.form />
+    @foreach($forms->get() as $form)
+        {{ $form->editInline()->showAsBlank()->render() }}
+    @endforeach
 </x-chief::sidebar-fragment>

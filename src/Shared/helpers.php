@@ -8,11 +8,12 @@ if (! function_exists('trap')) {
     function trap($var, ...$moreVars): void
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $basePath = __DIR__.'/../../';
 
         if ('cli' == php_sapi_name()) {
-            print_r("\e[1;30m dumped at: ".str_replace(base_path(), '', $trace[0]['file']).', line: '.$trace[0]['line']."\e[40m\n");
+            print_r("\e[1;30m dumped at: ".str_replace($basePath, '', $trace[0]['file']).', line: '.$trace[0]['line']."\e[40m\n");
         } else {
-            print_r('[dumped at: '.str_replace(base_path(), '', $trace[0]['file']).', line: '.$trace[0]['line']."]\n");
+            print_r('[dumped at: '.str_replace($basePath, '', $trace[0]['file']).', line: '.$trace[0]['line']."]\n");
         }
 
         dd($var, ...$moreVars);

@@ -1,27 +1,25 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('indexTitle')
+    {{ $resource->getIndexTitle() }}
 @endsection
 
 @section('header')
     <div class="container">
         @component('chief::layout._partials.header')
-            @slot('title')
-                @adminConfig('indexTitle')
-            @endslot
+            @slot('title', $resource->getIndexTitle())
 
             @slot('breadcrumbs')
-                @if($model->adminConfig()->getIndexBreadCrumb())
-                    <a href="{{ $model->adminConfig()->getIndexBreadCrumb()->url }}" class="link link-primary">
-                        <x-chief-icon-label type="back">{{ $model->adminConfig()->getIndexBreadCrumb()->label }}</x-chief-icon-label>
+                @if($indexBreadCrumb = $resource->getIndexBreadCrumb())
+                    <a href="{{ $indexBreadCrumb->url }}" class="link link-primary">
+                        <x-chief-icon-label type="back">{{ $indexBreadCrumb->label }}</x-chief-icon-label>
                     </a>
                 @endif
             @endslot
 
             @adminCan('create')
                 <a href="@adminRoute('create')" class="btn btn-primary">
-                    <x-chief-icon-label type="add">@adminConfig('modelName') toevoegen</x-chief-icon-label>
+                    <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
                 </a>
             @endAdminCan
         @endcomponent
@@ -33,7 +31,7 @@
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
                 @if(count($models))
-                    <x-chief::window>
+                    <div class="card">
                         @adminCan('sort-index', $models->first())
                             <div
                                 id="js-sortable"
@@ -44,10 +42,10 @@
                             <div class="-my-4 divide-y divide-grey-100">
                         @endAdminCan
                                 @foreach($models as $model)
-                                    @include($model->adminConfig()->getIndexCardView())
+                                    @include($resource->getIndexCardView())
                                 @endforeach
                             </div>
-                    </x-chief::window>
+                    </div>
 
                     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                         {!! $models->links('chief::pagination.default') !!}
@@ -58,12 +56,18 @@
             </div>
 
             <div class="w-full space-y-6 lg:w-1/3">
-                @if($model->adminConfig()->getIndexSidebar())
-                    {!! $model->adminConfig()->getIndexSidebar() !!}
+                @if($resource->getIndexSidebar())
+                    {!! $resource->getIndexSidebar() !!}
                 @endif
 
                 @if($manager->filters()->anyRenderable())
-                    <x-chief::window title="Filtering">
+                    <div class="card">
+                        <div class="w-full space-x-1 mt-0.5">
+                            <span class="text-lg display-base display-dark">
+                                Filter
+                            </span>
+                        </div>
+
                         <form method="GET" class="space-y-6">
                             {!! $manager->filters()->render() !!}
 
@@ -71,17 +75,23 @@
                                 <button class="btn btn-primary" type="submit">Filter</button>
                             </div>
                         </form>
-                    </x-chief::window>
+                    </div>
                 @endif
 
                 @adminCan('sort-index', $models->first())
-                    <x-chief::window title="Sortering">
+                    <div class="card">
+                        <div class="w-full space-x-1 mt-0.5">
+                            <span class="text-lg display-base display-dark">
+                                Sortering
+                            </span>
+                        </div>
+
                         @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
                             <p class="text-grey-700">
                                 Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
                             </p>
 
-                            <button data-sortable-toggle class="btn btn-primary">
+                            <button data-sortable-toggle class="btn btn-primary mt-4 mb-4">
                                 Pas volgorde aan
                             </button>
 
@@ -95,17 +105,23 @@
 
                             <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
                         @endif
-                    </x-chief::window>
+                    </div>
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    <x-chief::window title="Sortering">
+                    <div class="card">
+                        <div class="w-full space-x-1 mt-0.5">
+                            <span class="text-lg display-base display-dark">
+                                Archief
+                            </span>
+                        </div>
+
                         @if(Route::currentRouteName() == 'chief.single.archive_index')
                             <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
                         @else
                             <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
                         @endif
-                    </x-chief::window>
+                    </div>
                 @endAdminCan
             </div>
         </div>

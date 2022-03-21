@@ -56,7 +56,7 @@ class CreateFragmentCommand extends Command
 
         $className = Str::studly($name);
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
-        $fullPath = base_path($path) . '/' . $className.'.php';
+        $fullPath = $path . '/' . $className.'.php';
         $viewKey = Str::snake($className);
 
         $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/fragment.php.stub'), [

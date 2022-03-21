@@ -7,31 +7,35 @@
 @section('content')
     <div class="relative min-h-screen row-center-center">
         <div class="space-y-6 w-128">
-            <h1 class="text-center text-black">Reset jouw wachtwoord</h1>
+            <h1 class="text-center h1 display-dark">Reset jouw wachtwoord</h1>
 
-            <x-chief::window>
+            <div class="card">
                 <form role="form" method="POST" action="{{ route('chief.back.password.request') }}">
                     @csrf
 
                     <input type="hidden" name="token" value="{{ $token }}">
 
                     <div class="space-y-6">
-                        <x-chief::field.form label="E-mail" id="identity" error="email">
-                            <input id="identity" name="email" type="email" placeholder="E-mail" value="{{ old('email') }}">
-                        </x-chief::field.form>
 
-                        <x-chief::field.form label="Nieuw wachtwoord" id="password" error="password">
-                            <input type="password" id="password" name="password" placeholder="Nieuw wachtwoord">
-                        </x-chief::field.form>
+                        <x-chief-form::formgroup id="identity" label="E-mail" required>
+                            <input id="identity" type="email" name="email" value="{{ old('email') }}">
+                            <x-chief-form::formgroup.error error-ids="email"></x-chief-form::formgroup.error>
+                        </x-chief-form::formgroup>
 
-                        <x-chief::field.form label="Herhaal wachtwoord" id="password_confirmation" error="password_confirmation">
-                            <input type="password" id="password-confirm" name="password_confirmation" placeholder="Herhaal wachtwoord">
-                        </x-chief::field.form>
+                        <x-chief-form::formgroup id="password" label="Nieuw wachtwoord" required>
+                            <input id="password" type="password" name="password">
+                            <x-chief-form::formgroup.error error-ids="password"></x-chief-form::formgroup.error>
+                        </x-chief-form::formgroup>
+
+                        <x-chief-form::formgroup id="password_confirmation" label="Herhaal wachtwoord" required>
+                            <input id="password_confirmation" type="password" name="password_confirmation">
+                            <x-chief-form::formgroup.error error-ids="password_confirmation"></x-chief-form::formgroup.error>
+                        </x-chief-form::formgroup>
 
                         <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
                     </div>
                 </form>
-            </x-chief::window>
+            </div>
         </div>
     </div>
 @endsection

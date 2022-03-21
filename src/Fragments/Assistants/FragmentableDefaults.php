@@ -3,16 +3,19 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
+use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
+use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableStaticModelDefault;
 
 trait FragmentableDefaults
 {
-    use ManagedModelDefaults;
+    use FragmentResourceDefault;
+    use ReferableStaticModelDefault;
     use Viewable;
 
     private FragmentModel $fragmentModel;
@@ -20,6 +23,13 @@ trait FragmentableDefaults
     public function modelReference(): ModelReference
     {
         return ModelReference::fromStatic(static::class);
+    }
+
+    public function viewKey(): string
+    {
+        $key = (new ResourceKeyFormat(static::class))->getKey();
+
+        return Str::of($key)->remove('_fragment')->trim()->__toString();
     }
 
     public function renderAdminFragment($owner, $loop, $viewData = []): string
@@ -38,11 +48,6 @@ trait FragmentableDefaults
         ]));
 
         return $this->renderView();
-    }
-
-    public function adminView(): View
-    {
-        return view('chief::manager.windows.fragments.edit');
     }
 
     public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable

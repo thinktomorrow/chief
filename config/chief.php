@@ -56,14 +56,6 @@ return [
     ],
 
     /**
-     * List of Chief addon service providers.
-     * These will be loaded by Chief in the given sequence.
-     */
-    'addons' => [
-        \Thinktomorrow\Chief\Addons\Repeat\RepeatServiceProvider::class,
-    ],
-
-    /**
      * Widgets that will be shown on the dashboard
      */
     'widgets' => [

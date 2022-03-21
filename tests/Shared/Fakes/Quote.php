@@ -9,12 +9,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
@@ -33,14 +32,17 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
         'title', 'custom', 'title_trans', 'content_trans',
     ];
 
-    public function fields(): Fields
+    public function fields($model): iterable
     {
-        return Fields::make([
-            InputField::make('title')->validation(['min:4']),
-            InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']),
-            InputField::make('title_trans')->translatable(['nl', 'en']),
-            FileField::make('thumb'),
-        ]);
+        yield Fields\Text::make('title')->rules('min:4');
+        yield Fields\Text::make('title_trans')->locales(['nl','en']);
+        yield Fields\Text::make('custom')
+            ->required()
+            ->validationMessages(['required' => 'custom error for :attribute'])
+            ->validationAttribute('custom attribute')
+            ->rules('min:4');
+
+        yield File::make('thumb');
     }
 
     public static function migrateUp()
@@ -58,5 +60,10 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     protected function dynamicLocales(): array
     {
         return config('chief.locales', []);
+    }
+
+    public function viewKey(): string
+    {
+        return 'quote';
     }
 }

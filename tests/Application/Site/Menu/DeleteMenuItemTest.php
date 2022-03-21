@@ -15,7 +15,7 @@ class DeleteMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_can_delete_a_menuItem()
+    public function it_can_delete_a_menu_item()
     {
         $menuitem = MenuItem::create(['menu_type' => 'main']);
 
@@ -29,7 +29,7 @@ class DeleteMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function only_authenticated_admin_can_delete_a_menuItem()
+    public function only_authenticated_admin_can_delete_a_menu_item()
     {
         $menuitem = MenuItem::create();
 

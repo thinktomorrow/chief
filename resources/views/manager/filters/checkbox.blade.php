@@ -1,7 +1,4 @@
-<x-chief::field.form
-    label="{{ $label ?? '' }}"
-    name="{{ $name }}"
->
+<x-chief-form::formgroup id="{{ $id }}" label="{{ $label ?? null }}">
     @if(isset($description))
         <x-slot name="description">
             <p>{!! $description !!}</p>
@@ -20,4 +17,5 @@
                 </label>
             @endforeach
         </div>
-</x-chief::field.form>
+    <x-chief-form::formgroup.error error-ids="{{ $id }}"></x-chief-form::formgroup.error>
+</x-chief-form::formgroup>

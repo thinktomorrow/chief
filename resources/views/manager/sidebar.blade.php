@@ -2,7 +2,7 @@
 
 @push('custom-scripts-after-vue')
     <template id="js-sidebar-template">
-        <div data-sidebar class="fixed inset-0 z-10" style="display: none;">
+        <div data-sidebar class="fixed inset-0 z-20" style="display: none;">
             <div
                 data-sidebar-backdrop
                 data-sidebar-close
@@ -11,9 +11,9 @@
 
             <aside
                 data-sidebar-aside
-                class="absolute top-0 bottom-0 right-0 w-full px-8 py-12 overflow-auto bg-white shadow-window md:w-192 sidebar-slide-from-right"
+                class="absolute top-0 bottom-0 right-0 w-full px-6 py-12 space-y-12 overflow-auto bg-white md:w-192 sidebar-slide-from-right shadow-card"
             >
-                <div data-sidebar-close data-sidebar-close-button class="mb-2"></div>
+                <div data-sidebar-close data-sidebar-close-button></div>
 
                 <div data-sidebar-content tabindex="0" class="outline-none">
                     <!-- panel content -->

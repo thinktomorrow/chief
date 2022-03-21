@@ -7,7 +7,7 @@
     >
         @csrf
 
-        <h2>Archiveer: @adminConfig('pageTitle')</h2>
+        <h2 class="h2 display-dark">Archiveer: {{ $resource->getPageTitle($model) }}</h2>
 
         @if(contract($model, \Thinktomorrow\Chief\Site\Visitable\Visitable::class))
             <p>
@@ -28,7 +28,7 @@
                 class="mt-3"
             ></chief-multiselect>
         @else
-            <p>Archiveren haalt de @adminConfig('pageTitle') onmiddellijk van de site.</p>
+            <p>Archiveren haalt de {{ $resource->getPageTitle($model) }} onmiddellijk van de site.</p>
         @endif
     </form>
 

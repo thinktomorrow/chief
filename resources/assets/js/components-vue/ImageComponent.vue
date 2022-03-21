@@ -62,8 +62,12 @@ export default {
             Eventbus.$emit('image-upload-response' + this.reference, this.instance);
 
             if (error) {
+                if (error == 'fail') {
+                    error = 'Fout bij verwerking. Mogelijk is de afbeelding te groot.';
+                }
+
                 Eventbus.$emit('create-notification', 'error', error);
-                console.error(error);
+
                 return;
             } else {
                 Eventbus.$emit(

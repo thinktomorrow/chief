@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 
-interface FragmentsOwner extends ManagedModel
+interface FragmentsOwner
 {
     public function allowedFragments(): array;
 

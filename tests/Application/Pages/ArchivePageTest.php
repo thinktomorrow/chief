@@ -7,10 +7,10 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 final class ArchivePageTest extends ChiefTestCase
 {
@@ -23,8 +23,8 @@ final class ArchivePageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
@@ -126,5 +126,25 @@ final class ArchivePageTest extends ChiefTestCase
 
         $this->assertEquals('first-nl', UrlRecord::findRecentRedirect($redirectModel, 'nl')->slug);
         $this->assertEquals('first-en', UrlRecord::findRecentRedirect($redirectModel, 'en')->slug);
+    }
+
+    /** @test */
+    public function the_archive_index_can_be_visited_when_there_is_an_archived_model()
+    {
+        $model = ArticlePage::create([PageState::KEY => PageState::ARCHIVED]);
+
+        auth('chief')->login($this->admin());
+
+        $this->assertTrue($this->manager($model)->can('archive_index'));
+    }
+
+    /** @test */
+    public function the_archive_index_cannot_be_visited_when_there_are_no_archived_models()
+    {
+        $model = ArticlePage::create();
+
+        auth('chief')->login($this->admin());
+
+        $this->assertFalse($this->manager($model)->can('archive_index'));
     }
 }

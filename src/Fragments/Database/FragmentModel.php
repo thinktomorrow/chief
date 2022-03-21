@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Resource\FragmentResource;
+use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-final class FragmentModel extends Model implements ManagedModel, HasAsset
+final class FragmentModel extends Model implements FragmentResource, HasAsset
 {
-    use ManagedModelDefaults;
+    use FragmentResourceDefault;
     use HasDynamicAttributes;
     use AssetTrait;
     use SoftDeletes;
@@ -38,12 +38,12 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
         'id', 'model_reference', 'meta', 'created_at', 'updated_at',
     ];
 
-    public static function managedModelKey(): string
+    public static function resourceKey(): string
     {
         return 'fragments';
     }
 
-    public function fields(): iterable
+    public function fields($model): iterable
     {
         return [];
     }

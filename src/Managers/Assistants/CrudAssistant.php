@@ -7,14 +7,14 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
@@ -85,13 +85,11 @@ trait CrudAssistant
     {
         $this->guard('index');
 
-        $modelClass = $this->managedModelClass();
-
         app(VisitedUrl::class)->add(request()->fullUrl());
 
         return view('chief::manager.index', [
             'manager' => $this,
-            'model' => new $modelClass(),
+            'resource' => $this->resource,
             'models' => $this->indexModels(),
         ]);
     }
@@ -100,9 +98,7 @@ trait CrudAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        $pagination = (new $this->managedModelClass())->adminConfig()->getPagination();
-
-        if (! $pagination) {
+        if (! $pagination = $this->resource->getIndexPagination()) {
             return $builder->get();
         }
 
@@ -150,10 +146,12 @@ trait CrudAssistant
      */
     public function create()
     {
-        $model = new $this->managedModelClass();
+        $model = $this->managedModelClassInstance();
 
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('resource', $this->resource);
+        View::share('forms', Forms::make($this->resource->fields($model)));
 
         return view('chief::manager.create');
     }
@@ -164,23 +162,28 @@ trait CrudAssistant
 
         $model = $this->handleStore($request);
 
-        return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
+        if ($request->expectsJson()) {
+            return response()->json([
+                'redirect_to' => $this->route('edit', $model),
+            ]);
+        }
+
+        return redirect()->to($this->route('edit', $model));
     }
 
     private function handleStore(Request $request)
     {
-        /** @var ManagedModel $model */
-        $model = new $this->managedModelClass();
+        $model = $this->managedModelClassInstance();
 
-        $fields = Fields::make($model->fields())
-            ->notTagged(['edit', 'not-on-create'])
-            ->model($model);
+        $fields = Forms::make($this->resource->fields($model))
+            ->fillModel($model)
+            ->getFields()
+            ->notTagged(['edit', 'not-on-create']);
 
         $this->fieldValidator()->handle($fields, $request->all());
 
         // TODO: extract all uploadedFile instances from the input...
-        $model->saveFields($fields, $request->all(), $request->allFiles());
+        (new SaveFields())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelCreated($model->modelReference()));
 
@@ -196,10 +199,13 @@ trait CrudAssistant
 
         $this->guard('edit', $model);
 
+        // TODO/ remove share??
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('resource', $this->resource);
+        View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
 
-        return $model->adminView();
+        return $this->resource->getPageView();
     }
 
     public function update(Request $request, $id)
@@ -207,7 +213,7 @@ trait CrudAssistant
         $model = $this->handleUpdate($request, $id);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $this->resource->getPageTitle($model) . '</a> is aangepast');
     }
 
     private function handleUpdate(Request $request, $id)
@@ -216,11 +222,13 @@ trait CrudAssistant
 
         $this->guard('update', $model);
 
-        $fields = Fields::make($model->fields());
+        $fields = Forms::make($this->resource->fields($model))
+            ->fillModel($model)
+            ->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());
 
-        $model->saveFields($fields, $request->all(), $request->allFiles());
+        (new SaveFields())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelUpdated($model->modelReference()));
 
@@ -234,12 +242,12 @@ trait CrudAssistant
         $this->guard('delete', $model);
 
         if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $this->resource->getPageTitle($model) . ' is niet verwijderd.');
         }
 
         app(DeleteModel::class)->handle($model);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $this->resource->getPageTitle($model) . '" is verwijderd.');
     }
 }

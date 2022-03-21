@@ -26,12 +26,12 @@
     <div class="container-sm">
         <div class="row">
             @if($menuItems->isEmpty() )
-                <div class="w-full prose prose-dark">
+                <div class="w-full prose prose-spacing prose-dark">
                     <p>Momenteel zijn er nog geen menu items toegevoegd.</p>
                 </div>
             @else
                 <div class="w-full">
-                    <x-chief::window>
+                    <div class="card">
                         <div class="-my-3 divide-y divide-grey-100">
                             @foreach($menuItems as $item)
                                 <x-chief-hierarchy
@@ -41,7 +41,7 @@
                                 ></x-chief-hierarchy>
                             @endforeach
                         </div>
-                    </x-chief::window>
+                    </div>
                 </div>
             @endif
         </div>

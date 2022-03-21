@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
@@ -27,7 +27,7 @@ class DeleteModel
         $this->deleteContext = $deleteContext;
     }
 
-    public function handle(ManagedModel $model): void
+    public function handle(Model $model): void
     {
         try {
             DB::beginTransaction();

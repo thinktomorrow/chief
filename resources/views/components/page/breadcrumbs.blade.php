@@ -1,7 +1,7 @@
 <div>
-    @if($model->adminConfig()->getBreadCrumb())
-        <a href="{{ visitedUrl($model->adminConfig()->getBreadCrumb()->url) }}" class="link link-primary">
-            <x-chief-icon-label type="back">{{ $model->adminConfig()->getBreadCrumb()->label }}</x-chief-icon-label>
+    @if($breadCrumb = $resource->getPageBreadCrumb())
+        <a href="{{ visitedUrl($breadCrumb->url) }}" class="link link-primary">
+            <x-chief-icon-label type="back">{{ $breadCrumb->label }}</x-chief-icon-label>
         </a>
     @else
         @adminCan('index')

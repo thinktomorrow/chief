@@ -10,9 +10,9 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 final class DeletePageTest extends ChiefTestCase
 {
@@ -25,8 +25,8 @@ final class DeletePageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
@@ -54,6 +54,23 @@ final class DeletePageTest extends ChiefTestCase
 
         $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
         $this->assertFalse($model->fresh()->trashed());
+    }
+
+    /** @test */
+    public function it_cannot_delete_a_model_without_confirmation()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::DRAFT,
+        ]);
+
+        $this->asAdmin()->delete($this->manager->route('delete', $model), [
+            'deleteconfirmation' => 'FALSE',
+        ])
+            ->assertStatus(302);
+
+        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(1, $model::count());
     }
 
     /** @test */

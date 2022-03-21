@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\MorphableContract;
-use Thinktomorrow\Chief\ManagedModels\Assistants\SavingFields;
+use Thinktomorrow\Chief\Forms\SaveFields;
 
 abstract class Module extends Model implements ManagedModel, HasAsset, MorphableContract, ViewableContract
 {
@@ -27,7 +27,7 @@ abstract class Module extends Model implements ManagedModel, HasAsset, Morphable
     use SoftDeletes;
     use Viewable;
     use HasFragments;
-    use SavingFields;
+    use SaveFields;
 
     protected $dynamicKeys = [
         'title',

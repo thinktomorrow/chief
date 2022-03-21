@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Migrate\Legacy\Fragments;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Forms\Fields;
 
 class Fragment
 {
@@ -14,7 +14,7 @@ class Fragment
     /** @var array */
     private $values;
 
-    /** @var Fields */
+    /** @var \Thinktomorrow\Chief\Forms\Fields */
     private $fields;
 
     /** @var null|int */

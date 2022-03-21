@@ -1,118 +1,38 @@
 @if(chiefAdmin())
-    @php
-        // find model by this url, get manager, set model and then get route for edit
-        $editUrl = null;
 
-        try {
-            $editUrl = app(\Thinktomorrow\Chief\Site\AdminToast::class)->getEditUrlOfCurrentPage();
-        } catch(Exception $e) {
-            //
-        }
-
-        $inPreviewMode = \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check();
-        $previewModeToggleUrl = route('chief.front.preview');
-    @endphp
-
-    <style type="text/css">
-        .chief-widget-container {
-            position: fixed;
-            right: 0;
-            left: 0;
-            bottom: 1rem;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-        }
-
-        .chief-widget {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
-            border-radius: 9999px;
-        }
-        .chief-widget > *:not(:first-child) {
-            border-left: 1px solid rgb(240, 240, 240);
-        }
-
-        .chief-widget-link {
-            display: flex;
-            align-items: center;
-            line-height: 1;
-            padding: 0.75rem 1rem;
-            cursor: pointer;
-            text-align: center;
-            transition: 75ms all ease-in-out;
-        }
-        .chief-widget-link:hover {
-            color: #6366F1;
-        }
-        .chief-widget-link > *:not(:first-child) {
-            margin-left: 0.5rem;
-        }
-
-        @media (max-width: 640px) {
-            .chief-widget-hide-on-mobile {
-                display: none;
-            }
-        }
-    </style>
-
-    <div data-chief-widget class="chief-widget-container">
-        <div class="chief-widget">
-            @if($editUrl)
-                <span>
-                    <a 
-                        href="{{ $editUrl }}" 
-                        title="Bewerk deze pagina in chief" 
-                        aria-label="edit page"
-                        class="chief-widget-link"
-                    >
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/> </svg>
-                        <span class="chief-widget-hide-on-mobile">Pagina bewerken</span>
-                    </a>
-                </span>
-            @endif
-
-            <span>
-                <a 
-                    href="{{ $previewModeToggleUrl }}" 
-                    title="{{ $inPreviewMode ? 'Schakel preview uit: verberg offline pagina\'s' : 'Schakel preview aan: toon offline pagina\'s' }}"
-                    class="chief-widget-link"
-                >
-                    @if($inPreviewMode)
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /> </svg>
-                        <span>
-                            <span>Verberg offline</span>
-                            <span class="chief-widget-hide-on-mobile">pagina's en</span>
-                            <span>items</span>
-                        <span>
-                    @else
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /> </svg>
-                        <span>
-                            <span>Toon offline</span>
-                            <span class="chief-widget-hide-on-mobile">pagina's en</span>
-                            <span>items</span>
-                        <span>
-                    @endif
-                </a>
-            </span>
-
-            <span>
-                <span data-chief-widget-close title="sluiten" aria-label="close" class="chief-widget-link">
-                    <span class="chief-widget-hide-on-mobile">Sluiten</span>
-                    <svg width="16" height="16" style="margin-top: 2px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/> </svg>
-                </span>
-            </span>
-        </div>
-    </div>
+    <div id="jsChiefToast"></div>
 
     <script>
-        var chiefWidget = document.querySelector('[data-chief-widget]');
-        var chiefWidgetClose = chiefWidget.querySelector('[data-chief-widget-close]');
+        window.addEventListener('DOMContentLoaded', () => {
 
-        chiefWidgetClose.addEventListener('click', function() {
-            chiefWidget.style.display = "none";
-        });
+            try{
+                const toasts = document.getElementById('jsChiefToast');
+
+                fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        toast.innerHTML = data.data;
+                        listenForClose();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+
+                function listenForClose()
+                {
+                    const toastClose = toast.querySelector('[data-admin-toast-close]');
+
+                    toastClose.addEventListener('click', function() {
+                        toast.style.display = "none";
+                    });
+                }
+            } catch(error)
+            {
+                console.log(error);
+            }
+
+        })
+
     </script>
 @endif
+

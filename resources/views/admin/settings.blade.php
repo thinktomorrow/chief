@@ -22,18 +22,18 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
+                <div class="card">
                     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
                         @csrf
                         @method('put')
 
                         <div class="space-y-6">
                             @foreach($fields as $field)
-                                <x-chief::field.form :field="$field" />
+                                {!! $field->render() !!}
                             @endforeach
                         </div>
                     </form>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

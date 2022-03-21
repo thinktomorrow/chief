@@ -1,0 +1,1 @@
+{{ $form->editInline()->showAsBlank()->render() }}

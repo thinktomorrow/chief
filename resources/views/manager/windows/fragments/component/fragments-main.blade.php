@@ -1,5 +1,5 @@
 <div data-fragments-component>
-    <x-chief::window>
+    <x-chief-form::window class="card">
         <div class="relative -my-6">
             @include('chief::manager.windows.fragments.component.fragment-select', [
                 'ownerManager' => $manager,
@@ -10,12 +10,13 @@
                 data-fragments-container
                 data-sortable-fragments
                 data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
-                class="divide-y-2 divide-dashed divide-primary-50"
+                class="divide-y divide-grey-100"
             >
                 @foreach($fragments as $fragment)
                     @include('chief::manager.windows.fragments.component._card', [
                         'model' => $fragment['model'],
                         'manager' => $fragment['manager'],
+                        'resource' => $fragment['resource'],
                         'owner' => $owner,
                         'ownerManager' => $manager,
                         'loop' => $loop,
@@ -23,5 +24,5 @@
                 @endforeach
             </div>
         </div>
-    </x-chief:window>
+    </x-chief-form::window>
 </div>

@@ -1,5 +1,5 @@
-<div class="space-y-8">
-    <h3>Links beheren</h3>
+<div class="space-y-6">
+    <p class="text-lg display-base display-dark">Links beheren</p>
 
     <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST">
         @csrf
@@ -12,7 +12,7 @@
                     checkurl="{{ route('chief.back.links.check') }}"
                     initial-value="{{ old('links.'.$locale, $formValues->value) }}"
                     fixed-segment="{{ $formValues->fixedSegment }}"
-                    model-class="{{ get_class($model) }}"
+                    model-class="{{ $model::class }}"
                     model-id="{{ $model->id }}"
                 >
                     <div>
@@ -22,9 +22,9 @@
                             </span>
                         </div>
 
-                        <div class="space-y-2 mt-2">
+                        <div class="mt-2 space-y-2">
                             <div class="flex w-full">
-                                <div class="prepend-to-input">
+                                <div class="prepend">
                                     <span v-if="fixedSegment !== '/'" class="flex items-center space-x-1">
                                         {{-- TODO: better icon --}}
                                         <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
@@ -42,12 +42,12 @@
                                 </div>
 
                                 <input
-                                        @keyup="onInput"
-                                        id="links.{{ $locale }}"
-                                        type="text"
-                                        name="links[{{ $locale }}]"
-                                        v-model="value"
-                                        class="with-prepend"
+                                    @keyup="onInput"
+                                    id="links.{{ $locale }}"
+                                    type="text"
+                                    name="links[{{ $locale }}]"
+                                    v-model="value"
+                                    class="with-prepend"
                                 >
                             </div>
 
@@ -66,14 +66,14 @@
 
     @if($linkForm->hasAnyRedirects())
         <div class="space-y-3">
-            <h4 class="text-grey-900">Redirects</h4>
+            <h4 class="h4 display-dark">Redirects</h4>
 
             <div class="space-y-3">
                 @foreach($linkForm->links() as $locale => $links)
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
                             @if(count(config('chief.locales')) > 1)
-                                <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light">{{ $locale }}</span>
+                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey-light">{{ $locale }}</span>
                             @endif
 
                             <div class="w-full px-4 py-3">
