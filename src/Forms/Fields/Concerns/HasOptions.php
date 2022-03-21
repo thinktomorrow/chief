@@ -29,10 +29,11 @@ trait HasOptions
     /**
      * Convert non-associative array to associative one.
      * If you want to force an non-assoc. array, you can use a Closure.
+     * If it's a nested array which is used by the grouping of the Multiselect.
      */
     private function sanitizeOptions(array|Closure $options): array|Closure
     {
-        if (! is_array($options) || ! array_is_list($options)) {
+        if (!is_array($options) || !array_is_list($options) || is_array($options[0])) {
             return $options;
         }
 
