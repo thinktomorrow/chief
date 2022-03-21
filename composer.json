@@ -19,7 +19,7 @@
         "laravel/ui": "^3.2",
         "maennchen/zipstream-php": "^2.1",
         "ramsey/uuid": "^4.1",
-        "spatie/laravel-activitylog": "^3.0",
+        "spatie/laravel-activitylog": "^4.4",
         "spatie/laravel-permission": "^4.0",
         "spatie/laravel-sitemap": "^5.9",
         "thinktomorrow/assetlibrary": "^0.8.1",
