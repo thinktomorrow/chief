@@ -162,9 +162,13 @@ trait CrudAssistant
 
         $model = $this->handleStore($request);
 
-        return response()->json([
-            'redirect_to' => $this->route('edit', $model),
-        ]);
+        if($request->expectsJson()) {
+            return response()->json([
+                'redirect_to' => $this->route('edit', $model),
+            ]);
+        }
+
+        return redirect()->to($this->route('edit', $model));
     }
 
     private function handleStore(Request $request)
