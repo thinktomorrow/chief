@@ -10,10 +10,13 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
-class QuoteWithAstrotomicTranslations extends Model implements PageResource
+class QuoteWithAstrotomicTranslations extends Model implements PageResource, ReferableModel
 {
     use PageResourceDefault;
+    use ReferableModelDefault;
     use \Astrotomic\Translatable\Translatable;
 
     public $table = 'quotes';

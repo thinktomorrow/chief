@@ -10,10 +10,12 @@ use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableStaticModelDefault;
 
 trait FragmentableDefaults
 {
     use FragmentResourceDefault;
+    use ReferableStaticModelDefault;
     use Viewable;
 
     private FragmentModel $fragmentModel;

@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
 use Thinktomorrow\Chief\Managers\Routes\RegisterManagedRoutes;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 final class Register
 {
@@ -41,6 +42,8 @@ final class Register
 
     private function register(Resource $resource, Manager $manager): void
     {
+        $this->assertModelIsReferable($resource::modelClassName());
+
         $this->registerMorphMap($resource::resourceKey(), $resource::modelClassName());
 
         // Only load up the admin routes and managers when in admin...
@@ -69,5 +72,12 @@ final class Register
         Relation::morphMap([
             $key => $modelClass,
         ]);
+    }
+
+    private function assertModelIsReferable(string $modelClass): void
+    {
+        if (! (new \ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
+            throw new \InvalidArgumentException($modelClass.' should implement '.ReferableModel::class);
+        }
     }
 }
