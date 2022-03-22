@@ -66,7 +66,6 @@ class CreatePageCommand extends Command
         $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->model('.$namespacedClassName.'::class, \Thinktomorrow\Chief\Managers\Presets\PageManager::class, \'nav\');');
 
         if ($createMigrationFile) {
-            trap('trueueue');
             $this->call('chief:page-migration', ['table' => Str::snake(Str::plural($className))]);
         }
 
