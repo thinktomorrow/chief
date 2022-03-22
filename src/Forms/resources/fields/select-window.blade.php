@@ -25,5 +25,5 @@
         @endif
     </div>
 @else
-    <p><span class="text-grey-400">...</span></p>
+    <p>...</p>
 @endif
