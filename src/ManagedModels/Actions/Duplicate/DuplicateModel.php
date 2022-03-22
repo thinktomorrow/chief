@@ -27,7 +27,7 @@ class DuplicateModel
             $this->copyTitle($model, $titleKey, $copiedModel);
         }
 
-        if($copiedModel->timestamps) {
+        if ($copiedModel->timestamps) {
             $copiedModel->created_at = now();
             $copiedModel->updated_at = now();
         }
