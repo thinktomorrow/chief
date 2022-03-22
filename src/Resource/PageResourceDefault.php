@@ -44,8 +44,8 @@ trait PageResourceDefault
 
     public function getPageTitle($model): string
     {
-        if (isset($model->title) && $model->title) {
-            return $model->title;
+        if (isset($model->{$this->getTitleAttributeKey()}) && $model->{$this->getTitleAttributeKey()}) {
+            return $model->{$this->getTitleAttributeKey()};
         }
 
         return $this->getLabel();
