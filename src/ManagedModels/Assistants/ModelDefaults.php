@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
-use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;

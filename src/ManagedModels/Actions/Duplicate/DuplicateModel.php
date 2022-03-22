@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
@@ -50,7 +50,7 @@ class DuplicateModel
      */
     private function resetAstrotomicTranslations(Model $copiedModel): void
     {
-        if (!$copiedModel->relationLoaded('translations')) {
+        if (! $copiedModel->relationLoaded('translations')) {
             return;
         }
 
@@ -74,8 +74,9 @@ class DuplicateModel
     private function copyTitle(Model $model, string $titleKey, Model $copiedModel): void
     {
         // Default when title is no dynamic field
-        if (!public_method_exists($model, 'dynamic') || !$model->isDynamic($titleKey)) {
+        if (! public_method_exists($model, 'dynamic') || ! $model->isDynamic($titleKey)) {
             $copiedModel->$titleKey = $model->$titleKey;
+
             return;
         }
 
