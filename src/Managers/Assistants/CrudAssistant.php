@@ -120,8 +120,8 @@ trait CrudAssistant
 
         $filters = $this->addUpdatedFilter($filters);
 
-        if (public_method_exists($this->managedModelClass(), 'filters')) {
-            $filters = $filters->merge(Filters::make($this->managedModelClass()::filters()));
+        if (public_method_exists($this->resource, 'filters')) {
+            $filters = $filters->merge(Filters::make($this->resource::filters()));
         }
 
         return $filters;

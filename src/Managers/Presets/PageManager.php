@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
 
+use Thinktomorrow\Chief\Managers\Assistants\PreviewAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
@@ -25,6 +26,7 @@ final class PageManager implements Manager
     use CrudAssistant;
     use LinkAssistant;
     use StatusAssistant;
+    use PreviewAssistant;
     use FragmentsOwningAssistant;
     use FormsAssistant;
     use RepeatFieldAssistant;
