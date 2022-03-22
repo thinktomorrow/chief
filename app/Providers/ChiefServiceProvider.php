@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
@@ -44,14 +45,7 @@ class ChiefServiceProvider extends ServiceProvider
          * Boot required for frontend
          * ------------------------------------
          */
-        (new SquantoServiceProvider($this->app))->boot();
-        (new RoutesServiceProvider($this->app))->boot();
-
-        $this->bootChiefAuth();
-
-        Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
-
-        $this->app['view']->addNamespace('chief-site', __DIR__.'/../../resources/views/site');
+        $this->bootFrontendEssentials();
 
         if (! $this->app->make(AdminEnvironment::class)->check()) {
             return;
@@ -170,5 +164,21 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentDetached::class, UpdateFragmentMetadata::class.'@onFragmentDetached');
         Event::listen(FragmentAdded::class, UpdateFragmentMetadata::class.'@onFragmentAdded');
         Event::listen(FragmentDuplicated::class, UpdateFragmentMetadata::class.'@onFragmentDuplicated');
+    }
+
+    private function bootFrontendEssentials()
+    {
+        (new SquantoServiceProvider($this->app))->boot();
+        (new RoutesServiceProvider($this->app))->boot();
+
+        $this->bootChiefAuth();
+
+        Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
+
+        $this->app['view']->addNamespace('chief-site', __DIR__.'/../../resources/views/site');
+
+        Blade::directive('fragments', function () {
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model, get_defined_vars()); ?>';
+        });
     }
 }

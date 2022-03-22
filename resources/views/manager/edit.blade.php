@@ -7,11 +7,13 @@
                 <h1 class="h1 display-dark">{{ $resource->getPageTitle($model) }}</h1>
             @endif
 
-            <tabs class="-mb-3">
-                @foreach(config('chief.locales') as $locale)
-                    <tab v-cloak id="{{ $locale }}" name="{{ $locale }}"></tab>
-                @endforeach
-            </tabs>
+            @if(count(config('chief.locales')) > 1)
+                <tabs class="-mb-3">
+                    @foreach(config('chief.locales') as $locale)
+                        <tab v-cloak id="{{ $locale }}" name="{{ $locale }}"></tab>
+                    @endforeach
+                </tabs>
+            @endif
         </div>
     </x-slot>
 

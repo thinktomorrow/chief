@@ -54,9 +54,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::wireframes.rect', 'wireframe-rect');
 
         // Chief directives
-        Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model, get_defined_vars()); ?>';
-        });
 
         Blade::directive('adminRoute', function ($expression) {
             return "<?php echo \$manager->route({$expression}); ?>";

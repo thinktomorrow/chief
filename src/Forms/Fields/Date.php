@@ -13,4 +13,13 @@ class Date extends Component implements Field
 
     protected string $view = 'chief-form::fields.date';
     protected string $windowView = 'chief-form::fields.date-window';
+
+    public function getValue(?string $locale = null): mixed
+    {
+        $value = parent::getValue($locale);
+
+        return $value instanceof \DateTime
+            ? $value->format('Y-m-d')
+            : $value;
+    }
 }

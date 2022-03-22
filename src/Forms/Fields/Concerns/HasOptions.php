@@ -33,6 +33,12 @@ trait HasOptions
      */
     private function sanitizeOptions(array|Closure $options): array|Closure
     {
+        // Empty array
+        if(is_array($options) && empty($options)) {
+            return $options;
+        }
+
+        // Closure, assoc or nested array.
         if (! is_array($options) || ! array_is_list($options) || is_array($options[0])) {
             return $options;
         }
