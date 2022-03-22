@@ -46,11 +46,6 @@ final class Register
 
         $this->registerMorphMap($resource::resourceKey(), $resource::modelClassName());
 
-        // Only load up the admin routes and managers when in admin...
-        if (! $this->adminEnvironment->check()) {
-            return;
-        }
-
         $resource->setManager($manager);
 
         // Add to chief registry
@@ -58,7 +53,11 @@ final class Register
             ->registerResource($resource::resourceKey(), $resource, $manager)
         ;
 
-        // Register routes
+        // Register routes only when in admin...
+        if (!$this->adminEnvironment->check()) {
+            return;
+        }
+
         $this->container->make(RegisterManagedRoutes::class)(
             $manager,
             ManagedRoutes::empty($manager::class, $resource::resourceKey()),
@@ -76,7 +75,7 @@ final class Register
 
     private function assertModelIsReferable(string $modelClass): void
     {
-        if (! (new \ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
+        if (!(new \ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
             throw new \InvalidArgumentException($modelClass.' should implement '.ReferableModel::class);
         }
     }
