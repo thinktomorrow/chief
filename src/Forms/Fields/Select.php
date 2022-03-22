@@ -26,7 +26,7 @@ class Select extends Component implements Field
 
             $this->options($relationModel::all()->pluck($labelKey, $valueKey)->toArray())
                 ->value($model->{$relation}->pluck($valueKey)->toArray())
-                ->save(function ($field, $input) use ($model, $relation) {
+                ->save(function ($model, $field, $input) use ($relation) {
                     $model->{$relation}()->sync($input[$relation] ?? []);
                 });
         });
