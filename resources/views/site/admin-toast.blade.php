@@ -6,7 +6,7 @@
         window.addEventListener('DOMContentLoaded', () => {
 
             try{
-                const toasts = document.getElementById('jsChiefToast');
+                const toast = document.getElementById('jsChiefToast');
 
                 fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
                     .then((response) => response.json())
