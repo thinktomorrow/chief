@@ -22,14 +22,9 @@
                     <div class="space-y-0.5 text-sm">
                         <div>
                             <p>
-                                <span class="font-medium display-base body-dark">Bestandsnaam:</span>
                                 <span class="body-base body-dark" style="word-break: break-all;">
                                     {{ $image->filename }}
                                 </span>
-                            </p>
-
-                            <p>
-                                <span class="font-medium display-base body-dark">Bestandsgrootte:</span>
                                 <span class="body-base body-dark">{{ $image->size }} </span>
                             </p>
                         </div>
