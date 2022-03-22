@@ -34,7 +34,7 @@ trait HasOptions
     private function sanitizeOptions(array|Closure $options): array|Closure
     {
         // Empty array
-        if(is_array($options) && empty($options)) {
+        if (is_array($options) && empty($options)) {
             return $options;
         }
 
