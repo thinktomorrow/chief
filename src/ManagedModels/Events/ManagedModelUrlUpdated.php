@@ -9,5 +9,6 @@ class ManagedModelUrlUpdated
 {
     public function __construct(
         public readonly ModelReference $modelReference
-    ) { }
+    ) {
+    }
 }

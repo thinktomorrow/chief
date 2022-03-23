@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Shared\ModelReferences;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\PageResource;
 
 class ModelReferencePresenter
 {
@@ -15,7 +15,7 @@ class ModelReferencePresenter
         /** @var Registry $registry */
         $registry = app(Registry::class);
 
-        return $collection->map(function (ReferableModel $item) use($registry) {
+        return $collection->map(function (ReferableModel $item) use ($registry) {
 
             /** @var PageResource $resource */
             $resource = $registry->findResourceByModel($item::class);
