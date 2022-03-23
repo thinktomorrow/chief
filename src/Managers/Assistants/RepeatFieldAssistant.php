@@ -27,7 +27,7 @@ trait RepeatFieldAssistant
         $index = $request->input('index');
         $locale = $request->input('locale', null);
 
-        $model = $id ? $this->managedModelClass()::findOrFail($id) : $this->managedModelClassInstance();
+        $model = $id ? $this->fieldsModel($id) : $this->managedModelClassInstance();
 
         $field = $this->resource->field($model, $fieldKey);
         $repeatSection = $field->getRepeatSection((int) $index, [], $locale);

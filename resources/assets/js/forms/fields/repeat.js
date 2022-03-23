@@ -29,17 +29,6 @@ Repeat.prototype.init = function () {
 
         this.init();
     });
-
-    // EventBus.subscribe('sidebarPanelActivated', () => {
-    //     console.log('sisisi');
-    //
-    //     this.init();
-    //
-    //     // TODO: also clear events subscriptions when panel closed...
-    //     // EventBus.subscribe('chief-form-submitted', (e) => {
-    //     //         this.refreshIn(e.container, e.panel.getTags());
-    //     //     });
-    // });
 };
 
 Repeat.prototype.eventListeners = function () {
