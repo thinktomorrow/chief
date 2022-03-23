@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 
 class LinksController
 {
@@ -35,6 +36,8 @@ class LinksController
         })->each(function ($record) {
             app(ChangeHomepage::class)->onUrlChanged($record);
         });
+
+        event(new ManagedModelUrlUpdated($model->modelReference()));
 
         return response()->json([
             'message' => 'links updated',

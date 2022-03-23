@@ -68,7 +68,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
     {
         // Clear out any memoized values
         Memoize::clear();
-        MemoizedUrlRecords::clearCachedRecords();
 
         parent::tearDown();
     }

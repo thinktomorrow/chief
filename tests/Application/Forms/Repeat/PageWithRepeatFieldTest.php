@@ -21,7 +21,24 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     {
         $pageStub = PageStub::create();
 
-        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', $pageStub, 'repeat_values'). '?index=99');
+        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values'). '?index=99');
+        $response->assertStatus(200);
+
+        $responseData = $response->getOriginalContent()['data'];
+        $this->assertStringContainsString('name="repeat_values[99][first]"', $responseData);
+        $this->assertStringContainsString('name="repeat_values[99][second]"', $responseData);
+        $this->assertStringContainsString('name="repeat_values[99][grid-first]"', $responseData);
+        $this->assertStringContainsString('name="repeat_values[99][grid-second]"', $responseData);
+        $this->assertStringContainsString('name="repeat_values[99][nested][0][nested-first]"', $responseData);
+        $this->assertStringContainsString('name="repeat_values[99][nested][0][nested-second]"', $responseData);
+    }
+
+    /** @test */
+    public function it_can_retrieve_a_new_repeat_section_for_existing_page()
+    {
+        $pageStub = PageStub::create();
+
+        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values', $pageStub). '?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];

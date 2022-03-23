@@ -14,11 +14,11 @@ trait RepeatFieldAssistant
     public function routesRepeatFieldAssistant(): array
     {
         return [
-            ManagedRoute::get('repeat-section', 'repeat-section/{id}/{fieldKey}'),
+            ManagedRoute::get('repeat-section', 'repeat-section/{fieldKey}/{id?}'),
         ];
     }
 
-    public function repeatSection(Request $request, $id, $fieldKey)
+    public function repeatSection(Request $request, $fieldKey, $id = null)
     {
         if (! $request->filled('index')) {
             throw new \InvalidArgumentException('Required query value [index] missing.');
@@ -26,7 +26,8 @@ trait RepeatFieldAssistant
 
         $index = $request->input('index');
         $locale = $request->input('locale', null);
-        $model = $this->managedModelClass()::findOrFail($id);
+
+        $model = $id ? $this->managedModelClass()::findOrFail($id) : $this->managedModelClassInstance();
 
         $field = $this->resource->field($model, $fieldKey);
         $repeatSection = $field->getRepeatSection((int) $index, [], $locale);

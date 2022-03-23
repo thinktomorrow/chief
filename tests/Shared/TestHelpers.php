@@ -146,8 +146,6 @@ trait TestHelpers
             'links' => $links,
         ]);
 
-        MemoizedUrlRecords::clearCachedRecords();
-
         return $response;
     }
 
