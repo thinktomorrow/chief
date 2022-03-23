@@ -62,7 +62,7 @@ class Repeat extends Component implements Field
 
     public function fill(Manager $manager, Model $model): void
     {
-        $this->endpoint($manager->route('repeat-section', [$model->id, $this->getKey()]));
+        $this->endpoint($manager->route('repeat-section', [$this->getKey(), $model->id]));
     }
 
     public function sectionView(string $view): static
