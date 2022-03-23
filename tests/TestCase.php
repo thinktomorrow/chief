@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
