@@ -12,7 +12,7 @@
             </a>
         @endAdminCan
 
-        @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive', 'delete'] as $action)
+        @foreach(['draft', 'publish', 'unpublish', 'unarchive'] as $action)
             @adminCan($action, $model)
                 @include('chief::manager._transitions.index.'. $action, [ 'style' => 'dropdown-link' ])
             @endAdminCan
