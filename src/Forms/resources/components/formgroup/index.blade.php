@@ -15,7 +15,7 @@
 >
     @if($label)
         <div class="mb-1 leading-none">
-            <span class="font-medium display-base body-dark">
+            <span class="font-medium display-base display-dark">
                 {{ ucfirst($label) }}
             </span>
 
@@ -26,7 +26,7 @@
     @endif
 
     @if($description)
-        <div class="mb-3 prose prose-spacing prose-dark">
+        <div class="mb-3 prose prose-spacing text-grey-500">
             <p>{!! $description !!}</p>
         </div>
     @endif

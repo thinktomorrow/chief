@@ -9,7 +9,9 @@
 
     @if($model->fragmentModel()->exists)
         @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
-            <x-chief::fragments :owner="$model"/>
+            <div class="py-3">
+                <x-chief::fragments :owner="$model"/>
+            </div>
         @endif
 
         @if($model->fragmentModel()->isShared())
@@ -27,7 +29,7 @@
                             @if(!$loop->first), @endif
 
                             @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
-                                <span class="link">
+                                <span class="link link-grey">
                                     {{ $otherOwner['pageTitle'] }}
                                 </span>
                             @else

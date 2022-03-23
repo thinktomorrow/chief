@@ -90,7 +90,7 @@
 
 .with-fragment-select-options {
     .fragment-select-options {
-        @apply border-t-2 border-dashed border-primary-50;
+        @apply border-t border-grey-100;
     }
 
     &:first-child {

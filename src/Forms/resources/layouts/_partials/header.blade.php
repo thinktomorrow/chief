@@ -1,7 +1,7 @@
 @if($getTitle() || $getDescription())
     <div class="w-full space-y-1">
         @if($getTitle())
-            <span class="font-medium display-base display-dark">{{ $getTitle() }}</span>
+            <span class="display-base display-dark">{{ $getTitle() }}</span>
         @endif
 
         @if($getDescription())
