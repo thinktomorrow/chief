@@ -21,6 +21,7 @@ class UrlHelper
      */
     public static function allOnlineModels(bool $onlySingles = false, Model $ignoredModel = null): array
     {
+        trap('issi');
         $models = static::onlineModels($onlySingles, $ignoredModel);
 
         return ModelReferencePresenter::toGroupedSelectValues($models)->toArray();
@@ -33,17 +34,17 @@ class UrlHelper
      * @param Model|null $ignoredModel
      * @return array
      */
-    public static function allModelsExcept(Model $ignoredModel = null, bool $online = false): array
-    {
-        $models = static::models(false, $ignoredModel, $online);
+//    public static function allModelsExcept(Model $ignoredModel = null, bool $online = false): array
+//    {
+//        $models = static::models(false, $ignoredModel, $online);
+//
+//        return ModelReferencePresenter::toGroupedSelectValues($models)->toArray();
+//    }
 
-        return ModelReferencePresenter::toGroupedSelectValues($models)->toArray();
-    }
-
-    public static function allOnlineSingles(): array
-    {
-        return static::allOnlineModels(true);
-    }
+//    public static function allOnlineSingles(): array
+//    {
+//        return static::allOnlineModels(true);
+//    }
 
     /**
      * Fetch all models that have an active url. Here we check on the ignored model

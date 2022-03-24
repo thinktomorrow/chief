@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Urls\UrlStatus;
 use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
@@ -19,6 +21,7 @@ trait VisitableDefaults
         }
 
         try {
+            //TODO: this should be already set on the model... array of locale => slug
             $slug = MemoizedUrlRecords::findByModel($this, $locale)->slug;
 
             return $this->resolveUrl($locale, [$slug]);
@@ -57,4 +60,21 @@ trait VisitableDefaults
             $this->renderView()
         );
     }
+
+//    public function getOnlineLinks(): array
+//    {
+//        // ...
+//    }
+//
+//    private function onlineLinks()
+//    {
+//        return $this->hasMany(UrlRecord::class, 'model_id')
+//            ->where('model_type', $this->getMorphClass())
+//            ->whereNull('redirect_id')
+//            ->where('locale', $locale)
+//            ->where('status', UrlStatus::online->value)
+//            ->select('model_type', 'model_id', 'status', 'locale', 'slug', 'internal_label')
+//            ->groupBy('model_type', 'model_id')
+//            ->where();
+//    }
 }

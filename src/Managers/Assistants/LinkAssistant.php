@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Site\Urls\Links\LinkForm;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController;
-use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait LinkAssistant
 {

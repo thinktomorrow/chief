@@ -1,15 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Site\Urls\Form;
+namespace Thinktomorrow\Chief\Site\Urls\Links;
 
-use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Url\Root;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Url\Root;
+use function config;
+use function collect;
 
 final class LinkForm
 {

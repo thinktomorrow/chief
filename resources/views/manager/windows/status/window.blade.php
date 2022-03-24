@@ -1,7 +1,7 @@
 @adminCan('status-edit', $model)
     @php
         $isVisitable = ($model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable);
-        $isAnyLinkOnline = ($isVisitable && Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model)->isAnyLinkOnline());
+        $isAnyLinkOnline = ($isVisitable && Thinktomorrow\Chief\Site\Urls\Links\LinkForm::fromModel($model)->isAnyLinkOnline());
     @endphp
 
     <x-chief-form::window

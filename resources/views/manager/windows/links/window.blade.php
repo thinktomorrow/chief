@@ -1,6 +1,6 @@
 @adminCan('links-edit', $model)
     @php
-        $linkForm = \Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model);
+        $linkForm = \Thinktomorrow\Chief\Site\Urls\Links\LinkForm::fromModel($model);
     @endphp
 
     <x-chief-form::window

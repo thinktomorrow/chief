@@ -3,8 +3,14 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Urls\UrlStatus;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOnline;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOffline;
 
 class UrlRecordTest extends ChiefTestCase
 {
@@ -64,5 +70,48 @@ class UrlRecordTest extends ChiefTestCase
 
         $this->assertTrue($existing->fresh()->isRedirect());
         $this->assertEquals($new->id, $existing->fresh()->redirectTo()->id);
+    }
+
+    /** @test */
+    public function status_is_put_offline_when_model_is_drafted()
+    {
+        $page = $this->setupAndCreateArticle();
+
+        $nlUrlRecord = UrlRecord::create(['status' => UrlStatus::online->value, 'locale' => 'nl', 'slug' => 'foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id, 'internal_label' => null]);
+        $enUrlRecord = UrlRecord::create(['status' => UrlStatus::online->value, 'locale' => 'en', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id,  'internal_label' => null]);
+
+        event(new ManagedModelPutOffline($page->modelReference()));
+
+        $this->assertEquals(UrlStatus::offline->value, $nlUrlRecord->fresh()->status);
+        $this->assertEquals(UrlStatus::offline->value, $enUrlRecord->fresh()->status);
+    }
+
+    /** @test */
+    public function status_is_put_online_when_model_is_published()
+    {
+        $page = $this->setupAndCreateArticle();
+
+        $nlUrlRecord = UrlRecord::create(['status' => UrlStatus::offline->value, 'locale' => 'nl', 'slug' => 'foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id, 'internal_label' => null]);
+        $enUrlRecord = UrlRecord::create(['status' => UrlStatus::offline->value, 'locale' => 'en', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id,  'internal_label' => null]);
+
+        event(new ManagedModelPutOnline($page->modelReference()));
+
+        $this->assertEquals(UrlStatus::online->value, $nlUrlRecord->fresh()->status);
+        $this->assertEquals(UrlStatus::online->value, $enUrlRecord->fresh()->status);
+    }
+
+    /** @test */
+    public function it_updates_internal_label_when_model_title_is_updated()
+    {
+        $this->disableExceptionHandling();
+        $page = $this->setupAndCreateArticle(['custom' => 'foobar']);
+
+        $nlUrlRecord = UrlRecord::create(['status' => UrlStatus::online->value, 'locale' => 'nl', 'slug' => 'foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id, 'internal_label' => null]);
+        $enUrlRecord = UrlRecord::create(['status' => UrlStatus::online->value, 'locale' => 'en', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id,  'internal_label' => null]);
+
+        event(new ManagedModelUpdated($page->modelReference()));
+
+        $this->assertEquals('foobar', $nlUrlRecord->fresh()->internal_label);
+        $this->assertEquals('foobar', $enUrlRecord->fresh()->internal_label);
     }
 }

@@ -15,11 +15,16 @@ use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
 use Thinktomorrow\Chief\Admin\Users\Application\EnableUser;
+use Thinktomorrow\Chief\Site\Urls\Application\UpdateUrlStatus;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOnline;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOffline;
+use Thinktomorrow\Chief\Site\Urls\Application\UpdateUrlInternalLabel;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
@@ -164,6 +169,12 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentDetached::class, UpdateFragmentMetadata::class.'@onFragmentDetached');
         Event::listen(FragmentAdded::class, UpdateFragmentMetadata::class.'@onFragmentAdded');
         Event::listen(FragmentDuplicated::class, UpdateFragmentMetadata::class.'@onFragmentDuplicated');
+
+        // Url listeners
+//        Event::listen(ManagedModelCreated::class, UpdateUrlInternalLabel::class.'@onManagedModelCreated');
+        Event::listen(ManagedModelUpdated::class, UpdateUrlInternalLabel::class.'@onManagedModelUpdated');
+        Event::listen(ManagedModelPutOnline::class, UpdateUrlStatus::class.'@onManagedModelPutOnline');
+        Event::listen(ManagedModelPutOffline::class, UpdateUrlStatus::class.'@onManagedModelPutOffline');
     }
 
     private function bootFrontendEssentials()
