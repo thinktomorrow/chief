@@ -48,10 +48,11 @@ trait FormsAssistant
 
         $this->guard('form-update', $model);
 
-        $fields = Forms::make($this->resource->fields($model))
+        $form = Forms::make($this->resource->fields($model))
             ->fillModel($model)
-            ->find($formId)
-            ->getFields();
+            ->find($formId);
+
+        $fields = $form->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());
 
@@ -61,6 +62,7 @@ trait FormsAssistant
         return response()->json([
             'message' => 'fields updated',
             'data' => [],
+            'redirect_to' => $form->getRedirectAfterSubmit() ?: null,
         ], 200);
     }
 

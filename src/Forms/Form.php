@@ -26,7 +26,10 @@ class Form extends Component
     protected string $actionMethod;
 
     protected string $windowAction;
+
+    // What to do after submit: either refresh form window or redirect back to previous page
     protected ?string $refreshUrl = null;
+    protected ?string $redirectAfterSubmit = null;
 
     protected string $view = 'chief-form::templates.form';
     protected string $windowView = 'chief-form::templates.form-in-window';
@@ -110,6 +113,18 @@ class Form extends Component
     public function getRefreshUrl(): ?string
     {
         return $this->refreshUrl;
+    }
+
+    public function redirectAfterSubmit(string $redirect): static
+    {
+        $this->redirectAfterSubmit = $redirect;
+
+        return $this;
+    }
+
+    public function getRedirectAfterSubmit(): ?string
+    {
+        return $this->redirectAfterSubmit;
     }
 
     public function fillModel(Model $model): self
