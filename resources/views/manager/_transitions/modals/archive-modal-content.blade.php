@@ -2,7 +2,6 @@
         action="@adminRoute('archive', $model)"
         method="POST"
         id="archive-manager-form-{{ $model->id }}"
-        v-cloak
 >
     @csrf
 
@@ -11,21 +10,20 @@
     @if(contract($model, \Thinktomorrow\Chief\Site\Visitable\Visitable::class))
         <p>
             Opgelet, dit haalt deze pagina van de site en bezoekers krijgen een 404-pagina te zien.
-            Je kan ook kiezen om door te linken naar een andere pagina.
+            Je kan ook kiezen om door te linken naar een andere pagina:
         </p>
 
-        <p>Stel die pagina hieronder in:</p>
+        <select class="mt-3" name="redirect_id" id="redirectId">
+            @foreach($targetModels as $targetModelGroup)
+                <option value="">---</option>
+                <optgroup label="{{ $targetModelGroup['group'] }}">
+                    @foreach($targetModelGroup['values'] as $targetModel)
+                        <option value="{{ $targetModel['id'] }}">{{ $targetModel['label'] }}</option>
+                    @endforeach
+                </optgroup>
+            @endforeach
+        </select>
 
-        <chief-multiselect
-                name="redirect_id"
-                :options='@json($targetModels)'
-                selected='@json(old('redirect_id'))'
-                grouplabel="group"
-                groupvalues="values"
-                labelkey="label"
-                valuekey="id"
-                class="mt-3"
-        ></chief-multiselect>
     @else
         <p>Archiveren haalt de {{ $resource->getPageTitle($model) }} onmiddellijk van de site.</p>
     @endif

@@ -10,12 +10,12 @@
                             {{ title }}
                         </span>
                     </div>
-                    <div class="prose prose-spacing prose-dark" v-if="computedCustomHtml" v-html="computedCustomHtml">
 
-                    </div>
+                  <div id="modalCustomHtml" class="prose prose-spacing prose-dark" v-if="computedCustomHtml" v-html="computedCustomHtml"></div>
                     <div class="prose prose-spacing prose-dark" v-else>
-                        <slot></slot>
+                      <slot></slot>
                     </div>
+
                 </div>
 
                 <div v-if="showFooter" class="flex items-center mt-8 space-x-4">
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import vueFields from "../forms/fields/vue-fields";
+
 export default {
     props: {
         id: { required: true },
@@ -71,7 +73,6 @@ export default {
         open: function () {
 
           this.isVisible = true;
-
           if(this.fetchUrl) {
             fetch(this.fetchUrl)
                 .then((response) => response.json())

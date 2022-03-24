@@ -35,8 +35,6 @@ Forms.prototype.listenIn = function (container = document) {
 };
 
 Forms.prototype.refreshIn = function (container = document, tags) {
-    console.log('windows refresh in ', container, 'for tags: ', tags);
-
     Array.from(container.querySelectorAll(this.selector)).forEach((el) => {
         const form = new Form(el, this.sidebar);
 

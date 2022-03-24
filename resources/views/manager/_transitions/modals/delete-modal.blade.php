@@ -24,7 +24,7 @@
 
     <div v-cloak slot="modal-action-buttons">
         <button form="delete-manager-form-{{ $model->id }}" type="submit" class="btn btn-error">
-            Verwijderen
+            Verwijder
         </button>
     </div>
 </modal>
