@@ -10,8 +10,10 @@
                             {{ title }}
                         </span>
                     </div>
+                    <div class="prose prose-spacing prose-dark" v-if="computedCustomHtml" v-html="computedCustomHtml">
 
-                    <div class="prose prose-spacing prose-dark">
+                    </div>
+                    <div class="prose prose-spacing prose-dark" v-else>
                         <slot></slot>
                     </div>
                 </div>
@@ -46,6 +48,7 @@ export default {
         title: { default: '' },
         type: { default: 'modal' },
         size: { default: 'small' },
+        url: { default: null }
     },
     data() {
         return {
@@ -54,11 +57,31 @@ export default {
             typedclass: this.type == 'sidebar-large' ? 'sidebar sidebar-large' : this.type,
             typedtransition: this.type == 'sidebar-large' ? 'sidebar' : this.type,
             sizeClass: this.getSizeClass(),
+            fetchUrl: this.url,
+            customHtml: null,
         };
     },
+  computed: {
+      // Triggers template reeval.
+    computedCustomHtml: function(){
+        return this.customHtml;
+    }
+  },
     methods: {
         open: function () {
-            this.isVisible = true;
+
+          this.isVisible = true;
+
+          if(this.fetchUrl) {
+            fetch(this.fetchUrl)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.customHtml = data.data;
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+          }
         },
         close: function () {
             this.isVisible = false;

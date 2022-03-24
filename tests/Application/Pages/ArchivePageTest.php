@@ -147,4 +147,16 @@ final class ArchivePageTest extends ChiefTestCase
 
         $this->assertFalse($this->manager($model)->can('archive_index'));
     }
+
+    /** @test */
+    public function the_archive_modal_content_can_be_fetched()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::PUBLISHED,
+        ]);
+
+        $this->asAdmin()->get($this->manager->route('archive_modal', $model))
+            ->assertStatus(200);
+    }
 }
