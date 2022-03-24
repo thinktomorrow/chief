@@ -15,19 +15,6 @@ class ViewServiceProvider extends ServiceProvider
 
         $this->app['view']->addNamespace('chief-fragments', __DIR__.'/../../src/Fragments/resources');
 
-        View::composer([
-            'chief::manager._transitions.modals.archive-modal',
-        ], function ($view) {
-            $viewData = $view->getData();
-
-            $ignoredModel = (isset($viewData['model']))
-                ? $viewData['model']
-                : null;
-
-            $onlineModels = UrlHelper::allOnlineModels(false, $ignoredModel);
-            $view->with('targetModels', $onlineModels);
-        });
-
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
         Blade::component('chief::manager.windows.status.window', 'chief::window.status');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');

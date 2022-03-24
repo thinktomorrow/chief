@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
@@ -20,6 +21,7 @@ trait ArchiveAssistant
     public function routesArchiveAssistant(): array
     {
         return [
+            ManagedRoute::get('archive_modal', 'archive_modal/{id}'),
             ManagedRoute::post('archive', 'archive/{id}'),
             ManagedRoute::post('unarchive', 'unarchive/{id}'),
             ManagedRoute::get('archive_index'),
@@ -28,7 +30,7 @@ trait ArchiveAssistant
 
     public function canArchiveAssistant(string $action, $model = null): bool
     {
-        if (! in_array($action, ['archive', 'unarchive', 'archive_index'])) {
+        if (! in_array($action, ['archive', 'archive_modal', 'unarchive', 'archive_index'])) {
             return false;
         }
 
@@ -37,6 +39,8 @@ trait ArchiveAssistant
         } catch (NotAllowedManagerAction $e) {
             return false;
         }
+
+        if($action === 'archive_modal') return true;
 
         if ($action === 'archive_index') {
             // Archive index is only visitable when there is at least one model archived.
@@ -101,6 +105,20 @@ trait ArchiveAssistant
         Audit::activity()->performedOn($model)->log('unarchived');
 
         return redirect()->to($this->route('index'))->with('messages.success', $this->resource->getPageTitle($model) . ' is uit het archief gehaald.');
+    }
+
+    public function archiveModal(Request $request, $id)
+    {
+        $model = $this->fieldsModel($id);
+
+        return response()->json([
+            'data' => view('chief::manager._transitions.modals.archive-modal-content', [
+                'manager' => $this,
+                'model' => $model,
+                'resource' => $this->registry->findResourceByModel($model::class),
+                'targetModels' => UrlHelper::allOnlineModels(false, $model),
+            ])->render(),
+        ]);
     }
 
     /**
