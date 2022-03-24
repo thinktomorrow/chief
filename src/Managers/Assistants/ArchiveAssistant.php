@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 trait ArchiveAssistant
@@ -40,7 +40,9 @@ trait ArchiveAssistant
             return false;
         }
 
-        if($action === 'archive_modal') return true;
+        if ($action === 'archive_modal') {
+            return true;
+        }
 
         if ($action === 'archive_index') {
             // Archive index is only visitable when there is at least one model archived.

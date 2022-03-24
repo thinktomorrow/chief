@@ -3,9 +3,7 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class ViewServiceProvider extends ServiceProvider
 {
