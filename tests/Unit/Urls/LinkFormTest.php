@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Site\Urls\Links\LinkForm;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class LinkFormTest extends ChiefTestCase
 {

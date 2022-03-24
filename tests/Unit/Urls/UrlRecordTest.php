@@ -2,15 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Site\Urls\UrlStatus;
-use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOnline;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOffline;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOnline;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
+use Thinktomorrow\Chief\Site\Urls\UrlStatus;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class UrlRecordTest extends ChiefTestCase
 {

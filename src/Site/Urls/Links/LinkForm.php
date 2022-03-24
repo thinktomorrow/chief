@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Links;
 
-use Thinktomorrow\Url\Root;
-use Illuminate\Support\Collection;
+use function collect;
+use function config;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
-use function config;
-use function collect;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Url\Root;
 
 final class LinkForm
 {

@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Site\Urls\UrlStatus;
 use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
+use Thinktomorrow\Chief\Site\Urls\UrlStatus;
 
 trait VisitableDefaults
 {

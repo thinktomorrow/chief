@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
-use Thinktomorrow\Chief\Site\Urls\UrlStatus;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOnline;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOffline;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPutOnline;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Site\Urls\UrlStatus;
 
 class UpdateUrlStatus
 {
