@@ -123,10 +123,17 @@ export default class {
                 // GET request stays on same page and reloads it with the given response.
                 if (metadata.method === 'get') {
                     this.refresh(responseData);
-                    return;
+                    return true;
                 }
 
+                if (responseData.redirect_to) {
+                    this.show(responseData.redirect_to);
+                    return false;
+                }
+
+                // TODO: can we choose to go to another just like nested fragment?
                 this.backAfterSubmit();
+                return true;
             }
         );
     }
@@ -173,7 +180,7 @@ export default class {
         // A small delay so the sidebar isn't empty when closing
         setTimeout(() => {
             this.panels.clear();
-        }, 400);
+        }, 300);
     }
 
     refresh(data = null) {

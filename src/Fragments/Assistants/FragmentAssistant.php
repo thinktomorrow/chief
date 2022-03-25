@@ -314,15 +314,22 @@ trait FragmentAssistant
 
         $request->merge(['order' => (int) $request->input('order', 0)]);
 
-        $this->storeFragmentable($ownerModel, $fragmentable, $request);
+        $fragmentable = $this->storeFragmentable($ownerModel, $fragmentable, $request);
+
+        // If the fragment is a fragment owner ( = has nested fragments), we'll show the edit page of this fragment after creation
+        // By default other fragments will return to the main edit page after being created
+        $redirectTo = ($fragmentable instanceof FragmentsOwner)
+            ? $this->route('fragment-edit', $ownerModel, $fragmentable)
+            : null;
 
         return response()->json([
             'message' => 'fragment created',
+            'redirect_to' => $redirectTo,
             'data' => [],
         ], 201);
     }
 
-    private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): void
+    private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): Fragmentable
     {
         $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
 
@@ -332,6 +339,8 @@ trait FragmentAssistant
             $request->all(),
             $request->allFiles()
         );
+
+        return $fragmentable;
     }
 
     private function handleFragmentAdd(Model $ownerModel, int $fragmentModelId, int $order)

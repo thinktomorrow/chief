@@ -20,11 +20,6 @@ const Submit = {
             return;
         }
 
-        if (responseData.redirect_to) {
-            window.location.href = responseData.redirect_to;
-            return;
-        }
-
         EventBus.publish('chief-form-submitted', {
             currentElement,
             targetElement,
@@ -33,7 +28,14 @@ const Submit = {
         });
 
         if (successCallback) {
-            successCallback();
+            // Halt default process if success callback returns false. Success callback can handle redirect its own way.
+            if (successCallback() === false) {
+                return;
+            }
+        }
+
+        if (responseData.redirect_to) {
+            window.location.href = responseData.redirect_to;
         }
     },
 };

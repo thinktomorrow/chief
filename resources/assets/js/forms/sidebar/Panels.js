@@ -15,7 +15,8 @@ export default class {
     findFirstSubmitTarget(panel) {
         if (!panel) return null;
 
-        if (!panel.url.includes('/new-fragment')) {
+        // This is a bit too hardcoded... This makes sure we don't go back to any create pages after submission
+        if (!panel.url.includes('/new-fragment') && !panel.url.includes('/create')) {
             return panel;
         }
 
