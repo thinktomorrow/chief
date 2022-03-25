@@ -41,8 +41,7 @@ trait HasRedactorToolbar
     private function defaultRedactorOptions(): array
     {
         return [
-            'buttons' => [],
-            'plugins' => [],
+            
         ];
     }
 
