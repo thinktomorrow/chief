@@ -48,8 +48,8 @@ trait HasRedactorToolbar
 
     private function sanitizeOptions(array $options): array
     {
-        foreach(['buttons', 'plugins'] as $type) {
-            if(isset($options[$type])) {
+        foreach (['buttons', 'plugins'] as $type) {
+            if (isset($options[$type])) {
                 $options[$type] = (array) $options[$type];
             }
         }
