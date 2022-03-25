@@ -41,7 +41,7 @@ trait HasRedactorToolbar
     private function defaultRedactorOptions(): array
     {
         return [
-            
+
         ];
     }
 

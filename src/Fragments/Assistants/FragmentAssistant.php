@@ -325,7 +325,9 @@ trait FragmentAssistant
         return response()->json([
             'message' => 'fragment created',
             'redirect_to' => $redirectTo,
-            'data' => [],
+            'data' => [
+                'fragmentmodel_id' => $fragmentable->fragmentModel()->id,
+            ],
         ], 201);
     }
 
