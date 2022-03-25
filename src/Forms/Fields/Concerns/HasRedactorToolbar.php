@@ -18,15 +18,9 @@ trait HasRedactorToolbar
 
     public function redactorOptions(array $options): self
     {
-        $this->redactorOptions = $options;
+        $this->redactorOptions = $this->sanitizeOptions($options);
 
         return $this;
-    }
-
-    /** @deprecated Use redactorOptions instead */
-    public function htmlOptions(array $options): self
-    {
-        return $this->redactorOptions($options);
     }
 
     public function hasRedactorOptions(): bool
@@ -46,6 +40,20 @@ trait HasRedactorToolbar
 
     private function defaultRedactorOptions(): array
     {
-        return [];
+        return [
+            'buttons' => [],
+            'plugins' => [],
+        ];
+    }
+
+    private function sanitizeOptions(array $options): array
+    {
+        foreach(['buttons', 'plugins'] as $type) {
+            if(isset($options[$type])) {
+                $options[$type] = (array) $options[$type];
+            }
+        }
+
+        return $options;
     }
 }

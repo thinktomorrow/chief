@@ -34,6 +34,8 @@ class Text extends Component implements Field
     private function defaultRedactorOptions(?string $locale = null): array
     {
         return [
+            'buttons' => [],
+            'plugins' => [],
             'maxHeight' => '56px',
             'maxWidth' => '100%',
             'enterKey' => false,
