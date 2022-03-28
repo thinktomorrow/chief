@@ -7,9 +7,6 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Fragments\FragmentStatus;
-use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOnline;
-use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
@@ -17,11 +14,14 @@ use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
+use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
+use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOnline;
 use Thinktomorrow\Chief\Fragments\Actions\UnshareFragment;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -268,11 +268,11 @@ trait FragmentAssistant
 
         $status = FragmentStatus::from($request->input('online_status'));
 
-        if($status == FragmentStatus::online) {
+        if ($status == FragmentStatus::online) {
             app(PutFragmentOnline::class)->handle($fragmentable->fragmentModel()->id);
         }
 
-        if($status == FragmentStatus::offline) {
+        if ($status == FragmentStatus::offline) {
             app(PutFragmentOffline::class)->handle($fragmentable->fragmentModel()->id);
         }
 

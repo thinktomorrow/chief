@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
-use Thinktomorrow\Chief\Fragments\FragmentStatus;
-use Thinktomorrow\Chief\Fragments\Events\FragmentPutOnline;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Events\FragmentPutOnline;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
 
 class PutFragmentOnline
 {
