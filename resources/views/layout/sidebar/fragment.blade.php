@@ -14,6 +14,13 @@
             </div>
         @endif
 
+
+        <button
+            type="submit"
+            form="changeFragmentStatus{{ $model->modelReference()->get() }}"
+            class="btn btn-info-outline"
+        >{{ $model->fragmentModel()->isOnline() ? 'Zet offline' : 'Zet online' }}</button>
+
         @if($model->fragmentModel()->isShared())
             <div class="p-6 border border-orange-100 rounded-xl bg-orange-50">
                 <p class="text-lg display-base display-dark">Gedeeld fragment</p>
@@ -88,6 +95,18 @@
             method="POST"
             action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
         >
+            @csrf
+        </form>
+
+        <form
+                id="changeFragmentStatus{{ $model->modelReference()->get() }}"
+                method="POST"
+                action="{{ $manager->route('fragment-status', $model) }}"
+        >
+            <input type="hidden" name="online_status" value="{{ $model->fragmentModel()->isOnline()
+                ? \Thinktomorrow\Chief\Fragments\FragmentStatus::offline->value
+                : \Thinktomorrow\Chief\Fragments\FragmentStatus::online->value
+            }}">
             @csrf
         </form>
     @endif

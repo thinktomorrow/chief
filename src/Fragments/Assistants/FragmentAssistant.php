@@ -7,6 +7,9 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
+use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOnline;
+use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
@@ -263,7 +266,15 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find((int) $fragmentId);
 
-        $fragmentable->fragmentModel()->update(['online_status' => (bool) $request->input('online_status')]);
+        $status = FragmentStatus::from($request->input('online_status'));
+
+        if($status == FragmentStatus::online) {
+            app(PutFragmentOnline::class)->handle($fragmentable->fragmentModel()->id);
+        }
+
+        if($status == FragmentStatus::offline) {
+            app(PutFragmentOffline::class)->handle($fragmentable->fragmentModel()->id);
+        }
 
         return response()->json([
             'message' => 'fragment online status updated',

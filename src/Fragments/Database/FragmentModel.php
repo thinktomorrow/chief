@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
@@ -58,10 +59,15 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset
         return config('chief.locales', []);
     }
 
+    public function changeStatus(FragmentStatus $status): void
+    {
+        $this->online_status = $status->value;
+    }
+
     public function isOnline(): bool
     {
         // Default is online, except explicitly set offline
-        return (null === $this->online_status || $this->online_status != 0);
+        return (null === $this->online_status || $this->online_status === FragmentStatus::online->value);
     }
 
     public function isOffline(): bool
