@@ -4,7 +4,7 @@
  **/
 @layer components {
     .btn {
-        @apply inline-flex items-center border-2 cursor-pointer leading-normal px-4 py-1.5 font-semibold rounded-lg text-center;
+        @apply inline-flex items-center border-2 cursor-pointer leading-tight px-4 py-2 font-semibold rounded-lg text-center;
         @apply transition-all ease-in-out duration-75;
     }
 
@@ -28,8 +28,8 @@
     }
 
     .btn-grey {
-        @apply bg-grey-100 border-grey-100 text-grey-500;
-        @apply shadow-md shadow-grey-100;
+        @apply bg-grey-100 border-grey-100 text-grey-700;
+        @apply shadow-grey-100;
 
         &:hover,
         &:focus {
@@ -38,7 +38,7 @@
     }
 
     .btn-grey-outline {
-        @apply bg-transparent border-grey-500 text-grey-500;
+        @apply bg-transparent border-grey-500 text-grey-700;
 
         &:hover,
         &:focus {

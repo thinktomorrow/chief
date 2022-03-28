@@ -1,11 +1,9 @@
 @if(chiefAdmin())
-
     <div id="jsChiefToast"></div>
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-
-            try{
+            try {
                 const toast = document.getElementById('jsChiefToast');
 
                 fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
@@ -18,21 +16,16 @@
                         console.error(error);
                     });
 
-                function listenForClose()
-                {
+                function listenForClose() {
                     const toastClose = toast.querySelector('[data-admin-toast-close]');
 
                     toastClose.addEventListener('click', function() {
                         toast.style.display = "none";
                     });
                 }
-            } catch(error)
-            {
+            } catch(error) {
                 console.log(error);
             }
-
         })
-
     </script>
 @endif
-

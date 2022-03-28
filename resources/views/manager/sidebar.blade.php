@@ -11,7 +11,7 @@
 
             <aside
                 data-sidebar-aside
-                class="absolute top-0 bottom-0 right-0 w-full px-6 py-12 space-y-12 overflow-auto bg-white md:w-192 sidebar-slide-from-right shadow-card"
+                class="absolute top-0 bottom-0 right-0 w-full px-6 py-12 space-y-6 overflow-auto bg-white md:w-192 sidebar-slide-from-right shadow-card"
             >
                 <div data-sidebar-close data-sidebar-close-button></div>
 

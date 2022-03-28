@@ -33,18 +33,20 @@ module.exports = {
             primary: colors.indigo,
             secondary: colors.teal,
 
-            red: {
-                50: '#fdf3f6',
-                100: '#fae7ed',
-                200: '#f4c4d2',
-                300: '#eda0b6',
-                400: '#df5880',
-                500: '#d11149',
-                600: '#bc0f42',
-                700: '#9d0d37',
-                800: '#7d0a2c',
-                900: '#660824',
-            },
+            red: colors.red,
+            // red: {
+            //     50: '#fdf3f6',
+            //     100: '#fae7ed',
+            //     200: '#f4c4d2',
+            //     300: '#eda0b6',
+            //     400: '#df5880',
+            //     500: '#d11149',
+            //     600: '#bc0f42',
+            //     700: '#9d0d37',
+            //     800: '#7d0a2c',
+            //     900: '#660824',
+            // },
+
             green: {
                 50: '#f3fcf6',
                 100: '#e7faed',
@@ -57,6 +59,7 @@ module.exports = {
                 800: '#07792c',
                 900: '#066324',
             },
+
             // blue: colors.sky,
             blue: {
                 50: '#f3fdff',
@@ -70,6 +73,7 @@ module.exports = {
                 800: '#067b99',
                 900: '#05647d',
             },
+
             orange: colors.orange,
             // orange: {
             //     50: '#fef9f7',
