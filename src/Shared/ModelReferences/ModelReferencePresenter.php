@@ -22,7 +22,7 @@ class ModelReferencePresenter
 
             return [
                 'id' => $item->modelReference()->getShort(),
-                'label' => $resource->getPageTitle($item),
+                'label' => $resource->getPageTitleForSelect($item),
                 'group' => ucfirst($resource->getLabel()),
             ];
         });

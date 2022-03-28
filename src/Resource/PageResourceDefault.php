@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 
 trait PageResourceDefault
 {
@@ -14,7 +16,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (! $this->manager->can('index')) {
+        if (!$this->manager->can('index')) {
             return null;
         }
 
@@ -35,7 +37,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (! $this->manager->can('index')) {
+        if (!$this->manager->can('index')) {
             return null;
         }
 
@@ -51,9 +53,16 @@ trait PageResourceDefault
         return $this->getLabel();
     }
 
+    public function getPageTitleForSelect($model): string
+    {
+        $suffix = $model instanceof WithPageState && PageState::make($model)->isOffline() ? ' [offline]' : '';
+
+        return $this->getPageTitle($model).$suffix;
+    }
+
     public function getIndexTitle(): string
     {
-        return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel()) ;
+        return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
     }
 
     public function getIndexBreadcrumb(): ?BreadCrumb
@@ -103,7 +112,7 @@ trait PageResourceDefault
 
     private function assertManager(): void
     {
-        if (! $this->manager) {
+        if (!$this->manager) {
             throw new \RuntimeException('For calling this method a Manager instance should be set to this resource.');
         }
     }

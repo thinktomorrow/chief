@@ -15,6 +15,7 @@ interface PageResource extends Resource
     public function getPageView(): View;
     public function getPageBreadCrumb(): ?BreadCrumb;
     public function getPageTitle($model): string;
+    public function getPageTitleForSelect($model): string;
     public function getTitleAttributeKey(): string; // Which attribute identifies the title value - defaults to 'title' ($model->title).
 
     // Index
