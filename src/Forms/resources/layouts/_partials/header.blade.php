@@ -1,16 +1,12 @@
 @if($getTitle() || $getDescription())
     <div class="w-full space-y-1">
         @if($getTitle())
-            <span class="display-base display-dark">{{ $getTitle() }}</span>
+            <span class="text-sm tracking-wider uppercase display-base body-dark">{{ $getTitle() }}</span>
         @endif
 
         @if($getDescription())
             <div class="prose prose-spacing prose-dark">
-                @if($getDescription() != strip_tags($getDescription()))
-                    {!! $getDescription() !!}
-                @else
-                    <p>{{ $getDescription() }}</p>
-                @endif
+                <p>{!! $getDescription() !!}</p>
             </div>
         @endif
     </div>
