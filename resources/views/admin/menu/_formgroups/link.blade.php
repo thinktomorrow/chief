@@ -17,16 +17,16 @@
                 </label>
 
                 <div v-if="type == 'internal'">
-                        <chief-multiselect
-                            name="owner_reference"
-                            :options='@json($pages)'
-                            selected='@json(old('owner_reference', $ownerReference))'
-                            grouplabel="group"
-                            groupvalues="values"
-                            labelkey="label"
-                            valuekey="id"
-                        ></chief-multiselect>
-                        <x-chief-form::formgroup.error error-ids="owner_reference"></x-chief-form::formgroup.error>
+                    <chief-multiselect
+                        name="owner_reference"
+                        :options='@json($pages)'
+                        selected='@json(old('owner_reference', $ownerReference))'
+                        grouplabel="group"
+                        groupvalues="values"
+                        labelkey="label"
+                        valuekey="id"
+                    ></chief-multiselect>
+                    <x-chief-form::formgroup.error error-ids="owner_reference"></x-chief-form::formgroup.error>
                 </div>
             </div>
 

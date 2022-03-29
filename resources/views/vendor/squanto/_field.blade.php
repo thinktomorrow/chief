@@ -5,13 +5,19 @@
         @endphp
 
         @if($loop->first)
-            @slot('label', ucfirst( str_replace('_', ' ', $lineViewModel->label()) ))
-            @slot('description', $lineViewModel->description())
+            <div>
+                <p class="font-medium display-base display-dark">
+                    {{ ucfirst(str_replace('_', ' ', $lineViewModel->label())) }}
+                    {{ $lineViewModel->description() }}
+                </p>
+            </div>
         @endif
 
-        <div class="flex w-full space-x-4">
+        <div class="flex w-full gap-4">
             @if(count(config('chief.locales')) > 1)
-                <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light h-full">{{ $locale }}</span>
+                <span class="inline-flex items-center justify-center w-8 p-0 mt-1 shrink-0 label label-grey label-sm">
+                    {{ $locale }}
+                </span>
             @endif
 
             <div class="w-full">

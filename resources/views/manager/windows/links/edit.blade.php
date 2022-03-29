@@ -73,7 +73,7 @@
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
                             @if(count(config('chief.locales')) > 1)
-                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey-light">{{ $locale }}</span>
+                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
                             @endif
 
                             <div class="w-full px-4 py-3">

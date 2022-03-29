@@ -16,36 +16,32 @@
 
 <x-squanto::app-layout>
     <div class="container-sm">
-        <div class="row">
-            <div class="w-full">
-                <div class="window">
-                    <div class="-my-4 divide-y divide-grey-100">
-                        @foreach($pages as $page)
-                            @php
-                                $completionPercentage = $page->completionPercentage();
-                            @endphp
+        <div class="divide-y card divide-grey-100">
+            @foreach($pages as $page)
+                @php
+                    $completionPercentage = $page->completionPercentage();
+                @endphp
 
-                            <div class="py-4">
-                                <div class="flex items-center justify-between space-x-4">
-                                    <span class="space-x-2">
-                                        <span class="text-lg font-semibold text-grey-900">
-                                            {{ ucfirst($page->label()) }}
-                                        </span>
+                <div @class([
+                    'flex items-center justify-between space-x-4',
+                    'pt-4' => !$loop->first,
+                    'pb-4' => !$loop->last,
+                ])>
+                    <span class="space-x-2">
+                        <span class="text-lg display-dark display-base">
+                            {{ ucfirst($page->label()) }}
+                        </span>
 
-                                        <span class="text-sm label label-info">
-                                            {{ $completionPercentage }}%
-                                        </span>
-                                    </span>
+                        <span class="label label-grey label-xs">
+                            {{ $completionPercentage }}%
+                        </span>
+                    </span>
 
-                                    <a href="{{ route('squanto.edit',$page->slug()) }}" class="flex-shrink-0 link link-primary">
-                                        <x-chief-icon-label type="edit"></x-chief-icon-label>
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                    <a href="{{ route('squanto.edit',$page->slug()) }}" class="flex-shrink-0 link link-primary">
+                        <x-chief-icon-button type="edit"></x-chief-icon-button>
+                    </a>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </x-squanto::app-layout>

@@ -41,7 +41,7 @@
                 data-form-unsaved-notification
                 class="absolute bottom-0 right-0 hidden animate-pop-in"
             >
-                <span class="label label-grey-light label-xs">
+                <span class="label label-grey label-xs">
                     <span> Nog niet opgeslagen </span>
                 </span>
             </div>

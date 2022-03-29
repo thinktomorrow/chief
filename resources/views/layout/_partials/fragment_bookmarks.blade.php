@@ -1,7 +1,7 @@
 @if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
     <div class="flex items-center group">
         {{-- bookmark for this fragment --}}
-        <span class="mr-2 label label-grey-light">#{{ $model->getBookmark() }}</span>
+        <span class="mr-2 label label-grey">#{{ $model->getBookmark() }}</span>
 
         <div class="inline-flex items-center gutter-1">
             @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)

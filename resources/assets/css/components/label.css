@@ -43,14 +43,6 @@
     }
 
     .label-grey {
-        @apply bg-grey-200 text-grey-700;
-    }
-
-    .label-grey-dark {
-        @apply bg-grey-700 text-white;
-    }
-
-    .label-grey-light {
         @apply bg-grey-100 text-grey-500;
     }
 

@@ -21,7 +21,7 @@
         </div>
     @stop
 
-    <form id="updateSquantoForm" method="POST" action="{{ route('squanto.update', $page->slug()) }}" role="form" class="mb-0">
+    <form id="updateSquantoForm" method="POST" action="{{ route('squanto.update', $page->slug()) }}" role="form">
         {{ csrf_field() }}
 
         <input type="hidden" name="_method" value="PUT">
@@ -32,30 +32,26 @@
             });
         @endphp
 
-        <div class="container 2xl:container-1/2">
-            <div class="row">
-                <div class="w-full space-y-6">
-                    @foreach($collectedLines as $sectionKey => $groupedLines)
-                        <div class="window">
-                            <div class="row gutter-3">
-                                <div class="w-full lg:w-1/4">
-                                    <span class="text-xl font-semibold text-grey-900">
-                                        {{ ucfirst(str_replace('_', ' ', $sectionKey)) }}
-                                    </span>
-                                </div>
+        <div class="container space-y-6">
+            @foreach($collectedLines as $sectionKey => $groupedLines)
+                <div class="card">
+                    <div class="row-start-start gutter-3">
+                        <div class="w-full lg:w-1/4">
+                            <span class="text-sm tracking-wider uppercase display-base body-dark">
+                                {{ ucfirst(str_replace('_', ' ', $sectionKey)) }}
+                            </span>
+                        </div>
 
-                                <div class="w-full lg:w-3/4">
-                                    <div class="mt-1 space-y-6">
-                                        @foreach($groupedLines as $lineViewModel)
-                                            @include('squanto::_field')
-                                        @endforeach
-                                    </div>
-                                </div>
+                        <div class="w-full lg:w-3/4">
+                            <div class="space-y-6">
+                                @foreach($groupedLines as $lineViewModel)
+                                    @include('squanto::_field')
+                                @endforeach
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </form>
 </x-squanto::app-layout>
