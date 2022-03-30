@@ -3,6 +3,7 @@
     $collapsible = $attributes->has('collapsible');
     // Nav items with this attribute will be open on page load.
     $open = $attributes->has('open');
+    $blank = $attributes->has('blank');
     $dropdownIdentifier = uniqid();
 @endphp
 
@@ -17,6 +18,7 @@
                             title="{!! $label !!}"
                             data-toggle-dropdown-ignore
                             class="p-2 shrink-0 children:w-6 children:h-6 children:text-black"
+                            {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                         >
                             {!! $icon !!}
                         </a>
@@ -34,6 +36,7 @@
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
                         class="px-3 py-2 inline-block font-semibold text-black w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
                     </a>
