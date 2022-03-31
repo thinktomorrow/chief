@@ -13,11 +13,11 @@ trait VisitableDefaults
     /** {@inheritdoc} */
     public function url(string $locale = null): string
     {
-        if (!$locale) {
+        if (! $locale) {
             $locale = app()->getLocale();
         }
 
-        if (!$urlRecord = $this->urls->first(fn ($urlRecord) => $urlRecord->locale == $locale)) {
+        if (! $urlRecord = $this->urls->first(fn ($urlRecord) => $urlRecord->locale == $locale)) {
             return '';
         }
 
@@ -34,7 +34,7 @@ trait VisitableDefaults
 
     public function isVisitable(): bool
     {
-        if (public_method_exists($this, 'isPublished') && !$this->isPublished()) {
+        if (public_method_exists($this, 'isPublished') && ! $this->isPublished()) {
             // When admin is logged in and this request is in preview mode, we allow the view
             return PreviewMode::fromRequest()->check();
         }
