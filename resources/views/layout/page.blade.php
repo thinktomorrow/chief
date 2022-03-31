@@ -1,7 +1,11 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    {{ $resource->getPageTitle($model) }}
+    @isset($pageTitle)
+        {{ $pageTitle }}
+    @else
+        {{ $resource->getPageTitle($model) }}
+    @endisset
 @endsection
 
 @section('header')

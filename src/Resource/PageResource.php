@@ -19,6 +19,7 @@ interface PageResource extends Resource
     public function getTitleAttributeKey(): string; // Which attribute identifies the title value - defaults to 'title' ($model->title).
 
     // Index
+    public function getIndexView(): View;
     public function getIndexTitle(): string;
     public function getIndexBreadcrumb(): ?BreadCrumb;
     public function getIndexCardView(): string;

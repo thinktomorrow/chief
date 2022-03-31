@@ -87,11 +87,12 @@ trait CrudAssistant
 
         app(VisitedUrl::class)->add(request()->fullUrl());
 
-        return view('chief::manager.index', [
-            'manager' => $this,
-            'resource' => $this->resource,
-            'models' => $this->indexModels(),
-        ]);
+        View::share('manager', $this);
+        View::share('resource', $this->resource);
+        View::share('models', $this->indexModels());
+        View::share('model', $this->managedModelClassInstance());
+
+        return $this->resource->getIndexView();
     }
 
     protected function indexModels(): Paginator
