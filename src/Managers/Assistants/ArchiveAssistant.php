@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
@@ -126,16 +127,13 @@ trait ArchiveAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function archiveIndex(Request $request)
+    public function archiveIndex()
     {
-        $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        View::share('manager', $this);
+        View::share('resource', $this->resource);
+        View::share('models', $this->managedModelClass()::archived()->paginate(20)->withQueryString());
+        View::share('model', $this->managedModelClassInstance());
 
-        return view('chief::manager.index', [
-            'manager' => $this,
-            'model' => $model,
-            'resource' => $this->resource,
-            'models' => $this->managedModelClass()::archived()->paginate(20)->withQueryString(),
-        ]);
+        return $this->resource->getIndexView();
     }
 }

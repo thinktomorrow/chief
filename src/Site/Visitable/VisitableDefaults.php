@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Site\Visitable;
 
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
@@ -24,12 +25,19 @@ trait VisitableDefaults
         return $this->resolveUrl($locale, [$urlRecord->slug]);
     }
 
-    public function urls()
+    public function urls(): HasMany
     {
         return $this->hasMany(UrlRecord::class, 'model_id')
             ->where('model_type', $this->getMorphClass())
             ->whereNull('redirect_id')
         ;
+    }
+
+    public function allUrls(): HasMany
+    {
+        return $this->hasMany(UrlRecord::class, 'model_id')
+            ->where('model_type', $this->getMorphClass())
+            ;
     }
 
     public function isVisitable(): bool

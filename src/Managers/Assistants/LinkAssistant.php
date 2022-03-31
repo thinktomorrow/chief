@@ -37,7 +37,7 @@ trait LinkAssistant
         $model = $this->fieldsModel($id);
 
         return view('chief::manager.windows.links.edit', [
-            'linkForm' => LinkForm::fromModel($model),
+            'linkForm' => LinkForm::fromModel($model, true),
             'manager' => app(Registry::class)->findManagerByModel($model::class),
             'model' => $model,
         ]);

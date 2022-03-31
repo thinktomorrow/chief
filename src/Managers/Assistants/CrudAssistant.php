@@ -7,6 +7,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Forms\SaveFields;
@@ -98,6 +99,10 @@ trait CrudAssistant
     protected function indexModels(): Paginator
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
+
+        if($this->managedModelClassInstance() instanceof Visitable) {
+            $builder->with(['urls']);
+        }
 
         if (! $pagination = $this->resource->getIndexPagination()) {
             return $builder->get();

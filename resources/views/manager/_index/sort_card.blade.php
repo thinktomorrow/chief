@@ -23,7 +23,7 @@
                 Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
             </p>
 
-            <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
+            <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary mt-3">Sorteer handmatig</a>
         @endif
     </div>
 @endAdminCan
