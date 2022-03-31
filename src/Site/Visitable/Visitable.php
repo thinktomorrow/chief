@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Symfony\Component\HttpFoundation\Response;
 
 interface Visitable
 {

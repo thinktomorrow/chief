@@ -7,7 +7,6 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Forms\SaveFields;
@@ -21,6 +20,7 @@ use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait CrudAssistant
 {
@@ -100,7 +100,7 @@ trait CrudAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        if($this->managedModelClassInstance() instanceof Visitable) {
+        if ($this->managedModelClassInstance() instanceof Visitable) {
             $builder->with(['urls']);
         }
 
