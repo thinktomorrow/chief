@@ -91,7 +91,7 @@
                                 Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
                             </p>
 
-                            <button data-sortable-toggle class="btn btn-primary mt-4 mb-4">
+                            <button data-sortable-toggle class="mt-4 mb-4 btn btn-primary">
                                 Pas volgorde aan
                             </button>
 
@@ -109,18 +109,18 @@
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    <div class="card">
-                        <div class="w-full space-x-1 mt-0.5">
-                            <span class="text-lg display-base display-dark">
-                                Archief
-                            </span>
+                    <div class="space-y-6 card">
+                        <div class="mt-0.5">
+                            <span class="text-lg display-base display-dark"> Archief </span>
                         </div>
 
-                        @if(Route::currentRouteName() == 'chief.single.archive_index')
-                            <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
-                        @else
-                            <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
-                        @endif
+                        <div>
+                            @if(Route::currentRouteName() == 'chief.single.archive_index')
+                                <a href="@adminRoute('index')" class="link link-primary">Ga terug naar overzicht</a>
+                            @else
+                                <a href="@adminRoute('archive_index')" class="link link-warning">Bekijk de gearchiveerde items</a>
+                            @endif
+                        </div>
                     </div>
                 @endAdminCan
             </div>
