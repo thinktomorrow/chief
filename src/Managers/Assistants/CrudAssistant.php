@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait CrudAssistant
 {
@@ -87,16 +88,21 @@ trait CrudAssistant
 
         app(VisitedUrl::class)->add(request()->fullUrl());
 
-        return view('chief::manager.index', [
-            'manager' => $this,
-            'resource' => $this->resource,
-            'models' => $this->indexModels(),
-        ]);
+        View::share('manager', $this);
+        View::share('resource', $this->resource);
+        View::share('models', $this->indexModels());
+        View::share('model', $this->managedModelClassInstance());
+
+        return $this->resource->getIndexView();
     }
 
     protected function indexModels(): Paginator
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
+
+        if ($this->managedModelClassInstance() instanceof Visitable) {
+            $builder->with(['urls']);
+        }
 
         if (! $pagination = $this->resource->getIndexPagination()) {
             return $builder->get();

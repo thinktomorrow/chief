@@ -21,8 +21,8 @@ trait TestHelpers
     public function registerResponseMacros()
     {
         TestResponse::macro('assertViewCount', function ($key, $count) {
-            Assert::assertArrayHasKey($key, $this->getOriginalContent()->getData());
-            Assert::assertCount($count, $this->getOriginalContent()->getData()[$key]);
+            Assert::assertArrayHasKey($key, $this->getOriginalContent()->gatherData());
+            Assert::assertCount($count, $this->getOriginalContent()->gatherData()[$key]);
         });
 
         TestResponse::macro('assertContains', function ($value) {

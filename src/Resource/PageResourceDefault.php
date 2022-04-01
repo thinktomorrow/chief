@@ -60,6 +60,11 @@ trait PageResourceDefault
         return $this->getPageTitle($model).$suffix;
     }
 
+    public function getIndexView(): View
+    {
+        return view('chief::manager.index');
+    }
+
     public function getIndexTitle(): string
     {
         return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());

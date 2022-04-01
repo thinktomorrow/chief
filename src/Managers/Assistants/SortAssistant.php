@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
@@ -73,14 +74,12 @@ trait SortAssistant
      */
     public function indexForSorting()
     {
-        $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        View::share('manager', $this);
+        View::share('resource', $this->resource);
+        View::share('models', $this->indexModelsForSorting());
+        View::share('model', $this->managedModelClassInstance());
 
-        return view('chief::manager.index-for-sorting', [
-            'manager' => $this,
-            'model' => $model,
-            'models' => $this->indexModelsForSorting(),
-        ]);
+        return view('chief::manager.index-for-sorting');
     }
 
     protected function indexModelsForSorting(): LengthAwarePaginator

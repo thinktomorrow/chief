@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\Response;
 
 interface Visitable
@@ -43,4 +44,8 @@ interface Visitable
     public function resolveUrl(string $locale = null, $parameters = null): string;
 
     public function response(): Response;
+
+    public function urls(): HasMany;
+
+    public function allUrls(): HasMany;
 }
