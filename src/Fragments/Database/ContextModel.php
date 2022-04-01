@@ -30,7 +30,7 @@ final class ContextModel extends Model
     {
         return $this->belongsToMany(FragmentModel::class, 'context_fragment_lookup', 'context_id', 'fragment_id')
                 ->withPivot('order')
-                ->with('assetRelation','assetRelation.media')
+                ->with('assetRelation', 'assetRelation.media')
                 ->orderBy('context_fragment_lookup.order');
     }
 
