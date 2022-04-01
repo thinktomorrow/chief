@@ -58,6 +58,9 @@
             />
 
             @include('chief::layout.nav.nav-project')
+        </div>
+
+        <div class="py-6">
             @include('chief::layout.nav.nav-general')
         </div>
 
