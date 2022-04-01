@@ -12,7 +12,5 @@
         @can('view-squanto')
             <x-chief::nav.item label="Teksten" url="{{ route('squanto.index') }}" />
         @endcan
-
-        <x-chief::nav.item label="Sitemap" url="{{ route('chief.back.sitemap.show') }}" />
     </x-chief::nav.item>
 @endif

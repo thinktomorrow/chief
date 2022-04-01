@@ -20,6 +20,8 @@
             <x-chief::nav.item label="Settings" url="{{ route('chief.back.settings.edit') }}" />
         @endcan
 
+        <x-chief::nav.item label="Sitemap" url="{{ route('chief.back.sitemap.show') }}" />
+
         @can('view-audit')
             <x-chief::nav.item label="Audit" url="{{ route('chief.back.audit.index') }}" />
         @endcan
