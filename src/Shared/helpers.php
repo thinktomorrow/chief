@@ -180,6 +180,8 @@ if (! function_exists('teaser')) {
             $text = cleanupHTML($text, $clean);
         }
 
+        $text = html_entity_decode($text);
+
         $teaser = mb_substr($text, 0, $max, 'utf-8');
 
         return strlen($text) <= $max ? $teaser : $teaser.$ending;
