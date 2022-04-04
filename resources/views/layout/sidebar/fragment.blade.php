@@ -28,11 +28,15 @@
                     Dit is een gedeeld fragment. Dat betekent dat het ook toegevoegd werd op een andere plaats op de website.
                     Elke aanpassing aan dit fragment zal dus doorgevoerd worden op de volgende pagina's:
 
-                    @foreach(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)->get($model->fragmentModel()) as $otherOwner)
-                        @if($otherOwner['model']->modelReference()->equals($owner->modelReference())) @continue @endif
+                    @php
+                        $otherOwners = collect(app(Thinktomorrow\Chief\Fragments\Actions\GetOwningModels::class)
+                            ->get($model->fragmentModel()))
+                            ->reject(function($otherOwner) use ($owner) {
+                                return $otherOwner['model']->modelReference()->equals($owner->modelReference());
+                            });
+                    @endphp
 
-                        @if(!$loop->first), @endif
-
+                    @foreach($otherOwners as $otherOwner)
                         @if(($otherOwner['model'] instanceof \Thinktomorrow\Chief\Fragments\Fragmentable))
                             <span class="link link-grey">
                                 {{ $otherOwner['pageTitle'] }}
@@ -46,6 +50,8 @@
                                 {{ $otherOwner['pageTitle'] }}
                             </a>
                         @endif
+
+                        @if(!$loop->last), @endif
                     @endforeach
                 </p>
 
