@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemDeleted;
 
 class DeleteMenuItemTest extends ChiefTestCase
 {

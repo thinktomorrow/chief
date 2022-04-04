@@ -2,14 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
-use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
+use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
 class ProjectModelDataTest extends ChiefTestCase
 {

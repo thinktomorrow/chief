@@ -28,7 +28,7 @@ class ChiefMenuFactory
     public function forAdmin(string $key, string $locale): NodeCollection
     {
         // Include hidden : false;
-//trap(MenuItem::where('menu_type', $key)->whereRaw('LOWER(json_extract(`values`, "$.label.en")) = ?', 'null')->get());
+        //trap(MenuItem::where('menu_type', $key)->whereRaw('LOWER(json_extract(`values`, "$.label.en")) = ?', 'null')->get());
         return $this->nodeCollectionFactory->fromSource(
             MenuSource::fromCollection(MenuItem::where('menu_type', $key)->get(), $locale)
         )->sort('order');

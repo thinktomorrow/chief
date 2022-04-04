@@ -4,10 +4,9 @@ namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 
 class UpdateMenuItemTest extends ChiefTestCase
 {

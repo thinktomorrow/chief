@@ -69,8 +69,11 @@ class MenuItemController extends Controller
 
         $menuitem = MenuItem::findOrFail($id);
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare($this->chiefMenuFactory->forAdmin(
-            $menuitem->menuType(), config('app.fallback_locale')),
+        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
+            $this->chiefMenuFactory->forAdmin(
+            $menuitem->menuType(),
+            config('app.fallback_locale')
+        ),
             $menuitem
         );
 

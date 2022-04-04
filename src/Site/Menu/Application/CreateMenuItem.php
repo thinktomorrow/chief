@@ -6,11 +6,11 @@ namespace Thinktomorrow\Chief\Site\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Shared\Helpers\Form;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
 class CreateMenuItem

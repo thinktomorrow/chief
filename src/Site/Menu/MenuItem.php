@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 use Thinktomorrow\Vine\Node;
 
@@ -52,7 +52,7 @@ class MenuItem extends Model
             return $this->dynamic('owner_label', $locale);
         }
 
-        if (!$url = $this->getUrl($locale)) {
+        if (! $url = $this->getUrl($locale)) {
             return 'geen link';
         }
 
@@ -74,9 +74,9 @@ class MenuItem extends Model
 //        return static::where('menu_type', $key)
 //            ->get()
 //            ->map(function (self $menuItem) use ($locale) {
-////                if (!$menuItem->getLabel($locale)) {
-////                    $menuItem->setDynamic('label.'.$locale, '-');
-////                }
+    ////                if (!$menuItem->getLabel($locale)) {
+    ////                    $menuItem->setDynamic('label.'.$locale, '-');
+    ////                }
 //
 //                return $menuItem;
 //            })

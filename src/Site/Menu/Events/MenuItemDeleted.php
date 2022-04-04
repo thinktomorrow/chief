@@ -7,6 +7,5 @@ class MenuItemDeleted
 {
     public function __construct(public readonly string $menuItemId)
     {
-
     }
 }

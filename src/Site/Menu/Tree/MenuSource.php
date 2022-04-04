@@ -39,7 +39,7 @@ class MenuSource implements Source
 
     public function createNode($entry): Node
     {
-        if (!$entry instanceof MenuItem) {
+        if (! $entry instanceof MenuItem) {
             throw new \InvalidArgumentException('Entry argument should be instance of '.MenuItem::class);
         }
 

@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
-use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 
 class MenuItemNode extends DefaultNode implements Node
 {

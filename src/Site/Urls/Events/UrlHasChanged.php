@@ -9,6 +9,5 @@ class UrlHasChanged
 {
     public function __construct(public readonly ModelReference $modelReference)
     {
-
     }
 }

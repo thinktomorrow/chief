@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Application;
 
-use Thinktomorrow\Url\Url;
-use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
-use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
+use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Url\Url;
 
 class ProjectModelData
 {
@@ -88,13 +87,13 @@ class ProjectModelData
 
     private function handleByMenuItem(MenuItem $menuItem): void
     {
-        if (!$menuItem->ofType(MenuItem::TYPE_INTERNAL)) {
+        if (! $menuItem->ofType(MenuItem::TYPE_INTERNAL)) {
             return;
         }
 
         $model = $menuItem->owner;
 
-        if($model instanceof WithPageState) {
+        if ($model instanceof WithPageState) {
             $menuItem->setStatus(PageState::make($model)->isOffline() ? MenuItemStatus::offline : MenuItemStatus::online);
         }
 
