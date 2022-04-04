@@ -6,38 +6,43 @@ namespace Thinktomorrow\Chief\Site\Menu\Tree;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 
 class MenuItemNode extends DefaultNode implements Node
 {
-    private MenuItem $model;
-    private ?string $label;
+    private MenuItemStatus $status;
+    private string $label;
+    private ?string $url;
+    private string $adminUrlLabel;
 
-    public function __construct(MenuItem $model)
+    public function __construct(MenuItemStatus $status, string $label, ?string $url, string $adminUrlLabel, string $id, ?string $parentId, int $order)
     {
         parent::__construct([
-            'id' => $model->id,
-            'parent_id' => $model->parent_id,
-            'order' => $model->order,
+            'id' => $id,
+            'parent_id' => $parentId,
+            'order' => $order,
         ]);
 
-        $this->model = $model;
-        $this->label = $this->model->label;
+        $this->status = $status;
+        $this->label = $label;
+        $this->url = $url;
+        $this->adminUrlLabel = $adminUrlLabel;
     }
 
     public function getId()
     {
-        return $this->model->id;
+        return $this->getNodeId();
     }
 
     public function getParentId()
     {
-        return $this->model->parent_id;
+        return $this->getParentNodeId();
     }
 
-    public function getType()
-    {
-        return $this->model->type;
-    }
+//    public function getType()
+//    {
+//        return $this->type;
+//    }
 
     public function getLabel()
     {
@@ -50,39 +55,49 @@ class MenuItemNode extends DefaultNode implements Node
     }
 
     // Extra info when dealing with internal links
-    public function getPageLabel()
-    {
-        return $this->model->page_label;
-    }
+//    public function getPageLabel()
+//    {
+//        return $this->page_label;
+//    }
 
     public function getUrl()
     {
-        return $this->model->url();
+        return $this->url;
     }
 
-    public function getOrder()
+    public function isOffline(): bool
     {
-        return $this->model->order;
+        return $this->status != MenuItemStatus::online;
     }
 
-    public function getOwnerType()
+    public function getAdminUrlLabel(): string
     {
-        return $this->model->owner_type;
+        return $this->adminUrlLabel;
     }
 
-    public function getOwnerId()
-    {
-        return $this->model->owner_id;
-    }
+//    public function getOrder()
+//    {
+//        return $this->order;
+//    }
+//
+//    public function getOwnerType()
+//    {
+//        return $this->owner_type;
+//    }
+//
+//    public function getOwnerId()
+//    {
+//        return $this->owner_id;
+//    }
 
     // TODO: is this used?
-    public function isHiddenInMenu(): bool
-    {
-        return ! ! $this->model->hidden_in_menu;
-    }
-
-    public function isDraft(): bool
-    {
-        return ! ! $this->model->draft;
-    }
+//    public function isHiddenInMenu(): bool
+//    {
+//        return ! ! $this->hidden_in_menu;
+//    }
+//
+//    public function isDraft(): bool
+//    {
+//        return ! ! $this->draft;
+//    }
 }

@@ -10,8 +10,10 @@ use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 
 trait PublishAssistant
 {
@@ -76,6 +78,8 @@ trait PublishAssistant
 
         $model->publish();
 
+        event(new ManagedModelPublished($model->modelReference()));
+
         Audit::activity()->performedOn($model)->log('published');
 
         if ($request->expectsJson()) {
@@ -94,6 +98,8 @@ trait PublishAssistant
         $this->guard('unpublish', $model);
 
         $model->unpublish();
+
+        event(new ManagedModelUnPublished($model->modelReference()));
 
         Audit::activity()->performedOn($model)->log('unpublished');
 

@@ -6,13 +6,14 @@ namespace Thinktomorrow\Chief\Site\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Shared\Helpers\Form;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
-class CreateMenu
+class CreateMenuItem
 {
     use TranslatableCommand;
 
@@ -28,7 +29,7 @@ class CreateMenu
 
             if ($request->input('owner_reference')) {
                 $owner = ModelReference::fromString($request->input('owner_reference'));
-                $model->owner_type = $owner->className();
+                $model->owner_type = $owner->shortClassName();
                 $model->owner_id = $owner->id();
             }
 
@@ -37,6 +38,8 @@ class CreateMenu
             });
 
             $model->save();
+
+            event(new MenuItemCreated((string) $model->id));
 
             DB::commit();
 

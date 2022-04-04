@@ -81,16 +81,9 @@ if (! function_exists('chiefRegister')) {
 }
 
 if (! function_exists('chiefmenu')) {
-    /**
-     * @param mixed $key
-     *
-     * @return \Thinktomorrow\Chief\Site\Menu\Menu|\Thinktomorrow\Chief\Site\Menu\NullMenu
-     */
-    function chiefmenu($key = 'main')
+    function chiefmenu(string $key): \Thinktomorrow\Chief\Site\Menu\Menu
     {
-        $menu = \Thinktomorrow\Chief\Site\Menu\Menu::find($key);
-
-        return $menu ?? new \Thinktomorrow\Chief\Site\Menu\NullMenu();
+        return \Thinktomorrow\Chief\Site\Menu\Menu::find($key);
     }
 }
 

@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
-class DeleteMenu
+class DeleteMenuItem
 {
     use TranslatableCommand;
 
@@ -17,13 +18,15 @@ class DeleteMenu
         try {
             DB::beginTransaction();
 
-            $menuitem = MenuItem::find($id);
+            $model = MenuItem::find($id);
 
-            $menuitem->delete();
+            $model->delete();
 
             DB::commit();
 
-            return $menuitem;
+            event(new MenuItemDeleted((string)$model->id));
+
+            return $model;
         } catch (\Throwable $e) {
             DB::rollBack();
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 final class SaveUrlSlugs
 {

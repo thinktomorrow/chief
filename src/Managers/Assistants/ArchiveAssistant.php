@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -91,6 +92,8 @@ trait ArchiveAssistant
         }
 
         $model->archive();
+
+        event(new ManagedModelArchived($model->modelReference()));
 
         Audit::activity()->performedOn($model)->log('archived');
 

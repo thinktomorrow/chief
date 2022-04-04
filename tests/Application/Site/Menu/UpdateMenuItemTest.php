@@ -3,9 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 
 class UpdateMenuItemTest extends ChiefTestCase
 {
@@ -17,14 +19,12 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function admin_can_view_the_update_form()
+    public function admin_can_view_the_edit_form()
     {
-        $this->disableExceptionHandling();
         $menuitem = MenuItem::create();
 
         $response = $this->asAdmin()->get(route('chief.back.menuitem.edit', $menuitem->id));
-        $response->assertViewIs('chief::admin.menu.edit')
-            ->assertStatus(200);
+        $response->assertSuccessful();
     }
 
     /** @test */
@@ -67,11 +67,23 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
+    public function updating_a_new_menu_item_emits_event()
+    {
+        Event::fake();
+
+        $menuitem = MenuItem::create();
+
+        $this->asAdmin()->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams());
+
+        Event::assertDispatched(MenuItemUpdated::class);
+    }
+
+    /** @test */
     public function editing_an_internal_menu_item()
     {
-        ArticlePage::migrateUp();
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
-        $page = ArticlePage::create();
         $menuitem = MenuItem::create();
 
         $this->asAdmin()
@@ -80,7 +92,15 @@ class UpdateMenuItemTest extends ChiefTestCase
                 'owner_reference' => $page->modelReference()->getShort(),
             ]))->assertStatus(302);
 
-        $this->assertEquals($page->modelReference(), $menuitem->fresh()->owner->modelReference());
+        $item = MenuItem::first();
+
+        $this->assertEquals($page->modelReference(), $item->owner->modelReference());
+
+        $this->assertEquals('foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('foobar-en', $item->getUrl('en'));
+
+        $this->assertEquals('artikel pagetitle nl', $item->getAdminUrlLabel('nl'));
+        $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));
     }
 
     /** @test */

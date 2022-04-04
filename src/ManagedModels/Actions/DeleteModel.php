@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 
 class DeleteModel
 {
@@ -60,6 +61,8 @@ class DeleteModel
                 ->log('deleted');
 
             $model->delete();
+
+            event(new ManagedModelDeleted($model->modelReference()));
 
             DB::commit();
         } catch (\Throwable $e) {

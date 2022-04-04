@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Site\Urls\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -37,7 +38,7 @@ class LinksController
             app(ChangeHomepage::class)->onUrlChanged($record);
         });
 
-        event(new ManagedModelUrlUpdated($model->modelReference()));
+        event(new UrlHasChanged($model->modelReference()));
 
         return response()->json([
             'message' => 'links updated',
