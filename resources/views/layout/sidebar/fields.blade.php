@@ -1,13 +1,7 @@
-<div class="space-y-12">
-    @if($form->getTitle())
-        <div class="space-y-2">
-            <p class="text-2xl display-base display-dark">
-                {{ $form->getTitle() }}
-            </p>
-        </div>
-    @endif
+<div class="py-6 space-y-6 border-t border-grey-100">
+    <p class="text-lg display-base display-dark">
+        {{ ucfirst($form->getTitle()) }}
+    </p>
 
-    <div class="space-y-6">
-        {!! $slot !!}
-    </div>
+    {!! $slot !!}
 </div>

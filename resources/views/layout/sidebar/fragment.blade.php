@@ -1,9 +1,11 @@
 <div class="py-6 space-y-6 border-t border-grey-100">
-    <p class="text-lg display-base display-dark">
-        {{ ucfirst($resource->getLabel()) }}
-    </p>
+    <div class="space-y-2">
+        <p class="text-lg display-base display-dark">
+            {{ ucfirst($resource->getLabel()) }}
+        </p>
 
-    @include('chief::layout._partials.fragment_bookmarks')
+        @include('chief::layout._partials.fragment_bookmarks')
+    </div>
 
     {!! $slot !!}
 </div>

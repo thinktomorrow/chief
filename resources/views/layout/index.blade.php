@@ -1,5 +1,4 @@
 <x-chief::page>
-
     <x-slot name="pageTitle">
         @isset($pageTitle)
             {{ $pageTitle }}
