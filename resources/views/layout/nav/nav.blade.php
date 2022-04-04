@@ -1,3 +1,8 @@
+{{--
+    TODO(tijs):
+    - Change collapsible attribute API to standard top level collapsing without defining it explicitly on the component.
+--}}
+
 {{-- Mobile navigation toggle --}}
 <div class="container block lg:hidden">
     <div class="flex items-center justify-start pt-6 -ml-2 lg:hidden">
@@ -20,52 +25,53 @@
 >
     <div
         data-collapsible-navigation
-        class="h-screen px-3 border-r divide-y select-none divide-grey-100 border-grey-100"
+        class="flex flex-col justify-between h-screen px-3 border-r divide-y select-none divide-grey-100 border-grey-100"
     >
-        {{-- Desktop Chief title --}}
-        <div class="items-center justify-start hidden py-6 lg:flex">
-            <div
-                data-toggle-navigation
-                class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
-            >
-                <svg class="w-6 h-6 text-black"><use xlink:href="#menu"></use></svg>
+        <div class="pb-6 divide-y divide-grey-100">
+            {{-- Desktop Chief title --}}
+            <div class="items-center justify-start hidden py-6 lg:flex">
+                <div
+                    data-toggle-navigation
+                    class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
+                >
+                    <svg class="w-6 h-6 text-black"><use xlink:href="#menu"></use></svg>
+                </div>
+
+                <a
+                    data-toggle-classes="hidden"
+                    href="{{ route('chief.back.dashboard') }}"
+                    title="Ga naar Dashboard"
+                    class="block w-full px-3 py-2 font-semibold text-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
+                > Chief </a>
             </div>
 
-            <span
-                data-toggle-classes="hidden"
-                class="inline-block px-3 py-2 font-semibold text-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
-            > Chief </span>
-        </div>
+            {{-- Mobile Chief title --}}
+            <div class="flex items-center justify-start py-6 lg:hidden">
+                <div
+                    data-mobile-navigation-toggle
+                    class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
+                >
+                    <svg class="w-6 h-6 text-black"><use xlink:href="#icon-arrow-rtl"></use></svg>
+                </div>
 
-        {{-- Mobile Chief title --}}
-        <div class="flex items-center justify-start py-6 lg:hidden">
-            <div
-                data-mobile-navigation-toggle
-                class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
-            >
-                <svg class="w-6 h-6 text-black"><use xlink:href="#icon-arrow-rtl"></use></svg>
+                <a
+                    href="{{ route('chief.back.dashboard') }}"
+                    title="Ga naar Dashboard"
+                    class="inline-block px-3 py-2 font-semibold text-black"
+                > Chief </a>
             </div>
 
-            <span class="inline-block px-3 py-2 font-semibold text-black"> Chief </span>
+            <div class="py-6">
+                @include('chief::layout.nav.nav-project')
+            </div>
+
+            <div class="py-6">
+                @include('chief::layout.nav.nav-general')
+                @include('chief::layout.nav.nav-settings')
+            </div>
         </div>
 
         <div class="py-6">
-            <x-chief::nav.item
-                label="Dashboard"
-                url="{{ route('chief.back.dashboard') }}"
-                icon="<svg><use xlink:href='#icon-home'></use></svg>"
-                collapsible
-            />
-
-            @include('chief::layout.nav.nav-project')
-        </div>
-
-        <div class="py-6">
-            @include('chief::layout.nav.nav-general')
-        </div>
-
-        <div class="py-6">
-            @include('chief::layout.nav.nav-settings')
             @include('chief::layout.nav.nav-user')
         </div>
     </div>
