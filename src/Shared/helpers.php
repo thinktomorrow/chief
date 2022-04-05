@@ -83,7 +83,7 @@ if (! function_exists('chiefRegister')) {
 if (! function_exists('chiefmenu')) {
     function chiefmenu(string $key, ?string $locale = null): \Thinktomorrow\Vine\NodeCollection
     {
-        if(!$locale) {
+        if (! $locale) {
             $locale = app()->getLocale();
         }
 

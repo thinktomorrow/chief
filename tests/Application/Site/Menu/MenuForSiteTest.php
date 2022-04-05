@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
-use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MenuForSiteTest extends ChiefTestCase

@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
+use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FormsAssistant
