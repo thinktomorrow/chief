@@ -22,19 +22,21 @@
             </div>
 
             @adminCan('fragment-edit')
-            <a
+                <a
                     data-sidebar-trigger
                     href="@adminRoute('fragment-edit', $owner, $model)"
                     title="Fragment aanpassen"
                     class="shrink-0"
-            >
-                <x-chief-icon-button icon="icon-edit"/>
-            </a>
+                >
+                    <x-chief-icon-button icon="icon-edit"/>
+                </a>
             @endAdminCan
         </div>
 
         @if($adminFragment = $model->renderAdminFragment($owner, $loop))
-            {!! $adminFragment !!}
+            <div class="px-[2.65rem]">
+                {!! $adminFragment !!}
+            </div>
         @endif
     </div>
 
