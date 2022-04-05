@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Application;
 
+use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -17,7 +19,6 @@ use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
-use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Url;
 
@@ -40,7 +41,12 @@ class ProjectModelData
         $this->handleByMenuItem(MenuItem::find($event->menuItemId));
     }
 
-    public function onUrlHasChanged(UrlHasChanged $event): void
+    public function onFormUpdated(FormUpdated $event): void
+    {
+        $this->handleByOwner($event->modelReference->shortClassName(), $event->modelReference->id());
+    }
+
+    public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
     {
         $this->handleByOwner($event->modelReference->shortClassName(), $event->modelReference->id());
     }
@@ -85,9 +91,9 @@ class ProjectModelData
         }
     }
 
-    private function handleByMenuItem(MenuItem $menuItem): void
+    public function handleByMenuItem(MenuItem $menuItem): void
     {
-        if (! $menuItem->ofType(MenuItem::TYPE_INTERNAL)) {
+        if (!$menuItem->ofType(MenuItem::TYPE_INTERNAL)) {
             return;
         }
 
@@ -104,7 +110,7 @@ class ProjectModelData
         $locales = config('chief.locales');
 
         foreach ($locales as $locale) {
-            app()->setLocale($locale);
+            app()->setLocale($locale); // only way to get localized pagetitle
             $menuItem->setOwnerLabel($locale, $resource->getPageTitle($model));
 
             if ($model instanceof Visitable) {

@@ -73,30 +73,4 @@ class MenuItemNode extends DefaultNode implements Node
     {
         return $this->adminUrlLabel;
     }
-
-//    public function getOrder()
-//    {
-//        return $this->order;
-//    }
-//
-//    public function getOwnerType()
-//    {
-//        return $this->owner_type;
-//    }
-//
-//    public function getOwnerId()
-//    {
-//        return $this->owner_id;
-//    }
-
-    // TODO: is this used?
-//    public function isHiddenInMenu(): bool
-//    {
-//        return ! ! $this->hidden_in_menu;
-//    }
-//
-//    public function isDraft(): bool
-//    {
-//        return ! ! $this->draft;
-//    }
 }

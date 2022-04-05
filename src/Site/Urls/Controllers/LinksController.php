@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
@@ -37,7 +37,7 @@ class LinksController
             app(ChangeHomepage::class)->onUrlChanged($record);
         });
 
-        event(new UrlHasChanged($model->modelReference()));
+        event(new ManagedModelUrlUpdated($model->modelReference()));
 
         return response()->json([
             'message' => 'links updated',

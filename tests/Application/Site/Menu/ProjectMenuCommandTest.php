@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
-class ProjectModelDataCommandTest extends ChiefTestCase
+class ProjectMenuCommandTest extends ChiefTestCase
 {
     use PageFormParams;
 
@@ -36,6 +36,12 @@ class ProjectModelDataCommandTest extends ChiefTestCase
     /** @test */
     public function it_can_project_all_menu_items()
     {
-        throw new \Exception('TODO...');
+        $this->artisan('chief:project-menu')
+            ->assertExitCode(0);
+
+        $item = MenuItem::first();
+
+        $this->assertEquals('artikel titel nl', $item->getAdminUrlLabel('nl'));
+        $this->assertEquals('artikel titel en', $item->getAdminUrlLabel('en'));
     }
 }

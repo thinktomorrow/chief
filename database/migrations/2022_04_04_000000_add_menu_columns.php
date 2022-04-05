@@ -13,7 +13,7 @@ class AddMenuColumns extends Migration
         });
 
         Schema::table('menu_items', function(Blueprint $table){
-            $table->removeColumn('hidden_in_menu');
+            $table->dropColumn('hidden_in_menu');
         });
     }
 

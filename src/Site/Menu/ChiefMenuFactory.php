@@ -18,51 +18,25 @@ class ChiefMenuFactory
         $this->nodeCollectionFactory = $nodeCollectionFactory;
     }
 
-    // Faster build for frontend coming from projected data...
-    public function forSite(string $key, string $locale): self
+    /**
+     * Build the menu tree excluding offline items.
+     */
+    public function forSite(string $key, string $locale): NodeCollection
     {
-        // Include hidden : true;
+        return $this->nodeCollectionFactory->fromSource(
+            MenuSource::fromCollection(MenuItem::where('menu_type', $key)->get(), $locale)
+        )->remove(fn (MenuItemNode $node) => $node->isOffline())
+            ->sort('order')
+        ;
     }
 
-    // Slower build for admin but with full record data included.
+    /**
+     * Build the entire menu tree including offline items.
+     */
     public function forAdmin(string $key, string $locale): NodeCollection
     {
-        // Include hidden : false;
-        //trap(MenuItem::where('menu_type', $key)->whereRaw('LOWER(json_extract(`values`, "$.label.en")) = ?', 'null')->get());
         return $this->nodeCollectionFactory->fromSource(
             MenuSource::fromCollection(MenuItem::where('menu_type', $key)->get(), $locale)
         )->sort('order');
     }
-
-//    public static function empty(): self
-//    {
-//        return new static(new NodeCollection());
-//    }
-
-//    /**
-//     * @return static
-//     */
-//    public function includeHidden(): self
-//    {
-//        // TODO: THIS DOES NOT WORK???
-//        $this->includeHidden = true;
-//
-//        return $this;
-//    }
-
-//    public function items(): NodeCollection
-//    {
-//        return $this->collection;
-//    }
-
-//    private function sanitize(NodeCollection $collection): NodeCollection
-//    {
-//        if (! $this->includeHidden) {
-//            $collection = $collection->shake(function (MenuItemNode $node) {
-//                return ! $node->isHiddenInMenu() && ! $node->isDraft();
-//            });
-//        }
-//
-//        return $collection->sort('order');
-//    }
 }

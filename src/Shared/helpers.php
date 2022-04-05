@@ -81,9 +81,13 @@ if (! function_exists('chiefRegister')) {
 }
 
 if (! function_exists('chiefmenu')) {
-    function chiefmenu(string $key): \Thinktomorrow\Chief\Site\Menu\Menu
+    function chiefmenu(string $key, ?string $locale = null): \Thinktomorrow\Vine\NodeCollection
     {
-        return \Thinktomorrow\Chief\Site\Menu\Menu::find($key);
+        if(!$locale) {
+            $locale = app()->getLocale();
+        }
+
+        return app(\Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory::class)->forSite($key, $locale);
     }
 }
 

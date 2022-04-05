@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Auth\Events\Login;
+use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -41,7 +42,7 @@ use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
-use Thinktomorrow\Chief\Site\Urls\Events\UrlHasChanged;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 
@@ -177,7 +178,8 @@ class ChiefServiceProvider extends ServiceProvider
         // Menu model data listeners
         Event::listen(MenuItemCreated::class, ProjectModelData::class.'@onMenuItemCreated');
         Event::listen(MenuItemUpdated::class, ProjectModelData::class.'@onMenuItemUpdated');
-        Event::listen(UrlHasChanged::class, ProjectModelData::class.'@onUrlHasChanged');
+        Event::listen(ManagedModelUrlUpdated::class, ProjectModelData::class.'@onManagedModelUrlUpdated');
+        Event::listen(FormUpdated::class, ProjectModelData::class.'@onFormUpdated');
         Event::listen(ManagedModelUpdated::class, ProjectModelData::class.'@onManagedModelUpdated');
         Event::listen(ManagedModelArchived::class, ProjectModelData::class.'@onManagedModelArchived');
         Event::listen(ManagedModelPublished::class, ProjectModelData::class.'@onManagedModelPublished');
