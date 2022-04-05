@@ -93,7 +93,7 @@ class ProjectModelData
 
     public function handleByMenuItem(MenuItem $menuItem): void
     {
-        if (!$menuItem->ofType(MenuItem::TYPE_INTERNAL)) {
+        if (! $menuItem->ofType(MenuItem::TYPE_INTERNAL)) {
             return;
         }
 
