@@ -83,11 +83,17 @@ if (! function_exists('chiefRegister')) {
 if (! function_exists('chiefmenu')) {
     function chiefmenu(string $key, ?string $locale = null): \Thinktomorrow\Vine\NodeCollection
     {
+        static $loaded = [];
+
         if (! $locale) {
             $locale = app()->getLocale();
         }
 
-        return app(\Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory::class)->forSite($key, $locale);
+        if(isset($loaded[$cacheKey = $key . '_' . $locale])) {
+            return $loaded[$cacheKey];
+        }
+
+        return $loaded[$cacheKey] = app(\Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory::class)->forSite($key, $locale);
     }
 }
 
