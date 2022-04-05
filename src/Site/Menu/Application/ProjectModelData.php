@@ -114,7 +114,9 @@ class ProjectModelData
             $menuItem->setOwnerLabel($locale, $resource->getPageTitle($model));
 
             if ($model instanceof Visitable) {
-                $menuItem->setUrl($locale, '/'.Url::fromString($model->url($locale))->getPath());
+                $path = Url::fromString($model->url($locale))->getPath();
+
+                $menuItem->setUrl($locale, $path ? '/'.$path : null);
             }
         }
 

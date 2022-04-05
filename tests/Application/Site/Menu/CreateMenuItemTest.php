@@ -13,7 +13,6 @@ class CreateMenuItemTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertViewIs('chief::admin.menu.create')
                  ->assertStatus(200);
@@ -93,8 +92,8 @@ class CreateMenuItemTest extends ChiefTestCase
 
         $this->assertEquals($page->modelReference(), $item->owner->modelReference());
 
-        $this->assertEquals('foobar-nl', $item->getUrl('nl'));
-        $this->assertEquals('foobar-en', $item->getUrl('en'));
+        $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('/foobar-en', $item->getUrl('en'));
 
         $this->assertEquals('label one', $item->getLabel('nl'));
         $this->assertEquals('label two', $item->getLabel('en'));

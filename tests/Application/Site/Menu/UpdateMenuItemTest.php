@@ -95,8 +95,8 @@ class UpdateMenuItemTest extends ChiefTestCase
 
         $this->assertEquals($page->modelReference(), $item->owner->modelReference());
 
-        $this->assertEquals('foobar-nl', $item->getUrl('nl'));
-        $this->assertEquals('foobar-en', $item->getUrl('en'));
+        $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('/foobar-en', $item->getUrl('en'));
 
         $this->assertEquals('artikel pagetitle nl', $item->getAdminUrlLabel('nl'));
         $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));

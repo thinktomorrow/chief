@@ -87,12 +87,12 @@ class ProjectModelDataTest extends ChiefTestCase
 
         // nl
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
-        $this->assertEquals('foobar-nl', $collection->first()->getUrl('nl'));
+        $this->assertEquals('/foobar-nl', $collection->first()->getUrl('nl'));
         $this->assertEquals('artikel titel nl', $collection->first()->getAdminUrlLabel());
 
         // en
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
-        $this->assertEquals('foobar-en', $collection->first()->getUrl('en'));
+        $this->assertEquals('/foobar-en', $collection->first()->getUrl('en'));
         $this->assertEquals('artikel titel en', $collection->first()->getAdminUrlLabel());
     }
 
