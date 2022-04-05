@@ -26,7 +26,7 @@ class ChiefMenuFactory
      */
     public function forSite(string $key, string $locale): NodeCollection
     {
-        if(isset(static::$loaded[$cacheKey = $key . '_' . $locale])) {
+        if (isset(static::$loaded[$cacheKey = $key . '_' . $locale])) {
             return static::$loaded[$cacheKey];
         }
 
