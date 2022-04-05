@@ -89,7 +89,7 @@ if (! function_exists('chiefmenu')) {
             $locale = app()->getLocale();
         }
 
-        if(isset($loaded[$cacheKey = $key . '_' . $locale])) {
+        if (isset($loaded[$cacheKey = $key . '_' . $locale])) {
             return $loaded[$cacheKey];
         }
 
