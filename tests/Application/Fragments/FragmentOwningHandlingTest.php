@@ -33,7 +33,8 @@ class FragmentOwningHandlingTest extends ChiefTestCase
 
         $viewData = $response->getOriginalContent()->getData();
 
-        $this->assertCount(2, $viewData['fragments']);
+        $this->assertCount(1, $viewData['fragments']); // Grouped by category
+        $this->assertCount(2, reset($viewData['fragments']));
     }
 
     /** @test */
