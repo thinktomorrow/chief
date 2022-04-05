@@ -123,13 +123,13 @@
 }
 
 .children\:w-6 > * {
-    @apply w-6;
+    width: theme('width.6');
 }
 
 .children\:h-6 > * {
-    @apply h-6;
+    height: theme('height.6');
 }
 
 .children\:text-black > * {
-    @apply text-black;
+    color: theme('colors.black');
 }

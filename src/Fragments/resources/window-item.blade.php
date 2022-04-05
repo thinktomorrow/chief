@@ -34,9 +34,7 @@
         </div>
 
         @if($adminFragment = $model->renderAdminFragment($owner, $loop))
-            <div>
-                {!! $adminFragment !!}
-            </div>
+            {!! $adminFragment !!}
         @endif
     </div>
 

@@ -15,7 +15,7 @@
                     </span>
                 </div>
 
-                {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!}
+                {{-- {!! $allowedFragment['model']->renderAdminFragment($owner, $loop) !!} --}}
             </a>
         @empty
             <div class="p-6">

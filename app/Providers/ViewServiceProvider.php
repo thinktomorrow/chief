@@ -11,7 +11,8 @@ class ViewServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
 
-        $this->app['view']->addNamespace('chief-fragments', __DIR__.'/../../src/Fragments/resources');
+        // Fragment components
+        $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
         Blade::component('chief::manager.windows.status.window', 'chief::window.status');
@@ -39,7 +40,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::wireframes.rect', 'wireframe-rect');
 
         // Chief directives
-
         Blade::directive('adminRoute', function ($expression) {
             return "<?php echo \$manager->route({$expression}); ?>";
         });
