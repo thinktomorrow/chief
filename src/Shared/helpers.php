@@ -81,16 +81,13 @@ if (! function_exists('chiefRegister')) {
 }
 
 if (! function_exists('chiefmenu')) {
-    /**
-     * @param mixed $key
-     *
-     * @return \Thinktomorrow\Chief\Site\Menu\Menu|\Thinktomorrow\Chief\Site\Menu\NullMenu
-     */
-    function chiefmenu($key = 'main')
+    function chiefmenu(string $key, ?string $locale = null): \Thinktomorrow\Vine\NodeCollection
     {
-        $menu = \Thinktomorrow\Chief\Site\Menu\Menu::find($key);
+        if (! $locale) {
+            $locale = app()->getLocale();
+        }
 
-        return $menu ?? new \Thinktomorrow\Chief\Site\Menu\NullMenu();
+        return app(\Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory::class)->forSite($key, $locale);
     }
 }
 

@@ -11,6 +11,7 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
@@ -60,6 +61,8 @@ class DeleteModel
                 ->log('deleted');
 
             $model->delete();
+
+            event(new ManagedModelDeleted($model->modelReference()));
 
             DB::commit();
         } catch (\Throwable $e) {

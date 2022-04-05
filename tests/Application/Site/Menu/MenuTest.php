@@ -3,12 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Vine\NodeCollection;
 
 class MenuTest extends ChiefTestCase
@@ -16,17 +15,15 @@ class MenuTest extends ChiefTestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        ArticlePage::migrateUp();
     }
 
     /** @test */
     public function it_can_nest_a_menu_item()
     {
-        $parent = MenuItem::create(['label' => 'first item']);
-        MenuItem::create(['label' => 'second item', 'parent_id' => $parent->id]);
+        $parent = MenuItem::create(['label.nl' => 'first item']);
+        MenuItem::create(['label.nl' => 'second item', 'parent_id' => $parent->id]);
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
 
@@ -37,20 +34,37 @@ class MenuTest extends ChiefTestCase
     /** @test */
     public function it_can_reference_an_internal_page()
     {
-        $page = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
+        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
 
-        $item = MenuItem::create([
-            'menu_type' => 'main',
-            'label' => ['nl' => 'second item'],
-            'type' => 'internal',
-            'owner_type' => $page->getMorphClass(),
-            'owner_id' => $page->id,
-        ]);
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store'), [
+                'menu_type' => 'main',
+                'type' => 'internal',
+                'owner_reference' => $page->modelReference()->getShort(),
+                'trans' => [],
+            ])->assertSessionHasNoErrors();
 
-        $collection = ChiefMenu::fromMenuItems()->items();
-        $this->assertEquals($item->id, $collection->find(function ($node) use ($page) {
-            return $node->getOwnerId() == $page->id;
-        })->getId());
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+
+        $this->assertEquals('artikel titel', $collection->first()->getAdminUrlLabel());
+    }
+
+    /** @test */
+    public function it_takes_page_title_as_label_if_no_label_is_given()
+    {
+        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
+
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store'), [
+                'menu_type' => 'main',
+                'type' => 'internal',
+                'owner_reference' => $page->modelReference()->getShort(),
+                'trans' => [],
+            ])->assertSessionHasNoErrors();
+
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+
+        $this->assertEquals('artikel titel', $collection->first()->getLabel());
     }
 
     /** @test */
@@ -62,7 +76,7 @@ class MenuTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertNotNull($collection->find(function ($node) {
             return $node->getUrl() == 'https://google.com';
@@ -72,20 +86,25 @@ class MenuTest extends ChiefTestCase
     /** @test */
     public function it_can_be_rendered_with_a_generic_api()
     {
-        $page = ArticlePage::create([
-            'current_state' => PageState::PUBLISHED,
-        ]);
-
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
         $this->updateLinks($page, ['nl' => 'pagelink-nl']);
 
-        MenuItem::create(['type' => 'internal',
-                          'label' => 'first item',
-                          'owner_type' => $page->getMorphClass(),
-                          'owner_id' => $page->id,
-        ]);
+        // Via admin because this way the internal labeling is projected on the menu item record
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store'), [
+                'menu_type' => 'main',
+                'type' => 'internal',
+                'owner_reference' => $page->modelReference()->getShort(),
+                'trans' => [
+                    'nl' => [
+                        'label' => 'first item',
+                    ],
+                ],
+            ])->assertSessionHasNoErrors();
+
         MenuItem::create(['type' => 'custom', 'label' => ['nl' => 'second item'], 'url' => ['nl' => 'https://google.com']]);
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertCount(2, $collection);
         $check = 0;
@@ -105,7 +124,7 @@ class MenuTest extends ChiefTestCase
         MenuItem::create(['label' => 'second item', 'parent_id' => $parent->id]);
         MenuItem::create(['label' => 'last item']);
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals(2, $collection->count());
@@ -119,7 +138,7 @@ class MenuTest extends ChiefTestCase
         MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
         MenuItem::create(['label' => ['nl' => 'last item'], 'parent_id' => $parent->id, 'order' => 1]);
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getLabel());
@@ -128,20 +147,11 @@ class MenuTest extends ChiefTestCase
     /** @test */
     public function it_can_order_the_menu_items()
     {
-        $page = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
-
         $parent = MenuItem::create(['label' => ['nl' => 'first item']]);
         $second = MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
-        $third = MenuItem::create([
-            'label' => 'last item',
-            'type' => 'internal',
-            'owner_type' => $page->getMorphClass(),
-            'owner_id' => $page->id,
-            'parent_id' => $parent->id,
-            'order' => 1,
-        ]);
+        $third = MenuItem::create(['label' => 'last item', 'parent_id' => $parent->id, 'order' => 1]);
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertInstanceof(NodeCollection::class, $collection);
 
         $this->assertEquals("last item", $collection->first()->getChildNodes()->first()->getLabel());
@@ -152,23 +162,21 @@ class MenuTest extends ChiefTestCase
         $third->order = 2;
         $third->save();
 
-        $collection = ChiefMenu::fromMenuItems()->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals("second item", $collection->first()->getChildNodes()->first()->getLabel());
     }
 
     /** @test */
     public function it_can_get_menu_by_type()
     {
-        $page = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
+        $first = MenuItem::create(['label' => 'first item', 'menu_type' => 'main']);
+        $second = MenuItem::create(['label' => 'second item', 'menu_type' => 'main']);
+        $third = MenuItem::create(['label' => 'first item', 'menu_type' => 'footer']);
 
-        $first = MenuItem::create(['label' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);
-        $second = MenuItem::create(['label' => 'second item', 'type' => 'internal', 'menu_type' => 'main']);
-        $third = MenuItem::create(['label' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
-
-        $collection = ChiefMenu::fromMenuItems('main')->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals(2, $collection->total());
 
-        $collection = ChiefMenu::fromMenuItems('footer')->items();
+        $collection = app(ChiefMenuFactory::class)->forAdmin('footer', 'nl');
         $this->assertEquals(1, $collection->total());
     }
 

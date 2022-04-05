@@ -6,6 +6,8 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
@@ -76,6 +78,8 @@ trait PublishAssistant
 
         $model->publish();
 
+        event(new ManagedModelPublished($model->modelReference()));
+
         Audit::activity()->performedOn($model)->log('published');
 
         if ($request->expectsJson()) {
@@ -94,6 +98,8 @@ trait PublishAssistant
         $this->guard('unpublish', $model);
 
         $model->unpublish();
+
+        event(new ManagedModelUnPublished($model->modelReference()));
 
         Audit::activity()->performedOn($model)->log('unpublished');
 

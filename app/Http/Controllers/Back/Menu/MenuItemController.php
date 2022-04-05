@@ -5,22 +5,23 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\Site\Menu\Application\CreateMenu;
-use Thinktomorrow\Chief\Site\Menu\Application\DeleteMenu;
-use Thinktomorrow\Chief\Site\Menu\Application\UpdateMenu;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Site\Menu\Application\CreateMenuItem;
+use Thinktomorrow\Chief\Site\Menu\Application\DeleteMenuItem;
+use Thinktomorrow\Chief\Site\Menu\Application\UpdateMenuItem;
+use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\Tree\PrepareMenuItemsForAdminSelect;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class MenuItemController extends Controller
 {
-    /** @var PrepareMenuItemsForAdminSelect */
     private PrepareMenuItemsForAdminSelect $prepareMenuItemsForAdminSelect;
+    private ChiefMenuFactory $chiefMenuFactory;
 
-    public function __construct(PrepareMenuItemsForAdminSelect $prepareMenuItemsForAdminSelect)
+    public function __construct(ChiefMenuFactory $chiefMenuFactory, PrepareMenuItemsForAdminSelect $prepareMenuItemsForAdminSelect)
     {
         $this->prepareMenuItemsForAdminSelect = $prepareMenuItemsForAdminSelect;
+        $this->chiefMenuFactory = $chiefMenuFactory;
     }
 
     /**
@@ -34,7 +35,9 @@ class MenuItemController extends Controller
         $menuitem->type = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(ChiefMenu::fromMenuItems($menuitem->menuType())->items());
+        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
+            $this->chiefMenuFactory->forAdmin($menutype, config('app.fallback_locale'))
+        );
 
         return view('chief::admin.menu.create', [
             'pages' => UrlHelper::allOnlineModels(),
@@ -48,7 +51,7 @@ class MenuItemController extends Controller
     {
         $this->authorize('create-page');
 
-        $menu = app(CreateMenu::class)->handle($request);
+        $menu = app(CreateMenuItem::class)->handle($request);
 
         Audit::activity()
             ->performedOn($menu)
@@ -66,7 +69,13 @@ class MenuItemController extends Controller
 
         $menuitem = MenuItem::findOrFail($id);
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(ChiefMenu::fromMenuItems($menuitem->menuType())->items(), $menuitem);
+        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
+            $this->chiefMenuFactory->forAdmin(
+                $menuitem->menuType(),
+                config('app.fallback_locale')
+            ),
+            $menuitem
+        );
 
         return view('chief::admin.menu.edit', [
             'menuitem' => $menuitem,
@@ -80,7 +89,7 @@ class MenuItemController extends Controller
     {
         $this->authorize('update-page');
 
-        $menu = app(UpdateMenu::class)->handle($id, $request);
+        $menu = app(UpdateMenuItem::class)->handle($id, $request);
 
         Audit::activity()
             ->performedOn($menu)
@@ -93,7 +102,7 @@ class MenuItemController extends Controller
     {
         $this->authorize('delete-page');
 
-        $menuItem = app(DeleteMenu::class)->handle($id);
+        $menuItem = app(DeleteMenuItem::class)->handle($id);
 
         if ($menuItem) {
             $message = 'Het item werd verwijderd.';

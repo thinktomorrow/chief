@@ -11,6 +11,7 @@ principles.
 This release brings a major refactor of the forms and fields api. Its aim is to ease the layout setup of admin forms and simplify the logic around its view composition.
 
 ### Impactful
+- Menu items has been optimized for performance. After migrations you should run `php artisan chief:project-menu`. This will project model data on each menuitem.
 - Removed: extract dynamic fields based on field definitions.
 - Removed: chiefRegister()->model() is removed. Use chiefRegister()->resource().
 - Changed: Each viewable model needs to have a `viewKey()` method to determine the frontend view path.
