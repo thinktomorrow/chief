@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\View\Components\Fragments;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
@@ -137,7 +136,7 @@ trait FragmentsOwningAssistant
                 'model' => app($modelClass),
                 'resource' => $resource,
             ];
-        })->groupBy(function($item){
+        })->groupBy(function ($item) {
             return $item['resource']->getCategory();
         })->sortDesc()->all();
     }
