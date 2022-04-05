@@ -28,17 +28,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
         Blade::component('chief::components.nav-item', 'chief::nav.item');
 
-        // Wireframe components
-        Blade::component('chief::wireframes.wireframe', 'wireframe');
-        Blade::component('chief::wireframes.container', 'wireframe-container');
-        Blade::component('chief::wireframes.row', 'wireframe-row');
-        Blade::component('chief::wireframes.column', 'wireframe-column');
-        Blade::component('chief::wireframes.title', 'wireframe-title');
-        Blade::component('chief::wireframes.text', 'wireframe-text');
-        Blade::component('chief::wireframes.image', 'wireframe-image');
-        Blade::component('chief::wireframes.video', 'wireframe-video');
-        Blade::component('chief::wireframes.rect', 'wireframe-rect');
-
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {
             return "<?php echo \$manager->route({$expression}); ?>";
