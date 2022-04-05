@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
+use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
@@ -12,6 +13,13 @@ class MenuForSiteTest extends ChiefTestCase
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        ChiefMenuFactory::clearLoaded();
+
+        parent::tearDown();
     }
 
     /** @test */
