@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
 class ProjectMenuCommand extends BaseCommand
 {
@@ -24,7 +24,7 @@ class ProjectMenuCommand extends BaseCommand
 
         $this->info(count($menuItems) . ' menuitems will be updated.');
 
-        foreach($menuItems as $menuItem) {
+        foreach ($menuItems as $menuItem) {
             $this->projectModelData->handleByMenuItem($menuItem);
         }
 

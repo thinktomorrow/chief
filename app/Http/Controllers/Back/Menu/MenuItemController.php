@@ -71,9 +71,9 @@ class MenuItemController extends Controller
 
         $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
             $this->chiefMenuFactory->forAdmin(
-            $menuitem->menuType(),
-            config('app.fallback_locale')
-        ),
+                $menuitem->menuType(),
+                config('app.fallback_locale')
+            ),
             $menuitem
         );
 
