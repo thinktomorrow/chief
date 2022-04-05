@@ -3,16 +3,16 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class CreateMenuItemTest extends ChiefTestCase
 {
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertViewIs('chief::admin.menu.create')
                  ->assertStatus(200);
@@ -53,14 +53,53 @@ class CreateMenuItemTest extends ChiefTestCase
 
         $item = MenuItem::first();
 
-        $this->assertEquals('https://thinktomorrow.be', $item->url('nl'));
-        $this->assertEquals('https://thinktomorrow.co.uk', $item->url('en'));
+        $this->assertEquals('https://thinktomorrow.be', $item->getUrl('nl'));
+        $this->assertEquals('https://thinktomorrow.co.uk', $item->getUrl('en'));
 
-        app()->setLocale('nl');
-        $this->assertEquals('label one', $item->label);
+        $this->assertEquals('label one', $item->getLabel('nl'));
+        $this->assertEquals('label two', $item->getLabel('en'));
 
-        app()->setLocale('en');
-        $this->assertEquals('label two', $item->label);
+        $this->assertEquals('https://thinktomorrow.be', $item->getAdminUrlLabel('nl'));
+        $this->assertEquals('https://thinktomorrow.co.uk', $item->getAdminUrlLabel('en'));
+    }
+
+    /** @test */
+    public function creating_a_new_menu_item_emits_event()
+    {
+        Event::fake();
+
+        $this->asAdmin()->post(route('chief.back.menuitem.store'), $this->validParams());
+
+        Event::assertDispatched(MenuItemCreated::class);
+    }
+
+    /** @test */
+    public function creating_a_new_internal_menu_item()
+    {
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
+
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store'), $this->validParams([
+                'type' => 'internal',
+                'owner_reference' => $page->modelReference()->getShort(),
+                'trans.nl.label' => 'label one',
+                'trans.en.label' => 'label two',
+            ]))
+            ->assertStatus(302);
+
+        $item = MenuItem::first();
+
+        $this->assertEquals($page->modelReference(), $item->owner->modelReference());
+
+        $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('/foobar-en', $item->getUrl('en'));
+
+        $this->assertEquals('label one', $item->getLabel('nl'));
+        $this->assertEquals('label two', $item->getLabel('en'));
+
+        $this->assertEquals('artikel pagetitle nl', $item->getAdminUrlLabel('nl'));
+        $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));
     }
 
     /** @test */
@@ -79,19 +118,6 @@ class CreateMenuItemTest extends ChiefTestCase
 
         $this->assertCount(1, $parent->fresh()->children);
         $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
-    }
-
-    /** @test */
-    public function creating_a_new_internal_menu_item()
-    {
-        ArticlePage::migrateUp();
-        $page = ArticlePage::create();
-
-        $this->asAdmin()
-            ->post(route('chief.back.menuitem.store'), $this->validParams(['type' => 'internal', 'owner_reference' => $page->modelReference()->getShort()]))
-            ->assertStatus(302);
-
-        $this->assertEquals($page->modelReference(), MenuItem::first()->owner->modelReference());
     }
 
     /** @test */

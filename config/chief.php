@@ -69,7 +69,6 @@ return [
     'menus' => [
         'main' => [
             'label' => 'Hoofdnavigatie',
-            'view' => 'front.menus.main',
         ],
     ],
 

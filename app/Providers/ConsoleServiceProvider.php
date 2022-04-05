@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
 use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
 
@@ -48,6 +49,7 @@ class ConsoleServiceProvider extends ServiceProvider
             'command.chief:page-migration',
             'command.chief:fragment',
             'command.chief:view',
+            'command.chief:project-menu',
         ]);
 
         // Bind our commands to the container
@@ -62,6 +64,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:fragment', CreateFragmentCommand::class);
         $this->app->bind('command.chief:admin', CreateAdmin::class);
         $this->app->bind('command.chief:developer', CreateDeveloper::class);
+        $this->app->bind('command.chief:project-menu', ProjectMenuCommand::class);
     }
 
     public function register()

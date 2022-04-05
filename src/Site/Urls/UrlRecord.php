@@ -46,7 +46,6 @@ class UrlRecord extends Model
     public function model(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo('model');
-//        return Morphables::instance($this->model_type)->find($this->model_id);
     }
 
     /**

@@ -22,6 +22,7 @@ use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
+use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
 use Thinktomorrow\Chief\Fragments\Actions\UpdateFragmentMetadata;
@@ -29,9 +30,18 @@ use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
+use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
@@ -164,6 +174,17 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentDetached::class, UpdateFragmentMetadata::class.'@onFragmentDetached');
         Event::listen(FragmentAdded::class, UpdateFragmentMetadata::class.'@onFragmentAdded');
         Event::listen(FragmentDuplicated::class, UpdateFragmentMetadata::class.'@onFragmentDuplicated');
+
+        // Menu model data listeners
+        Event::listen(MenuItemCreated::class, ProjectModelData::class.'@onMenuItemCreated');
+        Event::listen(MenuItemUpdated::class, ProjectModelData::class.'@onMenuItemUpdated');
+        Event::listen(ManagedModelUrlUpdated::class, ProjectModelData::class.'@onManagedModelUrlUpdated');
+        Event::listen(FormUpdated::class, ProjectModelData::class.'@onFormUpdated');
+        Event::listen(ManagedModelUpdated::class, ProjectModelData::class.'@onManagedModelUpdated');
+        Event::listen(ManagedModelArchived::class, ProjectModelData::class.'@onManagedModelArchived');
+        Event::listen(ManagedModelPublished::class, ProjectModelData::class.'@onManagedModelPublished');
+        Event::listen(ManagedModelUnPublished::class, ProjectModelData::class.'@onManagedModelUnPublished');
+        Event::listen(ManagedModelDeleted::class, ProjectModelData::class.'@onManagedModelDeleted');
     }
 
     private function bootFrontendEssentials()
