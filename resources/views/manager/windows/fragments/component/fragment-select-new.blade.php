@@ -24,7 +24,7 @@
                                 </div>
 
                                 <div class="space-y-2">
-                                    <p class="mt-[0.15rem] leading-tight display-base display-dark">
+                                    <p class="mt-1 display-base display-dark">
                                         {{ ucfirst($allowedFragment['resource']->getLabel()) }}
                                     </p>
 

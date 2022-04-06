@@ -31,25 +31,31 @@
         </div>
     </form>
 
-    <div class="-mx-6 divide-y divide-grey-100">
+    <div class="space-y-3">
         @forelse($sharedFragments as $sharedFragment)
-
             <div data-form data-form-tags="fragments">
-                <form method="POST" action="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}">
-                    <button class="block w-full text-left p-6 space-y-2 overflow-hidden cursor-pointer group hover:bg-primary-500 transition-75" type="submit">
+                <form
+                    method="POST"
+                    action="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
+                >
+                    <button
+                        class="w-full p-3 space-y-3 text-left transition-all duration-75 ease-in-out border rounded-lg border-grey-100 bg-grey-50 hover:shadow-card hover:border-primary-500"
+                        type="submit"
+                    >
                         <div>
-                            <span class="display-dark display-base group-hover:text-white transition-75">
+                            <span class="display-dark display-base">
                                 {{ ucfirst($sharedFragment['resource']->getLabel()) }}
                             </span>
                         </div>
+
                         {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
                     </button>
                 </form>
             </div>
         @empty
-            <p class="p-6">
-                Geen fragmenten gevonden.
-            </p>
+            <div>
+                <p class="body-base body-dark">Geen fragmenten gevonden.</p>
+            </div>
         @endforelse
     </div>
 </div>
