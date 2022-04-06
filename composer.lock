@@ -1399,16 +1399,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.83.6",
+            "version": "v8.83.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dffcec0cb686eafaa3b8f33db11da2cd9d69af1c"
+                "reference": "0706abf5c99d3b14149fcf79c95074dadd40b203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dffcec0cb686eafaa3b8f33db11da2cd9d69af1c",
-                "reference": "dffcec0cb686eafaa3b8f33db11da2cd9d69af1c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0706abf5c99d3b14149fcf79c95074dadd40b203",
+                "reference": "0706abf5c99d3b14149fcf79c95074dadd40b203",
                 "shasum": ""
             },
             "require": {
@@ -1568,7 +1568,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-03-29T14:41:02+00:00"
+            "time": "2022-04-05T15:08:10+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -10930,16 +10930,16 @@
         },
         {
             "name": "spatie/laravel-ray",
-            "version": "1.29.4",
+            "version": "1.29.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ray.git",
-                "reference": "3cace74c812469e6e569dacffc46653457f9c2cc"
+                "reference": "7bb6f1f749e235cea5a963b4c12986baefafd624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/3cace74c812469e6e569dacffc46653457f9c2cc",
-                "reference": "3cace74c812469e6e569dacffc46653457f9c2cc",
+                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/7bb6f1f749e235cea5a963b4c12986baefafd624",
+                "reference": "7bb6f1f749e235cea5a963b4c12986baefafd624",
                 "shasum": ""
             },
             "require": {
@@ -10998,7 +10998,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-ray/issues",
-                "source": "https://github.com/spatie/laravel-ray/tree/1.29.4"
+                "source": "https://github.com/spatie/laravel-ray/tree/1.29.5"
             },
             "funding": [
                 {
@@ -11010,7 +11010,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-02-22T15:18:57+00:00"
+            "time": "2022-04-05T18:07:59+00:00"
         },
         {
             "name": "spatie/macroable",

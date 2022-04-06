@@ -1,9 +1,9 @@
 <x-chief::page>
     <x-slot name="pageTitle">
         @isset($pageTitle)
-            {{ $pageTitle }}
+            {{ ucfirst($pageTitle) }}
         @else
-            {{ $resource->getIndexTitle() }}
+            {{ ucfirst($resource->getIndexTitle()) }}
         @endisset
     </x-slot>
 
@@ -24,7 +24,7 @@
             {!! $header !!}
         @else
             <div class="flex flex-wrap items-end justify-between gap-6">
-                <h1 class="h1 display-dark">{{ $resource->getIndexTitle() }}</h1>
+                <h1 class="h1 display-dark">{{ ucfirst($resource->getIndexTitle()) }}</h1>
 
                 @adminCan('create')
                     <a href="@adminRoute('create')" class="btn btn-primary">
