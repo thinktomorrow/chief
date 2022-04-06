@@ -56,6 +56,22 @@ return [
     ],
 
     /**
+     *
+     */
+    'fragments_structure' => [
+        'algemeen' => [
+            // Fragment::class,
+            // Fragment::class,
+            // Fragment::class,
+        ],
+        'formulieren' => [
+            // Fragment::class,
+            // Fragment::class,
+            // Fragment::class,
+        ],
+    ],
+
+    /**
      * Widgets that will be shown on the dashboard
      */
     'widgets' => [
