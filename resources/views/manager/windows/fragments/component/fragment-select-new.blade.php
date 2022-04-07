@@ -1,5 +1,5 @@
 <div data-form data-form-tags="fragments" class="pt-6 space-y-6 border-t border-grey-100">
-    <p class="text-lg display-base display-dark">Voeg een nieuw fragment toe</p>
+    <p class="text-lg leading-none display-base display-dark">Voeg een nieuw fragment toe</p>
 
     <div>
         @forelse($fragments as $category => $fragmentsByCategory)
