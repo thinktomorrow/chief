@@ -5,7 +5,7 @@
 <a
     href="{{ $url }}"
     title="Ga naar deze URL"
-    class="inline font-normal underline break-all link link-grey"
+    class="inline text-sm font-normal underline break-all link link-grey"
     target="_blank"
     rel="noopener"
 >

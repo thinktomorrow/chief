@@ -34,9 +34,9 @@
 @endphp
 
 @if($slot->isNotEmpty())
-    <div>
+    <div class="w-full">
         <div {{ $attributes }} @class([
-            'flex flex-wrap justify-start',
+            'flex flex-wrap justify-start w-full',
             $itemsClass,
             $gutterClass
         ])>
