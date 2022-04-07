@@ -1,13 +1,15 @@
-<div data-repeat-section class="flex justify-between border border-grey-100 rounded p-2 my-2">
-    <span data-sortable-handle title="sorteer dit blokje">
-        <svg width="16" height="16"><use xlink:href="#icon-drag"/></svg>
+<div data-repeat-section class="flex gap-3 p-3 border rounded-lg border-grey-100">
+    <span data-sortable-handle class="cursor-pointer shrink-0">
+        <x-chief-icon-button icon="icon-drag" color="grey" />
     </span>
-    <div class="w-5/6">
+
+    <div class="w-full my-1 space-y-4">
         @foreach($components as $childComponent)
             {{ $childComponent }}
         @endforeach
     </div>
-    <span class="inline-block cursor-pointer" data-delete-repeat-section title="Verwijder dit blokje">
-        <svg width="16" height="16"><use xlink:href="#icon-trash"/></svg>
+
+    <span data-delete-repeat-section class="cursor-pointer shrink-0">
+        <x-chief-icon-button icon="icon-trash" color="grey" />
     </span>
 </div>
