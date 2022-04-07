@@ -31,4 +31,7 @@
         <x-chief::window.links />
         <x-chief-form::forms position="aside" />
     </x-slot>
+
+    @include('chief::manager._edit.state-modals-and-redactor')
+
 </x-chief::page>
