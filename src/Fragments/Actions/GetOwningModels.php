@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -32,5 +33,10 @@ class GetOwningModels
                 'pageTitle' => $resource instanceof PageResource ? $resource->getPageTitle($model) : $resource->getLabel(),
             ];
         })->all();
+    }
+
+    public function getCount(FragmentModel $fragmentModel): int
+    {
+        return ContextModel::owning($fragmentModel)->count();
     }
 }
