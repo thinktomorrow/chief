@@ -89,7 +89,7 @@ trait FragmentsOwningAssistant
         $existingOwnersOptions = [];
 
 
-        if(public_method_exists($owner, 'getRelatedOwners')) {
+        if (public_method_exists($owner, 'getRelatedOwners')) {
             foreach ($owner->getRelatedOwners() as $relatedOwner) {
                 $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $this->registry->findResourceByModel($relatedOwner::class)->getPageTitle($relatedOwner);
             }
