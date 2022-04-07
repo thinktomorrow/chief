@@ -1,7 +1,7 @@
 <x-chief-form::window
     :title="$getTitle()"
     :refresh-url="$getRefreshUrl()"
-    :tags="$getId()"
+    :tags="$getTagsAsString()"
     :class="$getLayout()->class()"
 >
     <form

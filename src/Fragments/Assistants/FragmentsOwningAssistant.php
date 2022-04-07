@@ -87,8 +87,12 @@ trait FragmentsOwningAssistant
     {
         // Select filter by owner
         $existingOwnersOptions = [];
-        foreach ($owner->getRelatedOwners() as $relatedOwner) {
-            $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $this->registry->findResourceByModel($relatedOwner::class)->getPageTitle($relatedOwner);
+
+
+        if(public_method_exists($owner, 'getRelatedOwners')) {
+            foreach ($owner->getRelatedOwners() as $relatedOwner) {
+                $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $this->registry->findResourceByModel($relatedOwner::class)->getPageTitle($relatedOwner);
+            }
         }
 
         // Select filter by fragment class

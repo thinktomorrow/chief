@@ -1,6 +1,6 @@
 <x-chief::sidebar-fragment>
     @foreach($forms->get() as $form)
-        {{ $form->editInline()->showAsBlank()->render() }}
+        {{ $form->tag('fragments')->editInline()->showAsBlank()->render() }}
     @endforeach
 </x-chief::sidebar-fragment>
 

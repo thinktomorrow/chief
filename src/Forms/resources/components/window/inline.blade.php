@@ -4,7 +4,6 @@
     'tags' => null,
     'icon' => null,
 ])
-
 <div
     data-form
     data-form-url="{{ $refreshUrl }}"

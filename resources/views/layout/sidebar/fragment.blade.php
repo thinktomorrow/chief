@@ -112,27 +112,29 @@
 
 
 @if($model->fragmentModel()->exists)
-    <div data-vue-fields>
-        @include('chief::manager._transitions.modals.delete-fragment-modal')
+    <div data-form data-form-tags="fragments">
+        <div data-vue-fields>
+            @include('chief::manager._transitions.modals.delete-fragment-modal')
+        </div>
+
+        <form
+                id="detachSharedFragment{{ $model->modelReference()->get() }}"
+                method="POST"
+                action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
+        >
+            @csrf
+        </form>
+
+        <form
+                id="changeFragmentStatus{{ $model->modelReference()->get() }}"
+                method="POST"
+                action="{{ $manager->route('fragment-status', $model) }}"
+        >
+            <input type="hidden" name="online_status" value="{{ $model->fragmentModel()->isOnline()
+                ? \Thinktomorrow\Chief\Fragments\FragmentStatus::offline->value
+                : \Thinktomorrow\Chief\Fragments\FragmentStatus::online->value
+            }}">
+            @csrf
+        </form>
     </div>
-
-    <form
-        id="detachSharedFragment{{ $model->modelReference()->get() }}"
-        method="POST"
-        action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
-    >
-        @csrf
-    </form>
-
-    <form
-        id="changeFragmentStatus{{ $model->modelReference()->get() }}"
-        method="POST"
-        action="{{ $manager->route('fragment-status', $model) }}"
-    >
-        <input type="hidden" name="online_status" value="{{ $model->fragmentModel()->isOnline()
-            ? \Thinktomorrow\Chief\Fragments\FragmentStatus::offline->value
-            : \Thinktomorrow\Chief\Fragments\FragmentStatus::online->value
-        }}">
-        @csrf
-    </form>
 @endif

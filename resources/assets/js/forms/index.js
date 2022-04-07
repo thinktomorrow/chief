@@ -7,7 +7,7 @@ import initFormNotifications from './utilities/form-notifications';
 import initCharacterCount from './utilities/character-count';
 
 document.addEventListener('DOMContentLoaded', () => {
-    new Forms(new Sidebar()).load(document);
+    new Forms(document.getElementById('content'), new Sidebar()).load(document);
 
     initRepeatFields();
     initConditionalFields();

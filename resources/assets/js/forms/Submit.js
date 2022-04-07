@@ -1,7 +1,7 @@
 import EventBus from '../utilities/EventBus';
 
 const Submit = {
-    handle(responseData, currentElement, targetElement, tags, successCallback) {
+    handle(responseData, currentElement, tags, meta, successCallback) {
         // Reset any error
         currentElement.querySelectorAll('[data-error-placeholder]').forEach((errorElement) => {
             errorElement.classList.add('hidden');
@@ -22,20 +22,13 @@ const Submit = {
 
         EventBus.publish('chief-form-submitted', {
             currentElement,
-            targetElement,
             tags,
             response: responseData,
+            meta,
         });
 
         if (successCallback) {
-            // Halt default process if success callback returns false. Success callback can handle redirect its own way.
-            if (successCallback() === false) {
-                return;
-            }
-        }
-
-        if (responseData.redirect_to) {
-            window.location.href = responseData.redirect_to;
+            successCallback();
         }
     },
 };

@@ -8,6 +8,7 @@
         title="Status"
         :edit-url="$manager->route('status-edit', $model)"
         :refresh-url="$manager->route('status-window', $model)"
+        tags="status,links"
         class="card"
     >
         @switch($model->getPageState())
