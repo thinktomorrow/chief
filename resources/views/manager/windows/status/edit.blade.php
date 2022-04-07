@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div data-form data-form-tags="status,links" class="space-y-6">
     <p class="text-lg display-base display-dark">Status beheren</p>
 
     @adminCan('publish', $model)

@@ -8,7 +8,6 @@ import EventBus from '../utilities/EventBus';
 
 const Form = function (el, sidebar) {
     this.el = el;
-    this.mainContainer = document.getElementById('content');
     this.sidebar = sidebar;
     this.triggerSelector = '[data-sidebar-trigger]';
 };
@@ -52,8 +51,10 @@ Form.prototype.listen = function () {
     });
 };
 
-Form.prototype.onFormSubmission = function (responseData) {
-    Submit.handle(responseData, this.el, this.mainContainer, this.getTags());
+Form.prototype.onFormSubmission = function (responseData, meta) {
+    console.log('TAGS: ', this.getTags());
+
+    Submit.handle(responseData, this.el, this.getTags(), meta);
 };
 
 Form.prototype.refresh = function () {

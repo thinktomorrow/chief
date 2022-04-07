@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Concerns\HasPosition;
+use Thinktomorrow\Chief\Forms\Concerns\HasTags;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
@@ -21,6 +22,7 @@ class Form extends Component
     use HasElementId;
     use HasLayout;
     use HasPosition;
+    use HasTags;
 
     protected string $action;
     protected string $actionMethod;
@@ -48,6 +50,7 @@ class Form extends Component
 
         $this->elementId($id.'_'.Str::random());
         $this->position('main');
+        $this->tag($id);
     }
 
     public function getView(): string

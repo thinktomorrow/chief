@@ -7,6 +7,11 @@ trait HasTags
 {
     protected array $tags = [];
 
+    public function getTagsAsString(): string
+    {
+        return implode(',', $this->tags);
+    }
+
     public function tagged(string|array $tags): bool
     {
         $tags = (array) $tags;

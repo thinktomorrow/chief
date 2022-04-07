@@ -1,13 +1,24 @@
 import EventBus from '../utilities/EventBus';
 import Form from './Form';
 
-const Forms = function (sidebar) {
+const Forms = function (mainContainer, sidebar) {
     this.sidebar = sidebar;
+    this.mainContainer = mainContainer;
     this.selector = '[data-form]';
 
     EventBus.subscribe('chief-form-submitted', (e) => {
-        // TODO: not always is currentElement a panel...
-        this.refreshIn(e.targetElement, e.tags);
+        const inSidebar = this.sidebar.sidebarContainer.el.contains(e.currentElement);
+        const targetElement =
+            inSidebar && this.sidebar.findPanelTarget() ? this.sidebar.findPanelTarget().el : this.mainContainer;
+
+        // If our submit happens from the sidebar, we'll trigger the
+        if (inSidebar) {
+            this.handleSubmitFromSidebar(e.response, e.meta);
+        } else if (e.response.redirect_to) {
+            window.location.href = e.response.redirect_to;
+        }
+
+        this.refreshIn(targetElement, e.tags);
     });
 
     EventBus.subscribe('sidebarPanelActivated', (e) => {
@@ -42,6 +53,22 @@ Forms.prototype.refreshIn = function (container = document, tags) {
             form.refresh();
         }
     });
+};
+
+Forms.prototype.handleSubmitFromSidebar = function (responseData, meta) {
+    // e.g. existing fragments...
+    if (meta && meta.method === 'get') {
+        this.sidebar.refresh(responseData);
+        return true;
+    }
+
+    if (responseData.redirect_to) {
+        this.sidebar.show(responseData.redirect_to);
+        return false;
+    }
+
+    this.sidebar.backAfterSubmit();
+    return true;
 };
 
 export { Forms as default };

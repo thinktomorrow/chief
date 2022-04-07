@@ -4,7 +4,6 @@ import Panels from './Panels';
 import EventBus from '../../utilities/EventBus';
 import Container from './Container';
 import vueFields from '../fields/vue-fields';
-import Submit from '../Submit';
 
 export default class {
     constructor(options = {}) {
@@ -90,9 +89,9 @@ export default class {
             // TODO: refactor to trigger submit.js for panel submissions...
             // This is somewhat in conflict with the Form.listen() logic.
             // We should make sure that both don't conflict with each other.
-            Api.listenForFormSubmits(panelEl, this.onFormSubmission.bind(this), (error) => {
-                console.error(`${error}`);
-            });
+            // Api.listenForFormSubmits(panelEl, this.onFormSubmission.bind(this), (error) => {
+            //     console.error(`${error}`);
+            // });
 
             this.panels.add(
                 new Panel(panelId, url, this.panels.findActive() ? this.panels.findActive() : null, panelEl, options)
@@ -110,33 +109,37 @@ export default class {
         });
     }
 
-    onFormSubmission(responseData, metadata) {
-        const activePanel = this.panels.findActive();
-        const targetPanel = this.panels.findFirstSubmitTarget(activePanel.parent);
-
-        Submit.handle(
-            responseData,
-            activePanel.el,
-            targetPanel ? targetPanel.el : document,
-            activePanel.getTags(),
-            () => {
-                // GET request stays on same page and reloads it with the given response.
-                if (metadata.method === 'get') {
-                    this.refresh(responseData);
-                    return true;
-                }
-
-                if (responseData.redirect_to) {
-                    this.show(responseData.redirect_to);
-                    return false;
-                }
-
-                // TODO: can we choose to go to another just like nested fragment?
-                this.backAfterSubmit();
-                return true;
-            }
-        );
+    findPanelTarget() {
+        return this.panels.findFirstSubmitTarget(this.panels.findActive().parent);
     }
+
+    // onFormSubmission(responseData, metadata) {
+    //     const activePanel = this.panels.findActive();
+    //     const targetPanel = this.findPanelTarget();
+    //
+    //     Submit.handle(
+    //         responseData,
+    //         activePanel.el,
+    //         targetPanel ? targetPanel.el : document,
+    //         activePanel.getTags(),
+    //         () => {
+    //             // GET request stays on same page and reloads it with the given response.
+    //             if (metadata.method === 'get') {
+    //                 this.refresh(responseData);
+    //                 return true;
+    //             }
+    //
+    //             if (responseData.redirect_to) {
+    //                 this.show(responseData.redirect_to);
+    //                 return false;
+    //             }
+    //
+    //             // TODO: can we choose to go to another just like nested fragment?
+    //             this.backAfterSubmit();
+    //             return true;
+    //         }
+    //     );
+    // }
 
     backAfterSubmit() {
         const targetPanel = this.panels.findFirstSubmitTarget(this.panels.findActive().parent);

@@ -1,37 +1,39 @@
 <div class="space-y-6">
     <p class="text-lg leading-none display-base display-dark">Kies een bestaand fragment</p>
 
-    <form
-        id="fragment-select-existing-form"
-        action="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
-    >
-        <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
+    <div data-form>
+        <form
+            id="fragment-select-existing-form"
+            action="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
+        >
+            <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
 
-        <div data-vue-fields class="flex items-center gap-4">
-            @if(public_method_exists($owner, 'getRelatedOwners'))
+            <div data-vue-fields class="flex items-center gap-4">
+                @if(public_method_exists($owner, 'getRelatedOwners'))
+                    <chief-multiselect
+                        id="selectExistingOwners"
+                        name="owners[]"
+                        placeholder="Kies een pagina"
+                        :options='@json($existingOwnersOptions)'
+                        class="w-full"
+                    ></chief-multiselect>
+                @endif
+
                 <chief-multiselect
-                    id="selectExistingOwners"
-                    name="owners[]"
-                    placeholder="Kies een pagina"
-                    :options='@json($existingOwnersOptions)'
+                    id="selectExistingTypes"
+                    name="types[]"
+                    placeholder="Kies een type"
+                    :options='@json($existingTypesOptions)'
                     class="w-full"
                 ></chief-multiselect>
-            @endif
 
-            <chief-multiselect
-                id="selectExistingTypes"
-                name="types[]"
-                placeholder="Kies een type"
-                :options='@json($existingTypesOptions)'
-                class="w-full"
-            ></chief-multiselect>
+                {{-- Should be deleted once the onchange/oninput submit on this form works --}}
+                <button class="btn btn-primary" type="submit">Zoek</button>
+            </div>
+        </form>
+    </div>
 
-            {{-- Should be deleted once the onchange/oninput submit on this form works --}}
-            <button class="btn btn-primary" type="submit">Zoek</button>
-        </div>
-    </form>
-
-    <div class="space-y-3">
+    <div data-sidebar-component="existingFragments" class="space-y-3">
         @forelse($sharedFragments as $sharedFragment)
             <div data-form data-form-tags="fragments">
                 <form
