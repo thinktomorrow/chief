@@ -4,7 +4,9 @@
             {{ ucfirst($resource->getLabel()) }}
         </p>
 
-        @include('chief::layout._partials.fragment_bookmarks')
+        @if($model->fragmentModel()->exists)
+            @include('chief::layout._partials.fragment_bookmarks')
+        @endif
     </div>
 
     {!! $slot !!}
