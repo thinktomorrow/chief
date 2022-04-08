@@ -56,6 +56,8 @@
                                     v-if="hint"
                                     v-html="hint"
                             ></div>
+
+                            <x-chief-form::formgroup.error error-ids="links"></x-chief-form::formgroup.error>
                         </div>
                     </div>
 
