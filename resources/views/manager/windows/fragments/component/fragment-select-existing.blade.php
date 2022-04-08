@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="pt-6 space-y-6 border-t border-grey-100">
     <p class="text-lg leading-none display-base display-dark">Kies een bestaand fragment</p>
 
     <div data-form>
