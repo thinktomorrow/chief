@@ -14,12 +14,11 @@ interface Resource
     public static function modelClassName(): string;
 
     /**
-     * How this resource is represented in the admin.
+     * The label that represents this resource in the admin.
      */
     public function getLabel(): string;
 
     public function fields($model): iterable;
-//    public function forms(): iterable;
 
     public function field($model, string $key): Field;
 }

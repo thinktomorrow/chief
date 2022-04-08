@@ -13,6 +13,11 @@ trait ResourceDefault
 {
     protected ?Manager $manager = null;
 
+    public static function modelClassName(): string
+    {
+        return static::class;
+    }
+
     public function setManager(Manager $manager): void
     {
         $this->manager = $manager;
