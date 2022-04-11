@@ -33,5 +33,4 @@
     </x-slot>
 
     @include('chief::manager._edit.state-modals-and-redactor')
-
 </x-chief::page>
