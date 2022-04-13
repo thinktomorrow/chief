@@ -3,7 +3,7 @@
         <div class="container 2xl:container-1/2">
             @component('chief::layout._partials.header')
                 @slot('title')
-                    {{ $page->slug() }}
+                    {{ $page->label() }}
                 @endslot
 
                 @slot('breadcrumbs')
