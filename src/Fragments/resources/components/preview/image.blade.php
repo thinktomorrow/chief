@@ -1,15 +1,27 @@
 @props([
     'src' => null,
+    'position' => 'center',
 ])
 
+@php
+    switch($position) {
+        case 'left':
+            $positionClass = 'justify-start'; break;
+        case 'center':
+            $positionClass = 'justify-center'; break;
+        default:
+            $positionClass = 'justify-start';
+    }
+@endphp
+
 @if($src)
-    <div {{ $attributes }} class="w-full h-32">
-        <a href="{{ $src }}" title="Chief fragment preview image" target="_blank" rel="noopener">
-            <img
-                src="{{ $src }}"
-                alt="Chief fragment preview image"
-                class="object-contain w-full h-full rounded-lg bg-grey-100"
-            >
-        </a>
-    </div>
+    <a
+        href="{{ $src }}"
+        title="Chief fragment preview image"
+        target="_blank"
+        rel="noopener"
+        {{ $attributes->class(['w-full bg-grey-100 rounded-lg flex overflow-hidden', $positionClass]) }}
+    >
+        <img src="{{ $src }}" alt="Chief fragment preview image">
+    </a>
 @endif
