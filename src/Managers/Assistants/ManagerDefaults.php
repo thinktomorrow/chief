@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
@@ -51,7 +52,7 @@ trait ManagerDefaults
     private function generateRoute(string $action, $model = null, ...$parameters): string
     {
         if ($model) {
-            $modelId = (is_object($model) && isset($model->id)) ? $model->id : $model;
+            $modelId = (is_object($model) && isset($model->{$model->getKeyName()})) ? $model->{$model->getKeyName()} : $model;
 
             $parameters = array_merge((array)$modelId, $parameters);
         }

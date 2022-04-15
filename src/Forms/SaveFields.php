@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use SplFileInfo;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Shared\Helpers\Form;
+use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 
 class SaveFields
 {
@@ -34,7 +35,7 @@ class SaveFields
                 continue;
             }
 
-            // Set standard non-localized attribute on the model
+            // Set standard non-localized attribute on the model or handle this
             if (! $field->hasLocales()) {
                 $value = $field->hasPrepareModelValue()
                     ? call_user_func_array($field->getPrepareModelValue(), [data_get($input, $field->getKey()), $input])
@@ -45,23 +46,17 @@ class SaveFields
                 continue;
             }
 
-            // Dynamic localized values or standard translated
-            // For standard translations we set value with the colon notation, e.g. title:en
-            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($model, $field, $input) {
-                if ($key !== $field->getColumnName()) {
-                    return;
+             if($field->getLocalizedFormKeyTemplate() == ':name.:locale') {
+                foreach(data_get($input, $field->getColumnName()) as $locale => $value){
+                    $this->localizedValueCallable($model, $field, $input)($locale, $field->getColumnName(), $value);
                 }
+            } else {
+                // Dynamic localized values or standard translated
+                // For standard translations we set value with the colon notation, e.g. title:en
+                Form::foreachTrans(data_get($input, 'trans', []), $this->localizedValueCallable($model, $field, $input));
+            }
 
-                $value = $field->hasPrepareModelValue()
-                    ? call_user_func_array($field->getPrepareModelValue(), [$value, $input, $locale])
-                    : $value;
 
-                if ($this->isFieldForDynamicValue($model, $field)) {
-                    $model->setDynamic($key, $value, $locale);
-                } else {
-                    $model->{$field->getColumnName().':'.$locale} = $value;
-                }
-            });
         }
 
         $model->save();
@@ -73,6 +68,26 @@ class SaveFields
             }
         }
     }
+
+    private function localizedValueCallable($model, $field, $input): \Closure
+    {
+        return function ($locale, $key, $value) use ($model, $field, $input) {
+            if ($key !== $field->getColumnName()) {
+                return;
+            }
+
+            $value = $field->hasPrepareModelValue()
+                ? call_user_func_array($field->getPrepareModelValue(), [$value, $input, $locale])
+                : $value;
+
+            if ($this->isFieldForDynamicValue($model, $field)) {
+                $model->setDynamic($key, $value, $locale);
+            } else {
+                $model->{$field->getColumnName() . ':' . $locale} = $value;
+            }
+        };
+    }
+
 
     private function removeDuplicateFilePayload($input, $files): array
     {

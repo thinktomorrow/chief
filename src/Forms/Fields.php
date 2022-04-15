@@ -199,10 +199,14 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         });
     }
 
-    public function remove($keys = null): self
+    public function remove(array|string|callable $keys): self
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            return ! in_array($field->getKey(), $keys);
+            if(is_callable($keys)) {
+                return ! call_user_func_array($keys, [$field]);
+            }
+
+            return ! in_array($field->getKey(), (array) $keys);
         });
     }
 

@@ -172,6 +172,20 @@ class FieldsTest extends TestCase
     }
 
     /** @test */
+    public function it_can_remove_by_key()
+    {
+        $fields = Fields::make($values = [
+            Fields\Text::make('xxx'),
+            Fields\Text::make('yyy'),
+        ]);
+
+        $fields = $fields->remove('xxx');
+
+        $this->assertCount(1, $fields->all());
+        $this->assertEquals($values[1], $fields->first());
+    }
+
+    /** @test */
     public function it_can_remove_by_keys()
     {
         $fields = Fields::make($values = [
@@ -179,7 +193,20 @@ class FieldsTest extends TestCase
             Fields\Text::make('yyy'),
         ]);
 
-        $fields = $fields->remove(['xxx']);
+        $fields = $fields->remove(['xxx', 'yyy', 'zzz']);
+
+        $this->assertCount(0, $fields->all());
+    }
+
+    /** @test */
+    public function it_can_remove_by_callable()
+    {
+        $fields = Fields::make($values = [
+            Fields\Text::make('xxx'),
+            Fields\Text::make('yyy'),
+        ]);
+
+        $fields = $fields->remove(fn($field) => $field->getId() == 'xxx');
 
         $this->assertCount(1, $fields->all());
         $this->assertEquals($values[1], $fields->first());

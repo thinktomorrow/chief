@@ -104,4 +104,25 @@ class SavingFieldTest extends TestCase
         $this->assertEquals('xxx-nl-foobar', $article->fresh()->dynamic('title_trans', 'nl'));
         $this->assertEquals('xxx-en-foobar', $article->fresh()->dynamic('title_trans', 'en'));
     }
+
+    /** @test */
+    public function it_can_save_localized_values_with_custom_formkey()
+    {
+        ArticlePage::migrateUp();
+        $article = new ArticlePage();
+
+        $field = Text::make('title_trans')->setLocalizedFormKeyTemplate(':name.:locale')->locales(['nl','en'])->prepare(function ($value, $input) {
+            return $value . '-foobar';
+        });
+
+        (new SaveFields)->save($article, Fields::make([$field]), [
+            'title_trans' => [
+                'nl' => 'xxx-nl',
+                'en' => 'xxx-en',
+            ],
+        ], []);
+
+        $this->assertEquals('xxx-nl-foobar', $article->fresh()->dynamic('title_trans', 'nl'));
+        $this->assertEquals('xxx-en-foobar', $article->fresh()->dynamic('title_trans', 'en'));
+    }
 }

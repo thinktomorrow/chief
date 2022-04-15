@@ -6,7 +6,13 @@ namespace Thinktomorrow\Chief\Forms\Fields\Common;
 
 class LocalizedFormKey
 {
-    public const DEFAULT_TEMPLATE = 'trans.:locale.:name';
+    const DEFAULT_TEMPLATE = 'trans.:locale.:name';
+
+    /**
+     * The default structure of a localized form key. The default
+     * 'trans.:locale.:name' translates to trans[nl][title].
+     */
+    private static string $default_template = self::DEFAULT_TEMPLATE;
 
     private string $template;
 
@@ -19,12 +25,22 @@ class LocalizedFormKey
 
     final private function __construct()
     {
-        $this->template = self::DEFAULT_TEMPLATE;
+        $this->template = self::$default_template;
     }
 
     public static function make(): self
     {
         return new static();
+    }
+
+    public static function setDefaultTemplate(string $default_template): void
+    {
+        static::$default_template = $default_template;
+    }
+
+    public static function getDefaultTemplate(): string
+    {
+        return static::$default_template;
     }
 
     public function get(string $value, ?string $locale = null, bool $cleanupUnusedPlaceholders = true): string
@@ -94,7 +110,6 @@ class LocalizedFormKey
             $value = preg_replace('#:([a-zA-Z]*)#', '', $value);
             $value = str_replace('..', '.', trim($value, '.'));
         }
-
 
         return $value;
     }

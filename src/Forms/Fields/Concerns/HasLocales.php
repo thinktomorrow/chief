@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
@@ -9,7 +10,7 @@ trait HasLocales
 {
     protected array $locales = [];
 
-    protected string $localizedFormKeyTemplate = LocalizedFormKey::DEFAULT_TEMPLATE;
+    protected ?string $localizedFormKeyTemplate = null;
 
     public function locales(?array $locales = null): static
     {
@@ -30,6 +31,14 @@ trait HasLocales
         return count($this->locales) > 0;
     }
 
+    public function getLocalizedFormKey(): LocalizedFormKey
+    {
+        return LocalizedFormKey::make()
+            ->bracketed()
+            ->template(str_contains($this->name, ':locale') ? ':name' : $this->getLocalizedFormKeyTemplate())
+        ;
+    }
+
     public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static
     {
         $this->localizedFormKeyTemplate = $localizedFormKeyTemplate;
@@ -37,10 +46,12 @@ trait HasLocales
         return $this;
     }
 
-    public function getLocalizedFormKey(): LocalizedFormKey
+    public function getLocalizedFormKeyTemplate(): string
     {
-        return LocalizedFormKey::make()
-            ->bracketed()
-            ->template(str_contains($this->name, ':locale') ? ':name' : $this->localizedFormKeyTemplate);
+        if (!$this->localizedFormKeyTemplate) {
+            return LocalizedFormKey::getDefaultTemplate();
+        }
+
+        return $this->localizedFormKeyTemplate;
     }
 }

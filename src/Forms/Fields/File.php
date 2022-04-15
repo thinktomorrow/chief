@@ -31,13 +31,13 @@ class File extends Component implements Field
 
     protected string $view = 'chief-form::fields.file';
     protected string $windowView = 'chief-form::fields.file-window';
-    protected string $localizedFormKeyTemplate = 'files.:name.:locale';
 
     public function __construct(string $key)
     {
         parent::__construct($key);
 
         $this->locales([config('app.fallback_locale', 'nl')]);
+        $this->setLocalizedFormKeyTemplate('files.:name.:locale');
 
         $this->uploadButtonLabel('Bestand opladen');
 
