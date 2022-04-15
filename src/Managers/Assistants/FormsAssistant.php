@@ -57,8 +57,7 @@ trait FormsAssistant
 
         $this->fieldValidator()->handle($fields, $request->all());
 
-        app(\Thinktomorrow\Chief\Forms\SaveFields::class)
-            ->save($model, $fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new FormUpdated($model->modelReference(), $formId));
 

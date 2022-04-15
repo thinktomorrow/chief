@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Resource;
 
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Manager;
 
@@ -41,4 +42,9 @@ trait ResourceDefault
     }
 
     abstract public function fields($model): iterable;
+
+    public function getSaveFieldsClass(): string
+    {
+        return SaveFields::class;
+    }
 }

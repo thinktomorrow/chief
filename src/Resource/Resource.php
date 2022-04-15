@@ -21,4 +21,6 @@ interface Resource
     public function fields($model): iterable;
 
     public function field($model, string $key): Field;
+
+    public function getSaveFieldsClass(): string;
 }
