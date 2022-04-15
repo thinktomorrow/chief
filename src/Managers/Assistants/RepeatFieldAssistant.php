@@ -34,7 +34,7 @@ trait RepeatFieldAssistant
         $repeatSection = $field->getRepeatSection((int) $index, [], $locale);
 
         // TODO: do this recursive because now only nested repeats are supported.
-        foreach($repeatSection as $nestedField) {
+        foreach ($repeatSection as $nestedField) {
             $nestedField->fill($this, $model);
         }
 
