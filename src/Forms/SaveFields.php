@@ -9,7 +9,6 @@ use Illuminate\Support\Arr;
 use SplFileInfo;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Shared\Helpers\Form;
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 
 class SaveFields
 {
@@ -46,8 +45,8 @@ class SaveFields
                 continue;
             }
 
-             if($field->getLocalizedFormKeyTemplate() == ':name.:locale') {
-                foreach(data_get($input, $field->getColumnName()) as $locale => $value){
+            if ($field->getLocalizedFormKeyTemplate() == ':name.:locale') {
+                foreach (data_get($input, $field->getColumnName()) as $locale => $value) {
                     $this->localizedValueCallable($model, $field, $input)($locale, $field->getColumnName(), $value);
                 }
             } else {
@@ -55,8 +54,6 @@ class SaveFields
                 // For standard translations we set value with the colon notation, e.g. title:en
                 Form::foreachTrans(data_get($input, 'trans', []), $this->localizedValueCallable($model, $field, $input));
             }
-
-
         }
 
         $model->save();

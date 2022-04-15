@@ -206,7 +206,7 @@ class FieldsTest extends TestCase
             Fields\Text::make('yyy'),
         ]);
 
-        $fields = $fields->remove(fn($field) => $field->getId() == 'xxx');
+        $fields = $fields->remove(fn ($field) => $field->getId() == 'xxx');
 
         $this->assertCount(1, $fields->all());
         $this->assertEquals($values[1], $fields->first());
