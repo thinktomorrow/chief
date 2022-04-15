@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cc7e0911e9ab5cf12f4ae8b02ad31c2",
+    "content-hash": "a206e2a8bb518d238e95936cd4d47a1d",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6386,19 +6386,20 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.8.2",
+            "version": "0.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "f645b31984084a07b9f95c159de2290022d1b3f1"
+                "reference": "6fd44e69e3fce93c10bc5e51ce517a4c5296b5aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/f645b31984084a07b9f95c159de2290022d1b3f1",
-                "reference": "f645b31984084a07b9f95c159de2290022d1b3f1",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/6fd44e69e3fce93c10bc5e51ce517a4c5296b5aa",
+                "reference": "6fd44e69e3fce93c10bc5e51ce517a4c5296b5aa",
                 "shasum": ""
             },
             "require": {
+                "doctrine/dbal": "^3.3",
                 "php": ">=8.1",
                 "spatie/laravel-medialibrary": "^9.10.0"
             },
@@ -6447,9 +6448,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.2"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.3"
             },
-            "time": "2022-01-13T12:55:47+00:00"
+            "time": "2022-04-15T13:03:38+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
@@ -11736,5 +11737,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
