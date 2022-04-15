@@ -48,7 +48,7 @@ trait HasLocales
 
     public function getLocalizedFormKeyTemplate(): string
     {
-        if (!$this->localizedFormKeyTemplate) {
+        if (! $this->localizedFormKeyTemplate) {
             return LocalizedFormKey::getDefaultTemplate();
         }
 

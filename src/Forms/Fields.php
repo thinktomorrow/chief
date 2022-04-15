@@ -202,7 +202,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove(array|string|callable $keys): self
     {
         return $this->filterBy(function (Field $field) use ($keys) {
-            if(is_callable($keys)) {
+            if (is_callable($keys)) {
                 return ! call_user_func_array($keys, [$field]);
             }
 
