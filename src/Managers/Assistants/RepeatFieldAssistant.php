@@ -6,7 +6,9 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait RepeatFieldAssistant
@@ -35,7 +37,9 @@ trait RepeatFieldAssistant
 
         // TODO: do this recursive because now only nested repeats are supported.
         foreach ($repeatSection as $nestedField) {
-            $nestedField->fill($this, $model);
+            if($nestedField instanceof Field) {
+                $nestedField->fill($this, $model instanceof Fragmentable ? $model->fragmentModel() : $model);
+            }
         }
 
         return response()->json([
