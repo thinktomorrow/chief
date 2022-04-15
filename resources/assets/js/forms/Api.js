@@ -1,7 +1,12 @@
 const Api = {
     get(url, successCallback, errorCallback, alwaysCallback) {
         fetch(url)
-            .then((response) => response.text())
+            .then((response) => {
+                if (response.status >= 500) {
+                    throw Error(response);
+                }
+                return response.text();
+            })
             .then((data) => {
                 if (successCallback) successCallback(data, { method: 'get' });
             })
@@ -22,7 +27,12 @@ const Api = {
                 Accept: 'application/json',
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.status >= 500) {
+                    throw Error(response);
+                }
+                return response.json();
+            })
             .then((data) => {
                 if (successCallback) successCallback(data, { method: 'post' });
             })

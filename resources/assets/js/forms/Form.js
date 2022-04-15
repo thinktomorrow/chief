@@ -46,14 +46,12 @@ Form.prototype.listen = function () {
     });
 
     // Inline form
-    Api.listenForFormSubmits(this.el, this.onFormSubmission.bind(this), (error) => {
-        console.error(`${error}`);
+    Api.listenForFormSubmits(this.el, this.onFormSubmission.bind(this), () => {
+        // TODO: show to user that form hasn't been saved
     });
 };
 
 Form.prototype.onFormSubmission = function (responseData, meta) {
-    console.log('TAGS: ', this.getTags());
-
     Submit.handle(responseData, this.el, this.getTags(), meta);
 };
 
