@@ -37,7 +37,7 @@ trait RepeatFieldAssistant
 
         // TODO: do this recursive because now only nested repeats are supported.
         foreach ($repeatSection as $nestedField) {
-            if($nestedField instanceof Field) {
+            if ($nestedField instanceof Field) {
                 $nestedField->fill($this, $model instanceof Fragmentable ? $model->fragmentModel() : $model);
             }
         }
