@@ -1,16 +1,12 @@
 @props([
     'src' => null,
-    'position' => 'center',
+    'objectFit' => 'contain'
 ])
 
 @php
-    switch($position) {
-        case 'left':
-            $positionClass = 'justify-start'; break;
-        case 'center':
-            $positionClass = 'justify-center'; break;
-        default:
-            $positionClass = 'justify-start';
+    // If argument isn't contain or cover, set to default contain
+    if($objectFit != 'contain' && $objectFit != 'cover') {
+        $objectFit = 'contain';
     }
 @endphp
 
@@ -20,8 +16,12 @@
         title="Chief fragment preview image"
         target="_blank"
         rel="noopener"
-        {{ $attributes->class(['w-full bg-grey-100 rounded-lg flex overflow-hidden', $positionClass]) }}
+        {{ $attributes->class(['block w-full bg-grey-100 rounded-lg overflow-hidden']) }}
     >
-        <img src="{{ $src }}" alt="Chief fragment preview image">
+        <img src="{{ $src }}" alt="Chief fragment preview image" @class([
+            'w-full max-h-40',
+            'object-cover' => $objectFit == 'cover',
+            'object-contain' => $objectFit == 'contain',
+        ])>
     </a>
 @endif
