@@ -26,7 +26,7 @@
         "thinktomorrow/dynamic-attributes": "^0.4.0",
         "thinktomorrow/squanto": "^2.0.1",
         "thinktomorrow/url": "~2.0.0",
-        "thinktomorrow/vine": "^0.4.0"
+        "thinktomorrow/vine": "^0.4.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

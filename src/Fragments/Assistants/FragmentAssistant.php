@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
@@ -196,7 +195,7 @@ trait FragmentAssistant
 
         $this->fieldValidator()->handle($fields, $request->all());
 
-        (new SaveFields())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
 
         return response()->json([
             'message' => 'fragment updated',
@@ -346,7 +345,7 @@ trait FragmentAssistant
     {
         $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
 
-        app(SaveFields::class)->save(
+        app($this->resource->getSaveFieldsClass())->save(
             $fragmentable->fragmentModel(),
             Fields::make($fragmentable->fields($fragmentable))->notTagged('edit'),
             $request->all(),

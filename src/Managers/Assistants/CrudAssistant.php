@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
@@ -189,7 +188,7 @@ trait CrudAssistant
         $this->fieldValidator()->handle($fields, $request->all());
 
         // TODO: extract all uploadedFile instances from the input...
-        (new SaveFields())->save($model, $fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelCreated($model->modelReference()));
 
@@ -234,7 +233,7 @@ trait CrudAssistant
 
         $this->fieldValidator()->handle($fields, $request->all());
 
-        (new SaveFields())->save($model, $fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelUpdated($model->modelReference()));
 

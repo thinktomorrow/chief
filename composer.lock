@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f00a947db0e38054baafa65897a69ef6",
+    "content-hash": "6cc7e0911e9ab5cf12f4ae8b02ad31c2",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6626,16 +6626,16 @@
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "0.4.1",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "d8d103176321f69cd3d9b4d1f65dd18223b318a3"
+                "reference": "4ead31587a032bc39cdc2c57e8edf44ea16e8ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/d8d103176321f69cd3d9b4d1f65dd18223b318a3",
-                "reference": "d8d103176321f69cd3d9b4d1f65dd18223b318a3",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/4ead31587a032bc39cdc2c57e8edf44ea16e8ec5",
+                "reference": "4ead31587a032bc39cdc2c57e8edf44ea16e8ec5",
                 "shasum": ""
             },
             "require": {
@@ -6665,9 +6665,9 @@
             "description": "Generate a tree from an adjacent database structure",
             "support": {
                 "issues": "https://github.com/thinktomorrow/vine/issues",
-                "source": "https://github.com/thinktomorrow/vine/tree/0.4.1"
+                "source": "https://github.com/thinktomorrow/vine/tree/0.4.2"
             },
-            "time": "2022-02-28T16:57:43+00:00"
+            "time": "2022-04-14T15:47:06+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9185,16 +9185,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.5.4",
+            "version": "1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "bbf68cae24f6dc023c607ea0f87da55dd9d55c2b"
+                "reference": "d77a607667f29ae099c0686f99664bd451fd23df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/bbf68cae24f6dc023c607ea0f87da55dd9d55c2b",
-                "reference": "bbf68cae24f6dc023c607ea0f87da55dd9d55c2b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d77a607667f29ae099c0686f99664bd451fd23df",
+                "reference": "d77a607667f29ae099c0686f99664bd451fd23df",
                 "shasum": ""
             },
             "require": {
@@ -9220,7 +9220,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.5.4"
+                "source": "https://github.com/phpstan/phpstan/tree/1.5.5"
             },
             "funding": [
                 {
@@ -9240,7 +9240,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-03T12:39:00+00:00"
+            "time": "2022-04-14T12:20:26+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -11736,5 +11736,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
