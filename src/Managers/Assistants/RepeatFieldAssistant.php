@@ -30,7 +30,13 @@ trait RepeatFieldAssistant
         $model = $id ? $this->fieldsModel($id) : $this->managedModelClassInstance();
 
         $field = $this->resource->field($model, $fieldKey);
+
         $repeatSection = $field->getRepeatSection((int) $index, [], $locale);
+
+        // TODO: do this recursive because now only nested repeats are supported.
+        foreach($repeatSection as $nestedField) {
+            $nestedField->fill($this, $model);
+        }
 
         return response()->json([
             'data' => $this->repeatSectionView($field, $repeatSection)->render(),

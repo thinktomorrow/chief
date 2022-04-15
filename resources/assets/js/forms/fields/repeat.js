@@ -2,11 +2,27 @@ import Sortable from 'sortablejs';
 import EventBus from '../../utilities/EventBus';
 import vueFields from './vue-fields';
 
-const Repeat = function (endpoint, containerId, sectionSelector, sectionName) {
+function initRepeatFieldsIn(container) {
+    const repeatContainerSelector = '[data-repeat]';
+
+    Array.from(container.querySelectorAll(repeatContainerSelector)).forEach((repeatElement) => {
+        new Repeat(
+            repeatElement.dataset.repeatEndpoint,
+            repeatElement.id,
+            '[data-repeat-section]',
+            repeatElement.dataset.repeatSectionName,
+            repeatContainerSelector
+        );
+    });
+}
+
+const Repeat = function (endpoint, containerId, sectionSelector, sectionName, containerSelector) {
     this.endpoint = endpoint;
     this.containerId = containerId;
     this.sectionSelector = sectionSelector;
     this.sectionName = sectionName;
+    this.containerSelector = containerSelector;
+
     this.handleAddSection = () => this.addSection();
     this.handleDeleteSection = (e) => this.deleteSection(e);
 
@@ -32,15 +48,19 @@ Repeat.prototype.init = function () {
 };
 
 Repeat.prototype.eventListeners = function () {
-    this.container.querySelectorAll('[data-add-repeat-section]').forEach((el) => {
-        el.removeEventListener('click', this.handleAddSection);
-        el.addEventListener('click', this.handleAddSection);
-    });
+    Array.from(this.container.querySelectorAll('[data-add-repeat-section]'))
+        .filter((el) => el.closest(this.containerSelector) === this.container)
+        .forEach((el) => {
+            el.removeEventListener('click', this.handleAddSection);
+            el.addEventListener('click', this.handleAddSection);
+        });
 
-    this.container.querySelectorAll('[data-delete-repeat-section]').forEach((el) => {
-        el.removeEventListener('click', this.handleDeleteSection);
-        el.addEventListener('click', this.handleDeleteSection);
-    });
+    Array.from(this.container.querySelectorAll('[data-delete-repeat-section]'))
+        .filter((el) => el.closest(this.containerSelector) === this.container)
+        .forEach((el) => {
+            el.removeEventListener('click', this.handleDeleteSection);
+            el.addEventListener('click', this.handleDeleteSection);
+        });
 };
 
 Repeat.prototype.addSection = function () {
@@ -48,8 +68,13 @@ Repeat.prototype.addSection = function () {
     const url = `${this.endpoint}?index=${nextIndex}`;
 
     fetch(url)
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) throw response;
+            return response.json();
+        })
         .then((json) => {
+            console.log(json);
+
             this.insertSection(json.data);
 
             this.eventListeners();
@@ -64,15 +89,22 @@ Repeat.prototype.insertSection = function (sectionHtml) {
     DOM.innerHTML = sectionHtml;
 
     const sectionElement = DOM.firstChild;
-    const sections = this.container.querySelectorAll(this.sectionSelector);
+    const sections = this.container.querySelectorAll(`:scope > ${this.sectionSelector}`);
     const lastSection = sections[sections.length - 1];
 
     this.container.insertBefore(sectionElement, lastSection.nextSibling);
 
     vueFields(sectionElement);
+
+    initRepeatFieldsIn(sectionElement);
 };
 
 Repeat.prototype.deleteSection = function (e) {
+    // We are not deleting the last one here guys.
+    if (this.container.querySelectorAll(`:scope > ${this.sectionSelector}`).length < 2) {
+        return;
+    }
+
     const section = e.currentTarget.closest(this.sectionSelector);
 
     if (section) {
@@ -123,4 +155,4 @@ Repeat.prototype.initSortable = function () {
     });
 };
 
-export { Repeat as default };
+export { Repeat as default, initRepeatFieldsIn };
