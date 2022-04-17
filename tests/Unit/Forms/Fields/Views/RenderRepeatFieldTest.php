@@ -67,7 +67,7 @@ class RenderRepeatFieldTest extends TestCase
             Text::make('title'),
             Repeat::make('yyy')->items([
                 Text::make('function'),
-            ])
+            ]),
         ])->value([
             [
                 'title' => 'first title',
@@ -100,7 +100,7 @@ class RenderRepeatFieldTest extends TestCase
             Text::make('title'),
             Repeat::make('yyy')->items([
                 Text::make('function'),
-            ])
+            ]),
         ]);
 
         $render = $component->toHtml();

@@ -23,7 +23,7 @@ trait RepeatFieldAssistant
 
     public function repeatSection(Request $request, $fieldKey, $id = null)
     {
-        if (!$request->filled('index')) {
+        if (! $request->filled('index')) {
             throw new \InvalidArgumentException('Required query value [index] missing.');
         }
 
@@ -69,7 +69,7 @@ trait RepeatFieldAssistant
 
     private function extractRepeatFieldsFrom(iterable $fields): Fields
     {
-        return Fields::make($fields, fn ($field) => !$field instanceof Repeat)
+        return Fields::make($fields, fn ($field) => ! $field instanceof Repeat)
             ->filterBy(fn ($field) => $field instanceof Repeat)
         ;
     }
