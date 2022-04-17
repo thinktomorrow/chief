@@ -51,6 +51,19 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     }
 
     /** @test */
+    public function it_can_retrieve_a_nested_repeat_section()
+    {
+        $pageStub = PageStub::create();
+
+        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'nested', $pageStub). '?index=0&prefix=repeat_values[99][nested]');
+        $response->assertStatus(200);
+
+        $responseData = $response->getOriginalContent()['data'];
+        $this->assertStringContainsString('name="repeat_values[99][nested][0][nested-first]"', $responseData);
+        $this->assertStringContainsString('name="repeat_values[99][nested][0][nested-second]"', $responseData);
+    }
+
+    /** @test */
     public function it_can_save_repeat_section()
     {
         $pageStub = PageStub::create();

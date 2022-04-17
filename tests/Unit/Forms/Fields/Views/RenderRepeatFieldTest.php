@@ -59,4 +59,53 @@ class RenderRepeatFieldTest extends TestCase
         $this->assertStringContainsString('name="xxx[0][title][en]"', $render);
         $this->assertStringContainsString('value="first title en"', $render);
     }
+
+    /** @test */
+    public function it_can_render_a_nested_repeat_field()
+    {
+        $component = Repeat::make('xxx')->items([
+            Text::make('title'),
+            Repeat::make('yyy')->items([
+                Text::make('function'),
+            ])
+        ])->value([
+            [
+                'title' => 'first title',
+                'yyy' => [
+                    ['function' => 'aaa'],
+                    ['function' => 'bbb'],
+                ],
+            ],
+            [
+                'title' => 'second title',
+                'yyy' => [
+                    ['function' => 'ccc'],
+                ],
+            ],
+        ]);
+
+        $render = $component->toHtml();
+
+        $this->assertStringContainsString('name="xxx[0][title]"', $render);
+        $this->assertStringContainsString('name="xxx[0][yyy][0][function]"', $render);
+        $this->assertStringContainsString('name="xxx[0][yyy][1][function]"', $render);
+        $this->assertStringContainsString('name="xxx[1][title]"', $render);
+        $this->assertStringContainsString('name="xxx[1][yyy][0][function]"', $render);
+    }
+
+    /** @test */
+    public function it_can_render_a_default_empty_nested_repeat_field()
+    {
+        $component = Repeat::make('xxx')->items([
+            Text::make('title'),
+            Repeat::make('yyy')->items([
+                Text::make('function'),
+            ])
+        ]);
+
+        $render = $component->toHtml();
+
+        $this->assertStringContainsString('name="xxx[0][title]"', $render);
+        $this->assertStringContainsString('name="xxx[0][yyy][0][function]"', $render);
+    }
 }

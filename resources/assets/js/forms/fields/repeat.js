@@ -16,17 +16,23 @@ function initRepeatFieldsIn(container) {
     });
 }
 
-const Repeat = function (endpoint, containerId, sectionSelector, sectionName, containerSelector) {
+const Repeat = function (endpoint, containerId, sectionSelector, prefix, containerSelector) {
     this.endpoint = endpoint;
     this.containerId = containerId;
     this.sectionSelector = sectionSelector;
-    this.sectionName = sectionName;
+    this.prefix = prefix;
     this.containerSelector = containerSelector;
 
     this.handleAddSection = () => this.addSection();
     this.handleDeleteSection = (e) => this.deleteSection(e);
 
     this.container = document.getElementById(this.containerId);
+
+    if (!this.container) {
+        console.error(`container by id ${this.containerId} not found.`);
+        return;
+    }
+
     this.init();
 };
 
@@ -64,8 +70,10 @@ Repeat.prototype.eventListeners = function () {
 };
 
 Repeat.prototype.addSection = function () {
-    const nextIndex = this.container.querySelectorAll(this.sectionSelector).length;
-    const url = `${this.endpoint}?index=${nextIndex}`;
+    const nextIndex = this.getSections().length;
+
+    console.log(this.prefix);
+    const url = `${this.endpoint}?index=${nextIndex}&prefix=${this.prefix}`;
 
     fetch(url)
         .then((response) => {
@@ -89,7 +97,7 @@ Repeat.prototype.insertSection = function (sectionHtml) {
     DOM.innerHTML = sectionHtml;
 
     const sectionElement = DOM.firstChild;
-    const sections = this.container.querySelectorAll(`:scope > ${this.sectionSelector}`);
+    const sections = this.getSections();
     const lastSection = sections[sections.length - 1];
 
     this.container.insertBefore(sectionElement, lastSection.nextSibling);
@@ -101,7 +109,7 @@ Repeat.prototype.insertSection = function (sectionHtml) {
 
 Repeat.prototype.deleteSection = function (e) {
     // We are not deleting the last one here guys.
-    if (this.container.querySelectorAll(`:scope > ${this.sectionSelector}`).length < 2) {
+    if (this.getSections().length < 2) {
         return;
     }
 
@@ -112,6 +120,10 @@ Repeat.prototype.deleteSection = function (e) {
     }
 };
 
+Repeat.prototype.getSections = function () {
+    return this.container.querySelectorAll(`:scope > ${this.sectionSelector}`);
+};
+
 /**
  * Order every element query index by setting the index
  * according to its position in the DOM tree.
@@ -119,22 +131,32 @@ Repeat.prototype.deleteSection = function (e) {
 Repeat.prototype.order = function () {
     let index = 0;
 
-    if (!this.container) {
-        console.error(`container by id ${this.containerId} not found.`);
-        return;
-    }
-
-    this.container.querySelectorAll(this.sectionSelector).forEach((el) => {
-        el.querySelectorAll(`[name^="${this.sectionName}["]`).forEach((node) => {
-            const indexedName = node
-                .getAttribute('name')
-                .replace(new RegExp(`${this.sectionName}\\[([0-9]+)\\]`, 'g'), `${this.sectionName}[${index}]`);
-
-            node.setAttribute('name', indexedName);
-        });
+    this.getSections().forEach((el) => {
+        // TODO: for each locale input, this will be executed. We could prevent this.
+        Array.from(el.querySelectorAll(`[name^="${this.prefix}["]`))
+            .filter((_el) => _el.closest(this.containerSelector) === this.container)
+            .forEach((node) => {
+                const indexedName = node
+                    .getAttribute('name')
+                    .replace(
+                        new RegExp(`${this.escapeForRegExp(this.prefix)}\\[([0-9]+)\\]`, 'g'),
+                        `${this.prefix}[${index}]`
+                    );
+                console.log(this.prefix);
+                console.log(node.name);
+                console.log(index);
+                console.log(indexedName);
+                console.log('-------------');
+                node.setAttribute('name', indexedName);
+            });
 
         index++;
     });
+};
+
+Repeat.prototype.escapeForRegExp = function (string) {
+    // eslint-disable-next-line
+    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 };
 
 Repeat.prototype.initSortable = function () {

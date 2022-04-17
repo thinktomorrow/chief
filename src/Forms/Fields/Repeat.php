@@ -33,7 +33,7 @@ class Repeat extends Component implements Field
         return $components;
     }
 
-    public function getRepeatSection(int $index, array $values = [], ?string $locale = null): array
+    public function getRepeatSection(int $index, array $values = [], ?string $locale = null, ?string $prefix = null): array
     {
         $clonedComponents = (new DeepCopy())
             ->skipUncloneable()
@@ -42,10 +42,10 @@ class Repeat extends Component implements Field
 
         // Populate fields with the correct name and the given values
         Fields::make($clonedComponents, fn ($field) => ! $field instanceof self)
-            ->each(function (Field $field) use ($index, $locale, $values) {
+            ->each(function (Field $field) use ($index, $locale, $values, $prefix) {
                 $fieldName = Common\LocalizedFormKey::make()
                     ->template(':prefix.'.$index.'.:name.:locale')
-                    ->replace('prefix', $this->getName())
+                    ->replace('prefix', $prefix ?: $this->getName())
                     ->bracketed()
                     ->get($field->getName(), $locale)
                 ;

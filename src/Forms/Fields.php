@@ -231,7 +231,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
                 continue;
             }
 
-            $fields = array_merge($fields, static::extractRecursive($component->getComponents()));
+            $fields = array_merge($fields, static::extractRecursive($component->getComponents(), $stopRecursiveCallback));
         }
 
         return $fields;
