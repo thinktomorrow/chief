@@ -111,11 +111,6 @@ Repeat.prototype.insertSection = function (sectionHtml) {
 };
 
 Repeat.prototype.deleteSection = function (e) {
-    // We are not deleting the last one here guys.
-    if (this.getSections().length < 2) {
-        return;
-    }
-
     const section = e.currentTarget.closest(this.sectionSelector);
 
     if (section) {
