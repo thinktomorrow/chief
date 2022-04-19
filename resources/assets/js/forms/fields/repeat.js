@@ -72,7 +72,6 @@ Repeat.prototype.eventListeners = function () {
 Repeat.prototype.addSection = function () {
     const nextIndex = this.getSections().length;
 
-    console.log(this.prefix);
     const url = `${this.endpoint}?index=${nextIndex}&prefix=${this.prefix}`;
 
     fetch(url)
@@ -81,8 +80,6 @@ Repeat.prototype.addSection = function () {
             return response.json();
         })
         .then((json) => {
-            console.log(json);
-
             this.insertSection(json.data);
 
             this.eventListeners();
@@ -142,11 +139,7 @@ Repeat.prototype.order = function () {
                         new RegExp(`${this.escapeForRegExp(this.prefix)}\\[([0-9]+)\\]`, 'g'),
                         `${this.prefix}[${index}]`
                     );
-                console.log(this.prefix);
-                console.log(node.name);
-                console.log(index);
-                console.log(indexedName);
-                console.log('-------------');
+
                 node.setAttribute('name', indexedName);
             });
 
