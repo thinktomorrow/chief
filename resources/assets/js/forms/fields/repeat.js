@@ -96,8 +96,14 @@ Repeat.prototype.insertSection = function (sectionHtml) {
     const sectionElement = DOM.firstChild;
     const sections = this.getSections();
     const lastSection = sections[sections.length - 1];
+    console.log(lastSection);
 
-    this.container.insertBefore(sectionElement, lastSection.nextSibling);
+    // Place after last section - if no section present yet, add it as the first section in the container
+    if (lastSection) {
+        this.container.insertBefore(sectionElement, lastSection.nextSibling);
+    } else {
+        this.container.prepend(sectionElement);
+    }
 
     vueFields(sectionElement);
 
