@@ -33,6 +33,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return $this->items->first();
     }
 
+    public function has(string $key): bool
+    {
+        return isset($this->items[$key]);
+    }
+
     public function find(string $key): Field
     {
         if (! isset($this->items[$key])) {
