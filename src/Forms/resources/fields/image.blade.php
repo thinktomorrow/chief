@@ -79,8 +79,8 @@
                 </div>
             </div>
 
-            <div class="flex mt-4">
-                <div v-if="(settings.multiple == true || items.length < 1 || !drag.hasValidUpload) && !sort.isReordering">
+            <div class="flex">
+                <div v-if="(settings.multiple == true || items.length < 1 || !drag.hasValidUpload) && !sort.isReordering" class="mt-4">
                     <div class="mr-4 btn btn-primary-outline" @click="gallery.open">
                         Voeg bestaande toe uit je galerij
                     </div>
@@ -94,7 +94,7 @@
                     ></mediagallery>
                 </div>
 
-                <a v-if="settings.multiple == true  && items.length > 1" @click.prevent="sort.toggleReorder" class="btn btn-primary">
+                <a v-if="settings.multiple == true  && items.length > 1" @click.prevent="sort.toggleReorder" class="mt-4 btn btn-primary">
                     @{{ sort.isReordering ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
                 </a>
 

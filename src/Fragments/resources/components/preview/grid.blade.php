@@ -1,15 +1,21 @@
 @props([
     'model' => null,
-    'columns' => 2
+    'columns' => 2,
+    'threshold' => 6
 ])
 
 @php
-    $fragments = getFragments($model);
+    $items = getFragments($model) ?? [];
+    $count = count($items);
+
+    if($count > $threshold) {
+        $items = $items->slice(0, $threshold - 1);
+    }
 @endphp
 
-@if(count($fragments) > 0 && $slot->isEmpty())
+@if($count > 0 && $slot->isEmpty())
     <x-chief-fragments::preview.row {{ $attributes }}>
-        @forelse ($fragments as $fragment)
+        @forelse ($items as $fragment)
             <x-chief-fragments::preview.column width="{{ '1/' . $columns }}">
                 <x-chief-fragments::preview.card>
                     {!! $fragment->renderAdminFragment($model, $loop, ['nested' => true]) !!}
@@ -20,5 +26,15 @@
                 {{ $slot }}
             @endif
         @endforelse
+
+        @if($count > $threshold)
+            <x-chief-fragments::preview.column width="{{ '1/' . $columns }}">
+                <x-chief-fragments::preview.card>
+                    <x-chief-fragments::preview.text>
+                        +{{ $count - ($threshold - 1) }} items
+                    </x-chief-fragments::preview.text>
+                </x-chief-fragments::preview.card>
+            </x-chief-fragments::preview.column>
+        @endif
     </x-chief-fragments::preview.row>
 @endif
