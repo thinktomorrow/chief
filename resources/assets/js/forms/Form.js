@@ -78,7 +78,7 @@ Form.prototype.refresh = function () {
         // Re-init event listeners
         this.listen();
 
-        EventBus.publish('form-refreshed', {
+        EventBus.publish('chief-form-refreshed', {
             element: this.el,
         });
 

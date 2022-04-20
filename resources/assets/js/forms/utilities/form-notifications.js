@@ -15,13 +15,13 @@ const initUnsavedNotifications = (formSelector, notificationSelector = '[data-fo
         initUnsavedNotification(form, notificationSelector);
     });
 
-    EventBus.subscribe('form-refreshed', (data) => {
+    EventBus.subscribe('chief-form-refreshed', (data) => {
         initUnsavedNotification(data.element, notificationSelector);
     });
 };
 
 const initRefreshedNotifications = (notificationSelector = '[data-form-refreshed-notification]') => {
-    EventBus.subscribe('form-refreshed', (data) => {
+    EventBus.subscribe('chief-form-refreshed', (data) => {
         const notification = data.element.querySelector(notificationSelector);
 
         if (notification) {

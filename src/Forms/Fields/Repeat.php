@@ -53,7 +53,7 @@ class Repeat extends Component implements Field
 
                 $field->name($fieldName)
                     ->elementId($field->getElementId().'_'.Str::random())
-                    ->value($values[$field->getColumnName()] ?? null)
+                    ->value(data_get($values, $field->getColumnName(), null))
                     ->setLocalizedFormKeyTemplate(':name.:locale')
                 ;
             })

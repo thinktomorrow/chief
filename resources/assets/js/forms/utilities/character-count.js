@@ -35,7 +35,7 @@ const initCharacterCount = (selector = '[data-character-count]') => {
         });
     });
 
-    EventBus.subscribe('form-refreshed', (data) => {
+    EventBus.subscribe('chief-form-refreshed', (data) => {
         Array.from(data.element.querySelectorAll(selector)).forEach((el) => {
             characterCount(data.element, el);
         });

@@ -41,7 +41,7 @@ Repeat.prototype.init = function () {
     this.initSortable();
     this.eventListeners();
 
-    EventBus.subscribe('form-refreshed', (e) => {
+    EventBus.subscribe('chief-form-refreshed', (e) => {
         // Refetch the container because of refresh it is a new DOM reference.
         this.container = document.getElementById(this.containerId);
 

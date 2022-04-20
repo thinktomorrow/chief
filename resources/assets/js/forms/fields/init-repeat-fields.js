@@ -7,6 +7,10 @@ function initRepeatFields() {
     EventBus.subscribe('sidebarPanelActivated', (data) => {
         initRepeatFieldsIn(data.panel.el);
     });
+
+    EventBus.subscribe('chief-form-refreshed', (e) => {
+        initRepeatFieldsIn(e.element);
+    });
 }
 
 export { initRepeatFields as default };
