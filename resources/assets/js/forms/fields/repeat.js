@@ -34,12 +34,12 @@ const Repeat = function (endpoint, containerId, sectionSelector, prefix, contain
     }
 
     this.init();
-};
 
-Repeat.prototype.init = function () {
-    this.order();
-    this.initSortable();
-    this.eventListeners();
+    EventBus.subscribe('chief-repeat-index-changed', (data) => {
+        if (data.section.contains(this.container) && this.prefix.startsWith(data.former_prefix)) {
+            this.prefix = this.prefix.replace(data.former_prefix, data.new_prefix);
+        }
+    });
 
     EventBus.subscribe('chief-form-refreshed', (e) => {
         // Refetch the container because of refresh it is a new DOM reference.
@@ -51,6 +51,12 @@ Repeat.prototype.init = function () {
 
         this.init();
     });
+};
+
+Repeat.prototype.init = function () {
+    this.order();
+    this.initSortable();
+    this.eventListeners();
 };
 
 Repeat.prototype.eventListeners = function () {
@@ -96,7 +102,6 @@ Repeat.prototype.insertSection = function (sectionHtml) {
     const sectionElement = DOM.firstChild;
     const sections = this.getSections();
     const lastSection = sections[sections.length - 1];
-    console.log(lastSection);
 
     // Place after last section - if no section present yet, add it as the first section in the container
     if (lastSection) {
@@ -129,17 +134,29 @@ Repeat.prototype.getSections = function () {
 Repeat.prototype.order = function () {
     let index = 0;
 
-    this.getSections().forEach((el) => {
+    this.getSections().forEach((section) => {
         // TODO: for each locale input, this will be executed. We could prevent this.
-        Array.from(el.querySelectorAll(`[name^="${this.prefix}["]`))
-            .filter((_el) => _el.closest(this.containerSelector) === this.container)
+        Array.from(section.querySelectorAll(`[name^="${this.prefix}["]`))
+            // .filter((_el) => _el.closest(this.containerSelector) === this.container)
             .forEach((node) => {
-                const indexedName = node
+                const match = node
                     .getAttribute('name')
-                    .replace(
-                        new RegExp(`${this.escapeForRegExp(this.prefix)}\\[([0-9]+)\\]`, 'g'),
-                        `${this.prefix}[${index}]`
-                    );
+                    .match(new RegExp(`${this.escapeForRegExp(this.prefix)}\\[([0-9]+)\\]`, 'g'));
+
+                if (!match) {
+                    console.error(this.prefix);
+                }
+
+                if (!match) return;
+
+                const formerPrefix = match[0];
+                const indexedName = node.getAttribute('name').replace(formerPrefix, `${this.prefix}[${index}]`);
+
+                EventBus.publish('chief-repeat-index-changed', {
+                    section,
+                    former_prefix: formerPrefix,
+                    new_prefix: `${this.prefix}[${index}]`,
+                });
 
                 node.setAttribute('name', indexedName);
             });
