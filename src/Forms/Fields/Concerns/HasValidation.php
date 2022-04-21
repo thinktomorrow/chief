@@ -28,6 +28,10 @@ trait HasValidation
 
     public function isRequired(): bool
     {
+        if(app()->environment('local') && true === config('chief.disable_field_required_validation')) {
+            return false;
+        }
+
         return $this->isRequired || $this->hasDefinitionInRules('required', FallbackLocaleRequiredRule::RULE);
     }
 
