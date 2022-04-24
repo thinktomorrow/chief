@@ -44,13 +44,10 @@ trait HasColumns
         switch ($span.'/'.$this->columns) {
             case '1/2':
                 return 'w-full sm:w-1/2';
-
             case '1/3':
                 return 'w-full sm:w-1/3';
-
             case '2/3':
                 return 'w-full sm:w-2/3';
-
             default:
                 return 'w-full';
         }
