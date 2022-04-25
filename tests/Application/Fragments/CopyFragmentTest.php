@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class CopyFragmentTest extends ChiefTestCase
 {
@@ -88,7 +89,7 @@ class CopyFragmentTest extends ChiefTestCase
         $snippet = $this->setupAndCreateSnippet($this->owner);
 
         // Make snippet shared
-        $snippetNested = $this->setupAndCreateSnippet($this->owner);
+        $snippetNested = $this->createAsFragment(new SnippetStub(), $this->owner);
         $this->asAdmin()->post($this->manager($snippetNested)->route('fragment-add', $snippet, $snippetNested));
 
         $newOwner = ArticlePage::create();

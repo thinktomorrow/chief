@@ -93,10 +93,10 @@ class DuplicatePageTest extends ChiefTestCase
     public function context_with_fragments_are_duplicated()
     {
         // Add shared and non-shared fragment
-        $snippet = $this->setupAndCreateSnippet($this->source, 1);
+        $snippet = $this->createAsFragment(new SnippetStub(), $this->source, 1);
         $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
 
-        $snippet2 = $this->setupAndCreateSnippet($this->source, 2, false);
+        $snippet2 = $this->createAsFragment(new SnippetStub(), $this->source, 2);
         $response = $this->asAdmin()-> post($this->manager($this->source)->route('duplicate', $this->source));
 
         $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();

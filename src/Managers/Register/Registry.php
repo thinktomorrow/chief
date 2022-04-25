@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
 
+use Thinktomorrow\Chief\Managers\Exceptions\ResourceAlreadyRegistered;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Resource\PageResource;
@@ -92,6 +93,10 @@ final class Registry
 
     public function registerResource(string $key, Resource $resource, Manager $manager): self
     {
+        if(isset($this->resources[$key])) {
+            throw new ResourceAlreadyRegistered('Cannot register resource. The resource key [' . $key . '] is already registered.');
+        }
+
         $this->resources[$key] = $resource;
         $this->managers[$key] = $manager;
 

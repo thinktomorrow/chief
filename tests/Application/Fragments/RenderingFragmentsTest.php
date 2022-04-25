@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class RenderingFragmentsTest extends ChiefTestCase
 {
@@ -20,7 +21,7 @@ class RenderingFragmentsTest extends ChiefTestCase
     {
         $owner = $this->setupAndCreateArticle();
         $this->setupAndCreateSnippet($owner, 1);
-        $this->setupAndCreateSnippet($owner, 2);
+        $this->createAsFragment(new SnippetStub(), $owner, 2);
 
         $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW\nTHIS IS SNIPPET STUB VIEW\n");
     }
