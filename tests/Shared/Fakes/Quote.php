@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
-use Thinktomorrow\Chief\Forms\Fields;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\AssetLibrary\HasAsset;
-use Illuminate\Database\Schema\Blueprint;
-use Thinktomorrow\AssetLibrary\AssetTrait;
-use Thinktomorrow\Chief\Forms\Fields\File;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
+use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
+use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
 {

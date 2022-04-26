@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Form;
 
-use Thinktomorrow\Url\Root;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Url\Root;
 
 final class LinkForm
 {

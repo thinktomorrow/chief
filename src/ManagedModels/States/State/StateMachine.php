@@ -19,7 +19,6 @@ class StateMachine
         $this->stateKey = $stateKey;
 
         $this->validateTransitions();
-
     }
 
     public static function fromConfig(StatefulContract $statefulContract, StateConfig $stateConfig): static

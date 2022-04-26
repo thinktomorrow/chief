@@ -3,23 +3,23 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Thinktomorrow\Chief\Forms\Forms;
-use Illuminate\Contracts\Pagination\Paginator;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
-use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
-use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
+use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
+use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait CrudAssistant
 {

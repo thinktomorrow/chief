@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
-use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Vine\NodeCollection;
 
 class MenuTest extends ChiefTestCase
 {
