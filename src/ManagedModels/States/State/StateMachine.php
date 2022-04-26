@@ -4,23 +4,32 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
-abstract class StateMachine
+class StateMachine
 {
-    /** States and transitions should be set on the specific state Machine. */
-    protected array $states = [];
-
-    /** Transitions from one state to other(s) */
-    protected array $transitions = [];
-
-    protected StatefulContract $statefulContract;
+    private array $states;
+    private array $transitions;
+    private StatefulContract $statefulContract;
     private string $stateKey;
 
-    final public function __construct(StatefulContract $statefulContract, string $stateKey)
+    final public function __construct(StatefulContract $statefulContract, string $stateKey, array $states, array $transitions)
     {
         $this->statefulContract = $statefulContract;
+        $this->states = $states;
+        $this->transitions = $transitions;
         $this->stateKey = $stateKey;
 
         $this->validateTransitions();
+
+    }
+
+    public static function fromConfig(StatefulContract $statefulContract, StateConfig $stateConfig): static
+    {
+        return new static(
+            $statefulContract,
+            $stateConfig->getStateKey(),
+            $stateConfig->getStates(),
+            $stateConfig->getTransitions()
+        );
     }
 
     public function can($transition): bool
@@ -37,26 +46,6 @@ abstract class StateMachine
         $state = $this->transitions[$transition]['to'];
 
         $this->statefulContract->changeStateOf($this->stateKey, $state);
-    }
-
-    /**
-     * assert the integrity of the new state.
-     *
-     * @param StatefulContract $statefulContract
-     * @param string $stateKey
-     * @param $state
-     *
-     * @throws StateException
-     *
-     * @return void
-     */
-    public static function assertNewState(StatefulContract $statefulContract, string $stateKey, $state): void
-    {
-        $machine = new static($statefulContract, $stateKey);
-
-        if (! $machine->canTransitionTo($state)) {
-            throw StateException::invalidState($state, $statefulContract->stateOf($stateKey), get_class($machine));
-        }
     }
 
     /**

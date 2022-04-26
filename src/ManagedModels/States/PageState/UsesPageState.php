@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\States;
+namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 trait UsesPageState
 {

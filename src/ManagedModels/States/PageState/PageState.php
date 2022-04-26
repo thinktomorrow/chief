@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\States;
+namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 

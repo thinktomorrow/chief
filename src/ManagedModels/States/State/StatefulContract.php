@@ -6,7 +6,9 @@ namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 interface StatefulContract
 {
-    public function stateOf(string $key);
+    public function getState(string $key);
 
-    public function changeStateOf(string $key, $state);
+    public function changeState(string $key, $state): void;
+
+    public function getStateConfig(string $stateKey): StateConfig;
 }

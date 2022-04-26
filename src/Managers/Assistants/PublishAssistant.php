@@ -6,14 +6,14 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
-use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
+use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
+use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
 
 trait PublishAssistant
 {

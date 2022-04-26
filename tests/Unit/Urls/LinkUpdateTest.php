@@ -2,15 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithBaseSegments;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
+use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithBaseSegments;
 
 class LinkUpdateTest extends ChiefTestCase
 {

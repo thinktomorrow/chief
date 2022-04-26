@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Thinktomorrow\Chief\ManagedModels\States;
+namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 

@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
 
 trait PageResourceDefault
 {

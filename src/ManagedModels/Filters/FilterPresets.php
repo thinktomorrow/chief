@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
-use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
 
 class FilterPresets
 {

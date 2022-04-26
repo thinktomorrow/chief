@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\Archivable;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
 trait Archivable
 {

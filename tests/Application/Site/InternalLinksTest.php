@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
 class InternalLinksTest extends ChiefTestCase
 {
