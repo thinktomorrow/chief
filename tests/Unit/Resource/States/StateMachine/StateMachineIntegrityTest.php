@@ -4,20 +4,23 @@ namespace Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine;
 
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
+use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\StatefulStub;
+use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\OnlineStateStub;
+use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\MissingStateConfigStub;
+use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\MalformedStateConfigStub;
 
 class StateMachineIntegrityTest extends TestCase
 {
-    private $dummyStatefulContract;
+    private $statefulStub;
     private $machine;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->dummyStatefulContract = new dummyStatefulContract();
-        $this->machine = new DummyStateMachine($this->dummyStatefulContract, 'current_state');
+        $this->statefulStub = new StatefulStub();
+        $this->machine = StateMachine::fromConfig($this->statefulStub, $this->statefulStub->getStateConfig('online_state'));
     }
 
     /** @test */
@@ -31,7 +34,7 @@ class StateMachineIntegrityTest extends TestCase
     {
         $this->expectException(StateException::class, 'malformed');
 
-        new MalformedStateMachine($this->dummyStatefulContract, 'current_state');
+        StateMachine::fromConfig($this->statefulStub, new MalformedStateConfigStub());
     }
 
     /** @test */
@@ -39,7 +42,7 @@ class StateMachineIntegrityTest extends TestCase
     {
         $this->expectException(StateException::class, 'non existing');
 
-        new MissingStateMachine($this->dummyStatefulContract, 'current_state');
+        StateMachine::fromConfig($this->statefulStub, new MissingStateConfigStub());
     }
 
     /** @test */
@@ -61,92 +64,20 @@ class StateMachineIntegrityTest extends TestCase
     /** @test */
     public function it_can_apply_transition()
     {
-        $dummyStatefulContract = new dummyStatefulContract();
-        $machine = new DummyStateMachine($dummyStatefulContract, 'current_state');
+        $this->assertEquals(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
 
-        $this->assertEquals('new', $dummyStatefulContract->stateOf('current_state'));
-
-        $machine->apply('create');
-        $this->assertEquals('pending', $dummyStatefulContract->stateOf('current_state'));
+        $this->machine->apply('publish');
+        $this->assertEquals(OnlineStateStub::online, $this->statefulStub->getState('online_state'));
     }
 
     /** @test */
     public function it_can_reset_same_state()
     {
-        $dummyStatefulContract = new dummyStatefulContract();
-        $machine = new DummyStateMachine($dummyStatefulContract, 'current_state');
+        $this->expectException(StateException::class);
 
-        $this->assertEquals('new', $dummyStatefulContract->stateOf('current_state'));
-        $dummyStatefulContract->changeStateOf('current_state', 'new');
-        $this->assertEquals('new', $dummyStatefulContract->stateOf('current_state'));
-    }
-}
+        $this->assertEquals(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
+        $this->machine->apply('unpublish');
 
-class DummyStateMachine extends StateMachine
-{
-    protected array $states = [
-        'new',
-        'pending',
-        'completed',
-        'canceled',
-        'refunded',
-    ];
-
-    protected array $transitions = [
-        'create' => [
-            'from' => ['new'],
-            'to' => 'pending',
-        ],
-        'complete' => [
-            'from' => ['pending'],
-            'to' => 'completed',
-        ],
-    ];
-}
-
-class MalformedStateMachine extends StateMachine
-{
-    protected array $transitions = [
-        'complete' => [
-            'from' => 'foobar',
-        ],
-    ];
-}
-
-class MissingStateMachine extends StateMachine
-{
-    protected array $states = [
-        'new',
-    ];
-
-    protected array $transitions = [
-        'create' => [
-            'from' => ['new'],
-            'to' => 'pending',
-        ],
-    ];
-}
-
-class DummyStatefulContract implements StatefulContract
-{
-    const STATE_NEW = 'new';
-    const STATE_PENDING = 'pending';
-
-    private $currentState;
-
-    public function __construct($state = null)
-    {
-        // Default state
-        $this->currentState = self::STATE_NEW;
-    }
-
-    public function stateOf($key): string
-    {
-        return $this->currentState;
-    }
-
-    public function changeStateOf($key, $state)
-    {
-        $this->currentState = $state;
+        $this->assertEquals(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
     }
 }

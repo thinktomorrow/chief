@@ -3,30 +3,32 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine;
 
 use PHPUnit\Framework\TestCase;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\StatefulStub;
+use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\OnlineStateStub;
 
 class StateMachineTest extends TestCase
 {
-    private $onlineStateMachine;
-
-    /** @var StatefulStub */
-    private $statefulStub;
+    private StatefulContract $statefulStub;
+    private StateMachine $machine;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->statefulStub = new StatefulStub();
-        $this->onlineStateMachine = new OnlineStateMachineStub($this->statefulStub, 'online');
+        $this->machine = StateMachine::fromConfig($this->statefulStub, $this->statefulStub->getStateConfig('online_state'));
     }
 
     /** @test */
     public function it_can_apply_transition()
     {
-        $this->assertSame(false, $this->statefulStub->stateOf(StatefulStub::ONLINE_STATEKEY));
+        $this->assertSame(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
 
-        $this->onlineStateMachine->apply('publish');
-        $this->assertEquals(true, $this->statefulStub->stateOf(StatefulStub::ONLINE_STATEKEY));
+        $this->machine->apply('publish');
+        $this->assertEquals(OnlineStateStub::online, $this->statefulStub->getState('online_state'));
     }
 
     /** @test */
@@ -34,15 +36,15 @@ class StateMachineTest extends TestCase
     {
         $this->expectException(StateException::class);
 
-        $this->onlineStateMachine->apply('foobar');
+        $this->machine->apply('foobar');
     }
 
     /** @test */
     public function it_ignores_change_to_current_state()
     {
-        $this->assertSame(false, $this->statefulStub->stateOf(StatefulStub::ONLINE_STATEKEY));
-        $this->statefulStub->changeStateOf(StatefulStub::ONLINE_STATEKEY, true);
-        $this->assertSame(true, $this->statefulStub->stateOf(StatefulStub::ONLINE_STATEKEY));
+        $this->assertSame(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
+        $this->statefulStub->changeState('online_state', OnlineStateStub::online);
+        $this->assertSame(OnlineStateStub::online, $this->statefulStub->getState('online_state'));
     }
 
     /** @test */
@@ -50,6 +52,6 @@ class StateMachineTest extends TestCase
     {
         $this->expectException(StateException::class);
 
-        $this->onlineStateMachine->apply('unpublish');
+        $this->machine->apply('unpublish');
     }
 }

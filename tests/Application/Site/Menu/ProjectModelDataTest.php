@@ -23,7 +23,7 @@ class ProjectModelDataTest extends ChiefTestCase
         $this->page = $this->setupAndCreateArticle([
             'custom.nl' => 'artikel titel nl', // Custom is the specific column for the title
             'custom.en' => 'artikel titel en',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
         MenuItem::create([
@@ -99,7 +99,8 @@ class ProjectModelDataTest extends ChiefTestCase
     /** @test */
     public function it_can_project_page_data_when_page_has_archived()
     {
-        $this->asAdmin()->post($this->manager($this->page)->route('archive', $this->page));
+        $this->asAdmin()
+            ->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'archive'));
 
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals('label nl', $collection->first()->getLabel());
@@ -110,8 +111,8 @@ class ProjectModelDataTest extends ChiefTestCase
     /** @test */
     public function it_can_project_page_data_when_page_has_published()
     {
-        $this->asAdmin()->post($this->manager($this->page)->route('unpublish', $this->page));
-        $this->asAdmin()->post($this->manager($this->page)->route('publish', $this->page));
+        $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'unpublish'));
+        $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'publish'));
 
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertFalse($collection->first()->isOffline());
@@ -120,10 +121,10 @@ class ProjectModelDataTest extends ChiefTestCase
     /** @test */
     public function it_can_project_page_data_when_page_is_deleted()
     {
-        $this->asAdmin()->post($this->manager($this->page)->route('archive', $this->page));
-        $this->asAdmin()->delete($this->manager($this->page)->route('delete', $this->page), [
-            'deleteconfirmation' => 'DELETE',
-        ]);
+        $this->asAdmin()
+            ->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'archive'));
+
+        $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'delete'));
 
         $this->assertNull(MenuItem::first()->owner);
 

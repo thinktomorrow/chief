@@ -152,11 +152,11 @@ final class LinkForm
         return $slug;
     }
 
-    public function getPageState(): ?string
+    private function getPageState(): ?PageState
     {
         return $this->model instanceof WithPageState
             ? $this->model->getPageState()
-            : PageState::PUBLISHED; // Without pageState behaviour we consider a model to be always published.
+            : PageState::published;
     }
 
     /**
@@ -167,7 +167,8 @@ final class LinkForm
     private function determineOnlineStatusInfo($currentRecord, $locale): array
     {
         $pagestate = $this->getPageState();
-        $is_online = ($pagestate && $pagestate == PageState::PUBLISHED && $currentRecord);
+
+        $is_online = ($pagestate && $pagestate == PageState::published && $currentRecord);
 
         $offline_reason = 'De pagina staat offline.';
 
@@ -175,13 +176,13 @@ final class LinkForm
             if (! $pagestate) {
                 $offline_reason = 'Pagina staat nog niet gepubliceerd.';
             } else {
-                if ($pagestate == PageState::DRAFT) {
+                if ($pagestate == PageState::draft) {
                     $offline_reason = 'Pagina staat nog in draft. Je dient deze nog te publiceren.';
                 } else {
-                    if ($pagestate == PageState::ARCHIVED) {
+                    if ($pagestate == PageState::archived) {
                         $offline_reason = 'De pagina is gearchiveerd.';
                     } else {
-                        if ($pagestate == PageState::PUBLISHED && ! $currentRecord) {
+                        if ($pagestate == PageState::published && ! $currentRecord) {
                             $offline_reason = 'Pagina staat klaar voor publicatie maar er ontbreekt nog een link voor de ' . $locale . ' taal.';
                         }
                     }

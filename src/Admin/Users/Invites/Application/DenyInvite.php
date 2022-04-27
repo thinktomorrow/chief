@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteDenied;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 
 class DenyInvite
@@ -20,7 +21,8 @@ class DenyInvite
         try {
             DB::beginTransaction();
 
-            InvitationState::make($invitation)->apply('deny');
+            $stateMachine = StateMachine::fromConfig($invitation, $invitation->getStateConfig(InvitationState::KEY));
+            $stateMachine->apply('deny');
 
             event(new InviteDenied($invitation->id));
 

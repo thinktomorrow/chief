@@ -56,7 +56,7 @@ class ArticlePage extends Model implements Page
         Schema::create('article_pages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->nullable();
-            $table->string('current_state')->default(PageState::DRAFT);
+            $table->string('current_state')->default(PageState::draft->getValueAsString());
             $table->json('values')->nullable(); // dynamic attributes
             $table->unsignedInteger('order')->default(0);
             $table->dateTime('start_at')->nullable();

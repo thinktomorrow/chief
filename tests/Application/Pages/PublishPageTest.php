@@ -31,13 +31,13 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DRAFT,
+            'current_state' => PageState::draft,
         ]);
 
-        $this->asAdminWithoutRole()->post($this->manager->route('publish', $model))
+        $this->asAdminWithoutRole()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'))
             ->assertStatus(302);
 
-        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -45,14 +45,13 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DRAFT,
+            'current_state' => PageState::draft,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('publish', $model))
-            ->assertStatus(302)
-            ->assertRedirect($this->manager->route('index'));
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'))
+            ->assertSuccessful();
 
-        $this->assertEquals(PageState::PUBLISHED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -60,14 +59,13 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('unpublish', $model))
-            ->assertStatus(302)
-            ->assertRedirect($this->manager->route('index'));
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'unpublish'))
+            ->assertSuccessful();
 
-        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -75,12 +73,12 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DELETED,
+            'current_state' => PageState::deleted,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('publish', $model))
-            ->assertStatus(302);
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'))
+            ->assertStatus(304);
 
-        $this->assertEquals(PageState::DELETED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
     }
 }

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
 class AuditTest extends ChiefTestCase
 {
@@ -13,8 +14,7 @@ class AuditTest extends ChiefTestCase
         $user = $this->admin();
         $article = $this->setupAndCreateArticle();
 
-        $this->actingAs($user, 'chief')
-            ->post($this->manager($article)->route('archive', $article));
+        $this->actingAs($user, 'chief')->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
 
         $audit = Audit::getAllActivityFor($article);
 
@@ -27,10 +27,9 @@ class AuditTest extends ChiefTestCase
     /** @test */
     public function it_show_events()
     {
-        $this->disableExceptionHandling();
         $article = $this->setupAndCreateArticle();
 
-        $this->asAdmin()->post($this->manager($article)->route('archive', $article));
+        $this->asAdmin()->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
 
         $response = $this->asAdmin()->get(route('chief.back.audit.index'));
 
@@ -44,9 +43,9 @@ class AuditTest extends ChiefTestCase
         $user = $this->admin();
         $article = $this->setupAndCreateArticle();
 
-        $this->actingAs($user, 'chief')->post($this->manager($article)->route('archive', $article));
+        $this->actingAs($user, 'chief')->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
 
-        $response = $this->asAdmin()->get(route('chief.back.audit.show', $user->id));
+        $response = $this->actingAs($user, 'chief')->get(route('chief.back.audit.show', $user->id));
 
         $audit = $this->getResponseData($response, 'audit');
         $causer = $this->getResponseData($response, 'causer');

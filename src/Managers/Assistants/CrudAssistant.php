@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
@@ -36,13 +37,12 @@ trait CrudAssistant
             ManagedRoute::get('create'),
             ManagedRoute::post('store'),
             ManagedRoute::put('update', '{id}/update'),
-            ManagedRoute::delete('delete', '{id}'),
         ];
     }
 
     public function canCrudAssistant(string $action, $model = null): bool
     {
-        if (! in_array($action, ['index', 'create', 'store', 'edit', 'update', 'delete'])) {
+        if (! in_array($action, ['index', 'create', 'store', 'edit', 'update'])) {
             return false;
         }
 
@@ -53,8 +53,6 @@ trait CrudAssistant
                 $permission = 'view-page';
             } elseif (in_array($action, ['create', 'store'])) {
                 $permission = 'create-page';
-            } elseif (in_array($action, ['delete'])) {
-                $permission = 'delete-page';
             }
 
             $this->authorize($permission);
@@ -66,16 +64,12 @@ trait CrudAssistant
             return true;
         }
 
-        if (! $model || ! $model instanceof WithPageState) {
-            return true;
-        }
-
         // Model cannot be in deleted state for editing purposes.
-        if (in_array($action, ['edit', 'update'])) {
-            return ! ($model->getPageState() == PageState::DELETED);
+        if ($model && $model instanceof WithPageState && in_array($action, ['edit', 'update'])) {
+            return ! ($model->getPageState() == PageState::deleted);
         }
 
-        return PageState::make($model)->can($action);
+        return true;
     }
 
     /**
@@ -210,6 +204,12 @@ trait CrudAssistant
         View::share('resource', $this->resource);
         View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
 
+        View::share('stateConfigs',
+            $model instanceof StatefulContract
+                ? array_map(fn(string $stateKey) => $model->getStateConfig($stateKey), $model->getStateKeys())
+                : []
+        );
+
         return $this->resource->getPageView();
     }
 
@@ -238,21 +238,5 @@ trait CrudAssistant
         event(new ManagedModelUpdated($model->modelReference()));
 
         return $model;
-    }
-
-    public function delete(Request $request, $id)
-    {
-        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
-
-        $this->guard('delete', $model);
-
-        if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $this->resource->getPageTitle($model) . ' is niet verwijderd.');
-        }
-
-        app(DeleteModel::class)->handle($model);
-
-        return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $this->resource->getPageTitle($model) . '" is verwijderd.');
     }
 }

@@ -50,7 +50,7 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
         Schema::create('quotes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->nullable();
-            $table->string('current_state')->default(PageState::DRAFT);
+            $table->string('current_state')->default(PageState::draft->getValueAsString());
             $table->json('values')->nullable(); // dynamic attributes
             $table->timestamps();
             $table->softDeletes();

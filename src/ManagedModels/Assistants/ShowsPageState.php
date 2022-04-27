@@ -20,23 +20,23 @@ trait ShowsPageState
             if (LinkForm::fromModel($this)->isAnyLinkOnline()) {
                 return '<span class="label label-xs label-success">Online</span>';
             }
-            if (PageState::PUBLISHED === $this->getPageState()) {
+            if (PageState::published === $this->getPageState()) {
                 return '<span class="label label-xs label-info">Nog niet online. Er ontbreekt nog een link.</span>';
             }
-            if (PageState::DRAFT === $this->getPageState()) {
+            if (PageState::draft === $this->getPageState()) {
                 return '<span class="label label-xs label-error">Offline</span>';
             }
         }
 
-        if (PageState::PUBLISHED === $this->getPageState()) {
+        if (PageState::published === $this->getPageState()) {
             return '<span class="label label-xs label-success">Gepubliceerd</span>';
         }
 
-        if (PageState::DRAFT === $this->getPageState()) {
+        if (PageState::draft === $this->getPageState()) {
             return '<span class="label label-xs label-error">In draft</span>';
         }
 
-        if (PageState::ARCHIVED === $this->getPageState()) {
+        if (PageState::archived === $this->getPageState()) {
             return '<span class="label label-xs label-warning">Gearchiveerd</span>';
         }
 

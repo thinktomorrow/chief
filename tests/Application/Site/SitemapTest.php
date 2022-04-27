@@ -32,10 +32,10 @@ class SitemapTest extends ChiefTestCase
         $this->mockHandler = new MockHandler();
         $this->sitemapXml = new SitemapXml(new Client(['handler' => $this->mockHandler]));
 
-        $page = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
+        $page = ArticlePage::create(['current_state' => PageState::published]);
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
-        $page2 = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
+        $page2 = ArticlePage::create(['current_state' => PageState::published]);
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo', 'model_type' => $page2->getMorphClass(), 'model_id' => $page2->id]);
 
         $this->mockHandler->append(new Response(200));
@@ -55,7 +55,7 @@ class SitemapTest extends ChiefTestCase
         UrlRecord::create(['locale' => 'nl', 'redirect_id' => 99, 'slug' => 'baz', 'model_type' => $redirect->getMorphClass(), 'model_id' => $redirect->id]);
 
         $offlinePage = ArticlePage::create();
-        $offlinePage->changeStateOf('current_state', PageState::DRAFT);
+        $offlinePage->changeState('current_state', PageState::draft);
         $offlinePage->save();
 
         UrlRecord::create(['locale' => 'nl', 'slug' => 'fooz', 'model_type' => $offlinePage->getMorphClass(), 'model_id' => $offlinePage->id]);
@@ -69,7 +69,7 @@ class SitemapTest extends ChiefTestCase
     /** @test */
     public function non_visitable_urls_will_be_excluded()
     {
-        $redirect = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
+        $redirect = ArticlePage::create(['current_state' => PageState::published]);
         UrlRecord::create(['locale' => 'nl', 'redirect_id' => 99, 'slug' => 'baz', 'model_type' => $redirect->getMorphClass(), 'model_id' => $redirect->id]);
 
         $this->mockHandler->append(new Response(404));

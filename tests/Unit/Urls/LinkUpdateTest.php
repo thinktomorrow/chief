@@ -85,7 +85,7 @@ class LinkUpdateTest extends ChiefTestCase
     /** @test */
     public function when_updating_an_url_it_keeps_the_old_url_as_redirect()
     {
-        $this->model = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
+        $this->model = ArticlePage::create(['current_state' => PageState::published]);
 
         $this->updateLinks($this->model, ['nl' => 'foobar']);
         $this->updateLinks($this->model, ['nl' => 'foobar-updated']);
@@ -209,7 +209,7 @@ class LinkUpdateTest extends ChiefTestCase
         $this->updateLinks($model2, ['nl' => 'foobar-updated-2']);
 
         $response = $this->asAdmin()
-            ->post($this->manager($this->model)->route('archive', $this->model), [
+            ->put($this->manager($this->model)->route('state-update', $this->model, PageState::KEY, 'archive'), [
                 'redirect_id' => $model2->modelReference()->get(),
             ]);
 

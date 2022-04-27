@@ -15,7 +15,7 @@ class ViewServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
-        Blade::component('chief::manager.windows.status.window', 'chief::window.status');
+        Blade::component('chief::manager.windows.state.windows', 'chief::window.states');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
         // Chief components

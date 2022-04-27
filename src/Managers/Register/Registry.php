@@ -45,7 +45,7 @@ final class Registry
         try {
             return $this->filter(fn (Resource $resource) => $resource::modelClassName() == $modelClass)->first();
         } catch (MissingResourceRegistration $e) {
-            throw new MissingResourceRegistration('No registered resource found for ['.$modelClass.'].');
+            throw new MissingResourceRegistration('No registered resource found for class ['.$modelClass.'].');
         }
     }
 

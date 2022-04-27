@@ -55,7 +55,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof WithPageState && PageState::make($model)->isOffline() ? ' [offline]' : '';
+        $suffix = $model instanceof WithPageState && !in_array($model->getPageState(), [PageState::published]) ? ' [offline]' : '';
 
         return $this->getPageTitle($model).$suffix;
     }

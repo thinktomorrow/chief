@@ -1,10 +1,14 @@
+<?php $formId = 'state-modal-form-' . \Illuminate\Support\Str::random(10); ?>
+
 <div data-form data-form-tags="status,links">
+
     <form
-            action="@adminRoute('archive', $model)"
+            id="{{ $formId }}"
+            action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,'archive')"
             method="POST"
-            id="archive-manager-form-{{ $model->id }}"
     >
         @csrf
+        @method('PUT')
 
         <h2 class="h2 display-dark">Archiveer: {{ $resource->getPageTitle($model) }}</h2>
 
@@ -29,5 +33,21 @@
             <p>Archiveren haalt de {{ $resource->getPageTitle($model) }} onmiddellijk van de site.</p>
         @endif
     </form>
+
+    @if($content = $stateConfig->getTransitionContent( 'archive' ))
+        <div class="prose prose-dark">
+            <p>{!! $stateConfig->getTransitionContent( 'archive' ) !!}</p>
+        </div>
+    @endif
+
+    <div class="flex items-center mt-8 space-x-4">
+        <button
+            form="{{ $formId }}"
+            type="submit"
+            class="btn btn-primary btn-{{ $stateConfig->getTransitionLabelType('archive') }}"
+        >
+            {{ $stateConfig->getTransitionLabel('archive') }}
+        </button>
+    </div>
 </div>
 

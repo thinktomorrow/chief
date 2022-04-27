@@ -24,7 +24,7 @@ class DuplicatePage
 
         // TODO: check for HasPageState contract
         if ($copiedModel instanceof WithPageState) {
-            $copiedModel->setPageState(PageState::DRAFT);
+            $copiedModel->setPageState(PageState::draft);
             $copiedModel->save();
         }
 

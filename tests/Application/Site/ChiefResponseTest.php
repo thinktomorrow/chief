@@ -26,7 +26,7 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function it_returns_a_laravel_response()
     {
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar');
@@ -64,7 +64,7 @@ class ChiefResponseTest extends ChiefTestCase
 
         $this->expectException(NotFoundHttpException::class);
 
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::draft]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         ChiefResponse::fromSlug('foo/bar');
@@ -77,7 +77,7 @@ class ChiefResponseTest extends ChiefTestCase
 
         $this->expectException(NotFoundHttpException::class);
 
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::ARCHIVED]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::archived]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         ChiefResponse::fromSlug('foo/bar');
@@ -86,7 +86,7 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function if_the_page_is_not_published_admin_can_view_with_preview_mode()
     {
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::draft]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         session()->flash('preview-mode', true);
@@ -100,7 +100,7 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function if_the_page_is_not_published_admin_cannot_view_without_preview_mode()
     {
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::draft]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         $response = $this->asAdmin()->get('foo/bar');
@@ -113,7 +113,7 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function it_can_find_a_model_for_a_localized_request()
     {
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);
         $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar', 'en');
@@ -127,7 +127,7 @@ class ChiefResponseTest extends ChiefTestCase
 
         $this->expectException(NotFoundHttpException::class);
 
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);
         UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar', 'nl');
@@ -150,8 +150,8 @@ class ChiefResponseTest extends ChiefTestCase
     /** @test */
     public function it_can_redirect_an_archived_url()
     {
-        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::ARCHIVED]);
-        $model2 = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
+        $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::archived]);
+        $model2 = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);
 
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
         $record2 = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar/new', 'model_type' => $model2->getMorphClass(), 'model_id' => $model2->id]);

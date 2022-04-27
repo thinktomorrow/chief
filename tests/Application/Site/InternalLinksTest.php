@@ -26,7 +26,7 @@ class InternalLinksTest extends ChiefTestCase
     /** @test */
     public function it_can_retrieve_links_of_online_models()
     {
-        $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::PUBLISHED]);
+        $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
         $response = $this->asAdmin()->get(route('chief.api.internal-links'));
@@ -41,7 +41,7 @@ class InternalLinksTest extends ChiefTestCase
     /** @test */
     public function it_can_retrieve_links_of_online_models_for_specific_locale()
     {
-        $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::PUBLISHED]);
+        $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
         $response = $this->asAdmin()->get(route('chief.api.internal-links').'?locale=en');

@@ -34,7 +34,7 @@ class MenuTest extends ChiefTestCase
     /** @test */
     public function it_can_reference_an_internal_page()
     {
-        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
+        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
         $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), [
@@ -52,7 +52,7 @@ class MenuTest extends ChiefTestCase
     /** @test */
     public function it_takes_page_title_as_label_if_no_label_is_given()
     {
-        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
+        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
         $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), [
@@ -86,7 +86,7 @@ class MenuTest extends ChiefTestCase
     /** @test */
     public function it_can_be_rendered_with_a_generic_api()
     {
-        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel titel', 'current_state' => PageState::published]);
         $this->updateLinks($page, ['nl' => 'pagelink-nl']);
 
         // Via admin because this way the internal labeling is projected on the menu item record

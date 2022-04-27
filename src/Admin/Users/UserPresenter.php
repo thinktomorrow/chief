@@ -22,10 +22,10 @@ class UserPresenter
     {
         // Avoid showing enabled state if there is an invitation pending
         if ($this->user->invitation->last()) {
-            $state = $this->user->invitation->last()->stateOf(InvitationState::KEY);
-            if ($state == 'pending') {
+            $state = $this->user->invitation->last()->getState(InvitationState::KEY);
+            if ($state == InvitationState::pending) {
                 return '<span class="label label-xs label-info">Uitgenodigd</span>';
-            } elseif ($state == 'denied') {
+            } elseif ($state == InvitationState::denied) {
                 return '<span class="label label-xs label-error">Geblokkeerd</span>';
             }
         }

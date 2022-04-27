@@ -24,7 +24,7 @@ class DuplicatePageTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
 
         $articlePage = ArticlePage::create([
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
             'created_at' => now()->subDay(),
             'updated_at' => now()->subDay(),
         ]);
@@ -48,7 +48,7 @@ class DuplicatePageTest extends ChiefTestCase
 
         $this->source = $articlePage->fresh();
 
-        $this->source->setPageState(PageState::PUBLISHED);
+        $this->source->setPageState(PageState::published);
         $this->source->created_at = now()->subDay();
         $this->source->updated_at = now()->subDay();
         $this->source->save();
@@ -73,7 +73,7 @@ class DuplicatePageTest extends ChiefTestCase
         );
 
         // state is set to draft
-        $this->assertEquals(PageState::DRAFT, $copiedModel->getPageState());
+        $this->assertEquals(PageState::draft, $copiedModel->getPageState());
 
         // timestamps should be the time of copy
         $this->assertTrue($this->source->created_at->lt($copiedModel->created_at));

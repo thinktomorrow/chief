@@ -27,7 +27,7 @@
 
     <x-slot name="aside">
         <x-chief-form::forms position="aside-top" />
-        <x-chief::window.status />
+        <x-chief::window.states />
         <x-chief::window.links />
         <x-chief-form::forms position="aside" />
     </x-slot>

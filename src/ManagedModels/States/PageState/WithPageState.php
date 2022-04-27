@@ -7,9 +7,9 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 interface WithPageState extends StatefulContract
 {
-    public function getPageState(): string;
+    public function getPageState(): PageState;
 
-    public function setPageState($state): void;
+    public function setPageState(PageState $state): void;
 
     public function getPageStateAttribute(): string;
 }

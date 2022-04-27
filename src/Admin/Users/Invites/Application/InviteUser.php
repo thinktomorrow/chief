@@ -9,7 +9,9 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class InviteUser
 {
@@ -21,9 +23,11 @@ class InviteUser
         try {
             DB::beginTransaction();
 
+            /** @var StatefulContract $invitation */
             $invitation = Invitation::make((string)$invitee->id, (string)$inviter->id);
 
-            InvitationState::make($invitation)->apply('invite');
+            $stateMachine = StateMachine::fromConfig($invitation, $invitation->getStateConfig(InvitationState::KEY));
+            $stateMachine->apply('invite');
 
             event(new UserInvited($invitation->id));
 

@@ -21,7 +21,7 @@ class ProjectMenuCommandTest extends ChiefTestCase
         $this->page = $this->setupAndCreateArticle([
             'custom.nl' => 'artikel titel nl', // Custom is the specific column for the title
             'custom.en' => 'artikel titel en',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
         MenuItem::create([

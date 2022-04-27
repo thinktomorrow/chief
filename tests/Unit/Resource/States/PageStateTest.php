@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Resource\States;
 
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -16,20 +17,20 @@ class PageStateTest extends TestCase
     {
         parent::setUp();
 
-        $this->page = new ArticlePage(['current_state' => PageState::DRAFT]);
-        $this->machine = PageState::make($this->page);
+        $this->page = new ArticlePage(['current_state' => PageState::draft->getValueAsString()]);
+        $this->machine = StateMachine::fromConfig($this->page, $this->page->getStateConfig(PageState::KEY));
     }
 
     /** @test */
     public function it_can_apply_transition()
     {
-        $this->assertEquals('draft', $this->page->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $this->page->getState(PageState::KEY));
 
         $this->machine->apply('publish');
-        $this->assertEquals(PageState::PUBLISHED, $this->page->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::published, $this->page->getState(PageState::KEY));
 
         $this->machine->apply('archive');
-        $this->assertEquals(PageState::ARCHIVED, $this->page->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::archived, $this->page->getState(PageState::KEY));
     }
 
     /** @test */
@@ -43,9 +44,9 @@ class PageStateTest extends TestCase
     /** @test */
     public function it_ignores_change_to_current_state()
     {
-        $this->assertEquals('draft', $this->page->stateOf(PageState::KEY));
-        $this->page->changeStateOf(PageState::KEY, 'draft');
-        $this->assertEquals('draft', $this->page->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $this->page->getState(PageState::KEY));
+        $this->page->changeState(PageState::KEY, PageState::draft);
+        $this->assertEquals(PageState::draft, $this->page->getState(PageState::KEY));
     }
 
     /** @test */
@@ -54,17 +55,5 @@ class PageStateTest extends TestCase
         $this->expectException(StateException::class);
 
         $this->machine->apply('unpublish');
-    }
-
-    /** @test */
-    public function it_tells_when_page_is_offline()
-    {
-        $this->assertTrue($this->machine->isOffline());
-        $this->assertFalse($this->machine->isOnline());
-
-        $this->machine->apply('publish');
-
-        $this->assertFalse($this->machine->isOffline());
-        $this->assertTrue($this->machine->isOnline());
     }
 }

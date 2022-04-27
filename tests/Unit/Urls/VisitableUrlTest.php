@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class ProvidesUrlTest extends ChiefTestCase
+class VisitableUrlTest extends ChiefTestCase
 {
     protected function setUp(): void
     {

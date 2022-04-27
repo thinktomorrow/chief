@@ -1,22 +1,23 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 interface StateConfig
 {
+    /**
+     * The unique identifier of this state.
+     * This usually is also the column name that refers to the current state in db.
+     */
     public function getStateKey(): string;
+
+    /**
+     * @return State[]
+     */
     public function getStates(): array;
+
     public function getTransitions(): array;
-    public function emitEvent(StatefulContract $statefulContract, string $transition): void;
 
-    public function getStateLabel(string $state): ?string;
-    public function getStateContent(string $state): ?string;
-
-    // Transition setup
-    public function getTransitionLabel(string $transitionKey): ?string;
-    public function getTransitionLabelType(string $transitionKey): ?string;
-    public function getTransitionDescription(string $transitionKey): ?string;
-    public function hasConfirmationForTransition(string $transitionKey): bool;
-    public function getRedirectAfterTransition(string $transitionKey): ?string;
+    public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void;
 }

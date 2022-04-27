@@ -32,7 +32,7 @@ final class ArchivePageTest extends ChiefTestCase
     {
         ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::ARCHIVED,
+            'current_state' => PageState::archived,
         ]);
 
         $response = $this->asAdmin()->get($this->manager->route('archive_index'));
@@ -45,13 +45,13 @@ final class ArchivePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
-        $this->asAdminWithoutRole()->post($this->manager->route('archive', $model))
+        $this->asAdminWithoutRole()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'archive'))
             ->assertStatus(302);
 
-        $this->assertEquals(PageState::PUBLISHED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -59,14 +59,15 @@ final class ArchivePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('archive', $model))
+        $this->asAdmin()
+            ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'archive'))
             ->assertStatus(302)
-            ->assertRedirect($this->manager->route('index'));
+            ->assertRedirect($this->manager($model)->route('index'));
 
-        $this->assertEquals(PageState::ARCHIVED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::archived, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -74,14 +75,15 @@ final class ArchivePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::ARCHIVED,
+            'current_state' => PageState::archived,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('unarchive', $model))
+        $this->asAdmin()
+            ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'unarchive'))
             ->assertStatus(302)
             ->assertRedirect($this->manager->route('index'));
 
-        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -89,13 +91,14 @@ final class ArchivePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DELETED,
+            'current_state' => PageState::deleted,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('archive', $model))
-            ->assertStatus(302);
+        $this->asAdmin()
+            ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'archive'))
+            ->assertStatus(304);
 
-        $this->assertEquals(PageState::DELETED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -103,23 +106,24 @@ final class ArchivePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
         $this->updateLinks($model, ['nl' => 'first-nl', 'en' => 'first-en']);
 
         $redirectModel = ArticlePage::create([
             'title' => 'second article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
         $this->updateLinks($redirectModel, ['nl' => 'second-nl', 'en' => 'second-en']);
 
-        $this->asAdmin()->post($this->manager->route('archive', $model), [
+        $this->asAdmin()
+            ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'archive'), [
             'redirect_id' => $redirectModel->modelReference()->getShort(),
         ])->assertStatus(302);
 
-        $this->assertEquals(PageState::ARCHIVED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::archived, $model->fresh()->getState(PageState::KEY));
 
         $this->assertCount(0, UrlRecord::getByModel($model));
         $this->assertCount(4, UrlRecord::getByModel($redirectModel));
@@ -131,7 +135,7 @@ final class ArchivePageTest extends ChiefTestCase
     /** @test */
     public function the_archive_index_can_be_visited_when_there_is_an_archived_model()
     {
-        $model = ArticlePage::create([PageState::KEY => PageState::ARCHIVED]);
+        $model = ArticlePage::create([PageState::KEY => PageState::archived]);
 
         auth('chief')->login($this->admin());
 
@@ -153,7 +157,7 @@ final class ArchivePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
         $this->asAdmin()->get($this->manager->route('archive_modal', $model))

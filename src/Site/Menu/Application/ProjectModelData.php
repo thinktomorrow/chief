@@ -100,7 +100,7 @@ class ProjectModelData
         $model = $menuItem->owner;
 
         if ($model instanceof WithPageState) {
-            $menuItem->setStatus(PageState::make($model)->isOffline() ? MenuItemStatus::offline : MenuItemStatus::online);
+            $menuItem->setStatus(!in_array($model->getPageState(), [PageState::published]) ? MenuItemStatus::offline : MenuItemStatus::online);
         }
 
         /** @var PageResource $resource */

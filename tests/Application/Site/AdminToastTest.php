@@ -13,7 +13,7 @@ class AdminToastTest extends ChiefTestCase
     {
         parent::setUp();
 
-        $model = $this->setupAndCreateArticle(['title' => 'Foobar', 'current_state' => PageState::PUBLISHED]);
+        $model = $this->setupAndCreateArticle(['title' => 'Foobar', 'current_state' => PageState::published]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
     }
 

@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 
 class DeleteModel
 {
@@ -28,19 +29,15 @@ class DeleteModel
         $this->deleteContext = $deleteContext;
     }
 
+    public function onManagedModelQueuedForDeletion(ManagedModelQueuedForDeletion $e): void
+    {
+        $this->handle($e->modelReference->instance());
+    }
+
     public function handle(Model $model): void
     {
         try {
             DB::beginTransaction();
-
-            // For stateful transitions we will apply this deletion as a state
-            if ($model instanceof WithPageState) {
-                PageState::make($model)->apply('delete');
-                $model->save();
-            }
-
-            // TODO: schedule for deletion instead of instantly deleting all relations and stuff...
-            // so the user has a small window of recovery
 
             if ($model instanceof HasAsset) {
                 $this->detachAsset->detachAll($model);

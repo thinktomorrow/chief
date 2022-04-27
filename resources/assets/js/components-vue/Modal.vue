@@ -11,7 +11,7 @@
                         </span>
                     </div>
 
-                  <div id="modalCustomHtml" class="prose prose-spacing prose-dark" v-if="computedCustomHtml" v-html="computedCustomHtml"></div>
+                  <div class="prose prose-spacing prose-dark" v-if="computedCustomHtml" v-html="computedCustomHtml"></div>
                     <div class="prose prose-spacing prose-dark" v-else>
                       <slot></slot>
                     </div>
@@ -50,12 +50,13 @@ export default {
         title: { default: '' },
         type: { default: 'modal' },
         size: { default: 'small' },
-        url: { default: null }
+        url: { default: null },
+        footer: {default: true, type: Boolean }
     },
     data() {
         return {
             isVisible: false,
-            showFooter: true,
+            showFooter: this.footer,
             typedclass: this.type == 'sidebar-large' ? 'sidebar sidebar-large' : this.type,
             typedtransition: this.type == 'sidebar-large' ? 'sidebar' : this.type,
             sizeClass: this.getSizeClass(),
@@ -78,6 +79,7 @@ export default {
                 .then((response) => response.json())
                 .then((data) => {
                     this.customHtml = data.data;
+                    console.log('done');
                 })
                 .catch((error) => {
                   console.error(error);

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
+use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
@@ -20,6 +21,8 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
+use Thinktomorrow\Chief\ManagedModels\Actions\PropagateArchivedUrl;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
@@ -180,10 +183,12 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(MenuItemUpdated::class, ProjectModelData::class.'@onMenuItemUpdated');
         Event::listen(ManagedModelUrlUpdated::class, ProjectModelData::class.'@onManagedModelUrlUpdated');
         Event::listen(FormUpdated::class, ProjectModelData::class.'@onFormUpdated');
+        Event::listen(ManagedModelArchived::class, PropagateArchivedUrl::class.'@onManagedModelArchived');
         Event::listen(ManagedModelUpdated::class, ProjectModelData::class.'@onManagedModelUpdated');
         Event::listen(ManagedModelArchived::class, ProjectModelData::class.'@onManagedModelArchived');
         Event::listen(ManagedModelPublished::class, ProjectModelData::class.'@onManagedModelPublished');
         Event::listen(ManagedModelUnPublished::class, ProjectModelData::class.'@onManagedModelUnPublished');
+        Event::listen(ManagedModelQueuedForDeletion::class, DeleteModel::class.'@onManagedModelQueuedForDeletion');
         Event::listen(ManagedModelDeleted::class, ProjectModelData::class.'@onManagedModelDeleted');
     }
 

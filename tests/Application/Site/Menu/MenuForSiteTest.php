@@ -25,7 +25,7 @@ class MenuForSiteTest extends ChiefTestCase
     /** @test */
     public function it_can_render_for_site()
     {
-        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::PUBLISHED]);
+        $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
         $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), [

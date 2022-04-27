@@ -7,6 +7,8 @@ namespace Thinktomorrow\Chief\Admin\Users\Invites;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\ManagedModels\States\State\State;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class Invitation extends Model implements StatefulContract
@@ -29,7 +31,7 @@ class Invitation extends Model implements StatefulContract
         return self::create([
             'invitee_id' => $invitee_id,
             'inviter_id' => $inviter_id,
-            'state' => InvitationState::NONE,
+            'state' => InvitationState::none->getValueAsString(),
             'token' => $token,
             'expires_at' => now()->addMinutes($expires ?? self::$expires),
         ]);
@@ -60,18 +62,27 @@ class Invitation extends Model implements StatefulContract
         return URL::temporarySignedRoute('invite.deny', $this->expires_at, ['token' => $this->token]);
     }
 
-    public function stateOf(string $key): string
+    public function getState(string $key): ?State
     {
-        return $this->$key;
+        if(!$this->$key) return null;
+
+        return InvitationState::from($this->$key);
     }
 
-    /**
-     * @return void
-     */
-    public function changeStateOf($key, $state)
+    public function changeState($key, State $state): void
     {
-        $this->$key = $state;
+        $this->$key = $state->getValueAsString();
         $this->save();
+    }
+
+    public function getStateKeys(): array
+    {
+        return [InvitationState::KEY];
+    }
+
+    public function getStateConfig(string $stateKey): StateConfig
+    {
+        return new InvitationStateConfig();
     }
 
     public function present(): InvitationPresenter
