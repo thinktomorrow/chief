@@ -9,6 +9,6 @@ class Toggle extends Checkbox
 {
     protected string $view = 'chief-form::fields.toggle';
     protected array|Closure $options = [
-        'true' => ''
+        'true' => '',
     ];
 }
