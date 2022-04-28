@@ -75,9 +75,9 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         if ('archive' == $transition) {
             event(
                 new ManagedModelArchived(
-                $statefulContract->modelReference(),
-                isset($data['redirect_id']) ? ModelReference::fromString($data['redirect_id']) : null
-            )
+                    $statefulContract->modelReference(),
+                    isset($data['redirect_id']) ? ModelReference::fromString($data['redirect_id']) : null
+                )
             );
 
             Audit::activity()->performedOn($statefulContract)->log('archived');
