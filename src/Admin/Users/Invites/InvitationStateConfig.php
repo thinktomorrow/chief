@@ -56,4 +56,9 @@ class InvitationStateConfig implements StateConfig
     {
         // TODO: Implement emitEvent() method.
     }
+
+    public function getStateLabel(StatefulContract $statefulContract): ?string
+    {
+        return $statefulContract->getState($this->getStateKey())->getValueAsString();
+    }
 }

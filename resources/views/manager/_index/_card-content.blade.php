@@ -1,6 +1,6 @@
 @php
     $showCreatedAt = (isset($model->created_at) && $model->created_at);
-    $showPageState = public_method_exists($model, 'pageStateAsLabel');
+    $showPageState = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 @endphp
 
 @if($showCreatedAt || $showPageState)
@@ -10,7 +10,9 @@
         @endif
 
         @if($showPageState)
-            {!! $model->pageStateAsLabel() !!}
+            @foreach($model->getStateKeys() as $stateKey)
+                {!! $model->getStateConfig($stateKey)->getStateLabel($model) !!}
+            @endforeach
         @endif
     </div>
 @endif

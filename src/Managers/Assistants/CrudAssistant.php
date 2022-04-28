@@ -16,11 +16,11 @@ use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 
 trait CrudAssistant
 {
@@ -65,8 +65,8 @@ trait CrudAssistant
         }
 
         // Model cannot be in deleted state for editing purposes.
-        if ($model && $model instanceof WithPageState && in_array($action, ['edit', 'update'])) {
-            return ! ($model->getPageState() == PageState::deleted);
+        if ($model && $model instanceof StatefulContract && in_array($action, ['edit', 'update'])) {
+            return ! ($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) == PageState::deleted);
         }
 
         return true;
@@ -204,11 +204,16 @@ trait CrudAssistant
         View::share('resource', $this->resource);
         View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
 
-        View::share('stateConfigs',
-            $model instanceof StatefulContract
-                ? array_map(fn(string $stateKey) => $model->getStateConfig($stateKey), $model->getStateKeys())
-                : []
-        );
+        $stateConfigs = [];
+
+        if($model instanceof StatefulContract) {
+            $stateConfigs = collect($model->getStateKeys())
+                ->map(fn(string $stateKey) => $model->getStateConfig($stateKey))
+                ->filter(fn($stateConfig) => $stateConfig instanceof StateAdminConfig)
+                ->all();
+        }
+
+        View::share('stateConfigs', $stateConfigs);
 
         return $this->resource->getPageView();
     }

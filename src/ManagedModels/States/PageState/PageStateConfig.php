@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
@@ -102,7 +104,38 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
-        // TODO: Implement getStateLabel() method.
+        if ($statefulContract instanceof Visitable) {
+            if ($statefulContract->inOnlineState()) {
+                if(LinkForm::fromModel($statefulContract)->isAnyLinkOnline()) {
+                    return '<span class="label label-xs label-success">Online</span>';
+                } else {
+                    return '<span class="label label-xs label-warning">Gepubliceerd maar ontbreekt nog een link.</span>';
+                }
+            }
+
+            switch ($statefulContract->getState($this->getStateKey())) {
+                case PageState::draft:
+                    return '<span class="label label-xs label-error">Offline</span>';
+            }
+        }
+
+        switch ($statefulContract->getState($this->getStateKey())) {
+
+            case PageState::published:
+                return '<span class="label label-xs label-success">Gepubliceerd</span>';
+
+            case PageState::draft:
+                return '<span class="label label-xs label-error">In draft</span>';
+
+            case PageState::archived:
+                return '<span class="label label-xs label-grey">Gearchiveerd</span>';
+
+            case PageState::deleted:
+                return '<span class="label label-xs label-grey">Verwijderd</span>';
+
+            default:
+                return $statefulContract->getState($this->getStateKey())->getValueAsString();
+        }
     }
 
     public function getEditContent(StatefulContract $statefulContract): ?string

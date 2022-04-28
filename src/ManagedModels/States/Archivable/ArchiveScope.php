@@ -13,6 +13,6 @@ class ArchiveScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where($model->getPageStateAttribute(), '<>', PageState::archived);
+        $builder->where(PageState::KEY, '<>', PageState::archived);
     }
 }

@@ -34,4 +34,9 @@ class StatefulStub implements StatefulContract
     {
         return new OnlineStateConfigStub();
     }
+
+    public function inOnlineState(): bool
+    {
+        return $this->getState('online') == OnlineStateStub::online;
+    }
 }

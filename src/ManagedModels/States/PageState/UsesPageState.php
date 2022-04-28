@@ -13,21 +13,6 @@ trait UsesPageState
         return [PageState::KEY];
     }
 
-    public function getPageState(): PageState
-    {
-        return $this->getState($this->getPageStateAttribute()) ?: PageState::published;
-    }
-
-    public function setPageState(PageState $state): void
-    {
-        $this->{$this->getPageStateAttribute()} = $state->getValueAsString();
-    }
-
-    public function getPageStateAttribute(): string
-    {
-        return property_exists($this, 'pageStateAttribute') ? $this->pageStateAttribute : PageState::KEY;
-    }
-
     /** @return PageState */
     public function getState(string $key): ?State
     {
@@ -50,5 +35,10 @@ trait UsesPageState
         }
 
         throw new \InvalidArgumentException('No state config found for ' . $stateKey);
+    }
+
+    public function inOnlineState(): bool
+    {
+        return in_array($this->getState(PageState::KEY), [PageState::published]);
     }
 }

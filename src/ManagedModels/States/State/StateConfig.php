@@ -20,4 +20,6 @@ interface StateConfig
     public function getTransitions(): array;
 
     public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void;
+
+    public function getStateLabel(StatefulContract $statefulContract): ?string;
 }

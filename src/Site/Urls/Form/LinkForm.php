@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\WithPageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Root;
 
@@ -152,13 +152,6 @@ final class LinkForm
         return $slug;
     }
 
-    private function getPageState(): ?PageState
-    {
-        return $this->model instanceof WithPageState
-            ? $this->model->getPageState()
-            : PageState::published;
-    }
-
     /**
      * @param $currentRecord
      * @param $locale
@@ -166,28 +159,14 @@ final class LinkForm
      */
     private function determineOnlineStatusInfo($currentRecord, $locale): array
     {
-        $pagestate = $this->getPageState();
+        $inOnlineState = $this->model->inOnlineState();
 
-        $is_online = ($pagestate && $pagestate == PageState::published && $currentRecord);
+        $is_online = ($inOnlineState && $currentRecord);
 
         $offline_reason = 'De pagina staat offline.';
 
-        if (! $is_online) {
-            if (! $pagestate) {
-                $offline_reason = 'Pagina staat nog niet gepubliceerd.';
-            } else {
-                if ($pagestate == PageState::draft) {
-                    $offline_reason = 'Pagina staat nog in draft. Je dient deze nog te publiceren.';
-                } else {
-                    if ($pagestate == PageState::archived) {
-                        $offline_reason = 'De pagina is gearchiveerd.';
-                    } else {
-                        if ($pagestate == PageState::published && ! $currentRecord) {
-                            $offline_reason = 'Pagina staat klaar voor publicatie maar er ontbreekt nog een link voor de ' . $locale . ' taal.';
-                        }
-                    }
-                }
-            }
+        if (! $is_online && ! $inOnlineState) {
+            $offline_reason = 'Pagina staat nog niet gepubliceerd, is gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
         }
 
         return [$is_online, $offline_reason];

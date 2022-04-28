@@ -7,7 +7,8 @@ principles.
 # unreleased
 - Added: allow for developer to disable field require validation. Add the `CHIEF_DISABLE_FIELD_REQUIRED_VALIDATION=true` to your .env
 - Changed: Resource keys must be unique. Trying to register a duplicate resource now halts registration.
-- Added: easier way to add custom state config.  
+- Added: easier way to add custom state config. This allows for easier custom state flows in projects.   
+- Fixed: preventing double submits when clicking fast on fragment create 
 
 ## 0.7.1 - 2022-04-21
 - Fixed: dashed squanto files are now displayed in admin without dash. This also fixes an issue with not showing translations when using dashed filenames.

@@ -62,11 +62,15 @@ const Api = {
                 if (this.method === 'get') {
                     const searchParams = new URLSearchParams(new FormData(this)).toString();
                     self.get(`${this.action}?${searchParams}`, successCallback, errorCallback, () => {
-                        form.classList.remove('is-submitting');
+                        setTimeout(() => {
+                            form.classList.remove('is-submitting');
+                        }, 400);
                     });
                 } else {
                     self.post(this.action, new FormData(this), successCallback, errorCallback, () => {
-                        form.classList.remove('is-submitting');
+                        setTimeout(() => {
+                            form.classList.remove('is-submitting');
+                        }, 400);
                     });
                 }
             });

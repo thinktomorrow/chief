@@ -1,7 +1,7 @@
 import EventBus from '../utilities/EventBus';
 
 const Submit = {
-    handle(responseData, currentElement, tags, meta, successCallback) {
+    handle(responseData, currentElement, tags, meta, successCallback, alwaysCallback) {
         // Reset any error
         currentElement.querySelectorAll('[data-error-placeholder]').forEach((errorElement) => {
             errorElement.classList.add('hidden');
@@ -17,6 +17,10 @@ const Submit = {
                 errorElement.querySelector('[data-error-placeholder-content]').innerHTML = responseData.errors[name];
             });
 
+            if (alwaysCallback) {
+                alwaysCallback();
+            }
+
             return;
         }
 
@@ -29,6 +33,10 @@ const Submit = {
 
         if (successCallback) {
             successCallback();
+        }
+
+        if (alwaysCallback) {
+            alwaysCallback();
         }
     },
 };

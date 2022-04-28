@@ -44,4 +44,9 @@ class OnlineStateConfigStub implements StateConfig
     {
         // TODO: Implement emitEvent() method.
     }
+
+    public function getStateLabel(StatefulContract $statefulContract): ?string
+    {
+        // TODO: Implement getStateLabel() method.
+    }
 }

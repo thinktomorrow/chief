@@ -48,7 +48,7 @@ class DuplicatePageTest extends ChiefTestCase
 
         $this->source = $articlePage->fresh();
 
-        $this->source->setPageState(PageState::published);
+        $this->source->changeState(PageState::KEY, PageState::published);
         $this->source->created_at = now()->subDay();
         $this->source->updated_at = now()->subDay();
         $this->source->save();
@@ -73,7 +73,7 @@ class DuplicatePageTest extends ChiefTestCase
         );
 
         // state is set to draft
-        $this->assertEquals(PageState::draft, $copiedModel->getPageState());
+        $this->assertEquals(PageState::draft, $copiedModel->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY));
 
         // timestamps should be the time of copy
         $this->assertTrue($this->source->created_at->lt($copiedModel->created_at));

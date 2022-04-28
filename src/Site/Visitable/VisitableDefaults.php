@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Site\Visitable;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\Response;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
@@ -42,7 +43,7 @@ trait VisitableDefaults
 
     public function isVisitable(): bool
     {
-        if (public_method_exists($this, 'isPublished') && ! $this->isPublished()) {
+        if ($this instanceof StatefulContract && !$this->inOnlineState()) {
             // When admin is logged in and this request is in preview mode, we allow the view
             return PreviewMode::fromRequest()->check();
         }

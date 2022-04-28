@@ -17,4 +17,6 @@ interface StatefulContract
     public function changeState(string $key, State $state): void;
 
     public function getStateConfig(string $stateKey): StateConfig;
+
+    public function inOnlineState(): bool;
 }

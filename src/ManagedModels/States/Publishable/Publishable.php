@@ -8,14 +8,19 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
 trait Publishable
 {
+    protected function getPublishablePageStateAttribute(): string
+    {
+        return PageState::KEY;
+    }
+
     public function isPublished(): bool
     {
-        return $this->getPageState() === PageState::published;
+        return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::published;
     }
 
     public function isDraft(): bool
     {
-        return $this->getPageState() === PageState::draft;
+        return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::draft;
     }
 
     public function scopePublished($query)
@@ -25,12 +30,12 @@ trait Publishable
             return;
         }
 
-        $query->where($this->getPageStateAttribute(), PageState::published);
+        $query->where($this->getPublishablePageStateAttribute(), PageState::published);
     }
 
     public function scopeDrafted($query)
     {
-        $query->where($this->getPageStateAttribute(), PageState::draft);
+        $query->where($this->getPublishablePageStateAttribute(), PageState::draft);
     }
 
     public static function getAllPublished()

@@ -49,11 +49,13 @@ trait StateAssistant
     public function stateWindow(Request $request, $id, $key)
     {
         $model = $this->fieldsModel($id);
+        $stateConfig = $model->getStateConfig($key);
 
         return view('chief::manager.windows.state.window', [
             'manager' => app(Registry::class)->findManagerByModel($model::class),
             'model' => $model,
-            'stateConfig' => $model->getStateConfig($key),
+            'stateConfig' => $stateConfig,
+            'allowedToEdit' => count(StateMachine::fromConfig($model, $stateConfig)->getAllowedTransitions()) > 0
         ]);
     }
 

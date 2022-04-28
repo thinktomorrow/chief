@@ -89,4 +89,9 @@ class Invitation extends Model implements StatefulContract
     {
         return new InvitationPresenter($this);
     }
+
+    public function inOnlineState(): bool
+    {
+        return $this->getState(InvitationState::KEY) == InvitationState::accepted;
+    }
 }
