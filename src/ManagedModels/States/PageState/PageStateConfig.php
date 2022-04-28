@@ -196,7 +196,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function getTransitionContent(string $transitionKey): ?string
     {
-        if($transitionKey == 'delete') {
+        if ($transitionKey == 'delete') {
             return 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt.';
         }
 
