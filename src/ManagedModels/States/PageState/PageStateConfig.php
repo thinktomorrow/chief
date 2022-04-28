@@ -177,7 +177,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         }
     }
 
-    public function getTransitionLabelType(string $transitionKey): ?string
+    public function getTransitionType(string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
@@ -196,7 +196,11 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function getTransitionContent(string $transitionKey): ?string
     {
-        return '';
+        if($transitionKey == 'delete') {
+            return 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt.';
+        }
+
+        return null;
     }
 
     public function hasConfirmationForTransition(string $transitionKey): bool
@@ -233,6 +237,10 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
         if ('unarchive' == $transitionKey) {
             return 'De pagina is uit het archief gehaald.';
+        }
+
+        if ('delete' == $transitionKey) {
+            return 'De pagina is definitief verwijderd.';
         }
 
         return null;

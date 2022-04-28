@@ -44,7 +44,7 @@
         <button
             form="{{ $formId }}"
             type="submit"
-            class="btn btn-primary btn-{{ $stateConfig->getTransitionLabelType('archive') }}"
+            class="btn btn-primary btn-{{ $stateConfig->getTransitionType('archive') }}"
         >
             {{ $stateConfig->getTransitionLabel('archive') }}
         </button>

@@ -14,17 +14,11 @@
             @endphp
 
             <div data-vue-fields class="space-y-4">
-                @if($content = $stateConfig->getTransitionContent( $transitionKey ))
-                    <x-chief-inline-notification type="{{ $stateConfig->getTransitionLabelType($transitionKey) }}" size="large">
-                        <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                    </x-chief-inline-notification>
-                @endif
-
                 <div>
                     <a
                             v-cloak
                             @click="showModal('state-modal-<?= $modalId; ?>')"
-                            class="cursor-pointer btn btn-{{ $stateConfig->getTransitionLabelType($transitionKey) }}"
+                            class="cursor-pointer btn btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
                     >
                         {{ $stateConfig->getTransitionLabel($transitionKey) }}
                     </a>
@@ -44,17 +38,18 @@
                         @method('PUT')
                     </form>
 
+
                     @if($content = $stateConfig->getTransitionContent( $transitionKey ))
-                        <div class="prose prose-dark">
+                        <x-chief-inline-notification type="{{ $stateConfig->getTransitionType($transitionKey) }}" size="large">
                             <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                        </div>
+                        </x-chief-inline-notification>
                     @endif
 
                     <div v-cloak slot="modal-action-buttons">
                         <button
                                 form="state-modal-form-{{ $modalId }}"
                                 type="submit"
-                                class="btn btn-primary btn-{{ $stateConfig->getTransitionLabelType($transitionKey) }}"
+                                class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
                         >
                             {{ $stateConfig->getTransitionLabel($transitionKey) }}
                         </button>
@@ -68,7 +63,7 @@
                 @method('PUT')
 
                 <button type="submit"
-                        class="btn btn-primary btn-{{ $stateConfig->getTransitionLabelType($transitionKey) }}">
+                        class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}">
                     {{ $stateConfig->getTransitionLabel($transitionKey) }}
                 </button>
             </form>

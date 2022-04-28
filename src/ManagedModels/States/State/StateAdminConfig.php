@@ -11,7 +11,7 @@ interface StateAdminConfig
     public function getEditContent(StatefulContract $statefulContract): ?string;
 
     public function getTransitionLabel(string $transitionKey): ?string;
-    public function getTransitionLabelType(string $transitionKey): ?string;
+    public function getTransitionType(string $transitionKey): ?string;
 
     public function getTransitionContent(string $transitionKey): ?string;
 
