@@ -1,14 +1,15 @@
 <div class="space-y-1">
     @foreach($getOptions() as $value => $label)
-        <label for="{{ $getElementId($locale ?? null).'_'.$value }}" class="with-checkbox">
+        <label for="{{ $getElementId($locale ?? null).'_'.$value }}" class="with-toggle">
             <input
                 type="checkbox"
-                name="{{ $getName($locale ?? null).'[]' }}"
-                value="{{ $value }}"
                 id="{{ $getElementId($locale ?? null).'_'.$value }}"
+                name="{{ $getName($locale ?? null) . '[]' }}"
+                value="{{ $value }}"
                 {{ in_array($value, (array) $getActiveValue($locale ?? null)) ? 'checked="checked"' : '' }}
             >
-            <span>{!! $label !!}</span>
+
+            <span class="toggle-slider"></span>
         </label>
     @endforeach
 </div>

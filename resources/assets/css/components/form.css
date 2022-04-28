@@ -41,14 +41,14 @@ input[type='number'] {
     @apply w-full;
 }
 
-input[type='radio'],
-input[type='checkbox'] {
-    @apply absolute opacity-0 z-[-1];
-}
-
 .with-radio,
 .with-checkbox {
     @apply relative text-grey-700 cursor-pointer flex;
+
+    input[type='radio'],
+    input[type='checkbox'] {
+        @apply absolute opacity-0 z-[-1];
+    }
 
     > span {
         @apply inline-block pl-8;
@@ -144,4 +144,41 @@ select.select {
     appearance: none;
 
     @apply pr-7 cursor-pointer;
+}
+
+.with-toggle {
+    width: 3.5rem;
+    height: 1.75rem;
+
+    @apply relative inline-block;
+
+    input {
+        @apply appearance-none;
+    }
+
+    .toggle-slider {
+        @apply absolute cursor-pointer inset-0 bg-grey-200 rounded-full transition-all duration-300 ease-in-out;
+    }
+
+    .toggle-slider:before {
+        content: '';
+        position: absolute;
+        width: 1.25rem;
+        height: 1.25rem;
+        top: 0.25rem;
+        left: 0.25rem;
+        @apply inline-block bg-white rounded-full shadow transition-all duration-300 ease-in-out;
+    }
+
+    input:focus + .toggle-slider {
+        @apply shadow;
+    }
+
+    input:checked + .toggle-slider {
+        @apply bg-primary-500;
+
+        &:before {
+            transform: translateX(1.75rem);
+        }
+    }
 }
