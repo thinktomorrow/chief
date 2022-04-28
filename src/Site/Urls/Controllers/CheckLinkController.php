@@ -40,7 +40,7 @@ class CheckLinkController
             return 'Deze link bestaat reeds als redirect. Deze redirect zal bijgevolg worden verwijderd.';
         }
 
-        return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" href="' . $this->editRouteOfOtherModel($urlRecord) . '">pas de andere pagina aan</a>.';
+        return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" class="underline" href="' . $this->editRouteOfOtherModel($urlRecord) . '">pas de andere pagina aan</a>.';
     }
 
     private function editRouteOfOtherModel(UrlRecord $urlRecord): string
