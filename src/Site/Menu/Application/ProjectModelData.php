@@ -8,11 +8,11 @@ use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
@@ -100,7 +100,7 @@ class ProjectModelData
         $model = $menuItem->owner;
 
         if ($model instanceof StatefulContract) {
-            $menuItem->setStatus(!in_array($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY), [PageState::published]) ? MenuItemStatus::offline : MenuItemStatus::online);
+            $menuItem->setStatus(! in_array($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY), [PageState::published]) ? MenuItemStatus::offline : MenuItemStatus::online);
         }
 
         /** @var PageResource $resource */

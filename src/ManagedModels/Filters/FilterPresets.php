@@ -14,9 +14,9 @@ class FilterPresets
         return RadioFilter::make('online', function ($query, $value) {
             return $query->where('current_state', '=', $value);
         })->options([
-            ''                   => 'Alle',
+            '' => 'Alle',
             PageState::published => 'online',
-            PageState::draft     => 'offline',
+            PageState::draft => 'offline',
         ]);
     }
 

@@ -5,11 +5,11 @@ namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait StateAssistant
 {
@@ -55,7 +55,7 @@ trait StateAssistant
             'manager' => app(Registry::class)->findManagerByModel($model::class),
             'model' => $model,
             'stateConfig' => $stateConfig,
-            'allowedToEdit' => count(StateMachine::fromConfig($model, $stateConfig)->getAllowedTransitions()) > 0
+            'allowedToEdit' => count(StateMachine::fromConfig($model, $stateConfig)->getAllowedTransitions()) > 0,
         ]);
     }
 

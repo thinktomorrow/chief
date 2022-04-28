@@ -33,11 +33,11 @@ class StateMachine
 
     public function can($transition): bool
     {
-        if (!in_array($transition, $this->getAllowedTransitions())) {
+        if (! in_array($transition, $this->getAllowedTransitions())) {
             return false;
         }
 
-        if (!in_array($this->statefulContract->getState($this->stateKey), $this->transitions[$transition]['from'])) {
+        if (! in_array($this->statefulContract->getState($this->stateKey), $this->transitions[$transition]['from'])) {
             return false;
         }
 
@@ -46,7 +46,7 @@ class StateMachine
 
     public function assertNewState($state)
     {
-        if (!$this->canTransitionTo($state)) {
+        if (! $this->canTransitionTo($state)) {
             throw StateException::invalidState($state, $this->statefulContract->getState($this->stateKey));
         }
     }
@@ -66,7 +66,7 @@ class StateMachine
 
     public function apply($transition): void
     {
-        if (!$this->can($transition)) {
+        if (! $this->can($transition)) {
             throw StateException::invalidTransition($transition, $this->statefulContract->getState($this->stateKey)->getValueAsString());
         }
 
@@ -84,12 +84,12 @@ class StateMachine
      */
     public function canTransitionTo($state)
     {
-        if (!in_array($state, $this->states)) {
+        if (! in_array($state, $this->states)) {
             return false;
         }
 
         foreach ($this->transitions as $transition) {
-            if (!in_array($this->statefulContract->getState($this->stateKey), $transition['from'])) {
+            if (! in_array($this->statefulContract->getState($this->stateKey), $transition['from'])) {
                 continue;
             }
 
@@ -104,24 +104,24 @@ class StateMachine
     private function validateTransitions(): void
     {
         foreach ($this->transitions as $transitionKey => $transition) {
-            if (!isset($transition['from']) || !isset($transition['to']) || !is_array($transition['from'])) {
+            if (! isset($transition['from']) || ! isset($transition['to']) || ! is_array($transition['from'])) {
                 throw StateException::malformedTransition($transitionKey);
             }
 
             foreach ($transition['from'] as $fromState) {
-                if (!$fromState instanceof State) {
+                if (! $fromState instanceof State) {
                     throw StateException::transitionStateIsNotAsStateInstance($transitionKey);
                 }
-                if (!in_array($fromState, $this->states)) {
+                if (! in_array($fromState, $this->states)) {
                     throw StateException::invalidTransitionState($transitionKey, $fromState->getValueAsString());
                 }
             }
 
-            if (!$transition['to'] instanceof State) {
+            if (! $transition['to'] instanceof State) {
                 throw StateException::transitionStateIsNotAsStateInstance($transitionKey);
             }
 
-            if (!in_array($transition['to'], $this->states)) {
+            if (! in_array($transition['to'], $this->states)) {
                 throw StateException::invalidTransitionState($transitionKey, $transition['to']);
             }
         }

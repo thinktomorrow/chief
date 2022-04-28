@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PageStateConfig implements StateConfig, StateAdminConfig
 {
@@ -73,10 +73,11 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         }
 
         if ('archive' == $transition) {
-
-            event(new ManagedModelArchived(
+            event(
+                new ManagedModelArchived(
                 $statefulContract->modelReference(),
-                isset($data['redirect_id']) ? ModelReference::fromString($data['redirect_id']) : null)
+                isset($data['redirect_id']) ? ModelReference::fromString($data['redirect_id']) : null
+            )
             );
 
             Audit::activity()->performedOn($statefulContract)->log('archived');
@@ -106,7 +107,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
     {
         if ($statefulContract instanceof Visitable) {
             if ($statefulContract->inOnlineState()) {
-                if(LinkForm::fromModel($statefulContract)->isAnyLinkOnline()) {
+                if (LinkForm::fromModel($statefulContract)->isAnyLinkOnline()) {
                     return '<span class="label label-xs label-success">Online</span>';
                 } else {
                     return '<span class="label label-xs label-warning">Gepubliceerd maar ontbreekt nog een link.</span>';
@@ -209,7 +210,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string
     {
-        if(in_array($transitionKey, ['archive', 'unarchive', 'delete'])) {
+        if (in_array($transitionKey, ['archive', 'unarchive', 'delete'])) {
             return app(Registry::class)->findManagerByModel($statefulContract::class)->route('index');
         }
 
@@ -239,7 +240,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function getAsyncModalUrl(string $transitionKey, StatefulContract $statefulContract): ?string
     {
-        if($transitionKey == 'archive') {
+        if ($transitionKey == 'archive') {
             return app(Registry::class)->findManagerByModel($statefulContract::class)->route('archive_modal', $statefulContract->id);
         }
 

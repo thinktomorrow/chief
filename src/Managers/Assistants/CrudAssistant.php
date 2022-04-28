@@ -9,18 +9,17 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 
 trait CrudAssistant
 {
@@ -206,10 +205,10 @@ trait CrudAssistant
 
         $stateConfigs = [];
 
-        if($model instanceof StatefulContract) {
+        if ($model instanceof StatefulContract) {
             $stateConfigs = collect($model->getStateKeys())
-                ->map(fn(string $stateKey) => $model->getStateConfig($stateKey))
-                ->filter(fn($stateConfig) => $stateConfig instanceof StateAdminConfig)
+                ->map(fn (string $stateKey) => $model->getStateConfig($stateKey))
+                ->filter(fn ($stateConfig) => $stateConfig instanceof StateAdminConfig)
                 ->all();
         }
 

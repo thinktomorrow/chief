@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteDenied;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 
 class DenyInvite
 {

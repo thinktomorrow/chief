@@ -64,7 +64,9 @@ class Invitation extends Model implements StatefulContract
 
     public function getState(string $key): ?State
     {
-        if(!$this->$key) return null;
+        if (! $this->$key) {
+            return null;
+        }
 
         return InvitationState::from($this->$key);
     }
