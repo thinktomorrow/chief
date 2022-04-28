@@ -154,7 +154,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         return null;
     }
 
-    public function getTransitionLabel(string $transitionKey): ?string
+    public function getTransitionButtonLabel(string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':

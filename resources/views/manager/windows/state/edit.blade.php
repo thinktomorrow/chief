@@ -20,7 +20,7 @@
                             @click="showModal('state-modal-<?= $modalId; ?>')"
                             class="cursor-pointer btn btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
                     >
-                        {{ $stateConfig->getTransitionLabel($transitionKey) }}
+                        {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
                     </a>
                 </div>
 
@@ -51,7 +51,7 @@
                                 type="submit"
                                 class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
                         >
-                            {{ $stateConfig->getTransitionLabel($transitionKey) }}
+                            {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
                         </button>
                     </div>
                 </modal>
@@ -64,7 +64,7 @@
 
                 <button type="submit"
                         class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}">
-                    {{ $stateConfig->getTransitionLabel($transitionKey) }}
+                    {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
                 </button>
             </form>
 

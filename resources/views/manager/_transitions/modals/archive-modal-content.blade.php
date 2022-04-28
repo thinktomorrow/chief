@@ -46,7 +46,7 @@
             type="submit"
             class="btn btn-primary btn-{{ $stateConfig->getTransitionType('archive') }}"
         >
-            {{ $stateConfig->getTransitionLabel('archive') }}
+            {{ $stateConfig->getTransitionButtonLabel('archive') }}
         </button>
     </div>
 </div>
