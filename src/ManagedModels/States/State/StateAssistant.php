@@ -108,7 +108,7 @@ trait StateAssistant
 
         return response()->json([
             'message' => 'Transition ['.$transitionKey.'] applied',
-            'redirect' => $redirect,
+            'redirect_to' => $redirect,
         ]);
     }
 
