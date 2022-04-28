@@ -16,7 +16,7 @@ trait UsesPageState
     /** @return PageState */
     public function getState(string $key): ?State
     {
-        if($key == PageState::KEY && $this->$key) {
+        if ($key == PageState::KEY && $this->$key) {
             return PageState::from($this->$key);
         }
 
@@ -30,7 +30,7 @@ trait UsesPageState
 
     public function getStateConfig(string $stateKey): StateConfig
     {
-        if($stateKey == PageState::KEY) {
+        if ($stateKey == PageState::KEY) {
             return app(PageStateConfig::class);
         }
 

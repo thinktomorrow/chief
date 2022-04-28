@@ -10,7 +10,6 @@ class OnlineStateConfigStub implements StateConfig
 {
     public function __construct()
     {
-
     }
 
     public function getStateKey(): string

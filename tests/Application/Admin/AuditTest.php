@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AuditTest extends ChiefTestCase
 {

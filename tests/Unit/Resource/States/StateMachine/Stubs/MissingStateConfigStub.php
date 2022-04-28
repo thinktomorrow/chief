@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs;
 
-class MissingStateConfigStub  extends OnlineStateConfigStub
+class MissingStateConfigStub extends OnlineStateConfigStub
 {
     public function getStates(): array
     {

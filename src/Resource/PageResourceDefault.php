@@ -55,7 +55,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof StatefulContract && !in_array($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY), [PageState::published]) ? ' [offline]' : '';
+        $suffix = $model instanceof StatefulContract && ! in_array($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY), [PageState::published]) ? ' [offline]' : '';
 
         return $this->getPageTitle($model).$suffix;
     }

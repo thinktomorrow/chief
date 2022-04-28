@@ -9,9 +9,9 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 
 class InviteUser
 {

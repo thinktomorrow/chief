@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class PropagateArchivedUrl
 {
     public function __construct()
     {
-
     }
 
     public function onManagedModelArchived(ManagedModelArchived $e)
     {
-        if(!$e->redirectReference) return;
+        if (! $e->redirectReference) {
+            return;
+        }
 
         $model = $e->modelReference->instance();
         $archivedUrlRecords = UrlRecord::getByModel($model);
