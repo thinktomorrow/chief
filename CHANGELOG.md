@@ -4,7 +4,10 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-# unreleased
+## unreleased
+- Fixed: Filter presets where page state enum was used as option key.
+
+## 0.7.2 - 2022-04-29
 - Fixed: preventing double submits when clicking fast on fragment create
 - Added: allow for developer to disable field require validation. Add the `CHIEF_DISABLE_FIELD_REQUIRED_VALIDATION=true` to your .env
 - Added: easier way to add custom state config. This allows for easier custom state flows in projects.
