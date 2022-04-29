@@ -27,7 +27,7 @@ class AdminToast
         if (0 === strpos($path, $locale.'/') || $path === $locale) {
             $path = substr($path, strlen($locale.'/'));
 
-            if (!$path) {
+            if (! $path) {
                 $path = '/';
             }
         }
@@ -40,7 +40,7 @@ class AdminToast
 
         $manager = $this->registry->findManagerByModel($model::class);
 
-        if (!$manager->can('edit', $model)) {
+        if (! $manager->can('edit', $model)) {
             return null;
         }
 
