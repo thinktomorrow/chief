@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Blade;
 
 trait StateAdminConfigDefaults
 {
@@ -23,9 +24,9 @@ trait StateAdminConfigDefaults
 
     public function getWindowContent(StatefulContract $statefulContract, array $viewData): string
     {
-        return '<x-slot name="labels">' .
+        return Blade::render('<x-slot name="labels">' .
             $this->getStateLabel($statefulContract) .
-            '</x-slot>';
+            '</x-slot>');
     }
 
     public function getEditContent(StatefulContract $statefulContract): ?string
