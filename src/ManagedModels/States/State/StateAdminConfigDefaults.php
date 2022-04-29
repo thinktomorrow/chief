@@ -35,7 +35,7 @@ trait StateAdminConfigDefaults
 
     public function getTransitionButtonLabel(string $transitionKey): ?string
     {
-        return Str::replace('_', ' ',$transitionKey);
+        return Str::replace('_', ' ', $transitionKey);
     }
 
     public function getTransitionType(string $transitionKey): ?string
