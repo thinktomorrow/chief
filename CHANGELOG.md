@@ -6,6 +6,7 @@ principles.
 
 ## unreleased
 - Fixed: Filter presets where page state enum was used as option key.
+- Fixed: Toast on error page fetches invalid url.
 
 ## 0.7.2 - 2022-04-29
 - Fixed: preventing double submits when clicking fast on fragment create
