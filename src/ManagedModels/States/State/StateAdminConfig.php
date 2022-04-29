@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
-interface StateAdminConfig
+interface StateAdminConfig extends StateConfig
 {
     /**
      * The title of the window tile on a page.
