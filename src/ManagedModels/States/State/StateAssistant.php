@@ -107,7 +107,7 @@ trait StateAssistant
         if ($redirect && ! $request->expectsJson()) {
             if ($notification = $stateConfig->getResponseNotification($transitionKey)) {
                 return redirect()->to($redirect)->with(
-                    'messages.' . $stateConfig->getTransitionType($transitionKey),
+                    'messages.' . ($stateConfig->getTransitionType($transitionKey) ?: 'info'),
                     $notification
                 );
             }

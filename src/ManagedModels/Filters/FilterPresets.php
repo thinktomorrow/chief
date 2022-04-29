@@ -15,8 +15,8 @@ class FilterPresets
             return $query->where('current_state', '=', $value);
         })->options([
             '' => 'Alle',
-            PageState::published => 'online',
-            PageState::draft => 'offline',
+            PageState::published->getValueAsString() => 'online',
+            PageState::draft->getValueAsString() => 'offline',
         ]);
     }
 

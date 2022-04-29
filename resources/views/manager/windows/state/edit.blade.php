@@ -69,9 +69,9 @@
             </form>
 
             @if($content = $stateConfig->getTransitionContent($transitionKey))
-                <div class="prose prose-dark">
-                    <p>{!! $stateConfig->getTransitionContent($transitionKey) !!}</p>
-                </div>
+                <x-chief-inline-notification type="{{ $stateConfig->getTransitionType($transitionKey) }}" size="large">
+                    <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
+                </x-chief-inline-notification>
             @endif
         @endif
     @endforeach

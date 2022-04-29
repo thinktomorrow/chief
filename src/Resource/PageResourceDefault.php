@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait PageResourceDefault
@@ -55,7 +54,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof StatefulContract && ! in_array($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY), [PageState::published]) ? ' [offline]' : '';
+        $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
 
         return $this->getPageTitle($model).$suffix;
     }

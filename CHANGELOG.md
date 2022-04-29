@@ -4,11 +4,15 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-# unreleased
+## unreleased
+- Fixed: Filter presets where page state enum was used as option key.
+
+## 0.7.2 - 2022-04-29
+- Fixed: preventing double submits when clicking fast on fragment create
 - Added: allow for developer to disable field require validation. Add the `CHIEF_DISABLE_FIELD_REQUIRED_VALIDATION=true` to your .env
+- Added: easier way to add custom state config. This allows for easier custom state flows in projects.
 - Changed: Resource keys must be unique. Trying to register a duplicate resource now halts registration.
-- Added: easier way to add custom state config. This allows for easier custom state flows in projects.   
-- Fixed: preventing double submits when clicking fast on fragment create 
+- Removed: StatusAssistant. If you have added this trait in your project, replace it with the new `StateAssistant`.
 
 ## 0.7.1 - 2022-04-21
 - Fixed: dashed squanto files are now displayed in admin without dash. This also fixes an issue with not showing translations when using dashed filenames.

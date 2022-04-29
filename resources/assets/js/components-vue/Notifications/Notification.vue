@@ -1,7 +1,7 @@
 <template>
     <transition name="pop">
         <div
-            v-show="isVisible && description"
+            v-show="isVisible"
             :ref="'notification-' + this._uid"
             class="flex items-center px-6 py-4 space-x-6 origin-right bg-white border rounded-lg shadow-lg border-grey-100"
         >
@@ -65,6 +65,7 @@ export default {
                 case 'warning':
                     return 'bg-orange-50 text-orange-500';
                 case 'information':
+                case 'info':
                     return 'bg-blue-50 text-blue-500';
                 default:
                     return 'bg-blue-50 text-blue-500';

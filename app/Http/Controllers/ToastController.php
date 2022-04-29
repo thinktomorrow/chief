@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\App\Http\Controllers;
@@ -34,12 +35,12 @@ final class ToastController extends Controller
             $request->input('locale')
         );
 
-        return response()->json(['data' =>
-            view('chief-site::admin-toast-element', [
-                'editUrl' => $editUrl,
-                'toggleUrl' => route('chief.toast.toggle'),
-                'inPreviewMode' => (bool) $request->input('preview_mode', false),
-            ])->render(),
-        ]);
+        $toastView = view('chief-site::admin-toast-element', [
+            'editUrl' => $editUrl,
+            'toggleUrl' => route('chief.toast.toggle'),
+            'inPreviewMode' => (bool) $request->input('preview_mode', false),
+        ])->render();
+
+        return response()->json(['data' => $toastView]);
     }
 }

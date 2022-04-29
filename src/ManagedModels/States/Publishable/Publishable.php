@@ -15,7 +15,7 @@ trait Publishable
 
     public function isPublished(): bool
     {
-        return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::published;
+        return $this->inOnlineState();
     }
 
     public function isDraft(): bool
