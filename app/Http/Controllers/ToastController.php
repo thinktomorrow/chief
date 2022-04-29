@@ -26,7 +26,7 @@ final class ToastController extends Controller
 
     public function get(Request $request)
     {
-        if (!chiefAdmin()) {
+        if (! chiefAdmin()) {
             return response()->json(['data' => null]);
         }
 
