@@ -147,20 +147,23 @@ select.select {
 }
 
 .with-toggle {
-    width: 3.5rem;
-    height: 1.75rem;
-
-    @apply relative inline-block;
-
     input {
         @apply appearance-none;
     }
 
     .toggle-slider {
-        @apply absolute cursor-pointer inset-0 bg-grey-200 rounded-full transition-all duration-300 ease-in-out;
+        width: 3.5rem;
+        height: 1.75rem;
+
+        @apply relative inline-block;
     }
 
     .toggle-slider:before {
+        content: '';
+        @apply absolute cursor-pointer inset-0 bg-grey-200 rounded-full transition-all duration-300 ease-in-out;
+    }
+
+    .toggle-slider:after {
         content: '';
         position: absolute;
         width: 1.25rem;
@@ -170,14 +173,16 @@ select.select {
         @apply inline-block bg-white rounded-full shadow transition-all duration-300 ease-in-out;
     }
 
-    input:focus + .toggle-slider {
+    input:focus + .toggle-slider:before {
         @apply shadow;
     }
 
     input:checked + .toggle-slider {
-        @apply bg-primary-500;
-
         &:before {
+            @apply bg-primary-500;
+        }
+
+        &:after {
             transform: translateX(1.75rem);
         }
     }
