@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Concerns\HasPosition;
+use Thinktomorrow\Chief\Forms\Concerns\HasProtectionAgainstFill;
 use Thinktomorrow\Chief\Forms\Concerns\HasTags;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
@@ -23,6 +24,7 @@ class Form extends Component
     use HasLayout;
     use HasPosition;
     use HasTags;
+    use HasProtectionAgainstFill;
 
     protected string $action;
     protected string $actionMethod;
@@ -132,8 +134,14 @@ class Form extends Component
 
     public function fillModel(Model $model): self
     {
+        if ($this->isProtectedAgainstFill()) {
+            return $this;
+        }
+
         return $this->recursiveEach(function ($component) use ($model) {
-            if ($component instanceof Field || $component instanceof Form) {
+            if ($component instanceof Form && !$component->isProtectedAgainstFill()) {
+                $component->model($model);
+            } elseif ($component instanceof Field) {
                 $component->model($model);
             }
         });
@@ -145,6 +153,10 @@ class Form extends Component
      */
     public function fill(Manager $manager, Model $model): self
     {
+        if ($this->isProtectedAgainstFill()) {
+            return $this;
+        }
+
         $this->fillFields($manager, $model);
 
         return $this->fillModel($model)
@@ -162,6 +174,10 @@ class Form extends Component
      */
     public function fillFields(Manager $manager, Model $model): self
     {
+        if ($this->isProtectedAgainstFill()) {
+            return $this;
+        }
+
         $this->recursiveEach(function ($component) use ($manager, $model) {
             if ($component instanceof Field) {
                 $component->fill($manager, $model);
