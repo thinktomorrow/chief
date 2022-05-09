@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleState;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleWithStateAdminConfig;
 
 class StateAdminConfigTest extends ChiefTestCase
@@ -55,5 +54,4 @@ class StateAdminConfigTest extends ChiefTestCase
         // State has not changed because field was required
         $this->assertEquals(ArticleState::online, $this->page->refresh()->getState('article_state'));
     }
-
 }

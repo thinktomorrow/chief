@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class ArticleStateAdminConfig implements StateAdminConfig
 {
@@ -42,7 +41,7 @@ class ArticleStateAdminConfig implements StateAdminConfig
 
     public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable
     {
-        if($transitionKey == 'draft') {
+        if ($transitionKey == 'draft') {
             yield Text::make('draft_note')->required();
         }
 

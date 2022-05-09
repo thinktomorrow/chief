@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\Tests\Unit\States\StateMachine;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
-use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\StatefulStub;
-use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\OnlineStateStub;
-use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\MissingStateConfigStub;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\MalformedStateConfigStub;
+use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\MissingStateConfigStub;
+use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\OnlineStateStub;
+use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\StatefulStub;
 
 class StateMachineIntegrityTest extends TestCase
 {

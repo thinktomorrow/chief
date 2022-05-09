@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Forms\Fields;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
@@ -89,7 +89,7 @@ trait StateAssistant
 
         $stateConfig = $model->getStateConfig($key);
 
-        if($stateConfig instanceof StateAdminConfig) {
+        if ($stateConfig instanceof StateAdminConfig) {
             $this->saveTransitionFields($model, $stateConfig->getTransitionFields($transitionKey, $model), $request);
         }
 
@@ -131,7 +131,9 @@ trait StateAssistant
     {
         $fields = Fields::make($fields);
 
-        if($fields->isEmpty()) return;
+        if ($fields->isEmpty()) {
+            return;
+        }
 
         $this->fieldValidator()->handle($fields, $request->all());
 

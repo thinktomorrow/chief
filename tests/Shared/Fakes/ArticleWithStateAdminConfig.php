@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\PageResourceDefault;
 
 class ArticleWithStateAdminConfig extends ArticlePage implements PageResource
 {
@@ -23,7 +22,6 @@ class ArticleWithStateAdminConfig extends ArticlePage implements PageResource
     public function getState(string $key): ?State
     {
         return ArticleState::from($this->article_state);
-
     }
 
     public function getStateConfig(string $stateKey): StateConfig
