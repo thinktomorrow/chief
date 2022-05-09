@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs;
+namespace Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs;
 
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;

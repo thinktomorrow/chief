@@ -45,6 +45,12 @@ interface StateAdminConfig extends StateConfig
     public function getTransitionContent(string $transitionKey): ?string;
 
     /**
+     * Optional message to show next to the transition button. If a confirmation modal
+     * is used, this message will be shown in the modal instead of on the edit view
+     */
+    public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable;
+
+    /**
      * Indicates whether or not this transition action requires confirmation via modal
      * Might be a good idea for destructive actions.
      */

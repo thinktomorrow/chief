@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine;
+namespace Thinktomorrow\Chief\Tests\Unit\States\StateMachine;
 
 use PHPUnit\Framework\TestCase;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
-use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\OnlineStateStub;
-use Thinktomorrow\Chief\Tests\Unit\Resource\States\StateMachine\Stubs\StatefulStub;
+use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\StatefulStub;
+use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\OnlineStateStub;
 
 class StateMachineTest extends TestCase
 {

@@ -7,6 +7,7 @@ principles.
 ## unreleased
 - Fixed: Filter presets where page state enum was used as option key.
 - Fixed: Toast on error page fetches invalid url.
+- Added: `StateAdminConfig::getTransitionFields` so you can add form fields that need to be filled in when changing state
 
 ## 0.7.2 - 2022-04-29
 - Fixed: preventing double submits when clicking fast on fragment create

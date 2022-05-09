@@ -16,9 +16,12 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
 
 class PageStateConfig implements StateConfig, StateAdminConfig
 {
+    use StateAdminConfigDefaults;
+
     public function getStateKey(): string
     {
         return PageState::KEY;

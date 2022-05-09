@@ -36,6 +36,11 @@
                     >
                         @csrf
                         @method('PUT')
+
+                        @foreach($stateConfig->getTransitionFields( $transitionKey, $model ) as $field)
+                            {{ $field->render() }}
+                        @endforeach
+
                     </form>
 
 
@@ -62,10 +67,17 @@
                 {{ csrf_field() }}
                 @method('PUT')
 
-                <button type="submit"
-                        class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}">
-                    {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
-                </button>
+                <div class="relative space-y-6">
+                    @foreach($stateConfig->getTransitionFields( $transitionKey, $model ) as $field)
+                        {{ $field->render() }}
+                    @endforeach
+
+                    <button type="submit"
+                            class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}">
+                        {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
+                    </button>
+                </div>
+
             </form>
 
             @if($content = $stateConfig->getTransitionContent($transitionKey))
