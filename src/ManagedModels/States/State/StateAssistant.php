@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
+use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -100,6 +101,8 @@ trait StateAssistant
             $model->save();
 
             $stateConfig->emitEvent($model, $transitionKey, $request->all());
+
+            event(new PageChanged($model->modelReference()));
         } catch (StateException $e) {
             return response()->json([
                 'message' => 'Transition ['.$transitionKey.'] not applied',

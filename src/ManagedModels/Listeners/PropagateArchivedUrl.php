@@ -1,17 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\Actions;
+namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 
 class PropagateArchivedUrl
 {
-    public function __construct()
-    {
-    }
-
     public function onManagedModelArchived(ManagedModelArchived $e)
     {
         if (! $e->redirectReference) {

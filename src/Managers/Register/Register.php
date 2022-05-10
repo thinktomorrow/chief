@@ -54,7 +54,7 @@ final class Register
         ;
 
         // Register routes only when in admin...
-        if (! $this->adminEnvironment->check()) {
+        if (! $this->adminEnvironment->check(request())) {
             return;
         }
 

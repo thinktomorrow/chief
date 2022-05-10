@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
@@ -196,6 +197,8 @@ trait FragmentAssistant
         $this->fieldValidator()->handle($fields, $request->all());
 
         app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
+
+        event(new FragmentUpdated($fragmentable->fragmentModel()->id));
 
         return response()->json([
             'message' => 'fragment updated',

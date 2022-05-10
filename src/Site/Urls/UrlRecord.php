@@ -72,7 +72,7 @@ class UrlRecord extends Model
         return $record;
     }
 
-    public static function getByModel(Model $model)
+    public static function getByModel(Model $model): \Illuminate\Database\Eloquent\Collection
     {
         return static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)

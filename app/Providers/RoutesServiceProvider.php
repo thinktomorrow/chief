@@ -21,7 +21,7 @@ class RoutesServiceProvider extends ServiceProvider
         $this->autoloadFrontendRoute();
         $this->loadOpenAdminRoutes();
 
-        if (app(AdminEnvironment::class)->check()) {
+        if (app(AdminEnvironment::class)->check(request())) {
             $this->loadAdminRoutes();
             $this->autoloadAdminMiddleware();
         }
