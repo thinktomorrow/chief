@@ -4,16 +4,16 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
-use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
-use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
+use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 
 class TriggerPageChangedEvent
 {
@@ -71,7 +71,7 @@ class TriggerPageChangedEvent
         $fragment = $this->fragmentRepository->find($fragmentModelId);
         $models = $this->getOwningModels->get($fragment->fragmentModel());
 
-        foreach($models as $model) {
+        foreach ($models as $model) {
             event(new PageChanged($model['model']->modelReference()));
         }
     }

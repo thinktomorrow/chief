@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class PropagateArchivedUrl
 {
