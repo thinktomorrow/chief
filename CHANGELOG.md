@@ -5,6 +5,11 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.5 - 2022-05-10
+- Added: PageChanged event that can notify of any changed pages. Can be used for breaking cache.
+
+## 0.7.4 - 2022-05-09
 - Fixed: Filter presets where page state enum was used as option key.
 - Fixed: Toast on error page fetches invalid url.
 - Added: `StateAdminConfig::getTransitionFields` so you can add form fields that need to be filled in when changing state
