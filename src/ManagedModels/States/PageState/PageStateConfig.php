@@ -138,7 +138,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
                 return '<span class="label label-xs label-grey">Verwijderd</span>';
 
             default:
-                return $statefulContract->getState($this->getStateKey())?->getValueAsString();
+                return $statefulContract->getState($this->getStateKey())->getValueAsString();
         }
     }
 

@@ -6,6 +6,9 @@ principles.
 
 ## unreleased
 
+## 0.7.6 - 2022-05-11
+- Added: Simple state to use when your model only needs: online, offline and delete states. Add the `UsesSimpleState` trait.
+
 ## 0.7.5 - 2022-05-10
 - Added: PageChanged event that can notify of any changed pages. Can be used for breaking cache.
 
