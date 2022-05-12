@@ -51,7 +51,9 @@ final class ContextModel extends Model
 
     public function getOwner()
     {
-        if(!$this->owner_type || !$this->owner_id) return null;
+        if (! $this->owner_type || ! $this->owner_id) {
+            return null;
+        }
 
         $model_reference = Relation::getMorphedModel($this->owner_type);
 

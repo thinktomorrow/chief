@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
