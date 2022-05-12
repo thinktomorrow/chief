@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
@@ -198,6 +199,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentUpdated::class, [TriggerPageChangedEvent::class,'onFragmentUpdated']);
         Event::listen(FragmentDuplicated::class, [TriggerPageChangedEvent::class,'onFragmentDuplicated']);
         Event::listen(FragmentDuplicated::class, [UpdateFragmentMetadata::class,'onFragmentDuplicated']);
+        Event::listen(FragmentsReordered::class, [TriggerPageChangedEvent::class,'onFragmentsReordered']);
 
         // Form events
         Event::listen(FormUpdated::class, [TriggerPageChangedEvent::class,'onFormUpdated']);

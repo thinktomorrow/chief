@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 final class ContextModel extends Model
 {
@@ -45,5 +47,14 @@ final class ContextModel extends Model
             ->where('context_fragment_lookup.fragment_id', $fragmentModel->id)
             ->select(['contexts.*'])
             ->get();
+    }
+
+    public function getOwner()
+    {
+        if(!$this->owner_type || !$this->owner_id) return null;
+
+        $model_reference = Relation::getMorphedModel($this->owner_type);
+
+        return ModelReference::make($model_reference, $this->owner_id)->instance();
     }
 }

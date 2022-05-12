@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: Trigger PageChanged event when fragments are sorted.
 
 ## 0.7.6 - 2022-05-11
 - Added: Simple state to use when your model only needs: online, offline and delete states. Add the `UsesSimpleState` trait.

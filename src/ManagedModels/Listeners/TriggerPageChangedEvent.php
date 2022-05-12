@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
@@ -44,6 +46,13 @@ class TriggerPageChangedEvent
     public function onFragmentUpdated(FragmentUpdated $e): void
     {
         $this->handleFragmentChange($e->fragmentModelId);
+    }
+
+    public function onFragmentsReordered(FragmentsReordered $e): void
+    {
+        $model = ContextModel::find($e->contextId)->getOwner();
+
+        event(new PageChanged($model->modelReference()));
     }
 
     public function onFragmentDetached(FragmentDetached $e): void

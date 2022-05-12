@@ -6,9 +6,11 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
@@ -112,6 +114,16 @@ class PageChangedEventTest extends ChiefTestCase
         Event::fakeExcept(ManagedModelDeleted::class);
 
         event(new ManagedModelDeleted($this->model->modelReference()));
+
+        Event::assertDispatched(PageChanged::class);
+    }
+
+    /** @test */
+    public function it_can_be_triggered_when_fragments_are_reordered()
+    {
+        Event::fakeExcept(FragmentsReordered::class);
+
+        event(new FragmentsReordered(ContextModel::ownedBy($this->model)->id));
 
         Event::assertDispatched(PageChanged::class);
     }
