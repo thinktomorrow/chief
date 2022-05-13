@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;

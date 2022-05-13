@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;

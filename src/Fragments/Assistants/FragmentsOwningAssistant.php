@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\View\Components\Fragments;
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 
 trait FragmentsOwningAssistant
 {

@@ -139,7 +139,7 @@ class Form extends Component
         }
 
         return $this->recursiveEach(function ($component) use ($model) {
-            if ($component instanceof Form && !$component->isProtectedAgainstFill()) {
+            if ($component instanceof Form && ! $component->isProtectedAgainstFill()) {
                 $component->model($model);
             } elseif ($component instanceof Field) {
                 $component->model($model);
