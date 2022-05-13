@@ -6,6 +6,8 @@ principles.
 
 ## unreleased
 - Fixed: Trigger PageChanged event when fragments are sorted.
+- Fixed: issue with sidebar trigger when using nested forms
+- Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
 
 ## 0.7.6 - 2022-05-11
 - Added: Simple state to use when your model only needs: online, offline and delete states. Add the `UsesSimpleState` trait.

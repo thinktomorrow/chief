@@ -33,8 +33,7 @@ Form.prototype.addTag = function (tag) {
 // Triggers to open sidebar
 Form.prototype.listen = function () {
     // Sidebar form
-    this.el
-        .querySelectorAll(this.triggerSelector)
+    Array.from(this.el.querySelectorAll(this.triggerSelector))
         // Avoid nested form elements
         .filter((el) => el.closest('[data-form]') === this.el)
         .forEach((trigger) => {

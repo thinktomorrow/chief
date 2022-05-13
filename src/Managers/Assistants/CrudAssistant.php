@@ -151,22 +151,25 @@ trait CrudAssistant
         View::share('resource', $this->resource);
         View::share('forms', Forms::make($this->resource->fields($model)));
 
-        return view('chief::manager.create');
+        return $this->resource->getCreatePageView();
     }
 
     public function store(Request $request)
     {
+
         $this->guard('store');
 
         $model = $this->handleStore($request);
 
+        $redirectAfterCreate = $this->resource->getRedirectAfterCreate($model);
+
         if ($request->expectsJson()) {
             return response()->json([
-                'redirect_to' => $this->route('edit', $model),
+                'redirect_to' => $redirectAfterCreate,
             ]);
         }
 
-        return redirect()->to($this->route('edit', $model));
+        return redirect()->to($redirectAfterCreate);
     }
 
     private function handleStore(Request $request)

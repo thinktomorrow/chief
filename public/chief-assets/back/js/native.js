@@ -150,13 +150,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_array_join_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_join_js__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _sidebar_Panels__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./sidebar/Panels */ "./resources/assets/js/forms/sidebar/Panels.js");
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/forms/Api.js");
-/* harmony import */ var _fields_vue_fields__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./fields/vue-fields */ "./resources/assets/js/forms/fields/vue-fields.js");
-/* harmony import */ var _utilities_sortable_group__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utilities/sortable-group */ "./resources/assets/js/utilities/sortable-group.js");
-/* harmony import */ var _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../fragments/selectFragment */ "./resources/assets/js/fragments/selectFragment.js");
-/* harmony import */ var _Submit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Submit */ "./resources/assets/js/forms/Submit.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.array.from.js */ "./node_modules/core-js/modules/es.array.from.js");
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _sidebar_Panels__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sidebar/Panels */ "./resources/assets/js/forms/sidebar/Panels.js");
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/forms/Api.js");
+/* harmony import */ var _fields_vue_fields__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./fields/vue-fields */ "./resources/assets/js/forms/fields/vue-fields.js");
+/* harmony import */ var _utilities_sortable_group__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utilities/sortable-group */ "./resources/assets/js/utilities/sortable-group.js");
+/* harmony import */ var _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../fragments/selectFragment */ "./resources/assets/js/fragments/selectFragment.js");
+/* harmony import */ var _Submit__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Submit */ "./resources/assets/js/forms/Submit.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+
+
 
 
 
@@ -204,12 +210,12 @@ Form.prototype.listen = function () {
   var _this = this;
 
   // Sidebar form
-  this.el.querySelectorAll(this.triggerSelector) // Avoid nested form elements
+  Array.from(this.el.querySelectorAll(this.triggerSelector)) // Avoid nested form elements
   .filter(function (el) {
     return el.closest('[data-form]') === _this.el;
   }).forEach(function (trigger) {
     // Provide panel id as default tag.
-    _this.addTag(_sidebar_Panels__WEBPACK_IMPORTED_MODULE_8__["default"].createId(trigger.getAttribute('href')));
+    _this.addTag(_sidebar_Panels__WEBPACK_IMPORTED_MODULE_10__["default"].createId(trigger.getAttribute('href')));
 
     trigger.addEventListener('click', function (event) {
       event.preventDefault();
@@ -220,12 +226,12 @@ Form.prototype.listen = function () {
     });
   }); // Inline form
 
-  _Api__WEBPACK_IMPORTED_MODULE_9__["default"].listenForFormSubmits(this.el, this.onFormSubmission.bind(this), function () {// TODO: show to user that form hasn't been saved
+  _Api__WEBPACK_IMPORTED_MODULE_11__["default"].listenForFormSubmits(this.el, this.onFormSubmission.bind(this), function () {// TODO: show to user that form hasn't been saved
   });
 };
 
 Form.prototype.onFormSubmission = function (responseData, meta) {
-  _Submit__WEBPACK_IMPORTED_MODULE_13__["default"].handle(responseData, this.el, this.getTags(), meta);
+  _Submit__WEBPACK_IMPORTED_MODULE_15__["default"].handle(responseData, this.el, this.getTags(), meta);
 };
 
 Form.prototype.refresh = function () {
@@ -237,13 +243,13 @@ Form.prototype.refresh = function () {
     return;
   }
 
-  _Api__WEBPACK_IMPORTED_MODULE_9__["default"].get(url, function (data) {
+  _Api__WEBPACK_IMPORTED_MODULE_11__["default"].get(url, function (data) {
     var DOM = document.createElement('div');
     DOM.innerHTML = data;
     _this2.el.innerHTML = DOM.firstElementChild.innerHTML; // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
     // before vanilla event listeners so native js can do its thing
 
-    (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_10__["default"])(_this2.el); // So Redactor can be reinitialised when the form is refreshed
+    (0,_fields_vue_fields__WEBPACK_IMPORTED_MODULE_12__["default"])(_this2.el); // So Redactor can be reinitialised when the form is refreshed
 
     window.dispatchEvent(new CustomEvent('chief::formrefreshed', {
       detail: {
@@ -253,7 +259,7 @@ Form.prototype.refresh = function () {
 
     _this2.listen();
 
-    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_14__["default"].publish('chief-form-refreshed', {
+    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_16__["default"].publish('chief-form-refreshed', {
       element: _this2.el
     });
 
@@ -265,8 +271,8 @@ Form.prototype.refresh = function () {
 
 Form.prototype.refreshCallback = function () {
   if (this.getTags().includes('fragments')) {
-    (0,_utilities_sortable_group__WEBPACK_IMPORTED_MODULE_11__["default"])('[data-sortable-fragments]', this.el);
-    new _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_12__["default"](this.el);
+    (0,_utilities_sortable_group__WEBPACK_IMPORTED_MODULE_13__["default"])('[data-sortable-fragments]', this.el);
+    new _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_14__["default"](this.el);
   } // Specific callbacks...
   // window.Eventbus.$emit('create-notification', 'success', '️Opgeslagen!', 2000);
 
