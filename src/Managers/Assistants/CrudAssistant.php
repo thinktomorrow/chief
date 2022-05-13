@@ -156,7 +156,6 @@ trait CrudAssistant
 
     public function store(Request $request)
     {
-
         $this->guard('store');
 
         $model = $this->handleStore($request);
