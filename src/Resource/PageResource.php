@@ -12,6 +12,8 @@ interface PageResource extends Resource
     public function getNavItem(): ?NavItem;
 
     // Page
+    public function getCreatePageView(): View;
+    public function getRedirectAfterCreate($model): ?string;
     public function getPageView(): View;
     public function getPageBreadCrumb(): ?BreadCrumb;
     public function getPageTitle($model): string;

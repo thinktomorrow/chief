@@ -27,6 +27,16 @@ trait PageResourceDefault
         );
     }
 
+    public function getCreatePageView(): View
+    {
+        return view('chief::manager.create');
+    }
+
+    public function getRedirectAfterCreate($model): ?string
+    {
+        return $this->manager->route('edit', $model);
+    }
+
     public function getPageView(): View
     {
         return view('chief::manager.edit');

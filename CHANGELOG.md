@@ -5,6 +5,10 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: issue with sidebar trigger when using nested forms
+- Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
+
+## 0.7.7 - 2022-05-17
 - Fixed: Trigger PageChanged event when fragments are sorted.
 - Fixed: stay in sidebar if redirect is set for a fragment. By default a fragment with nested fragments redirects after creation to its edit page.
 - Fixed: issue where file previews didn't show the original image while queue was still processing conversions.
