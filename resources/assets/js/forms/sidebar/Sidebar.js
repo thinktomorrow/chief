@@ -113,34 +113,6 @@ export default class {
         return this.panels.findFirstSubmitTarget(this.panels.findActive().parent);
     }
 
-    // onFormSubmission(responseData, metadata) {
-    //     const activePanel = this.panels.findActive();
-    //     const targetPanel = this.findPanelTarget();
-    //
-    //     Submit.handle(
-    //         responseData,
-    //         activePanel.el,
-    //         targetPanel ? targetPanel.el : document,
-    //         activePanel.getTags(),
-    //         () => {
-    //             // GET request stays on same page and reloads it with the given response.
-    //             if (metadata.method === 'get') {
-    //                 this.refresh(responseData);
-    //                 return true;
-    //             }
-    //
-    //             if (responseData.redirect_to) {
-    //                 this.show(responseData.redirect_to);
-    //                 return false;
-    //             }
-    //
-    //             // TODO: can we choose to go to another just like nested fragment?
-    //             this.backAfterSubmit();
-    //             return true;
-    //         }
-    //     );
-    // }
-
     backAfterSubmit() {
         const targetPanel = this.panels.findFirstSubmitTarget(this.panels.findActive().parent);
 
