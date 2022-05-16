@@ -10,6 +10,7 @@ const Form = function (el, sidebar) {
     this.el = el;
     this.sidebar = sidebar;
     this.triggerSelector = '[data-sidebar-trigger]';
+    this.formSelector = '[data-form]';
 };
 
 Form.prototype.getTags = function () {
@@ -33,20 +34,17 @@ Form.prototype.addTag = function (tag) {
 // Triggers to open sidebar
 Form.prototype.listen = function () {
     // Sidebar form
-    Array.from(this.el.querySelectorAll(this.triggerSelector))
-        // Avoid nested form elements
-        .filter((el) => el.closest('[data-form]') === this.el)
-        .forEach((trigger) => {
-            // Provide panel id as default tag.
-            this.addTag(Panels.createId(trigger.getAttribute('href')));
+    Array.from(this.el.querySelectorAll(this.triggerSelector)).forEach((trigger) => {
+        // Provide panel id as default tag.
+        this.addTag(Panels.createId(trigger.getAttribute('href')));
 
-            trigger.addEventListener('click', (event) => {
-                event.preventDefault();
-                this.sidebar.show(event.currentTarget.getAttribute('href'), {
-                    tags: this.getTags(),
-                });
+        trigger.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.sidebar.show(event.currentTarget.getAttribute('href'), {
+                tags: this.getTags(),
             });
         });
+    });
 
     // Inline form
     Api.listenForFormSubmits(this.el, this.onFormSubmission.bind(this), () => {
@@ -68,7 +66,6 @@ Form.prototype.refresh = function () {
     Api.get(url, (data) => {
         const DOM = document.createElement('div');
         DOM.innerHTML = data;
-
         this.el.innerHTML = DOM.firstElementChild.innerHTML;
 
         // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
