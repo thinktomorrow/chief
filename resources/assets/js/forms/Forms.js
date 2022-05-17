@@ -11,14 +11,12 @@ const Forms = function (mainContainer, sidebar) {
         const targetElement =
             inSidebar && this.sidebar.findPanelTarget() ? this.sidebar.findPanelTarget().el : this.mainContainer;
 
-        if (e.response.redirect_to) {
-            window.location.href = e.response.redirect_to;
-            return;
-        }
-
         // If our submit happens from the sidebar, we'll trigger the
         if (inSidebar) {
             this.handleSubmitFromSidebar(e.response, e.meta);
+        } else if (e.response.redirect_to) {
+            window.location.href = e.response.redirect_to;
+            return;
         }
 
         this.refreshIn(targetElement, e.tags);
