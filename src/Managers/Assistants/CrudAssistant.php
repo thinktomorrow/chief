@@ -142,9 +142,9 @@ trait CrudAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        $model = $this->managedModelClassInstance();
+        $model = $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
         View::share('manager', $this);
         View::share('model', $model);
@@ -173,7 +173,7 @@ trait CrudAssistant
 
     private function handleStore(Request $request)
     {
-        $model = $this->managedModelClassInstance();
+        $model = $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
         $fields = Forms::make($this->resource->fields($model))
             ->fillModel($model)

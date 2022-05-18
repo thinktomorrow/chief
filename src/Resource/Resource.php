@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Resource;
 
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 
 interface Resource
@@ -23,4 +24,12 @@ interface Resource
     public function field($model, string $key): Field;
 
     public function getSaveFieldsClass(): string;
+
+    /**
+     * Attributes that will be set on a new created model.
+     * Used in the create/store flow.
+     *
+     * @return array
+     */
+    public function getInstanceAttributes(Request $request): array;
 }

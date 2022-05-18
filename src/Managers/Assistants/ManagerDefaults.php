@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
@@ -88,11 +89,11 @@ trait ManagerDefaults
         return $this->resource::modelClassName();
     }
 
-    private function managedModelClassInstance()
+    private function managedModelClassInstance(array $attributes = [])
     {
         $modelClass = $this->managedModelClass();
 
-        return new $modelClass();
+        return new $modelClass($attributes);
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Resource;
 
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\SaveFields;
@@ -46,5 +47,10 @@ trait ResourceDefault
     public function getSaveFieldsClass(): string
     {
         return SaveFields::class;
+    }
+
+    public function getInstanceAttributes(Request $request): array
+    {
+        return [];
     }
 }
