@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
