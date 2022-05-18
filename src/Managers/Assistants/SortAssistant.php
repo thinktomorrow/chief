@@ -49,7 +49,13 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle($this->managedModelClassInstance(), $request->indices, $this->managedModelClassInstance()->sortableAttribute());
+        app(SortModels::class)->handle(
+            $this->managedModelClassInstance(),
+            $request->indices,
+            $this->managedModelClassInstance()->sortableAttribute(),
+            $this->managedModelClassInstance()->getKeyName(),
+            $this->managedModelClassInstance()->getKeyType() == 'int',
+        );
 
         return response()->json([
             'message' => 'models sorted.',

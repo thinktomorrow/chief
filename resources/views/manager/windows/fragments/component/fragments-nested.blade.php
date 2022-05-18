@@ -14,7 +14,7 @@
         <div
             data-fragments-container
             data-sidebar-component="fragments"
-            data-sortable-fragments
+            data-sortable
             data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
             class="divide-y divide-grey-100"
         >

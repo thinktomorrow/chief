@@ -6,6 +6,7 @@ const IndexSorting = function (options) {
     this.Sortables = [];
     this.sortableGroupEl = options.sortableGroupEl || document.getElementById('js-sortable');
     this.sortableIdAttribute = options.sortableId || 'data-sortable-id';
+    this.sortableIdType = options.sortableIdType || 'int'; // int, string
     this.endpoint = options.endpoint;
 
     if (!this.endpoint) {
@@ -79,7 +80,12 @@ IndexSorting.prototype._filterSortableIndices = function (indices) {
     // This is used for instance on the plus icons in the fragments,
     // which are elements which should not impact the order numbers.
     // ex: '4w1', '5tj', '6f1', '6iq'
-    return indices.filter((index) => index.match(/^[0-9]+$/));
+    console.log(this.sortableIdType);
+    if (this.sortableIdType === 'int') {
+        return indices.filter((index) => index.match(/^[0-9]+$/));
+    }
+
+    return indices;
 };
 
 export { IndexSorting as default };

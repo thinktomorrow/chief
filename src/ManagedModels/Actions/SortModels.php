@@ -9,11 +9,11 @@ use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 
 class SortModels
 {
-    public function handle(Model $model, array $indices, string $column = 'order'): void
+    public function handle(Model $model, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true): void
     {
         $table = $model->getTable();
 
-        static::batchUpdateColumn($table, $column, $indices);
+        static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers);
     }
 
     public function handleFragments(Model $owner, array $indices): void

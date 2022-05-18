@@ -89,8 +89,8 @@ Form.prototype.refresh = function () {
 // TODO: better design pattern than this. Now we set custom logic here per type,
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
+    initSortableGroup('[data-sortable]', this.el);
     if (this.getTags().includes('fragments')) {
-        initSortableGroup('[data-sortable-fragments]', this.el);
         new SelectFragment(this.el);
     }
 

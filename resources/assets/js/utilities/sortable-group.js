@@ -15,6 +15,7 @@ const initSortableGroup = (selector, container = document, options = {}) => {
                 endpoint: el.getAttribute('data-sortable-endpoint'),
                 handle: '[data-sortable-handle]',
                 isSorting: true,
+                sortableIdType: el.getAttribute('data-sortable-id-type') || 'int',
             },
             ...options,
         });
