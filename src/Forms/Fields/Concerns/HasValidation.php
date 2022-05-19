@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
+use Illuminate\Contracts\Validation\Rule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 
 trait HasValidation
@@ -35,7 +36,7 @@ trait HasValidation
         return $this->isRequired || $this->hasDefinitionInRules('required', FallbackLocaleRequiredRule::RULE);
     }
 
-    public function rules(string|array $rules): static
+    public function rules(string|array|Rule $rules): static
     {
         if (is_array($rules) && $this->isAlreadyKeyed($rules)) {
             throw new \InvalidArgumentException('Validation rules should be declared without a key. Keys are automatically added.');
