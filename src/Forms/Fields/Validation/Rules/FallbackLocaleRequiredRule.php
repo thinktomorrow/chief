@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
-
 class FallbackLocaleRequiredRule
 {
     const RULE = 'requiredFallbackLocale';
