@@ -20,7 +20,7 @@ trait HasOptions
     public function getOptions(?string $locale = null): array
     {
         if (is_callable($this->options)) {
-            return call_user_func_array($this->options, [$this, $locale]);
+            return call_user_func_array($this->options, [$this, $this->getModel(), $locale]);
         }
 
         return $this->options;

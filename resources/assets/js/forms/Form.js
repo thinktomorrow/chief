@@ -11,6 +11,8 @@ const Form = function (el, sidebar) {
     this.sidebar = sidebar;
     this.triggerSelector = '[data-sidebar-trigger]';
     this.formSelector = '[data-form]';
+
+    this.sidebarClick = (event) => this.handleSidebarClick(event);
 };
 
 Form.prototype.getTags = function () {
@@ -38,17 +40,20 @@ Form.prototype.listen = function () {
         // Provide panel id as default tag.
         this.addTag(Panels.createId(trigger.getAttribute('href')));
 
-        trigger.addEventListener('click', (event) => {
-            event.preventDefault();
-            this.sidebar.show(event.currentTarget.getAttribute('href'), {
-                tags: this.getTags(),
-            });
-        });
+        trigger.removeEventListener('click', this.sidebarClick);
+        trigger.addEventListener('click', this.sidebarClick);
     });
 
     // Inline form
     Api.listenForFormSubmits(this.el, this.onFormSubmission.bind(this), () => {
         // TODO: show to user that form hasn't been saved
+    });
+};
+
+Form.prototype.handleSidebarClick = function (event) {
+    event.preventDefault();
+    this.sidebar.show(event.currentTarget.getAttribute('href'), {
+        tags: this.getTags(),
     });
 };
 
