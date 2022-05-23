@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules;
 
 class FileFieldRequiredRule extends AbstractMediaFieldRule
 {
-    public function validate($attribute, array $values, $params, $validator): bool
+    public function validate($attribute, $values, $params, $validator): bool
     {
-        foreach ($values as $value) {
+        foreach ((array) $values as $value) {
             if (! is_null($value)) {
                 return true;
             }

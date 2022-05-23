@@ -6,6 +6,9 @@ principles.
 
 # unreleased
 
+# 0.6.18 - 2022-05-23
+- Fixed: issue when requiring file field with single value
+
 # 0.6.16 - 2022-03-09
 - Added: fields tagged with 'content' are placed in default edit view without need to create own edit view
 
