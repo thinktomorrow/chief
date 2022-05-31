@@ -1,4 +1,4 @@
-import IndexSorting from './sortable';
+import SortableGroup from './sortable';
 
 /**
  * Make a specific DOM element and its children sortable.
@@ -7,14 +7,16 @@ import IndexSorting from './sortable';
  * @param container
  * @param options
  */
-const initSortableGroup = (selector, container = document, options = {}) => {
+const initSortable = (selector, container = document, options = {}) => {
     Array.from(container.querySelectorAll(selector)).forEach((el) => {
-        new IndexSorting({
+        new SortableGroup({
             ...{
                 sortableGroupEl: el,
+                sortableGroupId: el.getAttribute('data-sortable-group') || 'models',
                 endpoint: el.getAttribute('data-sortable-endpoint'),
+                nestedEndpoint: el.getAttribute('data-sortable-nested-endpoint'),
                 handle: '[data-sortable-handle]',
-                isSorting: true,
+                isSorting: el.hasAttribute('data-sortable-is-sorting'),
                 sortableIdType: el.getAttribute('data-sortable-id-type') || 'int',
             },
             ...options,
@@ -22,4 +24,4 @@ const initSortableGroup = (selector, container = document, options = {}) => {
     });
 };
 
-export { initSortableGroup as default };
+export { initSortable as default };

@@ -18,12 +18,13 @@ trait SortAssistant
         return [
             ManagedRoute::get('index-for-sorting'),
             ManagedRoute::post('sort-index'),
+            ManagedRoute::post('move-index'),
         ];
     }
 
     public function canSortAssistant(string $action, $model = null): bool
     {
-        return (in_array($action, ['sort-index', 'index-for-sorting'])
+        return (in_array($action, ['sort-index', 'index-for-sorting', 'move-index'])
             && ($model && public_method_exists($model, 'isSortable') && $model->isSortable()));
     }
 
@@ -72,6 +73,24 @@ trait SortAssistant
 
         return response()->json([
             'message' => 'models sorted.',
+        ]);
+    }
+
+    public function moveIndex(Request $request)
+    {
+        if (! $request->input('itemId') || ! $request->has('parentId')) {
+            throw new \InvalidArgumentException('Missing arguments [itemId or parentId] for moveIndex request.');
+        }
+
+        $instance = $this->managedModelClassInstance();
+
+        $this->managedModelClass()::findOrFail($request->input('itemId'))->update([
+            'parent_id' => $request->input('parentId', null),
+            $instance->sortableAttribute() => $request->input('order', 0),
+        ]);
+
+        return response()->json([
+            'message' => 'Item moved to new parent',
         ]);
     }
 

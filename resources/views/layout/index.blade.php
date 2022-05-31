@@ -27,7 +27,7 @@
                 <h1 class="h1 display-dark">{{ ucfirst($resource->getIndexTitle()) }}</h1>
 
                 @adminCan('create')
-                    <a href="@adminRoute('create')" class="btn btn-primary">
+                    <a href="@adminRoute('create')" class="btn btn-primary-outline">
                         <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
                     </a>
                 @endAdminCan

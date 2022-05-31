@@ -9,6 +9,9 @@ const SortableToggle = function (Sortables, options = {}) {
     this.hiddenWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-hide-when-sorting]'));
     this.showWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-show-when-sorting]'));
 
+    this.classWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-class-when-sorting]'));
+    this.classWhenNotSortingEls = Array.from(document.querySelectorAll('[data-sortable-class-when-not-sorting]'));
+
     this.sortToggles.forEach((toggle) => {
         toggle.addEventListener('click', this.toggle.bind(this));
     });
@@ -42,6 +45,14 @@ SortableToggle.prototype.showSorting = function () {
         el.style.removeProperty('display');
     });
 
+    this.classWhenSortingEls.forEach((el) => {
+        el.classList.add(el.getAttribute('data-sortable-class-when-sorting').split(','));
+    });
+
+    this.classWhenNotSortingEls.forEach((el) => {
+        el.classList.remove(el.getAttribute('data-sortable-class-when-not-sorting').split(','));
+    });
+
     this.Sortables.forEach((sortableInstance) => {
         sortableInstance.option('disabled', false);
     });
@@ -56,6 +67,14 @@ SortableToggle.prototype.hideSorting = function () {
 
     this.showWhenSortingEls.forEach((el) => {
         el.style.display = 'none';
+    });
+
+    this.classWhenSortingEls.forEach((el) => {
+        el.classList.remove(el.getAttribute('data-sortable-class-when-sorting').split(','));
+    });
+
+    this.classWhenNotSortingEls.forEach((el) => {
+        el.classList.add(el.getAttribute('data-sortable-class-when-not-sorting').split(','));
     });
 
     this.Sortables.forEach((sortableInstance) => {

@@ -1,7 +1,7 @@
 import Panels from './sidebar/Panels';
 import Api from './Api';
 import vueFields from './fields/vue-fields';
-import initSortableGroup from '../utilities/sortable-group';
+import initSortable from '../sortable/sortable-init';
 import SelectFragment from '../fragments/selectFragment';
 import Submit from './Submit';
 import EventBus from '../utilities/EventBus';
@@ -94,7 +94,7 @@ Form.prototype.refresh = function () {
 // TODO: better design pattern than this. Now we set custom logic here per type,
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
-    initSortableGroup('[data-sortable]', this.el);
+    initSortable('[data-sortable]', this.el);
     if (this.getTags().includes('fragments')) {
         new SelectFragment(this.el);
     }
