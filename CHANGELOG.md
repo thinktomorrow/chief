@@ -11,6 +11,7 @@ principles.
 - Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
 - Added: resource::getInstanceAttributes method to set default attributes on a model when record is not created yet
 - Added: The data-sortable-id-type can now be set on the sortable container. It defaults to an int but now you set it to string so you can use an uuid as sortable id as well. 
+- Added: Sorted event after sorted
 
 ## 0.7.7 - 2022-05-17
 - Fixed: Trigger PageChanged event when fragments are sorted.
