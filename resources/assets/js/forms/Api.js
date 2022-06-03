@@ -1,5 +1,29 @@
+const submissionsInProgress = [];
+
+const Submissions = {
+    isSubmitting(url) {
+        return submissionsInProgress.includes(url);
+    },
+    addSubmission(url) {
+        submissionsInProgress.push(url);
+    },
+    removeSubmission(url) {
+        const index = submissionsInProgress.indexOf(url);
+        if (index !== -1) {
+            submissionsInProgress.splice(index, 1);
+        }
+    },
+};
+
 const Api = {
     get(url, successCallback, errorCallback, alwaysCallback) {
+        if (Submissions.isSubmitting(url)) {
+            console.log('no submission because we are already doing it GET');
+            return;
+        }
+        console.log('GET submission');
+        Submissions.addSubmission(url);
+
         fetch(url)
             .then((response) => {
                 if (response.status >= 500) {
@@ -15,11 +39,19 @@ const Api = {
                 console.error(error);
             })
             .finally(() => {
+                Submissions.removeSubmission(url);
                 if (alwaysCallback) alwaysCallback();
             });
     },
 
     post(url, body, successCallback, errorCallback, alwaysCallback) {
+        if (Submissions.isSubmitting(url)) {
+            console.log('no submission because we are already doing it POST');
+            return;
+        }
+        console.log('POST submission');
+        Submissions.addSubmission(url);
+
         fetch(url, {
             method: 'POST',
             body,
@@ -40,6 +72,7 @@ const Api = {
                 if (errorCallback) errorCallback(error);
             })
             .finally(() => {
+                Submissions.removeSubmission(url);
                 if (alwaysCallback) alwaysCallback();
             });
     },
@@ -57,6 +90,7 @@ const Api = {
                 if (form.classList.contains('is-submitting')) {
                     return;
                 }
+
                 form.classList.add('is-submitting');
 
                 if (this.method === 'get') {
