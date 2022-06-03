@@ -18,10 +18,9 @@ const Submissions = {
 const Api = {
     get(url, successCallback, errorCallback, alwaysCallback) {
         if (Submissions.isSubmitting(url)) {
-            console.log('no submission because we are already doing it GET');
             return;
         }
-        console.log('GET submission');
+
         Submissions.addSubmission(url);
 
         fetch(url)
@@ -46,10 +45,9 @@ const Api = {
 
     post(url, body, successCallback, errorCallback, alwaysCallback) {
         if (Submissions.isSubmitting(url)) {
-            console.log('no submission because we are already doing it POST');
             return;
         }
-        console.log('POST submission');
+
         Submissions.addSubmission(url);
 
         fetch(url, {
