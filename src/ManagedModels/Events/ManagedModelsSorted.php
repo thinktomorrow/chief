@@ -7,6 +7,5 @@ class ManagedModelsSorted
 {
     public function __construct(public readonly string $resourceKey, public readonly array $indices)
     {
-
     }
 }
