@@ -4,8 +4,8 @@
  * The 'is-sorting' class will be added by sortable-toggle.js, all
  * other classes are used to display a single item.
  */
-.has-nested-items .nested\:plt-6 {
-    padding: 1.5rem 0 0 1.5rem;
+.has-nested-items .nested\:ptl {
+    padding: 1rem 0 0 1.5rem;
 }
 .has-nested-items .nested\:block {
     display: block;
@@ -13,12 +13,12 @@
 .is-sorting .has-nested-items .sorting\:nested\:p-0 {
     padding: 0;
 }
-.is-sorting .has-nested-items .sortable-item:not(:first-child).sorting\:nested\:space-y-6 {
-    margin-top: 1.5rem;
+.is-sorting .has-nested-items .sortable-item:not(:first-child).sorting\:nested\:space-y-4 {
+    margin-top: 1rem;
 }
 .is-sorting .sorting\:drop-zone {
     border: 2px dashed rgb(226, 232, 240);
     border-radius: 0.5rem;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     margin-top: 0.75rem;
 }
