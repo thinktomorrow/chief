@@ -1,7 +1,7 @@
 @php
     switch($color ?? 'primary') {
         case 'primary':
-            $colorClasses = 'link-primary bg-primary-50';
+            $colorClasses = 'link-primary bg-grey-100 hover:bg-primary-50';
             break;
         case 'grey':
             $colorClasses = 'link-grey bg-grey-100 hover:link-primary hover:bg-primary-50';
@@ -10,7 +10,7 @@
             $colorClasses = 'link-grey bg-white hover:link-primary hover:bg-primary-50';
             break;
         case 'error':
-            $colorClasses = 'link-error bg-red-50';
+            $colorClasses = 'link-error bg-grey-100 hover:bg-red-50';
             break;
         default:
             $colorClasses = 'link-primary bg-grey-100 hover:bg-primary-50';

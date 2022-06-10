@@ -1,19 +1,22 @@
 @php
     switch($type ?? null) {
+        case 'default':
+            $classesForType = 'bg-grey-100 text-grey-700 border-grey-200';
+            break;
         case 'error':
-            $classesForType = 'bg-red-50 text-red-500';
+            $classesForType = 'bg-red-50 text-red-500 border-red-100';
             break;
         case 'warning':
-            $classesForType = 'bg-orange-50 text-orange-500';
+            $classesForType = 'bg-orange-50 text-orange-500 border-orange-100';
             break;
         case 'info':
-            $classesForType = 'bg-blue-50 text-blue-500';
+            $classesForType = 'bg-blue-50 text-blue-500 border-blue-100';
             break;
         case 'success':
-            $classesForType = 'bg-green-50 text-green-500';
+            $classesForType = 'bg-green-50 text-green-500 border-green-100';
             break;
         default:
-            $classesForType = 'bg-grey-50 text-grey-700';
+            $classesForType = 'bg-grey-100 text-grey-700 border-grey-200';
             break;
     }
 
@@ -33,6 +36,6 @@
     }
 @endphp
 
-<div class="{{ $classesForType }} {{ $classesForSize }} inline-block font-medium rounded-lg">
+<div {{ $attributes->merge(['class' => $classesForType . ' ' . $classesForSize . ' inline-block font-medium rounded-lg border']) }}>
     {{ $slot }}
 </div>
