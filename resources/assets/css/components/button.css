@@ -4,7 +4,7 @@
  **/
 @layer components {
     .btn {
-        @apply inline-flex items-center border-2 cursor-pointer leading-tight px-4 py-2 font-semibold rounded-lg text-center;
+        @apply inline-flex items-center border-2 cursor-pointer leading-tight px-3 py-1.5 font-semibold rounded-md text-center;
         @apply transition-all ease-in-out duration-75;
     }
 
@@ -29,7 +29,7 @@
 
     .btn-grey {
         @apply bg-grey-100 border-grey-100 text-grey-700;
-        @apply shadow-grey-100;
+        @apply shadow-grey-50;
 
         &:hover,
         &:focus {

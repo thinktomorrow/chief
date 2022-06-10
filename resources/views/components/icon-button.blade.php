@@ -9,6 +9,9 @@
         case 'white':
             $colorClasses = 'link-grey bg-white hover:link-primary hover:bg-primary-50';
             break;
+        case 'error':
+            $colorClasses = 'link-error bg-red-50';
+            break;
         default:
             $colorClasses = 'link-primary bg-grey-100 hover:bg-primary-50';
     }

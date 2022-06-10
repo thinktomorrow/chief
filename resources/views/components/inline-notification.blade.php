@@ -13,13 +13,16 @@
             $classesForType = 'bg-green-50 text-green-500';
             break;
         default:
-            $classesForType = 'bg-blue-50 text-blue-500';
+            $classesForType = 'bg-grey-50 text-grey-700';
             break;
     }
 
     switch($size ?? null) {
         case 'small':
             $classesForSize = 'px-2 py-1';
+            break;
+        case 'medium':
+            $classesForSize = 'px-4 py-3';
             break;
         case 'large':
             $classesForSize = 'px-6 py-4';
