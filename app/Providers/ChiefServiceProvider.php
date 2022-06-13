@@ -54,6 +54,16 @@ use Thinktomorrow\Squanto\SquantoServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
+    private SitemapServiceProvider $sitemapServiceProvider;
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        // Spatie Package logic sets a Package property on register so this needs to be retained when calling boot as well
+        $this->sitemapServiceProvider = new SitemapServiceProvider($app);
+    }
+
     public function boot(): void
     {
         /*
@@ -79,7 +89,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new FormsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new AssetLibraryServiceProvider($this->app))->boot();
-        (new SitemapServiceProvider($this->app))->boot();
+        $this->sitemapServiceProvider->boot();
 
         // Sitemap command is used by both cli and web scripts
         $this->commands(['command.chief:sitemap']);
@@ -124,7 +134,7 @@ class ChiefServiceProvider extends ServiceProvider
 
             (new SquantoManagerServiceProvider($this->app))->register();
             (new AssetLibraryServiceProvider($this->app))->register();
-            (new SitemapServiceProvider($this->app))->register();
+            $this->sitemapServiceProvider->register();
         }
     }
 
