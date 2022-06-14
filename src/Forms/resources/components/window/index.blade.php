@@ -4,7 +4,7 @@
     'tags' => null,
     'title' => null,
     'labels' => null,
-    'icon' => null,
+    'buttons' => null,
 ])
 
 <div data-form data-form-url="{{ $refreshUrl }}" data-form-tags="{{ $tags }}" {{ $attributes->class('space-y-6') }}>
@@ -25,14 +25,18 @@
                 @endif
             </div>
 
-            @if($editUrl)
-                <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="shrink-0">
-                    @if($icon)
-                        {!! $icon !!}
-                    @else
-                        <x-chief-icon-button icon="icon-edit" />
+            @if($editUrl || $buttons)
+                <div class="shrink-0">
+                    @if($editUrl)
+                        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen">
+                            <x-chief-icon-button icon="icon-edit" />
+                        </a>
                     @endif
-                </a>
+
+                    @if($buttons)
+                        {!! $buttons !!}
+                    @endif
+                </div>
             @endif
         </div>
     @endif

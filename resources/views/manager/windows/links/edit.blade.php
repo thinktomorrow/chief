@@ -52,9 +52,9 @@
                             </div>
 
                             <div
-                                    class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50"
-                                    v-if="hint"
-                                    v-html="hint"
+                                class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50"
+                                v-if="hint"
+                                v-html="hint"
                             ></div>
 
                             <x-chief-form::formgroup.error error-ids="links"></x-chief-form::formgroup.error>

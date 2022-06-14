@@ -8,10 +8,10 @@
 ])
 
 <div
-    {{ $attributes->class('w-full') }}
     data-field-key="{{ $id }}"
     data-field-type="{{ $fieldType }}"
     {!! $fieldToggles ? "data-conditional-toggle='" . json_encode($fieldToggles) . "'" : null !!}
+    {{ $attributes->merge(['class' => $fieldType == 'hidden' ? 'hidden' : 'w-full']) }}
 >
     @if($label)
         <div class="mb-1 leading-none">
