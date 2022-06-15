@@ -6,12 +6,13 @@ principles.
 
 ## unreleased
 - Fixed: issue with sidebar trigger when using nested forms
+- Fixed: issue where deleting model redirected to the index inside the sidebar.
 - Fixed: sorting logic can now handle uuids, rather than only integers.
 - Fixed: double clicks sometimes opened up sidebar with duplicate content.
 - Changed: Field::options callback now has the model as second parameter.
 - Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
 - Added: resource::getInstanceAttributes method to set default attributes on a model when record is not created yet
-- Added: The data-sortable-id-type can now be set on the sortable container. It defaults to an int but now you set it to string so you can use an uuid as sortable id as well. 
+- Added: The data-sortable-id-type can now be set on the sortable container. It defaults to an int but now you set it to string so you can use an uuid as sortable id as well.
 - Added: Sorted event after sorted
 
 ## 0.7.7 - 2022-05-17
@@ -40,7 +41,7 @@ principles.
 ## 0.7.1 - 2022-04-21
 - Fixed: dashed squanto files are now displayed in admin without dash. This also fixes an issue with not showing translations when using dashed filenames.
 - Fixed: Preview layout of images and grid.
-- Added: Nested repeats. Now a repeat field can contain a repeat field itself. 
+- Added: Nested repeats. Now a repeat field can contain a repeat field itself.
 - Added: A resource can set a custom `SaveFields` class.
 
 ## 0.7.0 - 2022-04-08
