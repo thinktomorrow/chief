@@ -5,7 +5,12 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
-- Fixed: Trigger PageChanged event when fragments are sorted.
+
+## 0.7.8 - 2022-06-15
+- Fixed: issue where deleting model redirected to the index inside the sidebar.
+
+## 0.7.7 - 2022-05-17
+- Fixed: issue where deleting model redirected to the index inside the sidebar.
 - Fixed: stay in sidebar if redirect is set for a fragment. By default a fragment with nested fragments redirects after creation to its edit page.
 - Fixed: issue where file previews didn't show the original image while queue was still processing conversions.
 
@@ -30,7 +35,7 @@ principles.
 ## 0.7.1 - 2022-04-21
 - Fixed: dashed squanto files are now displayed in admin without dash. This also fixes an issue with not showing translations when using dashed filenames.
 - Fixed: Preview layout of images and grid.
-- Added: Nested repeats. Now a repeat field can contain a repeat field itself. 
+- Added: Nested repeats. Now a repeat field can contain a repeat field itself.
 - Added: A resource can set a custom `SaveFields` class.
 
 ## 0.7.0 - 2022-04-08
