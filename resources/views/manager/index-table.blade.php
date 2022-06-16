@@ -77,11 +77,15 @@
     <div class="card-without-padding">
         <x-chief::table>
             <x-slot name="header">
+                <x-chief::table.header>
+                    <label for="select_all_rows" class="label with-checkbox">
+                        <input id="select_all_rows" type="checkbox">
+                        <span class="h-4 !pl-0"></span>
+                    </label>
+                </x-chief::table.header>
+
                 @foreach ($columns as $column)
-                    <x-chief::table.header
-                        :sortable="$column['sortable']"
-                        class="text-left bg-opacity-80 display-base display-dark backdrop-filter backdrop-blur"
-                    >
+                    <x-chief::table.header :sortable="$column['sortable']" class="text-left display-base display-dark">
                         {{ $column['title'] }}
                     </x-chief::table.header>
                 @endforeach
@@ -91,12 +95,19 @@
                 @foreach ([...$items, ...$items] as $item)
                     <x-chief::table.row>
                         <x-chief::table.data>
+                            <label for="item_{{ $loop->index }}" class="label with-checkbox">
+                                <input id="item_{{ $loop->index }}" type="checkbox">
+                                <span class="h-4 !pl-0"></span>
+                            </label>
+                        </x-chief::table.data>
+
+                        <x-chief::table.data>
                             <div class="w-10 h-10 overflow-hidden rounded-lg bg-grey-100">
                                 <img src="{{ $item['image'] }}" class="object-cover w-full h-full">
                             </div>
                         </x-chief::table.data>
 
-                        <x-chief::table.data class="leading-normal body-base display-dark">
+                        <x-chief::table.data class="leading-normal body-base body-dark">
                             {{ $item['title'] }}
                         </x-chief::table.data>
 
@@ -129,3 +140,27 @@
         </x-chief::table>
     </div>
 </x-chief::index-table>
+
+{{-- @if(count($models))
+    <div class="card">
+        @adminCan('sort-index', $models->first())
+            <div
+                id="js-sortable"
+                data-sort-route="{{ $manager->route('sort-index') }}"
+                class="-my-4 divide-y divide-grey-100"
+            >
+        @elseAdminCan
+            <div class="-my-4 divide-y divide-grey-100">
+        @endAdminCan
+                @foreach($models as $model)
+                    @include($resource->getIndexCardView())
+                @endforeach
+            </div>
+        </div>
+
+    @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+        {!! $models->links('chief::pagination.default') !!}
+    @endif
+@else
+    @include('chief::manager._index._empty')
+@endif --}}

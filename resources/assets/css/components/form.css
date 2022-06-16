@@ -41,14 +41,14 @@ input[type='number'] {
     @apply w-full;
 }
 
-input[type='radio'],
-input[type='checkbox'] {
-    @apply absolute opacity-0 z-[-1];
-}
-
 .with-radio,
 .with-checkbox {
     @apply relative text-grey-700 cursor-pointer flex;
+
+    input[type='radio'],
+    input[type='checkbox'] {
+        @apply absolute opacity-0 z-[-1];
+    }
 
     > span {
         @apply inline-block pl-8;
