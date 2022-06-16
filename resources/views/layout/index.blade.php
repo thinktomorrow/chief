@@ -37,17 +37,19 @@
 
     {!! $slot !!}
 
-    <x-slot name="aside">
-        @isset($aside)
-            {!! $aside !!}
-        @else
-            @if($resource->getIndexSidebar())
-                {!! $resource->getIndexSidebar() !!}
-            @endif
+    @if($sidebar)
+        <x-slot name="aside">
+            @isset($aside)
+                {!! $aside !!}
+            @else
+                @if($resource->getIndexSidebar())
+                    {!! $resource->getIndexSidebar() !!}
+                @endif
 
-            @include('chief::manager._index.filter_card')
-            @include('chief::manager._index.sort_card')
-            @include('chief::manager._index.archive_card')
-        @endisset
-    </x-slot>
+                @include('chief::manager._index.filter_card')
+                @include('chief::manager._index.sort_card')
+                @include('chief::manager._index.archive_card')
+            @endisset
+        </x-slot>
+    @endif
 </x-chief::page>

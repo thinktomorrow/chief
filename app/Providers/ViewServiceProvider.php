@@ -28,6 +28,12 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
         Blade::component('chief::components.nav-item', 'chief::nav.item');
 
+        // Table components
+        Blade::component('chief::components.table', 'chief::table');
+        Blade::component('chief::components.table.row', 'chief::table.row');
+        Blade::component('chief::components.table.header', 'chief::table.header');
+        Blade::component('chief::components.table.data', 'chief::table.data');
+
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {
             return "<?php echo \$manager->route({$expression}); ?>";
