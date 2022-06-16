@@ -78,10 +78,7 @@
         <x-chief::table>
             <x-slot name="header">
                 <x-chief::table.header>
-                    <label for="select_all_rows" class="label with-checkbox">
-                        <input id="select_all_rows" type="checkbox">
-                        <span class="h-4 !pl-0"></span>
-                    </label>
+                    <input type="checkbox" name="bulk_all" id="bulk_all" class="with-custom-checkbox">
                 </x-chief::table.header>
 
                 @foreach ($columns as $column)
@@ -95,10 +92,12 @@
                 @foreach ([...$items, ...$items] as $item)
                     <x-chief::table.row>
                         <x-chief::table.data>
-                            <label for="item_{{ $loop->index }}" class="label with-checkbox">
-                                <input id="item_{{ $loop->index }}" type="checkbox">
-                                <span class="h-4 !pl-0"></span>
-                            </label>
+                            <input
+                                type="checkbox"
+                                name="item_{{ $loop->index }}"
+                                id="item_{{ $loop->index }}"
+                                class="with-custom-checkbox"
+                            >
                         </x-chief::table.data>
 
                         <x-chief::table.data>
@@ -139,6 +138,10 @@
             </x-slot>
         </x-chief::table>
     </div>
+
+    @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+        {!! $models->links('chief::pagination.default') !!}
+    @endif
 </x-chief::index-table>
 
 {{-- @if(count($models))
