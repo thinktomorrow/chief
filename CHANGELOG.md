@@ -15,6 +15,9 @@ principles.
 - Added: The data-sortable-id-type can now be set on the sortable container. It defaults to an int but now you set it to string so you can use an uuid as sortable id as well.
 - Added: Sorted event after sorted
 
+## 0.7.8 - 2022-06-15
+- Fixed: issue where deleting model redirected to the index inside the sidebar.
+
 ## 0.7.7 - 2022-05-17
 - Fixed: Trigger PageChanged event when fragments are sorted.
 - Fixed: stay in sidebar if redirect is set for a fragment. By default a fragment with nested fragments redirects after creation to its edit page.
