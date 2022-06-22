@@ -5,7 +5,7 @@
 
 <th
     scope="col"
-    {{ $attributes->merge(['class' => 'sticky top-0 z-10 px-3 py-4 border-b border-grey-200 bg-grey-50 bg-opacity-80 backdrop-filter backdrop-blur whitespace-nowrap']) }}
+    {{ $attributes->merge(['class' => 'sticky top-0 z-10 px-2 py-4 border-b border-grey-200 bg-grey-50 bg-opacity-80 backdrop-filter backdrop-blur whitespace-nowrap text-left']) }}
 >
     @if($sortable)
         <span class="inline-flex items-center space-x-1.5 group">

@@ -30,3 +30,4 @@ if (document.getElementById('js-sortable')) {
 
 /** Form logic - submit forms async or via sidebar */
 require('./forms/index');
+require('./tables/index');

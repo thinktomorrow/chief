@@ -78,7 +78,13 @@
         <x-chief::table>
             <x-slot name="header">
                 <x-chief::table.header>
-                    <input type="checkbox" name="bulk_all" id="bulk_all" class="with-custom-checkbox">
+                    <input
+                        data-bulk-all-checkbox
+                        type="checkbox"
+                        name="bulk_all"
+                        id="bulk_all"
+                        class="with-custom-checkbox"
+                    >
                 </x-chief::table.header>
 
                 @foreach ($columns as $column)
@@ -93,6 +99,7 @@
                     <x-chief::table.row>
                         <x-chief::table.data>
                             <input
+                                data-bulk-item-checkbox
                                 type="checkbox"
                                 name="item_{{ $loop->index }}"
                                 id="item_{{ $loop->index }}"
