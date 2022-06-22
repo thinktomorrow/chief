@@ -3,7 +3,7 @@
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
 
         <transition name="fade">
-            <div v-show="isActive" class="absolute" style="z-index: 1;">
+            <div v-show="isActive" class="absolute" style="z-index: 1">
                 <slot :toggle="toggle"></slot>
             </div>
         </transition>
@@ -96,8 +96,8 @@ export default {
                             boundariesElement: 'viewport',
                         },
                     },
-                    removeOnDestroy: false, // We need to keep our element
-                    //                            placement: 'bottom-start',
+                    removeOnDestroy: false,
+                    placement: 'bottom-end',
                 });
 
                 // Force update to let preventOverflow kick in

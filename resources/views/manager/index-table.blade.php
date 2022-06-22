@@ -75,10 +75,21 @@
 
 <x-chief::index :sidebar="false">
     <x-chief::table>
+        <x-slot name="search">
+            <input type="text" placeholder="Zoek op productnaam ...">
+        </x-slot>
+
+        <x-slot name="filters">
+            <a href="#" title="..." class="dropdown-link dropdown-link-success">Online</a>
+            <a href="#" title="..." class="dropdown-link dropdown-link-error">Offline</a>
+            <a href="#" title="..." class="dropdown-link dropdown-link-warning">Gearchiveerd</a>
+            <a href="#" title="..." class="dropdown-link dropdown-link-primary">Alle</a>
+        </x-slot>
+
         <x-slot name="actions">
-            <a href="#" title="Exporteren" class="btn btn-primary">Exporteren</a>
-            <a href="#" title="Online/offline zetten" class="btn btn-success">Online zetten</a>
-            <a href="#" title="Online/offline zetten" class="btn btn-error">Offline zetten</a>
+            <a href="#" title="..." class="dropdown-link dropdown-link-primary">Exporteren</a>
+            <a href="#" title="..." class="dropdown-link dropdown-link-success">Zet online</a>
+            <a href="#" title="..." class="dropdown-link dropdown-link-error">Zet offline</a>
         </x-slot>
 
         <x-slot name="header">

@@ -107,11 +107,11 @@ class BulkActions {
 
     _toggleBulkActionsContainer(count) {
         if (count > 0) {
-            this.bulkActionsContainer.hidden = false;
+            this.bulkActionsContainer.classList.remove('hidden');
             return;
         }
 
-        this.bulkActionsContainer.hidden = true;
+        this.bulkActionsContainer.classList.add('hidden');
     }
 }
 
