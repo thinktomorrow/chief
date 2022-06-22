@@ -74,103 +74,83 @@
 @endphp
 
 <x-chief::index :sidebar="false">
-    <div class="card-without-padding">
-        <x-chief::table>
-            <x-slot name="header">
-                <x-chief::table.header>
-                    <input
-                        data-bulk-all-checkbox
-                        type="checkbox"
-                        name="bulk_all"
-                        id="bulk_all"
-                        class="with-custom-checkbox"
-                    >
+    <x-chief::table>
+        <x-slot name="actions">
+            <a href="#" title="Exporteren" class="btn btn-primary">Exporteren</a>
+            <a href="#" title="Online/offline zetten" class="btn btn-success">Online zetten</a>
+            <a href="#" title="Online/offline zetten" class="btn btn-error">Offline zetten</a>
+        </x-slot>
+
+        <x-slot name="header">
+            <x-chief::table.header>
+                <input
+                    data-bulk-all-checkbox
+                    type="checkbox"
+                    name="bulk_all"
+                    id="bulk_all"
+                    class="with-custom-checkbox"
+                >
+            </x-chief::table.header>
+
+            @foreach ($columns as $column)
+                <x-chief::table.header :sortable="$column['sortable']" class="text-left display-base display-dark">
+                    {{ $column['title'] }}
                 </x-chief::table.header>
+            @endforeach
+        </x-slot>
 
-                @foreach ($columns as $column)
-                    <x-chief::table.header :sortable="$column['sortable']" class="text-left display-base display-dark">
-                        {{ $column['title'] }}
-                    </x-chief::table.header>
-                @endforeach
-            </x-slot>
+        <x-slot name="body">
+            @foreach ([...$items, ...$items] as $item)
+                <x-chief::table.row>
+                    <x-chief::table.data>
+                        <input
+                            data-bulk-item-checkbox
+                            type="checkbox"
+                            name="item_{{ $loop->index }}"
+                            id="item_{{ $loop->index }}"
+                            class="with-custom-checkbox"
+                        >
+                    </x-chief::table.data>
 
-            <x-slot name="body">
-                @foreach ([...$items, ...$items] as $item)
-                    <x-chief::table.row>
-                        <x-chief::table.data>
-                            <input
-                                data-bulk-item-checkbox
-                                type="checkbox"
-                                name="item_{{ $loop->index }}"
-                                id="item_{{ $loop->index }}"
-                                class="with-custom-checkbox"
-                            >
-                        </x-chief::table.data>
+                    <x-chief::table.data>
+                        <div class="w-10 h-10 overflow-hidden rounded-lg bg-grey-100">
+                            <img src="{{ $item['image'] }}" class="object-cover w-full h-full">
+                        </div>
+                    </x-chief::table.data>
 
-                        <x-chief::table.data>
-                            <div class="w-10 h-10 overflow-hidden rounded-lg bg-grey-100">
-                                <img src="{{ $item['image'] }}" class="object-cover w-full h-full">
-                            </div>
-                        </x-chief::table.data>
+                    <x-chief::table.data class="leading-normal body-base body-dark">
+                        {{ $item['title'] }}
+                    </x-chief::table.data>
 
-                        <x-chief::table.data class="leading-normal body-base body-dark">
-                            {{ $item['title'] }}
-                        </x-chief::table.data>
+                    <x-chief::table.data class="leading-normal body-base body-dark">
+                        {{ $item['quotation'] ? 'Nee' : 'Ja' }}
+                    </x-chief::table.data>
 
-                        <x-chief::table.data class="leading-normal body-base body-dark">
-                            {{ $item['quotation'] ? 'Nee' : 'Ja' }}
-                        </x-chief::table.data>
+                    <x-chief::table.data>
+                        {{ $item['variants'] }}
+                    </x-chief::table.data>
 
-                        <x-chief::table.data>
-                            {{ $item['variants'] }}
-                        </x-chief::table.data>
+                    <x-chief::table.data>
+                        @if($item['status'] == 'online')
+                            <span class="label label-xs label-success">Online</span>
+                        @elseif($item['status'] == 'offline')
+                            <span class="label label-xs label-error">Offline</span>
+                        @elseif($item['status'] == 'uitverkocht')
+                            <span class="label label-xs label-grey">Uitverkocht</span>
+                        @endif
+                    </x-chief::table.data>
 
-                        <x-chief::table.data>
-                            @if($item['status'] == 'online')
-                                <span class="label label-xs label-success">Online</span>
-                            @elseif($item['status'] == 'offline')
-                                <span class="label label-xs label-error">Offline</span>
-                            @elseif($item['status'] == 'uitverkocht')
-                                <span class="label label-xs label-grey">Uitverkocht</span>
-                            @endif
-                        </x-chief::table.data>
-
-                        <x-chief::table.data class="text-right">
-                            <a href="#" title="Aanpassen">
-                                <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
-                            </a>
-                        </x-chief::table.data>
-                    </x-chief::table.row>
-                @endforeach
-            </x-slot>
-        </x-chief::table>
-    </div>
+                    <x-chief::table.data class="text-right">
+                        <a href="#" title="Aanpassen">
+                            <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
+                        </a>
+                    </x-chief::table.data>
+                </x-chief::table.row>
+            @endforeach
+        </x-slot>
+    </x-chief::table>
 
     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
         {!! $models->links('chief::pagination.default') !!}
     @endif
 </x-chief::index-table>
-
-{{-- @if(count($models))
-    <div class="card">
-        @adminCan('sort-index', $models->first())
-            <div
-                id="js-sortable"
-                data-sort-route="{{ $manager->route('sort-index') }}"
-                class="-my-4 divide-y divide-grey-100"
-            >
-        @elseAdminCan
-            <div class="-my-4 divide-y divide-grey-100">
-        @endAdminCan
-                @foreach($models as $model)
-                    @include($resource->getIndexCardView())
-                @endforeach
-            </div>
-        </div>
-
-    @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-        {!! $models->links('chief::pagination.default') !!}
-    @endif
-@else
-    @include('chief::manager._index._empty')
-@endif --}}

@@ -133,3 +133,12 @@
 .children\:text-black > * {
     color: theme('colors.black');
 }
+
+.siblings\:bulk-actions-counter-condition[data-bulk-actions-counter='1'] {
+    & ~ .bulk-actions-counter-is-1\:inline {
+        display: inline;
+    }
+    & ~ .bulk-actions-counter-is-1\:hidden {
+        display: none;
+    }
+}
