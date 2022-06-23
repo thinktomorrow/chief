@@ -1,4 +1,12 @@
 @php
+    $columns = [
+        [ 'title' => '', 'sortable' => false ],
+        [ 'title' => 'Productnaam', 'sortable' => true ],
+        [ 'title' => 'Online verkoopbaar', 'sortable' => false ],
+        [ 'title' => 'Varianten', 'sortable' => false ],
+        [ 'title' => 'Status', 'sortable' => true ],
+        [ 'title' => '', 'sortable' => false ],
+    ];
 
     $items = [
         [
@@ -87,11 +95,11 @@
         <x-slot name="header">
             <x-chief::table.header>
                 <input
-                    data-bulk-all-checkbox
-                    type="checkbox"
-                    name="bulk_all"
-                    id="bulk_all"
-                    class="with-custom-checkbox"
+                        data-bulk-all-checkbox
+                        type="checkbox"
+                        name="bulk_all"
+                        id="bulk_all"
+                        class="with-custom-checkbox"
                 >
             </x-chief::table.header>
 
@@ -103,30 +111,50 @@
         </x-slot>
 
         <x-slot name="body">
-            @foreach ($models as $model)
+            @foreach ([...$items, ...$items] as $item)
                 <x-chief::table.row>
                     <x-chief::table.data>
                         <input
-                            data-bulk-item-checkbox
-                            type="checkbox"
-                            name="item_{{ $loop->index }}"
-                            id="item_{{ $loop->index }}"
-                            class="with-custom-checkbox"
+                                data-bulk-item-checkbox
+                                type="checkbox"
+                                name="item_{{ $loop->index }}"
+                                id="item_{{ $loop->index }}"
+                                class="with-custom-checkbox"
                         >
                     </x-chief::table.data>
 
-                    @foreach($model->getTableColumnsHtml() as $columnHtml)
-                        <x-chief::table.data class="leading-normal body-base body-dark">
-                            {!! $columnHtml !!}
-                        </x-chief::table.data>
-                    @endforeach
+                    <x-chief::table.data>
+                        <div class="w-10 h-10 overflow-hidden rounded-lg bg-grey-100">
+                            <img src="{{ $item['image'] }}" class="object-cover w-full h-full">
+                        </div>
+                    </x-chief::table.data>
+
+                    <x-chief::table.data class="leading-normal body-base body-dark">
+                        {{ $item['title'] }}
+                    </x-chief::table.data>
+
+                    <x-chief::table.data class="leading-normal body-base body-dark">
+                        {{ $item['quotation'] ? 'Nee' : 'Ja' }}
+                    </x-chief::table.data>
+
+                    <x-chief::table.data>
+                        {{ $item['variants'] }}
+                    </x-chief::table.data>
+
+                    <x-chief::table.data>
+                        @if($item['status'] == 'online')
+                            <span class="label label-xs label-success">Online</span>
+                        @elseif($item['status'] == 'offline')
+                            <span class="label label-xs label-error">Offline</span>
+                        @elseif($item['status'] == 'uitverkocht')
+                            <span class="label label-xs label-grey">Uitverkocht</span>
+                        @endif
+                    </x-chief::table.data>
 
                     <x-chief::table.data class="text-right">
-                        @adminCan('edit')
-                            <a href="@adminRoute('edit', $model)" title="Aanpassen">
-                                <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
-                            </a>
-                        @endAdminCan
+                        <a href="#" title="Aanpassen">
+                            <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
+                        </a>
                     </x-chief::table.data>
                 </x-chief::table.row>
             @endforeach
@@ -134,6 +162,6 @@
     </x-chief::table>
 
     @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-        {!! $models->links('chief::pagination.default') !!}
+    {!! $models->links('chief::pagination.default') !!}
     @endif
-</x-chief::index-table>
+    </x-chief::index-table>
