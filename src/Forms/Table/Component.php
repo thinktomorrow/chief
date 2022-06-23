@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Table;
 
-use Illuminate\Support\Str;
-use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\Support\Htmlable;
-use Thinktomorrow\Chief\Forms\Concerns\HasId;
-use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
+use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
+use Thinktomorrow\Chief\Forms\Concerns\HasId;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use function view;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable
