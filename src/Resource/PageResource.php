@@ -29,4 +29,7 @@ interface PageResource extends Resource
     public function getIndexCardContent($model): string;
     public function getIndexSidebar(): string; // content in sidebar.
     public function getIndexPagination(): int;
+
+    // Index table
+    public function getIndexTableColumns(): array;
 }

@@ -109,6 +109,11 @@ trait PageResourceDefault
         return 20;
     }
 
+    public function getIndexTableColumns(): array
+    {
+        return [];
+    }
+
     public function getTitleAttributeKey(): string
     {
         return 'title';
