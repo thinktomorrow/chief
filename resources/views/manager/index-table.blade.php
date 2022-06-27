@@ -1,101 +1,51 @@
-@php
-
-    $items = [
-        [
-            'image' => 'https://i.picsum.photos/id/24/150/150.jpg?hmac=jC2D1NEZaS2CzTtVths4y8ojKmkWhNU2CmdOeT9YR5E',
-            'title' => 'Groot-Officier in de Leopoldsorde',
-            'quotation' => false,
-            'status' => 'online',
-            'variants' => '3',
-        ], [
-            'image' => 'https://i.picsum.photos/id/638/150/150.jpg?hmac=D5oquMlkjO6HyU7XmX9mmPwu-3dMkSbwMzenjR_5wDo',
-            'title' => 'Plexi staander voor 1 ereteken',
-            'quotation' => false,
-            'status' => 'offline',
-            'variants' => '9',
-        ], [
-            'image' => 'https://i.picsum.photos/id/210/150/150.jpg?hmac=yMZOdBY03wnTFZsYmGsVrssPvzR64PcESz_oDQkIe3k',
-            'title' => 'Ruiter van de 21ste eeuw (L. Verlee)',
-            'quotation' => true,
-            'status' => 'online',
-            'variants' => '4',
-        ], [
-            'image' => 'https://i.picsum.photos/id/273/150/150.jpg?hmac=Bu5ogF-NhP1Am_Z2qb4GZXtBYPyPKtUWUZ5JEiAnsN8',
-            'title' => 'Geboortemedaille',
-            'quotation' => false,
-            'status' => 'uitverkocht',
-            'variants' => '1',
-        ], [
-            'image' => 'https://i.picsum.photos/id/157/150/150.jpg?hmac=XmF2p8VBaVVKK_hZbNY03Iiozuxkj_xPeIhZzvcD9kA',
-            'title' => 'Beveled Diamond Cube (C632)',
-            'quotation' => true,
-            'status' => 'online',
-            'variants' => '6',
-        ], [
-            'image' => 'https://i.picsum.photos/id/16/150/150.jpg?hmac=SBCdxSur-hB58Ia8cDisHqbcDxYLlSxl70ttjzPrJVI',
-            'title' => 'Summit Award (GA02)',
-            'quotation' => false,
-            'status' => 'offline',
-            'variants' => '12',
-        ], [
-            'image' => 'https://i.picsum.photos/id/971/150/150.jpg?hmac=A-q6Orh1H3mT0RFrsIF_TErzbrmkNq1r_yoZ1cQ69ZQ',
-            'title' => 'Samen een stap vooruit',
-            'quotation' => false,
-            'status' => 'online',
-            'variants' => '8',
-        ], [
-            'image' => 'https://i.picsum.photos/id/521/150/150.jpg?hmac=LgXY8sRtcZMepPeH1D2k7JyVCLQ_L-8IcYCVz5flIP8',
-            'title' => 'Huisnummer in koper (rechthoekig - liggend)',
-            'quotation' => false,
-            'status' => 'online',
-            'variants' => '4',
-        ], [
-            'image' => 'https://i.picsum.photos/id/66/150/150.jpg?hmac=2cqd7x5UZVioa3Dh_Wk1VqZ8Er8YGzSrtiUMyXe350A',
-            'title' => 'Witte plastic naambadge met magneet',
-            'quotation' => false,
-            'status' => 'online',
-            'variants' => '1',
-        ], [
-            'image' => 'https://i.picsum.photos/id/1038/150/150.jpg?hmac=bSAVzm_4uVIKIA2AaQ5TFDxZUcdYoYh7LbIFBfls298',
-            'title' => 'Inner Wheel pin op magneet (5 stuks)',
-            'quotation' => false,
-            'status' => 'online',
-            'variants' => '2',
-        ]
-    ];
-@endphp
-
 <x-chief::index :sidebar="false">
     <x-chief::table>
-        <x-slot name="search">
-            <input type="text" placeholder="Zoek op productnaam ...">
-        </x-slot>
 
-        <x-slot name="filters">
-            <a href="#" title="..." class="dropdown-link dropdown-link-success">Online</a>
-            <a href="#" title="..." class="dropdown-link dropdown-link-error">Offline</a>
-            <a href="#" title="..." class="dropdown-link dropdown-link-warning">Gearchiveerd</a>
-            <a href="#" title="..." class="dropdown-link dropdown-link-primary">Alle</a>
-        </x-slot>
+            @if($manager->filters()->anyRenderable())
 
-        <x-slot name="actions">
-            <a href="#" title="..." class="dropdown-link dropdown-link-primary">Exporteren</a>
-            <a href="#" title="..." class="dropdown-link dropdown-link-success">Zet online</a>
-            <a href="#" title="..." class="dropdown-link dropdown-link-error">Zet offline</a>
-        </x-slot>
+                <x-slot name="search">
+                    <form method="GET" class="space-y-6">
+
+                        {!! $manager->filters()->render() !!}
+
+                        <div>
+                            <button class="btn btn-primary" type="submit">Filter</button>
+                        </div>
+
+                    </form>
+                </x-slot>
+
+                <!-- hidden filters -->
+                            <x-slot name="filters">
+                                <a href="#" title="..." class="dropdown-link dropdown-link-success">Online</a>
+                                <a href="#" title="..." class="dropdown-link dropdown-link-error">Offline</a>
+                                <a href="#" title="..." class="dropdown-link dropdown-link-warning">Gearchiveerd</a>
+                                <a href="#" title="..." class="dropdown-link dropdown-link-primary">Alle</a>
+                            </x-slot>
+            @endif
+
+        @if(count($resource::getTableBulkActions()) > 0)
+            <x-slot name="actions">
+                @foreach($resource::getTableBulkActions() as $tableAction)
+                    {!! $tableAction !!}
+                @endforeach
+            </x-slot>
+        @endif
 
         <x-slot name="header">
-            <x-chief::table.header>
-                <input
-                    data-bulk-all-checkbox
-                    type="checkbox"
-                    name="bulk_all"
-                    id="bulk_all"
-                    class="with-custom-checkbox"
-                >
-            </x-chief::table.header>
+            @if(count($resource::getTableBulkActions()) > 0)
+                <x-chief::table.header>
+                    <input
+                        data-bulk-all-checkbox
+                        type="checkbox"
+                        name="bulk_all"
+                        id="bulk_all"
+                        class="with-custom-checkbox"
+                    >
+                </x-chief::table.header>
+            @endif
 
-            @foreach ($columns as $column)
+            @foreach ($resource::getTableColumns() as $column)
                 <x-chief::table.header :sortable="$column['sortable']" class="text-left display-base display-dark">
                     {{ $column['title'] }}
                 </x-chief::table.header>
@@ -105,19 +55,21 @@
         <x-slot name="body">
             @foreach ($models as $model)
                 <x-chief::table.row>
-                    <x-chief::table.data>
-                        <input
-                            data-bulk-item-checkbox
-                            type="checkbox"
-                            name="item_{{ $loop->index }}"
-                            id="item_{{ $loop->index }}"
-                            class="with-custom-checkbox"
-                        >
-                    </x-chief::table.data>
+                    @if(count($resource::getTableBulkActions()) > 0)
+                        <x-chief::table.data>
+                            <input
+                                data-bulk-item-checkbox
+                                type="checkbox"
+                                name="item_{{ $loop->index }}"
+                                id="item_{{ $loop->index }}"
+                                class="with-custom-checkbox"
+                            >
+                        </x-chief::table.data>
+                    @endif
 
-                    @foreach($model->getTableColumnsHtml() as $columnHtml)
+                    @foreach($model->getTableRowHtml() as $rowHtml)
                         <x-chief::table.data class="leading-normal body-base body-dark">
-                            {!! $columnHtml !!}
+                            {!! $rowHtml !!}
                         </x-chief::table.data>
                     @endforeach
 

@@ -11,37 +11,42 @@
                 {{ $search }}
             </div>
 
-            <div class="flex items-start justify-end gap-6">
-                <div data-bulk-actions-container class="hidden">
-                    <div class="flex items-center justify-between gap-4">
-                        <p class="text-sm body-base body-dark">
-                            <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
-                            <span class="hidden bulk-actions-counter-is-1:inline">item</span>
-                            <span class="bulk-actions-counter-is-1:hidden">items</span>
-                            geselecteerd
-                        </p>
 
-                        <dropdown class="relative z-20">
-                            <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-primary">
-                                Bulkactie toepassen
-                            </span>
+                <div class="flex items-start justify-end gap-6">
+                    <div data-bulk-actions-container class="hidden">
+                        <div class="flex items-center justify-between gap-4">
+                            <p class="text-sm body-base body-dark">
+                                <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
+                                <span class="hidden bulk-actions-counter-is-1:inline">item</span>
+                                <span class="bulk-actions-counter-is-1:hidden">items</span>
+                                geselecteerd
+                            </p>
 
-                            <div v-cloak class="dropdown-content">
-                                {{ $actions }}
-                            </div>
-                        </dropdown>
+                            @if($actions)
+                                <dropdown class="relative z-20">
+                                    <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-primary">
+                                        Actie voor selectie ...
+                                    </span>
+
+                                    <div v-cloak class="dropdown-content">
+                                        {{ $actions }}
+                                    </div>
+                                </dropdown>
+                            @endif
+                        </div>
                     </div>
-                </div>
 
-                <dropdown class="relative z-20">
-                    <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-grey">
-                        Filteren
-                    </span>
+                @if($filters)
+                    <dropdown class="relative z-20">
+                        <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-grey">
+                            Filteren
+                        </span>
 
-                    <div v-cloak class="dropdown-content">
-                        {{ $filters }}
-                    </div>
-                </dropdown>
+                        <div v-cloak class="dropdown-content">
+                            {{ $filters }}
+                        </div>
+                    </dropdown>
+                @endif
             </div>
         </div>
     </div>
