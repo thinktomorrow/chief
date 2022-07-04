@@ -1,5 +1,4 @@
 import Errors from './utilities/Errors';
-// import Form from './utilities/Form';
 
 /**
  * First we will load all of this project's JavaScript dependencies which

@@ -114,6 +114,11 @@ trait PageResourceDefault
         return 'title';
     }
 
+    public function getSortableType(): string
+    {
+        return 'int';
+    }
+
     protected function getNavIcon(): ?string
     {
         return '<svg><use xlink:href="#icon-collection"></use></svg>';

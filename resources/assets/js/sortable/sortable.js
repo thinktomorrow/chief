@@ -60,6 +60,8 @@ SortableGroup.prototype._init = function () {
 
             // On the onEnd event, we take care of parent changes.
             onEnd: (evt) => {
+                console.log(self.nestedEndpoint);
+
                 if (!self.nestedEndpoint) return;
 
                 // if the parent is the same DOM element - we abort here.

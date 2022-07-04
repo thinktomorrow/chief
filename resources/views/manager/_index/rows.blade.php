@@ -2,8 +2,9 @@
     <div class="card">
         @adminCan('sort-index', $models->first())
             <div
-                id="js-sortable"
-                data-sort-route="{{ $manager->route('sort-index') }}"
+                data-sortable
+                data-sortable-endpoint="{{ $manager->route('sort-index') }}"
+                data-sortable-id-type="{{ $resource->getSortableType() }}"
                 class="-my-4 divide-y divide-grey-100"
             >
         @elseAdminCan

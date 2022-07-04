@@ -29,4 +29,11 @@ interface PageResource extends Resource
     public function getIndexCardContent($model): string;
     public function getIndexSidebar(): string; // content in sidebar.
     public function getIndexPagination(): int;
+
+    /**
+     * Indicate type of sortable id.
+     * Options are int, string. Defaults to int.
+     * @return string
+     */
+    public function getSortableType(): string;
 }

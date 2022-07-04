@@ -20,6 +20,7 @@ initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]'
  */
 initSortable('[data-sortable]');
 
+// Support for specific sorting index
 if (document.getElementById('js-sortable')) {
     new SortableGroup({
         // any options go here
