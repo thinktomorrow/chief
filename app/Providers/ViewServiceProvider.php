@@ -40,7 +40,7 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         Blade::directive('adminCan', function ($expression) {
-            return "<?php if (\$manager->can({$expression})) { ?>";
+            return "<?php if (isset(\$manager) && \$manager->can({$expression})) { ?>";
         });
 
         Blade::directive('elseAdminCan', function () {
