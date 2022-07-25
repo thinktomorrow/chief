@@ -307,7 +307,7 @@ trait FragmentAssistant
                         $form->action($this->route('fragment-store', $owner))
                              ->refreshUrl('');
                     })
-                ;
+        ;
 
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);

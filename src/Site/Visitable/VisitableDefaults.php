@@ -38,7 +38,7 @@ trait VisitableDefaults
     {
         return $this->hasMany(UrlRecord::class, 'model_id')
             ->where('model_type', $this->getMorphClass())
-            ;
+        ;
     }
 
     public function isVisitable(): bool

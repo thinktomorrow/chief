@@ -73,7 +73,7 @@ class MenuItem extends Model
         return static::where('owner_type', $ownerType)
             ->where('owner_id', $ownerId)
             ->get()
-            ;
+        ;
     }
 
     public function ofType($type): bool

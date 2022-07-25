@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -20,7 +20,6 @@ final class ChiefResponse
         }
 
         try {
-
             $slug = Str::ascii($slug);
 
             $urlRecord = UrlRecord::findBySlug($slug, $locale);

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
@@ -27,7 +27,6 @@ final class SaveUrlSlugs
         $existingRecords = UrlRecord::getByModel($model);
 
         foreach ($slugs as $locale => $slug) {
-
             if (! $slug) {
                 $this->deleteEmptyRecord($model, $locale, $existingRecords);
 
@@ -90,7 +89,7 @@ final class SaveUrlSlugs
         $nonRedirectsWithSameLocale->each(function ($existingRecord) use ($slug) {
             // Non-ascii chars are threated the same in url and will be found as if it were the ascii variant
             // Therefore we can safely update the existing url record instead of creating a redirect first.
-            if(Str::ascii($existingRecord->slug) == Str::ascii($slug)) {
+            if (Str::ascii($existingRecord->slug) == Str::ascii($slug)) {
                 $existingRecord->slug = $slug;
                 $existingRecord->save();
             } elseif ($existingRecord->slug != $slug) {
