@@ -15,6 +15,10 @@ principles.
 - Added: The data-sortable-id-type can now be set on the sortable container. It defaults to an int but now you set it to string so you can use an uuid as sortable id as well.
 - Added: Sorted event after sorted
 
+## 0.7.9 - 2022-07-25
+- Fixed: issue where removing diacritics in url removed entire url entry e.g. foobér => foobar.
+- Fixed: issue where ordering nested fragments gave an error.
+
 ## 0.7.8 - 2022-06-15
 - Fixed: issue where deleting model redirected to the index inside the sidebar.
 

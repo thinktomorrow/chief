@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\Mediagallery\Application\RemovalAction;
 use Thinktomorrow\Chief\Admin\Mediagallery\Application\ZipAction;
-    use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class BulkActionsController extends Controller
 {
