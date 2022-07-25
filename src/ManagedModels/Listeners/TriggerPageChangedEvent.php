@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
@@ -52,6 +53,8 @@ class TriggerPageChangedEvent
     {
         $model = ContextModel::find($e->contextId)->getOwner();
 
+        if($model instanceof FragmentModel) return;
+
         event(new PageChanged($model->modelReference()));
     }
 
@@ -81,6 +84,9 @@ class TriggerPageChangedEvent
         $models = $this->getOwningModels->get($fragment->fragmentModel());
 
         foreach ($models as $model) {
+
+            if($model instanceof FragmentModel) continue;
+
             event(new PageChanged($model['model']->modelReference()));
         }
     }
