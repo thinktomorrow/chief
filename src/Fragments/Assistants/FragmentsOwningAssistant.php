@@ -126,7 +126,7 @@ trait FragmentsOwningAssistant
 
         app(SortModels::class)->handleFragments($owner->ownerModel(), $indices);
 
-        event(new FragmentsReordered(ContextModel::ownedBy($owner)->id));
+        event(new FragmentsReordered(ContextModel::ownedBy($owner->ownerModel())->id));
 
         return response()->json([
             'message' => 'models sorted.',

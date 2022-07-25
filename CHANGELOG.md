@@ -6,6 +6,7 @@ principles.
 
 ## unreleased
 - Fixed: issue where removing diacritics in url removed entire url entry e.g. foobér => foobar.
+- Fixed: issue where ordering nested fragments gave an error.
 
 ## 0.7.8 - 2022-06-15
 - Fixed: issue where deleting model redirected to the index inside the sidebar.
