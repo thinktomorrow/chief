@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
@@ -36,7 +37,7 @@ class UrlRecord extends Model
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
-        if (! $record) {
+        if (!$record) {
             throw new UrlRecordNotFound('No url record found by slug [' . $slug . '] for locale [' . $locale . '].');
         }
 
@@ -65,7 +66,7 @@ class UrlRecord extends Model
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
-        if (! $record) {
+        if (!$record) {
             throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 
@@ -96,13 +97,14 @@ class UrlRecord extends Model
             ->first();
     }
 
-    public function replaceAndRedirect(array $values): UrlRecord
+    public function replaceAndRedirect(string $slug): UrlRecord
     {
-        $newRecord = static::firstOrCreate(array_merge([
-            'locale' => $this->locale,
+        $newRecord = static::firstOrCreate([
+            'locale'     => $this->locale,
             'model_type' => $this->model_type,
-            'model_id' => $this->model_id,
-        ], $values));
+            'model_id'   => $this->model_id,
+            'slug'       => $slug,
+        ]);
 
         $this->redirectTo($newRecord);
 
@@ -111,8 +113,12 @@ class UrlRecord extends Model
 
     public function redirectTo(self $record = null): ?UrlRecord
     {
-        if (! $record) {
+        if (!$record) {
             return $this->isRedirect() ? static::find($this->redirect_id) : null;
+        }
+
+        if($record->id === $this->id) {
+            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from ['.$this->slug.'] to ['.$record->slug.']');
         }
 
         $this->redirect_id = $record->id;
@@ -122,12 +128,13 @@ class UrlRecord extends Model
     }
 
     // Remove all urls that came after this one
+
     /**
      * @return void
      */
     public function revert()
     {
-        if (! $this->isRedirect()) {
+        if (!$this->isRedirect()) {
             return;
         }
 
@@ -144,7 +151,7 @@ class UrlRecord extends Model
 
     public function isRedirect(): bool
     {
-        return ! ! ($this->redirect_id);
+        return !!($this->redirect_id);
     }
 
     public function isHomepage(): bool
@@ -168,7 +175,7 @@ class UrlRecord extends Model
             $builder->where('locale', $locale);
         }
 
-        if (! $includeRedirects) {
+        if (!$includeRedirects) {
             $builder->whereNull('redirect_id');
         }
 
@@ -198,7 +205,7 @@ class UrlRecord extends Model
         })->reject(function ($model) {
             return $model == null;
         })->reject(function (Visitable $model) {
-            return (method_exists($model, 'isPublished') && ! $model->isPublished());
+            return (method_exists($model, 'isPublished') && !$model->isPublished());
         });
     }
 

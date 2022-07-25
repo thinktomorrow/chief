@@ -104,6 +104,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
             'prefix' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
         ]);
 
         // For our tests is it required to have 2 languages: nl and en.

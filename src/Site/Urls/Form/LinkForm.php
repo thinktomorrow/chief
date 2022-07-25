@@ -58,7 +58,7 @@ final class LinkForm
 
             $links[$locale] = (object)[
                 'current' => $currentRecord,
-                'url' => $url,
+                'url' => urldecode($url),
                 'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())), '/') : '',
                 'redirects' => $records->filter->isRedirect(),
             ];

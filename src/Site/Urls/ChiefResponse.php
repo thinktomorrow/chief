@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,6 +20,9 @@ final class ChiefResponse
         }
 
         try {
+
+            $slug = Str::ascii($slug);
+
             $urlRecord = UrlRecord::findBySlug($slug, $locale);
 
             if ($urlRecord->isRedirect()) {

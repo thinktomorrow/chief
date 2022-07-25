@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
@@ -26,11 +27,19 @@ final class SaveUrlSlugs
         $existingRecords = UrlRecord::getByModel($model);
 
         foreach ($slugs as $locale => $slug) {
+
             if (! $slug) {
                 $this->deleteEmptyRecord($model, $locale, $existingRecords);
 
                 continue;
             }
+
+            /**
+             * We convert any non-ascii characters to their ascii equivalent.
+             * The mysql database considers these chars the same in where clauses, e.g. e and é.
+             *  This asserts a consistent behaviour in both the application and the database
+             */
+//            $slug = Str::ascii($slug);
 
             $this->saveRecord(
                 $model,
@@ -70,7 +79,7 @@ final class SaveUrlSlugs
 
         $this->cleanupExistingRecords($model, $locale, $slug, $existingRecords);
 
-        // If slug entry is left empty, all existing records will be deleted
+        // If there are no matching urls, the url is created
         if ($nonRedirectsWithSameLocale->isEmpty()) {
             $this->createRecord($model, $locale, $slug);
 
@@ -79,8 +88,13 @@ final class SaveUrlSlugs
 
         // Only replace the existing records that differ from the current passed slugs
         $nonRedirectsWithSameLocale->each(function ($existingRecord) use ($slug) {
-            if ($existingRecord->slug != $slug) {
-                $existingRecord->replaceAndRedirect(['slug' => $slug]);
+            // Non-ascii chars are threated the same in url and will be found as if it were the ascii variant
+            // Therefore we can safely update the existing url record instead of creating a redirect first.
+            if(Str::ascii($existingRecord->slug) == Str::ascii($slug)) {
+                $existingRecord->slug = $slug;
+                $existingRecord->save();
+            } elseif ($existingRecord->slug != $slug) {
+                $existingRecord->replaceAndRedirect($slug);
             }
         });
     }
