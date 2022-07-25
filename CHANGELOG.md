@@ -5,6 +5,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.9 - 2022-07-25
 - Fixed: issue where removing diacritics in url removed entire url entry e.g. foobér => foobar.
 - Fixed: issue where ordering nested fragments gave an error.
 
