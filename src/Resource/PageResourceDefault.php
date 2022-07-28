@@ -50,7 +50,7 @@ trait PageResourceDefault
             return null;
         }
 
-        return new BreadCrumb('Terug naar overzicht', $this->manager->route('index'));
+        return new BreadCrumb('Overzicht', $this->manager->route('index'));
     }
 
     public function getPageTitle($model): string

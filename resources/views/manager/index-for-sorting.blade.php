@@ -46,7 +46,7 @@
                 <div class="card">
                     <div class="space-y-4">
                         <a class="btn btn-primary" href="{{ $manager->route('index') }}">
-                            Terug naar overzicht
+                            Overzicht
                         </a>
 
                         <p class="text-sm text-grey-700">

@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace __STUB_NAMESPACE__;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
+use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 
-class __STUB_CLASSNAME__ extends Model implements PageContract
+class __STUB_CLASSNAME__ extends Model implements PageContract, PageResource
 {
+    use PageResourceDefault;
     use PageDefaults;
 
     public $guarded = [];
@@ -16,6 +20,13 @@ class __STUB_CLASSNAME__ extends Model implements PageContract
     public $dynamicKeys = [
         'title', 'seo_title', 'seo_content',
     ];
+
+    public function fields($model): iterable
+    {
+        yield FieldPresets::pagetitle();
+        __STUB_FIELDS__
+        yield FieldPresets::seo();
+    }
 
     public function allowedFragments(): array
     {
