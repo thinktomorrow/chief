@@ -10,14 +10,9 @@ class CreateCommandsTest extends ChiefTestCase
     public function it_can_create_a_page()
     {
         $filepath = $this->getTempDirectory() .'/' . 'Article.php';
-        $resourceFilepath = $this->getTempDirectory() .'/' . 'ArticleResource.php';
 
         if (file_exists($filepath)) {
             unlink($filepath);
-        }
-
-        if (file_exists($resourceFilepath)) {
-            unlink($resourceFilepath);
         }
 
         $this->artisan('chief:page')
@@ -29,7 +24,6 @@ class CreateCommandsTest extends ChiefTestCase
             ->assertExitCode(0);
 
         $this->assertFileExists($filepath);
-        $this->assertFileExists($resourceFilepath);
     }
 
     /** @test */

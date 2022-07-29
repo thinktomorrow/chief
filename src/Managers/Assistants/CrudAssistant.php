@@ -149,7 +149,8 @@ trait CrudAssistant
         View::share('manager', $this);
         View::share('model', $model);
         View::share('resource', $this->resource);
-        View::share('forms', Forms::make($this->resource->fields($model)));
+
+        View::share('forms', Forms::make($this->resource->fields($model))->fillFields($this, $model));
 
         return $this->resource->getCreatePageView();
     }
