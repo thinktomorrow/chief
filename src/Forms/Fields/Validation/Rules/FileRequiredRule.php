@@ -12,7 +12,9 @@ class FileRequiredRule extends FileRule
             'file_required' => ':attribute is verplicht.',
         ]);
 
-        if(is_null($values)) return false;
+        if (is_null($values)) {
+            return false;
+        }
 
         foreach ($values as $value) {
             if (! is_null($value)) {
