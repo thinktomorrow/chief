@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class CreateUrlForPage
@@ -50,7 +50,7 @@ class CreateUrlForPage
         $currentLocale = app()->getLocale();
         $slugs = [];
 
-        if(!($resource = $this->registry->findResourceByModel($model::class)) || !$resource instanceof PageResource) {
+        if (! ($resource = $this->registry->findResourceByModel($model::class)) || ! $resource instanceof PageResource) {
             return [];
         }
 
