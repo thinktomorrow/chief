@@ -98,7 +98,7 @@ final class CreatePageTest extends ChiefTestCase
         $article = ArticlePage::first();
 
         $this->assertEquals(2, UrlRecord::count());
-        $this->assertEquals('new-title', UrlRecord::findByModel($article, 'nl')->slug);
-        $this->assertEquals('new-title', UrlRecord::findByModel($article, 'en')->slug);
+        $this->assertEquals('custom-value', UrlRecord::findByModel($article, 'nl')->slug);
+        $this->assertEquals('custom-value', UrlRecord::findByModel($article, 'en')->slug);
     }
 }

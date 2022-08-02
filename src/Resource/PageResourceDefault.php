@@ -119,7 +119,7 @@ trait PageResourceDefault
         return 'int';
     }
 
-    protected function getNavIcon(): ?string
+    protected function getNavIcon(): string
     {
         return '<svg><use xlink:href="#icon-collection"></use></svg>';
     }
