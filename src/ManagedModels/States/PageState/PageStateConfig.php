@@ -167,13 +167,13 @@ class PageStateConfig implements StateConfig, StateAdminConfig
                 return 'Haal offline';
 
             case 'archive':
-                return 'archiveer';
+                return 'Archiveer';
 
             case 'unarchive':
                 return 'Haal uit archief';
 
             case 'delete':
-                return 'verwijder';
+                return 'Verwijder';
 
             default:
                 return $transitionKey;
