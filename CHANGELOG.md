@@ -10,6 +10,7 @@ principles.
 - Fixed: sorting logic can now handle uuids, rather than only integers.
 - Fixed: double clicks sometimes opened up sidebar with duplicate content.
 - Fixed: adding file on create page didn't upload.
+- Fixed: multiselect for key value pairs
 - Fixed: locale showed up in validation errors when there were no multiple localized fields.
 - Changed: Field::options callback now has the model as second parameter.
 - Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
