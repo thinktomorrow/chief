@@ -20,7 +20,7 @@
                     Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.
                 </p>
             @else
-                <p class="text-sm body-dark body-base">
+                <p class="body-dark body-base">
                     Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
                 </p>
 

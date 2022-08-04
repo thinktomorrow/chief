@@ -1,8 +1,3 @@
-{{--
-    TODO(tijs):
-    - Change collapsible attribute API to standard top level collapsing without defining it explicitly on the component.
---}}
-
 {{-- Mobile navigation toggle --}}
 <div class="container block lg:hidden">
     <div class="flex items-center justify-start pt-6 -ml-2 lg:hidden">

@@ -33,7 +33,7 @@ class BulkActions {
 
             const count = this._getBulkActionsCount();
 
-            this._toggleBulkActionsContainer(count);
+            // this._toggleBulkActionsContainer(count);
             this._updateBulkActionsCounter(count);
         });
 
@@ -44,7 +44,7 @@ class BulkActions {
 
                 const count = this._getBulkActionsCount();
 
-                this._toggleBulkActionsContainer(count);
+                // this._toggleBulkActionsContainer(count);
                 this._updateBulkActionsCounter(count);
             });
         });

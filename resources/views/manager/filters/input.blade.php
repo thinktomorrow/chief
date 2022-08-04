@@ -5,5 +5,11 @@
         </x-slot>
     @endif
 
-    <input id="{{ $id }}" type="text" name="{{ $name }}" placeholder="{{ $placeholder }}" value="{{ $value }}">
+    <input
+        id="{{ $id }}"
+        type="text"
+        name="{{ $name }}"
+        placeholder="{{ $placeholder }}"
+        value="{{ $value }}"
+    >
 </x-chief-form::formgroup>

@@ -1,6 +1,6 @@
 @if($manager->filters()->anyRenderable())
-    <div class="card">
-        <div class="w-full space-x-1 mt-0.5">
+    <div class="space-y-6 card">
+        <div class="w-full space-x-1">
             <span class="text-lg display-base display-dark">
                 Filter
             </span>
