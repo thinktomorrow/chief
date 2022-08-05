@@ -6,10 +6,10 @@
     @endif
 
         <chief-multiselect
-                id="{{ $id }}"
-                name="{{ $name }}"
-                :options='@json($options)'
-                selected='@json($value)'
-                :multiple='@json($multiple)'
+            id="{{ $id }}"
+            name="{{ $name }}"
+            :options='@json($options)'
+            selected='@json($value)'
+            :multiple='@json($multiple)'
         ></chief-multiselect>
 </x-chief-form::formgroup>

@@ -6,7 +6,7 @@
 
         <main id="main" class="min-h-screen bg-grey-100">
             <div class="flex flex-wrap items-start lg:flex-nowrap">
-                <section class="relative top-0 z-10 w-full shrink-0 lg:sticky lg:w-auto">
+                <section class="relative top-0 z-20 w-full shrink-0 lg:sticky lg:w-auto">
                     @include('chief::layout.nav.nav')
                 </section>
 

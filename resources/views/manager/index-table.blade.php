@@ -1,29 +1,5 @@
-<x-chief::index :sidebar="false">
+<x-chief::index :sidebar="true">
     <x-chief::table>
-
-            @if($manager->filters()->anyRenderable())
-
-                <x-slot name="search">
-                    <form method="GET" class="space-y-6">
-
-                        {!! $manager->filters()->render() !!}
-
-                        <div>
-                            <button class="btn btn-primary" type="submit">Filter</button>
-                        </div>
-
-                    </form>
-                </x-slot>
-
-                <!-- hidden filters -->
-                            <x-slot name="filters">
-                                <a href="#" title="..." class="dropdown-link dropdown-link-success">Online</a>
-                                <a href="#" title="..." class="dropdown-link dropdown-link-error">Offline</a>
-                                <a href="#" title="..." class="dropdown-link dropdown-link-warning">Gearchiveerd</a>
-                                <a href="#" title="..." class="dropdown-link dropdown-link-primary">Alle</a>
-                            </x-slot>
-            @endif
-
         @if(count($resource::getTableBulkActions()) > 0)
             <x-slot name="actions">
                 @foreach($resource::getTableBulkActions() as $tableAction)
@@ -53,7 +29,7 @@
         </x-slot>
 
         <x-slot name="body">
-            @foreach ($models as $model)
+            @forelse ($models as $model)
                 <x-chief::table.row>
                     @if(count($resource::getTableBulkActions()) > 0)
                         <x-chief::table.data>
@@ -81,7 +57,13 @@
                         @endAdminCan
                     </x-chief::table.data>
                 </x-chief::table.row>
-            @endforeach
+            @empty
+                <x-chief::table.row>
+                    <x-chief::table.data colspan="100%" class="leading-normal text-center body-base text-grey-500">
+                        Geen {{ $model->getIndexTitle() }} gevonden
+                    </x-chief::table.data>
+                </x-chief::table.row>
+            @endforelse
         </x-slot>
     </x-chief::table>
 
