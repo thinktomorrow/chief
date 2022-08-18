@@ -18,6 +18,7 @@ initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]'
 /**
  * Sortable
  */
+// TODO: necessary?
 initSortable('[data-sortable]');
 
 // Support for specific sorting index
