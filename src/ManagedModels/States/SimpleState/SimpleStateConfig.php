@@ -76,7 +76,6 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
         switch ($statefulContract->getState($this->getStateKey())) {
-
             case SimpleState::online:
                 return '<span class="label label-xs label-success">Online</span>';
 

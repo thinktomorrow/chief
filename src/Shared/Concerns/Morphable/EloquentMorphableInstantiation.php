@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\Legacy\Pages\PageTranslation;
  */
 trait EloquentMorphableInstantiation
 {
-
     /**
      * Custom build for new Collections where we convert any models to the correct collection types.
      * Magic override warning.
