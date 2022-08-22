@@ -18,9 +18,11 @@
             function listenForClose() {
                 const toastClose = toast.querySelector('[data-admin-toast-close]');
 
-                toastClose.addEventListener('click', function() {
-                    toast.style.display = "none";
-                });
+                if(toastClose) {
+                    toastClose.addEventListener('click', function() {
+                        toast.style.display = "none";
+                    });
+                }
             }
         } catch(error) {
             console.log(error);
