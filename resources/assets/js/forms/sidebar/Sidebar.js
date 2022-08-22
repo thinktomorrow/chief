@@ -206,11 +206,16 @@ export default class {
 
             callback();
         } else {
-            Api.get(this.panels.findActive().url, (_data) => {
-                this.replacePanelDom(_data);
-
-                callback();
-            });
+            Api.get(
+                this.panels.findActive().url,
+                (_data) => {
+                    this.replacePanelDom(_data);
+                    callback();
+                },
+                null,
+                null,
+                true
+            );
         }
     }
 

@@ -16,8 +16,8 @@ const Submissions = {
 };
 
 const Api = {
-    get(url, successCallback, errorCallback, alwaysCallback) {
-        if (Submissions.isSubmitting(url)) {
+    get(url, successCallback, errorCallback, alwaysCallback, force = false) {
+        if (!force && Submissions.isSubmitting(url)) {
             return;
         }
 

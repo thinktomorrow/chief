@@ -6,6 +6,7 @@ principles.
 
 ## unreleased
 - Fixed: issue with sidebar trigger when using nested forms
+- Fixed: adding existing fragment showed json response instead of redirect
 - Fixed: issue where deleting model redirected to the index inside the sidebar.
 - Fixed: sorting logic can now handle uuids, rather than only integers.
 - Fixed: double clicks sometimes opened up sidebar with duplicate content.
