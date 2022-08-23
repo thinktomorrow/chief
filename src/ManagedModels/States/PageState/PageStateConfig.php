@@ -124,7 +124,6 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         }
 
         switch ($statefulContract->getState($this->getStateKey())) {
-
             case PageState::published:
                 return '<span class="label label-xs label-success">Gepubliceerd</span>';
 

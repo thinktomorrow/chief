@@ -24,7 +24,6 @@ class ChangeHomepage
         $this->assertNoEmptyValues($modelReferences);
 
         foreach ($modelReferences as $locale => $modelReferenceString) {
-
             // If existing value has changed, we'll need to revert this previous value
             if (isset($existingValues[$locale])) {
                 if ($modelReferenceString != $existingValues[$locale]) {

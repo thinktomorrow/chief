@@ -155,7 +155,6 @@ final class SaveUrlSlugs
                 $existingRecord->model_type == $model->getMorphClass() &&
                 $existingRecord->model_id == $model->id);
         })->each(function ($existingRecord) {
-
             // TODO: if there is a redirect to this page, we'll take this one as the new url
             $existingRecord->delete();
         });

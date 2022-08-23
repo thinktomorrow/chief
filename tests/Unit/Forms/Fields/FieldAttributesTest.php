@@ -35,7 +35,6 @@ class FieldAttributesTest extends TestCase
     public function it_has_default_attributes()
     {
         foreach ($this->classes as $class) {
-
             /** @var Field $component */
             $component = $class::make('xxx');
 
