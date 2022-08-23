@@ -22,16 +22,15 @@
                     <div
                         id="js-sortable"
                         data-sort-on-load data-sort-route="{{ $manager->route('sort-index') }}"
-                        class="row-start-stretch gutter-4"
+                        class="row-start-stretch gutter-1"
                     >
                         @foreach($models as $model)
-                            <div
-                                class="w-full border cursor-move sm:w-1/2 md:w-1/3 lg:w-1/4 border-grey-100"
-                                data-sortable-id="{{ $model->id }}"
-                            >
-                                <p class="text-sm font-semibold text-grey-900">
-                                    {{ $resource->getPageTitle($model) }}
-                                </p>
+                            <div data-sortable-id="{{ $model->id }}" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+                                <div class="h-full p-3 border rounded-md cursor-move transition-75 bg-grey-50 border-grey-100 hover:bg-grey-100">
+                                    <p class="text-sm display-base display-dark">
+                                        {{ $resource->getPageTitle($model) }}
+                                    </p>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -45,7 +44,7 @@
             <div class="w-full lg:w-1/3">
                 <div class="card">
                     <div class="space-y-4">
-                        <a class="btn btn-primary" href="{{ $manager->route('index') }}">
+                        <a href="{{ $manager->route('index') }}" title="Overzicht" class="btn btn-primary">
                             Overzicht
                         </a>
 
