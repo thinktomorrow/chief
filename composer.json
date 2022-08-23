@@ -23,7 +23,7 @@
         "spatie/laravel-sitemap": "^6",
         "thinktomorrow/assetlibrary": "^0.8.4",
         "thinktomorrow/dynamic-attributes": "^0.4.1",
-        "thinktomorrow/squanto": "^3.0.0",
+        "thinktomorrow/squanto": "^3.0.1",
         "thinktomorrow/url": "~2.0.0",
         "thinktomorrow/vine": "^0.4.4"
     },
