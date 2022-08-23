@@ -100,7 +100,7 @@ trait CrudAssistant
             return $builder->get();
         }
 
-        return $builder->paginate($pagination)->withQueryString();
+        return $builder->paginate($pagination)->onEachSide(1)->withQueryString();
     }
 
     public function filters(): Filters

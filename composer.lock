@@ -6574,16 +6574,16 @@
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "099bea300c5dacd91440fb3ef6849582761f071e"
+                "reference": "d93170a71843e80768fb29e2f9bc9b5ea1fd4637"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/099bea300c5dacd91440fb3ef6849582761f071e",
-                "reference": "099bea300c5dacd91440fb3ef6849582761f071e",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/d93170a71843e80768fb29e2f9bc9b5ea1fd4637",
+                "reference": "d93170a71843e80768fb29e2f9bc9b5ea1fd4637",
                 "shasum": ""
             },
             "require": {
@@ -6637,9 +6637,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/squanto/issues",
-                "source": "https://github.com/thinktomorrow/squanto/tree/3.0.0"
+                "source": "https://github.com/thinktomorrow/squanto/tree/3.0.1"
             },
-            "time": "2022-06-13T13:15:41+00:00"
+            "time": "2022-08-23T08:03:12+00:00"
         },
         {
             "name": "thinktomorrow/url",
