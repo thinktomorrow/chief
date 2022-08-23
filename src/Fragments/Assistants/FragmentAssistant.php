@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
@@ -329,11 +330,15 @@ trait FragmentAssistant
 
         $fragmentable = $this->storeFragmentable($ownerModel, $fragmentable, $request);
 
+        $redirectTo = null;
+
         // If the fragment is a fragment owner ( = has nested fragments), we'll show the edit page of this fragment after creation
-        // By default other fragments will return to the main edit page after being created
-        $redirectTo = ($fragmentable instanceof FragmentsOwner)
-            ? $this->route('fragment-edit', $ownerModel, $fragmentable)
-            : null;
+        // By default other fragments will return to the main edit page after being created.
+        if($fragmentable instanceof FragmentsOwner) {
+            $redirectTo = ($ownerModel instanceof FragmentModel)
+                ? $this->route('nested-fragment-edit', $ownerModel->id, $fragmentable->fragmentModel()->id)
+                : $this->route('fragment-edit', $ownerModel, $fragmentable);
+        }
 
         return response()->json([
             'message' => 'fragment created',
