@@ -22,8 +22,8 @@
             @endif
         </div>
 
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
+        <div class="hidden gap-4 sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div class="shrink-0">
                 <p class="text-sm leading-5 text-grey-700">
                     <span class="font-medium">{{ $paginator->firstItem() }}</span>
                     -
