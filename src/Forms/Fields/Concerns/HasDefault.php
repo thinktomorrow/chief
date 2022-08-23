@@ -25,7 +25,7 @@ trait HasDefault
 
     public function getDefault(?string $locale = null): null|string|int|array
     {
-        if (!$this->useDefault) {
+        if (! $this->useDefault) {
             return null;
         }
 
