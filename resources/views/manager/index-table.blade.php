@@ -49,13 +49,13 @@
                         </x-chief::table.data>
                     @endforeach
 
-                    <x-chief::table.data class="text-right">
-                        @adminCan('edit')
+                    @adminCan('edit')
+                        <x-chief::table.data class="text-right">
                             <a href="@adminRoute('edit', $model)" title="Aanpassen">
                                 <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
                             </a>
-                        @endAdminCan
-                    </x-chief::table.data>
+                        </x-chief::table.data>
+                    @endAdminCan
                 </x-chief::table.row>
             @empty
                 <x-chief::table.row>
