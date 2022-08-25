@@ -6,8 +6,8 @@
     @if($actions)
         <div class="p-6 space-y-4">
             <div data-bulk-actions-container>
-                <div class="flex items-center justify-between gap-4">
-                    <p class="body-base text-grey-500">
+                <div class="flex items-center justify-end gap-4">
+                    <p class="hidden body-base text-grey-500">
                         <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
                         <span class="hidden bulk-actions-counter-is-1:inline">item</span>
                         <span class="bulk-actions-counter-is-1:hidden">items</span>
@@ -16,7 +16,7 @@
 
                     <dropdown class="relative z-20">
                         <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-primary">
-                            Actie voor selectie ...
+                            Acties
                         </span>
 
                         <div v-cloak class="dropdown-content">
