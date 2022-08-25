@@ -15,8 +15,8 @@ return [
      * From which email should the chief transactional mails be sent.
      * By default the webmaster mail address and name will be used.
      */
-    'from_email' => null,
-    'from_name' => null,
+    'from_email' => env('MAIL_FROM_ADDRESS', 'info@thinktomorrow.be'),
+    'from_name' => env('MAIL_FROM_NAME', 'Think Tomorrow'),
 
     /**
      * Client details
