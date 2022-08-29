@@ -14,6 +14,7 @@ principles.
 - Fixed: multiselect for key value pairs
 - Fixed: locale showed up in validation errors when there were no multiple localized fields.
 - Fixed: nested fragment broke when adding fragmentowner as nested fragment
+- Changed: FilterPresets::text() now expects the queryParameter as first parameter. Beforehand the first parameter was the array of dynamic attributes.
 - Changed: Field::options callback now has the model as second parameter.
 - Changed: Default field value is no longer showed in field window views.
 - Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
