@@ -1,6 +1,6 @@
 import EventBus from '../../utilities/EventBus';
 import RadioFieldTrigger from './RadioFieldTrigger';
-import SelectFieldTrigger from './SelectFieldTrigger';
+import MultiSelectFieldTrigger from './MultiSelectFieldTrigger';
 import CheckboxFieldTrigger from './CheckboxFieldTrigger';
 import InputFieldTrigger from './InputFieldTrigger';
 
@@ -31,8 +31,8 @@ const initConditionalFieldsInContainer = (
             case 'radio':
                 new RadioFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'select':
-                new SelectFieldTrigger(name, element, conditionalFieldsData);
+            case 'multiselect':
+                new MultiSelectFieldTrigger(name, element, conditionalFieldsData);
                 break;
             case 'checkbox':
                 new CheckboxFieldTrigger(name, element, conditionalFieldsData);

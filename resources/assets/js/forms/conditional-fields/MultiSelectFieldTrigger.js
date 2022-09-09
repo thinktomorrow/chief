@@ -2,7 +2,7 @@ import _debounce from 'lodash/debounce';
 
 import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
-class SelectFieldTrigger extends ConditionalFieldTrigger {
+class MultiSelectFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
         const currentValues = this._getCurrentValuesFromSelectElement();
 
@@ -25,4 +25,4 @@ class SelectFieldTrigger extends ConditionalFieldTrigger {
     }
 }
 
-export { SelectFieldTrigger as default };
+export { MultiSelectFieldTrigger as default };
