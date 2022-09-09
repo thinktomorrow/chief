@@ -2,6 +2,7 @@ import Panels from './sidebar/Panels';
 import Api from './Api';
 import vueFields from './fields/vue-fields';
 import initSortable from '../sortable/sortable-init';
+import initConditionalFields from './conditional-fields/init-conditional-fields';
 import SelectFragment from '../fragments/selectFragment';
 import Submit from './Submit';
 import EventBus from '../utilities/EventBus';
@@ -95,6 +96,8 @@ Form.prototype.refresh = function () {
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
     initSortable('[data-sortable]', this.el);
+    initConditionalFields(this.el);
+
     if (this.getTags().includes('fragments')) {
         new SelectFragment(this.el);
     }
