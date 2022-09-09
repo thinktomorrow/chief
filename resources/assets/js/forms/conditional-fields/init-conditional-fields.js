@@ -1,8 +1,9 @@
 import EventBus from '../../utilities/EventBus';
-import RadioFieldTrigger from './RadioFieldTrigger';
-import MultiSelectFieldTrigger from './MultiSelectFieldTrigger';
-import CheckboxFieldTrigger from './CheckboxFieldTrigger';
 import InputFieldTrigger from './InputFieldTrigger';
+import RadioFieldTrigger from './RadioFieldTrigger';
+import CheckboxFieldTrigger from './CheckboxFieldTrigger';
+import SelectFieldTrigger from './SelectFieldTrigger';
+import MultiSelectFieldTrigger from './MultiSelectFieldTrigger';
 
 /**
  * Initialize conditional fields functionality
@@ -28,17 +29,20 @@ const initConditionalFieldsInContainer = (
         if (!name || !type || !conditionalFieldsData) return;
 
         switch (type) {
+            case 'input':
+                new InputFieldTrigger(name, element, conditionalFieldsData);
+                break;
             case 'radio':
                 new RadioFieldTrigger(name, element, conditionalFieldsData);
-                break;
-            case 'multiselect':
-                new MultiSelectFieldTrigger(name, element, conditionalFieldsData);
                 break;
             case 'checkbox':
                 new CheckboxFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'input':
-                new InputFieldTrigger(name, element, conditionalFieldsData);
+            case 'select':
+                new SelectFieldTrigger(name, element, conditionalFieldsData);
+                break;
+            case 'multiselect':
+                new MultiSelectFieldTrigger(name, element, conditionalFieldsData);
                 break;
             default:
                 console.error(
