@@ -4,7 +4,13 @@
 
 <div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200">
     @if($actions)
-        <div class="p-6 space-y-4">
+        <div class="flex justify-end p-6">
+            <div class="flex flex-wrap gap-2">
+                {{ $actions }}
+            </div>
+        </div>
+
+        {{-- <div class="p-6 space-y-4">
             <div data-bulk-actions-container>
                 <div class="flex items-center justify-end gap-4">
                     <p class="hidden body-base text-grey-500">
@@ -25,12 +31,15 @@
                     </dropdown>
                 </div>
             </div>
-        </div>
+        </div> --}}
     @endif
 
     {{-- The specific height value is necessary in order for the sticky table headers to work.
     This because of an issue combining sticky element within a container with non-default overflow values --}}
-    <div class="overflow-x-scroll whitespace-nowrap h-[80vh]">
+    <div @class([
+        'overflow-x-scroll whitespace-nowrap h-[80vh]',
+        'rounded-xl' => !$actions
+    ])>
         <table class="min-w-full border-separate border-spacing-0">
             <thead>
                 <x-chief::table.row>

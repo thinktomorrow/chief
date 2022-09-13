@@ -9,17 +9,17 @@
         @endif
 
         <x-slot name="header">
-{{--            @if(count($resource::getTableBulkActions()) > 0)--}}
-{{--                <x-chief::table.header>--}}
-{{--                    <input--}}
-{{--                        data-bulk-all-checkbox--}}
-{{--                        type="checkbox"--}}
-{{--                        name="bulk_all"--}}
-{{--                        id="bulk_all"--}}
-{{--                        class="with-custom-checkbox"--}}
-{{--                    >--}}
-{{--                </x-chief::table.header>--}}
-{{--            @endif--}}
+           {{-- @if(count($resource::getTableBulkActions()) > 0)
+               <x-chief::table.header>
+                   <input
+                       data-bulk-all-checkbox
+                       type="checkbox"
+                       name="bulk_all"
+                       id="bulk_all"
+                       class="with-custom-checkbox"
+                   >
+               </x-chief::table.header>
+            @endif --}}
 
             @foreach ($resource::getTableColumns() as $column)
                 <x-chief::table.header :sortable="$column['sortable']" class="text-left display-base display-dark">
@@ -31,17 +31,17 @@
         <x-slot name="body">
             @forelse ($models as $model)
                 <x-chief::table.row>
-{{--                    @if(count($resource::getTableBulkActions()) > 0)--}}
-{{--                        <x-chief::table.data>--}}
-{{--                            <input--}}
-{{--                                data-bulk-item-checkbox--}}
-{{--                                type="checkbox"--}}
-{{--                                name="item_{{ $loop->index }}"--}}
-{{--                                id="item_{{ $loop->index }}"--}}
-{{--                                class="with-custom-checkbox"--}}
-{{--                            >--}}
-{{--                        </x-chief::table.data>--}}
-{{--                    @endif--}}
+                   {{-- @if(count($resource::getTableBulkActions()) > 0)
+                       <x-chief::table.data>
+                           <input
+                               data-bulk-item-checkbox
+                               type="checkbox"
+                               name="item_{{ $loop->index }}"
+                               id="item_{{ $loop->index }}"
+                               class="with-custom-checkbox"
+                           >
+                       </x-chief::table.data>
+                   @endif --}}
 
                     @foreach($model->getTableRowHtml() as $rowHtml)
                         <x-chief::table.data class="leading-normal body-base body-dark">

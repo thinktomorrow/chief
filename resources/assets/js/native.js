@@ -15,11 +15,8 @@ initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]'
     animationClass: 'animate-slide-in-nav lg:animate-none',
 });
 
-/**
- * Sortable
- */
-// TODO: necessary?
-initSortable('[data-sortable]');
+/** Sortable */
+initSortable('[data-sortable]'); // TODO(ben): what's being initialised here exactly?
 
 // Support for specific sorting index
 if (document.getElementById('js-sortable')) {
@@ -32,4 +29,5 @@ if (document.getElementById('js-sortable')) {
 
 /** Form logic - submit forms async or via sidebar */
 require('./forms/index');
-require('./tables/index');
+
+// require('./tables/index');
