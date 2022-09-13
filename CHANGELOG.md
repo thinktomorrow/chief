@@ -5,6 +5,9 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Changed: Nav vertically spaced a bit better. To add a hr in your nav, add `<hr class="my-6 border-grey-100">`.
+
+## 0.7.10 - 2022-09-07
 - Fixed: issue with sidebar trigger when using nested forms
 - Fixed: adding existing fragment showed json response instead of redirect
 - Fixed: issue where deleting model redirected to the index inside the sidebar.
