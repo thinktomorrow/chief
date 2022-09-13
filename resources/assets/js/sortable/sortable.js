@@ -14,13 +14,14 @@ import SortableToggle from './sortable-toggle';
  * - data-sortable-hide-when-sorting        to hide the element when sorting
  * - data-sortable-show-when-sorting        to show the element when sorting
  *
+ * @param el
  * @param options
  * @constructor
  */
 
-const SortableGroup = function (options) {
+const SortableGroup = function (el, options) {
     this.Sortables = [];
-    this.sortableGroupEl = options.sortableGroupEl || document.getElementById('js-sortable');
+    this.sortableGroupEl = el;
     this.sortableGroupId = options.sortableGroupId || 'models';
     this.sortableIdAttribute = options.sortableId || 'data-sortable-id';
     this.sortableIdType = options.sortableIdType || 'int'; // int, string

@@ -1,4 +1,3 @@
-import SortableGroup from './sortable/sortable';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -16,18 +15,10 @@ initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]'
 });
 
 /** Sortable */
-initSortable('[data-sortable]'); // TODO(ben): what's being initialised here exactly?
-
-// Support for specific sorting index
-if (document.getElementById('js-sortable')) {
-    new SortableGroup({
-        // any options go here
-        isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
-        endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route'),
-    });
-}
+initSortable('[data-sortable]');
 
 /** Form logic - submit forms async or via sidebar */
 require('./forms/index');
 
+/** Table logic - bulk actions */
 // require('./tables/index');

@@ -9,9 +9,8 @@ import SortableGroup from './sortable';
  */
 const initSortable = (selector, container = document, options = {}) => {
     Array.from(container.querySelectorAll(selector)).forEach((el) => {
-        new SortableGroup({
+        new SortableGroup(el, {
             ...{
-                sortableGroupEl: el,
                 sortableGroupId: el.getAttribute('data-sortable-group') || 'models',
                 endpoint: el.getAttribute('data-sortable-endpoint'),
                 nestedEndpoint: el.getAttribute('data-sortable-nested-endpoint'),
