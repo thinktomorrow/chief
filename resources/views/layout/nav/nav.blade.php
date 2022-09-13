@@ -22,7 +22,7 @@
         data-collapsible-navigation
         class="flex flex-col justify-between h-screen px-3 overflow-auto border-r divide-y select-none divide-grey-100 border-grey-100"
     >
-        <div class="pb-6 divide-y divide-grey-100">
+        <div class="pb-6">
             {{-- Desktop Chief title --}}
             <div class="items-center justify-start hidden py-6 lg:flex">
                 <div
@@ -37,7 +37,7 @@
                     href="{{ route('chief.back.dashboard') }}"
                     title="Ga naar Dashboard"
                     class="block w-full px-3 py-2 font-semibold text-black {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
-                > Chief </a>
+                > {{ config('app.client', 'Chief') }} </a>
             </div>
 
             {{-- Mobile Chief title --}}
@@ -53,7 +53,7 @@
                     href="{{ route('chief.back.dashboard') }}"
                     title="Ga naar Dashboard"
                     class="inline-block px-3 py-2 font-semibold text-black"
-                > Chief </a>
+                > {{ config('app.client', 'Chief') }} </a>
             </div>
 
             <div class="py-6">
