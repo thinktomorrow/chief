@@ -18,17 +18,7 @@ initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]'
 /**
  * Sortable
  */
-// TODO: necessary?
 initSortable('[data-sortable]');
-
-// Support for specific sorting index
-if (document.getElementById('js-sortable')) {
-    new SortableGroup({
-        // any options go here
-        isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
-        endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route'),
-    });
-}
 
 /** Form logic - submit forms async or via sidebar */
 require('./forms/index');
