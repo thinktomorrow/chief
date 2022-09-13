@@ -22,13 +22,10 @@
         data-collapsible-navigation
         class="flex flex-col justify-between h-screen px-3 overflow-auto border-r divide-y select-none divide-grey-100 border-grey-100"
     >
-        <div class="pb-6">
+        <div class="py-6">
             {{-- Desktop Chief title --}}
-            <div class="items-center justify-start hidden py-6 lg:flex">
-                <div
-                    data-toggle-navigation
-                    class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
-                >
+            <div class="items-center justify-start hidden lg:flex">
+                <div data-toggle-navigation class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50">
                     <svg class="w-6 h-6 text-black"><use xlink:href="#menu"></use></svg>
                 </div>
 
@@ -41,11 +38,8 @@
             </div>
 
             {{-- Mobile Chief title --}}
-            <div class="flex items-center justify-start py-6 lg:hidden">
-                <div
-                    data-mobile-navigation-toggle
-                    class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50"
-                >
+            <div class="flex items-center justify-start lg:hidden">
+                <div data-mobile-navigation-toggle class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-primary-50">
                     <svg class="w-6 h-6 text-black"><use xlink:href="#icon-arrow-rtl"></use></svg>
                 </div>
 
@@ -56,14 +50,9 @@
                 > {{ config('app.client', 'Chief') }} </a>
             </div>
 
-            <div class="">
-                @include('chief::layout.nav.nav-project')
-            </div>
-
-            <div class="">
-                @include('chief::layout.nav.nav-general')
-                @include('chief::layout.nav.nav-settings')
-            </div>
+            @include('chief::layout.nav.nav-project')
+            @include('chief::layout.nav.nav-general')
+            @include('chief::layout.nav.nav-settings')
         </div>
 
         <div class="py-6">
