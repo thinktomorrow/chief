@@ -12,4 +12,3 @@
         </label>
     @endforeach
 </div>
-
