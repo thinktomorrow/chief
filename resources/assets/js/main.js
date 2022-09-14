@@ -9,7 +9,6 @@ import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
 window.Errors = Errors;
-// window.Form = Form;
 
 /** Chief components */
 window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);

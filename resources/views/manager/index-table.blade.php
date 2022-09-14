@@ -50,7 +50,7 @@
                     @endforeach
 
                     @adminCan('edit')
-                        <x-chief::table.data class="text-right">
+                        <x-chief::table.data class="sticky right-0 text-right bg-white bg-opacity-80 backdrop-filter backdrop-blur">
                             <a href="@adminRoute('edit', $model)" title="Aanpassen">
                                 <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
                             </a>
