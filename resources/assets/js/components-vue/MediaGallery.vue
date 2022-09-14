@@ -53,7 +53,7 @@
                 class="w-full p-1 cursor-pointer xs:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6"
             >
                 <div
-                    :class="{ 'bg-grey-50 border-secondary-500': isSelectedAsset(asset) }"
+                    :class="{ '!bg-primary-50 border-primary-500': isSelectedAsset(asset) }"
                     class="p-2 border-2 border-white rounded hover:bg-grey-50"
                 >
                     <div class="flex items-center justify-center h-32 mb-2 rounded bg-grey-100">
@@ -72,9 +72,9 @@
                             {{ asset.filename }}
                         </p>
 
-                        <div class="flex justify-between -my-1 space-x-2">
-                            <span class="my-1 text-sm font-medium text-grey-500">{{ asset.dimensions }}</span>
-                            <span class="my-1 text-sm font-medium text-grey-500">{{ asset.size }}</span>
+                        <div class="text-xs font-medium text-grey-500">
+                            <div>{{ asset.dimensions }}</div>
+                            <div>{{ asset.size }}</div>
                         </div>
                     </div>
                 </div>
