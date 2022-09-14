@@ -13,6 +13,7 @@ class SelectFilter extends AbstractFilter implements Filter
     private array $options = [];
 
     private bool $multiple = false;
+    private bool $grouped = false;
 
     public static function make(string $queryKey, \Closure $query): self
     {
@@ -33,12 +34,25 @@ class SelectFilter extends AbstractFilter implements Filter
         return $this;
     }
 
+    public function grouped(bool $grouped = true): static
+    {
+        $this->grouped = $grouped;
+
+        return $this;
+    }
+
+    public function isGrouped(): bool
+    {
+        return $this->grouped;
+    }
+
 
     protected function viewData(): array
     {
         return array_merge(parent::viewData(), [
             'options' => $this->options,
             'multiple' => $this->multiple,
+            'isGrouped' => $this->grouped,
         ]);
     }
 }

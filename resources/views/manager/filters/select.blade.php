@@ -11,5 +11,11 @@
             :options='@json($options)'
             selected='@json($value)'
             :multiple='@json($multiple)'
+            @if($isGrouped)
+                grouplabel="group"
+                groupvalues="values"
+                labelkey="label"
+                valuekey="id"
+            @endif
         ></chief-multiselect>
 </x-chief-form::formgroup>
