@@ -122,18 +122,6 @@
     @apply absolute left-6 top-0 bg-white rounded-lg p-2 min-w-48 shadow-md shadow-grey-100;
 }
 
-.children\:w-6 > * {
-    width: theme('width.6');
-}
-
-.children\:h-6 > * {
-    height: theme('height.6');
-}
-
-.children\:text-black > * {
-    color: theme('colors.black');
-}
-
 .siblings\:bulk-actions-counter-condition[data-bulk-actions-counter='1'] {
     & ~ .bulk-actions-counter-is-1\:inline {
         display: inline;

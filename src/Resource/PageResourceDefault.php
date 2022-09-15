@@ -121,7 +121,7 @@ trait PageResourceDefault
 
     protected function getNavIcon(): string
     {
-        return '<svg><use xlink:href="#icon-collection"></use></svg>';
+        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
     }
 
     protected function getNavTags(): array

@@ -3,14 +3,28 @@
         $hasActiveChildren = (isActiveUrl('admin/translations*') || isActiveUrl('admin/mediagallery*') || isActiveUrl('admin/menus*') || isActiveUrl('admin/sitemap*'));
     @endphp
 
-    <x-chief::nav.item label="Site" icon="<svg><use xlink:href='#logo'></use></svg>" collapsible>
-        @can('update-page')
-            <x-chief::nav.item label="Menu" url="{{ route('chief.back.menus.index') }}" />
-            <x-chief::nav.item label="Media" url="{{ route('chief.mediagallery.index') }}" />
-        @endcan
+    @can('update-page')
+        <x-chief::nav.item
+            label="Menu"
+            url="{{ route('chief.back.menus.index') }}"
+            icon="<svg><use xlink:href='#icon-bars-4'></use></svg>"
+            collapsible
+        />
 
-        @can('view-squanto')
-            <x-chief::nav.item label="Teksten" url="{{ route('squanto.index') }}" />
-        @endcan
-    </x-chief::nav.item>
+        <x-chief::nav.item
+            label="Media"
+            url="{{ route('chief.mediagallery.index') }}"
+            icon="<svg><use xlink:href='#icon-photo'></use></svg>"
+            collapsible
+        />
+    @endcan
+
+    @can('view-squanto')
+        <x-chief::nav.item
+            label="Teksten"
+            url="{{ route('squanto.index') }}"
+            icon="<svg><use xlink:href='#icon-chat-bubble-bottom-center-text'></use></svg>"
+            collapsible
+        />
+    @endcan
 @endif
