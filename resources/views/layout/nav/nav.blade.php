@@ -22,43 +22,47 @@
         data-collapsible-navigation
         class="flex flex-col justify-between h-screen px-3 overflow-auto border-r divide-y select-none divide-grey-100 border-grey-100"
     >
-        <div class="py-6">
-            {{-- Desktop Chief title --}}
-            <div class="items-center justify-start hidden lg:flex">
-                <div data-toggle-navigation class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-grey-50">
-                    <svg data-toggle-classes="hidden" class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} w-6 h-6 text-grey-800">
-                        <use xlink:href="#icon-arrows-pointing-in"></use>
-                    </svg>
+        <div class="py-6 divide-y divide-grey-100">
+            <div class="pb-6">
+                {{-- Desktop Chief title --}}
+                <div class="items-center justify-start hidden lg:flex">
+                    <div data-toggle-navigation class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-grey-50">
+                        <svg data-toggle-classes="hidden" class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} w-6 h-6 text-grey-800">
+                            <use xlink:href="#icon-arrows-pointing-in"></use>
+                        </svg>
 
-                    <svg data-toggle-classes="!block" class="{{ $isCollapsedOnPageLoad ? '!block' : null }} hidden w-6 h-6 text-grey-800">
-                        <use xlink:href="#icon-arrows-pointing-out"></use>
-                    </svg>
+                        <svg data-toggle-classes="!block" class="{{ $isCollapsedOnPageLoad ? '!block' : null }} hidden w-6 h-6 text-grey-800">
+                            <use xlink:href="#icon-arrows-pointing-out"></use>
+                        </svg>
+                    </div>
+
+                    <a
+                        data-toggle-classes="hidden"
+                        href="{{ route('chief.back.dashboard') }}"
+                        title="Ga naar Dashboard"
+                        class="block w-full px-3 py-2 font-medium text-grey-800 {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
+                    > {{ config('app.client', 'Chief') }} </a>
                 </div>
 
-                <a
-                    data-toggle-classes="hidden"
-                    href="{{ route('chief.back.dashboard') }}"
-                    title="Ga naar Dashboard"
-                    class="block w-full px-3 py-2 font-medium text-grey-800 {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
-                > {{ config('app.client', 'Chief') }} </a>
-            </div>
+                {{-- Mobile Chief title --}}
+                <div class="flex items-center justify-start lg:hidden">
+                    <div data-mobile-navigation-toggle class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-grey-50">
+                        <svg class="w-6 h-6 text-grey-800"><use xlink:href="#icon-arrow-long-left"></use></svg>
+                    </div>
 
-            {{-- Mobile Chief title --}}
-            <div class="flex items-center justify-start lg:hidden">
-                <div data-mobile-navigation-toggle class="p-2 rounded-lg cursor-pointer shrink-0 hover:bg-grey-50">
-                    <svg class="w-6 h-6 text-grey-800"><use xlink:href="#icon-arrow-long-left"></use></svg>
+                    <a
+                        href="{{ route('chief.back.dashboard') }}"
+                        title="Ga naar Dashboard"
+                        class="inline-block px-3 py-2 font-medium text-grey-800"
+                    > {{ config('app.client', 'Chief') }} </a>
                 </div>
-
-                <a
-                    href="{{ route('chief.back.dashboard') }}"
-                    title="Ga naar Dashboard"
-                    class="inline-block px-3 py-2 font-medium text-grey-800"
-                > {{ config('app.client', 'Chief') }} </a>
             </div>
 
-            @include('chief::layout.nav.nav-project')
-            @include('chief::layout.nav.nav-general')
-            @include('chief::layout.nav.nav-settings')
+            <div class="pt-6">
+                @include('chief::layout.nav.nav-project')
+                @include('chief::layout.nav.nav-general')
+                @include('chief::layout.nav.nav-settings')
+            </div>
         </div>
 
         <div class="py-6">
