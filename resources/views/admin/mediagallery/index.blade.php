@@ -23,7 +23,7 @@
                 <div class="card">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
                         <div class="flex items-center justify-between mb-4">
-                            <label for="select-all" class="flex items-center space-x-2 cursor-pointer text-grey-700 with-custom-checkbox">
+                            <label for="select-all" class="with-checkbox">
                                 <input type="checkbox" name="select_all" id="select-all">
                                 <span>Alles selecteren</span>
                             </label>
