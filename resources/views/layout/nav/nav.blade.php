@@ -20,7 +20,7 @@
 >
     <div
         data-collapsible-navigation
-        class="flex flex-col justify-between h-screen px-3 overflow-auto border-r divide-y select-none divide-grey-100 border-grey-100"
+        class="flex flex-col justify-between h-screen px-3 overflow-y-auto border-r divide-y select-none divide-grey-100 border-grey-100"
     >
         <div class="py-6 divide-y divide-grey-100">
             <div class="pb-6">

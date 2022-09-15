@@ -25,7 +25,7 @@
                             {!! $icon !!}
                         </a>
                     @else
-                        <div class="p-2 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-800">
+                        <div data-expand-navigation class="p-2 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-800">
                             {!! $icon !!}
                         </div>
                     @endisset
@@ -70,8 +70,7 @@
     @if(!$slot->isEmpty())
         <div
             data-dropdown="{{ $dropdownIdentifier }}"
-            data-toggle-classes="{{ 'collapsed-dropdown' }}"
-            class="ml-11 {{ $isCollapsedOnPageLoad ? 'collapsed-dropdown' : null }} {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
+            class="ml-11 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
         >
             {!! $slot !!}
         </div>
