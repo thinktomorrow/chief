@@ -23,14 +23,18 @@
                 @endphp
 
                 <div @class([
-                    'flex items-center justify-between space-x-4',
-                    'pt-4' => !$loop->first,
-                    'pb-4' => !$loop->last,
+                    'flex items-center justify-between gap-4',
+                    'pt-3' => !$loop->first,
+                    'pb-3' => !$loop->last,
                 ])>
-                    <span class="space-x-2">
-                        <span class="text-lg display-dark display-base">
+                    <span class="space-x-1">
+                        <a
+                            href="{{ route('squanto.edit',$page->slug()) }}"
+                            title="{{ ucfirst($page->label()) }}"
+                            class="display-dark display-base"
+                        >
                             {{ ucfirst($page->label()) }}
-                        </span>
+                        </a>
 
                         <span class="label label-grey label-xs">
                             {{ $completionPercentage }}%
