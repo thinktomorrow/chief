@@ -1,13 +1,33 @@
+{{-- TODO: add inner shadow if rows have horizontal scroll --}}
 @props([
+    'filters' => [],
     'actions' => null,
 ])
 
 <div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200">
-    @if($actions)
-        <div class="flex justify-end p-6">
-            <div class="flex flex-wrap gap-2">
-                {{ $actions }}
-            </div>
+    @if (count($filters) > 0 || $actions)
+        <div class="flex items-start justify-start gap-12 p-6">
+            @if (count($filters) > 0)
+                <div class="w-full">
+                    <form data-form-submit-on-change method="GET" class="row-start-end gutter-3">
+                        @foreach ($filters as $filter)
+                            <div @class([
+                                'w-full sm:w-1/2 md:w-1/3' => !$actions,
+                                'w-full sm:w-1/2 xl:w-1/3' => $actions,
+                                'hidden' => $filter->getType() == 'hidden'
+                            ])>
+                                {!! $filter->render() !!}
+                            </div>
+                        @endforeach
+                    </form>
+                </div>
+            @endif
+
+            @if ($actions)
+                <div class="flex flex-wrap gap-2 shrink-0">
+                    {{ $actions }}
+                </div>
+            @endif
         </div>
 
         {{-- <div class="p-6 space-y-4">
@@ -34,22 +54,26 @@
         </div> --}}
     @endif
 
-    {{-- The specific height value is necessary in order for the sticky table headers to work.
-    This because of an issue combining sticky element within a container with non-default overflow values --}}
-    <div @class([
-        'overflow-x-scroll whitespace-nowrap h-[80vh]',
-        'rounded-xl' => !$actions
-    ])>
-        <table class="min-w-full border-separate border-spacing-0">
-            <thead>
-                <x-chief::table.row>
-                    {{ $header }}
-                </x-chief::table.row>
-            </thead>
+    {{-- The specific height value is necessary in order for the sticky table headers to work. This because of an issue
+    combining sticky element within a container with non-default overflow values. The absolute position of the table
+    element is necessary to fix a bug where the table would partially overflow its container, even though it has
+    overflow-x-scroll. --}}
+    <div class="w-full h-[80vh] relative">
+        <div @class([
+            'overflow-x-scroll whitespace-nowrap absolute inset-0',
+            'rounded-xl' => !$actions && !$filters
+        ])>
+            <table class="min-w-full border-separate border-spacing-0">
+                <thead>
+                    <x-chief::table.row>
+                        {{ $header }}
+                    </x-chief::table.row>
+                </thead>
 
-            <tbody>
-                {{ $body }}
-            </tbody>
-        </table>
+                <tbody>
+                    {{ $body }}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
