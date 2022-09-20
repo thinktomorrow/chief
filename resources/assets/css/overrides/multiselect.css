@@ -11,9 +11,17 @@
     padding-bottom: 0.625rem !important;
 }
 
+.multiselect__tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-left: 0 !important;
+}
+
 .multiselect__tag {
     padding: 0.5rem 2rem 0.5rem 0.5rem !important;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
+    margin-right: 0;
     background: theme('colors.primary.500') !important;
     &::after {
         color: white !important;
