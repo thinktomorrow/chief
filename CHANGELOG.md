@@ -5,6 +5,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.11 - 2022-09-20
 - Fixed: sorting via sorting-index didnt trigger sorting endpoint
 - Changed: Nav menu title now shows the client name as set in `config.app.client`. Defaults to 'Chief'.
 - Changed: Nav vertically spaced a bit better. To add a hr in your nav, add `<hr class="my-6 border-grey-100">`.
