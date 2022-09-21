@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: adding homepage as menuitem resulted in menuitem without url.
 
 ## 0.7.11 - 2022-09-20
 - Fixed: sorting via sorting-index didnt trigger sorting endpoint
