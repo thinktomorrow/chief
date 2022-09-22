@@ -5,6 +5,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.12 - 2022-09-21
 - Fixed: adding homepage as menuitem resulted in menuitem without url.
 
 ## 0.7.11 - 2022-09-20
