@@ -9,7 +9,7 @@ class Index extends Component
     /**
      * @var bool
      */
-    public $sidebar;
+    public bool $sidebar = true;
 
     /**
      * Create the component instance.
@@ -17,7 +17,7 @@ class Index extends Component
      * @param bool $sidebar
      * @return void
      */
-    public function __construct($sidebar)
+    public function __construct(bool $sidebar = true)
     {
         $this->sidebar = $sidebar;
     }
