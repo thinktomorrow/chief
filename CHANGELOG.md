@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: Don't require sidebar prop on the chief::index view component.
 
 ## 0.7.12 - 2022-09-21
 - Fixed: adding homepage as menuitem resulted in menuitem without url.
