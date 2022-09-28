@@ -4,25 +4,19 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
-use Throwable;
-use Illuminate\Support\Arr;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Session\TokenMismatchException;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Database\RecordsNotFoundException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Database\MultipleRecordsFoundException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException;
-use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
+use Throwable;
 
 final class ChiefResponse
 {
@@ -45,7 +39,7 @@ final class ChiefResponse
 
             return static::findModel($urlRecord)->response();
         } catch (\Throwable $e) {
-            if (config('chief.strict') || !static::shouldBeIgnored($e)) {
+            if (config('chief.strict') || ! static::shouldBeIgnored($e)) {
                 throw $e;
             }
         }
