@@ -5,6 +5,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.13 - 2022-09-28
 - Fixed: Don't require sidebar prop on the chief::index view component.
 - Fixed: application errors via chief response are now properly reported.
 
