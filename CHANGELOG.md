@@ -6,6 +6,7 @@ principles.
 
 ## unreleased
 - Fixed: Don't require sidebar prop on the chief::index view component.
+- Fixed: application errors via chief response are now properly reported.
 
 ## 0.7.12 - 2022-09-21
 - Fixed: adding homepage as menuitem resulted in menuitem without url.

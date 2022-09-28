@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference;
 
 class ChiefResponseTest extends ChiefTestCase
 {
@@ -46,11 +47,11 @@ class ChiefResponseTest extends ChiefTestCase
     }
 
     /** @test */
-    public function if_the_model_reference_is_invalid_it_throws_a_404_exception()
+    public function if_the_model_reference_is_invalid_it_throws_the_correct_exception()
     {
         config()->set('chief.strict', false);
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(CannotInstantiateModelReference::class);
 
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => 'xxx', 'model_id' => 0]);
 
@@ -134,11 +135,11 @@ class ChiefResponseTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_throws_404_when_model_does_not_provide_url()
+    public function it_throws_exception_when_model_does_not_provide_url()
     {
         config()->set('chief.strict', false);
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(\BadMethodCallException::class);
 
         Quote::migrateUp();
         $model = Quote::create();
