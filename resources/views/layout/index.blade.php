@@ -47,8 +47,14 @@
                 @endif
 
                 @include('chief::manager._index.filter_card')
-                @include('chief::manager._index.sort_card')
-                @include('chief::manager._index.archive_card')
+
+                @adminCan('sort-index', $models->first())
+                    @include('chief::manager._index.sort_card')
+                @endAdminCan
+
+                @adminCan('archive_index')
+                    @include('chief::manager._index.archive_card')
+                @endAdminCan
             @endisset
         </x-slot>
     @endif

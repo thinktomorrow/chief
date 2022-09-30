@@ -72,18 +72,23 @@
     @endif
 
     <div class="row-start-start gutter-3">
-        <div class="w-full sm:w-1/2 md:w-1/3">
-            @if($resource->getIndexSidebar())
+        @if($resource->getIndexSidebar())
+            <div class="w-full md:w-1/2 2xl:w-1/3">
                 {!! $resource->getIndexSidebar() !!}
-            @endif
-        </div>
+            </div>
+        @endif
 
-        <div class="w-full sm:w-1/2 md:w-1/3">
-            @include('chief::manager._index.sort_card')
-        </div>
+        @adminCan('sort-index', $models->first())
+            <div class="w-full md:w-1/2 2xl:w-1/3">
+                @include('chief::manager._index.sort_card')
+            </div>
+        @endAdminCan
 
-        <div class="w-full sm:w-1/2 md:w-1/3">
-            @include('chief::manager._index.archive_card')
-        </div>
+
+        @adminCan('archive_index')
+            <div class="w-full md:w-1/2 2xl:w-1/3">
+                @include('chief::manager._index.archive_card')
+            </div>
+        @endAdminCan
     </div>
 </x-chief::index-table>
