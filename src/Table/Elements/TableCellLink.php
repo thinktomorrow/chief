@@ -11,7 +11,7 @@ class TableCellLink extends TableCell
 
     protected string $view = 'chief-table::cells.link';
 
-    public static function make(?string $url)
+    public static function make(string|int|null $url)
     {
         $component = parent::make($url);
         $component->url($url);

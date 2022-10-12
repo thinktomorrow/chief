@@ -31,7 +31,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
     use HasTitle;
     use HasDescription;
 
-    public function __construct(string|null $key)
+    public function __construct(string $key)
     {
         if($key) {
             $this->key($key);
@@ -39,9 +39,9 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
         }
     }
 
-    public static function make(string|null $key)
+    public static function make(string|int|null $key)
     {
-        return new static($key);
+        return new static((string) $key);
     }
 
     public function render(): View
