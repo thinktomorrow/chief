@@ -6,16 +6,15 @@ namespace Thinktomorrow\Chief\Table\Elements;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Table\Concerns\HasView;
-use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
+use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasTags;
 use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
+use Thinktomorrow\Chief\Table\Concerns\HasView;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable
 {
@@ -33,7 +32,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
 
     public function __construct(string $key)
     {
-        if($key) {
+        if ($key) {
             $this->key($key);
             $this->title($key);
         }

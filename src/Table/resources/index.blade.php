@@ -1,7 +1,9 @@
 <?php
     $tableActions = $resource->getTableActions($manager);
-    if(!is_array($tableActions)) $tableActions = iterator_to_array($tableActions);
-?>
+    if (! is_array($tableActions)) {
+        $tableActions = iterator_to_array($tableActions);
+    }
+    ?>
 
 <x-chief::index :sidebar="false">
     <x-chief::table :filters="$manager->filters()->all()">
