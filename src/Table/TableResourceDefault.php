@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Table\Elements\TableCell;
 use Thinktomorrow\Chief\Table\Elements\TableCellLink;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait TableResourceDefault
 {
@@ -25,8 +25,8 @@ trait TableResourceDefault
         yield TableCellLink::make($this->getPageTitle($model))
             ->url($manager->route('edit', $model));
 
-        if($model instanceof StatefulContract) {
-            foreach($model->getStateKeys() as $stateKey) {
+        if ($model instanceof StatefulContract) {
+            foreach ($model->getStateKeys() as $stateKey) {
                 yield TableCell::make($model->getStateConfig($stateKey)->getStateLabel($model));
             }
         }
