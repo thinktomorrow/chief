@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: FilterPresets::text can now accept jsonColumn with specific table prefix, e.g. orders.data
 - Added: Table index view. Set getIndexViewType() on your resource to 'table'.
 - Added: TableResource interface to provide the required methods for a table view.
 
