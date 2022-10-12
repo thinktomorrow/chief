@@ -25,7 +25,8 @@ class FilterPresets
         return InputFilter::make($queryParameter, function ($query, $value) use ($dynamicColumns, $astrotomicColumns, $jsonColumn) {
             return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {
                 foreach ($dynamicColumns as $column) {
-                    $builder->orWhereRaw('LOWER(json_extract(`'.$jsonColumn.'`, "$.'.$column.'")) LIKE ?', '%'. trim(strtolower($value)) . '%');
+                    $jsonColumnParts = explode('.', $jsonColumn);
+                    $builder->orWhereRaw('LOWER(json_extract(`'.implode('`.`', $jsonColumnParts).'`, "$.'.$column.'")) LIKE ?', '%'. trim(strtolower($value)) . '%');
                 }
 
                 foreach ($astrotomicColumns as $column) {

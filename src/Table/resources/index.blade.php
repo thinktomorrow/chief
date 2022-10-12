@@ -5,8 +5,8 @@
     }
     ?>
 
-<x-chief::index :sidebar="false">
-    <x-chief::table :filters="$manager->filters()->all()">
+<x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
+    <x-chief::table :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])">
         @if(count($tableActions) > 0)
             <x-slot name="actions">
                 @foreach($tableActions as $bulkAction)
@@ -75,24 +75,27 @@
         {!! $models->links('chief::pagination.default') !!}
     @endif
 
-    <div class="row-start-start gutter-3">
-        @if($resource->getIndexSidebar())
-            <div class="w-full md:w-1/2 2xl:w-1/3">
-                {!! $resource->getIndexSidebar() !!}
-            </div>
-        @endif
+    {{--TODO: avoid duplication of sidebar code ... --}}
+    @if(!$resource->showIndexSidebarAside())
+        <div class="row-start-start gutter-3">
+            @if($resource->getIndexSidebar())
+                <div class="w-full md:w-1/2 2xl:w-1/3">
+                    {!! $resource->getIndexSidebar() !!}
+                </div>
+            @endif
 
-        @adminCan('sort-index', $models->first())
-            <div class="w-full md:w-1/2 2xl:w-1/3">
-                @include('chief::manager._index.sort_card')
-            </div>
-        @endAdminCan
+            @adminCan('sort-index', $models->first())
+                <div class="w-full md:w-1/2 2xl:w-1/3">
+                    @include('chief::manager._index.sort_card')
+                </div>
+            @endAdminCan
 
 
-        @adminCan('archive_index')
-            <div class="w-full md:w-1/2 2xl:w-1/3">
-                @include('chief::manager._index.archive_card')
-            </div>
-        @endAdminCan
-    </div>
+            @adminCan('archive_index')
+                <div class="w-full md:w-1/2 2xl:w-1/3">
+                    @include('chief::manager._index.archive_card')
+                </div>
+            @endAdminCan
+        </div>
+    @endif
 </x-chief::index>

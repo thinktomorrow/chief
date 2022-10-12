@@ -5,11 +5,13 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\Table\TableResourceDefault;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait PageResourceDefault
 {
     use ResourceDefault;
+    use TableResourceDefault;
 
     public function getNavItem(): ?NavItem
     {
@@ -115,6 +117,11 @@ trait PageResourceDefault
     public function getIndexSidebar(): string
     {
         return '';
+    }
+
+    public function showIndexSidebarAside(): bool
+    {
+        return true;
     }
 
     public function getIndexPagination(): int

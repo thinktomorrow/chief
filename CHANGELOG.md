@@ -5,6 +5,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: Table index view. Set getIndexViewType() on your resource to 'table'.
+- Added: TableResource interface to provide the required methods for a table view.
 
 ## 0.7.13 - 2022-09-28
 - Fixed: Don't require sidebar prop on the chief::index view component.
