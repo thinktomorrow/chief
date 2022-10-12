@@ -11,4 +11,3 @@ class TableColumn extends Component
 
     protected string $view = 'chief-table::table-head';
 }
-

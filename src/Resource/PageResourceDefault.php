@@ -71,7 +71,7 @@ trait PageResourceDefault
 
     public function getIndexView(): View
     {
-        if($this->getIndexViewType() == 'table') {
+        if ($this->getIndexViewType() == 'table') {
             return view('chief-table::index');
         }
 
