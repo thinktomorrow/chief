@@ -29,10 +29,10 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.nav-item', 'chief::nav.item');
 
         // Table components
-        Blade::component('chief::components.table', 'chief::table');
-        Blade::component('chief::components.table.row', 'chief::table.row');
-        Blade::component('chief::components.table.header', 'chief::table.header');
-        Blade::component('chief::components.table.data', 'chief::table.data');
+        Blade::component('chief-table::components.table', 'chief::table');
+        Blade::component('chief-table::components.row', 'chief::table.row');
+        Blade::component('chief-table::components.header', 'chief::table.header');
+        Blade::component('chief-table::components.data', 'chief::table.data');
 
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {

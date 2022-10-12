@@ -13,6 +13,7 @@ class BulkActions {
         this.bulkActionsCounterAttribute = 'data-bulk-actions-counter';
         this.parentCheckboxSelector = '[data-bulk-all-checkbox]';
         this.itemCheckboxSelector = '[data-bulk-item-checkbox]';
+        this.bulkActionItemFieldSelector = '[data-bulk-action-item-field]';
 
         this.bulkActionsContainer = container.querySelector(this.bulkActionsContainerSelector);
         this.bulkActionsCounter = this.bulkActionsContainer.querySelector(`[${this.bulkActionsCounterAttribute}]`);
@@ -21,6 +22,7 @@ class BulkActions {
 
         this.parentCheckbox = container.querySelector(this.parentCheckboxSelector);
         this.itemCheckboxes = Array.from(container.querySelectorAll(this.itemCheckboxSelector));
+        this.bulkActionItemFields = Array.from(container.querySelectorAll(this.bulkActionItemFieldSelector));
 
         if (!this.parentCheckbox || _isEmpty(this.itemCheckboxes)) return;
 
@@ -33,8 +35,8 @@ class BulkActions {
 
             const count = this._getBulkActionsCount();
 
-            // this._toggleBulkActionsContainer(count);
             this._updateBulkActionsCounter(count);
+            this._syncBulkItemsFields();
         });
 
         this.itemCheckboxes.forEach((checkbox) => {
@@ -44,8 +46,8 @@ class BulkActions {
 
                 const count = this._getBulkActionsCount();
 
-                // this._toggleBulkActionsContainer(count);
                 this._updateBulkActionsCounter(count);
+                this._syncBulkItemsFields();
             });
         });
     }
@@ -101,6 +103,8 @@ class BulkActions {
     }
 
     _updateBulkActionsCounter(count) {
+        this._toggleBulkActionsContainer(count);
+
         this.bulkActionsCounter.innerHTML = count;
         this.bulkActionsCounter.setAttribute(this.bulkActionsCounterAttribute, count);
     }
@@ -112,6 +116,22 @@ class BulkActions {
         }
 
         this.bulkActionsContainer.classList.add('hidden');
+    }
+
+    // Sync the selected table rows with the bulk action form fields.
+    // This way the request has this selection as payload.
+    _syncBulkItemsFields() {
+        // Current selection
+        const selectedValues = this._getSelectedValues();
+
+        // Get all input elements of the target forms and populate each with the selected values
+        this.bulkActionItemFields.forEach((el) => {
+            el.value = JSON.stringify(selectedValues);
+        });
+    }
+
+    _getSelectedValues() {
+        return this.itemCheckboxes.filter((el) => el.checked).map((el) => el.value);
     }
 }
 

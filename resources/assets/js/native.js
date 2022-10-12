@@ -23,4 +23,4 @@ initSortable('[data-sortable]');
 require('./forms/index');
 
 /** Table logic - bulk actions */
-// require('./tables/index');
+require('./tables/index');

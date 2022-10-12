@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Auth\Events\Login;
+use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -87,6 +88,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
+        (new TableServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new AssetLibraryServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();

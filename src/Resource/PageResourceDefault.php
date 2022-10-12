@@ -71,7 +71,20 @@ trait PageResourceDefault
 
     public function getIndexView(): View
     {
+        if($this->getIndexViewType() == 'table') {
+            return view('chief-table::index');
+        }
+
         return view('chief::manager.index');
+    }
+
+    /**
+     * Default type of index: options are:
+     * index (default), table
+     */
+    protected function getIndexViewType(): string
+    {
+        return 'index';
     }
 
     public function getIndexTitle(): string

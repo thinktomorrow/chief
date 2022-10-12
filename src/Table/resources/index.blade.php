@@ -1,15 +1,20 @@
+<?php
+    $tableActions = $resource->getTableActions($manager);
+    if(!is_array($tableActions)) $tableActions = iterator_to_array($tableActions);
+?>
+
 <x-chief::index :sidebar="false">
     <x-chief::table :filters="$manager->filters()->all()">
-        @if(count($resource::getTableBulkActions()) > 0)
+        @if(count($tableActions) > 0)
             <x-slot name="actions">
-                @foreach($resource::getTableBulkActions() as $tableAction)
-                    {!! $tableAction !!}
+                @foreach($tableActions as $bulkAction)
+                    {{ $bulkAction->render() }}
                 @endforeach
             </x-slot>
         @endif
 
         <x-slot name="header">
-           {{-- @if(count($resource::getTableBulkActions()) > 0)
+            @if(count($tableActions) > 0)
                <x-chief::table.header>
                    <input
                        data-bulk-all-checkbox
@@ -19,34 +24,31 @@
                        class="with-custom-checkbox"
                    >
                </x-chief::table.header>
-            @endif --}}
+            @endif
 
-            @foreach ($resource::getTableColumns() as $column)
-                <x-chief::table.header :sortable="$column['sortable']">
-                    {{ $column['title'] }}
-                </x-chief::table.header>
+            @foreach ($resource->getTableColumns() as $tableHead)
+                {{ $tableHead->render() }}
             @endforeach
         </x-slot>
 
         <x-slot name="body">
             @forelse ($models as $model)
                 <x-chief::table.row>
-                   {{-- @if(count($resource::getTableBulkActions()) > 0)
+                    @if(count($tableActions) > 0)
                        <x-chief::table.data>
                            <input
                                data-bulk-item-checkbox
                                type="checkbox"
-                               name="item_{{ $loop->index }}"
+                               name="bulk_items[]"
                                id="item_{{ $loop->index }}"
                                class="with-custom-checkbox"
+                               value="{{ $resource->getTableRowId($model) }}"
                            >
                        </x-chief::table.data>
-                   @endif --}}
+                   @endif
 
-                    @foreach($model->getTableRowHtml() as $rowHtml)
-                        <x-chief::table.data>
-                            {!! $rowHtml !!}
-                        </x-chief::table.data>
+                    @foreach($resource->getTableRow($model, $manager) as $tableCell)
+                        {{ $tableCell->render() }}
                     @endforeach
 
                     @adminCan('edit')
@@ -91,4 +93,4 @@
             </div>
         @endAdminCan
     </div>
-</x-chief::index-table>
+</x-chief::index>

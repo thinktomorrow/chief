@@ -22,36 +22,32 @@
                     </form>
                 </div>
             @endif
-
-            @if ($actions)
-                <div class="flex flex-wrap gap-2 shrink-0">
-                    {{ $actions }}
-                </div>
-            @endif
         </div>
 
-        {{-- <div class="p-6 space-y-4">
-            <div data-bulk-actions-container>
-                <div class="flex items-center justify-end gap-4">
-                    <p class="hidden body-base text-grey-500">
-                        <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
-                        <span class="hidden bulk-actions-counter-is-1:inline">item</span>
-                        <span class="bulk-actions-counter-is-1:hidden">items</span>
-                        geselecteerd
-                    </p>
+        @if($actions)
+             <div class="p-6 space-y-4">
+                <div data-bulk-actions-container class="hidden">
+                    <div class="flex items-center justify-end gap-4">
+                        <p class="body-base text-grey-500">
+                            <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
+                            <span class="hidden bulk-actions-counter-is-1:inline">item</span>
+                            <span class="bulk-actions-counter-is-1:hidden">items</span>
+                            geselecteerd
+                        </p>
 
-                    <dropdown class="relative z-20">
-                        <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-primary">
-                            Acties
-                        </span>
+                            <dropdown class="relative z-20">
+                                <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-primary">
+                                    ...
+                                </span>
 
-                        <div v-cloak class="dropdown-content">
-                            {{ $actions }}
-                        </div>
-                    </dropdown>
+                                <div v-cloak class="dropdown-content">
+                                    {{ $actions }}
+                                </div>
+                            </dropdown>
+                    </div>
                 </div>
             </div>
-        </div> --}}
+        @endif
     @endif
 
     {{-- The specific height value is necessary in order for the sticky table headers to work. This because of an issue
