@@ -1,9 +1,9 @@
-{{-- TODO: add inner shadow if rows have horizontal scroll --}}
 @props([
     'filters' => [],
     'actions' => null,
 ])
 
+{{-- TODO: add inner shadow if rows have horizontal scroll --}}
 <div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200">
     @if (count($filters) > 0)
         <div class="flex items-start justify-start gap-12 p-6">
@@ -11,8 +11,7 @@
                 <form data-form-submit-on-change method="GET" class="row-start-end gutter-3">
                     @foreach ($filters as $filter)
                         <div @class([
-                            'w-full sm:w-1/2 md:w-1/3' => !$actions,
-                            'w-full sm:w-1/2 xl:w-1/3' => $actions,
+                            'w-full sm:w-1/2 md:w-1/3',
                             'hidden' => $filter->getType() == 'hidden'
                         ])>
                             {!! $filter->render() !!}
@@ -24,25 +23,17 @@
     @endif
 
     @if($actions)
-         <div class="p-6 space-y-4">
-            <div data-bulk-actions-container class="hidden">
-                <div class="flex items-center justify-end gap-4">
-                    <p class="body-base text-grey-500">
-                        <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
-                        <span class="hidden bulk-actions-counter-is-1:inline">item</span>
-                        <span class="bulk-actions-counter-is-1:hidden">items</span>
-                        geselecteerd
-                    </p>
+        <div data-bulk-actions-container class="hidden px-6 py-4">
+            <div class="flex items-center gap-6">
+                <p class="body-base text-grey-500">
+                    <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
+                    <span class="hidden bulk-actions-counter-is-1:inline">item</span>
+                    <span class="bulk-actions-counter-is-1:hidden">items</span>
+                    geselecteerd
+                </p>
 
-                        <dropdown class="relative z-20">
-                            <span slot="trigger" slot-scope="{ toggle }" @click="toggle" class="btn btn-primary">
-                                ...
-                            </span>
-
-                            <div v-cloak class="dropdown-content">
-                                {{ $actions }}
-                            </div>
-                        </dropdown>
+                <div class="flex flex-wrap items-start justify-start gap-3">
+                    {{ $actions }}
                 </div>
             </div>
         </div>

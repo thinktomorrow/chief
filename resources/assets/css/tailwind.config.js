@@ -13,6 +13,7 @@ module.exports = {
         'src/Forms/Layouts/**/*.php',
         'src/Forms/Concerns/**/*.php',
         'src/Fragments/resources/**/*.blade.php',
+        'src/Table/resources/**/*.blade.php',
     ],
     theme: {
         screens: {

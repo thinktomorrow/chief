@@ -1,22 +1,23 @@
-<?php
+@php
     $tableActions = $resource->getTableActions($manager);
     if (! is_array($tableActions)) {
         $tableActions = iterator_to_array($tableActions);
     }
-    ?>
+    $tableActionsCount = count($tableActions);
+@endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
     <x-chief::table :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])">
-        @if(count($tableActions) > 0)
+        @if ($tableActionsCount > 0)
             <x-slot name="actions">
-                @foreach($tableActions as $bulkAction)
+                @foreach ($tableActions as $bulkAction)
                     {{ $bulkAction->render() }}
                 @endforeach
             </x-slot>
         @endif
 
         <x-slot name="header">
-            @if(count($tableActions) > 0)
+            @if ($tableActionsCount > 0)
                <x-chief::table.header>
                    <input
                        data-bulk-all-checkbox
@@ -36,7 +37,7 @@
         <x-slot name="body">
             @forelse ($models as $model)
                 <x-chief::table.row>
-                    @if(count($tableActions) > 0)
+                    @if($tableActionsCount > 0)
                        <x-chief::table.data>
                            <input
                                data-bulk-item-checkbox
@@ -49,7 +50,7 @@
                        </x-chief::table.data>
                    @endif
 
-                    @foreach($resource->getTableRow($model, $manager) as $tableCell)
+                    @foreach ($resource->getTableRow($model, $manager) as $tableCell)
                         {{ $tableCell->render() }}
                     @endforeach
 
@@ -71,14 +72,14 @@
         </x-slot>
     </x-chief::table>
 
-    @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+    @if ($models instanceof \Illuminate\Contracts\Pagination\Paginator)
         {!! $models->links('chief::pagination.default') !!}
     @endif
 
     {{--TODO: avoid duplication of sidebar code ... --}}
-    @if(!$resource->showIndexSidebarAside())
+    @if (!$resource->showIndexSidebarAside())
         <div class="row-start-start gutter-3">
-            @if($resource->getIndexSidebar())
+            @if ($resource->getIndexSidebar())
                 <div class="w-full md:w-1/2 2xl:w-1/3">
                     {!! $resource->getIndexSidebar() !!}
                 </div>
