@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Elements;
 
-use Thinktomorrow\Chief\Table\Concerns\HasUrl;
 use Thinktomorrow\Chief\Table\Concerns\HasColor;
+use Thinktomorrow\Chief\Table\Concerns\HasUrl;
 
 class TableCellIcon extends TableCell
 {
