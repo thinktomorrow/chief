@@ -1,7 +1,9 @@
 <x-chief::table.data>
     <span
         {{ $attributes->merge($getCustomAttributes())->class([
-            'label', 'label-xs', 'label-'.$getLayoutType()->value,
+            'label',
+            'label-xs',
+            'label-'. $getLayoutType()->value,
         ]) }}
         title="{{ $getDescription() }}"
     >

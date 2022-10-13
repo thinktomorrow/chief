@@ -1,5 +1,10 @@
+@props([
+    'icon' => 'icon-edit',
+    'color' => 'primary',
+])
+
 @php
-    switch($color ?? 'primary') {
+    switch($color) {
         case 'primary':
             $colorClasses = 'link-primary bg-grey-100 hover:bg-primary-50';
             break;
@@ -25,6 +30,6 @@
     @if($slot->isNotEmpty())
         {!! $slot !!}
     @else
-        <svg width="18" height="18"><use xlink:href="#{{ $icon ?? 'icon-edit' }}"></use></svg>
+        <svg width="18" height="18"><use xlink:href="#{{ $icon }}"></use></svg>
     @endif
 </span>

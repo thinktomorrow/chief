@@ -1,6 +1,7 @@
 @props([
     'filters' => [],
     'actions' => null,
+    'sticky' => false,
 ])
 
 {{-- TODO: add inner shadow if rows have horizontal scroll --}}
@@ -39,26 +40,47 @@
         </div>
     @endif
 
-    {{-- The specific height value is necessary in order for the sticky table headers to work. This because of an issue
-    combining sticky element within a container with non-default overflow values. The absolute position of the table
-    element is necessary to fix a bug where the table would partially overflow its container, even though it has
-    overflow-x-scroll. --}}
-    <div class="w-full h-[80vh] relative">
-        <div @class([
-            'overflow-x-scroll whitespace-nowrap absolute inset-0',
-            'rounded-xl' => !$actions && !$filters
-        ])>
-            <table class="min-w-full border-separate border-spacing-0">
-                <thead>
-                    <x-chief::table.row>
-                        {{ $header }}
-                    </x-chief::table.row>
-                </thead>
+    @if ($sticky)
+        {{-- The specific height value is necessary in order for the sticky table headers to work. This because of an issue
+        combining sticky element within a container with non-default overflow values. The absolute position of the table
+        element is necessary to fix a bug where the table would partially overflow its container, even though it has
+        overflow-x-scroll. --}}
+        <div class="w-full h-[80vh] relative">
+            <div @class([
+                'overflow-x-scroll whitespace-nowrap absolute inset-0',
+                'rounded-xl' => !$actions && !$filters
+            ])>
+                <table class="min-w-full border-separate border-spacing-0">
+                    <thead>
+                        <x-chief::table.row>
+                            {{ $header }}
+                        </x-chief::table.row>
+                    </thead>
 
-                <tbody>
-                    {{ $body }}
-                </tbody>
-            </table>
+                    <tbody>
+                        {{ $body }}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    @else
+        <div class="relative w-full">
+            <div @class([
+                'overflow-x-scroll whitespace-nowrap',
+                'rounded-xl' => !$actions && !$filters
+            ])>
+                <table class="min-w-full border-separate border-spacing-0">
+                    <thead>
+                        <x-chief::table.row>
+                            {{ $header }}
+                        </x-chief::table.row>
+                    </thead>
+
+                    <tbody>
+                        {{ $body }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
 </div>

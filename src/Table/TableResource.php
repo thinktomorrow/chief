@@ -13,4 +13,6 @@ interface TableResource
     public function getTableRow($model, $manager): iterable;
 
     public function getTableActions(Manager $manager): iterable;
+
+    public function displayTableHeaderAsSticky(): bool;
 }

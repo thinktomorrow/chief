@@ -7,7 +7,10 @@
 @endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
-    <x-chief::table :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])">
+    <x-chief::table
+        :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])"
+        :sticky="$resource->displayTableHeaderAsSticky()"
+    >
         @if ($tableActionsCount > 0)
             <x-slot name="actions">
                 @foreach ($tableActions as $bulkAction)
@@ -18,20 +21,24 @@
 
         <x-slot name="header">
             @if ($tableActionsCount > 0)
-               <x-chief::table.header>
-                   <input
-                       data-bulk-all-checkbox
-                       type="checkbox"
-                       name="bulk_all"
-                       id="bulk_all"
-                       class="with-custom-checkbox"
-                   >
-               </x-chief::table.header>
+                <x-chief::table.header>
+                    <input
+                        data-bulk-all-checkbox
+                        type="checkbox"
+                        name="bulk_all"
+                        id="bulk_all"
+                        class="with-custom-checkbox"
+                    >
+                </x-chief::table.header>
             @endif
 
             @foreach ($resource->getTableColumns() as $tableHead)
                 {{ $tableHead->render() }}
             @endforeach
+
+            @adminCan('edit')
+                <x-chief::table.header/>
+            @endAdminCan
         </x-slot>
 
         <x-slot name="body">

@@ -36,4 +36,9 @@ trait TableResourceDefault
     {
         return [];
     }
+
+    public function displayTableHeaderAsSticky(): bool
+    {
+        return false;
+    }
 }
