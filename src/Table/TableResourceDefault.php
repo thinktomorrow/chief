@@ -1,16 +1,32 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Table\Elements\TableCell;
-use Thinktomorrow\Chief\Table\Elements\TableCellLink;
+use Thinktomorrow\Chief\Table\Elements\TableColumn;
+use Thinktomorrow\Chief\Table\Elements\TableColumnLink;
+use Thinktomorrow\Chief\Table\Elements\TableHeader;
 
 trait TableResourceDefault
 {
-    public function getTableColumns(): iterable
+    public function getTableRow(Manager $manager, $model): iterable
+    {
+        yield TableColumnLink::make('Titel')
+            ->value($this->getPageTitle($model))
+            ->url($manager->route('edit', $model))
+        ;
+
+        if ($model instanceof StatefulContract) {
+            foreach ($model->getStateKeys() as $stateKey) {
+                yield TableColumn::make('Status')->value($model->getStateConfig($stateKey)->getStateLabel($model));
+            }
+        }
+    }
+
+    public function getTableActions(Manager $manager): iterable
     {
         return [];
     }
@@ -20,21 +36,19 @@ trait TableResourceDefault
         return (string) $model->{$model->getKeyName()};
     }
 
-    public function getTableRow($model, $manager): iterable
+    public function getTableHeaders(Manager $manager, $firstModel): iterable
     {
-        yield TableCellLink::make($this->getPageTitle($model))
-            ->url($manager->route('edit', $model));
+        static $headers = null;
 
-        if ($model instanceof StatefulContract) {
-            foreach ($model->getStateKeys() as $stateKey) {
-                yield TableCell::make($model->getStateConfig($stateKey)->getStateLabel($model));
-            }
+        if ($headers) {
+            return $headers;
         }
-    }
 
-    public function getTableActions(Manager $manager): iterable
-    {
-        return [];
+        foreach ($this->getTableRow($manager, $firstModel) as $tableColumn) {
+            $headers[] = TableHeader::fromTableColumn($tableColumn);
+        }
+
+        return $headers;
     }
 
     public function displayTableHeaderAsSticky(): bool

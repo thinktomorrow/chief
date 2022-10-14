@@ -2,13 +2,13 @@
     <a
         {{ $attributes->merge($getCustomAttributes()) }}
         href="{{ $getUrl() }}"
-        title="{{ $getDescription() }}"
+        title="{{ $getHint() }}"
     >
-        @if (false === strpos($getKey(), '<svg '))
-            <x-chief-icon-button :icon="$getKey()" :color="$getColor()" />
+        @if (false === strpos($getValue(), '<svg '))
+            <x-chief-icon-button :icon="$getValue()" :color="$getColor()" />
         @else
             <x-chief-icon-button :color="$getColor()">
-                {!! $getKey() !!}
+                {!! $getValue() !!}
             </x-chief-icon-button>
         @endif
     </a>

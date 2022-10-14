@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Table\Elements;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
+use Thinktomorrow\Chief\Table\Concerns\HasHint;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
@@ -18,24 +19,23 @@ use Thinktomorrow\Chief\Table\Concerns\HasView;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable
 {
-    // Generic component concerns
+    // Cell values
     use HasLocalizableProperties;
     use HasComponentRendering;
     use HasView;
     use HasComponents;
     use HasCustomAttributes;
-    use HasTags;
+    use HasHint;
 
+    // Header values
     use HasKey;
     use HasTitle;
     use HasDescription;
 
     public function __construct(string $key)
     {
-        if ($key) {
-            $this->key($key);
-            $this->title($key);
-        }
+        $this->key($key);
+        $this->title($key);
     }
 
     public static function make(string|int|null $key)

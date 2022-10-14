@@ -5,8 +5,8 @@
             'label-xs',
             'label-'. $getLayoutType()->value,
         ]) }}
-        title="{{ $getDescription() }}"
+        title="{{ $getHint() }}"
     >
-        {!! $getTitle() !!}
+        {!! $getValue() !!}
     </span>
 </x-chief::table.data>

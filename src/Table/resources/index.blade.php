@@ -4,6 +4,8 @@
         $tableActions = iterator_to_array($tableActions);
     }
     $tableActionsCount = count($tableActions);
+
+    $tableHeaders = count($models) > 0 ? $resource->getTableHeaders($manager, $models->first()) : [];
 @endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
@@ -32,7 +34,7 @@
                 </x-chief::table.header>
             @endif
 
-            @foreach ($resource->getTableColumns() as $tableHead)
+            @foreach ($tableHeaders as $tableHead)
                 {{ $tableHead->render() }}
             @endforeach
 
@@ -57,7 +59,7 @@
                        </x-chief::table.data>
                    @endif
 
-                    @foreach ($resource->getTableRow($model, $manager) as $tableCell)
+                    @foreach ($resource->getTableRow($manager, $model) as $tableCell)
                         {{ $tableCell->render() }}
                     @endforeach
 

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Elements;
 
-use Thinktomorrow\Chief\Table\Concerns\HasSortable;
+use Thinktomorrow\Chief\Table\Concerns\HasValue;
 
 class TableColumn extends Component
 {
-    use HasSortable;
+    use HasValue;
 
-    protected string $view = 'chief-table::table-head';
+    protected string $view = 'chief-table::cells.text';
 }

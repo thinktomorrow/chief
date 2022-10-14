@@ -1,8 +1,8 @@
 <x-chief::table.data>
     <span
         {{ $attributes->merge($getCustomAttributes()) }}
-        title="{{ $getDescription() }}"
+        title="{{ $getHint() }}"
     >
-        {!! $getTitle() !!}
+        {!! $getValue() !!}
     </span>
 </x-chief::table.data>

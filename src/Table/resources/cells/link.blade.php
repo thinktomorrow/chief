@@ -2,9 +2,9 @@
     <a
         {{ $attributes->merge($getCustomAttributes()) }}
         href="{{ $getUrl() }}"
-        title="{{ $getDescription() }}"
+        title="{{ $getHint() }}"
         class="font-medium body-dark hover:underline"
     >
-        {{ $getTitle() }}
+        {{ $getValue() }}
     </a>
 </x-chief::table.data>
