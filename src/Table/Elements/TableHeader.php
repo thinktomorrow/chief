@@ -15,7 +15,7 @@ class TableHeader extends Component
     {
         $header = (new static($tableColumn->getTitle()));
 
-        if($description = $tableColumn->getDescription()) {
+        if ($description = $tableColumn->getDescription()) {
             $header->description($description);
         }
 

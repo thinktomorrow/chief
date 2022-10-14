@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Elements;
 
-use Thinktomorrow\Chief\Table\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Concerns\HasColor;
 use Thinktomorrow\Chief\Table\Concerns\HasUrl;
 
