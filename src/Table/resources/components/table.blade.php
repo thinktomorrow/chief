@@ -2,6 +2,7 @@
     'filters' => [],
     'actions' => null,
     'sticky' => false,
+    'bodyAttributes' => null,
 ])
 
 {{-- TODO: add inner shadow if rows have horizontal scroll --}}
@@ -76,7 +77,7 @@
                         </x-chief::table.row>
                     </thead>
 
-                    <tbody>
+                    <tbody {{ $bodyAttributes }}>
                         {{ $body }}
                     </tbody>
                 </table>

@@ -16,9 +16,10 @@ class BulkActions {
         this.bulkActionItemFieldSelector = '[data-bulk-action-item-field]';
 
         this.bulkActionsContainer = container.querySelector(this.bulkActionsContainerSelector);
-        this.bulkActionsCounter = this.bulkActionsContainer.querySelector(`[${this.bulkActionsCounterAttribute}]`);
+        if (!this.bulkActionsContainer) return;
 
-        if (!this.bulkActionsContainer || !this.bulkActionsCounter) return;
+        this.bulkActionsCounter = this.bulkActionsContainer.querySelector(`[${this.bulkActionsCounterAttribute}]`);
+        if (!this.bulkActionsCounter) return;
 
         this.parentCheckbox = container.querySelector(this.parentCheckboxSelector);
         this.itemCheckboxes = Array.from(container.querySelectorAll(this.itemCheckboxSelector));
