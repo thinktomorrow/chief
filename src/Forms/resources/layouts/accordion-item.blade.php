@@ -17,7 +17,7 @@
             <div class="space-y-1">
                 <div class="flex gap-2">
                     <span class="display-dark display-base">
-                        {{ $getTitle() ?? 'Click here to toggle' }}
+                        {{ $getTitle() ?? $getId() }}
                     </span>
 
                     <span data-accordion-item-show-if-closed="{{ $getId() }}" class="label label-primary label-xs">
@@ -25,7 +25,9 @@
                     </span>
                 </div>
 
-                <p class="body-base text-grey-500">{!! $getDescription() !!}</p>
+                @if ($getDescription())
+                    <p class="body-base text-grey-500">{!! $getDescription() !!}</p>
+                @endif
             </div>
 
             <div data-accordion-item-toggle="{{ $getId() }}" class="cursor-pointer text-grey-500">
