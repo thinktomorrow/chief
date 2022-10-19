@@ -12,7 +12,7 @@ trait HasView
         return $this->view;
     }
 
-    public function view(string $view): static
+    public function setView(string $view): static
     {
         $this->view = $view;
 

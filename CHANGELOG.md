@@ -7,6 +7,7 @@ principles.
 ## unreleased
 - Fixed: FilterPresets::text can now accept jsonColumn with specific table prefix, e.g. orders.data
 - Fixed: sorting on table index
+- Changed: BC! Field and Table views are now set via `setView($view)` and no longer via `view($view)`. Since Laravel 9.36 component abstract has an own view() method.
 - Added: Table index view. Set getIndexViewType() on your resource to 'table'.
 - Added: TableResource interface to provide the required methods for a table view.
 
