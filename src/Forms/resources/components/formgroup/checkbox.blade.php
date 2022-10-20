@@ -15,6 +15,6 @@
     @endif
 
     @if($label)
-        <span @class(['body-base display-dark', 'mt-0.5 ml-3' => $showAsToggle])>{!! $label !!}</span>
+        <span @class(['body-base body-dark', 'mt-0.5 ml-3' => $showAsToggle])>{!! $label !!}</span>
     @endif
 </label>
