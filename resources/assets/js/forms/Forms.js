@@ -65,8 +65,8 @@ Forms.prototype.handleSubmitFromSidebar = function (responseData, meta) {
         return true;
     }
 
-    if (responseData.redirect_to) {
-        this.sidebar.show(responseData.redirect_to);
+    if (responseData.sidebar_redirect_to) {
+        this.sidebar.show(responseData.sidebar_redirect_to);
         return false;
     }
 

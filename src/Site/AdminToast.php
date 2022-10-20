@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site;
 
-use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
@@ -12,12 +11,10 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 
 class AdminToast
 {
-    private Request $request;
-    private Registry $registry;
+    protected Registry $registry;
 
-    public function __construct(Request $request, Registry $registry)
+    public function __construct(Registry $registry)
     {
-        $this->request = $request;
         $this->registry = $registry;
     }
 

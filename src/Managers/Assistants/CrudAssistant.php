@@ -100,7 +100,7 @@ trait CrudAssistant
             return $builder->get();
         }
 
-        return $builder->paginate($pagination)->withQueryString();
+        return $builder->paginate($pagination)->onEachSide(1)->withQueryString();
     }
 
     public function filters(): Filters
@@ -142,16 +142,19 @@ trait CrudAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        $model = $this->managedModelClassInstance();
+        $model = $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
         View::share('manager', $this);
         View::share('model', $model);
         View::share('resource', $this->resource);
-        View::share('forms', Forms::make($this->resource->fields($model)));
 
-        return view('chief::manager.create');
+        View::share('forms', Forms::make($this->resource->fields($model))
+            ->fillModel($model)
+            ->fillFields($this, $model));
+
+        return $this->resource->getCreatePageView();
     }
 
     public function store(Request $request)
@@ -160,18 +163,20 @@ trait CrudAssistant
 
         $model = $this->handleStore($request);
 
+        $redirectAfterCreate = $this->resource->getRedirectAfterCreate($model);
+
         if ($request->expectsJson()) {
             return response()->json([
-                'redirect_to' => $this->route('edit', $model),
+                'redirect_to' => $redirectAfterCreate,
             ]);
         }
 
-        return redirect()->to($this->route('edit', $model));
+        return redirect()->to($redirectAfterCreate);
     }
 
     private function handleStore(Request $request)
     {
-        $model = $this->managedModelClassInstance();
+        $model = $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
         $fields = Forms::make($this->resource->fields($model))
             ->fillModel($model)

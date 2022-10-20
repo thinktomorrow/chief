@@ -27,7 +27,7 @@ class FormTest extends TestCase
         $this->assertStringContainsString(
             'general form view',
             Form::make('general')
-                ->view('test-views::custom-form')
+                ->setView('test-views::custom-form')
                 ->toHtml()
         );
     }

@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
@@ -60,5 +62,21 @@ class SortFragmentTest extends ChiefTestCase
         $this->assertEquals($this->fragment3->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
         $this->assertEquals($this->fragment2->fragmentModel()->id, $fragments[1]->fragmentModel()->id);
         $this->assertEquals($this->fragment->fragmentModel()->id, $fragments[2]->fragmentModel()->id);
+    }
+
+    /** @test */
+    public function it_emits_event_after_sorting()
+    {
+        Event::fake();
+
+        $this->asAdmin()->post($this->manager($this->owner)->route('fragments-reorder', $this->owner), [
+            'indices' => [
+                $this->fragment3->fragmentModel()->id,
+                $this->fragment2->fragmentModel()->id,
+                $this->fragment->fragmentModel()->id,
+            ],
+        ]);
+
+        Event::assertDispatched(FragmentsReordered::class);
     }
 }

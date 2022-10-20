@@ -1,7 +1,7 @@
 @if(!$attributes->has('inline') && $items->count() > 1)
     @php
         $icon = (($firstItem = $items->first()) && $firstItem->icon())
-            ? $firstItem->icon() : '<svg><use xlink:href="#icon-folder"></use></svg>';
+            ? $firstItem->icon() : '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
 
         $isActive = false;
         foreach($items as $navItem) {

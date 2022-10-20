@@ -11,6 +11,7 @@ class AuditTest extends ChiefTestCase
     /** @test */
     public function it_logs_edit_events_on_pages()
     {
+        $this->disableExceptionHandling();
         $user = $this->admin();
         $article = $this->setupAndCreateArticle();
 

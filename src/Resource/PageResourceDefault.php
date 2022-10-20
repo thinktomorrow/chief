@@ -6,10 +6,12 @@ use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Table\TableResourceDefault;
 
 trait PageResourceDefault
 {
     use ResourceDefault;
+    use TableResourceDefault;
 
     public function getNavItem(): ?NavItem
     {
@@ -27,6 +29,16 @@ trait PageResourceDefault
         );
     }
 
+    public function getCreatePageView(): View
+    {
+        return view('chief::manager.create');
+    }
+
+    public function getRedirectAfterCreate($model): ?string
+    {
+        return $this->manager->route('edit', $model);
+    }
+
     public function getPageView(): View
     {
         return view('chief::manager.edit');
@@ -40,7 +52,7 @@ trait PageResourceDefault
             return null;
         }
 
-        return new BreadCrumb('Terug naar overzicht', $this->manager->route('index'));
+        return new BreadCrumb('Overzicht', $this->manager->route('index'));
     }
 
     public function getPageTitle($model): string
@@ -61,7 +73,20 @@ trait PageResourceDefault
 
     public function getIndexView(): View
     {
+        if ($this->getIndexViewType() == 'table') {
+            return view('chief-table::index');
+        }
+
         return view('chief::manager.index');
+    }
+
+    /**
+     * Default type of index: options are:
+     * index (default), table
+     */
+    protected function getIndexViewType(): string
+    {
+        return 'index';
     }
 
     public function getIndexTitle(): string
@@ -94,6 +119,11 @@ trait PageResourceDefault
         return '';
     }
 
+    public function showIndexSidebarAside(): bool
+    {
+        return true;
+    }
+
     public function getIndexPagination(): int
     {
         return 20;
@@ -104,9 +134,14 @@ trait PageResourceDefault
         return 'title';
     }
 
-    protected function getNavIcon(): ?string
+    public function getSortableType(): string
     {
-        return '<svg><use xlink:href="#icon-collection"></use></svg>';
+        return 'int';
+    }
+
+    protected function getNavIcon(): string
+    {
+        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
     }
 
     protected function getNavTags(): array

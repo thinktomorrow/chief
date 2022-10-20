@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\View\Components\Fragments;
+use Thinktomorrow\Chief\Fragments\Database\ContextModel;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
@@ -123,6 +125,8 @@ trait FragmentsOwningAssistant
         $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string) $index) > 3);
 
         app(SortModels::class)->handleFragments($owner->ownerModel(), $indices);
+
+        event(new FragmentsReordered(ContextModel::ownedBy($owner->ownerModel())->id));
 
         return response()->json([
             'message' => 'models sorted.',

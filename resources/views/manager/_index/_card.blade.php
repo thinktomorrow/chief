@@ -1,4 +1,4 @@
-<div data-sortable-id="{{ $model->id }}" class="py-4">
+<div data-sortable-handle data-sortable-id="{{ $model->getKey() }}" class="py-4">
     <div class="space-y-2">
         <div class="flex justify-between">
             @adminCan('edit')

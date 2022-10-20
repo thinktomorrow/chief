@@ -8,11 +8,13 @@
         <div class="space-y-1">
             @foreach($options as $option => $optionLabel)
                 <label class="with-checkbox" for="{{ $id.'-'.$option }}">
-                    <input {{ ($option == $value) ? 'checked="checked"':'' }}
-                           name="{{ $name }}"
-                           value="{{ $option }}"
-                           id="{{ $id.'-'.$option }}"
-                           type="checkbox">
+                    <input
+                        {{ ($option == $value) ? 'checked="checked"':'' }}
+                        name="{{ $name }}"
+                        value="{{ $option }}"
+                        id="{{ $id.'-'.$option }}"
+                        type="checkbox"
+                    >
                     <span>{!! $optionLabel !!}</span>
                 </label>
             @endforeach

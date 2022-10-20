@@ -83,7 +83,7 @@ class RenderTextualFieldsTest extends TestCase
 
         $this->assertStringContainsString(
             'this is a custom field view',
-            Text::make('xxx')->view('test-views::custom-field')->render()
+            Text::make('xxx')->setView('test-views::custom-field')->render()
         );
     }
 }

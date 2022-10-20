@@ -49,6 +49,11 @@ trait StateAdminConfigDefaults
         return null;
     }
 
+    public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable
+    {
+        return [];
+    }
+
     public function hasConfirmationForTransition(string $transitionKey): bool
     {
         return false;

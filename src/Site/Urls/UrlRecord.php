@@ -72,7 +72,7 @@ class UrlRecord extends Model
         return $record;
     }
 
-    public static function getByModel(Model $model)
+    public static function getByModel(Model $model): \Illuminate\Database\Eloquent\Collection
     {
         return static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
@@ -96,13 +96,14 @@ class UrlRecord extends Model
             ->first();
     }
 
-    public function replaceAndRedirect(array $values): UrlRecord
+    public function replaceAndRedirect(string $slug): UrlRecord
     {
-        $newRecord = static::firstOrCreate(array_merge([
+        $newRecord = static::firstOrCreate([
             'locale' => $this->locale,
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
-        ], $values));
+            'slug' => $slug,
+        ]);
 
         $this->redirectTo($newRecord);
 
@@ -115,6 +116,10 @@ class UrlRecord extends Model
             return $this->isRedirect() ? static::find($this->redirect_id) : null;
         }
 
+        if ($record->id === $this->id) {
+            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from ['.$this->slug.'] to ['.$record->slug.']');
+        }
+
         $this->redirect_id = $record->id;
         $this->save();
 
@@ -122,6 +127,7 @@ class UrlRecord extends Model
     }
 
     // Remove all urls that came after this one
+
     /**
      * @return void
      */

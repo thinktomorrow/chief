@@ -16,7 +16,6 @@ class ModelReferencePresenter
         $registry = app(Registry::class);
 
         return $collection->map(function (ReferableModel $item) use ($registry) {
-
             /** @var PageResource $resource */
             $resource = $registry->findResourceByModel($item::class);
 

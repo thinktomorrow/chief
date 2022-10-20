@@ -11,8 +11,9 @@
 
         <div
             data-fragments-container
-            data-sortable-fragments
+            data-sortable
             data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
+            data-sortable-is-sorting
             class="divide-y divide-grey-100"
         >
             @foreach($fragments as $fragment)

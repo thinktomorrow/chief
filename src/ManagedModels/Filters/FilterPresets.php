@@ -20,12 +20,13 @@ class FilterPresets
         ]);
     }
 
-    public static function text(array $dynamicColumns = ['title'], array $astrotomicColumns = [], string $label = 'titel'): Filter
+    public static function text(string $queryParameter, array $dynamicColumns = ['title'], array $astrotomicColumns = [], string $label = 'titel', string $jsonColumn = 'values'): Filter
     {
-        return InputFilter::make('search', function ($query, $value) use ($dynamicColumns, $astrotomicColumns) {
-            return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns) {
+        return InputFilter::make($queryParameter, function ($query, $value) use ($dynamicColumns, $astrotomicColumns, $jsonColumn) {
+            return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {
                 foreach ($dynamicColumns as $column) {
-                    $builder->orWhereRaw('LOWER(json_extract(`values`, "$.'.$column.'")) LIKE ?', '%'. trim(strtolower($value)) . '%');
+                    $jsonColumnParts = explode('.', $jsonColumn);
+                    $builder->orWhereRaw('LOWER(json_extract(`'.implode('`.`', $jsonColumnParts).'`, "$.'.$column.'")) LIKE ?', '%'. trim(strtolower($value)) . '%');
                 }
 
                 foreach ($astrotomicColumns as $column) {

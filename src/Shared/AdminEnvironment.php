@@ -9,16 +9,14 @@ use Illuminate\Support\Str;
 
 class AdminEnvironment
 {
-    private Request $request;
     private Application $app;
 
-    public function __construct(Request $request, Application $app)
+    public function __construct(Application $app)
     {
-        $this->request = $request;
         $this->app = $app;
     }
 
-    public function check(): bool
+    public function check(Request $request): bool
     {
         if ($this->app->runningInConsole()) {
             return true;
@@ -26,6 +24,6 @@ class AdminEnvironment
 
         $adminPrefix = config('chief.route.prefix', 'admin');
 
-        return (Str::startsWith($this->request->path(), $adminPrefix . '/')) || $this->request->path() == $adminPrefix;
+        return (Str::startsWith($request->path(), $adminPrefix . '/')) || $request->path() == $adminPrefix;
     }
 }

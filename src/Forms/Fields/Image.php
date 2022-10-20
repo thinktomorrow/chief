@@ -13,6 +13,6 @@ class Image extends File
 
     public function fill(Manager $manager, Model $model): void
     {
-        $this->endpoint($manager->route('asyncUploadSlimImage', $this->getKey(), $this->getModel()?->id));
+        $this->endpoint($manager->route('asyncUploadSlimImage', $this->getKey(), $model->{$model->getKeyName()}));
     }
 }

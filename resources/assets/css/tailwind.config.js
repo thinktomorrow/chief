@@ -13,6 +13,7 @@ module.exports = {
         'src/Forms/Layouts/**/*.php',
         'src/Forms/Concerns/**/*.php',
         'src/Fragments/resources/**/*.blade.php',
+        'src/Table/resources/**/*.blade.php',
     ],
     theme: {
         screens: {
@@ -35,18 +36,7 @@ module.exports = {
             secondary: colors.teal,
 
             red: colors.red,
-            // red: {
-            //     50: '#fdf3f6',
-            //     100: '#fae7ed',
-            //     200: '#f4c4d2',
-            //     300: '#eda0b6',
-            //     400: '#df5880',
-            //     500: '#d11149',
-            //     600: '#bc0f42',
-            //     700: '#9d0d37',
-            //     800: '#7d0a2c',
-            //     900: '#660824',
-            // },
+            orange: colors.orange,
 
             green: {
                 50: '#f3fcf6',
@@ -61,7 +51,6 @@ module.exports = {
                 900: '#066324',
             },
 
-            // blue: colors.sky,
             blue: {
                 50: '#f3fdff',
                 100: '#e7faff',
@@ -74,20 +63,6 @@ module.exports = {
                 800: '#067b99',
                 900: '#05647d',
             },
-
-            orange: colors.orange,
-            // orange: {
-            //     50: '#fef9f7',
-            //     100: '#fdf3ee',
-            //     200: '#fae0d5',
-            //     300: '#f7cdbc',
-            //     400: '#f1a88a',
-            //     500: '#eb8258',
-            //     600: '#d4754f',
-            //     700: '#b06242',
-            //     800: '#8d4e35',
-            //     900: '#73402b',
-            // },
         },
         fontFamily: {
             display: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],

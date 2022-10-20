@@ -1,5 +1,3 @@
-import _debounce from 'lodash/debounce';
-
 import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class SelectFieldTrigger extends ConditionalFieldTrigger {
@@ -9,19 +7,12 @@ class SelectFieldTrigger extends ConditionalFieldTrigger {
         this._toggleConditionalFields(currentValues);
     }
 
-    _watch() {
-        window.Eventbus.$on(
-            'updated-select',
-            _debounce(() => {
-                this._handle();
-            }, 250)
-        );
-    }
-
     _getCurrentValuesFromSelectElement() {
         const selectElement = this.element.querySelector('select');
 
-        return Array.from(selectElement.querySelectorAll('option')).map((element) => element.value);
+        return Array.from(selectElement.querySelectorAll('option'))
+            .filter((option) => option.selected)
+            .map((option) => option.value);
     }
 }
 

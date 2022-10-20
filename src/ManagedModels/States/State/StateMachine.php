@@ -67,7 +67,7 @@ class StateMachine
     public function apply($transition): void
     {
         if (! $this->can($transition)) {
-            throw StateException::invalidTransition($transition, $this->statefulContract->getState($this->stateKey)->getValueAsString());
+            throw StateException::invalidTransition($transition, $this->statefulContract->getState($this->stateKey)?->getValueAsString());
         }
 
         $state = $this->transitions[$transition]['to'];

@@ -113,9 +113,15 @@ class ProjectModelData
             $menuItem->setOwnerLabel($locale, $resource->getPageTitle($model));
 
             if ($model instanceof Visitable) {
-                $path = Url::fromString($model->url($locale))->getPath();
+                $fullUrl = $model->url($locale);
+                $path = Url::fromString($fullUrl)->getPath();
 
-                $menuItem->setUrl($locale, $path ? '/'.$path : null);
+                /**
+                 * For root urls the path is null but in that case we want to have a '/' as path
+                 * so we can safely prepend this on each path. However for real missing links
+                 * we still set null as url on the menu item.
+                 */
+                $menuItem->setUrl($locale, $fullUrl ? '/'.$path : null);
             }
         }
 

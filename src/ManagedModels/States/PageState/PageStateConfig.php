@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -19,6 +20,8 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PageStateConfig implements StateConfig, StateAdminConfig
 {
+    use StateAdminConfigDefaults;
+
     public function getStateKey(): string
     {
         return PageState::KEY;
@@ -121,7 +124,6 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         }
 
         switch ($statefulContract->getState($this->getStateKey())) {
-
             case PageState::published:
                 return '<span class="label label-xs label-success">Gepubliceerd</span>';
 
@@ -164,13 +166,13 @@ class PageStateConfig implements StateConfig, StateAdminConfig
                 return 'Haal offline';
 
             case 'archive':
-                return 'archiveer';
+                return 'Archiveer';
 
             case 'unarchive':
                 return 'Haal uit archief';
 
             case 'delete':
-                return 'verwijder';
+                return 'Verwijder';
 
             default:
                 return $transitionKey;

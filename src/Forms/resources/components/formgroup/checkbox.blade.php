@@ -6,7 +6,7 @@
 
 <label for="{{ $for }}" @class([
     'with-checkbox' => !$showAsToggle,
-    'with-toggle flex' => $showAsToggle,
+    'with-toggle' => $showAsToggle,
 ])>
     {{ $slot }}
 

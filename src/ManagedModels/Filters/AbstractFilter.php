@@ -100,4 +100,9 @@ abstract class AbstractFilter
             'placeholder' => $this->placeholder,
         ];
     }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
 }

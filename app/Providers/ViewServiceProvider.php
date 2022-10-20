@@ -28,13 +28,19 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.hierarchy', 'chief-hierarchy');
         Blade::component('chief::components.nav-item', 'chief::nav.item');
 
+        // Table components
+        Blade::component('chief-table::components.table', 'chief::table');
+        Blade::component('chief-table::components.row', 'chief::table.row');
+        Blade::component('chief-table::components.header', 'chief::table.header');
+        Blade::component('chief-table::components.data', 'chief::table.data');
+
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {
             return "<?php echo \$manager->route({$expression}); ?>";
         });
 
         Blade::directive('adminCan', function ($expression) {
-            return "<?php if (\$manager->can({$expression})) { ?>";
+            return "<?php if (isset(\$manager) && \$manager->can({$expression})) { ?>";
         });
 
         Blade::directive('elseAdminCan', function () {

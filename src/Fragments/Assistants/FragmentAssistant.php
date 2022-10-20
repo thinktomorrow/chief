@@ -16,6 +16,8 @@ use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOnline;
 use Thinktomorrow\Chief\Fragments\Actions\UnshareFragment;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
@@ -197,6 +199,8 @@ trait FragmentAssistant
 
         app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
 
+        event(new FragmentUpdated($fragmentable->fragmentModel()->id));
+
         return response()->json([
             'message' => 'fragment updated',
             'data' => [],
@@ -304,7 +308,7 @@ trait FragmentAssistant
                         $form->action($this->route('fragment-store', $owner))
                              ->refreshUrl('');
                     })
-                ;
+        ;
 
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
@@ -326,15 +330,19 @@ trait FragmentAssistant
 
         $fragmentable = $this->storeFragmentable($ownerModel, $fragmentable, $request);
 
+        $redirectTo = null;
+
         // If the fragment is a fragment owner ( = has nested fragments), we'll show the edit page of this fragment after creation
-        // By default other fragments will return to the main edit page after being created
-        $redirectTo = ($fragmentable instanceof FragmentsOwner)
-            ? $this->route('fragment-edit', $ownerModel, $fragmentable)
-            : null;
+        // By default other fragments will return to the main edit page after being created.
+        if ($fragmentable instanceof FragmentsOwner) {
+            $redirectTo = ($ownerModel instanceof FragmentModel)
+                ? $this->route('nested-fragment-edit', $ownerModel->id, $fragmentable->fragmentModel()->id)
+                : $this->route('fragment-edit', $ownerModel, $fragmentable);
+        }
 
         return response()->json([
             'message' => 'fragment created',
-            'redirect_to' => $redirectTo,
+            'sidebar_redirect_to' => $redirectTo,
             'data' => [
                 'fragmentmodel_id' => $fragmentable->fragmentModel()->id,
             ],

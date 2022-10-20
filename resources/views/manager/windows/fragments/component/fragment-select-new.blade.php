@@ -19,7 +19,7 @@
                                 title="{{ ucfirst($allowedFragment['resource']->getLabel()) }}"
                                 class="flex gap-3 p-3 transition-all duration-75 ease-in-out border rounded-lg border-grey-100 bg-grey-50 hover:shadow-card hover:border-primary-500"
                             >
-                                <div class="shrink-0 body-dark children:w-6 children:h-6">
+                                <div class="shrink-0 body-dark [&>*]:w-6 [&>*]:h-6">
                                     {!! $allowedFragment['resource']->getIcon() !!}
                                 </div>
 

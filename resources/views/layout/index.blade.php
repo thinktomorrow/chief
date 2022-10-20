@@ -27,7 +27,7 @@
                 <h1 class="h1 display-dark">{{ ucfirst($resource->getIndexTitle()) }}</h1>
 
                 @adminCan('create')
-                    <a href="@adminRoute('create')" class="btn btn-primary">
+                    <a href="@adminRoute('create')" class="btn btn-primary-outline">
                         <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
                     </a>
                 @endAdminCan
@@ -37,17 +37,25 @@
 
     {!! $slot !!}
 
-    <x-slot name="aside">
-        @isset($aside)
-            {!! $aside !!}
-        @else
-            @if($resource->getIndexSidebar())
-                {!! $resource->getIndexSidebar() !!}
-            @endif
+    @if($sidebar)
+        <x-slot name="aside">
+            @isset($aside)
+                {!! $aside !!}
+            @else
+                @if($resource->getIndexSidebar())
+                    {!! $resource->getIndexSidebar() !!}
+                @endif
 
-            @include('chief::manager._index.filter_card')
-            @include('chief::manager._index.sort_card')
-            @include('chief::manager._index.archive_card')
-        @endisset
-    </x-slot>
+                @include('chief::manager._index.filter_card')
+
+                @adminCan('sort-index', $models->first())
+                    @include('chief::manager._index.sort_card')
+                @endAdminCan
+
+                @adminCan('archive_index')
+                    @include('chief::manager._index.archive_card')
+                @endAdminCan
+            @endisset
+        </x-slot>
+    @endif
 </x-chief::page>

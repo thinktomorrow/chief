@@ -1,3 +1,7 @@
+@php
+    $component->ignoreDefault();
+@endphp
+
 <x-chief-form::formgroup.window :label="$getLabel()">
     @if(!$hasLocales())
         @include($getView())

@@ -102,6 +102,26 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));
     }
 
+    public function test_using_homepage_as_link_gives_slash_as_link_entry()
+    {
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $this->updateLinks($page, ['nl' => '/', 'en' => '/en']);
+
+        $menuitem = MenuItem::create();
+
+        $this->asAdmin()
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
+                'trans' => [],
+                'type' => 'internal',
+                'owner_reference' => $page->modelReference()->getShort(),
+            ]))->assertStatus(302);
+
+        $item = MenuItem::first();
+
+        $this->assertEquals('/', $item->getUrl('nl'));
+        $this->assertEquals('/en', $item->getUrl('en'));
+    }
+
     /** @test */
     public function a_relative_url_is_sanitized_to_proper_relative_url()
     {

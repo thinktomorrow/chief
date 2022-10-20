@@ -31,7 +31,7 @@ trait RepeatFieldAssistant
         $index = $request->input('index');
         $locale = $request->input('locale');
 
-        $model = $id ? $this->fieldsModel($id) : $this->managedModelClassInstance();
+        $model = $id ? $this->fieldsModel($id) : $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
         $field = $this->resource->field($model, $fieldKey);
 

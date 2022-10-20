@@ -1,7 +1,8 @@
 import Panels from './sidebar/Panels';
 import Api from './Api';
 import vueFields from './fields/vue-fields';
-import initSortableGroup from '../utilities/sortable-group';
+import initSortable from '../sortable/sortable-init';
+import initConditionalFields from './conditional-fields/init-conditional-fields';
 import SelectFragment from '../fragments/selectFragment';
 import Submit from './Submit';
 import EventBus from '../utilities/EventBus';
@@ -10,6 +11,9 @@ const Form = function (el, sidebar) {
     this.el = el;
     this.sidebar = sidebar;
     this.triggerSelector = '[data-sidebar-trigger]';
+    this.formSelector = '[data-form]';
+
+    this.sidebarClick = (event) => this.handleSidebarClick(event);
 };
 
 Form.prototype.getTags = function () {
@@ -33,21 +37,24 @@ Form.prototype.addTag = function (tag) {
 // Triggers to open sidebar
 Form.prototype.listen = function () {
     // Sidebar form
-    this.el.querySelectorAll(this.triggerSelector).forEach((trigger) => {
+    Array.from(this.el.querySelectorAll(this.triggerSelector)).forEach((trigger) => {
         // Provide panel id as default tag.
         this.addTag(Panels.createId(trigger.getAttribute('href')));
 
-        trigger.addEventListener('click', (event) => {
-            event.preventDefault();
-            this.sidebar.show(event.currentTarget.getAttribute('href'), {
-                tags: this.getTags(),
-            });
-        });
+        trigger.removeEventListener('click', this.sidebarClick);
+        trigger.addEventListener('click', this.sidebarClick);
     });
 
     // Inline form
     Api.listenForFormSubmits(this.el, this.onFormSubmission.bind(this), () => {
         // TODO: show to user that form hasn't been saved
+    });
+};
+
+Form.prototype.handleSidebarClick = function (event) {
+    event.preventDefault();
+    this.sidebar.show(event.currentTarget.getAttribute('href'), {
+        tags: this.getTags(),
     });
 };
 
@@ -65,7 +72,6 @@ Form.prototype.refresh = function () {
     Api.get(url, (data) => {
         const DOM = document.createElement('div');
         DOM.innerHTML = data;
-
         this.el.innerHTML = DOM.firstElementChild.innerHTML;
 
         // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
@@ -89,8 +95,10 @@ Form.prototype.refresh = function () {
 // TODO: better design pattern than this. Now we set custom logic here per type,
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
+    initSortable('[data-sortable]', this.el);
+    initConditionalFields(this.el);
+
     if (this.getTags().includes('fragments')) {
-        initSortableGroup('[data-sortable-fragments]', this.el);
         new SelectFragment(this.el);
     }
 

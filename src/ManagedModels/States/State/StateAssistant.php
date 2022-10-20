@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
@@ -88,12 +90,19 @@ trait StateAssistant
 
         $stateConfig = $model->getStateConfig($key);
 
-        try {
-            StateMachine::fromConfig($model, $stateConfig)->apply($transitionKey);
+        if ($stateConfig instanceof StateAdminConfig) {
+            $this->saveTransitionFields($model, $stateConfig->getTransitionFields($transitionKey, $model), $request);
+        }
 
+        $machine = StateMachine::fromConfig($model, $stateConfig);
+
+        try {
+            $machine->apply($transitionKey);
             $model->save();
 
             $stateConfig->emitEvent($model, $transitionKey, $request->all());
+
+            event(new PageChanged($model->modelReference()));
         } catch (StateException $e) {
             return response()->json([
                 'message' => 'Transition ['.$transitionKey.'] not applied',
@@ -119,6 +128,19 @@ trait StateAssistant
             'message' => 'Transition ['.$transitionKey.'] applied',
             'redirect_to' => $redirect,
         ]);
+    }
+
+    private function saveTransitionFields($model, iterable $fields, Request $request)
+    {
+        $fields = Fields::make($fields);
+
+        if ($fields->isEmpty()) {
+            return;
+        }
+
+        $this->fieldValidator()->handle($fields, $request->all());
+
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
     }
 
     public function filtersStateAssistant(): Filters

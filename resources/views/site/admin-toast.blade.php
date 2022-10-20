@@ -1,31 +1,31 @@
-@if(chiefAdmin())
-    <div id="jsChiefToast"></div>
+<div id="jsChiefToast"></div>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            try {
-                const toast = document.getElementById('jsChiefToast');
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        try {
+            const toast = document.getElementById('jsChiefToast');
 
-                fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
-                    .then((response) => response.json())
-                    .then((data) => {
+            fetch("{{ route('chief.toast.get') }}?path={{ request()->path() }}&locale={{ app()->getLocale() }}&preview_mode={{ \Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode::fromRequest()->check() }}")
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data.data) {
                         toast.innerHTML = data.data;
                         listenForClose();
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
 
-                function listenForClose() {
-                    const toastClose = toast.querySelector('[data-admin-toast-close]');
+            function listenForClose() {
+                const toastClose = toast.querySelector('[data-admin-toast-close]');
 
-                    toastClose.addEventListener('click', function() {
-                        toast.style.display = "none";
-                    });
-                }
-            } catch(error) {
-                console.log(error);
+                toastClose.addEventListener('click', function() {
+                    toast.style.display = "none";
+                });
             }
-        })
-    </script>
-@endif
+        } catch(error) {
+            console.log(error);
+        }
+    })
+</script>

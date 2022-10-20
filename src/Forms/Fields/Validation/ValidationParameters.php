@@ -35,7 +35,7 @@ class ValidationParameters
     {
         if (! $attribute = $this->source->getValidationAttribute()) {
             $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
-            $attribute .= $this->source->hasLocales() ? ' :locale' : '';
+            $attribute .= ($this->source->hasLocales() && count($this->source->getLocales()) > 1) ? ' :locale' : '';
         }
 
         return $this->createEntryForEachLocale($attribute);

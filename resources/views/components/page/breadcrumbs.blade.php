@@ -6,7 +6,7 @@
     @else
         @adminCan('index')
             <a href="{{ visitedUrl($manager->route('index')) }}" class="link link-primary">
-                <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
+                <x-chief-icon-label type="back">Overzicht</x-chief-icon-label>
             </a>
         @endAdminCan
     @endif

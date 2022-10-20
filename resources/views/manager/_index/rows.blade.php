@@ -1,14 +1,15 @@
 @if(count($models))
     <div class="card">
         @adminCan('sort-index', $models->first())
-        <div
-            id="js-sortable"
-            data-sort-route="{{ $manager->route('sort-index') }}"
-            class="-my-4 divide-y divide-grey-100"
-        >
-            @elseAdminCan
+            <div
+                data-sortable
+                data-sortable-endpoint="{{ $manager->route('sort-index') }}"
+                data-sortable-id-type="{{ $resource->getSortableType() }}"
+                class="-my-4 divide-y divide-grey-100"
+            >
+        @elseAdminCan
             <div class="-my-4 divide-y divide-grey-100">
-                @endAdminCan
+        @endAdminCan
                 @foreach($models as $model)
                     @include($resource->getIndexCardView())
                 @endforeach

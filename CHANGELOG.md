@@ -5,7 +5,64 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: FilterPresets::text can now accept jsonColumn with specific table prefix, e.g. orders.data
+- Fixed: sorting on table index
+- Changed: BC! Field and Table views are now set via `setView($view)` and no longer via `view($view)`. Since Laravel 9.36 component abstract has an own view() method.
+- Added: Table index view. Set getIndexViewType() on your resource to 'table'.
+- Added: TableResource interface to provide the required methods for a table view.
+
+## 0.7.13 - 2022-09-28
+- Fixed: Don't require sidebar prop on the chief::index view component.
+- Fixed: application errors via chief response are now properly reported.
+
+## 0.7.12 - 2022-09-21
+- Fixed: adding homepage as menuitem resulted in menuitem without url.
+
+## 0.7.11 - 2022-09-20
+- Fixed: sorting via sorting-index didnt trigger sorting endpoint
+- Changed: Nav menu title now shows the client name as set in `config.app.client`. Defaults to 'Chief'.
+- Changed: Nav vertically spaced a bit better. To add a hr in your nav, add `<hr class="my-6 border-grey-100">`.
+
+## 0.7.10 - 2022-09-07
+- Fixed: issue with sidebar trigger when using nested forms
+- Fixed: adding existing fragment showed json response instead of redirect
+- Fixed: issue where deleting model redirected to the index inside the sidebar.
+- Fixed: sorting logic can now handle uuids, rather than only integers.
+- Fixed: double clicks sometimes opened up sidebar with duplicate content.
+- Fixed: adding file on create page didn't upload.
+- Fixed: multiselect for key value pairs
+- Fixed: locale showed up in validation errors when there were no multiple localized fields.
+- Fixed: nested fragment broke when adding fragmentowner as nested fragment
+- Changed: FilterPresets::text() now expects the queryParameter as first parameter. Beforehand the first parameter was the array of dynamic attributes.
+- Changed: Field::options callback now has the model as second parameter.
+- Changed: Default field value is no longer showed in field window views.
+- Added: option to choose where to go to after creating model. Via `Resource::getRedirectAfterCreate()`. This can be set to null as well aka when used in sidebar.
+- Added: resource::getInstanceAttributes method to set default attributes on a model when record is not created yet
+- Added: The data-sortable-id-type can now be set on the sortable container. It defaults to an int but now you set it to string so you can use an uuid as sortable id as well.
+- Added: Sorted event after sorted
+
+## 0.7.9 - 2022-07-25
+- Fixed: issue where removing diacritics in url removed entire url entry e.g. foobér => foobar.
+- Fixed: issue where ordering nested fragments gave an error.
+
+## 0.7.8 - 2022-06-15
+- Fixed: issue where deleting model redirected to the index inside the sidebar.
+
+## 0.7.7 - 2022-05-17
+- Fixed: Trigger PageChanged event when fragments are sorted.
+- Fixed: stay in sidebar if redirect is set for a fragment. By default a fragment with nested fragments redirects after creation to its edit page.
+- Fixed: issue where file previews didn't show the original image while queue was still processing conversions.
+
+## 0.7.6 - 2022-05-11
+- Added: Simple state to use when your model only needs: online, offline and delete states. Add the `UsesSimpleState` trait.
+
+## 0.7.5 - 2022-05-10
+- Added: PageChanged event that can notify of any changed pages. Can be used for breaking cache.
+
+## 0.7.4 - 2022-05-09
 - Fixed: Filter presets where page state enum was used as option key.
+- Fixed: Toast on error page fetches invalid url.
+- Added: `StateAdminConfig::getTransitionFields` so you can add form fields that need to be filled in when changing state
 
 ## 0.7.2 - 2022-04-29
 - Fixed: preventing double submits when clicking fast on fragment create
@@ -17,7 +74,7 @@ principles.
 ## 0.7.1 - 2022-04-21
 - Fixed: dashed squanto files are now displayed in admin without dash. This also fixes an issue with not showing translations when using dashed filenames.
 - Fixed: Preview layout of images and grid.
-- Added: Nested repeats. Now a repeat field can contain a repeat field itself. 
+- Added: Nested repeats. Now a repeat field can contain a repeat field itself.
 - Added: A resource can set a custom `SaveFields` class.
 
 ## 0.7.0 - 2022-04-08

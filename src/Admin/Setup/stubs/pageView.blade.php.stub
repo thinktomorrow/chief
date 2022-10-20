@@ -1,11 +1,10 @@
-{{--
-This default page view assumes you use the default Think Tomorrow layout.
-You are free to remove this boilerplate and start from a clean view instead.
---}}
-<x-page-layout>
-    <x-slot name="metatags">
-        @include('templates.page._partials.metatags', ['model' => $model])
-    </x-slot>
+<x-page-layout :model="$model">
+
+    {{--
+    This default page view assumes you use the default Think Tomorrow layout.
+    You are free to remove this boilerplate and start from a clean view instead.
+    --}}
 
     @fragments
+
 </x-page-layout>

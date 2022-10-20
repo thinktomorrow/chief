@@ -31,16 +31,6 @@ class FieldValidator
 
     private function createValidator(Validatable & Localizable $field, array $payload): Validator
     {
-        // TODO: what about the files.*.detach stuff...
-        // return ValidationNames::fromFormat($this->getValidationNameFormat())
-        //            ->payload($payload)
-        //            ->replace('locale', $this->getLocales())
-        //            ->replace('name', [$this->getName()])
-        //            ->removeKeysContaining(['files.*.detach', 'images.*.detach'])
-        //            ->get()
-
-//        trap()
-
         // Rename to validationParameters
         $validationParameters = ValidationParameters::make($field);
 

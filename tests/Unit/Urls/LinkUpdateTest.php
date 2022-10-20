@@ -245,4 +245,14 @@ class LinkUpdateTest extends ChiefTestCase
         $response->assertSessionHasNoErrors();
         $this->assertStringEndsWith('/artikels/foobar-updated', $model2->url());
     }
+
+    /** @test */
+    public function changing_diacritics_are_allowed()
+    {
+        $this->updateLinks($this->model, ['nl' => 'foobér']);
+        $this->updateLinks($this->model, ['nl' => 'foober']);
+
+        $this->assertCount(1, UrlRecord::all());
+        $this->assertNotNull(UrlRecord::findBySlug('foober', 'nl'));
+    }
 }

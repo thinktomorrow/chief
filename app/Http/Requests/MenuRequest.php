@@ -38,7 +38,7 @@ class MenuRequest extends FormRequest
      */
     public function rules()
     {
-        $translations = $this->request->get('trans', []);
+        $translations = $this->request->all('trans');
 
         $rules['type'] = 'required|in:custom,internal,nolink';
         $rules['owner_reference'] = 'required_if:type,internal';
@@ -61,7 +61,7 @@ class MenuRequest extends FormRequest
     {
         $attributes = [];
 
-        foreach (array_keys($this->request->get('trans', [])) as $locale) {
+        foreach (array_keys($this->request->all('trans')) as $locale) {
             $attributes['trans.' . $locale . '.label'] = $locale . ' label';
             $attributes['trans.' . $locale . '.url'] = $locale . ' link';
         }
