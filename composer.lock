@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a716d5b92c913a9071f378316697b3e9",
+    "content-hash": "a4d7da85c41cf8200dd050ea45efdbfc",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -1413,16 +1413,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.36.2",
+            "version": "v9.36.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0bcd350eec1974c9f912f129368587ef7e43722b"
+                "reference": "80ba0561b3682b96743e1c152fde0698bbdb2412"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0bcd350eec1974c9f912f129368587ef7e43722b",
-                "reference": "0bcd350eec1974c9f912f129368587ef7e43722b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/80ba0561b3682b96743e1c152fde0698bbdb2412",
+                "reference": "80ba0561b3682b96743e1c152fde0698bbdb2412",
                 "shasum": ""
             },
             "require": {
@@ -1511,7 +1511,7 @@
                 "league/flysystem-read-only": "^3.3",
                 "league/flysystem-sftp-v3": "^3.0",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.8",
+                "orchestra/testbench-core": "^7.11",
                 "pda/pheanstalk": "^4.0",
                 "phpstan/phpstan": "^1.4.7",
                 "phpunit/phpunit": "^9.5.8",
@@ -1595,7 +1595,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-10-18T18:46:20+00:00"
+            "time": "2022-10-19T13:23:53+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -4027,16 +4027,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.5.10",
+            "version": "5.5.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "5e96846341cb883bbe74f735502b743ee9898669"
+                "reference": "81254462a93ed274d3e18159f04f5e842f813d00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/5e96846341cb883bbe74f735502b743ee9898669",
-                "reference": "5e96846341cb883bbe74f735502b743ee9898669",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/81254462a93ed274d3e18159f04f5e842f813d00",
+                "reference": "81254462a93ed274d3e18159f04f5e842f813d00",
                 "shasum": ""
             },
             "require": {
@@ -4097,7 +4097,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.5.10"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.5.12"
             },
             "funding": [
                 {
@@ -4105,7 +4105,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-19T02:25:19+00:00"
+            "time": "2022-10-19T20:26:33+00:00"
         },
         {
             "name": "spatie/laravel-sitemap",
@@ -8831,23 +8831,23 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v7.10.2",
+            "version": "v7.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "713f811ebba7524eb5891ac102a3f270578e078a"
+                "reference": "64a5ef91760ab62acdd4adb10ebb1e1ad68e9311"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/713f811ebba7524eb5891ac102a3f270578e078a",
-                "reference": "713f811ebba7524eb5891ac102a3f270578e078a",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/64a5ef91760ab62acdd4adb10ebb1e1ad68e9311",
+                "reference": "64a5ef91760ab62acdd4adb10ebb1e1ad68e9311",
                 "shasum": ""
             },
             "require": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.34",
+                "laravel/framework": "^9.36",
                 "mockery/mockery": "^1.5.1",
-                "orchestra/testbench-core": "^7.10.2",
+                "orchestra/testbench-core": "^7.11",
                 "php": "^8.0",
                 "phpunit/phpunit": "^9.5.10",
                 "spatie/laravel-ray": "^1.28",
@@ -8884,7 +8884,7 @@
             ],
             "support": {
                 "issues": "https://github.com/orchestral/testbench/issues",
-                "source": "https://github.com/orchestral/testbench/tree/v7.10.2"
+                "source": "https://github.com/orchestral/testbench/tree/v7.11.0"
             },
             "funding": [
                 {
@@ -8896,20 +8896,20 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-10-14T11:29:27+00:00"
+            "time": "2022-10-19T11:54:46+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v7.10.2",
+            "version": "v7.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "ef1c1bfe5f05f96151a5bd9a9ccd7c10650bc5d1"
+                "reference": "7b67c9e23e9eb6e3e3b336f9ba3afe99072795e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/ef1c1bfe5f05f96151a5bd9a9ccd7c10650bc5d1",
-                "reference": "ef1c1bfe5f05f96151a5bd9a9ccd7c10650bc5d1",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/7b67c9e23e9eb6e3e3b336f9ba3afe99072795e2",
+                "reference": "7b67c9e23e9eb6e3e3b336f9ba3afe99072795e2",
                 "shasum": ""
             },
             "require": {
@@ -8917,7 +8917,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.9.2",
-                "laravel/framework": "^9.34",
+                "laravel/framework": "^9.36",
                 "laravel/laravel": "9.x-dev",
                 "laravel/pint": "^1.1",
                 "mockery/mockery": "^1.5.1",
@@ -8991,7 +8991,7 @@
                     "type": "liberapay"
                 }
             ],
-            "time": "2022-10-14T11:20:52+00:00"
+            "time": "2022-10-19T11:47:55+00:00"
         },
         {
             "name": "phar-io/manifest",
