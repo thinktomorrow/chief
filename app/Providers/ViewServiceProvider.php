@@ -19,9 +19,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
         // Chief components
-        Blade::component('chief::components.title', 'chief-title');
-        Blade::component('chief::components.content', 'chief-content');
-        Blade::component('chief::components.sidebar', 'chief-sidebar');
+        Blade::component('chief::components.window', 'chief-window');
         Blade::component('chief::components.inline-notification', 'chief-inline-notification');
         Blade::component('chief::components.icon-label', 'chief-icon-label');
         Blade::component('chief::components.icon-button', 'chief-icon-button');

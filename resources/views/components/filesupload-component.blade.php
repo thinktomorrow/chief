@@ -1,6 +1,5 @@
 @push('custom-scripts')
     <script>
-
         Vue.component('filesupload', {
             props: ['preselected', 'group', 'locale'],
             data: function () {
@@ -21,13 +20,6 @@
                 };
             },
             created: function () {
-                /** */
-                if(this.items.length < 1) {
-                    // this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
-                    // this.fileInput     = this.fileDropArea.querySelector('input');
-                    // this.fileInputName = this.fileInput.name;
-                }
-
                 /**
                  * When a new image is loaded, we want to reorder our files so
                  * this new one is included in the list. We have a small delay
@@ -66,7 +58,6 @@
                     });
                     self.updateFilesOrder();
                 })
-
             },
             computed: {
                 hasValidUpload: function(){
@@ -117,7 +108,6 @@
 
                     return supportDraggable && supportUpload;
                 },
-
                 /**
                  * Sorting methods
                  */
@@ -146,18 +136,14 @@
                 toggleReorder: function () {
                     this.reorder = !this.reorder;
                 },
-
                 handleSortingStart: function (e) {
-
                     this.sortSource = e.target;
                     this.sortSource.style.opacity = '0.4';
 
                     e.dataTransfer.effectAllowed = 'move';
                     e.dataTransfer.setData('text/html', this.innerHTML);// FF support
-
                 },
                 handleSortingEnter: function (e) {
-
                     this.sortSource.style.opacity = '1';
 
                     // We need our draggable-item, not the child elements
@@ -166,8 +152,7 @@
                     if (target && this.isbefore(this.sortSource, target)) {
                         target.parentNode.insertBefore(this.sortSource, target);
                         this.updateFilesOrder();
-                    }
-                    else {
+                    } else {
                         if (!target || this.sortSource == target.nextSibling) {
                             return;
                         }
@@ -186,7 +171,6 @@
                     }
                     return false;
                 },
-
                 findAncestor: function (el, sel) {
                     while ((el = el.parentElement) && !((el.matches || el.matchesSelector).call(el, sel)));
                     return el;

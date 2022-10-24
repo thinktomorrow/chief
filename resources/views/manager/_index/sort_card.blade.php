@@ -1,10 +1,4 @@
-<div class="space-y-6 card">
-    <div class="w-full space-x-1">
-        <span class="text-lg display-base display-dark">
-            Sortering
-        </span>
-    </div>
-
+<x-chief-window title="Sortering" class="card">
     <div class="space-y-4">
         @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
             <p class="body-dark body-base">
@@ -26,4 +20,4 @@
             <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
         @endif
     </div>
-</div>
+</x-chief-window>

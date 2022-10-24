@@ -26,15 +26,17 @@
                             </a>
                         </div>
 
-                        <modal id="state-modal-{{ $modalId }}" title="Ben je zeker?"
+                        <modal
+                            id="state-modal-{{ $modalId }}"
+                            title="Ben je zeker?"
                             url="{{ $stateConfig->getAsyncModalUrl($transitionKey, $model) }}"
                             {{ $stateConfig->getAsyncModalUrl($transitionKey, $model) ? ' :footer=false' : '' }}
                         >
                             <form
-                                    id="state-modal-form-{{ $modalId }}"
-                                    action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,$transitionKey)"
-                                    method="POST"
-                                    v-cloak
+                                id="state-modal-form-{{ $modalId }}"
+                                action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,$transitionKey)"
+                                method="POST"
+                                v-cloak
                             >
                                 @csrf
                                 @method('PUT')
@@ -42,21 +44,23 @@
                                 @foreach($stateConfig->getTransitionFields( $transitionKey, $model ) as $field)
                                     {{ $field->render() }}
                                 @endforeach
-
                             </form>
 
 
                             @if($content = $stateConfig->getTransitionContent( $transitionKey ))
-                                <x-chief-inline-notification type="{{ $stateConfig->getTransitionType($transitionKey) }}" size="large">
+                                <x-chief-inline-notification
+                                    type="{{ $stateConfig->getTransitionType($transitionKey) }}"
+                                    size="large"
+                                >
                                     <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
                                 </x-chief-inline-notification>
                             @endif
 
                             <div v-cloak slot="modal-action-buttons">
                                 <button
-                                        form="state-modal-form-{{ $modalId }}"
-                                        type="submit"
-                                        class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
+                                    form="state-modal-form-{{ $modalId }}"
+                                    type="submit"
+                                    class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
                                 >
                                     {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
                                 </button>
@@ -74,8 +78,10 @@
                                 {{ $field->render() }}
                             @endforeach
 
-                            <button type="submit"
-                                    class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
+                            >
                                 {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
                             </button>
                         </div>
@@ -83,7 +89,10 @@
                     </form>
 
                     @if($content = $stateConfig->getTransitionContent($transitionKey))
-                        <x-chief-inline-notification type="{{ $stateConfig->getTransitionType($transitionKey) }}" size="large">
+                        <x-chief-inline-notification
+                            type="{{ $stateConfig->getTransitionType($transitionKey) }}"
+                            size="large"
+                        >
                             <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
                         </x-chief-inline-notification>
                     @endif
