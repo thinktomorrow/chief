@@ -22,7 +22,7 @@
             title="Aanpassen"
             class="link link-primary"
         >
-            <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
+            <x-chief-icon-button icon="icon-edit"/>
         </a>
     </div>
 </div>

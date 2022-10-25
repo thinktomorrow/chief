@@ -29,7 +29,7 @@
                 <div class="shrink-0">
                     @if($editUrl)
                         <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen">
-                            <x-chief-icon-button icon="icon-edit" />
+                            <x-chief-icon-button icon="icon-edit"/>
                         </a>
                     @endif
 

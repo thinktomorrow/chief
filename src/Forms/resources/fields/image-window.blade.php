@@ -45,7 +45,7 @@
         @endforeach
     @else
         <div class="flex items-center justify-center w-32 h-20 rounded-lg bg-grey-100">
-            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-image" /></svg>
+            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-photo" /></svg>
         </div>
     @endif
 </div>

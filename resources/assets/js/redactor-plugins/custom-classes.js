@@ -21,7 +21,7 @@
 
             const $button = this.toolbar.addButtonAfter('link', 'toggle-button', { title: 'Wijzig link opmaak' });
 
-            $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span>');
+            $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#icon-droplet"/></svg></span>');
             $button.setDropdown(dropdown);
         },
         toggle(custom_tag) {

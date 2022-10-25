@@ -74,7 +74,7 @@
                             {{ $allowMultiple() ? 'multiple' : '' }}
                             accept="image/jpeg, image/png, image/svg+xml, image/webp"
                         >
-                        <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
+                        <span><svg width="18" height="18"><use xlink:href="#icon-plus"/></svg></span>
                     </div>
                 </div>
             </div>

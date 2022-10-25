@@ -73,7 +73,7 @@
                         @adminCan('edit')
                             <x-chief::table.data class="text-right">
                                 <a href="@adminRoute('edit', $model)" title="Aanpassen">
-                                    <x-chief-icon-button icon="icon-edit"></x-chief-icon-button>
+                                    <x-chief-icon-button icon="icon-edit"/>
                                 </a>
                             </x-chief::table.data>
                         @endAdminCan

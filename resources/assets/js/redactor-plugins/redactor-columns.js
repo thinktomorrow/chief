@@ -35,7 +35,7 @@
                 args: [4, 4, 4],
             };
 
-            $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#grid"/></svg></span>');
+            $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#icon-view-columns"/></svg></span>');
             $button.setDropdown(dropdown);
         },
 
