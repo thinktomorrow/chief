@@ -50,36 +50,40 @@
             </div>
 
             <div class="w-full lg:w-1/3">
-                <div class="card">
-                    <div class="w-full space-x-1 mt-0.5">
-                        <span class="text-lg display-base display-dark">
-                            Filter
-                        </span>
-                    </div>
-
+                <x-chief-window title="Filter" class="card">
                     <form method="GET" id="filtering" class="space-y-4">
                         <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
                         <x-chief-form::formgroup id="name" label="Bestandsnaam">
-                            <input type="text" name="search" placeholder="Zoek op bestandsnaam ..." value="{{ old('search', request()->input('search'))}}">
+                            <input
+                                type="text"
+                                name="search"
+                                placeholder="Zoek op bestandsnaam ..."
+                                value="{{ old('search', request()->input('search'))}}"
+                            >
                         </x-chief-form::formgroup>
 
                         <x-chief-form::formgroup id="owner" label="Pagina">
                             <chief-multiselect
-                                    name="owner"
-                                    :options='@json($pages)'
-                                    selected='@json(old('owner', request()->input('owner')))'
-                                    :multiple='false'
-                                    grouplabel="group"
-                                    groupvalues="values"
-                                    labelkey="label"
-                                    valuekey="id"
+                                name="owner"
+                                :options='@json($pages)'
+                                selected='@json(old('owner', request()->input('owner')))'
+                                :multiple='false'
+                                grouplabel="group"
+                                groupvalues="values"
+                                labelkey="label"
+                                valuekey="id"
                             ></chief-multiselect>
                         </x-chief-form::formgroup>
 
                         <x-chief-form::formgroup id="unused">
                             <label for="unused" class="with-checkbox">
-                                <input type="checkbox" name="unused" id="unused" {{ old('unused', request()->input('unused')) ? 'checked' : ''}}>
+                                <input
+                                    type="checkbox"
+                                    name="unused"
+                                    id="unused"
+                                    {{ old('unused', request()->input('unused')) ? 'checked' : '' }}
+                                >
 
                                 <span>Toon enkel ongebruikte media</span>
                             </label>
@@ -87,7 +91,7 @@
 
                         <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                     </form>
-                </div>
+                </x-chief-window>
             </div>
         </div>
     </div>
@@ -95,10 +99,15 @@
     <modal id="mediagallery-bulk-delete-modal" title="Selectie verwijderen">
         <h2 class="h2 display-dark">Bent u zeker?</h2>
 
-        <p>Je staat op het punt om de geselecteerde bestanden op te ruimen. Enkel ongebruikte bestanden zullen worden verwijderd.</p>
+        <p>
+            Je staat op het punt om de geselecteerde bestanden op te ruimen.
+            Enkel ongebruikte bestanden zullen worden verwijderd.
+        </p>
 
         <div v-cloak slot="modal-action-buttons">
-            <button type="submit" form="selecting" name="type" value="remove" class="btn btn-error">Verwijder de selectie</button>
+            <button type="submit" form="selecting" name="type" value="remove" class="btn btn-error">
+                Verwijder de selectie
+            </button>
         </div>
     </modal>
 @stop
