@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree;
 
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 
 final class NestedTreeSource implements Source
 {
@@ -24,7 +24,7 @@ final class NestedTreeSource implements Source
 
     public function createNode($entry): Node
     {
-        if (!$entry instanceof NestedNode) {
+        if (! $entry instanceof NestedNode) {
             throw new \InvalidArgumentException('Entry is expected to be a ' . NestedNode::class . '.');
         }
 

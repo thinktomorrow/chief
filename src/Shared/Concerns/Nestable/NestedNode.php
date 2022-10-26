@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
-use Thinktomorrow\Vine\Node;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Vine\Node;
 
 interface NestedNode extends Node
 {

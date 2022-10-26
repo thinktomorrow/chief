@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Shared\Concerns\Locale\HasLocale;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use function collect;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 
 /**
  * Model logic for handling nesting based on the parent_id construct
@@ -40,9 +39,11 @@ trait NestedNodeDefaults
 
     public function showOnline(): bool
     {
-        if($this->getNodeEntry() instanceof StatefulContract) return $this->getNodeEntry()->inOnlineState();
+        if ($this->getNodeEntry() instanceof StatefulContract) {
+            return $this->getNodeEntry()->inOnlineState();
+        }
 
-        return !!$this->getNodeEntry('show_online');
+        return ! ! $this->getNodeEntry('show_online');
     }
 
     public function getUrlSlug(string $locale): ?string
@@ -63,7 +64,7 @@ trait NestedNodeDefaults
     public function getOnlineChildren(): Collection
     {
         return $this->getChildren()
-            ->reject(fn(NestedNode $childNode) => !$childNode->showOnline());
+            ->reject(fn (NestedNode $childNode) => ! $childNode->showOnline());
     }
 
 //    public function getDirectChildrenIds(): array

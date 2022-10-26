@@ -13,7 +13,7 @@ class SqliteNestablePageRepository extends MysqlNestablePageRepository implement
         $table = $modelClassInstance->getTable();
 
         $results = DB::table($table)
-            ->leftJoin('chief_urls', function($join) use($table, $modelClassInstance){
+            ->leftJoin('chief_urls', function ($join) use ($table, $modelClassInstance) {
                 $join->on($table . '.'. $modelClassInstance->getKeyName(), 'chief_urls.model_id')
                     ->where('chief_urls.model_type', $modelClassInstance->getMorphClass());
             })

@@ -7,6 +7,5 @@ class BreadCrumbComposer
 {
     public function __construct()
     {
-
     }
 }

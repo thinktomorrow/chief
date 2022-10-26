@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PageNode;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PageNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\SqliteNestablePageRepository;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
 
 class NestableBreadCrumbTest extends ChiefTestCase
 {
@@ -59,5 +59,4 @@ class NestableBreadCrumbTest extends ChiefTestCase
         $this->assertEquals('label third fr > label fourth fr', $model->getBreadCrumbLabelWithoutRoot('fr'));
         $this->assertEquals('label first fr: label third fr > label fourth fr', $model->getBreadCrumbLabel('fr'));
     }
-
 }

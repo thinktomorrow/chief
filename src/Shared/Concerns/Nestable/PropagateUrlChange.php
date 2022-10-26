@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
-use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 
 class PropagateUrlChange
 {
@@ -24,7 +23,7 @@ class PropagateUrlChange
     public function handle(NestedNode & Visitable $model): void
     {
         // TODO: how to set locales per page??? Now we always take the general locales from chief
-        foreach($this->locales as $locale) {
+        foreach ($this->locales as $locale) {
             $this->resaveUrlSlug($model, $locale);
 
             foreach ($model->getChildNodes() as $child) {
@@ -52,5 +51,4 @@ class PropagateUrlChange
 //        // TODO: for each locales... not only NL
 //        return ($urlRecord = UrlRecord::findByModel($this, 'nl')) ? $urlRecord->slug : '';
 //    }
-
 }

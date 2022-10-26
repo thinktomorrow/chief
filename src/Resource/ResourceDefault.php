@@ -10,8 +10,8 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\MysqlNestablePageRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 
 trait ResourceDefault
 {

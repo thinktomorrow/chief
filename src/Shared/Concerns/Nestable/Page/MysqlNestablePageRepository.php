@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
-use Thinktomorrow\Vine\NodeCollectionFactory;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTreeSource;
+use Thinktomorrow\Vine\NodeCollectionFactory;
 
 class MysqlNestablePageRepository implements NestablePageRepository
 {
@@ -44,7 +44,7 @@ class MysqlNestablePageRepository implements NestablePageRepository
         $table = $modelClassInstance->getTable();
 
         $results = DB::table($table)
-            ->leftJoin('chief_urls', function($join) use($table, $modelClassInstance){
+            ->leftJoin('chief_urls', function ($join) use ($table, $modelClassInstance) {
                 $join->on($table . '.'. $modelClassInstance->getKeyName(), 'chief_urls.model_id')
                     ->where('chief_urls.model_type', $modelClassInstance->getMorphClass());
             })

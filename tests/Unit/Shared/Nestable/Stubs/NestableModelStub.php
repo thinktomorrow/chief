@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class NestableModelStub extends Model
@@ -31,7 +31,7 @@ class NestableModelStub extends Model
 
     public static function migrateUp()
     {
-        Schema::create((new static)->getTable(), function(Blueprint $table) {
+        Schema::create((new static)->getTable(), function (Blueprint $table) {
             $table->char('id', 36)->primary();
             $table->char('parent_id', 36)->index()->nullable();
             $table->string('title')->nullable();
@@ -78,7 +78,7 @@ class NestableModelStub extends Model
         $locale = app()->getLocale();
 
         // TODO: fix this for locales as well!!!!!!
-        if($this->getParentNode()){
+        if ($this->getParentNode()) {
             return $this->getParentNode()->getUrlSlug($locale);
         }
 

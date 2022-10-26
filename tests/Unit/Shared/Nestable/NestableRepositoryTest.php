@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\NestableArticlePage;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\SqliteNestablePageRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\NestableArticlePage;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
 final class NestableRepositoryTest extends ChiefTestCase
 {
