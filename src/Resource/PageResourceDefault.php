@@ -74,7 +74,9 @@ trait PageResourceDefault
     public function getIndexView(): View
     {
         if ($this->getIndexViewType() == 'table') {
-            return view('chief-table::index');
+            return ($this->isNestable())
+                ? view('chief-table::nestable.index')
+                : view('chief-table::index');
         }
 
         return view('chief::manager.index');
@@ -86,7 +88,7 @@ trait PageResourceDefault
      */
     protected function getIndexViewType(): string
     {
-        return 'index';
+        return 'table';
     }
 
     public function getIndexTitle(): string

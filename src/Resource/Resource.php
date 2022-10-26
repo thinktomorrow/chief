@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 
 interface Resource
 {
@@ -32,4 +33,14 @@ interface Resource
      * @return array
      */
     public function getInstanceAttributes(Request $request): array;
+
+    /**
+     * Nestable models will have a different UI in backend
+     * and allow for vine retrieval on the frontend
+     *
+     * @return bool
+     */
+    public function isNestable(): bool;
+
+    public function nestableRepository(): ?NestableRepository;
 }
