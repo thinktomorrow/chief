@@ -11,11 +11,14 @@
                         </span>
                     </div>
 
-                  <div class="prose prose-spacing prose-dark" v-if="computedCustomHtml" v-html="computedCustomHtml"></div>
+                    <div
+                        class="prose prose-spacing prose-dark"
+                        v-if="computedCustomHtml"
+                        v-html="computedCustomHtml"
+                    ></div>
                     <div class="prose prose-spacing prose-dark" v-else>
-                      <slot></slot>
+                        <slot></slot>
                     </div>
-
                 </div>
 
                 <div v-if="showFooter" class="flex items-center mt-8 space-x-4">
@@ -33,7 +36,7 @@
                     @click="close"
                     class="absolute p-1 bg-white rounded-full -top-3 -right-3 link link-grey icon-label m-7"
                 >
-                    <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#x" /></svg>
+                    <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#icon-x-mark" /></svg>
                 </button>
             </div>
         </div>
@@ -41,7 +44,7 @@
 </template>
 
 <script>
-import vueFields from "../forms/fields/vue-fields";
+import vueFields from '../forms/fields/vue-fields';
 
 export default {
     props: {
@@ -51,7 +54,7 @@ export default {
         type: { default: 'modal' },
         size: { default: 'small' },
         url: { default: null },
-        footer: {default: true, type: Boolean }
+        footer: { default: true, type: Boolean },
     },
     data() {
         return {
@@ -64,27 +67,26 @@ export default {
             customHtml: null,
         };
     },
-  computed: {
-      // Triggers template reeval.
-    computedCustomHtml: function(){
-        return this.customHtml;
-    }
-  },
+    computed: {
+        // Triggers template reeval.
+        computedCustomHtml: function () {
+            return this.customHtml;
+        },
+    },
     methods: {
         open: function () {
-
-          this.isVisible = true;
-          if(this.fetchUrl) {
-            fetch(this.fetchUrl)
-                .then((response) => response.json())
-                .then((data) => {
-                    this.customHtml = data.data;
-                    console.log('done');
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-          }
+            this.isVisible = true;
+            if (this.fetchUrl) {
+                fetch(this.fetchUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        this.customHtml = data.data;
+                        console.log('done');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
         },
         close: function () {
             this.isVisible = false;

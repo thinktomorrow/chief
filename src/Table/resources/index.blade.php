@@ -10,7 +10,6 @@
     $bodyAttributes = $manager->can('sort-index', $models->first())
         ? 'data-sortable data-sortable-endpoint=' . $manager->route('sort-index') .' data-sortable-id-type='. $resource->getSortableType()
         : '';
-
 @endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
