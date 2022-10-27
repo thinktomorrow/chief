@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4d7da85c41cf8200dd050ea45efdbfc",
+    "content-hash": "e9f9e79528492ad2aa5a41d588986f65",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -155,16 +155,16 @@
         },
         {
             "name": "dflydev/dot-access-data",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-dot-access-data.git",
-                "reference": "0992cc19268b259a39e86f296da5f0677841f42c"
+                "reference": "f41715465d65213d644d3141a6a93081be5d3549"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/0992cc19268b259a39e86f296da5f0677841f42c",
-                "reference": "0992cc19268b259a39e86f296da5f0677841f42c",
+                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/f41715465d65213d644d3141a6a93081be5d3549",
+                "reference": "f41715465d65213d644d3141a6a93081be5d3549",
                 "shasum": ""
             },
             "require": {
@@ -175,7 +175,7 @@
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.3",
                 "scrutinizer/ocular": "1.6.0",
                 "squizlabs/php_codesniffer": "^3.5",
-                "vimeo/psalm": "^3.14"
+                "vimeo/psalm": "^4.0.0"
             },
             "type": "library",
             "extra": {
@@ -224,9 +224,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dflydev/dflydev-dot-access-data/issues",
-                "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.1"
+                "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.2"
             },
-            "time": "2021-08-13T13:06:58+00:00"
+            "time": "2022-10-27T11:44:00+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1209,16 +1209,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.1",
+            "version": "2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379"
+                "reference": "67c26b443f348a51926030c83481b85718457d3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/69568e4293f4fa993f3b0e51c9723e1e17c41379",
-                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/67c26b443f348a51926030c83481b85718457d3d",
+                "reference": "67c26b443f348a51926030c83481b85718457d3d",
                 "shasum": ""
             },
             "require": {
@@ -1308,7 +1308,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.3"
             },
             "funding": [
                 {
@@ -1324,7 +1324,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-28T14:45:39+00:00"
+            "time": "2022-10-26T14:07:24+00:00"
         },
         {
             "name": "intervention/image",
@@ -1412,16 +1412,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.36.4",
+            "version": "v9.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "15ce569fd93124e8e2257c24e3ed85b9ef9951d6"
+                "reference": "0c9675abf6d966e834b2ebeca3319f524e07a330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/15ce569fd93124e8e2257c24e3ed85b9ef9951d6",
-                "reference": "15ce569fd93124e8e2257c24e3ed85b9ef9951d6",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0c9675abf6d966e834b2ebeca3319f524e07a330",
+                "reference": "0c9675abf6d966e834b2ebeca3319f524e07a330",
                 "shasum": ""
             },
             "require": {
@@ -1594,7 +1594,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-10-20T16:11:03+00:00"
+            "time": "2022-10-25T15:43:46+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -1907,16 +1907,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.10.1",
+            "version": "3.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "9857d7208a94fc63c7bf09caf223280e59ac7274"
+                "reference": "b9bd194b016114d6ff6765c09d40c7d427e4e3f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9857d7208a94fc63c7bf09caf223280e59ac7274",
-                "reference": "9857d7208a94fc63c7bf09caf223280e59ac7274",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/b9bd194b016114d6ff6765c09d40c7d427e4e3f6",
+                "reference": "b9bd194b016114d6ff6765c09d40c7d427e4e3f6",
                 "shasum": ""
             },
             "require": {
@@ -1978,7 +1978,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.10.1"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.2"
             },
             "funding": [
                 {
@@ -1994,7 +1994,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-21T18:57:47+00:00"
+            "time": "2022-10-25T07:01:47+00:00"
         },
         {
             "name": "league/glide",
@@ -3512,16 +3512,16 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "3.57.2",
+            "version": "3.57.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "7125719979b7de1257bbf699ff1d3bff3125b228"
+                "reference": "6dbd43cc3e8f35879e1add2fba6801aa97443e12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/7125719979b7de1257bbf699ff1d3bff3125b228",
-                "reference": "7125719979b7de1257bbf699ff1d3bff3125b228",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/6dbd43cc3e8f35879e1add2fba6801aa97443e12",
+                "reference": "6dbd43cc3e8f35879e1add2fba6801aa97443e12",
                 "shasum": ""
             },
             "require": {
@@ -3566,7 +3566,7 @@
                 "webpage"
             ],
             "support": {
-                "source": "https://github.com/spatie/browsershot/tree/3.57.2"
+                "source": "https://github.com/spatie/browsershot/tree/3.57.3"
             },
             "funding": [
                 {
@@ -3574,7 +3574,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-19T16:43:07+00:00"
+            "time": "2022-10-25T08:30:53+00:00"
         },
         {
             "name": "spatie/crawler",
@@ -6633,16 +6633,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.8.4",
+            "version": "0.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "d2f7270dc046af710140dcf03e49e71cc1ae9d7c"
+                "reference": "8a9f0f3d3408ef0565e81690cece4912e665a44a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/d2f7270dc046af710140dcf03e49e71cc1ae9d7c",
-                "reference": "d2f7270dc046af710140dcf03e49e71cc1ae9d7c",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/8a9f0f3d3408ef0565e81690cece4912e665a44a",
+                "reference": "8a9f0f3d3408ef0565e81690cece4912e665a44a",
                 "shasum": ""
             },
             "require": {
@@ -6695,9 +6695,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.4"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.5"
             },
-            "time": "2022-08-05T06:44:56+00:00"
+            "time": "2022-10-27T19:46:52+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
@@ -6872,16 +6872,16 @@
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "0.4.6",
+            "version": "0.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "026f64088b8e09ee7fe03ad2989f5db3332b274c"
+                "reference": "89c60563b28b41f2b115ca56f63cd04a152f6e94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/026f64088b8e09ee7fe03ad2989f5db3332b274c",
-                "reference": "026f64088b8e09ee7fe03ad2989f5db3332b274c",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/89c60563b28b41f2b115ca56f63cd04a152f6e94",
+                "reference": "89c60563b28b41f2b115ca56f63cd04a152f6e94",
                 "shasum": ""
             },
             "require": {
@@ -6911,9 +6911,9 @@
             "description": "Generate a tree from an adjacent database structure",
             "support": {
                 "issues": "https://github.com/thinktomorrow/vine/issues",
-                "source": "https://github.com/thinktomorrow/vine/tree/0.4.6"
+                "source": "https://github.com/thinktomorrow/vine/tree/0.4.8"
             },
-            "time": "2022-10-13T12:32:35+00:00"
+            "time": "2022-10-26T12:50:56+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -7421,16 +7421,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.4.3",
+            "version": "2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "b34c0e9a93f2cd688c62ce4dfcc69e13b6ce7aa4"
+                "reference": "e8d9087229bcdbc5867594d3098091412f1130cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/b34c0e9a93f2cd688c62ce4dfcc69e13b6ce7aa4",
-                "reference": "b34c0e9a93f2cd688c62ce4dfcc69e13b6ce7aa4",
+                "url": "https://api.github.com/repos/composer/composer/zipball/e8d9087229bcdbc5867594d3098091412f1130cf",
+                "reference": "e8d9087229bcdbc5867594d3098091412f1130cf",
                 "shasum": ""
             },
             "require": {
@@ -7513,7 +7513,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.4.3"
+                "source": "https://github.com/composer/composer/tree/2.4.4"
             },
             "funding": [
                 {
@@ -7529,7 +7529,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-14T14:56:41+00:00"
+            "time": "2022-10-27T12:39:29+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -9164,16 +9164,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.17",
+            "version": "9.2.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8"
+                "reference": "12fddc491826940cf9b7e88ad9664cf51f0f6d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/aa94dc41e8661fe90c7316849907cba3007b10d8",
-                "reference": "aa94dc41e8661fe90c7316849907cba3007b10d8",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/12fddc491826940cf9b7e88ad9664cf51f0f6d0a",
+                "reference": "12fddc491826940cf9b7e88ad9664cf51f0f6d0a",
                 "shasum": ""
             },
             "require": {
@@ -9229,7 +9229,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.17"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.18"
             },
             "funding": [
                 {
@@ -9237,7 +9237,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-30T12:24:04+00:00"
+            "time": "2022-10-27T13:35:33+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -11809,5 +11809,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
