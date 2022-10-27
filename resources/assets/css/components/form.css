@@ -168,3 +168,47 @@ select.select {
 
     @apply pr-7 cursor-pointer;
 }
+
+.with-toggle {
+    @apply flex;
+
+    input {
+        @apply appearance-none;
+    }
+
+    .toggle-slider {
+        width: 3.5rem;
+        height: 1.75rem;
+
+        @apply relative inline-block;
+    }
+
+    .toggle-slider:before {
+        content: '';
+        @apply absolute cursor-pointer inset-0 bg-grey-200 rounded-full transition-all duration-300 ease-in-out;
+    }
+
+    .toggle-slider:after {
+        content: '';
+        position: absolute;
+        width: 1.25rem;
+        height: 1.25rem;
+        top: 0.25rem;
+        left: 0.25rem;
+        @apply inline-block bg-white rounded-full shadow transition-all duration-300 ease-in-out;
+    }
+
+    input:focus + .toggle-slider:before {
+        @apply shadow;
+    }
+
+    input:checked + .toggle-slider {
+        &:before {
+            @apply bg-primary-500;
+        }
+
+        &:after {
+            transform: translateX(1.75rem);
+        }
+    }
+}
