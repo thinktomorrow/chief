@@ -48,6 +48,9 @@ interface Field extends Validatable, Localizable
     public function value(mixed $value): static;
     public function getValue(?string $locale = null): mixed;
 
+    public function default(null|string|int|array|Closure $default): static;
+    public function getDefault(?string $locale = null): null|string|int|array;
+
     public function tagged(string|array $tags): bool;
     public function untagged(): bool;
     public function tag(string|array $tags): static;
