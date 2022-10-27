@@ -4,7 +4,6 @@
 
 @switch($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY))
     @case(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::published)
-
         @php
             $isVisitable = ($model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable);
             $isAnyLinkOnline = ($isVisitable && Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model)->isAnyLinkOnline());
@@ -25,18 +24,17 @@
                 </p>
             </div>
         @endif
-
-    @break
+        @break
     @case(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::draft)
         <div class="prose prose-spacing prose-dark">
             <p> Deze pagina is nog niet gepubliceerd en niet zichtbaar voor de gebruiker. </p>
         </div>
-    @break
+        @break
     @case(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::archived)
         <div class="prose prose-spacing prose-dark">
             <p> Deze pagina is gearchiveerd. </p>
         </div>
-    @break
+        @break
     @default
         <div class="prose prose-spacing prose-dark">
             <p> ... </p>

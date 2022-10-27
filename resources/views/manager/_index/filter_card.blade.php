@@ -1,11 +1,5 @@
 @if($manager->filters()->anyRenderable())
-    <div class="space-y-6 card">
-        <div class="w-full space-x-1">
-            <span class="text-lg display-base display-dark">
-                Filter
-            </span>
-        </div>
-
+    <x-chief-window title="Filter" class="card">
         <form method="GET" class="space-y-6">
             {!! $manager->filters()->render() !!}
 
@@ -13,5 +7,5 @@
                 <button class="btn btn-primary" type="submit">Filter</button>
             </div>
         </form>
-    </div>
+    </x-chief-window>
 @endif

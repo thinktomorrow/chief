@@ -8,7 +8,8 @@
                 id="{{ $getElementId($locale ?? null).'_'.$value }}"
                 {{ in_array($value, (array) $getActiveValue($locale ?? null)) ? 'checked="checked"' : '' }}
             >
-            <span>{!! $label !!}</span>
+
+            <span class="body-base body-dark">{!! $label !!}</span>
         </label>
     @endforeach
 </div>
