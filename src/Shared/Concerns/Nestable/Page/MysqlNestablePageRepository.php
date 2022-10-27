@@ -40,6 +40,9 @@ class MysqlNestablePageRepository implements NestablePageRepository
 
     protected function getNodes(): array
     {
+        // TODO: use eloquent models!!!!!!!! and eager loading
+        // TODO: use security stuff
+
         $modelClassInstance = (new $this->modelClass);
         $table = $modelClassInstance->getTable();
 

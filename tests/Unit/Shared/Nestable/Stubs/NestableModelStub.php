@@ -85,6 +85,6 @@ class NestableModelStub extends Model
         // THIS WILL CAUSE ERROR SO W'll HAVE TO WORK ON THIS.
 
 
-        return parent::baseUrlSegment();
+        return parent::baseUrlSegment($locale);
     }
 }
