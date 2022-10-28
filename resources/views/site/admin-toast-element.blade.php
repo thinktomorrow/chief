@@ -50,8 +50,9 @@
                 <a
                     href="{{ $editUrl }}"
                     title="Bewerk deze pagina in chief"
-                    aria-label="edit page"
                     class="admin-toast-link"
+                    target="_blank"
+                    rel="noopener"
                 >
                     <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/> </svg>
                     <span class="admin-toast-hide-on-mobile">Pagina bewerken</span>
@@ -64,6 +65,8 @@
                 href="{{ $toggleUrl }}"
                 title="{{ $inPreviewMode ? 'Schakel preview uit: verberg offline pagina\'s' : 'Schakel preview aan: toon offline pagina\'s' }}"
                 class="admin-toast-link"
+                target="_blank"
+                rel="noopener"
             >
                 @if($inPreviewMode)
                     <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /> </svg>
