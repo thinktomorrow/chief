@@ -25,7 +25,7 @@
                             > Naar het dashboard </a>
 
                             <a
-                                href="mailto:chief@thinktomorrow.be"
+                                href="mailto:support@thinktomorrow.be"
                                 title="Contacteer ons"
                                 class="btn btn-primary-outline"
                             > Contacteer ons </a>
