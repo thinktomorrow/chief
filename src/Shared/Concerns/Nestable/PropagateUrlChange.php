@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
-use Thinktomorrow\Chief\Resource\Resource;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PropagateUrlChange
