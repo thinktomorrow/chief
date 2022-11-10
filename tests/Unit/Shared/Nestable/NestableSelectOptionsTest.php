@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\SqliteNestablePageRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\SelectOptions;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
@@ -20,8 +19,6 @@ final class NestableSelectOptionsTest extends ChiefTestCase
         parent::setUp();
 
         NestableModelStub::migrateUp();
-
-        app()->bind(NestablePageRepository::class, SqliteNestablePageRepository::class);
 
         $this->repository = app()->makeWith(NestablePageRepository::class, ['modelClass' => NestableModelStub::class]);
     }

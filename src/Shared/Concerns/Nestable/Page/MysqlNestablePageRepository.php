@@ -40,22 +40,10 @@ class MysqlNestablePageRepository implements NestablePageRepository
 
     protected function getNodes(): array
     {
-        // TODO: use eloquent models!!!!!!!! and eager loading
-        // TODO: use security stuff
-
-        $modelClassInstance = (new $this->modelClass);
-        $table = $modelClassInstance->getTable();
-
-        $results = DB::table($table)
-            ->leftJoin('chief_urls', function ($join) use ($table, $modelClassInstance) {
-                $join->on($table . '.'. $modelClassInstance->getKeyName(), 'chief_urls.model_id')
-                    ->where('chief_urls.model_type', $modelClassInstance->getMorphClass());
-            })
-            ->select($table .'.*', DB::raw('CONCAT("[",GROUP_CONCAT(JSON_OBJECT(chief_urls.locale, chief_urls.slug)),"]") AS slugs'))
-            ->groupBy($table . '.'. $modelClassInstance->getKeyName())
-            ->orderBy($table.'.order')
-            ->get();
-
-        return $results->map(fn ($row) => new PageNode(new $this->modelClass((array) $row)))->all();
+        return $this->modelClass::with(['urls', 'assetRelation','assetRelation.media'])
+            ->orderBy('order')
+            ->get()
+            ->map(fn ($model) => new PageNode($model))
+            ->all();
     }
 }

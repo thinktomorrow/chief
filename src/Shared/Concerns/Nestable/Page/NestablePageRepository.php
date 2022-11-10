@@ -7,4 +7,5 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 
 interface NestablePageRepository extends NestableRepository
 {
+
 }

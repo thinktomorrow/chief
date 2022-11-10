@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestablePageStub;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PageNode;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\SqliteNestablePageRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
@@ -17,8 +18,6 @@ class NestableBreadCrumbTest extends ChiefTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        app()->bind(NestablePageRepository::class, SqliteNestablePageRepository::class);
 
         NestableModelStub::migrateUp();
     }

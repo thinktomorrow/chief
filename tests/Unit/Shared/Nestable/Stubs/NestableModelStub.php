@@ -5,14 +5,13 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Thinktomorrow\Chief\ManagedModels\Presets\Page;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefaults;
 
-class NestableModelStub extends Model
+class NestableModelStub extends Model implements Page
 {
-    use HasDynamicAttributes;
+    use NestablePageDefaults;
 
     protected $guarded = [];
     protected $dynamicKeys = ['title'];
@@ -43,29 +42,29 @@ class NestableModelStub extends Model
         });
     }
 
-    public function isNestable(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Pass the nested node as model to the frontend
-     */
-    public function response(): Response
-    {
-        $this->setNestedNodeAsModelInView();
-
-        return $this->defaultResponse();
-    }
-
-    /**
-     * Allows to pass a predefined parent
-     * for the creation of a new nested model.
-     */
-    public function getInstanceAttributes(Request $request): array
-    {
-        return $this->getNestableInstanceAttributes($request);
-    }
+//    public function isNestable(): bool
+//    {
+//        return true;
+//    }
+//
+//    /**
+//     * Pass the nested node as model to the frontend
+//     */
+//    public function response(): Response
+//    {
+//        $this->setNestedNodeAsModelInView();
+//
+//        return $this->defaultResponse();
+//    }
+//
+//    /**
+//     * Allows to pass a predefined parent
+//     * for the creation of a new nested model.
+//     */
+//    public function getInstanceAttributes(Request $request): array
+//    {
+//        return $this->getNestableInstanceAttributes($request);
+//    }
 
     public function fields($model): iterable
     {
@@ -73,18 +72,5 @@ class NestableModelStub extends Model
         yield $this->parentNodeSelect($model);
     }
 
-    public function baseUrlSegment(): string
-    {
-        $locale = app()->getLocale();
 
-        // TODO: fix this for locales as well!!!!!!
-        if ($this->getParentNode()) {
-            return $this->getParentNode()->getUrlSlug($locale);
-        }
-
-        // THIS WILL CAUSE ERROR SO W'll HAVE TO WORK ON THIS.
-
-
-        return parent::baseUrlSegment($locale);
-    }
 }

@@ -1,32 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
-use function collect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 
 /**
- * Model logic for handling nesting based on the parent_id construct
+ * Model logic for handling nesting based on the parent_id construct.
  */
 trait NestedNodeDefaults
 {
-    protected string $parentKeyName = 'parent_id';
-
-//    public static function boot()
-//    {
-//        parent::boot();
-//
-//        static::saving(function (self $model) {
-//            if($model->exists && $model->isDirty(static::$parentKeyName)) {
-//                app(PropagateUrlChange::class)->handle($model);
-//            }
-//        });
-//    }
-
     public function getId(): string
     {
         return $this->getNodeId();
@@ -43,28 +30,35 @@ trait NestedNodeDefaults
             return $this->getNodeEntry()->inOnlineState();
         }
 
-        return ! ! $this->getNodeEntry('show_online');
+        return (bool) $this->getNodeEntry('show_online');
     }
 
-    public function getUrlSlug(string $locale): ?string
+    public function getUrlSlug(?string $locale = null): ?string
     {
-        return $this->getLocalizedModelValue('slug', $locale);
+        $locale ?: app()->getLocale();
+
+        if (!$urlRecord = $this->getModel()->urls->first(fn ($urlRecord) => $urlRecord->locale == $locale)) {
+            return null;
+        }
+
+        return $urlRecord->slug;
     }
 
-    public function getLabel(string $locale): string
+    public function getLabel(?string $locale = null): string
     {
-        return $this->getLocalizedModelValue('title', $locale, '');
+        return $this->getLocalizedModelValue('title', $locale ?? app()->getLocale(), '');
     }
 
     public function getChildren(): Collection
     {
-        return collect($this->getChildNodes()->all());
+        return \collect($this->getChildNodes()->all());
     }
 
     public function getOnlineChildren(): Collection
     {
         return $this->getChildren()
-            ->reject(fn (NestedNode $childNode) => ! $childNode->showOnline());
+            ->reject(fn (NestedNode $childNode) => !$childNode->showOnline())
+        ;
     }
 
 //    public function getDirectChildrenIds(): array
@@ -82,22 +76,22 @@ trait NestedNodeDefaults
         return $this->getAncestorNodes()->all();
     }
 
-    public function getBreadCrumbLabelWithoutRoot(string $locale): string
+    public function getBreadCrumbLabelWithoutRoot(?string $locale = null): string
     {
         return $this->getBreadcrumbLabel($locale, true);
     }
 
-    public function getBreadCrumbLabel(string $locale, bool $withoutRoot = false): string
+    public function getBreadCrumbLabel(?string $locale = null, bool $withoutRoot = false): string
     {
         $label = $this->getLabel($locale);
 
-        if (! $this->isRootNode()) {
+        if (!$this->isRootNode()) {
             $label = array_reduce(array_reverse($this->getBreadCrumbs()), function ($carry, NestedNode $node) use ($locale, $withoutRoot) {
                 if ($node->isRootNode()) {
-                    return $withoutRoot ? $carry : $node->getLabel($locale) . ': ' . $carry;
+                    return $withoutRoot ? $carry : $node->getLabel($locale).': '.$carry;
                 }
 
-                return $node->getLabel($locale) . ' > ' . $carry;
+                return $node->getLabel($locale).' > '.$carry;
             }, $this->getLabel($locale));
         }
 
@@ -112,7 +106,11 @@ trait NestedNodeDefaults
             return $model->dynamic($attribute, $locale, $default);
         }
 
-        return $model->$attribute ?? $default;
+        if (!$model->{$attribute} || !is_array($model->{$attribute})) {
+            return $default;
+        }
+
+        return $model->{$attribute}[$locale] ?: $default;
     }
 
     // get all children

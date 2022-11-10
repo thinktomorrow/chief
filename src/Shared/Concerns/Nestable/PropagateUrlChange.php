@@ -6,40 +6,55 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 
 class PropagateUrlChange
 {
     private array $locales;
+    private NestableRepository $nestableRepository;
 
-    public function __construct()
+    public function __construct(NestableRepository $nestableRepository)
     {
         $this->locales = config('chief.locales', []);
+        $this->nestableRepository = $nestableRepository;
     }
 
     /**
      * When a nestable url gets saved, we'll make sure that all
      * underlying children will have their urls updated.
      */
-    public function handle(NestedNode & Visitable $model): void
+    public function handle(Visitable $model): void
     {
+        $node = $this->nestableRepository->findNestableById($model->getKey());
+
         // TODO: how to set locales per page??? Now we always take the general locales from chief
         foreach ($this->locales as $locale) {
-            $this->resaveUrlSlug($model, $locale);
+            $this->resaveUrlSlug($node, $model, $locale);
 
-            foreach ($model->getChildNodes() as $child) {
-                $child->propagateBaseUrlSegment();
+            foreach ($node->getChildNodes() as $child) {
+                $this->handle($child->getModel());
             }
         }
+    }
+
+    public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
+    {
+        $model = $event->modelReference->instance();
+
+        dd($model);
+        // If nestable
+        $this->handle($model);
     }
 
     /**
      * This will retrigger the save for a nested page, which will now
      * take the updated parent slug as its base url segment.
      */
-    private function resaveUrlSlug(NestedNode & Visitable $model, string $locale): void
+    private function resaveUrlSlug(NestedNode $node, Visitable $model, string $locale): void
     {
 //        $currentSlug = ($urlRecord = UrlRecord::findByModel($model, $locale)) ? $urlRecord->slug : '';
-        $currentSlug = $model->getUrlSlug();
+        $currentSlug = $node->getUrlSlug($locale) ?: '';
 
         $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
 

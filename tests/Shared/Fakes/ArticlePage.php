@@ -30,7 +30,7 @@ class ArticlePage extends Model implements Page
     public $guarded = [];
 
     public $dynamicKeys = [
-        'custom', 'title_trans', 'content_trans', 'seo_title','seo_description', 'title_sanitized', 'title_sanitized_trans',
+        'title', 'custom', 'title_trans', 'content_trans', 'seo_title','seo_description', 'title_sanitized', 'title_sanitized_trans',
     ];
 
     protected function dynamicLocales(): array
