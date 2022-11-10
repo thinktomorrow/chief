@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
+use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
@@ -12,39 +14,42 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 class PropagateUrlChange
 {
     private array $locales;
-    private NestableRepository $nestableRepository;
+    private Registry $registry;
 
-    public function __construct(NestableRepository $nestableRepository)
+    public function __construct(Registry $registry)
     {
         $this->locales = config('chief.locales', []);
-        $this->nestableRepository = $nestableRepository;
+        $this->registry = $registry;
     }
 
     /**
      * When a nestable url gets saved, we'll make sure that all
      * underlying children will have their urls updated.
      */
-    public function handle(Visitable $model): void
+    public function handle(NestedNode $node): void
     {
-        $node = $this->nestableRepository->findNestableById($model->getKey());
-
         // TODO: how to set locales per page??? Now we always take the general locales from chief
         foreach ($this->locales as $locale) {
-            $this->resaveUrlSlug($node, $model, $locale);
+            $this->resaveUrlSlug($node, $node->getModel(), $locale);
 
             foreach ($node->getChildNodes() as $child) {
-                $this->handle($child->getModel());
+                $this->handle($child);
             }
         }
     }
 
     public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
     {
+        $resource = $this->registry->findResourceByModel($event->modelReference->className());
+        dd($resource);
         $model = $event->modelReference->instance();
 
-        dd($model);
-        // If nestable
-        $this->handle($model);
+        // TODO: get resource of model
+        // TODO: check if nestable
+
+        $node = $model->nestableRepository()->findNestableById($model->getKey());
+
+        $this->handle($node);
     }
 
     /**
@@ -53,17 +58,10 @@ class PropagateUrlChange
      */
     private function resaveUrlSlug(NestedNode $node, Visitable $model, string $locale): void
     {
-//        $currentSlug = ($urlRecord = UrlRecord::findByModel($model, $locale)) ? $urlRecord->slug : '';
         $currentSlug = $node->getUrlSlug($locale) ?: '';
 
         $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
 
         (new SaveUrlSlugs())->handle($model, [$locale => $strippedSlug]);
     }
-
-//    protected function getCurrentSlug(): string
-//    {
-//        // TODO: for each locales... not only NL
-//        return ($urlRecord = UrlRecord::findByModel($this, 'nl')) ? $urlRecord->slug : '';
-//    }
 }

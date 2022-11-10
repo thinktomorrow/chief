@@ -30,7 +30,9 @@ trait NestablePageDefaults
                     throw new \DomainException('Cannot assign itself as parent. Model ['.$model->getKey().'] is set with its own id ['.$model->parent_id.'] as parent_id.');
                 }
 
-                (new PropagateUrlChange($model->nestableRepository()))->handle($model);
+                // TODO: repo should not come from model.
+                $node = $model->nestableRepository()->findNestableById($model->getKey());
+                app(PropagateUrlChange::class)->handle($node);
             }
         });
     }

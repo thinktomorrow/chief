@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\PropagateUrlChange;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
@@ -196,6 +197,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(ManagedModelCreated::class, [CreateUrlForPage::class,'onManagedModelCreated']);
         Event::listen(ManagedModelUrlUpdated::class, [TriggerPageChangedEvent::class,'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [ProjectModelData::class,'onManagedModelUrlUpdated']);
+        Event::listen(ManagedModelUrlUpdated::class, [PropagateUrlChange::class,'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUpdated::class, [TriggerPageChangedEvent::class,'onManagedModelUpdated']);
         Event::listen(ManagedModelUpdated::class, [ProjectModelData::class,'onManagedModelUpdated']);
         Event::listen(ManagedModelArchived::class, [PropagateArchivedUrl::class,'onManagedModelArchived']);

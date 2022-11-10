@@ -42,5 +42,6 @@ interface Resource
      */
     public function isNestable(): bool;
 
+    // TODO: can be remove this from the model? Maybe just add nestable repository classname?
     public function nestableRepository(): ?NestableRepository;
 }
