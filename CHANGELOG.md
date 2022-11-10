@@ -5,6 +5,8 @@ principles.
 
 ## unreleased
 
+- Fixed: honour order of selected options in window
+
 ## 0.7.14 - 2022-11-03
 
 -   Fixed: FilterPresets::text can now accept jsonColumn with specific table prefix, e.g. orders.data

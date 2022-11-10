@@ -14,7 +14,7 @@ trait HasModel
         $this->model = $model;
 
         foreach ($this->whenModelIsSetCallbacks as $callback) {
-            call_user_func_array($callback, [$model]);
+            call_user_func_array($callback, [$model, $this]);
         }
 
         return $this;
