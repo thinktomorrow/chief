@@ -37,7 +37,7 @@ trait NestedNodeDefaults
     {
         $locale ?: app()->getLocale();
 
-        if (!$urlRecord = $this->getModel()->urls->first(fn ($urlRecord) => $urlRecord->locale == $locale)) {
+        if (! $urlRecord = $this->getModel()->urls->first(fn ($urlRecord) => $urlRecord->locale == $locale)) {
             return null;
         }
 
@@ -57,7 +57,7 @@ trait NestedNodeDefaults
     public function getOnlineChildren(): Collection
     {
         return $this->getChildren()
-            ->reject(fn (NestedNode $childNode) => !$childNode->showOnline())
+            ->reject(fn (NestedNode $childNode) => ! $childNode->showOnline())
         ;
     }
 
@@ -85,7 +85,7 @@ trait NestedNodeDefaults
     {
         $label = $this->getLabel($locale);
 
-        if (!$this->isRootNode()) {
+        if (! $this->isRootNode()) {
             $label = array_reduce(array_reverse($this->getBreadCrumbs()), function ($carry, NestedNode $node) use ($locale, $withoutRoot) {
                 if ($node->isRootNode()) {
                     return $withoutRoot ? $carry : $node->getLabel($locale).': '.$carry;
@@ -106,7 +106,7 @@ trait NestedNodeDefaults
             return $model->dynamic($attribute, $locale, $default);
         }
 
-        if (!$model->{$attribute} || !is_array($model->{$attribute})) {
+        if (! $model->{$attribute} || ! is_array($model->{$attribute})) {
             return $default;
         }
 

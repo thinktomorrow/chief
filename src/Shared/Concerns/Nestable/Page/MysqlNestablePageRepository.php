@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTreeSource;

@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\PropagateUrlChange;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\SelectOptions;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\PropagateUrlChange;
 
 trait NestablePageDefaults
 {
@@ -25,9 +25,8 @@ trait NestablePageDefaults
     public static function bootNestablePageDefaults()
     {
         static::saved(function (self $model) {
-            if($model->exists && $model->isDirty('parent_id')) {
-
-                if($model->parent_id == $model->getKey()) {
+            if ($model->exists && $model->isDirty('parent_id')) {
+                if ($model->parent_id == $model->getKey()) {
                     throw new \DomainException('Cannot assign itself as parent. Model ['.$model->getKey().'] is set with its own id ['.$model->parent_id.'] as parent_id.');
                 }
 

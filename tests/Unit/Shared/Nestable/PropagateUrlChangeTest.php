@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 
 class PropagateUrlChangeTest extends ChiefTestCase
 {
@@ -80,8 +80,8 @@ class PropagateUrlChangeTest extends ChiefTestCase
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
             'modelClass' => $node->getModel()::class,
-            'modelId'    => $node->getModel()->id,
-            'links'      => [
+            'modelId' => $node->getModel()->id,
+            'links' => [
                 'nl' => 'foobar',
             ],
         ]);
@@ -90,8 +90,8 @@ class PropagateUrlChangeTest extends ChiefTestCase
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
             'modelClass' => $parentNode->getModel()::class,
-            'modelId'    => $parentNode->getModel()->id,
-            'links'      => [
+            'modelId' => $parentNode->getModel()->id,
+            'links' => [
                 'nl' => 'parent',
             ],
         ]);

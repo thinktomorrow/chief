@@ -71,6 +71,4 @@ class NestableModelStub extends Model implements Page
         // Field to select parent model
         yield $this->parentNodeSelect($model);
     }
-
-
 }

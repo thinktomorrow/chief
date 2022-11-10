@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\MysqlNestablePageRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 
 trait ResourceDefault
