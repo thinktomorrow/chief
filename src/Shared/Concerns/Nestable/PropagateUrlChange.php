@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 
 class PropagateUrlChange
 {
@@ -39,13 +41,10 @@ class PropagateUrlChange
     public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
     {
         $resource = $this->registry->findResourceByModel($event->modelReference->className());
-        dd($resource);
-        $model = $event->modelReference->instance();
 
-        // TODO: get resource of model
-        // TODO: check if nestable
+        if(! $resource->isNestable()) return;
 
-        $node = $model->nestableRepository()->findNestableById($model->getKey());
+        $node = $resource->nestableRepository()->findNestableById($event->modelReference->id());
 
         $this->handle($node);
     }
@@ -59,6 +58,11 @@ class PropagateUrlChange
         $currentSlug = $node->getUrlSlug($locale) ?: '';
 
         $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
+
+        // Avoid saving the new slug in case that this slug already exists on another model
+        if(!(new UniqueUrlSlugRule($model, $model))->passes(null, [$locale => $strippedSlug])) {
+            return;
+        }
 
         (new SaveUrlSlugs())->handle($model, [$locale => $strippedSlug]);
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Forms\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
@@ -58,11 +59,13 @@ trait NestablePageDefaults
     {
         $tree = $this->nestableRepository()->getTree();
 
-        yield MultiSelect::make('parent_id')
-            ->label('Bovenliggende pagina')
-            ->description('Onder welke pagina hoort deze thuis.')
+        yield Form::make('nestable_parent_form')->position('aside')->items([
+            MultiSelect::make('parent_id')
+                ->label('Bovenliggende pagina')
+                ->description('Onder welke pagina hoort deze thuis.')
 //            ->grouped()
-            ->options(fn () => app(SelectOptions::class)->getParentOptions($tree, $model))
+                ->options(fn () => app(SelectOptions::class)->getParentOptions($tree, $model))
+        ]);
         ;
     }
 

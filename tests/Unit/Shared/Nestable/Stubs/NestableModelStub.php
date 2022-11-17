@@ -6,10 +6,11 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefaults;
 
-class NestableModelStub extends Model implements Page
+class NestableModelStub extends Model implements Page, PageResource
 {
     use NestablePageDefaults;
 
