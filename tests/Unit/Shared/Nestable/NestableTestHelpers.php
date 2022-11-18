@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 
 trait NestableTestHelpers
 {
@@ -34,5 +36,28 @@ trait NestableTestHelpers
             'nl' => 'label fifth nl',
             'fr' => 'label fifth fr',
         ]]));
+    }
+
+    private function findNode($modelId): NestedNode
+    {
+        return app()->makeWith(NestablePageRepository::class, ['modelClass' => NestableModelStub::class])->findNestableById($modelId);
+    }
+
+    private function changeParentModel($modelId, $parentId)
+    {
+        $model = NestableModelStub::find($modelId);
+        $model->parent_id = $parentId;
+        $model->save();
+    }
+
+    private function changeSlug($model, $locale, $slug)
+    {
+        $this->asAdmin()->put(route('chief.back.links.update'), [
+            'modelClass' => $model::class,
+            'modelId' => $model->id,
+            'links' => [
+                $locale => $slug,
+            ],
+        ]);
     }
 }

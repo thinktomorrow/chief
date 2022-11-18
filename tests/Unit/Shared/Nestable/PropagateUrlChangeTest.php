@@ -112,27 +112,4 @@ class PropagateUrlChangeTest extends ChiefTestCase
         $node = $this->findNode('fifth');
         $this->assertEquals('http://localhost/foobar', $node->url());
     }
-
-    private function findNode($modelId)
-    {
-        return app()->makeWith(NestablePageRepository::class, ['modelClass' => NestableModelStub::class])->findNestableById($modelId);
-    }
-
-    private function changeParentModel($modelId, $parentId)
-    {
-        $model = NestableModelStub::find($modelId);
-        $model->parent_id = $parentId;
-        $model->save();
-    }
-
-    private function changeSlug($model, $locale, $slug)
-    {
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                $locale => $slug,
-            ],
-        ]);
-    }
 }

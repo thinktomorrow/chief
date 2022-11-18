@@ -20,6 +20,7 @@ final class NestableRepositoryTest extends ChiefTestCase
     {
         parent::setUp();
 
+        chiefRegister()->resource(NestableModelStub::class);
         $this->repository = app()->makeWith(NestablePageRepository::class, ['modelClass' => NestableModelStub::class]);
     }
 

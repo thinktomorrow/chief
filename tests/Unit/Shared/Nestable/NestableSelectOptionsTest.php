@@ -18,6 +18,7 @@ final class NestableSelectOptionsTest extends ChiefTestCase
     {
         parent::setUp();
 
+        chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
 
         $this->repository = app()->makeWith(NestablePageRepository::class, ['modelClass' => NestableModelStub::class]);

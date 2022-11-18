@@ -19,6 +19,8 @@ class NestableModelStub extends Model implements Page, PageResource
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $viewPath = 'test-views::nestable_page';
+
     public function getCustomMethod(): string
     {
         return 'foobar';

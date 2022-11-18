@@ -20,6 +20,7 @@ class NestableTest extends TestCase
 
     public function test_it_can_call_underlying_model_properties_and_methods()
     {
+        chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
 
         $model = new NestedNodeStub(NestableModelStub::create(['id' => 'xxx', 'title' => 'custom title']));
@@ -33,6 +34,7 @@ class NestableTest extends TestCase
 
     public function test_it_when_underlying_model_has_same_property_or_method_the_node_one_is_used()
     {
+        chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
 
         $model = new NestedNodeStub($record = NestableModelStub::create(['id' => 'xxx', 'title' => 'custom title']));
@@ -43,6 +45,7 @@ class NestableTest extends TestCase
 
     public function test_it_can_get_localized_label()
     {
+        chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
 
         $model = new NestedNodeStub(NestableModelStub::create(['id' => 'xxx', 'title' => [
