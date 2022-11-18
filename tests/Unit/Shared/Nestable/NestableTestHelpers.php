@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
 
 trait NestableTestHelpers
 {
