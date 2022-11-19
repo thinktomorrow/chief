@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\PropagateUrlChange;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\SelectOptions;
