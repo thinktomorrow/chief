@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PageNode;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
 
 class NestableBreadCrumbTest extends ChiefTestCase
 {
@@ -72,7 +71,7 @@ class NestableBreadCrumbTest extends ChiefTestCase
         $node = $this->findNode('third');
 
         $this->assertEquals([
-            $this->findNode('fourth')
+            $this->findNode('fourth'),
         ], $node->getChildNodes()->all());
     }
 
