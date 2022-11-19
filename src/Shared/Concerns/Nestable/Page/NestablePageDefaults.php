@@ -30,11 +30,7 @@ trait NestablePageDefaults
                     throw new \DomainException('Cannot assign itself as parent. Model ['.$model->getKey().'] is set with its own id ['.$model->parent_id.'] as parent_id.');
                 }
 
-                $node = app(Registry::class)
-                    ->findResourceByModel($model::class)
-                    ->nestableRepository()
-                    ->findNestableById($model->getKey())
-                ;
+                $node = (new static())->nestableRepository()->findNestableById($model->getKey());
 
                 app(PropagateUrlChange::class)->handle($node);
             }
@@ -54,6 +50,7 @@ trait NestablePageDefaults
     public function baseUrlSegment(?string $locale = null): string
     {
         $locale = $locale ?: app()->getLocale();
+
         if ($this->parent_id) {
             return $this->nestableRepository()
                 ->findNestableById($this->getKey())
@@ -72,7 +69,6 @@ trait NestablePageDefaults
             MultiSelect::make('parent_id')
                 ->label('Bovenliggende pagina')
                 ->description('Onder welke pagina hoort deze thuis.')
-//            ->grouped()
                 ->options(fn () => app(SelectOptions::class)->getParentOptions($tree, $model)),
         ]);
     }
