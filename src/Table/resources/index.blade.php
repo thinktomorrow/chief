@@ -13,6 +13,9 @@
 @endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
+
+    @include('chief::manager._index.archived_breadcrumbs')
+
     <x-chief::table
         :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])"
         :sticky="$resource->displayTableHeaderAsSticky()"
