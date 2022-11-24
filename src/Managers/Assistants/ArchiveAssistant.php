@@ -79,7 +79,7 @@ trait ArchiveAssistant
 
         if ($this->resource->isNestable()) {
             $rootId = $request->input('root_id', null);
-dd($this->getTree($rootId));
+            dd($this->getTree($rootId));
             View::share('tree', $this->getTree($rootId));
             View::share('root', $this->getRoot($rootId));
         }

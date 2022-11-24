@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
-use Illuminate\Support\Str;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
@@ -35,7 +34,7 @@ class FilterPresets
 
     public static function column(string $name, string|array $columns, ?string $label = null): Filter
     {
-        return InputFilter::make($name, function ($query, $value) use($columns){
+        return InputFilter::make($name, function ($query, $value) use ($columns) {
             return $query->where(function ($builder) use ($value, $columns) {
                 foreach ($columns as $column) {
                     $builder->orWhere($column, 'LIKE', '%' . $value . '%');
