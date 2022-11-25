@@ -18,7 +18,7 @@ class FilterPresets
             '' => 'Alle',
             PageState::published->getValueAsString() => 'online',
             PageState::draft->getValueAsString() => 'offline',
-        ]);
+        ])->default('');
     }
 
     public static function simpleState(): Filter

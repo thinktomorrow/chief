@@ -22,6 +22,8 @@ abstract class AbstractFilter
     /** @var null|mixed */
     protected $value;
 
+    private $default = null;
+
     final public function __construct(string $type, string $queryKey, Closure $query)
     {
         $this->type = $type;
@@ -75,6 +77,13 @@ abstract class AbstractFilter
         return $this;
     }
 
+    public function default($default): self
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
     public function value(array $value): self
     {
         $this->value = $value;
@@ -98,6 +107,7 @@ abstract class AbstractFilter
             'description' => $this->description,
             'value' => old($this->queryKey, request()->input($this->queryKey, $this->value)),
             'placeholder' => $this->placeholder,
+            'default' => $this->default,
         ];
     }
 

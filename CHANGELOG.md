@@ -5,6 +5,9 @@ principles.
 
 ## unreleased
 
+- Added: option to set default for admin filter fields.
+- Fixed: title of inline nav is now displayed as section title instead of not showing at all.
+
 ## 0.7.14 - 2022-11-03
 
 -   Fixed: FilterPresets::text can now accept jsonColumn with specific table prefix, e.g. orders.data
