@@ -92,7 +92,7 @@ trait CrudAssistant
             $filteredModelIds = $this->indexModelIds();
             $filteredTree = $this
                 ->getTree($rootId)
-                ->shake(fn($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
+                ->shake(fn ($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
 
             View::share('tree', $filteredTree);
             View::share('root', $this->getRoot($rootId));
