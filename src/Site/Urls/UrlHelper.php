@@ -64,7 +64,7 @@ class UrlHelper
         $types = [];
 
         if ($onlySingles) {
-            $types = ['singles', 'single'];
+            $types = ['singles', 'single', 'page'];
         }
 
         return self::modelsByType($types, $ignoredModel, $online);
