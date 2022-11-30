@@ -82,6 +82,15 @@ trait PageResourceDefault
         return view('chief::manager.index');
     }
 
+    public function getArchivedIndexView(): View
+    {
+        if ($this->getIndexViewType() == 'table') {
+            return view('chief-table::index');
+        }
+
+        return view('chief::manager.index');
+    }
+
     /**
      * Default type of index: options are:
      * index (default), table

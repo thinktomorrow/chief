@@ -50,7 +50,7 @@
 
                 @include('chief::manager._index.filter_card')
 
-                @adminCan('sort-index', $models->first())
+                @adminCan('sort-index', $model)
                     @include('chief::manager._index.sort_card')
                 @endAdminCan
 

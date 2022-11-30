@@ -84,14 +84,20 @@ trait CrudAssistant
 
         View::share('manager', $this);
         View::share('resource', $this->resource);
-        View::share('models', $this->indexModels());
         View::share('model', $this->managedModelClassInstance());
 
         if ($this->resource->isNestable()) {
             $rootId = $request->input('root_id', null);
 
-            View::share('tree', $this->getTree($rootId));
+            $filteredModelIds = $this->indexModelIds();
+            $filteredTree = $this
+                ->getTree($rootId)
+                ->shake(fn($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
+
+            View::share('tree', $filteredTree);
             View::share('root', $this->getRoot($rootId));
+        } else {
+            View::share('models', $this->indexModels());
         }
 
         return $this->resource->getIndexView();
@@ -118,7 +124,10 @@ trait CrudAssistant
 
     protected function indexModels(): Paginator
     {
-        $this->filters()->apply($builder = $this->managedModelClass()::query());
+        $builder = $this->managedModelClass()::query();
+
+        // Apply filtering
+        $builder->whereIn($this->managedModelClassInstance()->getKeyName(), $this->indexModelIds());
 
         if ($this->managedModelClassInstance() instanceof Visitable) {
             $builder->with(['urls']);
@@ -129,6 +138,19 @@ trait CrudAssistant
         }
 
         return $builder->paginate($pagination)->onEachSide(1)->withQueryString();
+    }
+
+    protected function indexModelIds(): array
+    {
+        $this->filters()->apply($builder = $this->managedModelClass()::query());
+
+        $idColumn = $this->managedModelClassInstance()->getKeyName();
+
+        return $builder
+            ->select($idColumn)
+            ->get()
+            ->pluck($idColumn)
+            ->toArray();
     }
 
     public function filters(): Filters

@@ -77,13 +77,6 @@ trait ArchiveAssistant
         View::share('model', $this->managedModelClassInstance());
         View::share('is_archive_index', true);
 
-        if ($this->resource->isNestable()) {
-            View::share('tree', $this->getTree()->prune(function ($node) {
-                // Get archived state
-                dd($node->getModel());
-            }));
-        }
-
-        return $this->resource->getIndexView();
+        return $this->resource->getArchivedIndexView();
     }
 }
