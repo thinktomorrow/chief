@@ -78,10 +78,10 @@ trait ArchiveAssistant
         View::share('is_archive_index', true);
 
         if ($this->resource->isNestable()) {
-            $rootId = $request->input('root_id', null);
-            dd($this->getTree($rootId));
-            View::share('tree', $this->getTree($rootId));
-            View::share('root', $this->getRoot($rootId));
+            View::share('tree', $this->getTree()->prune(function($node){
+                // Get archived state
+                dd($node->getModel());
+            }));
         }
 
         return $this->resource->getIndexView();
