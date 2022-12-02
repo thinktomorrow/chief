@@ -27,10 +27,15 @@
     </x-chief::nav.item>
 @else
     @if($title)
-        <div class="text-sm tracking-wider text-grey-500 uppercase" style="padding: 0 0.5rem; margin-bottom: 1rem;">
+        <div
+            data-toggle-classes="hidden"
+            class="text-sm tracking-wider uppercase text-grey-500 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
+            style="padding: 0 0.5rem; margin-bottom: 1rem;"
+        >
             {{ $title }}
         </div>
     @endif
+
     @foreach($items as $navItem)
         <x-chief::nav.item
             label="{{ ucfirst($navItem->label()) }}"
