@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use Closure;
-use Illuminate\Http\Request;
 
 abstract class AbstractFilter
 {
@@ -34,9 +33,9 @@ abstract class AbstractFilter
         $this->description = $this->placeholder = $this->value = null;
     }
 
-    public function applicable(Request $request): bool
+    public function applicable(array $parameterBag): bool
     {
-        return ($request->filled($this->queryKey) || $this->value);
+        return (isset($parameterBag[$this->queryKey]) || $this->value);
     }
 
     public function queryKey(): string
@@ -91,21 +90,21 @@ abstract class AbstractFilter
         return $this;
     }
 
-    public function render(): string
+    public function render(array $parameterBag): string
     {
         $path = $this->view ?? 'chief::manager.filters.' . $this->type;
 
-        return view($path, $this->viewData())->render();
+        return view($path, $this->viewData($parameterBag))->render();
     }
 
-    protected function viewData(): array
+    protected function viewData(array $parameterBag): array
     {
         return [
             'id' => $this->queryKey,
             'name' => $this->queryKey,
             'label' => $this->label,
             'description' => $this->description,
-            'value' => old($this->queryKey, request()->input($this->queryKey, $this->value)),
+            'value' => old($this->queryKey, $parameterBag[$this->queryKey] ?: $this->value),
             'placeholder' => $this->placeholder,
             'default' => $this->default,
         ];

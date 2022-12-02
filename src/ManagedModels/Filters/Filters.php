@@ -41,11 +41,11 @@ class Filters
         return $this->filters;
     }
 
-    public function apply(Builder $builder): void
+    public function apply(Builder $builder, array $parameterBag): void
     {
         foreach ($this->all() as $filter) {
-            if ($filter->applicable(request())) {
-                $filter->query()($builder, request()->input($filter->queryKey()));
+            if ($filter->applicable($parameterBag)) {
+                $filter->query()($builder, $parameterBag[$filter->queryKey()] ?? null);
             }
         }
     }
