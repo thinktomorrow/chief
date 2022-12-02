@@ -4,6 +4,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.15 - 2022-12-02
 - Fixed: honour order of selected options in window
 - Changed: Show offline fragments when admin views page in preview mode.
 
