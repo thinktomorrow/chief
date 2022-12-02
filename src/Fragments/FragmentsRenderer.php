@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
@@ -6,6 +7,7 @@ namespace Thinktomorrow\Chief\Fragments;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\Actions\RenderFragments;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 final class FragmentsRenderer
 {
@@ -27,7 +29,15 @@ final class FragmentsRenderer
 
     public function getFragments(FragmentsOwner $owner): Collection
     {
-        return $this->fragmentRepository->getByOwner($owner->ownerModel())->reject(function (Fragmentable $fragmentable) {
+        $fragments = $this->fragmentRepository->getByOwner($owner->ownerModel());
+
+        // When admin is logged in and this request is in preview mode, we allow to view all fragments
+        if (PreviewMode::fromRequest()->check()) {
+            return $fragments;
+        }
+
+        // We don't display offline fragments
+        return $fragments->reject(function (Fragmentable $fragmentable) {
             return $fragmentable->fragmentModel()->isOffline();
         });
     }
