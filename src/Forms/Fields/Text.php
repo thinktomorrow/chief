@@ -36,7 +36,6 @@ class Text extends Component implements Field
         return [
             'buttons' => [],
             'plugins' => [],
-            'maxHeight' => '56px',
             'maxWidth' => '100%',
             'enterKey' => false,
             'paragraphize' => false, // don't put surrounding p tags on save
