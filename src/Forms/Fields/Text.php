@@ -39,7 +39,6 @@ class Text extends Component implements Field
             'maxWidth' => '100%',
             'enterKey' => false,
             'paragraphize' => false,
-            'replaceDivs' => false,
             'toolbarExternal' => '#js-external-editor-toolbar-'.str_replace('.', '_', $this->getElementId($locale)),
         ];
     }
