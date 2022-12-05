@@ -13,9 +13,9 @@
                 @endforeach
             @endforeach
         @else
-            @foreach($getOptions() as $optionKey => $optionValue)
-                @if(in_array($optionKey, $selected))
-                    <span class="inline-block label label-sm label-grey">{{ $optionValue }}</span>
+            @foreach($selected as $selectedValue)
+                @if(isset($getOptions()[$selectedValue]))
+                    <span class="inline-block label label-sm label-grey">{{ $getOptions()[$selectedValue] }}</span>
                 @endif
             @endforeach
         @endif
