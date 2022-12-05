@@ -124,10 +124,8 @@ trait CrudAssistant
 
     protected function indexModels(): Paginator
     {
-        $builder = $this->managedModelClass()::query();
-
-        // Apply filtering
-        $builder->whereIn($this->managedModelClassInstance()->getKeyName(), $this->indexModelIds());
+        // Apply filtering - this also includes default sorting
+        $this->filters()->apply($builder = $this->managedModelClass()::query());
 
         if ($this->managedModelClassInstance() instanceof Visitable) {
             $builder->with(['urls']);
