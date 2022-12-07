@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs;
 
+use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -38,5 +39,10 @@ class StatefulStub implements StatefulContract
     public function inOnlineState(): bool
     {
         return $this->getState('online') == OnlineStateStub::online;
+    }
+
+    public function scopeOnline(Builder $query): void
+    {
+        $query->where($this->getStateAttribute(), OnlineStateStub::online);
     }
 }

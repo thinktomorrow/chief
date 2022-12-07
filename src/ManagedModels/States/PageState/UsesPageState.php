@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
+use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
+use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 trait UsesPageState
 {
@@ -39,6 +41,31 @@ trait UsesPageState
 
     public function inOnlineState(): bool
     {
-        return in_array($this->getState(PageState::KEY), [PageState::published]);
+        return in_array($this->getState(PageState::KEY), $this->onlineStates());
+    }
+
+    /**
+     * Eloquent builder scope for filtering out the online models.
+     */
+    public function scopeOnline(Builder $query): void
+    {
+        // Here we widen up the results in case of preview mode and ignore the published scope
+        if (PreviewMode::fromRequest()->check()) {
+            return;
+        }
+
+        $query->whereIn($this->getStateAttribute(), $this->onlineStates());
+    }
+
+    protected function getStateAttribute(): string
+    {
+        return PageState::KEY;
+    }
+
+    protected function onlineStates(): array
+    {
+        return [
+            PageState::published,
+        ];
     }
 }
