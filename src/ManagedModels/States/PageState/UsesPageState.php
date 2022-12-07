@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
-use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 trait UsesPageState
 {
