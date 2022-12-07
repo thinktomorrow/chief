@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
@@ -20,24 +19,14 @@ class DefaultIndexRepository implements IndexRepository
         $this->builder = $builder;
     }
 
-//    public function applyFilters(Filters $filters, array $parameterBag): static
-//    {
-//        $filters->apply($this->builder, $parameterBag);
-//
-//        return $this;
-//    }
-
     public function adjustQuery(iterable $adjusters, array $parameterBag): static
     {
         foreach($adjusters as $adjuster) {
             call_user_func_array($adjuster, [$this->builder, $parameterBag]);
         }
 
-//        $filters->apply($this->builder, $parameterBag);
-
         return $this;
     }
-
 
     public function getTree(): NestedTree
     {

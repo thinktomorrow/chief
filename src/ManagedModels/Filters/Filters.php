@@ -41,11 +41,25 @@ class Filters
         return $this->filters;
     }
 
+    public function allApplicableQueryCallbacks(array $parameterBag): array
+    {
+        $applicableQueryCallbacks = [];
+
+        foreach ($this->all() as $filter) {
+            if ($filter->applicable($parameterBag)) {
+                $applicableQueryCallbacks[] = $filter->query();
+            }
+        }
+
+        return $applicableQueryCallbacks;
+    }
+
     public function apply(Builder $builder, array $parameterBag): void
     {
         foreach ($this->all() as $filter) {
             if ($filter->applicable($parameterBag)) {
-                $filter->query()($builder, $parameterBag[$filter->queryKey()] ?? null);
+                $filter->query()($builder, $parameterBag);
+//                $filter->query()($builder, $parameterBag[$filter->queryKey()] ?? null);
             }
         }
     }

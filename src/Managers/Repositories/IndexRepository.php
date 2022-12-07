@@ -3,11 +3,15 @@
 namespace Thinktomorrow\Chief\Managers\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
 interface IndexRepository
 {
+    /**
+     * @param callable[] $adjusters
+     * @param array $parameterBag
+     * @return $this
+     */
     public function adjustQuery(iterable $adjusters, array $parameterBag): static;
 
     /**

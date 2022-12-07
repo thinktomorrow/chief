@@ -15,6 +15,7 @@ class DefaultIndexRepositoryTest extends TestCase
 {
     private DefaultIndexRepository $repository;
     private $article;
+    private $article2;
 
     protected function setUp(): void
     {
@@ -22,7 +23,7 @@ class DefaultIndexRepositoryTest extends TestCase
 
         ArticlePage::migrateUp();
         $this->article = ArticlePage::create(['title' => 'foobar']);
-        $article2 = ArticlePage::create(['title' => 'stoner']);
+        $this->article2 = ArticlePage::create(['title' => 'stoner']);
 
         $this->repository = new DefaultIndexRepository(ArticlePage::query());
     }
@@ -35,13 +36,25 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(2, $rows);
     }
 
-    public function testItCanFilterIndexRows()
+    public function test_it_can_adjust_with_custom_queries()
+    {
+        $rows = $this->repository->adjustQuery([
+            function($builder, $parameterBag) {
+                $builder->where('title', 'stoner');
+            }
+        ], [])->getRows();
+
+        $this->assertCount(1, $rows);
+        $this->assertEquals($this->article2->id, $rows->first()->id);
+    }
+
+    public function testItCanAdjustWithFilters()
     {
         $filters = new Filters([
             FilterPresets::column('title', ['title']),
         ]);
 
-        $rows = $this->repository->applyFilters($filters, ['title' => 'foobar'])->getRows();
+        $rows = $this->repository->adjustQuery($filters->allApplicableQueryCallbacks(['title' => 'foobar']), ['title' => 'foobar'])->getRows();
 
         $this->assertCount(1, $rows);
         $this->assertEquals($this->article->id, $rows->first()->id);
