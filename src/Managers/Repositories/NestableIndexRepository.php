@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Repositories;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
 class NestableIndexRepository implements IndexRepository

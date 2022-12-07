@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
 class DefaultIndexRepository implements IndexRepository
@@ -21,7 +21,7 @@ class DefaultIndexRepository implements IndexRepository
 
     public function adjustQuery(iterable $adjusters, array $parameterBag): static
     {
-        foreach($adjusters as $adjuster) {
+        foreach ($adjusters as $adjuster) {
             call_user_func_array($adjuster, [$this->builder, $parameterBag]);
         }
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\IndexRepository;
 
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterPresets;
+use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\Managers\Repositories\DefaultIndexRepository;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -28,7 +28,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->repository = new DefaultIndexRepository(ArticlePage::query());
     }
 
-    public function testItCanRetrieveIndexRows()
+    public function test_it_can_retrieve_index_rows()
     {
         $rows = $this->repository->getRows();
 
@@ -39,16 +39,16 @@ class DefaultIndexRepositoryTest extends TestCase
     public function test_it_can_adjust_with_custom_queries()
     {
         $rows = $this->repository->adjustQuery([
-            function($builder, $parameterBag) {
+            function ($builder, $parameterBag) {
                 $builder->where('title', 'stoner');
-            }
+            },
         ], [])->getRows();
 
         $this->assertCount(1, $rows);
         $this->assertEquals($this->article2->id, $rows->first()->id);
     }
 
-    public function testItCanAdjustWithFilters()
+    public function test_it_can_adjust_with_filters()
     {
         $filters = new Filters([
             FilterPresets::column('title', ['title']),
@@ -60,7 +60,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertEquals($this->article->id, $rows->first()->id);
     }
 
-    public function testItCanPaginateIndexRows()
+    public function test_it_can_paginate_index_rows()
     {
         $rows = $this->repository->getRows(1);
 
@@ -70,7 +70,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(1, $rows);
     }
 
-    public function testItCanSortIndexRows()
+    public function test_it_can_sort_index_rows()
     {
         $rows = $this->repository->getRows(1);
 
