@@ -7,6 +7,7 @@ principles.
 
 - Added: option to set default for admin filter fields.
 - Fixed: title of inline nav is now displayed as section title instead of not showing at all.
+- Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins. 
 - Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
 
 ## 0.7.15 - 2022-12-02

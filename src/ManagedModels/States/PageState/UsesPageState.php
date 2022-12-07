@@ -54,7 +54,7 @@ trait UsesPageState
             return;
         }
 
-        $query->whereIn($this->getStateAttribute(), $this->onlineStates());
+        $query->whereIn($this->getTable().'.'.$this->getStateAttribute(), $this->onlineStates());
     }
 
     protected function getStateAttribute(): string
