@@ -16,12 +16,12 @@ class HiddenFilter extends AbstractFilter implements Filter
         return new self(FilterType::HIDDEN, $queryKey, $query);
     }
 
-    public function applicable(Request $request): bool
+    public function applicable(array $parameterBag): bool
     {
         return true;
     }
 
-    public function render(): string
+    public function render(array $parameterBag): string
     {
         return '';
     }

@@ -61,11 +61,11 @@
             <div class="pt-6">
                 @include('chief::layout.nav.nav-project')
                 @include('chief::layout.nav.nav-general')
-                @include('chief::layout.nav.nav-settings')
             </div>
         </div>
 
         <div class="py-6">
+            @include('chief::layout.nav.nav-settings')
             @include('chief::layout.nav.nav-user')
         </div>
     </div>

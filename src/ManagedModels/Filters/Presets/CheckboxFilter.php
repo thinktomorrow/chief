@@ -26,9 +26,9 @@ class CheckboxFilter extends AbstractFilter implements Filter
         return $this;
     }
 
-    protected function viewData(): array
+    protected function viewData(array $parameterBag): array
     {
-        return array_merge(parent::viewData(), [
+        return array_merge(parent::viewData($parameterBag), [
             'options' => $this->options,
         ]);
     }

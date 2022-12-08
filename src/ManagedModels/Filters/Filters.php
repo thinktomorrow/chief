@@ -6,8 +6,9 @@ namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use ArrayIterator;
 use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 
-class Filters implements \IteratorAggregate, \Countable
+class Filters implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /** @var array */
     private $filters;
@@ -64,10 +65,10 @@ class Filters implements \IteratorAggregate, \Countable
         }
     }
 
-    public function render(): string
+    public function render(array $parameterBag): string
     {
-        return array_reduce($this->all(), function ($carry, Filter $filter) {
-            return $carry . $filter->render();
+        return array_reduce($this->all(), function ($carry, Filter $filter) use($parameterBag) {
+            return $carry . $filter->render($parameterBag);
         }, '');
     }
 
@@ -84,7 +85,7 @@ class Filters implements \IteratorAggregate, \Countable
 
         // If at least one of the filters has content to be rendered.
         foreach ($this->filters as $filter) {
-            if ($filter->render()) {
+            if ($filter->render([])) {
                 return true;
             }
         }
@@ -99,9 +100,11 @@ class Filters implements \IteratorAggregate, \Countable
 
     private function validateFilters(array $filters): void
     {
-        array_map(function (Filter $filter) {
-            return $filter;
-        }, $filters);
+        foreach($filters as $filter) {
+            if(!$filter instanceof Filter) {
+                throw new \InvalidArgumentException('Filters class accepts instances of ' . Filter::class.'. [' . $filter::class . '] was given instead.');
+            }
+        }
     }
 
     private function sanitizeFilters(array $filters): array
@@ -118,7 +121,7 @@ class Filters implements \IteratorAggregate, \Countable
             $existingQueryKeys[] = $filter->queryKey();
         }
 
-        return $filters;
+        return array_values($filters);
     }
 
     public function add(Filter ...$filter): Filters
@@ -139,5 +142,33 @@ class Filters implements \IteratorAggregate, \Countable
     public function count(): int
     {
         return count($this->filters);
+    }
+
+    public function offsetExists($offset): bool
+    {
+        return isset($this->filters[$offset]);
+    }
+
+    public function offsetGet($offset): mixed
+    {
+        if (! isset($this->filters[$offset])) {
+            throw new \RuntimeException('No filter found by key ['.$offset.']');
+        }
+
+        return $this->filters[$offset];
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        if (! $value instanceof Filter) {
+            throw new \InvalidArgumentException('Passed value must be of type '.Filter::class);
+        }
+
+        $this->filters[$offset] = $value;
+    }
+
+    public function offsetUnset($offset): void
+    {
+        unset($this->filters[$offset]);
     }
 }

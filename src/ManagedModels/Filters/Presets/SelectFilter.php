@@ -46,10 +46,9 @@ class SelectFilter extends AbstractFilter implements Filter
         return $this->grouped;
     }
 
-
-    protected function viewData(): array
+    protected function viewData(array $parameterBag): array
     {
-        return array_merge(parent::viewData(), [
+        return array_merge(parent::viewData($parameterBag), [
             'options' => $this->options,
             'multiple' => $this->multiple,
             'isGrouped' => $this->grouped,

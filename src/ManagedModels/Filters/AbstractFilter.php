@@ -14,14 +14,12 @@ abstract class AbstractFilter
     protected Closure $query;
     protected ?string $view = null;
 
-    protected ?string $label;
-
+    protected ?string $label = null;
     protected ?string $description = null;
     protected ?string $placeholder = null;
 
     /** @var null|mixed */
     protected $value;
-
     private $default = null;
 
     final public function __construct(string $type, string $queryKey, Closure $query)
@@ -30,13 +28,12 @@ abstract class AbstractFilter
         $this->queryKey = $queryKey;
         $this->query = $query;
 
-        $this->label = null;
-        $this->description = $this->placeholder = $this->value = null;
+        $this->label = $this->description = $this->placeholder = $this->value = null;
     }
 
     public function applicable(array $parameterBag): bool
     {
-        return ($this->extractParameterValue($parameterBag) || $this->value);
+        return !is_null($this->extractParameterValue($parameterBag)) || $this->value;
     }
 
     public function queryKey(): string
@@ -88,7 +85,7 @@ abstract class AbstractFilter
         return $this;
     }
 
-    public function value(array $value): self
+    public function value($value): self
     {
         $this->value = $value;
 

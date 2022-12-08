@@ -11,6 +11,11 @@ use Thinktomorrow\Chief\Managers\Repositories\DefaultIndexRepository;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class DefaultIndexRepositoryTest extends TestCase
 {
     private DefaultIndexRepository $repository;
@@ -28,7 +33,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->repository = new DefaultIndexRepository(ArticlePage::query());
     }
 
-    public function test_it_can_retrieve_index_rows()
+    public function testItCanRetrieveIndexRows()
     {
         $rows = $this->repository->getRows();
 
@@ -36,18 +41,10 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(2, $rows);
     }
 
-    public function test_it_can_retrieve_index_rows_()
-    {
-        $rows = $this->repository->getRows();
-
-        $this->assertInstanceOf(LengthAwarePaginator::class, $rows);
-        $this->assertCount(2, $rows);
-    }
-
-    public function test_it_can_adjust_with_custom_queries()
+    public function testItCanAdjustWithCustomQueries()
     {
         $rows = $this->repository->adjustQuery([
-            function ($builder, $parameterBag) {
+            function ($builder) {
                 $builder->where('title', 'stoner');
             },
         ], [])->getRows();
@@ -56,7 +53,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertEquals($this->article2->id, $rows->first()->id);
     }
 
-    public function test_it_can_adjust_with_filters()
+    public function testItCanAdjustWithFilters()
     {
         $parameterBag = ['title' => 'foobar'];
 
@@ -70,7 +67,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertEquals($this->article->id, $rows->first()->id);
     }
 
-    public function test_it_can_paginate_index_rows()
+    public function testItCanPaginateIndexRows()
     {
         $rows = $this->repository->getRows(1);
 
@@ -80,13 +77,20 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(1, $rows);
     }
 
-    public function test_it_can_sort_index_rows()
+    public function testItCanSortIndexRows()
     {
-        $rows = $this->repository->getRows(1);
+        $this->repository->adjustQuery([
+            function ($builder) {
+                $builder->orderBy('title', 'DESC');
+            },
+        ], []);
+
+        $rows = $this->repository->getRows();
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $rows);
-        $this->assertEquals(2, $rows->total());
-        $this->assertEquals(1, $rows->count());
-        $this->assertCount(1, $rows);
+        $this->assertEquals(2, $rows->count());
+
+        $this->assertEquals($this->article2->id, $rows->first()->id);
+        $this->assertEquals($this->article->id, $rows[1]->id);
     }
 }
