@@ -33,7 +33,7 @@ abstract class AbstractFilter
 
     public function applicable(array $parameterBag): bool
     {
-        return !is_null($this->extractParameterValue($parameterBag)) || $this->value;
+        return ! is_null($this->extractParameterValue($parameterBag)) || $this->value;
     }
 
     public function queryKey(): string

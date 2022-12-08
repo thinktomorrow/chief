@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use ArrayIterator;
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\Forms\Fields\Field;
 
 class Filters implements \ArrayAccess, \IteratorAggregate, \Countable
 {
@@ -67,7 +66,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function render(array $parameterBag): string
     {
-        return array_reduce($this->all(), function ($carry, Filter $filter) use($parameterBag) {
+        return array_reduce($this->all(), function ($carry, Filter $filter) use ($parameterBag) {
             return $carry . $filter->render($parameterBag);
         }, '');
     }
@@ -100,8 +99,8 @@ class Filters implements \ArrayAccess, \IteratorAggregate, \Countable
 
     private function validateFilters(array $filters): void
     {
-        foreach($filters as $filter) {
-            if(!$filter instanceof Filter) {
+        foreach ($filters as $filter) {
+            if (! $filter instanceof Filter) {
                 throw new \InvalidArgumentException('Filters class accepts instances of ' . Filter::class.'. [' . $filter::class . '] was given instead.');
             }
         }

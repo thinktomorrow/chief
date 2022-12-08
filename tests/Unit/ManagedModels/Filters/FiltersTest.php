@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Filters;
 
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\SelectFilter;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class FiltersTest extends TestCase
 {
@@ -15,8 +15,10 @@ class FiltersTest extends TestCase
     public function it_can_collect_filters()
     {
         $filters = Filters::make([
-            InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
+            InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertInstanceOf(Filters::class, $filters);
@@ -28,9 +30,12 @@ class FiltersTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         new Filters([
-            InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
-            new class(){}
+            InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
+            new class() {
+            },
         ]);
     }
 
@@ -38,13 +43,16 @@ class FiltersTest extends TestCase
     public function it_can_add_filter()
     {
         $filters = Filters::make([
-            InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
+            InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertCount(2, $filters->all());
 
-        $addedFilters = $filters->add(InputFilter::make('name', function(){}),);
+        $addedFilters = $filters->add(InputFilter::make('name', function () {
+        }), );
 
         $this->assertCount(3, $addedFilters->all());
         $this->assertCount(2, $filters->all()); // immutable
@@ -54,12 +62,15 @@ class FiltersTest extends TestCase
     public function it_can_merge_filters()
     {
         $filters = Filters::make([
-            InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
+            InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
         ]);
 
         $filterForMerge = Filters::make([
-            InputFilter::make('name', function(){}),
+            InputFilter::make('name', function () {
+            }),
         ]);
 
         $mergedFilters = $filters->merge($filterForMerge);
@@ -72,13 +83,16 @@ class FiltersTest extends TestCase
     public function it_overwrites_filter_with_same_name()
     {
         $filters = Filters::make([
-            InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
+            InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertCount(2, $filters->all());
 
-        $addedFilters = $filters->add($usedFilter = InputFilter::make('title', function(){}),);
+        $addedFilters = $filters->add($usedFilter = InputFilter::make('title', function () {
+        }), );
 
         $this->assertCount(2, $addedFilters->all());
 
@@ -95,8 +109,10 @@ class FiltersTest extends TestCase
         $this->assertFalse($emptyFilters->anyRenderable());
 
         $filters = Filters::make([
-            InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
+            InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertFalse($filters->isEmpty());
@@ -108,8 +124,10 @@ class FiltersTest extends TestCase
     public function it_can_get_all_filters()
     {
         $filters = Filters::make([
-            $firstFilter = InputFilter::make('title', function(){}),
-            $secondFilter = SelectFilter::make('status', function(){}),
+            $firstFilter = InputFilter::make('title', function () {
+            }),
+            $secondFilter = SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertCount(2, $filters->all());
@@ -121,8 +139,10 @@ class FiltersTest extends TestCase
     public function it_can_get_all_applicable_filters()
     {
         $filters = Filters::make([
-            $firstFilter = InputFilter::make('title', function(){}),
-            SelectFilter::make('status', function(){}),
+            $firstFilter = InputFilter::make('title', function () {
+            }),
+            SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertCount(1, $filters->allApplicable(['title' => 'foobar']));
@@ -133,8 +153,10 @@ class FiltersTest extends TestCase
     public function it_can_render_all_filters()
     {
         $filters = Filters::make([
-            $firstFilter = InputFilter::make('title', function(){}),
-            $secondFilter = SelectFilter::make('status', function(){}),
+            $firstFilter = InputFilter::make('title', function () {
+            }),
+            $secondFilter = SelectFilter::make('status', function () {
+            }),
         ]);
 
         $this->assertEquals($firstFilter->render([]) . $secondFilter->render([]), $filters->render([]));
@@ -149,7 +171,7 @@ class FiltersTest extends TestCase
         $filters = Filters::make([
             InputFilter::make('title', function ($builder, $value, $parameterBag) {
                 $builder->where('title', $value);
-            })
+            }),
         ]);
 
         // Query with results
@@ -162,6 +184,4 @@ class FiltersTest extends TestCase
         $filters->apply($builder, ['title' => 'xxx']);
         $this->assertCount(0, $builder->get());
     }
-
-
 }

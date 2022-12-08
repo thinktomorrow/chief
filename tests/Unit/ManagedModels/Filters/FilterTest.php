@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Filters;
 
 use Thinktomorrow\Chief\ManagedModels\Filters\Filter;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\CheckboxFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\SelectFilter;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 /**
@@ -21,7 +21,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 class FilterTest extends TestCase
 {
     /** @test */
-    public function itCanCreateAFilter()
+    public function it_can_create_a_filter()
     {
         $filter = CheckboxFilter::make('status', function () {
         });
@@ -31,15 +31,15 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function itCanCreateAllPresetFilters()
+    public function it_can_create_all_preset_filters()
     {
-        foreach($this->allPresetFilters() as $presetFilter) {
+        foreach ($this->allPresetFilters() as $presetFilter) {
             $this->assertInstanceOf(Filter::class, $presetFilter);
         }
     }
 
     /** @test */
-    public function itCanProvideFieldInformation()
+    public function it_can_provide_field_information()
     {
         $filter = CheckboxFilter::make('status', function () {
         });
@@ -55,14 +55,14 @@ class FilterTest extends TestCase
         $filter->value('value filter');
 
         $this->assertEquals([
-            'id'          => 'status',
-            'name'        => 'status',
-            'label'       => 'label filter',
+            'id' => 'status',
+            'name' => 'status',
+            'label' => 'label filter',
             'description' => 'description filter',
-            'value'       => 'value filter',
+            'value' => 'value filter',
             'placeholder' => 'placeholder filter',
-            'default'     => 'default filter',
-            'options'     => [
+            'default' => 'default filter',
+            'options' => [
                 'one',
                 'two',
             ],
@@ -70,7 +70,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function itCanHaveValueFromParameterBag()
+    public function it_can_have_value_from_parameter_bag()
     {
         $filter = InputFilter::make('title', function () {
         });
@@ -79,7 +79,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function itIsApplicableWhenParameterIsPresentAndNotNull()
+    public function it_is_applicable_when_parameter_is_present_and_not_null()
     {
         $filter = CheckboxFilter::make('status', function () {
         });
@@ -97,7 +97,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function itCanCallQuery()
+    public function it_can_call_query()
     {
         ArticlePage::migrateUp();
         $article = ArticlePage::create(['title' => 'foobar']);
@@ -118,9 +118,9 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function itCanBeRendered()
+    public function it_can_be_rendered()
     {
-        foreach($this->allPresetFilters() as $presetFilter) {
+        foreach ($this->allPresetFilters() as $presetFilter) {
             $this->assertNotNull($presetFilter->render([]));
         }
     }

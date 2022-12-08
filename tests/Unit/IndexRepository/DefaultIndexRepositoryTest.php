@@ -33,7 +33,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->repository = new DefaultIndexRepository(ArticlePage::query());
     }
 
-    public function testItCanRetrieveIndexRows()
+    public function test_it_can_retrieve_index_rows()
     {
         $rows = $this->repository->getRows();
 
@@ -41,7 +41,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(2, $rows);
     }
 
-    public function testItCanAdjustWithCustomQueries()
+    public function test_it_can_adjust_with_custom_queries()
     {
         $rows = $this->repository->adjustQuery([
             function ($builder) {
@@ -53,7 +53,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertEquals($this->article2->id, $rows->first()->id);
     }
 
-    public function testItCanAdjustWithFilters()
+    public function test_it_can_adjust_with_filters()
     {
         $parameterBag = ['title' => 'foobar'];
 
@@ -67,7 +67,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertEquals($this->article->id, $rows->first()->id);
     }
 
-    public function testItCanPaginateIndexRows()
+    public function test_it_can_paginate_index_rows()
     {
         $rows = $this->repository->getRows(1);
 
@@ -77,7 +77,7 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(1, $rows);
     }
 
-    public function testItCanSortIndexRows()
+    public function test_it_can_sort_index_rows()
     {
         $this->repository->adjustQuery([
             function ($builder) {
