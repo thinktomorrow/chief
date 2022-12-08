@@ -49,7 +49,7 @@ abstract class AbstractFilter
         call_user_func_array($this->query, [
             $builder,
             $this->extractParameterValue($parameterBag),
-            $parameterBag
+            $parameterBag,
         ]);
     }
 

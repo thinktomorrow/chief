@@ -13,7 +13,6 @@ class FilterPresets
     public static function state(): Filter
     {
         return RadioFilter::make('online', function ($query, $parameterBag) {
-
             $value = Filters::extractParameter($parameterBag, 'online');
 
             return $query->where('current_state', '=', $value);
@@ -27,7 +26,6 @@ class FilterPresets
     public static function simpleState(): Filter
     {
         return RadioFilter::make('online', function ($query, $value, $parameterBag) {
-
             return $query->where('current_state', '=', $value);
         })->options([
             '' => 'Alle',
@@ -39,7 +37,6 @@ class FilterPresets
     public static function column(string $name, string|array $columns, ?string $label = null): Filter
     {
         return InputFilter::make($name, function ($query, $value, $parameterBag) use ($columns, $name) {
-
             return $query->where(function ($builder) use ($value, $columns) {
                 foreach ($columns as $column) {
                     $builder->orWhere($column, 'LIKE', '%' . $value . '%');
@@ -53,7 +50,6 @@ class FilterPresets
     public static function text(string $queryParameter, array $dynamicColumns = ['title'], array $astrotomicColumns = [], string $label = 'titel', string $jsonColumn = 'values'): Filter
     {
         return InputFilter::make($queryParameter, function ($query, $value, $parameterBag) use ($dynamicColumns, $astrotomicColumns, $jsonColumn, $queryParameter) {
-
             return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {
                 foreach ($dynamicColumns as $column) {
                     $jsonColumnParts = explode('.', $jsonColumn);

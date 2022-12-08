@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\IndexRepository;
 
-use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Shared\Helpers\Memoize;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterPresets;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
