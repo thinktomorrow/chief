@@ -1,17 +1,17 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Urls;
+namespace Thinktomorrow\Chief\Tests\Application\Site;
 
-use Thinktomorrow\Chief\Admin\Settings\Homepage;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
+use Thinktomorrow\Chief\Admin\Settings\Homepage;
+use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 class HomepageTest extends ChiefTestCase
 {
