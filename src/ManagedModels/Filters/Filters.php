@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
+use ArrayIterator;
 use Illuminate\Database\Eloquent\Builder;
 
-class Filters
+class Filters implements \IteratorAggregate, \Countable
 {
     /** @var array */
     private $filters;
@@ -41,25 +42,24 @@ class Filters
         return $this->filters;
     }
 
-    public function allApplicableQueryCallbacks(array $parameterBag): array
+    public function allApplicable(array $parameterBag): static
     {
-        $applicableQueryCallbacks = [];
+        $applicableFilters = [];
 
-        foreach ($this->all() as $filter) {
+        foreach ($this->filters as $filter) {
             if ($filter->applicable($parameterBag)) {
-                $applicableQueryCallbacks[] = $filter->query();
+                $applicableFilters[] = $filter;
             }
         }
 
-        return $applicableQueryCallbacks;
+        return new static($applicableFilters);
     }
 
     public function apply(Builder $builder, array $parameterBag): void
     {
         foreach ($this->all() as $filter) {
             if ($filter->applicable($parameterBag)) {
-                $filter->query()($builder, $parameterBag);
-//                $filter->query()($builder, $parameterBag[$filter->queryKey()] ?? null);
+                $filter->query($builder, $parameterBag);
             }
         }
     }
@@ -97,13 +97,6 @@ class Filters
         return ! $this->any();
     }
 
-    public function keys(): array
-    {
-        return array_map(function (AbstractFilter $filter) {
-            return $filter->key();
-        }, $this->filters);
-    }
-
     private function validateFilters(array $filters): void
     {
         array_map(function (Filter $filter) {
@@ -136,5 +129,15 @@ class Filters
     public function merge(Filters $other): Filters
     {
         return new static(array_merge($this->filters, $other->all()));
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return new ArrayIterator($this->filters);
+    }
+
+    public function count(): int
+    {
+        return count($this->filters);
     }
 }

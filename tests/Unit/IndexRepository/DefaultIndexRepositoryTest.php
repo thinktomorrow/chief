@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\IndexRepository;
 
+use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Shared\Helpers\Memoize;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterPresets;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
@@ -36,6 +39,14 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertCount(2, $rows);
     }
 
+    public function test_it_can_retrieve_index_rows_()
+    {
+        $rows = $this->repository->getRows();
+
+        $this->assertInstanceOf(LengthAwarePaginator::class, $rows);
+        $this->assertCount(2, $rows);
+    }
+
     public function test_it_can_adjust_with_custom_queries()
     {
         $rows = $this->repository->adjustQuery([
@@ -50,11 +61,13 @@ class DefaultIndexRepositoryTest extends TestCase
 
     public function test_it_can_adjust_with_filters()
     {
+        $parameterBag = ['title' => 'foobar'];
+
         $filters = new Filters([
             FilterPresets::column('title', ['title']),
         ]);
 
-        $rows = $this->repository->adjustQuery($filters->allApplicableQueryCallbacks(['title' => 'foobar']), ['title' => 'foobar'])->getRows();
+        $rows = $this->repository->adjustQuery($filters->allApplicable($parameterBag), $parameterBag)->getRows();
 
         $this->assertCount(1, $rows);
         $this->assertEquals($this->article->id, $rows->first()->id);

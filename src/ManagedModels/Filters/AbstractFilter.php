@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 
 abstract class AbstractFilter
 {
@@ -35,7 +36,7 @@ abstract class AbstractFilter
 
     public function applicable(array $parameterBag): bool
     {
-        return (isset($parameterBag[$this->queryKey]) || $this->value);
+        return ($this->extractParameterValue($parameterBag) || $this->value);
     }
 
     public function queryKey(): string
@@ -43,9 +44,13 @@ abstract class AbstractFilter
         return $this->queryKey;
     }
 
-    public function query(): Closure
+    public function query(Builder $builder, array $parameterBag): void
     {
-        return $this->query;
+        call_user_func_array($this->query, [
+            $builder,
+            $this->extractParameterValue($parameterBag),
+            $parameterBag
+        ]);
     }
 
     public function view(string $view): self
@@ -97,6 +102,11 @@ abstract class AbstractFilter
         return view($path, $this->viewData($parameterBag))->render();
     }
 
+    protected function extractParameterValue(array $parameterBag, $default = null)
+    {
+        return $parameterBag[$this->queryKey()] ?? $default;
+    }
+
     protected function viewData(array $parameterBag): array
     {
         return [
@@ -104,7 +114,7 @@ abstract class AbstractFilter
             'name' => $this->queryKey,
             'label' => $this->label,
             'description' => $this->description,
-            'value' => old($this->queryKey, $parameterBag[$this->queryKey] ?: $this->value),
+            'value' => old($this->queryKey, $this->extractParameterValue($parameterBag, $this->value)),
             'placeholder' => $this->placeholder,
             'default' => $this->default,
         ];

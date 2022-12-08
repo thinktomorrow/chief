@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Repositories;
 
+use Thinktomorrow\Chief\Shared\Concerns\ProvidesQuery;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
@@ -22,7 +23,13 @@ class DefaultIndexRepository implements IndexRepository
     public function adjustQuery(iterable $adjusters, array $parameterBag): static
     {
         foreach ($adjusters as $adjuster) {
-            call_user_func_array($adjuster, [$this->builder, $parameterBag]);
+            if($adjuster instanceof ProvidesQuery) {
+                $adjuster->query($this->builder, $parameterBag);
+            } elseif(is_callable($adjuster)) {
+                call_user_func_array($adjuster, [$this->builder, $parameterBag]);
+            } else {
+                throw new \InvalidArgumentException('An adjuster should be callable or implement the ProvidesQuery interface. Please check the passed adjusters array.');
+            }
         }
 
         return $this;
