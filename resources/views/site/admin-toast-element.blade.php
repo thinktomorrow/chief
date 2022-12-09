@@ -7,6 +7,7 @@
         z-index: 9999;
         display: flex;
         justify-content: center;
+        pointer-events: none;
     }
 
     .admin-toast {
@@ -15,6 +16,7 @@
         background-color: white;
         box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
         border-radius: 9999px;
+        pointer-events: auto;
     }
     .admin-toast > *:not(:first-child) {
         border-left: 1px solid rgb(240, 240, 240);
