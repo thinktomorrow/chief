@@ -31,7 +31,6 @@ class FieldValidator
 
     private function createValidator(Validatable & Localizable $field, array $payload): Validator
     {
-        // Rename to validationParameters
         $validationParameters = ValidationParameters::make($field);
 
         return $this->validatorFactory->make(
@@ -40,34 +39,27 @@ class FieldValidator
             $validationParameters->getMessages(),
             $validationParameters->getAttributes(),
         );
-
-//        return $this->validatorFactory->make(
-//            $payload,
-//            $this->ruleMatrix($field->getValidationNames($payload), $field->getValidationParameters()->getRules()), // rules
-//            $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getMessages()), // messages
-//            $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getAttributes()) // attributes
-//        );
     }
-
-    /*
-     * Complete rule definitions - in the format of [attribute => rules] - will be left as is and are not being manipulated e.g. ['foobar' => 'required']
-     * Otherwise if the rules are being passed as an array, they will be normalized to a string.
-     */
-    private function ruleMatrix(array $keys, array $values): array
-    {
-        if (is_string(key($values))) {
-            return $values;
-        }
-
-        return array_fill_keys($keys, $values);
-    }
-
-    private function matrix(array $keys, array $values): array
-    {
-        if (empty($values)) {
-            return [];
-        }
-
-        return array_fill_keys($keys, reset($values));
-    }
+//
+//    /*
+//     * Complete rule definitions - in the format of [attribute => rules] - will be left as is and are not being manipulated e.g. ['foobar' => 'required']
+//     * Otherwise if the rules are being passed as an array, they will be normalized to a string.
+//     */
+//    private function ruleMatrix(array $keys, array $values): array
+//    {
+//        if (is_string(key($values))) {
+//            return $values;
+//        }
+//
+//        return array_fill_keys($keys, $values);
+//    }
+//
+//    private function matrix(array $keys, array $values): array
+//    {
+//        if (empty($values)) {
+//            return [];
+//        }
+//
+//        return array_fill_keys($keys, reset($values));
+//    }
 }

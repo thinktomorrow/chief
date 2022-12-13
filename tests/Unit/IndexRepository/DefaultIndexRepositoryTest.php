@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\IndexRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterPresets;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Managers\Repositories\DefaultIndexRepository;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -40,6 +41,14 @@ class DefaultIndexRepositoryTest extends TestCase
         $this->assertInstanceOf(LengthAwarePaginator::class, $rows);
         $this->assertCount(2, $rows);
     }
+
+//    public function test_it_can_retrieve_index_tree()
+//    {
+//        $tree = $this->repository->getTree();
+//
+//        $this->assertInstanceOf(NestedTree::class, $tree);
+//        $this->assertEquals(2, $tree->count());
+//    }
 
     public function test_it_can_adjust_with_custom_queries()
     {

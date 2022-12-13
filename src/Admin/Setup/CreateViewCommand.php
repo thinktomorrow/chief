@@ -80,7 +80,7 @@ class CreateViewCommand extends Command
         return "
     public function adminView(): \Illuminate\Contracts\View\View
     {
-        return view('${path}');
+        return view('{$path}');
     }
 ";
     }

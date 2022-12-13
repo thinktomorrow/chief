@@ -44,6 +44,7 @@ trait TestHelpers
         $response->assertRedirect($coming_from_url);
         $response->assertSessionHasErrors($field);
 
+
         $this->assertEquals($assert_count, $model->count());
 
         return $response;
