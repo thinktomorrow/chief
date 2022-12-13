@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Redirects;
 
-use Thinktomorrow\Url\Url;
-use Thinktomorrow\Url\Root;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Url\Url;
 
 final class AddRedirect
 {
@@ -30,7 +29,7 @@ final class AddRedirect
             ($parsedUrl->hasQuery() ? '?' . $parsedUrl->getQuery() : '') .
             ($parsedUrl->hasHash() ? '#' . $parsedUrl->getHash() : '');
 
-        if(UrlRecord::where('locale', $locale)->where('slug', $redirectUrl)->exists()) {
+        if (UrlRecord::where('locale', $locale)->where('slug', $redirectUrl)->exists()) {
             throw new RedirectUrlAlreadyExists($redirectUrl . ' [locale: '.$locale.'] already exists as url');
         }
 

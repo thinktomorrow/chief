@@ -13,6 +13,6 @@ final class MysqlRedirectRepository
     {
         $records = UrlRecord::whereNotNull('redirect_id')->get();
 
-        return $records->map(fn(UrlRecord $record) => Redirect::fromUrlRecord($record));
+        return $records->map(fn (UrlRecord $record) => Redirect::fromUrlRecord($record));
     }
 }

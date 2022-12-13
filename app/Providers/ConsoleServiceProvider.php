@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
 use Thinktomorrow\Chief\Admin\Setup\CreateFragmentCommand;
@@ -15,6 +14,7 @@ use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
 use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
