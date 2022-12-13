@@ -3,9 +3,8 @@
 namespace Thinktomorrow\Chief\App\Console;
 
 use Thinktomorrow\Chief\Site\Redirects\AddRedirect;
-use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
-use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 use Thinktomorrow\Chief\Site\Redirects\RedirectUrlAlreadyExists;
+use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 
 class ImportRedirects extends BaseCommand
 {
@@ -25,14 +24,16 @@ class ImportRedirects extends BaseCommand
     public function handle(): void
     {
         // CSV should consist of: locale - redirect url - target -url
-        $this->loop($this->argument('file'), function($row){
-            try{
+        $this->loop($this->argument('file'), function ($row) {
+            try {
                 $this->addRedirect->handle($row[0], $row[1], $row[2]);
             } catch(UrlRecordNotFound $e) {
                 $this->warn('No record found for targeturl ['.$row[2].'], locale ['.$row[0].']');
+
                 return;
             } catch(RedirectUrlAlreadyExists $e) {
                 $this->warn('Redirect url already exists as record ['.$row[1].'], locale ['.$row[0].']');
+
                 return;
             }
             $this->info('Added '.$row[0].' redirect: ' . $row[1] . ' -> ' . $row[2]);
