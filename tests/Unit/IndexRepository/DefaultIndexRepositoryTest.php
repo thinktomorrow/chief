@@ -7,8 +7,8 @@ namespace Thinktomorrow\Chief\Tests\Unit\IndexRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterPresets;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Managers\Repositories\DefaultIndexRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
