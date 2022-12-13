@@ -10,6 +10,9 @@ principles.
 - Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins. 
 - Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
 
+## 0.7.16 - 2022-12-13
+- Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
+
 ## 0.7.15 - 2022-12-02
 
 - Fixed: honour order of selected options in window
