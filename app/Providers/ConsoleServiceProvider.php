@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
 use Thinktomorrow\Chief\Admin\Setup\CreateFragmentCommand;
@@ -50,6 +51,7 @@ class ConsoleServiceProvider extends ServiceProvider
             'command.chief:fragment',
             'command.chief:view',
             'command.chief:project-menu',
+            'command.chief:import-redirects',
         ]);
 
         // Bind our commands to the container
@@ -65,6 +67,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:admin', CreateAdmin::class);
         $this->app->bind('command.chief:developer', CreateDeveloper::class);
         $this->app->bind('command.chief:project-menu', ProjectMenuCommand::class);
+        $this->app->bind('command.chief:import-redirects', ImportRedirects::class);
     }
 
     public function register()
