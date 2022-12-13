@@ -4,6 +4,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.16 - 2022-12-13
 - Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
 
 ## 0.7.15 - 2022-12-02
