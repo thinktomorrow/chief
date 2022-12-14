@@ -27,8 +27,12 @@
             <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getLabel() }}">
                 <span class="font-medium body-dark group-hover:underline">{{ $node->getLabel() }}</span>
 
+                @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
+                    <span class="inline mr-1 label label-xs label-primary">Homepage</span>
+                @endif
+
                 @if(!$node->showOnline())
-                    <span class="inline label label-xs label-warning">Offline</span>
+                    <span class="inline mr-1 label label-xs label-warning">Offline</span>
                 @endif
             </a>
         </div>
