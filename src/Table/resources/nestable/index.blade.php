@@ -19,8 +19,7 @@
                 data-sortable-nested-endpoint="{{ $manager->route('move-index') }}"
                 data-sortable-id-type="{{ $resource->getSortableType() }}"
                 data-sortable-class-when-sorting="is-sorting"
-                class="-my-4 divide-y divide-grey-100"
-                style="padding: 0;"
+                class="-my-3 divide-y divide-grey-100"
             >
                 @foreach($tree as $node)
                     @include('chief-table::nestable.node', [
@@ -31,8 +30,13 @@
             </div>
         </div>
     @else
-        <div class="card">Nog geen items toegevoegd.
-            <a href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}" class="link link-primary">
+        <div class="card">
+            Nog geen items toegevoegd.
+            <a
+                href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}"
+                title="Voeg een eerste item toe"
+                class="link link-primary"
+            >
                 Voeg een eerste item toe
             </a>
         </div>
