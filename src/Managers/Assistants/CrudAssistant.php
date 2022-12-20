@@ -86,16 +86,17 @@ trait CrudAssistant
         View::share('resource', $this->resource);
         View::share('model', $this->managedModelClassInstance());
 
-        if ($this->resource->isNestable()) {
-            $rootId = $request->input('root_id', null);
+        // TODO: get proper indexRepository
+        // Get rows or tree accordingly... with filters applied
+        // TODO: root is removed!!
 
+        if ($this->resource->isNestable()) {
             $filteredModelIds = $this->indexModelIds();
             $filteredTree = $this
-                ->getTree($rootId)
+                ->getTree()
                 ->shake(fn ($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
 
             View::share('tree', $filteredTree);
-            View::share('root', $this->getRoot($rootId));
         } else {
             View::share('models', $this->indexModels());
         }
@@ -111,15 +112,6 @@ trait CrudAssistant
         return $rootId
             ? $tree->find(fn (NestedNode $node) => $node->getId() == $rootId)->getChildNodes()
             : $tree;
-    }
-
-    private function getRoot(?string $rootId = null): ?NestedNode
-    {
-        if (! $rootId) {
-            return null;
-        }
-
-        return $this->resource->nestableRepository()->getTree()->find(fn (NestedNode $node) => $node->getId() == $rootId);
     }
 
     protected function indexModels(): Paginator
