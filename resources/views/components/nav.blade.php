@@ -25,7 +25,7 @@
             />
         @endforeach
     </x-chief::nav.item>
-@else
+@elseif($items->count() > 0)
     @if($title)
         <div
             data-toggle-classes="hidden"
