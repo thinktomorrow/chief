@@ -73,9 +73,9 @@
 
                     @adminCan('edit')
                         <x-chief::table.data class="text-right">
-                            <a href="@adminRoute('edit', $model)" title="Aanpassen">
-                                <x-chief-icon-button icon="icon-edit"/>
-                            </a>
+                            <div data-sortable-hide-when-sorting>
+                                @include('chief::manager._index._options')
+                            </div>
                         </x-chief::table.data>
                     @endAdminCan
                 </x-chief::table.row>

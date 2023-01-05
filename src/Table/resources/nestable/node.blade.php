@@ -37,16 +37,8 @@
             </a>
         </div>
 
-        {{-- Edit icon --}}
         <div data-sortable-hide-when-sorting>
-            @include('chief-table::nestable._partials.options')
-            {{-- <a
-                href="{{ $manager->route('edit', $node->getId()) }}"
-                title="Aanpassen"
-                class="flex-shrink-0 link link-primary"
-            >
-                <x-chief-icon-button icon="icon-edit"/>
-            </a> --}}
+            @include('chief::manager._index._options', ['model' => $node->getModel()])
         </div>
     </div>
 
