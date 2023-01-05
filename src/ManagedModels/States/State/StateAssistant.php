@@ -127,7 +127,7 @@ trait StateAssistant
 
         // Default when we don't have a custom redirect and no json response
         // is expected, we'll go back to the current page
-        if(!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             return redirect()->back();
         }
 
