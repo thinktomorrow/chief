@@ -48,7 +48,9 @@ final class PublishPageTest extends ChiefTestCase
             'current_state' => PageState::draft,
         ]);
 
-        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'))
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'), [], [
+            'Accept' => 'application/json',
+        ])
             ->assertSuccessful();
 
         $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
@@ -62,7 +64,9 @@ final class PublishPageTest extends ChiefTestCase
             'current_state' => PageState::published,
         ]);
 
-        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'unpublish'))
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'unpublish'), [], [
+            'Accept' => 'application/json',
+        ])
             ->assertSuccessful();
 
         $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
@@ -76,7 +80,9 @@ final class PublishPageTest extends ChiefTestCase
             'current_state' => PageState::deleted,
         ]);
 
-        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'))
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'), [], [
+            'Accept' => 'application/json',
+        ])
             ->assertStatus(304);
 
         $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
