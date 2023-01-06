@@ -1,4 +1,5 @@
-<div data-sortable-hide-when-sorting class="flex gap-1">
+<div data-sortable-hide-when-sorting class="flex gap-1 justify-end">
+
     @adminCan('edit', $model)
         <a href="{{ $manager->route('edit', $model->getKey()) }}" title="Aanpassen">
             <x-chief-icon-button color="grey" icon="icon-edit"/>

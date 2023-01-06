@@ -70,16 +70,9 @@
                         {{ $tableCell->render() }}
                     @endforeach
 
-                    @if (
-                        $manager->can('edit', $model) ||
-                        $manager->can('preview', $model) ||
-                        $manager->can('state-update', $model) ||
-                        $manager->can('duplicate', $model)
-                    )
-                        <x-chief::table.data>
-                            @include('chief::manager._index._options')
-                        </x-chief::table.data>
-                    @endif
+                    <x-chief::table.data>
+                        @include('chief::manager._index._options')
+                    </x-chief::table.data>
                 </x-chief::table.row>
             @empty
                 <x-chief::table.row>
