@@ -4,6 +4,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: show options menu on page index. Options show links to duplicate and state changes
+- Added: Edit and preview link on page index.
 
 ## 0.7.17 - 2022-12-13
 - Added: nestable page logic
