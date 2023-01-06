@@ -13,7 +13,6 @@
 @endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
-
     @include('chief::manager._index.archived_breadcrumbs')
 
     <x-chief::table
@@ -71,13 +70,16 @@
                         {{ $tableCell->render() }}
                     @endforeach
 
-                    @adminCan('edit')
-                        <x-chief::table.data class="text-right">
-                            <div data-sortable-hide-when-sorting>
-                                @include('chief::manager._index._options')
-                            </div>
+                    @if (
+                        $manager->can('edit', $model) ||
+                        $manager->can('preview', $model) ||
+                        $manager->can('state-update', $model) ||
+                        $manager->can('duplicate', $model)
+                    )
+                        <x-chief::table.data>
+                            @include('chief::manager._index._options')
                         </x-chief::table.data>
-                    @endAdminCan
+                    @endif
                 </x-chief::table.row>
             @empty
                 <x-chief::table.row>
