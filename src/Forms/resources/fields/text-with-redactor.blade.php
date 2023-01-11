@@ -1,5 +1,5 @@
 <div
-    class="w-full external-editor-toolbar"
+    class="w-full mb-1 external-editor-toolbar"
     id="js-external-editor-toolbar-{{ str_replace('.','_',$getElementId($locale ?? null)) }}"
 ></div>
 
