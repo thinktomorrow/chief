@@ -21,13 +21,9 @@ class TagTest extends TestCase
 
     public function test_it_can_read_nested_data_with_dotted_syntax()
     {
-
     }
 
     public function test_it_can_read_localized_data()
     {
-
     }
-
-
 }
