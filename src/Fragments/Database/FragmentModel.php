@@ -39,6 +39,8 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset
         'id', 'model_reference', 'meta', 'created_at', 'updated_at',
     ];
 
+    private ?string $dynamicLocaleFallback = null;
+
     public static function resourceKey(): string
     {
         return 'fragments';
@@ -57,6 +59,16 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset
     protected function dynamicLocales(): array
     {
         return config('chief.locales', []);
+    }
+
+    protected function dynamicLocaleFallback(): ?string
+    {
+        return $this->dynamicLocaleFallback;
+    }
+
+    public function setDynamicLocaleFallback(?string $dynamicLocaleFallback = null): void
+    {
+        $this->dynamicLocaleFallback = $dynamicLocaleFallback;
     }
 
     public function changeStatus(FragmentStatus $status): void
