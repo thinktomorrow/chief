@@ -14,7 +14,7 @@
         "astrotomic/laravel-translatable": "^11.9",
         "doctrine/dbal": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.11",
+        "laravel/framework": "^9.47",
         "laravel/ui": "^3.2",
         "maennchen/zipstream-php": "^2.1",
         "ramsey/uuid": "^4.1",
