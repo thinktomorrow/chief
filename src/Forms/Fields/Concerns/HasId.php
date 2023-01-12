@@ -17,7 +17,7 @@ trait HasId
 
     public function getId(?string $locale = null): string
     {
-        if(!method_exists($this, 'getLocalizedFormKey')) {
+        if (! method_exists($this, 'getLocalizedFormKey')) {
             throw new \Exception('Missing method getLocalizedFormKey.');
         }
 
