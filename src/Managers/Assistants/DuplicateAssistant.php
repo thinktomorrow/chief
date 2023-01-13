@@ -43,10 +43,10 @@ trait DuplicateAssistant
         $this->guard('duplicate', $model);
 
         // $model = Duplicate ...
-        $copiedModel = app(DuplicatePage::class)->handle($model);
+        $copiedModel = app(DuplicatePage::class)->handle($model, $this->resource->getTitleAttributeKey());
 
         Audit::activity()->performedOn($model)->log('duplicated');
 
-        return redirect()->to($this->route('edit', $copiedModel))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is gekopieerd.');
+        return redirect()->to($this->route('edit', $copiedModel))->with('messages.success', $this->resource->getPageTitle($model) . ' is gekopieerd.');
     }
 }

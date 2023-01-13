@@ -3,7 +3,7 @@
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative p-6 bg-white rounded-2xl shadow-window w-full" :class="sizeClass">
+            <div class="relative w-full card" :class="sizeClass">
                 <div class="space-y-6">
                     <div v-if="title">
                         <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">
@@ -11,7 +11,12 @@
                         </span>
                     </div>
 
-                    <div class="prose prose-dark">
+                    <div
+                        class="prose prose-spacing prose-dark"
+                        v-if="computedCustomHtml"
+                        v-html="computedCustomHtml"
+                    ></div>
+                    <div class="prose prose-spacing prose-dark" v-else>
                         <slot></slot>
                     </div>
                 </div>
@@ -29,9 +34,9 @@
                 <button
                     type="button"
                     @click="close"
-                    class="absolute -top-3 -right-3 p-1 bg-white rounded-full link link-grey icon-label m-7"
+                    class="absolute p-1 bg-white rounded-full -top-3 -right-3 link link-grey icon-label m-7"
                 >
-                    <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#x" /></svg>
+                    <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#icon-x-mark" /></svg>
                 </button>
             </div>
         </div>
@@ -39,6 +44,8 @@
 </template>
 
 <script>
+import vueFields from '../forms/fields/vue-fields';
+
 export default {
     props: {
         id: { required: true },
@@ -46,19 +53,40 @@ export default {
         title: { default: '' },
         type: { default: 'modal' },
         size: { default: 'small' },
+        url: { default: null },
+        footer: { default: true, type: Boolean },
     },
     data() {
         return {
             isVisible: false,
-            showFooter: true,
+            showFooter: this.footer,
             typedclass: this.type == 'sidebar-large' ? 'sidebar sidebar-large' : this.type,
             typedtransition: this.type == 'sidebar-large' ? 'sidebar' : this.type,
             sizeClass: this.getSizeClass(),
+            fetchUrl: this.url,
+            customHtml: null,
         };
+    },
+    computed: {
+        // Triggers template reeval.
+        computedCustomHtml: function () {
+            return this.customHtml;
+        },
     },
     methods: {
         open: function () {
             this.isVisible = true;
+            if (this.fetchUrl) {
+                fetch(this.fetchUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        this.customHtml = data.data;
+                        console.log('done');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
         },
         close: function () {
             this.isVisible = false;

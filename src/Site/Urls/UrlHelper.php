@@ -64,26 +64,11 @@ class UrlHelper
         $types = [];
 
         if ($onlySingles) {
-            $types = ['singles', 'single'];
+            $types = ['singles', 'single', 'page'];
         }
 
         return self::modelsByType($types, $ignoredModel, $online);
     }
-
-//    public static function modelsByKeys(array $keys, Model $ignoredModel = null, bool $online = true)
-//    {
-//        $managers = app(Managers::class);
-//
-//        $whitelistedDatabaseTypes = [];
-//
-//        foreach ($keys as $key) {
-//            $manager = $managers->findByKey($key);
-//            $whitelistedDatabaseTypes[] = $manager->modelInstance()->getMorphClass();
-//        }
-//
-//        return static::modelsByType($whitelistedDatabaseTypes, $ignoredModel, $online);
-//    }
-
 
     public static function modelsByType(array $types, Model $ignoredModel = null, bool $online = true)
     {
@@ -112,7 +97,7 @@ class UrlHelper
 
         if ($ignoredModel) {
             $models = $models->reject(function ($model) use ($ignoredModel) {
-                return (get_class($model) === get_class($ignoredModel) && $model->id === $ignoredModel->id);
+                return ($model::class === get_class($ignoredModel) && $model->id === $ignoredModel->id);
             });
         }
 

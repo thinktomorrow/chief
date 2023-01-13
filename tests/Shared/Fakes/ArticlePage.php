@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -33,57 +29,9 @@ class ArticlePage extends Model implements Page
     public $table = 'article_pages';
     public $guarded = [];
 
-    public function fields(): iterable
-    {
-        yield InputField::make('title')->validation(['min:4']);
-        yield InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']);
-        yield InputField::make('title_trans')->locales(['nl', 'en']);
-        yield InputField::make('content_trans')->locales(['nl', 'en'])->validation('requiredFallbackLocale');
-
-        yield FileField::make('thumb')->tag('edit');
-        yield FileField::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
-        yield FileField::make(static::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
-        yield ImageField::make('thumb_image')->tag('edit');
-        yield ImageField::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
-        yield ImageField::make(static::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
-
-        yield InputField::make('title_sanitized')->sanitize(function ($value, array $input) {
-            if ($value) {
-                return $value;
-            }
-            if (isset($input['title'])) {
-                return Str::slug($input['title']);
-            }
-
-            return null;
-        });
-
-        yield InputField::make('title_sanitized_trans')->locales()->sanitize(function ($value, array $input, $locale = null) {
-            if ($value) {
-                return $value;
-            }
-            if (isset($input['title'])) {
-                return Str::slug($input['title']) . '-' . $locale;
-            }
-
-            return null;
-        });
-    }
-
-    public static function migrateUp()
-    {
-        Schema::create('article_pages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title')->nullable();
-            $table->string('current_state')->default(PageState::DRAFT);
-            $table->json('values')->nullable(); // dynamic attributes
-            $table->unsignedInteger('order')->default(0);
-            $table->dateTime('start_at')->nullable();
-            $table->dateTime('end_at')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+    public $dynamicKeys = [
+        'title', 'custom', 'title_trans', 'content_trans', 'seo_title','seo_description', 'title_sanitized', 'title_sanitized_trans',
+    ];
 
     protected function dynamicLocales(): array
     {
@@ -96,5 +44,25 @@ class ArticlePage extends Model implements Page
             Quote::class,
             SnippetStub::class,
         ];
+    }
+
+    public function viewKey(): string
+    {
+        return 'article_page';
+    }
+
+    public static function migrateUp()
+    {
+        Schema::create('article_pages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title')->nullable();
+            $table->string('current_state')->default(PageState::draft->getValueAsString());
+            $table->json('values')->nullable(); // dynamic attributes
+            $table->unsignedInteger('order')->default(0);
+            $table->dateTime('start_at')->nullable();
+            $table->dateTime('end_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 }

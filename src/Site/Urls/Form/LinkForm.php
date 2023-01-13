@@ -5,9 +5,6 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Root;
 
@@ -29,13 +26,14 @@ final class LinkForm
         $this->setFormValues();
     }
 
-    public static function fromModel(Model $model): self
+    public static function fromModel(Model & Visitable $model, bool $includeRedirects = false): self
     {
-        return new static($model, MemoizedUrlRecords::getByModel($model)
+        return new static($model, ($includeRedirects ? $model->allUrls : $model->urls)
             ->groupBy('locale')
             ->map(function ($records) {
                 return $records->sortBy('redirect_id')->sortByDesc('created_at');
-            }));
+            })
+        );
     }
 
     public function links(): Collection
@@ -60,7 +58,7 @@ final class LinkForm
 
             $links[$locale] = (object)[
                 'current' => $currentRecord,
-                'url' => $url,
+                'url' => urldecode($url),
                 'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())), '/') : '',
                 'redirects' => $records->filter->isRedirect(),
             ];
@@ -152,13 +150,6 @@ final class LinkForm
         return $slug;
     }
 
-    public function getPageState(): ?string
-    {
-        return $this->model instanceof WithPageState
-            ? $this->model->getPageState()
-            : PageState::PUBLISHED; // Without pageState behaviour we consider a model to be always published.
-    }
-
     /**
      * @param $currentRecord
      * @param $locale
@@ -166,27 +157,14 @@ final class LinkForm
      */
     private function determineOnlineStatusInfo($currentRecord, $locale): array
     {
-        $pagestate = $this->getPageState();
-        $is_online = ($pagestate && $pagestate == PageState::PUBLISHED && $currentRecord);
+        $inOnlineState = $this->model->inOnlineState();
+
+        $is_online = ($inOnlineState && $currentRecord);
 
         $offline_reason = 'De pagina staat offline.';
 
-        if (! $is_online) {
-            if (! $pagestate) {
-                $offline_reason = 'Pagina staat nog niet gepubliceerd.';
-            } else {
-                if ($pagestate == PageState::DRAFT) {
-                    $offline_reason = 'Pagina staat nog in draft. Je dient deze nog te publiceren.';
-                } else {
-                    if ($pagestate == PageState::ARCHIVED) {
-                        $offline_reason = 'De pagina is gearchiveerd.';
-                    } else {
-                        if ($pagestate == PageState::PUBLISHED && ! $currentRecord) {
-                            $offline_reason = 'Pagina staat klaar voor publicatie maar er ontbreekt nog een link voor de ' . $locale . ' taal.';
-                        }
-                    }
-                }
-            }
+        if (! $is_online && ! $inOnlineState) {
+            $offline_reason = 'Pagina staat nog niet gepubliceerd, is gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
         }
 
         return [$is_online, $offline_reason];

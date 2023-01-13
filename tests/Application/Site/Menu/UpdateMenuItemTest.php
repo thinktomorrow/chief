@@ -3,9 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class UpdateMenuItemTest extends ChiefTestCase
 {
@@ -17,14 +18,12 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function admin_can_view_the_update_form()
+    public function admin_can_view_the_edit_form()
     {
-        $this->disableExceptionHandling();
         $menuitem = MenuItem::create();
 
         $response = $this->asAdmin()->get(route('chief.back.menuitem.edit', $menuitem->id));
-        $response->assertViewIs('chief::admin.menu.edit')
-            ->assertStatus(200);
+        $response->assertSuccessful();
     }
 
     /** @test */
@@ -37,7 +36,7 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function editing_a_new_menuItem()
+    public function editing_a_new_menu_item()
     {
         $menuitem = MenuItem::create(['menu_type' => 'main']);
 
@@ -56,7 +55,7 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function only_authenticated_admin_can_update_a_menuItem()
+    public function only_authenticated_admin_can_update_a_menu_item()
     {
         $menuitem = MenuItem::create(['label' => ['nl' => 'existing label']]);
 
@@ -67,11 +66,23 @@ class UpdateMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function editing_an_internal_menuItem()
+    public function updating_a_new_menu_item_emits_event()
     {
-        ArticlePage::migrateUp();
+        Event::fake();
 
-        $page = ArticlePage::create();
+        $menuitem = MenuItem::create();
+
+        $this->asAdmin()->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams());
+
+        Event::assertDispatched(MenuItemUpdated::class);
+    }
+
+    /** @test */
+    public function editing_an_internal_menu_item()
+    {
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
+
         $menuitem = MenuItem::create();
 
         $this->asAdmin()
@@ -80,7 +91,35 @@ class UpdateMenuItemTest extends ChiefTestCase
                 'owner_reference' => $page->modelReference()->getShort(),
             ]))->assertStatus(302);
 
-        $this->assertEquals($page->modelReference(), $menuitem->fresh()->owner->modelReference());
+        $item = MenuItem::first();
+
+        $this->assertEquals($page->modelReference(), $item->owner->modelReference());
+
+        $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('/foobar-en', $item->getUrl('en'));
+
+        $this->assertEquals('artikel pagetitle nl', $item->getAdminUrlLabel('nl'));
+        $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));
+    }
+
+    public function test_using_homepage_as_link_gives_slash_as_link_entry()
+    {
+        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $this->updateLinks($page, ['nl' => '/', 'en' => '/en']);
+
+        $menuitem = MenuItem::create();
+
+        $this->asAdmin()
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
+                'trans' => [],
+                'type' => 'internal',
+                'owner_reference' => $page->modelReference()->getShort(),
+            ]))->assertStatus(302);
+
+        $item = MenuItem::first();
+
+        $this->assertEquals('/', $item->getUrl('nl'));
+        $this->assertEquals('/en', $item->getUrl('en'));
     }
 
     /** @test */

@@ -27,13 +27,13 @@
 <script>
 export default {
     props: {
-        external_nav: { default: false, type: Boolean },
+        hide_nav: { default: false, type: Boolean },
     },
 
     data() {
         return {
             tabs: [],
-            hideNav: this.external_nav,
+            hideNav: this.hide_nav,
         };
     },
 

@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
+use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 
 class FragmentableStub implements Fragmentable, FragmentsOwner
 {
@@ -30,15 +29,20 @@ class FragmentableStub implements Fragmentable, FragmentsOwner
         return [];
     }
 
-    public static function managedModelKey(): string
+    public static function resourceKey(): string
     {
         return 'fragment-stub';
     }
 
-    public function fields(): Fields
+    public function fields($model): Fields
     {
         return Fields::make([
-            InputField::make('title')->tag('create'),
+            Fields\Text::make('title')->tag('create'),
         ]);
+    }
+
+    public function viewKey(): string
+    {
+        return 'fragmentable_stub';
     }
 }

@@ -23,6 +23,7 @@ class MenuPagesTest extends ChiefTestCase
     /** @test */
     public function menu_index_route_shows_menu_show_if_there_is_only_one_menu()
     {
+        $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
         $response->assertViewIs('chief::admin.menu.show')
                  ->assertStatus(200);

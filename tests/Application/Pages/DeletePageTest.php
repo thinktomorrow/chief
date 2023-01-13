@@ -6,13 +6,13 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 final class DeletePageTest extends ChiefTestCase
 {
@@ -25,8 +25,8 @@ final class DeletePageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
@@ -34,7 +34,7 @@ final class DeletePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DELETED,
+            'current_state' => PageState::deleted,
         ]);
 
         $this->asAdmin()->get($this->manager->route('edit', $model))
@@ -46,13 +46,14 @@ final class DeletePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DRAFT,
+            'current_state' => PageState::draft,
         ]);
 
-        $this->asAdminWithoutRole()->delete($this->manager->route('delete', $model))
+        $this->asAdminWithoutRole()
+            ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'))
             ->assertStatus(302);
 
-        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
         $this->assertFalse($model->fresh()->trashed());
     }
 
@@ -61,16 +62,14 @@ final class DeletePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DRAFT,
+            'current_state' => PageState::draft,
         ]);
 
-        $this->asAdmin()->delete($this->manager->route('delete', $model), [
-            'deleteconfirmation' => 'DELETE',
-        ])
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'))
             ->assertStatus(302)
             ->assertRedirect($this->manager->route('index'));
 
-        $this->assertEquals(PageState::DELETED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
         $this->assertTrue($model->fresh()->trashed());
     }
 
@@ -79,13 +78,13 @@ final class DeletePageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
-        $this->asAdmin()->delete($this->manager->route('delete', $model))
-            ->assertStatus(302);
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'))
+            ->assertStatus(304);
 
-        $this->assertEquals(PageState::PUBLISHED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
         $this->assertFalse($model->fresh()->trashed());
     }
 
@@ -98,9 +97,7 @@ final class DeletePageTest extends ChiefTestCase
 
         app(AddAsset::class)->add($model, UploadedFile::fake()->image('image.png'), 'image', 'nl');
 
-        $this->asAdmin()->delete($this->manager->route('delete', $model), [
-            'deleteconfirmation' => 'DELETE',
-        ]);
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'));
 
         $this->assertCount(0, $model->fresh()->assets());
 
@@ -118,9 +115,7 @@ final class DeletePageTest extends ChiefTestCase
         $this->setupAndCreateQuote($model);
         $this->assertFragmentCount($model, 1);
 
-        $this->asAdmin()->delete($this->manager->route('delete', $model), [
-            'deleteconfirmation' => 'DELETE',
-        ]);
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'));
 
         $this->assertFragmentCount($model, 0);
     }

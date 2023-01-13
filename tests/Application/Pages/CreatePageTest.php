@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 final class CreatePageTest extends ChiefTestCase
 {
@@ -21,16 +22,25 @@ final class CreatePageTest extends ChiefTestCase
         parent::setUp();
 
         ArticlePage::migrateUp();
-        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
-        $this->manager = $this->manager(ArticlePage::managedModelKey());
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
     public function it_can_visit_the_create_page()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('create'))
              ->assertStatus(200);
+    }
+
+    /** @test */
+    public function guests_cannot_view_the_create_form()
+    {
+        $this->get($this->manager->route('create'))
+            ->assertStatus(302)
+            ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
@@ -55,7 +65,7 @@ final class CreatePageTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_emits_an_modelCreated_event()
+    public function it_emits_an_model_created_event()
     {
         Event::fake();
 
@@ -88,7 +98,7 @@ final class CreatePageTest extends ChiefTestCase
         $article = ArticlePage::first();
 
         $this->assertEquals(2, UrlRecord::count());
-        $this->assertEquals('new-title', UrlRecord::findByModel($article, 'nl')->slug);
-        $this->assertEquals('new-title', UrlRecord::findByModel($article, 'en')->slug);
+        $this->assertEquals('custom-value', UrlRecord::findByModel($article, 'nl')->slug);
+        $this->assertEquals('custom-value', UrlRecord::findByModel($article, 'en')->slug);
     }
 }

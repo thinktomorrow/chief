@@ -5,7 +5,9 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelsSorted;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -17,18 +19,21 @@ trait SortAssistant
         return [
             ManagedRoute::get('index-for-sorting'),
             ManagedRoute::post('sort-index'),
+            ManagedRoute::post('move-index'),
         ];
     }
 
     public function canSortAssistant(string $action, $model = null): bool
     {
-        return (in_array($action, ['sort-index', 'index-for-sorting'])
+        return (in_array($action, ['sort-index', 'index-for-sorting', 'move-index'])
             && ($model && public_method_exists($model, 'isSortable') && $model->isSortable()));
     }
 
     public function filtersSortAssistant(): Filters
     {
-        $model = new $this->managedModelClass();
+        $modelClass = $this->managedModelClass();
+        $model = new $modelClass();
+
         if (! $this->can('sort-index', $model)) {
             return new Filters();
         }
@@ -46,7 +51,15 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle((new $this->managedModelClass()), $request->indices, (new $this->managedModelClass())->sortableAttribute());
+        app(SortModels::class)->handle(
+            $this->managedModelClassInstance(),
+            $request->indices,
+            $this->managedModelClassInstance()->sortableAttribute(),
+            $this->managedModelClassInstance()->getKeyName(),
+            $this->managedModelClassInstance()->getKeyType() == 'int',
+        );
+
+        event(new ManagedModelsSorted($this->resource::resourceKey(), $request->indices));
 
         return response()->json([
             'message' => 'models sorted.',
@@ -59,10 +72,28 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [index] for item sorting request.');
         }
 
-        app(SortModels::class)->handleItem((new $this->managedModelClass()), $request->index, (new $this->managedModelClass())->sortableAttribute());
+        app(SortModels::class)->handleItem($this->managedModelClassInstance(), $request->index, $this->managedModelClassInstance()->sortableAttribute());
 
         return response()->json([
             'message' => 'models sorted.',
+        ]);
+    }
+
+    public function moveIndex(Request $request)
+    {
+        if (! $request->input('itemId') || ! $request->has('parentId')) {
+            throw new \InvalidArgumentException('Missing arguments [itemId or parentId] for moveIndex request.');
+        }
+
+        $instance = $this->managedModelClassInstance();
+
+        $this->managedModelClass()::findOrFail($request->input('itemId'))->update([
+            'parent_id' => $request->input('parentId', null),
+            $instance->sortableAttribute() => $request->input('order', 0),
+        ]);
+
+        return response()->json([
+            'message' => 'Item moved to new parent',
         ]);
     }
 
@@ -71,14 +102,12 @@ trait SortAssistant
      */
     public function indexForSorting()
     {
-        $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        View::share('manager', $this);
+        View::share('resource', $this->resource);
+        View::share('models', $this->indexModelsForSorting());
+        View::share('model', $this->managedModelClassInstance());
 
-        return view('chief::manager.index-for-sorting', [
-            'manager' => $this,
-            'model' => $model,
-            'models' => $this->indexModelsForSorting(),
-        ]);
+        return view('chief::manager.index-for-sorting');
     }
 
     protected function indexModelsForSorting(): LengthAwarePaginator

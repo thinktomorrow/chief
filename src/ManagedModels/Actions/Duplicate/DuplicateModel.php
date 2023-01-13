@@ -4,32 +4,34 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class DuplicateModel
 {
-    public function handle(Model $model): Model
+    private Registry $registry;
+
+    public function __construct(Registry $registry)
     {
-        $copiedModel = $model->replicate();
-        $copiedModel->id = null;
+        $this->registry = $registry;
+    }
 
-        if ($model->title && public_method_exists($model, 'dynamic') && $model->isDynamic('title')) {
+    public function handle(Model $model, string $titleKey = 'title'): Model
+    {
+        $copiedModel = $model->replicate(['id', 'created_at', 'updated_at']);
 
-            // Is title field localized or not?
-            $isTitleLocalized = ($field = Fields::make($model->fields())->find('title')) ? $field->isLocalized() : false;
+        $this->resetAstrotomicTranslations($copiedModel);
 
-            if ($isTitleLocalized) {
-                $locales = config('chief.locales', []);
-                $defaultLocale = reset($locales);
-                $copiedModel->setDynamic('title', '[Copy] ' . $model->dynamic('title', $defaultLocale, $model->dynamic('title')), $defaultLocale);
-            } else {
-                $copiedModel->setDynamic('title', '[Copy] ' . $model->title);
-            }
+        if ($model->$titleKey) {
+            $this->copyTitle($model, $titleKey, $copiedModel);
         }
 
-        $copiedModel->created_at = now();
-        $copiedModel->updated_at = now();
+        if ($copiedModel->timestamps) {
+            $copiedModel->created_at = now();
+            $copiedModel->updated_at = now();
+        }
+
         $copiedModel->save();
 
         if ($model instanceof HasAsset) {
@@ -43,5 +45,54 @@ class DuplicateModel
         }
 
         return $copiedModel;
+    }
+
+    /**
+     * @param Model $copiedModel
+     * @return void
+     */
+    private function resetAstrotomicTranslations(Model $copiedModel): void
+    {
+        if (! $copiedModel->relationLoaded('translations')) {
+            return;
+        }
+
+        $transModels = new Collection();
+
+        foreach ($copiedModel->getRelation('translations') as $translation) {
+            $transModels->push($translation->replicate(['id', 'owner_id', 'created_at', 'updated_at']));
+        }
+
+        $copiedModel->unsetRelation('translations');
+        $copiedModel->setRelation('translations', $transModels);
+    }
+
+    /**
+     * @param Model $model
+     * @param string $titleKey
+     * @param Model $copiedModel
+     * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     * @throws \Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration
+     */
+    private function copyTitle(Model $model, string $titleKey, Model $copiedModel): void
+    {
+        // Default when title is no dynamic field
+        if (! public_method_exists($model, 'dynamic') || ! $model->isDynamic($titleKey)) {
+            $copiedModel->$titleKey = '[Copy] ' . $model->$titleKey;
+
+            return;
+        }
+
+        // Dynamic field - Is title field localized or not?
+        $field = $this->registry->findResourceByModel($model::class)->field($model, $titleKey);
+        $isTitleLocalized = $field ? $field->hasLocales() : false;
+
+        if ($isTitleLocalized) {
+            $locales = config('chief.locales', []);
+            $defaultLocale = reset($locales);
+            $copiedModel->setDynamic($titleKey, '[Copy] ' . $model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)), $defaultLocale);
+        } else {
+            $copiedModel->setDynamic($titleKey, '[Copy] ' . $model->$titleKey);
+        }
     }
 }

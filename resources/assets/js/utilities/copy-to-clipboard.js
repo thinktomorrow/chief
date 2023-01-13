@@ -1,3 +1,5 @@
+import EventBus from './EventBus';
+
 const CopyToClipboard = function (
     copyValueAttribute = 'data-copy-value',
     labelElementSelector = '[data-copy-label]',
@@ -46,11 +48,14 @@ CopyToClipboard.prototype._toggleSuccessState = function () {
     }, 2500);
 };
 
-const initializeCopyToClipboard = () => {
+const initCopyToClipboard = () => {
     const copyToClipboard = new CopyToClipboard();
 
-    // List here all CopyToClipboard triggers
     copyToClipboard.init('[data-copy-to-clipboard="bookmark"]');
+
+    EventBus.subscribe('sidebarPanelActivated', () => {
+        copyToClipboard.init('[data-copy-to-clipboard="bookmark"]');
+    });
 };
 
-export { initializeCopyToClipboard as default };
+export { initCopyToClipboard as default };

@@ -22,7 +22,7 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
+                <div class="card">
                     <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
                         @csrf
                         @method('put')
@@ -31,7 +31,7 @@
                             @include('chief::admin.authorization.roles._form')
                         </div>
                     </form>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

@@ -15,9 +15,9 @@
 
         <div class="relative min-h-screen row-center-center">
             <div class="space-y-6 w-128">
-                <h1 class="text-center text-black">Welkom terug, Chief!</h1>
+                <h1 class="text-center h1 display-dark">Welkom terug, Chief!</h1>
 
-                <x-chief::window>
+                <div class="card">
                     <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
                         {{ csrf_field() }}
 
@@ -31,26 +31,28 @@
                                 </x-chief-inline-notification>
                             @endif
 
-                            <x-chief::field.form label="E-mail" id="identity" error="email">
-                                <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
-                            </x-chief::field.form>
+                            <x-chief-form::formgroup id="email" label="E-mail" required>
+                                <input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="jouwemail@example.com" autofocus>
+                                <x-chief-form::formgroup.error error-ids="email"></x-chief-form::formgroup.error>
+                            </x-chief-form::formgroup>
 
-                            <x-chief::field.form label="Wachtwoord" id="password" error="password">
+                            <x-chief-form::formgroup id="password" label="Wachtwoord" required>
                                 <input id="password" name="password" type="password">
-                            </x-chief::field.form>
+                                <x-chief-form::formgroup.error error-ids="password"></x-chief-form::formgroup.error>
+                            </x-chief-form::formgroup>
 
-                            <x-chief::field.form>
+                            <x-chief-form::formgroup id="remember">
                                 <label for="rememberCheckbox" class="with-checkbox">
                                     <input
-                                        id="rememberCheckbox"
-                                        name="remember"
-                                        type="checkbox"
-                                        {{ old('remember') ? 'checked=checked' : null  }}
+                                            id="rememberCheckbox"
+                                            name="remember"
+                                            type="checkbox"
+                                            {{ old('remember') ? 'checked=checked' : null  }}
                                     >
 
                                     <span>Hou me ingelogd</span>
                                 </label>
-                            </x-chief::field.form>
+                            </x-chief-form::formgroup>
 
                             <div class="space-x-2">
                                 <button type="submit" form="valid" class="btn btn-primary">Log in</button>
@@ -65,7 +67,7 @@
                             </div>
                         </div>
                     </form>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

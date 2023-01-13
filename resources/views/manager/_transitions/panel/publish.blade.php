@@ -1,4 +1,4 @@
-<div class="space-y-3 prose prose-dark">
+<div class="space-y-3 prose prose-spacing prose-dark">
     <p>De pagina staat nog in draft.</p>
 
     <form action="@adminRoute('publish', $model)" method="POST">

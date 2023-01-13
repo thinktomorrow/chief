@@ -5,16 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class MemoizedUrlRecords
 {
-    private static $cachedRecords;
-
-    public static function clearCachedRecords(): void
-    {
-        static::$cachedRecords = null;
-    }
-
     /**
      * Here we cache all the url records and determine the proper url record
      * via the collection methods. This is a lot faster on large data sets.
@@ -38,14 +32,10 @@ class MemoizedUrlRecords
         return $record;
     }
 
-    public static function getByModel(Model $model)
+    public static function getByModel(Model $model): Collection
     {
-        if (! static::$cachedRecords) {
-            static::$cachedRecords = UrlRecord::all();
-        }
-
-        return static::$cachedRecords
-            ->where('model_type', $model->getMorphClass())
-            ->where('model_id', $model->id);
+        return UrlRecord::where('model_type', $model->getMorphClass())
+                         ->where('model_id', $model->id)
+                         ->get();
     }
 }

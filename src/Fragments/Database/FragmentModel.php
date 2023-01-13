@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
+use Thinktomorrow\Chief\Resource\FragmentResource;
+use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-final class FragmentModel extends Model implements ManagedModel, HasAsset
+final class FragmentModel extends Model implements FragmentResource, HasAsset
 {
-    use ManagedModelDefaults;
+    use FragmentResourceDefault;
     use HasDynamicAttributes;
     use AssetTrait;
     use SoftDeletes;
@@ -38,12 +39,14 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
         'id', 'model_reference', 'meta', 'created_at', 'updated_at',
     ];
 
-    public static function managedModelKey(): string
+    private ?string $dynamicLocaleFallback = null;
+
+    public static function resourceKey(): string
     {
         return 'fragments';
     }
 
-    public function fields(): iterable
+    public function fields($model): iterable
     {
         return [];
     }
@@ -58,10 +61,25 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
         return config('chief.locales', []);
     }
 
+    protected function dynamicLocaleFallback(): ?string
+    {
+        return $this->dynamicLocaleFallback;
+    }
+
+    public function setDynamicLocaleFallback(?string $dynamicLocaleFallback = null): void
+    {
+        $this->dynamicLocaleFallback = $dynamicLocaleFallback;
+    }
+
+    public function changeStatus(FragmentStatus $status): void
+    {
+        $this->online_status = $status->value;
+    }
+
     public function isOnline(): bool
     {
         // Default is online, except explicitly set offline
-        return (null === $this->online_status || $this->online_status != 0);
+        return (null === $this->online_status || $this->online_status === FragmentStatus::online->value);
     }
 
     public function isOffline(): bool

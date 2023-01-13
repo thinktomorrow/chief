@@ -3,11 +3,7 @@
         $R.options = {
             plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'clips'],
 
-            @if(chiefAdmin()->hasRole('developer'))
-                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
-            @else
-                buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
-            @endif
+            buttons: ['html', 'undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
 
             formatting: ['h2', 'h3', 'p', 'blockquote'],
             imageResizable: true,
@@ -24,22 +20,22 @@
             mediagalleryApi: '{{ route('chief.api.media')}}',
             customClasses: [
                 {
-                    title: '<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span> link als knop',
+                    title: 'link als knop',
                     'class': 'btn btn-default',
                     tags: ['a'],
                 },
                 {
-                    title: '<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span> link als primaire knop',
+                    title: 'link als primaire knop',
                     'class': 'btn btn-primary',
                     tags: ['a'],
                 },
                 {
-                    title: '<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span> link as secundaire knop',
+                    title: 'link as secundaire knop',
                     'class': 'btn btn-primary-outline',
                     tags: ['a'],
                 },
                 {
-                    title: '<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span> geen knop weergave',
+                    title: 'geen knop weergave',
                     'class': '',
                     tags: ['a'],
                 },

@@ -22,8 +22,8 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
-                    <div class="prose prose-dark">
+                <div class="card">
+                    <div class="prose prose-spacing prose-dark">
                         <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 
                         <div class="my-6 space-y-2">
@@ -32,10 +32,10 @@
                                     <div class="flex flex-col space-y-1">
                                         <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
 
-                                        <a 
-                                            href="{{ url($sitemapFile->getFileName()) }}" 
+                                        <a
+                                            href="{{ url($sitemapFile->getFileName()) }}"
                                             title="Download sitemap"
-                                            class="link link-primary" 
+                                            class="link link-primary"
                                             download
                                         >
                                             {{ url($sitemapFile->getFileName()) }}
@@ -43,7 +43,7 @@
                                     </div>
 
                                     <span class="text-grey-500">
-                                        {{ \Carbon\Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }} 
+                                        {{ \Carbon\Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }}
                                         vernieuwd
                                     </span>
                                 </div>
@@ -52,13 +52,13 @@
 
                         <p>
                             De sitemaps worden automatisch gebruikt door de zoekpagina's zoals Google en Bing.
-                            U kan ook de links toevoegen aan jouw 
-                            <a 
+                            U kan ook de links toevoegen aan jouw
+                            <a
                                 href="https://search.google.com/search-console"
                                 title="Google search console"
-                                target="_blank" 
-                                rel="noopener" 
-                                class="link link-primary" 
+                                target="_blank"
+                                rel="noopener"
+                                class="link link-primary"
                             > search console </a>.
                         </p>
 
@@ -71,25 +71,25 @@
                         </p>
 
                         <p>
-                            <a 
+                            <a
                                 href="https://support.google.com/webmasters/answer/156184?hl=nl"
                                 title="Meer lezen over Google sitemaps"
-                                target="_blank" 
-                                rel="noopener" 
-                                class="link link-primary" 
+                                target="_blank"
+                                rel="noopener"
+                                class="link link-primary"
                             >
                                 Meer lezen over Google sitemaps
                             </a>
                         </p>
                     </div>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>
 
     <modal id="generate-sitemap" title="Sitemap genereren ..." size="large" :active="false">
-        <div class="prose prose-dark">
-            Bezig met het genereren van een sitemap. Dit kan eventjes duren. 
+        <div class="prose prose-spacing prose-dark">
+            Bezig met het genereren van een sitemap. Dit kan eventjes duren.
         </div>
     </modal>
 @stop

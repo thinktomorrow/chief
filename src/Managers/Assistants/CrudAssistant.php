@@ -7,19 +7,21 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
-use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait CrudAssistant
 {
@@ -36,13 +38,12 @@ trait CrudAssistant
             ManagedRoute::get('create'),
             ManagedRoute::post('store'),
             ManagedRoute::put('update', '{id}/update'),
-            ManagedRoute::delete('delete', '{id}'),
         ];
     }
 
     public function canCrudAssistant(string $action, $model = null): bool
     {
-        if (! in_array($action, ['index', 'create', 'store', 'edit', 'update', 'delete'])) {
+        if (! in_array($action, ['index', 'create', 'store', 'edit', 'update'])) {
             return false;
         }
 
@@ -53,8 +54,6 @@ trait CrudAssistant
                 $permission = 'view-page';
             } elseif (in_array($action, ['create', 'store'])) {
                 $permission = 'create-page';
-            } elseif (in_array($action, ['delete'])) {
-                $permission = 'delete-page';
             }
 
             $this->authorize($permission);
@@ -66,47 +65,90 @@ trait CrudAssistant
             return true;
         }
 
-        if (! $model || ! $model instanceof WithPageState) {
-            return true;
-        }
-
         // Model cannot be in deleted state for editing purposes.
-        if (in_array($action, ['edit', 'update'])) {
-            return ! ($model->getPageState() == PageState::DELETED);
+        if ($model && $model instanceof StatefulContract && in_array($action, ['edit', 'update'])) {
+            return ! ($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) == PageState::deleted);
         }
 
-        return PageState::make($model)->can($action);
+        return true;
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->guard('index');
 
-        $modelClass = $this->managedModelClass();
-
         app(VisitedUrl::class)->add(request()->fullUrl());
 
-        return view('chief::manager.index', [
-            'manager' => $this,
-            'model' => new $modelClass(),
-            'models' => $this->indexModels(),
-        ]);
+        View::share('manager', $this);
+        View::share('resource', $this->resource);
+        View::share('model', $this->managedModelClassInstance());
+
+        if ($this->resource->isNestable()) {
+            $rootId = $request->input('root_id', null);
+
+            $filteredModelIds = $this->indexModelIds();
+            $filteredTree = $this
+                ->getTree($rootId)
+                ->shake(fn ($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
+
+            View::share('tree', $filteredTree);
+            View::share('root', $this->getRoot($rootId));
+        } else {
+            View::share('models', $this->indexModels());
+        }
+
+        return $this->resource->getIndexView();
+    }
+
+    private function getTree(?string $rootId = null): iterable
+    {
+        /** @var NestedTree $tree */
+        $tree = $this->resource->nestableRepository()->getTree();
+
+        return $rootId
+            ? $tree->find(fn (NestedNode $node) => $node->getId() == $rootId)->getChildNodes()
+            : $tree;
+    }
+
+    private function getRoot(?string $rootId = null): ?NestedNode
+    {
+        if (! $rootId) {
+            return null;
+        }
+
+        return $this->resource->nestableRepository()->getTree()->find(fn (NestedNode $node) => $node->getId() == $rootId);
     }
 
     protected function indexModels(): Paginator
     {
+        // Apply filtering - this also includes default sorting
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        $pagination = (new $this->managedModelClass())->adminConfig()->getPagination();
+        if ($this->managedModelClassInstance() instanceof Visitable) {
+            $builder->with(['urls']);
+        }
 
-        if (! $pagination) {
+        if (! $pagination = $this->resource->getIndexPagination()) {
             return $builder->get();
         }
 
-        return $builder->paginate($pagination)->withQueryString();
+        return $builder->paginate($pagination)->onEachSide(1)->withQueryString();
+    }
+
+    protected function indexModelIds(): array
+    {
+        $this->filters()->apply($builder = $this->managedModelClass()::query());
+
+        $idColumn = $this->managedModelClassInstance()->getKeyName();
+
+        return $builder
+            ->select($idColumn)
+            ->get()
+            ->pluck($idColumn)
+            ->toArray();
     }
 
     public function filters(): Filters
@@ -124,8 +166,8 @@ trait CrudAssistant
 
         $filters = $this->addUpdatedFilter($filters);
 
-        if (public_method_exists($this->managedModelClass(), 'filters')) {
-            $filters = $filters->merge(Filters::make($this->managedModelClass()::filters()));
+        if (public_method_exists($this->resource, 'filters')) {
+            $filters = $filters->merge(Filters::make($this->resource::filters()));
         }
 
         return $filters;
@@ -148,14 +190,19 @@ trait CrudAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        $model = new $this->managedModelClass();
+        $model = $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('resource', $this->resource);
 
-        return view('chief::manager.create');
+        View::share('forms', Forms::make($this->resource->fields($model))
+            ->fillModel($model)
+            ->fillFields($this, $model));
+
+        return $this->resource->getCreatePageView();
     }
 
     public function store(Request $request)
@@ -164,23 +211,30 @@ trait CrudAssistant
 
         $model = $this->handleStore($request);
 
-        return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
+        $redirectAfterCreate = $this->resource->getRedirectAfterCreate($model);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'redirect_to' => $redirectAfterCreate,
+            ]);
+        }
+
+        return redirect()->to($redirectAfterCreate);
     }
 
     private function handleStore(Request $request)
     {
-        /** @var ManagedModel $model */
-        $model = new $this->managedModelClass();
+        $model = $this->managedModelClassInstance($this->resource->getInstanceAttributes($request));
 
-        $fields = Fields::make($model->fields())
-            ->notTagged(['edit', 'not-on-create'])
-            ->model($model);
+        $fields = Forms::make($this->resource->fields($model))
+            ->fillModel($model)
+            ->getFields()
+            ->notTagged(['edit', 'not-on-create']);
 
         $this->fieldValidator()->handle($fields, $request->all());
 
         // TODO: extract all uploadedFile instances from the input...
-        $model->saveFields($fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelCreated($model->modelReference()));
 
@@ -196,10 +250,24 @@ trait CrudAssistant
 
         $this->guard('edit', $model);
 
+        // TODO/ remove share??
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('resource', $this->resource);
+        View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
 
-        return $model->adminView();
+        $stateConfigs = [];
+
+        if ($model instanceof StatefulContract) {
+            $stateConfigs = collect($model->getStateKeys())
+                ->map(fn (string $stateKey) => $model->getStateConfig($stateKey))
+                ->filter(fn ($stateConfig) => $stateConfig instanceof StateAdminConfig)
+                ->all();
+        }
+
+        View::share('stateConfigs', $stateConfigs);
+
+        return $this->resource->getPageView();
     }
 
     public function update(Request $request, $id)
@@ -207,7 +275,7 @@ trait CrudAssistant
         $model = $this->handleUpdate($request, $id);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $this->resource->getPageTitle($model) . '</a> is aangepast');
     }
 
     private function handleUpdate(Request $request, $id)
@@ -216,30 +284,16 @@ trait CrudAssistant
 
         $this->guard('update', $model);
 
-        $fields = Fields::make($model->fields());
+        $fields = Forms::make($this->resource->fields($model))
+            ->fillModel($model)
+            ->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());
 
-        $model->saveFields($fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
 
         event(new ManagedModelUpdated($model->modelReference()));
 
         return $model;
-    }
-
-    public function delete(Request $request, $id)
-    {
-        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
-
-        $this->guard('delete', $model);
-
-        if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
-        }
-
-        app(DeleteModel::class)->handle($model);
-
-        return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
     }
 }

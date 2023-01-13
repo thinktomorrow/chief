@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -20,7 +19,7 @@ class PageAuthorisationTest extends ChiefTestCase
     /** @test */
     public function guests_cannot_view_the_create_form()
     {
-        $manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        $manager = $this->manager($this->page);
 
         $this->get($manager->route('create'))
             ->assertStatus(302)
@@ -30,7 +29,7 @@ class PageAuthorisationTest extends ChiefTestCase
     /** @test */
     public function a_non_admin_cannot_update_a_page()
     {
-        $manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        $manager = $this->manager($this->page);
 
         $this->page->title = 'existing-title';
         $this->page->save();

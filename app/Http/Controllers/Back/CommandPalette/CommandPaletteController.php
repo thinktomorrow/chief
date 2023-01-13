@@ -2,13 +2,15 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class CommandPaletteController extends Controller
 {
+    public $pageModels;
+
     public function __construct()
     {
         $this->pageModels = $this->getAllPageModels();
@@ -41,15 +43,15 @@ class CommandPaletteController extends Controller
             foreach ($modelGroup['models'] as $model) {
                 if (
                     Str::contains(Str::lower($model->modelReference()), $term) ||
-                    Str::contains(Str::lower($model->adminConfig()->getModelName()), $term) ||
-                    Str::contains(Str::lower($model->adminConfig()->getIndexTitle()), $term) ||
-                    Str::contains(Str::lower($model->adminConfig()->getNavTitle()), $term) ||
-                    Str::contains(Str::lower($model->adminConfig()->getPageTitle()), $term) ||
+                    Str::contains(Str::lower($model->modelReferenceLabel()), $term) ||
+                    Str::contains(Str::lower($model->getIndexTitle()), $term) ||
+                    Str::contains(Str::lower($model->getLabel()), $term) ||
+                    Str::contains(Str::lower($model->getPageTitle($model)), $term) ||
                     Str::contains(Str::lower($model->title ?? ''), $term)
                 ) {
                     $resultGroup[$model->modelReference()->getShort()] = [
                         'label' => $model->title,
-                        'url' => '/admin/' . $model->managedModelKey() . '/' . $model->id . '/edit',
+                        'url' => '/admin/' . $model->resourceKey() . '/' . $model->id . '/edit',
                     ];
                 }
             }
@@ -60,7 +62,7 @@ class CommandPaletteController extends Controller
                 // Add model index page to result group
                 array_push($resultGroup, [
                     'label' => ucfirst($modelGroup['label']) . ' overzicht',
-                    'url' => '/admin/' . $firstModel->managedModelKey(),
+                    'url' => '/admin/' . $firstModel->resourceKey(),
                 ]);
 
                 // Add result group to search results
@@ -131,7 +133,7 @@ class CommandPaletteController extends Controller
 
     private function getAllPageModels(): Collection
     {
-        return collect(app(Registry::class)->models())
+        return collect(app(Registry::class)->pageResources())
             // Filter out fragment models
             ->filter(function ($model) {
                 return ! in_array('Thinktomorrow\Chief\Fragments\Fragmentable', class_implements($model));
@@ -140,7 +142,7 @@ class CommandPaletteController extends Controller
                 $models = $model::all();
 
                 return [
-                    'label' => $model::make()->adminConfig()->getIndexTitle(),
+                    'label' => $model::make()->getIndexTitle(),
                     'models' => $models,
                 ];
             });

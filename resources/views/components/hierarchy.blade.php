@@ -12,7 +12,7 @@
 >
     <div data-sortable-id="xxx" data-sortable-handle class="relative flex py-3">
         <div
-            class="flex-shrink-0 hidden pr-3 text-grey-700 hierarchy-sub-level:block"
+            class="hidden pr-3 shrink-0 text-grey-700 hierarchy-sub-level:block"
             style="margin-top: {{ $iconMarginTop }};"
         >
             <svg width="18" height="18"><use xlink:href="#icon-arrow-tl-to-br"/></svg>
@@ -32,6 +32,6 @@
             :level="$level"
             viewPath="{{ $viewPath }}"
             iconMarginTop="{{ $iconMarginTop ?? '' }}"
-        ></x-chief-hierarchy>
+        />
     @endforeach
 </div>

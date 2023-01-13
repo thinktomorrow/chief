@@ -6,10 +6,10 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
@@ -23,13 +23,13 @@ final class EditPageTest extends ChiefTestCase
         parent::setUp();
 
         ArticlePage::migrateUp();
-        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
         Quote::migrateUp();
-        chiefRegister()->model(Quote::class, FragmentManager::class);
-        chiefRegister()->model(SnippetStub::class, FragmentManager::class);
+        chiefRegister()->fragment(Quote::class);
+        chiefRegister()->fragment(SnippetStub::class);
 
-        $this->manager = $this->manager(ArticlePage::managedModelKey());
+        $this->manager = $this->manager(ArticlePage::class);
 
         $this->asAdmin()->post($this->manager->route('store'), [
             'title' => 'new title',
@@ -47,6 +47,16 @@ final class EditPageTest extends ChiefTestCase
     {
         $this->asAdmin()->get($this->manager->route('edit', ArticlePage::first()))
                         ->assertStatus(200);
+    }
+
+    /** @test */
+    public function guests_cannot_visit_the_edit_form()
+    {
+        auth('chief')->logout();
+
+        $this->get($this->manager->route('edit', ArticlePage::first()))
+            ->assertStatus(302)
+            ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
@@ -71,7 +81,7 @@ final class EditPageTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_emits_an_modelUpdated_event()
+    public function it_emits_an_model_updated_event()
     {
         Event::fake();
 

@@ -1,15 +1,15 @@
 <template>
     <transition name="pop">
         <div
-            v-show="isVisible && description"
+            v-show="isVisible"
             :ref="'notification-' + this._uid"
-            class="flex items-center bg-white border border-grey-100 rounded-lg shadow-lg px-6 py-4 space-x-6 origin-right"
+            class="flex items-center px-6 py-4 space-x-6 origin-right bg-white border rounded-lg shadow-lg border-grey-100"
         >
             <div class="rounded-full" :class="color">
-                <svg width="24" height="24"><use :xlink:href="'#' + type"></use></svg>
+                <svg width="24" height="24"><use :xlink:href="iconId"></use></svg>
             </div>
 
-            <div class="flex-grow">
+            <div class="grow">
                 <p class="font-medium text-grey-500">
                     <slot>
                         <!-- Notifications that were created asynchronously, have their content stored in description variable -->
@@ -18,8 +18,8 @@
                 </p>
             </div>
 
-            <div @click="hideNotification" class="link link-grey icon-label cursor-pointer">
-                <svg width="18" height="18" class="icon-label-icon"><use xlink:href="#x"></use></svg>
+            <div @click="hideNotification" class="cursor-pointer link link-grey icon-label">
+                <svg width="18" height="18" class="icon-label-icon"><use xlink:href="#icon-x-mark"></use></svg>
             </div>
         </div>
     </transition>
@@ -36,6 +36,7 @@ export default {
         return {
             isVisible: false,
             color: this.setColorByType(),
+            iconId: this.getIconId(),
         };
     },
     mounted() {
@@ -65,9 +66,25 @@ export default {
                 case 'warning':
                     return 'bg-orange-50 text-orange-500';
                 case 'information':
+                case 'info':
                     return 'bg-blue-50 text-blue-500';
                 default:
                     return 'bg-blue-50 text-blue-500';
+            }
+        },
+        getIconId: function () {
+            switch (this.type) {
+                case 'success':
+                    return '#icon-check-circle';
+                case 'error':
+                    return '#icon-exclamation-circle';
+                case 'warning':
+                    return '#icon-exclamation-triangle';
+                case 'information':
+                case 'info':
+                    return '#icon-information-circle';
+                default:
+                    return '#icon-information-circle';
             }
         },
     },

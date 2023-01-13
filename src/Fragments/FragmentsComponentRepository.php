@@ -29,24 +29,25 @@ class FragmentsComponentRepository
         return $this->fragments()->map(function (Fragmentable $model) {
             return [
                 'model' => $model,
-                'manager' => $this->registry->manager($model::managedModelKey()),
+                'manager' => $this->registry->findManagerByModel($model::class),
+                'resource' => $this->registry->findResourceByModel($model::class),
             ];
         });
     }
 
     public function getManager(): Manager
     {
-        return $this->registry->manager($this->owner::managedModelKey());
+        return $this->registry->findManagerByModel($this->owner::class);
     }
 
     public function getAllowedFragments(): array
     {
         return array_map(function ($fragmentableClass) {
-            $modelClass = $this->registry->modelClass($fragmentableClass::managedModelKey());
+            $resource = $this->registry->findResourceByModel($fragmentableClass);
 
             return [
-                'manager' => $this->registry->manager($fragmentableClass::managedModelKey()),
-                'model' => app($modelClass),
+                'manager' => $this->registry->manager($resource::resourceKey()),
+                'model' => app($fragmentableClass),
             ];
         }, $this->owner->allowedFragments());
     }
@@ -57,7 +58,7 @@ class FragmentsComponentRepository
 
         return $this->fragmentRepository->getAllShared($this->owner)->map(function ($fragmentable) use ($fragmentModelIds) {
             return [
-                'manager' => $this->registry->manager($fragmentable::managedModelKey()),
+                'manager' => $this->registry->manager($fragmentable::resourceKey()),
                 'model' => $fragmentable,
                 'is_already_selected' => in_array($fragmentable->fragmentModel()->id, $fragmentModelIds),
             ];

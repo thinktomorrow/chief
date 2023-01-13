@@ -10,19 +10,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Activitylog\ActivitylogServiceProvider;
-use Spatie\MediaLibrary\ImageGenerators\FileTypes\Image;
-use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
-use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
-use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Svg;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Video;
+use Spatie\MediaLibrary\Conversions\ImageGenerators\Webp;
 use Spatie\Permission\PermissionServiceProvider;
 use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
-use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
@@ -68,12 +65,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function tearDown(): void
     {
-        ManagerFactory::clearTemporaryFiles();
-        ManagedModelFactory::clearTemporaryFiles();
-
         // Clear out any memoized values
         Memoize::clear();
-        MemoizedUrlRecords::clearCachedRecords();
 
         parent::tearDown();
     }
@@ -111,6 +104,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
             'prefix' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
         ]);
 
         // For our tests is it required to have 2 languages: nl and en.

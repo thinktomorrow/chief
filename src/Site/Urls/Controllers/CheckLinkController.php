@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Site\Urls\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
@@ -41,14 +40,13 @@ class CheckLinkController
             return 'Deze link bestaat reeds als redirect. Deze redirect zal bijgevolg worden verwijderd.';
         }
 
-        return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" href="' . $this->editRouteOfOtherModel($urlRecord) . '">pas de andere pagina aan</a>.';
+        return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" class="underline" href="' . $this->editRouteOfOtherModel($urlRecord) . '">pas de andere pagina aan</a>.';
     }
 
     private function editRouteOfOtherModel(UrlRecord $urlRecord): string
     {
-        /** @var ManagedModel $model */
         $model = $urlRecord->model;
 
-        return app(Registry::class)->manager($model::managedModelKey())->route('edit', $model);
+        return app(Registry::class)->findManagerByModel($model::class)->route('edit', $model);
     }
 }

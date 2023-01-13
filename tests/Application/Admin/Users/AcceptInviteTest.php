@@ -24,7 +24,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->inviter = $this->developer();
 
         $this->invitation = Invitation::make($this->invitee->id, $this->inviter->id);
-        $this->invitation->changeStateOf(InvitationState::KEY, 'pending');
+        $this->invitation->changeState(InvitationState::KEY, InvitationState::pending);
 
         // Fake password so we can login with a known value
         $this->invitee->password = Hash::make('password');
@@ -97,7 +97,7 @@ class AcceptInviteTest extends ChiefTestCase
     public function accept_url_should_not_be_processed_when_invitation_is_revoked()
     {
         // Force invitation state on revoked
-        $this->invitation->changeStateOf(InvitationState::KEY, 'revoked');
+        $this->invitation->changeState(InvitationState::KEY, InvitationState::revoked);
 
         $response = $this->get($this->invitation->acceptUrl());
         $response->assertRedirect(route('invite.expired'));
@@ -167,7 +167,6 @@ class AcceptInviteTest extends ChiefTestCase
     /** @test */
     public function after_invite_accepted_invite_can_only_be_reused_by_same_user_if_he_is_logged()
     {
-        $this->disableExceptionHandling();
         Notification::fake();
 
         $invitee = new User();

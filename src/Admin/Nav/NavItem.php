@@ -11,7 +11,7 @@ final class NavItem
     private array $tags;
     private string $icon;
 
-    public function __construct(string $label, string $url, array $tags = [], string $icon)
+    public function __construct(string $label, string $url, array $tags, string $icon)
     {
         $this->label = $label;
         $this->url = $url;

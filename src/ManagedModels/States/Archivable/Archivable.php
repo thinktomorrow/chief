@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\Archivable;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
 trait Archivable
 {
+    protected function getArchivablePageStateAttribute(): string
+    {
+        return PageState::KEY;
+    }
+
     protected static function bootArchivable()
     {
         static::addGlobalScope(new ArchiveScope());
@@ -15,33 +20,21 @@ trait Archivable
 
     public function isArchived(): bool
     {
-        return $this->getPageState() === PageState::ARCHIVED;
+        return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::archived;
     }
 
     public function scopeArchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where($this->getPageStateAttribute(), PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where($this->getArchivablePageStateAttribute(), PageState::archived);
     }
 
     public function scopeUnarchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where($this->getPageStateAttribute(), '<>', PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where($this->getArchivablePageStateAttribute(), '<>', PageState::archived);
     }
 
     public function scopeWithArchived($query)
     {
         $query->withoutGlobalScope(ArchiveScope::class);
-    }
-
-    public function archive()
-    {
-        PageState::make($this)->apply('archive');
-        $this->save();
-    }
-
-    public function unarchive()
-    {
-        PageState::make($this)->apply('unarchive');
-        $this->save();
     }
 }

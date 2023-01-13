@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
+use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 
 class Hero implements Fragmentable
 {
@@ -22,15 +21,21 @@ class Hero implements Fragmentable
         return 'hero-fragment';
     }
 
-    public function fields(): Fields
+    public function fields($model): Fields
     {
         return Fields::make([
-            InputField::make('title'),
+            Fields\Text::make('title'),
+            Fields\Image::make('thumb'),
         ]);
     }
 
     public function getTitle()
     {
         return $this->fragmentModel()->title;
+    }
+
+    public function viewKey(): string
+    {
+        return 'hero';
     }
 }

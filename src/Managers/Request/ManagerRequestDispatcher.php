@@ -15,9 +15,9 @@ final class ManagerRequestDispatcher
         $this->registry = $registry;
     }
 
-    public function fromRequest(string $method, string $managedModelKey, ...$parameters)
+    public function fromRequest(string $method, string $resourceKey, ...$parameters)
     {
-        $manager = $this->registry->manager($managedModelKey);
+        $manager = $this->registry->manager($resourceKey);
 
         return $manager->$method(request(), ...$parameters);
     }

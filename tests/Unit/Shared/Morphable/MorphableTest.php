@@ -69,7 +69,7 @@ class MorphableTest extends ChiefTestCase
     }
 
     /** @test */
-    public function a_morph_key_is_by_default_based_on_the_morphClass()
+    public function a_morph_key_is_by_default_based_on_the_morph_class()
     {
         $page = ArticleModel::create();
 

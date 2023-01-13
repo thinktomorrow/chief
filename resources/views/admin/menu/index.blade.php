@@ -20,19 +20,29 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
-                    <div class="-my-4 divide-y divide-grey-100">
+                <div class="card">
+                    <div class="-my-3 divide-y divide-grey-100">
                         @foreach($menus as $menu)
-                            <a
-                                href="{{ route('chief.back.menus.show', $menu->key()) }}"
-                                title="{{ ucfirst($menu->label()) }}"
-                                class="block py-4 text-lg display-base display-dark"
-                            >
-                                {{ ucfirst($menu->label()) }}
-                            </a>
+                            <div class="flex items-center justify-between py-3">
+                                <a
+                                    href="{{ route('chief.back.menus.show', $menu->key()) }}"
+                                    title="{{ ucfirst($menu->label()) }}"
+                                    class="font-medium body-dark hover:underline"
+                                >
+                                    {{ ucfirst($menu->label()) }}
+                                </a>
+
+                                <a
+                                    href="{{ route('chief.back.menus.show', $menu->key()) }}"
+                                    title="{{ ucfirst($menu->label()) }}"
+                                    class="shrink-0 link link-primary"
+                                >
+                                    <x-chief-icon-button icon="icon-edit"/>
+                                </a>
+                            </div>
                         @endforeach
                     </div>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

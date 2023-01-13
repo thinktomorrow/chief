@@ -15,7 +15,6 @@ class SnippetParser
         }
 
         $value = preg_replace_callback(static::$pattern, function ($matches) {
-
             // First entry of matches contains our full captured group, which we want to replace.
             // Second entry is the text itself, without the brackets
             return static::replaceWithSnippet($matches[0], $matches[1]);

@@ -4,7 +4,7 @@
  **/
 @layer components {
     .label {
-        @apply inline-block font-semibold leading-tight px-2.5 py-1 rounded;
+        @apply inline-block font-medium leading-tight px-2.5 py-1 rounded;
     }
 
     .label-xs {
@@ -43,15 +43,7 @@
     }
 
     .label-grey {
-        @apply bg-grey-200 text-grey-600;
-    }
-
-    .label-grey-dark {
-        @apply bg-grey-700 text-white;
-    }
-
-    .label-grey-light {
-        @apply bg-grey-100 text-grey-500;
+        @apply bg-grey-100 text-grey-600;
     }
 
     .label-warning {

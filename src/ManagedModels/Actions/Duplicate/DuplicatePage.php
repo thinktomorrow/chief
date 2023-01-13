@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class DuplicatePage
 {
@@ -18,13 +18,12 @@ class DuplicatePage
         $this->duplicateModel = $duplicateModel;
     }
 
-    public function handle(Model $model): Model
+    public function handle(Model $model, string $titleKey = 'title'): Model
     {
-        $copiedModel = $this->duplicateModel->handle($model);
+        $copiedModel = $this->duplicateModel->handle($model, $titleKey);
 
-        // TODO: check for HasPageState contract
-        if ($copiedModel instanceof WithPageState) {
-            $copiedModel->setPageState(PageState::DRAFT);
+        if ($copiedModel instanceof StatefulContract && in_array(PageState::draft, $copiedModel->getStateConfig(PageState::KEY)->getStates())) {
+            $copiedModel->changeState(PageState::KEY, PageState::draft);
             $copiedModel->save();
         }
 

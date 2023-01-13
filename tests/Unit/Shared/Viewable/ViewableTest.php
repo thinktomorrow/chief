@@ -28,15 +28,6 @@ class ViewableTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_can_render_a_page_specific_fragment_view()
-    {
-        $owner = $this->setupAndCreateArticleWithBaseSegments();
-        $this->setupAndCreateSnippet($owner);
-
-        $this->assertEquals("THIS IS ARTICLE PAGE VIEW\nTHIS IS ARTICLE SPECIFIC SNIPPET STUB VIEW\n", $owner->renderView());
-    }
-
-    /** @test */
     public function it_throws_exception_when_view_isnt_found()
     {
         $this->expectException(NotFoundView::class);

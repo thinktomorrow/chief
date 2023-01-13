@@ -3,45 +3,28 @@
         $hasActiveChildren = (isActiveUrl('admin/translations*') || isActiveUrl('admin/mediagallery*') || isActiveUrl('admin/menus*') || isActiveUrl('admin/sitemap*'));
     @endphp
 
-    <div data-navigation-item class="space-y-4">
-        <span
-            data-navigation-item-label
-            class="link link-black cursor-pointer {{ $hasActiveChildren ? 'active' : '' }}"
-        >
-            <x-chief-icon-label space="large" icon="logo">Site</x-chief-icon-label>
-        </span>
+    @can('update-page')
+        <x-chief::nav.item
+            label="Menu"
+            url="{{ route('chief.back.menus.index') }}"
+            icon="<svg><use xlink:href='#icon-bars-4'></use></svg>"
+            collapsible
+        />
 
-        <div
-            data-navigation-item-content
-            class="flex flex-col space-y-3 animate-slide-in"
-            style="margin-left: calc(20px + 1rem); {{ $hasActiveChildren ? '' : 'display: none;' }}"
-        >
-            @can('update-page')
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/menus*') ? 'active' : '' }}"
-                    href="{{ route('chief.back.menus.index') }}"
-                    title="Menu"
-                > Menu </a>
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/mediagallery*') ? 'active' : '' }}"
-                    href="{{ route('chief.mediagallery.index') }}"
-                    title="Media"
-                > Media </a>
-            @endcan
+        <x-chief::nav.item
+            label="Media"
+            url="{{ route('chief.mediagallery.index') }}"
+            icon="<svg><use xlink:href='#icon-photo'></use></svg>"
+            collapsible
+        />
+    @endcan
 
-            @can('view-squanto')
-                <a
-                    class="link link-grey font-medium {{ isActiveUrl('admin/translations*') ? 'active' : '' }}"
-                    href="{{ route('squanto.index') }}"
-                    title="Teksten"
-                > Teksten </a>
-            @endcan
-
-            <a
-                class="link link-grey font-medium {{ isActiveUrl('admin/sitemap*') ? 'active' : '' }}"
-                href="{{ route('chief.back.sitemap.show') }}"
-                title="Sitemap"
-            > Sitemap </a>
-        </div>
-    </div>
+    @can('view-squanto')
+        <x-chief::nav.item
+            label="Teksten"
+            url="{{ route('squanto.index') }}"
+            icon="<svg><use xlink:href='#icon-chat-bubble-bottom-center-text'></use></svg>"
+            collapsible
+        />
+    @endcan
 @endif

@@ -46,7 +46,7 @@ class InviteUserTest extends ChiefTestCase
         $newUser = User::findByEmail('new@example.com');
 
         $this->assertNewValues($newUser);
-        $this->assertEquals(InvitationState::PENDING, $newUser->invitation->last()->stateOf(InvitationState::KEY));
+        $this->assertEquals(InvitationState::pending, $newUser->invitation->last()->getState(InvitationState::KEY));
 
         Notification::assertSentTo(new AnonymousNotifiable(), InvitationMail::class);
     }

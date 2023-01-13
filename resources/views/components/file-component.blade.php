@@ -1,6 +1,3 @@
-@push('custom-styles')
-
-@endpush
 @push('custom-scripts')
     <script>
         Vue.component('file', {
@@ -9,7 +6,7 @@
                     <div class="flex items-center p-4 bg-white border rounded-lg border-grey-100">
                         <input ref="hiddenInput" type="hidden" :name="hiddenInputKey" :value="hiddenInputValue"/>
 
-                        <div v-if="isImage" class="flex-shrink-0 w-1/6">
+                        <div v-if="isImage" class="w-1/6 shrink-0">
                              <img loading="lazy" :src="thumbUrl" :alt="filename" class="rounded" />
                         </div>
 
@@ -72,11 +69,9 @@
                     this.mimetype = this.file.type;
                     this.size = this.file.size;
                 }
-
             },
             computed: {
                 hiddenInputKey: function(){
-
                     // Only required to indicate which references to watch for
                     this.existingId; this.id;
 
@@ -88,7 +83,6 @@
                     return this.name + '[new_'+ this.randomString(6) +']';
                 },
                 hiddenInputValue: function(){
-
                     // Put on first line so vue knows which elements to watch
                     this.id; this.deletion;
 
@@ -104,7 +98,6 @@
             },
             methods: {
                 upload: function(){
-
                     this.showLoader = true;
                     Eventbus.$emit('disable-update-form');
 
@@ -116,7 +109,6 @@
                     window.axios.post(this.uploadUrl, formData, {headers: {
                         'Content-Type': 'multipart/form-data'
                     }}).then((response) => {
-
                         // PostsizeTooLarge is returned as 200 instead of 419 to meet the redactor requirements
                         if(typeof response.data == 'string' && response.data.includes('POST Content-Length')) {
                             this.showError('Ongeldig bestand. Dit bestand is te groot om op te laden.');
@@ -132,7 +124,6 @@
                         this.mimetype = responseData.mimetype;
                         this.size = responseData.size;
                         this.isImage = responseData.isImage || this.isImage;
-
                     }).catch((error) => {
                         this.id = null;
                         console.error(error);
@@ -167,7 +158,5 @@
                 }
             },
         });
-
     </script>
-
 @endpush

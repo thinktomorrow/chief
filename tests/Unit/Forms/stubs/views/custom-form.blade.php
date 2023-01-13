@@ -1,0 +1,1 @@
+<?= $getId(); ?> form view

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace __STUB_NAMESPACE__;
 
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Forms\Fields\Html;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 
@@ -15,9 +15,9 @@ class __STUB_CLASSNAME__ implements Fragmentable
 
     private $baseViewPath = 'fragments';
 
-    public function fields(): iterable
+    public function fields($model): iterable
     {
-        yield HtmlField::make('content')->locales();
+        yield Html::make('content')->locales();
         __STUB_FIELDS__
     }
 

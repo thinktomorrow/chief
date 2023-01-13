@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\Publishable;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
+/**
+ * @deprecated use the UsesPageState or UsesSimpleState traits instead
+ */
 trait Publishable
 {
+    protected function getPublishablePageStateAttribute(): string
+    {
+        return PageState::KEY;
+    }
+
     public function isPublished(): bool
     {
-        return $this->getPageState() === PageState::PUBLISHED;
+        return $this->inOnlineState();
     }
 
     public function isDraft(): bool
     {
-        return $this->getPageState() === PageState::DRAFT;
+        return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::draft;
     }
 
     public function scopePublished($query)
@@ -25,28 +33,16 @@ trait Publishable
             return;
         }
 
-        $query->where($this->getPageStateAttribute(), PageState::PUBLISHED);
+        $query->where($this->getPublishablePageStateAttribute(), PageState::published);
     }
 
     public function scopeDrafted($query)
     {
-        $query->where($this->getPageStateAttribute(), PageState::DRAFT);
+        $query->where($this->getPublishablePageStateAttribute(), PageState::draft);
     }
 
     public static function getAllPublished()
     {
         return static::published()->get();
-    }
-
-    public function publish()
-    {
-        PageState::make($this)->apply('publish');
-        $this->save();
-    }
-
-    public function unpublish()
-    {
-        PageState::make($this)->apply('unpublish');
-        $this->save();
     }
 }

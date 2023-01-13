@@ -3,96 +3,102 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
 
-use Thinktomorrow\Chief\Managers\Exceptions\MissingManagerRegistration;
-use Thinktomorrow\Chief\Managers\Exceptions\MissingModelRegistration;
+use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
+use Thinktomorrow\Chief\Managers\Exceptions\ResourceAlreadyRegistered;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\Resource;
 
 final class Registry
 {
-    private array $models;
-    private array $managers;
-    private TaggedKeys $tags;
+    /** @var PageResource|Resource[] */
+    private array $resources;
 
-    public function __construct(array $models, array $managers, TaggedKeys $tags)
+    /** @var Manager[] */
+    private array $managers;
+
+    public function __construct(array $resources)
     {
-        $this->models = $models;
-        $this->managers = $managers;
-        $this->tags = $tags; // TODO: make a weakmap when in PHP 8.0 because it can be deleted if registry is deleted.
+        $this->resources = $resources;
     }
 
-    public function modelClass(string $key): string
+    public function resource(string $key): PageResource|Resource
     {
-        if (! isset($this->models[$key])) {
-            throw new MissingModelRegistration('No model class registered for key ['.$key.']');
+        if (! isset($this->resources[$key])) {
+            throw new MissingResourceRegistration('No resource class registered for key ['.$key.']');
         }
 
-        return $this->models[$key];
+        return $this->resources[$key];
     }
 
     public function manager(string $key): Manager
     {
         if (! isset($this->managers[$key])) {
-            throw new MissingManagerRegistration('No manager registered for key ['.$key.']');
+            throw new MissingResourceRegistration('No manager class registered for key ['.$key.']');
         }
 
         return $this->managers[$key];
     }
 
-    public function managers(): array
+    public function findResourceByModel(string $modelClass): Resource
     {
-        return $this->managers;
+        try {
+            return $this->filter(fn (Resource $resource) => $resource::modelClassName() == $modelClass)->first();
+        } catch (MissingResourceRegistration $e) {
+            throw new MissingResourceRegistration('No registered resource found for class ['.$modelClass.'].');
+        }
     }
 
-    public function models(): array
+    public function findManagerByModel(string $modelClass): Manager
     {
-        return $this->models;
+        $resource = $this->findResourceByModel($modelClass);
+
+        return $this->manager($resource::resourceKey());
     }
 
-    public function managersWithTags(): array
+    /**
+     * @return PageResource[]
+     */
+    public function pageResources(): array
     {
-        return collect($this->tags->get())->reject(function ($_tags, $key) {
-            return ! isset($this->managers[$key]);
-        })->map(function ($tags, $key) {
-            return (object)[
-                'manager' => $this->manager($key),
-                'tags' => $tags,
-            ];
-        })->toArray();
+        return $this->filter(fn ($resource) => $resource instanceof PageResource)->all();
     }
 
-    public function tagged(string $tag): self
+    private function all(): array
     {
-        $tags = $this->tags->tagged($tag);
-        $taggedKeys = $tags->getKeys();
-
-        $filteredModels = array_filter($this->models, function ($key) use ($taggedKeys) {
-            return in_array($key, $taggedKeys);
-        }, ARRAY_FILTER_USE_KEY);
-
-        $filteredManagers = array_filter($this->managers, function ($key) use ($taggedKeys) {
-            return in_array($key, $taggedKeys);
-        }, ARRAY_FILTER_USE_KEY);
-
-        return new static($filteredModels, $filteredManagers, $tags);
+        return $this->resources;
     }
 
-    public function registerModel(string $key, string $modelClass): self
+    private function first(): Resource
     {
-        $this->models[$key] = $modelClass;
+        if (count($this->resources) < 1) {
+            throw new MissingResourceRegistration('No resource found in the registry.');
+        }
 
-        return $this;
+        return array_values($this->resources)[0];
     }
 
-    public function registerManager(string $key, Manager $manager): self
+    private function filter(callable $filter): static
     {
+        $resources = [];
+
+        foreach ($this->resources as $key => $resource) {
+            if (true == $filter($resource)) {
+                $resources[$key] = $resource;
+            }
+        }
+
+        return new static($resources);
+    }
+
+    public function registerResource(string $key, Resource $resource, Manager $manager): self
+    {
+        if (isset($this->resources[$key])) {
+            throw new ResourceAlreadyRegistered('Cannot register resource. The resource key [' . $key . '] is already registered.');
+        }
+
+        $this->resources[$key] = $resource;
         $this->managers[$key] = $manager;
-
-        return $this;
-    }
-
-    public function registerTags(string $key, array $tags): self
-    {
-        $this->tags->tag($key, $tags);
 
         return $this;
     }

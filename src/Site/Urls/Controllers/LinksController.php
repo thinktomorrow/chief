@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
+use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
@@ -23,7 +25,7 @@ class LinksController
         $model = ModelReference::make($request->modelClass, (string) $request->modelId)->instance();
 
         $this->validate($request, ['links' => [
-            'array', 'min:1', new UniqueUrlSlugRule($model, $model),], [], ['links.*' => 'taalspecifieke link'],
+            'array', 'min:1', new UniqueUrlSlugRule($model, $model), ], [], ['links.*' => 'taalspecifieke link'],
         ]);
 
         (new SaveUrlSlugs())->handle($model, $request->input('links', []));
@@ -35,6 +37,9 @@ class LinksController
         })->each(function ($record) {
             app(ChangeHomepage::class)->onUrlChanged($record);
         });
+
+        event(new ManagedModelUrlUpdated($model->modelReference()));
+        event(new PageChanged($model->modelReference()));
 
         return response()->json([
             'message' => 'links updated',

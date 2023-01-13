@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
+use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Site\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -15,7 +17,7 @@ class DeleteMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_can_delete_a_menuItem()
+    public function it_can_delete_a_menu_item()
     {
         $menuitem = MenuItem::create(['menu_type' => 'main']);
 
@@ -29,7 +31,7 @@ class DeleteMenuItemTest extends ChiefTestCase
     }
 
     /** @test */
-    public function only_authenticated_admin_can_delete_a_menuItem()
+    public function only_authenticated_admin_can_delete_a_menu_item()
     {
         $menuitem = MenuItem::create();
 
@@ -37,5 +39,17 @@ class DeleteMenuItemTest extends ChiefTestCase
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(1, MenuItem::all());
+    }
+
+    /** @test */
+    public function deleting_a_new_menu_item_emits_event()
+    {
+        Event::fake();
+
+        $menuitem = MenuItem::create();
+
+        $this->asAdmin()->delete(route('chief.back.menuitem.destroy', $menuitem->id));
+
+        Event::assertDispatched(MenuItemDeleted::class);
     }
 }

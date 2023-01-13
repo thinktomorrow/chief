@@ -2,7 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Events\FragmentPutOffline;
+use Thinktomorrow\Chief\Fragments\Events\FragmentPutOnline;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -34,47 +38,78 @@ class FragmentOnlineStatusTest extends ChiefTestCase
     /** @test */
     public function it_can_be_put_offline()
     {
+        Event::fake();
+
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
         $this->assertTrue($fragments->first()->fragmentModel()->isOnline());
 
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
-            'online_status' => false,
+            'online_status' => FragmentStatus::offline->value,
         ]);
 
         $this->firstFragment($this->owner, function ($fragment) {
             $this->assertFalse($fragment->fragmentModel()->isOnline());
         });
+
+        Event::assertDispatched(FragmentPutOffline::class);
     }
 
     /** @test */
     public function it_can_be_put_online()
     {
+        Event::fake();
+
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
-            'online_status' => true,
+            'online_status' => FragmentStatus::online->value,
         ]);
 
         $this->firstFragment($this->owner, function ($fragment) {
             $this->assertTrue($fragment->fragmentModel()->isOnline());
         });
+
+        Event::assertDispatched(FragmentPutOnline::class);
     }
 
     /** @test */
     public function it_only_renders_children_that_are_online()
     {
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner, $this->fragment), [
-            'custom' => 'xx',
-        ]);
-
-        $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner, $this->fragment), [
-            'custom' => 'xx',
-        ]);
-
-        // First one will be offline
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
-            'online_status' => false,
+            'online_status' => FragmentStatus::offline->value,
         ]);
 
-        $this->assertFragmentCount($this->owner, 3);
-        $this->assertRenderedFragments($this->owner, "THIS IS QUOTE FRAGMENT\nTHIS IS QUOTE FRAGMENT\n");
+        $this->assertFragmentCount($this->owner, 1);
+        $this->assertRenderedFragments($this->owner, "");
+    }
+
+    /** @test */
+    public function it_renders_offline_children_when_admin_is_previewing()
+    {
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
+            'online_status' => FragmentStatus::offline->value,
+        ]);
+
+        // We need a fake request for the Preview check to work because it is based on a frontend request.
+        $this->get('/bar');
+
+        session()->flash('preview-mode', true);
+
+        $this->assertFragmentCount($this->owner, 1);
+        $this->assertRenderedFragments($this->owner, "THIS IS QUOTE FRAGMENT\n");
+    }
+
+    /** @test */
+    public function it_does_not_render_offline_children_when_admin_is_not_previewing()
+    {
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
+            'online_status' => FragmentStatus::offline->value,
+        ]);
+
+        // We need a fake request for the Preview check to work because it is based on a frontend request.
+        $this->get('/bar');
+
+        session()->flash('preview-mode', false);
+
+        $this->assertFragmentCount($this->owner, 1);
+        $this->assertRenderedFragments($this->owner, "");
     }
 }

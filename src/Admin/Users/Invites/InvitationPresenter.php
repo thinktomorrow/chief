@@ -18,29 +18,29 @@ class InvitationPresenter
 
     public function stateAsLabel(): string
     {
-        if ($this->invitation->stateOf(InvitationState::KEY) == InvitationState::ACCEPTED) {
+        if ($this->invitation->getState(InvitationState::KEY) == InvitationState::accepted) {
             return '';
         }
 
         $flair = 'label-primary';
 
-        switch ($this->invitation->stateOf(InvitationState::KEY)) {
-            case InvitationState::REVOKED:
+        switch ($this->invitation->getState(InvitationState::KEY)) {
+            case InvitationState::revoked:
                 $flair = 'label-error';
 
                 break;
-            case InvitationState::DENIED:
-            case InvitationState::EXPIRED:
+            case InvitationState::denied:
+            case InvitationState::expired:
                 $flair = 'label-warning';
 
                 break;
-            case InvitationState::PENDING:
-            case InvitationState::NONE:
+            case InvitationState::pending:
+            case InvitationState::none:
                 $flair = 'label-primary';
 
                 break;
         }
 
-        return '<span class="label ' . $flair . '">uitnodiging ' . $this->invitation->stateOf(InvitationState::KEY) . '</span>';
+        return '<span class="label ' . $flair . '">uitnodiging ' . $this->invitation->getState(InvitationState::KEY)?->getValueAsString() . '</span>';
     }
 }

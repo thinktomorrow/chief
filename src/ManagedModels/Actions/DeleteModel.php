@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\WithPageState;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
@@ -27,19 +27,15 @@ class DeleteModel
         $this->deleteContext = $deleteContext;
     }
 
-    public function handle(ManagedModel $model): void
+    public function onManagedModelQueuedForDeletion(ManagedModelQueuedForDeletion $e): void
+    {
+        $this->handle($e->modelReference->instance());
+    }
+
+    public function handle(Model $model): void
     {
         try {
             DB::beginTransaction();
-
-            // For stateful transitions we will apply this deletion as a state
-            if ($model instanceof WithPageState) {
-                PageState::make($model)->apply('delete');
-                $model->save();
-            }
-
-            // TODO: schedule for deletion instead of instantly deleting all relations and stuff...
-            // so the user has a small window of recovery
 
             if ($model instanceof HasAsset) {
                 $this->detachAsset->detachAll($model);
@@ -60,6 +56,8 @@ class DeleteModel
                 ->log('deleted');
 
             $model->delete();
+
+            event(new ManagedModelDeleted($model->modelReference()));
 
             DB::commit();
         } catch (\Throwable $e) {

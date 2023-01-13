@@ -18,14 +18,14 @@ class CreateAdmin extends BaseCommand
         $lastname = null;
 
         while (! $firstname) {
-            $firstname = $this->ask('firstname');
+            $firstname = $this->ask('Firstname');
         }
 
         while (! $lastname) {
-            $lastname = $this->ask('lastname');
+            $lastname = $this->ask('Lastname');
         }
 
-        $email = $this->ask('email');
+        $email = $this->ask('Email');
 
         $password = $this->askPassword();
 

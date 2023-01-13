@@ -1,18 +1,27 @@
-<x-chief::field.form>
-    <div class="space-y-2">
+<div class="flex flex-wrap justify-between w-full sm:flex-nowrap gap-y-3 gap-x-6">
+    <div class="w-full space-y-1 sm:w-64 shrink-0">
+        <p class="font-medium display-base display-dark">
+            {{ ucfirst(str_replace('_', ' ', $lineViewModel->label())) }}
+        </p>
+
+        @if ($lineViewModel->description())
+            <p class="text-sm body-base text-grey-500">
+                {{ $lineViewModel->description() }}
+            </p>
+        @endif
+    </div>
+
+    <div class="w-full space-y-2">
         @foreach($locales as $i => $locale)
             @php
                 $fieldId = $lineViewModel->id() . '_' . $locale;
             @endphp
 
-            @if($loop->first)
-                @slot('label', ucfirst( str_replace('_', ' ', $lineViewModel->label()) ))
-                @slot('description', $lineViewModel->description())
-            @endif
-
-            <div class="flex w-full space-x-4">
+            <div class="flex w-full gap-2">
                 @if(count(config('chief.locales')) > 1)
-                    <span class="flex-shrink-0 w-8 px-0 text-sm text-center label label-grey-light h-full">{{ $locale }}</span>
+                    <div class="flex items-center justify-center w-8 p-2 rounded-md shrink-0 bg-grey-50">
+                        <span class="text-xs uppercase text-grey-500">{{ $locale }}</span>
+                    </div>
                 @endif
 
                 <div class="w-full">
@@ -34,4 +43,4 @@
             </div>
         @endforeach
     </div>
-</x-chief::field.form>
+</div>

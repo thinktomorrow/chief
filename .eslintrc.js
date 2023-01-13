@@ -32,7 +32,7 @@ module.exports = {
         'wrap-iife': ['error', 'inside'],
 
         // 'no-new': process.env.NODE_ENV === 'production' ? 1 : 0,
-        'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
+        'no-console': 0,
         'no-alert': process.env.NODE_ENV === 'production' ? 1 : 0,
     },
 };

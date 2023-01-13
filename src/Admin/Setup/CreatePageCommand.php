@@ -58,7 +58,12 @@ class CreatePageCommand extends Command
                 'namespace' => $namespace,
             ]), $this->option('force'));
 
-        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->model('.$namespacedClassName.'::class, \Thinktomorrow\Chief\Managers\Presets\PageManager::class, \'nav\');');
+//        $this->fileManipulation->writeFile($path . '/' . $className.'Resource.php', $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageResource.php.stub'), [
+//            'className' => $className.'Resource',
+//            'namespace' => $namespace,
+//        ]), $this->option('force'));
+
+        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->resource('.$namespacedClassName.'::class);');
 
         if ($createMigrationFile) {
             $this->call('chief:page-migration', ['table' => Str::snake(Str::plural($className))]);

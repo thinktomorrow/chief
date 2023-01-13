@@ -30,7 +30,12 @@ class DeleteFragment
      */
     public function handle(FragmentModel $fragmentModel): void
     {
-        $this->detachAsset->detachAll($fragmentModel);
+        try {
+            // This gives an error when entity_id contains of integer ids (like for fragmentModel) and uuids.
+            $this->detachAsset->detachAll($fragmentModel);
+        } catch (\Exception $e) {
+            report($e);
+        }
 
         $fragmentModel->delete();
     }
@@ -43,7 +48,7 @@ class DeleteFragment
         // that if the fragment is still shared (used by another context) then leave britney alone!
         // TODO: emit event so we can recheck the metadata for the fragment (aka shared attribute:
         // because maybe the fragment is now only used by only one model so it is no longer shared.
-        if (count($this->getOwningModels->get($fragmentable->fragmentModel())) > 0) {
+        if ($this->getOwningModels->getCount($fragmentable->fragmentModel()) > 0) {
             return;
         }
 

@@ -5,16 +5,24 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Shared\ModelReferences;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\PageResource;
 
 class ModelReferencePresenter
 {
     public static function toSelectValues(Collection $collection): Collection
     {
-        return $collection->map(function (ReferableModel $item) {
+        /** @var Registry $registry */
+        $registry = app(Registry::class);
+
+        return $collection->map(function (ReferableModel $item) use ($registry) {
+            /** @var PageResource $resource */
+            $resource = $registry->findResourceByModel($item::class);
+
             return [
                 'id' => $item->modelReference()->getShort(),
-                'label' => $item->modelReferenceLabel(),
-                'group' => $item->modelReferenceGroup(),
+                'label' => $resource->getPageTitleForSelect($item),
+                'group' => ucfirst($resource->getLabel()),
             ];
         });
     }

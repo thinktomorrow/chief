@@ -1,5 +1,4 @@
 import Errors from './utilities/Errors';
-import Form from './utilities/Form';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -10,7 +9,6 @@ import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
 window.Errors = Errors;
-window.Form = Form;
 
 /** Chief components */
 window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);

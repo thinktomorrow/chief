@@ -1,5 +1,5 @@
 import _debounce from 'lodash/debounce';
-import Api from '../components/sidebar/Api';
+import Api from '../forms/Api';
 
 const initCommandPalette = () => {
     const container = document.querySelector('#command-palette');

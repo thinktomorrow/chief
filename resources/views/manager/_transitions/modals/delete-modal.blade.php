@@ -8,7 +8,7 @@
         @method('DELETE')
         @csrf
 
-        <h2>Verwijder: @adminConfig('pageTitle')</h2>
+        <h2 class="h2 display-dark">Verwijder: {{ $resource->getPageTitle($model) }}</h2>
 
         <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
 
@@ -24,7 +24,7 @@
 
     <div v-cloak slot="modal-action-buttons">
         <button form="delete-manager-form-{{ $model->id }}" type="submit" class="btn btn-error">
-            Verwijderen
+            Verwijder
         </button>
     </div>
 </modal>

@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
-use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 final class ChiefNavigation
@@ -25,14 +24,9 @@ final class ChiefNavigation
 
     public function handle($request, Closure $next)
     {
-        foreach ($this->registry->managersWithTags() as $managerWithTags) {
-            if ($managerWithTags->manager->can('index')) {
-                $modelClass = $managerWithTags->manager->managedModelClass();
-                $navLabel = (new $modelClass)->adminConfig()->getNavTitle();
-                $navIcon = (new $modelClass)->adminConfig()->getNavIcon();
-
-                $this->container->make(Nav::class)
-                    ->add(new NavItem($navLabel, $managerWithTags->manager->route('index'), $managerWithTags->tags, $navIcon));
+        foreach ($this->registry->pageResources() as $resource) {
+            if ($navItem = $resource->getNavItem()) {
+                $this->container->make(Nav::class)->add($navItem);
             }
         }
 

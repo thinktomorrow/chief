@@ -1,13 +1,13 @@
 <div data-fragment data-sortable-id="{{ $model->fragmentModel()->id }}" class="w-full">
     <div class="py-6 space-y-4">
         <div class="flex items-stretch justify-end space-x-3">
-            <div data-sortable-handle class="flex-shrink-0 cursor-pointer">
-                <x-chief-icon-button icon="icon-drag" />
+            <div data-sortable-handle class="cursor-pointer shrink-0">
+                <x-chief-icon-button icon="icon-chevron-up-down" color="grey" />
             </div>
 
             <div class="w-full mt-0.5 space-x-1">
                 <span class="text-lg display-base display-dark">
-                    {{ ucfirst($model->adminConfig()->getModelName()) }}
+                    {{ ucfirst($resource->getLabel()) }}
                 </span>
 
                 <span class="align-bottom with-xs-labels">
@@ -26,9 +26,9 @@
                     data-sidebar-trigger="fragments"
                     href="@adminRoute('fragment-edit', $owner, $model)"
                     title="Fragment aanpassen"
-                    class="flex-shrink-0"
+                    class="shrink-0"
                 >
-                    <x-chief-icon-button icon="icon-edit" />
+                    <x-chief-icon-button icon="icon-edit"/>
                 </a>
             @endAdminCan
         </div>

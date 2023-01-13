@@ -2,31 +2,36 @@
     @include('chief::layout._partials.head')
 
     <body>
-        @include('chief::layout._partials.healthbar')
         @include('chief::layout._partials.svg-symbols')
 
-        <main id="main" class="min-h-screen bg-grey-50 bg-gradient-to-r from-grey-50 to-grey-100">
-            <div class="flex items-start">
-                <aside class="sticky top-0 flex-shrink-0">
+        <main id="main" class="min-h-screen bg-grey-100">
+            <div class="flex flex-wrap items-start lg:flex-nowrap">
+                <section class="relative top-0 z-20 w-full shrink-0 lg:sticky lg:w-auto">
                     @include('chief::layout.nav.nav')
-                </aside>
+                </section>
 
-                <div class="w-full py-12 space-y-8">
-                    @yield('header')
+                <section role="sidebar">
+                    @include('chief::manager.sidebar')
+                </section>
 
-                    <section id="content">
+                {{-- Content --}}
+                <section id="content" class="w-full">
+                    @include('chief::layout._partials.healthbar')
+
+                    <div class="py-12 space-y-8">
+                        @yield('header')
+
                         <div v-cloak class="container v-loading">
-                            <p class="text-grey-500">loading...</p>
+                            <!-- loading -->
                         </div>
 
                         <div v-cloak>
                             @include('chief::layout._partials.notifications')
-                            @include('chief::manager.sidebar')
 
                             @yield('content')
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
             </div>
 
             <!-- place outside the main content area as a place for modals, secondary forms, ... -->

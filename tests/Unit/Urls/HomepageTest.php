@@ -6,10 +6,10 @@ use Thinktomorrow\Chief\Admin\Settings\Homepage;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
 
@@ -27,8 +27,8 @@ class HomepageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
@@ -55,7 +55,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => 'foobar',
@@ -98,7 +98,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => 'foobar',
@@ -152,14 +152,13 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => 'foobar',
                 'en' => 'foobar',
             ],
         ]);
-        $other = ArticlePage::create();
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
@@ -168,12 +167,13 @@ class HomepageTest extends ChiefTestCase
             ],
         ]));
 
-        $this->assertEquals(4, UrlRecord::count());
+        $this->assertEquals(6, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($model, 'nl')->slug);
         $this->assertEquals('/', UrlRecord::findByModel($model, 'en')->slug);
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
 
+        $other = ArticlePage::create();
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $other->modelReference()->getShort(),
@@ -181,7 +181,7 @@ class HomepageTest extends ChiefTestCase
             ],
         ]));
 
-        $this->assertEquals(4, UrlRecord::count());
+        $this->assertEquals(6, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($other, 'nl')->slug);
         $this->assertEquals('/', UrlRecord::findByModel($other, 'en')->slug);
         $this->assertEquals('foobar', UrlRecord::findByModel($model, 'nl')->slug);
@@ -195,7 +195,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => '/',
@@ -214,7 +214,7 @@ class HomepageTest extends ChiefTestCase
         $model = ArticlePage::first();
 
         $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => [
                 'nl' => '/',

@@ -1,3 +1,9 @@
+html,
+body {
+    /* font-size: 16px; */
+    @apply font-body antialiased;
+}
+
 :focus {
     @apply outline-none;
 }

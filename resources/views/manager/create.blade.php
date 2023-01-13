@@ -1,20 +1,20 @@
 @extends('chief::layout.master')
 
 @section('page-title')
-    @adminConfig('modelName')
+    {{ $resource->getLabel() }}
 @endsection
 
 @section('header')
     <div class="container-sm">
         <x-chief::page.header>
             @slot('title')
-                @adminConfig('modelName')
+                {{ $resource->getLabel() }}
             @endslot
 
             @slot('breadcrumbs')
                 @adminCan('index')
                 <a href="@adminRoute('index')" class="link link-primary">
-                    <x-chief-icon-label type="back">Terug naar overzicht</x-chief-icon-label>
+                    <x-chief-icon-label type="back">Overzicht</x-chief-icon-label>
                 </a>
                 @endAdminCan
             @endslot
@@ -28,17 +28,18 @@
     <div class="container-sm">
         <div class="row">
             <div class="w-full">
-                <x-chief::window>
+
+                <div class="card">
                     <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                         @csrf
 
                         <div class="space-y-6">
-                            <x-chief::fields.form not-tagged="edit,not-on-create" />
+                            <x-chief-form::fields not-tagged="edit,not-on-create" />
 
                             <button type="submit" class="btn btn-primary">Aanmaken</button>
                         </div>
                     </form>
-                </x-chief::window>
+                </div>
             </div>
         </div>
     </div>

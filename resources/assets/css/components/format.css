@@ -1,6 +1,112 @@
 @layer components {
+    .h1-size {
+        @apply text-4xl;
+    }
+
+    .h2-size {
+        @apply text-3xl;
+    }
+
+    .h3-size {
+        @apply text-2xl;
+    }
+
+    .h4-size {
+        @apply text-xl;
+    }
+
+    .h5-size {
+        @apply text-lg;
+    }
+
+    .h6-size {
+        @apply text-base;
+    }
+
+    .body-size {
+        @apply text-base;
+    }
+
+    .display-leading {
+        line-height: theme('lineHeight.normal');
+    }
+
+    .display-weight {
+        font-weight: theme('fontWeight.semibold');
+    }
+
     .display-base {
-        @apply leading-normal font-semibold;
+        @extend .display-leading;
+        @extend .display-weight;
+    }
+
+    .body-leading {
+        line-height: theme('lineHeight.relaxed');
+    }
+
+    .body-weight {
+        font-weight: theme('fontWeight.normal');
+    }
+
+    .body-base {
+        @extend .body-leading;
+        @extend .body-weight;
+    }
+
+    .h1-base {
+        font-weight: theme('fontWeight.extrabold');
+        line-height: theme('lineHeight.tight');
+    }
+
+    .h2-base {
+        font-weight: theme('fontWeight.bold');
+        line-height: theme('lineHeight.tight');
+    }
+
+    .h3-base {
+        @extend .display-base;
+    }
+
+    .h4-base {
+        @extend .display-base;
+    }
+
+    .h5-base {
+        @extend .display-base;
+    }
+
+    .h6-base {
+        @extend .display-base;
+    }
+
+    .h1 {
+        @extend .h1-base;
+        @extend .h1-size;
+    }
+
+    .h2 {
+        @extend .h2-base;
+        @extend .h2-size;
+    }
+
+    .h3 {
+        @extend .h3-base;
+        @extend .h3-size;
+    }
+
+    .h4 {
+        @extend .h4-base;
+        @extend .h4-size;
+    }
+
+    .h5 {
+        @extend .h5-base;
+        @extend .h5-size;
+    }
+
+    .h6 {
+        @extend .h6-base;
+        @extend .h6-size;
     }
 
     .display-dark {
@@ -8,6 +114,6 @@
     }
 
     .body-dark {
-        @apply text-grey-600;
+        @apply text-grey-700;
     }
 }

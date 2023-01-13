@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 final class PublishPageTest extends ChiefTestCase
 {
@@ -22,8 +22,8 @@ final class PublishPageTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        app(Register::class)->model(ArticlePage::class, PageManager::class);
-        $this->manager = app(Registry::class)->manager(ArticlePage::managedModelKey());
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 
     /** @test */
@@ -31,29 +31,29 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DRAFT,
+            'current_state' => PageState::draft,
         ]);
 
-        $this->asAdminWithoutRole()->post($this->manager->route('publish', $model))
+        $this->asAdminWithoutRole()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'))
             ->assertStatus(302);
 
-        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
     public function an_admin_can_publish_a_page()
     {
-        $this->disableExceptionHandling();
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DRAFT,
+            'current_state' => PageState::draft,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('publish', $model))
-            ->assertStatus(302)
-            ->assertRedirect($this->manager->route('index'));
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'), [], [
+            'Accept' => 'application/json',
+        ])
+            ->assertSuccessful();
 
-        $this->assertEquals(PageState::PUBLISHED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -61,14 +61,15 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::PUBLISHED,
+            'current_state' => PageState::published,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('unpublish', $model))
-            ->assertStatus(302)
-            ->assertRedirect($this->manager->route('index'));
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'unpublish'), [], [
+            'Accept' => 'application/json',
+        ])
+            ->assertSuccessful();
 
-        $this->assertEquals(PageState::DRAFT, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
     /** @test */
@@ -76,12 +77,14 @@ final class PublishPageTest extends ChiefTestCase
     {
         $model = ArticlePage::create([
             'title' => 'first article',
-            'current_state' => PageState::DELETED,
+            'current_state' => PageState::deleted,
         ]);
 
-        $this->asAdmin()->post($this->manager->route('publish', $model))
-            ->assertStatus(302);
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'publish'), [], [
+            'Accept' => 'application/json',
+        ])
+            ->assertStatus(304);
 
-        $this->assertEquals(PageState::DELETED, $model->fresh()->stateOf(PageState::KEY));
+        $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
     }
 }

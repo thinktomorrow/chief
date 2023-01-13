@@ -131,6 +131,7 @@ export default {
     methods: {
         parseOptions(options) {
             options = this.isJson(options) ? JSON.parse(options) : options;
+
             // We need an array so if options is given as key:value pairs, we convert them here.
             if (this.isKeyValuePair(options) && (options.length > 0 || Object.keys(options).length > 0)) {
                 let convertedOptions = [];
@@ -292,12 +293,13 @@ export default {
             if (!this.isObject(pairs)) return false;
 
             // Check if the values are primitives, which is expected in key value pairs,
-            // also we except the first key to not be 0
+            // also we expect the first key to not be 0
             const propertyKeys = Object.getOwnPropertyNames(pairs);
+
             for (let k in propertyKeys) {
                 const key = propertyKeys[k];
 
-                if (parseInt(key) === 0) {
+                if (key === 0 || key === "0") {
                     return false;
                 }
 

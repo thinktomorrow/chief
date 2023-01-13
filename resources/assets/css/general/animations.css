@@ -1,4 +1,4 @@
-.transition-150 {
+.transition-75 {
     @apply transition-all duration-75 ease-in-out;
 }
 

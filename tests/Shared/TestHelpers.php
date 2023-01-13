@@ -15,15 +15,14 @@ use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecords;
 
 trait TestHelpers
 {
     public function registerResponseMacros()
     {
         TestResponse::macro('assertViewCount', function ($key, $count) {
-            Assert::assertArrayHasKey($key, $this->getOriginalContent()->getData());
-            Assert::assertCount($count, $this->getOriginalContent()->getData()[$key]);
+            Assert::assertArrayHasKey($key, $this->getOriginalContent()->gatherData());
+            Assert::assertCount($count, $this->getOriginalContent()->gatherData()[$key]);
         });
 
         TestResponse::macro('assertContains', function ($value) {
@@ -35,7 +34,7 @@ trait TestHelpers
         });
     }
 
-    protected function assertValidation(Model $model, $field, array $params, $coming_from_url, $submission_url, $assert_count = 0, $method = 'post')
+    protected function assertValidation(Model $model, $field, array $params, $coming_from_url, $submission_url, $assert_count = 0, $method = 'post'): TestResponse
     {
         $response = $this->actingAs($this->developer(), 'chief')
                          ->from($coming_from_url)
@@ -46,6 +45,8 @@ trait TestHelpers
         $response->assertSessionHasErrors($field);
 
         $this->assertEquals($assert_count, $model->count());
+
+        return $response;
     }
 
     protected function asAdminWithoutRole()
@@ -139,12 +140,10 @@ trait TestHelpers
     protected function updateLinks(Model $model, array $links): TestResponse
     {
         $response = $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => get_class($model),
+            'modelClass' => $model::class,
             'modelId' => $model->id,
             'links' => $links,
         ]);
-
-        MemoizedUrlRecords::clearCachedRecords();
 
         return $response;
     }
@@ -177,14 +176,14 @@ trait TestHelpers
         $this->assertTrue($flag, 'Mail [' . $mailMessage->view . '] view could\'nt be rendered!');
     }
 
-    protected function invokePrivateMethod($object, $methodName, array $parameters = [])
-    {
-        $reflection = new \ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-
-        return $method->invokeArgs($object, $parameters);
-    }
+//    protected function invokePrivateMethod($object, $methodName, array $parameters = [])
+//    {
+//        $reflection = new \ReflectionClass(get_class($object));
+//        $method = $reflection->getMethod($methodName);
+//        $method->setAccessible(true);
+//
+//        return $method->invokeArgs($object, $parameters);
+//    }
 
 
 

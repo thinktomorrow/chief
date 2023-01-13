@@ -1,70 +1,63 @@
-<div class="space-y-12">
-    <h3>Kies een bestaand fragment</h3>
+<div class="pt-6 space-y-6 border-t border-grey-100">
+    <p class="text-lg leading-none display-base display-dark">Kies een bestaand fragment</p>
 
-    <form
-        id="fragment-select-existing-form"
-        action="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
-    >
-        <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
+    <div data-form>
+        <form
+            id="fragment-select-existing-form"
+            action="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
+        >
+            <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
 
-        <div data-vue-fields class="flex items-center -mx-2">
-            @if(public_method_exists($owner, 'getRelatedOwners'))
-                @php
-                    $existingOwnersOptions = [];
-                    foreach($owner->getRelatedOwners() as $relatedOwner) {
-                        $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $relatedOwner->adminConfig()->getPageTitle();
-                    }
-                @endphp
+            <div data-vue-fields class="flex items-center gap-4">
+                @if(public_method_exists($owner, 'getRelatedOwners'))
+                    <chief-multiselect
+                        id="selectExistingOwners"
+                        name="owners[]"
+                        placeholder="Kies een pagina"
+                        :options='@json($existingOwnersOptions)'
+                        class="w-full"
+                    ></chief-multiselect>
+                @endif
 
                 <chief-multiselect
-                    id="selectExistingOwners"
-                    name="owners[]"
-                    placeholder="Kies een pagina"
-                    :options='@json($existingOwnersOptions)'
-                    class="w-1/2 px-2"
+                    id="selectExistingTypes"
+                    name="types[]"
+                    placeholder="Kies een type"
+                    :options='@json($existingTypesOptions)'
+                    class="w-full"
                 ></chief-multiselect>
-            @endif
 
-            @php
-                $existingTypesOptions = [];
-                foreach($owner->allowedFragments() as $allowedFragmentClass) {
-                    $existingTypesOptions[$allowedFragmentClass] = ucfirst(app($allowedFragmentClass)->adminConfig()->getModelName());
-                }
-            @endphp
+                {{-- Should be deleted once the onchange/oninput submit on this form works --}}
+                <button class="btn btn-primary" type="submit">Zoek</button>
+            </div>
+        </form>
+    </div>
 
-            <chief-multiselect
-                id="selectExistingTypes"
-                name="types[]"
-                placeholder="Kies een type"
-                :options='@json($existingTypesOptions)'
-                class="w-1/2 px-2"
-            ></chief-multiselect>
-        </div>
-
-
-        {{-- Should be deleted once the onchange/oninput submit on this form works --}}
-        <button class="mt-4 btn btn-primary" type="submit">Zoek</button>
-    </form>
-
-    <div data-sidebar-component="existingFragments">
-        <div class="-m-6 divide-y divide-grey-100">
-            @forelse($sharedFragments as $sharedFragment)
-                <div class="p-6 group hover:bg-primary-500 transition-75 rounded-xl">
-                    <a
-                        data-sidebar-close
-                        data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
-                        class="flex flex-col w-full space-y-2 overflow-hidden"
+    <div data-sidebar-component="existingFragments" class="space-y-3">
+        @forelse($sharedFragments as $sharedFragment)
+            <div data-form data-form-tags="fragments">
+                <form
+                    method="POST"
+                    action="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) . (isset($order) ? '?order=' . $order : '') }}"
+                >
+                    <button
+                        class="w-full p-3 space-y-3 text-left transition-all duration-75 ease-in-out border rounded-lg border-grey-100 bg-grey-50 hover:shadow-card hover:border-primary-500"
+                        type="submit"
                     >
-                        <span class="font-semibold text-grey-900 group-hover:text-white transition-75">
-                            {{ ucfirst($sharedFragment['model']->adminConfig()->getModelName()) }}
-                        </span>
+                        <div>
+                            <span class="display-dark display-base">
+                                {{ ucfirst($sharedFragment['resource']->getLabel()) }}
+                            </span>
+                        </div>
 
                         {!! $sharedFragment['model']->renderAdminFragment($owner, $loop) !!}
-                    </a>
-                </div>
-            @empty
-                <p class="p-6">Geen fragmenten gevonden.</p>
-            @endforelse
-        </div>
+                    </button>
+                </form>
+            </div>
+        @empty
+            <div>
+                <p class="body-base body-dark">Geen fragmenten gevonden.</p>
+            </div>
+        @endforelse
     </div>
 </div>
