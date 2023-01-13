@@ -2,6 +2,10 @@
     z-index: 1 !important;
 }
 
+.redactor-box .redactor-toolbar {
+    @apply !px-3 !py-2.5;
+}
+
 .redactor-box {
     overflow: hidden !important;
     border-radius: theme('borderRadius.lg') !important;
@@ -34,5 +38,5 @@
 }
 
 .redactor-box .redactor-styles {
-    @apply font-body;
+    @apply font-body px-3 py-2.5;
 }

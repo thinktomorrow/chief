@@ -45,8 +45,10 @@ trait HasValue
         }
 
         // Localized value
-        if ($locale && is_array($this->value) && array_key_exists($locale, $this->value)) {
-            return $this->value[$locale];
+        if ($locale && is_array($this->value)) {
+            return array_key_exists($locale, $this->value)
+                ? $this->value[$locale]
+                : $this->getDefault($locale);
         }
 
         return $this->value;
