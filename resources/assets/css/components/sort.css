@@ -5,7 +5,7 @@
  * other classes are used to display a single item.
  */
 .has-nested-items .nested\:ptl {
-    padding: 1rem 0 0 1.5rem;
+    padding: 0.5rem 0 0 1.75rem;
 }
 .has-nested-items .nested\:block {
     display: block;
@@ -19,6 +19,6 @@
 .is-sorting .sorting\:drop-zone {
     border: 2px dashed rgb(226, 232, 240);
     border-radius: 0.5rem;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1rem;
     margin-top: 0.75rem;
 }

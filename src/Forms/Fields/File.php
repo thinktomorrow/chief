@@ -49,6 +49,8 @@ class File extends Component implements Field
             return $field->getMedia($model, $locale);
         });
 
+        $this->default([]);
+
         $this->save(function ($model, $field, $input, $files) {
             app(FileUpload::class)->handle($model, $field, $input, $files);
         });

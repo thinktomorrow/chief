@@ -13,7 +13,6 @@
 @endphp
 
 <x-chief::index sidebar="{{ $resource->showIndexSidebarAside() }}">
-
     @include('chief::manager._index.archived_breadcrumbs')
 
     <x-chief::table
@@ -71,13 +70,9 @@
                         {{ $tableCell->render() }}
                     @endforeach
 
-                    @adminCan('edit')
-                        <x-chief::table.data class="text-right">
-                            <a href="@adminRoute('edit', $model)" title="Aanpassen">
-                                <x-chief-icon-button icon="icon-edit"/>
-                            </a>
-                        </x-chief::table.data>
-                    @endAdminCan
+                    <x-chief::table.data>
+                        @include('chief::manager._index._options')
+                    </x-chief::table.data>
                 </x-chief::table.row>
             @empty
                 <x-chief::table.row>

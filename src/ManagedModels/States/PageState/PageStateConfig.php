@@ -113,7 +113,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
                 if (LinkForm::fromModel($statefulContract)->isAnyLinkOnline()) {
                     return '<span class="label label-xs label-success">Online</span>';
                 } else {
-                    return '<span class="label label-xs label-warning">Gepubliceerd maar ontbreekt nog een link.</span>';
+                    return '<span class="label label-xs label-warning">Link ontbreekt</span>';
                 }
             }
 

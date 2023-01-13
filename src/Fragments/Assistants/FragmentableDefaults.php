@@ -54,6 +54,8 @@ trait FragmentableDefaults
     {
         $this->fragmentModel = $fragmentModel;
 
+        $this->fragmentModel->setDynamicLocaleFallback($this->dynamicLocaleFallback());
+
         return $this;
     }
 
@@ -64,5 +66,10 @@ trait FragmentableDefaults
         }
 
         return $this->fragmentModel;
+    }
+
+    public function dynamicLocaleFallback(): ?string
+    {
+        return null;
     }
 }

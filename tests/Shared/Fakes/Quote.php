@@ -20,9 +20,11 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
 {
-    use FragmentableDefaults;
     use OwningFragments;
-    use HasDynamicAttributes;
+    use HasDynamicAttributes{
+        HasDynamicAttributes::dynamicLocaleFallback as standardDynamicLocaleFallback;
+    }
+    use FragmentableDefaults;
     use SoftDeletes;
     use AssetTrait;
 
@@ -31,6 +33,11 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans',
     ];
+
+    public function dynamicLocaleFallback(): ?string
+    {
+        return $this->standardDynamicLocaleFallback();
+    }
 
     public function fields($model): iterable
     {

@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
+use Thinktomorrow\Chief\ManagedModels\Filters\Presets\SelectFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
 
@@ -12,9 +13,9 @@ class FilterPresets
 {
     public static function state(): Filter
     {
-        return RadioFilter::make('online', function ($query, $value) {
+        return SelectFilter::make('online', function ($query, $value) {
             return $query->where('current_state', '=', $value);
-        })->options([
+        })->label('Status')->options([
             '' => 'Alle',
             PageState::published->getValueAsString() => 'online',
             PageState::draft->getValueAsString() => 'offline',
