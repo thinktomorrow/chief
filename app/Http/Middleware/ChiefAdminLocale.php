@@ -8,7 +8,7 @@ class ChiefAdminLocale
 {
     public function handle($request, Closure $next)
     {
-        if($adminLocale = config('chief.admin_locale')) {
+        if ($adminLocale = config('chief.admin_locale')) {
             app()->setLocale($adminLocale);
         }
 
