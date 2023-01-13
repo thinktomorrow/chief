@@ -1,4 +1,5 @@
 import initCopyToClipboard from './utilities/copy-to-clipboard';
+import initCommandPalette from './command-palette/command-palette';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
 import initAnimatedToggle from './utilities/animated-toggle';
@@ -11,6 +12,7 @@ import initFormSubmitOnChange from './utilities/form-submit-on-change';
 initCollapsibleNavigation();
 initDropdowns();
 initCopyToClipboard();
+initCommandPalette();
 initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]', {
     animationClass: 'animate-slide-in-nav lg:animate-none',
 });

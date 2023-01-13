@@ -4,7 +4,7 @@ form {
 
 textarea,
 select,
-input[type='text'],
+input[type='text']:not(.custom),
 input[type='date'],
 input[type='email'],
 input[type='url'],

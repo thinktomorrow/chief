@@ -5,6 +5,7 @@
         "prod": "mix --production --mix-config=webpack.mix.js",
         "test": "jest",
         "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write",
+        "format-blade": "prettier 'resources/views/**/*.{php}' '*.{php}' --write --plugin-search-dir=./node_modules --plugin=./node_modules/@ryangjchandler/prettier-plugin-blade",
         "lint": "eslint --fix 'resources/assets/**/*.js'",
         "prepare": "husky install"
     },
