@@ -25,7 +25,6 @@
         "laravel-mix-eslint": "^0.2.0",
         "laravel-mix-polyfill": "^3.0.0",
         "lint-staged": "^13.1.0",
-        "module": "^1.2.5",
         "postcss": "^8.4.14",
         "postcss-extend": "^1.0.5",
         "postcss-import": "^14.0.2",
