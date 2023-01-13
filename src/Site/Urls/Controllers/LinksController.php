@@ -25,7 +25,7 @@ class LinksController
         $model = ModelReference::make($request->modelClass, (string) $request->modelId)->instance();
 
         $this->validate($request, ['links' => [
-            'array', 'min:1', new UniqueUrlSlugRule($model, $model),], [], ['links.*' => 'taalspecifieke link'],
+            'array', 'min:1', new UniqueUrlSlugRule($model, $model), ], [], ['links.*' => 'taalspecifieke link'],
         ]);
 
         (new SaveUrlSlugs())->handle($model, $request->input('links', []));

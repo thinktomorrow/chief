@@ -26,11 +26,13 @@
             <div class="flex flex-wrap items-end justify-between gap-6">
                 <h1 class="h1 display-dark">{{ ucfirst($resource->getIndexTitle()) }}</h1>
 
-                @adminCan('create')
-                    <a href="@adminRoute('create')" class="btn btn-primary-outline">
-                        <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
-                    </a>
-                @endAdminCan
+                @if(!isset($is_archive_index) || !$is_archive_index)
+                    @adminCan('create')
+                        <a href="@adminRoute('create')" class="btn btn-primary-outline">
+                            <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
+                        </a>
+                    @endAdminCan
+                @endif
             </div>
         @endisset
     </x-slot>
@@ -48,7 +50,7 @@
 
                 @include('chief::manager._index.filter_card')
 
-                @adminCan('sort-index', $models->first())
+                @adminCan('sort-index', $model)
                     @include('chief::manager._index.sort_card')
                 @endAdminCan
 

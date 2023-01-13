@@ -17,12 +17,8 @@ trait HasId
         return $this;
     }
 
-    public function getId(?string $locale = null): string
+    public function getId(): string
     {
-        if ($locale) {
-            return $this->getLocalizedFormKey()->dotted()->get($this->id, $locale);
-        }
-
         return FormKey::replaceBracketsByDots($this->id);
     }
 }

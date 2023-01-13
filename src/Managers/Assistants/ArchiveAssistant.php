@@ -69,13 +69,14 @@ trait ArchiveAssistant
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function archiveIndex()
+    public function archiveIndex(Request $request)
     {
         View::share('manager', $this);
         View::share('resource', $this->resource);
         View::share('models', $this->managedModelClass()::archived()->paginate(20)->withQueryString());
         View::share('model', $this->managedModelClassInstance());
+        View::share('is_archive_index', true);
 
-        return $this->resource->getIndexView();
+        return $this->resource->getArchivedIndexView();
     }
 }

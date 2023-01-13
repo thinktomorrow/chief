@@ -9,7 +9,7 @@
             @foreach($options as $option => $optionLabel)
                 <label class="with-checkbox" for="{{ $id.'-'.$option }}">
                     <input
-                        {{ ($option == $value) ? 'checked="checked"':'' }}
+                        {{ ($option == ($value ?: $default))  ? 'checked="checked"':'' }}
                         name="{{ $name }}"
                         value="{{ $option }}"
                         id="{{ $id.'-'.$option }}"

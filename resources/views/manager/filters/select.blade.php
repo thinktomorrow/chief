@@ -9,7 +9,7 @@
             id="{{ $id }}"
             name="{{ $name }}"
             :options='@json($options)'
-            selected='@json($value)'
+            selected='@json($value ?: $default)'
             :multiple='@json($multiple)'
             @if($isGrouped)
                 grouplabel="group"

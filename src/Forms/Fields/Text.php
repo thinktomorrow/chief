@@ -20,7 +20,7 @@ class Text extends Component implements Field
 
     public function getView(): string
     {
-        if ($this->hasRedactorOptions()) {
+        if ($this->hasRedactorOptions() && ! $this->getEditInSidebar()) {
             return $this->viewWithRedactor;
         }
 
@@ -36,10 +36,9 @@ class Text extends Component implements Field
         return [
             'buttons' => [],
             'plugins' => [],
-            'maxHeight' => '56px',
             'maxWidth' => '100%',
             'enterKey' => false,
-            'paragraphize' => false, // don't put surrounding p tags on save
+            'paragraphize' => false,
             'toolbarExternal' => '#js-external-editor-toolbar-'.str_replace('.', '_', $this->getElementId($locale)),
         ];
     }

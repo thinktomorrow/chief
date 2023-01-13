@@ -10,6 +10,6 @@
         type="text"
         name="{{ $name }}"
         placeholder="{{ $placeholder }}"
-        value="{{ $value }}"
+        value="{{ $value ?: $default }}"
     >
 </x-chief-form::formgroup>

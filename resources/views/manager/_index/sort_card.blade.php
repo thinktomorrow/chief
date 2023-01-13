@@ -1,6 +1,6 @@
 <x-chief-window title="Sortering" class="card">
     <div class="space-y-4">
-        @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
+        @if($resource->isNestable() || (!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages()))
             <p class="body-dark body-base">
                 Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
             </p>

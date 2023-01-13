@@ -6,6 +6,9 @@ namespace Thinktomorrow\Chief\ManagedModels\States\Publishable;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 
+/**
+ * @deprecated use the UsesPageState or UsesSimpleState traits instead
+ */
 trait Publishable
 {
     protected function getPublishablePageStateAttribute(): string

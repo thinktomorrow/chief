@@ -39,11 +39,12 @@ final class SaveUrlSlugs
              *  This asserts a consistent behaviour in both the application and the database
              */
 //            $slug = Str::ascii($slug);
+            $slug = $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $locale) : $slug;
 
             $this->saveRecord(
                 $model,
                 $locale,
-                $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $locale) : $slug,
+                $slug,
                 $existingRecords
             );
         }
@@ -54,10 +55,7 @@ final class SaveUrlSlugs
         $this->saveRecord($model, $locale, null, $existingRecords);
     }
 
-    /**
-     * @return void
-     */
-    private function saveRecord(Visitable $model, string $locale, ?string $slug, Collection $existingRecords)
+    private function saveRecord(Visitable $model, string $locale, ?string $slug, Collection $existingRecords): void
     {
         // Existing ones for this locale?
         $nonRedirectsWithSameLocale = $existingRecords->filter(function ($record) use ($locale) {

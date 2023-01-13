@@ -61,6 +61,28 @@ class RenderRepeatFieldTest extends TestCase
     }
 
     /** @test */
+    public function when_repeat_field_misses_locale_it_shows_default()
+    {
+        $component = Repeat::make('xxx')->items([
+            Text::make('title')->locales(['nl','fr']),
+        ])->value([
+            [
+                'title' => ['nl' => 'first title nl'],
+            ],
+            [
+                'title' => ['nl' => 'second title nl'],
+            ],
+        ]);
+
+        $render = $component->toHtml();
+
+        $this->assertStringContainsString('name="xxx[0][title][nl]"', $render);
+        $this->assertStringContainsString('value="first title nl"', $render);
+        $this->assertStringContainsString('name="xxx[0][title][fr]"', $render);
+        $this->assertStringContainsString('value=""', $render);
+    }
+
+    /** @test */
     public function it_can_render_a_nested_repeat_field()
     {
         $component = Repeat::make('xxx')->items([

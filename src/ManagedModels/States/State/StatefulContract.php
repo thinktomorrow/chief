@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
+use Illuminate\Database\Eloquent\Builder;
+
 interface StatefulContract
 {
     /**
@@ -19,4 +21,5 @@ interface StatefulContract
     public function getStateConfig(string $stateKey): StateConfig;
 
     public function inOnlineState(): bool;
+    public function scopeOnline(Builder $query): void;
 }

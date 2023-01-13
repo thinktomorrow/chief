@@ -9,12 +9,12 @@ use Thinktomorrow\Chief\Admin\Nav\Nav as NavItems;
 
 final class Nav extends Component
 {
-    public string $title;
+    public ?string $title;
 
     /** @var NavItems */
     private NavItems $nav;
 
-    public function __construct(NavItems $nav, string $title = 'models')
+    public function __construct(NavItems $nav, ?string $title = null)
     {
         $this->title = $title;
         $this->nav = $nav;

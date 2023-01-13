@@ -38,4 +38,9 @@ class SnippetStub implements Fragmentable, FragmentsOwner
     {
         return 'snippet_stub';
     }
+
+    public function dynamicLocaleFallback(): ?string
+    {
+        return 'en';
+    }
 }

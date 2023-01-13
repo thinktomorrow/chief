@@ -38,7 +38,6 @@ class FragmentOnlineStatusTest extends ChiefTestCase
     /** @test */
     public function it_can_be_put_offline()
     {
-        $this->disableExceptionHandling();
         Event::fake();
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
@@ -77,6 +76,38 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
             'online_status' => FragmentStatus::offline->value,
         ]);
+
+        $this->assertFragmentCount($this->owner, 1);
+        $this->assertRenderedFragments($this->owner, "");
+    }
+
+    /** @test */
+    public function it_renders_offline_children_when_admin_is_previewing()
+    {
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
+            'online_status' => FragmentStatus::offline->value,
+        ]);
+
+        // We need a fake request for the Preview check to work because it is based on a frontend request.
+        $this->get('/bar');
+
+        session()->flash('preview-mode', true);
+
+        $this->assertFragmentCount($this->owner, 1);
+        $this->assertRenderedFragments($this->owner, "THIS IS QUOTE FRAGMENT\n");
+    }
+
+    /** @test */
+    public function it_does_not_render_offline_children_when_admin_is_not_previewing()
+    {
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
+            'online_status' => FragmentStatus::offline->value,
+        ]);
+
+        // We need a fake request for the Preview check to work because it is based on a frontend request.
+        $this->get('/bar');
+
+        session()->flash('preview-mode', false);
 
         $this->assertFragmentCount($this->owner, 1);
         $this->assertRenderedFragments($this->owner, "");

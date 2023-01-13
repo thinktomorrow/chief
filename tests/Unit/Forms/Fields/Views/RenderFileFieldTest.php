@@ -21,15 +21,17 @@ class RenderFileFieldTest extends TestCase
         Route::get('api/media', 'example@handle')->name('chief.api.media');
 
         $this->classes = [
-            File::class => [$this->payload()],
+            File::class => ['nl' => [$this->payload()]],
             Image::class => [
-                $this->payload([
-                    'filename' => 'testfile.jpg',
-                    'url' => '/media/testfile.jpg',
-                    'thumbUrl' => '/media/testfile-thumb.jpg',
-                    'mimetype' => 'image/jpeg',
-                    'isImage' => true,
-                ]),
+                'nl' => [
+                    $this->payload([
+                        'filename' => 'testfile.jpg',
+                        'url' => '/media/testfile.jpg',
+                        'thumbUrl' => '/media/testfile-thumb.jpg',
+                        'mimetype' => 'image/jpeg',
+                        'isImage' => true,
+                    ]),
+                ],
             ],
         ];
     }
@@ -41,7 +43,7 @@ class RenderFileFieldTest extends TestCase
         foreach ($this->classes as $class => $value) {
             $component = $class::make('xxx')->value($value);
             $this->assertStringContainsString('name="files[xxx][nl]', $component->toHtml());
-            $this->assertStringContainsString($value[0]->filename, $component->toHtml());
+            $this->assertStringContainsString($value['nl'][0]->filename, $component->toHtml());
         }
     }
 
@@ -70,7 +72,7 @@ class RenderFileFieldTest extends TestCase
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
             $component = $class::make('xxx')->editInSidebar()->value($value);
-            $this->assertStringContainsString($value[0]->filename, $component->toHtml());
+            $this->assertStringContainsString($value['nl'][0]->filename, $component->toHtml());
         }
     }
 

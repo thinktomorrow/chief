@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users\Invites;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 use Thinktomorrow\Chief\Admin\Users\User;
@@ -95,5 +96,10 @@ class Invitation extends Model implements StatefulContract
     public function inOnlineState(): bool
     {
         return $this->getState(InvitationState::KEY) == InvitationState::accepted;
+    }
+
+    public function scopeOnline(Builder $query): void
+    {
+        $query->where(InvitationState::KEY, InvitationState::accepted);
     }
 }

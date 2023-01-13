@@ -45,6 +45,9 @@ use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\MysqlNestablePageRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
@@ -119,6 +122,8 @@ class ChiefServiceProvider extends ServiceProvider
             return new Settings();
         });
 
+        $this->app->bind(NestablePageRepository::class, MysqlNestablePageRepository::class);
+
         (new SquantoServiceProvider($this->app))->register();
 
         if ($this->app->make(AdminEnvironment::class)->check(request())) {
@@ -192,6 +197,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(ManagedModelCreated::class, [CreateUrlForPage::class,'onManagedModelCreated']);
         Event::listen(ManagedModelUrlUpdated::class, [TriggerPageChangedEvent::class,'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [ProjectModelData::class,'onManagedModelUrlUpdated']);
+        Event::listen(ManagedModelUrlUpdated::class, [PropagateUrlChange::class,'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUpdated::class, [TriggerPageChangedEvent::class,'onManagedModelUpdated']);
         Event::listen(ManagedModelUpdated::class, [ProjectModelData::class,'onManagedModelUpdated']);
         Event::listen(ManagedModelArchived::class, [PropagateArchivedUrl::class,'onManagedModelArchived']);
@@ -234,7 +240,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-site', __DIR__.'/../../resources/views/site');
 
         Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model, get_defined_vars()); ?>';
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';
         });
     }
 }

@@ -113,6 +113,7 @@ trait StateAssistant
         // we'll want to redirect to a different page.
         $redirect = $stateConfig->getRedirectAfterTransition($transitionKey, $model);
 
+        // A custom redirect is present so we'll return to the redirect.
         if ($redirect && ! $request->expectsJson()) {
             if ($notification = $stateConfig->getResponseNotification($transitionKey)) {
                 return redirect()->to($redirect)->with(
@@ -122,6 +123,12 @@ trait StateAssistant
             }
 
             return redirect()->to($redirect);
+        }
+
+        // Default when we don't have a custom redirect and no json response
+        // is expected, we'll go back to the current page
+        if (! $request->expectsJson()) {
+            return redirect()->back();
         }
 
         return response()->json([

@@ -4,8 +4,26 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: show options menu on page index. Options show links to duplicate and state changes
+- Added: Edit and preview link on page index.
+- Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
+- Added: option to set the admin locale. This is the locale in which to display page content by default.
+- Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
+
+## 0.7.17 - 2022-12-13
+- Added: nestable page logic
+- Added: option to set default for admin filter fields.
+- Fixed: title of inline nav is now displayed as section title instead of not showing at all.
+- Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins. 
+- Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
+
+## 0.7.16 - 2022-12-13
+- Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
+
+## 0.7.15 - 2022-12-02
 
 - Fixed: honour order of selected options in window
+- Changed: Show offline fragments when admin views page in preview mode.
 
 ## 0.7.14 - 2022-11-03
 
