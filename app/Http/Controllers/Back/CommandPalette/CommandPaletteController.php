@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\CommandPalette;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Managers\Register\Registry;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class CommandPaletteController extends Controller
 {
