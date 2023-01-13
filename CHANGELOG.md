@@ -6,6 +6,9 @@ principles.
 ## unreleased
 - Added: show options menu on page index. Options show links to duplicate and state changes
 - Added: Edit and preview link on page index.
+- Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
+- Added: option to set the admin locale. This is the locale in which to display page content by default.
+- Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
 
 ## 0.7.17 - 2022-12-13
 - Added: nestable page logic

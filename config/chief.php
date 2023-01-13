@@ -22,6 +22,18 @@ return [
         'nl',
     ],
 
+    /**
+     * Admin locale
+     *
+     * Determines the locale in which the admin sees the pages and content.
+     * This basically sets the app.locale to this value on admin visits.
+     *
+     * If set to null, the current set default is used. But be aware that any locale
+     * manipulations, such as done by the thinktomorrow/locale::localeRoutePrefix()
+     * can influence this locale. So it's better to set a specific locale value.
+     */
+    'admin_locale' => 'nl',
+
     'route' => [
         /**
          * By default Chief will add the pages.show routing to your app. Since this is a catch-all route, it will be loaded last.

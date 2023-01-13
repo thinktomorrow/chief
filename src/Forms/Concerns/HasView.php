@@ -9,6 +9,11 @@ trait HasView
 
     protected bool $editInSidebar = false;
 
+    public function getEditInSidebar(): bool
+    {
+        return $this->editInSidebar;
+    }
+
     public function getView(): string
     {
         return ($this->editInSidebar && isset($this->windowView))

@@ -1,1 +1,1 @@
-THIS IS SNIPPET STUB VIEW
+THIS IS SNIPPET STUB VIEW {{ $model->title_trans }}

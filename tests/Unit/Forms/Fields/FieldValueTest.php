@@ -48,6 +48,8 @@ class FieldValueTest extends TestCase
 
         $this->assertEquals(null, $field->getValue('nl'));
         $this->assertEquals('value-en', $field->getValue('en'));
+
+        // Non localized value
         $this->assertEquals(['nl' => null, 'en' => 'value-en'], $field->getValue());
     }
 
@@ -60,6 +62,19 @@ class FieldValueTest extends TestCase
 
         $field->value('some-value');
         $this->assertEquals('some-value', $field->getValue());
+    }
+
+    /** @test */
+    public function it_uses_the_default_when_no_localized_value_is_given()
+    {
+        $field = Text::make('title')->default('foobar');
+
+        $this->assertEquals('foobar', $field->getValue());
+
+        $field->value(['nl' => 'foobar-nl']);
+
+        $this->assertEquals('foobar-nl', $field->getValue('nl'));
+        $this->assertEquals('foobar', $field->getValue('fr'));
     }
 
     /** @test */

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Middleware\MonitorMiddleware;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefAdminLocale;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefNavigation;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
@@ -79,6 +80,7 @@ class RoutesServiceProvider extends ServiceProvider
             AuthenticateChiefSession::class,
             MonitorMiddleware::class,
             ChiefNavigation::class,
+            ChiefAdminLocale::class,
         ]);
 
         app(Router::class)->aliasMiddleware('chief-guest', ChiefRedirectIfAuthenticated::class);
