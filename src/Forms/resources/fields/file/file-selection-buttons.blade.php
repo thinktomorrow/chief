@@ -1,9 +1,10 @@
 <div class="flex gap-4">
     <label for="{{ $getKey() }}" class="relative rounded-full">
         <input
+            type="file"
             id="{{ $getKey() }}"
             name="{{ $getName($locale) }}[]"
-            type="file"
+            {{ $allowMultiple ? 'multiple' : '' }}
             class="absolute inset-0 w-full opacity-0 cursor-pointer pointer-events-auto peer"
         />
 

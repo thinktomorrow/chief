@@ -1,9 +1,10 @@
 <div class="flex border border-dashed divide-x rounded-lg shadow-sm border-grey-200 divide-grey-200 divide-dashed">
     <label for="{{ $getKey() }}" class="relative w-1/2">
         <input
+            type="file"
             id="{{ $getKey() }}"
             name="{{ $getName($locale) }}[]"
-            type="file"
+            {{ $allowMultiple ? 'multiple' : '' }}
             class="absolute inset-0 w-full opacity-0 cursor-pointer pointer-events-auto peer"
         />
 
