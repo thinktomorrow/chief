@@ -26,7 +26,7 @@
     $attributes
         ->merge(['class' => 'inline-flex items-center p-1.5 rounded-xl link space-x-2 hover:child-svg-scale-110 transition-all duration-75 ease-in-out shadow-card'])
         ->merge(['class' => $colorClasses])
-}} >
+}}>
     @if($slot->isNotEmpty())
         {!! $slot !!}
     @else
