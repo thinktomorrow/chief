@@ -1,6 +1,23 @@
 @php
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
     $files = $getValue($locale);
+@endphp
+
+@if (count($files) == 0)
+    @include('chief-form::fields.file.file-selection')
+@else
+    <div class="space-y-4">
+        @include('chief-form::fields.file.file-preview')
+
+        @if ($allowMultiple())
+            @include('chief-form::fields.file.file-selection-buttons')
+        @endif
+    </div>
+@endif
+
+{{-- @php
+    /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
+    $files = $getValue($locale);
 
     $imagesUploadSettings = json_encode([
         'group' => $getKey(),
@@ -102,4 +119,4 @@
             </div>
         </div>
     </imagesupload>
-</div>
+</div> --}}
