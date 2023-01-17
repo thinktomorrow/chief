@@ -1,5 +1,5 @@
 <div class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
-    @foreach ($files ?? [] as $file)
+    @foreach ($files as $file)
         <div class="flex gap-4 p-2">
             <div class="shrink-0">
                 <img
@@ -35,5 +35,7 @@
                 </button>
             </div>
         </div>
+
+        {{-- @include('chief-form::fields.file.file-edit') --}}
     @endforeach
 </div>
