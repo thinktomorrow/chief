@@ -21,7 +21,7 @@ const Forms = function (mainContainer, sidebar) {
             this.handleSubmitFromSidebar(e.response, e.meta);
         }
 
-        this.refreshIn(targetElement, e.tags);
+        this.refreshIn(e.tags, targetElement);
     });
 
     EventBus.subscribe('sidebarPanelActivated', (e) => {
@@ -48,7 +48,7 @@ Forms.prototype.listenIn = function (container = document) {
     });
 };
 
-Forms.prototype.refreshIn = function (container = document, tags) {
+Forms.prototype.refreshIn = function (tags, container = document) {
     Array.from(container.querySelectorAll(this.selector)).forEach((el) => {
         const form = new Form(el, this.sidebar);
 
