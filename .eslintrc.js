@@ -13,8 +13,6 @@ module.exports = {
 
         // Turned this rule off because of conflict with prettier formatting operators at the end of a line.
         'operator-linebreak': 0,
-
-        // indent: ['error', 4],
         'comma-dangle': [
             'error',
             {
@@ -28,6 +26,7 @@ module.exports = {
         'func-names': 0,
         'no-plusplus': 0,
         'no-restricted-syntax': 0,
+        'no-restricted-exports': 0,
         'no-underscore-dangle': 0,
         'wrap-iife': ['error', 'inside'],
 
