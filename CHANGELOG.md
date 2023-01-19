@@ -10,6 +10,8 @@ principles.
 - Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
 - Added: option to set the admin locale. This is the locale in which to display page content by default.
 - Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
+- Fixed: issue where archiving or deleting a parent node, resulted in a failed node collection retrieval, due to the strict setting.
+- Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
 - Changed: updated node packages to their latest stable version
 
 ## 0.7.17 - 2022-12-13

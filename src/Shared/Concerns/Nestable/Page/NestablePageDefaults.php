@@ -51,10 +51,12 @@ trait NestablePageDefaults
         $locale = $locale ?: app()->getLocale();
 
         if ($this->parent_id) {
-            return $this->nestableRepository()
-                ->findNestableById($this->getKey())
-                ->getParentNode()
-                ->getUrlSlug($locale) ?: '';
+
+            if(!$node = $this->nestableRepository()->findNestableById($this->getKey())) {
+                return '';
+            }
+
+            return $node->getParentNode()?->getUrlSlug($locale) ?: '';
         }
 
         return $this->defaultBaseUrlSegment($locale);

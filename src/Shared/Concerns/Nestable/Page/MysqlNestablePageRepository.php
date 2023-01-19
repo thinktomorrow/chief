@@ -30,7 +30,6 @@ class MysqlNestablePageRepository implements NestablePageRepository
         }
 
         $this->tree = new NestedTree((new NodeCollectionFactory)
-            ->strict()
             ->fromSource(new NestedTreeSource($this->getNodes()))
             ->all());
 
