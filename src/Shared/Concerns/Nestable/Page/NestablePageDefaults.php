@@ -51,8 +51,7 @@ trait NestablePageDefaults
         $locale = $locale ?: app()->getLocale();
 
         if ($this->parent_id) {
-
-            if(!$node = $this->nestableRepository()->findNestableById($this->getKey())) {
+            if (! $node = $this->nestableRepository()->findNestableById($this->getKey())) {
                 return '';
             }
 
