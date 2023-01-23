@@ -2,16 +2,16 @@
 
 namespace Thinktomorrow\Chief\Forms;
 
-use Livewire\Livewire;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Thinktomorrow\Chief\Forms\Livewire\FileUpload;
+use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
+use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
-use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
-use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
-use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
+use Thinktomorrow\Chief\Forms\Livewire\FileUpload;
 
 class FormsServiceProvider extends ServiceProvider
 {
