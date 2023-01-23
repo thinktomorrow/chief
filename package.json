@@ -34,7 +34,7 @@
     },
     "dependencies": {
         "axios": "^1.2.2",
-        "core-js": "^3.21.1",
+        "core-js": "^3.27.2",
         "cross-env": "^7.0.3",
         "lodash": "^4.17.21",
         "popper.js": "^1.16.1",
