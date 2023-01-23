@@ -29,5 +29,7 @@
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
 
+    <livewire:styles />
+
     @stack('custom-styles')
 </head>

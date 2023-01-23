@@ -111,6 +111,8 @@
 
 <script src="{{ chief_cached_asset('/chief-assets/back/js/native.js') }}"></script>
 
+<livewire:scripts />
+
 @stack('custom-scripts-after-vue')
 
 </body>
