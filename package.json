@@ -41,7 +41,7 @@
         "sortablejs": "^1.13.0",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.7",
-        "vue-multiselect": "^2.1.6",
+        "vue-multiselect": "^2.1.7",
         "vue-server-renderer": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
     },
