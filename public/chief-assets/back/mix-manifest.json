@@ -1,13 +1,7 @@
 {
-<<<<<<< HEAD
-    "/js/main.js": "/js/main.js?id=50260656756db64f1a2e91e468c2b840",
-    "/js/native.js": "/js/native.js?id=db15535dafca07deb09d86dd80b4e01d",
-    "/css/main.css": "/css/main.css?id=b97af052536551c5978c4edb6bb8762f",
-=======
-    "/js/main.js": "/js/main.js?id=063f3442c8cc9b7df921b3926fbee4fb",
-    "/js/native.js": "/js/native.js?id=628c53678d85291b865b377453e77772",
-    "/css/main.css": "/css/main.css?id=436886f1625949b9ec44e0eecdfdd579",
->>>>>>> 1f0a3eb9 (Add: first slicing file-edit (WIP))
+    "/js/main.js": "/js/main.js?id=7e2125c52b18df6c0395bdfbd3a95e6b",
+    "/js/native.js": "/js/native.js?id=e18c485c29afc4841ece4abe35f567b6",
+    "/css/main.css": "/css/main.css?id=736c34ebd7f2f7db298624e70d34f905",
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",
