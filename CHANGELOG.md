@@ -5,6 +5,9 @@ principles.
 
 ## unreleased
 
+
+## 0.7.18 - 2023-01-23
+
 - Added: show options menu on page index. Options show links to duplicate and state changes
 - Added: Edit and preview link on page index.
 - Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
