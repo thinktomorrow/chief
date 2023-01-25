@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\App\View\Components\Template;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,11 @@ class ViewServiceProvider extends ServiceProvider
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
         Blade::component('chief::manager.windows.state.windows', 'chief::window.states');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
+
+        // Template
+        Blade::component('chief::template.page-layout', 'chief::page-layout');
+        Blade::component('chief::template.template', 'chief::template');
+        Blade::component('chief::template.hero', 'chief::template.hero');
 
         // Chief components
         Blade::component('chief::components.window', 'chief-window');

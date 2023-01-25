@@ -4,6 +4,7 @@
             ? $firstItem->icon() : '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
 
         $isActive = false;
+
         foreach($items as $navItem) {
             if(isActiveUrl($navItem->url()) || isActiveUrl($navItem->url() .'/*')) {
                 $isActive = true;

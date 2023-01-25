@@ -5,31 +5,32 @@ principles.
 
 ## unreleased
 
-- Added: show options menu on page index. Options show links to duplicate and state changes
-- Added: Edit and preview link on page index.
-- Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
-- Added: option to set the admin locale. This is the locale in which to display page content by default.
-- Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
-- Fixed: issue where archiving or deleting a parent node, resulted in a failed node collection retrieval, due to the strict setting.
-- Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
-- Changed: updated node packages to their latest stable version
+-   Added: show options menu on page index. Options show links to duplicate and state changes
+-   Added: Edit and preview link on page index.
+-   Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
+-   Added: option to set the admin locale. This is the locale in which to display page content by default.
+-   Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
+-   Fixed: issue where archiving or deleting a parent node, resulted in a failed node collection retrieval, due to the strict setting.
+-   Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
+-   Changed: updated node packages to their latest stable version
+-   Changed: nav-project view moved to resources/views/template/nav/nav-project.blade.php
 
 ## 0.7.17 - 2022-12-13
 
-- Added: nestable page logic
-- Added: option to set default for admin filter fields.
-- Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
-- Fixed: title of inline nav is now displayed as section title instead of not showing at all.
-- Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins. 
+-   Added: nestable page logic
+-   Added: option to set default for admin filter fields.
+-   Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
+-   Fixed: title of inline nav is now displayed as section title instead of not showing at all.
+-   Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins.
 
 ## 0.7.16 - 2022-12-13
 
-- Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
+-   Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
 
 ## 0.7.15 - 2022-12-02
 
-- Fixed: honour order of selected options in window
-- Changed: Show offline fragments when admin views page in preview mode.
+-   Fixed: honour order of selected options in window
+-   Changed: Show offline fragments when admin views page in preview mode.
 
 ## 0.7.14 - 2022-11-03
 

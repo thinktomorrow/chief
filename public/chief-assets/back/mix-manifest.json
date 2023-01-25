@@ -1,7 +1,7 @@
 {
-    "/js/main.js": "/js/main.js?id=5671e0fc075488e364b0164227213539",
+    "/js/main.js": "/js/main.js?id=47b77ee62fb0c675d9abacee6d3687a7",
     "/js/native.js": "/js/native.js?id=e18c485c29afc4841ece4abe35f567b6",
-    "/css/main.css": "/css/main.css?id=f1e7e30a8bfbe47e4254b1a0c4c17326",
+    "/css/main.css": "/css/main.css?id=19f7ef2846ec387ff5c3df88cc68738b",
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",
@@ -11,5 +11,6 @@
     "/img/favicon/favicon.ico": "/img/favicon/favicon.ico?id=7816506d12dd1a41d7233d284bcd8310",
     "/img/favicon/mstile-150x150.png": "/img/favicon/mstile-150x150.png?id=30ba963f7cdbf9a41b2a3edb114439d8",
     "/img/favicon/safari-pinned-tab.svg": "/img/favicon/safari-pinned-tab.svg?id=2f23ace895c126784332e441e735e633",
-    "/img/favicon/site.webmanifest": "/img/favicon/site.webmanifest?id=d1439a86db8574277a77dc7da9c40fd3"
+    "/img/favicon/site.webmanifest": "/img/favicon/site.webmanifest?id=d1439a86db8574277a77dc7da9c40fd3",
+    "/img/social_share.png": "/img/social_share.png?id=56309af73c58b95dcf94b8f219f7db76"
 }

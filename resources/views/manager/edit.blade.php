@@ -1,10 +1,15 @@
-<x-chief::page>
-    <x-slot name="header">
-        <div class="flex flex-wrap items-end justify-between gap-6">
+{{-- <x-chief::page> --}}
+<x-chief::template :title="$resource->getPageTitle($model)">
+    <x-slot name="hero">
+        <x-chief::template.hero>
             @if($forms->has('pagetitle'))
-                <x-chief-form::forms id="pagetitle" />
+                <x-slot name="customTitle">
+                    <x-chief-form::forms id="pagetitle" />
+                </x-slot>
             @else
-                <h1 class="h1 display-dark">{{ $resource->getPageTitle($model) }}</h1>
+                <x-slot name="title">
+                    {{ $resource->getPageTitle($model) }}
+                </x-slot>
             @endif
 
             @if(count(config('chief.locales')) > 1)
@@ -14,23 +19,31 @@
                     @endforeach
                 </tabs>
             @endif
+        </x-chief::template.hero>
+    </x-slot>
+
+    <div class="container">
+        <div class="row-start-start gutter-3">
+            <div class="w-full space-y-6 lg:w-2/3">
+                <x-chief-form::forms position="main" />
+
+                @adminCan('fragments-index', $model)
+                    <x-chief::fragments :owner="$model" />
+                @endAdminCan
+
+                <x-chief-form::forms position="main-bottom" />
+            </div>
+
+            <div class="w-full space-y-6 lg:w-1/3">
+                {{-- TODO: add sidebar config to template --}}
+                <x-chief-form::forms position="aside-top" />
+                <x-chief::window.states />
+                <x-chief::window.links />
+                <x-chief-form::forms position="aside" />
+            </div>
         </div>
-    </x-slot>
-
-    <x-chief-form::forms position="main" />
-
-    @adminCan('fragments-index', $model)
-        <x-chief::fragments :owner="$model" />
-    @endAdminCan
-
-    <x-chief-form::forms position="main-bottom" />
-
-    <x-slot name="aside">
-        <x-chief-form::forms position="aside-top" />
-        <x-chief::window.states />
-        <x-chief::window.links />
-        <x-chief-form::forms position="aside" />
-    </x-slot>
+    </div>
 
     @include('chief::manager._edit.state-modals-and-redactor')
-</x-chief::page>
+</x-chief::template>
+{{-- </x-chief::page> --}}
