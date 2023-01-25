@@ -57,11 +57,11 @@
                     data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
                     class="shrink-0 p-2 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                 >
-                    <span class="inline-flex items-center justify-center w-6 h-6">
+                    <div class="flex items-center justify-center w-6 h-6">
                         <span class="p-1 rounded-lg hover:bg-grey-200 text-grey-800">
                             <svg width="16" height="16"><use xlink:href="#icon-chevron-down"></use></svg>
                         </span>
-                    </span>
+                    </div>
                 </div>
             @endif
         </div>

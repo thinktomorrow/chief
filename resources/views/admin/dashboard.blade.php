@@ -7,12 +7,16 @@
 @section('content')
     <div class="container">
         <div class="row-start-start gutter-3">
-            <div class="w-full prose-spacing lg:w-1/2">
-                <h1 class="h1 display-dark"> Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }} </h1>
+            <div class="w-full">
+                <div class="max-w-2xl space-y-4">
+                    <h1 class="h1 display-dark">
+                        Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}
+                    </h1>
 
-                <p class="font-medium text-grey-500">
-                    Don't try to follow trends. Create them.
-                </p>
+                    <p class="font-medium text-grey-500">
+                        Don't try to follow trends. Create them.
+                    </p>
+                </div>
             </div>
 
             <div class="w-full lg:w-1/2">

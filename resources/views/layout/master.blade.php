@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     @include('chief::layout._partials.head')
 
