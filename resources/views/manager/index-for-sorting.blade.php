@@ -16,7 +16,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-3">
+        <div class="row-start-start gutter-3">
             <div class="w-full lg:w-2/3">
                 <div class="card">
                     <div

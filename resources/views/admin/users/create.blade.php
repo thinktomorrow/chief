@@ -3,7 +3,7 @@
 @section('page-title', 'Nieuwe gebruiker uitnodigen')
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title', 'Nieuwe gebruiker')
 
@@ -19,8 +19,8 @@
 @endsection
 
 @section('content')
-    <div class="container-sm">
-        <div class="row">
+    <div class="container max-w-3xl">
+        <div class="row-start-start">
             <div class="w-full">
                 <div class="card">
                     <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">

@@ -22,7 +22,7 @@
             :id="'filegroup-' + reference + '-' + settings.locale"
             :class="{'sorting-mode' : sort.isReordering}"
         >
-            <div class="row gutter-2">
+            <div class="row-start-start gutter-2">
                 <div
                     v-for="(item, index) in items"
                     class="w-1/3 draggable-item"

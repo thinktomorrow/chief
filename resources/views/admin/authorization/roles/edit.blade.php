@@ -3,7 +3,7 @@
 @section('page-title', $role->name)
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title', $role->name)
 
@@ -19,8 +19,8 @@
 @endsection
 
 @section('content')
-    <div class="container-sm">
-        <div class="row">
+    <div class="container max-w-3xl">
+        <div class="row-start-start">
             <div class="w-full">
                 <div class="card">
                     <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">

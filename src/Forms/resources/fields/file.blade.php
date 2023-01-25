@@ -12,7 +12,7 @@
         v-cloak
     >
         <div id="filegroup-{{ $getKey() }}-{{$locale}}" :class="{'sorting-mode' : reorder}" class="space-y-4">
-            <div v-show="items.length > 0" class="row gutter-2">
+            <div v-show="items.length > 0" class="row-start-start gutter-2">
                 <div
                     v-for="(item, index) in items"
                     class="w-full draggable-item"

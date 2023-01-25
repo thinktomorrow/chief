@@ -26,7 +26,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-3">
+        <div class="row-start-start gutter-3">
             <div class="w-full {{ isset($aside) ? 'lg:w-2/3' : null }}">
                 <div class="space-y-6">
                     {!! $slot !!}

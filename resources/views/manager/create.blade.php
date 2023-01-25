@@ -5,7 +5,7 @@
 @endsection
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         <x-chief::page.header>
             @slot('title')
                 {{ $resource->getLabel() }}
@@ -25,8 +25,8 @@
 @endsection
 
 @section('content')
-    <div class="container-sm">
-        <div class="row">
+    <div class="container max-w-3xl">
+        <div class="row-start-start">
             <div class="w-full">
 
                 <div class="card">

@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-3">
+        <div class="row-start-start gutter-3">
             <div class="w-full prose-spacing lg:w-1/2">
                 <h1 class="h1 display-dark"> Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }} </h1>
 

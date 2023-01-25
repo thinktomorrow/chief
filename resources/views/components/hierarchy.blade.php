@@ -5,11 +5,11 @@
     $iconMarginTop = $iconMarginTop ?? '0px';
 @endphp
 
-<div
-    data-sortable-menu
-    data-sortable-endpoint="#"
-    class="divide-y divide-grey-100 {{ $isFirstLevel ? null : 'hierarchy-sub-level' }} {{ $level > 1 ? 'pl-8' : null }}"
->
+<div data-sortable-menu data-sortable-endpoint="#" @class([
+    'divide-y divide-grey-100',
+    'hierarchy-sub-level' => !$isFirstLevel,
+    'pl-8' => $level > 1,
+])>
     <div data-sortable-id="xxx" data-sortable-handle class="relative flex py-3">
         <div
             class="hidden pr-3 shrink-0 text-grey-700 hierarchy-sub-level:block"

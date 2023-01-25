@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row-start-start">
     <div class="w-full">
         <div class="card">
             <div class="-my-4 divide-y divide-grey-100">

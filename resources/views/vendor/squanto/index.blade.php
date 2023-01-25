@@ -1,5 +1,5 @@
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title')
                 Vertalingen
@@ -15,7 +15,7 @@
 @stop
 
 <x-squanto::app-layout>
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         <div class="divide-y card divide-grey-100">
             @foreach($pages as $page)
                 @php

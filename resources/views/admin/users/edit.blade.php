@@ -3,7 +3,7 @@
 @section('page-title', $user->fullname)
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title', $user->fullname)
 
@@ -53,8 +53,8 @@
         </form>
     @endif
 
-    <div class="container-sm">
-        <div class="row">
+    <div class="container max-w-3xl">
+        <div class="row-start-start">
             <div class="w-full">
                 <div class="card">
                     <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST">

@@ -3,7 +3,7 @@
 @section('page-title', 'Audit')
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title', 'Audit for '. $causer->fullname . '')
 
@@ -17,7 +17,7 @@
 @endsection
 
 @section('content')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @include('chief::admin.audit._rows')
     </div>
 @stop

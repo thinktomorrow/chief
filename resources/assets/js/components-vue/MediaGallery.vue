@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div data-overflow-scroll class="-mx-3 overflow-scroll row max-h-1/2">
+        <div data-overflow-scroll class="-mx-3 overflow-scroll row max-h-[50vh]">
             <div class="flex justify-center w-full" v-if="isLoading && assets.length < 1">
                 <svg
                     width="24"

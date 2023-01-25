@@ -18,7 +18,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row gutter-3">
+        <div class="row-start-start gutter-3">
             <div class="w-full lg:w-2/3">
                 <div class="card">
                     <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting">
@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <div class="row gutter-3">
+                        <div class="row-start-start gutter-3">
                             @foreach($assets as $index => $asset)
                                 <div class="w-1/2 xl:w-1/3 2xl:w-1/4">
                                     @include('chief::admin.mediagallery.item')

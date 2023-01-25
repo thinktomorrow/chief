@@ -3,7 +3,7 @@
 @section('page-title', 'Menu ' . $menu->label())
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title', 'Menu ' . $menu->label())
 
@@ -23,8 +23,8 @@
 @endsection
 
 @section('content')
-    <div class="container-sm">
-        <div class="row">
+    <div class="container max-w-3xl">
+        <div class="row-start-start">
             @if($menuItems->isEmpty() )
                 <div class="w-full prose prose-spacing prose-dark">
                     <p>Momenteel zijn er nog geen menu items toegevoegd.</p>

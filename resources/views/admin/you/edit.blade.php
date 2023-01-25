@@ -3,7 +3,7 @@
 @section('page-title', $user->fullname)
 
 @section('header')
-    <div class="container-sm">
+    <div class="container max-w-3xl">
         @component('chief::layout._partials.header')
             @slot('title', 'Bewerk jouw profiel')
 
@@ -17,8 +17,8 @@
 @endsection
 
 @section('content')
-    <div class="container-sm">
-        <div class="row gutter-3">
+    <div class="container max-w-3xl">
+        <div class="row-start-start gutter-3">
             <div class="w-full">
                 <div class="card">
                     <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">

@@ -1,5 +1,5 @@
 <div>
-    <div class="row gutter-4">
+    <div class="row-start-start gutter-4">
         <x-chief-form::formgroup id="firstname" label="Voornaam" class="w-full lg:w-1/2" required>
             <input id="firstname" type="text" name="firstname" value="{{ old('firstname', $user->firstname) }}">
             <x-chief-form::formgroup.error error-ids="firstname"></x-chief-form::formgroup.error>
