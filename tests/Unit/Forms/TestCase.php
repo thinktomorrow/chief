@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms;
 
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Providers\ViewServiceProvider;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
@@ -17,6 +18,7 @@ class TestCase extends OrchestraTestCase
         return [
             ViewServiceProvider::class,
             FormsServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 

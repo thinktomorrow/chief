@@ -16,8 +16,8 @@
     <!-- hide vue elements until vue is loaded -->
     <style type="text/css">
         .v-loading { display: none !important; }
-        [v-cloak].v-loading { display: block !important; }
-        [v-cloak] { display: none !important; }
+        /*[v-cloak].v-loading { display: block !important; }*/
+        /*[v-cloak] { display: none !important; }*/
     </style>
 
     @include('chief::layout._partials.favicon')

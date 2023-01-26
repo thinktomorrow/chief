@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Managers\Manager;
 class Repeat extends Component implements Field
 {
     use Fields\Concerns\HasEndpoint;
+    use Fields\Concerns\HasParentField;
 
     protected string $view = 'chief-form::fields.repeat.repeat';
     protected string $sectionView = 'chief-form::fields.repeat.repeat-section';
@@ -77,5 +78,10 @@ class Repeat extends Component implements Field
     public function getSectionView(): string
     {
         return $this->sectionView;
+    }
+
+    public function getPrefixedKey(?string $locale = null): string
+    {
+        return Fields\Common\FormKey::replaceBracketsByDots($this->getName($locale));
     }
 }

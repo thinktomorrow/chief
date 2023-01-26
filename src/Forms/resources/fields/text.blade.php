@@ -2,9 +2,11 @@
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
+    {{ dump($this->formDataIdentifier($getName(),$locale ?? null)) }}
     <input
+        wire:model="{{ $this->formDataIdentifier($getName(),$locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
-        id="{{ $getElementId($locale ?? null) }}"
+{{--        id="{{ $getElementId($locale ?? null) }}"--}}
         placeholder="{{ $getPlaceholder($locale ?? null) }}"
         value="{{ $getActiveValue($locale ?? null) }}"
         {{ $hasAutofocus() ? 'autofocus' : '' }}
