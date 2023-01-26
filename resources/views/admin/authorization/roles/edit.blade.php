@@ -1,38 +1,23 @@
-@extends('chief::layout.master')
+@php
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar overzicht', route('chief.back.roles.index'));
+    $title = ucfirst($role->name);
+@endphp
 
-@section('page-title', $role->name)
+<x-chief::template :title="$title">
+    <x-slot name="hero">
+        <x-chief::template.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+            <button form="editForm" type="submit" class="btn btn-primary">Rol opslaan</button>
+        </x-chief::template.hero>
+    </x-slot>
 
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', $role->name)
+    <x-chief::template.grid class="max-w-3xl">
+        <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST" class="card">
+            @csrf
+            @method('put')
 
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.roles.index') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Terug naar rechten</x-chief-icon-label>
-                </a>
-            @endslot
-
-            <button form="editForm" type="submit" class="btn btn-primary">Opslaan</button>
-        @endcomponent
-    </div>
-@endsection
-
-@section('content')
-    <div class="container max-w-3xl">
-        <div class="row-start-start">
-            <div class="w-full">
-                <div class="card">
-                    <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
-                        @csrf
-                        @method('put')
-
-                        <div class="space-y-6">
-                            @include('chief::admin.authorization.roles._form')
-                        </div>
-                    </form>
-                </div>
+            <div class="space-y-6">
+                @include('chief::admin.authorization.roles._form')
             </div>
-        </div>
-    </div>
-@endsection
+        </form>
+    </x-chief::template.grid>
+</x-chief::template>

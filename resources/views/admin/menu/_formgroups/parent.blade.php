@@ -1,7 +1,6 @@
 <x-chief-form::formgroup id="niveau" label="Niveau" required>
-
     <x-slot name="description">
-        <p>Zet dit item op het hoogste niveau of plaats het onder een bestaand.</p>
+        Zet dit item op het hoogste niveau of plaats het onder een bestaand.
     </x-slot>
 
     <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">

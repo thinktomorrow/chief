@@ -8,12 +8,4 @@ class BreadCrumb
     public function __construct(public readonly string $label, public readonly ?string $url = null)
     {
     }
-
-    public function toArray(): array
-    {
-        return [
-            'label' => $this->label,
-            'url' => $this->url,
-        ];
-    }
 }

@@ -1,39 +1,27 @@
-@extends('chief::layout.master')
+<x-chief::template title="Rollen">
+    <x-slot name="hero">
+        <x-chief::template.hero title="Rollen" class="max-w-3xl">
+            <a href="{{ route('chief.back.roles.create') }}" title="Rol toevoegen" class="btn btn-primary">
+                Rol toevoegen
+            </a>
+        </x-chief::template.hero>
+    </x-slot>
 
-@section('page-title', 'Rollen')
-
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Rollen')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-
-            <a href="{{ route('chief.back.roles.create') }}" class="btn btn-primary">Nieuwe rol toevoegen</a>
-        @endcomponent
-    </div>
-@endsection
-
-@section('content')
-    <div class="container max-w-3xl">
-        <div class="row-start-start">
-            <div class="w-full">
-                <div class="card">
-                    <div class="-my-4 divide-y divide-grey-100">
-                        @foreach($roles as $role)
-                            <a
-                                href="{{ route('chief.back.roles.edit', $role->id) }}"
-                                title="Edit {{ $role->name }}"
-                                class="block py-4 display-dark display-base"
-                            > {{ ucfirst($role->name) }} </a>
-                        @endforeach
-                    </div>
-                </div>
+    <x-chief::template.grid class="max-w-3xl">
+        <div class="card">
+            <div class="-my-4 divide-y divide-grey-100">
+                @foreach($roles as $role)
+                    <a
+                        href="{{ route('chief.back.roles.edit', $role->id) }}"
+                        title="{{ $role->name }} aanpassen"
+                        class="block py-4"
+                    >
+                        <span class="font-medium body-dark hover:underline">
+                            {{ ucfirst($role->name) }}
+                        </span>
+                    </a>
+                @endforeach
             </div>
         </div>
-    </div>
-@stop
+    </x-chief::template.grid>
+</x-chief::template>

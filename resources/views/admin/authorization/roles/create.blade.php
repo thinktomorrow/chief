@@ -1,37 +1,21 @@
-@extends('chief::layout.master')
+@php
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar overzicht', route('chief.back.roles.index'));
+@endphp
 
-@section('page-title', 'Nieuwe rol toevoegen')
-
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Nieuwe rol toevoegen')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.roles.index') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Terug naar rechten</x-chief-icon-label>
-                </a>
-            @endslot
-
+<x-chief::template title="Nieuwe rol toevoegen">
+    <x-slot name="hero">
+        <x-chief::template.hero title="Nieuwe rol toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <button form="createForm" type="submit" class="btn btn-primary">Voeg nieuwe rol toe</button>
-        @endcomponent
-    </div>
-@endsection
+        </x-chief::template.hero>
+    </x-slot>
 
-@section('content')
-    <div class="container max-w-3xl">
-        <div class="row-start-start">
-            <div class="w-full">
-                <div class="card">
-                    <form id="createForm" action="{{ route('chief.back.roles.store') }}" method="POST">
-                        @csrf
+    <x-chief::template.grid class="max-w-3xl">
+        <form id="createForm" action="{{ route('chief.back.roles.store') }}" method="POST" class="card">
+            @csrf
 
-                        <div class="space-y-6">
-                            @include('chief::admin.authorization.roles._form')
-                        </div>
-                    </form>
-                </div>
+            <div class="space-y-6">
+                @include('chief::admin.authorization.roles._form')
             </div>
-        </div>
-    </div>
-@endsection
+        </form>
+    </x-chief::template.grid>
+</x-chief::template>

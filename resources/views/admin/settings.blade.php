@@ -1,40 +1,20 @@
-@extends('chief::layout.master')
-
-@section('page-title', 'settings')
-
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Settings')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-
+<x-chief::template title="Settings">
+    <x-slot name="hero">
+        <x-chief::template.hero title="Settings" class="max-w-3xl">
             <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-        @endcomponent
-    </div>
-@endsection
+        </x-chief::template.hero>
+    </x-slot>
 
-@section('content')
-    <div class="container max-w-3xl">
-        <div class="row-start-start">
-            <div class="w-full">
-                <div class="card">
-                    <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
-                        @csrf
-                        @method('put')
+    <x-chief::template.grid class="max-w-3xl">
+        <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="card">
+            @csrf
+            @method('put')
 
-                        <div class="space-y-6">
-                            @foreach($fields as $field)
-                                {!! $field->render() !!}
-                            @endforeach
-                        </div>
-                    </form>
-                </div>
+            <div class="space-y-6">
+                @foreach($fields as $field)
+                    {!! $field->render() !!}
+                @endforeach
             </div>
-        </div>
-    </div>
-@endsection
+        </form>
+    </x-chief::template.grid>
+</x-chief::template>

@@ -4128,16 +4128,16 @@
         },
         {
             "name": "spatie/laravel-sitemap",
-            "version": "6.2.4",
+            "version": "6.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sitemap.git",
-                "reference": "8531830d2f3485da9ef1dbd87f1521e183cd4a28"
+                "reference": "903d9860b81b9c99622c930af628f9695f3283be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sitemap/zipball/8531830d2f3485da9ef1dbd87f1521e183cd4a28",
-                "reference": "8531830d2f3485da9ef1dbd87f1521e183cd4a28",
+                "url": "https://api.github.com/repos/spatie/laravel-sitemap/zipball/903d9860b81b9c99622c930af628f9695f3283be",
+                "reference": "903d9860b81b9c99622c930af628f9695f3283be",
                 "shasum": ""
             },
             "require": {
@@ -4190,7 +4190,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-sitemap/tree/6.2.4"
+                "source": "https://github.com/spatie/laravel-sitemap/tree/6.2.5"
             },
             "funding": [
                 {
@@ -4198,7 +4198,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-01-24T08:44:41+00:00"
+            "time": "2023-01-26T13:07:05+00:00"
         },
         {
             "name": "spatie/robots-txt",
@@ -10210,16 +10210,16 @@
         },
         {
             "name": "spatie/laravel-ray",
-            "version": "1.32.0",
+            "version": "1.32.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ray.git",
-                "reference": "05fc99dba671c5d7478cb0400fe7152d7f00712e"
+                "reference": "8ecf893a7af385e72b1f63cbd318fb00e2dca340"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/05fc99dba671c5d7478cb0400fe7152d7f00712e",
-                "reference": "05fc99dba671c5d7478cb0400fe7152d7f00712e",
+                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/8ecf893a7af385e72b1f63cbd318fb00e2dca340",
+                "reference": "8ecf893a7af385e72b1f63cbd318fb00e2dca340",
                 "shasum": ""
             },
             "require": {
@@ -10279,7 +10279,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-ray/issues",
-                "source": "https://github.com/spatie/laravel-ray/tree/1.32.0"
+                "source": "https://github.com/spatie/laravel-ray/tree/1.32.1"
             },
             "funding": [
                 {
@@ -10291,7 +10291,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-01-11T10:37:27+00:00"
+            "time": "2023-01-26T13:02:05+00:00"
         },
         {
             "name": "spatie/macroable",

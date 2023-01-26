@@ -1,49 +1,40 @@
-@extends('chief::layout.master')
+@php
+    $title = ucfirst($menu->label());
+    $breadcrumb = null;
 
-@section('page-title', 'Menu ' . $menu->label())
+    if(\Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1) {
+        $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar menu overzicht', route('chief.back.menus.index'));
+    }
+@endphp
 
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Menu ' . $menu->label())
-
-            @if(Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1)
-                @slot('breadcrumbs')
-                    <a href="{{ route('chief.back.menus.index') }}" class="link link-primary">
-                        <x-chief-icon-label type="back">Menu overzicht</x-chief-icon-label>
-                    </a>
-                @endslot
-            @endif
-
-            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
+<x-chief::template :title="$title">
+    <x-slot name="hero">
+        <x-chief::template.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+            <a
+                href="{{ route('chief.back.menuitem.create', $menu->key()) }}"
+                title="Menu item toevoegen"
+                class="btn btn-primary"
+            >
                 <x-chief-icon-label type="add">Menu item toevoegen</x-chief-icon-label>
             </a>
-        @endcomponent
-    </div>
-@endsection
+        </x-chief::template.hero>
+    </x-slot>
 
-@section('content')
-    <div class="container max-w-3xl">
-        <div class="row-start-start">
+    <x-chief::template.grid class="max-w-3xl">
+        <div class="card">
             @if($menuItems->isEmpty() )
-                <div class="w-full prose prose-spacing prose-dark">
-                    <p>Momenteel zijn er nog geen menu items toegevoegd.</p>
-                </div>
+                <p class="body-dark">Momenteel zijn er nog geen menu items toegevoegd.</p>
             @else
-                <div class="w-full">
-                    <div class="card">
-                        <div class="-my-3 divide-y divide-grey-100">
-                            @foreach($menuItems as $item)
-                                <x-chief-hierarchy
-                                    :item="$item"
-                                    view-path="chief::admin.menu._partials.menu-item"
-                                    iconMarginTop="0.2rem"
-                                ></x-chief-hierarchy>
-                            @endforeach
-                        </div>
-                    </div>
+                <div class="-my-3 divide-y divide-grey-100">
+                    @foreach($menuItems as $item)
+                        <x-chief-hierarchy
+                            :item="$item"
+                            view-path="chief::admin.menu._partials.menu-item"
+                            iconMarginTop="0.2rem"
+                        />
+                    @endforeach
                 </div>
             @endif
         </div>
-    </div>
-@stop
+    </x-chief::template.grid>
+</x-chief::template>

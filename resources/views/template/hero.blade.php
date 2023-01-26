@@ -10,7 +10,7 @@
     ])
 
     @if ($title || $customTitle || $slot->isNotEmpty())
-        <div class="flex flex-wrap items-end justify-between gap-6 pb-8">
+        <div class="flex items-end justify-between pb-8 gap-y-4 gap-x-6">
             @if ($customTitle)
                 {{ $customTitle }}
             @else
@@ -18,7 +18,7 @@
             @endif
 
             @if ($slot->isNotEmpty())
-                <div>
+                <div class="shrink-0">
                     {{ $slot }}
                 </div>
             @endif

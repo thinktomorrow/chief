@@ -1,6 +1,6 @@
 <x-chief-form::formgroup id="label" label="Label" required>
     <x-slot name="description">
-        <p>Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.</p>
+        Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.
     </x-slot>
 
     @if(count(config('chief.locales')) > 1)
@@ -9,17 +9,16 @@
                 <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
                     <div class="space-y-2">
                         <input
-                                type="text"
-                                name="trans[{{ $locale }}][label]"
-                                id="trans-{{ $locale }}-label"
-                                placeholder="Menu label"
-                                value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
+                            type="text"
+                            name="trans[{{ $locale }}][label]"
+                            id="trans-{{ $locale }}-label"
+                            placeholder="Menu label"
+                            value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
                         >
-
                         @error('trans.' . $locale . '.label')
-                        <x-chief-inline-notification type="error">
-                            {{ $message}}
-                        </x-chief-inline-notification>
+                            <x-chief-inline-notification type="error">
+                                {{ $message}}
+                            </x-chief-inline-notification>
                         @enderror
                     </div>
                 </tab>
@@ -29,17 +28,17 @@
         @foreach(config('chief.locales') as $locale)
             <div class="space-y-2">
                 <input
-                        type="text"
-                        name="trans[{{ $locale }}][label]"
-                        id="trans-{{ $locale }}-label"
-                        placeholder="Menu label"
-                        value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
+                    type="text"
+                    name="trans[{{ $locale }}][label]"
+                    id="trans-{{ $locale }}-label"
+                    placeholder="Menu label"
+                    value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
                 >
 
                 @error('trans.' . $locale . '.label')
-                <x-chief-inline-notification type="error">
-                    {{ $message}}
-                </x-chief-inline-notification>
+                    <x-chief-inline-notification type="error">
+                        {{ $message}}
+                    </x-chief-inline-notification>
                 @enderror
             </div>
         @endforeach

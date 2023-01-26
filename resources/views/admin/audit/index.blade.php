@@ -1,23 +1,9 @@
-@extends('chief::layout.master')
+<x-chief::template title="Audit">
+    <x-slot name="hero">
+        <x-chief::template.hero title="Audit" class="max-w-3xl"/>
+    </x-slot>
 
-@section('page-title','Audit')
-
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Audit')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-        @endcomponent
-    </div>
-@endsection
-
-@section('content')
-    <div class="container max-w-3xl">
+    <x-chief::template.grid class="max-w-3xl">
         @include('chief::admin.audit._rows')
-    </div>
-@stop
+    </x-chief::template.grid>
+</x-chief::template>

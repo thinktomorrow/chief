@@ -1,37 +1,21 @@
-@extends('chief::layout.master')
+@php
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar admins', route('chief.back.users.index'));
+@endphp
 
-@section('page-title', 'Nieuwe gebruiker uitnodigen')
-
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Nieuwe gebruiker')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.users.index') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Terug naar admins</x-chief-icon-label>
-                </a>
-            @endslot
-
+<x-chief::template title="Nieuwe gebruiker uitnodigen">
+    <x-slot name="hero">
+        <x-chief::template.hero title="Nieuwe gebruiker uitnodigen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <button form="createForm" type="submit" class="btn btn-primary">Uitnodiging versturen</button>
-        @endcomponent
-    </div>
-@endsection
+        </x-chief::template.hero>
+    </x-slot>
 
-@section('content')
-    <div class="container max-w-3xl">
-        <div class="row-start-start">
-            <div class="w-full">
-                <div class="card">
-                    <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">
-                        @csrf
+    <x-chief::template.grid class="max-w-3xl">
+        <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST" class="card">
+            @csrf
 
-                        <div class="space-y-6">
-                            @include('chief::admin.users._form')
-                        </div>
-                    </form>
-                </div>
+            <div class="space-y-6">
+                @include('chief::admin.users._form')
             </div>
-        </div>
-    </div>
-@endsection
+        </form>
+    </x-chief::template.grid>
+</x-chief::template>
