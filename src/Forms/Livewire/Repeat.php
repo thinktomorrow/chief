@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Forms\Livewire;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\Query\FindForm;
 
@@ -46,12 +45,11 @@ class Repeat extends Component
         data_set($this->formData, $this->getPrefixedFieldKey(), $this->field->getActiveValue() ?? [ $this->getDefaultRow() ]);
 
 //        $this->formData = [$this->fieldKey => ];
-if($this->fieldKey == 'inner') {
-    dd($this->field->getValue());
+        if ($this->fieldKey == 'inner') {
+            dd($this->field->getValue());
 
-        dd($this->formData);
-
-}
+            dd($this->formData);
+        }
 //        if($this->fieldKey != 'labels') {
 //            dd($this->fieldKey);
 //        }
@@ -66,7 +64,7 @@ if($this->fieldKey == 'inner') {
     {
         $row = [];
 
-        foreach($this->field->getComponents() as $component) {
+        foreach ($this->field->getComponents() as $component) {
             $row[$component->getId()] = $component->getValue();
         }
 
@@ -83,11 +81,11 @@ if($this->fieldKey == 'inner') {
     {
         /** @var \Thinktomorrow\Chief\Forms\Form $form */
         $form = app(FindForm::class)->findByModel($this->model, $this->formId);
-$this->count++;
+        $this->count++;
         $field = $form->getAllFields()->find($this->fieldKey);
 
         // In an active session, the formData property is the true value state, instead of the initial value state.
-        if(count($this->formData) > 0) {
+        if (count($this->formData) > 0) {
             $field->value($this->getRows());
         }
 
@@ -150,7 +148,8 @@ $this->count++;
 
     private function syncWithForm()
     {
-        $this->emitUp('repeatValuesChanged',
+        $this->emitUp(
+            'repeatValuesChanged',
             $this->getPrefixedFieldKey(),
             $this->getRows()
         );
@@ -158,8 +157,9 @@ $this->count++;
 
     public function repeatValuesChanged(string $fieldId, array $values)
     {
-        if(!isset($this->formData[$fieldId])) {
+        if (! isset($this->formData[$fieldId])) {
             dd($this->formData, $fieldId);
+
             throw new \InvalidArgumentException('No nested repeat formdata key ['.$fieldId.'] found in the form.');
         }
 

@@ -10,7 +10,7 @@ trait HasWiredInput
     {
         $prefix = (isset($this->prefix) ? $this->prefix.'.' : '');
 
-        return "formData.{$prefix}{$this->formDataIdentifierSegment($name,$locale)}";
+        return "formData.{$prefix}{$this->formDataIdentifierSegment($name, $locale)}";
     }
 
     private function formDataIdentifierSegment(string $name, ?string $locale = null): ?string
