@@ -38,5 +38,20 @@
         </x-slot>
     </x-chief::template.grid>
 
-    @include('chief::manager._edit.state-modals-and-redactor')
+    @push('portals')
+        @adminCan('delete', $model)
+            @include('chief::manager._transitions.modals.delete-modal')
+        @endAdminCan
+
+        @adminCan('archive', $model)
+            @include('chief::manager._transitions.modals.archive-modal')
+        @endAdminCan
+    @endpush
+
+    @include('chief::components.file-component')
+    @include('chief::components.filesupload-component')
+
+    @push('custom-scripts-after-vue')
+        @include('chief::layout._partials.editor-script')
+    @endpush
 </x-chief::template>

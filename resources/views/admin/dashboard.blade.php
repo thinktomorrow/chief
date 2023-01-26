@@ -1,61 +1,28 @@
-<x-chief::template>
+@php
+    $widgets = app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)
+        ->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))
+        ->get())
+@endphp
+
+<x-chief::template title="Dashboard">
+    <x-slot name="hero">
+        <x-chief::template.hero :title="'Welkom op je dashboard, ' . ucfirst(Auth::user()->firstname)"/>
+    </x-slot>
+
     <div class="container">
         <div class="row-start-start gutter-3">
             <div class="w-full">
-                <div class="max-w-2xl space-y-4">
-                    <h1 class="h1 display-dark">
-                        Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}
-                    </h1>
+                <p class="font-medium text-grey-500">
+                    Don't try to follow trends. Create them.
+                </p>
+            </div>
 
-                    <p class="font-medium text-grey-500">
-                        Don't try to follow trends. Create them.
-                    </p>
+            @if ($widgets)
+                {{-- TODO: widgets should be an array/collection instead of a string. That way it's possible to render them in a grid. --}}
+                <div class="w-full">
+                    {!! $widgets !!}
                 </div>
-            </div>
-
-            <div class="w-full lg:w-1/2">
-                @php
-                    $widgets = app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)
-                        ->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))
-                        ->get())
-                @endphp
-
-                {!! $widgets !!}
-            </div>
+            @endif
         </div>
     </div>
 </x-chief-template>
-
-{{-- @extends('chief::layout.master')
-
-@section('page-title')
-    Dashboard
-@stop
-
-@section('content')
-    <div class="container">
-        <div class="row-start-start gutter-3">
-            <div class="w-full">
-                <div class="max-w-2xl space-y-4">
-                    <h1 class="h1 display-dark">
-                        Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}
-                    </h1>
-
-                    <p class="font-medium text-grey-500">
-                        Don't try to follow trends. Create them.
-                    </p>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-1/2">
-                @php
-                    $widgets = app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)
-                        ->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))
-                        ->get())
-                @endphp
-
-                {!! $widgets !!}
-            </div>
-        </div>
-    </div>
-@stop --}}
