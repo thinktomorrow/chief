@@ -28,11 +28,13 @@
     @stack('custom-styles')
 </head>
 <body class="min-h-screen bg-grey-100">
-    {{ $slot }}
+    <main id="main">
+        {{ $slot }}
+
+        @stack('portals')
+    </main>
 
     @include('chief::template._partials.symbols')
-
-    @stack('portals')
 
     <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
     <script src="{{ asset('assets/back/js/vendor/slim.min.js') }}"></script>

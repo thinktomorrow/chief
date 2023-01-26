@@ -32,7 +32,7 @@
                 @endif
 
                 @if(!$node->showOnline())
-                    <span class="inline mr-1 label label-xs label-warning">Offline</span>
+                    <span class="inline mr-1 label label-xs label-error">Offline</span>
                 @endif
             </a>
         </div>

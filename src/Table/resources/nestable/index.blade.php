@@ -4,7 +4,7 @@
 
 <x-chief::template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title">
+        <x-chief::template.hero :title="$title" :breadcrumbs="[$resource->getIndexBreadCrumb()]">
             @adminCan('create')
                 <a
                     href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}"
@@ -17,9 +17,9 @@
         </x-chief::template.hero>
     </x-slot>
 
-    <div class="container">
-        @if (!$tree->isEmpty())
-            <div class="card">
+    <x-chief::template.grid>
+        <div class="card">
+            @if (!$tree->isEmpty())
                 <div
                     data-sortable
                     data-sortable-group-id="{{ $root?->getId() }}"
@@ -33,9 +33,7 @@
                         @include('chief-table::nestable.node', ['node' => $node, 'level' => 0])
                     @endforeach
                 </div>
-            </div>
-        @else
-            <div class="card">
+            @else
                 <p class="body-dark">
                     Nog geen items toegevoegd.
                     <a
@@ -44,7 +42,15 @@
                         class="link link-primary"
                     >Voeg een eerste item toe</a>.
                 </p>
-            </div>
+            @endif
+        </div>
+
+        @if ($resource->showIndexSidebarAside())
+            <x-slot name="aside">
+                @include('chief::template.index.default-sidebar')
+            </x-slot>
+        @else
+            @include('chief::template.index.inline-sidebar')
         @endif
-    </div>
+    </x-chief::template.grid>
 </x-chief:template>

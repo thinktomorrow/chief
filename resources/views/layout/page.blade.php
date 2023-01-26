@@ -16,7 +16,7 @@
                 {!! $header !!}
             @else
                 <div class="space-y-2">
-                    @include('chief::template._partials.breadcrumbs')
+                    <x-chief::page.breadcrumbs />
 
                     {!! $header !!}
                 </div>
