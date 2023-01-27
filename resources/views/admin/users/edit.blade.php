@@ -2,9 +2,9 @@
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar admins', route('chief.back.users.index'));
 @endphp
 
-<x-chief::template :title="$user->fullname">
+<x-chief::page.template :title="$user->fullname">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$user->fullname" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+        <x-chief::page.hero :title="$user->fullname" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <div class="flex items-center gap-4">
                 {!! $user->present()->enabledAsLabel() !!}
 
@@ -28,7 +28,7 @@
                     </div>
                 </options-dropdown>
             </div>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
     @if($user->isEnabled())
@@ -41,7 +41,7 @@
         </form>
     @endif
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST" class="card">
             @csrf
             @method('put')
@@ -50,5 +50,5 @@
                 @include('chief::admin.users._form')
             </div>
         </form>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

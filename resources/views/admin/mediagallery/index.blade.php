@@ -1,5 +1,5 @@
-<x-chief::template title="Media">
-    <x-chief::template.grid>
+<x-chief::page.template title="Media">
+    <x-chief::page.grid>
         <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="card">
             <div class="flex items-center justify-between mb-4">
                 <label for="select-all" class="with-checkbox">
@@ -68,7 +68,7 @@
                 </form>
             </x-chief-window>
         </x-slot>
-    </x-chief::template.grid>
+    </x-chief::page.grid>
 
     <modal id="mediagallery-bulk-delete-modal" title="Selectie verwijderen">
         <h2 class="h2 display-dark">Bent u zeker?</h2>
@@ -103,4 +103,4 @@
             })();
         </script>
     @endpush
-</x-chief::template>
+</x-chief::page.template>

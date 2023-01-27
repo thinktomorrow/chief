@@ -24,7 +24,7 @@
         @error($errorId)
         <div class="mt-2">
             <x-chief-inline-notification type="error">
-                {{ $message }}
+                {{ ucfirst($message) }}
             </x-chief-inline-notification>
         </div>
         @enderror

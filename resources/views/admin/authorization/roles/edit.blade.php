@@ -3,14 +3,14 @@
     $title = ucfirst($role->name);
 @endphp
 
-<x-chief::template :title="$title">
+<x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <button form="editForm" type="submit" class="btn btn-primary">Rol opslaan</button>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST" class="card">
             @csrf
             @method('put')
@@ -19,5 +19,5 @@
                 @include('chief::admin.authorization.roles._form')
             </div>
         </form>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

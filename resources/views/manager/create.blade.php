@@ -2,14 +2,14 @@
     $title = ucfirst($resource->getLabel());
 @endphp
 
-<x-chief::template :title="$title">
+<x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title" :breadcrumbs="[$resource->getPageBreadCrumb()]" class="max-w-3xl">
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getPageBreadCrumb()]" class="max-w-3xl">
             <button form="createForm" type="submit" class="btn btn-primary">Aanmaken</button>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="card">
             <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
                 @csrf
@@ -21,8 +21,8 @@
                 </div>
             </form>
         </div>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>
 
 @include('chief::components.file-component')
 @include('chief::components.filesupload-component')

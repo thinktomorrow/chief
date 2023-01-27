@@ -19,11 +19,13 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::manager.windows.state.windows', 'chief::window.states');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
-        // Template
-        Blade::component('chief::template.page-layout', 'chief::page-layout');
-        Blade::component('chief::template.template', 'chief::template');
-        Blade::component('chief::template.hero', 'chief::template.hero');
-        Blade::component('chief::template.grid', 'chief::template.grid');
+        // Templates
+        Blade::component('chief::templates.page.layout', 'chief::page.layout');
+        Blade::component('chief::templates.page.template', 'chief::page.template');
+        Blade::component('chief::templates.page.hero', 'chief::page.hero');
+        Blade::component('chief::templates.page.grid', 'chief::page.grid');
+        Blade::component('chief::templates.solo.layout', 'chief::solo.layout');
+        Blade::component('chief::templates.solo.template', 'chief::solo.template');
 
         // Chief components
         Blade::component('chief::components.window', 'chief-window');

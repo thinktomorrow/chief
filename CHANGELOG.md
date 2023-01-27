@@ -14,7 +14,7 @@ principles.
 -   Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
 -   Changed: updated node packages to their latest stable version
 -   Changed: nav-project view moved to resources/views/template/nav/nav-project.blade.php
--   Added: `<x-chief::template/>`, `<x-chief::template.hero/>` and `<x-chief::template.grid/>` components
+-   Added: `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
 -   Changed: rebuilt index, index-for-sorting, nestable index, table index, edit, create and dashboard with new template
 -   Fixed: menu item create breadcrumb now links back to correct menu
 

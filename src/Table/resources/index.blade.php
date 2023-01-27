@@ -15,9 +15,9 @@
         : '';
 @endphp
 
-<x-chief::template :title="$title">
+<x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
+        <x-chief::page.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
             @if(!$is_archive_index)
                 @adminCan('create')
                     <a href="@adminRoute('create')" title="{{ ucfirst($resource->getLabel()) }} toevoegen" class="btn btn-primary">
@@ -25,10 +25,10 @@
                     </a>
                 @endAdminCan
             @endif
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid>
+    <x-chief::page.grid>
         <x-chief::table
             :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])"
             :sticky="$resource->displayTableHeaderAsSticky()"
@@ -104,10 +104,10 @@
 
         @if ($resource->showIndexSidebarAside())
             <x-slot name="aside">
-                @include('chief::template.index.default-sidebar')
+                @include('chief::templates.page.index.default-sidebar')
             </x-slot>
         @else
-            @include('chief::template.index.inline-sidebar', ['withFilters' => false])
+            @include('chief::templates.page.index.inline-sidebar', ['withFilters' => false])
         @endif
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

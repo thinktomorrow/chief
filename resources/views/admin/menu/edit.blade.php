@@ -2,9 +2,9 @@
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar het menu', route('chief.back.menus.show', $menuitem->menu_type));
 @endphp
 
-<x-chief::template title="Menu item bewerken">
+<x-chief::page.template title="Menu item bewerken">
     <x-slot name="hero">
-        <x-chief::template.hero title="Menu item bewerken" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+        <x-chief::page.hero title="Menu item bewerken" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <div class="space-x-3">
                 <span class="btn btn-error-outline" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
                     Verwijderen
@@ -12,10 +12,10 @@
 
                 <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
             </div>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <form
             id="updateForm"
             method="POST"
@@ -29,7 +29,7 @@
 
             @include('chief::admin.menu._partials.form')
         </form>
-    </x-chief::template.grid>
+    </x-chief::page.grid>
 
     @include('chief::admin.menu._partials.delete-modal')
-</x-chief::template>
+</x-chief::page.template>

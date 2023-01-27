@@ -7,9 +7,9 @@
     }
 @endphp
 
-<x-chief::template :title="$title">
+<x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <a
                 href="{{ route('chief.back.menuitem.create', $menu->key()) }}"
                 title="Menu item toevoegen"
@@ -17,10 +17,10 @@
             >
                 <x-chief-icon-label type="add">Menu item toevoegen</x-chief-icon-label>
             </a>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="card">
             @if($menuItems->isEmpty() )
                 <p class="body-dark">Momenteel zijn er nog geen menu items toegevoegd.</p>
@@ -36,5 +36,5 @@
                 </div>
             @endif
         </div>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

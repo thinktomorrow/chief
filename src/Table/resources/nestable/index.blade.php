@@ -2,9 +2,9 @@
     $title = $root ? $root->getLabel() : ucfirst($resource->getIndexTitle());
 @endphp
 
-<x-chief::template :title="$title">
+<x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title" :breadcrumbs="[$resource->getIndexBreadCrumb()]">
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getIndexBreadCrumb()]">
             @adminCan('create')
                 <a
                     href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}"
@@ -14,10 +14,10 @@
                     <x-chief-icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief-icon-label>
                 </a>
             @endAdminCan
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid>
+    <x-chief::page.grid>
         <div class="card">
             @if (!$tree->isEmpty())
                 <div
@@ -47,10 +47,10 @@
 
         @if ($resource->showIndexSidebarAside())
             <x-slot name="aside">
-                @include('chief::template.index.default-sidebar')
+                @include('chief::templates.page.index.default-sidebar')
             </x-slot>
         @else
-            @include('chief::template.index.inline-sidebar')
+            @include('chief::templates.page.index.inline-sidebar')
         @endif
-    </x-chief::template.grid>
+    </x-chief::page.grid>
 </x-chief:template>

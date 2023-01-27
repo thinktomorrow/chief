@@ -20,13 +20,13 @@
         [v-cloak] { display: none !important; }
     </style>
 
-    @include('chief::layout._partials.favicon')
+    @include('chief::templates.page._partials.favicon')
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
 
     @stack('custom-styles')

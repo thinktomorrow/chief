@@ -1,9 +1,9 @@
-<x-chief::template title="Menu overzicht">
+<x-chief::page.template title="Menu overzicht">
     <x-slot name="hero">
-        <x-chief::template.hero title="Menu overzicht" class="max-w-3xl"/>
+        <x-chief::page.hero title="Menu overzicht" class="max-w-3xl"/>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="card">
             <div class="-my-3 divide-y divide-grey-100">
                 @foreach($menus as $menu)
@@ -27,5 +27,5 @@
                 @endforeach
             </div>
         </div>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

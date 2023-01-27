@@ -1,9 +1,9 @@
-<x-chief::template title="Bewerk jouw profiel">
+<x-chief::page.template title="Bewerk jouw profiel">
     <x-slot name="hero">
-        <x-chief::template.hero title="Bewerk jouw profiel" class="max-w-3xl"/>
+        <x-chief::page.hero title="Bewerk jouw profiel" class="max-w-3xl"/>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST" class="card">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="PUT">
@@ -26,5 +26,5 @@
                 class="btn btn-warning-outline"
             > Wijzig wachtwoord </a>
         </x-chief-form::formgroup>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

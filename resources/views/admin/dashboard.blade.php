@@ -4,9 +4,9 @@
         ->get())
 @endphp
 
-<x-chief::template title="Dashboard">
+<x-chief::page.template title="Dashboard">
     <x-slot name="hero">
-        <x-chief::template.hero :title="'Welkom op je dashboard, ' . ucfirst(Auth::user()->firstname)"/>
+        <x-chief::page.hero :title="'Welkom op je dashboard, ' . ucfirst(Auth::user()->firstname)"/>
     </x-slot>
 
     <div class="container">

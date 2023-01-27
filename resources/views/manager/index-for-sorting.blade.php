@@ -3,12 +3,12 @@
 @endphp
 
 {{-- TODO: test if this view works correctly --}}
-<x-chief::template :title="$title">
+<x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::template.hero :title="$title" :breadcrumbs="[$resource->getPageBreadCrumb()]"/>
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getPageBreadCrumb()]"/>
     </x-slot>
 
-    <x-chief::template.grid>
+    <x-chief::page.grid>
         <div class="card">
             <div
                 data-sortable
@@ -44,5 +44,5 @@
                 </p>
             </div>
         </x-slot>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

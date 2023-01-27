@@ -1,13 +1,13 @@
-<x-chief::template title="Sitemap">
+<x-chief::page.template title="Sitemap">
     <x-slot name="hero">
-        <x-chief::template.hero title="Sitemap" class="max-w-3xl">
+        <x-chief::page.hero title="Sitemap" class="max-w-3xl">
             <a @click="generateSitemap('generate-sitemap')" title="Vernieuw nu" class="btn btn-primary">
                 Vernieuw nu
             </a>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="card">
             <div class="prose prose-spacing prose-dark">
                 <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
@@ -69,11 +69,11 @@
                 </p>
             </div>
         </div>
-    </x-chief::template.grid>
+    </x-chief::page.grid>
 
     <modal id="generate-sitemap" title="Sitemap genereren ..." size="large" :active="false">
         <div class="prose prose-spacing prose-dark">
             Bezig met het genereren van een sitemap. Dit kan eventjes duren.
         </div>
     </modal>
-</x-chief::template>
+</x-chief::page.template>

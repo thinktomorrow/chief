@@ -1,13 +1,13 @@
-<x-chief::template title="Rollen">
+<x-chief::page.template title="Rollen">
     <x-slot name="hero">
-        <x-chief::template.hero title="Rollen" class="max-w-3xl">
+        <x-chief::page.hero title="Rollen" class="max-w-3xl">
             <a href="{{ route('chief.back.roles.create') }}" title="Rol toevoegen" class="btn btn-primary">
                 Rol toevoegen
             </a>
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid class="max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="card">
             <div class="-my-4 divide-y divide-grey-100">
                 @foreach($roles as $role)
@@ -23,5 +23,5 @@
                 @endforeach
             </div>
         </div>
-    </x-chief::template.grid>
-</x-chief::template>
+    </x-chief::page.grid>
+</x-chief::page.template>

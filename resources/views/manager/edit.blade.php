@@ -1,6 +1,6 @@
-<x-chief::template :title="$resource->getPageTitle($model)">
+<x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
-        <x-chief::template.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
+        <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
             @if($forms->has('pagetitle'))
                 <x-slot name="customTitle">
                     <x-chief-form::forms id="pagetitle" />
@@ -18,10 +18,10 @@
                     @endforeach
                 </tabs>
             @endif
-        </x-chief::template.hero>
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::template.grid>
+    <x-chief::page.grid>
         <x-chief-form::forms position="main" />
 
         @adminCan('fragments-index', $model)
@@ -36,7 +36,7 @@
             <x-chief::window.links />
             <x-chief-form::forms position="aside" />
         </x-slot>
-    </x-chief::template.grid>
+    </x-chief::page.grid>
 
     @push('portals')
         @adminCan('delete', $model)
@@ -54,4 +54,4 @@
     @push('custom-scripts-after-vue')
         @include('chief::layout._partials.editor-script')
     @endpush
-</x-chief::template>
+</x-chief::page.template>
