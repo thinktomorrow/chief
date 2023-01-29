@@ -1,6 +1,6 @@
 <div class="py-6 space-y-6 border-t border-grey-100">
     <div class="space-y-2">
-        <p class="text-lg display-base display-dark">
+        <p class="text-lg h6 h1-dark">
             {{ ucfirst($resource->getLabel()) }}
         </p>
 
@@ -23,7 +23,7 @@
 @if($model->fragmentModel()->exists)
     @if($model->fragmentModel()->isShared())
         <div class="p-6 border border-orange-100 rounded-xl bg-orange-50">
-            <p class="text-lg display-base display-dark">Gedeeld fragment</p>
+            <p class="text-lg h6 h1-dark">Gedeeld fragment</p>
 
             <div class="mt-4 prose prose-dark prose-spacing">
                 <p>

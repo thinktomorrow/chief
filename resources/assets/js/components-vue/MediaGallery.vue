@@ -1,7 +1,7 @@
 <template>
     <modal :id="id" type="modal" title="Media" size="xl">
         <div v-if="!isLoading || assets.length > 1" class="mb-4 space-y-4">
-            <h3 class="h3 display-dark">Kies een bestaande afbeelding</h3>
+            <h3 class="h3 h1-dark">Kies een bestaande afbeelding</h3>
 
             <div class="flex items-center justify-end space-x-4">
                 <input placeholder="Zoek op bestandsnaam ..." type="text" v-model="searchQuery" />

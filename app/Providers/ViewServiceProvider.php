@@ -25,6 +25,8 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::templates.page.grid', 'chief::page.grid');
         Blade::component('chief::templates.solo.layout', 'chief::solo.layout');
         Blade::component('chief::templates.solo.template', 'chief::solo.template');
+        Blade::component('chief::templates.mail.layout', 'chief::mail.layout');
+        Blade::component('chief::templates.mail.template', 'chief::mail.template');
 
         // Chief components
         Blade::component('chief::components.window', 'chief-window');

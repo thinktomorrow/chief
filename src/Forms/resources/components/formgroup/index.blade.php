@@ -16,7 +16,7 @@
 >
     @if($label)
         <div class="mb-1 leading-none">
-            <span class="font-medium display-base display-dark">
+            <span class="font-medium h6 h1-dark">
                 {{ ucfirst($label) }}
             </span>
 

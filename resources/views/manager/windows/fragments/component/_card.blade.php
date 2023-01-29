@@ -6,7 +6,7 @@
             </div>
 
             <div class="w-full mt-0.5 space-x-1">
-                <span class="text-lg display-base display-dark">
+                <span class="text-lg h6 h1-dark">
                     {{ ucfirst($resource->getLabel()) }}
                 </span>
 

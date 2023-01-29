@@ -29,7 +29,7 @@
             title="{{ $asset->filename() }}"
             target="_blank"
             rel="noopener"
-            class="overflow-hidden font-medium display-dark whitespace-nowrap overflow-ellipsis hover:underline"
+            class="overflow-hidden font-medium h1-dark whitespace-nowrap overflow-ellipsis hover:underline"
         >
             {{ $asset->filename() }}
         </a>

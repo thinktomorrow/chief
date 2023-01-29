@@ -27,7 +27,7 @@
     @if($actions)
         <div data-bulk-actions-container class="hidden px-6 py-4">
             <div class="flex items-center gap-6">
-                <p class="body-base text-grey-500">
+                <p class="body text-grey-500">
                     <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
                     <span class="hidden bulk-actions-counter-is-1:inline">item</span>
                     <span class="bulk-actions-counter-is-1:hidden">items</span>

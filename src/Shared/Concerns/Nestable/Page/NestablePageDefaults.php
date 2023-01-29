@@ -65,12 +65,14 @@ trait NestablePageDefaults
     {
         $tree = $this->nestableRepository()->getTree();
 
-        yield Form::make('nestable_parent_form')->position('aside')->items([
-            MultiSelect::make('parent_id')
-                ->label('Bovenliggende pagina')
-                ->description('Onder welke pagina hoort deze thuis.')
-                ->options(fn () => app(SelectOptions::class)->getParentOptions($tree, $model)),
-        ]);
+        yield Form::make('nestable_parent_form')
+            ->title('Bovenliggende pagina')
+            ->position('aside')
+            ->items([
+                MultiSelect::make('parent_id')
+                    ->description('Onder welke pagina hoort deze thuis.')
+                    ->options(fn () => app(SelectOptions::class)->getParentOptions($tree, $model)),
+            ]);
     }
 
     private function viewData(): array

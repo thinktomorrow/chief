@@ -1,5 +1,5 @@
 <div class="pt-6 space-y-6 border-t border-grey-100">
-    <p class="text-lg leading-none display-base display-dark">Kies een bestaand fragment</p>
+    <p class="text-lg leading-none h6 h1-dark">Kies een bestaand fragment</p>
 
     <div data-form>
         <form
@@ -45,7 +45,7 @@
                         type="submit"
                     >
                         <div>
-                            <span class="display-dark display-base">
+                            <span class="h1-dark h1">
                                 {{ ucfirst($sharedFragment['resource']->getLabel()) }}
                             </span>
                         </div>
@@ -56,7 +56,7 @@
             </div>
         @empty
             <div>
-                <p class="body-base body-dark">Geen fragmenten gevonden.</p>
+                <p class="body body-dark">Geen fragmenten gevonden.</p>
             </div>
         @endforelse
     </div>

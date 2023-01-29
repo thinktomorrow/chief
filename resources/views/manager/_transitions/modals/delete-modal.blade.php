@@ -8,7 +8,7 @@
         @method('DELETE')
         @csrf
 
-        <h2 class="h2 display-dark">Verwijder: {{ $resource->getPageTitle($model) }}</h2>
+        <h2 class="h2 h1-dark">Verwijder: {{ $resource->getPageTitle($model) }}</h2>
 
         <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
 

@@ -1,12 +1,12 @@
 <div data-form data-form-tags="fragments" class="pt-6 space-y-6 border-t border-grey-100">
-    <p class="text-lg leading-none display-base display-dark">Voeg een nieuw fragment toe</p>
+    <p class="text-lg leading-none h6 h1-dark">Voeg een nieuw fragment toe</p>
 
     <div>
         @forelse($fragments as $category => $fragmentsByCategory)
             <div @class(['space-y-3', 'pt-6 border-t border-grey-100' => !$loop->first, 'pb-6' => !$loop->last])>
                 @if($category)
                     <div>
-                        <p class="text-sm tracking-wider uppercase display-base body-dark">{{ ucfirst($category) }}</p>
+                        <p class="text-sm tracking-wider uppercase h6 body-dark">{{ ucfirst($category) }}</p>
                     </div>
                 @endif
 
@@ -24,12 +24,12 @@
                                 </div>
 
                                 <div class="space-y-2">
-                                    <p class="display-base display-dark">
+                                    <p class="h6 h1-dark">
                                         {{ ucfirst($allowedFragment['resource']->getLabel()) }}
                                     </p>
 
                                     @if($hint = $allowedFragment['resource']->getHint())
-                                        <p class="text-sm body-base body-dark">
+                                        <p class="text-sm body body-dark">
                                             {!! $hint !!}
                                         </p>
                                     @endif
@@ -41,7 +41,7 @@
             </div>
         @empty
             <div class="w-full">
-                <p class="body-base body-dark">Geen fragmenten gevonden.</p>
+                <p class="body body-dark">Geen fragmenten gevonden.</p>
             </div>
         @endforelse
     </div>

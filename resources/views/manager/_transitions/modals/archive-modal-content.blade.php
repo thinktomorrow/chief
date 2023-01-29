@@ -10,7 +10,7 @@
         @csrf
         @method('PUT')
 
-        <h2 class="h2 display-dark">Archiveer: {{ $resource->getPageTitle($model) }}</h2>
+        <h2 class="h2 h1-dark">Archiveer: {{ $resource->getPageTitle($model) }}</h2>
 
         @if(contract($model, \Thinktomorrow\Chief\Site\Visitable\Visitable::class))
             <p>
@@ -50,4 +50,3 @@
         </button>
     </div>
 </div>
-

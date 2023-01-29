@@ -22,10 +22,10 @@
                     <div class="space-y-0.5 text-sm">
                         <div>
                             <p>
-                                <span class="body-base body-dark" style="word-break: break-all;">
+                                <span class="body body-dark" style="word-break: break-all;">
                                     {{ $image->filename }}
                                 </span>
-                                <span class="body-base body-dark">{{ $image->size }} </span>
+                                <span class="body body-dark">{{ $image->size }} </span>
                             </p>
                         </div>
 

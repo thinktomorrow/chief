@@ -9,7 +9,7 @@
                 {{ in_array($value, (array) $getActiveValue($locale ?? null)) ? 'checked="checked"' : '' }}
             >
 
-            <span class="body-base body-dark">{!! $label !!}</span>
+            <span class="body body-dark">{!! $label !!}</span>
         </label>
     @endforeach
 </div>

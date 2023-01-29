@@ -20,7 +20,7 @@
 
         <div class="container max-w-2xl space-y-6 sm:space-y-8 my">
             @if ($title)
-                <h1 class="sm:text-center h1 display-dark">{{ $title }}</h1>
+                <h1 class="sm:text-center h1 h1-dark">{{ $title }}</h1>
             @endif
 
             <div class="p-6 bg-white bg-opacity-[0.85] rounded-xl shadow-card backdrop-filter backdrop-blur-sm">

@@ -71,7 +71,7 @@
     </x-chief::page.grid>
 
     <modal id="mediagallery-bulk-delete-modal" title="Selectie verwijderen">
-        <h2 class="h2 display-dark">Bent u zeker?</h2>
+        <h2 class="h2 h1-dark">Bent u zeker?</h2>
 
         <p>
             Je staat op het punt om de geselecteerde bestanden op te ruimen.

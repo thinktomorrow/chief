@@ -18,15 +18,15 @@
                     <div class="space-y-0.5 text-sm">
                         <div>
                             <p>
-                                <span class="font-medium display-base body-dark">Bestandsnaam:</span>
-                                <span class="body-base body-dark" style="word-break: break-all;">
+                                <span class="font-medium h6 body-dark">Bestandsnaam:</span>
+                                <span class="body body-dark" style="word-break: break-all;">
                                     {{ $file->filename }}
                                 </span>
                             </p>
 
                             <p>
-                                <span class="font-medium display-base body-dark">Bestandsgrootte:</span>
-                                <span class="body-base body-dark">{{ $file->size }} </span>
+                                <span class="font-medium h6 body-dark">Bestandsgrootte:</span>
+                                <span class="body body-dark">{{ $file->size }} </span>
                             </p>
                         </div>
 

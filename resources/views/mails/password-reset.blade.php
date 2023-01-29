@@ -1,4 +1,8 @@
-@extends('chief::layout.mail')
+<x-chief::mail.template>
+    ...
+</x-chief::mail.template>
+
+{{-- @extends('chief::layout.mail')
 
 @section('preheader')
     Maak een nieuw Chief wachtwoord aan.
@@ -30,4 +34,4 @@
         </td>
     </tr>
 
-@endsection
+@endsection --}}

@@ -20,7 +20,7 @@
                 @foreach($models as $model)
                     <div data-sortable-handle data-sortable-id="{{ $model->getKey() }}" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                         <div class="h-full p-3 border rounded-md cursor-move transition-75 bg-grey-50 border-grey-100 hover:bg-grey-100">
-                            <p class="text-sm display-base display-dark">
+                            <p class="text-sm h6 h1-dark">
                                 {{ $resource->getPageTitle($model) }}
                             </p>
                         </div>

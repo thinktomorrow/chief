@@ -14,7 +14,7 @@
             @if ($customTitle)
                 {{ $customTitle }}
             @else
-                <h1 class="h1 display-dark">{{ $title }}</h1>
+                <h1 class="h1 h1-dark">{{ $title }}</h1>
             @endif
 
             @if ($slot->isNotEmpty())

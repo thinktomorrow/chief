@@ -31,7 +31,7 @@
                         <a
                             href="{{ route('squanto.edit',$page->slug()) }}"
                             title="{{ ucfirst($page->label()) }}"
-                            class="display-dark display-base"
+                            class="text-black h6"
                         >
                             {{ ucfirst($page->label()) }}
                         </a>

@@ -21,5 +21,5 @@
         @endif
     </div>
 @else
-    <p class="body-base body-dark">...</p>
+    <p class="body body-dark">...</p>
 @endif
