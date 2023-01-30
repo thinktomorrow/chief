@@ -12,10 +12,14 @@ principles.
 -   Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
 -   Fixed: issue where archiving or deleting a parent node, resulted in a failed node collection retrieval, due to the strict setting.
 -   Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
--   Changed: updated node packages to their latest stable version
+-   Added: `<x-chief::page.layout/>`, `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
+-   Added: `<x-chief::solo.layout/>` and `<x-chief::solo.template/>` components
+-   Added: `<x-chief::mail.layout/>` and `<x-chief::mail.template/>` components
+-   Changed: rebuilt all Chief pages with new `<x-chief::page.template/>`.
+-   Changed: rebuilt all Chief solo pages with new `<x-chief::solo.template/>`.
+-   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
 -   Changed: nav-project view moved to resources/views/template/nav/nav-project.blade.php
--   Added: `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
--   Changed: rebuilt index, index-for-sorting, nestable index, table index, edit, create and dashboard with new template
+-   Changed: updated node packages to their latest stable version
 -   Fixed: menu item create breadcrumb now links back to correct menu
 
 ## 0.7.17 - 2022-12-13
