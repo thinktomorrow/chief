@@ -1,21 +1,9 @@
-@section('header')
-    <div class="container max-w-3xl">
-        @component('chief::layout._partials.header')
-            @slot('title')
-                Vertalingen
-            @endslot
+<x-chief::page.template title="Vaste teksten">
+    <x-slot name="hero">
+        <x-chief::page.hero title="Vaste teksten" class="max-w-3xl"/>
+    </x-slot>
 
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-        @endcomponent
-    </div>
-@stop
-
-<x-squanto::app-layout>
-    <div class="container max-w-3xl">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="divide-y card divide-grey-100">
             @foreach($pages as $page)
                 @php
@@ -47,5 +35,5 @@
                 </div>
             @endforeach
         </div>
-    </div>
-</x-squanto::app-layout>
+    </x-chief::page.grid>
+</x-chief::page.template>

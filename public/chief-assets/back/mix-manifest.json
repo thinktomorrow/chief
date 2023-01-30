@@ -1,7 +1,7 @@
 {
     "/js/main.js": "/js/main.js?id=1b49e0b58e186b02cb0c53bcc42a4da2",
     "/js/native.js": "/js/native.js?id=e18c485c29afc4841ece4abe35f567b6",
-    "/css/main.css": "/css/main.css?id=aae7182e8c3e61857499769cd2a2eaf3",
+    "/css/main.css": "/css/main.css?id=8637f6cd93631d5ea8a161fe1223ee53",
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",
@@ -12,9 +12,5 @@
     "/img/favicon/mstile-150x150.png": "/img/favicon/mstile-150x150.png?id=30ba963f7cdbf9a41b2a3edb114439d8",
     "/img/favicon/safari-pinned-tab.svg": "/img/favicon/safari-pinned-tab.svg?id=2f23ace895c126784332e441e735e633",
     "/img/favicon/site.webmanifest": "/img/favicon/site.webmanifest?id=d1439a86db8574277a77dc7da9c40fd3",
-    "/img/login-background-min.png": "/img/login-background-min.png?id=4935e9a35a7bfb1cdcd30a2041e4d201",
-    "/img/login-background.jpg": "/img/login-background.jpg?id=b63286c04537c1e2c7977e771a9ee2e0",
-    "/img/social_share.png": "/img/social_share.png?id=56309af73c58b95dcf94b8f219f7db76",
-    "/img/solo_bg.jpg": "/img/solo_bg.jpg?id=b63286c04537c1e2c7977e771a9ee2e0",
-    "/img/solo_bg.png": "/img/solo_bg.png?id=4935e9a35a7bfb1cdcd30a2041e4d201"
+    "/img/social_share.png": "/img/social_share.png?id=56309af73c58b95dcf94b8f219f7db76"
 }

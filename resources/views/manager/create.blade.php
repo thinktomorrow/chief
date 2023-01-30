@@ -22,10 +22,11 @@
             </form>
         </div>
     </x-chief::page.grid>
+
+    @include('chief::components.file-component')
+    @include('chief::components.filesupload-component')
 </x-chief::page.template>
 
-@include('chief::components.file-component')
-@include('chief::components.filesupload-component')
 
 @push('custom-scripts-after-vue')
     @include('chief::layout._partials.editor-script')
