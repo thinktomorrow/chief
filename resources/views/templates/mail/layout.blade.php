@@ -27,7 +27,7 @@
     <title>{{ $title }}</title>
     <style>
         .hover-bg-blue-600:hover {
-            background-color: #2563eb !important;
+            background-color: #6366f1 !important;
         }
         .hover-underline:hover {
             text-decoration: underline !important;
@@ -90,7 +90,7 @@
                                             @if ($footer)
                                                 {{ $footer }}
                                             @else
-                                                <p style="margin: 0; margin-bottom: 4px; text-transform: uppercase;">
+                                                <p style="margin: 0; margin-bottom: 4px;">
                                                     Powered by Chief
                                                 </p>
 

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ chief_cached_asset('css/main.css') }}">
 </head>
 
-<body>
+<body class="bg-grey-100">
     <main>
         {{ $slot }}
     </main>
