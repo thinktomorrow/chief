@@ -37,7 +37,7 @@
         "lodash": "^4.17.21",
         "popper.js": "^1.16.1",
         "sortablejs": "^1.13.0",
-        "vue": "^2.6.12",
+        "vue": "^3.2.45",
         "vue-loader": "^15.9.7",
         "vue-multiselect": "^2.1.6",
         "vue-server-renderer": "^2.6.12",
