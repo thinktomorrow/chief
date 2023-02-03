@@ -22,10 +22,10 @@
                 <x-chief::input.password id="password" name="password"/>
             </x-chief::input.group>
 
-            <x-chief::input.group>
-                <x-chief::input.label for="remember" class="flex items-start space-x-2" unset>
-                    <x-chief::input.checkbox id="rememberCheckbox" name="remember" :checked="old('remember')"/>
-                    <span class="body-dark">Ingelogd blijven</span>
+            <x-chief::input.group inner-class="flex items-start gap-2">
+                <x-chief::input.checkbox id="rememberCheckbox" name="remember" :checked="old('remember')"/>
+                <x-chief::input.label for="remember" class="body-dark" unset>
+                    Ingelogd blijven
                 </x-chief::input.label>
             </x-chief::input.group>
 

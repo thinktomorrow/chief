@@ -3,7 +3,7 @@
    'unset', // if set, show label without form-input-label styling (e.g. radio/checkbox input groups)
 ])
 
-<label {{ $attributes->class(['form-input-label' => !isset($unset)]) }}>
+<label {{ $attributes->class(['select-none', 'form-input-label' => !isset($unset)]) }}>
     {{ $slot }}
 
     @isset ($required)

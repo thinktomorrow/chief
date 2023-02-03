@@ -1,5 +1,5 @@
 .form-input-label {
-    @apply block select-none font-medium;
+    @apply block font-medium;
 }
 
 .form-light .form-input-label {

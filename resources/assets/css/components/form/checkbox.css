@@ -13,8 +13,8 @@
 
     &:checked {
         &:after {
-            margin-top: 1px;
-            margin-left: 1px;
+            top: 1px;
+            left: 1px;
             @apply inline-block absolute;
         }
     }

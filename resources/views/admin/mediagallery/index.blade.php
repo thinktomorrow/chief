@@ -29,17 +29,20 @@
                 <form method="GET" id="filtering" class="space-y-4">
                     <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
-                    <x-chief-form::formgroup id="name" label="Bestandsnaam">
-                        <input
-                            type="text"
+                    <x-chief::input.group>
+                        <x-chief::input.label for="search">Bestandsnaam</x-chief::input.label>
+                        <x-chief::input.text
+                            id="search"
                             name="search"
                             placeholder="Zoek op bestandsnaam ..."
                             value="{{ old('search', request()->input('search'))}}"
-                        >
-                    </x-chief-form::formgroup>
+                        />
+                    </x-chief::input.group>
 
-                    <x-chief-form::formgroup id="owner" label="Pagina">
+                    <x-chief::input.group>
+                        <x-chief::input.label for="owner">Pagina</x-chief::input.label>
                         <chief-multiselect
+                            id="owner"
                             name="owner"
                             :options='@json($pages)'
                             selected='@json(old('owner', request()->input('owner')))'
@@ -48,21 +51,20 @@
                             groupvalues="values"
                             labelkey="label"
                             valuekey="id"
-                        ></chief-multiselect>
-                    </x-chief-form::formgroup>
+                        />
+                    </x-chief::input.group>
 
-                    <x-chief-form::formgroup id="unused">
-                        <label for="unused" class="with-checkbox">
-                            <input
-                                type="checkbox"
-                                name="unused"
-                                id="unused"
-                                {{ old('unused', request()->input('unused')) ? 'checked' : '' }}
-                            >
+                    <x-chief::input.group inner-class="flex items-start gap-2">
+                        <x-chief::input.checkbox
+                            id="unused"
+                            name="unused"
+                            :checked="old('unused', request()->input('unused'))"
+                        />
 
-                            <span>Toon enkel ongebruikte media</span>
-                        </label>
-                    </x-chief-form::formgroup>
+                        <x-chief::input.label for="unused" class="body-dark" unset>
+                            Toon enkel ongebruikte media
+                        </x-chief::input.label>
+                    </x-chief::input.group>
 
                     <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                 </form>
