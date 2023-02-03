@@ -19,7 +19,7 @@
             @if($icon)
                 {!! $icon !!}
             @else
-                <x-chief-icon-button icon="icon-edit"/>
+                <x-chief::icon-button icon="icon-edit"/>
             @endif
         </a>
     @endif

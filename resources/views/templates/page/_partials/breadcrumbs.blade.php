@@ -10,6 +10,6 @@
 
 @foreach ($breadcrumbs as $breadcrumb)
     <a href="{{ visitedUrl($breadcrumb->url) }}" title="{{ $breadcrumb->label }}" class="link link-primary">
-        <x-chief-icon-label type="back">{{ $breadcrumb->label }}</x-chief-icon-label>
+        <x-chief::icon-label type="back">{{ $breadcrumb->label }}</x-chief::icon-label>
     </a>
 @endforeach

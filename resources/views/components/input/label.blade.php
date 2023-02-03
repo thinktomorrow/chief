@@ -1,0 +1,12 @@
+@props([
+   'required', // if set, show asterisk symbol next to label
+   'unset', // if set, show label without form-input-label styling (e.g. radio/checkbox input groups)
+])
+
+<label {{ $attributes->class(['form-input-label' => !isset($unset)]) }}>
+    {{ $slot }}
+
+    @isset ($required)
+        <span class="text-orange-500">*</span>
+    @endisset
+</label>

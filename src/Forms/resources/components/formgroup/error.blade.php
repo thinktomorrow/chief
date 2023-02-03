@@ -23,16 +23,16 @@
     @if(isset($errors))
         @error($errorId)
         <div class="mt-2">
-            <x-chief-inline-notification type="error">
+            <x-chief::inline-notification type="error">
                 {{ ucfirst($message) }}
-            </x-chief-inline-notification>
+            </x-chief::inline-notification>
         </div>
         @enderror
     @endif
 
     <div data-error-placeholder="{{ $errorId }}" class="hidden mt-2">
-        <x-chief-inline-notification type="error">
+        <x-chief::inline-notification type="error">
             <div data-error-placeholder-content></div>
-        </x-chief-inline-notification>
+        </x-chief::inline-notification>
     </div>
 @endforeach

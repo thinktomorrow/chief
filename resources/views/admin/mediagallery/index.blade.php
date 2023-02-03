@@ -25,7 +25,7 @@
         {{ $assets->links('chief::pagination.default') }}
 
         <x-slot name="aside">
-            <x-chief-window title="Filter" class="card">
+            <x-chief::window title="Filter" class="card">
                 <form method="GET" id="filtering" class="space-y-4">
                     <span class="text-grey-500">{{ $assets->total() }} resultaten</span>
 
@@ -66,7 +66,7 @@
 
                     <button type="submit" form="filtering" class="btn btn-primary">Filter</button>
                 </form>
-            </x-chief-window>
+            </x-chief::window>
         </x-slot>
     </x-chief::page.grid>
 

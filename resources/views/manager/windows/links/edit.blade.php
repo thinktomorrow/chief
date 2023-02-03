@@ -93,7 +93,7 @@
                                                     <div>{{ $urlRecord->slug }}</div>
 
                                                     <span class="cursor-pointer link link-error" @click="remove">
-                                                        <x-chief-icon-label type="delete"></x-chief-icon-label>
+                                                        <x-chief::icon-label type="delete"></x-chief::icon-label>
                                                     </span>
                                                 </div>
                                             </url-redirect>

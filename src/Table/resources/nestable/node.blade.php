@@ -11,7 +11,7 @@
                 class="cursor-pointer link link-primary"
                 style="margin-left: 0; margin-top: -2px; margin-right: 0.5rem"
             >
-                <x-chief-icon-button icon="icon-chevron-up-down"/>
+                <x-chief::icon-button icon="icon-chevron-up-down"/>
             </span>
 
             {{-- Arrow icon --}}

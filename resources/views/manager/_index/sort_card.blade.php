@@ -1,4 +1,4 @@
-<x-chief-window title="Sortering" class="card">
+<x-chief::window title="Sortering" class="card">
     <div class="space-y-4">
         @if($resource->isNestable() || (!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages()))
             <p class="body-dark body">
@@ -20,4 +20,4 @@
             <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
         @endif
     </div>
-</x-chief-window>
+</x-chief::window>

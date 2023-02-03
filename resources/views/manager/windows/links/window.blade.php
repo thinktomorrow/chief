@@ -17,7 +17,7 @@
                     data-sidebar-trigger="links"
                     href="{{ $manager->route('links-edit', $model) }}"
                 >
-                    <x-chief-icon-label type="add">Voeg een eerste link toe</x-chief-icon-label>
+                    <x-chief::icon-label type="add">Voeg een eerste link toe</x-chief::icon-label>
                 </a>
             @else
                 @foreach($linkForm->links() as $locale => $link)

@@ -15,10 +15,12 @@ class ViewServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
+
+        // Manager components
         Blade::component('chief::manager.windows.state.windows', 'chief::window.states');
         Blade::component('chief::manager.windows.links.window', 'chief::window.links');
 
-        // Templates
+        // Template components
         Blade::component('chief::templates.page.layout', 'chief::page.layout');
         Blade::component('chief::templates.page.template', 'chief::page.template');
         Blade::component('chief::templates.page.hero', 'chief::page.hero');
@@ -27,14 +29,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::templates.solo.template', 'chief::solo.template');
         Blade::component('chief::templates.mail.layout', 'chief::mail.layout');
         Blade::component('chief::templates.mail.template', 'chief::mail.template');
-
-        // Chief components
-        Blade::component('chief::components.window', 'chief-window');
-        Blade::component('chief::components.inline-notification', 'chief-inline-notification');
-        Blade::component('chief::components.icon-label', 'chief-icon-label');
-        Blade::component('chief::components.icon-button', 'chief-icon-button');
-        Blade::component('chief::components.hierarchy', 'chief-hierarchy');
-        Blade::component('chief::components.nav-item', 'chief::nav.item');
 
         // Table components
         Blade::component('chief-table::components.table', 'chief::table');

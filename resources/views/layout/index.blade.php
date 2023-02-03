@@ -13,7 +13,7 @@
         @else
             @if($indexBreadCrumb = $resource->getIndexBreadCrumb())
                 <a href="{{ $indexBreadCrumb->url }}" class="link link-primary">
-                    <x-chief-icon-label type="back">{{ $indexBreadCrumb->label }}</x-chief-icon-label>
+                    <x-chief::icon-label type="back">{{ $indexBreadCrumb->label }}</x-chief::icon-label>
                 </a>
             @endif
         @endisset
@@ -29,7 +29,7 @@
                 @if(!isset($is_archive_index) || !$is_archive_index)
                     @adminCan('create')
                         <a href="@adminRoute('create')" class="btn btn-primary-outline">
-                            <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
+                            <x-chief::icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief::icon-label>
                         </a>
                     @endAdminCan
                 @endif

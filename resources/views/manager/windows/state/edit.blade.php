@@ -48,12 +48,12 @@
 
 
                             @if($content = $stateConfig->getTransitionContent( $transitionKey ))
-                                <x-chief-inline-notification
+                                <x-chief::inline-notification
                                     type="{{ $stateConfig->getTransitionType($transitionKey) }}"
                                     size="large"
                                 >
                                     <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                                </x-chief-inline-notification>
+                                </x-chief::inline-notification>
                             @endif
 
                             <div v-cloak slot="modal-action-buttons">
@@ -89,12 +89,12 @@
                     </form>
 
                     @if($content = $stateConfig->getTransitionContent($transitionKey))
-                        <x-chief-inline-notification
+                        <x-chief::inline-notification
                             type="{{ $stateConfig->getTransitionType($transitionKey) }}"
                             size="large"
                         >
                             <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                        </x-chief-inline-notification>
+                        </x-chief::inline-notification>
                     @endif
                 @endif
             @endforeach

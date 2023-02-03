@@ -1,0 +1,7 @@
+.form-input-label {
+    @apply block select-none font-medium;
+}
+
+.form-light .form-input-label {
+    @apply text-black;
+}

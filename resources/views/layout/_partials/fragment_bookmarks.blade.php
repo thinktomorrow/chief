@@ -10,7 +10,7 @@
                 rel="noopener"
                 class="link link-primary"
             >
-                <x-chief-icon-button icon="icon-external-link" />
+                <x-chief::icon-button icon="icon-external-link" />
             </a>
 
             <span
@@ -20,7 +20,7 @@
                 title="Kopiëer de link naar deze bookmark"
                 class="text-sm cursor-pointer link link-primary"
             >
-                <x-chief-icon-button icon="icon-link" />
+                <x-chief::icon-button icon="icon-link" />
             </span>
         @endif
     </div>

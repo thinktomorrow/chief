@@ -16,9 +16,9 @@
                             value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
                         >
                         @error('trans.' . $locale . '.label')
-                            <x-chief-inline-notification type="error">
+                            <x-chief::inline-notification type="error">
                                 {{ $message}}
-                            </x-chief-inline-notification>
+                            </x-chief::inline-notification>
                         @enderror
                     </div>
                 </tab>
@@ -36,9 +36,9 @@
                 >
 
                 @error('trans.' . $locale . '.label')
-                    <x-chief-inline-notification type="error">
+                    <x-chief::inline-notification type="error">
                         {{ $message}}
-                    </x-chief-inline-notification>
+                    </x-chief::inline-notification>
                 @enderror
             </div>
         @endforeach

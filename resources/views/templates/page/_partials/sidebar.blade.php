@@ -24,7 +24,7 @@
 
     <template id="js-sidebar-close-button">
         <div class="cursor-pointer link link-primary">
-            <x-chief-icon-label type="back">Ga terug</x-chief-icon-label>
+            <x-chief::icon-label type="back">Ga terug</x-chief::icon-label>
         </div>
     </template>
 @endpush
