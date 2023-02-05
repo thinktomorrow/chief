@@ -1,15 +1,21 @@
-<x-chief-form::formgroup id="{{ $id }}" label="{{ $label ?? null }}">
-    @if(isset($description))
-        <x-slot name="description">
-            <p>{!! $description !!}</p>
-        </x-slot>
+@php
+    $label = $label ?? null;
+    $description = $description ?? null;
+@endphp
+
+<x-chief::input.group :rule="$id">
+    @if ($label)
+        <x-chief::input.label for="{{ $id }}">{{ $label }}</x-chief::input.label>
     @endif
 
-    <input
+    @if ($description)
+        <x-chief::input.description>{{ $description }}</x-chief::input.description>
+    @endif
+
+    <x-chief::input.text
         id="{{ $id }}"
-        type="text"
         name="{{ $name }}"
         placeholder="{{ $placeholder }}"
         value="{{ $value ?: $default }}"
-    >
-</x-chief-form::formgroup>
+    />
+</x-chief::input.group>

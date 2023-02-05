@@ -1,3 +1,8 @@
+{{-- TODO: finish component --}}
+{{-- <x-chief::input.group rule="...">
+
+</x-chief::input.group> --}}
+
 <x-chief-form::formgroup
     :id="$getId($locale ?? null)"
     :label="$getLabel()"

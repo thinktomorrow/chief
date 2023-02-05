@@ -1,18 +1,27 @@
-<x-chief-form::formgroup id="firstname" label="Voornaam" required>
-    <input id="firstname" type="text" name="firstname" value="{{ old('firstname', $user->firstname) }}">
-    <x-chief-form::formgroup.error error-ids="firstname"/>
-</x-chief-form::formgroup>
+<div class="row-start-start gutter-3">
+    <x-chief::input.group rule="firstname" class="w-full sm:w-1/2">
+        <x-chief::input.label for="firstname" required>Voornaam</x-chief::input.label>
+        <x-chief::input.text id="firstname" name="firstname" value="{{ old('firstname', $user->firstname) }}"/>
+    </x-chief::input.group>
 
-<x-chief-form::formgroup id="lastname" label="Achternaam" required>
-    <input id="lastname" type="text" name="lastname" value="{{ old('lastname', $user->lastname) }}">
-    <x-chief-form::formgroup.error error-ids="lastname"/>
-</x-chief-form::formgroup>
+    <x-chief::input.group rule="lastname" class="w-full sm:w-1/2">
+        <x-chief::input.label for="lastname" required>Achternaam</x-chief::input.label>
+        <x-chief::input.text id="lastname" name="lastname" value="{{ old('lastname', $user->lastname) }}"/>
+    </x-chief::input.group>
 
-<x-chief-form::formgroup id="email" label="E-mail (tevens login)" required>
-    <x-slot name="description">
-        Dit e-mailadres geldt tevens als login.
-    </x-slot>
+    <x-chief::input.group rule="email" class="w-full">
+        <x-chief::input.label for="email" required>
+            Achternaam
+        </x-chief::input.label>
 
-    <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}">
-    <x-chief-form::formgroup.error error-ids="email"/>
-</x-chief-form::formgroup>
+        <x-chief::input.description>
+            Dit e-mailadres geldt tevens als login.
+        </x-chief::input.description>
+
+        <x-chief::input.email id="email" name="email" value="{{ old('email', $user->email) }}"/>
+    </x-chief::input.group>
+
+    <div class="w-full">
+        <button form="updateForm" type="submit" class="btn btn-primary"> Opslaan </button>
+    </div>
+</div>

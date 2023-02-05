@@ -46,9 +46,7 @@
             @csrf
             @method('put')
 
-            <div class="space-y-6">
-                @include('chief::admin.users._form')
-            </div>
+            @include('chief::admin.users._form')
         </form>
     </x-chief::page.grid>
 </x-chief::page.template>

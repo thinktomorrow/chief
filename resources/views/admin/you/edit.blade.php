@@ -4,27 +4,29 @@
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
-        <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST" class="card">
-            {!! csrf_field() !!}
-            <input type="hidden" name="_method" value="PUT">
+        <x-chief::window title="Jouw gegevens" class="card">
+            <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
+                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="PUT">
 
-            <div class="space-y-6">
                 @include('chief::admin.you._form')
+            </form>
+        </x-chief::window>
 
-                <button form="updateForm" type="submit" class="btn btn-primary"> Opslaan </button>
+        <x-chief::window title="Wachtwoord wijzigen" class="card">
+            <div class="space-y-4">
+                <p class="body text-grey-500">
+                    Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.
+                </p>
+
+                <div>
+                    <a
+                        href="{{ route('chief.back.password.edit') }}"
+                        title="Wijzig wachtwoord"
+                        class="btn btn-warning-outline"
+                    > Wijzig wachtwoord </a>
+                </div>
             </div>
-        </form>
-
-        <x-chief-form::formgroup id="password" label="Wachtwoord" class="card">
-            <x-slot name="description">
-                Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.
-            </x-slot>
-
-            <a
-                href="{{ route('chief.back.password.edit') }}"
-                title="Wijzig wachtwoord"
-                class="btn btn-warning-outline"
-            > Wijzig wachtwoord </a>
-        </x-chief-form::formgroup>
+        </x-chief::window>
     </x-chief::page.grid>
 </x-chief::page.template>
