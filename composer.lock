@@ -6826,25 +6826,25 @@
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "0.4.9",
+            "version": "0.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "cadddf595087c30ae4b3a042416de0ea04ba3afb"
+                "reference": "c5c92c952bc7cb4d16b99a05da2a91c7d2361ad3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/cadddf595087c30ae4b3a042416de0ea04ba3afb",
-                "reference": "cadddf595087c30ae4b3a042416de0ea04ba3afb",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/c5c92c952bc7cb4d16b99a05da2a91c7d2361ad3",
+                "reference": "c5c92c952bc7cb4d16b99a05da2a91c7d2361ad3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/phpstan": "^1.2.0",
-                "phpunit/phpunit": "^9.5"
+                "friendsofphp/php-cs-fixer": "^3.13",
+                "phpstan/phpstan": "^1.9.2",
+                "phpunit/phpunit": "^9.5.27"
             },
             "type": "library",
             "autoload": {
@@ -6865,9 +6865,9 @@
             "description": "Generate a tree from an adjacent database structure",
             "support": {
                 "issues": "https://github.com/thinktomorrow/vine/issues",
-                "source": "https://github.com/thinktomorrow/vine/tree/0.4.9"
+                "source": "https://github.com/thinktomorrow/vine/tree/0.4.10"
             },
-            "time": "2022-11-18T14:09:18+00:00"
+            "time": "2023-02-03T10:58:15+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
