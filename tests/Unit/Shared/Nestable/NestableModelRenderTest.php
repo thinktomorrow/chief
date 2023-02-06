@@ -7,7 +7,7 @@ use ReflectionMethod;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
-class NestablePageRenderTest extends ChiefTestCase
+class NestableModelRenderTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
@@ -22,28 +22,22 @@ class NestablePageRenderTest extends ChiefTestCase
         $this->defaultNestables();
     }
 
-    public function test_it_passes_node_to_view()
-    {
-        $node = $this->findNode('third');
-
-        // Call private viewData()
-        $reflectionMethod = new ReflectionMethod(NestableModelStub::class, 'viewData');
-        $reflectionMethod->setAccessible(true);
-
-        $viewData = $reflectionMethod->invoke($node->getModel());
-
-        $this->assertEquals([
-            'node' => $node,
-            'model' => $node->getModel(),
-        ], $viewData);
-    }
-
-    public function test_it_can_render_model_properties()
+    public function test_it_can_render_nestable()
     {
         $node = $this->findNode('third');
 
         $this->assertStringContainsString(
-            '<h1>'.$node->getLabel().'</h1>',
+            '<h1>'.$node->getModel()->title.'</h1>',
+            $node->getModel()->response()->getOriginalContent(),
+        );
+    }
+
+    public function test_it_can_render_nestable_root()
+    {
+        $node = $this->findNode('first');
+
+        $this->assertStringContainsString(
+            '<h1>'.$node->getModel()->title.'</h1>',
             $node->getModel()->response()->getOriginalContent(),
         );
     }

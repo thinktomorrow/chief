@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
 

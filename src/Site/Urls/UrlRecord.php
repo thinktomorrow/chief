@@ -36,7 +36,7 @@ class UrlRecord extends Model
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
-        if (! $record) {
+        if (!$record) {
             throw new UrlRecordNotFound('No url record found by slug [' . $slug . '] for locale [' . $locale . '].');
         }
 
@@ -65,11 +65,22 @@ class UrlRecord extends Model
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
-        if (! $record) {
+        if (!$record) {
             throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 
         return $record;
+    }
+
+    public static function findSlugByModel(Model $model, ?string $locale = null): ?string
+    {
+        try {
+            $currentSlug = static::findByModel($model, $locale ?? app()->getLocale())->slug;
+        } catch (UrlRecordNotFound $e) {
+            $currentSlug = '';
+        }
+
+        return $currentSlug;
     }
 
     public static function getByModel(Model $model): \Illuminate\Database\Eloquent\Collection
@@ -112,12 +123,12 @@ class UrlRecord extends Model
 
     public function redirectTo(self $record = null): ?UrlRecord
     {
-        if (! $record) {
+        if (!$record) {
             return $this->isRedirect() ? static::find($this->redirect_id) : null;
         }
 
         if ($record->id === $this->id) {
-            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from ['.$this->slug.'] to ['.$record->slug.']');
+            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from [' . $this->slug . '] to [' . $record->slug . ']');
         }
 
         $this->redirect_id = $record->id;
@@ -133,7 +144,7 @@ class UrlRecord extends Model
      */
     public function revert()
     {
-        if (! $this->isRedirect()) {
+        if (!$this->isRedirect()) {
             return;
         }
 
@@ -150,7 +161,7 @@ class UrlRecord extends Model
 
     public function isRedirect(): bool
     {
-        return ! ! ($this->redirect_id);
+        return !!($this->redirect_id);
     }
 
     public function isHomepage(): bool
@@ -174,7 +185,7 @@ class UrlRecord extends Model
             $builder->where('locale', $locale);
         }
 
-        if (! $includeRedirects) {
+        if (!$includeRedirects) {
             $builder->whereNull('redirect_id');
         }
 
@@ -204,7 +215,7 @@ class UrlRecord extends Model
         })->reject(function ($model) {
             return $model == null;
         })->reject(function (Visitable $model) {
-            return (method_exists($model, 'isPublished') && ! $model->isPublished());
+            return (method_exists($model, 'isPublished') && !$model->isPublished());
         });
     }
 

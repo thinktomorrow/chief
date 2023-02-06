@@ -10,8 +10,6 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
 
 trait ResourceDefault
 {
@@ -54,16 +52,5 @@ trait ResourceDefault
     public function getInstanceAttributes(Request $request): array
     {
         return [];
-    }
-
-    public function isNestable(): bool
-    {
-        return false;
-    }
-
-    public function nestableRepository(): NestableRepository
-    {
-        // TODO: only fetch once!!!!! memoize the tree.
-        return app()->makeWith(NestablePageRepository::class, ['modelClass' => static::class]);
     }
 }

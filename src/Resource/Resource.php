@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 
 interface Resource
 {
@@ -33,15 +33,4 @@ interface Resource
      * @return array
      */
     public function getInstanceAttributes(Request $request): array;
-
-    /**
-     * Nestable models will have a different UI in backend
-     * and allow for vine retrieval on the frontend
-     *
-     * @return bool
-     */
-    public function isNestable(): bool;
-
-    // TODO: can be remove this from the model? Maybe just add nestable repository classname?
-    public function nestableRepository(): ?NestableRepository;
 }

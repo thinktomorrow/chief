@@ -19,7 +19,8 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
@@ -84,9 +85,9 @@ trait CrudAssistant
 
         View::share('manager', $this);
         View::share('resource', $this->resource);
-        View::share('model', $this->managedModelClassInstance());
+        View::share('model', $model = $this->managedModelClassInstance());
 
-        if ($this->resource->isNestable()) {
+        if ($model instanceof Nestable) {
             $rootId = $request->input('root_id', null);
 
             $filteredModelIds = $this->indexModelIds();
