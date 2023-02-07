@@ -179,11 +179,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
         }
     }
 
-    protected function getResponseData($response, $key)
-    {
-        return $response->getOriginalContent()->getData()[$key];
-    }
-
     private function getStubDirectory($dir = null)
     {
         return __DIR__ . '/Shared/stubs/' . $dir;
