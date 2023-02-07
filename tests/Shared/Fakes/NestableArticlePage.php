@@ -12,7 +12,6 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class NestableArticlePage extends ArticlePage implements PageResource, Nestable
 {

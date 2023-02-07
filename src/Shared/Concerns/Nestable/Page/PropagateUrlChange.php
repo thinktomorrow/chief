@@ -42,7 +42,7 @@ class PropagateUrlChange
     {
         $model = $event->modelReference->instance();
 
-        if(!$model instanceof Nestable) {
+        if (! $model instanceof Nestable) {
             return;
         }
 

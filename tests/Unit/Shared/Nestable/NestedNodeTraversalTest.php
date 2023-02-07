@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageNode;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 

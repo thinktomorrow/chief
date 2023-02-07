@@ -21,8 +21,6 @@ use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait CrudAssistant
@@ -89,7 +87,6 @@ trait CrudAssistant
         View::share('model', $model = $this->managedModelClassInstance());
 
         if ($model instanceof Nestable) {
-
             // TODO: this should be changed to the repository pattern like:
             // app($resource->indexRepository(), ['resourceKey' => $resourceKey])->applyFilters(request()->all())->getNestableResults()
             // indexModelIds can then be removed

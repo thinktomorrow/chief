@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 
 interface Resource
 {

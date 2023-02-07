@@ -38,8 +38,8 @@ trait NestableTestHelpers
             'fr' => 'label fifth fr',
         ]]));
 
-        if($online) {
-            foreach(['first', 'second', 'third','fourth','fifth'] as $key) {
+        if ($online) {
+            foreach (['first', 'second', 'third','fourth','fifth'] as $key) {
                 $model = $this->findNode($key)->getModel();
                 $model->changeState('current_state', PageState::published);
                 $model->save();
@@ -53,7 +53,7 @@ trait NestableTestHelpers
             ->getTree(NestableModelStub::resourceKey())
             ->find(fn (NestedNode $nestable) => $nestable->getId() == $modelId);
 
-        if(!$node) {
+        if (! $node) {
             throw new \Exception('No node found by id ' . $modelId);
         }
 

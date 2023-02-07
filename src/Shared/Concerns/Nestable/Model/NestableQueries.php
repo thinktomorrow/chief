@@ -34,11 +34,11 @@ class NestableQueries
             ->from(DB::raw($table))
             ->where($table.'.id', $model->getKey());
 
-        for($i = 1; $i < $this->depth+1; $i++) {
+        for ($i = 1; $i < $this->depth + 1; $i++) {
             $prevTableName = $i == 1 ? $table : $table . '_'.$i;
             $nextTableName = $table . '_'.($i + 1);
 
-            if($i > 1) {
+            if ($i > 1) {
                 $query->addSelect(DB::raw($prevTableName.'.id AS parent_id_' . $i));
             }
 
@@ -46,7 +46,7 @@ class NestableQueries
         }
 
         return collect($query->get()->first())
-            ->reject(fn($item) => !$item)
+            ->reject(fn ($item) => ! $item)
             ->values()
             ->toArray();
     }
@@ -58,7 +58,7 @@ class NestableQueries
         $query = DB::table($table)
             ->where($table.'.parent_id', $model->getKey());
 
-        for($i = 1; $i < $this->depth+1; $i++) {
+        for ($i = 1; $i < $this->depth + 1; $i++) {
             $prevTableName = $i == 1 ? $table : $table . '_'.$i;
             $nextTableName = $table . '_'.($i + 1);
 
@@ -67,9 +67,9 @@ class NestableQueries
         }
 
         return collect($query->get()[0])
-            ->map(fn($row) => explode(',', $row))
+            ->map(fn ($row) => explode(',', $row))
             ->flatten()
-            ->reject(fn($item) => !$item)
+            ->reject(fn ($item) => ! $item)
             ->unique()
             ->values()
             ->toArray();

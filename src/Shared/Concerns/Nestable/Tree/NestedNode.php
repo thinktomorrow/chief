@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree;
 
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Vine\Node;
 
 interface NestedNode extends Node
 {

@@ -5,9 +5,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Repository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableNode;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class EloquentIndexRepository implements IndexRepository
@@ -33,11 +31,11 @@ class EloquentIndexRepository implements IndexRepository
         $reflection = (new \ReflectionClass($modelClass));
         $eagerLoading = [];
 
-        if($reflection->implementsInterface(Visitable::class)) {
+        if ($reflection->implementsInterface(Visitable::class)) {
             $eagerLoading[] = 'urls';
         }
 
-        if($reflection->implementsInterface(HasAsset::class)) {
+        if ($reflection->implementsInterface(HasAsset::class)) {
             $eagerLoading[] = 'assetRelation';
             $eagerLoading[] = 'assetRelation.media';
         }

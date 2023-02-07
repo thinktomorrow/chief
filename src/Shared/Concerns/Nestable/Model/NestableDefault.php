@@ -12,14 +12,18 @@ trait NestableDefault
 {
     public function getParent(): ?Nestable
     {
-        if(!$this->parent_id) return null;
+        if (! $this->parent_id) {
+            return null;
+        }
 
         return $this->parentModel;
     }
 
     public function getAncestors(): array
     {
-        if(!$this->parent_id) return [];
+        if (! $this->parent_id) {
+            return [];
+        }
 
         return $this->ancestors()->all();
     }
@@ -57,7 +61,8 @@ trait NestableDefault
      */
     public function getDescendants(): NestedTree
     {
-        $descendants = static::whereIn($this->getKeyName(),
+        $descendants = static::whereIn(
+            $this->getKeyName(),
             $this->getDescendantIds()
         )->get();
 
@@ -73,7 +78,7 @@ trait NestableDefault
     {
         // Parent id is either NULL or given id
         return static::where($this->getParentIdName(), $this->{$this->getParentIdName()})
-            ->where($this->getKeyName(),'<>',$this->getKey())
+            ->where($this->getKeyName(), '<>', $this->getKey())
             ->get();
     }
 

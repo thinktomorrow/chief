@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Unit\Repository;
 
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\NestableArticlePage;
 
 class IndexRepositoryTest extends ChiefTestCase
@@ -19,7 +18,7 @@ class IndexRepositoryTest extends ChiefTestCase
 
     public function test_it_can_get_empty_results()
     {
-        foreach($this->getRepositories() as $repository) {
+        foreach ($this->getRepositories() as $repository) {
             $this->assertIsIterable($repository->getResults());
             $this->assertEmpty($repository->getResults());
             $this->assertIsIterable($repository->getNestableResults());
@@ -33,7 +32,7 @@ class IndexRepositoryTest extends ChiefTestCase
     {
         $this->markTestSkipped();
 
-        foreach($this->getRepositories() as $repository) {
+        foreach ($this->getRepositories() as $repository) {
             $results = $repository->getResults();
         }
     }
@@ -42,7 +41,7 @@ class IndexRepositoryTest extends ChiefTestCase
     {
         $this->markTestSkipped();
 
-        foreach($this->getRepositories() as $repository) {
+        foreach ($this->getRepositories() as $repository) {
             $results = $repository->getPaginatedResults();
         }
     }
@@ -54,7 +53,7 @@ class IndexRepositoryTest extends ChiefTestCase
         NestableArticlePage::create(['id' => '3', 'parent_id' => '1']);
         NestableArticlePage::create(['id' => '4', 'parent_id' => '3']);
 
-        foreach($this->getRepositories() as $repository) {
+        foreach ($this->getRepositories() as $repository) {
             $results = $repository->getNestableResults();
 
             $this->assertCount(4, $results);

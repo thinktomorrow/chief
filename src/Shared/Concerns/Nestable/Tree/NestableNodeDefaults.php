@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree;
 
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 
 /**
@@ -36,7 +35,7 @@ trait NestableNodeDefaults
     {
         $label = $this->getLabel();
 
-        if (!$this->isRootNode()) {
+        if (! $this->isRootNode()) {
             $label = array_reduce(array_reverse($this->getAncestorNodes()->all()), function ($carry, NestedNode $node) use ($withoutRoot) {
                 if ($node->isRootNode()) {
                     return $withoutRoot ? $carry : $node->getLabel() . ': ' . $carry;

@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
 
 class NestableModelTest extends ChiefTestCase
 {
