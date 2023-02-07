@@ -15,7 +15,7 @@ trait TableResourceDefault
     public function getTableRow(Manager $manager, $model): iterable
     {
         yield TableColumnLink::make('Titel')
-            ->value(teaser($this->getPageTitle($model), 140, '...'))
+            ->value(teaser($this->getPageTitle($model), 50, '...'))
             ->url($manager->route('edit', $model));
 
         if ($model instanceof StatefulContract) {

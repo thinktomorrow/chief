@@ -152,6 +152,11 @@ trait PageResourceDefault
         return 'int';
     }
 
+    public function allowInlineSorting(): bool
+    {
+        return false;
+    }
+
     public function indexRepository(): string
     {
         return EloquentIndexRepository::class;

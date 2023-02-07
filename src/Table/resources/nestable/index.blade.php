@@ -1,5 +1,5 @@
 @php
-    $title = $root ? $root->getLabel() : ucfirst($resource->getIndexTitle());
+    $title = ucfirst($resource->getIndexTitle());
 @endphp
 
 <x-chief::page.template :title="$title">
@@ -7,7 +7,7 @@
         <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getIndexBreadCrumb()]">
             @adminCan('create')
                 <a
-                    href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}"
+                    href="@adminRoute('create')"
                     title="{{ ucfirst($resource->getLabel()) }} toevoegen"
                     class="btn btn-primary"
                 >
@@ -22,7 +22,7 @@
             @if (!$tree->isEmpty())
                 <div
                     data-sortable
-                    data-sortable-group-id="{{ $root?->getId() }}"
+                    data-sortable-group-id="{{ $resource::resourceKey() }}"
                     data-sortable-endpoint="{{ $manager->route('sort-index') }}"
                     data-sortable-nested-endpoint="{{ $manager->route('move-index') }}"
                     data-sortable-id-type="{{ $resource->getSortableType() }}"
@@ -37,7 +37,7 @@
                 <p class="body-dark">
                     Nog geen items toegevoegd.
                     <a
-                        href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}"
+                        href="@adminRoute('create')"
                         title="Voeg een eerste item toe"
                         class="link link-primary"
                     >Voeg een eerste item toe</a>.
@@ -53,4 +53,4 @@
             @include('chief::templates.page.index.inline-sidebar')
         @endif
     </x-chief::page.grid>
-</x-chief:template>
+</x-chief::page.template>

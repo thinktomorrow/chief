@@ -30,6 +30,11 @@ interface Nestable
     public function getDescendants(): NestedTree;
 
     /**
+     * List of all the descendant ids.
+     */
+    public function getDescendantIds(): array;
+
+    /**
      * @return Nestable[]
      */
     public function getSiblings(): iterable;

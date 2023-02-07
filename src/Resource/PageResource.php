@@ -59,6 +59,8 @@ interface PageResource extends Resource, TableResource
      */
     public function getSortableType(): string;
 
+    public function allowInlineSorting(): bool;
+
     /**
      * The class responsible for fetching the results for admin index pages.
      * @return string

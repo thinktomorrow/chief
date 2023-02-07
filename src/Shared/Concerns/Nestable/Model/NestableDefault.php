@@ -57,13 +57,16 @@ trait NestableDefault
      */
     public function getDescendants(): NestedTree
     {
-        $nestableQueries = app(NestableQueries::class);
-
         $descendants = static::whereIn($this->getKeyName(),
-            $nestableQueries->getDescendantIds($this)
+            $this->getDescendantIds()
         )->get();
 
-        return $nestableQueries->buildNestedTree($descendants);
+        return app(NestableQueries::class)->buildNestedTree($descendants);
+    }
+
+    public function getDescendantIds(): array
+    {
+        return app(NestableQueries::class)->getDescendantIds($this);
     }
 
     public function getSiblings(): iterable

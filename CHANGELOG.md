@@ -5,6 +5,9 @@ principles.
 
 ## unreleased
 
+-   Changed: Refactored and changed nestable logic. This introduces a couple of breaking changes:
+-   A nestable model should now implement the `Nestable` interface.
+-   
 -   Added: `<x-chief::page.layout/>`, `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
 -   Added: `<x-chief::solo.layout/>` and `<x-chief::solo.template/>` components
 -   Added: `<x-chief::mail.layout/>` and `<x-chief::mail.template/>` components

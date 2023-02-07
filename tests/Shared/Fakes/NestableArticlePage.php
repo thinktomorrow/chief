@@ -9,10 +9,16 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault;
+use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-class NestableArticlePage extends ArticlePage implements PageResource
+class NestableArticlePage extends ArticlePage implements PageResource, Nestable
 {
     use PageResourceDefault;
+    use NestableDefault;
+//    use NestablePageDefault;
 
     public static function migrateUp()
     {

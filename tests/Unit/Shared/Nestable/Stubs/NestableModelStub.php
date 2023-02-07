@@ -35,7 +35,6 @@ class NestableModelStub extends Model implements Page, PageResource, Nestable
         Schema::create((new static)->getTable(), function (Blueprint $table) {
             $table->char('id', 36)->primary();
             $table->char('parent_id', 36)->index()->nullable();
-//            $table->string('title')->nullable();
             $table->json('values')->nullable();
             $table->string('current_state')->default('draft');
             $table->tinyInteger('order')->default(0);
