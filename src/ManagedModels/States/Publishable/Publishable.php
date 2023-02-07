@@ -16,6 +16,9 @@ trait Publishable
         return PageState::KEY;
     }
 
+    /**
+     * @deprecated use inOnlineState() instead
+     */
     public function isPublished(): bool
     {
         return $this->inOnlineState();
@@ -26,21 +29,25 @@ trait Publishable
         return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::draft;
     }
 
+    /**
+     * @deprecated use UsesPageState::scopeOnline(Builder $query) instead
+     */
     public function scopePublished($query)
     {
-        // Here we widen up the results in case of preview mode and ignore the published scope
-        if (PreviewMode::fromRequest()->check()) {
-            return;
-        }
-
-        $query->where($this->getPublishablePageStateAttribute(), PageState::published);
+        $this->scopeOnline($query);
     }
 
+    /**
+     * @deprecated use $query->where(PageState::KEY, PageState::draft->value) instead
+     */
     public function scopeDrafted($query)
     {
         $query->where($this->getPublishablePageStateAttribute(), PageState::draft);
     }
 
+    /**
+     * @deprecated use $query->online()->get() instead
+     */
     public static function getAllPublished()
     {
         return static::published()->get();

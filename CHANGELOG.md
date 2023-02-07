@@ -16,6 +16,7 @@ principles.
 -   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
 -   Changed: nav-project view moved to resources/views/template/nav/nav-project.blade.php
 -   Fixed: menu item create breadcrumb now links back to correct menu
+-   Deprecated: Publishable trait. The same functionality can be achieved with the UsesPageState trait.
 
 ## 0.7.18 - 2023-01-23
 
