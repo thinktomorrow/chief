@@ -33,8 +33,7 @@ class AuditTest extends ChiefTestCase
         $this->asAdmin()->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
 
         $response = $this->asAdmin()->get(route('chief.back.audit.index'));
-        dd($response);
-        $response->assertViewHas('audit');
+        $response->assertSuccessful();
 
         $this->assertCount(1, $response->viewData('audit'));
     }
@@ -48,8 +47,8 @@ class AuditTest extends ChiefTestCase
         $this->actingAs($user, 'chief')->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
 
         $response = $this->actingAs($user, 'chief')->get(route('chief.back.audit.show', $user->id));
-        $response->assertViewHas('audit');
-
+        $response->assertSuccessful();
+        
         $causer = $response->viewData('causer');
         $this->assertEquals($user->name, $causer->name);
     }
