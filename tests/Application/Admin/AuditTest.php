@@ -48,7 +48,7 @@ class AuditTest extends ChiefTestCase
 
         $response = $this->actingAs($user, 'chief')->get(route('chief.back.audit.show', $user->id));
         $response->assertSuccessful();
-        
+
         $causer = $response->viewData('causer');
         $this->assertEquals($user->name, $causer->name);
     }
