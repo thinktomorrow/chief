@@ -3,7 +3,7 @@
     $breadcrumb = null;
 
     if(\Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1) {
-        $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar menu overzicht', route('chief.back.menus.index'));
+        $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar menu overzicht', route('chief.back.menus.index'));
     }
 @endphp
 

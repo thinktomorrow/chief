@@ -1,5 +1,5 @@
 @php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar het menu', route('chief.back.menus.show', $menuitem->menu_type));
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar het menu', route('chief.back.menus.show', $menuitem->menu_type));
 @endphp
 
 <x-chief::page.template title="Menu item toevoegen">

@@ -1,5 +1,5 @@
 @php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar overzicht', route('chief.back.roles.index'));
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', route('chief.back.roles.index'));
 @endphp
 
 <x-chief::page.template title="Nieuwe rol toevoegen">

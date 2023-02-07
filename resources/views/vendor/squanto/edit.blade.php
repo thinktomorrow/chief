@@ -1,6 +1,6 @@
 @php
     $title = ucfirst($page->label());
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Vaste teksten', route('squanto.index'));
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Vaste teksten', route('squanto.index'));
     $collectedLines = collect($lines)->groupBy(function($lineViewModel) {
         return $lineViewModel->sectionKey();
     });

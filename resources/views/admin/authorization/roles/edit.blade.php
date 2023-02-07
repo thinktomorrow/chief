@@ -1,5 +1,5 @@
 @php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar overzicht', route('chief.back.roles.index'));
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', route('chief.back.roles.index'));
     $title = ucfirst($role->name);
 @endphp
 

@@ -1,5 +1,5 @@
 @php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\Breadcrumb('Terug naar admins', route('chief.back.users.index'));
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar admins', route('chief.back.users.index'));
 @endphp
 
 <x-chief::page.template :title="$user->fullname">
