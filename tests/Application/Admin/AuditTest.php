@@ -33,6 +33,7 @@ class AuditTest extends ChiefTestCase
         $this->asAdmin()->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
 
         $response = $this->asAdmin()->get(route('chief.back.audit.index'));
+        dd($response);
         $response->assertViewHas('audit');
 
         $this->assertCount(1, $response->viewData('audit'));
