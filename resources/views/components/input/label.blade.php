@@ -6,7 +6,7 @@
 <label {{ $attributes->class(['select-none', 'form-input-label' => !isset($unset)]) }}>
     {{ $slot }}
 
-    @isset ($required)
+    @if (isset($required) && $required)
         <span class="text-orange-500">*</span>
-    @endisset
+    @endif
 </label>
