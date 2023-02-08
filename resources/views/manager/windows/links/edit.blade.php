@@ -58,10 +58,9 @@
                                     v-html="hint"
                                 ></div>
 
-                                <x-chief-form::formgroup.error error-ids="links"></x-chief-form::formgroup.error>
+                                <x-chief::input.error rule="links"/>
                             </div>
                         </div>
-
                     </link-input>
                 @endforeach
             </div>

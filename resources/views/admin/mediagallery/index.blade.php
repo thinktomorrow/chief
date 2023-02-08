@@ -2,10 +2,10 @@
     <x-chief::page.grid>
         <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="card">
             <div class="flex items-center justify-between mb-4">
-                <label for="select-all" class="with-checkbox">
-                    <input type="checkbox" name="select_all" id="select-all">
-                    <span>Alles selecteren</span>
-                </label>
+                <x-chief::input.label for="select-all" class="flex items-start gap-2">
+                    <x-chief::input.checkbox id="select-all" name="select_all"/>
+                    <span class="body body-dark">Alles selecteren</span>
+                </x-chief::input.label>
 
                 <div class="space-x-2">
                     <button type="submit" form="selecting" name="type" value="download" class="btn btn-primary">Download de selectie</button>

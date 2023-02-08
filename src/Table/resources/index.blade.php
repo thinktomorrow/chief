@@ -45,13 +45,7 @@
             <x-slot name="header">
                 @if ($tableActionsCount > 0)
                     <x-chief::table.header>
-                        <input
-                            data-bulk-all-checkbox
-                            type="checkbox"
-                            name="bulk_all"
-                            id="bulk_all"
-                            class="with-custom-checkbox"
-                        >
+                        <x-chief::input.checkbox data-bulk-all-checkbox name="bulk_all" id="bulk_all"/>
                     </x-chief::table.header>
                 @endif
 
@@ -69,14 +63,12 @@
                     <x-chief::table.row data-sortable-handle data-sortable-id="{{ $resource->getTableRowId($model) }}">
                         @if($tableActionsCount > 0)
                             <x-chief::table.data>
-                                <input
+                                <x-chief::input.checkbox
                                     data-bulk-item-checkbox
-                                    type="checkbox"
-                                    name="bulk_items[]"
                                     id="item_{{ $loop->index }}"
-                                    class="with-custom-checkbox"
+                                    name="bulk_items[]"
                                     value="{{ $resource->getTableRowId($model) }}"
-                                >
+                                />
                             </x-chief::table.data>
                         @endif
 
