@@ -3,7 +3,7 @@
 ])
 
 <input
-    type="text"
+    type="date"
     {{ $attributes->class('form-input-field') }}
     {!! $autofocus ? 'autofocus' : null !!}
 />

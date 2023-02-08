@@ -4,11 +4,11 @@
         :options='@json($getOptions())'
         selected='@json($getActiveValue($locale ?? null))'
         :multiple='@json(!!$allowMultiple())'
-        @if($isGrouped())
+        @if ($isGrouped())
             grouplabel="group"
             groupvalues="values"
             labelkey="label"
             valuekey="id"
         @endif
-    ></chief-multiselect>
+    />
 </div>

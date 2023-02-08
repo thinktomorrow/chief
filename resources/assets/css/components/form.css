@@ -133,7 +133,7 @@ input[type='number'] {
     }
 } */
 
-.prepend,
+/* .prepend,
 .append {
     @apply inline-flex items-center border border-r-0 bg-primary-50 border-grey-200 shrink-0;
     @apply font-medium text-primary-500 px-3 py-2.5;
@@ -161,15 +161,15 @@ input[type='number'] {
 
 .children\:with-append > * {
     @apply !rounded-r-none;
-}
+} */
 
-select.select {
+/* select.select {
     appearance: none;
 
     @apply pr-7 cursor-pointer;
-}
+} */
 
-.with-toggle {
+/* .with-toggle {
     @apply flex;
 
     input {
@@ -211,4 +211,4 @@ select.select {
             transform: translateX(1.75rem);
         }
     }
-}
+} */

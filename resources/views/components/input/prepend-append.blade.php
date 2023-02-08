@@ -4,22 +4,22 @@
 ])
 
 <div class="flex">
-    @if($prepend)
-        <div class="prepend">
+    @if ($prepend)
+        <div class="form-input-prepend">
             <span> {!! $prepend !!} </span>
         </div>
     @endif
 
     <div @class([
         'w-full',
-        'children:with-prepend' => $prepend,
-        'children:with-append' => $append
+        '[&>*]:form-input-with-prepend' => $prepend,
+        '[&>*]:form-input-with-append' => $append
     ])>
         {{ $slot }}
     </div>
 
-    @if($append)
-        <div class="append">
+    @if ($append)
+        <div class="form-input-append">
             <span> {!! $append !!} </span>
         </div>
     @endif

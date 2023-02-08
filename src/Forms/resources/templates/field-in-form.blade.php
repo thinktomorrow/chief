@@ -10,7 +10,7 @@
     class="space-y-1 form-light"
 >
     @if ($getLabel())
-        <x-chief::input.label for="..." :required="$isRequired()">
+        <x-chief::input.label :required="$isRequired()">
             {{ $getLabel() }}
         </x-chief::input.label>
     @endif

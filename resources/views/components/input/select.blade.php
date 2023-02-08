@@ -1,5 +1,12 @@
+@props([
+    'multiple' => false,
+])
+
 <div class="relative flex items-center justify-end">
-    <select {{ $attributes->class('form-input-field appearance-none !pr-9') }}>
+    <select
+        {!! $multiple ? 'multiple' : null !!}
+        {{ $attributes->class('form-input-field appearance-none !pr-9') }}
+    >
         {{ $slot }}
     </select>
 

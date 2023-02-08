@@ -1,10 +1,35 @@
-/* Hides native up/down arrows for number inputs */
-.form-input-without-spin-buttons {
-    -moz-appearance: textfield;
+@layer utilities {
+    /* Hides native up/down arrows for number inputs */
+    .form-input-without-spin-buttons {
+        -moz-appearance: textfield;
 
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+    /* Prepend/append styling */
+    .form-input-prepend,
+    .form-input-append {
+        @apply inline-flex items-center border border-r-0 bg-primary-50 border-grey-200 shrink-0 shadow-sm;
+        @apply font-medium text-primary-500 px-3 py-2;
+    }
+
+    .form-input-prepend {
+        @apply rounded-l-lg;
+    }
+
+    .form-input-append {
+        @apply rounded-r-lg;
+    }
+
+    .form-input-with-prepend {
+        @apply !rounded-l-none;
+    }
+
+    .form-input-with-append {
+        @apply !rounded-l-none;
     }
 }

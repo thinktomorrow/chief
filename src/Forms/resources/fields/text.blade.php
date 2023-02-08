@@ -3,15 +3,11 @@
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
     <x-chief::input.text
-        {{-- TODO: FINISH --}}
-        {{-- :attributes="$attributes" --}}
-        name="{{ $getName($locale ?? null) }}"
         id="{{ $getElementId($locale ?? null) }}"
+        name="{{ $getName($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"
         value="{{ $getActiveValue($locale ?? null) }}"
-        {{ $hasAutofocus() ? 'autofocus' : '' }}
-        {{ $attributes->merge($getCustomAttributes())->merge($passedAttributes ?? [])->merge([
-            'type' => 'text',
-        ]) }}
-    >
+        :autofocus="$hasAutofocus()"
+        :attributes="$attributes->merge($getCustomAttributes())"
+    />
 </x-chief::input.prepend-append>
