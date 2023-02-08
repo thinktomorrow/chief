@@ -13,13 +13,18 @@ principles.
 -   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
 -   Changed: nav-project view moved to resources/views/template/nav/nav-project.blade.php
 -   Fixed: menu item create breadcrumb now links back to correct menu
--   Added: input components to build forms
+-   Added: chief::input components
+-   Changed: replaced all input elements with new input components
 -   Changed: renamed chief-window to use default component namespace chief::window
 -   Changed: renamed chief-inline-notifications to use default component namespace chief::inline-notifications
 -   Changed: renamed chief-icon-label to use default component namespace chief::icon-label
 -   Changed: renamed chief-icon-button to use default component namespace chief::icon-button
 -   Changed: renamed chief-hierarchy to use default component namespace chief::hierarchy
--   Deprecated: chief-form::formgroup component (use new input components instead)
+-   Removed: chief-form::formgroup component (use new input components instead)
+-   Removed: chief-form::formgroup.window component
+-   Removed: chief-form::formgroup.error component (use new chief::input.error component instead)
+-   Removed: chief-form::formgroup.prepend-append component (use new chief::input.prepend-append component instead)
+-   Removed: global form element styling (e.g. input, .prepend, .append, .select, .with-toggle...)
 
 ## 0.7.18 - 2023-01-23
 
