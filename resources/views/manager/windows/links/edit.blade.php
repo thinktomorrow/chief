@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="mt-2 space-y-2">
-                                <div class="flex w-full">
+                                <div class="flex w-full form-light">
                                     <div class="form-input-prepend">
                                         <span v-if="fixedSegment !== '/'" class="flex items-center space-x-0.5">
                                             {{-- TODO: better icon --}}
@@ -48,7 +48,7 @@
                                         type="text"
                                         name="links[{{ $locale }}]"
                                         v-model="value"
-                                        class="form-input-with-prepend"
+                                        class="form-input-with-prepend form-input-field"
                                     >
                                 </div>
 

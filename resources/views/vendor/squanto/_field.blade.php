@@ -24,20 +24,19 @@
                     </div>
                 @endif
 
-                <div class="w-full">
+                <div class="w-full form-light">
                     @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
-                        <textarea
+                        <x-chief::input.textarea
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
-                        >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</textarea>
+                        >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</x-chief::input.textarea>
                     @else
-                        <input
-                            type="text"
+                        <x-chief::input.text
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
-                        >
+                        />
                     @endif
                 </div>
             </div>

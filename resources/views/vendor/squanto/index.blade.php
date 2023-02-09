@@ -15,11 +15,11 @@
                     'pt-3' => !$loop->first,
                     'pb-3' => !$loop->last,
                 ])>
-                    <span class="space-x-1">
+                    <span class="space-x-1 mt-0.5">
                         <a
                             href="{{ route('squanto.edit',$page->slug()) }}"
                             title="{{ ucfirst($page->label()) }}"
-                            class="text-black h6"
+                            class="font-medium body-dark hover:underline"
                         >
                             {{ ucfirst($page->label()) }}
                         </a>
@@ -30,7 +30,7 @@
                     </span>
 
                     <a href="{{ route('squanto.edit',$page->slug()) }}" class="flex-shrink-0 link link-primary">
-                        <x-chief-icon-button type="edit"></x-chief-icon-button>
+                        <x-chief::icon-button type="edit"></x-chief-icon-button>
                     </a>
                 </div>
             @endforeach

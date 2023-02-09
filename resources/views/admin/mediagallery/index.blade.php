@@ -2,7 +2,7 @@
     <x-chief::page.grid>
         <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="card">
             <div class="flex items-center justify-between mb-4">
-                <x-chief::input.label for="select-all" class="flex items-start gap-2">
+                <x-chief::input.label for="select-all" class="flex items-start gap-2 form-light">
                     <x-chief::input.checkbox id="select-all" name="select_all"/>
                     <span class="body body-dark">Alles selecteren</span>
                 </x-chief::input.label>
