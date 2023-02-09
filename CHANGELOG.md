@@ -14,7 +14,7 @@ principles.
 -   Changed: rebuilt all Chief pages with new `<x-chief::page.template/>`.
 -   Changed: rebuilt all Chief solo pages with new `<x-chief::solo.template/>`.
 -   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
--   Changed: nav-project view moved to resources/views/template/nav/nav-project.blade.php
+-   Changed: nav-project view moved to resources/views/templates/page/nav/nav-project.blade.php
 -   Fixed: menu item create breadcrumb now links back to correct menu
 -   Deprecated: Publishable trait. The same functionality can be achieved with the UsesPageState trait.
 
