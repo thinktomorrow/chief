@@ -2,7 +2,7 @@
     $possibleToSortInline = $model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable || (!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages());
 @endphp
 
-<x-chief-window title="Sortering" class="card">
+<x-chief::window title="Sortering" class="card">
     <div class="space-y-4">
         @if($resource->allowInlineSorting() && $possibleToSortInline)
             <p class="body-dark body">
@@ -24,4 +24,4 @@
             <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>
         @endif
     </div>
-</x-chief-window>
+</x-chief::window>

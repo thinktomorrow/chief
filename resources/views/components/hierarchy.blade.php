@@ -26,7 +26,7 @@
     @php $level++ @endphp
 
     @foreach($item->getChildNodes() as $subItem)
-        <x-chief-hierarchy
+        <x-chief::hierarchy
             :manager="$manager"
             :item="$subItem"
             :level="$level"

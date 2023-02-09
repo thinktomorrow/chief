@@ -1,13 +1,16 @@
 <div class="space-y-1">
     @foreach($getOptions() as $value => $label)
-        <label for="{{ $getElementId($locale ?? null).'_'.$value }}" class="with-radio">
-            <input
-                type="radio"
+        @php
+            $id = $getElementId($locale ?? null) . '_' . $value;
+        @endphp
+
+        <label for="{{ $id }}" class="flex items-start gap-2">
+            <x-chief::input.radio
+                id="{{ $id }}"
                 name="{{ $getName($locale ?? null) }}"
                 value="{{ $value }}"
-                id="{{ $getElementId($locale ?? null).'_'.$value }}"
-                {{ in_array($value, (array) $getActiveValue($locale ?? null)) ? 'checked="checked"' : '' }}
-            >
+                :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
+            />
 
             <span class="body body-dark">{!! $label !!}</span>
         </label>

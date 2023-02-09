@@ -1,9 +1,10 @@
 <modal id="delete-manager-{{ $model->id }}" title="Ben je zeker?">
     <form
+        v-cloak
+        id="delete-manager-form-{{ $model->id }}"
         action="@adminRoute('delete', $model)"
         method="POST"
-        id="delete-manager-form-{{ $model->id }}"
-        v-cloak
+        class="form-light"
     >
         @method('DELETE')
         @csrf
@@ -18,7 +19,7 @@
             placeholder="DELETE"
             type="text"
             autocomplete="off"
-            class="w-full mt-3"
+            class="form-input-field"
         >
     </form>
 

@@ -1,0 +1,41 @@
+.form-input-checkbox {
+    margin-top: 2px;
+    @apply appearance-none relative w-5 h-5 rounded leading-none;
+
+    &:before {
+        content: '';
+        @apply inline-block w-5 h-5 border rounded shadow-sm;
+    }
+
+    &:focus {
+        @apply ring-1 ring-primary-500 outline-none;
+    }
+
+    &:checked {
+        &:after {
+            top: 1px;
+            left: 1px;
+            @apply inline-block absolute;
+        }
+    }
+
+    &:disabled {
+        @apply opacity-50;
+    }
+}
+
+.form-light .form-input-checkbox {
+    &:before {
+        @apply bg-white border-grey-200;
+    }
+
+    &:checked {
+        &:before {
+            @apply bg-primary-500 border-primary-500;
+        }
+
+        &:after {
+            content: url('data:image/svg+xml; utf8, <svg width="18" height="18" stroke="%23ffffff" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /> </svg>');
+        }
+    }
+}

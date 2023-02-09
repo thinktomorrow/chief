@@ -10,24 +10,24 @@
 
         <div class="space-y-6">
             @if($errors and count($errors) > 0)
-                <x-chief-inline-notification type="error" size="large">
+                <x-chief::inline-notification type="error" size="large">
                     <ul>
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                </x-chief-inline-notification>
+                </x-chief::inline-notification>
             @endif
 
-            <x-chief-form::formgroup id="password" label="Nieuw wachtwoord" required>
-                <input id="password" type="password" name="password">
-                <x-chief-form::formgroup.error error-ids="password"/>
-            </x-chief-form::formgroup>
+            <x-chief::input.group>
+                <x-chief::input.label for="password" required>Nieuw wachtwoord</x-chief::input.label>
+                <x-chief::input.password id="password" name="password" />
+            </x-chief::input.group>
 
-            <x-chief-form::formgroup id="password_confirmation" label="Herhaal wachtwoord" required>
-                <input id="password_confirmation" type="password" name="password_confirmation">
-                <x-chief-form::formgroup.error error-ids="password_confirmation"/>
-            </x-chief-form::formgroup>
+            <x-chief::input.group>
+                <x-chief::input.label for="password_confirmation" required>Herhaal wachtwoord</x-chief::input.label>
+                <x-chief::input.password id="password_confirmation" name="password_confirmation" />
+            </x-chief::input.group>
 
             <div class="space-y-3">
                 @if($new_password)

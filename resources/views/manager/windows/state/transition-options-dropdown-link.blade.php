@@ -49,7 +49,7 @@
     </div>
 @else
     <form action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,$transitionKey)"
-          method="POST">
+        method="POST">
         {{ csrf_field() }}
         @method('PUT')
 
@@ -65,6 +65,5 @@
                 {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
             </button>
         </div>
-
     </form>
 @endif

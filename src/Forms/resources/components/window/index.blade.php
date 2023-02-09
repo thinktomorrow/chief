@@ -7,7 +7,7 @@
     'buttons' => null,
 ])
 
-<x-chief-window
+<x-chief::window
     data-form
     data-form-url="{{ $refreshUrl }}"
     data-form-tags="{{ $tags }}"
@@ -19,7 +19,7 @@
         <x-slot name="buttons">
             @if($editUrl)
                 <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen">
-                    <x-chief-icon-button icon="icon-edit" />
+                    <x-chief::icon-button icon="icon-edit" />
                 </a>
             @endif
 
@@ -34,4 +34,4 @@
             {!! $slot !!}
         </div>
     @endisset
-</x-chief-window>
+</x-chief::window>

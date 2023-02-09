@@ -30,14 +30,14 @@
                         </div>
 
                         <a href="{{ $image->url }}" title="Afbeelding bekijken" target="_blank" rel="noopener" class="block">
-                            <x-chief-icon-label
+                            <x-chief::icon-label
                                 icon="icon-external-link"
                                 position="append"
                                 size="18"
                                 class="link link-primary"
                             >
                                 Afbeelding bekijken
-                            </x-chief-icon-label>
+                            </x-chief::icon-label>
                         </a>
                     </div>
                 @endif

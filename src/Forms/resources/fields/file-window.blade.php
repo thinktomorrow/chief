@@ -31,14 +31,14 @@
                         </div>
 
                         <a href="{{ $file->url }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
-                            <x-chief-icon-label
+                            <x-chief::icon-label
                                 icon="icon-external-link"
                                 position="append"
                                 size="18"
                                 class="link link-primary"
                             >
                                 Document bekijken
-                            </x-chief-icon-label>
+                            </x-chief::icon-label>
                         </a>
                     </div>
                 @endif

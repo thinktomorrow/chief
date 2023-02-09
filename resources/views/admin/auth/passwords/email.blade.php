@@ -17,16 +17,15 @@
             {{ csrf_field() }}
 
             <div class="space-y-6">
-                {{-- TODO: mail confirmation message also shows as error --}}
-                <x-chief-form::formgroup id="identity" label="E-mail" required>
-                    <x-slot name="description">
+                <x-chief::input.group rule="email">
+                    <x-chief::input.label for="email" required>E-mailadres</x-chief::input.label>
+
+                    <x-chief::input.description>
                         Geef je e-mailadres in om je wachtwoord opnieuw in te stellen.
-                    </x-slot>
+                    </x-chief::input.description>
 
-                    <input id="identity" type="email" name="email" value="{{ old('email') }}">
-
-                    <x-chief-form::formgroup.error error-ids="email"/>
-                </x-chief-form::formgroup>
+                    <x-chief::input.email id="email" name="email" value="{{ old('email') }}"/>
+                </x-chief::input.group>
 
                 <div class="space-y-3">
                     <button type="submit" class="flex justify-center w-full btn btn-primary">

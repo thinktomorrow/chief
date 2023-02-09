@@ -15,7 +15,7 @@
                 title="Menu item toevoegen"
                 class="btn btn-primary"
             >
-                <x-chief-icon-label type="add">Menu item toevoegen</x-chief-icon-label>
+                <x-chief::icon-label type="add">Menu item toevoegen</x-chief::icon-label>
             </a>
         </x-chief::page.hero>
     </x-slot>
@@ -27,7 +27,7 @@
             @else
                 <div class="-my-3 divide-y divide-grey-100">
                     @foreach($menuItems as $item)
-                        <x-chief-hierarchy
+                        <x-chief::hierarchy
                             :item="$item"
                             view-path="chief::admin.menu._partials.menu-item"
                             iconMarginTop="0.2rem"

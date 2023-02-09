@@ -1,10 +1,9 @@
 <modal id="delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}" title="Ben je zeker?">
-
     <form
-            action="{{ $manager->route('fragment-delete', $owner, $model) }}"
-            method="POST"
-            id="delete-fragment-form-{{ $model->modelReference()->get() }}"
-            v-cloak
+        action="{{ $manager->route('fragment-delete', $owner, $model) }}"
+        method="POST"
+        id="delete-fragment-form-{{ $model->modelReference()->get() }}"
+        v-cloak
     >
         @method('DELETE')
         @csrf

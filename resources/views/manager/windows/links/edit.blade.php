@@ -25,7 +25,7 @@
 
                             <div class="mt-2 space-y-2">
                                 <div class="flex w-full">
-                                    <div class="prepend">
+                                    <div class="form-input-prepend">
                                         <span v-if="fixedSegment !== '/'" class="flex items-center space-x-0.5">
                                             {{-- TODO: better icon --}}
                                             <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
@@ -48,7 +48,7 @@
                                         type="text"
                                         name="links[{{ $locale }}]"
                                         v-model="value"
-                                        class="with-prepend"
+                                        class="form-input-with-prepend"
                                     >
                                 </div>
 
@@ -58,10 +58,9 @@
                                     v-html="hint"
                                 ></div>
 
-                                <x-chief-form::formgroup.error error-ids="links"></x-chief-form::formgroup.error>
+                                <x-chief::input.error rule="links"/>
                             </div>
                         </div>
-
                     </link-input>
                 @endforeach
             </div>
@@ -93,7 +92,7 @@
                                                     <div>{{ $urlRecord->slug }}</div>
 
                                                     <span class="cursor-pointer link link-error" @click="remove">
-                                                        <x-chief-icon-label type="delete"></x-chief-icon-label>
+                                                        <x-chief::icon-label type="delete"></x-chief::icon-label>
                                                     </span>
                                                 </div>
                                             </url-redirect>
