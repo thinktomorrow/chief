@@ -66,4 +66,12 @@ interface StateAdminConfig extends StateConfig
      * Should the request be redirected after this transition and to where.
      */
     public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string;
+
+    /**
+     * The notification shown in the notification bubble
+     *
+     * @param string $transitionKey
+     * @return string|null
+     */
+    public function getResponseNotification(string $transitionKey): ?string;
 }

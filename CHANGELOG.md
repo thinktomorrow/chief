@@ -5,25 +5,24 @@ principles.
 
 ## unreleased
 
--   Changed: Refactored and changed nestable logic. This introduces a couple of breaking changes:
--   A nestable model should now implement the `Nestable` interface.
--
+-   Changed: Refactored and changed nestable logic. This introduces a couple of breaking changes. A nestable model should now implement the `Nestable` interface.
 -   Added: `<x-chief::page.layout/>`, `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
 -   Added: `<x-chief::solo.layout/>` and `<x-chief::solo.template/>` components
 -   Added: `<x-chief::mail.layout/>` and `<x-chief::mail.template/>` components
+-   Added: `PageAdminConfig::getResponseNotification` as interface method.
+-   Added: chief::input components
+-   Fixed: menu item create breadcrumb now links back to correct menu
 -   Changed: rebuilt all Chief pages with new `<x-chief::page.template/>`.
 -   Changed: rebuilt all Chief solo pages with new `<x-chief::solo.template/>`.
 -   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
 -   Changed: nav-project view moved to resources/views/templates/page/nav/nav-project.blade.php
--   Fixed: menu item create breadcrumb now links back to correct menu
--   Deprecated: Publishable trait. The same functionality can be achieved with the UsesPageState trait.
--   Added: chief::input components
 -   Changed: replaced all input elements with new input components
 -   Changed: renamed chief-window to use default component namespace chief::window
 -   Changed: renamed chief-inline-notifications to use default component namespace chief::inline-notifications
 -   Changed: renamed chief-icon-label to use default component namespace chief::icon-label
 -   Changed: renamed chief-icon-button to use default component namespace chief::icon-button
 -   Changed: renamed chief-hierarchy to use default component namespace chief::hierarchy
+-   Deprecated: Publishable trait. The same functionality can be achieved with the UsesPageState trait.
 -   Removed: chief-form::formgroup component (use new input components instead)
 -   Removed: chief-form::formgroup.window component
 -   Removed: chief-form::formgroup.error component (use new chief::input.error component instead)
