@@ -32,7 +32,7 @@
         "filp/whoops": "^2.14.6",
         "friendsofphp/php-cs-fixer": "^3.14.3",
         "mockery/mockery": "^1.5.1",
-        "nunomaduro/collision": "^6.4",
+        "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.4",
         "orchestra/testbench": "^7.20",
         "phpunit/phpunit": "^9.5.28"
