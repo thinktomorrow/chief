@@ -5,13 +5,15 @@ principles.
 
 ## unreleased
 
--   Changed: Refactored and changed nestable logic. This introduces a couple of breaking changes. A nestable model should now implement the `Nestable` interface.
+## 0.7.19 - 2023-02-13
+
 -   Added: `<x-chief::page.layout/>`, `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
 -   Added: `<x-chief::solo.layout/>` and `<x-chief::solo.template/>` components
 -   Added: `<x-chief::mail.layout/>` and `<x-chief::mail.template/>` components
 -   Added: `PageAdminConfig::getResponseNotification` as interface method.
 -   Added: chief::input components
 -   Fixed: menu item create breadcrumb now links back to correct menu
+-   Changed: Refactored and changed nestable logic. This introduces a couple of breaking changes. A nestable model should now implement the `Nestable` interface.
 -   Changed: rebuilt all Chief pages with new `<x-chief::page.template/>`.
 -   Changed: rebuilt all Chief solo pages with new `<x-chief::solo.template/>`.
 -   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
