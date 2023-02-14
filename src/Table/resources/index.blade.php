@@ -44,7 +44,7 @@
 
             <x-slot name="header">
                 @if ($tableActionsCount > 0)
-                    <x-chief::table.header>
+                    <x-chief::table.header class="form-light">
                         <x-chief::input.checkbox data-bulk-all-checkbox name="bulk_all" id="bulk_all"/>
                     </x-chief::table.header>
                 @endif
