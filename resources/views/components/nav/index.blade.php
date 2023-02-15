@@ -1,4 +1,4 @@
-@if(!$attributes->has('inline') && $items->count() > 1)
+@if (!$attributes->has('inline') && $items->count() > 0)
     @php
         $icon = (($firstItem = $items->first()) && $firstItem->icon())
             ? $firstItem->icon() : '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
@@ -19,15 +19,23 @@
         collapsible
         {{ $attributes }}
     >
+        @if (!$attributes->has('append'))
+            {{ $slot }}
+        @endif
+
         @foreach($items as $navItem)
             <x-chief::nav.item
                 label="{{ ucfirst($navItem->label()) }}"
                 url="{{ $navItem->url() }}"
             />
         @endforeach
+
+        @if ($attributes->has('append'))
+            {{ $slot }}
+        @endif
     </x-chief::nav.item>
-@elseif($items->count() > 0)
-    @if($title)
+@else
+    @if ($title)
         <div
             data-toggle-classes="hidden"
             class="text-sm tracking-wider uppercase text-grey-500 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
@@ -37,7 +45,11 @@
         </div>
     @endif
 
-    @foreach($items as $navItem)
+    @if (!$attributes->has('append'))
+        {{ $slot }}
+    @endif
+
+    @foreach ($items as $navItem)
         <x-chief::nav.item
             label="{{ ucfirst($navItem->label()) }}"
             url="{{ $navItem->url() }}"
@@ -46,7 +58,12 @@
             {{ $attributes }}
         />
     @endforeach
-    @if($title)
+
+    @if ($attributes->has('append'))
+        {{ $slot }}
+    @endif
+
+    @if ($title)
         <hr class="my-6 border-grey-100">
     @endif
 @endif

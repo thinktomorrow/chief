@@ -70,7 +70,7 @@
     @if(!$slot->isEmpty())
         <div
             data-dropdown="{{ $dropdownIdentifier }}"
-            class="ml-11 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
+            class="ml-10 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
         >
             {!! $slot !!}
         </div>
