@@ -12,7 +12,7 @@ enum LayoutType: string
     case warning = 'warning';
     case error = 'error';
 
-    public function class(): string
+    public function cardClass(): string
     {
         return match ($this) {
             self::none => '',
@@ -21,6 +21,18 @@ enum LayoutType: string
             self::info => 'bg-blue-50 border border-blue-100',
             self::warning => 'bg-orange-50 border border-orange-100',
             self::error => 'bg-red-50 border border-red-100',
+        };
+    }
+
+    public function labelClass(): string
+    {
+        return match ($this) {
+            self::none => '',
+            self::default => 'label label-xs label-grey',
+            self::success => 'label label-xs label-success',
+            self::info => 'label label-xs label-info',
+            self::warning => 'label label-xs label-warning',
+            self::error => 'label label-xs label-error',
         };
     }
 }
