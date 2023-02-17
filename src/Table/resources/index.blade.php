@@ -62,7 +62,7 @@
                 @forelse ($models as $model)
                     <x-chief::table.row data-sortable-handle data-sortable-id="{{ $resource->getTableRowId($model) }}">
                         @if($tableActionsCount > 0)
-                            <x-chief::table.data>
+                            <x-chief::table.data class="form-light">
                                 <x-chief::input.checkbox
                                     data-bulk-item-checkbox
                                     id="item_{{ $loop->index }}"
