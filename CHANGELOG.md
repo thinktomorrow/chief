@@ -5,7 +5,11 @@ principles.
 
 ## unreleased
 
+-   Fixed: MediaGallery images were not showing up in the expected row layout
+-   Fixed: fragment titles in fragment-select-existing sidebar had h1 styling
+
 ## 0.7.20 - 2023-02-21
+
 -   Fixed: issue where a new nestable model retrieved all others as descendants
 -   Changed: you can now prepend or append content to a nav component by using the default slot attribute
 

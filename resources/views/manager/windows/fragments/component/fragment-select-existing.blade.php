@@ -45,7 +45,7 @@
                         type="submit"
                     >
                         <div>
-                            <span class="h1-dark h1">
+                            <span class="h6-dark h6">
                                 {{ ucfirst($sharedFragment['resource']->getLabel()) }}
                             </span>
                         </div>
