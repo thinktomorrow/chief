@@ -76,7 +76,9 @@ trait NestableDefault
 
     public function getSiblings(): iterable
     {
-        if(!$this->exists) return collect();
+        if (! $this->exists) {
+            return collect();
+        }
 
         // Parent id is either NULL or given id
         return static::where($this->getParentIdName(), $this->{$this->getParentIdName()})
