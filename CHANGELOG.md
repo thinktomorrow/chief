@@ -4,7 +4,10 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.7.20 - 2023-02-21
 -   Fixed: issue where a new nestable model retrieved all others as descendants
+-   Changed: you can now prepend or append content to a nav component by using the default slot attribute
 
 ## 0.7.19 - 2023-02-13
 
