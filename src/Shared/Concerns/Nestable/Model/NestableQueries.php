@@ -28,6 +28,8 @@ class NestableQueries
 
     public function getAncestorIds(Model $model): array
     {
+        if(!$model->exists) return [];
+
         $table = $model->getTable();
 
         $query = $model::query()
@@ -53,6 +55,8 @@ class NestableQueries
 
     public function getDescendantIds(Model $model): array
     {
+        if(!$model->exists) return [];
+
         $table = $model->getTable();
 
         $query = DB::table($table)

@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+-   Fixed: issue where a new nestable model retrieved all others as descendants
 
 ## 0.7.19 - 2023-02-13
 

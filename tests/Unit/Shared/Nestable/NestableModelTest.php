@@ -106,4 +106,27 @@ class NestableModelTest extends ChiefTestCase
         $this->assertCount(1, $model->getSiblings());
         $this->assertEquals($this->findNode('fifth')->getModel()->getAttributes(), $model->getSiblings()[0]->getAttributes());
     }
+
+    public function test_a_non_existing_model_has_no_descendants()
+    {
+        $model = new NestableModelStub();
+
+        $this->assertEmpty($model->getDescendantIds());
+        $this->assertInstanceOf(NestedTree::class, $model->getDescendants());
+        $this->assertEquals(0, $model->getDescendants()->total());
+    }
+
+    public function test_a_non_existing_model_has_no_ancestors()
+    {
+        $model = new NestableModelStub();
+
+        $this->assertCount(0, $model->getAncestors());
+    }
+
+    public function test_a_non_existing_model_has_no_siblings()
+    {
+        $model = new NestableModelStub();
+
+        $this->assertCount(0, $model->getSiblings());
+    }
 }
