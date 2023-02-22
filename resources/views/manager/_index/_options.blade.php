@@ -12,8 +12,7 @@
     @endAdminCan
 
     @if (
-        $manager->can('state-update', $model)
-        && $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract
+        ($manager->can('state-update', $model) && $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract)
         || $manager->can('duplicate', $model)
     )
         <options-dropdown>

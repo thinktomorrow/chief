@@ -13,6 +13,8 @@
     $bodyAttributes = $manager->can('sort-index', $models->first())
         ? 'data-sortable data-sortable-endpoint=' . $manager->route('sort-index') .' data-sortable-id-type='. $resource->getSortableType()
         : '';
+
+    $showOptionsColumn = $manager->can('edit') || $manager->can('preview') || $manager->can('duplicate') || $manager->can('state-update')
 @endphp
 
 <x-chief::page.template :title="$title">
@@ -21,6 +23,7 @@
             @if($resource->getIndexHeaderContent())
                 {!! $resource->getIndexHeaderContent() !!}
             @endif
+
             @if(!$is_archive_index)
                 @adminCan('create')
                     <a href="@adminRoute('create')" title="{{ ucfirst($resource->getLabel()) }} toevoegen" class="btn btn-primary">
@@ -56,9 +59,9 @@
                     {{ $tableHead->render() }}
                 @endforeach
 
-                @adminCan('edit')
+                @if ($showOptionsColumn)
                     <x-chief::table.header/>
-                @endAdminCan
+                @endif
             </x-slot>
 
             <x-slot name="body">
@@ -79,9 +82,11 @@
                             {{ $tableCell->render() }}
                         @endforeach
 
-                        <x-chief::table.data>
-                            @include('chief::manager._index._options')
-                        </x-chief::table.data>
+                        @if ($showOptionsColumn)
+                            <x-chief::table.data>
+                                @include('chief::manager._index._options')
+                            </x-chief::table.data>
+                        @endif
                     </x-chief::table.row>
                 @empty
                     <x-chief::table.row>

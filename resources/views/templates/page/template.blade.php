@@ -14,7 +14,8 @@
         </section>
 
         {{-- Content --}}
-        <section id="content" class="w-full">
+        {{-- If min-width isn't set, this section will overflow the flex container if it contains a table (go figure) --}}
+        <section id="content" class="w-full min-w-0">
             @include('chief::templates.page._partials.healthbar')
 
             <div class="py-4 sm:py-8 lg:py-12">
