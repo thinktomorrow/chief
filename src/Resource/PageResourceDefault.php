@@ -66,6 +66,11 @@ trait PageResourceDefault
         return $this->getLabel();
     }
 
+    public function getIndexHeaderContent(): ?string
+    {
+        return null;
+    }
+
     public function getPageTitleForSelect($model): string
     {
         $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';

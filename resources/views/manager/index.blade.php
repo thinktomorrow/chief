@@ -6,6 +6,9 @@
 <x-chief::page.template :title="$title">
     <x-slot name="hero">
         <x-chief::page.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
+            @if($resource->getIndexHeaderContent())
+                {!! $resource->getIndexHeaderContent() !!}
+            @endif
             @if(!$is_archive_index)
                 @adminCan('create')
                     <a href="@adminRoute('create')" title="{{ ucfirst($resource->getLabel()) }} toevoegen" class="btn btn-primary">

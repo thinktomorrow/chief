@@ -5,6 +5,9 @@
 <x-chief::page.template :title="$title">
     <x-slot name="hero">
         <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getIndexBreadCrumb()]">
+            @if($resource->getIndexHeaderContent())
+                {!! $resource->getIndexHeaderContent() !!}
+            @endif
             @adminCan('create')
                 <a
                     href="@adminRoute('create')"
