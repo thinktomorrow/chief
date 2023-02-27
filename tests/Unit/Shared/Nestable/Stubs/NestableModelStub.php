@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault;
 
@@ -45,6 +46,6 @@ class NestableModelStub extends Model implements Page, PageResource, Nestable
     public function fields($model): iterable
     {
         // Field to select parent model
-        yield $this->parentNodeSelect($model);
+        yield NestableFormPresets::parentSelect($model);
     }
 }

@@ -15,7 +15,7 @@ class Single extends Model implements PageContract, PageResource, \Thinktomorrow
     public function fields($model): iterable
     {
         // Field to select parent model
-        yield $this->parentNodeSelect($model);
+        yield NestableFormPresets::parentSelect($model);
     }
 }
 
