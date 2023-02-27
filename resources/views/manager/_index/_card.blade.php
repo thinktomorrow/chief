@@ -10,7 +10,7 @@
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
                         <span class="align-bottom with-xs-labels">
-                            <span class="label label-info"> Homepage </span>
+                            <span class="label label-primary"> Homepage </span>
                         </span>
                     @endif
             @adminCan('edit')

@@ -5,6 +5,6 @@
         title="{{ $getHint() }}"
         class="font-medium body-dark hover:underline"
     >
-        {{ $getValue() }}
+        {!! $getValue() !!}
     </a>
 </x-chief::table.data>

@@ -15,7 +15,7 @@ trait TableResourceDefault
     public function getTableRow(Manager $manager, $model): iterable
     {
         yield TableColumnLink::make('Titel')
-            ->value(teaser($this->getPageTitle($model), 50, '...'))
+            ->value($this->generateDefaultTitleColumnLink($model))
             ->url($manager->route('edit', $model));
 
         if ($model instanceof StatefulContract) {
@@ -53,5 +53,21 @@ trait TableResourceDefault
     public function displayTableHeaderAsSticky(): bool
     {
         return false;
+    }
+
+    public function generateDefaultTitleColumnLink($model): string
+    {
+        $output = '<span class="inline-flex items-center gap-1">';
+
+        $output .= '<span>'.teaser($this->getPageTitle($model), 50, '...').'</span>';
+
+        if (\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model)) {
+            $output .= '<span class="label label-xs label-primary">Homepage</span>';
+        }
+
+        $output .= '</span>';
+
+
+        return $output;
     }
 }
