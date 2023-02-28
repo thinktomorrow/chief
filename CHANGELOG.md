@@ -8,6 +8,7 @@ principles.
 -   Added: `PageResource::getIndexHeaderContent()` method to provide custom content on index header.
 -   Fixed: MediaGallery images were not showing up in the expected row layout
 -   Fixed: fragment titles in fragment-select-existing sidebar had h1 styling
+-   Fixed: bug where model has other primary than default id column
 
 ## 0.7.20 - 2023-02-21
 

@@ -11,8 +11,8 @@
     }
 @endphp
 
-<a data-submit-form="publishForm-{{ $model->id }}" class="{{ $styleClasses }} cursor-pointer">Zet online</a>
+<a data-submit-form="publishForm-{{ $model->getKey() }}" class="{{ $styleClasses }} cursor-pointer">Zet online</a>
 
-<form class="hidden" id="publishForm-{{ $model->id }}" action="@adminRoute('publish', $model)" method="POST">
+<form class="hidden" id="publishForm-{{ $model->getKey() }}" action="@adminRoute('publish', $model)" method="POST">
     {{ csrf_field() }}
 </form>
