@@ -120,17 +120,17 @@
         </div>
 
         <form
-                id="detachSharedFragment{{ $model->modelReference()->get() }}"
-                method="POST"
-                action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
+            id="detachSharedFragment{{ $model->modelReference()->get() }}"
+            method="POST"
+            action="{{ $manager->route('fragment-unshare', $owner, $model) }}"
         >
             @csrf
         </form>
 
         <form
-                id="changeFragmentStatus{{ $model->modelReference()->get() }}"
-                method="POST"
-                action="{{ $manager->route('fragment-status', $model) }}"
+            id="changeFragmentStatus{{ $model->modelReference()->get() }}"
+            method="POST"
+            action="{{ $manager->route('fragment-status', $model) }}"
         >
             <input type="hidden" name="online_status" value="{{ $model->fragmentModel()->isOnline()
                 ? \Thinktomorrow\Chief\Fragments\FragmentStatus::offline->value
