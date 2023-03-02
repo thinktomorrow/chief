@@ -23,6 +23,26 @@ CopyToClipboard.prototype.init = function (triggerElementSelector) {
         this._copyToClipboard();
         this._toggleSuccessState();
     });
+
+    // TODO(tijs): refactor this if the functionality below goes to production
+    const fragmentBookmarkLabel = document.querySelector('[data-fragment-bookmark-label]');
+    const fragmentBookmarkForm = document.querySelector('[data-fragment-bookmark-form]');
+    const fragmentBookmarkInput = document.querySelector('[data-fragment-bookmark-input]');
+    const fragmentBookmarkEditButton = document.querySelector('[data-fragment-bookmark-edit-button]');
+    const fragmentBookmarkCancelButton = document.querySelector('[data-fragment-bookmark-cancel-button]');
+
+    [fragmentBookmarkEditButton, fragmentBookmarkCancelButton].forEach((button) => {
+        button.addEventListener('click', () => {
+            fragmentBookmarkLabel.classList.toggle('hidden');
+            fragmentBookmarkForm.classList.toggle('hidden');
+            fragmentBookmarkEditButton.classList.toggle('hidden');
+            fragmentBookmarkCancelButton.classList.toggle('hidden');
+        });
+    });
+
+    fragmentBookmarkCancelButton.addEventListener('click', () => {
+        fragmentBookmarkInput.value = fragmentBookmarkInput.defaultValue;
+    });
 };
 
 CopyToClipboard.prototype._copyToClipboard = function () {
