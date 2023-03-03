@@ -1,6 +1,6 @@
 import EventBus from './EventBus';
 
-const CopyToClipboard = function (
+const FragmentBookmark = function (
     copyValueAttribute = 'data-copy-value',
     labelElementSelector = '[data-copy-label]',
     successContentAttribute = 'data-copy-success-content'
@@ -10,7 +10,14 @@ const CopyToClipboard = function (
     this.successContentAttribute = successContentAttribute;
 };
 
-CopyToClipboard.prototype.init = function (triggerElementSelector) {
+FragmentBookmark.prototype.init = function () {
+    this._initCopyToClipboard();
+    this._initToggleEditField();
+};
+
+FragmentBookmark.prototype._initCopyToClipboard = function (
+    triggerElementSelector = '[data-copy-to-clipboard="bookmark"]'
+) {
     this.triggerElement = document.querySelector(triggerElementSelector);
 
     if (!this.triggerElement) return;
@@ -23,29 +30,48 @@ CopyToClipboard.prototype.init = function (triggerElementSelector) {
         this._copyToClipboard();
         this._toggleSuccessState();
     });
+};
 
-    // TODO(tijs): refactor this if the functionality below goes to production
+FragmentBookmark.prototype._initToggleEditField = function () {
     const fragmentBookmarkLabel = document.querySelector('[data-fragment-bookmark-label]');
     const fragmentBookmarkForm = document.querySelector('[data-fragment-bookmark-form]');
     const fragmentBookmarkInput = document.querySelector('[data-fragment-bookmark-input]');
     const fragmentBookmarkEditButton = document.querySelector('[data-fragment-bookmark-edit-button]');
-    const fragmentBookmarkCancelButton = document.querySelector('[data-fragment-bookmark-cancel-button]');
+    const fragmentBookmarkUndoButton = document.querySelector('[data-fragment-bookmark-undo-button]');
+    const fragmentBookmarkConfirmButton = document.querySelector('[data-fragment-bookmark-confirm-button]');
 
-    [fragmentBookmarkEditButton, fragmentBookmarkCancelButton].forEach((button) => {
+    if (
+        !fragmentBookmarkLabel ||
+        !fragmentBookmarkForm ||
+        !fragmentBookmarkInput ||
+        !fragmentBookmarkEditButton ||
+        !fragmentBookmarkUndoButton ||
+        !fragmentBookmarkConfirmButton
+    ) {
+        return;
+    }
+
+    [fragmentBookmarkEditButton, fragmentBookmarkUndoButton, fragmentBookmarkConfirmButton].forEach((button) => {
         button.addEventListener('click', () => {
             fragmentBookmarkLabel.classList.toggle('hidden');
             fragmentBookmarkForm.classList.toggle('hidden');
             fragmentBookmarkEditButton.classList.toggle('hidden');
-            fragmentBookmarkCancelButton.classList.toggle('hidden');
+            fragmentBookmarkUndoButton.classList.toggle('hidden');
+            fragmentBookmarkConfirmButton.classList.toggle('hidden');
         });
     });
 
-    fragmentBookmarkCancelButton.addEventListener('click', () => {
+    fragmentBookmarkUndoButton.addEventListener('click', () => {
         fragmentBookmarkInput.value = fragmentBookmarkInput.defaultValue;
+        fragmentBookmarkLabel.innerHTML = fragmentBookmarkInput.defaultValue;
+    });
+
+    fragmentBookmarkConfirmButton.addEventListener('click', () => {
+        fragmentBookmarkLabel.innerHTML = fragmentBookmarkInput.value;
     });
 };
 
-CopyToClipboard.prototype._copyToClipboard = function () {
+FragmentBookmark.prototype._copyToClipboard = function () {
     const tempInput = document.createElement('input');
 
     tempInput.value = this.copyValue;
@@ -58,7 +84,7 @@ CopyToClipboard.prototype._copyToClipboard = function () {
     document.body.removeChild(tempInput);
 };
 
-CopyToClipboard.prototype._toggleSuccessState = function () {
+FragmentBookmark.prototype._toggleSuccessState = function () {
     const originalTriggerLabelContent = this.triggerElement.innerHTML;
 
     this.triggerElement.innerHTML = this.triggerSuccessContent;
@@ -69,12 +95,12 @@ CopyToClipboard.prototype._toggleSuccessState = function () {
 };
 
 const initCopyToClipboard = () => {
-    const copyToClipboard = new CopyToClipboard();
+    const fragmentBookmark = new FragmentBookmark();
 
-    copyToClipboard.init('[data-copy-to-clipboard="bookmark"]');
+    fragmentBookmark.init();
 
     EventBus.subscribe('sidebarPanelActivated', () => {
-        copyToClipboard.init('[data-copy-to-clipboard="bookmark"]');
+        fragmentBookmark.init();
     });
 };
 
