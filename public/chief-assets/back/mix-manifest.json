@@ -1,7 +1,12 @@
 {
     "/js/main.js": "/js/main.js?id=b48199b741fd02f1c86332e0797938d1",
+<<<<<<< HEAD
     "/js/native.js": "/js/native.js?id=1d5566f264196c8be237e290ed79f1cb",
     "/css/main.css": "/css/main.css?id=7b5a77014338f6d777306fe29228df5c",
+=======
+    "/js/native.js": "/js/native.js?id=6f2f416491df84a5a6f22f8985b556b3",
+    "/css/main.css": "/css/main.css?id=2f40d14dd2baa9fdf703c047ea25bb03",
+>>>>>>> 3b2bb00e (Change: edit confirm button + refactored fragment-bookmark js)
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",

@@ -4,31 +4,29 @@
 
         @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             {{-- TODO(ben): This form should save the bookmark_label as a dynamic attribute, just like other fragment forms --}}
-            <form data-fragment-bookmark-form action="#" method="PUT" class="hidden form-light">
+            <form data-fragment-bookmark-form action="#" method="PUT" class="hidden form-light grow">
                 <x-chief::input.text
                     data-fragment-bookmark-input
                     id="bookmark_label"
                     name="bookmark_label"
                     value="{{ old('bookmark_label', $model->getBookmark()) }}"
-                    class="w-auto px-1 py-0.5"
+                    class="px-1 py-0.5"
                 />
             </form>
 
             {{-- if this is clicked, it should toggle to a cancellation button --}}
             <span class="cursor-pointer">
-                <x-chief::icon-button
-                    data-fragment-bookmark-edit-button
-                    icon="icon-edit"
-                    color="grey"
-                />
+                <x-chief::icon-button data-fragment-bookmark-edit-button icon="icon-edit" color="grey"/>
 
-                <x-chief::icon-button
-                    data-fragment-bookmark-cancel-button
-                    color="grey"
-                    class="hidden"
-                >
+                <x-chief::icon-button data-fragment-bookmark-undo-button color="grey" class="hidden">
                     <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                    </svg>
+                </x-chief::icon-button>
+
+                <x-chief::icon-button data-fragment-bookmark-confirm-button color="grey" class="hidden">
+                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                 </x-chief::icon-button>
             </span>
