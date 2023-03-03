@@ -1,80 +1,99 @@
 import EventBus from './EventBus';
 
-const FragmentBookmark = function (
-    copyValueAttribute = 'data-copy-value',
-    labelElementSelector = '[data-copy-label]',
-    successContentAttribute = 'data-copy-success-content'
-) {
-    this.labelElementSelector = labelElementSelector;
-    this.copyValueAttribute = copyValueAttribute;
-    this.successContentAttribute = successContentAttribute;
-};
+const FragmentBookmark = function () {};
 
-FragmentBookmark.prototype.init = function () {
+FragmentBookmark.prototype.init = function (
+    labelSelector = '[data-fragment-bookmark-label]',
+    formSelector = '[data-fragment-bookmark-form]',
+    inputSelector = '[data-fragment-bookmark-input]',
+    editButtonSelector = '[data-fragment-bookmark-edit-button]',
+    undoButtonSelector = '[data-fragment-bookmark-undo-button]',
+    confirmButtonSelector = '[data-fragment-bookmark-confirm-button]',
+    externalLinkButtonSelector = '[data-fragment-bookmark-external-link-button]',
+    copyButtonSelector = '[data-fragment-bookmark-copy-button]'
+) {
+    this.label = document.querySelector(labelSelector);
+    this.form = document.querySelector(formSelector);
+    this.input = document.querySelector(inputSelector);
+    this.editButton = document.querySelector(editButtonSelector);
+    this.undoButton = document.querySelector(undoButtonSelector);
+    this.confirmButton = document.querySelector(confirmButtonSelector);
+    this.externalLinkButton = document.querySelector(externalLinkButtonSelector);
+    this.copyButton = document.querySelector(copyButtonSelector);
+
     this._initCopyToClipboard();
     this._initToggleEditField();
 };
 
 FragmentBookmark.prototype._initCopyToClipboard = function (
-    triggerElementSelector = '[data-copy-to-clipboard="bookmark"]'
+    copyValueAttribute = 'data-copy-value',
+    copyLabelElementSelector = '[data-copy-label]',
+    successContentAttribute = 'data-copy-success-content'
 ) {
-    this.triggerElement = document.querySelector(triggerElementSelector);
+    this.copyLabelElementSelector = copyLabelElementSelector;
+    this.copyValueAttribute = copyValueAttribute;
+    this.successContentAttribute = successContentAttribute;
 
-    if (!this.triggerElement) return;
+    if (!this.copyButton) return;
 
-    this.copyValue = this.triggerElement.getAttribute(this.copyValueAttribute);
-    this.triggerLabelElement = this.triggerElement.querySelector(this.labelElementSelector);
-    this.triggerSuccessContent = this.triggerElement.getAttribute(this.successContentAttribute);
+    this.triggerLabelElement = this.copyButton.querySelector(this.copyLabelElementSelector);
+    this.triggerSuccessContent = this.copyButton.getAttribute(this.successContentAttribute);
 
-    this.triggerElement.addEventListener('click', () => {
+    this.copyButton.addEventListener('click', () => {
         this._copyToClipboard();
         this._toggleSuccessState();
     });
 };
 
 FragmentBookmark.prototype._initToggleEditField = function () {
-    const fragmentBookmarkLabel = document.querySelector('[data-fragment-bookmark-label]');
-    const fragmentBookmarkForm = document.querySelector('[data-fragment-bookmark-form]');
-    const fragmentBookmarkInput = document.querySelector('[data-fragment-bookmark-input]');
-    const fragmentBookmarkEditButton = document.querySelector('[data-fragment-bookmark-edit-button]');
-    const fragmentBookmarkUndoButton = document.querySelector('[data-fragment-bookmark-undo-button]');
-    const fragmentBookmarkConfirmButton = document.querySelector('[data-fragment-bookmark-confirm-button]');
-
     if (
-        !fragmentBookmarkLabel ||
-        !fragmentBookmarkForm ||
-        !fragmentBookmarkInput ||
-        !fragmentBookmarkEditButton ||
-        !fragmentBookmarkUndoButton ||
-        !fragmentBookmarkConfirmButton
+        !this.label ||
+        !this.form ||
+        !this.input ||
+        !this.editButton ||
+        !this.undoButton ||
+        !this.confirmButton ||
+        !this.externalLinkButton ||
+        !this.copyButton
     ) {
         return;
     }
 
-    [fragmentBookmarkEditButton, fragmentBookmarkUndoButton, fragmentBookmarkConfirmButton].forEach((button) => {
+    [this.editButton, this.undoButton, this.confirmButton].forEach((button) => {
         button.addEventListener('click', () => {
-            fragmentBookmarkLabel.classList.toggle('hidden');
-            fragmentBookmarkForm.classList.toggle('hidden');
-            fragmentBookmarkEditButton.classList.toggle('hidden');
-            fragmentBookmarkUndoButton.classList.toggle('hidden');
-            fragmentBookmarkConfirmButton.classList.toggle('hidden');
+            this.label.classList.toggle('hidden');
+            this.form.classList.toggle('hidden');
+            this.editButton.classList.toggle('hidden');
+            this.undoButton.classList.toggle('hidden');
+            this.confirmButton.classList.toggle('hidden');
         });
     });
 
-    fragmentBookmarkUndoButton.addEventListener('click', () => {
-        fragmentBookmarkInput.value = fragmentBookmarkInput.defaultValue;
-        fragmentBookmarkLabel.innerHTML = fragmentBookmarkInput.defaultValue;
+    this.undoButton.addEventListener('click', () => {
+        const hash = `#${this.input.defaultValue}`;
+        const link = this.externalLinkButton.href.split('#')[0] + hash;
+
+        this.label.innerHTML = hash;
+        this.externalLinkButton.href = link;
+        this.copyButton.dataset.copyValue = link;
+
+        this.input.value = this.input.defaultValue;
     });
 
-    fragmentBookmarkConfirmButton.addEventListener('click', () => {
-        fragmentBookmarkLabel.innerHTML = fragmentBookmarkInput.value;
+    this.confirmButton.addEventListener('click', () => {
+        const hash = `#${this.input.value}`;
+        const link = this.externalLinkButton.href.split('#')[0] + hash;
+
+        this.label.innerHTML = hash;
+        this.externalLinkButton.href = link;
+        this.copyButton.dataset.copyValue = link;
     });
 };
 
 FragmentBookmark.prototype._copyToClipboard = function () {
     const tempInput = document.createElement('input');
 
-    tempInput.value = this.copyValue;
+    tempInput.value = this.copyButton.getAttribute(this.copyValueAttribute);
 
     document.body.appendChild(tempInput);
 
@@ -85,12 +104,12 @@ FragmentBookmark.prototype._copyToClipboard = function () {
 };
 
 FragmentBookmark.prototype._toggleSuccessState = function () {
-    const originalTriggerLabelContent = this.triggerElement.innerHTML;
+    const originalTriggerLabelContent = this.copyButton.innerHTML;
 
-    this.triggerElement.innerHTML = this.triggerSuccessContent;
+    this.copyButton.innerHTML = this.triggerSuccessContent;
 
     setTimeout(() => {
-        this.triggerElement.innerHTML = originalTriggerLabelContent;
+        this.copyButton.innerHTML = originalTriggerLabelContent;
     }, 2500);
 };
 

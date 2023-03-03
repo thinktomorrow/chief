@@ -7775,6 +7775,7 @@
         },
         {
             "name": "filp/whoops",
+<<<<<<< HEAD
             "version": "2.15.1",
             "source": {
                 "type": "git",
@@ -7785,6 +7786,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/filp/whoops/zipball/e864ac957acd66e1565f25efda61e37791a5db0b",
                 "reference": "e864ac957acd66e1565f25efda61e37791a5db0b",
+=======
+            "version": "2.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filp/whoops.git",
+                "reference": "3e8aebbca9f0ae6f618962c4ad514077fd365ab3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/3e8aebbca9f0ae6f618962c4ad514077fd365ab3",
+                "reference": "3e8aebbca9f0ae6f618962c4ad514077fd365ab3",
+>>>>>>> c9ed7716 (Fix: fragment-bookmark hashed label, external link and copy button)
                 "shasum": ""
             },
             "require": {
@@ -7834,7 +7847,11 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/filp/whoops/tree/2.15.1"
+=======
+                "source": "https://github.com/filp/whoops/tree/2.15.0"
+>>>>>>> c9ed7716 (Fix: fragment-bookmark hashed label, external link and copy button)
             },
             "funding": [
                 {
@@ -7842,7 +7859,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2023-03-06T18:09:13+00:00"
+=======
+            "time": "2023-03-03T12:00:00+00:00"
+>>>>>>> c9ed7716 (Fix: fragment-bookmark hashed label, external link and copy button)
         },
         {
             "name": "friendsofphp/php-cs-fixer",

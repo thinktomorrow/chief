@@ -1,6 +1,8 @@
 @if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
     <div class="flex flex-wrap items-center gap-2">
-        <span data-fragment-bookmark-label class="label label-grey">#{{ $model->getBookmark() }}</span>
+        <span data-fragment-bookmark-label class="label label-grey">
+            #{{ $model->getBookmark() }}
+        </span>
 
         @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             {{-- TODO(ben): This form should save the bookmark_label as a dynamic attribute, just like other fragment forms --}}
@@ -32,6 +34,7 @@
             </span>
 
             <a
+                data-fragment-bookmark-external-link-button
                 href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
                 title="Ga naar dit fragment op de website"
                 target="_blank"
@@ -42,6 +45,7 @@
             </a>
 
             <span
+                data-fragment-bookmark-copy-button
                 data-copy-to-clipboard="bookmark"
                 data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"
                 data-copy-success-content="Gekopiëerd!"
