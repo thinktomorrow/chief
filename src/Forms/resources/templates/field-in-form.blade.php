@@ -17,7 +17,7 @@
 
     @if ($getDescription())
         <x-chief::input.description>
-            {{ $getDescription() }}
+            {!! $getDescription() !!}
         </x-chief::input.description>
     @endif
 
