@@ -5,6 +5,8 @@ principles.
 
 ## unreleased
 
+## 0.7.21 - 2023-03-08
+
 -   Added: `PageResource::getIndexHeaderContent()` method to provide custom content on index header.
 -   Fixed: MediaGallery images were not showing up in the expected row layout
 -   Fixed: fragment titles in fragment-select-existing sidebar had h1 styling
