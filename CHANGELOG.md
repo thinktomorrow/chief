@@ -5,6 +5,8 @@ principles.
 
 ## unreleased
 
+-   Fixed: clicking on the login remember password form label doesn't check the corresponding checkbox
+
 ## 0.7.21 - 2023-03-08
 
 -   Added: `PageResource::getIndexHeaderContent()` method to provide custom content on index header.
