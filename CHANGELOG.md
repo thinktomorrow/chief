@@ -5,6 +5,7 @@ principles.
 
 ## unreleased
 
+-   Fixed: Redactor field was not initialized in inserted repeat section
 -   Fixed: clicking on the login remember password form label doesn't check the corresponding checkbox
 -   Fixed: NestableFormPresets parent_id MultiSelect is shown on create
 

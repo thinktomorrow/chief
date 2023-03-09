@@ -1,8 +1,8 @@
 {
     "private": true,
     "scripts": {
-        "front": "mix --production --mix-config=webpack.mix.js",
-        "front-watch": "mix watch --mix-config=webpack.mix.js",
+        "prod": "mix --production --mix-config=webpack.mix.js",
+        "watch": "mix watch --mix-config=webpack.mix.js",
         "prepare": "husky install",
         "test": "jest"
     },
