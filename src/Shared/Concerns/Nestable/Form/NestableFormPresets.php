@@ -15,7 +15,8 @@ class NestableFormPresets
             ->items([
                 MultiSelect::make('parent_id')
                     ->description('Onder welke pagina hoort deze thuis.')
-                    ->options(fn () => app(SelectOptions::class)->getParentOptions($model)),
+                    ->options(fn () => app(SelectOptions::class)->getParentOptions($model))
+                    ->tag('not-on-create'),
             ]);
     }
 }

@@ -6,6 +6,7 @@ principles.
 ## unreleased
 
 -   Fixed: clicking on the login remember password form label doesn't check the corresponding checkbox
+-   Fixed: NestableFormPresets parent_id MultiSelect is shown on create
 
 ## 0.7.21 - 2023-03-08
 
