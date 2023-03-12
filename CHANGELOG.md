@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: canonicals view file that adds a canonical and hreflang header tags
 
 -   Fixed: Redactor field was not initialized in inserted repeat section
 -   Fixed: clicking on the login remember password form label doesn't check the corresponding checkbox
