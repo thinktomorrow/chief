@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Fragments\Bookmark\BookmarkDefaults;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
