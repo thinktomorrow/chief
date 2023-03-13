@@ -4,6 +4,9 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+-   Added: Bookmark Field 
+-   Changed: Bookmark logic. Bookmark field replaces current fragment bookmark input, which was hardcoded in the fragment edit. It is now included when the field is added to the fields list of the fragment
+-   Changed: HasBookmark namespace reference changed from `Thinktomorrow\Chief\Fragments\Assistants\HasBookmark` to `Thinktomorrow\Chief\Fragments\Bookmark\HasBookmark`.
 
 ## 0.7.22 - 2023-03-13
 

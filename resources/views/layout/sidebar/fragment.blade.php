@@ -3,10 +3,6 @@
         <p class="text-lg h6 h1-dark">
             {{ ucfirst($resource->getLabel()) }}
         </p>
-
-        @if($model->fragmentModel()->exists)
-            @include('chief::layout._partials.fragment-bookmarks')
-        @endif
     </div>
 
     {!! $slot !!}
