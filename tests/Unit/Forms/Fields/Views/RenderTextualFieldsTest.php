@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields\Views;
 
+use Thinktomorrow\Chief\Forms\Fields\Bookmark;
 use Thinktomorrow\Chief\Forms\Fields\Date;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Hidden;
@@ -26,6 +27,7 @@ class RenderTextualFieldsTest extends TestCase
             Slider::class => 5,
             Date::class => '2022-02-02',
             Hidden::class => 'given value',
+            Bookmark::class => 'given bookmark value',
         ];
     }
 

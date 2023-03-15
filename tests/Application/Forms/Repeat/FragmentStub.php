@@ -9,13 +9,16 @@ use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
+use Thinktomorrow\Chief\Fragments\Bookmark\BookmarkDefaults;
+use Thinktomorrow\Chief\Fragments\Bookmark\HasBookmark;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class FragmentStub implements Fragmentable, FragmentsOwner
+class FragmentStub implements Fragmentable, FragmentsOwner, HasBookmark
 {
     use FragmentableDefaults;
     use OwningFragments;
+    use BookmarkDefaults;
 
     public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
