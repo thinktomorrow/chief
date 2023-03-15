@@ -3828,7 +3828,6 @@
         },
         {
             "name": "spatie/image-optimizer",
-<<<<<<< HEAD
             "version": "1.6.4",
             "source": {
                 "type": "git",
@@ -3839,18 +3838,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/d997e01ba980b2769ddca2f00badd3b80c2a2512",
                 "reference": "d997e01ba980b2769ddca2f00badd3b80c2a2512",
-=======
-            "version": "1.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/image-optimizer.git",
-                "reference": "9ed7a80f92310d162adb39f8ffe2622b5ae05d91"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/9ed7a80f92310d162adb39f8ffe2622b5ae05d91",
-                "reference": "9ed7a80f92310d162adb39f8ffe2622b5ae05d91",
->>>>>>> 59d74628 (Add: fragment_bookmarks edit button (WIP))
                 "shasum": ""
             },
             "require": {
@@ -3890,15 +3877,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/image-optimizer/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/spatie/image-optimizer/tree/1.6.4"
             },
             "time": "2023-03-10T08:43:19+00:00"
-=======
-                "source": "https://github.com/spatie/image-optimizer/tree/1.6.3"
-            },
-            "time": "2023-02-28T16:56:09+00:00"
->>>>>>> 59d74628 (Add: fragment_bookmarks edit button (WIP))
         },
         {
             "name": "spatie/laravel-activitylog",
@@ -4101,16 +4082,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.14.1",
+            "version": "1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df"
+                "reference": "bab62023a4745a61170ad5424184533685e73c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df",
-                "reference": "b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/bab62023a4745a61170ad5424184533685e73c2d",
+                "reference": "bab62023a4745a61170ad5424184533685e73c2d",
                 "shasum": ""
             },
             "require": {
@@ -4149,7 +4130,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.1"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.2"
             },
             "funding": [
                 {
@@ -4157,7 +4138,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-27T15:33:45+00:00"
+            "time": "2023-03-14T16:41:21+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -6704,16 +6685,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.8.6",
+            "version": "0.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "4b411318ae84a49cd1a68123643cd8a161b801a2"
+                "reference": "4d8e1bd56ffde01ed852718d3771322a69f8cfe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/4b411318ae84a49cd1a68123643cd8a161b801a2",
-                "reference": "4b411318ae84a49cd1a68123643cd8a161b801a2",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/4d8e1bd56ffde01ed852718d3771322a69f8cfe5",
+                "reference": "4d8e1bd56ffde01ed852718d3771322a69f8cfe5",
                 "shasum": ""
             },
             "require": {
@@ -6766,9 +6747,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.6"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.8.7"
             },
-            "time": "2023-03-06T12:58:58+00:00"
+            "time": "2023-03-14T20:30:14+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
@@ -7775,7 +7756,6 @@
         },
         {
             "name": "filp/whoops",
-<<<<<<< HEAD
             "version": "2.15.1",
             "source": {
                 "type": "git",
@@ -7786,18 +7766,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/filp/whoops/zipball/e864ac957acd66e1565f25efda61e37791a5db0b",
                 "reference": "e864ac957acd66e1565f25efda61e37791a5db0b",
-=======
-            "version": "2.15.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/filp/whoops.git",
-                "reference": "3e8aebbca9f0ae6f618962c4ad514077fd365ab3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/3e8aebbca9f0ae6f618962c4ad514077fd365ab3",
-                "reference": "3e8aebbca9f0ae6f618962c4ad514077fd365ab3",
->>>>>>> c9ed7716 (Fix: fragment-bookmark hashed label, external link and copy button)
                 "shasum": ""
             },
             "require": {
@@ -7847,11 +7815,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/filp/whoops/tree/2.15.1"
-=======
-                "source": "https://github.com/filp/whoops/tree/2.15.0"
->>>>>>> c9ed7716 (Fix: fragment-bookmark hashed label, external link and copy button)
             },
             "funding": [
                 {
@@ -7859,24 +7823,20 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-03-06T18:09:13+00:00"
-=======
-            "time": "2023-03-03T12:00:00+00:00"
->>>>>>> c9ed7716 (Fix: fragment-bookmark hashed label, external link and copy button)
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.15.0",
+            "version": "v3.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "7306744c63e9cc1337894252b4eec4920c38b053"
+                "reference": "d48755372a113bddb99f749e34805d83f3acfe04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7306744c63e9cc1337894252b4eec4920c38b053",
-                "reference": "7306744c63e9cc1337894252b4eec4920c38b053",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d48755372a113bddb99f749e34805d83f3acfe04",
+                "reference": "d48755372a113bddb99f749e34805d83f3acfe04",
                 "shasum": ""
             },
             "require": {
@@ -7951,7 +7911,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.15.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.15.1"
             },
             "funding": [
                 {
@@ -7959,7 +7919,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-12T22:44:55+00:00"
+            "time": "2023-03-13T23:26:30+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -9176,7 +9136,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
             "version": "9.6.5",
             "source": {
                 "type": "git",
@@ -9187,18 +9146,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/86e761949019ae83f49240b2f2123fb5ab3b2fc5",
                 "reference": "86e761949019ae83f49240b2f2123fb5ab3b2fc5",
-=======
-            "version": "9.6.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9125ee085b6d95e78277dc07aa1f46f9e0607b8d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9125ee085b6d95e78277dc07aa1f46f9e0607b8d",
-                "reference": "9125ee085b6d95e78277dc07aa1f46f9e0607b8d",
->>>>>>> 59d74628 (Add: fragment_bookmarks edit button (WIP))
                 "shasum": ""
             },
             "require": {
@@ -9271,11 +9218,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.5"
-=======
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.4"
->>>>>>> 59d74628 (Add: fragment_bookmarks edit button (WIP))
             },
             "funding": [
                 {
@@ -9291,11 +9234,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-03-09T06:34:10+00:00"
-=======
-            "time": "2023-02-27T13:06:37+00:00"
->>>>>>> 59d74628 (Add: fragment_bookmarks edit button (WIP))
         },
         {
             "name": "pimple/pimple",
@@ -10513,7 +10452,6 @@
         },
         {
             "name": "spatie/ray",
-<<<<<<< HEAD
             "version": "1.37.1",
             "source": {
                 "type": "git",
@@ -10524,18 +10462,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/spatie/ray/zipball/a915e327f04c0fbed3bdd26e076e39feea091062",
                 "reference": "a915e327f04c0fbed3bdd26e076e39feea091062",
-=======
-            "version": "1.37.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/ray.git",
-                "reference": "eee231d752eb9b0df33aa99a507c89b5a0ed34fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/eee231d752eb9b0df33aa99a507c89b5a0ed34fb",
-                "reference": "eee231d752eb9b0df33aa99a507c89b5a0ed34fb",
->>>>>>> 3b2bb00e (Change: edit confirm button + refactored fragment-bookmark js)
                 "shasum": ""
             },
             "require": {
@@ -10586,11 +10512,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/spatie/ray/tree/1.37.1"
-=======
-                "source": "https://github.com/spatie/ray/tree/1.37.0"
->>>>>>> 3b2bb00e (Change: edit confirm button + refactored fragment-bookmark js)
             },
             "funding": [
                 {
@@ -10602,11 +10524,7 @@
                     "type": "other"
                 }
             ],
-<<<<<<< HEAD
             "time": "2023-03-06T07:22:28+00:00"
-=======
-            "time": "2023-03-03T13:24:41+00:00"
->>>>>>> 3b2bb00e (Change: edit confirm button + refactored fragment-bookmark js)
         },
         {
             "name": "symfony/filesystem",

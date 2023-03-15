@@ -9,7 +9,6 @@
             id="{{ $getElementId($locale ?? null) }}"
             name="{{ $getName($locale ?? null) }}"
             value="{{ $getActiveValue($locale ?? null) }}"
-            class="px-1 py-0.5"
         />
     </div>
 
