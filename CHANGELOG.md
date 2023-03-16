@@ -1,9 +1,11 @@
 # Changelog
 
-All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
+All notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## unreleased
+## Unreleased
+
+-   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
 
 ## 0.7.22 - 2023-03-13
 
