@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <div class="w-full sm:w-128">
+    <div class="w-full max-w-full sm:w-128">
         @if (!$hasLocales())
             @include($getView())
         @elseif (count($getLocales()) == 1)
