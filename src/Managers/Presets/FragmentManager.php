@@ -24,7 +24,7 @@ final class FragmentManager implements Manager
     use SlimImageUploadAssistant;
     use RepeatFieldAssistant;
 
-//    private Resource $resource;
+    //    private Resource $resource;
     private FragmentRepository $fragmentRepository;
     private FieldValidator $fieldValidator;
     private Registry $registry;

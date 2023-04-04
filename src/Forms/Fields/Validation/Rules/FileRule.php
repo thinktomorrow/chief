@@ -39,9 +39,9 @@ abstract class FileRule
      */
     protected function getSlimImageSize($value)
     {
-//        $file = json_decode($value)->output;
-//        $estimatedSize = strlen(base64_decode($file->image));
-//        return $estimatedSize / 1024;
+        //        $file = json_decode($value)->output;
+        //        $estimatedSize = strlen(base64_decode($file->image));
+        //        return $estimatedSize / 1024;
 
         $inputData = json_decode($value)->input;
 

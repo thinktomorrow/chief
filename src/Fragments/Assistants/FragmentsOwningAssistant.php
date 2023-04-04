@@ -46,7 +46,7 @@ trait FragmentsOwningAssistant
         // TODO: would be great if we could remove this specific 'nested' attitude here and just use the same routes for everything
         if ($model instanceof Fragmentable) {
             $model = $model->fragmentModel();
-//            return route('chief.' . $this->managedModelClass()::resourceKey() . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
+            //            return route('chief.' . $this->managedModelClass()::resourceKey() . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
         }
 
         return $this->generateRoute($action, $model, ...$parameters);
