@@ -158,9 +158,10 @@ export default {
     },
     created() {
         Eventbus.$on('open-modal', (id) => {
+            console.log(this.url);
             if (this.id == id && !this.assets.length) {
                 axios
-                    .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}`)
+                    .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                     .then((response) => {
                         this.assets = response.data;
                         console.log(this.assets);
@@ -176,9 +177,7 @@ export default {
         loadMore: function () {
             this.isLoading = true;
             axios
-                .get(
-                    `${this.url}?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}`
-                )
+                .get(`${this.url}?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                 .then((response) => {
                     this.assets = [...this.assets, ...response.data];
                     this.isLoading = false;
@@ -223,7 +222,7 @@ export default {
         search: function () {
             this.isLoading = true;
             axios
-                .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}`)
+                .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                 .then((response) => {
                     this.assets = response.data;
                     this.isLoading = false;

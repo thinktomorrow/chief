@@ -18,21 +18,29 @@ class MediaGalleryController extends Controller
         $limit = $request->query()['limit'] ?? $limit;
         $offset = $request->query()['offset'] ?? $offset;
         $search = $request->query()['search'] ?? '';
+        $conversion = $request->query()['conversion'] ?? 'full';
 
         $excluded = isset($request->query()['excluded']) ? explode(",", $request->query()['excluded']) : $excluded;
 
-        $links = Asset::with('media')->orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->whereHas('media', function (Builder $query) use ($search) {
-            $query->where('mime_type', 'LIKE', '%image%');
-            $query->where('name', 'LIKE', '%' . $search . '%');
-        })->offset($offset)->limit($limit)->get()->map(function ($asset) {
-            return [
-                "id" => $asset->id,
-                "url" => $asset->url(),
-                "filename" => $asset->filename(),
-                "dimensions" => $asset->getDimensions(),
-                "size" => $asset->getSize(),
-            ];
-        });
+        $links = Asset::with('media')
+            ->orderBy('created_at', 'DESC')
+            ->whereNotIn('id', $excluded)
+            ->whereHas('media', function (Builder $query) use ($search) {
+                $query->where('mime_type', 'LIKE', '%image%');
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            })
+            ->offset($offset)
+            ->limit($limit)
+            ->get()
+            ->map(function ($asset) use ($conversion) {
+                return [
+                    "id" => $asset->id,
+                    "url" => $asset->url($conversion),
+                    "filename" => $asset->filename(),
+                    "dimensions" => $asset->getDimensions(),
+                    "size" => $asset->getSize(),
+                ];
+            });
 
         return response()->json($links->all());
     }
