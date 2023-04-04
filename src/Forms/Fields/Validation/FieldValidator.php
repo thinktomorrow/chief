@@ -41,12 +41,12 @@ class FieldValidator
             $validationParameters->getAttributes(),
         );
 
-//        return $this->validatorFactory->make(
-//            $payload,
-//            $this->ruleMatrix($field->getValidationNames($payload), $field->getValidationParameters()->getRules()), // rules
-//            $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getMessages()), // messages
-//            $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getAttributes()) // attributes
-//        );
+        //        return $this->validatorFactory->make(
+        //            $payload,
+        //            $this->ruleMatrix($field->getValidationNames($payload), $field->getValidationParameters()->getRules()), // rules
+        //            $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getMessages()), // messages
+        //            $this->matrix($field->getValidationNames($payload), $field->getValidationParameters()->getAttributes()) // attributes
+        //        );
     }
 
     /*

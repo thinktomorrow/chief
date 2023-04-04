@@ -31,10 +31,10 @@ class RefreshDatabase extends BaseCommand
         // Add 10 dummy entries + make sure to enter page fragments as well.
 
         // Include Our Chief factories for this command
-//        app(ModelFactory::class)->load(realpath(dirname(__DIR__) . '/../database/factories'));
-//
-//        $this->info('Scaffolding some entries...');
-//        factory(Page::class, 5)->create();
+        //        app(ModelFactory::class)->load(realpath(dirname(__DIR__) . '/../database/factories'));
+        //
+        //        $this->info('Scaffolding some entries...');
+        //        factory(Page::class, 5)->create();
 
         $this->info('Great. We\'re done here. NOW START HACKING!');
     }
