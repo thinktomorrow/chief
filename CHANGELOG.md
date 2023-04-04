@@ -5,6 +5,7 @@ principles.
 
 ## Unreleased
 
+-   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned
 -   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
 
 ## 0.7.22 - 2023-03-13
