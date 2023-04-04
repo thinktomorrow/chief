@@ -25,7 +25,7 @@
             <div class="row-start-start gutter-2">
                 <div
                     v-for="(item, index) in items"
-                    class="w-1/3 draggable-item"
+                    class="w-full sm:w-56 draggable-item"
                     :key="item.key"
                     :draggable="sort.isReordering"
                     :data-item-id="item.id"
