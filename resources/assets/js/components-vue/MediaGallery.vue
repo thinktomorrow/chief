@@ -158,13 +158,11 @@ export default {
     },
     created() {
         Eventbus.$on('open-modal', (id) => {
-            console.log(this.url);
             if (this.id == id && !this.assets.length) {
                 axios
                     .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                     .then((response) => {
                         this.assets = response.data;
-                        console.log(this.assets);
                         this.isLoading = false;
                     })
                     .catch((errors) => {
