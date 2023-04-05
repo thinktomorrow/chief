@@ -7,6 +7,7 @@ principles.
 
 -   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned
 -   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
+-   Fixed: RadioFilter and CheckboxFilter field labels were not correctly styled
 
 ## 0.7.22 - 2023-03-13
 

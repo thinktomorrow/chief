@@ -22,7 +22,7 @@
                     :checked="($option == ($value ?: $default))"
                 />
 
-                <x-chief::input.label for="{{ $id . '-' . $option }}">
+                <x-chief::input.label for="{{ $id . '-' . $option }}" unset class="body body-dark">
                     {{ $optionLabel }}
                 </x-chief::input.label>
             </div>
