@@ -6,6 +6,7 @@ principles.
 ## Unreleased
 
 -   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned
+-   Added: you can now find the current Chief version on the bottom of the sidebar navigation view
 -   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
 -   Fixed: RadioFilter and CheckboxFilter field labels were not correctly styled
 

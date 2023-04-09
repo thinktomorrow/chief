@@ -67,6 +67,13 @@
 
         <div class="py-6">
             @include('chief::templates.page.nav.nav-user')
+
+            <p data-toggle-classes="hidden" @class([
+                'px-2.5 mt-6 text-xs text-grey-400',
+                'hidden' => $isCollapsedOnPageLoad
+            ])>
+                Chief v{{ \Composer\InstalledVersions::getVersion('thinktomorrow/chief') }}
+            </p>
         </div>
     </div>
 </div>
