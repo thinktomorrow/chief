@@ -14,7 +14,7 @@
             />
 
             @if ($optedForToggleDisplay())
-                <span class="form-input-toggle"></span>
+                <span class="form-input-toggle shrink-0"></span>
             @endif
 
             @if ($label)
