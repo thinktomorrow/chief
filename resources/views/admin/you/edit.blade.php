@@ -28,5 +28,17 @@
                 </div>
             </div>
         </x-chief::window>
+
+        <div>
+            <a
+                href="{{ route('chief.back.logout') }}"
+                title="Uitloggen"
+                class="link link-grey"
+            >
+                <x-chief::icon-label icon="icon-arrow-right-on-rectangle" size="24">
+                    Uitloggen
+                </x-chief::icon-label>
+            </a>
+        </div>
     </x-chief::page.grid>
 </x-chief::page.template>
