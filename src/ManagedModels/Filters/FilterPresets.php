@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\Admin\Tags\Read\TagReadRepository;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\SelectFilter;
@@ -32,6 +34,21 @@ class FilterPresets
             SimpleState::offline->getValueAsString() => 'offline',
         ]);
     }
+
+    public static function tags(): Filter
+    {
+        return SelectFilter::make('tags', function ($query, $value) {
+
+            $tagIds = (array) $value;
+
+            $query->whereHas('tags', function (Builder $q) use($tagIds) {
+                $q->whereIn('id', $tagIds);
+            });
+        })->label('Tag')->options(
+            app(TagReadRepository::class)->getAllForSelect()
+        )->default('');
+    }
+
 
     public static function column(string $name, string|array $columns, ?string $label = null): Filter
     {
