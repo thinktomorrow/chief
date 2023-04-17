@@ -3,10 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Tags\Crud;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Admin\Tags\Events\TagCreated;
 use Thinktomorrow\Chief\Admin\Tags\Events\TagGroupCreated;
 use Thinktomorrow\Chief\Admin\Tags\TagGroupModel;
-use Thinktomorrow\Chief\Admin\Tags\TagModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class CreateTagGroupTest extends ChiefTestCase

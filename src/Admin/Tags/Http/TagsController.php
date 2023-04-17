@@ -30,7 +30,7 @@ class TagsController extends Controller
 
     public function index()
     {
-        $tags = $this->tagReadRepository->getAll()->groupBy(fn(TagRead $tag) => $tag->getTagGroupId());
+        $tags = $this->tagReadRepository->getAll()->groupBy(fn (TagRead $tag) => $tag->getTagGroupId());
         $tagGroups = $this->tagReadRepository->getAllGroups();
 
         return view('chief::admin.tags.index', [
