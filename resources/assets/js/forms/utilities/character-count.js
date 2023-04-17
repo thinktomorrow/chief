@@ -24,15 +24,14 @@ const characterCount = (container, characterCountEl) => {
         characterCountEl.innerHTML = currentLength;
     });
 
-    // Default
+    // Set count on initial input value
     formField.dispatchEvent(new Event('input'));
 };
 
 const initCharacterCount = (selector = '[data-character-count]') => {
-    document.addEventListener('DOMContentLoaded', () => {
-        Array.from(document.querySelectorAll(selector)).forEach((el) => {
-            characterCount(document, el);
-        });
+    // Scan triggers on initial pageload
+    Array.from(document.querySelectorAll(selector)).forEach((el) => {
+        characterCount(document, el);
     });
 
     EventBus.subscribe('chief-form-refreshed', (data) => {

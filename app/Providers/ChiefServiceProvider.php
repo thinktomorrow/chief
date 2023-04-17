@@ -14,6 +14,12 @@ use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
+use Thinktomorrow\Chief\Admin\Tags\Read\DefaultTagGroupRead;
+use Thinktomorrow\Chief\Admin\Tags\Read\DefaultTagRead;
+use Thinktomorrow\Chief\Admin\Tags\Read\DefaultTagReadRepository;
+use Thinktomorrow\Chief\Admin\Tags\Read\TagGroupRead;
+use Thinktomorrow\Chief\Admin\Tags\Read\TagRead;
+use Thinktomorrow\Chief\Admin\Tags\Read\TagReadRepository;
 use Thinktomorrow\Chief\Admin\Users\Application\EnableUser;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
@@ -120,6 +126,13 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->app->singleton(Settings::class, function () {
             return new Settings();
+        });
+
+        $this->app->bind(TagRead::class, fn() => DefaultTagRead::class);
+        $this->app->bind(TagGroupRead::class, fn() => DefaultTagGroupRead::class);
+
+        $this->app->bind(TagReadRepository::class, function ($app) {
+            return $app->make(DefaultTagReadRepository::class);
         });
 
         $this->app->bind(NestableRepository::class, MysqlNestableRepository::class);

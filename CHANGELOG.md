@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: charactercount was not triggered in forms on initial page DOM, only in sidebar.
 
 ## 0.7.22 - 2023-03-13
 

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Admin\Tags;
 
-class TagId
+class TagGroupId
 {
     use AggregateId;
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
+use Thinktomorrow\Chief\Admin\Tags\Read\TagRead;
+use Thinktomorrow\Chief\Admin\Tags\Taggable;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Table\Elements\TableColumn;
@@ -22,6 +24,10 @@ trait TableResourceDefault
             foreach ($model->getStateKeys() as $stateKey) {
                 yield TableColumn::make('Status')->value($model->getStateConfig($stateKey)->getStateLabel($model));
             }
+        }
+
+        if ($model instanceof Taggable) {
+            yield TableColumn::make('Tags')->value($model->getTags()->map(fn(TagRead $tag) => "<span class='label label' style='background-color:{{ $tag->getColor() }}'>" . $tag->getLabel() .'</span>')->implode(' '));
         }
     }
 

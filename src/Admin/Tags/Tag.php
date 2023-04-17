@@ -4,20 +4,20 @@ namespace Thinktomorrow\Chief\Admin\Tags;
 
 class Tag
 {
-    private TagState $tagState;
     private string $label;
     private array $data;
+    private TagGroupId $tagGroupId;
 
-    public function __construct(readonly public TagId $tagId, TagState $tagState, string $label, array $data)
+    public function __construct(readonly public TagId $tagId, TagGroupId $tagGroupId, string $label, array $data)
     {
-        $this->tagState = $tagState;
         $this->label = $label;
         $this->data = $data;
+        $this->tagGroupId = $tagGroupId;
     }
 
-    public function getState(): TagState
+    public function getTagGroupId(): TagGroupId
     {
-        return $this->tagState;
+        return $this->tagGroupId;
     }
 
     public function getLabel(): string
@@ -28,5 +28,20 @@ class Tag
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function updateTagGroupId(TagGroupId $tagGroupId): void
+    {
+        $this->tagGroupId = $tagGroupId;
+    }
+
+    public function updateLabel(string $label): void
+    {
+        $this->label = $label;
+    }
+
+    public function updateData(array $data): void
+    {
+        $this->data = array_merge($this->data, $data);
     }
 }
