@@ -30,7 +30,7 @@ class TagReadTest extends TestCase
         $tagRead = $this->getInstance(['data' => ['baz' => ['bad' => 'foobar']]]);
 
         $this->assertEquals('foobar', $tagRead->getData('baz.bad'));
-        $this->assertEquals('foobar', $tagRead->getData('baz','bad'));
+        $this->assertEquals('foobar', $tagRead->getData('baz', 'bad'));
     }
 
     public function test_it_can_return_fallback_data()

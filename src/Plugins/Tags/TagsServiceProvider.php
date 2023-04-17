@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\DefaultTagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\DefaultTagRead;
-use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories\EloquentTagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories\EloquentTaggableRepository;
+use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories\EloquentTagReadRepository;
 
 class TagsServiceProvider extends ServiceProvider
 {

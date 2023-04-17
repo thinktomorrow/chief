@@ -11,11 +11,11 @@ trait TaggableDefaults
 {
     public function getTags(): Collection
     {
-        return $this->tags->map(fn(TagModel $model) => app(TagRead::class)::fromMappedData($model->toArray()));
+        return $this->tags->map(fn (TagModel $model) => app(TagRead::class)::fromMappedData($model->toArray()));
     }
 
     public function tags(): MorphToMany
     {
-        return $this->morphToMany(app(TagModel::class), 'owner', 'chief_tags_pivot','owner_id', 'tag_id');
+        return $this->morphToMany(app(TagModel::class), 'owner', 'chief_tags_pivot', 'owner_id', 'tag_id');
     }
 }
