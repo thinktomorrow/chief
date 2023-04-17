@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Application\Read;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
-use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TestCase;
 use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TagTestHelpers;
+use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TestCase;
 
 class TagReadRepositoryTest extends TestCase
 {
