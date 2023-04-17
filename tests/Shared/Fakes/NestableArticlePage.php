@@ -17,7 +17,7 @@ class NestableArticlePage extends ArticlePage implements PageResource, Nestable
 {
     use PageResourceDefault;
     use NestableDefault;
-//    use NestablePageDefault;
+    //    use NestablePageDefault;
 
     public static function migrateUp()
     {

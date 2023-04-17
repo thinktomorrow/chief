@@ -3,10 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Tags\Crud;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Admin\Tags\Events\TagDeleted;
 use Thinktomorrow\Chief\Admin\Tags\Events\TagGroupDeleted;
 use Thinktomorrow\Chief\Admin\Tags\TagGroupModel;
-use Thinktomorrow\Chief\Admin\Tags\TagModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class DeleteTagGroupTest extends ChiefTestCase
@@ -32,4 +30,3 @@ class DeleteTagGroupTest extends ChiefTestCase
         Event::assertDispatched(TagGroupDeleted::class);
     }
 }
-

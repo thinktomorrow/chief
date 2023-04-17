@@ -100,7 +100,7 @@ class TagGroupsController extends Controller
         $model = app(TagGroupModel::class);
         $model = $tagGroupId ? $model::find($tagGroupId) : $model;
 
-        $fields = Fields::make($model->fields($model))->each(fn($field) => $field->model($model));
+        $fields = Fields::make($model->fields($model))->each(fn ($field) => $field->model($model));
 
         return [$model, $fields];
     }

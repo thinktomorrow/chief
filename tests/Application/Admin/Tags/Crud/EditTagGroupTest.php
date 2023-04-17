@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Tags\Crud;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Admin\Tags\Events\TagGroupUpdated;
-use Thinktomorrow\Chief\Admin\Tags\Events\TagUpdated;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class EditTagGroupTest extends ChiefTestCase

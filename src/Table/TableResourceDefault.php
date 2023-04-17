@@ -27,7 +27,7 @@ trait TableResourceDefault
         }
 
         if ($model instanceof Taggable) {
-            yield TableColumn::make('Tags')->value($model->getTags()->map(fn(TagRead $tag) => "<span class='label label' style='background-color:{{ $tag->getColor() }}'>" . $tag->getLabel() .'</span>')->implode(' '));
+            yield TableColumn::make('Tags')->value($model->getTags()->map(fn (TagRead $tag) => "<span class='label label' style='background-color:{{ $tag->getColor() }}'>" . $tag->getLabel() .'</span>')->implode(' '));
         }
     }
 

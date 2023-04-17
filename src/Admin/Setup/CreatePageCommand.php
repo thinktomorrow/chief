@@ -58,10 +58,10 @@ class CreatePageCommand extends Command
                 'namespace' => $namespace,
             ]), $this->option('force'));
 
-//        $this->fileManipulation->writeFile($path . '/' . $className.'Resource.php', $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageResource.php.stub'), [
-//            'className' => $className.'Resource',
-//            'namespace' => $namespace,
-//        ]), $this->option('force'));
+        //        $this->fileManipulation->writeFile($path . '/' . $className.'Resource.php', $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageResource.php.stub'), [
+        //            'className' => $className.'Resource',
+        //            'namespace' => $namespace,
+        //        ]), $this->option('force'));
 
         $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'), 'boot', 'chiefRegister()->resource('.$namespacedClassName.'::class);');
 

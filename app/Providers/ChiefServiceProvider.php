@@ -128,8 +128,8 @@ class ChiefServiceProvider extends ServiceProvider
             return new Settings();
         });
 
-        $this->app->bind(TagRead::class, fn() => DefaultTagRead::class);
-        $this->app->bind(TagGroupRead::class, fn() => DefaultTagGroupRead::class);
+        $this->app->bind(TagRead::class, fn () => DefaultTagRead::class);
+        $this->app->bind(TagGroupRead::class, fn () => DefaultTagGroupRead::class);
 
         $this->app->bind(TagReadRepository::class, function ($app) {
             return $app->make(DefaultTagReadRepository::class);

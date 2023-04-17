@@ -38,7 +38,7 @@ final class SaveUrlSlugs
              * The mysql database considers these chars the same in where clauses, e.g. e and é.
              *  This asserts a consistent behaviour in both the application and the database
              */
-//            $slug = Str::ascii($slug);
+            //            $slug = Str::ascii($slug);
             $slug = $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $locale) : $slug;
 
             $this->saveRecord(

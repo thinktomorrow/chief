@@ -41,7 +41,7 @@ class FilterPresets
 
             $tagIds = (array) $value;
 
-            $query->whereHas('tags', function (Builder $q) use($tagIds) {
+            $query->whereHas('tags', function (Builder $q) use ($tagIds) {
                 $q->whereIn('id', $tagIds);
             });
         })->label('Tag')->options(

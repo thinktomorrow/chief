@@ -32,7 +32,7 @@ class AdminToastTest extends ChiefTestCase
         $response = $this->asAdmin()->get(route('chief.toast.get').'?path=foo/bar&locale=nl');
 
         $response->assertSuccessful();
-//            ->assertJson(['data' => view('chief-site::admin-toast-element')->render()]);
+        //            ->assertJson(['data' => view('chief-site::admin-toast-element')->render()]);
     }
 
     /** @test */
