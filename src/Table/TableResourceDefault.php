@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
-use Thinktomorrow\Chief\Admin\Tags\Read\TagRead;
-use Thinktomorrow\Chief\Admin\Tags\Taggable;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
+use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable;
 use Thinktomorrow\Chief\Table\Elements\TableColumn;
 use Thinktomorrow\Chief\Table\Elements\TableColumnLink;
 use Thinktomorrow\Chief\Table\Elements\TableHeader;
@@ -27,7 +27,7 @@ trait TableResourceDefault
         }
 
         if ($model instanceof Taggable) {
-            yield TableColumn::make('Tags')->value($model->getTags()->map(fn (TagRead $tag) => "<span class='label label' style='background-color:{{ $tag->getColor() }}'>" . $tag->getLabel() .'</span>')->implode(' '));
+            yield TableColumn::make('Tags')->value($model->getTags()->map(fn (TagRead $tag) => "<span class='label label' style='background-color:".$tag->getColor()."'>" . $tag->getLabel() .'</span>')->implode(' '));
         }
     }
 
