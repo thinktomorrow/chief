@@ -7,12 +7,11 @@ use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\HasWeekTable;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\TaggableRepository;
 
 class FieldPresets
 {
-    public static function tags(HasWeekTable $model): iterable
+    public static function tags($model): iterable
     {
         yield Form::make('tags')
             ->title('Tags')

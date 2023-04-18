@@ -40,7 +40,7 @@
                             @endif
                         </div>
 
-                        <x-chief-tags::tags :tags="$tagsByGroup"/>
+                        <x-chief-tags::tags :tags="$tagsByGroup" :threshold="9999"/>
                     </div>
                 @endforeach
 

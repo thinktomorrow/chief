@@ -2,8 +2,8 @@
     data-sortable-id="{{ $node->getId() }}"
     class="py-3 nested:ptl sortable-item sorting:nested:p-0 sorting:nested:space-y-4"
 >
-    <div class="flex items-center justify-between group">
-        <div class="flex items-center">
+    <div class="flex items-start justify-between group">
+        <div class="flex items-start gap-1">
             {{-- Sortable handle icon --}}
             <span
                 data-sortable-show-when-sorting
@@ -24,19 +24,28 @@
             </span>
 
             {{-- Card label --}}
-            <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getModel()->getPageTitle($node->getModel()) }}">
-                <span class="font-medium body-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
+            <div class="flex flex-wrap gap-1" style="margin-top: 0.2rem;">
+                <a
+                    href="{{ $manager->route('edit', $node->getId()) }}"
+                    title="{{ $node->getModel()->getPageTitle($node->getModel()) }}"
+                    class="font-medium body-dark group-hover:underline"
+                >
+                    {{ $node->getModel()->getPageTitle($node->getModel()) }}
+                </a>
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
-                    <span class="inline mr-1 label label-xs label-primary">Homepage</span>
+                    <span class="label label-xs label-primary">Home</span>
                 @endif
 
-                {{-- <x-chief-tags::tags :tags="$node->getModel()->tags" threshold="3"/> --}}
+                <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="3"/>
 
-                @if($node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && !$node->getModel()->inOnlineState())
+                @if(
+                    $node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract
+                    && !$node->getModel()->inOnlineState()
+                )
                     <span class="inline mr-1 label label-xs label-error">Offline</span>
                 @endif
-            </a>
+            </div>
         </div>
 
         <div data-sortable-hide-when-sorting>
