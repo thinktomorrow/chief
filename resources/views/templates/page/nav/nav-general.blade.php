@@ -17,13 +17,6 @@
             icon="<svg><use xlink:href='#icon-photo'></use></svg>"
             collapsible
         />
-
-        <x-chief::nav.item
-            label="Tags"
-            url="{{ route('chief.tags.index') }}"
-            icon="<svg><use xlink:href='#icon-rectangle-group'></use></svg>"
-            collapsible
-        />
     @endcan
 
     @can('view-squanto')
