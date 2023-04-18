@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\App\Providers\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;

@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -53,7 +52,7 @@ class WeekDayModel extends Model implements ReferableModel, PageResource
     {
         yield MultiSelect::make('weektable_id')
             ->label('Weekschema')
-            ->options(fn() => app(WeekTableReadRepository::class)->getAllWeekTablesForSelect());
+            ->options(fn () => app(WeekTableReadRepository::class)->getAllWeekTablesForSelect());
 
         yield MultiSelect::make('weekday')
             ->label('Dag van de week')

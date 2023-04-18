@@ -7,7 +7,9 @@ class Slot
     private \DateTime $from;
     private \DateTime $until;
 
-    private function __construct(){}
+    private function __construct()
+    {
+    }
 
     public static function make(\DateTime $from, \DateTime $until): static
     {

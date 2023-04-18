@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\WeekTable\Domain\Values;
 
-use Illuminate\Support\Carbon;
-
 class WeekDaySlots
 {
     private WeekDay $weekDay;
@@ -44,4 +42,3 @@ class WeekDaySlots
     }
 
 }
-

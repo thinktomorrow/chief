@@ -2,9 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\WeekTable\Tests\Unit;
 
-use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\WeekTableRead;
-use Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Models\DefaultDateRead;
 use Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Models\DefaultWeekTableRead;
 use Thinktomorrow\Chief\Tests\TestCase;
 

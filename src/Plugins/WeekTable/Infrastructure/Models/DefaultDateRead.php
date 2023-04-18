@@ -33,7 +33,7 @@ class DefaultDateRead implements DateRead
         $model->periods = Slots::make(Slots::convertMappedPeriods($data['periods']));
         $model->data = $data['data'] ?? [];
 
-        $model->weekTableIds = array_map(fn($weekTableId) => WeekTableId::fromString($weekTableId), $childEntities[WeekTableModel::class]);
+        $model->weekTableIds = array_map(fn ($weekTableId) => WeekTableId::fromString($weekTableId), $childEntities[WeekTableModel::class]);
 
         return $model;
     }
@@ -45,7 +45,7 @@ class DefaultDateRead implements DateRead
 
     public function getWeekTableIds(): array
     {
-        return array_map(fn(WeekTableId $weekTableId) => $weekTableId->get(), $this->weekTableIds);
+        return array_map(fn (WeekTableId $weekTableId) => $weekTableId->get(), $this->weekTableIds);
     }
 
     public function getDate(): \DateTime

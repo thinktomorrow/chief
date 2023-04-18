@@ -51,7 +51,7 @@ class DateReadTest extends TestCase
             ]),
             'data' => [],
         ], $values), [
-            WeekTableModel::class => array_merge(['1', '2'], $weekTableIds)
+            WeekTableModel::class => array_merge(['1', '2'], $weekTableIds),
         ]);
     }
 }

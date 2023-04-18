@@ -2,13 +2,12 @@
 
 namespace Thinktomorrow\Chief\Plugins\WeekTable;
 
-use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\App\Providers\ChiefPluginServiceProvider;
-use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\WeekTableRead;
 use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\DateRead;
+use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\WeekTableRead;
 use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\WeekTableReadRepository;
-use Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Models\DefaultWeekTableRead;
 use Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Models\DefaultDateRead;
+use Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Models\DefaultWeekTableRead;
 use Thinktomorrow\Chief\Plugins\WeekTable\Infrastructure\Repositories\EloquentWeekTableReadRepository;
 
 class WeekTableServiceProvider extends ChiefPluginServiceProvider

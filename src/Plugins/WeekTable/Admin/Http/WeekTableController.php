@@ -7,7 +7,6 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\WeekTable\Application\Read\WeekTableReadRepository;
 use Thinktomorrow\Chief\Plugins\WeekTable\Domain\Events\WeekTableCreated;
 use Thinktomorrow\Chief\Plugins\WeekTable\Domain\Events\WeekTableDeleted;

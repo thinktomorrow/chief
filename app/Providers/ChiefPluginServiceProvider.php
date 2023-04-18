@@ -15,9 +15,11 @@ abstract class ChiefPluginServiceProvider extends ServiceProvider
 
     protected function loadPluginAdminRoutes(string $path): void
     {
-        if(!$this->isRequestInAdminEnvironment()) return;
+        if(! $this->isRequestInAdminEnvironment()) {
+            return;
+        }
 
-        Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () use($path) {
+        Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () use ($path) {
             $this->loadRoutesFrom($path);
         });
     }

@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\WeekTable\Tests\Infrastructure;
 
-use Thinktomorrow\Chief\Plugins\WeekTable\WeekTableServiceProvider;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 abstract class TestCase extends ChiefTestCase

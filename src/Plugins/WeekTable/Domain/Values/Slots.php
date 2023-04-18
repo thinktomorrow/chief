@@ -9,12 +9,14 @@ class Slots
     /** @var Slot[] */
     private array $slots;
 
-    private function __construct(){}
+    private function __construct()
+    {
+    }
 
     public static function make(array $slots): static
     {
         // Typecheck
-        array_map(fn(Slot $slot) => $slot, $slots);
+        array_map(fn (Slot $slot) => $slot, $slots);
 
         $model = new static();
 
