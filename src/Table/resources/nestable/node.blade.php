@@ -31,6 +31,8 @@
                     <span class="inline mr-1 label label-xs label-primary">Homepage</span>
                 @endif
 
+                {{-- <x-chief-tags::tags :tags="$node->getModel()->tags" threshold="3"/> --}}
+
                 @if($node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && !$node->getModel()->inOnlineState())
                     <span class="inline mr-1 label label-xs label-error">Offline</span>
                 @endif

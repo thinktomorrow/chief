@@ -14,6 +14,7 @@ module.exports = {
         'src/Forms/Concerns/**/*.php',
         'src/Fragments/resources/**/*.blade.php',
         'src/Table/resources/**/*.blade.php',
+        'src/Plugins/**/resources/**/*.blade.php',
     ],
     theme: {
         screens: {

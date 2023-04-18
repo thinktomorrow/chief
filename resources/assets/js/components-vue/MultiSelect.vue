@@ -5,6 +5,7 @@
             :options="values"
             v-model="value"
             :multiple="multiple"
+            :taggable="true"
             :hide-selected="multiple"
             :close-on-select="!multiple"
             :label="realLabelKey"
@@ -16,6 +17,7 @@
             deselect-label="╳"
             selected-label="✓"
             select-label="✓"
+            @tag="addTag"
         ></multiselect>
 
         <select v-if="name" style="display: none" :name="multiple ? name + '[]' : name" :multiple="multiple">
@@ -308,6 +310,26 @@ export default {
 
             return true;
         },
+        addTag (newTag) {
+            // If the new tag is not valid (e.g. it's a valid hex code in color options), return and show a notification
+            // add new tag to options
+            // save options to database
+
+            const tag = {
+                id: newTag,
+                label: newTag,
+            }
+
+            console.log(this.values);
+
+            this.values.push(tag);
+
+            if (this.isArray(this.value)) {
+                this.value.push(tag);
+            } else {
+                this.value = tag;
+            }
+        }
     },
-};
+}
 </script>
