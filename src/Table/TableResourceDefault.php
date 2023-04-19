@@ -59,7 +59,10 @@ trait TableResourceDefault
     {
         $output = '<span class="inline-flex items-center gap-1">';
 
-        $output .= '<span>'.teaser($this->getPageTitle($model), 50, '...').'</span>';
+        $pageTitle = $this->getPageTitle($model);
+        $pageTitle = strlen(strip_tags($pageTitle)) > 50 ? teaser($this->getPageTitle($model), 50, '...') : $pageTitle;
+
+        $output .= '<span>'.$pageTitle.'</span>';
 
         if (\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model)) {
             $output .= '<span class="label label-xs label-primary">Homepage</span>';

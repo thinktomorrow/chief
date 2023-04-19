@@ -4,7 +4,8 @@ All notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
--   Fixed: testsuite
+-   Fixed: Testsuite
+-   Added: Pagetitle can be shown with svg icons in table index
 
 ## 0.7.23 - 2023-04-19
 
