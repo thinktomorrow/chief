@@ -4,6 +4,9 @@ All notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
+-   Fixed: testsuite
+
+## 0.7.23 - 2023-04-19
 
 -   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned
 -   Added: you can now find the current Chief version on the bottom of the sidebar navigation view
