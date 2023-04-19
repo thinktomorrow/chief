@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms;
 
 use ArrayIterator;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use function collect;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
@@ -26,6 +27,12 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public static function make(iterable $components, ?callable $stopRecursiveCallback = null): static
     {
         return new static(static::extractRecursive(ResolveIterables::resolve($components), $stopRecursiveCallback));
+    }
+
+    // Return all fields but omit any nested fields such as there are in the repeat field
+    public static function makeWithoutFlatteningNestedFields(iterable $components): static
+    {
+        return static::make($components, fn ($field) => ! $field instanceof Repeat);
     }
 
     public function first(): ?Field
