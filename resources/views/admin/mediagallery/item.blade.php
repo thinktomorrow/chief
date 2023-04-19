@@ -3,7 +3,7 @@
     // Account for media files which are not stored on public accessible location. They throw a
     $assetUrl = null;
     try {
-        $assetUrl = $asset->url();
+        $assetUrl = $asset->url('small');
     } catch(Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined $e) {}
 
 ?>
@@ -23,7 +23,7 @@
 
     <div class="p-3">
         <a
-            href="{{ $assetUrl }}"
+            href="{{ $asset->url() }}"
             title="{{ $asset->filename() }}"
             target="_blank"
             rel="noopener"
