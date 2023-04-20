@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Psr\Container\ContainerInterface;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
@@ -21,8 +22,10 @@ class EloquentTagReadRepository implements TagReadRepository
 
     public function getAll(): Collection
     {
+        $usages = $this->getAllUsages();
+
         return $this->container->get(TagModel::class)::all()
-            ->map(fn (TagModel $tagModel) => $this->container->get(TagRead::class)::fromMappedData($tagModel->toArray()));
+            ->map(fn (TagModel $tagModel) => $this->container->get(TagRead::class)::fromMappedData([...$tagModel->toArray(), 'usages' => $usages->first(fn($usage) => $usage->tag_id == $tagModel->id)?->count, 0]));
     }
 
     public function getAllGroups(): Collection
@@ -44,5 +47,13 @@ class EloquentTagReadRepository implements TagReadRepository
         return $this->container->get(TagGroupModel::class)::all()
             ->mapWithKeys(fn (TagGroupModel $model) => [$model->id => $model->label])
             ->all();
+    }
+
+    private function getAllUsages(): Collection
+    {
+        return DB::table('chief_tags_pivot')
+            ->groupBy('tag_id')
+            ->selectRaw('count(*) as count, tag_id')
+            ->get();
     }
 }

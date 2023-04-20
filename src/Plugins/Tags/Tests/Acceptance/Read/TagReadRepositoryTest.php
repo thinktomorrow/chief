@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Application\Read;
+namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Acceptance\Read;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
+use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TaggableStub;
 use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TagTestHelpers;
 use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TestCase;
 
@@ -20,6 +21,24 @@ class TagReadRepositoryTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $results);
         $this->assertCount(2, $results);
+    }
+
+    public function test_it_can_get_all_tags_and_usages()
+    {
+        $tagModel = $this->createTagModel();
+        $tagModel2 = $this->createTagModel();
+
+        TaggableStub::migrateUp();
+        $taggable = TaggableStub::create();
+        $taggable2 = TaggableStub::create();
+
+        $taggable->tags()->attach([$tagModel->id]);
+        $taggable2->tags()->attach([$tagModel->id, $tagModel2->id]);
+
+        $results = app(TagReadRepository::class)->getAll();
+
+        $this->assertEquals(2,$results->first(fn($tagRead) => $tagRead->getTagId() == $tagModel->id)->getUsages());
+        $this->assertEquals(1,$results->first(fn($tagRead) => $tagRead->getTagId() == $tagModel2->id)->getUsages());
     }
 
     public function test_it_can_get_all_taggroups()

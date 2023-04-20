@@ -13,6 +13,7 @@ class DefaultTagRead implements TagRead
     private string $label;
     private ?string $color;
     private array $data;
+    private int $usages;
 
     private function __construct()
     {
@@ -27,6 +28,7 @@ class DefaultTagRead implements TagRead
         $model->tagGroupId = $data['taggroup_id'] ? TagGroupId::fromString($data['taggroup_id']) : null;
         $model->label = $data['label'];
         $model->color = $data['color'] ?? null;
+        $model->usages = $data['usages'] ?? 0;
         $model->data = $data['data'] ?? [];
 
         return $model;
@@ -50,6 +52,11 @@ class DefaultTagRead implements TagRead
     public function getColor(): string
     {
         return $this->color ?: '#999999';
+    }
+
+    public function getUsages(): int
+    {
+        return $this->usages;
     }
 
     public function getData(string $key, string $index = null, $default = null)

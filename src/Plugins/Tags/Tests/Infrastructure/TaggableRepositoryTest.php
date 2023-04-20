@@ -11,12 +11,12 @@ class TaggableRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        HasWeekTableStub::migrateUp();
+        TaggableStub::migrateUp();
     }
 
     public function test_it_can_sync_tags()
     {
-        $taggable = HasWeekTableStub::create();
+        $taggable = TaggableStub::create();
         $tagModel = $this->createTagModel();
 
         foreach ($this->repositories() as $repository) {

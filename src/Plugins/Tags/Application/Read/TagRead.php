@@ -14,5 +14,7 @@ interface TagRead
 
     public function getColor(): string;
 
+    public function getUsages(): int;
+
     public function getData(string $key, string $index = null, $default = null);
 }

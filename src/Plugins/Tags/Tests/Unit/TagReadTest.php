@@ -16,6 +16,7 @@ class TagReadTest extends TestCase
         $this->assertEquals('2', $tagRead->getTagGroupId());
         $this->assertEquals('internal label', $tagRead->getLabel());
         $this->assertEquals('#333333', $tagRead->getColor());
+        $this->assertEquals(5, $tagRead->getUsages());
     }
 
     public function test_it_can_read_data()
@@ -47,6 +48,7 @@ class TagReadTest extends TestCase
             'taggroup_id' => '2',
             'label' => 'internal label',
             'color' => '#333333',
+            'usages' => 5,
             'data' => [],
         ], $values));
     }
