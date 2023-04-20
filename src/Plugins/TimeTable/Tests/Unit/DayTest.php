@@ -10,7 +10,7 @@ class DayTest extends TestCase
 {
     public function test_it_can_create_day()
     {
-        $day = Day::make(7,'label');
+        $day = Day::make(7, 'label');
 
         $this->assertEquals(7, $day->getIso8601WeekDay());
         $this->assertEquals('label', $day->getLabel());

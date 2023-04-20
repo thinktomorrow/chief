@@ -2,12 +2,9 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Unit;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
-use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultDateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultTimeTableRead;
-use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class TimeTableReadTest extends TestCase
@@ -77,7 +74,7 @@ class TimeTableReadTest extends TestCase
                 'key' => 3,
                 'slots' => json_encode([]),
                 'data' => [],
-            ]
+            ],
         ]);
     }
 }

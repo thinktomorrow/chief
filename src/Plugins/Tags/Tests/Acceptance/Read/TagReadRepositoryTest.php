@@ -37,8 +37,8 @@ class TagReadRepositoryTest extends TestCase
 
         $results = app(TagReadRepository::class)->getAll();
 
-        $this->assertEquals(2,$results->first(fn($tagRead) => $tagRead->getTagId() == $tagModel->id)->getUsages());
-        $this->assertEquals(1,$results->first(fn($tagRead) => $tagRead->getTagId() == $tagModel2->id)->getUsages());
+        $this->assertEquals(2, $results->first(fn ($tagRead) => $tagRead->getTagId() == $tagModel->id)->getUsages());
+        $this->assertEquals(1, $results->first(fn ($tagRead) => $tagRead->getTagId() == $tagModel2->id)->getUsages());
     }
 
     public function test_it_can_get_all_taggroups()

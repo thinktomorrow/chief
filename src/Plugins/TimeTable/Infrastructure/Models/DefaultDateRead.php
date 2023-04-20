@@ -34,7 +34,7 @@ class DefaultDateRead implements DateRead
 
         $model->data = $data['data'] ?? [];
 
-        $model->timeTableIds = array_map(fn($timeTableId) => TimeTableId::fromString($timeTableId), $timeTableIds);
+        $model->timeTableIds = array_map(fn ($timeTableId) => TimeTableId::fromString($timeTableId), $timeTableIds);
 
         return $model;
     }
@@ -46,7 +46,7 @@ class DefaultDateRead implements DateRead
 
     public function getTimeTableIds(): array
     {
-        return array_map(fn(TimeTableId $timeTableId) => $timeTableId->get(), $this->timeTableIds);
+        return array_map(fn (TimeTableId $timeTableId) => $timeTableId->get(), $this->timeTableIds);
     }
 
     public function getDate(): \DateTime

@@ -12,7 +12,7 @@ class Slots
     public static function make(Day $day, array $slots): static
     {
         // Type check
-        array_map(fn(Slot $slot) => $slot, $slots);
+        array_map(fn (Slot $slot) => $slot, $slots);
 
         $model = new static();
 
@@ -72,4 +72,3 @@ class Slots
     }
 
 }
-

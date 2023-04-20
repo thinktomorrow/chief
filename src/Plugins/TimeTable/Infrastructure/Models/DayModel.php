@@ -52,7 +52,7 @@ class DayModel extends Model implements ReferableModel, PageResource
     {
         yield MultiSelect::make('timetable_id')
             ->label('Tijdschema')
-            ->options(fn() => app(TimeTableReadRepository::class)->getAllTimeTablesForSelect());
+            ->options(fn () => app(TimeTableReadRepository::class)->getAllTimeTablesForSelect());
 
         yield MultiSelect::make('weekday')
             ->label('Dag van de week')

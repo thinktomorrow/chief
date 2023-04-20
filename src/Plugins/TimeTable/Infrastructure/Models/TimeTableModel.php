@@ -57,7 +57,7 @@ class TimeTableModel extends Model implements ReferableModel
                 ->tag('not-on-create')
                 ->label('Eigen tekst')
                 ->locales()
-                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"')
+                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
         ]);
 
         yield Form::make('tuesday_form')->editInSidebar()->items([
@@ -72,35 +72,35 @@ class TimeTableModel extends Model implements ReferableModel
                 ->tag('not-on-create')
                 ->label('Eigen tekst')
                 ->locales()
-                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"')
+                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
         ]);
 
-//        yield Repeat::make('days')->tag('not-on-create')->items([
-//           MultiSelect::make('day')
-//               ->tag('not-on-create')
-//                ->label('Dag van de week')
-//                ->options([
-//                    'maandag',
-//                    'dindag',
-//                    'woensdag',
-//                    'donderdag',
-//                    'vrijdag',
-//                    'zaterdag',
-//                    'zondag',
-//                ]),
-//
-//           Repeat::make('hours')->tag('not-on-create')->items([
-//                Grid::make()->columns(2)->items([
-//                    Text::make('from')->tag('not-on-create'),
-//                    Text::make('until')->tag('not-on-create'),
-//                ]),
-//            ]),
-//
-//           Text::make('content')
-//               ->tag('not-on-create')
-//                ->label('Eigen tekst')
-//                ->locales()
-//                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
-//        ]);
+        //        yield Repeat::make('days')->tag('not-on-create')->items([
+        //           MultiSelect::make('day')
+        //               ->tag('not-on-create')
+        //                ->label('Dag van de week')
+        //                ->options([
+        //                    'maandag',
+        //                    'dindag',
+        //                    'woensdag',
+        //                    'donderdag',
+        //                    'vrijdag',
+        //                    'zaterdag',
+        //                    'zondag',
+        //                ]),
+        //
+        //           Repeat::make('hours')->tag('not-on-create')->items([
+        //                Grid::make()->columns(2)->items([
+        //                    Text::make('from')->tag('not-on-create'),
+        //                    Text::make('until')->tag('not-on-create'),
+        //                ]),
+        //            ]),
+        //
+        //           Text::make('content')
+        //               ->tag('not-on-create')
+        //                ->label('Eigen tekst')
+        //                ->locales()
+        //                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
+        //        ]);
     }
 }

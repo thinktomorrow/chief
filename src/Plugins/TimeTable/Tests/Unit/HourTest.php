@@ -11,7 +11,7 @@ class HourTest extends TestCase
 {
     public function test_it_can_create_hour()
     {
-        $hour = Hour::make(9,30);
+        $hour = Hour::make(9, 30);
 
         $this->assertEquals(9, $hour->getHour());
         $this->assertEquals(30, $hour->getMinutes());
@@ -25,7 +25,7 @@ class HourTest extends TestCase
 
     public function test_it_can_get_in_format()
     {
-        $hour = Hour::make(9,30);
+        $hour = Hour::make(9, 30);
 
         $this->assertEquals('9:30', $hour->getFormat()); // Default format
         $this->assertEquals('9:30', $hour->getFormat('g:i'));
@@ -35,7 +35,7 @@ class HourTest extends TestCase
 
     public function test_it_can_create_hour_with_prepended_zero()
     {
-        $hour = Hour::make(02,05);
+        $hour = Hour::make(02, 05);
 
         $this->assertEquals(2, $hour->getHour());
         $this->assertEquals(5, $hour->getMinutes());

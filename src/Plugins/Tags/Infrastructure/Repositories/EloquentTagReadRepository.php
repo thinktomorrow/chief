@@ -25,7 +25,7 @@ class EloquentTagReadRepository implements TagReadRepository
         $usages = $this->getAllUsages();
 
         return $this->container->get(TagModel::class)::all()
-            ->map(fn (TagModel $tagModel) => $this->container->get(TagRead::class)::fromMappedData([...$tagModel->toArray(), 'usages' => $usages->first(fn($usage) => $usage->tag_id == $tagModel->id)?->count, 0]));
+            ->map(fn (TagModel $tagModel) => $this->container->get(TagRead::class)::fromMappedData([...$tagModel->toArray(), 'usages' => $usages->first(fn ($usage) => $usage->tag_id == $tagModel->id)?->count, 0]));
     }
 
     public function getAllGroups(): Collection

@@ -25,7 +25,7 @@ class DefaultTimeTableRead implements TimeTableRead
         $model = new static();
 
         $model->timeTableId = TimeTableId::fromString($data['id']);
-        $model->days = array_map(fn($day) => Slots::fromMappedData($day['key'], json_decode($day['slots'], true)), $days);
+        $model->days = array_map(fn ($day) => Slots::fromMappedData($day['key'], json_decode($day['slots'], true)), $days);
         $model->label = $data['label'];
         $model->data = $data['data'] ?? [];
 

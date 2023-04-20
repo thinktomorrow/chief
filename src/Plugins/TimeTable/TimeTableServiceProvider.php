@@ -2,13 +2,12 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable;
 
-use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\App\Providers\ChiefPluginServiceProvider;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\DateRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableReadRepository;
-use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultTimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultDateRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultTimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Repositories\EloquentTimeTableReadRepository;
 
 class TimeTableServiceProvider extends ChiefPluginServiceProvider

@@ -17,8 +17,8 @@ class DateReadTest extends TestCase
         $this->assertEquals('1', $dateRead->getId());
         $this->assertEquals(['1','2'], $dateRead->getTimeTableIds());
         $this->assertEquals([
-            Slot::make(Hour::make(9),Hour::make(12)),
-            Slot::make(Hour::make(13),Hour::make(16,30))
+            Slot::make(Hour::make(9), Hour::make(12)),
+            Slot::make(Hour::make(13), Hour::make(16, 30)),
         ], $dateRead->getSlots());
     }
 

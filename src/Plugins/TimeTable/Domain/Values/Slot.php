@@ -7,7 +7,9 @@ class Slot
     private Hour $from;
     private Hour $until;
 
-    private function __construct(){}
+    private function __construct()
+    {
+    }
 
     public static function make(Hour $from, Hour $until): static
     {

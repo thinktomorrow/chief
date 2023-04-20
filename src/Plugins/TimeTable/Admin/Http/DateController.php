@@ -7,8 +7,6 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TagRead;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateDeleted;
@@ -111,7 +109,7 @@ class DateController extends Controller
     {
         $model = app(DateModel::class);
         $model = $weekId ? $model::find($weekId): $model;
-dd(Fields::make($model->fields($model))->withoutNestedFields());
+        dd(Fields::make($model->fields($model))->withoutNestedFields());
         $fields = Fields::makeWithoutFlatteningNestedFields($model->fields($model))->each(fn ($field) => $field->model($model));
 
         return [$model, $fields];

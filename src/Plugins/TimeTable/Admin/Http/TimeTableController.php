@@ -7,7 +7,6 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableDeleted;
