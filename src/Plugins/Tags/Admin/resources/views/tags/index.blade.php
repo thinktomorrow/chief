@@ -40,7 +40,9 @@
                             @endif
                         </div>
 
-                        <x-chief-tags::tags :tags="$tagsByGroup" :threshold="9999"/>
+                        <div class="flex flex-wrap gap-2 item-start">
+                            <x-chief-tags::tags :tags="$tagsByGroup" :threshold="9999"/>
+                        </div>
                     </div>
                 @endforeach
 

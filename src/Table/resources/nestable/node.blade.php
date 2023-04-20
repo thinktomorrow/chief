@@ -37,7 +37,9 @@
                     <span class="label label-xs label-primary">Home</span>
                 @endif
 
-                <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="3"/>
+                @if ($node->getModel() instanceof Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable)
+                    <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="4"/>
+                @endif
 
                 @if(
                     $node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract
