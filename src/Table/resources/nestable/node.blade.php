@@ -2,7 +2,7 @@
     data-sortable-id="{{ $node->getId() }}"
     class="py-3 nested:ptl sortable-item sorting:nested:p-0 sorting:nested:space-y-4"
 >
-    <div class="flex items-start justify-between group">
+    <div class="flex items-start justify-between gap-4 group">
         <div class="flex items-start gap-1">
             {{-- Sortable handle icon --}}
             <span
@@ -24,14 +24,20 @@
             </span>
 
             {{-- Card label --}}
-            <div class="flex flex-wrap gap-1" style="margin-top: 0.2rem;">
-                <a
-                    href="{{ $manager->route('edit', $node->getId()) }}"
-                    title="{{ $node->getModel()->getPageTitle($node->getModel()) }}"
-                    class="font-medium body-dark group-hover:underline"
-                >
-                    {{ $node->getModel()->getPageTitle($node->getModel()) }}
-                </a>
+            <div class="flex flex-wrap gap-1 mt-[0.2rem]">
+                @adminCan('edit')
+                    <a
+                        href="{{ $manager->route('edit', $node->getId()) }}"
+                        title="{{ $node->getModel()->getPageTitle($node->getModel()) }}"
+                        class="mr-1 font-medium body-dark group-hover:underline"
+                    >
+                        {{ $node->getModel()->getPageTitle($node->getModel()) }}
+                    </a>
+                @elseAdminCan
+                    <span class="mr-1 font-medium body-dark">
+                        {{ $node->getModel()->getPageTitle($node->getModel()) }}
+                    </span>
+                @endAdminCan
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
                     <span class="label label-xs label-primary">Home</span>

@@ -1,11 +1,12 @@
 <template>
     <div>
         <multiselect
-            v-on:input="clearErrors"
-            :options="values"
             v-model="value"
+            v-on:input="clearErrors"
+            v-on:tag="addTag"
+            :options="values"
             :multiple="multiple"
-            :taggable="true"
+            :taggable="taggable"
             :hide-selected="multiple"
             :close-on-select="!multiple"
             :label="realLabelKey"
@@ -17,7 +18,6 @@
             deselect-label="╳"
             selected-label="✓"
             select-label="✓"
-            @tag="addTag"
         ></multiselect>
 
         <select v-if="name" style="display: none" :name="multiple ? name + '[]' : name" :multiple="multiple">
@@ -52,6 +52,7 @@ export default {
         selected: { default: null },
         name: { default: '', type: String },
         multiple: { default: false, type: Boolean },
+        taggable: { default: false, type: Boolean },
 
         /**
          * Object / Array behaviour
@@ -311,6 +312,7 @@ export default {
             return true;
         },
         addTag (newTag) {
+            // TODO: Save tags?
             // If the new tag is not valid (e.g. it's a valid hex code in color options), return and show a notification
             // add new tag to options
             // save options to database
@@ -319,8 +321,6 @@ export default {
                 id: newTag,
                 label: newTag,
             }
-
-            console.log(this.values);
 
             this.values.push(tag);
 

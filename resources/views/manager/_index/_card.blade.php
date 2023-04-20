@@ -1,27 +1,33 @@
-<div data-sortable-handle data-sortable-id="{{ $model->getKey() }}" class="py-4">
-    <div class="space-y-2">
-        <div class="flex justify-between gap-4 group">
+<div data-sortable-handle data-sortable-id="{{ $model->getKey() }}" class="py-4 space-y-2">
+    <div class="flex items-start justify-between gap-4 group">
+        <div class="flex flex-wrap gap-1 mt-[0.2rem]">
             @adminCan('edit')
-                <a href="@adminRoute('edit', $model)" class="w-full mt-0.5 space-x-1">
-            @endAdminCan
-                    <span class="font-medium body-dark group-hover:underline">
-                        {!! $resource->getIndexCardTitle($model) !!}
-                    </span>
-
-                    @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                        <span class="align-bottom with-xs-labels">
-                            <span class="label label-primary"> Homepage </span>
-                        </span>
-                    @endif
-            @adminCan('edit')
+                <a
+                    href="{{ $manager->route('edit', $model) }}"
+                    title="{{ $resource->getPageTitle($model) }}"
+                    class="mr-1 font-medium body-dark group-hover:underline"
+                >
+                    {!! $resource->getIndexCardTitle($model) !!}
                 </a>
+            @elseAdminCan
+                <span class="mr-1 font-medium body-dark">
+                    {!! $resource->getIndexCardTitle($model) !!}
+                </span>
             @endAdminCan
 
-            <div class="shrink-0">
-                @include('chief::manager._index._options')
-            </div>
+            @if (\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
+                <span class="label label-xs label-primary">Home</span>
+            @endif
+
+            @if ($model instanceof Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable)
+                <x-chief-tags::tags :tags="$model->getTags()" size="xs" threshold="4"/>
+            @endif
         </div>
 
-        {!! $resource->getIndexCardContent($model) !!}
+        <div class="shrink-0">
+            @include('chief::manager._index._options')
+        </div>
     </div>
+
+    {!! $resource->getIndexCardContent($model) !!}
 </div>
