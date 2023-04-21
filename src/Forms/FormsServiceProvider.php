@@ -4,12 +4,15 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
+use Thinktomorrow\Chief\Forms\Livewire\FileUpload;
 
 class FormsServiceProvider extends ServiceProvider
 {
@@ -24,5 +27,14 @@ class FormsServiceProvider extends ServiceProvider
         Validator::extend('file_dimensions', FileDimensionsRule::class.'@validate');
         Validator::extend('file_min', FileMinRule::class.'@validate');
         Validator::extend('file_max', FileMaxRule::class.'@validate');
+
+        // Livewire components
+        Livewire::addPersistentMiddleware([
+            AuthenticateChiefSession::class,
+        ]);
+
+        Livewire::component('chief-wire::form', \Thinktomorrow\Chief\Forms\Livewire\Form::class);
+        Livewire::component('chief-wire::dialog', \Thinktomorrow\Chief\Forms\Livewire\Dialog::class);
+        Livewire::component('chief-wire::file-upload', FileUpload::class);
     }
 }

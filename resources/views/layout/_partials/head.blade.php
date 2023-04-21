@@ -16,8 +16,8 @@
     <!-- hide vue elements until vue is loaded -->
     <style type="text/css">
         .v-loading { display: none !important; }
-        [v-cloak].v-loading { display: block !important; }
-        [v-cloak] { display: none !important; }
+        /*[v-cloak].v-loading { display: block !important; }*/
+        /*[v-cloak] { display: none !important; }*/
     </style>
 
     @include('chief::layout._partials.favicon')
@@ -28,6 +28,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
+
+    <livewire:styles />
 
     @stack('custom-styles')
 </head>

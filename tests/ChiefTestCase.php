@@ -8,6 +8,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
@@ -19,6 +20,7 @@ use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
@@ -40,6 +42,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
             TranslatableServiceProvider::class,
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 

@@ -3,17 +3,23 @@
     $files = $getValue($locale);
 @endphp
 
-@if (count($files) == 0)
-    @include('chief-form::fields.file.file-selection')
-@else
-    <div class="space-y-4">
-        @include('chief-form::fields.file.file-preview')
+<livewire:chief-wire::file-upload
+    :key="$getKey()"
+    :name="$getName($locale)"
+    :multiple="true"
+/>
 
-        @if ($allowMultiple())
-            @include('chief-form::fields.file.file-selection-buttons')
-        @endif
-    </div>
-@endif
+{{--@if (count($files) == 0)--}}
+{{--    @include('chief-form::fields.file.file-selection')--}}
+{{--@else--}}
+{{--    <div class="space-y-4">--}}
+{{--        @include('chief-form::fields.file.file-preview')--}}
+
+{{--        @if ($allowMultiple())--}}
+{{--            @include('chief-form::fields.file.file-selection-buttons')--}}
+{{--        @endif--}}
+{{--    </div>--}}
+{{--@endif--}}
 
 {{-- @php
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */

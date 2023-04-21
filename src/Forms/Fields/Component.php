@@ -78,7 +78,9 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
         $this->name($key);
         $this->columnName($key);
 
-        $this->elementId($key.'_'.Str::random());
+        // This causes livewire to refresh field DOM...
+//        $this->elementId($key.'_'.Str::random());
+        $this->elementId($key);
     }
 
     public static function make(string $key)
@@ -94,6 +96,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
 
         return view($view, array_merge($this->data(), [
             'component' => $this,
+            'field' => $this,
         ]));
     }
 

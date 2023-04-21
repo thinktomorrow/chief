@@ -6,7 +6,8 @@
     data-repeat
     data-repeat-endpoint="{{ $getEndpoint() }}"
     data-repeat-section-name="{{ $getName() }}"
-    id="{{ $getElementId($locale ?? null) }}"
+{{--    id="{{ $getElementId($locale ?? null) }}"--}}
+    id="{{ $getId() }}"
     class="space-y-3"
 >
     @foreach($repeatedComponents as $components)
