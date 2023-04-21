@@ -10,6 +10,9 @@
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
+
+        {{ \Thinktomorrow\Chief\Table\Elements\TableColumnIcon::make('edit')->url('test')->render() }}
+
         <div class="card">
             <div class="-my-4 divide-y divide-grey-100">
                 @if($tagGroups->count() == 1)
@@ -20,7 +23,7 @@
                         <p class="body body-dark">
                             <a href="{{ route('chief.tags.create') }}" title="Tag toevoegen" class="btn btn-primary">
                                 <x-chief::icon-label icon="icon-plus">
-                                    
+
                                 </x-chief::icon-label>
                             </a>
                         </p>

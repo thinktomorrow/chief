@@ -69,8 +69,7 @@ class TagModel extends Model implements ReferableModel, PageResource
                 '#0ea5e9' => 'Blauw',
                 '#6366f1' => 'Indigo',
                 '#a855f7' => 'Paars',
-            ])->default('#0ea5e9')
-            ->taggable();
+            ])->default('#0ea5e9');
 
         $tagGroupsForSelect = app(TagReadRepository::class)->getAllGroupsForSelect();
 
