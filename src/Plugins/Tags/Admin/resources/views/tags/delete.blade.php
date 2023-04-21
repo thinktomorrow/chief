@@ -54,7 +54,6 @@
     >
         @csrf
         @method('DELETE')
-    </form>
 
         <div class="relative space-y-6">
             <button

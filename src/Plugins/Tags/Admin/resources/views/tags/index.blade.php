@@ -11,32 +11,37 @@
                 });
             @endphp
 
-            @continue($tagsByGroup->isEmpty())
-
             <x-chief::window>
                 @if ($tagGroup->getLabel())
                     @if ($tagGroups->count() > 1)
                         <div class="flex items-start justify-between mb-2">
                             <div class="flex items-center gap-1">
-                                <span class="body text-grey-500">
-                                    {{ ucfirst($tagGroup->getLabel()) }}
-                                </span>
+                                    <span class="body text-grey-500">
+                                        {{ ucfirst($tagGroup->getLabel()) }}
+                                    </span>
 
-                                <a href="{{ route('chief.taggroups.edit', $tagGroup->getTagGroupId()) }}">
-                                    <x-chief::icon-button icon="icon-edit" color="grey" class="shadow-none text-grey-500">
-                                        <svg width="16" height="16"><use xlink:href="#icon-edit"></use></svg>
-                                    </x-chief::icon-button>
-                                </a>
+                                @if($tagGroup->getTagGroupId())
+                                    <a data-sidebar-trigger
+                                       href="{{ route('chief.taggroups.edit', $tagGroup->getTagGroupId()) }}">
+                                        <x-chief::icon-button icon="icon-edit" color="grey"
+                                                              class="shadow-none text-grey-500">
+                                            <svg width="16" height="16">
+                                                <use xlink:href="#icon-edit"></use>
+                                            </svg>
+                                        </x-chief::icon-button>
+                                    </a>
+                                @endif
                             </div>
 
                             <a
-                                href="{{ route('chief.tags.create') }}"
+                                href="{{ route('chief.tags.create') }}?taggroup_id={{ $tagGroup->getTagGroupId() }}"
                                 title="Tag toevoegen"
                                 class="inline-flex items-center gap-1 mt-1 text-sm font-medium text-grey-500 hover:text-primary-500"
                             >
-                                <svg width="18" height="18"> <use xlink:href="#icon-plus"></use> </svg>
-                                <span>Tag</span>
-                                {{-- <x-chief::icon-label icon="icon-plus">Tag</x-chief::icon-label> --}}
+                                <svg width="18" height="18">
+                                    <use xlink:href="#icon-plus"></use>
+                                </svg>
+                                <span>Tag toevoegen</span>
                             </a>
                         </div>
                     @endif
@@ -52,11 +57,13 @@
                                         title="{{ $tag->getLabel() }}"
                                         class="inline-flex items-center gap-x-3"
                                     >
-                                        <svg class="w-2.5 h-2.5" style="fill: {{ $tag->getColor() }};" viewBox="0 0 6 6" aria-hidden="true">
-                                            <circle cx="3" cy="3" r="3" />
+                                        <svg class="w-2.5 h-2.5" style="fill: {{ $tag->getColor() }};" viewBox="0 0 6 6"
+                                             aria-hidden="true">
+                                            <circle cx="3" cy="3" r="3"/>
                                         </svg>
 
-                                        <span class="font-medium body-dark hover:underline">{{ $tag->getLabel() }}</span>
+                                        <span
+                                            class="font-medium body-dark hover:underline">{{ $tag->getLabel() }}</span>
                                     </a>
                                 </x-chief::table.data>
 
@@ -71,7 +78,8 @@
                                 <x-chief::table.data>
                                     <div class="flex justify-end">
                                         <a href="{{ route('chief.tags.edit', $tag->getTagId()) }}">
-                                            <x-chief::icon-button icon="icon-edit" color="grey" class="bg-white shadow-none text-grey-500" />
+                                            <x-chief::icon-button icon="icon-edit" color="grey"
+                                                                  class="bg-white shadow-none text-grey-500"/>
                                         </a>
                                         @include('chief-tags::tags.delete')
                                     </div>

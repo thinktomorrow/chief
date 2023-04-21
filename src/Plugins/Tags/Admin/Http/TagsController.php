@@ -35,7 +35,7 @@ class TagsController extends Controller
         $tagGroups = $this->tagReadRepository->getAllGroups();
 
         if(! $tags->isEmpty() || ! $tagGroups->isEmpty()) {
-            $tagGroups->push(NullTagGroup::fromMappedData(['label' => 'Algemeen']));
+            $tagGroups->push(NullTagGroup::fromMappedData(['label' => 'Algemene tags']));
         }
 
         return view('chief-tags::tags.index', [

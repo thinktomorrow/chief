@@ -55,12 +55,8 @@ class TagModel extends Model implements ReferableModel, PageResource
             ->rules('max:20')
         );
 
-        // yield Text::make('color')->label('Label kleur')
-        //     ->description('')
-        //     ->placeholder('#6366F1');
         yield MultiSelect::make('color')
             ->label('Label kleur')
-            ->description('Geef de tag een eigen kleur. Liefst een geldige hex waarde.')
             ->options([
                 '#ef4444' => 'Rood',
                 '#f59e0b' => 'Oranje',
@@ -80,8 +76,9 @@ class TagModel extends Model implements ReferableModel, PageResource
                 ->items([
                     MultiSelect::make('taggroup_id')
                         ->label('Groep')
-                        ->description('Zet deze tag in een vakje. Net iets overzichtelijker.')
-                        ->options($tagGroupsForSelect),
+                        ->description('Net iets overzichtelijker.')
+                        ->options($tagGroupsForSelect)
+                        ->default(request()->input('taggroup_id', null)),
                 ]);
         }
     }

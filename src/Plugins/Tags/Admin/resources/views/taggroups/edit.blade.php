@@ -5,11 +5,7 @@
 <x-chief::page.template title="Tag categorie aanpassen">
     <x-slot name="hero">
         <x-chief::page.hero title="Tag categorie aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <a href="{{ route('chief.taggroups.delete', $model) }}" title="Categorie verwijderen" class="btn btn-error-outline">
-                <x-chief::icon-label icon="icon-trash">
-                    Categorie verwijderen
-                </x-chief::icon-label>
-            </a>
+
         </x-chief::page.hero>
     </x-slot>
 
@@ -24,7 +20,17 @@
                 @endforeach
             </div>
 
-            <button class="mt-4 btn btn-primary" type="submit">Bewaar aanpassingen</button>
+            <div class="flex justify-between">
+                <button class="mt-4 btn btn-primary" type="submit">Bewaar aanpassingen</button>
+                <a href="{{ route('chief.taggroups.delete', $model) }}" title="Groep verwijderen" class="link link-error">
+                    <x-chief::icon-label icon="icon-trash">
+                        Groep verwijderen
+                    </x-chief::icon-label>
+                </a>
+            </div>
+
+
         </form>
+
     </x-chief::page.grid>
 </x-chief::page.template>
