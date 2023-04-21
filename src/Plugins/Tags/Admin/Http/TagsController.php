@@ -104,7 +104,7 @@ class TagsController extends Controller
         $model = app(TagModel::class)::find($tagId);
 
         // TODO: test remove pivot entries as well
-        DB::tabel('chief_tags_pivot')->where('tag_id', $model->id)->delete();
+        DB::table('chief_tags_pivot')->where('tag_id', $model->id)->delete();
 
         $model->delete();
 

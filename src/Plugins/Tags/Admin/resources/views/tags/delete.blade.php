@@ -2,7 +2,7 @@
     $modalId = \Illuminate\Support\Str::random(10);
 @endphp
 
-@if('meer dan 0 pagina')
+@if($tag->getUsages() > 0)
 <div data-vue-fields class="space-y-4">
     <div>
         <a
@@ -17,8 +17,12 @@
     @push('portals')
         <modal
             id="state-modal-{{ $modalId }}"
-            title="Ben je zeker?"
+            title="Verwijder tag {{ $tag->getLabel() }}"
         >
+            <p>
+                Als je de tag verwijdert, zal deze ook worden ontkoppeld van alle pagina's.
+            </p>
+
             <form
                 id="delete-tag-modal-form-{{ $modalId }}"
                 action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
@@ -43,7 +47,7 @@
 </div>
 @else
     <form
-        id="delete-tag-form-{{ $modalId }}"
+        id="delete-tag-form-{{ $tag->getTagId() }}"
         action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
         method="POST"
         v-cloak
@@ -55,6 +59,7 @@
         <div class="relative space-y-6">
             <button
                 type="submit"
+                form="delete-tag-form-{{ $tag->getTagId() }}"
                 class="block w-full text-left cursor-pointer"
             >
                 <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
