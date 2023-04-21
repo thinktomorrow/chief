@@ -13,16 +13,16 @@ class FilterPresets
     {
         return (new TagsFilter);
 
-//        return SelectFilter::make('tags', function ($query, $value) {
-//            $tagIds = (array) $value;
-//
-//            $query->whereHas('tags', function (Builder $q) use ($tagIds) {
-//                $q->whereIn('id', $tagIds);
-//            });
-//        })->label('Tag')
-//        ->options(app(TagReadRepository::class)->getAllForSelect())
-//        ->default('')
-//        ->view('chief-tags::filters.tags');
+        //        return SelectFilter::make('tags', function ($query, $value) {
+        //            $tagIds = (array) $value;
+        //
+        //            $query->whereHas('tags', function (Builder $q) use ($tagIds) {
+        //                $q->whereIn('id', $tagIds);
+        //            });
+        //        })->label('Tag')
+        //        ->options(app(TagReadRepository::class)->getAllForSelect())
+        //        ->default('')
+        //        ->view('chief-tags::filters.tags');
     }
 
 //    public static function tags(): Filter

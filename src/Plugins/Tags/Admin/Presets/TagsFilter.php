@@ -56,7 +56,7 @@ class TagsFilter implements Filter
     public function query(): Closure
     {
         return function (Builder $builder, $value) {
-            $builder->whereHas('tags', function($query) use($value){
+            $builder->whereHas('tags', function ($query) use ($value) {
                 $query->whereIn('id', (array) $value);
             });
         };
@@ -121,7 +121,7 @@ class TagsFilter implements Filter
 
     private function getTags(): Collection
     {
-        if(!$this->tags->isEmpty()) {
+        if(! $this->tags->isEmpty()) {
             return $this->tags;
         }
 
