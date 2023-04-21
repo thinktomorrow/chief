@@ -50,7 +50,7 @@ class TagGroupsController extends Controller
 
         event(new TagGroupCreated(TagGroupId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag categorie is toegevoegd.');
+        return redirect()->route('chief.tags.index')->with('messages.success', 'Groep '.$model->label.' is toegevoegd.');
     }
 
     public function edit($tagGroupId)
@@ -77,7 +77,7 @@ class TagGroupsController extends Controller
 
         event(new TagGroupUpdated(TagGroupId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag categorie is aangepast.');
+        return redirect()->route('chief.tags.index')->with('messages.success', 'Groep '.$model->label.' is aangepast.');
     }
 
     public function delete($tagGroupId)
@@ -92,7 +92,7 @@ class TagGroupsController extends Controller
 
         event(new TagGroupDeleted(TagGroupId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag categorie is verwijderd.');
+        return redirect()->route('chief.tags.index')->with('messages.success', 'Groep '.$model->label.' is verwijderd.');
     }
 
     private function getModelAndFields(?string $tagGroupId = null): array

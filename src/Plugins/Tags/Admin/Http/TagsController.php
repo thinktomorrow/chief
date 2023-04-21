@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\Tags\Admin\Http;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
@@ -66,7 +67,7 @@ class TagsController extends Controller
 
         event(new TagCreated(TagId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag is toegevoegd.');
+        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag '.$model->label.' is toegevoegd.');
     }
 
     public function edit($tagId)
@@ -93,7 +94,7 @@ class TagsController extends Controller
 
         event(new TagUpdated(TagId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag is aangepast.');
+        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag '.$model->label.' is aangepast.');
     }
 
     public function delete($tagId)
@@ -102,13 +103,14 @@ class TagsController extends Controller
 
         $model = app(TagModel::class)::find($tagId);
 
-        // TODO: remove pivot entries as well
+        // TODO: test remove pivot entries as well
+        DB::tabel('chief_tags_pivot')->where('tag_id', $model->id)->delete();
 
         $model->delete();
 
         event(new TagDeleted(TagId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag is verwijderd.');
+        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag '.$model->label.' is verwijderd.');
     }
 
     private function getModelAndFields(?string $tagId = null): array

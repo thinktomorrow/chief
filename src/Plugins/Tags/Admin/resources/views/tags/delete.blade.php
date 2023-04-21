@@ -10,7 +10,7 @@
             @click="showModal('state-modal-<?= $modalId; ?>')"
             class="block cursor-pointer"
         >
-            DELETE
+            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
         </a>
     </div>
 
@@ -21,12 +21,12 @@
         >
             <form
                 id="delete-tag-modal-form-{{ $modalId }}"
-                action="DELETEMODELURL"
+                action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
                 method="POST"
                 v-cloak
             >
                 @csrf
-                @method('PUT')
+                @method('DELETE')
             </form>
 
             <div v-cloak slot="modal-action-buttons">
@@ -43,13 +43,13 @@
 </div>
 @else
     <form
-        id="delete-tag-modal-form-{{ $modalId }}"
-        action="DELETEMODELURL"
+        id="delete-tag-form-{{ $modalId }}"
+        action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
         method="POST"
         v-cloak
     >
         @csrf
-        @method('PUT')
+        @method('DELETE')
     </form>
 
         <div class="relative space-y-6">
@@ -57,7 +57,7 @@
                 type="submit"
                 class="block w-full text-left cursor-pointer"
             >
-                DELETE
+                <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
             </button>
         </div>
     </form>
