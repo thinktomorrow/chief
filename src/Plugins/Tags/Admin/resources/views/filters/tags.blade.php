@@ -5,7 +5,7 @@
 
 <x-chief::input.group :rule="$id">
     @if ($label)
-        <x-chief::input.label for="{{ $id }}">{{ $label }}</x-chief::input.label>
+        <x-chief::input.label for="{{ $id }}" unset class="font-medium h6 body-dark">{{ $label }}</x-chief::input.label>
     @endif
 
     @if ($description)

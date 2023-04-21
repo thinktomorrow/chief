@@ -11,7 +11,7 @@ class FilterPresets
 {
     public static function tags(): Filter
     {
-        return (new TagsFilter);
+        return (new TagsFilter)->label('Tags');
 
         //        return SelectFilter::make('tags', function ($query, $value) {
         //            $tagIds = (array) $value;

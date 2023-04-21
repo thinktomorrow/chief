@@ -24,7 +24,7 @@
             </span>
 
             {{-- Card label --}}
-            <div class="flex flex-wrap gap-1 mt-[0.2rem]">
+            <div class="flex flex-wrap gap-1 mt-[0.2rem] items-start">
                 @adminCan('edit')
                     <a
                         href="{{ $manager->route('edit', $node->getId()) }}"
@@ -40,18 +40,18 @@
                 @endAdminCan
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
-                    <span class="label label-xs label-primary">Home</span>
-                @endif
-
-                @if ($node->getModel() instanceof Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable)
-                    <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="4"/>
+                    <span class="label label-xs label-primary mt-[1px]">Home</span>
                 @endif
 
                 @if(
                     $node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract
                     && !$node->getModel()->inOnlineState()
                 )
-                    <span class="inline mr-1 label label-xs label-error">Offline</span>
+                    <span class="label label-xs label-error mt-[1px]">Offline</span>
+                @endif
+
+                @if ($node->getModel() instanceof Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable)
+                    <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="4"/>
                 @endif
             </div>
         </div>

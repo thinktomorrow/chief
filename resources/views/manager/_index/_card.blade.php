@@ -16,7 +16,7 @@
             @endAdminCan
 
             @if (\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                <span class="label label-xs label-primary">Home</span>
+                <span class="label label-xs label-primary mt-[1px]">Home</span>
             @endif
 
             @if ($model instanceof Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable)
