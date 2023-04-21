@@ -4,7 +4,7 @@
 ])
 
 <span {{ $attributes->class([
-    'inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 font-medium body-dark ring-1 ring-inset ring-grey-200 hover:ring-grey-300',
+    'inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 font-medium body-dark ring-1 ring-inset ring-grey-200 hover:ring-grey-400',
     'text-xs' => $size === 'xs',
     'text-sm' => $size === 'sm',
 ]) }}>

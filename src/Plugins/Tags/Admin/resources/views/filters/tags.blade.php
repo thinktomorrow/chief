@@ -19,13 +19,14 @@
                     id="{{ $tag->getTagId() . '-' . $tag->getColor() }}"
                     name="{{ $name }}"
                     value="{{ $tag->getTagId() }}"
+                    :checked="in_array($tag->getTagId(), (array) $value)"
                     class="hidden peer"
                 />
 
                 <x-chief-tags::tag
                     :color="$tag->getColor()"
                     size="sm"
-                    class="peer-checked:ring-1 peer-checked:ring-primary-500"
+                    class="peer-checked:ring-primary-500 peer-checked:ring-1 peer-checked:shadow"
                 >
                     {{ $tag->getLabel() }}
                 </x-chief-tags::tag>
