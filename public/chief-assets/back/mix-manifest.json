@@ -1,21 +1,7 @@
 {
-<<<<<<< HEAD
-    "/js/main.js": "/js/main.js?id=6d25921de5b4c59cb95fdac97c00418c",
-    "/js/native.js": "/js/native.js?id=c5d13c00eca1e8c4fc94917dd02dfe29",
-    "/css/main.css": "/css/main.css?id=27cb13cdb72f7882ae98b35666deb401",
-=======
     "/js/main.js": "/js/main.js?id=470f132ca3ae84c1ebc3a7b120712bd4",
     "/js/native.js": "/js/native.js?id=2337b3860b2f418b73ea2bb3e87526aa",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "/css/main.css": "/css/main.css?id=0992dd71fc56073f33acf2153dfb8b33",
->>>>>>> 0260a4aa (Change: Tag filter view (WIP))
-=======
-    "/css/main.css": "/css/main.css?id=c11e6dd0382373de3c0093a2e521ccad",
->>>>>>> d224fc72 (Change: Tag filter checked state)
-=======
-    "/css/main.css": "/css/main.css?id=a6923946db4999a3f4273c7a130820ab",
->>>>>>> 17452a78 (Fix: node/card layout + tag filter label layout)
+    "/css/main.css": "/css/main.css?id=b5c6984b046bd24db79b7979f302a7f4",
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",

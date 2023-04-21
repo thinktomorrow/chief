@@ -52,15 +52,19 @@
                 'rounded-xl' => !$actions && !$filters
             ])>
                 <table class="min-w-full border-separate border-spacing-0">
-                    <thead>
-                        <x-chief::table.row>
-                            {{ $header }}
-                        </x-chief::table.row>
-                    </thead>
+                    @isset($header)
+                        <thead>
+                            <x-chief::table.row>
+                                {{ $header }}
+                            </x-chief::table.row>
+                        </thead>
+                    @endisset
 
-                    <tbody>
-                        {{ $body }}
-                    </tbody>
+                    @isset($body)
+                        <tbody>
+                            {{ $body }}
+                        </tbody>
+                    @endisset
                 </table>
             </div>
         </div>
@@ -71,15 +75,19 @@
                 'rounded-xl' => !$actions && !$filters
             ])>
                 <table class="min-w-full border-separate border-spacing-0">
-                    <thead>
-                        <x-chief::table.row>
-                            {{ $header }}
-                        </x-chief::table.row>
-                    </thead>
+                    @isset($header)
+                        <thead>
+                            <x-chief::table.row>
+                                {{ $header }}
+                            </x-chief::table.row>
+                        </thead>
+                    @endisset
 
-                    <tbody {{ $bodyAttributes }}>
-                        {{ $body }}
-                    </tbody>
+                    @isset($body)
+                        <tbody {{ $bodyAttributes }}>
+                            {{ $body }}
+                        </tbody>
+                    @endisset
                 </table>
             </div>
         </div>
