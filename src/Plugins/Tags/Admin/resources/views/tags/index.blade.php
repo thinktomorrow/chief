@@ -11,8 +11,6 @@
                 });
             @endphp
 
-            @continue($tagsByGroup->isEmpty())
-
             <x-chief::window>
                 @if ($tagGroup->getLabel())
                     @if ($tagGroups->count() > 1)
@@ -43,7 +41,7 @@
 
                 <x-chief::table>
                     <x-slot name="body">
-                        @foreach ($tagsByGroup as $tag)
+                        @forelse ($tagsByGroup as $tag)
                             <x-chief::table.row>
                                 <x-chief::table.data>
                                     <a
@@ -77,7 +75,15 @@
                                     </div>
                                 </x-chief::table.data>
                             </x-chief::table.row>
-                        @endforeach
+                        @empty
+                            <x-chief::table.row>
+                                <x-chief::table.data>
+                                    <div class="min-h-[30px] flex items-center">
+                                        <span class="text-grey-400">Deze groep bevat nog geen tags</span>
+                                    </div>
+                                </x-chief::table.data>
+                            </x-chief::table.row>
+                        @endforelse
                     </x-slot>
                 </x-chief::table>
             </x-chief::window>

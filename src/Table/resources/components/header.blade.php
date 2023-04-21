@@ -8,7 +8,7 @@
 <th
     scope="col"
     {{ $attributes->class([
-        'px-3 py-4 border-b border-grey-200 bg-grey-50/90 whitespace-nowrap text-left font-medium text-black body',
+        'px-2 py-3 border-b border-grey-200 bg-grey-50/90 whitespace-nowrap text-left font-medium text-black body',
         'sticky top-0 z-10' => $sticky
     ]) }}
 >

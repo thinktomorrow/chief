@@ -33,18 +33,4 @@
             </x-chief::input.label>
         @endforeach
     </div>
-
-{{--    <chief-multiselect--}}
-{{--        id="{{ $id }}"--}}
-{{--        name="{{ $name }}"--}}
-{{--        :options='@json($options)'--}}
-{{--        selected='@json($value ?: $default)'--}}
-{{--        :multiple='@json($multiple)'--}}
-{{--        @if($isGrouped)--}}
-{{--            grouplabel="group"--}}
-{{--            groupvalues="values"--}}
-{{--            labelkey="label"--}}
-{{--            valuekey="id"--}}
-{{--        @endif--}}
-{{--    />--}}
 </x-chief::input.group>
