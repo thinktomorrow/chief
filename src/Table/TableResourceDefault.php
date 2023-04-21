@@ -22,7 +22,11 @@ trait TableResourceDefault
 
         if ($model instanceof Taggable) {
             yield TableColumn::make('Tags')
-                ->value(Blade::render('<x-chief-tags::tags :tags="$tags" size="xs" threshold="4"/>', [
+                ->value(Blade::render('
+                    <div class="flex items-start gap-1">
+                        <x-chief-tags::tags :tags="$tags" size="xs" threshold="3"/>
+                    </div>
+                ', [
                     'tags' => $model->getTags()
                 ]));
         }

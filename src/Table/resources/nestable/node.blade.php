@@ -18,7 +18,7 @@
             <span
                 data-sortable-hide-when-sorting
                 class="hidden cursor-pointer link link-black nested:block"
-                style="margin-left: -1.75rem; margin-top: -5px; margin-right: 0.5rem;"
+                style="margin-left: -1.75rem; margin-right: 0.5rem; margin-top: 0.2rem;"
             >
                 <svg width="20" height="20"><use xlink:href="#icon-arrow-tl-to-br"/></svg>
             </span>
