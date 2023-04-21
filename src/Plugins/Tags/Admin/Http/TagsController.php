@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
+use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagCreated;
@@ -14,6 +15,7 @@ use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagDeleted;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagUpdated;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagId;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
+use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\NullTagGroup;
 
 class TagsController extends Controller
 {
@@ -30,8 +32,12 @@ class TagsController extends Controller
 
     public function index()
     {
-        $tags = $this->tagReadRepository->getAll()->groupBy(fn (TagRead $tag) => $tag->getTagGroupId());
+        $tags = $this->tagReadRepository->getAll();
         $tagGroups = $this->tagReadRepository->getAllGroups();
+
+        if(!$tags->isEmpty() || !$tagGroups->isEmpty()) {
+            $tagGroups->push(NullTagGroup::fromMappedData(['label' => 'Algemeen']));
+        }
 
         return view('chief-tags::tags.index', [
             'tags' => $tags,

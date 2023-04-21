@@ -15,6 +15,12 @@
         <x-chief-tags::tag :color="$tag->getColor()" :size="$size">
             {{ $tag->getLabel() }}
         </x-chief-tags::tag>
+
+        @if($tag->getUsages() > 0)
+            <p>Gebruikt door {{ $tag->getUsages() }} pagina's</p>
+        @else
+            <p>Niet gebruikt</p>
+       @endif
     </a>
 @endforeach
 
