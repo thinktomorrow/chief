@@ -7,8 +7,6 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagGroupRead;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagCreated;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagDeleted;
@@ -35,7 +33,7 @@ class TagsController extends Controller
         $tags = $this->tagReadRepository->getAll();
         $tagGroups = $this->tagReadRepository->getAllGroups();
 
-        if(!$tags->isEmpty() || !$tagGroups->isEmpty()) {
+        if(! $tags->isEmpty() || ! $tagGroups->isEmpty()) {
             $tagGroups->push(NullTagGroup::fromMappedData(['label' => 'Algemeen']));
         }
 
