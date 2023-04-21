@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Illuminate\Support\Facades\Blade;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\HasWeekTable;
 use Thinktomorrow\Chief\Table\Elements\TableColumn;
-use Thinktomorrow\Chief\Table\Elements\TableColumnLink;
 use Thinktomorrow\Chief\Table\Elements\TableHeader;
+use Thinktomorrow\Chief\Table\Elements\TableColumnLink;
+use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait TableResourceDefault
 {
@@ -20,14 +20,17 @@ trait TableResourceDefault
             ->value($this->generateDefaultTitleColumnLink($model))
             ->url($manager->route('edit', $model));
 
+        if ($model instanceof Taggable) {
+            yield TableColumn::make('Tags')
+                ->value(Blade::render('<x-chief-tags::tags :tags="$tags" size="xs" threshold="4"/>', [
+                    'tags' => $model->getTags()
+                ]));
+        }
+
         if ($model instanceof StatefulContract) {
             foreach ($model->getStateKeys() as $stateKey) {
                 yield TableColumn::make('Status')->value($model->getStateConfig($stateKey)->getStateLabel($model));
             }
-        }
-
-        if ($model instanceof HasWeekTable) {
-            yield TableColumn::make('Tags')->value($model->getTags()->map(fn (TagRead $tag) => "<span class='label label' style='background-color:".$tag->getColor()."'>" . $tag->getLabel() .'</span>')->implode(' '));
         }
     }
 

@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
     "/js/main.js": "/js/main.js?id=6d25921de5b4c59cb95fdac97c00418c",
     "/js/native.js": "/js/native.js?id=c5d13c00eca1e8c4fc94917dd02dfe29",
     "/css/main.css": "/css/main.css?id=27cb13cdb72f7882ae98b35666deb401",
+=======
+    "/js/main.js": "/js/main.js?id=470f132ca3ae84c1ebc3a7b120712bd4",
+    "/js/native.js": "/js/native.js?id=2337b3860b2f418b73ea2bb3e87526aa",
+    "/css/main.css": "/css/main.css?id=0992dd71fc56073f33acf2153dfb8b33",
+>>>>>>> 0260a4aa (Change: Tag filter view (WIP))
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",

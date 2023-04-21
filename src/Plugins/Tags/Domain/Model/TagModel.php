@@ -62,14 +62,14 @@ class TagModel extends Model implements ReferableModel, PageResource
             ->label('Label kleur')
             ->description('Geef de tag een eigen kleur. Liefst een geldige hex waarde.')
             ->options([
-                '#fecaca' => 'Rood',
-                '#fed7aa' => 'Oranje',
-                '#fef08a' => 'Geel',
-                '#bbf7d0' => 'Groen',
-                '#bae6fd' => 'Blauw',
-                '#c7d2fe' => 'Indigo',
-                '#e9d5ff' => 'Paars',
-            ])->default('#c7d2fe')
+                '#ef4444' => 'Rood',
+                '#f59e0b' => 'Oranje',
+                '#fde047' => 'Geel',
+                '#22c55e' => 'Groen',
+                '#0ea5e9' => 'Blauw',
+                '#6366f1' => 'Indigo',
+                '#a855f7' => 'Paars',
+            ])->default('#0ea5e9')
             ->taggable();
 
         $tagGroupsForSelect = app(TagReadRepository::class)->getAllGroupsForSelect();
