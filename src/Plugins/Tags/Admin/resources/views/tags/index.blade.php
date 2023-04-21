@@ -22,7 +22,7 @@
                                     {{ ucfirst($tagGroup->getLabel()) }}
                                 </span>
 
-                                <a href="{{ route('chief.tags.edit', $tagGroup->getTagGroupId()) }}">
+                                <a href="{{ route('chief.taggroups.edit', $tagGroup->getTagGroupId()) }}">
                                     <x-chief::icon-button icon="icon-edit" color="grey" class="shadow-none text-grey-500">
                                         <svg width="16" height="16"><use xlink:href="#icon-edit"></use></svg>
                                     </x-chief::icon-button>
@@ -48,7 +48,7 @@
                             <x-chief::table.row>
                                 <x-chief::table.data>
                                     <a
-                                        href="{{ route('chief.tags.edit', $tagGroup->getTagGroupId()) }}"
+                                        href="{{ route('chief.tags.edit', $tag->getTagId()) }}"
                                         title="{{ $tag->getLabel() }}"
                                         class="inline-flex items-center gap-x-3"
                                     >
@@ -70,12 +70,10 @@
 
                                 <x-chief::table.data>
                                     <div class="flex justify-end">
-                                        <a href="{{ route('chief.tags.edit', $tagGroup->getTagGroupId()) }}">
+                                        <a href="{{ route('chief.tags.edit', $tag->getTagId()) }}">
                                             <x-chief::icon-button icon="icon-edit" color="grey" class="bg-white shadow-none text-grey-500" />
                                         </a>
-                                        <a href="{{ route('chief.tags.delete', $tagGroup->getTagGroupId()) }}">
-                                            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500" />
-                                        </a>
+                                        @include('chief-tags::tags.delete')
                                     </div>
                                 </x-chief::table.data>
                             </x-chief::table.row>
