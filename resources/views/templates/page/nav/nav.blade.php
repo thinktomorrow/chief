@@ -4,12 +4,12 @@
         <div
             data-mobile-navigation-toggle
             data-expand-navigation
-            class="px-3 py-2 rounded-md cursor-pointer shrink-0 hover:bg-grey-200"
+            class="p-2 rounded-md cursor-pointer shrink-0 hover:bg-grey-200"
         >
-            <svg class="w-6 h-6 body-dark"><use xlink:href="#icon-bars-4"></use></svg>
+            <svg class="w-6 h-6 text-grey-700"><use xlink:href="#icon-bars-4"></use></svg>
         </div>
 
-        <span class="py-2 font-medium body-dark"> Menu </span>
+        <span class="py-2 font-semibold text-grey-700"> Menu </span>
     </div>
 </div>
 
@@ -20,22 +20,22 @@
 >
     <div
         data-collapsible-navigation
-        class="flex flex-col justify-between h-screen px-3 py-6 overflow-y-auto border-r select-none border-grey-100"
+        class="flex flex-col justify-between h-screen px-3 py-6 overflow-y-auto border-r select-none border-grey-100 gap-y-9"
     >
         <div class="space-y-9">
             {{-- Desktop Chief title --}}
-            <div class="items-center justify-start hidden gap-1.5 px-1.5 py-0.5 lg:flex">
-                <div data-toggle-navigation class="p-1.5 rounded-md cursor-pointer shrink-0 hover:bg-grey-50 group">
+            <div class="items-center justify-start hidden gap-1 lg:flex">
+                <div data-toggle-navigation class="p-2 rounded-md cursor-pointer shrink-0 hover:bg-grey-50 group">
                     <svg
                         data-toggle-classes="hidden"
-                        class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} w-6 h-6 body-dark group-hover:text-grey-950"
+                        class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} w-6 h-6 text-grey-500 group-hover:text-grey-900"
                     >
                         <use xlink:href="#icon-arrows-pointing-in"></use>
                     </svg>
 
                     <svg
                         data-toggle-classes="!block"
-                        class="{{ $isCollapsedOnPageLoad ? '!block' : null }} hidden w-6 h-6 body-dark group-hover:text-grey-950"
+                        class="{{ $isCollapsedOnPageLoad ? '!block' : null }} hidden w-6 h-6 text-grey-500 group-hover:text-grey-900"
                     >
                         <use xlink:href="#icon-arrows-pointing-out"></use>
                     </svg>
@@ -45,7 +45,7 @@
                     data-toggle-classes="hidden"
                     href="{{ route('chief.back.dashboard') }}"
                     title="Ga naar Dashboard"
-                    class="block w-full py-2 font-medium body-dark {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
+                    class="block w-full py-2 font-medium text-grey-700 text-sm leading-6 {{ $isCollapsedOnPageLoad ? 'hidden' : null }}"
                 > {{ config('app.client', 'Chief') }} </a>
             </div>
 

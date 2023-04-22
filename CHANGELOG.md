@@ -3,6 +3,11 @@
 All notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
+## Unreleased - Better UI
+
+-   Changed: Updated `<x-chief::nav/>` layout.
+-   Changed: `<x-chief::nav/>` now has a seperate label attribute. This way you can both display a nav title and label.
+
 ## Unreleased
 
 -   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned

@@ -10,9 +10,9 @@
 @if ($title)
     <div
         data-toggle-classes="hidden"
-        class="px-3 mb-3 mt-6 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
+        class="px-2 mb-2 mt-6 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
     >
-        <span class="text-sm body text-grey-500">
+        <span class="text-xs font-medium body text-grey-500">
             {{ ucfirst($title) }}
         </span>
     </div>
@@ -54,7 +54,7 @@
             {{ $slot }}
         @endif
     </x-chief::nav.item>
-@else
+@elseif ($items->count() > 0)
     @if (!isset($append))
         {{ $slot }}
     @endif
