@@ -62,7 +62,7 @@ trait TableResourceDefault
         $output .= '<span>'.teaser($this->getPageTitle($model), 50, '...').'</span>';
 
         if (\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model)) {
-            $output .= '<span class="label label-xs label-primary">Homepage</span>';
+            $output .= '<span class="label label-primary">Homepage</span>';
         }
 
         $output .= '</span>';

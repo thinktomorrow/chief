@@ -3,5 +3,5 @@
         {{ ucfirst($form->getTitle()) }}
     </p>
 
-    {!! $slot !!}
+   {!! $slot !!}
 </div>

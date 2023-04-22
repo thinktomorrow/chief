@@ -9,19 +9,26 @@
                 {!! $resource->getIndexHeaderContent() !!}
             @endif
             @adminCan('create')
-                <a
+                {{-- <a
                     href="@adminRoute('create')"
                     title="{{ ucfirst($resource->getLabel()) }} toevoegen"
                     class="btn btn-primary"
                 >
                     <x-chief::icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief::icon-label>
+                </a> --}}
+                <a
+                    href="@adminRoute('create')"
+                    title="{{ ucfirst($resource->getLabel()) }} toevoegen"
+                    class="flex items-center justify-center w-8 h-8 rounded-full text-grey-600 bg-grey-100"
+                >
+                    <x-chief::icon-button icon="icon-plus" color="grey"/>
                 </a>
             @endAdminCan
         </x-chief::page.hero>
     </x-slot>
 
     <x-chief::page.grid>
-        <div class="card">
+        <div class="p-6">
             @if (!$tree->isEmpty())
                 <div
                     data-sortable
@@ -48,12 +55,20 @@
             @endif
         </div>
 
-        @if ($resource->showIndexSidebarAside())
+        {{-- @if ($resource->showIndexSidebarAside())
             <x-slot name="aside">
                 @include('chief::templates.page.index.default-sidebar')
             </x-slot>
         @else
             @include('chief::templates.page.index.inline-sidebar')
-        @endif
+        @endif --}}
     </x-chief::page.grid>
+
+    @if ($resource->showIndexSidebarAside())
+        <x-slot name="sidebar">
+            @include('chief::templates.page.index.default-sidebar')
+        </x-slot>
+    @else
+        @include('chief::templates.page.index.inline-sidebar')
+    @endif
 </x-chief::page.template>

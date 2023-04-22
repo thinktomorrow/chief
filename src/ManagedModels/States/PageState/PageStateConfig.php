@@ -111,30 +111,30 @@ class PageStateConfig implements StateConfig, StateAdminConfig
         if ($statefulContract instanceof Visitable) {
             if ($statefulContract->inOnlineState()) {
                 if (LinkForm::fromModel($statefulContract)->isAnyLinkOnline()) {
-                    return '<span class="label label-xs label-success">Online</span>';
+                    return '<span class="label label-success">Online</span>';
                 } else {
-                    return '<span class="label label-xs label-warning">Link ontbreekt</span>';
+                    return '<span class="label label-warning">Link ontbreekt</span>';
                 }
             }
 
             switch ($statefulContract->getState($this->getStateKey())) {
                 case PageState::draft:
-                    return '<span class="label label-xs label-error">Offline</span>';
+                    return '<span class="label label-error">Offline</span>';
             }
         }
 
         switch ($statefulContract->getState($this->getStateKey())) {
             case PageState::published:
-                return '<span class="label label-xs label-success">Gepubliceerd</span>';
+                return '<span class="label label-success">Gepubliceerd</span>';
 
             case PageState::draft:
-                return '<span class="label label-xs label-error">In draft</span>';
+                return '<span class="label label-error">In draft</span>';
 
             case PageState::archived:
-                return '<span class="label label-xs label-grey">Gearchiveerd</span>';
+                return '<span class="label label-grey">Gearchiveerd</span>';
 
             case PageState::deleted:
-                return '<span class="label label-xs label-grey">Verwijderd</span>';
+                return '<span class="label label-grey">Verwijderd</span>';
 
             default:
                 return $statefulContract->getState($this->getStateKey())->getValueAsString();

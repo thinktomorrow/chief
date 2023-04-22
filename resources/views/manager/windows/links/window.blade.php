@@ -24,7 +24,7 @@
                     @if($link->current)
                         <div class="flex items-start gap-4">
                             @if(count(config('chief.locales')) > 1)
-                                <span class="inline-flex items-center justify-center w-8 p-0 mt-1 shrink-0 label label-grey label-sm">
+                                <span class="inline-flex items-center justify-center w-8 p-0 mt-1 text-sm shrink-0 label label-grey">
                                     {{ $locale }}
                                 </span>
                             @endif

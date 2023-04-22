@@ -28,11 +28,11 @@ enum LayoutType: string
     {
         return match ($this) {
             self::none => '',
-            self::default => 'label label-xs label-grey',
-            self::success => 'label label-xs label-success',
-            self::info => 'label label-xs label-info',
-            self::warning => 'label label-xs label-warning',
-            self::error => 'label label-xs label-error',
+            self::default => 'label label-grey',
+            self::success => 'label label-success',
+            self::info => 'label label-info',
+            self::warning => 'label label-warning',
+            self::error => 'label label-error',
         };
     }
 }

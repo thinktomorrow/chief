@@ -4,34 +4,9 @@
  **/
 @layer components {
     .label {
-        @apply inline-block font-medium leading-tight px-2.5 py-1 rounded;
-    }
-
-    .label-xs {
-        @apply px-2 py-1 text-xs rounded;
-    }
-
-    .label-sm {
-        @apply px-2.5 py-1 text-sm rounded;
-    }
-
-    .label-md {
-        @apply px-3 py-1 text-base rounded-md;
-    }
-
-    .label-lg {
-        @apply px-4 py-3 rounded-lg;
-    }
-
-    .label-xl {
-        @apply px-8 py-4 rounded-xl;
-    }
-
-    .with-xs-labels {
-        .label {
-            @apply mr-1;
-            @extend .label-xs;
-        }
+        /* @apply inline-block font-medium leading-tight px-2.5 py-1 rounded; */
+        @apply inline-flex items-center rounded-md font-medium;
+        @apply px-2 py-1 text-xs;
     }
 
     .label-primary {

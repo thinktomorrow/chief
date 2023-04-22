@@ -102,12 +102,20 @@
             {!! $models->links('chief::pagination.default') !!}
         @endif
 
-        @if ($resource->showIndexSidebarAside())
+        {{-- @if ($resource->showIndexSidebarAside())
             <x-slot name="aside">
                 @include('chief::templates.page.index.default-sidebar')
             </x-slot>
         @else
             @include('chief::templates.page.index.inline-sidebar', ['withFilters' => false])
-        @endif
+        @endif --}}
     </x-chief::page.grid>
+
+    @if ($resource->showIndexSidebarAside())
+        <x-slot name="sidebar">
+            @include('chief::templates.page.index.default-sidebar')
+        </x-slot>
+    @else
+        @include('chief::templates.page.index.inline-sidebar', ['withFilters' => false])
+    @endif
 </x-chief::page.template>

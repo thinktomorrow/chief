@@ -27,7 +27,7 @@
 
     @stack('custom-styles')
 </head>
-<body class="min-h-screen bg-grey-100">
+<body class="min-h-screen">
     <main id="main">
         {{ $slot }}
 

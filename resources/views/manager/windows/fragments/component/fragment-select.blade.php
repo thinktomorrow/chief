@@ -32,7 +32,7 @@
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-new', $owner) }}"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-center label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
+                    class="flex flex-col items-center justify-center h-full px-8 py-4 space-y-1 text-center label label-primary rounded-xl hover:bg-primary-500 hover:text-white transition-75"
                 >
                     <svg width="24" height="24"> <use xlink:href="#icon-squares-plus"/> </svg>
 
@@ -44,7 +44,7 @@
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-center label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
+                    class="flex flex-col items-center justify-center h-full px-8 py-4 space-y-1 text-center label label-primary rounded-xl hover:bg-primary-500 hover:text-white transition-75"
                 >
                     <svg width="24" height="24"> <use xlink:href="#icon-square-2-stack"/> </svg>
 

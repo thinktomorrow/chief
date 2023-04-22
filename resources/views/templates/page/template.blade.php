@@ -1,6 +1,7 @@
 @props([
     'hero' => null,
-    'title' => null
+    'title' => null,
+    'sidebar' => null,
 ])
 
 {{-- This makes the title prop available in parent components, e.g page.layout metatags --}}
@@ -18,7 +19,7 @@
         <section id="content" class="w-full min-w-0">
             @include('chief::templates.page._partials.healthbar')
 
-            <div class="py-4 sm:py-8 lg:py-12">
+            <div class="py-4 sm:py-8">
                 @if ($hero)
                     {{ $hero }}
                 @else
@@ -30,8 +31,14 @@
                 </div>
             </div>
 
-            @include('chief::layout._partials.notifications')
+            @include('chief::templates.page._partials.notifications')
         </section>
+
+        @if ($sidebar)
+            <section class="w-full h-full min-h-screen bg-white border-l md:w-192 border-grey-200">
+                {{ $sidebar }}
+            </section>
+        @endif
 
         {{-- Sidebar --}}
         <section role="sidebar">

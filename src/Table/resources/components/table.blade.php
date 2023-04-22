@@ -6,7 +6,8 @@
 ])
 
 {{-- TODO: add inner shadow if rows have horizontal scroll --}}
-<div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200">
+{{-- <div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200"> --}}
+<div data-table-container>
     @if (count($filters) > 0)
         <div class="flex items-start justify-start gap-12 p-6">
             <div class="w-full">

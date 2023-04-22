@@ -9,7 +9,7 @@
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                        <span class="align-bottom with-xs-labels">
+                        <span class="align-bottom inline-flex gap-1 flex-wrap">
                             <span class="label label-primary"> Homepage </span>
                         </span>
                     @endif

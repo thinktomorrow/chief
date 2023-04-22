@@ -25,14 +25,14 @@
 
             {{-- Card label --}}
             <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getModel()->getPageTitle($node->getModel()) }}">
-                <span class="font-medium body-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
+                <span class="font-medium body body-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
-                    <span class="inline mr-1 label label-xs label-primary">Homepage</span>
+                    <span class="inline mr-1 label label-primary">Homepage</span>
                 @endif
 
                 @if($node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && !$node->getModel()->inOnlineState())
-                    <span class="inline mr-1 label label-xs label-error">Offline</span>
+                    <span class="inline mr-1 label label-error">Offline</span>
                 @endif
             </a>
         </div>

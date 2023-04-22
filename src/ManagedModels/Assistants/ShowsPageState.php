@@ -18,26 +18,26 @@ trait ShowsPageState
 
         if ($this instanceof Visitable) {
             if (LinkForm::fromModel($this)->isAnyLinkOnline()) {
-                return '<span class="label label-xs label-success">Online</span>';
+                return '<span class="label label-success">Online</span>';
             }
             if (PageState::published === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-                return '<span class="label label-xs label-info">Nog niet online. Er ontbreekt nog een link.</span>';
+                return '<span class="label label-info">Nog niet online. Er ontbreekt nog een link.</span>';
             }
             if (PageState::draft === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-                return '<span class="label label-xs label-error">Offline</span>';
+                return '<span class="label label-error">Offline</span>';
             }
         }
 
         if (PageState::published === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-            return '<span class="label label-xs label-success">Gepubliceerd</span>';
+            return '<span class="label label-success">Gepubliceerd</span>';
         }
 
         if (PageState::draft === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-            return '<span class="label label-xs label-error">In draft</span>';
+            return '<span class="label label-error">In draft</span>';
         }
 
         if (PageState::archived === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-            return '<span class="label label-xs label-warning">Gearchiveerd</span>';
+            return '<span class="label label-warning">Gearchiveerd</span>';
         }
 
         return '';

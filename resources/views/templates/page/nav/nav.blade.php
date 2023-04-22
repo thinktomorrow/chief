@@ -20,7 +20,7 @@
 >
     <div
         data-collapsible-navigation
-        class="flex flex-col justify-between h-screen px-3 py-6 overflow-y-auto border-r select-none border-grey-100 gap-y-9"
+        class="flex flex-col justify-between h-screen px-3 py-6 overflow-y-auto border-r select-none border-grey-200 gap-y-9"
     >
         <div class="space-y-9">
             {{-- Desktop Chief title --}}

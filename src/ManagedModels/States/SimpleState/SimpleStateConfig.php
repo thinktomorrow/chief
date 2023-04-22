@@ -77,13 +77,13 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
     {
         switch ($statefulContract->getState($this->getStateKey())) {
             case SimpleState::online:
-                return '<span class="label label-xs label-success">Online</span>';
+                return '<span class="label label-success">Online</span>';
 
             case SimpleState::offline:
-                return '<span class="label label-xs label-error">Offline</span>';
+                return '<span class="label label-error">Offline</span>';
 
             case SimpleState::deleted:
-                return '<span class="label label-xs label-grey">Verwijderd</span>';
+                return '<span class="label label-grey">Verwijderd</span>';
 
             default:
                 return $statefulContract->getState($this->getStateKey())?->getValueAsString();

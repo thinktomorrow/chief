@@ -16,7 +16,7 @@
                 @endif
 
                 @if($labels)
-                    <span class="align-bottom with-xs-labels">
+                    <span class="inline-flex flex-wrap gap-1 align-bottom">
                         {!! $labels !!}
                     </span>
                 @endif

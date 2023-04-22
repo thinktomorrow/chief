@@ -5,7 +5,7 @@
         </p>
 
         @if($model->fragmentModel()->exists)
-            @include('chief::layout._partials.fragment_bookmarks')
+            @include('chief::templates.page._partials.fragment_bookmarks')
         @endif
     </div>
 

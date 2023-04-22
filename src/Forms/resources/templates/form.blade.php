@@ -34,14 +34,14 @@
                 data-form-refreshed-notification
                 class="absolute bottom-0 right-0 hidden scale-0 animate-pop-in-out"
             >
-                <span class="label label-success label-xs"> Opgeslagen </span>
+                <span class="label label-success"> Opgeslagen </span>
             </div>
 
             <div
                 data-form-unsaved-notification
                 class="absolute bottom-0 right-0 hidden animate-pop-in"
             >
-                <span class="label label-grey label-xs">
+                <span class="label label-grey">
                     <span> Nog niet opgeslagen </span>
                 </span>
             </div>

@@ -41,8 +41,8 @@ module.exports = {
             center: true,
             padding: {
                 DEFAULT: '1rem',
-                sm: '2rem',
-                lg: '3rem',
+                sm: '1.5rem',
+                // lg: '3rem',
             },
         },
         fontFamily: {

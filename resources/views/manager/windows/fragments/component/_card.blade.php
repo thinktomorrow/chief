@@ -10,7 +10,7 @@
                     {{ ucfirst($resource->getLabel()) }}
                 </span>
 
-                <span class="align-bottom with-xs-labels">
+                <span class="align-bottom inline-flex gap-1 flex-wrap">
                     @if($model->fragmentModel()->isOffline())
                         <span class="label label-error"> Offline </span>
                     @endif

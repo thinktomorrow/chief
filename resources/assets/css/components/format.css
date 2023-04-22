@@ -24,7 +24,7 @@
     }
 
     .body-size {
-        @apply text-base;
+        @apply text-sm;
     }
 
     .h1-weight {

@@ -8,14 +8,14 @@
             @foreach($getOptions() as $fieldGroup)
                 @foreach($fieldGroup['values'] as $optionValue)
                     @if(in_array($optionValue['id'], $selected))
-                        <span class="inline-block label label-sm label-grey">{{ $optionValue['label'] }}</span>
+                        <span class="inline-block text-sm label label-grey">{{ $optionValue['label'] }}</span>
                     @endif
                 @endforeach
             @endforeach
         @else
             @foreach($selected as $selectedValue)
                 @if(isset($getOptions()[$selectedValue]))
-                    <span class="inline-block label label-sm label-grey">{{ $getOptions()[$selectedValue] }}</span>
+                    <span class="inline-block text-sm label label-grey">{{ $getOptions()[$selectedValue] }}</span>
                 @endif
             @endforeach
         @endif
