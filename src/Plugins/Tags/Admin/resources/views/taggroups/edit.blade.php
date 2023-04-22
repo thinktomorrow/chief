@@ -2,9 +2,9 @@
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar tags', route('chief.tags.index'));
 @endphp
 
-<x-chief::page.template title="Tag categorie aanpassen">
+<x-chief::page.template title="Tag groep aanpassen">
     <x-slot name="hero">
-        <x-chief::page.hero title="Tag categorie aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+        <x-chief::page.hero title="Tag groep aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
 
         </x-chief::page.hero>
     </x-slot>

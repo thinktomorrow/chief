@@ -48,15 +48,16 @@ class TagModel extends Model implements ReferableModel, PageResource
     {
         yield FieldPresets::pagetitle(
             Text::make('label')
-            ->label('Label tekst')
+            ->label('Label')
             ->description('Korte labels duren het langst.')
             ->required()
             ->characterCount('20')
             ->rules('max:20')
+            ->autofocus()
         );
 
         yield MultiSelect::make('color')
-            ->label('Label kleur')
+            ->label('Kleur')
             ->options([
                 '#ef4444' => 'Rood',
                 '#f59e0b' => 'Oranje',

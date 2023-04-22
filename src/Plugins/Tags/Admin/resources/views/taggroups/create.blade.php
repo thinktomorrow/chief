@@ -2,9 +2,9 @@
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar tags', route('chief.tags.index'));
 @endphp
 
-<x-chief::page.template title="Tag categorie toevoegen">
+<x-chief::page.template title="Groep toevoegen">
     <x-slot name="hero">
-        <x-chief::page.hero title="Nieuwe tag categorie toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"></x-chief::page.hero>
+        <x-chief::page.hero title="Groep toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"></x-chief::page.hero>
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
@@ -17,7 +17,7 @@
                 @endforeach
             </div>
 
-            <button class="btn btn-primary mt-4" type="submit">Maak categorie aan</button>
+            <button class="btn btn-primary mt-4" type="submit">Voeg groep toe</button>
         </form>
     </x-chief::page.grid>
 </x-chief::page.template>

@@ -12,31 +12,34 @@
             @endphp
 
             <x-chief::window>
-                @if ($tagGroup->getLabel())
-                    @if ($tagGroups->count() > 1)
-                        <div class="flex items-start justify-between mb-2">
-                            <div class="flex items-center gap-1">
+                @if ($tagGroups->count() > 1)
+                    <div id="taggroup-{{ $tagGroup->getTagGroupId() }}" class="flex items-start justify-between mb-2">
+                        <div class="flex items-center gap-1">
                                 <span class="body text-grey-500">
                                     {{ ucfirst($tagGroup->getLabel()) }}
                                 </span>
 
+                            @if($tagGroup->getTagGroupId())
                                 <a href="{{ route('chief.taggroups.edit', $tagGroup->getTagGroupId()) }}">
-                                    <x-chief::icon-button icon="icon-edit" color="grey" class="shadow-none text-grey-500">
-                                        <svg width="16" height="16"><use xlink:href="#icon-edit"></use></svg>
+                                    <x-chief::icon-button icon="icon-edit" color="grey"
+                                                          class="shadow-none text-grey-500">
+                                        <svg width="16" height="16">
+                                            <use xlink:href="#icon-edit"></use>
+                                        </svg>
                                     </x-chief::icon-button>
                                 </a>
-                            </div>
-
-                            <a
-                                href="{{ route('chief.tags.create') }}"
-                                title="Tag toevoegen"
-                                class="inline-flex items-center gap-0.5 mt-1 text-sm font-medium text-grey-500 hover:text-primary-500"
-                            >
-                                <svg width="18" height="18"> <use xlink:href="#icon-plus"></use> </svg>
-                                <span>Tag toevoegen</span>
-                            </a>
+                            @endif
                         </div>
-                    @endif
+
+                        <a
+                            href="{{ route('chief.tags.create') }}?taggroup_id={{ $tagGroup->getTagGroupId() }}"
+                            title="Tag toevoegen"
+                            class="inline-flex items-center gap-0.5 mt-1 text-sm font-medium text-grey-500 hover:text-primary-500"
+                        >
+                            <svg width="18" height="18"> <use xlink:href="#icon-plus"></use> </svg>
+                            <span>Tag toevoegen</span>
+                        </a>
+                    </div>
                 @endif
 
                 <x-chief::table>

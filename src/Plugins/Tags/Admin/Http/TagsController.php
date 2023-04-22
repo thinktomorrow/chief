@@ -67,7 +67,7 @@ class TagsController extends Controller
 
         event(new TagCreated(TagId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag '.$model->label.' is toegevoegd.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is toegevoegd.');
     }
 
     public function edit($tagId)
@@ -94,7 +94,7 @@ class TagsController extends Controller
 
         event(new TagUpdated(TagId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag '.$model->label.' is aangepast.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is aangepast.');
     }
 
     public function delete($tagId)
@@ -110,7 +110,7 @@ class TagsController extends Controller
 
         event(new TagDeleted(TagId::fromString($model->id)));
 
-        return redirect()->route('chief.tags.index')->with('messages.success', 'Tag '.$model->label.' is verwijderd.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is verwijderd.');
     }
 
     private function getModelAndFields(?string $tagId = null): array

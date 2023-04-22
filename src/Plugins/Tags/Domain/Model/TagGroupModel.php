@@ -20,11 +20,11 @@ class TagGroupModel extends Model implements ReferableModel
     {
         yield FieldPresets::pagetitle(
             Text::make('label')
-                ->label('Label tekst')
-                ->description('Laat ons het overzichtelijk houden.')
+                ->label('Groepsnaam')
                 ->required()
                 ->characterCount('20')
                 ->rules('max:20')
+                ->autofocus()
         );
     }
 }
