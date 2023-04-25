@@ -74,6 +74,6 @@ class Day
 
     public static function fullList(): array
     {
-        return array_map(fn($day) => static::fromIso8601Format($day), [1,2,3,4,5,6,7]);
+        return array_map(fn ($day) => static::fromIso8601Format($day), [1,2,3,4,5,6,7]);
     }
 }

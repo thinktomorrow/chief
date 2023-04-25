@@ -81,7 +81,7 @@ class TimeTableController extends Controller
 
         [$model, $fields] = $this->getModelAndFields($id);
 
-//        $model
+        //        $model
 
         $this->fieldValidator->handle($fields, $request->all());
         dd($request->all());

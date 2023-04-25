@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -14,7 +13,6 @@ use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class TimeTableModel extends Model implements ReferableModel
 {
@@ -26,14 +24,18 @@ class TimeTableModel extends Model implements ReferableModel
 
     public function getDayContentForForm($weekday, ?string $locale = null): ?string
     {
-        if(!$model = $this->findDay($weekday)) return null;
+        if(! $model = $this->findDay($weekday)) {
+            return null;
+        }
 
         return $model->getContent($locale);
     }
 
     public function getSlotForForm($weekday, $index, string $key): ?string
     {
-        if(!$model = $this->findDay($weekday)) return null;
+        if(! $model = $this->findDay($weekday)) {
+            return null;
+        }
 
         $slot = $model->slots[$index] ?? ['from' => '', 'until' => ''];
 
@@ -42,7 +44,7 @@ class TimeTableModel extends Model implements ReferableModel
 
     private function findDay($weekday): ?DayModel
     {
-        return $this->days->first(fn($day) => $day->weekday == $weekday);
+        return $this->days->first(fn ($day) => $day->weekday == $weekday);
     }
 
     public function days(): HasMany
@@ -81,39 +83,39 @@ class TimeTableModel extends Model implements ReferableModel
                     ->tag('not-on-create')
                     ->label('Eigen tekst')
                     ->locales()
-                    ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"')
+                    ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
             ]);
         }
 
-//        yield Form::make('monday_form')->editInSidebar()->items([
-//            Repeat::make('monday.hours')->tag('not-on-create')->items([
-//                Grid::make()->columns(2)->items([
-//                    Text::make('from')->tag('not-on-create'),
-//                    Text::make('until')->tag('not-on-create'),
-//                ]),
-//            ]),
-//
-//            Text::make('monday.content')
-//                ->tag('not-on-create')
-//                ->label('Eigen tekst')
-//                ->locales()
-//                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
-//        ]);
-//
-//        yield Form::make('tuesday_form')->editInSidebar()->items([
-//            Repeat::make('tuesday.hours')->tag('not-on-create')->items([
-//                Grid::make()->columns(2)->items([
-//                    Text::make('from')->tag('not-on-create'),
-//                    Text::make('until')->tag('not-on-create'),
-//                ]),
-//            ]),
-//
-//            Text::make('tuesday.content')
-//                ->tag('not-on-create')
-//                ->label('Eigen tekst')
-//                ->locales()
-//                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
-//        ]);
+        //        yield Form::make('monday_form')->editInSidebar()->items([
+        //            Repeat::make('monday.hours')->tag('not-on-create')->items([
+        //                Grid::make()->columns(2)->items([
+        //                    Text::make('from')->tag('not-on-create'),
+        //                    Text::make('until')->tag('not-on-create'),
+        //                ]),
+        //            ]),
+        //
+        //            Text::make('monday.content')
+        //                ->tag('not-on-create')
+        //                ->label('Eigen tekst')
+        //                ->locales()
+        //                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
+        //        ]);
+        //
+        //        yield Form::make('tuesday_form')->editInSidebar()->items([
+        //            Repeat::make('tuesday.hours')->tag('not-on-create')->items([
+        //                Grid::make()->columns(2)->items([
+        //                    Text::make('from')->tag('not-on-create'),
+        //                    Text::make('until')->tag('not-on-create'),
+        //                ]),
+        //            ]),
+        //
+        //            Text::make('tuesday.content')
+        //                ->tag('not-on-create')
+        //                ->label('Eigen tekst')
+        //                ->locales()
+        //                ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"'),
+        //        ]);
 
         //        yield Repeat::make('days')->tag('not-on-create')->items([
         //           MultiSelect::make('day')
