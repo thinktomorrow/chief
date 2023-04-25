@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Unit;
 
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\DefaultTagRead;
 use Thinktomorrow\Chief\Tests\TestCase;
 

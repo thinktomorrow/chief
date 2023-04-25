@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\DateRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Repositories\EloquentTaggableRepository;
 
 class TaggableRepositoryTest extends TestCase

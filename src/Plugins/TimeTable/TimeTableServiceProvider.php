@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Plugins\TimeTable;
 
 use Thinktomorrow\Chief\App\Providers\ChiefPluginServiceProvider;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\DateRead;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableRead;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableReadRepository;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\DateRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultDateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultTimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Repositories\EloquentTimeTableReadRepository;
@@ -14,11 +14,11 @@ class TimeTableServiceProvider extends ChiefPluginServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-timetable', __DIR__ . '/Admin/resources/views');
+        $this->app['view']->addNamespace('chief-timetable', __DIR__ . '/App/resources/views');
 
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');
 
-        $this->loadPluginAdminRoutes(__DIR__.'/Admin/routes/chief-admin-routes.php');
+        $this->loadPluginAdminRoutes(__DIR__ . '/App/routes/chief-admin-routes.php');
     }
 
     public function register()

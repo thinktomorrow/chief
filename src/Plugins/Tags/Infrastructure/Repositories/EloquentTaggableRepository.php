@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories;
 
-use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 
-class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\TaggableRepository
+class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository
 {
     public function attachTags(Taggable $taggable, array $tagIds): void
     {

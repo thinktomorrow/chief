@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\TimeTableRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\timetableId;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
 

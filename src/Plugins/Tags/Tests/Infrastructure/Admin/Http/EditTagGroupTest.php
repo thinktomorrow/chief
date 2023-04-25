@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\Admin\Http;
+namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\App\Http;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagGroupUpdated;

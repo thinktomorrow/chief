@@ -71,4 +71,9 @@ class Day
             throw new InvalidDayFormat($iso8601WeekDay . ' is not a valid ISO 8601 weekday value.');
         }
     }
+
+    public static function fullList(): array
+    {
+        return array_map(fn($day) => static::fromIso8601Format($day), [1,2,3,4,5,6,7]);
+    }
 }

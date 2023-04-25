@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\TaggableDefaults;
 
 class TaggableStub extends Model implements Taggable

@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 
 trait TaggableDefaults

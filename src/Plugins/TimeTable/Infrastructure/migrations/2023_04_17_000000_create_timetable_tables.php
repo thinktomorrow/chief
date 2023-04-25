@@ -11,14 +11,13 @@ return new class extends Migration {
             $table->id();
             $table->string('label');
             $table->unsignedTinyInteger('order')->default(0);
-            $table->json('values')->nullable();
             $table->json('data')->nullable();
         });
 
         Schema::create('timetable_days', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('timetable_id')->nullable();
-            $table->unsignedTinyInteger('day');
+            $table->unsignedTinyInteger('weekday'); // iso8601 WeekDay
             $table->json('slots')->nullable();
             $table->json('data')->nullable();
 

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models;
 
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagGroupId;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagId;
 

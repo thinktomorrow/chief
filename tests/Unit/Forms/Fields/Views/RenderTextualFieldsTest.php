@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class RenderTextualFieldsTest extends TestCase
@@ -25,6 +26,7 @@ class RenderTextualFieldsTest extends TestCase
             Number::class => 'given value',
             Slider::class => 5,
             Date::class => '2022-02-02',
+            Time::class => '9:23',
             Hidden::class => 'given value',
         ];
     }

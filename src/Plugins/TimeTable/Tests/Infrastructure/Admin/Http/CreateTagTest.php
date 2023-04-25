@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\Admin\Http;
+namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\App\Http;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateCreated;

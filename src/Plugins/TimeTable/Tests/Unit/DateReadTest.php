@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Unit;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\DateRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Hour;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slot;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultDateRead;

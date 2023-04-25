@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Psr\Container\ContainerInterface;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagGroupRead;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagRead;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagReadRepository;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagGroupRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagGroupModel;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 

@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 
 use Illuminate\Support\Carbon;
-use Thinktomorrow\Chief\Plugins\TimeTable\Application\Read\DateRead;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\DateId;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\TimeTableId;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day;

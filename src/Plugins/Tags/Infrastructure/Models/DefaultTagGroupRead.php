@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models;
 
-use Thinktomorrow\Chief\Plugins\Tags\Application\Read\TagGroupRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagGroupId;
 
 class DefaultTagGroupRead implements TagGroupRead

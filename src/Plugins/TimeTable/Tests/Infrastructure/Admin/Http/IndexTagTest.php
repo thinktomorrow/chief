@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\Admin\Http;
+namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\App\Http;
 
 use Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\TestCase;
 

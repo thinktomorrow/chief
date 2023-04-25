@@ -9,6 +9,12 @@ principles.
 
 ## 0.7.23 - 2023-04-19
 
+-   Added: A Time field to enter hour values. `\Thinktomorrow\Chief\Forms\Fields\Time::class`.
+-   Added: Pagetitle can be shown with svg icons in table index
+-   Fixed: Testsuite
+
+## 0.7.23 - 2023-04-19
+
 -   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned
 -   Added: you can now find the current Chief version on the bottom of the sidebar navigation view
 -   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
