@@ -4,7 +4,7 @@
     'breadcrumbs' => [], // should be an array of breadcrumbs
 ])
 
-<div {{ $attributes->merge(['class' => 'container border-b border-grey-200']) }}>
+<div {{ $attributes->merge(['class' => 'container max-w-screen-xl']) }}>
     @include('chief::templates.page._partials.breadcrumbs', [
         'breadcrumbs' => $breadcrumbs
     ])

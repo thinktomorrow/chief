@@ -37,7 +37,7 @@
                         title="{!! $label !!}"
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="py-2 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="py-2 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
@@ -45,7 +45,7 @@
                 @else
                     <span
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="py-2 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="py-2 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </span>

@@ -20,11 +20,13 @@
             @include('chief::templates.page._partials.healthbar')
 
             <div class="py-4 sm:py-8">
-                @if ($hero)
-                    {{ $hero }}
-                @else
-                    <x-chief::page.hero :title="$title" />
-                @endif
+                <div class="border-b border-grey-100">
+                    @if ($hero)
+                        {{ $hero }}
+                    @else
+                        <x-chief::page.hero :title="$title" />
+                    @endif
+                </div>
 
                 <div v-cloak>
                     {{ $slot }}
@@ -35,13 +37,13 @@
         </section>
 
         @if ($sidebar)
-            <section class="w-full h-full min-h-screen bg-white border-l md:w-192 border-grey-200">
+            <section class="w-full h-full min-h-screen border-l bg-black/[0.01] md:w-96 2xl:w-128 border-grey-200 shrink-0">
                 {{ $sidebar }}
             </section>
         @endif
 
         {{-- Sidebar --}}
-        <section role="sidebar">
+        <section role="sidebar" class="shrink-0">
             @include('chief::templates.page._partials.sidebar')
         </section>
     <div>

@@ -42,7 +42,7 @@ module.exports = {
             padding: {
                 DEFAULT: '1rem',
                 sm: '1.5rem',
-                // lg: '3rem',
+                lg: '2rem',
             },
         },
         fontFamily: {

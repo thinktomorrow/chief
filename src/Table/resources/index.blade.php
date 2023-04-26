@@ -39,6 +39,7 @@
             :filters="(!$resource->showIndexSidebarAside() ? $manager->filters()->all() : [])"
             :sticky="$resource->displayTableHeaderAsSticky()"
             body-attributes="{{ $bodyAttributes }}"
+            class="-mx-8"
         >
             @if ($tableActionsCount > 0)
                 <x-slot name="actions">

@@ -2,7 +2,7 @@
     $possibleToSortInline = $model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable || (!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages());
 @endphp
 
-<x-chief::window title="Sortering" class="card">
+<x-chief::window title="Sortering" class="p-8">
     <div class="space-y-4">
         @if($resource->allowInlineSorting() && $possibleToSortInline)
             <p class="body-dark body">

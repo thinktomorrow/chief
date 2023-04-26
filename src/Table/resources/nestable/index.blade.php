@@ -19,7 +19,7 @@
                 <a
                     href="@adminRoute('create')"
                     title="{{ ucfirst($resource->getLabel()) }} toevoegen"
-                    class="flex items-center justify-center w-8 h-8 rounded-full text-grey-600 bg-grey-100"
+                    {{-- class="flex items-center justify-center w-8 h-8 rounded-full text-grey-600 bg-grey-100" --}}
                 >
                     <x-chief::icon-button icon="icon-plus" color="grey"/>
                 </a>
@@ -28,7 +28,7 @@
     </x-slot>
 
     <x-chief::page.grid>
-        <div class="p-6">
+        <div class="py-6 -mx-8">
             @if (!$tree->isEmpty())
                 <div
                     data-sortable
@@ -37,7 +37,7 @@
                     data-sortable-nested-endpoint="{{ $manager->route('move-index') }}"
                     data-sortable-id-type="{{ $resource->getSortableType() }}"
                     data-sortable-class-when-sorting="is-sorting"
-                    class="-my-3 divide-y divide-grey-100"
+                    class="-my-2 divide-y divide-grey-100"
                 >
                     @foreach($tree as $node)
                         @include('chief-table::nestable.node', ['node' => $node, 'level' => 0])

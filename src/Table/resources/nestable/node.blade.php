@@ -1,6 +1,6 @@
 <div
     data-sortable-id="{{ $node->getId() }}"
-    class="py-3 nested:ptl sortable-item sorting:nested:p-0 sorting:nested:space-y-4"
+    class="container py-2 nested:ptl sortable-item sorting:nested:p-0 sorting:nested:space-y-4"
 >
     <div class="flex items-center justify-between group">
         <div class="flex items-center">
@@ -25,7 +25,7 @@
 
             {{-- Card label --}}
             <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getModel()->getPageTitle($node->getModel()) }}">
-                <span class="font-medium body body-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
+                <span class="font-medium body h1-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
                     <span class="inline mr-1 label label-primary">Homepage</span>

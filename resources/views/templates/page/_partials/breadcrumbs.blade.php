@@ -9,7 +9,7 @@
 @endphp
 
 @foreach ($breadcrumbs as $breadcrumb)
-    <a href="{{ visitedUrl($breadcrumb->url) }}" title="{{ $breadcrumb->label }}" class="link link-primary body">
+    <a href="{{ visitedUrl($breadcrumb->url) }}" title="{{ $breadcrumb->label }}" class="text-sm link link-primary body">
         <x-chief::icon-label type="back">{{ $breadcrumb->label }}</x-chief::icon-label>
     </a>
 @endforeach

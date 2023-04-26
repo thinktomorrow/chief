@@ -7,7 +7,7 @@
 
 {{-- TODO: add inner shadow if rows have horizontal scroll --}}
 {{-- <div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200"> --}}
-<div data-table-container>
+<div data-table-container {{ $attributes }}>
     @if (count($filters) > 0)
         <div class="flex items-start justify-start gap-12 p-6">
             <div class="w-full">
@@ -50,7 +50,7 @@
         <div class="w-full h-[80vh] relative">
             <div @class([
                 'overflow-x-auto whitespace-nowrap absolute inset-0',
-                'rounded-xl' => !$actions && !$filters
+                // 'rounded-xl' => !$actions && !$filters
             ])>
                 <table class="min-w-full border-separate border-spacing-0">
                     <thead>
@@ -69,7 +69,7 @@
         <div class="relative w-full">
             <div @class([
                 'overflow-x-auto whitespace-nowrap',
-                'rounded-xl' => !$actions && !$filters
+                // 'rounded-xl' => !$actions && !$filters
             ])>
                 <table class="min-w-full border-separate border-spacing-0">
                     <thead>
