@@ -30,8 +30,10 @@ module.exports = {
             white: colors.white,
             grey: colors.gray,
             black: colors.black,
-            primary: colors.indigo,
-            secondary: colors.teal,
+            primary: {
+                DEFAULT: colors.indigo[600],
+                ...colors.indigo,
+            },
             red: colors.red,
             orange: colors.orange,
             green: colors.green,
@@ -93,6 +95,9 @@ module.exports = {
                 128: '32rem',
                 160: '40rem',
                 192: '48rem',
+            },
+            maxWidth: {
+                1920: '1920px',
             },
         },
     },

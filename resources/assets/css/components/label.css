@@ -10,11 +10,7 @@
     }
 
     .label-primary {
-        @apply bg-primary-50 text-primary-500;
-    }
-
-    .label-secondary {
-        @apply bg-secondary-50 text-secondary-500;
+        @apply bg-primary-50 text-primary-600;
     }
 
     .label-grey {

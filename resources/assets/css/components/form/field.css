@@ -1,8 +1,8 @@
 .form-input-field {
-    @apply block border px-3 py-2 shadow-sm rounded-md w-full;
+    @apply block px-3 py-2 shadow-sm rounded-md w-full ring-1 ring-inset;
 
     &:focus {
-        @apply ring-1 ring-primary-500 outline-none;
+        @apply outline-none;
     }
 
     &:disabled {
@@ -11,7 +11,11 @@
 }
 
 .form-light .form-input-field {
-    @apply bg-white border-grey-200 text-grey-700;
+    @apply bg-white text-grey-700 ring-grey-200;
+
+    &:focus {
+        @apply ring-primary;
+    }
 
     &::placeholder {
         @apply text-grey-400;

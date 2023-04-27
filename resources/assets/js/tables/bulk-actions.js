@@ -81,16 +81,21 @@ class BulkActions {
 
     static _updateItemRowStyle(checkbox) {
         // TODO: Make this selector dynamic.
-        // Maybe by making a general TableRow class which will can passed to all other table classes (e.g BulkActions).
+        // Maybe by making a general TableRow class which can passed to all other table classes (e.g BulkActions).
         const row = checkbox.closest('[data-table-row]');
-        const highlightClass = 'bg-primary-50';
+        const highlightClasses = ['bg-grey-50'];
 
         if (checkbox.checked) {
-            row.classList.add(highlightClass);
+            highlightClasses.forEach((highlightClass) => {
+                row.classList.add(highlightClass);
+            });
+
             return;
         }
 
-        row.classList.remove(highlightClass);
+        highlightClasses.forEach((highlightClass) => {
+            row.classList.remove(highlightClass);
+        });
     }
 
     _getBulkActionsCount() {

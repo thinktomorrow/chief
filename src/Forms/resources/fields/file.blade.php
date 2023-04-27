@@ -49,7 +49,7 @@
                             {!! $getUploadButtonLabel() !!}
                         </label>
 
-                        <span class="text-secondary-500"></span>
+                        <span class="text-grey-500"></span>
                     </div>
 
                     <input id="document-upload-{{ $locale }}" @change="handleFileSelect" type="file" {{ $allowMultiple() ? 'multiple' : '' }} class="hidden">

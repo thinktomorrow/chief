@@ -25,22 +25,25 @@
         </div>
     @endif
 
-    @if($actions)
-        <div data-bulk-actions-container class="hidden px-6 py-4">
-            <div class="flex items-center gap-6">
-                <p class="body text-grey-500">
+    {{-- @if($actions) --}}
+        <div data-bulk-actions-container class="hidden px-8 py-2 border-t border-grey-200 bg-primary-50">
+            {{-- <div class="flex items-center gap-6"> --}}
+                <p class="leading-6 body body-dark">
                     <span data-bulk-actions-counter class="siblings:bulk-actions-counter-condition">0</span>
                     <span class="hidden bulk-actions-counter-is-1:inline">item</span>
                     <span class="bulk-actions-counter-is-1:hidden">items</span>
-                    geselecteerd
+                    geselecteerd.
+
+                    <span class="link link-primary">Alle X items selecteren.</span>
+                    <span class="link link-primary">Alle items deselecteren.</span>
                 </p>
 
-                <div class="flex flex-wrap items-start justify-start gap-3">
+                {{-- <div class="flex flex-wrap items-start justify-start gap-3">
                     {{ $actions }}
-                </div>
-            </div>
+                </div> --}}
+            {{-- </div> --}}
         </div>
-    @endif
+    {{-- @endif --}}
 
     @if ($sticky)
         {{-- The specific height value is necessary in order for the sticky table headers to work. This because of an issue
