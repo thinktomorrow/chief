@@ -102,6 +102,14 @@ trait SortAssistant
      */
     public function indexForSorting()
     {
+        $filteredModelIds = $this->indexModelIds();
+
+        $filteredTree = $this
+            ->getTree()
+            ->shake(fn ($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
+
+        View::share('tree', $filteredTree);
+
         View::share('manager', $this);
         View::share('resource', $this->resource);
         View::share('models', $this->indexModelsForSorting());

@@ -1,5 +1,5 @@
 .form-input-label {
-    @apply block font-medium;
+    @apply block font-medium text-sm;
 }
 
 .form-light .form-input-label {

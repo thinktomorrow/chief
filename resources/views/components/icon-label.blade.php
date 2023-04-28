@@ -4,11 +4,11 @@
 
     switch($space ?? null) {
         case 'small':
-            $spaceClass = 'space-x-2'; break;
+            $spaceClass = 'gap-x-2'; break;
         case 'large':
-            $spaceClass = 'space-x-4'; break;
+            $spaceClass = 'gap-x-4'; break;
         default:
-            $spaceClass = 'space-x-2'; break;
+            $spaceClass = 'gap-x-2'; break;
     }
 
     if(isset($icon) && false === strpos($icon, '<svg ')) {

@@ -2,8 +2,6 @@ import _isEmpty from 'lodash/isEmpty';
 /**
  * Handles bulk actions display, checkboxes and highlighting
  * @param container container
- * @param parentCheckboxSelector Selector for parent (all items) checkbox
- * @param itemCheckboxSelector Selector for item checkbox
  */
 class BulkActions {
     constructor(container = document) {
@@ -14,6 +12,7 @@ class BulkActions {
         this.parentCheckboxSelector = '[data-bulk-all-checkbox]';
         this.itemCheckboxSelector = '[data-bulk-item-checkbox]';
         this.bulkActionItemFieldSelector = '[data-bulk-action-item-field]';
+        this.bulkActionElementSelector = '[data-bulk-action-element]';
 
         this.bulkActionsContainer = container.querySelector(this.bulkActionsContainerSelector);
         if (!this.bulkActionsContainer) return;
@@ -24,6 +23,7 @@ class BulkActions {
         this.parentCheckbox = container.querySelector(this.parentCheckboxSelector);
         this.itemCheckboxes = Array.from(container.querySelectorAll(this.itemCheckboxSelector));
         this.bulkActionItemFields = Array.from(container.querySelectorAll(this.bulkActionItemFieldSelector));
+        this.bulkActionElements = Array.from(document.querySelectorAll(this.bulkActionElementSelector));
 
         if (!this.parentCheckbox || _isEmpty(this.itemCheckboxes)) return;
 
@@ -110,9 +110,23 @@ class BulkActions {
 
     _updateBulkActionsCounter(count) {
         this._toggleBulkActionsContainer(count);
+        this._toggleBulkActionElements(count);
 
         this.bulkActionsCounter.innerHTML = count;
         this.bulkActionsCounter.setAttribute(this.bulkActionsCounterAttribute, count);
+    }
+
+    _toggleBulkActionElements(count) {
+        if (count > 0) {
+            this.bulkActionElements.forEach((element) => {
+                element.classList.remove('hidden');
+            });
+            return;
+        }
+
+        this.bulkActionElements.forEach((element) => {
+            element.classList.add('hidden');
+        });
     }
 
     _toggleBulkActionsContainer(count) {
