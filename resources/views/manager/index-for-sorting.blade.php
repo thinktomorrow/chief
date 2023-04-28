@@ -38,7 +38,7 @@
             data-sortable-is-sorting
             data-sortable-endpoint="{{ $manager->route('sort-index') }}"
             data-sortable-id-type="{{ $resource->getSortableType() }}"
-            class="divide-y divide-grey-100 is-sorting"
+            class="divide-y divide-grey-100 border-y border-grey-100"
         >
             @foreach($tree as $node)
                 @include('chief-table::nestable.table-node-sort', ['node' => $node, 'level' => 0])

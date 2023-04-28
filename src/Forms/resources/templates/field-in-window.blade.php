@@ -5,7 +5,7 @@
 <div class="flex flex-wrap justify-between w-full gap-y-1 gap-x-3">
     @if ($getLabel())
         <div class="w-48">
-            <span class="font-medium h6 body-dark">
+            <span class="font-medium body h1-dark">
                 {{ ucfirst($getLabel()) }}
             </span>
         </div>

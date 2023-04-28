@@ -31,7 +31,7 @@
     </x-slot>
 
     <x-chief::page.grid>
-        <div>
+        <div class="mt-8">
             {{-- <div class="container mb-8">
                 <div class="row-start-start gutter-2">
                     <div class="w-full lg:w-1/3">

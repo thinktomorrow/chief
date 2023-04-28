@@ -4,7 +4,6 @@
  **/
 @layer components {
     .label {
-        /* @apply inline-block font-medium leading-tight px-2.5 py-1 rounded; */
         @apply inline-flex items-center rounded-md font-medium;
         @apply px-2 py-1 text-xs;
     }

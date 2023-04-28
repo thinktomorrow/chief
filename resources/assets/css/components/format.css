@@ -28,7 +28,7 @@
     }
 
     .h1-weight {
-        font-weight: theme('fontWeight.extrabold');
+        font-weight: theme('fontWeight.bold');
     }
 
     .h2-weight,
@@ -36,7 +36,7 @@
     .h4-weight,
     .h5-weight,
     .h6-weight {
-        font-weight: theme('fontWeight.bold');
+        font-weight: theme('fontWeight.semibold');
     }
 
     .body-weight {

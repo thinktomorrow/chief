@@ -53,6 +53,7 @@
         figcaption,
         cite,
         li {
+            @apply font-body;
             @extend .body-weight;
             @extend .body-tracking;
         }

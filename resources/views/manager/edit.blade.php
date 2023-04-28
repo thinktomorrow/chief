@@ -30,13 +30,22 @@
 
         <x-chief-form::forms position="main-bottom" />
 
-        <x-slot name="aside">
+        {{-- <x-slot name="aside">
             <x-chief-form::forms position="aside-top" />
             <x-chief::window.states />
             <x-chief::window.links />
             <x-chief-form::forms position="aside" />
-        </x-slot>
+        </x-slot> --}}
     </x-chief::page.grid>
+
+    <x-slot name="sidebar">
+        <div class="divide-y divide-grey-100">
+            <x-chief-form::forms position="aside-top" />
+            <x-chief::window.states />
+            <x-chief::window.links />
+            <x-chief-form::forms position="aside" />
+        </div>
+    </x-slot>
 
     @push('portals')
         @adminCan('delete', $model)

@@ -2,7 +2,6 @@
     'filters' => [],
     'actions' => null,
     'sticky' => false,
-    'bodyAttributes' => null,
 ])
 
 {{-- TODO: add inner shadow if rows have horizontal scroll --}}
@@ -51,39 +50,41 @@
         element is necessary to fix a bug where the table would partially overflow its container, even though it has
         overflow-x-auto. --}}
         <div class="w-full h-[80vh] relative">
-            <div @class([
-                'overflow-x-auto whitespace-nowrap absolute inset-0',
-                // 'rounded-xl' => !$actions && !$filters
-            ])>
+            <div class="absolute inset-0 overflow-x-auto whitespace-nowrap">
                 <table class="min-w-full border-separate border-spacing-0">
-                    <thead>
-                        <x-chief::table.row>
-                            {{ $header }}
-                        </x-chief::table.row>
-                    </thead>
+                    @isset($header)
+                        <thead {{ $header->attributes }}>
+                            <x-chief::table.row>
+                                {{ $header }}
+                            </x-chief::table.row>
+                        </thead>
+                    @endisset
 
-                    <tbody {{ $body->attributes }}>
-                        {{ $body }}
-                    </tbody>
+                    @isset($body)
+                        <tbody {{ $body->attributes }}>
+                            {{ $body }}
+                        </tbody>
+                    @endisset
                 </table>
             </div>
         </div>
     @else
         <div class="relative w-full">
-            <div @class([
-                'overflow-x-auto whitespace-nowrap',
-                // 'rounded-xl' => !$actions && !$filters
-            ])>
+            <div class="overflow-x-auto whitespace-nowrap">
                 <table class="min-w-full border-separate border-spacing-0">
-                    <thead>
-                        <x-chief::table.row>
-                            {{ $header }}
-                        </x-chief::table.row>
-                    </thead>
+                    @isset($header)
+                        <thead {{ $header->attributes }}>
+                            <x-chief::table.row>
+                                {{ $header }}
+                            </x-chief::table.row>
+                        </thead>
+                    @endisset
 
-                    <tbody {{ $bodyAttributes }} {{ $body->attributes }}>
-                        {{ $body }}
-                    </tbody>
+                    @isset($body)
+                        <tbody {{ $body->attributes }}>
+                            {{ $body }}
+                        </tbody>
+                    @endisset
                 </table>
             </div>
         </div>

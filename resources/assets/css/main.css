@@ -8,7 +8,6 @@
 @import './components/link';
 @import './components/prose';
 @import './components/card';
-@import './components/sort';
 
 @import './components/form';
 @import './components/form/index.css';

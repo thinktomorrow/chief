@@ -61,16 +61,6 @@
     }
 }
 
-.hover\:child-svg-scale-110 {
-    svg {
-        @apply inline-block transition-all ease-in-out duration-75;
-    }
-
-    &:hover svg {
-        @apply scale-110;
-    }
-}
-
 .siblings\:bulk-actions-counter-condition[data-bulk-actions-counter='1'] {
     & ~ .bulk-actions-counter-is-1\:inline {
         display: inline;
