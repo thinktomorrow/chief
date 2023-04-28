@@ -30,35 +30,24 @@ class Slots
         );
     }
 
-    public static function convertMappedWeekDays(array $rawWeekDays): array
-    {
-        $days = [];
-
-        foreach($rawWeekDays as $rawWeekDay) {
-            $days[] = static::make(
-                Day::make($rawWeekDay['day'], 'trans...'),
-                static::convertMappedSlots($rawWeekDay['slots'])
-            );
-        }
-
-        return $days;
-    }
-
     public static function convertMappedSlots(array $rawSlots): array
     {
         $slots = [];
 
         foreach($rawSlots as $rawSlot) {
+
+            if(!isset($rawSlot['from']) && !isset($rawSlot['until'])) continue;
+
             $slots[] = Slot::make(
-                Hour::fromFormat($rawSlot['from'], 'H:i'),
-                Hour::fromFormat($rawSlot['until'], 'H:i'),
+                isset($rawSlot['from']) ? Hour::fromFormat($rawSlot['from'], 'H:i') : null,
+                isset($rawSlot['until']) ? Hour::fromFormat($rawSlot['until'], 'H:i') : null,
             );
         }
 
         return $slots;
     }
 
-    public function getWeekDay(): Day
+    public function getDay(): Day
     {
         return $this->day;
     }

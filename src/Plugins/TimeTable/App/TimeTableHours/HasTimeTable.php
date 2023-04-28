@@ -1,10 +1,12 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TimeTable\App\HasTimeTable;
+namespace Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableHours;
 
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\TimeTableId;
 
 interface HasTimeTable
 {
     public function getTimeTableId(): ?TimeTableId;
+
+    public function getTimeTableHours(): TimeTableHours;
 }

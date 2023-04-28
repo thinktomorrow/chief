@@ -18,67 +18,77 @@
                     {!! $field->render() !!}
                 @endforeach
 
-
-{{--                <!-- label -->--}}
-{{--                <div class="space-y-1 form-light">--}}
-{{--                    <x-chief::input.label :required="true">Intern label</x-chief::input.label>--}}
-
-{{--                    <x-chief::input.text--}}
-{{--                        name="label"--}}
-{{--                        placeholder="Bijv. Openingsuren Gent, Levertijden magazijn, ..."--}}
-{{--                        value="{{ old('label', $model->label) }}"--}}
-{{--                    />--}}
-
-{{--                    <x-chief::input.error rule="label"/>--}}
-{{--                </div>--}}
-
-{{--                <!-- day -->--}}
-{{--                @foreach(\Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fullList() as $day)--}}
-{{--                    <div class="space-y-4 form-light">--}}
-{{--                        <h2>{{ $day->getLabel() }}</h2>--}}
-
-{{--                        <div class="space-y-2">--}}
-{{--                            <x-chief::input.label>Uren (van - tot)</x-chief::input.label>--}}
-
-
-{{--                            @foreach([0,1] as $i)--}}
-{{--                                <div class="row-start-start gap-2">--}}
-
-{{--                                    <div class="w-1/3">--}}
-{{--                                        <x-chief::input.time--}}
-{{--                                            step="{{ 60*15 }}"--}}
-{{--                                            name="days[{{ $day->getIso8601WeekDay() }}][hours][{{ $i }}][from]"--}}
-{{--                                            value="{{ old('days.'.$day->getIso8601WeekDay().'.hours.' . $i.'.from', $model->getSlotForForm($day->getIso8601WeekDay(), $i,'from')) }}"--}}
-{{--                                            placeholder="van"--}}
-{{--                                        />--}}
-
-{{--                                        <x-chief::input.error rule="days.{{ $day->getIso8601WeekDay() }}.hours.{{$i}}.from"/>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="w-1/3">--}}
-{{--                                        <x-chief::input.time--}}
-{{--                                            step="{{ 60*15 }}"--}}
-{{--                                            name="days[{{ $day->getIso8601WeekDay() }}][hours][{{ $i }}][until]"--}}
-{{--                                            value="{{ old('days.'.$day->getIso8601WeekDay().'.hours.' . $i.'.until', $model->getSlotForForm($day->getIso8601WeekDay(), $i,'until')) }}"--}}
-{{--                                            placeholder="tot"--}}
-{{--                                        />--}}
-
-{{--                                        <x-chief::input.error rule="days.{{ $day->getIso8601WeekDay() }}.hours.{{$i}}.until"/>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                            @endforeach--}}
-{{--                        </div>--}}
-
-{{--                        {{ \Thinktomorrow\Chief\Forms\Fields\Text::make('days.'.$day->getIso8601WeekDay().'.content')--}}
-{{--                            ->label('Eigen tekstje')--}}
-{{--                            ->placeholder('Bijv. Openingsuren Gent, Levertijden magazijn, ...')--}}
-{{--                            ->render() }}--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
-
             </div>
 
-            <button class="btn btn-primary mt-4" type="submit">Bewaar aanpassingen</button>
+            <button class="btn btn-primary mt-4" type="submit">Bewaar naam</button>
         </form>
+
+        <div class="card space-y-4">
+
+            <h3>Weekschema</h3>
+
+            @foreach($model->days as $day)
+                <div class="bg-grey-50 shadow p-4 rounded relative">
+                    <h2 class="font-bold">{{ $day->getLabel() }}</h2>
+
+                    @if(empty($day->getSlots()))
+                        <p>Gesloten</p>
+                    @else
+                        @foreach($day->getSlots() as $slot)
+                            <p>{{ $slot->getAsString() }}</p>
+                        @endforeach
+                    @endif
+
+                    @if($day->content)
+                        <p>{{ $day->content }}</p>
+                    @endif
+
+                    <div class="absolute top-0 right-0 p-4">
+                        <a href="{{ route('chief.timetable_days.edit', $day->id) }}">
+                            <x-chief::icon-button icon="icon-edit" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
+                        </a>
+                    </div>
+
+                </div>
+
+            @endforeach
+        </div>
+
+        <div class="card space-y-4">
+
+            <h3>Uitzonderingen</h3>
+
+            <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
+                <x-chief::icon-button icon="icon-plus" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
+            </a>
+
+            @foreach($model->dates as $date)
+                <div class="bg-grey-50 shadow p-4 rounded relative">
+                    <h2 class="font-bold">{{ \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y') }}</h2>
+
+                    @if(empty($date->getSlots()))
+                        <p>Gesloten</p>
+                    @else
+                        @foreach($date->getSlots() as $slot)
+                            <p>{{ $slot->getAsString() }}</p>
+                        @endforeach
+                    @endif
+
+                    @if($date->content)
+                        <p>{{ $date->content }}</p>
+                     @endif
+
+
+                    <div class="absolute top-0 right-0 p-4">
+                        <a href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}">
+                            <x-chief::icon-button icon="icon-edit" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
+                        </a>
+                    </div>
+
+                </div>
+
+            @endforeach
+        </div>
+
     </x-chief::page.grid>
 </x-chief::page.template>

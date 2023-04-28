@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "845a10700d6b6b4c0877a213f2d35828",
+    "content-hash": "0f55dd5daebe8d332f3b23f3120feaa4",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -10443,6 +10443,60 @@
                 "source": "https://github.com/spatie/macroable/tree/2.0.0"
             },
             "time": "2021-03-26T22:39:02+00:00"
+        },
+        {
+            "name": "spatie/opening-hours",
+            "version": "2.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/opening-hours.git",
+                "reference": "befffe986db3e439a2985033694d4175f80c581e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/opening-hours/zipball/befffe986db3e439a2985033694d4175f80c581e",
+                "reference": "befffe986db3e439a2985033694d4175f80c581e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "kylekatarnls/multi-tester": "^1.1",
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\OpeningHours\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A helper to query and format a set of opening hours",
+            "homepage": "https://github.com/spatie/opening-hours",
+            "keywords": [
+                "hours",
+                "opening",
+                "opening-hours",
+                "schedule",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/opening-hours/issues",
+                "source": "https://github.com/spatie/opening-hours/tree/2.13.0"
+            },
+            "time": "2022-08-07T15:46:29+00:00"
         },
         {
             "name": "spatie/ray",

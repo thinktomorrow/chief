@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateCreated;
@@ -18,33 +19,26 @@ class DateController extends Controller
 {
     private FieldValidator $fieldValidator;
     private SaveFields $saveFields;
-    private TimeTableReadRepository $timeTableReadRepository;
 
-    public function __construct(TimeTableReadRepository $timeTableReadRepository, FieldValidator $fieldValidator, SaveFields $saveFields)
+    public function __construct(FieldValidator $fieldValidator, SaveFields $saveFields)
     {
         $this->fieldValidator = $fieldValidator;
         $this->saveFields = $saveFields;
-        $this->timeTableReadRepository = $timeTableReadRepository;
     }
 
-    public function index()
-    {
-        $timeTables = $this->timeTableReadRepository->getAll();
-
-        return view('chief-weeks::weeks.index', [
-            'weeks' => $weeks,
-            'weekGroups' => $weekGroups,
-        ]);
-    }
-
-    public function create()
+    public function create($timetable_id)
     {
         $this->authorize('update-page');
 
-        [, $fields] = $this->getModelAndFields();
+        [$model, $fields] = $this->getModelAndFields();
 
-        return view('chief-weeks::weeks.create', [
+        // Enrich fields with the layout components
+        $forms = Forms::make($model->fields($model))->fillModel($model)->getComponents();
+        $fields = $forms[0]->getComponents();
+
+        return view('chief-timetable::dates.create', [
             'fields' => $fields,
+            'timetable_id' => $timetable_id,
         ]);
     }
 
@@ -54,24 +48,45 @@ class DateController extends Controller
 
         [$model, $fields] = $this->getModelAndFields();
 
+        if($request->has('closed')) {
+            $request = $request->merge(['slots' => [], 'closed' => true]);
+        }
+
+        $fields = $fields->remove('closed');
+
         $this->fieldValidator->handle($fields, $request->all());
 
-        $this->saveFields->save($model, $fields, $request->all(), $request->allFiles());
+        $model->date = $request->input('date');
+        $model->slots = $request->input('slots');
+        $model->content = $request->input('content');
+        $model->save();
+
+        // Connect to all timetables
+        $model->timetables()->sync($request->input('timetables', []));
 
         event(new DateCreated(DateId::fromString($model->id)));
 
-        return redirect()->route('chief.weeks.index')->with('messages.success', 'Tag is toegevoegd.');
+        if(count($timetableIds = $request->input('timetables', [])) > 0) {
+            return redirect()->route('chief.timetables.edit', reset($timetableIds))->with('messages.success', 'Uitzondering is toegevoegd.');
+        }
+
+        return redirect()->route('chief.timetables.index')->with('messages.success', 'Dag is aangepast.');
     }
 
-    public function edit($weekId)
+    public function edit($timetable_id, $weekId)
     {
         $this->authorize('update-page');
 
         [$model, $fields] = $this->getModelAndFields($weekId);
 
-        return view('chief-weeks::weeks.edit', [
+        // Enrich fields with the layout components
+        $forms = Forms::make($model->fields($model))->fillModel($model)->getComponents();
+        $fields = $forms[0]->getComponents();
+
+        return view('chief-timetable::dates.edit', [
             'model' => $model,
             'fields' => $fields,
+            'timetable_id' => $timetable_id,
         ]);
     }
 
@@ -87,7 +102,7 @@ class DateController extends Controller
 
         event(new DateUpdated(DateId::fromString($model->id)));
 
-        return redirect()->route('chief.weeks.index')->with('messages.success', 'Tag is aangepast.');
+        return redirect()->route('chief.dates.index')->with('messages.success', 'Tag is aangepast.');
     }
 
     public function delete($weekId)
@@ -102,14 +117,14 @@ class DateController extends Controller
 
         event(new DateDeleted(DateId::fromString($model->id)));
 
-        return redirect()->route('chief.weeks.index')->with('messages.success', 'Tag is verwijderd.');
+        return redirect()->route('chief.dates.index')->with('messages.success', 'Tag is verwijderd.');
     }
 
     private function getModelAndFields(?string $weekId = null): array
     {
         $model = app(DateModel::class);
         $model = $weekId ? $model::find($weekId): $model;
-        dd(Fields::make($model->fields($model))->withoutNestedFields());
+
         $fields = Fields::makeWithoutFlatteningNestedFields($model->fields($model))->each(fn ($field) => $field->model($model));
 
         return [$model, $fields];

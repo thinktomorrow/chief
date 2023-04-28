@@ -2,7 +2,7 @@
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
-    <x-chief::input.date
+    <x-chief::input.time
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"

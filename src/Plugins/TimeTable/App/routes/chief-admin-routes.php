@@ -3,16 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 Route::post('timetable_dates', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'store'])->name('chief.timetable_dates.store');
-Route::get('timetable_dates/create', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'create'])->name('chief.timetable_dates.create');
+Route::get('timetable_dates/{timetable_id}/create', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'create'])->name('chief.timetable_dates.create');
 Route::delete('timetable_dates/{timetable_date}', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'delete'])->name('chief.timetable_dates.delete');
 Route::put('timetable_dates/{timetable_date}', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'update'])->name('chief.timetable_dates.update');
-Route::get('timetable_dates/{timetable_date}/edit', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'edit'])->name('chief.timetable_dates.edit');
-//
-//Route::post('timetable_days', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'store'])->name('chief.timetable_days.store');
-//Route::get('timetable_days/create', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'create'])->name('chief.timetable_days.create');
-//Route::delete('timetable_days/{timetable_day}', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'delete'])->name('chief.timetable_days.delete');
-//Route::put('timetable_days/{timetable_day}', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'update'])->name('chief.timetable_days.update');
-//Route::get('timetable_days/{timetable_day}/edit', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'edit'])->name('chief.timetable_days.edit');
+Route::get('timetable_dates/{timetable_id}/{timetable_date}/edit', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DateController::class,'edit'])->name('chief.timetable_dates.edit');
+
+Route::put('timetable_days/{timetable_day}', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'update'])->name('chief.timetable_days.update');
+Route::get('timetable_days/{timetable_day}/edit', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\DayController::class,'edit'])->name('chief.timetable_days.edit');
 
 Route::get('timetables', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\TimeTableController::class,'index'])->name('chief.timetables.index');
 Route::post('timetables', [\Thinktomorrow\Chief\Plugins\TimeTable\App\Http\TimeTableController::class,'store'])->name('chief.timetables.store');

@@ -51,6 +51,14 @@ trait HasValue
                 : $this->getDefault($locale);
         }
 
+        // Relationships are retrieved as collections - if they
+        // are empty, we can return the default instead
+        if(is_countable($this->value) && count($this->value) == 0) {
+            $default = $this->getDefault($locale);
+
+            return (is_countable($default) && count($default) > 0) ? $default : $this->value;
+        }
+
         return $this->value;
     }
 
@@ -73,7 +81,28 @@ trait HasValue
                 return $model->{$this->getColumnName().':'.$locale};
             }
 
-            return $model->{$this->getColumnName()} ?? $this->getDefault($locale);
+            // Dotted syntax as support for array casts. We can fetch nested values as: days.0.am, days.0.pm, ...
+            if(str_contains($this->getColumnName(), '.')) {
+                $column = substr($this->getColumnName(), 0, strpos($this->getColumnName(),'.'));
+                $key = substr($this->getColumnName(), strpos($this->getColumnName(),'.') + 1);
+
+                if(is_array($model->{$column})){
+                    return data_get($model->{$column}, trim($key, '.'));
+                }
+            }
+
+            $value = $model->{$this->getColumnName()};
+
+            // Relationships are retrieved as collections - if they
+            // are empty, we can return the default instead
+            if(is_countable($value) && count($value) == 0) {
+                $default = $this->getDefault($locale);
+
+                return (is_countable($default) && count($default) > 0) ? $default : $value;
+            }
+
+
+            return $value ?? $this->getDefault($locale);
         };
     }
 }

@@ -5,15 +5,15 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Presets;
 
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Form;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\HasTimeTable\HasTimeTable;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableHours\HasTimeTable;
 
 class FieldPresets
 {
-    public static function tags(HasTimeTable $model): iterable
+    public static function timetable(HasTimeTable $model): iterable
     {
         yield Form::make('timetable')
-            ->title('Tijdschema')
+            ->title('Openingsuren')
             ->position('aside')
             ->items([
                 MultiSelect::make('timetable_id')

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure;
 
 use Illuminate\Testing\TestResponse;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DateModel;
+use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 
 trait TimeTableTestHelpers
@@ -11,33 +12,66 @@ trait TimeTableTestHelpers
     protected function createDateModel(array $values = []): DateModel
     {
         return DateModel::create(array_merge([
-            'color' => '#333333',
-            'taggroup_id' => '666',
-            'label' => 'in review',
+            'date' => now()->addWeek(),
+            'slots' => [
+                ['from' => '08:30', 'until' => '12:00'],
+                ['from' => '13:00', 'until' => '17:00'],
+            ],
+            'content' => ['nl' => 'speciale dag', 'en' => 'special day'],
         ], $values));
     }
 
     protected function performDateStore(array $values = []): TestResponse
     {
         return $this->asAdmin()->post(route('chief.timetable_dates.store'), array_merge([
-            'label' => 'reviewing',
-            'color' => '#333333',
-            'taggroup_id' => '1',
+            'date' => '2022-03-05',
+            'slots' => [
+                ['from' => '08:30', 'until' => '12:00'],
+                ['from' => '13:00', 'until' => '17:00'],
+            ],
+            'content' => ['nl' => 'speciale dag', 'en' => 'special day'],
         ], $values));
     }
 
     protected function performDateUpdate($tagId, array $values = []): TestResponse
     {
         return $this->asAdmin()->put(route('chief.timetable_dates.update', $tagId), array_merge([
-            'label' => 'reviewed',
-            'color' => '#666666',
-            'taggroup_id' => '2',
+            'date' => '2022-03-06',
+            'slots' => [
+                ['from' => '08:45', 'until' => '12:00'],
+                ['from' => '14:00', 'until' => '17:00'],
+            ],
+            'content' => ['nl' => 'halve speciale dag', 'en' => 'half special day'],
         ], $values));
     }
+
 
     protected function performDateDelete($tagId): TestResponse
     {
         return $this->asAdmin()->delete(route('chief.timetable_dates.delete', $tagId));
+    }
+
+    protected function createDayModel($timetable_id, array $values = []): DayModel
+    {
+        return DayModel::create(array_merge([
+            'timetable_id' => $timetable_id,
+            'slots' => [
+                ['from' => '08:30', 'until' => '12:00'],
+                ['from' => '13:00', 'until' => '17:00'],
+            ],
+            'content' => ['nl' => 'speciale dag', 'en' => 'special day'],
+        ], $values));
+    }
+
+    protected function performDayUpdate($dayId, array $values = []): TestResponse
+    {
+        return $this->asAdmin()->put(route('chief.timetable_days.update', $dayId), array_merge([
+            'slots' => [
+                ['from' => '08:45', 'until' => '12:00'],
+                ['from' => '14:00', 'until' => '17:00'],
+            ],
+            'content' => ['nl' => 'halve speciale dag', 'en' => 'half special day'],
+        ], $values));
     }
 
     protected function createTimeTableModel(array $values = []): TimeTableModel
@@ -58,36 +92,6 @@ trait TimeTableTestHelpers
     {
         return $this->asAdmin()->put(route('chief.timetables.update', $tagId), array_merge([
             'label' => 'Openingsuren Herentals',
-            'days' => [
-                [
-                    'day' => '1',
-                    'hours' => [
-                        [
-                            'from' => '9:00',
-                            'until' => '12:00',
-                        ],
-                        [
-                            'from' => '13:00',
-                            'until' => '16:30',
-                        ],
-                    ],
-                    'content' => ['nl' => 'open voor zaken', 'en' => 'open for business'],
-                ],
-                [
-                    'day' => '2',
-                    'hours' => [
-                        [
-                            'from' => '10:00',
-                            'until' => '12:00',
-                        ],
-                        [
-                            'from' => '14:00',
-                            'until' => '16:30',
-                        ],
-                    ],
-                    'content' => [],
-                ],
-            ],
         ], $values));
     }
 

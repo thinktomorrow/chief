@@ -20,7 +20,7 @@ class EloquentTimeTableReadRepository implements TimeTableReadRepository
     public function getAllTimeTablesForSelect(): array
     {
         return $this->container->get(TimeTableModel::class)::all()
-            ->mapWithKeys(fn (TimeTableModel $model) => [$model->id => $model->title])
+            ->mapWithKeys(fn (TimeTableModel $model) => [$model->id => $model->label])
             ->all();
     }
 

@@ -35,7 +35,8 @@
         "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.4",
         "orchestra/testbench": "^7.20",
-        "phpunit/phpunit": "^9.5.28"
+        "phpunit/phpunit": "^9.5.28",
+        "spatie/opening-hours": "^2.13"
     },
     "autoload": {
         "psr-4": {

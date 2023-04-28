@@ -4,9 +4,19 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Thinktomorrow\Chief\Forms\Fields\Checkbox;
+use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Time;
+use Thinktomorrow\Chief\Forms\Layouts\Card;
+use Thinktomorrow\Chief\Forms\Layouts\Grid;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
 
 class DayModel extends Model
 {
+    use UsesContent;
+
     protected $guarded = [];
     public $table = 'timetable_days';
     public $timestamps = false;
@@ -15,51 +25,48 @@ class DayModel extends Model
         'data' => 'array',
     ];
 
-    public function getContent(?string $locale): ?string
+    public function getSlots()
     {
-        return $this->getData('content', $locale);
+        return Slots::fromMappedData($this->weekday, $this->slots)->getSlots();
     }
 
-    private function getData(string $key, string $index = null, $default = null)
+    public function fields($model): iterable
     {
-        $key = $index ? $key .'.'.$index : $key;
+        yield Card::make()->title('Uurschema (voor- en namiddag)')
+            ->description('Een leeg veld geeft aan dat je gesloten bent')->items([
+            Grid::make()->columns(2)->items([
+                Time::make('slots[0][from]')->columnName('slots.0.from')->tag('not-on-create')->default('08:30'),
+                Time::make('slots[0][until]')->columnName('slots.0.until')->tag('not-on-create')->default('12:00'),
+            ]),
+            Grid::make()->columns(2)->items([
+                Time::make('slots[1][from]')->columnName('slots.1.from')->tag('not-on-create')->default('13:00'),
+                Time::make('slots[1][until]')->columnName('slots.1.until')->tag('not-on-create')->default('17:00'),
+            ]),
 
-        return data_get($this->data, $key, $default);
+            Checkbox::make('closed')
+                ->options([
+                    1 => 'Hele dag gesloten'
+                ])
+                ->value(fn() => empty($model->slots) ? 1 : null)
+                ->showAsToggle(),
+        ]);
+
+        yield Text::make('content')
+            ->setLocalizedFormKeyTemplate('content.:locale')
+            ->tag('not-on-create')
+            ->label('Eigen tekst')
+            ->value($model->data['content'] ?? [])
+            ->locales()
+            ->description('Bijv. "Woensdagnamiddag gesloten"');
     }
-
-//    public function fields($model): iterable
-//    {
-//        yield MultiSelect::make('timetable_id')
-//            ->label('Tijdschema')
-//            ->options(fn () => app(TimeTableReadRepository::class)->getAllTimeTablesForSelect());
-//
-//        yield MultiSelect::make('weekday')
-//            ->label('Dag van de week')
-//            ->options([
-//                'maandag',
-//                'dindag',
-//                'woensdag',
-//                'donderdag',
-//                'vrijdag',
-//                'zaterdag',
-//                'zondag',
-//            ]);
-//
-//        yield Repeat::make('hours')->items([
-//            Grid::make()->columns(2)->items([
-//                Text::make('from'),
-//                Text::make('until'),
-//            ]),
-//        ]);
-//
-//        yield Text::make('content')
-//            ->label('Eigen tekst')
-//            ->locales()
-//            ->description('Zet het in korte mensentaal. Bijv. "Gesloten op Paasmaandag", "Kantoor dicht want Teambuilding 🥳"');
-//    }
 
     public function timetable(): BelongsTo
     {
         return $this->belongsTo(app(TimeTableModel::class), 'timetable_id');
+    }
+
+    public function getLabel()
+    {
+        return \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromIso8601Format($this->weekday)->getLabel();
     }
 }

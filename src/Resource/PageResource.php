@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Table\TableResource;
 
-// Admin specific resource methods
+// App specific resource methods
 interface PageResource extends Resource, TableResource
 {
     // Nav

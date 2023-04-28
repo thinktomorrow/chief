@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Acceptance\Read;
+namespace Thinktomorrow\Chief\Plugins\Tags\Tests\App\Read;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
