@@ -4,91 +4,59 @@
 
 <x-chief::page.template title="Schema aanpassen">
     <x-slot name="hero">
-        <x-chief::page.hero title="Schema aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"></x-chief::page.hero>
+        <x-chief::page.hero :title="$model->label" :breadcrumbs="[$breadcrumb]">
+            {{-- TODO: render field as pagetitle --}}
+            {{-- <x-slot name="customTitle">
+                {!! $fields->first()->render() !!}
+            </x-slot> --}}
+        </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
+    <x-chief::page.grid>
+        {{-- TODO: remove this card once the field is editable as pagetitle --}}
         <form id="timeTableEditForm" action="{{ route('chief.timetables.update', $model->id) }}" method="POST" class="card">
             @csrf
             @method('PUT')
 
             <div class="space-y-4">
-
                 @foreach($fields as $field)
                     {!! $field->render() !!}
                 @endforeach
 
+                <button class="btn btn-primary" type="submit">Bewaar naam</button>
             </div>
-
-            <button class="btn btn-primary mt-4" type="submit">Bewaar naam</button>
         </form>
 
-        <div class="card space-y-4">
+        <x-chief::window title="Weekschema" class="card">
+            <div class="flex flex-wrap items-start gap-3">
+                @foreach($model->days as $day)
+                    <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}">
+                        <x-chief-timetable::day :title="$day->getLabel()" :day="$day" class="w-48"/>
+                    </a>
+                @endforeach
+            </div>
+        </x-chief::window>
 
-            <h3>Weekschema</h3>
+        <x-slot name="aside">
+            <x-chief::window title="Uitzonderingen" class="card">
+                <x-slot name="buttons">
+                    <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
+                        <x-chief::icon-button icon="icon-plus" color="grey" class="shadow-none bg-grey-50 text-grey-500" />
+                    </a>
+                </x-slot>
 
-            @foreach($model->days as $day)
-                <div class="bg-grey-50 shadow p-4 rounded relative">
-                    <h2 class="font-bold">{{ $day->getLabel() }}</h2>
+                <div class="space-y-3">
+                    @foreach($model->dates as $date)
+                        @php
+                            $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getShortLabel().' '.$date->date->format('d/m/Y');
+                        @endphp
 
-                    @if(empty($day->getSlots()))
-                        <p>Gesloten</p>
-                    @else
-                        @foreach($day->getSlots() as $slot)
-                            <p>{{ $slot->getAsString() }}</p>
-                        @endforeach
-                    @endif
-
-                    @if($day->content)
-                        <p>{{ $day->content }}</p>
-                    @endif
-
-                    <div class="absolute top-0 right-0 p-4">
-                        <a href="{{ route('chief.timetable_days.edit', $day->id) }}">
-                            <x-chief::icon-button icon="icon-edit" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
+                        <a href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}" title="{{ $title }}" class="block">
+                            <x-chief-timetable::day :title="$title" :day="$date" class="w-full"/>
                         </a>
-                    </div>
-
+                    @endforeach
                 </div>
-
-            @endforeach
-        </div>
-
-        <div class="card space-y-4">
-
-            <h3>Uitzonderingen</h3>
-
-            <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
-                <x-chief::icon-button icon="icon-plus" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
-            </a>
-
-            @foreach($model->dates as $date)
-                <div class="bg-grey-50 shadow p-4 rounded relative">
-                    <h2 class="font-bold">{{ \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y') }}</h2>
-
-                    @if(empty($date->getSlots()))
-                        <p>Gesloten</p>
-                    @else
-                        @foreach($date->getSlots() as $slot)
-                            <p>{{ $slot->getAsString() }}</p>
-                        @endforeach
-                    @endif
-
-                    @if($date->content)
-                        <p>{{ $date->content }}</p>
-                     @endif
-
-
-                    <div class="absolute top-0 right-0 p-4">
-                        <a href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}">
-                            <x-chief::icon-button icon="icon-edit" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
-                        </a>
-                    </div>
-
-                </div>
-
-            @endforeach
-        </div>
-
+            </x-chief::window>
+        </x-slot>
     </x-chief::page.grid>
 </x-chief::page.template>

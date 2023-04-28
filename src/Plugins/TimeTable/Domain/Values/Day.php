@@ -50,6 +50,11 @@ class Day
         return $this->label;
     }
 
+    public function getShortLabel(): string
+    {
+        return substr($this->label, 0, 2);
+    }
+
     private static function mapLabels(int $iso8601WeekDay): string
     {
         self::validateConstraints($iso8601WeekDay);
