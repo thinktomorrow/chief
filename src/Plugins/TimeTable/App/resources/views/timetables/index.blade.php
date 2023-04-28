@@ -1,4 +1,4 @@
-<x-chief::page.template title="Tags">
+<x-chief::page.template title="Weekschema's">
     <x-slot name="hero">
         <x-chief::page.hero title="Weekschema's">
             <a href="{{ route('chief.timetables.create') }}" title="Weekschema toevoegen" class="btn btn-primary">

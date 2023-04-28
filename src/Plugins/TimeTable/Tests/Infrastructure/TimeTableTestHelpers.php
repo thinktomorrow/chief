@@ -74,7 +74,7 @@ trait TimeTableTestHelpers
         ], $values));
     }
 
-    protected function createTimeTableModel(array $values = []): TimeTableModel
+    protected function createTimeTableModel(array $values = [], bool $withDays = true): TimeTableModel
     {
         return TimeTableModel::create(array_merge([
             'label' => 'Openingsuren Herenthout',
