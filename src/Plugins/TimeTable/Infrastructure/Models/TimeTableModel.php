@@ -19,10 +19,10 @@ class TimeTableModel extends Model implements ReferableModel
     public $table = 'timetables';
     public $timestamps = false;
 
-//    public function getSlotsPerDay()
-//    {
-//        return $this->days->map(fn (DayModel $day) => Slots::fromMappedData($day->weekday, $day->slots));
-//    }
+    //    public function getSlotsPerDay()
+    //    {
+    //        return $this->days->map(fn (DayModel $day) => Slots::fromMappedData($day->weekday, $day->slots));
+    //    }
 
     public function days(): HasMany
     {

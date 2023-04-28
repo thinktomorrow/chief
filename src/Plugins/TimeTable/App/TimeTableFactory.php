@@ -10,14 +10,14 @@ class TimeTableFactory
 {
     public function create(TimeTableModel $model, string $locale): TimeTable
     {
-        $items = $model->days->mapWithKeys(fn(DayModel $dayModel) => [$dayModel->getDayInEnglish() => [
+        $items = $model->days->mapWithKeys(fn (DayModel $dayModel) => [$dayModel->getDayInEnglish() => [
             ...$dayModel->getSlots()->getSlotsAsString(),
-            ...($content = $model->days->first(fn($day) => $day->weekday == $dayModel->weekday)?->getContent($locale)) ? ['data' => $content] : [],
+            ...($content = $model->days->first(fn ($day) => $day->weekday == $dayModel->weekday)?->getContent($locale)) ? ['data' => $content] : [],
         ]]);
 
-        $items['exceptions'] = $model->exceptions->mapWithKeys(fn(DateModel $dateModel) => [$dateModel->date->format('Y-m-d') => [
+        $items['exceptions'] = $model->exceptions->mapWithKeys(fn (DateModel $dateModel) => [$dateModel->date->format('Y-m-d') => [
             ...$dateModel->getSlots()->getSlotsAsString(),
-            ...($content = $model->exceptions->first(fn($day) => $day->weekday == $dateModel->weekday)?->getContent($locale)) ? ['data' => $content] : [],
+            ...($content = $model->exceptions->first(fn ($day) => $day->weekday == $dateModel->weekday)?->getContent($locale)) ? ['data' => $content] : [],
         ]]);
 
         return TimeTable::create($items->all());

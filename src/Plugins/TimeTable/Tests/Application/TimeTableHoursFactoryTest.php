@@ -46,7 +46,7 @@ class TimeTableHoursFactoryTest extends TestCase
         $this->createDays($model);
 
         $this->createDateModel([
-            'date' => '2022-05-09'
+            'date' => '2022-05-09',
         ], [$model->id]);
 
         $result = app(TimeTableFactory::class)->create($model, 'nl');

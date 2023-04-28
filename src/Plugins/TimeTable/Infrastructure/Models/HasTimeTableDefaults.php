@@ -20,7 +20,9 @@ trait HasTimeTableDefaults
 
     private function getTimeTableModel(): ?TimeTableModel
     {
-        if(!$this->getTimeTableId()) return null;
+        if(! $this->getTimeTableId()) {
+            return null;
+        }
 
         return app(TimeTableModel::class)->where('id', $this->getTimeTableId()->get())->first();
     }
