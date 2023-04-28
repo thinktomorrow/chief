@@ -8,17 +8,12 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Date;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Forms\Layouts\Card;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
-use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Resource\PageResourceDefault;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 class DateModel extends Model
 {
@@ -45,7 +40,7 @@ class DateModel extends Model
             ->multiple()
             ->description('Op welke weekschema\'s is deze uitzondering van toepassing?')
             ->sync(null, 'id', 'label')
-            ->default(!$model->exists ? [Route::getCurrentRoute()->parameter('timetable_id')] : []);
+            ->default(! $model->exists ? [Route::getCurrentRoute()->parameter('timetable_id')] : []);
 
         yield Date::make('date')
             ->required()
@@ -64,9 +59,9 @@ class DateModel extends Model
 
                 Checkbox::make('closed')
                     ->options([
-                        1 => 'Hele dag gesloten'
+                        1 => 'Hele dag gesloten',
                     ])
-                    ->value(fn() => ($model->exists && empty($model->slots)) ? 1 : null)
+                    ->value(fn () => ($model->exists && empty($model->slots)) ? 1 : null)
                     ->showAsToggle(),
             ]);
 

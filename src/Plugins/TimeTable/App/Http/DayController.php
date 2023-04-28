@@ -8,8 +8,6 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateUpdated;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\DateId;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 
 class DayController extends Controller
@@ -46,7 +44,7 @@ class DayController extends Controller
         [$model, $fields] = $this->getModelAndFields($id);
 
         if($request->has('closed')) {
-          $request = $request->merge(['slots' => [], 'closed' => true]);
+            $request = $request->merge(['slots' => [], 'closed' => true]);
         }
 
         $fields = $fields->remove('closed');

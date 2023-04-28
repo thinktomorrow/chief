@@ -36,7 +36,9 @@ class Slots
 
         foreach($rawSlots as $rawSlot) {
 
-            if(!isset($rawSlot['from']) && !isset($rawSlot['until'])) continue;
+            if(! isset($rawSlot['from']) && ! isset($rawSlot['until'])) {
+                continue;
+            }
 
             $slots[] = Slot::make(
                 isset($rawSlot['from']) ? Hour::fromFormat($rawSlot['from'], 'H:i') : null,

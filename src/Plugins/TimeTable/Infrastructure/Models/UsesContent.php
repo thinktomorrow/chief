@@ -2,13 +2,11 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
-
 trait UsesContent
 {
     public function setContentAttribute($value)
     {
-        if(!is_array($value)) {
+        if(! is_array($value)) {
             $value = [app()->getLocale() => $value];
         }
 

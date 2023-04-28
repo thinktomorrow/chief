@@ -83,10 +83,10 @@ trait HasValue
 
             // Dotted syntax as support for array casts. We can fetch nested values as: days.0.am, days.0.pm, ...
             if(str_contains($this->getColumnName(), '.')) {
-                $column = substr($this->getColumnName(), 0, strpos($this->getColumnName(),'.'));
-                $key = substr($this->getColumnName(), strpos($this->getColumnName(),'.') + 1);
+                $column = substr($this->getColumnName(), 0, strpos($this->getColumnName(), '.'));
+                $key = substr($this->getColumnName(), strpos($this->getColumnName(), '.') + 1);
 
-                if(is_array($model->{$column})){
+                if(is_array($model->{$column})) {
                     return data_get($model->{$column}, trim($key, '.'));
                 }
             }
