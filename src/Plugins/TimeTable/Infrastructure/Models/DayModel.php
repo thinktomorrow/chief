@@ -5,8 +5,6 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Thinktomorrow\Chief\Forms\Fields\Checkbox;
-use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
-use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Forms\Layouts\Card;
@@ -45,9 +43,9 @@ class DayModel extends Model
 
             Checkbox::make('closed')
                 ->options([
-                    1 => 'Hele dag gesloten'
+                    1 => 'Hele dag gesloten',
                 ])
-                ->value(fn() => empty($model->slots) ? 1 : null)
+                ->value(fn () => empty($model->slots) ? 1 : null)
                 ->showAsToggle(),
         ]);
 

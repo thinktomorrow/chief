@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateDeleted;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateUpdated;
