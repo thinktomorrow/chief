@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableDeleted;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableUpdated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\TimeTableId;
+use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 
 class TimeTableController extends Controller
@@ -57,38 +58,11 @@ class TimeTableController extends Controller
 
         $this->saveFields->save($model, $fields, $request->all(), $request->allFiles());
 
-        $this->createDays($model);
+        app(DayModel::class)::createWeekWithDefaults($model);
 
         event(new TimeTableCreated(TimeTableId::fromString($model->id)));
 
         return redirect()->route('chief.timetables.index')->with('messages.success', 'Schema is toegevoegd.');
-    }
-
-    private function createDays($model)
-    {
-        $existingDays = TimeTableModel::exists() ? TimeTableModel::first()->days : collect();
-
-        foreach(range(1, 7) as $weekDay) {
-
-            $day = $existingDays->first(fn ($day) => $day->weekday == $weekDay);
-            $slots = $day ? $day->slots : $this->defaultSlots($weekDay);
-
-            $model->days()->create([
-                'weekday' => $weekDay,
-                'slots' => $slots,
-            ]);
-        }
-    }
-
-    private function defaultSlots($weekDay): array
-    {
-        return match($weekDay) {
-            '6','7' => [],
-            default => [
-                ['from' => '08:30', 'until' => '12:00'],
-                ['from' => '13:00', 'until' => '17:00'],
-            ]
-        };
     }
 
     public function edit($id)

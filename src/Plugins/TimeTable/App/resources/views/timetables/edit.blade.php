@@ -31,10 +31,10 @@
                 <div class="bg-grey-50 shadow p-4 rounded relative">
                     <h2 class="font-bold">{{ $day->getLabel() }}</h2>
 
-                    @if(empty($day->getSlots()))
+                    @if(empty($day->getSlots()->getSlots()))
                         <p>Gesloten</p>
                     @else
-                        @foreach($day->getSlots() as $slot)
+                        @foreach($day->getSlots()->getSlots() as $slot)
                             <p>{{ $slot->getAsString() }}</p>
                         @endforeach
                     @endif
@@ -62,14 +62,14 @@
                 <x-chief::icon-button icon="icon-plus" color="grey" class="bg-grey-50 shadow-none text-grey-500" />
             </a>
 
-            @foreach($model->dates as $date)
+            @foreach($model->exceptions as $date)
                 <div class="bg-grey-50 shadow p-4 rounded relative">
                     <h2 class="font-bold">{{ \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y') }}</h2>
 
-                    @if(empty($date->getSlots()))
+                    @if(empty($date->getSlots()->getSlots()))
                         <p>Gesloten</p>
                     @else
-                        @foreach($date->getSlots() as $slot)
+                        @foreach($date->getSlots()->getSlots() as $slot)
                             <p>{{ $slot->getAsString() }}</p>
                         @endforeach
                     @endif

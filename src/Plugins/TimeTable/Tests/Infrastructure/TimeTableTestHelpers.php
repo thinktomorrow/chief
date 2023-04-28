@@ -9,9 +9,9 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 
 trait TimeTableTestHelpers
 {
-    protected function createDateModel(array $values = []): DateModel
+    protected function createDateModel(array $values = [], array $timeTableIds = []): DateModel
     {
-        return DateModel::create(array_merge([
+        $model = DateModel::create(array_merge([
             'date' => now()->addWeek(),
             'slots' => [
                 ['from' => '08:30', 'until' => '12:00'],
@@ -19,6 +19,10 @@ trait TimeTableTestHelpers
             ],
             'content' => ['nl' => 'speciale dag', 'en' => 'special day'],
         ], $values));
+
+        $model->timetables()->sync($timeTableIds);
+
+        return $model;
     }
 
     protected function performDateStore(array $values = []): TestResponse
@@ -55,6 +59,7 @@ trait TimeTableTestHelpers
     {
         return DayModel::create(array_merge([
             'timetable_id' => $timetable_id,
+            'weekday' => 1,
             'slots' => [
                 ['from' => '08:30', 'until' => '12:00'],
                 ['from' => '13:00', 'until' => '17:00'],
@@ -74,11 +79,16 @@ trait TimeTableTestHelpers
         ], $values));
     }
 
-    protected function createTimeTableModel(array $values = [], bool $withDays = true): TimeTableModel
+    protected function createTimeTableModel(array $values = []): TimeTableModel
     {
         return TimeTableModel::create(array_merge([
             'label' => 'Openingsuren Herenthout',
         ], $values));
+    }
+
+    public function createDays(TimeTableModel $model)
+    {
+        app(DayModel::class)::createWeekWithDefaults($model);
     }
 
     protected function performTimeTableStore(array $values = []): TestResponse

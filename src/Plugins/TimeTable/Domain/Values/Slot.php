@@ -33,6 +33,6 @@ class Slot
 
     public function getAsString(): string
     {
-        return $this->from?->getFormat('H:i') .' - ' . $this->until?->getFormat('H:i');
+        return $this->from?->getFormat('H:i') .'-' . $this->until?->getFormat('H:i');
     }
 }

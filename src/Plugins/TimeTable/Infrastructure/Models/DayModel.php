@@ -25,7 +25,7 @@ class DayModel extends Model
 
     public function getSlots()
     {
-        return Slots::fromMappedData($this->weekday, $this->slots)->getSlots();
+        return Slots::fromMappedData($this->weekday, $this->slots);
     }
 
     public function fields($model): iterable
@@ -66,5 +66,47 @@ class DayModel extends Model
     public function getLabel()
     {
         return \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromIso8601Format($this->weekday)->getLabel();
+    }
+
+    public static function createWeekWithDefaults(TimeTableModel $model)
+    {
+        $existingDays = $model::exists() ? $model::first()->days : collect();
+
+        foreach(range(1, 7) as $weekDay) {
+
+            $day = $existingDays->first(fn ($day) => $day->weekday == $weekDay);
+            $slots = $day ? $day->slots : static::defaultSlots($weekDay);
+
+            $model->days()->create([
+                'weekday' => $weekDay,
+                'slots' => $slots,
+            ]);
+        }
+    }
+
+    private static function defaultSlots($weekDay): array
+    {
+        return match((string) $weekDay) {
+            '6','7' => [],
+            default => [
+                ['from' => '08:30', 'until' => '12:00'],
+                ['from' => '13:00', 'until' => '17:00'],
+            ]
+        };
+    }
+
+    public function getDayInEnglish(): string
+    {
+        $map = [
+            1 => 'monday',
+            2 => 'tuesday',
+            3 => 'wednesday',
+            4 => 'thursday',
+            5 => 'friday',
+            6 => 'saturday',
+            7 => 'sunday',
+        ];
+
+        return $map[$this->weekday];
     }
 }

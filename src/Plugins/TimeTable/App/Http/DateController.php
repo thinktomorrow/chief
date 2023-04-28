@@ -69,14 +69,14 @@ class DateController extends Controller
             return redirect()->route('chief.timetables.edit', reset($timetableIds))->with('messages.success', 'Uitzondering is toegevoegd.');
         }
 
-        return redirect()->route('chief.timetables.index')->with('messages.success', 'Dag is aangepast.');
+        return redirect()->route('chief.timetables.index')->with('messages.success', 'Dag is toegevoegd.');
     }
 
-    public function edit($timetable_id, $weekId)
+    public function edit($timetable_id, $dateId)
     {
         $this->authorize('update-page');
 
-        [$model, $fields] = $this->getModelAndFields($weekId);
+        [$model, $fields] = $this->getModelAndFields($dateId);
 
         // Enrich fields with the layout components
         $forms = Forms::make($model->fields($model))->fillModel($model)->getComponents();
@@ -89,40 +89,54 @@ class DateController extends Controller
         ]);
     }
 
-    public function update($weekId, Request $request)
+    public function update($dateId, Request $request)
     {
         $this->authorize('update-page');
 
-        [$model, $fields] = $this->getModelAndFields($weekId);
+        [$model, $fields] = $this->getModelAndFields($dateId);
+
+        if($request->has('closed')) {
+            $request = $request->merge(['slots' => [], 'closed' => true]);
+        }
+
+        $fields = $fields->remove('closed');
 
         $this->fieldValidator->handle($fields, $request->all());
 
-        $this->saveFields->save($model, $fields, $request->all(), $request->allFiles());
+        $model->date = $request->input('date');
+        $model->slots = $request->input('slots');
+        $model->content = $request->input('content');
+        $model->save();
+
+        // Connect to all timetables
+        $model->timetables()->sync($request->input('timetables', []));
 
         event(new DateUpdated(DateId::fromString($model->id)));
 
-        return redirect()->route('chief.dates.index')->with('messages.success', 'Tag is aangepast.');
+        if(count($timetableIds = $request->input('timetables', [])) > 0) {
+            return redirect()->route('chief.timetables.edit', reset($timetableIds))->with('messages.success', 'Uitzondering is toegevoegd.');
+        }
+
+        return redirect()->route('chief.timetables.index')->with('messages.success', 'Uitzondering is aangepast.');
     }
 
-    public function delete($weekId)
+    public function delete($dateId)
     {
         $this->authorize('update-page');
 
-        $model = app(DateModel::class)::find($weekId);
-
-        // TODO: remove pivot entries as well
+        $model = app(DateModel::class)::find($dateId);
 
         $model->delete();
 
         event(new DateDeleted(DateId::fromString($model->id)));
 
-        return redirect()->route('chief.dates.index')->with('messages.success', 'Tag is verwijderd.');
+        return redirect()->route('chief.timetables.index')->with('messages.success', 'Uitzondering is verwijderd.');
     }
 
-    private function getModelAndFields(?string $weekId = null): array
+    private function getModelAndFields(?string $dateId = null): array
     {
         $model = app(DateModel::class);
-        $model = $weekId ? $model::find($weekId): $model;
+        $model = $dateId ? $model::find($dateId): $model;
 
         $fields = Fields::makeWithoutFlatteningNestedFields($model->fields($model))->each(fn ($field) => $field->model($model));
 

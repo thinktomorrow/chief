@@ -62,4 +62,9 @@ class Slots
         return $this->slots;
     }
 
+    public function getSlotsAsString(): array
+    {
+        return array_map(fn(Slot $slot) => $slot->getAsString(),$this->slots);
+    }
+
 }

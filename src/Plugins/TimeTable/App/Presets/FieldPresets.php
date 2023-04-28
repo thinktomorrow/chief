@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Presets;
 
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\HasTimeTable;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableHours\HasTimeTable;
 
 class FieldPresets
 {

@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
-        <form id="tagsEditForm" action="{{ route('chief.tags.update', $model->id) }}" method="POST" class="card">
+        <form id="tagsEditForm" action="{{ route('chief.timetable_dates.update', $model->id) }}" method="POST" class="card">
             @csrf
             @method('PUT')
 

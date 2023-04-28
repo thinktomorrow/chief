@@ -30,7 +30,7 @@ class DateModel extends Model
 
     public function getSlots()
     {
-        return Slots::make(Day::fromDateTime($this->date), Slots::convertMappedSlots($this->slots))->getSlots();
+        return Slots::make(Day::fromDateTime($this->date), Slots::convertMappedSlots($this->slots));
     }
 
     public function fields($model): iterable

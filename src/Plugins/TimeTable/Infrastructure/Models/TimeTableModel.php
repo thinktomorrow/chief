@@ -19,42 +19,17 @@ class TimeTableModel extends Model implements ReferableModel
     public $table = 'timetables';
     public $timestamps = false;
 
-    //    public function getDayContentForForm($weekday, ?string $locale = null): ?string
-    //    {
-    //        if(! $model = $this->findDay($weekday)) {
-    //            return null;
-    //        }
-    //
-    //        return $model->getContent($locale);
-    //    }
-    //
-    //    public function getSlotForForm($weekday, $index, string $key): ?string
-    //    {
-    //        if(! $model = $this->findDay($weekday)) {
-    //            return null;
-    //        }
-    //
-    //        $slot = $model->slots[$index] ?? ['from' => '', 'until' => ''];
-    //
-    //        return $slot[$key];
-    //    }
-
-    //    private function findDay($weekday): ?DayModel
-    //    {
-    //        return $this->days->first(fn ($day) => $day->weekday == $weekday);
-    //    }
-
-    public function getSlotsPerDay()
-    {
-        return $this->days->map(fn (DayModel $day) => Slots::fromMappedData($day->weekday, $day->slots));
-    }
+//    public function getSlotsPerDay()
+//    {
+//        return $this->days->map(fn (DayModel $day) => Slots::fromMappedData($day->weekday, $day->slots));
+//    }
 
     public function days(): HasMany
     {
         return $this->hasMany(DayModel::class, 'timetable_id');
     }
 
-    public function dates(): BelongsToMany
+    public function exceptions(): BelongsToMany
     {
         return $this->belongsToMany(DateModel::class, 'timetable_date_pivot', 'timetable_id', 'timetable_date_id');
     }
