@@ -79,7 +79,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
         $this->columnName($key);
 
         // This causes livewire to refresh field DOM...
-//        $this->elementId($key.'_'.Str::random());
+        //        $this->elementId($key.'_'.Str::random());
         $this->elementId($key);
     }
 

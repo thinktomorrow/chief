@@ -8,7 +8,7 @@ class LivewireAssist
 {
     public static function formDataIdentifier(string $name, ?string $locale = null): string
     {
-        return "formData.".static::formDataIdentifierSegment($name,$locale);
+        return "formData.".static::formDataIdentifierSegment($name, $locale);
     }
 
     public static function formDataIdentifierSegment(string $name, ?string $locale = null): ?string

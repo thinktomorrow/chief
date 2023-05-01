@@ -18,16 +18,16 @@ class Repeat extends Component
 
     public function updatedPhotos()
     {
-//        $this->validate([
-//            'photos.*' => 'min:5024',
-//        ]);
+        //        $this->validate([
+        //            'photos.*' => 'min:5024',
+        //        ]);
     }
 
     public function save()
     {
-//        $this->validate([
-//            'photos.*' => 'image',
-//        ]);
+        //        $this->validate([
+        //            'photos.*' => 'image',
+        //        ]);
 
         foreach($this->photos as $photo) {
             $photo->store('photos');
@@ -35,8 +35,8 @@ class Repeat extends Component
 
         $this->reset();
         $this->message = 'goed opgeladen';
-//        dd($this->message);
-//        // storing message
-//        file_put_contents(__DIR__.'/test', $this->message);
+        //        dd($this->message);
+        //        // storing message
+        //        file_put_contents(__DIR__.'/test', $this->message);
     }
 }

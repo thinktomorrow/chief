@@ -6,11 +6,11 @@ trait HasWiredInput
 {
     public function formDataIdentifier(string $name, ?string $locale = null): string
     {
-        return LivewireAssist::formDataIdentifier($name,$locale);
+        return LivewireAssist::formDataIdentifier($name, $locale);
     }
 
     public function formDataIdentifierSegment(string $name, ?string $locale = null): ?string
     {
-        return LivewireAssist::formDataIdentifierSegment($name,$locale);
+        return LivewireAssist::formDataIdentifierSegment($name, $locale);
     }
 }

@@ -2,15 +2,11 @@
 
 namespace Thinktomorrow\Chief\Forms\Livewire;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Query\FindForm;
-
 
 class Form extends Component
 {
@@ -58,7 +54,8 @@ class Form extends Component
 
         // TODO: set fixed elementIds so we dont trigger a refresh when elementId has changed.
         // TODO: set unique element ids... (once and not on every create...)
-$this->count++;
+        $this->count++;
+
         return $form;
 
     }
@@ -66,11 +63,11 @@ $this->count++;
     private function populateFormData()
     {
         // TODO: localizedFormKey should be always <KEY><LOCALE> (no longer trans[nl][title])
-//        LocalizedFormKey::setDefaultTemplate(':name.:locale');
+        //        LocalizedFormKey::setDefaultTemplate(':name.:locale');
 
         // TODO: ideally we should take the current value from the field itself
         // ALSO: account for localisation, repeatfield, file field, ...
-        foreach($this->form->getFields() as $field){
+        foreach($this->form->getFields() as $field) {
             $this->addFormDataEntry($field);
         }
     }
@@ -79,16 +76,16 @@ $this->count++;
     {
         if($field->hasLocales()) {
             foreach($field->getLocales() as $locale) {
-                data_set($this->formData,$this->formDataIdentifierSegment($field->getName(), $locale), $field->getActiveValue($locale));
+                data_set($this->formData, $this->formDataIdentifierSegment($field->getName(), $locale), $field->getActiveValue($locale));
             }
         } else {
-            data_set($this->formData,$this->formDataIdentifierSegment($field->getName()), $field->getActiveValue());
+            data_set($this->formData, $this->formDataIdentifierSegment($field->getName()), $field->getActiveValue());
         }
     }
 
     public function repeatValuesChanged(string $fieldId, array $values)
     {
-        if(!isset($this->formData[$fieldId])) {
+        if(! isset($this->formData[$fieldId])) {
             throw new \InvalidArgumentException('No formdata key ['.$fieldId.'] found in the form.');
         }
 
@@ -109,11 +106,11 @@ $this->count++;
 
     public function render()
     {
-//        $this->formData['title'] = 'qqkkqkq';
-//        $this->handleHydrateProperty('formData.title', 'qqqqqqq');
+        //        $this->formData['title'] = 'qqkkqkq';
+        //        $this->handleHydrateProperty('formData.title', 'qqqqqqq');
         // Trigger the attributes population of the form component
 
-//        $this->populateFormData();
+        //        $this->populateFormData();
 
         // populate the formData property? Or should this be done via the field component render itself
         // ...
