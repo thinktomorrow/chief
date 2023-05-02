@@ -31,7 +31,7 @@
             <div class="flex flex-wrap items-start gap-3">
                 @foreach($model->days as $day)
                     <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}">
-                        <x-chief-timetable::day :title="$day->getLabel()" :day="$day" class="w-48"/>
+                        <x-chief-timetable::day title="{{ $day->getLabel() }}" :day="$day" class="w-48"/>
                     </a>
                 @endforeach
             </div>

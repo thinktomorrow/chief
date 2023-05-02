@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Forms\Layouts\Card;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 
 class DayModel extends Model
 {
@@ -25,7 +25,7 @@ class DayModel extends Model
 
     public function getSlots()
     {
-        return Slots::fromMappedData($this->weekday, $this->slots);
+        return SlotsByDay::fromMappedData($this->weekday, $this->slots);
     }
 
     public function fields($model): iterable

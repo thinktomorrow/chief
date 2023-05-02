@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values;
 
-class Slots
+class SlotsByDay
 {
     private Day $day;
 

@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Unit;
 
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableRead;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultTimeTableRead;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -21,7 +21,7 @@ class TimeTableReadTest extends TestCase
     {
         $weekRead = $this->getInstance();
 
-        $this->assertInstanceOf(Slots::class, $weekRead->getDays()[0]);
+        $this->assertInstanceOf(SlotsByDay::class, $weekRead->getDays()[0]);
     }
 
     public function test_it_can_read_data()

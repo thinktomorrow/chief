@@ -7,13 +7,13 @@ use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\DateId;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\TimeTableId;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 
 class DefaultDateRead implements DateRead
 {
     private DateId $dateId;
     private \DateTime $date;
-    private Slots $weekDay;
+    private SlotsByDay $weekDay;
     private array $data;
 
     /** @var TimeTableId[] */
@@ -30,7 +30,7 @@ class DefaultDateRead implements DateRead
 
         $model->dateId = DateId::fromString($data['id']);
         $model->date = Carbon::make($data['date']);
-        $model->weekDay = Slots::make(Day::fromDateTime($model->date), Slots::convertMappedSlots(json_decode($data['slots'], true)));
+        $model->weekDay = SlotsByDay::make(Day::fromDateTime($model->date), SlotsByDay::convertMappedSlots(json_decode($data['slots'], true)));
 
         $model->data = $data['data'] ?? [];
 

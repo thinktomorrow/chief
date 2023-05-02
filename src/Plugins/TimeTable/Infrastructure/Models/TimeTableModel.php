@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 

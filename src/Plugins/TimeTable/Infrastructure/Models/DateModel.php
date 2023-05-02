@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Forms\Layouts\Card;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day;
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 
 class DateModel extends Model
 {
@@ -30,7 +30,7 @@ class DateModel extends Model
 
     public function getSlots()
     {
-        return Slots::make(Day::fromDateTime($this->date), Slots::convertMappedSlots($this->slots));
+        return SlotsByDay::make(Day::fromDateTime($this->date), SlotsByDay::convertMappedSlots($this->slots));
     }
 
     public function fields($model): iterable

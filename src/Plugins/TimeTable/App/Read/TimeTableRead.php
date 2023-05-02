@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Read;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Slots;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 
 interface TimeTableRead
 {
@@ -12,7 +12,7 @@ interface TimeTableRead
 
     public function getLabel(): string;
 
-    /** @return Slots[] */
+    /** @return SlotsByDay[] */
     public function getDays(): array;
 
     public function getData(string $key, string $locale = null, $default = null);

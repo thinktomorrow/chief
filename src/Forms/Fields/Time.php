@@ -17,7 +17,7 @@ class Time extends Component implements Field
     {
         $model = new static($key);
 
-        $model->step(60 * 15); // 15 mins as default steps
+        $model->step(60 * 5); // 5 mins as default steps
 
         return $model;
     }
