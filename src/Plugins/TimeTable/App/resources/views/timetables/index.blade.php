@@ -9,24 +9,69 @@
 
     <div class="container">
         <div class="row-start-start gutter-3">
-            @foreach($timeTables as $timeTable)
-                <div class="w-full">
-                    <div class="card">
-                        <a
-                            href="{{ route('chief.timetables.edit', $timeTable->getId()) }}"
-                            title="Aanpassen"
-                            class="font-medium body-dark body"
-                        >
-                            {{ $timeTable->getLabel() }}
-                        </a>
-                        {{-- {{ dd($timeTable) }} --}}
+            @foreach($timeTables as $timeTableRead)
+                @php
+                    // TODO: This is a hack to get the model from the read model. This should be done in the repository.
+                    $timeTable = \ThinkTomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel::find($timeTableRead->getId());
+                @endphp
 
-                        <div class="flex flex-wrap items-start gap-3">
-                            @foreach($timeTable->getDays() as $day)
-                                <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}">
-                                    <x-chief-timetable::day :title="$day->getLabel()" :day="$day" class="w-48"/>
-                                </a>
-                            @endforeach
+                <div class="w-full">
+                    <div class="space-y-4 card">
+                        <a
+                            href="{{ route('chief.timetables.edit', $timeTable->id) }}"
+                            title="Aanpassen"
+                            class="flex items-start justify-between gap-4"
+                        >
+                            <span class="font-medium leading-8 h1-dark body hover:underline">
+                                {{ $timeTable->label }}
+                            </span>
+
+                            <x-chief::icon-button/>
+                        </a>
+
+                        <div class="border rounded-md border-grey-100">
+                            <div class="flex overflow-x-auto border-b border-grey-100">
+                                @foreach(['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'] as $weekDay)
+                                    <div @class(['text-center text-sm h1-dark font-medium p-1 flex-1', 'border-r border-grey-100' => !$loop->last])>
+                                        <span>{{ $weekDay }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            @php
+                                $date = date('M d, Y');
+                            @endphp
+
+                            <div class="flex border-b border-grey-100">
+                                @foreach($timeTable->days as $day)
+                                    <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}" @class([
+                                        'flex-1 block p-2',
+                                        'border-r border-grey-100' => !$loop->last,
+                                    ])>
+                                        <x-chief-timetable::day
+                                            :title="strval($loop->index) . ' '"
+                                            :day="$day"
+                                            :exception="$loop->index == 4"
+                                            in-time-table
+                                        />
+                                    </a>
+                                @endforeach
+                            </div>
+
+                            <div class="flex">
+                                @foreach($timeTable->days as $day)
+                                    <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}" @class([
+                                        'flex-1 block p-3',
+                                        'border-r border-grey-100' => !$loop->last,
+                                    ])>
+                                        <x-chief-timetable::day
+                                            :title="strval($loop->index) . ' '"
+                                            :day="$day"
+                                            in-time-table
+                                        />
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>

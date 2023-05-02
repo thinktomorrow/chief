@@ -1,25 +1,46 @@
 @props([
     'title' => null,
     'day' => null,
+    'exception' => false,
+    'inTimeTable'
 ])
-<div {{ $attributes->class('p-3 space-y-1 rounded-lg bg-grey-50 hover:bg-grey-100 transition-all duration-75 ease-in-out group') }}>
-    @if($title)
-        <div class="text-sm font-medium body h1-dark">
-            {{ $title }}
-        </div>
-    @endif
 
-    <div class="border-t divide-y divide-grey-100 border-grey-100 group-hover:border-grey-200 group-hover:divide-grey-200">
+<div {{ $attributes->class('space-y-1') }}>
+    <div @class([
+        'flex items-start justify-between gap-2',
+        'max-lg:flex-col' => isset($inTimeTable),
+    ])>
+        @if($title)
+            <div @class([
+                'text-sm font-medium leading-5 body body-dark',
+                'max-lg:ml-auto' => isset($inTimeTable),
+            ])>
+                {{ $title }}
+            </div>
+        @endif
+
+        @if($exception)
+            <svg class="w-5 h-5 text-orange-500 shrink-0"><use xlink:href="#icon-exclamation-circle"></use></svg>
+        @endif
+    </div>
+
+    <div @class(['space-y-1', 'max-lg:hidden' => isset($inTimeTable)])>
         @if(empty($day->getSlots()->getSlots()))
-            <p class="py-1 text-sm body-dark">Gesloten</p>
+            <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
+                Gesloten
+            </p>
         @else
             @foreach($day->getSlots()->getSlots() as $slot)
-                <div class="py-1 text-sm body-dark">{{ $slot->getAsString() }}</div>
+                <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
+                    {{ $slot->getAsString() }}
+                </p>
             @endforeach
         @endif
 
         @if($day->content)
-            <p class="py-1 text-xs body-dark">{{ $day->content }}</p>
+            <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
+                {{ $day->content }}
+            </p>
         @endif
     </div>
 </div>
