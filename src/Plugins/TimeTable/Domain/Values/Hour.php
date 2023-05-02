@@ -16,6 +16,10 @@ class Hour
 
     public static function make(string $hour, string $minutes = '00'): static
     {
+        if (strlen($minutes) < 2) {
+            $minutes = '0' . $minutes;
+        }
+
         self::validateConstraints($hour, $minutes);
 
         $model = new static();
@@ -42,7 +46,7 @@ class Hour
         return $this->minutes;
     }
 
-    public function getFormat(string $format = 'g:i'): string
+    public function getFormat(string $format = 'H:i'): string
     {
         $date = \DateTime::createFromFormat('H:i', $this->hour.':'.$this->minutes);
 

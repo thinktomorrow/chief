@@ -20,6 +20,11 @@ class TimeTableFactory
             ...($content = $model->exceptions->first(fn ($day) => $day->weekday == $dateModel->weekday)?->getContent($locale)) ? ['data' => $content] : [],
         ]]);
 
-        return TimeTable::create($items->all());
+        return TimeTable::createAndMergeOverlappingRanges($items->all());
+
+//        return TimeTable::create([
+//            ...$items->all(),
+//            'overflow' => true
+//        ]);
     }
 }

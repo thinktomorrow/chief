@@ -1,7 +1,9 @@
 @props([
-    'title' => null,
-    'day' => null,
+    'title' => $date->format('d'),
+    'isToday' => $date->isToday(),
+    'content' => null,
     'exception' => false,
+    'slots' => [],
     'inTimeTable'
 ])
 
@@ -25,21 +27,21 @@
     </div>
 
     <div @class(['space-y-1', 'max-lg:hidden' => isset($inTimeTable)])>
-        @if(empty($day->getSlots()->getSlots()))
+        @if(empty($slots))
             <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
                 Gesloten
             </p>
         @else
-            @foreach($day->getSlots()->getSlots() as $slot)
+            @foreach($slots as $slot)
                 <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
-                    {{ $slot->getAsString() }}
+                    {{ $slot }}
                 </p>
             @endforeach
         @endif
 
-        @if($day->content)
+        @if($content)
             <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
-                {{ $day->content }}
+                {{ $content }}
             </p>
         @endif
     </div>

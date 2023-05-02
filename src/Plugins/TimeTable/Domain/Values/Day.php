@@ -22,8 +22,16 @@ class Day
         return $model;
     }
 
-    public static function fromDateTime(\DateTime $dateTime): static
+    public static function fromDateTime(\DateTime|string $dateTime, string $format = 'Y-m-d H:i:s'): static
     {
+        if(is_string($dateTime)){
+            $dateTime = \DateTime::createFromFormat($format, $dateTime);
+
+            if(!$dateTime) {
+                throw new \Exception('Invalid date string passed ' . $dateTime);
+            }
+        }
+
         // ISO 8601 numeric representation of the day of the week
         return static::make(
             $dateTime->format('N'),

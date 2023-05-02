@@ -23,7 +23,6 @@ class TimeTableServiceProvider extends ChiefPluginServiceProvider
 
     public function register()
     {
-        $this->app->bind(DateRead::class, fn () => DefaultDateRead::class);
         $this->app->bind(TimeTableRead::class, fn () => DefaultTimeTableRead::class);
 
         $this->app->bind(TimeTableReadRepository::class, function ($app) {

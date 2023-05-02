@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App;
 
 use Carbon\Carbon;
 use Spatie\OpeningHours\OpeningHours;
+use Spatie\OpeningHours\OpeningHoursForDay;
 
 class TimeTable extends OpeningHours
 {
@@ -22,22 +23,20 @@ class TimeTable extends OpeningHours
 
     public function forDays(Carbon $from, Carbon $until): array
     {
-        $days = [];
+        $result = [];
 
-        //        $i = 1;
-        $period = $from->range($until);
-
-        foreach($period as $day) {
-            $days[] = $this->forDate($day);
+        foreach($from->range($until) as $date) {
+            $result[$date->format('Y-m-d H:i:s')] = $this->forDate($date);
         }
 
-        //        $day = $from->copy();
-        //        $days[] = $this->forDate($day);
-        //
-        //        while($until->gt($day)) {
-        //            $days[] = $this->forDate($day->copy()->addDays(++$i));
-        //        }
+        return $result;
+    }
 
-        return $days;
+    public function isException(Carbon $date): bool
+    {
+        $dateFormatted = $date->format('Y-m-d');
+        $exceptions = array_keys($this->exceptions);
+
+        return in_array($dateFormatted, $exceptions);
     }
 }

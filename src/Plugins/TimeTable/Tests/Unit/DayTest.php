@@ -30,6 +30,14 @@ class DayTest extends TestCase
         $this->assertEquals('Maandag', Day::fromDateTime($now)->getLabel());
     }
 
+    public function test_it_can_create_from_datetime_string()
+    {
+        $now = now()->startOfWeek();
+
+        $this->assertEquals($now->format('N'), Day::fromDateTime($now->format('Y-m-d H:i:s'))->getIso8601WeekDay());
+        $this->assertEquals('Maandag', Day::fromDateTime($now->format('Y-m-d H:i:s'))->getLabel());
+    }
+
     public function test_it_can_get_labels_for_each_day()
     {
         $this->assertEquals('Maandag', Day::fromIso8601Format('1')->getLabel());

@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
+use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableDeleted;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableUpdated;
@@ -19,19 +20,22 @@ class TimeTableController extends Controller
 {
     private FieldValidator $fieldValidator;
     private SaveFields $saveFields;
-    private TimeTableReadRepository $timeTableReadRepository;
+    private TimeTableFactory $timeTableFactory;
 
-    public function __construct(TimeTableReadRepository $timeTableReadRepository, FieldValidator $fieldValidator, SaveFields $saveFields)
+    public function __construct(TimeTableFactory $timeTableFactory, FieldValidator $fieldValidator, SaveFields $saveFields)
     {
         $this->fieldValidator = $fieldValidator;
         $this->saveFields = $saveFields;
-        $this->timeTableReadRepository = $timeTableReadRepository;
+        $this->timeTableFactory = $timeTableFactory;
     }
 
     public function index()
     {
         return view('chief-timetable::timetables.index', [
-            'timeTables' => $this->timeTableReadRepository->getAll(),
+            'timeTables' => app(TimeTableModel::class)->all()->map(function($timeTable){
+                $timeTable->timeTable = $this->timeTableFactory->create($timeTable, app()->getLocale());
+                return $timeTable;
+            }),
         ]);
     }
 
