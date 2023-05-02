@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App;
 
 use Carbon\Carbon;
 use Spatie\OpeningHours\OpeningHours;
-use Spatie\OpeningHours\OpeningHoursForDay;
 
 class TimeTable extends OpeningHours
 {

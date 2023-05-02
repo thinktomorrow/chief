@@ -7,7 +7,6 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableDeleted;
@@ -32,8 +31,9 @@ class TimeTableController extends Controller
     public function index()
     {
         return view('chief-timetable::timetables.index', [
-            'timeTables' => app(TimeTableModel::class)->all()->map(function($timeTable){
+            'timeTables' => app(TimeTableModel::class)->all()->map(function ($timeTable) {
                 $timeTable->timeTable = $this->timeTableFactory->create($timeTable, app()->getLocale());
+
                 return $timeTable;
             }),
         ]);

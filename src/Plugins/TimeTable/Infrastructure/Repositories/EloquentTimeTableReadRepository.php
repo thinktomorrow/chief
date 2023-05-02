@@ -2,11 +2,8 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Repositories;
 
-use Illuminate\Support\Collection;
 use Psr\Container\ContainerInterface;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTable;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 

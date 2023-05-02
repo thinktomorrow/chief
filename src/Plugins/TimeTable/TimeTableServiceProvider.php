@@ -3,10 +3,8 @@
 namespace Thinktomorrow\Chief\Plugins\TimeTable;
 
 use Thinktomorrow\Chief\App\Providers\ChiefPluginServiceProvider;
-use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\DateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
-use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultDateRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DefaultTimeTableRead;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Repositories\EloquentTimeTableReadRepository;
 
