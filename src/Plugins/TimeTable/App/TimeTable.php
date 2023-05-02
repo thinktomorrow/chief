@@ -15,7 +15,7 @@ class TimeTable extends OpeningHours
     public function forWeeks(int $weeks = 2, int $weekStartsAt = 1): array
     {
         $from = now()->startOfWeek($weekStartsAt);
-        $until = $from->copy()->addDays((7 * $weeks)-1);
+        $until = $from->copy()->addDays((7 * $weeks) - 1);
 
         return $this->forDays($from, $until);
     }
@@ -24,19 +24,19 @@ class TimeTable extends OpeningHours
     {
         $days = [];
 
-//        $i = 1;
+        //        $i = 1;
         $period = $from->range($until);
 
         foreach($period as $day) {
             $days[] = $this->forDate($day);
         }
 
-//        $day = $from->copy();
-//        $days[] = $this->forDate($day);
-//
-//        while($until->gt($day)) {
-//            $days[] = $this->forDate($day->copy()->addDays(++$i));
-//        }
+        //        $day = $from->copy();
+        //        $days[] = $this->forDate($day);
+        //
+        //        while($until->gt($day)) {
+        //            $days[] = $this->forDate($day->copy()->addDays(++$i));
+        //        }
 
         return $days;
     }

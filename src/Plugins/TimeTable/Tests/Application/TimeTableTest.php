@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Tests\Application;
 
-use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTable;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory;
 use Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\TestCase;
 use Thinktomorrow\Chief\Plugins\TimeTable\Tests\Infrastructure\TimeTableTestHelpers;
