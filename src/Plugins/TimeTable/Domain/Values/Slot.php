@@ -37,4 +37,9 @@ class Slot
 
         return $this->from?->getFormat('H:i') . '-' . $until->getFormat('H:i');
     }
+
+    public function __toString(): string
+    {
+        return $this->getAsString();
+    }
 }

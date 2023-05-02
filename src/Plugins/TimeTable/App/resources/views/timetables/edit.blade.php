@@ -31,7 +31,11 @@
             <div class="flex flex-wrap items-start gap-3">
                 @foreach($model->days as $day)
                     <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}">
-                        <x-chief-timetable::day title="{{ $day->getLabel() }}" :day="$day" class="w-48"/>
+                        <x-chief-timetable::day
+                            title="{{ $day->getLabel() }}"
+                            :slots="$day->getSlots()->getSlots()" class="w-48"
+                            content="{{ $day->getContent(app()->getLocale()) }}"
+                        />
                     </a>
                 @endforeach
             </div>
@@ -52,7 +56,11 @@
                         @endphp
 
                         <a href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}" title="{{ $title }}" class="block">
-                            <x-chief-timetable::day :title="$title" :day="$date" class="w-full"/>
+                            <x-chief-timetable::day
+                                :title="$title"
+                                :slots="$date->getSlots()->getSlots()"
+                                content="{{ $date->getContent(app()->getLocale()) }}"
+                                class="w-full"/>
                         </a>
                     @endforeach
                 </div>

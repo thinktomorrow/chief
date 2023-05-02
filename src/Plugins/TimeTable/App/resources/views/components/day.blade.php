@@ -1,6 +1,6 @@
 @props([
-    'title' => $date->format('d'),
-    'isToday' => $date->isToday(),
+    'title' => isset($date) ? $date->format('d') : null,
+    'isToday' => isset($date) ? $date->isToday() : false,
     'content' => null,
     'exception' => false,
     'slots' => [],
