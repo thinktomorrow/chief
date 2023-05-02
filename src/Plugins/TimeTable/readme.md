@@ -1,4 +1,4 @@
-# Hours
+# TimeTable
 Plugin to add opening hours functionality to your Chief Admin.
 This will allow you to use the Opening hours api from spatie/opening-hours
 
@@ -30,7 +30,7 @@ Popular cases are:
 
 List the schedule for the current week which takes into account any exceptions
 ```php
-$hours = $model->getTimeTableHours('nl');
+$hours = $model->getTimeTable('nl');
 foreach($hours->forCurrentWeek() as $day => $weekDay) {
 
     echo $day;
@@ -44,20 +44,20 @@ foreach($hours->forCurrentWeek() as $day => $weekDay) {
 
 List the default schedule for the week
 ```php
-$hours = $model->getTimeTableHours('nl');
+$hours = $model->getTimeTable('nl');
 $hours->forWeek() // Traversable as array like forCurrentWeek()
 ```
 
 Checking if the office is currently open or not
 ```php
-$hours = $office->getTimeTableHours('nl');
+$hours = $office->getTimeTable('nl');
 $hours->isOpen(); // true
 $hours->isClosed(); // false
 ```
 
 Checking if the office is currently open on a specific date
 ```php
-$hours = $office->getTimeTableHours('nl');
+$hours = $office->getTimeTable('nl');
 $hours->currentOpenRange(now())->start(); // 8:00
 $hours->currentOpenRange(now())->end(); // 17:00
 ```
