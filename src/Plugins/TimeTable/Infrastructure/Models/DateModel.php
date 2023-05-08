@@ -51,8 +51,6 @@ class DateModel extends Model
                 Grid::make()->columns(2)->items([
                     Time::make('slots[0][from]')->columnName('slots.0.from')->tag('not-on-create')->default('08:30'),
                     Time::make('slots[0][until]')->columnName('slots.0.until')->tag('not-on-create')->default('12:00'),
-                ]),
-                Grid::make()->columns(2)->items([
                     Time::make('slots[1][from]')->columnName('slots.1.from')->tag('not-on-create')->default('13:00'),
                     Time::make('slots[1][until]')->columnName('slots.1.until')->tag('not-on-create')->default('17:00'),
                 ]),

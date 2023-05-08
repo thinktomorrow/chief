@@ -28,43 +28,53 @@
         </form>
 
         <x-chief::window title="Weekschema" class="card">
-            <div class="flex flex-wrap items-start gap-3">
-                @foreach($model->days as $day)
-                    <a href="{{ route('chief.timetable_days.edit', $day->id) }}" title="{{ $day->getLabel() }}">
-                        <x-chief-timetable::day
-                            title="{{ $day->getLabel() }}"
-                            :slots="$day->getSlots()->getSlots()" class="w-48"
-                            content="{{ $day->getContent(app()->getLocale()) }}"
-                        />
+            <x-chief-timetable::time-table :model="$model" :days="$model->days" :wrap="true" />
+        </x-chief::window>
+
+        <x-chief::window title="Uitzonderingen" class="card">
+            <x-slot name="buttons">
+                <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
+                    <x-chief::icon-button icon="icon-plus" color="grey" class="shadow-none bg-grey-50 text-grey-500" />
+                </a>
+            </x-slot>
+
+            <div class="row-start-start gutter-2 sm:gutter-3">
+                @foreach($model->exceptions as $date)
+                    @php
+                        $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getShortLabel().' '.$date->date->format('d/m/Y');
+                    @endphp
+
+                    <a
+                        href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}"
+                        title="{{ $title }}"
+                        class="block w-full space-y-1 sm:w-1/2 lg:w-1/3 xl:w-1/4"
+                    >
+                        @if($title)
+                            <div class="text-sm font-medium leading-5 body body-dark">
+                                {{ $title }}
+                            </div>
+                        @endif
+
+                        <div class="flex flex-col items-start gap-1">
+                            @forelse($date->getSlots()->getSlots() as $slot)
+                                <p class="label label-xs label-grey">
+                                    {{ $slot->getAsString() }}
+                                </p>
+                            @empty
+                                <p class="label label-xs label-grey">
+                                    Gesloten
+                                </p>
+                            @endforelse
+
+                            @if($date->content)
+                                <p class="text-xs body text-grey-500">
+                                    {{ $date->content }}
+                                </p>
+                            @endif
+                        </div>
                     </a>
                 @endforeach
             </div>
         </x-chief::window>
-
-        <x-slot name="aside">
-            <x-chief::window title="Uitzonderingen" class="card">
-                <x-slot name="buttons">
-                    <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
-                        <x-chief::icon-button icon="icon-plus" color="grey" class="shadow-none bg-grey-50 text-grey-500" />
-                    </a>
-                </x-slot>
-
-                <div class="space-y-3">
-                    @foreach($model->exceptions as $date)
-                        @php
-                            $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getShortLabel().' '.$date->date->format('d/m/Y');
-                        @endphp
-
-                        <a href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}" title="{{ $title }}" class="block">
-                            <x-chief-timetable::day
-                                :title="$title"
-                                :slots="$date->getSlots()->getSlots()"
-                                content="{{ $date->getContent(app()->getLocale()) }}"
-                                class="w-full"/>
-                        </a>
-                    @endforeach
-                </div>
-            </x-chief::window>
-        </x-slot>
     </x-chief::page.grid>
 </x-chief::page.template>
