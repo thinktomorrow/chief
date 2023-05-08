@@ -4,27 +4,35 @@
     'wrap' => false,
     'withDates' => true,
     'withDateEdit' => false,
+    'read' => true,
 ])
 
 @php
     $date = date('M d, Y');
     $count = count($days);
+    $weekDays = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
+    $weekDaysLong = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
 @endphp
 
-<div class="border rounded-md border-grey-100">
-    <div class="flex flex-wrap">
-        @foreach(['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'] as $weekDay)
-            <div @class([
-                'text-center text-sm h1-dark font-medium p-1 w-[calc(100%/7)] border-b border-grey-100',
-                'border-r' => !$loop->last,
-                'max-lg:hidden' => $wrap,
-            ])>
-                <span>{{ $weekDay }}</span>
-            </div>
-        @endforeach
-    </div>
+<div @class([
+    'border rounded-md border-grey-100',
+    'max-lg:border-0 max-lg:rounded-none' => $wrap
+])>
+    @if(!$wrap)
+        <div class="flex flex-wrap">
+            @foreach($weekDays as $weekDay)
+                <div @class([
+                    'text-center text-sm h1-dark font-medium p-1 w-[calc(100%/7)] border-b border-grey-100',
+                    'border-r' => !$loop->last,
+                    'max-lg:hidden' => $wrap,
+                ])>
+                    <span>{{ $weekDay }}</span>
+                </div>
+            @endforeach
+        </div>
+    @endif
 
-    <div class="flex flex-wrap">
+    <div @class(['row-start-stretch', 'max-lg:gutter-3' => $wrap])>
         @foreach($days as $date => $day)
             @php
                 if ($withDates) {
@@ -32,12 +40,19 @@
                 } else {
                     $date = null;
                 }
-                // $slots = (iterator_to_array($day->getIterator()));
-                $slots = $day->getSlots()->getSlots();
-                // $exception = $model->timeTable->isException($date);
-                $exception = true;
+
+                if ($read) {
+                    $slots = (iterator_to_array($day->getIterator()));
+                    $exception = $model->timeTable->isException($date);
+                    $content = $day->getData();
+                } else {
+                    $slots = $day->getSlots()->getSlots();
+                    $exception = false;
+                    $content = $day->content;
+                }
+
                 $isToday = $date ? $date->isToday() : false;
-                $title = $date ? $date->format('d') : null;
+                $title = $date ? $date->format('d/m') : $weekDaysLong[$loop->index];
             @endphp
 
             @if($withDateEdit)
@@ -47,7 +62,7 @@
                     @class([
                         'block p-2 border-grey-100',
                         'w-[calc(100%/7)]' => !$wrap,
-                        'w-full lg:w-[calc(100%/7)]' => $wrap,
+                        'max-lg:border-r-0 max-lg:p-0 w-full sm:w-1/2 lg:w-[calc(100%/7)]' => $wrap,
                         'border-r' => !$loop->last,
                         'border-b' => $count - $loop->index > 7,
                     ])
@@ -57,21 +72,19 @@
                     @class([
                         'block p-2 border-grey-100',
                         'w-[calc(100%/7)]' => !$wrap,
-                        'w-full lg:w-[calc(100%/7)]' => $wrap,
-                        'border-r' => !$loop->last,
+                        'max-lg:border-r-0 max-lg:p-0 w-full sm:w-1/2 lg:w-[calc(100%/7)]' => $wrap,
+                        'border-r' => $loop->iteration % 7 != 0,
                         'border-b' => $count - $loop->index > 7,
                     ])
                 >
             @endif
                     <div {{ $attributes->class('space-y-1') }}>
-                        <div @class([
-                            'flex items-start justify-between gap-2',
-                            'max-lg:flex-col' => isset($wrap),
-                        ])>
+                        <div class="flex items-start justify-between gap-2 max-lg:flex-col">
                             @if($title)
                                 <div @class([
                                     'text-sm font-medium leading-5 body body-dark',
-                                    'max-lg:ml-auto' => isset($wrap),
+                                    'max-lg:ml-auto' => !$wrap,
+                                    'text-primary-500' => $isToday,
                                 ])>
                                     {{ $title }}
                                 </div>
@@ -82,7 +95,7 @@
                             @endif
                         </div>
 
-                        <div @class(['space-y-1', 'max-lg:hidden' => isset($wrap)])>
+                        <div @class(['space-y-1', 'max-lg:hidden' => !$wrap])>
                             @if(empty($slots))
                                 <p @class(['label label-xs', 'label-grey' => !$exception, 'label-warning' => $exception])>
                                     Gesloten
@@ -95,12 +108,11 @@
                                 @endforeach
                             @endif
 
-                            {{-- @if($day->getData()) --}}
+                            @if($content)
                                 <p class="text-xs body text-grey-500">
-                                    {{-- {{ $day->getData() }} --}}
-                                    {{ $day->content }}
+                                    {{ $content }}
                                 </p>
-                            {{-- @endif --}}
+                            @endif
                         </div>
                     </div>
             @if($attributes->has('href'))

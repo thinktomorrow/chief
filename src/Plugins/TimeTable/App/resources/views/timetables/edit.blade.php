@@ -28,7 +28,7 @@
         </form>
 
         <x-chief::window title="Weekschema" class="card">
-            <x-chief-timetable::time-table :model="$model" :days="$model->days" :wrap="true" />
+            <x-chief-timetable::time-table :model="$model" :days="$model->days" :with-dates="false" :wrap="true" :read="false" />
         </x-chief::window>
 
         <x-chief::window title="Uitzonderingen" class="card">
@@ -41,13 +41,13 @@
             <div class="row-start-start gutter-2 sm:gutter-3">
                 @foreach($model->exceptions as $date)
                     @php
-                        $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getShortLabel().' '.$date->date->format('d/m/Y');
+                        $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y');
                     @endphp
 
                     <a
                         href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}"
                         title="{{ $title }}"
-                        class="block w-full space-y-1 sm:w-1/2 lg:w-1/3 xl:w-1/4"
+                        class="block w-full space-y-2 sm:w-1/2 lg:w-1/3 xl:w-1/4"
                     >
                         @if($title)
                             <div class="text-sm font-medium leading-5 body body-dark">
