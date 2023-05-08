@@ -24,7 +24,7 @@
                             <x-chief::icon-button/>
                         </a>
 
-                        <x-chief-timetable::time-table :time-table="$timeTableModel->timeTable" :days="$timeTableModel->timeTable->forWeeks(2)"/>
+                        <x-chief-timetable::time-table :time-table="$timeTableModel->timeTable" :days="$timeTableModel->timeTable->forWeeks(4)"/>
 
                         <div class="border rounded-md border-grey-100">
                             {{-- <div class="flex overflow-x-auto border-b border-grey-100">
