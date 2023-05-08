@@ -13,7 +13,7 @@ trait HasTimeTableDefaults
         return $this->timetable_id ? TimeTableId::fromString($this->timetable_id) : null;
     }
 
-    public function getTimeTableHours(string $locale): TimeTable
+    public function getTimeTable(string $locale): TimeTable
     {
         return app(TimeTableFactory::class)->create($this->getTimeTableModel(), $locale);
     }

@@ -1,5 +1,5 @@
 @props([
-    'model' => null,
+    'timeTable',
     'days' => [],
     'wrap' => false,
     'withDates' => true,
@@ -43,7 +43,7 @@
 
                 if ($read) {
                     $slots = (iterator_to_array($day->getIterator()));
-                    $exception = $model->timeTable->isException($date);
+                    $exception = $timeTable->isException($date);
                     $content = $day->getData();
                 } else {
                     $slots = $day->getSlots()->getSlots();
