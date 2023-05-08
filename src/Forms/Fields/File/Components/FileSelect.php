@@ -35,12 +35,12 @@ class FileSelect extends Component implements Htmlable
 
     public function getFilesForUpload(): Collection
     {
-        return collect($this->fileUploadComponent->previewFiles)->reject(fn(PreviewFile $file) => ($file->mediaId || $file->isQueuedForDeletion));
+        return collect($this->fileUploadComponent->previewFiles)->reject(fn (PreviewFile $file) => ($file->mediaId || $file->isQueuedForDeletion));
     }
 
     public function getFilesForDeletion(): Collection
     {
-        return collect($this->fileUploadComponent->previewFiles)->filter(fn(PreviewFile $file) => ($file->mediaId && $file->isQueuedForDeletion));
+        return collect($this->fileUploadComponent->previewFiles)->filter(fn (PreviewFile $file) => ($file->mediaId && $file->isQueuedForDeletion));
     }
 
     public function getFiles(): Collection
@@ -63,4 +63,3 @@ class FileSelect extends Component implements Htmlable
         ]));
     }
 }
-

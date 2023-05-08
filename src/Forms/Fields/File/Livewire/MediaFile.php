@@ -20,8 +20,7 @@ class MediaFile implements Wireable
         public string $mimeType,
         public string $extension,
         public array $owners,
-    )
-    {
+    ) {
 
     }
 
@@ -38,7 +37,7 @@ class MediaFile implements Wireable
     public function isImage(): bool
     {
         return Str::endsWith($this->mimeType, [
-            'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'
+            'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp',
         ]);
     }
 
@@ -47,7 +46,7 @@ class MediaFile implements Wireable
     {
         $urls = [
             'original' => $model->originalUrl,
-            ...$model->getGeneratedConversions()->reject(fn($isConverted) => false)->mapWithKeys(fn($isConverted,$conversionName) => [$conversionName => $model->getUrl($conversionName)])->all(),
+            ...$model->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $model->getUrl($conversionName)])->all(),
         ];
 
         // Owners

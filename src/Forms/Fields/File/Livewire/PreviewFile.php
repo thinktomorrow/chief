@@ -22,8 +22,7 @@ class PreviewFile implements Wireable
         public string $mimeType,
         public string $extension,
         public bool $isQueuedForDeletion = false,
-    )
-    {
+    ) {
 
     }
 //
@@ -88,7 +87,7 @@ class PreviewFile implements Wireable
             File\App\FileHelper::getHumanReadableSize((int)$asset->getSize()),  // asset->getSize() already returns human readable so this is first converted back to bytes
             $asset->getMimeType(),
             File\App\FileHelper::getExtension($asset->getFirstMediaPath()),
-false,
+            false,
         );
     }
 

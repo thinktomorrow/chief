@@ -6,7 +6,6 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\Chief\Forms\Fields\File\App\FileApplication;
-use Thinktomorrow\Chief\Forms\Forms;
 
 class FileEditComponent extends Component
 {
@@ -27,7 +26,7 @@ class FileEditComponent extends Component
     public function mount(string $parentId, array $components)
     {
         $this->parentId = $parentId;
-        $this->components = array_map(fn($component) => $component->toLivewire(),$components);
+        $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
     }
 
 //    public function booted()
@@ -37,7 +36,7 @@ class FileEditComponent extends Component
 
     public function getComponents(): array
     {
-        return array_map(fn($componentArray) => $componentArray['class']::fromLivewire($componentArray), $this->components);
+        return array_map(fn ($componentArray) => $componentArray['class']::fromLivewire($componentArray), $this->components);
     }
 
     private function setFile(PreviewFile $previewFile)
@@ -54,7 +53,9 @@ class FileEditComponent extends Component
 
     public function openInParentScope($value)
     {
-        if(!isset($value['parent_id']) || $this->parentId !== $value['parent_id']) return;
+        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
+            return;
+        }
 
         $this->open($value);
     }

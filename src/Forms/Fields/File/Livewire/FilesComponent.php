@@ -39,16 +39,16 @@ class FilesComponent extends Component
      */
     public $previewFiles = [];
 
-//    /**
-//     * @var PreviewFile[]
-//     */
-//    public $existingFiles = [];
+    //    /**
+    //     * @var PreviewFile[]
+    //     */
+    //    public $existingFiles = [];
 
     public function mount(array $existingFiles, array $components = [])
     {
         // Assert types
-        array_map(fn(PreviewFile $file) => $file, $existingFiles);
-        array_map(fn(\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
+        array_map(fn (PreviewFile $file) => $file, $existingFiles);
+        array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
 
         $this->previewFiles = $existingFiles;
         $this->components = $components;
@@ -75,12 +75,12 @@ class FilesComponent extends Component
 
     private function syncPreviewFiles()
     {
-//        dd($this->previewFiles);
+        //        dd($this->previewFiles);
         // Livewire converts the public properties of PreviewFile object to an array. So we need to convert this back to an object
-        $this->previewFiles = array_map(fn(array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
+        $this->previewFiles = array_map(fn (array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
 
         foreach($this->files as $newFile) {
-            if(!is_null($index = $this->findPreviewFile($newFile->getFilename()))) {
+            if(! is_null($index = $this->findPreviewFile($newFile->getFilename()))) {
                 $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFile, $this->previewFiles[$index]);
             } else {
                 $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFile);
@@ -91,7 +91,9 @@ class FilesComponent extends Component
     private function findPreviewFile($fileId): ?int
     {
         foreach($this->previewFiles as $index => $previewFile) {
-            if($previewFile->id == $fileId) return $index;
+            if($previewFile->id == $fileId) {
+                return $index;
+            }
         }
 
         return null;
@@ -100,8 +102,8 @@ class FilesComponent extends Component
     public function openFileEdit($fileId)
     {
         $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile_array' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
-//        $this->emitDown('openFileEdit', ['previewfile_array' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
-//        $this->emitTo('chief-wire::file-edit', 'open', $this->previewFiles[$this->findPreviewFile($fileId)]);
+        //        $this->emitDown('openFileEdit', ['previewfile_array' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
+        //        $this->emitTo('chief-wire::file-edit', 'open', $this->previewFiles[$this->findPreviewFile($fileId)]);
     }
 
     public function openFilesChoose()
@@ -114,6 +116,7 @@ class FilesComponent extends Component
         foreach($this->previewFiles as $file) {
             if($file->id == $fileId) {
                 $file->isQueuedForDeletion = true;
+
                 return;
             }
         }
@@ -124,6 +127,7 @@ class FilesComponent extends Component
         foreach($this->previewFiles as $file) {
             if($file->id == $fileId) {
                 $file->isQueuedForDeletion = false;
+
                 return;
             }
         }

@@ -54,7 +54,7 @@ class File extends Component implements Field
 
         $this->save(function ($model, $field, $input, $files) {
             app(SaveFileField::class)->handle($model, $field, $input, $files);
-//            app(FileUpload::class)->handle($model, $field, $input, $files);
+            //            app(FileUpload::class)->handle($model, $field, $input, $files);
         });
     }
 
