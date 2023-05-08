@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
@@ -34,7 +35,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 use Thinktomorrow\Chief\Managers\Manager;
 
-abstract class Component extends \Illuminate\View\Component implements Htmlable
+abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
 {
     // Generic component concerns
     use HasLocalizableProperties;
@@ -118,5 +119,37 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
         $this->fieldWindowView = $fieldWindowView;
 
         return $this;
+    }
+
+    public function toLivewire()
+    {
+        return [
+            'class' => static::class,
+            'key' => $this->key,
+            'methods' => [
+                ...(isset($this->id) ? ['id' => $this->id] : []),
+                ...(isset($this->name) ? ['name' => $this->name] : []),
+                ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),
+                ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
+                ...(isset($this->locales) ? ['locales' => $this->locales] : []),
+                ...(isset($this->localizedFormKeyTemplate) ? ['setLocalizedFormKeyTemplate' => $this->localizedFormKeyTemplate] : []),
+                ...(isset($this->label) ? ['label' => $this->label] : []),
+                ...(isset($this->description) ? ['description' => $this->description] : []),
+                ...(isset($this->options) ? ['options' => $this->options] : []),
+                ...(isset($this->placeholders) ? ['placeholders' => $this->placeholders] : []),
+                ...(isset($this->autofocus) ? ['autofocus' => $this->autofocus] : []),
+            ],
+        ];
+    }
+
+    public static function fromLivewire($value)
+    {
+        $component = static::make($value['key']);
+
+        foreach($value['methods'] as $method => $parameters) {
+            $component->{$method}($parameters);
+        }
+
+        return $component;
     }
 }

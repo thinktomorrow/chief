@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Livewire;
+namespace Thinktomorrow\Chief\Admin\Components;
 
 class Dialog
 {

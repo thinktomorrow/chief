@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesChooseComponent;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditComponent;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\ImageCropComponent;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
-use Thinktomorrow\Chief\Forms\Livewire\FileUpload;
 
 class FormsServiceProvider extends ServiceProvider
 {
@@ -33,8 +36,9 @@ class FormsServiceProvider extends ServiceProvider
             AuthenticateChiefSession::class,
         ]);
 
-        Livewire::component('chief-wire::form', \Thinktomorrow\Chief\Forms\Livewire\Form::class);
-        Livewire::component('chief-wire::dialog', \Thinktomorrow\Chief\Forms\Livewire\Dialog::class);
-        Livewire::component('chief-wire::file-upload', FileUpload::class);
+        Livewire::component('chief-wire::file-upload', FilesComponent::class);
+        Livewire::component('chief-wire::files-choose', FilesChooseComponent::class);
+        Livewire::component('chief-wire::file-edit', FileEditComponent::class);
+        Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
     }
 }

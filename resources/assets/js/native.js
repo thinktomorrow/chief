@@ -4,6 +4,7 @@ import initDropdowns from './utilities/dropdown';
 import initAnimatedToggle from './utilities/animated-toggle';
 import initSortable from './sortable/sortable-init';
 import initFormSubmitOnChange from './utilities/form-submit-on-change';
+import vueFields from './forms/fields/vue-fields';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -24,3 +25,5 @@ require('./forms/index');
 
 /** Table logic - bulk actions */
 require('./tables/index');
+
+window.vueFieldsRefresh = (el) => vueFields(el);

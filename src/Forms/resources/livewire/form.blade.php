@@ -2,17 +2,7 @@
     <div wire:loading.delay.long>
         LOADING...
     </div>
-    <div>
-
-        <span>aantal keren form: {{ $count }}</span>
-
-        @foreach($formData as $key => $value)
-            <div wire:key="{{'preview-'.$key}}">
-                <span>{{ $key }}: {{ print_r($value) }}</span>
-            </div>
-        @endforeach
-    </div>
-    <form class="w-full container" wire:submit.prevent="save"
+    <form class="w-full container" wire:submit.prevent="submit"
           {{ $this->form->attributes->merge($this->form->getCustomAttributes()) }}
           id="{{ $this->form->getElementId() }}"
           method="POST"
@@ -25,20 +15,7 @@
             @method('put')
         @endif
 
-        @if(isset($order))
-            <input type="hidden" name="order" value="{{ $order ?? 0 }}">
-        @endif
-
-        <div class="relative space-y-6" wire:loading.class.delay.long="bg-orange-50">
-            @foreach($this->form->getComponents() as $i => $childComponent)
-                <div wire:key="form-components-{{ $i }}">
-                    {{ $childComponent }}
-                </div>
-            @endforeach
-            <button type="submit" class="relative btn btn-primary" style="z-index: 1;">
-                Opslaan
-            </button>
-        </div>
+        {{ $this->form }}
     </form>
 </div>
 

@@ -12,7 +12,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStorageDisk;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
-use Thinktomorrow\Chief\Forms\Fields\Media\Application\FileUpload;
+use Thinktomorrow\Chief\Forms\Fields\File\App\SaveFileField;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -29,7 +30,7 @@ class File extends Component implements Field
     use HasUploadButtonLabel;
     use HasEndpoint;
 
-    protected string $view = 'chief-form::fields.file';
+    protected string $view = 'chief-form::fields.file.field';
     protected string $windowView = 'chief-form::fields.file-window';
 
     public function __construct(string $key)
@@ -52,7 +53,8 @@ class File extends Component implements Field
         $this->default([]);
 
         $this->save(function ($model, $field, $input, $files) {
-            app(FileUpload::class)->handle($model, $field, $input, $files);
+            app(SaveFileField::class)->handle($model, $field, $input, $files);
+//            app(FileUpload::class)->handle($model, $field, $input, $files);
         });
     }
 
@@ -73,6 +75,22 @@ class File extends Component implements Field
     }
 
     private function getMedia(Model & HasAsset $model, string $locale): array
+    {
+        $files = [];
+
+        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
+            return $asset->pivot->locale == $locale;
+        })->sortBy('pivot.order');
+
+        /** @var Asset $asset */
+        foreach ($assets as $asset) {
+            $files[] = PreviewFile::fromAsset($this, $asset);
+        }
+
+        return $files;
+    }
+
+    private function getLegacyMedia(Model & HasAsset $model, string $locale): array
     {
         $files = [];
 

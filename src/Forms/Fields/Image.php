@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Managers\Manager;
 
 class Image extends File
 {
-    protected string $view = 'chief-form::fields.image';
+    protected string $view = 'chief-form::fields.file.field';
     protected string $windowView = 'chief-form::fields.image-window';
 
     public function fill(Manager $manager, Model $model): void

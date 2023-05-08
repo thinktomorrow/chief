@@ -1,13 +1,18 @@
-@php
-    /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
-    $files = $getValue($locale);
-@endphp
+{{--@php--}}
+{{--    /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */--}}
+{{--    $files = $getValue($locale);--}}
+{{--@endphp--}}
 
-<livewire:chief-wire::file-upload
-    :key="$getKey()"
-    :name="$getName($locale)"
-    :multiple="true"
-/>
+<div>
+    <livewire:chief-wire::file-upload
+        :field-id="$field->getId()"
+        :field-name="$field->getName($locale)"
+        :allow-multiple="$field->allowMultiple()"
+        :media-ids="(array_map(fn($file) => $file->id, $field->getValue($locale)))"
+    />
+</div>
+
+
 
 {{--@if (count($files) == 0)--}}
 {{--    @include('chief-form::fields.file.file-selection')--}}

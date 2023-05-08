@@ -13,8 +13,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- hide vue elements until vue is loaded -->
+    <!-- hide alpine / vue elements until vue is loaded -->
     <style type="text/css">
+        [x-cloak] { display: none !important; }
         .v-loading { display: none !important; }
         /*[v-cloak].v-loading { display: block !important; }*/
         /*[v-cloak] { display: none !important; }*/
