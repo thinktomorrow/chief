@@ -106,6 +106,8 @@ class FileEditComponent extends Component
 
     public function submit()
     {
+        dd($this->formValues);
+
         if($this->mediaFile) {
             app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->formValues['basename']);
         }
