@@ -176,17 +176,4 @@
             </form>
         </div>
     @endif
-
-    @push('custom-scripts-after-vue')
-        <script>
-            @this.on('componentOpened', () => {
-                setTimeout(() => {
-                    const component = document.getElementById('{{ $componentId }}');
-                    console.log(component);
-                    vueFieldsRefresh(component);
-                }, 1000);
-
-            })
-        </script>
-    @endpush
 </div>

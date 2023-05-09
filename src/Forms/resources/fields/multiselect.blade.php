@@ -1,7 +1,7 @@
 <div data-vue-fields>
     <chief-multiselect
         name="{{ $getName($locale ?? null) }}"
-        :options='@json($getOptions())'
+        options='@json($getOptions())'
         selected='@json($getActiveValue($locale ?? null))'
         :multiple='@json(!!$allowMultiple())'
         @if($isGrouped())

@@ -1,5 +1,4 @@
 <div id="test" class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
-
     @foreach ($getFiles() as $file)
 
         <div class="flex gap-4 p-2">
