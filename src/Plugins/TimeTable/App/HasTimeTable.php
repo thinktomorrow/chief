@@ -8,5 +8,5 @@ interface HasTimeTable
 {
     public function getTimeTableId(): ?TimeTableId;
 
-    public function getTimeTable(string $locale): TimeTable;
+    public function getTimeTable(string $locale): ?TimeTable;
 }

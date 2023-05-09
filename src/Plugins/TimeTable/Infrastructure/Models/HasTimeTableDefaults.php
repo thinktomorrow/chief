@@ -10,20 +10,32 @@ trait HasTimeTableDefaults
 {
     public function getTimeTableId(): ?TimeTableId
     {
-        return $this->timetable_id ? TimeTableId::fromString($this->timetable_id) : null;
+        if (! $this->timetable_id) {
+            return null;
+        }
+
+        return TimeTableId::fromString($this->timetable_id);
     }
 
-    public function getTimeTable(string $locale): TimeTable
+    public function getTimeTable(string $locale): ?TimeTable
     {
-        return app(TimeTableFactory::class)->create($this->getTimeTableModel(), $locale);
+        $timeTableModel = $this->getTimeTableModel();
+
+        if(! $timeTableModel) {
+            return null;
+        }
+
+        return app(TimeTableFactory::class)->create($timeTableModel, $locale);
     }
 
     private function getTimeTableModel(): ?TimeTableModel
     {
-        if(! $this->getTimeTableId()) {
+        $timeTableId = $this->getTimeTableId();
+
+        if(! $timeTableId) {
             return null;
         }
 
-        return app(TimeTableModel::class)->where('id', $this->getTimeTableId()->get())->first();
+        return app(TimeTableModel::class)->where('id', $timeTableId->get())->first();
     }
 }
