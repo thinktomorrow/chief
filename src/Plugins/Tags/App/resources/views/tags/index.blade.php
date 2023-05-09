@@ -21,8 +21,11 @@
 
                             @if($tagGroup->getTagGroupId())
                                 <a href="{{ route('chief.taggroups.edit', $tagGroup->getTagGroupId()) }}">
-                                    <x-chief::icon-button icon="icon-edit" color="grey"
-                                                          class="shadow-none text-grey-500">
+                                    <x-chief::icon-button
+                                        icon="icon-edit"
+                                        color="grey"
+                                        class="shadow-none text-grey-500"
+                                    >
                                         <svg width="16" height="16">
                                             <use xlink:href="#icon-edit"></use>
                                         </svg>

@@ -1,19 +1,14 @@
 @php
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', route('chief.timetables.index'));
+    $timeTable = (new \Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory())->create($model, app()->getLocale());
 @endphp
 
 <x-chief::page.template title="Schema aanpassen">
     <x-slot name="hero">
-        <x-chief::page.hero :title="$model->label" :breadcrumbs="[$breadcrumb]">
-            {{-- TODO: render field as pagetitle --}}
-            {{-- <x-slot name="customTitle">
-                {!! $fields->first()->render() !!}
-            </x-slot> --}}
-        </x-chief::page.hero>
+        <x-chief::page.hero :title="$model->label" :breadcrumbs="[$breadcrumb]"/>
     </x-slot>
 
     <x-chief::page.grid>
-        {{-- TODO: remove this card once the field is editable as pagetitle --}}
         <form id="timeTableEditForm" action="{{ route('chief.timetables.update', $model->id) }}" method="POST" class="card">
             @csrf
             @method('PUT')
@@ -28,7 +23,7 @@
         </form>
 
         <x-chief::window title="Weekschema" class="card">
-            <x-chief-timetable::time-table :model="$model" :days="$model->days" :with-dates="false" :wrap="true" :read="false" />
+            <x-chief-timetable::time-table :time-table="$timeTable" :days="$timeTable->forCurrentWeek()" :is-calendar="false"/>
         </x-chief::window>
 
         <x-chief::window title="Uitzonderingen" class="card">

@@ -21,43 +21,13 @@
                                 {{ $timeTableModel->label }}
                             </span>
 
-                            <x-chief::icon-button/>
+                            <x-chief::icon-button color="grey" class="shadow-none text-grey-500"/>
                         </a>
 
-                        <x-chief-timetable::time-table :time-table="$timeTableModel->timeTable" :days="$timeTableModel->timeTable->forWeeks(4)"/>
-
-                        <div class="border rounded-md border-grey-100">
-                            {{-- <div class="flex overflow-x-auto border-b border-grey-100">
-                                @foreach(['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'] as $weekDay)
-                                    <div @class(['text-center text-sm h1-dark font-medium p-1 flex-1', 'border-r border-grey-100' => !$loop->last])>
-                                        <span>{{ $weekDay }}</span>
-                                    </div>
-                                @endforeach
-                            </div> --}}
-
-                            {{-- <div class="flex border-b border-grey-100">
-                                @foreach($timeTableModel->timeTable->forWeeks(2) as $date => $day)
-                                    @php $date = \Illuminate\Support\Carbon::parse($date); @endphp
-
-                                    <a
-                                        href=""
-                                        title="{{ \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date)->getLabel() }}"
-                                        @class([
-                                            'flex-1 block p-2',
-                                            'border-r border-grey-100' => !$loop->last,
-                                        ])
-                                    >
-                                        <x-chief-timetable::day
-                                            :date="$date"
-                                            :slots="(iterator_to_array($day->getIterator()))"
-                                            content="{{ $day->getData() }}"
-                                            :exception="$timeTableModel->timeTable->isException($date)"
-                                            :minimal="true"
-                                        />
-                                    </a>
-                                @endforeach
-                            </div> --}}
-                        </div>
+                        <x-chief-timetable::time-table
+                            :time-table="$timeTableModel->timeTable"
+                            :days="$timeTableModel->timeTable->forWeeks(4)"
+                        />
                     </div>
                 </div>
             @endforeach
