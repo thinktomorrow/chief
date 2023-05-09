@@ -19,7 +19,7 @@
                 <span class="label label-xs label-primary mt-[1px]">Home</span>
             @endif
 
-            @if ($model instanceof Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable)
+            @if ($model instanceof \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable)
                 <x-chief-tags::tags :tags="$model->getTags()" size="xs" threshold="4"/>
             @endif
         </div>

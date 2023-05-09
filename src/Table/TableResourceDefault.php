@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Table;
 use Illuminate\Support\Facades\Blade;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Plugins\Tags\Application\Taggable\Taggable;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Table\Elements\TableColumn;
 use Thinktomorrow\Chief\Table\Elements\TableColumnLink;
 use Thinktomorrow\Chief\Table\Elements\TableHeader;
