@@ -23,53 +23,64 @@
         </form>
 
         <x-chief::window title="Weekschema" class="card">
+            {{-- TODO: this shouldn't display the current week, but rather a week with all default day values --}}
             <x-chief-timetable::time-table :time-table="$timeTable" :days="$timeTable->forCurrentWeek()" :is-calendar="false"/>
         </x-chief::window>
 
-        <x-chief::window title="Uitzonderingen" class="card">
-            <x-slot name="buttons">
-                <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
-                    <x-chief::icon-button icon="icon-plus" color="grey" class="shadow-none bg-grey-50 text-grey-500" />
-                </a>
-            </x-slot>
-
-            <div class="row-start-start gutter-2 sm:gutter-3">
-                @foreach($model->exceptions as $date)
-                    @php
-                        $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y');
-                    @endphp
-
-                    <a
-                        href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}"
-                        title="{{ $title }}"
-                        class="block w-full space-y-2 sm:w-1/2 lg:w-1/3 xl:w-1/4"
-                    >
-                        @if($title)
-                            <div class="text-sm font-medium leading-5 body body-dark">
-                                {{ $title }}
-                            </div>
-                        @endif
-
-                        <div class="flex flex-col items-start gap-1">
-                            @forelse($date->getSlots()->getSlots() as $slot)
-                                <p class="label label-xs label-grey">
-                                    {{ $slot->getAsString() }}
-                                </p>
-                            @empty
-                                <p class="label label-xs label-grey">
-                                    Gesloten
-                                </p>
-                            @endforelse
-
-                            @if($date->content)
-                                <p class="text-xs body text-grey-500">
-                                    {{ $date->content }}
-                                </p>
-                            @endif
-                        </div>
+        <x-slot name="aside">
+            <x-chief::window title="Uitzonderingen" class="card">
+                <x-slot name="buttons">
+                    <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
+                        <x-chief::icon-button icon="icon-plus" color="grey" class="shadow-none bg-grey-50 text-grey-500" />
                     </a>
-                @endforeach
-            </div>
-        </x-chief::window>
+                </x-slot>
+
+                <div>
+                    @foreach($model->exceptions as $date)
+                        @php
+                            $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y');
+                        @endphp
+
+                        <div @class([
+                            'w-full space-y-1',
+                            'pt-3' => !$loop->first,
+                            'pb-4 border-b border-grey-100' => !$loop->last,
+                        ])>
+                            <div class="flex items-start justify-between gap-2">
+                                @if($title)
+                                    <div class="mt-1 text-sm font-medium leading-5 body body-dark">
+                                        {{ $title }}
+                                    </div>
+                                @endif
+
+                                <a href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}" title="Uitzondering aanpassen"/>
+                                    <x-chief::icon-button icon="icon-edit" color="grey" class="shadow-none text-grey-500">
+                                        <svg class="w-4 h-4"><use xlink:href="#icon-edit"></use></svg>
+                                    </x-chief::icon-button>
+                                </a>
+                            </div>
+
+                            <div class="flex flex-col items-start gap-1">
+                                @forelse($date->getSlots()->getSlots() as $slot)
+                                    <p class="label label-xs label-grey">
+                                        {{ $slot->getAsString() }}
+                                    </p>
+                                @empty
+                                    <p class="label label-xs label-grey">
+                                        Gesloten
+                                    </p>
+                                @endforelse
+
+                                @if($date->content)
+                                    <p class="text-xs body text-grey-500">
+                                        {{ $date->content }}
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </x-chief::window>
+        </x-slot>
     </x-chief::page.grid>
 </x-chief::page.template>
