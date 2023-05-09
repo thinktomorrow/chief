@@ -14,12 +14,11 @@ class FieldPresets
     {
         yield Form::make('timetable')
             ->title('Openingsuren')
-            ->position('aside')
             ->editInSidebar()
             ->items([
                 MultiSelect::make('timetable_id')
                     ->options(fn () => app(TimeTableReadRepository::class)->getAllTimeTablesForSelect())
-                    ->windowView('chief-timetable::fields.timetable'),
+                    ->fieldWindowView('chief-timetable::fields.timetable-window'),
             ]);
     }
 }
