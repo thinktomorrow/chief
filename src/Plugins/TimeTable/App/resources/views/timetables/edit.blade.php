@@ -1,6 +1,6 @@
 @php
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', route('chief.timetables.index'));
-    $timeTable = (new \Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory())->create($model, app()->getLocale());
+    $timeTable = (new \Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory())->createWithoutExceptions($model, app()->getLocale());
 @endphp
 
 <x-chief::page.template title="Schema aanpassen">
@@ -24,7 +24,12 @@
 
         <x-chief::window title="Weekschema" class="card">
             {{-- TODO: this shouldn't display the current week, but rather a week with all default day values --}}
-            <x-chief-timetable::time-table :time-table="$timeTable" :days="$timeTable->forCurrentWeek()" :is-calendar="false"/>
+            <x-chief-timetable::time-table
+                :time-table="$timeTable"
+                :days="$timeTable->forCurrentWeek()"
+                :is-calendar="false"
+                :day-models="$model->days"
+            />
         </x-chief::window>
 
         <x-slot name="aside">
