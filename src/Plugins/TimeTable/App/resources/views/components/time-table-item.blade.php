@@ -45,7 +45,7 @@
                 </x-chief::icon-button>
             @endif
 
-            @if(!$isCalendar)
+            @if(!$isCalendar && isset($dayModel))
                 <a href="{{ route('chief.timetable_days.edit', $dayModel->id) }}" title="Dag aanpassen"/>
                 <x-chief::icon-button icon="icon-edit" color="grey" class="shadow-none text-grey-500">
                     <svg class="w-4 h-4"><use xlink:href="#icon-edit"></use></svg>
