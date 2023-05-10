@@ -36,7 +36,7 @@
                 </x-slot>
 
                 <div>
-                    @foreach($model->exceptions as $date)
+                    @forelse($model->exceptions as $date)
                         @php
                             $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel().' '.$date->date->format('d/m/Y');
                         @endphp
@@ -78,7 +78,11 @@
                                 @endif
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="body body-dark">
+                            Er zijn momenteel geen uitzonderingen.
+                        </p>
+                    @endforelse
                 </div>
             </x-chief::window>
         </x-slot>
