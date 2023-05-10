@@ -9,7 +9,7 @@ class FileHelper
     public static function isImage(string $mimeType): bool
     {
         return Str::endsWith($mimeType, [
-            'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'
+            'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp',
         ]);
     }
 

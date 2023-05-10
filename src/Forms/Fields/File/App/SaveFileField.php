@@ -39,12 +39,12 @@ class SaveFileField
 
         // Sort
 
-dd($input);
+        dd($input);
         foreach (data_get($input, 'files.'.$field->getName(), []) as $locale => $values) {
             $this->handlePayload($model, $field, $locale, $values);
         }
 
-//        $this->sort($model, $field, $input);
+        //        $this->sort($model, $field, $input);
     }
 
     /**

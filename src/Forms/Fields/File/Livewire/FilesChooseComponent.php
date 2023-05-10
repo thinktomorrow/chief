@@ -3,9 +3,6 @@
 namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Thinktomorrow\Chief\Forms\Fields\File\App\FileApplication;
 
 class FilesChooseComponent extends Component
 {
@@ -25,7 +22,9 @@ class FilesChooseComponent extends Component
 
     public function openInParentScope($value)
     {
-        if(!isset($value['parent_id']) || $this->parentId !== $value['parent_id']) return;
+        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
+            return;
+        }
 
         $this->open();
     }

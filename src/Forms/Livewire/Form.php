@@ -14,34 +14,34 @@ class Form extends Component
 
     public array $data;
 
-//    use HasWiredInput;
-//
-//    public $model;
-//    public string $formId;
-//
-//    public $message;
-//
-//    public $count = 0;
-//
-//    /**
-//     * The form data contained by each field
-//     * @var array
-//     */
-//    public array $formData = [];
-//
-//    public string $formHash;
-//
-//    public $listeners = [
-////        'repeatValuesChanged',
-//    ];
+    //    use HasWiredInput;
+    //
+    //    public $model;
+    //    public string $formId;
+    //
+    //    public $message;
+    //
+    //    public $count = 0;
+    //
+    //    /**
+    //     * The form data contained by each field
+    //     * @var array
+    //     */
+    //    public array $formData = [];
+    //
+    //    public string $formHash;
+    //
+    //    public $listeners = [
+    ////        'repeatValuesChanged',
+    //    ];
 
     public function mount(\Thinktomorrow\Chief\Forms\Form $form)
     {
         $this->form = $form;
 
-//        $this->formHash = Str::random();
+        //        $this->formHash = Str::random();
 
-//        $this->populateFormData();
+        //        $this->populateFormData();
     }
 
 //    public function getFormProperty()

@@ -43,7 +43,9 @@ class ImageCropComponent extends Component
 
     public function openInParentScope($value)
     {
-        if(!isset($value['parent_id']) || $this->parentId !== $value['parent_id']) return;
+        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
+            return;
+        }
 
         $this->open($value);
     }
