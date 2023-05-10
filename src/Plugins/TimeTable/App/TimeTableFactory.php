@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\App;
 
+use Spatie\OpeningHours\Exceptions\OverlappingTimeRanges;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DateModel;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
@@ -20,6 +21,12 @@ class TimeTableFactory
             ...($content = $model->exceptions->first(fn ($exception) => $exception->date->format('Y-m-d') == $dateModel->date->format('Y-m-d'))?->getContent($locale)) ? ['data' => $content] : [],
         ]]);
 
-        return TimeTable::createAndMergeOverlappingRanges($items->all());
+        try{
+            return TimeTable::create($items->all());
+        } catch(OverlappingTimeRanges $e) {
+            report($e);
+            return TimeTable::createAndMergeOverlappingRanges($items->all());
+        }
+
     }
 }
