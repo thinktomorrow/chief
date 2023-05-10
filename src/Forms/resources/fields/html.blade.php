@@ -1,4 +1,5 @@
 <textarea
+    wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
     data-editor
     data-locale="{{ $locale ?? app()->getLocale() }}"
     data-custom-redactor-options='@json($getRedactorOptions($locale ?? null))'

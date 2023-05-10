@@ -86,6 +86,8 @@ export default class {
             // vue mount occurs before a sidebar activation so native js can do its thing
             vueFields(panelEl);
 
+            window.Livewire.rescan(panelEl);
+
             // TODO: refactor to trigger submit.js for panel submissions...
             // This is somewhat in conflict with the Form.listen() logic.
             // We should make sure that both don't conflict with each other.

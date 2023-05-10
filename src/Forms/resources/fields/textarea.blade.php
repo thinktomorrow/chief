@@ -6,6 +6,7 @@
     ])->class([
         'w-full',
     ]) }}
+    wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
     id="{{ $getElementId($locale ?? null) }}"
 >{{ $getActiveValue($locale ?? null) }}</textarea>

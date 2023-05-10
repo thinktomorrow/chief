@@ -3,9 +3,17 @@
 namespace Thinktomorrow\Chief\Forms\Fields\File\App;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Thinktomorrow\AssetLibrary\Asset;
 
 class FileApplication
 {
+    public function updateFileValues(string $assetId, array $values): void
+    {
+        $model = Asset::find($assetId);
+
+        $model->save();
+    }
+
     public function updateFileName(string $mediaId, string $basename): void
     {
         $model = Media::find($mediaId);

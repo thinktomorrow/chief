@@ -1,6 +1,7 @@
 <div>
     <div class="relative flex items-center justify-end cursor-pointer">
         <select
+            wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
                 {{ $allowMultiple() ? 'multiple' : '' }}
                 name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
                 id="{{ $getElementId($locale ?? null) }}"

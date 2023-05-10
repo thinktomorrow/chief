@@ -6,6 +6,7 @@
             :show-as-toggle="$optedForToggleDisplay()"
         >
             <input
+                wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
                 type="checkbox"
                 name="{{ $getName($locale ?? null).'[]' }}"
                 value="{{ $value }}"

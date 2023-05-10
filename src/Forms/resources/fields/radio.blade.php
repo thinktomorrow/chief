@@ -2,6 +2,7 @@
     @foreach($getOptions() as $value => $label)
         <label for="{{ $getElementId($locale ?? null).'_'.$value }}" class="with-radio">
             <input
+                wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
                 type="radio"
                 name="{{ $getName($locale ?? null) }}"
                 value="{{ $value }}"

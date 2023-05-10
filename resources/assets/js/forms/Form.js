@@ -102,6 +102,8 @@ Form.prototype.refreshCallback = function () {
         new SelectFragment(this.el);
     }
 
+    window.Livewire.rescan(this.el);
+
     // Specific callbacks...
     // window.Eventbus.$emit('create-notification', 'success', '️Opgeslagen!', 2000);
 };

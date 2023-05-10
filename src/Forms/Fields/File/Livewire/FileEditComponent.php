@@ -21,6 +21,7 @@ class FileEditComponent extends Component
     public $components = [];
 
     public $listeners = [
+        'open' => 'open',
         'openInParentScope' => 'openInParentScope',
     ];
 
@@ -59,7 +60,7 @@ class FileEditComponent extends Component
         $this->open($value);
     }
 
-    private function open($value)
+    public function open($value)
     {
         $this->setFile(PreviewFile::fromArray($value['previewfile_array']));
         $this->isOpen = true;
@@ -107,6 +108,10 @@ class FileEditComponent extends Component
     public function submit()
     {
         dd($this->formValues);
+
+        // Values should be:
+        // - Validate
+        // - Save to Asset as custom properties
 
         if($this->mediaFile) {
             app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->formValues['basename']);
