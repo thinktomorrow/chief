@@ -12,4 +12,8 @@
     <a href="{{ route('chief.timetables.edit', $timetable_id) }}" class="mt-4 text-sm link link-primary">
         Bewerk deze openingsuren
     </a>
+@else
+    <p class="body body-dark">
+        Er is nog geen weekschema geselecteerd.
+    </p>
 @endif
