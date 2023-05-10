@@ -21,10 +21,11 @@ class TimeTableFactory
             ...($content = $model->exceptions->first(fn ($exception) => $exception->date->format('Y-m-d') == $dateModel->date->format('Y-m-d'))?->getContent($locale)) ? ['data' => $content] : [],
         ]]);
 
-        try{
+        try {
             return TimeTable::create($items->all());
         } catch(OverlappingTimeRanges $e) {
             report($e);
+
             return TimeTable::createAndMergeOverlappingRanges($items->all());
         }
 
