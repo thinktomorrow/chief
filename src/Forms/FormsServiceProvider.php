@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditComponent;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesChooseComponent;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\GalleryComponent;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\ImageCropComponent;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
@@ -36,6 +37,7 @@ class FormsServiceProvider extends ServiceProvider
             AuthenticateChiefSession::class,
         ]);
 
+        Livewire::component('chief-wire::file-gallery', GalleryComponent::class);
         Livewire::component('chief-wire::file-upload', FilesComponent::class);
         Livewire::component('chief-wire::files-choose', FilesChooseComponent::class);
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
