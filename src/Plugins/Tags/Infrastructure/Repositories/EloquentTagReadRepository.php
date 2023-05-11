@@ -42,6 +42,7 @@ class EloquentTagReadRepository implements TagReadRepository
             ->all();
     }
 
+    // TODO(ben): This should contain the 'ungrouped' tags as well. At the moment it doesn't return anything yet.
     public function getAllGroupsForSelect(): array
     {
         return $this->container->get(TagGroupModel::class)::all()

@@ -5,9 +5,16 @@
 <x-chief::page.template title="Tag aanpassen">
     <x-slot name="hero">
         <x-chief::page.hero title="Tag aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <a href="{{ route('chief.tags.delete', $model) }}" title="Tag verwijderen" class="btn btn-error-outline">
-                <x-chief::icon-label icon="icon-trash">
-                    Tag verwijderen
+            <a
+                v-cloak
+                @click="showModal('delete-tag-modal-{{ $model->id }}')"
+                class="block cursor-pointer"
+            >
+                <x-chief::icon-label class="text-grey-500 hover:text-red-500">
+                    <x-slot name="icon">
+                        <svg width="18" height="18"><use xlink:href="#icon-trash"/></svg>
+                    </x-slot>
+                    Verwijder tag
                 </x-chief::icon-label>
             </a>
         </x-chief::page.hero>
@@ -23,19 +30,7 @@
                     {!! $field->render() !!}
                 @endforeach
 
-                <div class="flex justify-between items-center mt-4">
-                    <button class="btn btn-primary" type="submit">Bewaar aanpassingen</button>
-
-                    <a
-                        v-cloak
-                        @click="showModal('delete-tag-modal-{{ $model->id }}')"
-                        class="block cursor-pointer"
-                    >
-                        <x-chief::icon-label icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500">
-                            Verwijder tag
-                        </x-chief::icon-label>
-                    </a>
-                </div>
+                <button class="btn btn-primary" type="submit">Bewaar aanpassingen</button>
             </div>
         </form>
     </x-chief::page.grid>
