@@ -34,7 +34,7 @@
 
                         <div class="flex items-center gap-2 py-2 pr-2 shrink-0">
                             <button wire:click="selectFile('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                                <x-chief-icon-button icon="icon-plus" color="grey" />
+                                <x-chief::icon-button icon="icon-plus" color="grey" />
                             </button>
                         </div>
                     </div>

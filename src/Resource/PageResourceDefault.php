@@ -5,7 +5,9 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
 
 trait PageResourceDefault
@@ -64,6 +66,11 @@ trait PageResourceDefault
         return $this->getLabel();
     }
 
+    public function getIndexHeaderContent(): ?string
+    {
+        return null;
+    }
+
     public function getPageTitleForSelect($model): string
     {
         $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
@@ -74,7 +81,7 @@ trait PageResourceDefault
     public function getIndexView(): View
     {
         if ($this->getIndexViewType() == 'table') {
-            return ($this->isNestable())
+            return ($this instanceof Nestable)
                 ? view('chief-table::nestable.index')
                 : view('chief-table::index');
         }
@@ -148,6 +155,16 @@ trait PageResourceDefault
     public function getSortableType(): string
     {
         return 'int';
+    }
+
+    public function allowInlineSorting(): bool
+    {
+        return false;
+    }
+
+    public function indexRepository(): string
+    {
+        return EloquentIndexRepository::class;
     }
 
     protected function getNavIcon(): string

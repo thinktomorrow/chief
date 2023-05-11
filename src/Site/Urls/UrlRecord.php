@@ -72,6 +72,17 @@ class UrlRecord extends Model
         return $record;
     }
 
+    public static function findSlugByModel(Model $model, ?string $locale = null): ?string
+    {
+        try {
+            $currentSlug = static::findByModel($model, $locale ?? app()->getLocale())->slug;
+        } catch (UrlRecordNotFound $e) {
+            $currentSlug = '';
+        }
+
+        return $currentSlug;
+    }
+
     public static function getByModel(Model $model): \Illuminate\Database\Eloquent\Collection
     {
         return static::where('model_type', $model->getMorphClass())
@@ -117,7 +128,7 @@ class UrlRecord extends Model
         }
 
         if ($record->id === $this->id) {
-            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from ['.$this->slug.'] to ['.$record->slug.']');
+            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from [' . $this->slug . '] to [' . $record->slug . ']');
         }
 
         $this->redirect_id = $record->id;

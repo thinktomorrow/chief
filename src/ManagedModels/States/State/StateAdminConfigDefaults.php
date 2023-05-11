@@ -68,4 +68,9 @@ trait StateAdminConfigDefaults
     {
         return null;
     }
+
+    public function getResponseNotification(string $transitionKey): ?string
+    {
+        return null;
+    }
 }

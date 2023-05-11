@@ -4,13 +4,13 @@
     'buttons' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'space-y-6']) }}>
+<div {{ $attributes->merge(['class' => 'space-y-4']) }}>
     {{-- Window header --}}
     @if($title || $labels || $buttons)
         <div class="flex justify-end space-x-4">
             <div class="w-full space-x-1">
                 @if($title)
-                    <span class="text-lg display-base display-dark">
+                    <span class="text-lg h6 h1-dark">
                         {!! $title !!}
                     </span>
                 @endif

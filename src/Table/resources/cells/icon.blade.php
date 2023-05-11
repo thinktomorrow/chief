@@ -5,11 +5,11 @@
         title="{{ $getHint() }}"
     >
         @if (false === strpos($getValue(), '<svg '))
-            <x-chief-icon-button :icon="$getValue()" :color="$getColor()" />
+            <x-chief::icon-button :icon="$getValue()" :color="$getColor()" />
         @else
-            <x-chief-icon-button :color="$getColor()">
+            <x-chief::icon-button :color="$getColor()">
                 {!! $getValue() !!}
-            </x-chief-icon-button>
+            </x-chief::icon-button>
         @endif
     </a>
 </x-chief::table.data>

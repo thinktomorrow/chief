@@ -1,11 +1,11 @@
 <div class="flex flex-wrap justify-between w-full sm:flex-nowrap gap-y-3 gap-x-6">
     <div class="w-full space-y-1 sm:w-64 shrink-0">
-        <p class="font-medium display-base display-dark">
+        <p class="font-medium h6 h1-dark">
             {{ ucfirst(str_replace('_', ' ', $lineViewModel->label())) }}
         </p>
 
         @if ($lineViewModel->description())
-            <p class="text-sm body-base text-grey-500">
+            <p class="text-sm body text-grey-500">
                 {{ $lineViewModel->description() }}
             </p>
         @endif
@@ -24,20 +24,19 @@
                     </div>
                 @endif
 
-                <div class="w-full">
+                <div class="w-full form-light">
                     @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
-                        <textarea
+                        <x-chief::input.textarea
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
-                        >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</textarea>
+                        >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</x-chief::input.textarea>
                     @else
-                        <input
-                            type="text"
+                        <x-chief::input.text
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
-                        >
+                        />
                     @endif
                 </div>
             </div>

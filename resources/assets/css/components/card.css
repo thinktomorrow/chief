@@ -1,9 +1,11 @@
-.card {
-    @apply bg-white rounded-xl p-6 shadow-card;
-}
+@layer utilities {
+    .card {
+        @apply bg-white rounded-xl p-6 shadow-card;
+    }
 
-.card-without-padding {
-    padding: 0;
+    .card-without-padding {
+        padding: 0;
 
-    @extend .card;
+        @extend .card;
+    }
 }

@@ -27,93 +27,100 @@
         @apply text-base;
     }
 
-    .display-leading {
-        line-height: theme('lineHeight.normal');
+    .h1-weight {
+        font-weight: theme('fontWeight.extrabold');
     }
 
-    .display-weight {
+    .h2-weight {
+        font-weight: theme('fontWeight.bold');
+    }
+
+    .h3-weight,
+    .h4-weight,
+    .h5-weight,
+    .h6-weight {
         font-weight: theme('fontWeight.semibold');
-    }
-
-    .display-base {
-        @extend .display-leading;
-        @extend .display-weight;
-    }
-
-    .body-leading {
-        line-height: theme('lineHeight.relaxed');
     }
 
     .body-weight {
         font-weight: theme('fontWeight.normal');
     }
 
-    .body-base {
-        @extend .body-leading;
-        @extend .body-weight;
+    .h1-tracking,
+    .h2-tracking,
+    .h3-tracking {
+        letter-spacing: theme('letterSpacing.tight');
     }
 
-    .h1-base {
-        font-weight: theme('fontWeight.extrabold');
-        line-height: theme('lineHeight.tight');
+    .h4-tracking,
+    .h5-tracking,
+    .h6-tracking {
+        letter-spacing: theme('letterSpacing.normal');
     }
 
-    .h2-base {
-        font-weight: theme('fontWeight.bold');
-        line-height: theme('lineHeight.tight');
+    .body-tracking {
+        letter-spacing: theme('letterSpacing.normal');
     }
 
-    .h3-base {
-        @extend .display-base;
-    }
-
-    .h4-base {
-        @extend .display-base;
-    }
-
-    .h5-base {
-        @extend .display-base;
-    }
-
-    .h6-base {
-        @extend .display-base;
-    }
-
-    .h1 {
-        @extend .h1-base;
-        @extend .h1-size;
-    }
-
-    .h2 {
-        @extend .h2-base;
-        @extend .h2-size;
-    }
-
-    .h3 {
-        @extend .h3-base;
-        @extend .h3-size;
-    }
-
-    .h4 {
-        @extend .h4-base;
-        @extend .h4-size;
-    }
-
-    .h5 {
-        @extend .h5-base;
-        @extend .h5-size;
-    }
-
-    .h6 {
-        @extend .h6-base;
-        @extend .h6-size;
-    }
-
-    .display-dark {
+    .h1-dark,
+    .h2-dark,
+    .h3-dark,
+    .h4-dark,
+    .h5-dark,
+    .h6-dark {
         @apply text-black;
     }
 
     .body-dark {
         @apply text-grey-700;
+    }
+
+    .h1 {
+        @apply font-display;
+        @extend .h1-size;
+        @extend .h1-weight;
+        @extend .h1-tracking;
+    }
+
+    .h2 {
+        @apply font-display;
+        @extend .h2-size;
+        @extend .h2-weight;
+        @extend .h2-tracking;
+    }
+
+    .h3 {
+        @apply font-display;
+        @extend .h3-size;
+        @extend .h3-weight;
+        @extend .h3-tracking;
+    }
+
+    .h4 {
+        @apply font-display;
+        @extend .h4-size;
+        @extend .h4-weight;
+        @extend .h4-tracking;
+    }
+
+    .h5 {
+        @apply font-display;
+        @extend .h5-size;
+        @extend .h5-weight;
+        @extend .h5-tracking;
+    }
+
+    .h6 {
+        @apply font-display;
+        @extend .h6-size;
+        @extend .h6-weight;
+        @extend .h6-tracking;
+    }
+
+    .body {
+        @apply font-body;
+        @extend .body-size;
+        @extend .body-weight;
+        @extend .body-tracking;
     }
 }

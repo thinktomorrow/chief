@@ -1,16 +1,14 @@
-<textarea
-    wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+<x-chief::input.textarea
     data-editor
     data-locale="{{ $locale ?? app()->getLocale() }}"
-    data-custom-redactor-options='@json($getRedactorOptions($locale ?? null))'
+    data-custom-redactor-options="{{ json_encode($getRedactorOptions($locale ?? null)) }}"
+    wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+    v-pre
     id="{{ $getId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
-    {{ $attributes->merge($getCustomAttributes())->merge([
-        'cols' => '10',
-        'rows' => '5',
-        'style' => 'resize: vertical',
-        'v-pre' => 'v-pre',
-    ])->class([
-        'w-full',
-    ]) }}
->{{ $getActiveValue($locale ?? null) }}</textarea>
+    cols="10"
+    rows="5"
+    :autofocus="$hasAutofocus()"
+    :attributes="$attributes->merge($getCustomAttributes())"
+    style="resize: vertical"
+>{{ $getActiveValue($locale ?? null) }}</x-chief::input.textarea>

@@ -1,16 +1,21 @@
 <template>
     <modal :id="id" type="modal" title="Media" size="xl">
         <div v-if="!isLoading || assets.length > 1" class="mb-4 space-y-4">
-            <h3 class="h3 display-dark">Kies een bestaande afbeelding</h3>
+            <h3 class="h3 h1-dark">Kies een bestaande afbeelding</h3>
 
             <div class="flex items-center justify-end space-x-4">
-                <input placeholder="Zoek op bestandsnaam ..." type="text" v-model="searchQuery" />
+                <input
+                    v-model="searchQuery"
+                    type="text"
+                    placeholder="Zoek op bestandsnaam ..."
+                    class="form-input-field"
+                />
 
                 <button class="btn btn-primary" @click.prevent="search()">Filter</button>
             </div>
         </div>
 
-        <div data-overflow-scroll class="-mx-3 overflow-scroll row max-h-1/2">
+        <div data-overflow-scroll class="-mx-3 overflow-scroll row-start-start max-h-[50vh]">
             <div class="flex justify-center w-full" v-if="isLoading && assets.length < 1">
                 <svg
                     width="24"
@@ -155,7 +160,7 @@ export default {
         Eventbus.$on('open-modal', (id) => {
             if (this.id == id && !this.assets.length) {
                 axios
-                    .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}`)
+                    .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                     .then((response) => {
                         this.assets = response.data;
                         this.isLoading = false;
@@ -170,9 +175,7 @@ export default {
         loadMore: function () {
             this.isLoading = true;
             axios
-                .get(
-                    `${this.url}?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}`
-                )
+                .get(`${this.url}?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                 .then((response) => {
                     this.assets = [...this.assets, ...response.data];
                     this.isLoading = false;
@@ -217,7 +220,7 @@ export default {
         search: function () {
             this.isLoading = true;
             axios
-                .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}`)
+                .get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}&search=${this.searchQuery}&conversion=small`)
                 .then((response) => {
                     this.assets = response.data;
                     this.isLoading = false;

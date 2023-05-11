@@ -10,7 +10,7 @@
             @endif
         </div>
 
-        <x-chief-icon-label type="forward" class="mr-3 text-primary-500"></x-chief-icon-label>
+        <x-chief::icon-label type="forward" class="mr-3 text-primary-500"></x-chief::icon-label>
         <a class="label label-primary" href="{{ $item->getUrl() }}" target="_blank">
             {{ $item->getAdminUrlLabel() }}
         </a>
@@ -22,7 +22,7 @@
             title="Aanpassen"
             class="link link-primary"
         >
-            <x-chief-icon-button icon="icon-edit"/>
+            <x-chief::icon-button icon="icon-edit"/>
         </a>
     </div>
 </div>

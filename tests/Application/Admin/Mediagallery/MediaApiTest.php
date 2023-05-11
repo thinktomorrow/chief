@@ -24,7 +24,7 @@ class MediaApiTest extends ChiefTestCase
                  ->assertJson([
                         [
                             "id" => $asset->id,
-                            "url" => $asset->url(),
+                            "url" => $asset->url('full'),
                             "filename" => $asset->filename(),
                             "dimensions" => $asset->getDimensions(),
                             "size" => $asset->getSize(),
@@ -63,7 +63,7 @@ class MediaApiTest extends ChiefTestCase
         $response->assertStatus(200)
                  ->assertJson([[
                     "id" => $asset->id,
-                    "url" => $asset->url(),
+                    "url" => $asset->url('full'),
                     "filename" => $asset->filename(),
                     "dimensions" => $asset->getDimensions(),
                     "size" => $asset->getSize(),
@@ -74,7 +74,7 @@ class MediaApiTest extends ChiefTestCase
         $response->assertStatus(200)
                  ->assertJson([[
                     "id" => $asset2->id,
-                    "url" => $asset2->url(),
+                    "url" => $asset2->url('full'),
                     "filename" => $asset2->filename(),
                     "dimensions" => $asset2->getDimensions(),
                     "size" => $asset2->getSize(),
@@ -95,7 +95,7 @@ class MediaApiTest extends ChiefTestCase
         $response->assertStatus(200)
                  ->assertJson([[
                     "id" => $asset2->id,
-                    "url" => $asset2->url(),
+                    "url" => $asset2->url('full'),
                     "filename" => $asset2->filename(),
                     "dimensions" => $asset2->getDimensions(),
                     "size" => $asset2->getSize(),

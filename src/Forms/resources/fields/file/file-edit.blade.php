@@ -27,18 +27,18 @@
                                 <a
                                     wire:click="openImageCrop()"
                                     title="crop or resize the image"
-                                    class="shrink-0 link link-primary cursor-pointer"
+                                    class="cursor-pointer shrink-0 link link-primary"
                                 >
-                                    <x-chief-icon-button color="grey">
+                                    <x-chief::icon-button color="grey">
                                         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><line x1="64" y1="64" x2="24" y2="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><polyline points="64 24 64 192 232 192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><polyline points="192 160 192 64 96 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><line x1="192" y1="232" x2="192" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
-                                    </x-chief-icon-button>
+                                    </x-chief::icon-button>
                                 </a>
                             @endif
 
                             @if($mediaFile)
-                                <x-chief-icon-button color="grey">
+                                <x-chief::icon-button color="grey">
                                     <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><polyline points="176.2 99.7 224.2 99.7 224.2 51.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><path d="M65.8,65.8a87.9,87.9,0,0,1,124.4,0l34,33.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path><polyline points="79.8 156.3 31.8 156.3 31.8 204.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><path d="M190.2,190.2a87.9,87.9,0,0,1-124.4,0l-34-33.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path></svg>
-                                </x-chief-icon-button>
+                                </x-chief::icon-button>
 
                                 <a
                                     download
@@ -46,7 +46,7 @@
                                     title="download"
                                     class="shrink-0 link link-primary"
                                 >
-                                    <x-chief-icon-button icon="icon-download" color="grey"/>
+                                    <x-chief::icon-button icon="icon-download" color="grey"/>
                                 </a>
                             @endif
                         </div>
@@ -83,9 +83,8 @@
                         <div>
                             <label for="basename" class="inline-block mb-1 font-medium display-base display-dark">Bestandsnaam</label>
 
-                            <x-chief-form::formgroup.prepend-append
-                                :append="'.'.$previewFile->extension"
-                            >
+
+                            <x-chief::input.prepend-append :append="'.'.$previewFile->extension">
                                 <input
                                     type="text"
                                     id="basename"
@@ -155,15 +154,15 @@
 {{--                            <div class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-56">--}}
 {{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
 {{--                                    <span class="text-black">Homepage</span>--}}
-{{--                                    <x-chief-icon-button icon="icon-external-link" color="grey"/>--}}
+{{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
 {{--                                </div>--}}
 {{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
 {{--                                    <span class="text-black">Contacteer ons</span>--}}
-{{--                                    <x-chief-icon-button icon="icon-external-link" color="grey"/>--}}
+{{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
 {{--                                </div>--}}
 {{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
 {{--                                    <span class="text-black">AI Generated Content</span>--}}
-{{--                                    <x-chief-icon-button icon="icon-external-link" color="grey"/>--}}
+{{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}

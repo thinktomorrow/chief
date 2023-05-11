@@ -4,6 +4,7 @@
     'tags' => null,
     'icon' => null,
 ])
+
 <div
     data-form
     data-form-url="{{ $refreshUrl }}"
@@ -19,7 +20,7 @@
             @if($icon)
                 {!! $icon !!}
             @else
-                <x-chief-icon-button icon="icon-edit"/>
+                <x-chief::icon-button icon="icon-edit"/>
             @endif
         </a>
     @endif

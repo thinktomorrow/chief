@@ -1,24 +1,7 @@
-<script src="{{ chief_cached_asset('/chief-assets/back/js/main.js') }}"></script>
+<script src="{{ chief_cached_asset('js/main.js') }}"></script>
 
 <!-- place to add custom vue components, right before the global Vue instance is created -->
 @stack('custom-components')
-
-<!-- radio options component, todo: place in component file instead of inline -->
-<script>
-    Vue.component('radio-options',{
-        props: ['errors', 'defaultType'],
-        data: function(){
-            return {
-                type: this.defaultType,
-            };
-        },
-        methods:{
-            changeType: function(type){
-                this.type = type;
-            },
-        }
-    });
-</script>
 
 @stack('custom-scripts')
 
@@ -109,7 +92,7 @@
     };
 </script>
 
-<script src="{{ chief_cached_asset('/chief-assets/back/js/native.js') }}"></script>
+<script src="{{ chief_cached_asset('js/native.js') }}"></script>
 
 <livewire:scripts />
 

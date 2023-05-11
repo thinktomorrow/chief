@@ -1,38 +1,93 @@
 # Changelog
 
-All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
+All notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## unreleased
+## Unreleased
 
+-   Fixed: Testsuite
+-   Added: Pagetitle can be shown with svg icons in table index
+
+## 0.7.23 - 2023-04-19
+
+-   Added: MediaGalleryController now accepts a conversion query defining which conversion should be returned
+-   Added: you can now find the current Chief version on the bottom of the sidebar navigation view
+-   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
+-   Fixed: RadioFilter and CheckboxFilter field labels were not correctly styled
+-   Fixed: Checkbox form-input-toggle doesn't shrink anymore in flexbox with long label
+
+## 0.7.22 - 2023-03-13
+
+-   Fixed: Redactor field was not initialized in inserted repeat section
+-   Fixed: clicking on the login remember password form label doesn't check the corresponding checkbox
+-   Fixed: NestableFormPresets parent_id MultiSelect is shown on create
+
+## 0.7.21 - 2023-03-08
+
+-   Added: `PageResource::getIndexHeaderContent()` method to provide custom content on index header.
+-   Fixed: MediaGallery images were not showing up in the expected row layout
+-   Fixed: fragment titles in fragment-select-existing sidebar had h1 styling
+-   Fixed: bug where model has other primary than default id column
+-   Fixed: detaching asset with entity id being uuid failed (upgraded assetlibrary to 0.8.6)
+
+## 0.7.20 - 2023-02-21
+
+-   Fixed: issue where a new nestable model retrieved all others as descendants
+-   Changed: you can now prepend or append content to a nav component by using the default slot attribute
+
+## 0.7.19 - 2023-02-13
+
+-   Added: `<x-chief::page.layout/>`, `<x-chief::page.template/>`, `<x-chief::page.hero/>` and `<x-chief::page.grid/>` components
+-   Added: `<x-chief::solo.layout/>` and `<x-chief::solo.template/>` components
+-   Added: `<x-chief::mail.layout/>` and `<x-chief::mail.template/>` components
+-   Added: `PageAdminConfig::getResponseNotification` as interface method.
+-   Added: chief::input components
+-   Fixed: menu item create breadcrumb now links back to correct menu
+-   Changed: Refactored and changed nestable logic. This introduces a couple of breaking changes. A nestable model should now implement the `Nestable` interface.
+-   Changed: rebuilt all Chief pages with new `<x-chief::page.template/>`.
+-   Changed: rebuilt all Chief solo pages with new `<x-chief::solo.template/>`.
+-   Changed: rebuilt all Chief mails with new `<x-chief::mail.template/>`.
+-   Changed: nav-project view moved to resources/views/templates/page/nav/nav-project.blade.php
+-   Changed: replaced all input elements with new input components
+-   Changed: renamed chief-window to use default component namespace chief::window
+-   Changed: renamed chief-inline-notifications to use default component namespace chief::inline-notifications
+-   Changed: renamed chief-icon-label to use default component namespace chief::icon-label
+-   Changed: renamed chief::icon-button to use default component namespace chief::icon-button
+-   Changed: renamed chief-hierarchy to use default component namespace chief::hierarchy
+-   Deprecated: Publishable trait. The same functionality can be achieved with the UsesPageState trait.
+-   Removed: chief-form::formgroup component (use new input components instead)
+-   Removed: chief-form::formgroup.window component
+-   Removed: chief-form::formgroup.error component (use new chief::input.error component instead)
+-   Removed: chief-form::formgroup.prepend-append component (use new chief::input.prepend-append component instead)
+-   Removed: global form element styling (e.g. input, .prepend, .append, .select, .with-toggle...)
 
 ## 0.7.18 - 2023-01-23
 
-- Added: show options menu on page index. Options show links to duplicate and state changes
-- Added: Edit and preview link on page index.
-- Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
-- Added: option to set the admin locale. This is the locale in which to display page content by default.
-- Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
-- Fixed: issue where archiving or deleting a parent node, resulted in a failed node collection retrieval, due to the strict setting.
-- Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
-- Changed: updated node packages to their latest stable version
+-   Added: show options menu on page index. Options show links to duplicate and state changes
+-   Added: Edit and preview link on page index.
+-   Added: option to the fallback locale on a fragment. You can do this `Fragmentable::dynamicLocaleFallback`.
+-   Added: option to set the admin locale. This is the locale in which to display page content by default.
+-   Changed: updated node packages to their latest stable version
+-   Fixed: when the localized repeatfield values were not present, the entire array was given as value instead of the default value.
+-   Fixed: issue where archiving or deleting a parent node, resulted in a failed node collection retrieval, due to the strict setting.
+-   Fixed: issue when retrieving the baseUrlSegment resulted in an error when the parent node was archived/deleted.
 
 ## 0.7.17 - 2022-12-13
 
-- Added: nestable page logic
-- Added: option to set default for admin filter fields.
-- Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
-- Fixed: title of inline nav is now displayed as section title instead of not showing at all.
-- Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins. 
+-   Added: nestable page logic
+-   Added: option to set default for admin filter fields.
+-   Added: scopeOnline method to stateful contracts. This allows to use it as eloquent query scope. E.g. `static::online()->get()`.
+-   Fixed: title of inline nav is now displayed as section title instead of not showing at all.
+-   Fixed: Mysql column conflict (`current_state` is ambiguous) when using archivable scope in custom joins.
 
 ## 0.7.16 - 2022-12-13
 
-- Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
+-   Added: import redirect script. Run as `php artisan chief:import-redirects <csv>`.
 
 ## 0.7.15 - 2022-12-02
 
-- Fixed: honour order of selected options in window
-- Changed: Show offline fragments when admin views page in preview mode.
+-   Fixed: honour order of selected options in window
+-   Changed: Show offline fragments when admin views page in preview mode.
 
 ## 0.7.14 - 2022-11-03
 

@@ -11,7 +11,7 @@
                 class="cursor-pointer link link-primary"
                 style="margin-left: 0; margin-top: -2px; margin-right: 0.5rem"
             >
-                <x-chief-icon-button icon="icon-chevron-up-down"/>
+                <x-chief::icon-button icon="icon-chevron-up-down"/>
             </span>
 
             {{-- Arrow icon --}}
@@ -24,15 +24,15 @@
             </span>
 
             {{-- Card label --}}
-            <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getLabel() }}">
-                <span class="font-medium body-dark group-hover:underline">{{ $node->getLabel() }}</span>
+            <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getModel()->getPageTitle($node->getModel()) }}">
+                <span class="font-medium body-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
                     <span class="inline mr-1 label label-xs label-primary">Homepage</span>
                 @endif
 
-                @if(!$node->showOnline())
-                    <span class="inline mr-1 label label-xs label-warning">Offline</span>
+                @if($node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && !$node->getModel()->inOnlineState())
+                    <span class="inline mr-1 label label-xs label-error">Offline</span>
                 @endif
             </a>
         </div>

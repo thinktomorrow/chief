@@ -1,5 +1,4 @@
 <notifications>
-
     @if($errors and count($errors) > 0)
         @foreach($errors->all() as $error)
             <notification type="error" duration="5000">

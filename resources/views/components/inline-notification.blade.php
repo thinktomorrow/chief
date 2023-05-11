@@ -22,7 +22,7 @@
 
     switch($size ?? null) {
         case 'small':
-            $classesForSize = 'px-2 py-1';
+            $classesForSize = 'px-2 py-1 text-sm';
             break;
         case 'medium':
             $classesForSize = 'px-4 py-3';
@@ -31,11 +31,11 @@
             $classesForSize = 'px-6 py-4';
             break;
         default:
-            $classesForSize = 'px-2 py-1';
+            $classesForSize = 'px-2 py-1 text-sm';
             break;
     }
 @endphp
 
-<div {{ $attributes->merge(['class' => $classesForType . ' ' . $classesForSize . ' inline-block font-medium rounded-lg border']) }}>
+<div {{ $attributes->merge(['class' => $classesForType . ' ' . $classesForSize . ' inline-block rounded-md border']) }}>
     {{ $slot }}
 </div>

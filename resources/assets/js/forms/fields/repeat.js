@@ -112,6 +112,9 @@ Repeat.prototype.insertSection = function (sectionHtml) {
 
     vueFields(sectionElement);
 
+    // So Redactor can be initialised on the inserted section
+    window.dispatchEvent(new CustomEvent('chief::formrefreshed', { detail: { container: sectionElement } }));
+
     initRepeatFieldsIn(sectionElement);
 };
 

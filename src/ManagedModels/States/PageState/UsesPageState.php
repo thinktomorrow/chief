@@ -8,6 +8,9 @@ use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 
+/**
+ * @method static static online()
+ */
 trait UsesPageState
 {
     public function getStateKeys(): array

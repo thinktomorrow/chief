@@ -7,8 +7,8 @@
     border-radius: theme('borderRadius.md') !important;
     border-color: theme('colors.grey.200') !important;
     padding-left: 0.75rem !important;
-    padding-top: 0.625rem !important;
-    padding-bottom: 0.625rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
 }
 
 .multiselect__tags-wrap {
@@ -78,6 +78,7 @@
 .multiselect__input {
     font-size: theme('fontSize.base') !important;
     color: theme('colors.grey.400') !important;
+    line-height: theme('lineHeight.normal') !important;
 }
 
 .multiselect__option--highlight {

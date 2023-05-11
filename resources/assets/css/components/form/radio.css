@@ -1,0 +1,38 @@
+.form-input-radio {
+    margin-top: 2px;
+    @apply appearance-none relative w-5 h-5 rounded-full leading-none;
+
+    &:before {
+        content: '';
+        @apply inline-block w-5 h-5 border rounded-full shadow-sm;
+    }
+
+    &:after {
+        content: '';
+        @apply inline-block absolute w-5 h-5 left-0 top-0 scale-0 rounded-full;
+    }
+
+    &:focus {
+        @apply ring-1 ring-primary-500 outline-none;
+    }
+
+    &:checked {
+        &:after {
+            @apply scale-[0.45];
+        }
+    }
+
+    &:disabled {
+        @apply opacity-50;
+    }
+}
+
+.form-light .form-input-radio {
+    &:before {
+        @apply bg-white border-grey-200;
+    }
+
+    &:after {
+        @apply bg-primary-500;
+    }
+}

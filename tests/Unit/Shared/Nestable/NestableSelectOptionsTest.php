@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\SelectOptions;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\SelectOptions;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
@@ -12,7 +12,7 @@ final class NestableSelectOptionsTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    private NestablePageRepository $repository;
+    private NestableRepository $repository;
 
     protected function setUp(): void
     {
@@ -20,14 +20,11 @@ final class NestableSelectOptionsTest extends ChiefTestCase
 
         chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
-
-        $this->repository = app()->makeWith(NestablePageRepository::class, ['modelClass' => NestableModelStub::class]);
     }
 
     public function test_it_can_get_empty_select_options()
     {
         $options = app(SelectOptions::class)->getParentOptions(
-            $this->repository->getTree(),
             NestableModelStub::create(['id' => 'xxx'])
         );
 
@@ -36,10 +33,9 @@ final class NestableSelectOptionsTest extends ChiefTestCase
 
     public function test_it_can_create_nestable_model()
     {
-        $this->defaultNestables();
+        $this->defaultNestables(true);
 
         $options = app(SelectOptions::class)->getParentOptions(
-            $this->repository->getTree(),
             NestableModelStub::find('third')
         );
 

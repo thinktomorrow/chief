@@ -44,15 +44,15 @@
                     @endif
 
                     <button wire:click="openFileEdit('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                        <x-chief-icon-button icon="icon-edit" color="grey" />
+                        <x-chief::icon-button icon="icon-edit" color="grey" />
                     </button>
 
                     <button type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                        <x-chief-icon-button icon="icon-chevron-up-down" color="grey" />
+                        <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
                     </button>
 
                     <button wire:click="deleteFile('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                        <x-chief-icon-button icon="icon-trash" color="grey" />
+                        <x-chief::icon-button icon="icon-trash" color="grey" />
                     </button>
                 @endif
             </div>

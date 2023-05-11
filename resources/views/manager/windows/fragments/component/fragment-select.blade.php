@@ -15,7 +15,7 @@
             style="margin-top: -14px; z-index: 1;"
         >
             <div class="absolute">
-                <x-chief-icon-button icon="icon-plus" color="grey" />
+                <x-chief::icon-button icon="icon-plus" color="grey" />
             </div>
         </div>
     @endif
@@ -55,7 +55,7 @@
             <div class="flex justify-end w-8 shrink-0">
                 @if($hideSelectOptions)
                     <span data-fragment-select-close class="cursor-pointer">
-                        <x-chief-icon-button icon="icon-x-mark" color="grey" />
+                        <x-chief::icon-button icon="icon-x-mark" color="grey" />
                     </span>
                 @endif
             </div>

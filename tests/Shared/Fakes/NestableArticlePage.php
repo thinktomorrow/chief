@@ -5,13 +5,19 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\PageResourceDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault;
 
-class NestableArticlePage extends ArticlePage
+class NestableArticlePage extends ArticlePage implements PageResource, Nestable
 {
-    public function isNestable(): bool
-    {
-        return true;
-    }
+    use PageResourceDefault;
+    use NestableDefault;
+    //    use NestablePageDefault;
 
     public static function migrateUp()
     {
@@ -25,5 +31,11 @@ class NestableArticlePage extends ArticlePage
             $table->timestamps();
             $table->softDeletes();
         });
+    }
+
+    public function fields($model): iterable
+    {
+        yield Text::make('title');
+        yield NestableFormPresets::parentSelect($model);
     }
 }

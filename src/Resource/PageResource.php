@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Table\TableResource;
 
+// Admin specific resource methods
 interface PageResource extends Resource, TableResource
 {
     // Nav
@@ -33,6 +34,8 @@ interface PageResource extends Resource, TableResource
 
     public function getIndexTitle(): string;
 
+    public function getIndexHeaderContent(): ?string;
+
     public function getIndexBreadcrumb(): ?BreadCrumb;
 
     public function getIndexCardView(): string;
@@ -57,4 +60,12 @@ interface PageResource extends Resource, TableResource
      * Options are int, string. Defaults to int.
      */
     public function getSortableType(): string;
+
+    public function allowInlineSorting(): bool;
+
+    /**
+     * The class responsible for fetching the results for admin index pages.
+     * @return string
+     */
+    public function indexRepository(): string;
 }

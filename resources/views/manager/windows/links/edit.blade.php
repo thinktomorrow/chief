@@ -1,6 +1,6 @@
 <div class="pt-6 border-t border-grey-100">
     <div data-form data-form-tags="status,links" class="space-y-6">
-        <p class="text-lg display-base display-dark">Links beheren</p>
+        <p class="text-lg h6 h1-dark">Links beheren</p>
 
         <form id="linksUpdateForm" action="@adminRoute('links-update', $model)" method="POST">
             @csrf
@@ -18,14 +18,14 @@
                     >
                         <div>
                             <div class="mb-1 space-x-1 leading-none">
-                                <span class="font-medium display-base display-dark">
+                                <span class="font-medium h6 h1-dark">
                                     {{ strtoupper($locale) }} link
                                 </span>
                             </div>
 
                             <div class="mt-2 space-y-2">
-                                <div class="flex w-full">
-                                    <div class="prepend">
+                                <div class="flex w-full form-light">
+                                    <div class="form-input-prepend">
                                         <span v-if="fixedSegment !== '/'" class="flex items-center space-x-0.5">
                                             {{-- TODO: better icon --}}
                                             <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
@@ -48,7 +48,7 @@
                                         type="text"
                                         name="links[{{ $locale }}]"
                                         v-model="value"
-                                        class="with-prepend"
+                                        class="form-input-with-prepend form-input-field"
                                     >
                                 </div>
 
@@ -58,10 +58,9 @@
                                     v-html="hint"
                                 ></div>
 
-                                <x-chief-form::formgroup.error error-ids="links"></x-chief-form::formgroup.error>
+                                <x-chief::input.error rule="links"/>
                             </div>
                         </div>
-
                     </link-input>
                 @endforeach
             </div>
@@ -69,7 +68,7 @@
 
         @if($linkForm->hasAnyRedirects())
             <div class="space-y-3">
-                <h4 class="h4 display-dark">Redirects</h4>
+                <h4 class="h4 h1-dark">Redirects</h4>
 
                 <div class="space-y-3">
                     @foreach($linkForm->links() as $locale => $links)
@@ -93,7 +92,7 @@
                                                     <div>{{ $urlRecord->slug }}</div>
 
                                                     <span class="cursor-pointer link link-error" @click="remove">
-                                                        <x-chief-icon-label type="delete"></x-chief-icon-label>
+                                                        <x-chief::icon-label type="delete"></x-chief::icon-label>
                                                     </span>
                                                 </div>
                                             </url-redirect>

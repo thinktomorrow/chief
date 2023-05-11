@@ -1,14 +1,15 @@
 <modal id="delete-manager-{{ $model->id }}" title="Ben je zeker?">
     <form
+        v-cloak
+        id="delete-manager-form-{{ $model->id }}"
         action="@adminRoute('delete', $model)"
         method="POST"
-        id="delete-manager-form-{{ $model->id }}"
-        v-cloak
+        class="form-light"
     >
         @method('DELETE')
         @csrf
 
-        <h2 class="h2 display-dark">Verwijder: {{ $resource->getPageTitle($model) }}</h2>
+        <h2 class="h2 h1-dark">Verwijder: {{ $resource->getPageTitle($model) }}</h2>
 
         <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
 
@@ -18,7 +19,7 @@
             placeholder="DELETE"
             type="text"
             autocomplete="off"
-            class="w-full mt-3"
+            class="form-input-field"
         >
     </form>
 

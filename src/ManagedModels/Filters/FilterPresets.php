@@ -46,7 +46,7 @@ class FilterPresets
         })->label($label ?? $name);
     }
 
-    public static function text(string $queryParameter, array $dynamicColumns = ['title'], array $astrotomicColumns = [], string $label = 'titel', string $jsonColumn = 'values'): Filter
+    public static function text(string $queryParameter, array $dynamicColumns = ['title'], array $astrotomicColumns = [], string $label = 'Titel', string $jsonColumn = 'values'): Filter
     {
         return InputFilter::make($queryParameter, function ($query, $value) use ($dynamicColumns, $astrotomicColumns, $jsonColumn) {
             return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {

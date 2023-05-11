@@ -1,23 +1,13 @@
-@extends('chief::layout.master')
+@php
+    $title = 'Audit van '. $causer->fullname;
+@endphp
 
-@section('page-title', 'Audit')
+<x-chief::page.template :title="$title">
+    <x-slot name="hero">
+        <x-chief::page.hero :title="$title" class="max-w-3xl"/>
+    </x-slot>
 
-@section('header')
-    <div class="container-sm">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Audit for '. $causer->fullname . '')
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-        @endcomponent
-    </div>
-@endsection
-
-@section('content')
-    <div class="container-sm">
+    <x-chief::page.grid class="max-w-3xl">
         @include('chief::admin.audit._rows')
-    </div>
-@stop
+    </x-chief::page.grid>
+</x-chief::page.template>

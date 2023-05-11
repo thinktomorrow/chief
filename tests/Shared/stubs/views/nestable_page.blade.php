@@ -1,20 +1,20 @@
 <div>
-    <h1>{{ $node->getLabel() }}</h1>
+    <h1>{{ $model->title }}</h1>
 </div>
 <div>
-    <!-- get breadcrumbs -->
-    {!! implode(' > ', array_map(fn($node) => $node->getLabel() ,$node->getBreadCrumbs())) !!}
+    <!-- get ancestors -->
+    {!! implode(' > ', array_map(fn($model) => $model->title, $model->getAncestors())) !!}
 
     <!-- get parent page -->
-    {!! $node->getParentNode()?->getLabel() !!}
+    {!! $model->getParent()?->title !!}
 
     <!-- get child pages -->
-    {!! implode(' > ', array_map(fn($node) => $node->getLabel() ,$node->getChildNodes()->all())) !!}
+    {!! implode(' > ', array_map(fn($model) => $model->title, $model->getChildren()->all())) !!}
 
-    <!-- get previous page -->
-    {!! $node->getLeftSiblingNode()?->getLabel() !!}
+    <!-- get sibling pages -->
+    {!! implode(' > ', array_map(fn($model) => $model->title, $model->getSiblings()->all())) !!}
 
-    <!-- get next page -->
-    {!! $node->getRightSiblingNode()?->getLabel() !!}
+    <!-- get descendants -->
+    {!! implode(',', array_map(fn($node) => $node->getModel()->title, $model->getDescendants()->flatten()->all())) !!}
 </div>
 

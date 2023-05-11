@@ -1,19 +1,11 @@
-@extends('chief::layout.master')
+@php
+    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar admins', route('chief.back.users.index'));
+@endphp
 
-@section('page-title', $user->fullname)
-
-@section('header')
-    <div class="container-sm">
-        @component('chief::layout._partials.header')
-            @slot('title', $user->fullname)
-
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.users.index') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Terug naar admins</x-chief-icon-label>
-                </a>
-            @endslot
-
-            <div class="flex items-center space-x-4">
+<x-chief::page.template :title="$user->fullname">
+    <x-slot name="hero">
+        <x-chief::page.hero :title="$user->fullname" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
+            <div class="flex items-center gap-4">
                 {!! $user->present()->enabledAsLabel() !!}
 
                 @if($user->isEnabled())
@@ -36,37 +28,25 @@
                     </div>
                 </options-dropdown>
             </div>
-        @endcomponent
-    </div>
-@endsection
+        </x-chief::page.hero>
+    </x-slot>
 
-@section('content')
     @if($user->isEnabled())
         <form id="disableUserForm" method="POST" action="{{ route('chief.back.users.disable', $user->id) }}">
             @csrf
-            {{-- <p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <input type="submit" class="text-error" value="blokkeren">.</p> --}}
         </form>
     @else
         <form id="enableUserForm" method="POST" action="{{ route('chief.back.users.enable', $user->id) }}">
             @csrf
-            {{-- <p>{{ $user->firstname }} is momenteel geblokkeerd. <br> <input type="submit" class="text-primary" value="Verleen opnieuw toegang">.</p> --}}
         </form>
     @endif
 
-    <div class="container-sm">
-        <div class="row">
-            <div class="w-full">
-                <div class="card">
-                    <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST">
-                        @csrf
-                        @method('put')
+    <x-chief::page.grid class="max-w-3xl">
+        <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST" class="card">
+            @csrf
+            @method('put')
 
-                        <div class="space-y-6">
-                            @include('chief::admin.users._form')
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+            @include('chief::admin.users._form')
+        </form>
+    </x-chief::page.grid>
+</x-chief::page.template>

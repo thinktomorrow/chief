@@ -8,7 +8,7 @@
         @method('DELETE')
         @csrf
 
-        <h2 class="h2 display-dark">Het menuitem - {{ $menuitem->label }} - verwijderen?</h2>
+        <h2 class="h2 h1-dark">Het menuitem - {{ $menuitem->label }} - verwijderen?</h2>
         <p>Eenmaal verwijderd, zal het menuitem onmiddellijk van de site verdwijnen.</p>
     </form>
 

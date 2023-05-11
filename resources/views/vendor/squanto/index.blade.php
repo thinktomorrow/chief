@@ -1,21 +1,9 @@
-@section('header')
-    <div class="container-sm">
-        @component('chief::layout._partials.header')
-            @slot('title')
-                Vertalingen
-            @endslot
+<x-chief::page.template title="Vaste teksten">
+    <x-slot name="hero">
+        <x-chief::page.hero title="Vaste teksten" class="max-w-3xl"/>
+    </x-slot>
 
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-        @endcomponent
-    </div>
-@stop
-
-<x-squanto::app-layout>
-    <div class="container-sm">
+    <x-chief::page.grid class="max-w-3xl">
         <div class="divide-y card divide-grey-100">
             @foreach($pages as $page)
                 @php
@@ -27,11 +15,11 @@
                     'pt-3' => !$loop->first,
                     'pb-3' => !$loop->last,
                 ])>
-                    <span class="space-x-1">
+                    <span class="space-x-1 mt-0.5">
                         <a
                             href="{{ route('squanto.edit',$page->slug()) }}"
                             title="{{ ucfirst($page->label()) }}"
-                            class="display-dark display-base"
+                            class="font-medium body-dark hover:underline"
                         >
                             {{ ucfirst($page->label()) }}
                         </a>
@@ -42,10 +30,10 @@
                     </span>
 
                     <a href="{{ route('squanto.edit',$page->slug()) }}" class="flex-shrink-0 link link-primary">
-                        <x-chief-icon-button type="edit"></x-chief-icon-button>
+                        <x-chief::icon-button type="edit"></x-chief-icon-button>
                     </a>
                 </div>
             @endforeach
         </div>
-    </div>
-</x-squanto::app-layout>
+    </x-chief::page.grid>
+</x-chief::page.template>

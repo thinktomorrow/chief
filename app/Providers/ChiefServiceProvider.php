@@ -45,9 +45,9 @@ use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\MysqlNestablePageRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\PropagateUrlChange;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\MysqlNestableRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
@@ -122,7 +122,7 @@ class ChiefServiceProvider extends ServiceProvider
             return new Settings();
         });
 
-        $this->app->bind(NestablePageRepository::class, MysqlNestablePageRepository::class);
+        $this->app->bind(NestableRepository::class, MysqlNestableRepository::class);
 
         (new SquantoServiceProvider($this->app))->register();
 
@@ -240,7 +240,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-site', __DIR__.'/../../resources/views/site');
 
         Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';
         });
     }
 }

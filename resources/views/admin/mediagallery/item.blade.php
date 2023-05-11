@@ -7,25 +7,33 @@
 
 @endphp
 
-<div>
-    <input type="checkbox" id="asset_{{ $index }}" name="asset_ids[]" value="{{ $asset->id }}" class="sr-only peer"/>
+<label for="asset_{{ $index }}" class="relative block overflow-hidden rounded-lg cursor-pointer group hover:bg-grey-100">
+    <div class="absolute top-0 left-0 m-2 z-[1] form-light">
+        <x-chief::input.checkbox id="asset_{{ $index }}" name="asset_ids[]" value="{{ $asset->id }}"/>
+    </div>
 
-    <label
-        for="asset_{{ $index }}"
-        class="block transition-all duration-75 ease-in-out rounded peer-checked:ring-2 peer-checked:ring-primary-500 peer-checked:ring-offset-[6px]"
-    >
-        <div class="w-full overflow-hidden aspect-square rounded-xl bg-grey-100">
-            @if ($asset->getExtensionType() == "image")
-                <img
-                    src="{{ $assetUrl }}"
-                    alt="{{ $asset->filename() }}"
-                    class="object-contain w-full h-full"
-                />
-            @else
-                <div class="flex items-center justify-center w-full h-full text-grey-500">
-                    {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
-                </div>
-            @endif
+    <div class="flex items-center justify-center overflow-hidden rounded-lg group-hover:bg-grey-100 bg-grey-50">
+        @if($asset->getExtensionType() == "image")
+            <img class="object-contain h-48" src="{{ $assetUrl }}">
+        @else
+            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
+        @endif
+    </div>
+
+    <div class="p-3">
+        <a
+            href="{{ $asset->url() }}"
+            title="{{ $asset->filename() }}"
+            target="_blank"
+            rel="noopener"
+            class="overflow-hidden font-medium h1-dark whitespace-nowrap overflow-ellipsis hover:underline"
+        >
+            {{ $asset->filename() }}
+        </a>
+
+        <div class="mt-1 text-sm font-medium text-grey-500">
+            <p>{{ $asset->getDimensions() }}</p>
+            <p>{{ $asset->getSize() }}</p>
         </div>
 
         <div class="mt-4 space-y-1.5 leading-tight">

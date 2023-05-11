@@ -19,7 +19,7 @@
                         title="Aanpassen"
                         class="link link-primary"
                     >
-                        <x-chief-icon-label type="add"> Voeg een eerste link toe </x-chief-icon-label>
+                        <x-chief::icon-label type="add"> Voeg een eerste link toe </x-chief::icon-label>
                     </a>
                 </p>
             </div>

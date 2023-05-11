@@ -1,54 +1,32 @@
-@extends('chief::layout.master')
+<x-chief::page.template title="Bewerk jouw profiel">
+    <x-slot name="hero">
+        <x-chief::page.hero title="Bewerk jouw profiel" class="max-w-3xl"/>
+    </x-slot>
 
-@section('page-title', $user->fullname)
+    <x-chief::page.grid class="max-w-3xl">
+        <x-chief::window title="Jouw gegevens" class="card">
+            <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
+                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="PUT">
 
-@section('header')
-    <div class="container-sm">
-        @component('chief::layout._partials.header')
-            @slot('title', 'Bewerk jouw profiel')
+                @include('chief::admin.you._form')
+            </form>
+        </x-chief::window>
 
-            @slot('breadcrumbs')
-                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
-                    <x-chief-icon-label type="back">Dashboard</x-chief-icon-label>
-                </a>
-            @endslot
-        @endcomponent
-    </div>
-@endsection
+        <x-chief::window title="Wachtwoord wijzigen" class="card">
+            <div class="space-y-4">
+                <p class="body text-grey-500">
+                    Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.
+                </p>
 
-@section('content')
-    <div class="container-sm">
-        <div class="row gutter-3">
-            <div class="w-full">
-                <div class="card">
-                    <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
-                        {!! csrf_field() !!}
-                        <input type="hidden" name="_method" value="PUT">
-
-                        <div class="space-y-6">
-                            @include('chief::admin.you._form')
-
-                            <button form="updateForm" type="submit" class="btn btn-primary"> Opslaan </button>
-                        </div>
-                    </form>
+                <div>
+                    <a
+                        href="{{ route('chief.back.password.edit') }}"
+                        title="Wijzig wachtwoord"
+                        class="btn btn-warning-outline"
+                    > Wijzig wachtwoord </a>
                 </div>
             </div>
-
-            <div class="w-full">
-                <div class="card">
-                    <x-chief-form::formgroup id="password" label="Wachtwoord">
-                        <x-slot name="description">
-                            <p>Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>
-                        </x-slot>
-
-                        <a
-                            class="btn btn-warning-outline"
-                            title="Wijzig wachtwoord"
-                            href="{{ route('chief.back.password.edit') }}"
-                        > Wijzig wachtwoord </a>
-                    </x-chief-form::formgroup>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+        </x-chief::window>
+    </x-chief::page.grid>
+</x-chief::page.template>

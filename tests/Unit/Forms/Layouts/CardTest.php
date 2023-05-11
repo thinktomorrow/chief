@@ -18,6 +18,6 @@ class CardTest extends TestCase
 
         $this->assertStringStartsWith('<div ', $component->toHtml());
         $this->assertStringEndsWith("</div>\n", $component->toHtml());
-        $this->assertStringContainsString('<textarea ', $component->toHtml());
+        $this->assertStringContainsString('<textarea', $component->toHtml());
     }
 }

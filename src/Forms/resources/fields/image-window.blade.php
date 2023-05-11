@@ -22,22 +22,22 @@
                     <div class="space-y-0.5 text-sm">
                         <div>
                             <p>
-                                <span class="body-base body-dark" style="word-break: break-all;">
+                                <span class="body body-dark" style="word-break: break-all;">
                                     {{ $image->filename }}
                                 </span>
-                                <span class="body-base body-dark">{{ $image->size }} </span>
+                                <span class="body body-dark">{{ $image->size }} </span>
                             </p>
                         </div>
 
                         <a href="{{ $image->url }}" title="Afbeelding bekijken" target="_blank" rel="noopener" class="block">
-                            <x-chief-icon-label
+                            <x-chief::icon-label
                                 icon="icon-external-link"
                                 position="append"
                                 size="18"
                                 class="link link-primary"
                             >
                                 Afbeelding bekijken
-                            </x-chief-icon-label>
+                            </x-chief::icon-label>
                         </a>
                     </div>
                 @endif

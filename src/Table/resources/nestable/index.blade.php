@@ -1,44 +1,59 @@
-<x-chief::index :sidebar="true">
-    <x-slot name="header">
-        <div class="flex flex-wrap items-end justify-between gap-6">
-            <h1 class="h1 display-dark">{{ $root ? $root->getLabel() : ucfirst($resource->getIndexTitle()) }}</h1>
+@php
+    $title = ucfirst($resource->getIndexTitle());
+@endphp
+
+<x-chief::page.template :title="$title">
+    <x-slot name="hero">
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getIndexBreadCrumb()]">
+            @if($resource->getIndexHeaderContent())
+                {!! $resource->getIndexHeaderContent() !!}
+            @endif
             @adminCan('create')
-                <a href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}" class="btn btn-primary-outline">
-                    <x-chief-icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief-icon-label>
+                <a
+                    href="@adminRoute('create')"
+                    title="{{ ucfirst($resource->getLabel()) }} toevoegen"
+                    class="btn btn-primary"
+                >
+                    <x-chief::icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief::icon-label>
                 </a>
             @endAdminCan
-        </div>
+        </x-chief::page.hero>
     </x-slot>
 
-    @if(!$tree->isEmpty())
+    <x-chief::page.grid>
         <div class="card">
-            <div
-                data-sortable
-                data-sortable-group-id="{{ $root?->getId() }}"
-                data-sortable-endpoint="{{ $manager->route('sort-index') }}"
-                data-sortable-nested-endpoint="{{ $manager->route('move-index') }}"
-                data-sortable-id-type="{{ $resource->getSortableType() }}"
-                data-sortable-class-when-sorting="is-sorting"
-                class="-my-3 divide-y divide-grey-100"
-            >
-                @foreach($tree as $node)
-                    @include('chief-table::nestable.node', [
-                        'node' => $node,
-                        'level' => 0,
-                    ])
-                @endforeach
-            </div>
+            @if (!$tree->isEmpty())
+                <div
+                    data-sortable
+                    data-sortable-group-id="{{ $resource::resourceKey() }}"
+                    data-sortable-endpoint="{{ $manager->route('sort-index') }}"
+                    data-sortable-nested-endpoint="{{ $manager->route('move-index') }}"
+                    data-sortable-id-type="{{ $resource->getSortableType() }}"
+                    data-sortable-class-when-sorting="is-sorting"
+                    class="-my-3 divide-y divide-grey-100"
+                >
+                    @foreach($tree as $node)
+                        @include('chief-table::nestable.node', ['node' => $node, 'level' => 0])
+                    @endforeach
+                </div>
+            @else
+                <p class="body-dark">
+                    Nog geen items toegevoegd.
+                    <a
+                        href="@adminRoute('create')"
+                        title="Voeg een eerste item toe"
+                        class="link link-primary"
+                    >Voeg een eerste item toe</a>.
+                </p>
+            @endif
         </div>
-    @else
-        <div class="card">
-            Nog geen items toegevoegd.
-            <a
-                href="@adminRoute('create'){{ $root ? '?parent_id=' . $root->getId() : null }}"
-                title="Voeg een eerste item toe"
-                class="link link-primary"
-            >
-                Voeg een eerste item toe
-            </a>
-        </div>
-    @endif
-</x-chief::index>
+
+        @if ($resource->showIndexSidebarAside())
+            <x-slot name="aside">
+                @include('chief::templates.page.index.default-sidebar')
+            </x-slot>
+        @else
+            @include('chief::templates.page.index.inline-sidebar')
+        @endif
+    </x-chief::page.grid>
+</x-chief::page.template>

@@ -1,16 +1,16 @@
 <div data-sortable-handle data-sortable-id="{{ $model->getKey() }}" class="py-4">
     <div class="space-y-2">
-        <div class="flex justify-between">
+        <div class="flex justify-between gap-4 group">
             @adminCan('edit')
                 <a href="@adminRoute('edit', $model)" class="w-full mt-0.5 space-x-1">
             @endAdminCan
-                    <span class="text-lg display-dark display-base">
+                    <span class="font-medium body-dark group-hover:underline">
                         {!! $resource->getIndexCardTitle($model) !!}
                     </span>
 
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
                         <span class="align-bottom with-xs-labels">
-                            <span class="label label-info"> Homepage </span>
+                            <span class="label label-primary"> Homepage </span>
                         </span>
                     @endif
             @adminCan('edit')

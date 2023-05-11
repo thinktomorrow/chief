@@ -1,6 +1,6 @@
 <div class="pt-6 border-t border-grey-100">
     <div data-form data-form-tags="status,links" class="space-y-6">
-        <p class="text-lg display-base display-dark">Status beheren</p>
+        <p class="text-lg h6 h1-dark">Status beheren</p>
 
         @if($content = $stateConfig->getEditContent($model))
             <div class="prose prose-dark">
@@ -48,12 +48,12 @@
 
 
                             @if($content = $stateConfig->getTransitionContent( $transitionKey ))
-                                <x-chief-inline-notification
+                                <x-chief::inline-notification
                                     type="{{ $stateConfig->getTransitionType($transitionKey) }}"
                                     size="large"
                                 >
                                     <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                                </x-chief-inline-notification>
+                                </x-chief::inline-notification>
                             @endif
 
                             <div v-cloak slot="modal-action-buttons">
@@ -89,12 +89,12 @@
                     </form>
 
                     @if($content = $stateConfig->getTransitionContent($transitionKey))
-                        <x-chief-inline-notification
+                        <x-chief::inline-notification
                             type="{{ $stateConfig->getTransitionType($transitionKey) }}"
                             size="large"
                         >
                             <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                        </x-chief-inline-notification>
+                        </x-chief::inline-notification>
                     @endif
                 @endif
             @endforeach
