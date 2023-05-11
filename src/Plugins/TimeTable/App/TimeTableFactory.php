@@ -45,6 +45,7 @@ class TimeTableFactory
             return TimeTable::create($items->all());
         } catch (OverlappingTimeRanges $e) {
             report($e);
+
             return TimeTable::createAndMergeOverlappingRanges($items->all());
         }
     }
