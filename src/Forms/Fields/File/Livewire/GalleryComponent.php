@@ -56,7 +56,7 @@ class GalleryComponent extends Component
             ->select('assets.*');
 
         if(isset($this->filters['search'])) {
-            $builder->whereHas('media', function (Builder $query){
+            $builder->whereHas('media', function (Builder $query) {
                 $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
             });
         }
@@ -108,4 +108,3 @@ class GalleryComponent extends Component
         $this->emitTo($name, $event, $params);
     }
 }
-
