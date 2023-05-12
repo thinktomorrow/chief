@@ -2,6 +2,9 @@
 
 <div class="w-full">
     <div class="space-y-4 card">
+
+        <h2>GALLERIJ ALS TABLE</h2>
+
         <div>
             <div class="row gutter-3">
                 @foreach($rows as $i => $asset)
@@ -19,3 +22,4 @@
         @endif
     </div>
 </div>
+

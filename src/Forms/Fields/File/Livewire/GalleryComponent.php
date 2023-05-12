@@ -4,11 +4,9 @@ namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
 
@@ -17,6 +15,9 @@ class GalleryComponent extends Component
     use WithPagination;
 
     public $filters = [];
+    public $sort = null;
+    public $showAsList = false;
+
     public Collection $rows;
     protected Gallery $table;
 
@@ -39,15 +40,31 @@ class GalleryComponent extends Component
         $this->resetPage();
     }
 
+    public function showAsList()
+    {
+        return $this->showAsList = true;
+    }
+
+    public function showAsGrid()
+    {
+        return $this->showAsList = false;
+    }
+
     public function getTableRows(): Paginator
     {
-        $builder = Asset::with('media')->orderBy('created_at', 'DESC')
+        $builder = Asset::with('media')
             ->select('assets.*');
 
         if(isset($this->filters['search'])) {
             $builder->whereHas('media', function (Builder $query){
                 $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
             });
+        }
+
+        if($this->sort == 'created_at_asc') {
+            $builder = $builder->orderBy('created_at', 'ASC');
+        } elseif($this->sort == 'created_at_desc' || !$this->sort) {
+            $builder = $builder->orderBy('created_at', 'DESC');
         }
 
         return $builder->paginate(4);

@@ -32,9 +32,18 @@ class Gallery extends Component implements Htmlable
         return $this->livewireComponent->getTableRows();
     }
 
+    private function getView(): string
+    {
+        if($this->livewireComponent->showAsList) {
+            return 'chief-form::fields.file.gallery-list';
+        }
+
+        return 'chief-form::fields.file.gallery';
+    }
+
     public function render(): View
     {
-        return view('chief-form::fields.file.gallery', array_merge($this->data(), [
+        return view($this->getView(), array_merge($this->data(), [
 
         ]));
     }
