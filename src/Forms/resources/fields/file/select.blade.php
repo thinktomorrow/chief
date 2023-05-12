@@ -3,10 +3,10 @@
         <!-- Once the temp files are stored, this field is populated with the associated media record id -->
         @foreach($getFilesForUpload() as $i => $file)
             <div wire:key="files_for_upload_{{$file->id}}">
-                <input type="hidden" name="{{ $getFieldName() }}[{{ $i }}][id]" value="{{$file->id}}" />
-                <input type="hidden" name="{{ $getFieldName() }}[{{ $i }}][path]" value="{{$file->tempPath}}" />
-                <input type="hidden" name="{{ $getFieldName() }}[{{ $i }}][originalName]" value="{{$file->filename}}" />
-                <input type="hidden" name="{{ $getFieldName() }}[{{ $i }}][mimeType]" value="{{$file->mimeType}}" />
+                <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][id]" value="{{$file->id}}" />
+                <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][path]" value="{{$file->tempPath}}" />
+                <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][originalName]" value="{{$file->filename}}" />
+                <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][mimeType]" value="{{$file->mimeType}}" />
             </div>
         @endforeach
 
