@@ -4,11 +4,9 @@ namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
 
@@ -45,7 +43,7 @@ class GalleryComponent extends Component
             ->select('assets.*');
 
         if(isset($this->filters['search'])) {
-            $builder->whereHas('media', function (Builder $query){
+            $builder->whereHas('media', function (Builder $query) {
                 $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
             });
         }
@@ -91,4 +89,3 @@ class GalleryComponent extends Component
         $this->emitTo($name, $event, $params);
     }
 }
-

@@ -53,7 +53,7 @@ class AssetDeleteComponent extends Component
             foreach($this->assetIds as $assetId) {
 
                 // TODO: this exception is thrown by current version of assetlib and is in new version not necessary
-                try{
+                try {
                     app(DeleteAsset::class)->delete($assetId);
                 } catch(FileNotAccessibleException $e) {
                     Asset::find($assetId)->delete();
