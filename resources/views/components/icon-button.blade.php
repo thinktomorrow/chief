@@ -1,6 +1,6 @@
 @props([
     'icon' => 'icon-edit',
-    'color' => 'primary',
+    'color' => 'grey',
 ])
 
 @php

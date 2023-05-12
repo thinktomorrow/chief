@@ -69,6 +69,8 @@ module.exports = {
                 'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in': 'popIn 200ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in-out': 'popInOut 2000ms cubic-bezier(0.83, 0, 0.17, 1)',
+                'dialog-pop-in': 'dialogPopIn 150ms ease-out',
+                'dialog-fade-in': 'dialogFadeIn 150ms ease-out',
             },
             keyframes: {
                 slideInNavigation: {
@@ -83,6 +85,14 @@ module.exports = {
                     '0%': { transform: 'scale(0)' },
                     '10%, 90%': { transform: 'scale(1)' },
                     '100%': { transform: 'scale(0)' },
+                },
+                dialogPopIn: {
+                    '0%': { transform: 'scale(0.9)' },
+                    '100%': { transform: 'scale(1)' },
+                },
+                dialogFadeIn: {
+                    '0%': { opacity: 0 },
+                    '100%': { opacity: 1 },
                 },
             },
             boxShadow: {

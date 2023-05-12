@@ -28,17 +28,17 @@
                 @if($file->isQueuedForDeletion)
                     @if($file->mediaId)
                         <span class="text-sm text-primary-500">
-                            Wordt verwijderd na bewaren. <span class="link link-primary underline cursor-pointer" wire:click="undoDeleteFile('{{ $file->id }}')">Ongedaan maken</span>
+                            Wordt verwijderd na bewaren. <span class="underline cursor-pointer link link-primary" wire:click="undoDeleteFile('{{ $file->id }}')">Ongedaan maken</span>
                         </span>
                     @else
                         <span class="text-sm text-primary-500">
-                            <span class="link link-primary underline cursor-pointer" wire:click="undoDeleteFile('{{ $file->id }}')">Verwijderen ongedaan maken</span>
+                            <span class="underline cursor-pointer link link-primary" wire:click="undoDeleteFile('{{ $file->id }}')">Verwijderen ongedaan maken</span>
                         </span>
                     @endif
                 @else
 
                     @if(!$file->mediaId)
-                        <span class="text-primary-500 text-xs" title="Je kan een bestand bewerken van zodra het is bewaard.">
+                        <span class="text-xs text-primary-500" title="Je kan een bestand bewerken van zodra het is bewaard.">
                             Nog niet bewaard
                         </span>
                     @endif
