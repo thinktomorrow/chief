@@ -7,7 +7,6 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\AssetDeleteComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditComponent;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditDialog;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesChooseComponent;
