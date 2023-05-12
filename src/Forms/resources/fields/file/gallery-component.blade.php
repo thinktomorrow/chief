@@ -6,15 +6,8 @@
             <option value="created_at_asc">Datum eerst toegevoegd</option>
         </x-chief::input.select>
 
-{{--        <button wire:click="showAsGrid">GRID</button>--}}
-{{--        <button wire:click="showAsList">List</button>--}}
-
-        <button x-on:click="showAsList = true">GRID</button>
-        <button x-on:click="showAsList = false">List</button>
-
-        <div x-show="showAsList">
-            IK TOON ALS JE OP GRID HEBT STAAN.
-        </div>
+        <button wire:click="showAsGrid">GRID</button>
+        <button wire:click="showAsList">LIST</button>
     </div>
 
     {{ $this->table }}
