@@ -15,6 +15,8 @@
                 <p class="font-medium text-grey-500">
                     Don't try to follow trends. Create them.
                 </p>
+
+                <livewire:chief-wire::file-edit-dialog>
             </div>
 
             @if ($widgets)

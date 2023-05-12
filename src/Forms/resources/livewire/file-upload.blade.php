@@ -51,9 +51,9 @@
 {{--            <h2>{{ $photo->getClientOriginalName() }}</h2>--}}
 
 {{--            @if($photo->isPreviewable())--}}
-{{--                <img class="w-24 h-24 border rounded m-2" src="{{ $photo->temporaryUrl() }}" />--}}
+{{--                <img class="w-24 h-24 m-2 border rounded" src="{{ $photo->temporaryUrl() }}" />--}}
 {{--            @else--}}
-{{--                <img class="w-24 h-24 border rounded m-2" />--}}
+{{--                <img class="w-24 h-24 m-2 border rounded" />--}}
 {{--            @endif--}}
 
 {{--            @error('photos.' . $i)--}}
@@ -73,7 +73,7 @@
 {{--     x-on:livewire-upload-progress="progress = $event.detail.progress"--}}
 {{-->--}}
 
-{{--    <input class="border p-4" type="file" wire:model="photos" multiple>--}}
+{{--    <input class="p-4 border" type="file" wire:model="photos" multiple>--}}
 
 {{--    <div class="border bg-grey-400" x-show="isUploading">--}}
 {{--        IS UPLOADEN...--}}
@@ -91,4 +91,3 @@
 {{--@error('photos.*')--}}
 {{--<span class="text-red-500">{{ $message }}</span>--}}
 {{--@enderror--}}
-

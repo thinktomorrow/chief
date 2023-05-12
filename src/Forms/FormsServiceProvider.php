@@ -7,7 +7,9 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\AssetDeleteComponent;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditComponent;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditDialog;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesChooseComponent;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesComponent;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\GalleryComponent;
@@ -44,5 +46,7 @@ class FormsServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
         Livewire::component('chief-wire::asset-delete', AssetDeleteComponent::class);
+
+        Livewire::component('chief-wire::file-edit-dialog', FileEditDialog::class);
     }
 }
