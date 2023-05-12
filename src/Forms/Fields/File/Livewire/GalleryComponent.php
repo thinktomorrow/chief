@@ -63,7 +63,7 @@ class GalleryComponent extends Component
 
         if($this->sort == 'created_at_asc') {
             $builder = $builder->orderBy('created_at', 'ASC');
-        } elseif($this->sort == 'created_at_desc' || !$this->sort) {
+        } elseif($this->sort == 'created_at_desc' || ! $this->sort) {
             $builder = $builder->orderBy('created_at', 'DESC');
         }
 
