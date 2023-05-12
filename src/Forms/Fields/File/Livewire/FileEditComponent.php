@@ -24,7 +24,7 @@ class FileEditComponent extends Component
         'openInParentScope' => 'openInParentScope',
     ];
 
-    public function mount(string $parentId, array $components)
+    public function mount(string $parentId, array $components = [])
     {
         $this->parentId = $parentId;
         $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
@@ -63,7 +63,7 @@ class FileEditComponent extends Component
 
     public function open($value)
     {
-        $this->setFile(PreviewFile::fromArray($value['previewfile_array']));
+        $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
         $this->isOpen = true;
 
         $this->emitSelf('componentOpened');

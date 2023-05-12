@@ -101,9 +101,7 @@ class FilesComponent extends Component
 
     public function openFileEdit($fileId)
     {
-        $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile_array' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
-        //        $this->emitDown('openFileEdit', ['previewfile_array' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
-        //        $this->emitTo('chief-wire::file-edit', 'open', $this->previewFiles[$this->findPreviewFile($fileId)]);
+        $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
     }
 
     public function openFilesChoose()

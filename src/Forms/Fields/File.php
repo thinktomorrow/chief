@@ -84,7 +84,7 @@ class File extends Component implements Field
 
         /** @var Asset $asset */
         foreach ($assets as $asset) {
-            $files[] = PreviewFile::fromAsset($this, $asset);
+            $files[] = PreviewFile::fromAsset($asset);
         }
 
         return $files;

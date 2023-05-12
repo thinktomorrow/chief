@@ -60,21 +60,11 @@ class PreviewFile implements Wireable
         );
     }
 
-    // TODO: this should be changed to fromMedia when we remove asset library
-    public static function fromAsset(File $field, Asset $asset): static
+    public static function fromAsset(Asset $asset): static
     {
-        $url = $field->isStoredOnPublicDisk()
-            ? $asset->url()
-            : ($field->generatesCustomUrl() ? $field->generateCustomUrl($asset, $field->getModel()) : '');
-
-        $thumbUrl = $field->isStoredOnPublicDisk()
-            ? $asset->url('thumb')
-            : '';
-
-        // If the conversions haven't run yet, we'll use the original image until they are uploaded
-        if ($field->isStoredOnPublicDisk() && ! $asset->getFirstMedia()?->hasGeneratedConversion('thumb')) {
-            $thumbUrl = $asset->url();
-        }
+        // TODO: convert this to using the new asset library api.
+        // TODO: how to get the smallest conversions if we don't know the field info?
+        $thumbUrl = $asset->url();
 
         return new static(
             $asset->id,

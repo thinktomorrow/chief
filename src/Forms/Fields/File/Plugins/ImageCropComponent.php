@@ -1,11 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Forms\Fields\File\Plugins;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\Chief\Forms\Fields\File\App\FileApplication;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\MediaFile;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\PreviewFile;
 
 class ImageCropComponent extends Component
 {
@@ -85,8 +87,6 @@ class ImageCropComponent extends Component
         $y = $value['y'];
         $width = $value['width'];
         $height = $value['height'];
-
-
     }
 
     public function submit()

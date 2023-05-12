@@ -8,6 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
 
@@ -18,6 +19,10 @@ class GalleryComponent extends Component
     public $filters = [];
     public Collection $rows;
     protected Gallery $table;
+
+    protected $listeners = [
+        'assetsDeleted' => 'onAssetsDeleted',
+    ];
 
     public function mount()
     {
@@ -48,24 +53,28 @@ class GalleryComponent extends Component
         return $builder->paginate(4);
     }
 
-    public function openFileEdit($assetId)
+    public function openAssetEdit($assetId)
     {
-        $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile_array' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
+        $previewFile = PreviewFile::fromAsset(Asset::find($assetId));
+
+        $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile' => $previewFile]);
     }
 
-    public function search()
+    public function deleteAsset($assetId)
     {
-
-    }
-
-    public function deleteFile($assetId)
-    {
-        //
+        $this->emitDownTo('chief-wire::asset-delete', 'openInParentScope', ['assetIds' => [$assetId]]);
     }
 
     public function onFileUpdated($assetId): void
     {
         // Immediately show the updated values
+    }
+
+    public function onAssetsDeleted(array $assetIds): void
+    {
+        // TODO: show toast of deletion
+
+        $this->callMethod('$refresh');
     }
 
     public function render()
@@ -75,7 +84,7 @@ class GalleryComponent extends Component
         ]);
     }
 
-    private function emitDownTo($name, $event, array $params)
+    private function emitDownTo($name, $event, array $params = [])
     {
         $params['parent_id'] = $this->id;
 

@@ -4,4 +4,7 @@
     </div>
 
     {{ $this->table }}
+
+    <div><livewire:chief-wire::file-edit parent-id="{{ $this->id }}" /></div>
+    <div><livewire:chief-wire::asset-delete parent-id="{{ $this->id }}" /></div>
 </div>

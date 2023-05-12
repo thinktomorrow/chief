@@ -34,5 +34,23 @@
                 {{ $asset->getDimensions() }} | {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
             </p>
         </div>
+
+        <button wire:click="openAssetEdit('{{ $asset->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+            <x-chief::icon-button icon="icon-edit" color="grey" />
+        </button>
+
+        <button wire:click="deleteAsset('{{ $asset->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+            <x-chief::icon-button icon="icon-trash" color="grey" />
+        </button>
+
+        <a
+            download
+            href="{{ $asset->url() }}"
+            title="download"
+            class="shrink-0 link link-primary"
+        >
+            <x-chief::icon-button icon="icon-download" color="grey"/>
+        </a>
+
     </label>
 </div>
