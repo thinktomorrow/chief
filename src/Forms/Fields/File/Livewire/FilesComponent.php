@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -21,6 +23,7 @@ class FilesComponent extends Component
     protected array $components;
 
     public $listeners = [
+        'upload:finished' => 'onUploadFinished',
         'fileUpdated' => 'onFileUpdated',
     ];
 
@@ -62,10 +65,19 @@ class FilesComponent extends Component
         $this->syncPreviewFiles();
     }
 
-    public function updatedFiles(): void
+    /**
+     * After the upload of a file, we convert our passed
+     * filepath to a valid UploadedFile object
+     *
+     * @param $key
+     * @param $value
+     * @return void
+     */
+    public function onUploadFinished($key, $value)
     {
-        $currentCount = count($this->previewFiles);
+        Arr::set($this->files, str_replace('files.','',$key), TemporaryUploadedFile::createFromLivewire($value[0]));
 
+        $currentCount = count($this->previewFiles);
         $this->syncPreviewFiles();
 
         if(count($this->previewFiles) > $currentCount) {
@@ -73,18 +85,41 @@ class FilesComponent extends Component
         }
     }
 
+//    public function updatedFiles($value, $key): void
+//    {
+////        $this->validate([
+////            'files.*' => 'email',
+////        ]);
+//return;
+//        list($index, $attribute) = explode('.',$key);
+//
+//        // Each setting is individually passed (fileName, fileSize, fileRef). But we only want to update our
+//        // previewFiles when the file is actually uploaded, e.g. when fileRef is updated.
+//        if($attribute != 'fileRef') return;
+//
+//
+//
+//        $this->syncPreviewFiles();
+//
+//
+//    }
+
     private function syncPreviewFiles()
     {
-        //        dd($this->previewFiles);
         // Livewire converts the public properties of PreviewFile object to an array. So we need to convert this back to an object
         $this->previewFiles = array_map(fn (array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
 
-        foreach($this->files as $newFile) {
-            if(! is_null($index = $this->findPreviewFile($newFile->getFilename()))) {
-                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFile, $this->previewFiles[$index]);
+        foreach($this->files as $index => $newFileDetails) {
+
+            if(!isset($newFileDetails['fileRef'])) continue;
+
+            if(! is_null($index = $this->findPreviewFile($newFileDetails['fileRef']->getFilename()))) {
+                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
             } else {
-                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFile);
+                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
             }
+
+//            dd($this->previewFiles);
         }
     }
 
@@ -137,6 +172,11 @@ class FilesComponent extends Component
         $previewFile = $this->previewFiles[$this->findPreviewFile($fileId)];
         $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
     }
+
+//    public function getRules()
+//    {
+//        return ['email'];
+//    }
 
 //    public function rules(): array
 //    {

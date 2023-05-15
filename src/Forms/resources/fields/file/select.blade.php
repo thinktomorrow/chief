@@ -20,14 +20,29 @@
     </div>
 
     <div class="flex border border-dashed divide-x rounded-lg shadow-sm border-grey-200 divide-grey-200 divide-dashed">
-        <label for="{{ $getFieldId() }}" class="relative w-1/2">
-            <input
-                type="file"
-                wire:model="files"
-                id="{{ $getFieldId() }}"
-                {{ $allowMultiple() ? 'multiple' : '' }}
-                class="absolute inset-0 w-full opacity-0 cursor-pointer pointer-events-auto peer"
-            />
+
+        <label for="{{ $getFieldName() }}" class="relative w-1/2">
+
+            <div x-data="{isUploading: false, isDone: false, progress: 0}"
+                 x-show="isUploading"
+                 x-on:livewire-upload-start="isUploading = true"
+                 x-on:livewire-upload-finish="() => {}"
+                 x-on:livewire-upload-error="isUploading = false"
+                 x-on:livewire-upload-progress="progress = $event.detail.progress"
+            >
+
+                <input
+                    type="file"
+{{--                    wire:model="files"--}}
+                    id="{{ $getFieldName() }}"
+                    {{ $allowMultiple() ? 'multiple' : '' }}
+                    class="absolute inset-0 w-full opacity-0 cursor-pointer pointer-events-auto peer"
+                />
+
+                <progress class="w-full" max="100" x-bind:value="progress"></progress>
+            </div>
+
+
 
             <div class="flex items-center gap-4 p-4 rounded-l-lg group peer-focus:ring-1 peer-focus:ring-primary-500">
                 <div class="flex items-center justify-center w-12 h-12 rounded-full shrink-0 group-hover:bg-primary-50 bg-grey-100">
@@ -59,5 +74,29 @@
             </div>
         </a>
     </div>
+
+    @push('custom-scripts-after-vue')
+        <script>
+            (function(){
+                const fileField = document.getElementById('{{ $getFieldName() }}');
+
+                fileField.addEventListener('change', () => {
+
+                    const fileList = [...fileField.files];
+
+                    fileList.forEach((file, index) => {
+                        @this.set('files.'+index+'.fileName', file.name );
+                        @this.set('files.'+index+'.fileSize', file.size );
+                        @this.set('files.'+index+'.progress', 0 );
+                        @this.upload('files.'+index+'.fileRef', file, (n)=>{}, ()=>{}, (e)=>{
+                            // Progress callback
+                            @this.set('files.'+index+'.progress', e.detail.progress);
+                        });
+                    });
+                });
+            })();
+
+        </script>
+    @endpush
 
 </div>

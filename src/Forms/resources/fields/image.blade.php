@@ -5,7 +5,7 @@
 
 <div>
     <livewire:chief-wire::file-upload
-        :field-id="$field->getId()"
+        :field-id="$field->getId($locale)"
         :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
         :media-ids="(array_map(fn($file) => $file->id, $field->getValue($locale)))"
