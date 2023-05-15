@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -75,7 +74,7 @@ class FilesComponent extends Component
      */
     public function onUploadFinished($key, $value)
     {
-        Arr::set($this->files, str_replace('files.','',$key), TemporaryUploadedFile::createFromLivewire($value[0]));
+        Arr::set($this->files, str_replace('files.', '', $key), TemporaryUploadedFile::createFromLivewire($value[0]));
 
         $currentCount = count($this->previewFiles);
         $this->syncPreviewFiles();
@@ -111,7 +110,9 @@ class FilesComponent extends Component
 
         foreach($this->files as $index => $newFileDetails) {
 
-            if(!isset($newFileDetails['fileRef'])) continue;
+            if(! isset($newFileDetails['fileRef'])) {
+                continue;
+            }
 
             if(! is_null($index = $this->findPreviewFile($newFileDetails['fileRef']->getFilename()))) {
                 $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
@@ -119,7 +120,7 @@ class FilesComponent extends Component
                 $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
             }
 
-//            dd($this->previewFiles);
+            //            dd($this->previewFiles);
         }
     }
 
