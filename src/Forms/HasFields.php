@@ -10,7 +10,7 @@ trait HasFields
     public function getFields(): Fields
     {
         // Return all fields but omit any nested fields such as there are in the repeat field
-        return Fields::make($this->components, fn ($field) => ! $field instanceof Repeat && !$field instanceof File);
+        return Fields::make($this->components, fn ($field) => ! $field instanceof Repeat && ! $field instanceof File);
     }
 
     public function getAllFields(): Fields
