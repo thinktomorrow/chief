@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Unit;
 
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\DefaultTagRead;
+use Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure\TaggableStub;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class TagReadTest extends TestCase
@@ -48,7 +49,28 @@ class TagReadTest extends TestCase
             'taggroup_id' => '2',
             'label' => 'internal label',
             'color' => '#333333',
-            'usages' => 5,
+            'owner_references' => collect([
+                (object)[
+                    'owner_type' => TaggableStub::class,
+                    'owner_id' => '1',
+                ],
+                (object)[
+                    'owner_type' => TaggableStub::class,
+                    'owner_id' => '2',
+                ],
+                (object)[
+                    'owner_type' => TaggableStub::class,
+                    'owner_id' => '3',
+                ],
+                (object)[
+                    'owner_type' => TaggableStub::class,
+                    'owner_id' => '4',
+                ],
+                (object)[
+                    'owner_type' => TaggableStub::class,
+                    'owner_id' => '5',
+                ],
+            ]),
             'data' => [],
         ], $values));
     }

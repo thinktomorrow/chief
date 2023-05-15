@@ -22,10 +22,10 @@ class EloquentTagReadRepository implements TagReadRepository
 
     public function getAll(): Collection
     {
-        $usages = $this->getAllUsages();
+        $ownerReferences = $this->getAllOwnerReferences();
 
         return $this->container->get(TagModel::class)::all()
-            ->map(fn (TagModel $tagModel) => $this->container->get(TagRead::class)::fromMappedData([...$tagModel->toArray(), 'usages' => $usages->first(fn ($usage) => $usage->tag_id == $tagModel->id)?->count, 0]));
+            ->map(fn (TagModel $tagModel) => $this->container->get(TagRead::class)::fromMappedData([...$tagModel->toArray(), 'owner_references' => $ownerReferences->first(fn ($ownerReferencesByTag, $tagId) => $tagId == $tagModel->id), 0]));
     }
 
     public function getAllGroups(): Collection
@@ -50,11 +50,18 @@ class EloquentTagReadRepository implements TagReadRepository
             ->all();
     }
 
-    private function getAllUsages(): Collection
+    private function getAllOwnerReferences(): Collection
     {
         return DB::table('chief_tags_pivot')
-            ->groupBy('tag_id')
-            ->selectRaw('count(*) as count, tag_id')
-            ->get();
+            ->get()
+            ->groupBy('tag_id');
     }
+//
+//    private function getAllUsages(): Collection
+//    {
+//        return DB::table('chief_tags_pivot')
+//            ->groupBy('tag_id')
+//            ->selectRaw('count(*) as count, tag_id')
+//            ->get();
+//    }
 }

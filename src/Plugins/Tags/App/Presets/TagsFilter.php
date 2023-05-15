@@ -32,6 +32,7 @@ class TagsFilter implements Filter
 
     private Collection $tags;
     private array $tagGroupIds = [];
+    private array $ownerTypes = [];
 
     final public function __construct(string $queryKey = 'tags', ?Closure $query = null)
     {
@@ -111,6 +112,14 @@ class TagsFilter implements Filter
         return $this;
     }
 
+    public function filterByOwnerTypes(array|string $ownerTypes): static
+    {
+        $this->optionType = 'owner_type';
+        $this->ownerTypes = (array) $ownerTypes;
+
+        return $this;
+    }
+
     public function filterByTagCategory(array|string|int $tagGroupIds): static
     {
         $this->optionType = 'category';
@@ -127,6 +136,9 @@ class TagsFilter implements Filter
 
         return match($this->optionType) {
             'used' => app(TagReadRepository::class)->getAll()->reject(fn (TagRead $tagRead) => $tagRead->getUsages() < 1),
+            'owner_type' => app(TagReadRepository::class)->getAll()->filter(function(TagRead $tagRead){
+                return $tagRead->getOwnerReferences()->contains(fn($pivotRow) => in_array($pivotRow->owner_type, $this->ownerTypes));
+            }),
             'category' => app(TagReadRepository::class)->getAll()->filter(fn (TagRead $tagRead) => in_array($tagRead->getTagGroupId(), $this->tagGroupIds)),
             default => app(TagReadRepository::class)->getAll(),
         };

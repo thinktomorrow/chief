@@ -41,6 +41,24 @@ class TagReadRepositoryTest extends TestCase
         $this->assertEquals(1, $results->first(fn ($tagRead) => $tagRead->getTagId() == $tagModel2->id)->getUsages());
     }
 
+    public function test_it_can_get_all_tags_and_owner_references()
+    {
+        $tagModel = $this->createTagModel();
+        $tagModel2 = $this->createTagModel();
+
+        TaggableStub::migrateUp();
+        $taggable = TaggableStub::create();
+        $taggable2 = TaggableStub::create();
+
+        $taggable->tags()->attach([$tagModel->id]);
+        $taggable2->tags()->attach([$tagModel->id, $tagModel2->id]);
+
+        $results = app(TagReadRepository::class)->getAll();
+
+        $this->assertCount(2, $results->first(fn ($tagRead) => $tagRead->getTagId() == $tagModel->id)->getOwnerReferences());
+        $this->assertCount(1, $results->first(fn ($tagRead) => $tagRead->getTagId() == $tagModel2->id)->getOwnerReferences());
+    }
+
     public function test_it_can_get_all_taggroups()
     {
         $this->createTaggroupModel();

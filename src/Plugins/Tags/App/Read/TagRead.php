@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\App\Read;
 
+use Illuminate\Support\Collection;
+
 interface TagRead
 {
     public static function fromMappedData(array $data): static;
@@ -15,6 +17,8 @@ interface TagRead
     public function getColor(): string;
 
     public function getUsages(): int;
+
+    public function getOwnerReferences(): Collection;
 
     public function getData(string $key, string $index = null, $default = null);
 }

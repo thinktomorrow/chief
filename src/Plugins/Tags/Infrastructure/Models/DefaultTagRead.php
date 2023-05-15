@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models;
 
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagGroupId;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagId;
@@ -14,6 +15,7 @@ class DefaultTagRead implements TagRead
     private ?string $color;
     private array $data;
     private int $usages;
+    private Collection $ownerReferences;
 
     private function __construct()
     {
@@ -28,7 +30,9 @@ class DefaultTagRead implements TagRead
         $model->tagGroupId = $data['taggroup_id'] ? TagGroupId::fromString($data['taggroup_id']) : null;
         $model->label = $data['label'];
         $model->color = $data['color'] ?? null;
-        $model->usages = $data['usages'] ?? 0;
+
+        $model->ownerReferences = $data['owner_references'] ?? collect();
+        $model->usages = count($data['owner_references'] ?? []);
         $model->data = $data['data'] ?? [];
 
         return $model;
@@ -57,6 +61,11 @@ class DefaultTagRead implements TagRead
     public function getUsages(): int
     {
         return $this->usages;
+    }
+
+    public function getOwnerReferences(): Collection
+    {
+        return $this->ownerReferences;
     }
 
     public function getData(string $key, string $index = null, $default = null)
