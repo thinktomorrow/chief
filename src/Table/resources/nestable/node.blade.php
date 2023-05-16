@@ -2,8 +2,8 @@
     data-sortable-id="{{ $node->getId() }}"
     class="py-3 nested:ptl sortable-item sorting:nested:p-0 sorting:nested:space-y-4"
 >
-    <div class="flex items-center justify-between group">
-        <div class="flex items-center">
+    <div class="flex items-start justify-between gap-4 group">
+        <div class="flex items-start gap-1">
             {{-- Sortable handle icon --}}
             <span
                 data-sortable-show-when-sorting
@@ -18,23 +18,42 @@
             <span
                 data-sortable-hide-when-sorting
                 class="hidden cursor-pointer link link-black nested:block"
-                style="margin-left: -1.75rem; margin-top: -5px; margin-right: 0.5rem;"
+                style="margin-left: -1.75rem; margin-right: 0.5rem; margin-top: 0.2rem;"
             >
                 <svg width="20" height="20"><use xlink:href="#icon-arrow-tl-to-br"/></svg>
             </span>
 
             {{-- Card label --}}
-            <a href="{{ $manager->route('edit', $node->getId()) }}" title="{{ $node->getModel()->getPageTitle($node->getModel()) }}">
-                <span class="font-medium body-dark group-hover:underline">{{ $node->getModel()->getPageTitle($node->getModel()) }}</span>
+            <div class="flex flex-wrap gap-1 mt-[0.2rem] items-start">
+                @adminCan('edit')
+                    <a
+                        href="{{ $manager->route('edit', $node->getId()) }}"
+                        title="{{ $node->getModel()->getPageTitle($node->getModel()) }}"
+                        class="mr-1 font-medium body-dark group-hover:underline"
+                    >
+                        {{ $node->getModel()->getPageTitle($node->getModel()) }}
+                    </a>
+                @elseAdminCan
+                    <span class="mr-1 font-medium body-dark">
+                        {{ $node->getModel()->getPageTitle($node->getModel()) }}
+                    </span>
+                @endAdminCan
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
-                    <span class="inline mr-1 label label-xs label-primary">Homepage</span>
+                    <span class="label label-xs label-primary mt-[1px]">Home</span>
                 @endif
 
-                @if($node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && !$node->getModel()->inOnlineState())
-                    <span class="inline mr-1 label label-xs label-error">Offline</span>
+                @if(
+                    $node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract
+                    && !$node->getModel()->inOnlineState()
+                )
+                    <span class="label label-xs label-error mt-[1px]">Offline</span>
                 @endif
-            </a>
+
+                @if ($node->getModel() instanceof \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable)
+                    <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="4"/>
+                @endif
+            </div>
         </div>
 
         <div data-sortable-hide-when-sorting>

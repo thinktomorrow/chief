@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
+use Illuminate\Support\Facades\Blade;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Table\Elements\TableColumn;
 use Thinktomorrow\Chief\Table\Elements\TableColumnLink;
 use Thinktomorrow\Chief\Table\Elements\TableHeader;
@@ -17,6 +19,17 @@ trait TableResourceDefault
         yield TableColumnLink::make('Titel')
             ->value($this->generateDefaultTitleColumnLink($model))
             ->url($manager->route('edit', $model));
+
+        if ($model instanceof Taggable) {
+            yield TableColumn::make('Tags')
+                ->value(Blade::render('
+                    <div class="flex items-start gap-1">
+                        <x-chief-tags::tags :tags="$tags" size="xs" threshold="3"/>
+                    </div>
+                ', [
+                    'tags' => $model->getTags(),
+                ]));
+        }
 
         if ($model instanceof StatefulContract) {
             foreach ($model->getStateKeys() as $stateKey) {
@@ -59,10 +72,7 @@ trait TableResourceDefault
     {
         $output = '<span class="inline-flex items-center gap-1">';
 
-        $pageTitle = $this->getPageTitle($model);
-        $pageTitle = strlen(strip_tags($pageTitle)) > 50 ? teaser($this->getPageTitle($model), 50, '...') : $pageTitle;
-
-        $output .= '<span>'.$pageTitle.'</span>';
+        $output .= '<span>'.teaser($this->getPageTitle($model), 50, '...').'</span>';
 
         if (\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model)) {
             $output .= '<span class="label label-xs label-primary">Homepage</span>';

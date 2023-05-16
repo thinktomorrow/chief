@@ -17,6 +17,9 @@
         case 'error':
             $colorClasses = 'link-error bg-grey-100 hover:bg-red-50';
             break;
+        case 'warning':
+            $colorClasses = 'link-warning bg-grey-100 hover:bg-orange-50';
+            break;
         default:
             $colorClasses = 'link-primary bg-grey-100 hover:bg-primary-50';
     }

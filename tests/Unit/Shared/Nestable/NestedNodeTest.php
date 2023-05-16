@@ -56,7 +56,7 @@ class NestedNodeTest extends TestCase
 
         app()->setLocale('nl');
         $this->assertEquals('label nl', $node->getModel()->title);
-        $this->assertEquals('label nl [offline]', $node->getLabel()); // Admin label
+        $this->assertEquals('label nl [offline]', $node->getLabel()); // App label
 
         app()->setLocale('fr');
         $this->assertEquals('label fr', $node->getModel()->title);

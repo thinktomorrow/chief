@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasTaggable;
+
 class MultiSelect extends Select
 {
+    use HasTaggable;
+
     protected string $view = 'chief-form::fields.multiselect';
 
     private bool $grouped = false;
