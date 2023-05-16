@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Forms\Fields;
 
+use Thinktomorrow\Chief\Forms\Fields\Date;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Hidden;
@@ -10,6 +11,7 @@ use Thinktomorrow\Chief\Forms\Fields\Number;
 use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class FieldAttributesTest extends TestCase
@@ -28,6 +30,8 @@ class FieldAttributesTest extends TestCase
             File::class,
             Image::class,
             Hidden::class,
+            Date::class,
+            Time::class,
         ];
     }
 

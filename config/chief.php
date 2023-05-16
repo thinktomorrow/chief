@@ -23,7 +23,7 @@ return [
     ],
 
     /**
-     * Admin locale
+     * App locale
      *
      * Determines the locale in which the admin sees the pages and content.
      * This basically sets the app.locale to this value on admin visits.

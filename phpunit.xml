@@ -21,6 +21,9 @@
     <testsuite name="Application tests">
       <directory suffix="Test.php">./tests/Application</directory>
     </testsuite>
+  <testsuite name="Plugin Tests">
+      <directory suffix="Test.php">./src/Plugins</directory>
+  </testsuite>
   </testsuites>
   <logging>
     <junit outputFile="build/report.junit.xml"/>

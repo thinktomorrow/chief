@@ -14,6 +14,7 @@ module.exports = {
         'src/Forms/Concerns/**/*.php',
         'src/Fragments/resources/**/*.blade.php',
         'src/Table/resources/**/*.blade.php',
+        'src/Plugins/**/resources/**/*.blade.php',
     ],
     theme: {
         screens: {
@@ -68,6 +69,7 @@ module.exports = {
             animation: {
                 'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in': 'popIn 200ms cubic-bezier(0.83, 0, 0.17, 1)',
+                'pop-in-tag': 'popIn 100ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in-out': 'popInOut 2000ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'dialog-pop-in': 'dialogPopIn 150ms ease-out',
                 'dialog-fade-in': 'dialogFadeIn 150ms ease-out',

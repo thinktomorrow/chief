@@ -1,10 +1,12 @@
 <template>
     <div>
         <multiselect
-            v-on:input="clearErrors"
-            :options="values"
             v-model="value"
+            v-on:input="clearErrors"
+            v-on:tag="addTag"
+            :options="values"
             :multiple="multiple"
+            :taggable="taggable"
             :hide-selected="multiple"
             :close-on-select="!multiple"
             :label="realLabelKey"
@@ -50,6 +52,7 @@ export default {
         selected: { default: null },
         name: { default: '', type: String },
         multiple: { default: false, type: Boolean },
+        taggable: { default: false, type: Boolean },
 
         /**
          * Object / Array behaviour
@@ -308,6 +311,25 @@ export default {
 
             return true;
         },
+        addTag (newTag) {
+            // TODO: Save tags?
+            // If the new tag is not valid (e.g. it's a valid hex code in color options), return and show a notification
+            // add new tag to options
+            // save options to database
+
+            const tag = {
+                id: newTag,
+                label: newTag,
+            }
+
+            this.values.push(tag);
+
+            if (this.isArray(this.value)) {
+                this.value.push(tag);
+            } else {
+                this.value = tag;
+            }
+        }
     },
-};
+}
 </script>
