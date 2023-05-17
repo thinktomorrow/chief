@@ -42,7 +42,6 @@ class EloquentTagReadRepository implements TagReadRepository
             ->all();
     }
 
-    // TODO(ben): This should contain the 'ungrouped' tags as well. At the moment it doesn't return anything yet.
     public function getAllGroupsForSelect(): array
     {
         return $this->container->get(TagGroupModel::class)::all()
@@ -56,12 +55,4 @@ class EloquentTagReadRepository implements TagReadRepository
             ->get()
             ->groupBy('tag_id');
     }
-//
-//    private function getAllUsages(): Collection
-//    {
-//        return DB::table('chief_tags_pivot')
-//            ->groupBy('tag_id')
-//            ->selectRaw('count(*) as count, tag_id')
-//            ->get();
-//    }
 }
