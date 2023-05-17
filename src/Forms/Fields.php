@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms;
 
 use ArrayIterator;
+use Thinktomorrow\Chief\Forms\Fields\File;
 use function collect;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
@@ -32,7 +33,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     // Return all fields but omit any nested fields such as there are in the repeat field
     public static function makeWithoutFlatteningNestedFields(iterable $components): static
     {
-        return static::make($components, fn ($field) => ! $field instanceof Repeat);
+        return static::make($components, fn ($field) => ! $field instanceof Repeat && ! $field instanceof File);
     }
 
     public function first(): ?Field

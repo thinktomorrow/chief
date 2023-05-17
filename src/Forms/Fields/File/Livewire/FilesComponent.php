@@ -137,7 +137,7 @@ class FilesComponent extends Component
 
     public function openFileEdit($fileId)
     {
-        $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
+        $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
     }
 
     public function openFilesChoose()
@@ -203,7 +203,6 @@ class FilesComponent extends Component
 
     private function emitDownTo($name, $event, array $params)
     {
-        $params['parent_id'] = $this->id;
-        $this->emitTo($name, $event, $params);
+        $this->emitTo($name, $event . '-' . $this->id, $params);
     }
 }

@@ -6,12 +6,13 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\Chief\Forms\Fields\File\App\FileApplication;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\ShowsAsDialog;
 
 class FileEditComponent extends Component
 {
+    use ShowsAsDialog;
     use WithFileUploads;
 
-    public $isOpen = false;
     public $parentId;
 
     public ?PreviewFile $previewFile = null;
@@ -19,21 +20,19 @@ class FileEditComponent extends Component
     public $formValues = [];
     public $components = [];
 
-    public $listeners = [
-        'open' => 'open',
-        'openInParentScope' => 'openInParentScope',
-    ];
-
     public function mount(string $parentId, array $components = [])
     {
         $this->parentId = $parentId;
         $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
     }
 
-//    public function booted()
-//    {
-//        $this->emitSelf('componentBooted');
-//    }
+    public function getListeners()
+    {
+        return [
+            'open' => 'open',
+            'open-' . $this->parentId => 'open',
+        ];
+    }
 
     public function getComponents(): array
     {
@@ -52,21 +51,10 @@ class FileEditComponent extends Component
 
     }
 
-    public function openInParentScope($value)
-    {
-        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
-            return;
-        }
-
-        $this->open($value);
-    }
-
     public function open($value)
     {
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
         $this->isOpen = true;
-
-        $this->emitSelf('componentOpened');
     }
 
     public function close()
@@ -118,7 +106,7 @@ class FileEditComponent extends Component
             app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->formValues['basename']);
         }
 
-        $this->emitUp('fileUpdated', $this->previewFile->id, $this->formValues);
+        $this->emitUp('assetUpdated', $this->previewFile->id, $this->formValues);
 
         $this->close();
     }

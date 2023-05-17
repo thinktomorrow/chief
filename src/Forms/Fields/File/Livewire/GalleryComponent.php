@@ -23,6 +23,7 @@ class GalleryComponent extends Component
 
     protected $listeners = [
         'assetsDeleted' => 'onAssetsDeleted',
+        'assetUpdated' => 'onAssetUpdated',
     ];
 
     public function mount()
@@ -74,17 +75,17 @@ class GalleryComponent extends Component
     {
         $previewFile = PreviewFile::fromAsset(Asset::find($assetId));
 
-        $this->emitDownTo('chief-wire::file-edit', 'openInParentScope', ['previewfile' => $previewFile]);
+        $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $previewFile]);
     }
 
     public function deleteAsset($assetId)
     {
-        $this->emitDownTo('chief-wire::asset-delete', 'openInParentScope', ['assetIds' => [$assetId]]);
+        $this->emitDownTo('chief-wire::asset-delete', 'open', ['assetIds' => [$assetId]]);
     }
 
-    public function onFileUpdated($assetId): void
+    public function onAssetUpdated($assetId): void
     {
-        // Immediately show the updated values
+        $this->callMethod('$refresh');
     }
 
     public function onAssetsDeleted(array $assetIds): void
@@ -103,8 +104,6 @@ class GalleryComponent extends Component
 
     private function emitDownTo($name, $event, array $params = [])
     {
-        $params['parent_id'] = $this->id;
-
-        $this->emitTo($name, $event, $params);
+        $this->emitTo($name, $event . '-' . $this->id, $params);
     }
 }

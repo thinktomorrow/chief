@@ -1,7 +1,4 @@
-<?php $componentId = \Illuminate\Support\Str::random(); ?>
-
-<div id="{{ $componentId }}" x-cloak x-data="{open:@entangle('isOpen')}" x-show="open" class="fixed inset-0 flex items-center justify-center z-[100]">
-
+<x-chief::dialog wired>
     @if($isOpen)
         <div class="absolute inset-0 bg-black/50"></div>
 
@@ -93,7 +90,7 @@
                                     class="w-full shadow-sm"
                                     wire:model.lazy="formValues.basename"
                                 >
-                            </x-chief-form::formgroup.prepend-append>
+                                </x-chief-form::formgroup.prepend-append>
                         </div>
 
                         <div>
@@ -115,17 +112,17 @@
                         {{--                        >--}}
                         {{--                    </div>--}}
 
-{{--                        <div>--}}
-{{--                            <label for="..." class="inline-block mb-1 font-medium display-base display-dark">Alt</label>--}}
+                        {{--                        <div>--}}
+                        {{--                            <label for="..." class="inline-block mb-1 font-medium display-base display-dark">Alt</label>--}}
 
-{{--                            <input--}}
-{{--                                type="text"--}}
-{{--                                id="..."--}}
-{{--                                name="..."--}}
-{{--                                placeholder="Alt"--}}
-{{--                                class="w-full shadow-sm"--}}
-{{--                            >--}}
-{{--                        </div>--}}
+                        {{--                            <input--}}
+                        {{--                                type="text"--}}
+                        {{--                                id="..."--}}
+                        {{--                                name="..."--}}
+                        {{--                                placeholder="Alt"--}}
+                        {{--                                class="w-full shadow-sm"--}}
+                        {{--                            >--}}
+                        {{--                        </div>--}}
 
                         {{--                    <div>--}}
                         {{--                        <label for="..." class="inline-block mb-1 font-medium display-base display-dark">Tags</label>--}}
@@ -145,27 +142,27 @@
                         {{--                        </x-chief-form::formgroup.checkbox>--}}
                         {{--                    </div>--}}
 
-{{--                        <div>--}}
-{{--                            <label for="..." class="items-baseline inline-block mb-1 font-medium display-base display-dark">--}}
-{{--                                <span>Zichtbaar op</span>--}}
-{{--                                <span class="label label-xs label-grey">3</span>--}}
-{{--                            </label>--}}
+                        {{--                        <div>--}}
+                        {{--                            <label for="..." class="items-baseline inline-block mb-1 font-medium display-base display-dark">--}}
+                        {{--                                <span>Zichtbaar op</span>--}}
+                        {{--                                <span class="label label-xs label-grey">3</span>--}}
+                        {{--                            </label>--}}
 
-{{--                            <div class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-56">--}}
-{{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
-{{--                                    <span class="text-black">Homepage</span>--}}
-{{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
-{{--                                </div>--}}
-{{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
-{{--                                    <span class="text-black">Contacteer ons</span>--}}
-{{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
-{{--                                </div>--}}
-{{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
-{{--                                    <span class="text-black">AI Generated Content</span>--}}
-{{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                            <div class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-56">--}}
+                        {{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
+                        {{--                                    <span class="text-black">Homepage</span>--}}
+                        {{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
+                        {{--                                    <span class="text-black">Contacteer ons</span>--}}
+                        {{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="flex items-center justify-between px-3 py-1.5">--}}
+                        {{--                                    <span class="text-black">AI Generated Content</span>--}}
+                        {{--                                    <x-chief::icon-button icon="icon-external-link" color="grey"/>--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
 
                         <div>
                             <button wire:click.prevent="submit" type="submit" class="btn btn-primary">Bestand opslaan</button>
@@ -175,4 +172,4 @@
             </form>
         </div>
     @endif
-</div>
+</x-chief::dialog>

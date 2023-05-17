@@ -14,31 +14,23 @@ class AssetDeleteComponent extends Component
 
     public $assetIds = [];
 
-    public $listeners = [
-        'open' => 'open',
-        'openInParentScope' => 'openInParentScope',
-    ];
-
     public function mount(string $parentId)
     {
         $this->parentId = $parentId;
     }
 
-    public function openInParentScope($value)
+    public function getListeners()
     {
-        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
-            return;
-        }
-
-        $this->open($value);
+        return [
+            'open' => 'open',
+            'open-' . $this->parentId => 'open',
+        ];
     }
 
     public function open($value)
     {
         $this->isOpen = true;
         $this->assetIds = $value['assetIds'];
-
-        $this->emitSelf('componentOpened');
     }
 
     public function close()
