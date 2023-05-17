@@ -55,6 +55,8 @@ class DateController extends Controller
 
         $this->fieldValidator->handle($fields, $request->all());
 
+        // TODO: create valid slots here (so we don't have any overlap)
+
         $model->date = $request->input('date');
         $model->slots = $request->input('slots');
         $model->content = $request->input('content');
@@ -102,6 +104,8 @@ class DateController extends Controller
         $fields = $fields->remove('closed');
 
         $this->fieldValidator->handle($fields, $request->all());
+
+        // TODO: create valid slots here (so we don't have any overlap)
 
         $model->date = $request->input('date');
         $model->slots = $request->input('slots');

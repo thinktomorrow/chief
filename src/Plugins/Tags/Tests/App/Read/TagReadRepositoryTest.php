@@ -85,6 +85,16 @@ class TagReadRepositoryTest extends TestCase
         ], $results);
     }
 
+    public function test_it_can_get_all_taggroups_for_select()
+    {
+        $this->createTaggroupModel();
+        $this->createTaggroupModel(['label' => 'done']);
+
+        $results = app(TagReadRepository::class)->getAllGroupsForSelect();
+
+        $this->assertEquals([1 => 'Review status', 2 => 'done'], $results);
+    }
+
     public function test_it_can_order_tags()
     {
     }

@@ -53,6 +53,15 @@ class Hour
         return \DateTime::createFromFormat('H:i', $this->hour.':'.$this->minutes)->format($format);
     }
 
+    public function beforeOrEqual(self $hour): bool
+    {
+        if($this->hour === $hour->hour) {
+            return $this->minutes <= $hour->minutes;
+        }
+
+        return $this->hour <= $hour->hour;
+    }
+
     private static function validateConstraints(string $hour, ?string $minutes): void
     {
         if ((int)$hour > 24 || (int)$hour < 0) {
