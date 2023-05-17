@@ -11,7 +11,7 @@
     @endif
 
     <div @class([
-        'w-full',
+        'w-full relative',
         '[&>*]:form-input-with-prepend' => $prepend,
         '[&>*]:form-input-with-append' => $append
     ])>
