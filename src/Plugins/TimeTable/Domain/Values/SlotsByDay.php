@@ -32,18 +32,39 @@ class SlotsByDay
 
     public static function convertMappedSlots(array $rawSlots): array
     {
-        $slots = [];
-
-        foreach($rawSlots as $rawSlot) {
-
-            if(! isset($rawSlot['from']) && ! isset($rawSlot['until'])) {
-                continue;
-            }
-
-            $slots[] = Slot::make(
+        $slots = collect($rawSlots)
+            ->reject(fn($rawSlot) => ! isset($rawSlot['from']) && ! isset($rawSlot['until']))
+            ->map(fn($rawSlot) => Slot::make(
                 isset($rawSlot['from']) ? Hour::fromFormat($rawSlot['from'], 'H:i') : null,
                 isset($rawSlot['until']) ? Hour::fromFormat($rawSlot['until'], 'H:i') : null,
-            );
+            ))->values();
+
+        $slots = $slots
+            ->map(function($slot, $i) use($slots){
+                if($i === 0 || !$previousUntil = $slots[$i-1]->getUntil()) return $slot;
+
+                return $slot->getFrom() && $slot->getFrom()->beforeOrEqual($previousUntil)
+                    ? Slot::make(null, $slot->getUntil())
+                    : $slot;
+            })
+            ->all();
+
+        // Next we will merge slots where there are null values, but only when there are more than one slots to merge
+        if(count($slots) < 2) return $slots;
+
+        /** @var Slot $slot */
+        foreach($slots as $i => $slot) {
+            if($i > 0 && is_null($slot->getFrom())) {
+                $slots[$i-1] = Slot::make($slots[$i-1]->getFrom(), $slot->getUntil());
+                unset($slots[$i]);
+            }
+
+            if($i > 0 && is_null($slots[$i-1]->getUntil())) {
+                $slots[$i-1] = Slot::make($slots[$i-1]->getFrom(), $slot->getUntil());
+                unset($slots[$i]);
+            }
+
+            $slots = array_values($slots);
         }
 
         return $slots;

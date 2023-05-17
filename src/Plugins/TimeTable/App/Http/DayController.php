@@ -51,6 +51,8 @@ class DayController extends Controller
 
         $this->fieldValidator->handle($fields, $request->all());
 
+        // TODO: create valid slots here (so we don't have any overlap)
+
         $model->slots = $request->input('slots');
         $model->content = $request->input('content');
         $model->save();
