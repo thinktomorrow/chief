@@ -19,9 +19,9 @@ class SlotsByDayTest extends TestCase
         ]);
 
         $this->assertEquals([
-            Slot::make(Hour::make('10'), Hour::make('12','45')),
+            Slot::make(Hour::make('10'), Hour::make('12', '45')),
             Slot::make(Hour::make('13'), Hour::make('17')),
-            Slot::make(Hour::make('18', '30'), Hour::make('23','00')),
+            Slot::make(Hour::make('18', '30'), Hour::make('23', '00')),
         ], $slotsByDay->getSlots());
 
         $this->assertEquals(Day::make(2, 'Dinsdag'), $slotsByDay->getDay());
@@ -36,8 +36,8 @@ class SlotsByDayTest extends TestCase
         ]);
 
         $this->assertEquals([
-            Slot::make(Hour::make('10'), Hour::make('12','45')),
-            Slot::make(Hour::make('18', '30'), Hour::make('23','00')),
+            Slot::make(Hour::make('10'), Hour::make('12', '45')),
+            Slot::make(Hour::make('18', '30'), Hour::make('23', '00')),
         ], $slotsByDay->getSlots());
     }
 
@@ -50,8 +50,8 @@ class SlotsByDayTest extends TestCase
         ]);
 
         $this->assertEquals([
-            Slot::make(Hour::make('10'), Hour::make('12','45')),
-            Slot::make(Hour::make('13'), Hour::make('23','00')),
+            Slot::make(Hour::make('10'), Hour::make('12', '45')),
+            Slot::make(Hour::make('13'), Hour::make('23', '00')),
         ], $slotsByDay->getSlots());
     }
 
@@ -65,7 +65,7 @@ class SlotsByDayTest extends TestCase
 
         $this->assertEquals([
             Slot::make(Hour::make('10'), Hour::make('17')),
-            Slot::make(Hour::make('18', '30'), Hour::make('23','00')),
+            Slot::make(Hour::make('18', '30'), Hour::make('23', '00')),
         ], $slotsByDay->getSlots());
     }
 
