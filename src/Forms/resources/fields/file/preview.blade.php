@@ -1,4 +1,8 @@
-<div class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
+<div
+    wire:sortable
+    wire:end.stop="reorder($event.target.sortable.toArray())"
+{{--    wire:sortable.options="{ animation: 100 }"--}}
+    class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
     @foreach ($getFiles() as $file)
 
 {{--        @if($file->isUploading)--}}
@@ -6,8 +10,7 @@
 {{--                --}}
 {{--            </div>--}}
 {{--        @endif--}}
-
-        <div class="flex gap-4 p-2">
+       <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2">
             <div class="shrink-0">
                 @if($file->isPreviewable)
                 <img
@@ -53,7 +56,7 @@
                         <x-chief::icon-button icon="icon-edit" color="grey" />
                     </button>
 
-                    <button type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+                    <button wire:sortable.handle type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
                         <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
                     </button>
 

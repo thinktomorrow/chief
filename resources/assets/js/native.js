@@ -26,4 +26,6 @@ require('./forms/index');
 /** Table logic - bulk actions */
 require('./tables/index');
 
+require('./sortable/sortable-livewire');
+
 window.vueFieldsRefresh = (el) => vueFields(el);

@@ -23,7 +23,7 @@ class FilesComponent extends Component
 
     public $listeners = [
         'upload:finished' => 'onUploadFinished',
-        'fileUpdated' => 'onFileUpdated',
+        'assetUpdated' => 'onAssetUpdated',
     ];
 
     /**
@@ -84,6 +84,15 @@ class FilesComponent extends Component
         }
     }
 
+    public function reorder($orderedIds)
+    {
+        $reorderedPreviewFiles = collect($orderedIds)
+            ->map(fn($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
+            ->all();
+
+        $this->previewFiles = $reorderedPreviewFiles;
+    }
+
 //    public function updatedFiles($value, $key): void
 //    {
 ////        $this->validate([
@@ -114,7 +123,7 @@ class FilesComponent extends Component
                 continue;
             }
 
-            if(! is_null($index = $this->findPreviewFile($newFileDetails['fileRef']->getFilename()))) {
+            if(! is_null($index = $this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
                 $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
             } else {
                 $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
@@ -124,7 +133,7 @@ class FilesComponent extends Component
         }
     }
 
-    private function findPreviewFile($fileId): ?int
+    private function findPreviewFileIndex($fileId): ?int
     {
         foreach($this->previewFiles as $index => $previewFile) {
             if($previewFile->id == $fileId) {
@@ -137,7 +146,7 @@ class FilesComponent extends Component
 
     public function openFileEdit($fileId)
     {
-        $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $this->previewFiles[$this->findPreviewFile($fileId)]]);
+        $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $this->previewFiles[$this->findPreviewFileIndex($fileId)]]);
     }
 
     public function openFilesChoose()
@@ -167,10 +176,10 @@ class FilesComponent extends Component
         }
     }
 
-    public function onFileUpdated($fileId, array $values): void
+    public function onAssetUpdated($fileId, array $values): void
     {
         // Immediately show the updated values
-        $previewFile = $this->previewFiles[$this->findPreviewFile($fileId)];
+        $previewFile = $this->previewFiles[$this->findPreviewFileIndex($fileId)];
         $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
     }
 

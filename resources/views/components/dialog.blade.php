@@ -5,7 +5,7 @@
 <div
     x-cloak
     x-show="open"
-    @isset($wired) x-data="{ open: @entangle('isOpen') }" @else x-data="{ open: false }" @endisset
+    @isset($wired) x-data="{ open: $wire.entangle('isOpen') }" @else x-data="{ open: false }" @endisset
     x-on:open-dialog.window="if($el.id === $event.detail.id) { open = true; }"
     class="fixed inset-0 z-[100] flex items-center justify-center"
     {{ $attributes }}

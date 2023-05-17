@@ -129,9 +129,9 @@
         };
     </script>
 
-    <script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
-
     <livewire:scripts />
+
+    <script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
 
     {{--TODO:Tijs include these sources in our build step --}}
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
