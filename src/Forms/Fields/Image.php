@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Managers\Manager;
-
 class Image extends File
 {
     protected string $view = 'chief-form::fields.file';
