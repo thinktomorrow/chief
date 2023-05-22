@@ -1,12 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\TemporaryUploadedFile;
 use Livewire\Wireable;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Forms\Fields\File\App\FileHelper;
+use Thinktomorrow\Chief\Assets\App\FileHelper;
 
 class PreviewFile implements Wireable
 {
@@ -86,7 +85,7 @@ class PreviewFile implements Wireable
             $asset->getSize(),  // asset->getSize() already returns human readable so this is first converted back to bytes
             //            File\App\FileHelper::getHumanReadableSize((int)$asset->getSize()),  // asset->getSize() already returns human readable so this is first converted back to bytes
             $asset->getMimeType(),
-            File\App\FileHelper::getExtension($asset->getFirstMediaPath()),
+            \Thinktomorrow\Chief\Assets\App\FileHelper::getExtension($asset->getFirstMediaPath()),
             false,
             true,
         );

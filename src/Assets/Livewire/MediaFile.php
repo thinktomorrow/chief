@@ -1,12 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Forms\Fields\File;
 
 class MediaFile implements Wireable
 {
@@ -26,7 +24,7 @@ class MediaFile implements Wireable
 
     public function getBaseName(): string
     {
-        return File\App\FileHelper::getBaseName($this->filename);
+        return \Thinktomorrow\Chief\Assets\App\FileHelper::getBaseName($this->filename);
     }
 
     public function url(string $conversionName = 'original'): ?string
@@ -61,7 +59,7 @@ class MediaFile implements Wireable
             $model->file_name,
             $model->getCustomProperty('alt', null),
             $model->size,
-            File\App\FileHelper::getHumanReadableSize($model->size),
+            \Thinktomorrow\Chief\Assets\App\FileHelper::getHumanReadableSize($model->size),
             $model->mime_type,
             $model->extension,
             $owners,

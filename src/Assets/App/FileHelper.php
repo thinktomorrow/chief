@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\App;
+namespace Thinktomorrow\Chief\Assets\App;
 
 use Illuminate\Support\Str;
 

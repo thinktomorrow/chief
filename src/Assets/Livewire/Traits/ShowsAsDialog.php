@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits;
+namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 trait ShowsAsDialog
 {

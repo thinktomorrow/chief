@@ -1,9 +1,9 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Assets;
+namespace Thinktomorrow\Chief\Assets\Tests;
 
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
 use Thinktomorrow\Chief\Tests\Unit\Forms\TestCase;
 
 class FilesComponentTest extends TestCase

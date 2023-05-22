@@ -1,14 +1,14 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Forms\Fields\File\Components\FilePreview;
-use Thinktomorrow\Chief\Forms\Fields\File\Components\FileSelect;
+use Thinktomorrow\Chief\Assets\Components\FilePreview;
+use Thinktomorrow\Chief\Assets\Components\FileSelect;
 
 class FilesComponent extends Component
 {
@@ -209,7 +209,7 @@ class FilesComponent extends Component
 
     public function render()
     {
-        return view('chief-form::fields.file.files-component', [
+        return view('chief-assets::files-component', [
             //
         ]);
     }

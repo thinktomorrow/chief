@@ -1,11 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\Component;
-use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\InteractsWithGallery;
+use Thinktomorrow\Chief\Assets\Components\Gallery;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FilesChooseComponent extends Component
 {
@@ -48,7 +48,7 @@ class FilesChooseComponent extends Component
 
     public function render()
     {
-        return view('chief-form::fields.file.files-choose', [
+        return view('chief-assets::files-choose', [
             //
         ]);
     }

@@ -4,15 +4,6 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
-use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\AssetDeleteComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FileEditDialog;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesChooseComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\GalleryComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Plugins\ImageCropComponent;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
@@ -33,19 +24,5 @@ class FormsServiceProvider extends ServiceProvider
         Validator::extend('file_dimensions', FileDimensionsRule::class.'@validate');
         Validator::extend('file_min', FileMinRule::class.'@validate');
         Validator::extend('file_max', FileMaxRule::class.'@validate');
-
-        // Livewire components
-        Livewire::addPersistentMiddleware([
-            AuthenticateChiefSession::class,
-        ]);
-
-        Livewire::component('chief-wire::file-gallery', GalleryComponent::class);
-        Livewire::component('chief-wire::file-upload', FilesComponent::class);
-        Livewire::component('chief-wire::files-choose', FilesChooseComponent::class);
-        Livewire::component('chief-wire::file-edit', FileEditComponent::class);
-        Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
-        Livewire::component('chief-wire::asset-delete', AssetDeleteComponent::class);
-
-        Livewire::component('chief-wire::file-edit-dialog', FileEditDialog::class);
     }
 }

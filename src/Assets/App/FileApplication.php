@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\App;
+namespace Thinktomorrow\Chief\Assets\App;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\AssetLibrary\Asset;

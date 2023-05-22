@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
@@ -60,7 +60,7 @@ class AssetDeleteComponent extends Component
 
     public function render()
     {
-        return view('chief-form::fields.file.asset-delete', [
+        return view('chief-assets::asset-delete', [
             //
         ]);
     }

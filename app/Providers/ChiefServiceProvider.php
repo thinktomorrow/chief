@@ -22,6 +22,7 @@ use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
+use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
@@ -92,8 +93,8 @@ class ChiefServiceProvider extends ServiceProvider
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
         (new TableServiceProvider($this->app))->boot();
+        (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
-        (new AssetLibraryServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
 
         // Sitemap command is used by both cli and web scripts
@@ -139,8 +140,8 @@ class ChiefServiceProvider extends ServiceProvider
                 return new Nav();
             });
 
+            (new AssetsServiceProvider($this->app))->register();
             (new SquantoManagerServiceProvider($this->app))->register();
-            (new AssetLibraryServiceProvider($this->app))->register();
             $this->sitemapServiceProvider->register();
         }
     }

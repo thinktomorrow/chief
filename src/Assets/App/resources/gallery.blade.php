@@ -6,7 +6,7 @@
             <div class="row gutter-3">
                 @foreach($rows as $i => $asset)
                     <div wire:key="{{ $i.'_'.$asset->id }}" class="w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
-                        @include('chief-form::fields.file.gallery-row')
+                        @include('chief-assets::gallery-row')
                     </div>
                 @endforeach
             </div>

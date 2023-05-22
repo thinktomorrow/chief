@@ -1,13 +1,12 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\App;
+namespace Thinktomorrow\Chief\Assets\App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\SortAssets;
 use Thinktomorrow\AssetLibrary\Asset;

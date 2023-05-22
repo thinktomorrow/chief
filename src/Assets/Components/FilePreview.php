@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Components;
+namespace Thinktomorrow\Chief\Assets\Components;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\FilesComponent;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
 class FilePreview extends Component implements Htmlable
 {
@@ -38,7 +38,7 @@ class FilePreview extends Component implements Htmlable
 
     public function render(): View
     {
-        $view = 'chief-form::fields.file.preview';
+        $view = 'chief-assets::preview';
 
         return view($view, array_merge($this->data(), [
 

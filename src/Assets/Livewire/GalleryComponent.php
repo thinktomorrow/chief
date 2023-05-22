@@ -1,15 +1,12 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\InteractsWithGallery;
+use Thinktomorrow\Chief\Assets\Components\Gallery;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
 use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\WithListAndGridToggle;
 
 class GalleryComponent extends Component
@@ -62,7 +59,7 @@ class GalleryComponent extends Component
 
     public function render()
     {
-        return view('chief-form::fields.file.gallery-component', [
+        return view('chief-assets::gallery-component', [
             //
         ]);
     }

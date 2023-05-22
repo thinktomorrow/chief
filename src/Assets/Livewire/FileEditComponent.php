@@ -1,12 +1,12 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
+namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Thinktomorrow\Chief\Forms\Fields\File\App\FileApplication;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FileEditComponent extends Component
 {
@@ -113,7 +113,7 @@ class FileEditComponent extends Component
 
     public function render()
     {
-        return view('chief-form::fields.file.file-edit', [
+        return view('chief-assets::file-edit', [
             //
         ]);
     }

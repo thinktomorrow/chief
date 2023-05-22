@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Components;
+namespace Thinktomorrow\Chief\Assets\Components;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Support\Htmlable;
@@ -35,10 +35,10 @@ class Gallery extends Component implements Htmlable
     private function getView(): string
     {
         if($this->livewireComponent->showAsList) {
-            return 'chief-form::fields.file.gallery-list';
+            return 'chief-assets::gallery-list';
         }
 
-        return 'chief-form::fields.file.gallery';
+        return 'chief-assets::gallery';
     }
 
     public function render(): View

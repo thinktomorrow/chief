@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\File\Plugins;
+namespace Thinktomorrow\Chief\Assets\Plugins;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Thinktomorrow\Chief\Forms\Fields\File\App\FileApplication;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\MediaFile;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\MediaFile;
+use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
 class ImageCropComponent extends Component
 {
@@ -106,7 +106,7 @@ class ImageCropComponent extends Component
 
     public function render()
     {
-        return view('chief-form::fields.file.image-crop', [
+        return view('chief-assets::image-crop', [
             //
         ]);
     }

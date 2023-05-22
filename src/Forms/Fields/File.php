@@ -7,13 +7,12 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Assets\App\SaveFileField;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStorageDisk;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
-use Thinktomorrow\Chief\Forms\Fields\File\App\SaveFileField;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -30,7 +29,7 @@ class File extends Component implements Field
     use HasUploadButtonLabel;
     use HasEndpoint;
 
-    protected string $view = 'chief-form::fields.file.field';
+    protected string $view = 'chief-form::fields.file';
     protected string $windowView = 'chief-form::fields.file-window';
 
     public function __construct(string $key)
