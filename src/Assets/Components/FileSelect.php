@@ -58,6 +58,13 @@ class FileSelect extends Component implements Htmlable
         return $this->fileUploadComponent->allowMultiple;
     }
 
+    public function acceptedMimeTypes(): ?string
+    {
+        $mimeTypes = $this->fileUploadComponent->acceptedMimeTypes;
+
+        return implode(', ', $mimeTypes);
+    }
+
     public function render(): View
     {
         $view = 'chief-assets::select';

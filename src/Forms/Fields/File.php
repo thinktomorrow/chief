@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\SaveFileField;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStorageDisk;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
-use Thinktomorrow\Chief\Forms\Fields\Media\FileDTO;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
-use Thinktomorrow\Chief\Managers\Manager;
 
 /**
  * Default field settings are overriden mostly because values of file inputs
@@ -28,6 +26,7 @@ class File extends Component implements Field
     use HasCustomUrl;
     use HasUploadButtonLabel;
     use HasEndpoint;
+    use HasAcceptedMimeTypes;
 
     protected string $view = 'chief-form::fields.file';
     protected string $windowView = 'chief-form::fields.file-window';
@@ -53,13 +52,7 @@ class File extends Component implements Field
 
         $this->save(function ($model, $field, $input, $files) {
             app(SaveFileField::class)->handle($model, $field, $input, $files);
-            //            app(FileUpload::class)->handle($model, $field, $input, $files);
         });
-    }
-
-    public function fill(Manager $manager, Model $model): void
-    {
-        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $model->{$model->getKeyName()}));
     }
 
     public function getRules(): array
@@ -81,19 +74,25 @@ class File extends Component implements Field
         ->all();
     }
 
-    private function getLegacyMedia(Model & HasAsset $model, string $locale): array
-    {
-        $files = [];
+    //    public function fill(Manager $manager, Model $model): void
+//    {
+//        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $model->{$model->getKeyName()}));
+//    }
 
-        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
-            return $asset->pivot->locale == $locale;
-        })->sortBy('pivot.order');
-
-        /** @var Asset $asset */
-        foreach ($assets as $asset) {
-            $files[] = FileDTO::fromAsset($this, $asset);
-        }
-
-        return $files;
-    }
+//
+//    private function getLegacyMedia(Model & HasAsset $model, string $locale): array
+//    {
+//        $files = [];
+//
+//        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
+//            return $asset->pivot->locale == $locale;
+//        })->sortBy('pivot.order');
+//
+//        /** @var Asset $asset */
+//        foreach ($assets as $asset) {
+//            $files[] = FileDTO::fromAsset($this, $asset);
+//        }
+//
+//        return $files;
+//    }
 }

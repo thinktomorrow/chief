@@ -39,6 +39,7 @@
                     type="file"
                     id="{{ $getFieldId() }}"
                     {{ $allowMultiple() ? 'multiple' : '' }}
+                    accept="{{ $acceptedMimeTypes() ?: '' }}"
                     x-on:change="() => {
                         const fileList = [...$el.files];
                         uploadFiles(fileList);
@@ -59,10 +60,10 @@
                         Upload een nieuw bestand
                     </p>
 
-                    {{-- Allowed file types --}}
-                    <p class="text-sm text-grey-500">
-                        JPEG, PNG, GIF & SVG
-                    </p>
+{{--                    --}}{{-- Allowed file types --}}
+{{--                    <p class="text-sm text-grey-500">--}}
+{{--                        JPEG, PNG, GIF & SVG--}}
+{{--                    </p>--}}
                 </div>
             </div>
         </label>
@@ -74,7 +75,7 @@
 
             <div class="space-y-0.5 leading-tight">
                 <span class="text-black">
-                    Kies een bestand uit de mediabibliotheek
+                    Kies uit de mediabibliotheek
                 </span>
             </div>
         </a>

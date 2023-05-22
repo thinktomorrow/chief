@@ -11,8 +11,12 @@ class Image extends File
     protected string $view = 'chief-form::fields.file';
     protected string $windowView = 'chief-form::fields.image-window';
 
-    public function fill(Manager $manager, Model $model): void
+    public function __construct(string $key)
     {
-        $this->endpoint($manager->route('asyncUploadSlimImage', $this->getKey(), $model->{$model->getKeyName()}));
+        parent::__construct($key);
+
+        $this->acceptedMimeTypes([
+            'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp',
+        ]);
     }
 }

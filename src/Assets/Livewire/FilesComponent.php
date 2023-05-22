@@ -16,6 +16,7 @@ class FilesComponent extends Component
 
     public string $fieldName;
     public bool $allowMultiple = false;
+    public array $acceptedMimeTypes = [];
 
     protected FilePreview $filePreview;
     protected FileSelect $fileSelect;

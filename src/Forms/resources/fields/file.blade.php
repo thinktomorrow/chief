@@ -4,5 +4,6 @@
         :allow-multiple="$field->allowMultiple()"
         :assets="$field->getValue($locale)"
         :components="$field->getComponents()"
+        :accepted-mime-types="$field->getAcceptedMimeTypes()"
     />
 </div>
