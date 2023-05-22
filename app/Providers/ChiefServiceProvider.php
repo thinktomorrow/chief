@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
-use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;

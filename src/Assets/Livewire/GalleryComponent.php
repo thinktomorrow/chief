@@ -7,7 +7,6 @@ use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\Gallery;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
-use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\WithListAndGridToggle;
 
 class GalleryComponent extends Component
 {

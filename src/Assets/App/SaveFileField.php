@@ -71,18 +71,20 @@ class SaveFileField
     {
         foreach ($assetIds as $orderIndex => $assetId) {
             $model->assetRelation()->attach(
-                Asset::find($assetId), [
+                Asset::find($assetId),
+                [
                     'type' => $field->getKey(),
                     'locale' => $locale,
-                    'order' => $orderIndex
-                ]);
+                    'order' => $orderIndex,
+                ]
+            );
         }
     }
 
     private function handleDeletions(HasAsset $model, File $field, string $locale, array $values, Collection &$orderedAssetIds): void
     {
         foreach ($values as $value) {
-            $this->detachAsset->detach($model, $value, $field->getKey() ,$locale);
+            $this->detachAsset->detach($model, $value, $field->getKey(), $locale);
 
             $orderedAssetIds = $orderedAssetIds->reject(fn ($orderedAssetId) => $orderedAssetId == $value);
         }
