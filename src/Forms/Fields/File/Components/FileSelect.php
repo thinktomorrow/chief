@@ -25,7 +25,7 @@ class FileSelect extends Component implements Htmlable
 
     public function getFieldId(): string
     {
-        return $this->fileUploadComponent->fieldId;
+        return $this->fileUploadComponent->id.'-'.$this->fileUploadComponent->fieldName;
     }
 
     public function getFieldName(): string
@@ -35,12 +35,17 @@ class FileSelect extends Component implements Htmlable
 
     public function getFilesForUpload(): Collection
     {
-        return collect($this->fileUploadComponent->previewFiles)->reject(fn (PreviewFile $file) => ($file->mediaId || $file->isQueuedForDeletion));
+        return collect($this->fileUploadComponent->previewFiles)->reject(fn (PreviewFile $file) => ($file->isAttachedToModel || $file->isQueuedForDeletion || $file->mediaId));
+    }
+
+    public function getFilesForAttach(): Collection
+    {
+        return collect($this->fileUploadComponent->previewFiles)->filter(fn (PreviewFile $file) => ($file->mediaId && !$file->isAttachedToModel && !$file->isQueuedForDeletion));
     }
 
     public function getFilesForDeletion(): Collection
     {
-        return collect($this->fileUploadComponent->previewFiles)->filter(fn (PreviewFile $file) => ($file->mediaId && $file->isQueuedForDeletion));
+        return collect($this->fileUploadComponent->previewFiles)->filter(fn (PreviewFile $file) => ($file->isAttachedToModel && $file->isQueuedForDeletion));
     }
 
     public function getFiles(): Collection
@@ -58,8 +63,7 @@ class FileSelect extends Component implements Htmlable
         $view = 'chief-form::fields.file.select';
 
         return view($view, array_merge($this->data(), [
-//            'id' => $this->fileUploadComponent->getFieldId(),
-//            'name' => $this->fileUploadComponent->getFieldName(),
+
         ]));
     }
 }

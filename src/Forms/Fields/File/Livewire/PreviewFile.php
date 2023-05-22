@@ -22,6 +22,7 @@ class PreviewFile implements Wireable
         public string $mimeType,
         public string $extension,
         public bool $isQueuedForDeletion = false,
+        public bool $isAttachedToModel = false,
     ) {
 
     }
@@ -57,6 +58,7 @@ class PreviewFile implements Wireable
             $file->getMimeType(),
             FileHelper::getExtension($file->getClientOriginalName()),
             false,
+            false,
         );
     }
 
@@ -86,6 +88,7 @@ class PreviewFile implements Wireable
             $asset->getMimeType(),
             File\App\FileHelper::getExtension($asset->getFirstMediaPath()),
             false,
+            true,
         );
     }
 
@@ -103,6 +106,7 @@ class PreviewFile implements Wireable
             'mimeType' => $this->mimeType,
             'extension' => $this->extension,
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
+            'isAttachedToModel' => $this->isAttachedToModel,
         ];
     }
 

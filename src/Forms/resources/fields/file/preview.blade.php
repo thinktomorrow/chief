@@ -4,13 +4,7 @@
 {{--    wire:sortable.options="{ animation: 100 }"--}}
     class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
     @foreach ($getFiles() as $file)
-
-{{--        @if($file->isUploading)--}}
-{{--            <div>--}}
-{{--                --}}
-{{--            </div>--}}
-{{--        @endif--}}
-       <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2">
+       <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2 {{ ($loop->index > 0 && !$allowMultiple()) ? 'opacity-25' : '' }}">
             <div class="shrink-0">
                 @if($file->isPreviewable)
                 <img
@@ -46,7 +40,7 @@
                     @endif
                 @else
 
-                    @if(!$file->mediaId)
+                    @if(!$file->isAttachedToModel)
                         <span class="text-xs text-primary-500" title="Je kan een bestand bewerken van zodra het is bewaard.">
                             Nog niet bewaard
                         </span>

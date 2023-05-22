@@ -3,47 +3,46 @@
 namespace Thinktomorrow\Chief\Forms\Fields\File\Livewire;
 
 use Livewire\Component;
+use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\InteractsWithGallery;
 
 class FilesChooseComponent extends Component
 {
-    public $isOpen = false;
-    public $filters = [];
-    public $parentId;
+    use ShowsAsDialog;
+    use InteractsWithGallery;
 
-    public $listeners = [
-        'openInParentScope' => 'openInParentScope',
-        'open' => 'open',
-    ];
+    public $assetIds = [];
+    public $parentId;
+    protected Gallery $gallery;
 
     public function mount(string $parentId)
     {
         $this->parentId = $parentId;
+        $this->rows = collect();
+    }
+    public function getListeners()
+    {
+        return [
+            'open' => 'open',
+            'open-' . $this->parentId => 'open',
+        ];
     }
 
-    public function openInParentScope($value)
+    public function booted()
     {
-        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
-            return;
-        }
-
-        $this->open();
+        $this->gallery = new Gallery($this);
     }
 
-    public function open()
+    public function selectAsset($assetId)
     {
-        $this->isOpen = true;
+        $this->assetIds[] = $assetId;
     }
 
-    public function close()
+    public function save()
     {
-        $this->isOpen = false;
-    }
-
-    public function submitFilter()
-    {
-        // Filter results
-        // Sort
-        // Paginate
+        $this->emitUp('assetsChosen', $this->assetIds);
+        $this->close();
 
     }
 

@@ -26,6 +26,11 @@ class FilePreview extends Component implements Htmlable
         return collect($this->fileUploadComponent->previewFiles);
     }
 
+    public function allowMultiple(): bool
+    {
+        return $this->fileUploadComponent->allowMultiple;
+    }
+
     public function toHtml()
     {
         return $this->render()->render();

@@ -9,14 +9,14 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Forms\Fields\File\Components\Gallery;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\InteractsWithGallery;
+use Thinktomorrow\Chief\Forms\Fields\File\Livewire\Traits\WithListAndGridToggle;
 
 class GalleryComponent extends Component
 {
-    use WithPagination;
+    use InteractsWithGallery;
 
-    public $filters = [];
     public $sort = null;
-    public $showAsList = false;
 
     public Collection $rows;
     protected Gallery $table;
@@ -34,41 +34,6 @@ class GalleryComponent extends Component
     public function booted()
     {
         $this->table = new Gallery($this);
-    }
-
-    public function updatedFilters()
-    {
-        $this->resetPage();
-    }
-
-    public function showAsList()
-    {
-        return $this->showAsList = true;
-    }
-
-    public function showAsGrid()
-    {
-        return $this->showAsList = false;
-    }
-
-    public function getTableRows(): Paginator
-    {
-        $builder = Asset::with('media')
-            ->select('assets.*');
-
-        if(isset($this->filters['search'])) {
-            $builder->whereHas('media', function (Builder $query) {
-                $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
-            });
-        }
-
-        if($this->sort == 'created_at_asc') {
-            $builder = $builder->orderBy('created_at', 'ASC');
-        } elseif($this->sort == 'created_at_desc' || ! $this->sort) {
-            $builder = $builder->orderBy('created_at', 'DESC');
-        }
-
-        return $builder->paginate(4);
     }
 
     public function openAssetEdit($assetId)

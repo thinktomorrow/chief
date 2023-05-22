@@ -1,9 +1,8 @@
 <div>
     <livewire:chief-wire::file-upload
-        :field-id="$field->getId()"
         :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
-        :existing-files="$field->getValue($locale)"
+        :assets="$field->getValue($locale)"
         :components="$field->getComponents()"
     />
 </div>

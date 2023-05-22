@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Forms\Fields\File\Components\FilePreview;
 use Thinktomorrow\Chief\Forms\Fields\File\Components\FileSelect;
 
@@ -13,7 +14,6 @@ class FilesComponent extends Component
 {
     use WithFileUploads;
 
-    public string $fieldId;
     public string $fieldName;
     public bool $allowMultiple = false;
 
@@ -24,6 +24,7 @@ class FilesComponent extends Component
     public $listeners = [
         'upload:finished' => 'onUploadFinished',
         'assetUpdated' => 'onAssetUpdated',
+        'assetsChosen' => 'onAssetsChosen',
     ];
 
     /**
@@ -41,19 +42,12 @@ class FilesComponent extends Component
      */
     public $previewFiles = [];
 
-    //    /**
-    //     * @var PreviewFile[]
-    //     */
-    //    public $existingFiles = [];
-
-    public function mount(array $existingFiles, array $components = [])
+    public function mount(string $fieldName, array $assets = [], array $components = [])
     {
-        // Assert types
-        array_map(fn (PreviewFile $file) => $file, $existingFiles);
-        array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
+        $this->fieldName = $fieldName;
 
-        $this->previewFiles = $existingFiles;
-        $this->components = $components;
+        $this->previewFiles = array_map(fn (Asset $asset) => PreviewFile::fromAsset($asset), $assets);
+        $this->components = array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
     }
 
     public function booted()
@@ -87,10 +81,20 @@ class FilesComponent extends Component
     public function reorder($orderedIds)
     {
         $reorderedPreviewFiles = collect($orderedIds)
-            ->map(fn($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
+            ->map(fn ($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
             ->all();
 
         $this->previewFiles = $reorderedPreviewFiles;
+    }
+
+    public function onAssetsChosen(array $assetIds)
+    {
+        Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
+            $previewFile = PreviewFile::fromAsset($asset);
+            $previewFile->isAttachedToModel = false;
+
+            $this->previewFiles[] = $previewFile;
+        });
     }
 
 //    public function updatedFiles($value, $key): void
@@ -151,7 +155,7 @@ class FilesComponent extends Component
 
     public function openFilesChoose()
     {
-        $this->emitTo('chief-wire::files-choose', 'open');
+        $this->emitDownTo('chief-wire::files-choose', 'open');
     }
 
     public function deleteFile($fileId)
@@ -210,7 +214,7 @@ class FilesComponent extends Component
         ]);
     }
 
-    private function emitDownTo($name, $event, array $params)
+    private function emitDownTo($name, $event, array $params = [])
     {
         $this->emitTo($name, $event . '-' . $this->id, $params);
     }

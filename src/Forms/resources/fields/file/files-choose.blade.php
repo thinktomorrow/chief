@@ -1,46 +1,76 @@
-<div x-cloak x-data="{open:@entangle('isOpen')}" x-show="open" class="fixed inset-0 flex items-center justify-center z-[100]">
+<x-chief::dialog wired>
     @if($isOpen)
-        <div class="absolute inset-0 bg-black/50"></div>
 
-        <div class="relative p-12 bg-white rounded-xl">
+        <?php $rows = $this->getTableRows(); ?>
 
-            <button class="btn btn-primary-outline" type="button" x-on:click="open = false">X</button>
+        <div x-cloak x-data="{showAsList: @entangle('showAsList')}" class="flex gap-3 mb-4">
+            <input class="p-3" type="text" wire:model.debounce.500ms="filters.search"
+                   placeholder="zoek op bestandsnaam">
+            <x-chief::input.select wire:model="sort">
+                <option value="created_at_desc">Datum laatst toegevoegd</option>
+                <option value="created_at_asc">Datum eerst toegevoegd</option>
+            </x-chief::input.select>
 
-            <div class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
-                @foreach ($getFiles() as $file)
+            <button type="button" wire:click="showAsGrid">GRID</button>
+            <button type="button" wire:click="showAsList">LIST</button>
+        </div>
 
-                    <div class="flex gap-4 p-2">
-                        <div class="shrink-0">
-                            @if($file->isPreviewable)
-                                <img
-                                    src="{{ $file->previewUrl }}"
-                                    alt="..."
-                                    class="object-contain w-16 h-16 rounded-lg bg-grey-100"
-                                >
-                            @endif
-                        </div>
 
-                        <div class="flex items-center py-2 grow">
-                            <div class="space-y-0.5 leading-tight">
-                                <p class="text-black">
-                                    {{ $file->filename }}
-                                </p>
+        <div class="w-full">
+            <div class="space-y-4 card">
+                <div>
+                    <div class="row gutter-3">
+                        @foreach($rows as $i => $asset)
+                            <div wire:key="{{ $i.'_'.$asset->id }}" class="w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
 
-                                <p class="text-sm text-grey-500">
-                                    {{ $file->humanReadableSize }} - {{ $file->mimeType }}
-                                </p>
+                                <div class="w-full overflow-hidden aspect-square rounded-xl bg-grey-100">
+                                    @if ($asset->getExtensionType() == "image")
+                                        <img
+                                            src="{{ $asset->url('thumb') }}"
+                                            alt="{{ $asset->filename() }}"
+                                            class="object-contain w-full h-full"
+                                        />
+                                    @else
+                                        <div class="flex items-center justify-center w-full h-full text-grey-500">
+                                            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="mt-4 space-y-1.5 leading-tight">
+                                    <a
+                                        href="{{ $asset->url() }}"
+                                        title="{{ $asset->filename() }}"
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="text-black"
+                                    >
+                                        {{ $asset->filename() }}
+                                    </a>
+
+                                    <p class="text-sm text-grey-500">
+                                        {{ $asset->getDimensions() }} | {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
+                                    </p>
+                                </div>
+
+                                <button wire:click="selectAsset('{{ $asset->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+                                    <x-chief::icon-button icon="icon-plus" color="grey" />
+                                </button>
+
                             </div>
-                        </div>
-
-                        <div class="flex items-center gap-2 py-2 pr-2 shrink-0">
-                            <button wire:click="selectFile('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                                <x-chief::icon-button icon="icon-plus" color="grey" />
-                            </button>
-                        </div>
+                        @endforeach
                     </div>
+                </div>
 
-                @endforeach
+                @if ($rows->total() > $rows->count())
+                    <div>
+                        {{ $rows->links() }}
+                    </div>
+                @endif
             </div>
         </div>
+
+        <button wire:click="save" type="button">VOEG SELECTIE TOE</button>
+
     @endif
-</div>
+</x-chief::dialog>

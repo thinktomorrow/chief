@@ -76,18 +76,10 @@ class File extends Component implements Field
 
     private function getMedia(Model & HasAsset $model, string $locale): array
     {
-        $files = [];
-
-        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
+        return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
             return $asset->pivot->locale == $locale;
-        })->sortBy('pivot.order');
-
-        /** @var Asset $asset */
-        foreach ($assets as $asset) {
-            $files[] = PreviewFile::fromAsset($asset);
-        }
-
-        return $files;
+        })->sortBy('pivot.order')
+        ->all();
     }
 
     private function getLegacyMedia(Model & HasAsset $model, string $locale): array
