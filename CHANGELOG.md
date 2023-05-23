@@ -5,7 +5,10 @@ principles.
 
 ## Unreleased
 
--   Fixed: Testsuite
+## 0.7.24 - 2023-05-23
+-   
+- Fixed: Testsuite
+-   Added: Plugins Taggable and TimeTable. Currently still in chief core. 
 -   Added: Pagetitle can be shown with svg icons in table index
 
 ## 0.7.23 - 2023-04-19
@@ -21,7 +24,7 @@ principles.
 -   Fixed: field-in-window flexbox items are sometimes overflowing the container (e.g. repeat field window view)
 -   Fixed: RadioFilter and CheckboxFilter field labels were not correctly styled
 -   Fixed: Checkbox form-input-toggle doesn't shrink anymore in flexbox with long label
-- Fixed: charactercount was not triggered in forms on initial page DOM, only in sidebar.
+-   Fixed: charactercount was not triggered in forms on initial page DOM, only in sidebar.
 
 ## 0.7.22 - 2023-03-13
 

@@ -21,6 +21,7 @@ use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Plugins\Tags\TagsServiceProvider;
+use Thinktomorrow\Chief\Plugins\TimeTable\TimeTableServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
@@ -42,10 +43,11 @@ abstract class ChiefTestCase extends OrchestraTestCase
             TranslatableServiceProvider::class,
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
+            LivewireServiceProvider::class,
 
             // Plugins TODO: this should not be here but currently index card contains reference to chief-tags component
             TagsServiceProvider::class,
-            LivewireServiceProvider::class,
+            TimeTableServiceProvider::class, // For now here because method is called once on the first run of the testsuite
         ];
     }
 
