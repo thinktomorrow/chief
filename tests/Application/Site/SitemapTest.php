@@ -86,13 +86,13 @@ class SitemapTest extends ChiefTestCase
         <lastmod>'.$this->carbon->format(DateTime::ATOM).'</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
-        </url>
+            </url>
     <url>
         <loc>http://localhost/foo</loc>
         <lastmod>'.$this->carbon->format(DateTime::ATOM).'</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
-        </url>
+            </url>
 </urlset>
 ';
     }
