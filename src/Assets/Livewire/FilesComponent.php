@@ -138,11 +138,11 @@ class FilesComponent extends Component
                 $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
             }
 
-//            if(! is_null($index = $this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
-//                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
-//            } else {
-//                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
-//            }
+            //            if(! is_null($index = $this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
+            //                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
+            //            } else {
+            //                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
+            //            }
 
             //            dd($this->previewFiles);
         }

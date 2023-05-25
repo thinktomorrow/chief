@@ -3,11 +3,7 @@
 namespace Thinktomorrow\Chief\Assets\App;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
-use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
