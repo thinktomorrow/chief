@@ -14,7 +14,10 @@ class FilesComponent extends Component
 {
     use WithFileUploads;
 
+    public string $modelReference;
+    public string $fieldKey;
     public string $fieldName;
+    public string $locale;
     public bool $allowMultiple = false;
     public array $acceptedMimeTypes = [];
 
@@ -43,9 +46,12 @@ class FilesComponent extends Component
      */
     public $previewFiles = [];
 
-    public function mount(string $fieldName, array $assets = [], array $components = [])
+    public function mount(string $modelReference, string $fieldKey, string $fieldName, string $locale, array $assets = [], array $components = [])
     {
+        $this->modelReference = $modelReference;
+        $this->fieldKey = $fieldKey;
         $this->fieldName = $fieldName;
+        $this->locale = $locale;
 
         $this->previewFiles = array_map(fn (Asset $asset) => PreviewFile::fromAsset($asset), $assets);
         $this->components = array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
@@ -122,17 +128,21 @@ class FilesComponent extends Component
         // Livewire converts the public properties of PreviewFile object to an array. So we need to convert this back to an object
         $this->previewFiles = array_map(fn (array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
 
-        foreach($this->files as $index => $newFileDetails) {
+        foreach($this->files as $newFileDetails) {
 
             if(! isset($newFileDetails['fileRef'])) {
                 continue;
             }
 
-            if(! is_null($index = $this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
-                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
-            } else {
+            if(is_null($this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
                 $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
             }
+
+//            if(! is_null($index = $this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
+//                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
+//            } else {
+//                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
+//            }
 
             //            dd($this->previewFiles);
         }
@@ -183,8 +193,9 @@ class FilesComponent extends Component
 
     public function onAssetUpdated($fileId, array $values): void
     {
-        // Immediately show the updated values
         $previewFile = $this->previewFiles[$this->findPreviewFileIndex($fileId)];
+
+        $previewFile->fieldValues = $values;
         $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
     }
 

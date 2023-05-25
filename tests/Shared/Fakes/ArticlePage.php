@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
@@ -22,7 +22,7 @@ class ArticlePage extends Model implements Page
 
     use PageDefaults;
     use SoftDeletes;
-    use AssetTrait;
+    use InteractsWithAssets;
     use HasPeriodTrait;
     use Sortable;
 

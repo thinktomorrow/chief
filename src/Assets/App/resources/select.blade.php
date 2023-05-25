@@ -7,11 +7,20 @@
                 <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][path]" value="{{$file->tempPath}}" />
                 <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][originalName]" value="{{$file->filename}}" />
                 <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][mimeType]" value="{{$file->mimeType}}" />
+
+                @foreach($file->fieldValues as $fieldKey => $fieldValue)
+                    <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][fieldValues][{{ $fieldKey }}]" value="{{$fieldValue}}" />
+                @endforeach
             </div>
         @endforeach
 
         @foreach($getFilesForAttach() as $i => $file)
-            <input wire:key="files_for_attach_{{$file->id}}" type="hidden" name="{{ $getFieldName() }}[attach][{{ $i }}]" value="{{ $file->id }}">
+            <div wire:key="files_for_attach_{{$file->id}}">
+                <input type="hidden" name="{{ $getFieldName() }}[attach][{{ $i }}][id]" value="{{ $file->id }}">
+                @foreach($file->fieldValues as $fieldKey => $fieldValue)
+                    <input type="hidden" name="{{ $getFieldName() }}[attach][{{ $i }}][fieldValues][{{ $fieldKey }}]" value="{{$fieldValue}}" />
+                @endforeach
+            </div>
         @endforeach
 
         @foreach($getFilesForDeletion() as $i => $file)

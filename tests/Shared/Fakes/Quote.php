@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\File;
@@ -26,7 +26,7 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     }
     use FragmentableDefaults;
     use SoftDeletes;
-    use AssetTrait;
+    use InteractsWithAssets;
 
     public $table = 'quotes';
     public $guarded = [];

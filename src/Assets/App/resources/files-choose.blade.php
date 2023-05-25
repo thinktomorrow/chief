@@ -49,7 +49,7 @@
                                     </a>
 
                                     <p class="text-sm text-grey-500">
-                                        {{ $asset->getDimensions() }} | {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
+                                        {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
                                     </p>
                                 </div>
 

@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\Resource\FragmentResource;
@@ -16,7 +16,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset
 {
     use FragmentResourceDefault;
     use HasDynamicAttributes;
-    use AssetTrait;
+    use InteractsWithAssets;
     use SoftDeletes;
 
     /**

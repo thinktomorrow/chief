@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
@@ -18,7 +18,7 @@ class User extends Authenticatable implements HasAsset
 {
     use Notifiable;
     use HasRoles;
-    use AssetTrait;
+    use InteractsWithAssets;
     use Enablable;
     use HasFactory;
 

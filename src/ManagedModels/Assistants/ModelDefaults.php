@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
-use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
@@ -13,7 +13,7 @@ trait ModelDefaults
     use ReferableModelDefault;
     use Viewable;
 
-    use AssetTrait;
+    use InteractsWithAssets;
     use HasDynamicAttributes;
 
     /**

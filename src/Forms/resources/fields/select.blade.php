@@ -1,5 +1,5 @@
 <x-chief::input.select
-    wire:model="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+    wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
     :multiple="$allowMultiple()"

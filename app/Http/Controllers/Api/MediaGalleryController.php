@@ -37,7 +37,6 @@ class MediaGalleryController extends Controller
                     "id" => $asset->id,
                     "url" => $asset->url($conversion),
                     "filename" => $asset->filename(),
-                    "dimensions" => $asset->getDimensions(),
                     "size" => $asset->getSize(),
                 ];
             });

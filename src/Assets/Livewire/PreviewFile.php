@@ -22,6 +22,7 @@ class PreviewFile implements Wireable
         public string $extension,
         public bool $isQueuedForDeletion = false,
         public bool $isAttachedToModel = false,
+        public array $fieldValues = [],
     ) {
 
     }
@@ -65,7 +66,7 @@ class PreviewFile implements Wireable
     {
         // TODO: convert this to using the new asset library api.
         // TODO: how to get the smallest conversions if we don't know the field info?
-        $thumbUrl = $asset->url();
+        $thumbUrl = $asset->getUrl('thumb');
 
         try {
             $filesize = filesize($asset->getFirstMediaPath());
@@ -73,21 +74,21 @@ class PreviewFile implements Wireable
             $filesize = 0;
         }
 
-
         return new static(
             $asset->id,
             $asset->id,
             $thumbUrl,
             ('image' == $asset->getExtensionType()),
             null,
-            $asset->filename(),
+            $asset->getFileName() ?: '',
             $filesize,
             $asset->getSize(),  // asset->getSize() already returns human readable so this is first converted back to bytes
             //            File\App\FileHelper::getHumanReadableSize((int)$asset->getSize()),  // asset->getSize() already returns human readable so this is first converted back to bytes
-            $asset->getMimeType(),
+            $asset->getMimeType() ?: '',
             \Thinktomorrow\Chief\Assets\App\FileHelper::getExtension($asset->getFirstMediaPath()),
             false,
             true,
+            $asset->pivot->data ?? [],
         );
     }
 
@@ -106,6 +107,7 @@ class PreviewFile implements Wireable
             'extension' => $this->extension,
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
             'isAttachedToModel' => $this->isAttachedToModel,
+            'fieldValues' => $this->fieldValues,
         ];
     }
 

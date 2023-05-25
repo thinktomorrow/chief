@@ -7,26 +7,29 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
-use Thinktomorrow\AssetLibrary\Application\SortAssets;
+use Thinktomorrow\AssetLibrary\Application\ReorderAssets;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields\File;
 
 class SaveFileField
 {
+    private CreateAsset $createAsset;
     protected AddAsset $addAsset;
     protected AssetUploader $assetUploader;
-    private SortAssets $sortAssets;
+    private ReorderAssets $reorderAssets;
 
     /** @var string the media disk where the files should be stored. */
     private $disk = '';
     private DetachAsset $detachAsset;
 
-    final public function __construct(AddAsset $addAsset, DetachAsset $detachAsset, SortAssets $sortAssets, AssetUploader $assetUploader)
+    final public function __construct(CreateAsset $createAsset, AddAsset $addAsset, DetachAsset $detachAsset, ReorderAssets $reorderAssets, AssetUploader $assetUploader)
     {
+        $this->createAsset = $createAsset;
         $this->addAsset = $addAsset;
-        $this->sortAssets = $sortAssets;
+        $this->reorderAssets = $reorderAssets;
         $this->assetUploader = $assetUploader;
         $this->detachAsset = $detachAsset;
     }
@@ -38,7 +41,6 @@ class SaveFileField
         }
 
         foreach (data_get($input, 'files.' . $field->getName(), []) as $locale => $values) {
-
             $assetsForUpload = $values['uploads'] ?? [];
             $assetsForAttach = $values['attach'] ?? [];
             $assetsForDeletion = $values['queued_for_deletion'] ?? [];
@@ -54,45 +56,39 @@ class SaveFileField
     private function handleUploads(HasAsset $model, File $field, string $locale, array $values, Collection &$orderedAssetIds): void
     {
         foreach ($values as $value) {
-            $filename = $value['originalName'];
+            $filename = $this->sluggifyFilename($value['originalName']);
 
-            $uploadedFile = new UploadedFile($value['path'], $filename, $value['mimeType']);
+            $asset = $this->createAsset
+                ->uploadedFile(new UploadedFile($value['path'], $filename, $value['mimeType']))
+                ->filename($filename)
+                ->save($this->getDisk());
 
-            $asset = $this->assetUploader->upload($uploadedFile, $filename, 'default', $this->getDisk());
-
-            $this->addAsset->add($model, $asset, $field->getKey(), $locale, $this->sluggifyFilename($filename), 'default', $this->getDisk()); // TODO: remove  'default'
+            $this->addAsset->handle($model, $asset, $field->getKey(), $locale, 0, $value['fieldValues']);
 
             // Replace the temporary upload id with the asset id
             $orderedAssetIds = $orderedAssetIds->map(fn ($orderedAssetId) => $orderedAssetId == $value['id'] ? $asset->id : $orderedAssetId);
         }
     }
 
-    private function handleAttach(HasAsset $model, File $field, string $locale, array $assetIds): void
+    private function handleAttach(HasAsset $model, File $field, string $locale, array $values): void
     {
-        foreach ($assetIds as $orderIndex => $assetId) {
-            $model->assetRelation()->attach(
-                Asset::find($assetId),
-                [
-                    'type' => $field->getKey(),
-                    'locale' => $locale,
-                    'order' => $orderIndex,
-                ]
-            );
+        foreach ($values as $orderIndex => $assetValues) {
+            $this->addAsset->handle($model, Asset::find($assetValues['id']), $field->getKey(), $locale, $orderIndex, $assetValues['fieldValues']);
         }
     }
 
     private function handleDeletions(HasAsset $model, File $field, string $locale, array $values, Collection &$orderedAssetIds): void
     {
-        foreach ($values as $value) {
-            $this->detachAsset->detach($model, $value, $field->getKey(), $locale);
+        foreach ($values as $assetId) {
+            $this->detachAsset->handle($model, $field->getKey(), $locale, [$assetId]);
 
-            $orderedAssetIds = $orderedAssetIds->reject(fn ($orderedAssetId) => $orderedAssetId == $value);
+            $orderedAssetIds = $orderedAssetIds->reject(fn ($orderedAssetId) => $orderedAssetId == $assetId);
         }
     }
 
     private function handleReOrder(HasAsset $model, File $field, string $locale, Collection $orderedAssetIds): void
     {
-        $this->sortAssets->handle($model, $orderedAssetIds->all(), $field->getKey(), $locale);
+        $this->reorderAssets->handle($model, $field->getKey(), $locale, $orderedAssetIds->all());
     }
 
     private function sluggifyFilename(string $filename): string

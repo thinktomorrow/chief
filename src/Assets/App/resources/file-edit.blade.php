@@ -86,7 +86,7 @@
 
                 <div>
                     <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                        Bestand opslaan
+                        Opslaan
                     </button>
                 </div>
             </div>

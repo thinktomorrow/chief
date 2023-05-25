@@ -2,11 +2,13 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
+use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 
 class FileEditComponent extends Component
 {
@@ -14,15 +16,22 @@ class FileEditComponent extends Component
     use WithFileUploads;
 
     public $parentId;
+    public string $modelReference;
+    public string $fieldKey;
+    public string $locale;
 
     public ?PreviewFile $previewFile = null;
     public ?MediaFile $mediaFile = null;
     public $formValues = [];
     public $components = [];
 
-    public function mount(string $parentId, array $components = [])
+    public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
     {
+        $this->modelReference = $modelReference;
+        $this->fieldKey = $fieldKey;
+        $this->locale = $locale;
         $this->parentId = $parentId;
+
         $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
     }
 
@@ -36,7 +45,7 @@ class FileEditComponent extends Component
 
     public function getComponents(): array
     {
-        return array_map(fn ($componentArray) => $componentArray['class']::fromLivewire($componentArray), $this->components);
+        return array_map(fn($componentArray) => $componentArray['class']::fromLivewire($componentArray), $this->components);
     }
 
     private function setFile(PreviewFile $previewFile)
@@ -49,6 +58,21 @@ class FileEditComponent extends Component
             $this->mediaFile = MediaFile::fromMedia($mediaModel);
         }
 
+        $this->setFieldValues();
+    }
+
+    private function setFieldValues()
+    {
+        foreach($this->components as $componentArray) {
+            $component = $componentArray['class']::fromLivewire($componentArray);
+
+            if(!$component instanceof Field) continue;
+
+            Arr::set($this->formValues,
+                $component->getKey(),
+                data_get($this->previewFile->fieldValues,$component->getKey())
+            );
+        }
     }
 
     public function open($value)
@@ -96,14 +120,12 @@ class FileEditComponent extends Component
 
     public function submit()
     {
-        //        dd($this->formValues);
-
         // Values should be:
         // - Validate
         // - Save to Asset as custom properties
-
         if($this->mediaFile) {
             app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->formValues['basename']);
+            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->mediaFile->mediaId, $this->formValues);
         }
 
         $this->emitUp('assetUpdated', $this->previewFile->id, $this->formValues);

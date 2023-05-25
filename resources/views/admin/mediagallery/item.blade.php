@@ -32,7 +32,7 @@
         </a>
 
         <div class="mt-1 text-sm font-medium text-grey-500">
-            <p>{{ $asset->getDimensions() }}</p>
+            <p></p>
             <p>{{ $asset->getSize() }}</p>
         </div>
 
@@ -48,7 +48,7 @@
             </a>
 
             <p class="text-sm text-grey-500">
-                {{ $asset->getDimensions() }} | {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
+                {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
             </p>
 
             @if (!$asset->isUsed())
