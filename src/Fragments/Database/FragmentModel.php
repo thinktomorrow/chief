@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
