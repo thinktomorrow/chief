@@ -23,7 +23,9 @@ class FallbackLocaleRequiredRule
         if (str_ends_with($attribute, '.'.$fallbackLocale)) {
 
             // TODO: for asset field this should be custom made because here the value is the entire file upload payload (including new uploads, attachments of existing assets, deletions, ...)
-            if(is_array($value)) return true; // TEMP false passing of validation
+            if(is_array($value)) {
+                return true;
+            } // TEMP false passing of validation
 
             return is_null($value) ? false : (bool) trim($value);
         }
