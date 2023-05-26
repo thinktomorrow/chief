@@ -41,7 +41,7 @@ class FilesChooseComponent extends Component
 
     public function save()
     {
-        $this->emitUp('assetsChosen', $this->assetIds);
+        $this->emit('assetsChosen-'.$this->parentId, $this->assetIds);
         $this->close();
 
     }

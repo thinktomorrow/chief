@@ -25,12 +25,6 @@ class FilesComponent extends Component
     protected FileSelect $fileSelect;
     protected array $components;
 
-    public $listeners = [
-        'upload:finished' => 'onUploadFinished',
-        'assetUpdated' => 'onAssetUpdated',
-        'assetsChosen' => 'onAssetsChosen',
-    ];
-
     /**
      * The temporary uploaded files. These files
      * are not yet stored as media records.
@@ -55,6 +49,15 @@ class FilesComponent extends Component
 
         $this->previewFiles = array_map(fn (Asset $asset) => PreviewFile::fromAsset($asset), $assets);
         $this->components = array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
+    }
+
+    public function getListeners()
+    {
+        return [
+            'upload:finished' => 'onUploadFinished',
+            'assetUpdated' => 'onAssetUpdated',
+            'assetsChosen-'.$this->id => 'onAssetsChosen',
+        ];
     }
 
     public function booted()
@@ -104,25 +107,6 @@ class FilesComponent extends Component
         });
     }
 
-//    public function updatedFiles($value, $key): void
-//    {
-////        $this->validate([
-////            'files.*' => 'email',
-////        ]);
-//return;
-//        list($index, $attribute) = explode('.',$key);
-//
-//        // Each setting is individually passed (fileName, fileSize, fileRef). But we only want to update our
-//        // previewFiles when the file is actually uploaded, e.g. when fileRef is updated.
-//        if($attribute != 'fileRef') return;
-//
-//
-//
-//        $this->syncPreviewFiles();
-//
-//
-//    }
-
     private function syncPreviewFiles()
     {
         // Livewire converts the public properties of PreviewFile object to an array. So we need to convert this back to an object
@@ -137,14 +121,6 @@ class FilesComponent extends Component
             if(is_null($this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
                 $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
             }
-
-            //            if(! is_null($index = $this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
-            //                $this->previewFiles[$index] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], $this->previewFiles[$index]);
-            //            } else {
-            //                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
-            //            }
-
-            //            dd($this->previewFiles);
         }
     }
 
@@ -198,26 +174,6 @@ class FilesComponent extends Component
         $previewFile->fieldValues = $values;
         $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
     }
-
-//    public function getRules()
-//    {
-//        return ['email'];
-//    }
-
-//    public function rules(): array
-//    {
-//
-//    }
-//
-//    public function messages(): array
-//    {
-//
-//    }
-//
-//    public function validationAttributes(): array
-//    {
-//
-//    }
 
     public function render()
     {

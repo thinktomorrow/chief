@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
@@ -24,9 +25,11 @@ class FileEditComponent extends Component
     public string $locale;
 
     public ?PreviewFile $previewFile = null;
-    public ?MediaFile $mediaFile = null;
+    public ?PreviewFile $replacedPreviewFile = null;
     public $form = [];
     public $components = [];
+    public $file = null;
+    public bool $showReplaceActions = false;
 
     public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
     {
@@ -43,15 +46,14 @@ class FileEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
+            'assetsChosen-'.$this->id => 'onAssetsChosen',
         ];
     }
 
     public function getComponents(): array
     {
         return array_map(function($componentArray) {
-            $component = $componentArray['class']::fromLivewire($componentArray);
-//            $component->key(LivewireAssist::formDataIdentifier($component->getKey()));
-            return $component;
+            return $componentArray['class']::fromLivewire($componentArray);
         }, $this->components);
     }
 
@@ -62,7 +64,6 @@ class FileEditComponent extends Component
 
         if($previewFile->mediaId) {
             $mediaModel = Media::find($previewFile->mediaId);
-            $this->mediaFile = MediaFile::fromMedia($mediaModel);
         }
 
         $this->setFieldValues();
@@ -90,47 +91,34 @@ class FileEditComponent extends Component
 
     public function close()
     {
-        $this->reset(['previewFile','mediaFile','form']);
+        $this->reset(['previewFile','form']);
         $this->isOpen = false;
     }
 
-//    public function updatedFiles(): void
-//    {
-//        $currentCount = count($this->previewFiles);
-//
-//        $this->syncPreviewFiles();
-//
-//        if(count($this->previewFiles) > $currentCount) {
-//            $this->emit('fileAdded');
-//        }
-//    }
+    public function updatedFile(): void
+    {
+        $this->replacedPreviewFile = $this->previewFile;
+        $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
+    }
 
-//    public function rules(): array
-//    {
-////        $rules = []
-//        // Rename to validationParameters
-//        $validationParameters = ValidationParameters::make($field);
-//
-//        return $this->validatorFactory->make(
-//            $payload,
-//            $validationParameters->getRules(),
-//            $validationParameters->getMessages(),
-//            $validationParameters->getAttributes(),
-//        );
-//
-//
-//        return ['form.url' => 'required|numeric'];
-//    }
-//
-//    public function messages(): array
-//    {
-//
-//    }
-//
-//    public function validationAttributes(): array
-//    {
-//
-//    }
+    public function onAssetsChosen(array $assetIds)
+    {
+        if(empty($assetIds)) return;
+
+        // Replacement of file can be only one asset.
+        $assetId = reset($assetIds);
+
+        $previewFile = PreviewFile::fromAsset(Asset::where('id', $assetId)->first());
+        $previewFile->isAttachedToModel = false;
+
+        $this->replacedPreviewFile = $this->previewFile;
+        $this->previewFile = $previewFile;
+    }
+
+    public function openFilesChoose()
+    {
+        $this->emitDownTo('chief-wire::files-choose', 'open');
+    }
 
     public function openImageCrop()
     {
@@ -141,10 +129,24 @@ class FileEditComponent extends Component
     {
         $this->validateForm();
 
-        if($this->mediaFile) {
-            app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->form['basename']);
-            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->mediaFile->mediaId, $this->form);
+        if($this->previewFile->mediaId) {
+            app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
+            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
+
+        if($this->replacedPreviewFile) {
+            // TODO: replace non-uploaded asset?
+
+            if($this->previewFile->mediaId) {
+                app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->mediaId);
+            } else {
+                app(FileApplication::class)->replaceMediaWithUpload($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
+            }
+        }
+
+        // replace ...
+        // upload new media -
+        // use existing media for this asset
 
         $this->emitUp('assetUpdated', $this->previewFile->id, $this->form);
 
@@ -181,7 +183,12 @@ class FileEditComponent extends Component
         ]);
     }
 
-    private function emitToSibling($name, $event, array $params)
+    private function emitDownTo($name, $event, array $params = [])
+    {
+        $this->emitTo($name, $event . '-' . $this->id, $params);
+    }
+
+    private function emitToSibling($name, $event, array $params = [])
     {
         $params['parent_id'] = $this->parentId;
         $this->emitTo($name, $event, $params);

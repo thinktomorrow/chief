@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\TemporaryUploadedFile;
 use Livewire\Wireable;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
 
@@ -11,7 +12,7 @@ class PreviewFile implements Wireable
 {
     private function __construct(
         public string $id,
-        public ?string $mediaId,
+        public ?string $mediaId, // Actually the asset id
         public ?string $previewUrl,
         public bool $isPreviewable,
         public ?string $tempPath,
@@ -23,6 +24,10 @@ class PreviewFile implements Wireable
         public bool $isQueuedForDeletion = false,
         public bool $isAttachedToModel = false,
         public array $fieldValues = [],
+
+        // Asset related values
+        public array $urls,
+        public array $owners,
     ) {
 
     }
@@ -31,6 +36,11 @@ class PreviewFile implements Wireable
 //    {
 //
 //    }
+
+    public function getUrl(string $conversionName = 'original'): ?string
+    {
+        return $this->urls[$conversionName] ?? null;
+    }
 
     public function isImage(): bool
     {
@@ -59,11 +69,27 @@ class PreviewFile implements Wireable
             FileHelper::getExtension($file->getClientOriginalName()),
             false,
             false,
+            [],
+            [],
+            [],
         );
     }
 
     public static function fromAsset(Asset $asset): static
     {
+        $media = $asset->getFirstMedia();
+
+        $urls = [
+            'original' => $media->originalUrl,
+            ...$media->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $asset->getUrl($conversionName)])->all(),
+        ];
+
+        // Owners
+        $owners = [];
+//        if($asset = $asset->model) {
+//
+//        }
+
         // TODO: convert this to using the new asset library api.
         // TODO: how to get the smallest conversions if we don't know the field info?
         $thumbUrl = $asset->getUrl('thumb');
@@ -89,7 +115,14 @@ class PreviewFile implements Wireable
             false,
             true,
             $asset->pivot->data ?? [],
+            $urls,
+            $owners,
         );
+    }
+
+    public function toUploadedFile(): UploadedFile
+    {
+        return new UploadedFile($this->tempPath, $this->filename, $this->mimeType);
     }
 
     public function toLivewire()
@@ -108,6 +141,8 @@ class PreviewFile implements Wireable
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
             'isAttachedToModel' => $this->isAttachedToModel,
             'fieldValues' => $this->fieldValues,
+            'urls' => $this->urls,
+            'owners' => $this->owners,
         ];
     }
 
