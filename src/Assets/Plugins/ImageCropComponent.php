@@ -17,7 +17,7 @@ class ImageCropComponent extends Component
 
     public ?PreviewFile $previewFile = null;
     public ?MediaFile $mediaFile = null;
-    public $formValues = [];
+    public $form = [];
     public $parentId;
 
     public $listeners = [
@@ -34,7 +34,7 @@ class ImageCropComponent extends Component
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
-        $this->formValues['basename'] = $previewFile->getBaseName();
+        $this->form['basename'] = $previewFile->getBaseName();
 
         if($previewFile->mediaId) {
             $mediaModel = Media::find($previewFile->mediaId);
@@ -62,7 +62,7 @@ class ImageCropComponent extends Component
 
     public function close()
     {
-        $this->reset(['previewFile','mediaFile','formValues']);
+        $this->reset(['previewFile','mediaFile','form']);
         $this->isOpen = false;
     }
 
@@ -96,10 +96,10 @@ class ImageCropComponent extends Component
         // for new file: perform upload and then emitUp with newpath, name and mimeType...
         dd('submitting');
         if($this->mediaFile) {
-            app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->formValues['basename']);
+            app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->form['basename']);
         }
 
-        $this->emitUp('fileUpdated', $this->previewFile->id, $this->formValues);
+        $this->emitUp('fileUpdated', $this->previewFile->id, $this->form);
 
         $this->close();
     }

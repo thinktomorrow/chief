@@ -63,7 +63,7 @@ class SaveFileField
                 ->filename($filename)
                 ->save($this->getDisk());
 
-            $this->addAsset->handle($model, $asset, $field->getKey(), $locale, 0, $value['fieldValues']);
+            $this->addAsset->handle($model, $asset, $field->getKey(), $locale, 0, $value['fieldValues'] ?? []);
 
             // Replace the temporary upload id with the asset id
             $orderedAssetIds = $orderedAssetIds->map(fn ($orderedAssetId) => $orderedAssetId == $value['id'] ? $asset->id : $orderedAssetId);
@@ -73,7 +73,7 @@ class SaveFileField
     private function handleAttach(HasAsset $model, File $field, string $locale, array $values): void
     {
         foreach ($values as $orderIndex => $assetValues) {
-            $this->addAsset->handle($model, Asset::find($assetValues['id']), $field->getKey(), $locale, $orderIndex, $assetValues['fieldValues']);
+            $this->addAsset->handle($model, Asset::find($assetValues['id']), $field->getKey(), $locale, $orderIndex, $assetValues['fieldValues'] ?? []);
         }
     }
 

@@ -75,14 +75,28 @@
                             id="basename"
                             name="basename"
                             placeholder="Bestandsnaam"
-                            wire:model.lazy="formValues.basename"
+                            wire:model.lazy="form.basename"
                         />
                     </x-chief::input.prepend-append>
                 </x-chief::input.group>
 
-                @foreach($this->getComponents() as $component)
-                    {{ $component }}
-                @endforeach
+                @if(count($this->getComponents()) > 0)
+                    <div class="bg-blue-50 p-4 rounded space-y-4">
+
+                        <h2 class="text-blue-500">Gegevens op deze pagina</h2>
+
+                        @foreach($this->getComponents() as $component)
+                            {{ $component }}
+                        @endforeach
+                    </div>
+                @endif
+
+                <div>
+                    @foreach($errors->all() as $error)
+                        <span class="text-red-500">{{ $error }}</span>
+                    @endforeach
+                </div>
+
 
                 <div>
                     <button wire:click.prevent="submit" type="submit" class="btn btn-primary">

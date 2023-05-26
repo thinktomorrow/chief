@@ -80,8 +80,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         $this->columnName($key);
 
         // This causes livewire to refresh field DOM...
-        //        $this->elementId($key.'_'.Str::random());
-        $this->elementId($key);
+                $this->elementId($key.'_'.Str::random());
+//        $this->elementId($key);
     }
 
     public static function make(string $key)
@@ -128,6 +128,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             'key' => $this->key,
             'methods' => [
                 ...(isset($this->id) ? ['id' => $this->id] : []),
+                ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
                 ...(isset($this->name) ? ['name' => $this->name] : []),
                 ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),
                 ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
@@ -138,6 +139,10 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->options) ? ['options' => $this->options] : []),
                 ...(isset($this->placeholders) ? ['placeholders' => $this->placeholders] : []),
                 ...(isset($this->autofocus) ? ['autofocus' => $this->autofocus] : []),
+                ...(isset($this->isRequired) && $this->isRequired ? ['required' => true] : []),
+                ...(isset($this->rules) ? ['rules' => $this->rules] : []),
+                ...(isset($this->validationMessages) ? ['validationMessages' => $this->validationMessages] : []),
+                ...(isset($this->validationAttribute) ? ['validationAttribute' => $this->validationAttribute] : []),
             ],
         ];
     }
