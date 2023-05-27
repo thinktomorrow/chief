@@ -26,64 +26,34 @@
                     @endif
 
                     @if($previewFile)
-                        <div x-cloak x-data="{showReplaceActions: false}">
-                            <x-chief::icon-button color="grey" x-on:click="showReplaceActions = true">
-                                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><polyline points="176.2 99.7 224.2 99.7 224.2 51.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><path d="M65.8,65.8a87.9,87.9,0,0,1,124.4,0l34,33.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path><polyline points="79.8 156.3 31.8 156.3 31.8 204.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><path d="M190.2,190.2a87.9,87.9,0,0,1-124.4,0l-34-33.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path></svg>
-                            </x-chief::icon-button>
 
-                            <div x-show="showReplaceActions">
+                        <div class="flex border border-dashed divide-x rounded-lg shadow-sm border-grey-200 divide-grey-200 divide-dashed">
 
-                                <div class="flex border border-dashed divide-x rounded-lg shadow-sm border-grey-200 divide-grey-200 divide-dashed">
+                            <label for="{{ $this->id }}" class="relative w-1/2">
 
-                                    <label for="{{ $this->id }}" class="relative w-1/2">
+                                <div x-data="{isUploading: false, isDone: false, progress: 0}"
+                                     x-show="isUploading"
+                                     x-on:livewire-upload-start="isUploading = true"
+                                     x-on:livewire-upload-finish="() => {}"
+                                     x-on:livewire-upload-error="isUploading = false"
+                                     x-on:livewire-upload-progress="progress = $event.detail.progress"
+                                >
 
-                                        <div x-data="{isUploading: false, isDone: false, progress: 0}"
-                                             x-show="isUploading"
-                                             x-on:livewire-upload-start="isUploading = true"
-                                             x-on:livewire-upload-finish="() => {}"
-                                             x-on:livewire-upload-error="isUploading = false"
-                                             x-on:livewire-upload-progress="progress = $event.detail.progress"
-                                        >
+                                    <input
+                                        wire:model="file"
+                                        type="file"
+                                        id="{{ $this->id }}"
+                                        class="absolute inset-0 w-full opacity-0 cursor-pointer pointer-events-auto peer"
+                                    />
 
-                                            <input
-                                                wire:model="file"
-                                                type="file"
-                                                id="{{ $this->id }}"
-                                                class="absolute inset-0 w-full opacity-0 cursor-pointer pointer-events-auto peer"
-                                            />
-
-                                            <progress class="w-full" max="100" x-bind:value="progress"></progress>
-                                        </div>
-
-                                        <div class="flex items-center gap-4 p-4 rounded-l-lg group peer-focus:ring-1 peer-focus:ring-primary-500">
-                                            <div class="flex items-center justify-center w-12 h-12 rounded-full shrink-0 group-hover:bg-primary-50 bg-grey-100">
-                                                <svg class="w-6 h-6 text-black transition-all duration-75 ease-in-out group-hover:text-primary-500 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" /> </svg>
-                                            </div>
-
-                                            <div class="space-y-0.5 leading-tight">
-                                                <p class="text-black">
-                                                    Upload een nieuw bestand
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </label>
-
-                                    <a wire:click="openFilesChoose" class="cursor-pointer flex items-center w-1/2 gap-4 p-4 rounded-r-lg group">
-                                        <div class="flex items-center justify-center w-12 h-12 rounded-full shrink-0 group-hover:bg-primary-50 bg-grey-100">
-                                            <svg class="w-5 h-5 text-black transition-all duration-75 ease-in-out group-hover:text-primary-500 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /> </svg>
-                                        </div>
-
-                                        <div class="space-y-0.5 leading-tight">
-                                            <span class="text-black">
-                                                Kies uit de mediabibliotheek
-                                            </span>
-                                        </div>
-                                    </a>
+                                    <progress class="w-full" max="100" x-bind:value="progress"></progress>
                                 </div>
 
-                            </div>
+                                <x-chief::icon-button color="grey" x-on:click="showReplaceActions = true">
+                                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><polyline points="176.2 99.7 224.2 99.7 224.2 51.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><path d="M65.8,65.8a87.9,87.9,0,0,1,124.4,0l34,33.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path><polyline points="79.8 156.3 31.8 156.3 31.8 204.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline><path d="M190.2,190.2a87.9,87.9,0,0,1-124.4,0l-34-33.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path></svg>
+                                </x-chief::icon-button>
+                            </label>
                         </div>
-
 
                         <a
                             download
@@ -160,7 +130,4 @@
             </div>
         </form>
     @endif
-
-    <div><livewire:chief-wire::files-choose parent-id="{{ $this->id }}" /></div>
-
 </x-chief::dialog>

@@ -32,9 +32,9 @@ class FileMimetypesRule extends FileRule
             $value = new UploadedFile($value['path'], $value['originalName']);
         }
 
-//        if (! $this->isValidFileInstance($value)) {
-//            return $this->validateSlimMimetypes($value, $parameters);
-//        }
+        //        if (! $this->isValidFileInstance($value)) {
+        //            return $this->validateSlimMimetypes($value, $parameters);
+        //        }
 
         return parent::validateMimetypes($attribute, $value, $parameters);
     }

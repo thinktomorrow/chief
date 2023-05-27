@@ -26,26 +26,26 @@
                                 <div class="w-full overflow-hidden aspect-square rounded-xl bg-grey-100">
                                     @if ($asset->getExtensionType() == "image")
                                         <img
-                                            src="{{ $asset->url('thumb') }}"
-                                            alt="{{ $asset->filename() }}"
+                                            src="{{ $asset->getUrl('thumb') }}"
+                                            alt="{{ $asset->getFileName() }}"
                                             class="object-contain w-full h-full"
                                         />
-                                    @else
+                                    @elseif($asset->getMimeType())
                                         <div class="flex items-center justify-center w-full h-full text-grey-500">
-                                            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
+                                            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
                                         </div>
                                     @endif
                                 </div>
 
                                 <div class="mt-4 space-y-1.5 leading-tight">
                                     <a
-                                        href="{{ $asset->url() }}"
-                                        title="{{ $asset->filename() }}"
+                                        href="{{ $asset->getUrl() }}"
+                                        title="{{ $asset->getFileName() }}"
                                         target="_blank"
                                         rel="noopener"
                                         class="text-black"
                                     >
-                                        {{ $asset->filename() }}
+                                        {{ $asset->getFileName() }}
                                     </a>
 
                                     <p class="text-sm text-grey-500">

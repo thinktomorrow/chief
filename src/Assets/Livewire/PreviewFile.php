@@ -79,6 +79,10 @@ class PreviewFile implements Wireable
     {
         $media = $asset->getFirstMedia();
 
+        if(!$media) {
+            throw new \InvalidArgumentException('No media found for asset ' . $asset->id);
+        }
+
         $urls = [
             'original' => $media->originalUrl,
             ...$media->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $asset->getUrl($conversionName)])->all(),

@@ -47,26 +47,13 @@ class FileApplication
         $model->save();
     }
 
-    public function replaceMedia(string $assetId, string $newAssetId): void
-    {
-        $this->replaceAsset($assetId, $newAssetId);
-    }
-
-    public function replaceMediaWithUpload(string $assetId, \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile): void
-    {
-        $this->replaceAsset($assetId, $uploadedFile);
-    }
-
-    private function replaceAsset(string $assetId, string|UploadedFile $newAssetId): void
+    public function replaceMedia(string $assetId, \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile): void
     {
         /** @var Asset $existingAsset */
         $existingAsset = Asset::find($assetId);
 
-        $newAsset = is_string($newAssetId)
-            ? Asset::find($newAssetId)
-            : $this->createAsset
-                ->uploadedFile($newAssetId)
-                ->filename($existingAsset->getFileName())
+        $newAsset = $this->createAsset
+                ->uploadedFile($uploadedFile)
                 ->save();
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
