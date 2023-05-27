@@ -172,7 +172,7 @@ class FilesComponent extends Component
         $previewFile = PreviewFile::fromArray($previewFileArray);
         $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
 
-//        $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
+        //        $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
     }
 
     public function render()

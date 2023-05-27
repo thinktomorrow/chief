@@ -52,7 +52,7 @@ class FileEditComponent extends Component
 
     public function getComponents(): array
     {
-        return array_map(function($componentArray) {
+        return array_map(function ($componentArray) {
             return $componentArray['class']::fromLivewire($componentArray);
         }, $this->components);
     }
@@ -86,18 +86,21 @@ class FileEditComponent extends Component
         foreach($this->components as $componentArray) {
             $component = $componentArray['class']::fromLivewire($componentArray);
 
-            if(!$component instanceof Field) continue;
+            if(! $component instanceof Field) {
+                continue;
+            }
 
-            Arr::set($this->form,
+            Arr::set(
+                $this->form,
                 $component->getKey(),
-                data_get($this->previewFile->fieldValues,$component->getKey())
+                data_get($this->previewFile->fieldValues, $component->getKey())
             );
         }
     }
 
     public function updatedFile(): void
     {
-        if(!$this->replacedPreviewFile) {
+        if(! $this->replacedPreviewFile) {
             $this->replacedPreviewFile = $this->previewFile;
         }
         $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);

@@ -79,7 +79,7 @@ class PreviewFile implements Wireable
     {
         $media = $asset->getFirstMedia();
 
-        if(!$media) {
+        if(! $media) {
             throw new \InvalidArgumentException('No media found for asset ' . $asset->id);
         }
 
@@ -90,9 +90,9 @@ class PreviewFile implements Wireable
 
         // Owners
         $owners = [];
-//        if($asset = $asset->model) {
-//
-//        }
+        //        if($asset = $asset->model) {
+        //
+        //        }
 
         // TODO: convert this to using the new asset library api.
         // TODO: how to get the smallest conversions if we don't know the field info?

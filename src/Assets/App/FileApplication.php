@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Assets\App;
 
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceMedia;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
