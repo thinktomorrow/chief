@@ -72,17 +72,22 @@ class FileEditComponent extends Component
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
-        $this->form['basename'] = $previewFile->getBaseName();
-
-        if($previewFile->mediaId) {
-            $mediaModel = Media::find($previewFile->mediaId);
-        }
-
         $this->extractFormFromPreviewFile();
+    }
+
+    public function updatedFile(): void
+    {
+        if(! $this->replacedPreviewFile) {
+            $this->replacedPreviewFile = $this->previewFile;
+        }
+        $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
+        $this->syncForm();
     }
 
     private function extractFormFromPreviewFile()
     {
+        $this->form['basename'] = $this->previewFile->getBaseName();
+
         foreach($this->components as $componentArray) {
             $component = $componentArray['class']::fromLivewire($componentArray);
 
@@ -98,19 +103,11 @@ class FileEditComponent extends Component
         }
     }
 
-    public function updatedFile(): void
-    {
-        if(! $this->replacedPreviewFile) {
-            $this->replacedPreviewFile = $this->previewFile;
-        }
-        $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
-        $this->syncValues();
-    }
-
-    private function syncValues()
+    private function syncForm()
     {
         $this->previewFile->fieldValues = $this->form;
-        $this->previewFile->filename = $this->form['basename'] . '.' . $this->previewFile->extension;
+
+        $this->form['basename'] = $this->previewFile->getBaseName();
     }
 
 //    public function onAssetsChosen(array $assetIds)
@@ -159,7 +156,7 @@ class FileEditComponent extends Component
         }
 
         // Update form values
-        $this->syncValues();
+        $this->syncForm();
 
         $this->emitUp('assetUpdated', $this->previewFile);
 

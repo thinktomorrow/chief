@@ -55,14 +55,16 @@
                             </label>
                         </div>
 
-                        <a
-                            download
-                            href="{{ $previewFile->getUrl() }}"
-                            title="download"
-                            class="shrink-0 link link-primary"
-                        >
-                            <x-chief::icon-button icon="icon-download" color="grey"/>
-                        </a>
+                        @if($previewFile->getUrl())
+                            <a
+                                download
+                                href="{{ $previewFile->getUrl() }}"
+                                title="download"
+                                class="shrink-0 link link-primary"
+                            >
+                                <x-chief::icon-button icon="icon-download" color="grey"/>
+                            </a>
+                        @endif
                     @endif
                 </div>
 
