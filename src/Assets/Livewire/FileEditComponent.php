@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
