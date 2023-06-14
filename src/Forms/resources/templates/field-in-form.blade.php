@@ -45,10 +45,10 @@
     @if ($hasLocales())
         @foreach($getLocales() as $locale)
             <x-chief::input.error :rule="$getId($locale)"/>
-            <x-chief::input.error :rule="\Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getId(),$locale)"/>
+            <x-chief::input.error :rule="\Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getId(),$locale)"/>
         @endforeach
     @else
         <x-chief::input.error :rule="$getId()"/>
-        <x-chief::input.error :rule="\Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getId())"/>
+        <x-chief::input.error :rule="\Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getId())"/>
     @endif
 </div>
