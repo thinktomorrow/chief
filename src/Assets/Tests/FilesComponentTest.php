@@ -156,15 +156,4 @@ class FilesComponentTest extends ChiefTestCase
         ->assertSet('previewFiles.0.isQueuedForDeletion', true)
         ->assertSeeHtml('name="thumb[queued_for_deletion][0]" value="'.$asset->id.'"');
     }
-
-    private function uploadForLivewire(UploadedFile $file)
-    {
-        Storage::fake('tmp-for-tests');
-
-        $paths = app(FileUploadHandler::class)->validateAndStore([
-            $file
-        ],'tmp-for-tests');
-
-        return ltrim($paths[0],'/');
-    }
 }
