@@ -1,5 +1,5 @@
 <x-chief::input.textarea
-    wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+    wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getName(),$locale ?? null) }}"
     v-pre
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"

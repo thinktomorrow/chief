@@ -46,7 +46,7 @@ final class FragmentRepository
 
         $builder = FragmentModel::query();
 
-        $builder->limit(10);
+        $builder->limit(30);
 
         if ($isFilteringByType) {
             $builder = $this->filterByTypes($builder, $filters['types']);

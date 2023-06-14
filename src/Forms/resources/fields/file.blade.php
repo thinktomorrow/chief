@@ -1,6 +1,6 @@
 <div>
     <livewire:chief-wire::file-upload
-        :model-reference="$getModel()->modelReference()->get()"
+        :model-reference="$getModel()?->modelReference()->get()"
         :field-key="$field->getKey()"
         :field-name="$field->getName($locale)"
         :locale="$locale"

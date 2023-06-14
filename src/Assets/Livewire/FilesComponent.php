@@ -14,16 +14,17 @@ class FilesComponent extends Component
 {
     use WithFileUploads;
 
-    public string $modelReference;
+    public ?string $modelReference;
     public string $fieldKey;
     public string $fieldName;
     public string $locale;
     public bool $allowMultiple = false;
+    public bool $isReordering = false;
     public array $acceptedMimeTypes = [];
 
     protected FilePreview $filePreview;
     protected FileSelect $fileSelect;
-    protected array $components;
+    protected array $components = [];
 
     /**
      * The temporary uploaded files. These files
@@ -40,7 +41,7 @@ class FilesComponent extends Component
      */
     public $previewFiles = [];
 
-    public function mount(string $modelReference, string $fieldKey, string $fieldName, string $locale, array $assets = [], array $components = [])
+    public function mount(?string $modelReference, string $fieldKey, string $fieldName, string $locale, array $assets = [], array $components = [])
     {
         $this->modelReference = $modelReference;
         $this->fieldKey = $fieldKey;
@@ -95,6 +96,8 @@ class FilesComponent extends Component
             ->all();
 
         $this->previewFiles = $reorderedPreviewFiles;
+
+        $this->isReordering = false;
     }
 
     public function onAssetsChosen(array $assetIds)

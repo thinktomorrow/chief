@@ -6,7 +6,7 @@
 
         <label for="{{ $id }}" class="flex items-start gap-2">
             <x-chief::input.radio
-                wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+                wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getName(),$locale ?? null) }}"
                 id="{{ $id }}"
                 name="{{ $getName($locale ?? null) }}"
                 value="{{ $value }}"

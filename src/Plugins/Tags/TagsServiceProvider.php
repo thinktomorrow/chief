@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags;
 
-use Thinktomorrow\Chief\App\Providers\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;

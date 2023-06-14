@@ -1,5 +1,6 @@
 <div
     wire:sortable
+    wire:start="$set('isReordering', true)"
     wire:end.stop="reorder($event.target.sortable.toArray())"
 {{--    wire:sortable.options="{ animation: 100 }"--}}
     class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">

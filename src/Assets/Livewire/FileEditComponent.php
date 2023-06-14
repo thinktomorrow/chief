@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireAssist;
+use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
 class FileEditComponent extends Component
 {
@@ -133,7 +133,12 @@ class FileEditComponent extends Component
 
     public function openImageCrop()
     {
-        $this->emitToSibling('chief-wire::image-crop', 'openInParentScope', ['previewfile_array' => $this->previewFile]);
+        $this->emitDownTo('chief-wire::image-crop', 'open', ['previewfile' => $this->previewFile]);
+    }
+
+    public function openHotSpots()
+    {
+        $this->emitToSibling('chief-wire::hotspots', 'open', ['previewfile' => $this->previewFile]);
     }
 
     public function submit()
@@ -173,7 +178,7 @@ class FileEditComponent extends Component
         foreach ($this->getComponents() as $component) {
             if ($component instanceof Field) {
 
-                $component->name(FormKey::replaceDotsByBrackets(LivewireAssist::formDataIdentifier($component->getName())));
+                $component->name(FormKey::replaceDotsByBrackets(LivewireFieldName::get($component->getName())));
 
                 $validationParameters = ValidationParameters::make($component);
                 $rules = array_merge($rules, $validationParameters->getRules());
@@ -199,7 +204,6 @@ class FileEditComponent extends Component
 
     private function emitToSibling($name, $event, array $params = [])
     {
-        $params['parent_id'] = $this->parentId;
-        $this->emitTo($name, $event, $params);
+        $this->emitTo($name, $event . '-' . $this->parentId, $params);
     }
 }

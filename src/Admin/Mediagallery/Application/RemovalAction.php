@@ -23,7 +23,7 @@ final class RemovalAction
     {
         // Strict protection enabled: we won't remove assets who are still being used...
         $assetIds = collect($request->input('asset_ids', []))->reject(function ($assetId) {
-            return DB::table('asset_pivots')
+            return DB::table('assets_pivot')
                 ->where('asset_id', $assetId)
                 ->where('unused', 0)
                 ->exists();

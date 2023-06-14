@@ -8,6 +8,9 @@ return new class extends Migration
 {
     public function up()
     {
+        // Only want to run these migrations for existing asset database schemas.
+        if(Schema::hasTable('assets_pivot')) return;
+
         Schema::rename('asset_pivots', 'assets_pivot');
 
         Schema::table('assets', function (Blueprint $table) {

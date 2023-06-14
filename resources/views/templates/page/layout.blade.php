@@ -138,5 +138,9 @@
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @stack('custom-scripts-after-vue')
+
+    @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getFooterSections() as $footerSection)
+        {{ $footerSection }}
+    @endforeach
 </body>
 </html>

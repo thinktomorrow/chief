@@ -9,10 +9,10 @@
         @foreach ($images as $image)
             <div class="flex items-center gap-4">
                 <div class="w-32 h-20">
-                    <a href="{{ $image->url }}" title="{{ $image->filename }}" target="_blank" rel="noopener">
+                    <a href="{{ $image->getUrl() }}" title="{{ $image->getFileName() }}" target="_blank" rel="noopener">
                         <img
                             src="{{ $image->thumbUrl }}"
-                            alt="{{ $image->filename }}"
+                            alt="{{ $image->getFileName() }}"
                             class="object-contain w-full h-full rounded-lg bg-grey-100"
                         >
                     </a>
@@ -23,13 +23,13 @@
                         <div>
                             <p>
                                 <span class="body body-dark" style="word-break: break-all;">
-                                    {{ $image->filename }}
+                                    {{ $image->getFileName() }}
                                 </span>
                                 <span class="body body-dark">{{ $image->size }} </span>
                             </p>
                         </div>
 
-                        <a href="{{ $image->url }}" title="Afbeelding bekijken" target="_blank" rel="noopener" class="block">
+                        <a href="{{ $image->getUrl() }}" title="Afbeelding bekijken" target="_blank" rel="noopener" class="block">
                             <x-chief::icon-label
                                 icon="icon-external-link"
                                 position="append"

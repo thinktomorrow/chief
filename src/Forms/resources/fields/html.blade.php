@@ -2,7 +2,7 @@
     data-editor
     data-locale="{{ $locale ?? app()->getLocale() }}"
     data-custom-redactor-options="{{ json_encode($getRedactorOptions($locale ?? null)) }}"
-    wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+    wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getName(),$locale ?? null) }}"
     v-pre
     id="{{ $getId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"

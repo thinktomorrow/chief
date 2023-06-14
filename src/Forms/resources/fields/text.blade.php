@@ -3,7 +3,7 @@
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
     <x-chief::input.text
-        wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireAssist::formDataIdentifier($getName(),$locale ?? null) }}"
+        wire:model.lazy="{{ \Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getName(),$locale ?? null) }}"
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"

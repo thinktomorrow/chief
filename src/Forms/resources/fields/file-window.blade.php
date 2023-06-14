@@ -8,7 +8,7 @@
     @if($count > 0)
         @foreach ($files as $file)
             <div class="flex items-center gap-4">
-                <a href="{{ $file->url }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
+                <a href="{{ $file->getUrl() }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
                     <div class="flex items-center justify-center w-32 h-20 rounded-lg bg-grey-100">
                         <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
                     </div>
@@ -20,17 +20,17 @@
                             <p>
                                 <span class="font-medium h6 body-dark">Bestandsnaam:</span>
                                 <span class="body body-dark" style="word-break: break-all;">
-                                    {{ $file->filename }}
+                                    {{ $file->getFileName() }}
                                 </span>
                             </p>
 
                             <p>
                                 <span class="font-medium h6 body-dark">Bestandsgrootte:</span>
-                                <span class="body body-dark">{{ $file->size }} </span>
+                                <span class="body body-dark">{{ $file->getSize() }} </span>
                             </p>
                         </div>
 
-                        <a href="{{ $file->url }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
+                        <a href="{{ $file->getUrl() }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
                             <x-chief::icon-label
                                 icon="icon-external-link"
                                 position="append"

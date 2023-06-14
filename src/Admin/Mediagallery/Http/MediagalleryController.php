@@ -41,9 +41,9 @@ class MediagalleryController extends Controller
         if ($unused) {
             $assets->whereNotExists(function ($query) {
                 $query->select(DB::raw(1))
-                    ->from('asset_pivots')
-                    ->whereRaw('asset_pivots.asset_id = assets.id')
-                    ->where('asset_pivots.unused', 0);
+                    ->from('assets_pivot')
+                    ->whereRaw('assets_pivot.asset_id = assets.id')
+                    ->where('assets_pivot.unused', 0);
             });
         }
 

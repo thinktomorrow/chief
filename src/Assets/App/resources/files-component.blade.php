@@ -12,9 +12,17 @@
             });
 
         },
-        onDragEnter: () => { $el.classList.add('border-2','border-dashed'); },
-        onDragLeave: () => { $el.classList.remove('border-2','border-dashed'); },
+        isReordering: @entangle('isReordering'),
+        onDragEnter: () => {
+            if($data.isReordering) return;
+            $el.classList.add('border-2','border-dashed');
+            $data.hasEnteredDrag = true;
+        },
+        onDragLeave: () => {
+            $el.classList.remove('border-2','border-dashed');
+        },
         onDrop: (event) => {
+            if($data.isReordering) return;
             const files = event.dataTransfer.files;
             $data.uploadFiles([...files]);
         }
@@ -33,5 +41,9 @@
     {{ $this->fileSelect }}
     <div><livewire:chief-wire::files-choose parent-id="{{ $this->id }}" /></div>
     <div><livewire:chief-wire::file-edit parent-id="{{ $this->id }}" model-reference="{{ $modelReference }}" field-key="{{ $fieldKey }}" locale="{{ $locale }}" :components="$this->components" /></div>
-    <div><livewire:chief-wire::image-crop parent-id="{{ $this->id }}" /></div>
+
+    @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
+        <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->id }}" model-reference="{{ $modelReference }}" field-key="{{ $fieldKey }}" locale="{{ $locale }}"/></div>
+    @endforeach
+{{--    <div><livewire:chief-wire::image-crop parent-id="{{ $this->id }}" /></div>--}}
 </div>
