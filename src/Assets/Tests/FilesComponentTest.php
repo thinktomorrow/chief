@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Assets\Tests;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Livewire\Controllers\FileUploadHandler;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
@@ -34,13 +32,13 @@ class FilesComponentTest extends ChiefTestCase
     public function test_it_can_create_component()
     {
         $this->livewireInstance
-            ->assertSet('modelReference',$this->model->modelReference()->get())
-            ->assertSet('fieldKey','thumb')
-            ->assertSet('fieldName','thumb')
-            ->assertSet('locale','nl')
-            ->assertSet('allowMultiple',false)
-            ->assertSet('previewFiles',[])
-            ->assertSet('acceptedMimeTypes',[]);
+            ->assertSet('modelReference', $this->model->modelReference()->get())
+            ->assertSet('fieldKey', 'thumb')
+            ->assertSet('fieldName', 'thumb')
+            ->assertSet('locale', 'nl')
+            ->assertSet('allowMultiple', false)
+            ->assertSet('previewFiles', [])
+            ->assertSet('acceptedMimeTypes', []);
     }
 
     public function test_it_can_create_component_with_existing_assets()
@@ -56,7 +54,7 @@ class FilesComponentTest extends ChiefTestCase
             'locale' => 'nl',
             'assets' => [$asset],
         ])
-            ->assertCount('previewFiles',1)
+            ->assertCount('previewFiles', 1)
             ->assertSeeHtml('name="thumb[order][0]" value="'.$asset->id.'"');
     }
 
@@ -65,13 +63,13 @@ class FilesComponentTest extends ChiefTestCase
         $filePath = $this->uploadForLivewire($file = UploadedFile::fake()->image('image.png'));
 
         $this->livewireInstance
-            ->assertCount('previewFiles',0)
+            ->assertCount('previewFiles', 0)
             ->set('files', [[
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
-            ->emit('upload:finished', 'files.0.fileRef',[$filePath])
-            ->assertCount('previewFiles',1)
+            ->emit('upload:finished', 'files.0.fileRef', [$filePath])
+            ->assertCount('previewFiles', 1)
             ->assertSeeHtml('name="thumb[uploads][0][id]" value="'.$filePath.'"')
             ->assertSeeHtml('name="thumb[order][0]" value="'.$filePath.'"');
     }
@@ -83,9 +81,9 @@ class FilesComponentTest extends ChiefTestCase
             ->save();
 
         $this->livewireInstance
-            ->assertCount('previewFiles',0)
+            ->assertCount('previewFiles', 0)
             ->call('onAssetsChosen', [$asset->id])
-            ->assertCount('previewFiles',1)
+            ->assertCount('previewFiles', 1)
             ->assertSeeHtml('name="thumb[attach][0][id]" value="'.$asset->id.'"')
             ->assertSeeHtml('name="thumb[order][0]" value="'.$asset->id.'"');
     }
@@ -102,7 +100,7 @@ class FilesComponentTest extends ChiefTestCase
 
         $this->livewireInstance
             ->call('onAssetsChosen', [$asset->id, $asset2->id])
-            ->assertCount('previewFiles',2)
+            ->assertCount('previewFiles', 2)
             ->assertSeeHtml('name="thumb[order][0]" value="'.$asset->id.'"')
             ->assertSeeHtml('name="thumb[order][1]" value="'.$asset2->id.'"')
             ->call('reorder', [$asset2->id, $asset->id])
@@ -120,8 +118,8 @@ class FilesComponentTest extends ChiefTestCase
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
-            ->emit('upload:finished', 'files.0.fileRef',[$filePath])
-            ->call('deleteFile',$filePath)
+            ->emit('upload:finished', 'files.0.fileRef', [$filePath])
+            ->call('deleteFile', $filePath)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
             ->assertDontSeeHtml('name="thumb[uploads][0][id]"');
     }
@@ -134,8 +132,8 @@ class FilesComponentTest extends ChiefTestCase
 
         $this->livewireInstance
             ->call('onAssetsChosen', [$asset->id])
-            ->assertCount('previewFiles',1)
-            ->call('deleteFile',$asset->id)
+            ->assertCount('previewFiles', 1)
+            ->call('deleteFile', $asset->id)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
             ->assertDontSeeHtml('name="thumb[attach][0]"');
     }
@@ -152,7 +150,7 @@ class FilesComponentTest extends ChiefTestCase
             'fieldName' => 'thumb',
             'locale' => 'nl',
             'assets' => [$asset],
-        ])->call('deleteFile',$asset->id)
+        ])->call('deleteFile', $asset->id)
         ->assertSet('previewFiles.0.isQueuedForDeletion', true)
         ->assertSeeHtml('name="thumb[queued_for_deletion][0]" value="'.$asset->id.'"');
     }

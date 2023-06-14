@@ -39,7 +39,7 @@ class ChiefPluginSections
 
     private function addSection(string $key, $value): void
     {
-        if(!isset($this->sections[$key])) {
+        if(! isset($this->sections[$key])) {
             $this->sections[$key] = [];
         }
 

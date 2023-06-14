@@ -40,7 +40,7 @@ class ArticlePageResource implements PageResource
 
         yield File::make('thumb');
         yield File::make('thumb_enhanced')->items([
-            Text::make('caption')
+            Text::make('caption'),
         ]);
         yield File::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
         yield File::make(ArticlePage::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');

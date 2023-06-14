@@ -22,6 +22,6 @@ class HotSpotsServiceProvider extends ChiefPluginServiceProvider
 
 
 
-//        $this->loadPluginAdminRoutes(__DIR__ . '/App/routes/chief-admin-routes.php');
+        //        $this->loadPluginAdminRoutes(__DIR__ . '/App/routes/chief-admin-routes.php');
     }
 }

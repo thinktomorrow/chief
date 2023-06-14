@@ -125,7 +125,7 @@ class SaveFileFieldTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        app(AddAsset::class)->handle($this->model,$asset, 'thumb', 'nl', 0, []);
+        app(AddAsset::class)->handle($this->model, $asset, 'thumb', 'nl', 0, []);
 
         $this->assertCount(1, $this->model->assets('thumb'));
 

@@ -14,10 +14,10 @@ trait TestingWithFiles
         Storage::fake('tmp-for-tests');
 
         $paths = app(FileUploadHandler::class)->validateAndStore([
-            $file
-        ],'tmp-for-tests');
+            $file,
+        ], 'tmp-for-tests');
 
-        return ltrim($paths[0],'/');
+        return ltrim($paths[0], '/');
     }
 
     protected function dummySmallSlimImagePayload($name = "tt-favicon.png", $mimetype = 'image/png', $width = 32, $height = 32, $size = 5000)
