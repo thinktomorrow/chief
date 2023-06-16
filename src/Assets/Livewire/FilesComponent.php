@@ -89,12 +89,14 @@ class FilesComponent extends Component
         $this->validateUploadedFile($key, $temporaryUploadedFile = TemporaryUploadedFile::createFromLivewire($value[0]));
 
         // In case only one asset is allowed, we make sure to delete any existing / other uploads.
-        if(!$this->allowMultiple) {
+        if(! $this->allowMultiple) {
             foreach($this->previewFiles as $previewFile) {
 
                 // In subsequent uploads it occurs that previewFiles are synced before this listener. In that case we make sure
                 // That current uploaded file is not wrongfully queued for deletion.
-                if($previewFile->id == $value[0]) continue;
+                if($previewFile->id == $value[0]) {
+                    continue;
+                }
 
                 $previewFile->isQueuedForDeletion = true;
             }
@@ -123,14 +125,14 @@ class FilesComponent extends Component
 
     public function onAssetsChosen(array $assetIds)
     {
-        if(!$this->allowMultiple) {
+        if(! $this->allowMultiple) {
             // Assert only one file is added.
             $assetIds = (array) reset($assetIds);
 
             foreach($this->previewFiles as $previewFile) {
-//                if(in_array($previewFile->id, $assetIds)) {
-////                    dd($previewFile);
-//                }
+                //                if(in_array($previewFile->id, $assetIds)) {
+                ////                    dd($previewFile);
+                //                }
 
                 $previewFile->isQueuedForDeletion = true;
             }
