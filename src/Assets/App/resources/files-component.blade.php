@@ -1,6 +1,5 @@
 <div x-data="{
         uploadFiles: (files) => {
-
             files.forEach((file, index) => {
                 @this.set('files.'+index+'.fileName', file.name );
                 @this.set('files.'+index+'.fileSize', file.size );

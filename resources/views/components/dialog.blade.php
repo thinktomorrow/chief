@@ -12,13 +12,15 @@
 >
     <div x-on:click="open = false" class="absolute inset-0 cursor-pointer bg-black/20 animate-dialog-fade-in"></div>
 
-    <div class="overflow-y-auto max-h-[90vh] relative p-12 bg-white rounded-lg w-[56rem] animate-dialog-pop-in border border-grey-100 shadow">
-        <button type="button" x-on:click="open = false" class="absolute top-6 right-6">
-            <svg class="w-6 h-6 text-grey-500 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
-        </button>
+    <div class="container relative max-w-screen-2xl">
+        <div class="relative p-12 bg-white border rounded-lg shadow animate-dialog-pop-in border-grey-100">
+            <button type="button" x-on:click="open = false" class="absolute top-6 right-6">
+                <svg class="w-6 h-6 text-grey-500 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
+            </button>
 
-        <div>
-            {{ $slot }}
+            <div>
+                {{ $slot }}
+            </div>
         </div>
     </div>
 </div>

@@ -50,6 +50,6 @@ trait InteractsWithGallery
             $builder = $builder->orderBy('created_at', 'DESC');
         }
 
-        return $builder->paginate(4);
+        return $builder->paginate(12);
     }
 }
