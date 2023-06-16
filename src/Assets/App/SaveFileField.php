@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Assets\App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
@@ -14,7 +13,6 @@ use Thinktomorrow\AssetLibrary\Application\ReorderAssets;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 
 class SaveFileField
 {

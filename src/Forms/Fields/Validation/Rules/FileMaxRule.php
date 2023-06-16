@@ -21,9 +21,9 @@ class FileMaxRule extends FileRule
 
     public function validateMax($attribute, $value, $parameters)
     {
-//        if ($this->refersToExistingAsset($value)) {
-//            return $this->validateAssetMax($this->existingAsset($value), $parameters);
-//        }
+        //        if ($this->refersToExistingAsset($value)) {
+        //            return $this->validateAssetMax($this->existingAsset($value), $parameters);
+        //        }
 
         if (! $this->isValidFileInstance($value)) {
             return false;

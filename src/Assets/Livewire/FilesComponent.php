@@ -11,13 +11,8 @@ use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class FilesComponent extends Component
 {
@@ -137,7 +132,7 @@ class FilesComponent extends Component
             }
 
             // Only add to files is upload is valid
-            if(! isset($newFileDetails['validated']) || !$newFileDetails['validated']) {
+            if(! isset($newFileDetails['validated']) || ! $newFileDetails['validated']) {
                 continue;
             }
 
@@ -204,15 +199,13 @@ class FilesComponent extends Component
      */
     private function validateUploadedFile(string $key, TemporaryUploadedFile $uploadedFile): void
     {
-        try{
+        try {
             $validator = Validator::make(['files' => [$uploadedFile]], ['files' => $this->rules], [], ['files' => 'bestand']);
             $validator->validate();
 
             $this->setFilesValidatedState($key, true);
-        }
-        catch(ValidationException $e)
-        {
-//            dd($this->files, $uploadedFile);
+        } catch(ValidationException $e) {
+            //            dd($this->files, $uploadedFile);
 
             $this->setFilesValidatedState($key, false);
             $this->removeUpload($key, $uploadedFile->getFilename());

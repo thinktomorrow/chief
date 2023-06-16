@@ -77,21 +77,21 @@ class File extends Component implements Field
         $validationParameters = ValidationParameters::make($this)
             ->multiple($this->allowMultiple());
 
-//        try{
-//            $validatorFactory->make(
-//                $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
-//                $validationParameters->getRules(),
-//                $validationParameters->getMessages(),
-//                $validationParameters->getAttributes(),
-//            )->validate();
-//
-//            dd('VALID');
-//        } catch(ValidationException $e)
-//        {
-//            dd($e->getMessage(), $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
-//                $validationParameters->getRules());
-//            dd('INVALID');
-//        }
+        //        try{
+        //            $validatorFactory->make(
+        //                $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
+        //                $validationParameters->getRules(),
+        //                $validationParameters->getMessages(),
+        //                $validationParameters->getAttributes(),
+        //            )->validate();
+        //
+        //            dd('VALID');
+        //        } catch(ValidationException $e)
+        //        {
+        //            dd($e->getMessage(), $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
+        //                $validationParameters->getRules());
+        //            dd('INVALID');
+        //        }
 
         return $validatorFactory->make(
             $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
@@ -138,7 +138,7 @@ class File extends Component implements Field
     private function convertUploadsToUploadedFiles(array $uploads): array
     {
         return collect($uploads)
-            ->map(fn($upload) => new UploadedFile($upload['path'], $upload['originalName'], $upload['mimeType']))
+            ->map(fn ($upload) => new UploadedFile($upload['path'], $upload['originalName'], $upload['mimeType']))
             ->all();
     }
 
