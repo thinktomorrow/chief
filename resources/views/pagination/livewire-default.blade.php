@@ -31,14 +31,13 @@
 
             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
-                    <p class="text-sm leading-5 text-grey-700">
-                        <span>{!! __('Showing') !!}</span>
+                    <p class="text-sm leading-5 body-dark">
                         <span class="font-medium">{{ $paginator->firstItem() }}</span>
-                        <span>{!! __('to') !!}</span>
+                        <span>tot</span>
                         <span class="font-medium">{{ $paginator->lastItem() }}</span>
-                        <span>{!! __('of') !!}</span>
+                        <span>van</span>
                         <span class="font-medium">{{ $paginator->total() }}</span>
-                        <span>{!! __('results') !!}</span>
+                        <span>resultaten</span>
                     </p>
                 </div>
 

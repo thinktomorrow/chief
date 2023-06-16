@@ -12,8 +12,8 @@
 >
     <div x-on:click="open = false" class="absolute inset-0 cursor-pointer bg-black/20 animate-dialog-fade-in"></div>
 
-    <div class="container relative max-w-screen-2xl">
-        <div class="relative p-12 bg-white border rounded-lg shadow animate-dialog-pop-in border-grey-100">
+    <div class="container relative pointer-events-none max-w-screen-2xl">
+        <div class="relative p-12 bg-white border rounded-lg shadow pointer-events-auto animate-dialog-pop-in border-grey-100">
             <button type="button" x-on:click="open = false" class="absolute top-6 right-6">
                 <svg class="w-6 h-6 text-grey-500 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
             </button>
