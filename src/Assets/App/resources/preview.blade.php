@@ -5,7 +5,10 @@
 {{--    wire:sortable.options="{ animation: 100 }"--}}
     class="overflow-auto border divide-y rounded-lg border-grey-200 divide-grey-200 max-h-[24rem] shadow-sm">
     @foreach ($getFiles() as $file)
-       <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2 {{ ($loop->index > 0 && !$allowMultiple()) ? 'opacity-25' : '' }}">
+
+        @continue(count($getFiles()) > 1 && !$allowMultiple() && $file->isQueuedForDeletion)
+
+       <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2">
             <div class="shrink-0">
                 @if($file->isPreviewable)
                 <img
@@ -51,9 +54,11 @@
                         <x-chief::icon-button icon="icon-edit" color="grey" />
                     </button>
 
-                    <button wire:sortable.handle type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                        <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
-                    </button>
+                    @if(count($getFiles()) > 1)
+                        <button wire:sortable.handle type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+                            <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
+                        </button>
+                    @endif
 
                     <button wire:click="deleteFile('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
                         <x-chief::icon-button icon="icon-trash" color="grey" />
