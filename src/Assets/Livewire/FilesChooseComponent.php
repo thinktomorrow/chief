@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\Gallery;
-use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FilesChooseComponent extends Component
 {
