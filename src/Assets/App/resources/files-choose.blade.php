@@ -3,7 +3,7 @@
         @php $rows = $this->getTableRows(); @endphp
 
         <div class="flex items-stretch max-h-[80vh]">
-            <div class="flex flex-col w-full gap-6 pr-12 mr-12 border-r border-grey-100">
+            <div class="flex flex-col gap-6 w-192">
                 <div
                     x-cloak
                     x-data="{showAsList: @entangle('showAsList')}"
@@ -40,49 +40,24 @@
                 </div>
 
                 <div class="w-full overflow-y-auto grow">
-                    <div class="row-start-start gutter-3">
+                    <div class="row-start-start gutter-2">
                         @foreach($rows as $i => $asset)
-                            <div wire:key="{{ $i.'_'.$asset->id }}" class="w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
-                                <div class="relative">
-                                    <input
-                                        wire:click="selectAsset('{{ $asset->id }}')"
-                                        type="checkbox"
-                                        class="absolute inset-0 appearance-none cursor-pointer peer"
-                                    >
-
-                                    <div class="w-full overflow-hidden aspect-square rounded-xl bg-grey-100 peer-checked:ring-inset peer-checked:ring-1 peer-checked:ring-primary-500 peer-checked:shadow-md peer-hover:ring-inset peer-hover:ring-1 peer-hover:ring-primary-500 p-[1px]">
-                                        @if ($asset->getExtensionType() == "image")
-                                            <img
-                                                src="{{ $asset->getUrl('thumb') }}"
-                                                alt="{{ $asset->getFileName() }}"
-                                                class="object-contain w-full h-full rounded-xl"
-                                            />
-                                        @elseif($asset->getMimeType())
-                                            <div class="flex items-center justify-center w-full h-full text-grey-500">
-                                                {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    {{-- <div class="mt-4 space-y-1.5 leading-tight">
-                                        <a
-                                            href="{{ $asset->getUrl() }}"
-                                            title="{{ $asset->getFileName() }}"
-                                            target="_blank"
-                                            rel="noopener"
-                                            class="text-black"
-                                        >
-                                            {{ $asset->getFileName() }}
-                                        </a>
-
-                                        <p class="text-sm text-grey-500">
-                                            {{ $asset->getSize() }} | {{ $asset->getMimeType() }}
-                                        </p>
-                                    </div> --}}
-
-                                    {{-- <button wire:click="selectAsset('{{ $asset->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                                        <x-chief::icon-button icon="icon-plus" color="grey" />
-                                    </button> --}}
+                            <div wire:key="{{ $i.'_'.$asset->id }}" class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+                                <div wire:click="selectAsset('{{ $asset->id }}')" @class([
+                                    'w-full overflow-hidden aspect-square rounded-xl bg-grey-100 hover:ring-inset hover:ring-1 hover:ring-primary-500 p-[1px]',
+                                    'ring-inset ring-1 ring-primary-500 shadow-md' => in_array($asset->id, $assetIds),
+                                ])>
+                                    @if ($asset->getExtensionType() == "image")
+                                        <img
+                                            src="{{ $asset->getUrl('thumb') }}"
+                                            alt="{{ $asset->getFileName() }}"
+                                            class="object-contain w-full h-full rounded-xl"
+                                        />
+                                    @elseif($asset->getMimeType())
+                                        <div class="flex items-center justify-center w-full h-full text-grey-500">
+                                            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -98,21 +73,37 @@
             </div>
 
             {{-- Sidebar --}}
-            <div class="flex flex-col gap-6 overflow-y-auto w-72 shrink-0">
-                <div class="shrink-0">
-                    <p class="h6 h6-dark">Geselecteerde assets</p>
-                </div>
+            @if(count($selectedPreviewFiles) > 0)
+                <div class="flex flex-col gap-6 pl-12 ml-12 overflow-y-auto border-l w-80 shrink-0 border-grey-100">
+                    <div class="shrink-0">
+                        <p class="h6 h6-dark">Geselecteerde assets</p>
+                    </div>
 
-                <div class="overflow-y-auto grow">
-                    {{-- assets here ... --}}
-                </div>
+                    <div class="overflow-y-auto grow">
+                        <div class="space-y-1.5">
+                            @foreach($selectedPreviewFiles as $selectedPreviewFile)
+                                <div class="flex gap-3">
+                                    <img
+                                        src="{{ $selectedPreviewFile->getUrl('thumb') }}"
+                                        alt="{{ $selectedPreviewFile->filename }}"
+                                        class="object-contain w-12 h-12 rounded-lg bg-grey-100"
+                                    >
 
-                <div class="shrink-0">
-                    <button wire:click="save" type="button" class="justify-center w-full text-center btn btn-grey">
-                        Voeg selectie toe
-                    </button>
+                                    <div>
+                                        <p class="text-sm body body-dark">{{ $selectedPreviewFile->filename }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="shrink-0">
+                        <button wire:click="save" type="button" class="justify-center w-full text-center btn btn-grey">
+                            Voeg selectie toe
+                        </button>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     @endif
 </x-chief::dialog>

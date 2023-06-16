@@ -2,16 +2,11 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
-use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
-use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
 class FileEditComponent extends Component
 {
