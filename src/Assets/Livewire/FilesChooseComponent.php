@@ -55,4 +55,9 @@ class FilesChooseComponent extends Component
             //
         ]);
     }
+
+    public function paginationView()
+    {
+        return 'chief::pagination.livewire-default';
+    }
 }

@@ -15,6 +15,7 @@ module.exports = {
         'src/Fragments/resources/**/*.blade.php',
         'src/Table/resources/**/*.blade.php',
         'src/Plugins/**/resources/**/*.blade.php',
+        'src/Assets/App/resources/**/*.blade.php',
     ],
     theme: {
         screens: {
