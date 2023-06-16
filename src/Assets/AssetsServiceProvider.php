@@ -7,6 +7,7 @@ use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Assets\Livewire\AssetDeleteComponent;
+use Thinktomorrow\Chief\Assets\Livewire\AttachedFileEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\FileEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\FileEditDialog;
 use Thinktomorrow\Chief\Assets\Livewire\FilesChooseComponent;
@@ -30,6 +31,7 @@ class AssetsServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::file-gallery', GalleryComponent::class);
         Livewire::component('chief-wire::file-upload', FilesComponent::class);
         Livewire::component('chief-wire::files-choose', FilesChooseComponent::class);
+        Livewire::component('chief-wire::attached-file-edit', AttachedFileEditComponent::class);
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
         Livewire::component('chief-wire::asset-delete', AssetDeleteComponent::class);

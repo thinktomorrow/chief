@@ -22,9 +22,6 @@
             </form>
         </div>
     </x-chief::page.grid>
-
-    @include('chief::components.file-component')
-    @include('chief::components.filesupload-component')
 </x-chief::page.template>
 
 
