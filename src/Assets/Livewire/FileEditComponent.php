@@ -57,6 +57,11 @@ class FileEditComponent extends Component
         $this->extractFormFromPreviewFile();
     }
 
+    public function getComponents(): array
+    {
+        return [];
+    }
+
     public function updatedFile(): void
     {
         if(! $this->replacedPreviewFile) {
