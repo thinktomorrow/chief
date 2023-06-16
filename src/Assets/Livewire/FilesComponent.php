@@ -3,12 +3,21 @@
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
+use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
+use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class FilesComponent extends Component
 {
@@ -20,6 +29,9 @@ class FilesComponent extends Component
     public string $locale;
     public bool $allowMultiple = false;
     public bool $isReordering = false;
+    public array $rules = [];
+    public array $validationMessages = [];
+    public ?string $validationAttribute = null;
     public array $acceptedMimeTypes = [];
 
     protected FilePreview $filePreview;
@@ -79,7 +91,9 @@ class FilesComponent extends Component
      */
     public function onUploadFinished($key, $value)
     {
-        Arr::set($this->files, str_replace('files.', '', $key), TemporaryUploadedFile::createFromLivewire($value[0]));
+        $this->validateUploadedFile($key, $temporaryUploadedFile = TemporaryUploadedFile::createFromLivewire($value[0]));
+
+        Arr::set($this->files, str_replace('files.', '', $key), $temporaryUploadedFile);
 
         $currentCount = count($this->previewFiles);
         $this->syncPreviewFiles();
@@ -117,7 +131,13 @@ class FilesComponent extends Component
 
         foreach($this->files as $newFileDetails) {
 
+            // Only proceed if the temp upload has completed
             if(! isset($newFileDetails['fileRef'])) {
+                continue;
+            }
+
+            // Only add to files is upload is valid
+            if(! isset($newFileDetails['validated']) || !$newFileDetails['validated']) {
                 continue;
             }
 
@@ -176,6 +196,36 @@ class FilesComponent extends Component
         $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
 
         //        $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
+    }
+
+    /**
+     * Validation is performed for all fields
+     * Each field is parsed for the proper validation rules and messages.
+     */
+    private function validateUploadedFile(string $key, TemporaryUploadedFile $uploadedFile): void
+    {
+        try{
+            $validator = Validator::make(['files' => [$uploadedFile]], ['files' => $this->rules], [], ['files' => 'bestand']);
+            $validator->validate();
+
+            $this->setFilesValidatedState($key, true);
+        }
+        catch(ValidationException $e)
+        {
+//            dd($this->files, $uploadedFile);
+
+            $this->setFilesValidatedState($key, false);
+            $this->removeUpload($key, $uploadedFile->getFilename());
+
+            throw $e;
+        }
+
+        $this->resetErrorBag();
+    }
+
+    private function setFilesValidatedState(string $key, bool $validatedState)
+    {
+        Arr::set($this->files, str_replace('files.', '', str_replace('fileRef', 'validated', $key)), $validatedState);
     }
 
     public function render()

@@ -8,11 +8,34 @@
     @if($count > 0)
         @foreach ($files as $file)
             <div class="flex items-center gap-4">
-                <a href="{{ $file->getUrl() }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
-                    <div class="flex items-center justify-center w-32 h-20 rounded-lg bg-grey-100">
-                        <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
+
+{{--                <div class="w-32 h-20">--}}
+{{--                    <a href="{{ $file->getUrl() }}" title="{{ $file->getFileName() }}" target="_blank" rel="noopener">--}}
+{{--                        <img--}}
+{{--                            src="{{ $file->getUrl('thumb') }}"--}}
+{{--                            alt="{{ $file->getFileName() }}"--}}
+{{--                            class="object-contain w-full h-full rounded-lg bg-grey-100"--}}
+{{--                        >--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+
+                @if($file->isImage())
+                    <div class="w-32 h-20">
+                        <a href="{{ $file->getUrl() }}" title="{{ $file->getFileName() }}" target="_blank" rel="noopener">
+                            <img
+                                src="{{ $file->getUrl('thumb') }}"
+                                alt="{{ $file->getFileName() }}"
+                                class="object-contain w-full h-full rounded-lg bg-grey-100"
+                            >
+                        </a>
                     </div>
-                </a>
+                @else
+                    <a href="{{ $file->getUrl() }}" title="Document bekijken" target="_blank" rel="noopener" class="block">
+                        <div class="flex items-center justify-center w-32 h-20 rounded-lg bg-grey-100">
+                            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
+                        </div>
+                    </a>
+                @endif
 
                 @if($count === 1)
                     <div class="space-y-0.5 text-sm">

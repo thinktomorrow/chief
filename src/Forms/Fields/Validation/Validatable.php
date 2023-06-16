@@ -2,6 +2,9 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Factory;
+
 interface Validatable
 {
     public function getName(): string;
@@ -18,4 +21,6 @@ interface Validatable
 
     public function validationMessages(array $validationMessages): static;
     public function getValidationMessages(): array;
+
+    public function createValidatorInstance(Factory $validatorFactory, array $payload): Validator;
 }

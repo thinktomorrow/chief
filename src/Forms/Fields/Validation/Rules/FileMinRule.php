@@ -21,15 +21,15 @@ class FileMinRule extends FileRule
 
     public function validateMin($attribute, $value, $parameters)
     {
-        if ($this->refersToExistingAsset($value)) {
-            return $this->validateAssetMin($this->existingAsset($value), $parameters);
-        }
-
-        if (! $this->isValidFileInstance($value)) {
-            $this->requireParameterCount(1, $parameters, 'min');
-
-            return $this->getSlimImageSize($value) >= $parameters[0];
-        }
+//        if ($this->refersToExistingAsset($value)) {
+//            return $this->validateAssetMin($this->existingAsset($value), $parameters);
+//        }
+//
+//        if (! $this->isValidFileInstance($value)) {
+//            $this->requireParameterCount(1, $parameters, 'min');
+//
+//            return $this->getSlimImageSize($value) >= $parameters[0];
+//        }
 
         return parent::validateMin($attribute, $value, $parameters);
     }

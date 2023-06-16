@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Assets\App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
@@ -13,6 +14,7 @@ use Thinktomorrow\AssetLibrary\Application\ReorderAssets;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 
 class SaveFileField
 {
@@ -58,8 +60,10 @@ class SaveFileField
         foreach ($values as $value) {
             $filename = $this->sluggifyFilename($value['originalName']);
 
+            $uploadedFile = new UploadedFile($value['path'], $filename, $value['mimeType']);
+
             $asset = $this->createAsset
-                ->uploadedFile(new UploadedFile($value['path'], $filename, $value['mimeType']))
+                ->uploadedFile($uploadedFile)
                 ->filename($filename)
                 ->save($this->getDisk());
 

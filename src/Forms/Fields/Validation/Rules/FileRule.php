@@ -6,11 +6,9 @@ namespace Thinktomorrow\Chief\Forms\Fields\Validation\Rules;
 
 use Illuminate\Validation\Concerns\ValidatesAttributes;
 use Symfony\Component\HttpFoundation\File\File;
-use Thinktomorrow\Chief\Forms\Fields\Media\Application\ChecksExistingAssets;
 
 abstract class FileRule
 {
-    use ChecksExistingAssets;
     use ValidatesAttributes;
     use ValidatesExistingAssetAttributes;
 
@@ -32,21 +30,21 @@ abstract class FileRule
 
         return mb_strlen($value);
     }
-
-    /**
-     * @param $value
-     * @return float|int
-     */
-    protected function getSlimImageSize($value)
-    {
-        //        $file = json_decode($value)->output;
-        //        $estimatedSize = strlen(base64_decode($file->image));
-        //        return $estimatedSize / 1024;
-
-        $inputData = json_decode($value)->input;
-
-        // size in Kilobytes (slim component already provides a size that, due to the way slim stored this,
-        //  we need reduce to kilobytes by dividing 1000 instead of the expected 1024.
-        return $inputData->size / 1000;
-    }
+//
+//    /**
+//     * @param $value
+//     * @return float|int
+//     */
+//    protected function getSlimImageSize($value)
+//    {
+//        //        $file = json_decode($value)->output;
+//        //        $estimatedSize = strlen(base64_decode($file->image));
+//        //        return $estimatedSize / 1024;
+//
+//        $inputData = json_decode($value)->input;
+//
+//        // size in Kilobytes (slim component already provides a size that, due to the way slim stored this,
+//        //  we need reduce to kilobytes by dividing 1000 instead of the expected 1024.
+//        return $inputData->size / 1000;
+//    }
 }

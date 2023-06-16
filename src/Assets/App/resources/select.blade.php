@@ -96,4 +96,12 @@
             </div>
         </a>
     </div>
+
+    <div>
+        @foreach($errors->all() as $error)
+            <x-chief::inline-notification type="error" class="mt-2">
+                {{ ucfirst($error) }}
+            </x-chief::inline-notification>
+        @endforeach
+    </div>
 </div>

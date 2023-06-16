@@ -98,12 +98,6 @@ class PreviewFile implements Wireable
         // TODO: how to get the smallest conversions if we don't know the field info?
         $thumbUrl = $asset->getUrl('thumb');
 
-        try {
-            $filesize = filesize($asset->getFirstMediaPath());
-        } catch(\ErrorException $e) {
-            $filesize = 0;
-        }
-
         return new static(
             $asset->id,
             $asset->id,
@@ -111,9 +105,8 @@ class PreviewFile implements Wireable
             ('image' == $asset->getExtensionType()),
             null,
             $asset->getFileName() ?: '',
-            $filesize,
-            $asset->getSize(),  // asset->getSize() already returns human readable so this is first converted back to bytes
-            //            File\App\FileHelper::getHumanReadableSize((int)$asset->getSize()),  // asset->getSize() already returns human readable so this is first converted back to bytes
+            $asset->getSize(),
+            $asset->getHumanReadableSize(),
             $asset->getMimeType() ?: '',
             \Thinktomorrow\Chief\Assets\App\FileHelper::getExtension($asset->getFirstMediaPath()),
             false,

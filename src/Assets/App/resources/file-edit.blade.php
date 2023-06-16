@@ -124,7 +124,9 @@
 
                 <div>
                     @foreach($errors->all() as $error)
-                        <span class="text-red-500">{{ $error }}</span>
+                        <x-chief::inline-notification type="error" class="mt-2">
+                            {{ ucfirst($error) }}
+                        </x-chief::inline-notification>
                     @endforeach
                 </div>
 
