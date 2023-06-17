@@ -24,6 +24,8 @@ class PreviewFile implements Wireable
         public bool $isQueuedForDeletion = false,
         public bool $isAttachedToModel = false,
         public array $fieldValues = [],
+        public ?string $createdAt = null,
+        public ?string $updatedAt = null,
 
         // Asset related values
         public array $urls,
@@ -31,11 +33,6 @@ class PreviewFile implements Wireable
     ) {
 
     }
-//
-//    public function getOrderIndex(): int
-//    {
-//
-//    }
 
     public function getUrl(string $conversionName = 'original'): ?string
     {
@@ -70,6 +67,8 @@ class PreviewFile implements Wireable
             false,
             false,
             [],
+            null,
+            null,
             [],
             [],
         );
@@ -112,6 +111,8 @@ class PreviewFile implements Wireable
             false,
             true,
             $asset->pivot->data ?? [],
+            $asset->created_at->getTimestamp(),
+            $asset->updated_at->getTimestamp(),
             $urls,
             $owners,
         );
@@ -138,6 +139,8 @@ class PreviewFile implements Wireable
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
             'isAttachedToModel' => $this->isAttachedToModel,
             'fieldValues' => $this->fieldValues,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
             'urls' => $this->urls,
             'owners' => $this->owners,
         ];

@@ -45,7 +45,6 @@ class AttachedFileEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
-//            'assetsChosen-'.$this->id => 'onAssetsChosen',
         ];
     }
 
@@ -59,6 +58,7 @@ class AttachedFileEditComponent extends Component
     public function open($value)
     {
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
+
         $this->isOpen = true;
     }
 
