@@ -40,10 +40,14 @@ class FilesChooseComponent extends Component
 
     public function selectAsset($assetId)
     {
-        // TODO(ben): deselect bro
-        $this->assetIds[] = $assetId;
-        // dd($this->gallery->getRows());
-        $this->selectedPreviewFiles[] = PreviewFile::fromAsset(Asset::find($assetId));
+        // TODO: already selected assetsIds should be disabled, not selecta ble
+        if(in_array($assetId, $this->assetIds)) {
+            unset($this->assetIds[array_search($assetId, $this->assetIds)]);
+            unset($this->selectedPreviewFiles[$assetId]);
+        } else {
+            $this->assetIds[] = $assetId;
+            $this->selectedPreviewFiles[$assetId] = PreviewFile::fromAsset(Asset::find($assetId));
+        }
     }
 
     private function syncPreviewFiles()
@@ -56,7 +60,7 @@ class FilesChooseComponent extends Component
     {
         $this->emit('assetsChosen-'.$this->parentId, $this->assetIds);
 
-        $this->reset('assetIds');
+        $this->reset('assetIds', 'selectedPreviewFiles');
 
         $this->close();
 
