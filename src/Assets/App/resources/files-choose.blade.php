@@ -47,7 +47,7 @@
                                     'w-full overflow-hidden aspect-square rounded-xl bg-grey-100 hover:ring-inset hover:ring-1 hover:ring-primary-500 p-[1px]',
                                     'ring-inset ring-1 ring-primary-500 shadow-md' => in_array($asset->id, $assetIds),
                                 ])>
-                                    @if ($asset->getExtensionType() == "image")
+                                    @if ($asset->isImage())
                                         <img
                                             src="{{ $asset->getUrl('thumb') }}"
                                             alt="{{ $asset->getFileName() }}"
