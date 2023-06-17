@@ -6,13 +6,13 @@
         class="block transition-all duration-75 ease-in-out rounded peer-checked:ring-2 peer-checked:ring-primary-500 peer-checked:ring-offset-[6px]"
     >
         <div class="w-full overflow-hidden aspect-square rounded-xl bg-grey-100">
-            @if ($asset->getExtensionType() == "image")
+            @if ($asset->isImage())
                 <img
-                    src="{{ $asset->url('thumb') }}"
-                    alt="{{ $asset->filename() }}"
+                    src="{{ $asset->getUrl('thumb') }}"
+                    alt="{{ $asset->getFileName() }}"
                     class="object-contain w-full h-full"
                 />
-            @else
+            @elseif($asset->getMimeType())
                 <div class="flex items-center justify-center w-full h-full text-grey-500">
                     {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
                 </div>
@@ -21,13 +21,13 @@
 
         <div class="mt-4 space-y-1.5 leading-tight">
             <a
-                href="{{ $asset->url() }}"
-                title="{{ $asset->filename() }}"
+                href="{{ $asset->getUrl() }}"
+                title="{{ $asset->getFileName() }}"
                 target="_blank"
                 rel="noopener"
                 class="text-black"
             >
-                {{ $asset->filename() }}
+                {{ $asset->getFileName() }}
             </a>
 
             <p class="text-sm text-grey-500">
@@ -45,7 +45,7 @@
 
         <a
             download
-            href="{{ $asset->url() }}"
+            href="{{ $asset->getUrl() }}"
             title="download"
             class="shrink-0 link link-primary"
         >

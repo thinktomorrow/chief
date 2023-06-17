@@ -145,11 +145,6 @@ class AttachedFileEditComponent extends Component
     {
         $this->validateForm();
 
-        if($this->previewFile->mediaId) {
-            app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
-            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
-        }
-
         if($this->replacedPreviewFile) {
             if($this->replacedPreviewFile->mediaId) {
                 app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
@@ -157,6 +152,11 @@ class AttachedFileEditComponent extends Component
             } else {
                 $this->previewFile->id = $this->replacedPreviewFile->id;
             }
+        }
+
+        if($this->previewFile->mediaId) {
+            app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
+            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
 
         // Update form values

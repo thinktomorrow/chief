@@ -85,10 +85,6 @@ class FileEditComponent extends Component
 
     public function submit()
     {
-        if($this->previewFile->mediaId) {
-            app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
-        }
-
         if($this->replacedPreviewFile) {
             if($this->replacedPreviewFile->mediaId) {
                 app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
@@ -96,6 +92,10 @@ class FileEditComponent extends Component
             } else {
                 $this->previewFile->id = $this->replacedPreviewFile->id;
             }
+        }
+
+        if($this->previewFile->mediaId) {
+            app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
         }
 
         // Update form values
