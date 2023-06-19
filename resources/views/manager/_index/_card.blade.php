@@ -20,7 +20,7 @@
             @endif
 
             @if ($model instanceof \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable)
-                <x-chief-tags::tags :tags="$model->getTags()" size="xs" threshold="4"/>
+                <x-dynamic-component component="chief-tags::tags" :tags="$model->getTags()" size="xs" threshold="4"></x-dynamic-component>
             @endif
         </div>
 

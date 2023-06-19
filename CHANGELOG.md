@@ -5,6 +5,10 @@ principles.
 
 ## Unreleased
 
+## 0.7.25 - 2023-05-24
+-   Fixed: Only load tags index component when model is taggable.
+-   Changed: Bump limit of shareable fragments to 30.
+
 ## 0.7.24 - 2023-05-23
 -   Fixed: Testsuite
 -   Added: Plugins Taggable and TimeTable. Currently still in chief core. 
