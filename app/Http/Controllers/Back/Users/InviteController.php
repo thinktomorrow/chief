@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\AcceptInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\DenyInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class InviteController extends Controller
