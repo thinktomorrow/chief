@@ -16,10 +16,10 @@ class StateException extends \Exception
         return new self('Transition ['.$transition.'] is malformed. It should contain both a [from:array] and [to:string] value.');
     }
 
-//    public static function invalidTransitionKey($transition)
-//    {
-//        return new self('unknown transition ['.$transition.'].');
-//    }
+    //    public static function invalidTransitionKey($transition)
+    //    {
+    //        return new self('unknown transition ['.$transition.'].');
+    //    }
 
     public static function invalidTransition($transition, $state)
     {

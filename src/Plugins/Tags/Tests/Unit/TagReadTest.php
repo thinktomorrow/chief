@@ -74,11 +74,11 @@ class TagReadTest extends TestCase
             'data' => [],
         ], $values));
     }
-//
-//    public function test_it_can_read_localized_data()
-//    {
-//        $tag = new Tag(TagId::fromString('xxx'), TagGroupId::fromString('yyy'), 'intern label', ['option' => ['foo' => 'foobar']]);
-//
-//        $this->assertEquals(['foo' => 'foobar'], $tag->getData('option'));
-//    }
+    //
+    //    public function test_it_can_read_localized_data()
+    //    {
+    //        $tag = new Tag(TagId::fromString('xxx'), TagGroupId::fromString('yyy'), 'intern label', ['option' => ['foo' => 'foobar']]);
+    //
+    //        $this->assertEquals(['foo' => 'foobar'], $tag->getData('option'));
+    //    }
 }

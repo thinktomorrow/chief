@@ -38,10 +38,10 @@ class MenuItemNode extends DefaultNode implements Node
         return $this->getParentNodeId();
     }
 
-//    public function getType()
-//    {
-//        return $this->type;
-//    }
+    //    public function getType()
+    //    {
+    //        return $this->type;
+    //    }
 
     public function getLabel()
     {
@@ -54,10 +54,10 @@ class MenuItemNode extends DefaultNode implements Node
     }
 
     // Extra info when dealing with internal links
-//    public function getPageLabel()
-//    {
-//        return $this->page_label;
-//    }
+    //    public function getPageLabel()
+    //    {
+    //        return $this->page_label;
+    //    }
 
     public function getUrl()
     {
