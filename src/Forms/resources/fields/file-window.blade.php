@@ -60,7 +60,7 @@
                                 size="18"
                                 class="link link-primary"
                             >
-                                Document bekijken
+                                Bekijken
                             </x-chief::icon-label>
                         </a>
                     </div>

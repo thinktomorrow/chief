@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 
 class Image extends File
 {
-    protected string $view = 'chief-form::fields.file';
-    protected string $windowView = 'chief-form::fields.image-window';
+//    protected string $view = 'chief-form::fields.file';
+//    protected string $windowView = 'chief-form::fields.image-window';
 
     public function __construct(string $key)
     {
