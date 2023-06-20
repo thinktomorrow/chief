@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\AssetLibrary\Exceptions\FileNotAccessibleException;
 
 class AssetDeleteComponent extends Component
 {
