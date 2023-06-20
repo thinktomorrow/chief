@@ -174,7 +174,17 @@ class AttachedFileEditComponent extends Component
      */
     private function validateForm(): void
     {
-        $rules = $messages = $validationAttributes = [];
+        $rules = [
+            'form.basename' => ['required','min:1','max:200', 'regex:/^[a-zA-Z0-9\s_-]+$/']
+        ];
+
+        $messages = [
+            'form.basename.regex' => 'Geen speciale tekens toegestaan in de bestandsnaam',
+        ];
+
+        $validationAttributes = [
+            'form.basename' => 'bestandsnaam',
+        ];
 
         foreach ($this->getComponents() as $component) {
             if ($component instanceof Field) {
@@ -188,10 +198,7 @@ class AttachedFileEditComponent extends Component
             }
         }
 
-        // If rules is empty, this errors when trying to validate
-        if(! empty($rules)) {
-            $this->validate($rules, $messages, $validationAttributes);
-        }
+        $this->validate($rules, $messages, $validationAttributes);
     }
 
     public function render()
