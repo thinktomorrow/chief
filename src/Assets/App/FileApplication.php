@@ -55,5 +55,7 @@ class FileApplication
                 ->save();
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
+
+        $newAsset->delete();
     }
 }
