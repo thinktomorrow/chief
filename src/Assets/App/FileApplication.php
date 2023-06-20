@@ -6,19 +6,16 @@ use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceMedia;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class FileApplication
 {
-    private Registry $registry;
     private UpdateAssetData $updateAssetData;
     private CreateAsset $createAsset;
     private ReplaceMedia $replaceMedia;
 
-    public function __construct(Registry $registry, UpdateAssetData $updateAssetData, CreateAsset $createAsset, ReplaceMedia $replaceMedia)
+    public function __construct(UpdateAssetData $updateAssetData, CreateAsset $createAsset, ReplaceMedia $replaceMedia)
     {
-        $this->registry = $registry;
         $this->updateAssetData = $updateAssetData;
         $this->createAsset = $createAsset;
         $this->replaceMedia = $replaceMedia;
@@ -26,7 +23,6 @@ class FileApplication
 
     public function updateFieldValues(string $modelReference, string $fieldKey, string $locale, string $assetId, array $values): void
     {
-        $resource = $this->registry->findResourceByModel(ModelReference::fromString($modelReference)->className());
         $model = ModelReference::fromString($modelReference)->instance();
 
         // Validate
