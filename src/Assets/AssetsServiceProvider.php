@@ -35,8 +35,6 @@ class AssetsServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
         Livewire::component('chief-wire::asset-delete', AssetDeleteComponent::class);
-
-        Livewire::component('chief-wire::file-edit-dialog', FileEditDialog::class);
     }
 
     public function register()
