@@ -43,13 +43,7 @@ class AssetDeleteComponent extends Component
     {
         if(count($this->assetIds) > 0) {
             foreach($this->assetIds as $assetId) {
-
-                // TODO: this exception is thrown by current version of assetlib and is in new version not necessary
-                try {
-                    app(DeleteAsset::class)->delete($assetId);
-                } catch(FileNotAccessibleException $e) {
-                    Asset::find($assetId)->delete();
-                }
+                app(DeleteAsset::class)->handle(Asset::find($assetId));
             }
 
             $this->emitUp('assetsDeleted', $this->assetIds);
