@@ -34,10 +34,6 @@ class Gallery extends Component implements Htmlable
 
     private function getView(): string
     {
-        if($this->livewireComponent->showAsList) {
-            return 'chief-assets::gallery-list';
-        }
-
         return 'chief-assets::gallery';
     }
 

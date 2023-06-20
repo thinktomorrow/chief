@@ -63,18 +63,10 @@ class FilesChooseComponent extends Component
         $this->reset('assetIds', 'selectedPreviewFiles');
 
         $this->close();
-
     }
 
     public function render()
     {
-        return view('chief-assets::files-choose', [
-            //
-        ]);
-    }
-
-    public function paginationView()
-    {
-        return 'chief::pagination.livewire-default';
+        return view('chief-assets::files-choose');
     }
 }
