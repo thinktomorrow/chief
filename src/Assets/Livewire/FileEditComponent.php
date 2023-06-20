@@ -94,6 +94,8 @@ class FileEditComponent extends Component
             }
         }
 
+        $this->validateForm();
+
         if($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
         }
@@ -104,6 +106,19 @@ class FileEditComponent extends Component
         $this->emitUp('assetUpdated', $this->previewFile);
 
         $this->close();
+    }
+
+    /**
+     * Validation is performed for all fields
+     * Each field is parsed for the proper validation rules and messages.
+     */
+    private function validateForm(): void
+    {
+        $this->validate([
+            'form.basename' => ['required','min:1','max:200'],
+        ], [], [
+            'form.basename' => 'bestandsnaam',
+        ]);
     }
 
     public function render()
