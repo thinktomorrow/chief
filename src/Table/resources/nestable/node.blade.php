@@ -49,9 +49,8 @@
                 )
                     <span class="label label-xs label-error mt-[1px]">Offline</span>
                 @endif
-
                 @if ($node->getModel() instanceof \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable)
-                    <x-chief-tags::tags :tags="$node->getModel()->getTags()" size="xs" threshold="4"/>
+                    <x-dynamic-component component="chief-tags::tags" :tags="$node->getModel()->getTags()" size="xs" threshold="4"></x-dynamic-component>
                 @endif
             </div>
         </div>
