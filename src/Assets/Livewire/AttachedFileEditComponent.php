@@ -64,7 +64,7 @@ class AttachedFileEditComponent extends Component
 
     public function close()
     {
-        $this->reset(['previewFile','form']);
+        $this->reset(['previewFile', 'form']);
         $this->isOpen = false;
     }
 
@@ -76,7 +76,7 @@ class AttachedFileEditComponent extends Component
 
     public function updatedFile(): void
     {
-        if(! $this->replacedPreviewFile) {
+        if (! $this->replacedPreviewFile) {
             $this->replacedPreviewFile = $this->previewFile;
         }
         $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
@@ -87,10 +87,10 @@ class AttachedFileEditComponent extends Component
     {
         $this->form['basename'] = $this->previewFile->getBaseName();
 
-        foreach($this->components as $componentArray) {
+        foreach ($this->components as $componentArray) {
             $component = $componentArray['class']::fromLivewire($componentArray);
 
-            if(! $component instanceof Field) {
+            if (! $component instanceof Field) {
                 continue;
             }
 
@@ -145,8 +145,8 @@ class AttachedFileEditComponent extends Component
     {
         $this->validateForm();
 
-        if($this->replacedPreviewFile) {
-            if($this->replacedPreviewFile->mediaId) {
+        if ($this->replacedPreviewFile) {
+            if ($this->replacedPreviewFile->mediaId) {
                 app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
                 $this->previewFile = PreviewFile::fromAsset(Asset::find($this->replacedPreviewFile->mediaId));
             } else {
@@ -158,7 +158,7 @@ class AttachedFileEditComponent extends Component
         $this->previewFile->filename = $this->form['basename'] . '.' . $this->previewFile->extension;
         $this->syncForm();
 
-        if($this->previewFile->mediaId) {
+        if ($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
             app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
@@ -175,12 +175,10 @@ class AttachedFileEditComponent extends Component
     private function validateForm(): void
     {
         $rules = [
-            'form.basename' => ['required','min:1','max:200', 'regex:/^[a-zA-Z0-9\s_-]+$/'],
+            'form.basename' => ['required', 'min:1', 'max:200'],
         ];
 
-        $messages = [
-            'form.basename.regex' => 'Geen speciale tekens toegestaan in de bestandsnaam',
-        ];
+        $messages = [];
 
         $validationAttributes = [
             'form.basename' => 'bestandsnaam',
