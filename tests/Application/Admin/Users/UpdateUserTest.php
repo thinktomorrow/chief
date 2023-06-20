@@ -76,7 +76,7 @@ class UpdateUserTest extends ChiefTestCase
         $this->assertNewValues($this->newUser->fresh());
     }
 
-//    /** @test */
+    //    /** @test */
     public function non_developer_cannot_update_an_existing_developer()
     {
         $this->newUser->assignRole('developer');

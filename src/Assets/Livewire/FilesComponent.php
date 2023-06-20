@@ -11,8 +11,6 @@ use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
-use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\File;
 
 class FilesComponent extends Component
 {

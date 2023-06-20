@@ -151,24 +151,24 @@ class File extends Component implements Field
     }
 
     //    public function fill(Manager $manager, Model $model): void
-//    {
-//        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $model->{$model->getKeyName()}));
-//    }
+    //    {
+    //        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $model->{$model->getKeyName()}));
+    //    }
 
-//
-//    private function getLegacyMedia(Model & HasAsset $model, string $locale): array
-//    {
-//        $files = [];
-//
-//        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
-//            return $asset->pivot->locale == $locale;
-//        })->sortBy('pivot.order');
-//
-//        /** @var Asset $asset */
-//        foreach ($assets as $asset) {
-//            $files[] = FileDTO::fromAsset($this, $asset);
-//        }
-//
-//        return $files;
-//    }
+    //
+    //    private function getLegacyMedia(Model & HasAsset $model, string $locale): array
+    //    {
+    //        $files = [];
+    //
+    //        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
+    //            return $asset->pivot->locale == $locale;
+    //        })->sortBy('pivot.order');
+    //
+    //        /** @var Asset $asset */
+    //        foreach ($assets as $asset) {
+    //            $files[] = FileDTO::fromAsset($this, $asset);
+    //        }
+    //
+    //        return $files;
+    //    }
 }

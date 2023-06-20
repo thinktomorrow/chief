@@ -109,27 +109,27 @@ class AttachedFileEditComponent extends Component
         $this->form['basename'] = $this->previewFile->getBaseName();
     }
 
-//    public function onAssetsChosen(array $assetIds)
-//    {
-//        if(empty($assetIds)) return;
-//
-//        // Replacement of file can be only one asset.
-//        $assetId = reset($assetIds);
-//
-//        $previewFile = PreviewFile::fromAsset(Asset::where('id', $assetId)->first());
-//        $previewFile->isAttachedToModel = false;
-//
-//        if(!$this->replacedPreviewFile) {
-//            $this->replacedPreviewFile = $this->previewFile;
-//        }
-//
-//        $this->previewFile = $previewFile;
-//    }
+    //    public function onAssetsChosen(array $assetIds)
+    //    {
+    //        if(empty($assetIds)) return;
+    //
+    //        // Replacement of file can be only one asset.
+    //        $assetId = reset($assetIds);
+    //
+    //        $previewFile = PreviewFile::fromAsset(Asset::where('id', $assetId)->first());
+    //        $previewFile->isAttachedToModel = false;
+    //
+    //        if(!$this->replacedPreviewFile) {
+    //            $this->replacedPreviewFile = $this->previewFile;
+    //        }
+    //
+    //        $this->previewFile = $previewFile;
+    //    }
 
-//    public function openFilesChoose()
-//    {
-//        $this->emitDownTo('chief-wire::files-choose', 'open');
-//    }
+    //    public function openFilesChoose()
+    //    {
+    //        $this->emitDownTo('chief-wire::files-choose', 'open');
+    //    }
 
     public function openImageCrop()
     {
