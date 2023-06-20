@@ -14,11 +14,11 @@
         isReordering: @entangle('isReordering'),
         onDragEnter: () => {
             if($data.isReordering) return;
-            $el.classList.add('border-2','border-dashed');
+            $el.classList.add('m-[-2px]', 'border-2', 'border-dashed', 'rounded-lg', 'border-primary-500');
             $data.hasEnteredDrag = true;
         },
         onDragLeave: () => {
-            $el.classList.remove('border-2','border-dashed');
+            $el.classList.remove('m-[-2px]', 'border-2', 'border-dashed', 'rounded-lg', 'border-primary-500');
         },
         onDrop: (event) => {
             if($data.isReordering) return;
@@ -34,15 +34,31 @@
     {{ $this->filePreview }}
 
     @error('files.0')
-        <span class="text-red-500">{{ $message }}</span>
+        <x-chief::inline-notification type="error" class="mt-2">
+            {{ ucfirst($message) }}
+        </x-chief::inline-notification>
     @enderror
 
     {{ $this->fileSelect }}
-    <div><livewire:chief-wire::files-choose parent-id="{{ $this->id }}" /></div>
-    <div><livewire:chief-wire::attached-file-edit parent-id="{{ $this->id }}" model-reference="{{ $modelReference }}" field-key="{{ $fieldKey }}" locale="{{ $locale }}" :components="$this->components" /></div>
+
+    <livewire:chief-wire::files-choose parent-id="{{ $this->id }}" />
+    <livewire:chief-wire::attached-file-edit
+        parent-id="{{ $this->id }}"
+        model-reference="{{ $modelReference }}"
+        field-key="{{ $fieldKey }}"
+        locale="{{ $locale }}"
+        :components="$this->components"
+    />
 
     @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
-        <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->id }}" model-reference="{{ $modelReference }}" field-key="{{ $fieldKey }}" locale="{{ $locale }}"/></div>
+        <livewire:is
+            component="{{ $livewireFileComponent }}"
+            parent-id="{{ $this->id }}"
+            model-reference="{{ $modelReference }}"
+            field-key="{{ $fieldKey }}"
+            locale="{{ $locale }}"
+        />
     @endforeach
+
 {{--    <div><livewire:chief-wire::image-crop parent-id="{{ $this->id }}" /></div>--}}
 </div>
