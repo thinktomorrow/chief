@@ -39,13 +39,13 @@ class FileMimetypesRule extends FileRule
         return parent::validateMimetypes($attribute, $value, $parameters);
     }
 
-//    private function validateSlimMimetypes($value, array $parameters): bool
-//    {
-//        $mimetype = json_decode($value)->output->type;
-//
-//        return (in_array($mimetype, $parameters) ||
-//            in_array(explode('/', $mimetype)[0] . '/*', $parameters));
-//    }
+    //    private function validateSlimMimetypes($value, array $parameters): bool
+    //    {
+    //        $mimetype = json_decode($value)->output->type;
+    //
+    //        return (in_array($mimetype, $parameters) ||
+    //            in_array(explode('/', $mimetype)[0] . '/*', $parameters));
+    //    }
 
     /**
      * @param $attribute

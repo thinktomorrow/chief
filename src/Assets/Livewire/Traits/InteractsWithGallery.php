@@ -14,19 +14,8 @@ trait InteractsWithGallery
 
     public $filters = [];
     public $sort = null;
-    public $showAsList = false;
 
     public Collection $rows;
-
-    public function showAsList()
-    {
-        return $this->showAsList = true;
-    }
-
-    public function showAsGrid()
-    {
-        return $this->showAsList = false;
-    }
 
     public function updatedFilters()
     {
@@ -50,6 +39,11 @@ trait InteractsWithGallery
             $builder = $builder->orderBy('created_at', 'DESC');
         }
 
-        return $builder->paginate(12);
+        return $builder->paginate(24);
+    }
+
+    public function paginationView()
+    {
+        return 'chief::pagination.livewire-default';
     }
 }

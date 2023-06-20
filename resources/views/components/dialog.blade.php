@@ -12,10 +12,10 @@
 >
     <div x-on:click="open = false" class="absolute inset-0 cursor-pointer bg-black/20 animate-dialog-fade-in"></div>
 
-    <div class="container relative pointer-events-none max-w-screen-2xl">
-        <div class="relative p-12 bg-white border rounded-lg shadow pointer-events-auto animate-dialog-pop-in border-grey-100">
-            <button type="button" x-on:click="open = false" class="absolute top-6 right-6">
-                <svg class="w-6 h-6 text-grey-500 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
+    <div class="container relative inline-flex justify-center pointer-events-none max-w-screen-2xl">
+        <div class="relative p-8 bg-white border rounded-lg shadow pointer-events-auto sm:p-12 animate-dialog-pop-in border-grey-100">
+            <button type="button" x-on:click="open = false" class="absolute top-3 right-3 sm:top-4 sm:right-4">
+                <svg class="w-5 h-5 text-grey-500 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
             </button>
 
             <div>

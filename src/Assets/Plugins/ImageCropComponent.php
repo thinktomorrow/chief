@@ -66,20 +66,20 @@ class ImageCropComponent extends Component
         $this->isOpen = false;
     }
 
-//    public function rules(): array
-//    {
-//
-//    }
-//
-//    public function messages(): array
-//    {
-//
-//    }
-//
-//    public function validationAttributes(): array
-//    {
-//
-//    }
+    //    public function rules(): array
+    //    {
+    //
+    //    }
+    //
+    //    public function messages(): array
+    //    {
+    //
+    //    }
+    //
+    //    public function validationAttributes(): array
+    //    {
+    //
+    //    }
 
     public function updateCropSelection($value)
     {
