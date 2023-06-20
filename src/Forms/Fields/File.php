@@ -10,6 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\ValidationException;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\SaveFileField;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
@@ -77,48 +78,12 @@ class File extends Component implements Field
         $validationParameters = ValidationParameters::make($this)
             ->multiple($this->allowMultiple());
 
-        //        try{
-        //            $validatorFactory->make(
-        //                $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
-        //                $validationParameters->getRules(),
-        //                $validationParameters->getMessages(),
-        //                $validationParameters->getAttributes(),
-        //            )->validate();
-        //
-        //            dd('VALID');
-        //        } catch(ValidationException $e)
-        //        {
-        //            dd($e->getMessage(), $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
-        //                $validationParameters->getRules());
-        //            dd('INVALID');
-        //        }
-
         return $validatorFactory->make(
             $this->preparePayloadForValidation(array_keys($validationParameters->getRules()), $payload),
             $validationParameters->getRules(),
             $validationParameters->getMessages(),
             $validationParameters->getAttributes(),
         );
-
-        // // Validate uploaded File first
-        ////        if ($field->hasValidation()) {
-        ////
-        ////            $payload = [];
-        ////
-        ////            foreach (array_keys($validationParameters->getRules()) as $fieldKey) {
-        ////                $payload[$fieldKey] =
-        ////                }
-        ////
-        ////            $validationParameters = ValidationParameters::make($field);
-        ////            dd(
-        ////
-        ////                $validationParameters->getRules(),
-        ////                $validationParameters->getMessages(),
-        ////                $validationParameters->getAttributes(),
-        ////            );
-        ////            $validator = \Illuminate\Support\Facades\Validator::make([$field->getKey() => [$uploadedFile]], [$field->getKey() => $field->getRules()]);
-        ////            $validator->validate();
-        //////        }
     }
 
     private function preparePayloadForValidation(array $ruleKeys, array $payload)
@@ -129,6 +94,8 @@ class File extends Component implements Field
         foreach($ruleKeys as $ruleKey) {
             if(Arr::has($payload, $ruleKey.'.uploads')) {
                 $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey.'.uploads'));
+            } elseif(Arr::has($payload, $ruleKey.'.attach')) {
+                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey.'.attach'));
             }
         }
 
@@ -139,6 +106,13 @@ class File extends Component implements Field
     {
         return collect($uploads)
             ->map(fn ($upload) => new UploadedFile($upload['path'], $upload['originalName'], $upload['mimeType']))
+            ->all();
+    }
+
+    private function convertAttachedAssetsToUploadedFiles(array $assetIds): array
+    {
+        return Asset::whereIn('id', $assetIds)->get()
+            ->map(fn (Asset $asset) => new UploadedFile($asset->getPath(), $asset->getFileName(), $asset->getMimeType()))
             ->all();
     }
 
