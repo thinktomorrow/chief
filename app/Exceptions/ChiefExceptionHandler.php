@@ -45,14 +45,14 @@ class ChiefExceptionHandler extends ExceptionHandler
             return $this->unauthorized($request, $e);
         }
 
-//        if ($request->getMethod() == 'POST' && $e instanceof PostTooLargeException) {
-//            if ($request->expectsJson()) {
-//                return response()->json([
-//                    'error' => true, // required by redactor
-//                    'message' => $e->getMessage(),
-//                ], 200);
-//            }
-//        }
+        //        if ($request->getMethod() == 'POST' && $e instanceof PostTooLargeException) {
+        //            if ($request->expectsJson()) {
+        //                return response()->json([
+        //                    'error' => true, // required by redactor
+        //                    'message' => $e->getMessage(),
+        //                ], 200);
+        //            }
+        //        }
         if ($this->shouldRenderChiefException($e)) {
             return $this->renderChiefException($request, $e);
         }
@@ -82,28 +82,29 @@ class ChiefExceptionHandler extends ExceptionHandler
     protected function unauthorized(\Illuminate\Http\Request $request, AuthorizationException $exception)
     {
         return redirect()->route('chief.back.dashboard')
-                         ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
+            ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
     }
 
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
      * @return \Illuminate\Http\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+        if ($request->expectsJson() || $request->isJson()) {
+            return response()->json([
+                'error' => 'Unauthenticated.',
+                'message' => $exception->getMessage(),
+            ], 401);
         }
 
         if (! empty($exception->guards()) && Arr::first($exception->guards()) == 'chief') {
             return redirect()->guest(route('chief.back.login'));
         }
 
-        return $request->expectsJson()
-            ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->guest(method_exists($exception, 'redirectTo') ? $exception->redirectTo() : '/');
+        return redirect()->guest(method_exists($exception, 'redirectTo') ? $exception->redirectTo() : '/');
     }
 }
