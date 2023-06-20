@@ -12,7 +12,7 @@
         @foreach ($files as $file)
             @continue(count($files) > 1 && !$allowMultiple() && $file->isQueuedForDeletion)
 
-        <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2">
+            <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2">
                 <div class="shrink-0">
                     @if($file->isPreviewable)
                         <img
@@ -47,7 +47,6 @@
                             </span>
                         @endif
                     @else
-
                         @if(!$file->isAttachedToModel)
                             <span class="text-xs text-grey-500" title="Je kan een bestand bewerken van zodra het is bewaard.">
                                 Nog niet bewaard
