@@ -189,7 +189,7 @@ class AttachedFileEditComponent extends Component
         }
 
         // If rules is empty, this errors when trying to validate
-        if(!empty($rules)) {
+        if(! empty($rules)) {
             $this->validate($rules, $messages, $validationAttributes);
         }
     }
