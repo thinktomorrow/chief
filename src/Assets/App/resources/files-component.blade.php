@@ -1,4 +1,5 @@
-<div x-data="{
+<div
+    x-data="{
         uploadFiles: (files) => {
             files.forEach((file, index) => {
                 @this.set('files.'+index+'.fileName', file.name );
@@ -9,7 +10,6 @@
                     @this.set('files.'+index+'.progress', e.detail.progress);
                 });
             });
-
         },
         isReordering: @entangle('isReordering'),
         onDragEnter: () => {
@@ -30,7 +30,7 @@
      x-on:dragover.prevent="onDragEnter"
      x-on:dragleave.prevent="onDragLeave"
      x-on:drop.prevent="onDrop"
-    >
+>
     {{ $this->filePreview }}
 
     @error('files.0')

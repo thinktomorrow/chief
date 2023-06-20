@@ -30,6 +30,7 @@ trait InteractsWithGallery
         if(isset($this->filters['search'])) {
             $builder->whereHas('media', function (Builder $query) {
                 $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
+
             });
         }
 
