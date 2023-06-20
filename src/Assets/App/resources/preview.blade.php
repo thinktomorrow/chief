@@ -57,7 +57,7 @@
                             <x-chief::icon-button icon="icon-edit" color="grey" />
                         </button>
 
-                        @if(count($files) > 1)
+                        @if(count($files) > 1 && $allowMultiple())
                             <button wire:sortable.handle type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
                                 <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
                             </button>

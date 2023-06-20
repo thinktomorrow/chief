@@ -11,19 +11,35 @@
                 });
             });
         },
-        isReordering: @entangle('isReordering'),
-        onDragEnter: () => {
-            if($data.isReordering) return;
+        isDragging: false,
+        onDragEnter: (event) => {
+
+            if (event.dataTransfer.types) {
+                for (var i = 0; i < event.dataTransfer.types.length; i++) {
+                    if (event.dataTransfer.types[i] !== 'Files') {
+                        $data.isDragging = false;
+                        return false;
+                    }
+                }
+            }
+
+            if($data.isDragging) return;
             $el.classList.add('m-[-2px]', 'border-2', 'border-dashed', 'rounded-lg', 'border-primary-500');
-            $data.hasEnteredDrag = true;
+            $data.isDragging = true;
+        },
+        onDragOver: (event) => {
+            if(!$data.isDragging) return;
+            $el.classList.add('m-[-2px]', 'border-2', 'border-dashed', 'rounded-lg', 'border-primary-500');
         },
         onDragLeave: () => {
+            $data.isDragging = false;
             $el.classList.remove('m-[-2px]', 'border-2', 'border-dashed', 'rounded-lg', 'border-primary-500');
         },
         onDrop: (event) => {
-            if($data.isReordering) return;
+            if(!$data.isDragging) return;
             const files = event.dataTransfer.files;
             $data.uploadFiles([...files]);
+            $data.isDragging = false;
         }
     }"
      x-on:dragenter.prevent="onDragEnter"
