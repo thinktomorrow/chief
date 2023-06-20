@@ -85,11 +85,14 @@ const Api = {
                 event.preventDefault();
 
                 // Avoid double submission - Check if already has been clicked
-                if (form.classList.contains('is-submitting')) {
-                    return;
-                }
-
+                if (form.classList.contains('is-submitting')) return;
                 form.classList.add('is-submitting');
+
+                // Show loading spinner when submitting a form if it exists
+                const spinner = form.querySelector('[data-form-submit-spinner]');
+                if (spinner) {
+                    spinner.classList.remove('hidden');
+                }
 
                 if (this.method === 'get') {
                     const searchParams = new URLSearchParams(new FormData(this)).toString();
