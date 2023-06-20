@@ -115,7 +115,7 @@ class FileEditComponent extends Component
     private function validateForm(): void
     {
         $this->validate([
-            'form.basename' => ['required','min:1','max:200', 'regex:/^[a-zA-Z0-9\s_-]+$/']
+            'form.basename' => ['required','min:1','max:200', 'regex:/^[a-zA-Z0-9\s_-]+$/'],
         ], [
             'form.basename.regex' => 'Geen speciale tekens toegestaan in de bestandsnaam',
         ], [

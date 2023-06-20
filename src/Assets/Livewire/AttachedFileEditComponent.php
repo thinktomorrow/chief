@@ -175,7 +175,7 @@ class AttachedFileEditComponent extends Component
     private function validateForm(): void
     {
         $rules = [
-            'form.basename' => ['required','min:1','max:200', 'regex:/^[a-zA-Z0-9\s_-]+$/']
+            'form.basename' => ['required','min:1','max:200', 'regex:/^[a-zA-Z0-9\s_-]+$/'],
         ];
 
         $messages = [
