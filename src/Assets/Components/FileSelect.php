@@ -53,6 +53,11 @@ class FileSelect extends Component implements Htmlable
         return collect($this->fileUploadComponent->previewFiles);
     }
 
+    public function getFilesCount(): int
+    {
+        return count(collect($this->fileUploadComponent->previewFiles));
+    }
+
     public function allowMultiple(): bool
     {
         return $this->fileUploadComponent->allowMultiple;
@@ -67,10 +72,6 @@ class FileSelect extends Component implements Htmlable
 
     public function render(): View
     {
-        $view = 'chief-assets::select';
-
-        return view($view, array_merge($this->data(), [
-
-        ]));
+        return view('chief-assets::select', array_merge($this->data()));
     }
 }
