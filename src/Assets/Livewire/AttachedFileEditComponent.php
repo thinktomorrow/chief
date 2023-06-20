@@ -154,13 +154,14 @@ class AttachedFileEditComponent extends Component
             }
         }
 
+        // Update form values
+        $this->previewFile->filename = $this->form['basename'] . '.' . $this->previewFile->extension;
+        $this->syncForm();
+
         if($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
             app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
-
-        // Update form values
-        $this->syncForm();
 
         $this->emitUp('assetUpdated', $this->previewFile);
 
@@ -187,7 +188,10 @@ class AttachedFileEditComponent extends Component
             }
         }
 
-        $this->validate($rules, $messages, $validationAttributes);
+        // If rules is empty, this errors when trying to validate
+        if(!empty($rules)) {
+            $this->validate($rules, $messages, $validationAttributes);
+        }
     }
 
     public function render()

@@ -213,9 +213,8 @@ class FilesComponent extends Component
     public function onAssetUpdated(array $previewFileArray): void
     {
         $previewFile = PreviewFile::fromArray($previewFileArray);
-        $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
 
-        //        $previewFile->filename = $values['basename'] . '.' . $previewFile->extension;
+        $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
     }
 
     /**
