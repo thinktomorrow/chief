@@ -41,14 +41,12 @@
                     <div class="space-y-0.5 text-sm">
                         <div>
                             <p>
-                                <span class="font-medium h6 body-dark">Bestandsnaam:</span>
                                 <span class="body body-dark" style="word-break: break-all;">
                                     {{ $file->getFileName() }}
                                 </span>
                             </p>
 
                             <p>
-                                <span class="font-medium h6 body-dark">Bestandsgrootte:</span>
                                 <span class="body body-dark">{{ $file->getSize() }} </span>
                             </p>
                         </div>
@@ -60,7 +58,7 @@
                                 size="18"
                                 class="link link-primary"
                             >
-                                Document bekijken
+                                Bekijken
                             </x-chief::icon-label>
                         </a>
                     </div>

@@ -137,9 +137,18 @@
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
-        Livewire.hook('message.received', (message, component) => {
-            console.log(message, component);
-        })
+        Livewire.onError((message, response) => {
+
+            console.log(response.status);
+
+            if(response.status === 419) {
+
+                // TODO: Show custom refresh
+                confirm('Please refresh the page?') && window.location.reload();
+
+                return false;
+            }
+        });
     </script>
 
     @stack('custom-scripts-after-vue')
