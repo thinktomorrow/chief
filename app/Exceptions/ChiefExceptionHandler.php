@@ -45,14 +45,14 @@ class ChiefExceptionHandler extends ExceptionHandler
             return $this->unauthorized($request, $e);
         }
 
-//        if ($request->getMethod() == 'POST' && $e instanceof PostTooLargeException) {
-//            if ($request->expectsJson()) {
-//                return response()->json([
-//                    'error' => true, // required by redactor
-//                    'message' => $e->getMessage(),
-//                ], 200);
-//            }
-//        }
+        //        if ($request->getMethod() == 'POST' && $e instanceof PostTooLargeException) {
+        //            if ($request->expectsJson()) {
+        //                return response()->json([
+        //                    'error' => true, // required by redactor
+        //                    'message' => $e->getMessage(),
+        //                ], 200);
+        //            }
+        //        }
         if ($this->shouldRenderChiefException($e)) {
             return $this->renderChiefException($request, $e);
         }
