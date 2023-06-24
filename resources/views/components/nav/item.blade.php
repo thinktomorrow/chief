@@ -1,5 +1,3 @@
-{{-- TODO: Keep top level nav item open if a child nav item links to the current page --}}
-{{-- TODO: Active state --}}
 @php
     // Only nav items with this attribute are collapsible. This tag is meant for top level nav items.
     $collapsible = $attributes->has('collapsible');
@@ -9,23 +7,23 @@
     $dropdownIdentifier = uniqid();
 @endphp
 
-<div class="relative">
-    <div data-toggle-dropdown="{{ $dropdownIdentifier }}" class="rounded-lg cursor-pointer hover:bg-grey-50">
-        <div class="flex justify-between">
-            <div class="flex grow">
+<div class="relative group">
+    <div data-toggle-dropdown="{{ $dropdownIdentifier }}" class="rounded-md cursor-pointer hover:bg-grey-100">
+        <div class="flex justify-between gap-3 px-2">
+            <div class="flex gap-3 grow">
                 @isset($icon)
                     @isset($url)
                         <a
                             href="{{ $url }}"
                             title="{!! $label !!}"
                             data-toggle-dropdown-ignore
-                            class="p-2 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-800"
+                            class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
                             {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                         >
                             {!! $icon !!}
                         </a>
                     @else
-                        <div data-expand-navigation class="p-2 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-800">
+                        <div data-expand-navigation class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900">
                             {!! $icon !!}
                         </div>
                     @endisset
@@ -37,7 +35,7 @@
                         title="{!! $label !!}"
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="px-3 py-2 inline-block font-medium text-grey-800 w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
@@ -45,7 +43,7 @@
                 @else
                     <span
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="px-3 py-2 inline-block font-medium text-grey-800 w-full lg:w-40 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </span>
@@ -55,11 +53,11 @@
             @if(!$slot->isEmpty())
                 <div
                     data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                    class="shrink-0 p-2 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                    class="shrink-0 mt-2.5 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                 >
-                    <div class="flex items-center justify-center w-6 h-6">
-                        <span class="p-1 rounded-lg hover:bg-grey-200 text-grey-800">
-                            <svg width="16" height="16"><use xlink:href="#icon-chevron-down"></use></svg>
+                    <div class="flex items-center justify-center">
+                        <span class="text-grey-700 hover:scale-105">
+                            <svg class="w-4 h-4"><use xlink:href="#icon-chevron-down"></use></svg>
                         </span>
                     </div>
                 </div>
@@ -70,7 +68,7 @@
     @if(!$slot->isEmpty())
         <div
             data-dropdown="{{ $dropdownIdentifier }}"
-            class="ml-10 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
+            class="ml-9 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
         >
             {!! $slot !!}
         </div>

@@ -1,12 +1,32 @@
-@if (!$attributes->has('inline') && $items->count() > 0)
+@props([
+    'label' => null,
+    'title' => null,
+    'items' => collect(),
+    'inline',
+    'append',
+    'prepend',
+])
+
+@if ($title)
+    <div
+        data-toggle-classes="hidden"
+        class="px-2 mb-2 mt-6 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
+    >
+        <span class="text-xs font-medium body text-grey-500">
+            {{ ucfirst($title) }}
+        </span>
+    </div>
+@endif
+
+@if (!isset($inline) && $items->count() > 0)
     @php
         $icon = (($firstItem = $items->first()) && $firstItem->icon())
             ? $firstItem->icon() : '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
 
         $isActive = false;
 
-        foreach($items as $navItem) {
-            if(isActiveUrl($navItem->url()) || isActiveUrl($navItem->url() .'/*')) {
+        foreach($items as $item) {
+            if(isActiveUrl($item->url()) || isActiveUrl($item->url() .'/*')) {
                 $isActive = true;
                 $showOpenDropdown = true;
             }
@@ -14,56 +34,42 @@
     @endphp
 
     <x-chief::nav.item
-        label="{{ $title }}"
+        label="{{ $label }}"
         icon="{!! $icon !!}"
         collapsible
         {{ $attributes }}
     >
-        @if (!$attributes->has('append'))
+        @if (!isset($append))
             {{ $slot }}
         @endif
 
-        @foreach($items as $navItem)
+        @foreach ($items as $item)
             <x-chief::nav.item
-                label="{{ ucfirst($navItem->label()) }}"
-                url="{{ $navItem->url() }}"
+                label="{{ ucfirst($item->label()) }}"
+                url="{{ $item->url() }}"
             />
         @endforeach
 
-        @if ($attributes->has('append'))
+        @if (isset($append))
             {{ $slot }}
         @endif
     </x-chief::nav.item>
-@else
-    @if ($title)
-        <div
-            data-toggle-classes="hidden"
-            class="text-sm tracking-wider uppercase text-grey-500 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
-            style="padding: 0 0.5rem; margin-bottom: 1rem;"
-        >
-            {{ $title }}
-        </div>
-    @endif
-
-    @if (!$attributes->has('append'))
+@elseif ($items->count() > 0)
+    @if (!isset($append))
         {{ $slot }}
     @endif
 
-    @foreach ($items as $navItem)
+    @foreach ($items as $item)
         <x-chief::nav.item
-            label="{{ ucfirst($navItem->label()) }}"
-            url="{{ $navItem->url() }}"
-            icon="{!! $navItem->icon() !!}"
+            label="{{ ucfirst($item->label()) }}"
+            url="{{ $item->url() }}"
+            icon="{!! $item->icon() !!}"
             collapsible
             {{ $attributes }}
         />
     @endforeach
 
-    @if ($attributes->has('append'))
+    @if (isset($append))
         {{ $slot }}
-    @endif
-
-    @if ($title)
-        <hr class="my-6 border-grey-100">
     @endif
 @endif
