@@ -4,25 +4,31 @@ All notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
-Major refactor and improvement of the file asset management. 
+
+Major refactor and improvement of the file asset management.
 Upload, additions, deletions and sorting of files per page is more user-friendly.
 An asset can be edited and can contain textual fields.
 All assets can be managed via the asset index.
 
-The Slim script is replaced by a custom livewire solution. This resulted in less code complexity and easier upload handling. 
+The Slim script is replaced by a custom livewire solution. This resulted in less code complexity and easier upload handling.
 
--   Removed `Thinktomorrow\Chief\Forms\Fields\Media\MediaType` as a legacy reference to predefined file keys. 
--   Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to file field instead. 
+-   Removed `Thinktomorrow\Chief\Forms\Fields\Media\MediaType` as a legacy reference to predefined file keys.
+-   Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to file field instead.
 -   Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant` and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These are no longer used and replaced by the Livewire FileComponent upload logic. The latter one was no longer actively used.
 
+-   Changed: Updated `<x-chief::nav/>` layout.
+-   Changed: `<x-chief::nav/>` now has a seperate label attribute. This way you can both display a nav title and label.
+
 ## 0.7.25 - 2023-05-24
+
 -   Fixed: Only load tags index component when model is taggable.
 -   Changed: Bump limit of shareable fragments to 30.
 
 ## 0.7.24 - 2023-05-23
--   
+
+-
 -   Fixed: Testsuite
--   Added: Plugins Taggable and TimeTable. Currently still in chief core. 
+-   Added: Plugins Taggable and TimeTable. Currently still in chief core.
 -   Added: Pagetitle can be shown with svg icons in table index
 
 ## 0.7.23 - 2023-04-19
