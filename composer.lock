@@ -6859,12 +6859,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "f665f4ff79d7cddfe4ab3a9de3086e9934a47226"
+                "reference": "862a1ac1877cefb7a9eb1c7edfc45afe5510eb95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/f665f4ff79d7cddfe4ab3a9de3086e9934a47226",
-                "reference": "f665f4ff79d7cddfe4ab3a9de3086e9934a47226",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/862a1ac1877cefb7a9eb1c7edfc45afe5510eb95",
+                "reference": "862a1ac1877cefb7a9eb1c7edfc45afe5510eb95",
                 "shasum": ""
             },
             "require": {
@@ -6930,7 +6930,7 @@
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
                 "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9"
             },
-            "time": "2023-06-26T12:00:34+00:00"
+            "time": "2023-06-26T12:38:57+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
