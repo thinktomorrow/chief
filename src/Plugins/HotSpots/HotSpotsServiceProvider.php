@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\HotSpots;
 
-use Illuminate\Support\HtmlString;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
