@@ -24,4 +24,11 @@
 
     <div><livewire:chief-wire::file-edit parent-id="{{ $this->id }}"/></div>
     <div><livewire:chief-wire::asset-delete parent-id="{{ $this->id }}"/></div>
+
+    @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
+        <livewire:is
+            component="{{ $livewireFileComponent }}"
+            parent-id="{{ $this->id }}"
+        />
+    @endforeach
 </div>

@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins;
 
-use Illuminate\Contracts\Support\Htmlable;
-
 class ChiefPluginSections
 {
     private array $sections;
@@ -13,9 +11,9 @@ class ChiefPluginSections
         $this->sections = [];
     }
 
-    public function addFooterSection(Htmlable $value): static
+    public function addFooterSection(string $viewPath): static
     {
-        $this->addSection('footer', $value);
+        $this->addSection('footer', $viewPath);
 
         return $this;
     }
@@ -35,6 +33,18 @@ class ChiefPluginSections
     public function getLivewireFileComponents(): array
     {
         return $this->getSection('livewire_component_in_file_component');
+    }
+
+    public function addLivewireFileEditAction(string $livewireFileEditActionPath): static
+    {
+        $this->addSection('livewire_file_edit_actions', $livewireFileEditActionPath);
+
+        return $this;
+    }
+
+    public function getLivewireFileEditActions(): array
+    {
+        return $this->getSection('livewire_file_edit_actions');
     }
 
     private function addSection(string $key, $value): void

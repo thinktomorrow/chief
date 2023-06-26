@@ -6,7 +6,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReorderAssets;
@@ -18,19 +17,17 @@ class SaveFileField
 {
     private CreateAsset $createAsset;
     protected AddAsset $addAsset;
-    protected AssetUploader $assetUploader;
     private ReorderAssets $reorderAssets;
 
     /** @var string the media disk where the files should be stored. */
     private $disk = '';
     private DetachAsset $detachAsset;
 
-    final public function __construct(CreateAsset $createAsset, AddAsset $addAsset, DetachAsset $detachAsset, ReorderAssets $reorderAssets, AssetUploader $assetUploader)
+    final public function __construct(CreateAsset $createAsset, AddAsset $addAsset, DetachAsset $detachAsset, ReorderAssets $reorderAssets)
     {
         $this->createAsset = $createAsset;
         $this->addAsset = $addAsset;
         $this->reorderAssets = $reorderAssets;
-        $this->assetUploader = $assetUploader;
         $this->detachAsset = $detachAsset;
     }
 

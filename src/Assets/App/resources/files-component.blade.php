@@ -14,6 +14,8 @@
         isDragging: false,
         onDragEnter: (event) => {
 
+            if($data.isDragging) return;
+
             if (event.dataTransfer.types) {
                 for (var i = 0; i < event.dataTransfer.types.length; i++) {
                     if (event.dataTransfer.types[i] !== 'Files') {
@@ -23,7 +25,6 @@
                 }
             }
 
-            if($data.isDragging) return;
             $el.classList.add('m-[-2px]', 'border-2', 'border-dashed', 'rounded-lg', 'border-primary-500');
             $data.isDragging = true;
         },
@@ -43,7 +44,7 @@
         }
     }"
      x-on:dragenter.prevent="onDragEnter"
-     x-on:dragover.prevent="onDragEnter"
+     x-on:dragover.prevent="onDragOver"
      x-on:dragleave.prevent="onDragLeave"
      x-on:drop.prevent="onDrop"
 >
@@ -57,24 +58,29 @@
 
     {{ $this->fileSelect }}
 
-    <livewire:chief-wire::files-choose parent-id="{{ $this->id }}" />
-    <livewire:chief-wire::attached-file-edit
-        parent-id="{{ $this->id }}"
-        model-reference="{{ $modelReference }}"
-        field-key="{{ $fieldKey }}"
-        locale="{{ $locale }}"
-        :components="$this->components"
-    />
-
-    @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
-        <livewire:is
-            component="{{ $livewireFileComponent }}"
+    <div>
+        <livewire:chief-wire::files-choose parent-id="{{ $this->id }}" />
+    </div>
+    <div>
+        <livewire:chief-wire::attached-file-edit
             parent-id="{{ $this->id }}"
             model-reference="{{ $modelReference }}"
             field-key="{{ $fieldKey }}"
             locale="{{ $locale }}"
+            :components="$this->components"
         />
-    @endforeach
+    </div>
 
-{{--    <div><livewire:chief-wire::image-crop parent-id="{{ $this->id }}" /></div>--}}
+
+    @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
+        <div>
+            <livewire:is
+                component="{{ $livewireFileComponent }}"
+                parent-id="{{ $this->id }}"
+                model-reference="{{ $modelReference }}"
+                field-key="{{ $fieldKey }}"
+                locale="{{ $locale }}"
+            />
+        </div>
+    @endforeach
 </div>

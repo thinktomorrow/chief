@@ -16,13 +16,6 @@
 
                 <div class="space-y-4">
                     <div class="flex flex-wrap gap-2">
-                        {{-- Cropping --}}
-                        @if($previewFile->isImage())
-                            <a wire:click="openImageCrop()" title="Image crop/resize tool" class="shrink-0">
-                                <x-chief::icon-button icon="icon-crop"/>
-                            </a>
-                        @endif
-
                         {{-- Replace --}}
                         @if($previewFile)
                             <label for="{{ $this->id }}" class="relative cursor-pointer">
@@ -41,6 +34,11 @@
                                     <x-chief::icon-button icon="icon-download"/>
                                 </a>
                             @endif
+
+                            @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
+                                @include($livewireFileEditAction)
+                            @endforeach
+
                         @endif
                     </div>
 
@@ -84,6 +82,10 @@
                             wire:model.lazy="form.basename"
                         />
                     </x-chief::input.prepend-append>
+                    @if($replacedPreviewFile)
+                        <span class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
+                    @endif
+
                 </x-chief::input.group>
 
                 {{-- TODO(ben): add alt text field --}}

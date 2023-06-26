@@ -80,7 +80,7 @@ class FileEditComponent extends Component
 
     public function openImageCrop()
     {
-        $this->emitDownTo('chief-wire::image-crop', 'open', ['previewfile' => $this->previewFile]);
+        $this->emitToSibling('chief-wire::image-crop', 'open', ['previewfile' => $this->previewFile]);
     }
 
     public function submit()

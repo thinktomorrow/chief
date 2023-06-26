@@ -133,7 +133,7 @@
 
     <script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
 
-    {{--TODO:Tijs include these sources in our build step --}}
+    {{--TODO: Tijs include these sources in our build step --}}
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -154,7 +154,7 @@
     @stack('custom-scripts-after-vue')
 
     @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getFooterSections() as $footerSection)
-        {{ $footerSection }}
+        @include($footerSection)
     @endforeach
 </body>
 </html>
