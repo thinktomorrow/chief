@@ -25,9 +25,9 @@ class FileMaxRuleTest extends ChiefTestCase
 
     public function test_it_fails_to_upload_when_file_exceeds_max_width()
     {
-        UploadedFile::fake()->image('image.png', '1000','1000')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '1000', '1000')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['max:1']),
             ];
@@ -47,7 +47,7 @@ class FileMaxRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -59,9 +59,9 @@ class FileMaxRuleTest extends ChiefTestCase
 
     public function test_it_passes_upload_when_file_does_not_exceed_max_width()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['max:1']),
             ];
@@ -81,7 +81,7 @@ class FileMaxRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -95,7 +95,7 @@ class FileMaxRuleTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png', 1000, 1000))
             ->save();
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['max:1']),
             ];
@@ -109,7 +109,7 @@ class FileMaxRuleTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -125,7 +125,7 @@ class FileMaxRuleTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
             ->save();
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['max:1']),
             ];
@@ -139,7 +139,7 @@ class FileMaxRuleTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -147,28 +147,28 @@ class FileMaxRuleTest extends ChiefTestCase
         $this->assertCount(1, $this->model->assets('thumb'));
     }
 
-//    /** @test */
-//    public function it_can_validate_a_mimetype()
-//    {
-//        $response = $this->uploadFile('thumb_trans', [
-//            'nl' => [UploadedFile::fake()->image('image.jpg', '200', '200')],
-//            'en' => [],
-//        ]);
-//
-//        $response->assertSessionHasErrors('files.thumb_trans.nl');
-//        $this->assertStringContainsString('thumb trans NL is niet het juiste bestandstype', session()->get('errors')->first('files.thumb_trans.nl'));
-//
-//        $this->assertCount(0, $this->model->assets('thumb_trans'));
-//    }
-//
-//    /** @test */
-//    public function it_passed_file_validation_when_there_are_already_images_for_model_present()
-//    {
-//        $response = $this->uploadFile('thumb_trans', [
-//            'nl' => [2 => 2], // indicates there is already an asset on this model attached.
-//            'en' => [],
-//        ]);
-//
-//        $response->assertSessionHasNoErrors();
-//    }
+    //    /** @test */
+    //    public function it_can_validate_a_mimetype()
+    //    {
+    //        $response = $this->uploadFile('thumb_trans', [
+    //            'nl' => [UploadedFile::fake()->image('image.jpg', '200', '200')],
+    //            'en' => [],
+    //        ]);
+    //
+    //        $response->assertSessionHasErrors('files.thumb_trans.nl');
+    //        $this->assertStringContainsString('thumb trans NL is niet het juiste bestandstype', session()->get('errors')->first('files.thumb_trans.nl'));
+    //
+    //        $this->assertCount(0, $this->model->assets('thumb_trans'));
+    //    }
+    //
+    //    /** @test */
+    //    public function it_passed_file_validation_when_there_are_already_images_for_model_present()
+    //    {
+    //        $response = $this->uploadFile('thumb_trans', [
+    //            'nl' => [2 => 2], // indicates there is already an asset on this model attached.
+    //            'en' => [],
+    //        ]);
+    //
+    //        $response->assertSessionHasNoErrors();
+    //    }
 }

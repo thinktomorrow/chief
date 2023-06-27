@@ -19,10 +19,10 @@ class FileDimensionsRule extends FileRule
         return true;
     }
 
-//    public function validateDimensions($attribute, $value, $parameters)
-//    {
-//        return parent::validateDimensions($attribute, $value, $parameters);
-//    }
+    //    public function validateDimensions($attribute, $value, $parameters)
+    //    {
+    //        return parent::validateDimensions($attribute, $value, $parameters);
+    //    }
 
     /**
      * @param $attribute

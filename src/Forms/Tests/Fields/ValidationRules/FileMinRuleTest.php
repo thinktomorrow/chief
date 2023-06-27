@@ -25,9 +25,9 @@ class FileMinRuleTest extends ChiefTestCase
 
     public function test_it_fails_to_upload_when_file_is_below_min_width()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['min:1']),
             ];
@@ -47,7 +47,7 @@ class FileMinRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -59,9 +59,9 @@ class FileMinRuleTest extends ChiefTestCase
 
     public function test_it_passes_upload_when_file_does_is_higher_than_min_width()
     {
-        UploadedFile::fake()->image('image.png', '1000','1000')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '1000', '1000')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['min:1']),
             ];
@@ -81,7 +81,7 @@ class FileMinRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -95,7 +95,7 @@ class FileMinRuleTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
             ->save();
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['min:1']),
             ];
@@ -109,7 +109,7 @@ class FileMinRuleTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -125,7 +125,7 @@ class FileMinRuleTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png', 1000, 1000))
             ->save();
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['min:1']),
             ];
@@ -139,7 +139,7 @@ class FileMinRuleTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 

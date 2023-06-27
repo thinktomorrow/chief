@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\App\SaveFileField;
 use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

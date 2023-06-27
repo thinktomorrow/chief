@@ -31,7 +31,7 @@ class ValidateFileTest extends ChiefTestCase
 
     public function test_it_fails_an_upload_if_file_is_required()
     {
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->locales(['nl', 'en'])->required(),
             ];
@@ -42,7 +42,7 @@ class ValidateFileTest extends ChiefTestCase
                 'thumb' => [
                     'nl' => [null],
                     'en' => [],
-                ]
+                ],
             ],
         ]);
 
@@ -53,9 +53,9 @@ class ValidateFileTest extends ChiefTestCase
 
     public function test_it_fails_a_localized_upload_if_file_is_required()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->locales(['nl', 'en'])->required(),
             ];
@@ -76,7 +76,7 @@ class ValidateFileTest extends ChiefTestCase
                         ],
                     ],
                     'en' => [],
-                ]
+                ],
             ],
         ]);
 
@@ -88,9 +88,9 @@ class ValidateFileTest extends ChiefTestCase
 
     public function test_it_passes_an_upload_if_file_is_required()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->required(),
             ];
@@ -111,7 +111,7 @@ class ValidateFileTest extends ChiefTestCase
                         ],
                     ],
                     'en' => [],
-                ]
+                ],
             ],
         ]);
 
@@ -122,9 +122,9 @@ class ValidateFileTest extends ChiefTestCase
 
     public function test_it_fails_an_upload_if_dimensions_are_invalidated()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=300']),
             ];
@@ -144,7 +144,7 @@ class ValidateFileTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -156,9 +156,9 @@ class ValidateFileTest extends ChiefTestCase
 
     public function test_it_can_pass_an_upload_if_dimensions_are_validated()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=40']),
             ];
@@ -178,7 +178,7 @@ class ValidateFileTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -194,7 +194,7 @@ class ValidateFileTest extends ChiefTestCase
             ->save();
 
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=300']),
             ];
@@ -208,7 +208,7 @@ class ValidateFileTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 

@@ -24,7 +24,7 @@ class FileRequiredRuleTest extends ChiefTestCase
 
     public function test_it_fails_an_upload_if_file_is_required()
     {
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->locales(['nl', 'en'])->required(),
             ];
@@ -35,7 +35,7 @@ class FileRequiredRuleTest extends ChiefTestCase
                 'thumb' => [
                     'nl' => [null],
                     'en' => [],
-                ]
+                ],
             ],
         ]);
 
@@ -46,9 +46,9 @@ class FileRequiredRuleTest extends ChiefTestCase
 
     public function test_it_fails_a_localized_upload_if_file_is_required()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->locales(['nl', 'en'])->required(),
             ];
@@ -69,7 +69,7 @@ class FileRequiredRuleTest extends ChiefTestCase
                         ],
                     ],
                     'en' => [],
-                ]
+                ],
             ],
         ]);
 
@@ -81,9 +81,9 @@ class FileRequiredRuleTest extends ChiefTestCase
 
     public function test_it_passes_an_upload_if_file_is_required()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->required(),
             ];
@@ -103,7 +103,7 @@ class FileRequiredRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 

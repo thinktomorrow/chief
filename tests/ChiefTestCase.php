@@ -143,8 +143,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         $app['config']->set('thinktomorrow.assetlibrary.conversions', [
             'placeholder' => [
-                'width'     => 16,
-                'height'    => 16,
+                'width' => 16,
+                'height' => 16,
             ],
         ]);
 

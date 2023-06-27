@@ -31,9 +31,9 @@ class FileDimensionsRuleTest extends ChiefTestCase
 
     public function test_it_fails_an_upload_if_dimensions_are_invalid()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=300']),
             ];
@@ -53,7 +53,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -65,9 +65,9 @@ class FileDimensionsRuleTest extends ChiefTestCase
 
     public function test_it_pass_an_upload_if_dimensions_are_validat()
     {
-        UploadedFile::fake()->image('image.png', '50','50')->storeAs('test', 'image-temp-name.png');
+        UploadedFile::fake()->image('image.png', '50', '50')->storeAs('test', 'image-temp-name.png');
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=40']),
             ];
@@ -87,7 +87,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -102,7 +102,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
             ->save();
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=300']),
             ];
@@ -116,7 +116,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
@@ -133,7 +133,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
             ->save();
 
 
-        PageWithAssets::setFieldsDefinition(function(){
+        PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=40']),
             ];
@@ -147,7 +147,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
                             ['id' => $asset->id],
                         ],
                     ],
-                ]
+                ],
             ],
         ]);
 
