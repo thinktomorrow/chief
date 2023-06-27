@@ -19,18 +19,18 @@ class FileMaxRule extends FileRule
         return true;
     }
 
-    public function validateMax($attribute, $value, $parameters)
-    {
-        //        if ($this->refersToExistingAsset($value)) {
-        //            return $this->validateAssetMax($this->existingAsset($value), $parameters);
-        //        }
-
-        if (! $this->isValidFileInstance($value)) {
-            return false;
-        }
-
-        return parent::validateMax($attribute, $value, $parameters);
-    }
+//    public function validateMax($attribute, $value, $parameters)
+//    {
+//        //        if ($this->refersToExistingAsset($value)) {
+//        //            return $this->validateAssetMax($this->existingAsset($value), $parameters);
+//        //        }
+//
+//        if (! $this->isValidFileInstance($value)) {
+//            return false;
+//        }
+//
+//        return parent::validateMax($attribute, $value, $parameters);
+//    }
 
     /**
      * @param $attribute

@@ -19,27 +19,9 @@ class FileDimensionsRule extends FileRule
         return true;
     }
 
-    public function validateDimensions($attribute, $value, $parameters)
-    {
-//        if ($this->refersToExistingAsset($value)) {
-//            return $this->validateAssetDimensions($this->existingAsset($value), $parameters);
-//        }
-//
-//        if (! $this->isValidFileInstance($value)) {
-//            return $this->validateSlimOutputDimensions($value, $parameters);
-//        }
-
-        return parent::validateDimensions($attribute, $value, $parameters);
-    }
-
-//    private function validateSlimOutputDimensions($value, array $parameters): bool
+//    public function validateDimensions($attribute, $value, $parameters)
 //    {
-//        $file = json_decode($value)->output;
-//
-//        $width = $file->width;
-//        $height = $file->height;
-//
-//        return $this->dimensionsCheck($width, $height, $parameters);
+//        return parent::validateDimensions($attribute, $value, $parameters);
 //    }
 
     /**

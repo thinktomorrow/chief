@@ -1,14 +1,14 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\File;
+namespace Fields\Validation;
 
-use function app;
 use Illuminate\Http\UploadedFile;
-use function session;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
+use function app;
+use function session;
 
 class ValidateImageTest extends ChiefTestCase
 {

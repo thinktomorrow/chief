@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\Fields;
+namespace Fields\Validation;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;

@@ -128,10 +128,6 @@ class FilesComponent extends Component
             $assetIds = (array) reset($assetIds);
 
             foreach($this->previewFiles as $previewFile) {
-                //                if(in_array($previewFile->id, $assetIds)) {
-                ////                    dd($previewFile);
-                //                }
-
                 $previewFile->isQueuedForDeletion = true;
             }
         }

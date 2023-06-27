@@ -3,12 +3,29 @@
 
 namespace Thinktomorrow\Chief\Tests\Shared;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Controllers\FileUploadHandler;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Assets\App\SaveFileField;
+use Thinktomorrow\Chief\Resource\Resource;
 
 trait TestingWithFiles
 {
+    protected function saveFileField(Resource & HasAsset $model, $fieldKey, array $payload)
+    {
+        return app(SaveFileField::class)->handle(
+            $model,
+            $model->field($model, 'thumb'),
+            [
+                'files' => [
+                    $fieldKey => $payload,
+                ],
+            ],
+        );
+    }
+
     protected function uploadForLivewire(UploadedFile $file)
     {
         Storage::fake('tmp-for-tests');

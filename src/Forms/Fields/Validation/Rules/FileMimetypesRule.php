@@ -21,23 +21,23 @@ class FileMimetypesRule extends FileRule
         return true;
     }
 
-    public function validateMimetypes($attribute, $value, $parameters)
-    {
-        //        if ($this->refersToExistingAsset($value)) {
-        //            return $this->validateAssetMimetypes($this->existingAsset($value), $parameters);
-        //        }
-
-        // Livewire uploaded file
-        //        if(is_array($value) && isset($value['path'])) {
-        //            $value = new UploadedFile($value['path'], $value['originalName']);
-        //        }
-
-        //        if (! $this->isValidFileInstance($value)) {
-        //            return $this->validateSlimMimetypes($value, $parameters);
-        //        }
-
-        return parent::validateMimetypes($attribute, $value, $parameters);
-    }
+//    public function validateMimetypes($attribute, $value, $parameters)
+//    {
+//        //        if ($this->refersToExistingAsset($value)) {
+//        //            return $this->validateAssetMimetypes($this->existingAsset($value), $parameters);
+//        //        }
+//
+//        // Livewire uploaded file
+//        //        if(is_array($value) && isset($value['path'])) {
+//        //            $value = new UploadedFile($value['path'], $value['originalName']);
+//        //        }
+//
+//        //        if (! $this->isValidFileInstance($value)) {
+//        //            return $this->validateSlimMimetypes($value, $parameters);
+//        //        }
+//
+//        return parent::validateMimetypes($attribute, $value, $parameters);
+//    }
 
     //    private function validateSlimMimetypes($value, array $parameters): bool
     //    {

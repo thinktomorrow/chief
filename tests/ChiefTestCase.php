@@ -134,12 +134,21 @@ abstract class ChiefTestCase extends OrchestraTestCase
             'root' => $this->getTempDirectory('media2'),
         ]);
 
-        $app['config']->set('medialibrary.image_generators', [
+        $app['config']->set('media-library.image_generators', [
             Image::class,
             Webp::class,
             Svg::class,
             Video::class,
         ]);
+
+        $app['config']->set('thinktomorrow.assetlibrary.conversions', [
+            'placeholder' => [
+                'width'     => 16,
+                'height'    => 16,
+            ],
+        ]);
+
+        $app['config']->set('thinktomorrow.assetlibrary.formats', []);
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
         $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);

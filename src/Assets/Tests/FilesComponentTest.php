@@ -26,6 +26,7 @@ class FilesComponentTest extends ChiefTestCase
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
             'locale' => 'nl',
+            'allowMultiple' => true,
         ]);
     }
 
@@ -36,7 +37,7 @@ class FilesComponentTest extends ChiefTestCase
             ->assertSet('fieldKey', 'thumb')
             ->assertSet('fieldName', 'thumb')
             ->assertSet('locale', 'nl')
-            ->assertSet('allowMultiple', false)
+            ->assertSet('allowMultiple', true)
             ->assertSet('previewFiles', [])
             ->assertSet('acceptedMimeTypes', []);
     }

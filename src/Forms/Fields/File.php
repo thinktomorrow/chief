@@ -6,11 +6,11 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
 use Thinktomorrow\Chief\Assets\App\SaveFileField;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
@@ -104,14 +104,14 @@ class File extends Component implements Field
     private function convertUploadsToUploadedFiles(array $uploads): array
     {
         return collect($uploads)
-            ->map(fn ($upload) => new UploadedFile($upload['path'], $upload['originalName'], $upload['mimeType']))
+            ->map(fn ($upload) => new LivewireUploadedFile($upload['path'], $upload['originalName'], $upload['mimeType']))
             ->all();
     }
 
     private function convertAttachedAssetsToUploadedFiles(array $assetIds): array
     {
         return Asset::whereIn('id', $assetIds)->get()
-            ->map(fn (Asset $asset) => new UploadedFile($asset->getPath(), $asset->getFileName(), $asset->getMimeType()))
+            ->map(fn (Asset $asset) => new LivewireUploadedFile($asset->getPath(), $asset->getFileName(), $asset->getMimeType()))
             ->all();
     }
 
@@ -122,26 +122,4 @@ class File extends Component implements Field
         })->sortBy('pivot.order')
         ->all();
     }
-
-    //    public function fill(Manager $manager, Model $model): void
-    //    {
-    //        $this->endpoint($manager->route('asyncUploadFile', $this->getKey(), $model->{$model->getKeyName()}));
-    //    }
-
-    //
-    //    private function getLegacyMedia(Model & HasAsset $model, string $locale): array
-    //    {
-    //        $files = [];
-    //
-    //        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
-    //            return $asset->pivot->locale == $locale;
-    //        })->sortBy('pivot.order');
-    //
-    //        /** @var Asset $asset */
-    //        foreach ($assets as $asset) {
-    //            $files[] = FileDTO::fromAsset($this, $asset);
-    //        }
-    //
-    //        return $files;
-    //    }
 }
