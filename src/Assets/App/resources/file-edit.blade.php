@@ -48,6 +48,13 @@
                             <dd class="text-right">{{ $previewFile->humanReadableSize }}</dd>
                         </dl>
 
+                        @if($previewFile->isImage())
+                            <dl class="flex justify-between">
+                                <dt>Afmetingen</dt>
+                                <dd class="text-right">{{ $previewFile->imageWidth }} x {{ $previewFile->imageHeight }}</dd>
+                            </dl>
+                        @endif
+
                         <dl class="flex justify-between">
                             <dt>Bestandsextensie</dt>
                             <dd class="text-right">{{ $previewFile->extension }}</dd>

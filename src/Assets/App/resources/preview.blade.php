@@ -30,7 +30,12 @@
                         </p>
 
                         <p class="text-sm text-grey-500">
-                            {{ $file->humanReadableSize }} - <span class="uppercase">{{ $file->extension }}</span>
+                            {{ $file->humanReadableSize }} -
+                            @if($file->isImage())
+                                {{ $file->imageWidth }} x {{ $file->imageHeight }}
+                            @else
+                                <span class="uppercase">{{ $file->extension }}</span>
+                            @endif
                         </p>
                     </div>
                 </div>

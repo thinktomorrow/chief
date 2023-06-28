@@ -49,7 +49,11 @@
             </p>
 
             <p class="text-xs uppercase body text-grey-500">
+            @if($asset->isImage() && $asset->getImageWidth())
+                {{ $asset->getImageWidth() }} x {{ $asset->getImageHeight() }}
+            @else
                 {{ $asset->getExtension() }}
+            @endif
             </p>
         </div>
     </div>

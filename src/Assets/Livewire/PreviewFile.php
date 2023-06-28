@@ -21,6 +21,8 @@ class PreviewFile implements Wireable
         public string $humanReadableSize,
         public string $mimeType,
         public string $extension,
+        public ?string $imageWidth = null,
+        public ?string $imageHeight = null,
         public bool $isQueuedForDeletion = false,
         public bool $isAttachedToModel = false,
         public array $fieldValues = [],
@@ -28,8 +30,8 @@ class PreviewFile implements Wireable
         public ?string $updatedAt = null,
 
         // Asset related values
-        public array $urls,
-        public array $owners,
+        public array $urls = [],
+        public array $owners = [],
     ) {
 
     }
@@ -64,6 +66,8 @@ class PreviewFile implements Wireable
             FileHelper::getHumanReadableSize($file->getSize()),
             $file->getMimeType(),
             FileHelper::getExtension($file->getClientOriginalName()),
+            FileHelper::getImageWidth($file->getRealPath()),
+            FileHelper::getImageHeight($file->getRealPath()),
             false,
             false,
             [],
@@ -108,6 +112,8 @@ class PreviewFile implements Wireable
             $asset->getHumanReadableSize(),
             $asset->getMimeType() ?: '',
             \Thinktomorrow\Chief\Assets\App\FileHelper::getExtension($asset->getFirstMediaPath()),
+            $asset->getImageWidth(),
+            $asset->getImageHeight(),
             false,
             true,
             $asset->pivot->data ?? [],
@@ -136,6 +142,8 @@ class PreviewFile implements Wireable
             'humanReadableSize' => $this->humanReadableSize,
             'mimeType' => $this->mimeType,
             'extension' => $this->extension,
+            'imageWidth' => $this->imageWidth,
+            'imageHeight' => $this->imageHeight,
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
             'isAttachedToModel' => $this->isAttachedToModel,
             'fieldValues' => $this->fieldValues,
