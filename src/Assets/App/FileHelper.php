@@ -32,14 +32,18 @@ class FileHelper
 
     public static function getImageWidth(string $path): ?int
     {
-        if(!$sizes = getimagesize($path)) return null;
+        if(! $sizes = getimagesize($path)) {
+            return null;
+        }
 
         return $sizes[0];
     }
 
     public static function getImageHeight(string $path): ?int
     {
-        if(!$sizes = getimagesize($path)) return null;
+        if(! $sizes = getimagesize($path)) {
+            return null;
+        }
 
         return $sizes[1];
     }
