@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields\ValidationRules;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\PageWithAssets;
@@ -22,7 +23,7 @@ class FileRequiredRuleTest extends ChiefTestCase
         $this->model = PageWithAssets::create();
     }
 
-    public function test_it_fails_an_upload_if_file_is_required()
+    public function test_it_fails_an_upload_if_required_file_is_not_present()
     {
         PageWithAssets::setFieldsDefinition(function () {
             return [
@@ -109,6 +110,60 @@ class FileRequiredRuleTest extends ChiefTestCase
 
         $response->assertSessionHasNoErrors();
 
+        $this->assertCount(1, $this->model->assets('thumb'));
+    }
+
+    public function test_it_fails_required_validation_if_an_attached_asset_is_not_present()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
+            ->save();
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->required(),
+            ];
+        });
+
+        $response = $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), [
+            'files' => [
+                'thumb' => [
+                    'nl' => [
+                        'attach' => [],
+                    ],
+                ],
+            ],
+        ]);
+
+        $response->assertSessionHasErrors('files.thumb.nl');
+        $this->assertCount(0, $this->model->assets('thumb'));
+    }
+
+    public function test_it_passes_required_validation_if_an_attached_asset_is_present()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
+            ->save();
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->required(),
+            ];
+        });
+
+        $response = $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), [
+            'files' => [
+                'thumb' => [
+                    'nl' => [
+                        'attach' => [
+                            ['id' => $asset->id],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
         $this->assertCount(1, $this->model->assets('thumb'));
     }
 }

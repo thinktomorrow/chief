@@ -98,14 +98,16 @@ const Api = {
                     const searchParams = new URLSearchParams(new FormData(this)).toString();
                     self.get(`${this.action}?${searchParams}`, successCallback, errorCallback, () => {
                         setTimeout(() => {
+                            spinner.classList.add('hidden');
                             form.classList.remove('is-submitting');
-                        }, 400);
+                        }, 200);
                     });
                 } else {
                     self.post(this.action, new FormData(this), successCallback, errorCallback, () => {
                         setTimeout(() => {
+                            spinner.classList.add('hidden');
                             form.classList.remove('is-submitting');
-                        }, 400);
+                        }, 200);
                     });
                 }
             });

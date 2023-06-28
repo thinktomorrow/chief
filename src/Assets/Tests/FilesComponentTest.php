@@ -155,4 +155,38 @@ class FilesComponentTest extends ChiefTestCase
         ->assertSet('previewFiles.0.isQueuedForDeletion', true)
         ->assertSeeHtml('name="thumb[queued_for_deletion][0]" value="'.$asset->id.'"');
     }
+
+    public function test_it_has_existing_file_reference_on_single_field()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        Livewire::test(FilesComponent::class, [
+            'modelReference' => $this->model->modelReference()->get(),
+            'fieldKey' => 'thumb',
+            'fieldName' => 'thumb',
+            'locale' => 'nl',
+            'assets' => [$asset],
+            'allowMultiple' => false,
+        ])->assertSeeHtml('name="thumb[attach][0][id]" value="'.$asset->id.'"');
+    }
+
+    public function test_it_can_queue_existing_file_for_deletion_on_single_field()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        Livewire::test(FilesComponent::class, [
+            'modelReference' => $this->model->modelReference()->get(),
+            'fieldKey' => 'thumb',
+            'fieldName' => 'thumb',
+            'locale' => 'nl',
+            'assets' => [$asset],
+            'allowMultiple' => false,
+        ])->call('deleteFile', $asset->id)
+            ->assertSet('previewFiles.0.isQueuedForDeletion', true)
+            ->assertSeeHtml('name="thumb[queued_for_deletion][0]" value="'.$asset->id.'"');
+    }
 }

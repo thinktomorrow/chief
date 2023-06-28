@@ -37,6 +37,8 @@ class SaveFileField
             $this->setDisk($field->getStorageDisk());
         }
 
+        $existingAssetIds = $model->assetRelation()->get()->pluck('id');
+
         foreach (data_get($input, 'files.' . $field->getName(), []) as $locale => $values) {
             $assetsForUpload = $values['uploads'] ?? [];
             $assetsForAttach = $values['attach'] ?? [];
@@ -44,7 +46,7 @@ class SaveFileField
             $assetsForOrder = collect($values['order'] ?? []);
 
             $this->handleUploads($model, $field, $locale, $assetsForUpload, $assetsForOrder);
-            $this->handleAttach($model, $field, $locale, $assetsForAttach);
+            $this->handleAttach($model, $field, $locale, $assetsForAttach, $existingAssetIds);
             $this->handleDeletions($model, $field, $locale, $assetsForDeletion, $assetsForOrder);
             $this->handleReOrder($model, $field, $locale, $assetsForOrder);
         }
@@ -69,9 +71,13 @@ class SaveFileField
         }
     }
 
-    private function handleAttach(HasAsset $model, File $field, string $locale, array $values): void
+    private function handleAttach(HasAsset $model, File $field, string $locale, array $values, Collection $existingAssetIds): void
     {
+        // Avoid asset duplication
         foreach ($values as $orderIndex => $assetValues) {
+
+            if($existingAssetIds->contains($assetValues['id'])) continue;
+
             $this->addAsset->handle($model, Asset::find($assetValues['id']), $field->getKey(), $locale, $orderIndex, $assetValues['fieldValues'] ?? []);
         }
     }

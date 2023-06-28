@@ -108,8 +108,10 @@ class File extends Component implements Field
             ->all();
     }
 
-    private function convertAttachedAssetsToUploadedFiles(array $assetIds): array
+    private function convertAttachedAssetsToUploadedFiles(array $attach): array
     {
+        $assetIds = collect($attach)->pluck('id')->all();
+
         return Asset::whereIn('id', $assetIds)->get()
             ->map(fn (Asset $asset) => new LivewireUploadedFile($asset->getPath(), $asset->getFileName(), $asset->getMimeType()))
             ->all();

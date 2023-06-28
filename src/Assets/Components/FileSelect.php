@@ -40,7 +40,7 @@ class FileSelect extends Component implements Htmlable
 
     public function getFilesForAttach(): Collection
     {
-        return collect($this->fileUploadComponent->previewFiles)->filter(fn (PreviewFile $file) => ($file->mediaId && ! $file->isAttachedToModel && ! $file->isQueuedForDeletion));
+        return collect($this->fileUploadComponent->previewFiles)->filter(fn (PreviewFile $file) => ($file->mediaId && ! $file->isQueuedForDeletion));
     }
 
     public function getFilesForDeletion(): Collection

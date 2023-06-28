@@ -17,6 +17,7 @@ class FilesChooseComponent extends Component
     public $selectedPreviewFiles = [];
     public $parentId;
     protected Gallery $gallery;
+    public bool $allowMultiple = false;
 
     public function mount(string $parentId)
     {
@@ -40,7 +41,13 @@ class FilesChooseComponent extends Component
 
     public function selectAsset($assetId)
     {
-        // TODO: already selected assetsIds should be disabled, not selecta ble
+        if(!$this->allowMultiple) {
+            $this->assetIds = [$assetId];
+            $this->selectedPreviewFiles= [$assetId => PreviewFile::fromAsset(Asset::find($assetId))];
+            return;
+        }
+
+        // TODO: already selected assetsIds should be disabled, not selectable
         if(in_array($assetId, $this->assetIds)) {
             unset($this->assetIds[array_search($assetId, $this->assetIds)]);
             unset($this->selectedPreviewFiles[$assetId]);

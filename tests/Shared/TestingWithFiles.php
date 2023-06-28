@@ -12,11 +12,11 @@ use Thinktomorrow\Chief\Resource\Resource;
 
 trait TestingWithFiles
 {
-    protected function saveFileField(Resource & HasAsset $model, $fieldKey, array $payload)
+    protected function saveFileField(Resource $resource, HasAsset $model, $fieldKey, array $payload)
     {
         return app(SaveFileField::class)->handle(
             $model,
-            $model->field($model, 'thumb'),
+            $resource->field($model, 'thumb'),
             [
                 'files' => [
                     $fieldKey => $payload,

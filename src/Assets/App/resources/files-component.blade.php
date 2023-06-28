@@ -59,7 +59,10 @@
     {{ $this->fileSelect }}
 
     <div>
-        <livewire:chief-wire::files-choose parent-id="{{ $this->id }}" />
+        <livewire:chief-wire::files-choose
+            parent-id="{{ $this->id }}"
+            allowMultiple="{{ $allowMultiple }}"
+        />
     </div>
     <div>
         <livewire:chief-wire::attached-file-edit

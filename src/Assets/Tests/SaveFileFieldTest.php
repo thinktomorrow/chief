@@ -46,7 +46,7 @@ class SaveFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->model, 'thumb', [
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -70,7 +70,7 @@ class SaveFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->model, 'thumb', [
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -106,7 +106,7 @@ class SaveFileFieldTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->saveFileField($this->model, 'thumb', [
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -116,6 +116,35 @@ class SaveFileFieldTest extends ChiefTestCase
 
         $this->assertCount(1, $this->model->assets('thumb'));
         $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
+    }
+
+    public function test_it_should_not_attach_already_attached_assets()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
+                ],
+            ],
+        ]);
+
+        $this->assertCount(1, $this->model->assets('thumb'));
+        $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
+
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
+                ],
+            ],
+        ]);
+
+        $this->model->refresh();
+        $this->assertCount(1, $this->model->assets('thumb'));
     }
 
     public function test_it_can_detach_assets()
@@ -128,7 +157,7 @@ class SaveFileFieldTest extends ChiefTestCase
 
         $this->assertCount(1, $this->model->assets('thumb'));
 
-        $this->saveFileField($this->model, 'thumb', [
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
             'nl' => [
                 'queued_for_deletion' => [$asset->id],
             ],
@@ -142,7 +171,7 @@ class SaveFileFieldTest extends ChiefTestCase
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
         UploadedFile::fake()->image('image2.png')->storeAs('test', 'image-temp-name-2.png');
 
-        $this->saveFileField($this->model, 'thumb', [
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -174,7 +203,7 @@ class SaveFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->model, 'thumb', [
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
