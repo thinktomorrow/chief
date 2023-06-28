@@ -41,9 +41,10 @@ class FilesChooseComponent extends Component
 
     public function selectAsset($assetId)
     {
-        if(!$this->allowMultiple) {
+        if(! $this->allowMultiple) {
             $this->assetIds = [$assetId];
-            $this->selectedPreviewFiles= [$assetId => PreviewFile::fromAsset(Asset::find($assetId))];
+            $this->selectedPreviewFiles = [$assetId => PreviewFile::fromAsset(Asset::find($assetId))];
+
             return;
         }
 

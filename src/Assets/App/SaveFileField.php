@@ -76,7 +76,9 @@ class SaveFileField
         // Avoid asset duplication
         foreach ($values as $orderIndex => $assetValues) {
 
-            if($existingAssetIds->contains($assetValues['id'])) continue;
+            if($existingAssetIds->contains($assetValues['id'])) {
+                continue;
+            }
 
             $this->addAsset->handle($model, Asset::find($assetValues['id']), $field->getKey(), $locale, $orderIndex, $assetValues['fieldValues'] ?? []);
         }
