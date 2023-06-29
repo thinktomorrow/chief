@@ -7,9 +7,6 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Site\Urls\Application\ResaveUrlSlug;
-use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PropagateUrlChange

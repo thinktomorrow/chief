@@ -28,7 +28,9 @@ class Select extends Component implements Field
                 ->value($model->{$relation}->pluck($valueKey)->toArray())
                 ->save(function ($model, $field, $input) use ($relation, $afterSaveCallback) {
                     $model->{$relation}()->sync($input[$relation] ?? []);
-                    if($afterSaveCallback && is_callable($afterSaveCallback)) $afterSaveCallback($model, $field, $input);
+                    if($afterSaveCallback && is_callable($afterSaveCallback)) {
+                        $afterSaveCallback($model, $field, $input);
+                    }
                 });
         });
 
