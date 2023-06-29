@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Site\Urls\Application\ResaveUrlSlug;
 use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
@@ -15,11 +16,13 @@ class PropagateUrlChange
 {
     private array $locales;
     private Registry $registry;
+    private ResaveUrlSlug $resaveUrlSlug;
 
-    public function __construct(Registry $registry)
+    public function __construct(Registry $registry, ResaveUrlSlug $resaveUrlSlug)
     {
         $this->locales = config('chief.locales', []);
         $this->registry = $registry;
+        $this->resaveUrlSlug = $resaveUrlSlug;
     }
 
     /**
@@ -30,7 +33,7 @@ class PropagateUrlChange
     {
         // TODO: how to set locales per page??? Now we always take the general locales from chief
         foreach ($this->locales as $locale) {
-            $this->resaveUrlSlug($model, $locale);
+            $this->resaveUrlSlug->handle($model, $locale);
         }
 
         foreach ($model->getChildren() as $child) {
@@ -47,23 +50,5 @@ class PropagateUrlChange
         }
 
         $this->handle($model);
-    }
-
-    /**
-     * This will retrigger the save for a nested page, which will now
-     * take the updated parent slug as its base url segment.
-     */
-    private function resaveUrlSlug(Nestable & Visitable $model, string $locale): void
-    {
-        $currentSlug = UrlRecord::findSlugByModel($model, $locale);
-
-        $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
-
-        // Avoid saving the new slug in case that this slug already exists on another model
-        if (! (new UniqueUrlSlugRule($model, $model))->passes(null, [$locale => $strippedSlug])) {
-            return;
-        }
-
-        (new SaveUrlSlugs())->handle($model, [$locale => $strippedSlug]);
     }
 }

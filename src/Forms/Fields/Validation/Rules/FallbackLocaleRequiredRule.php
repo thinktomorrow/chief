@@ -11,7 +11,7 @@ class FallbackLocaleRequiredRule
     public function validate($attribute, $value, $params, $validator): bool
     {
         $validator->setCustomMessages([
-            'required_fallback_locale' => 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.',
+            'required_fallback_locale' => 'Voor :attribute is de default taal verplicht.',
         ]);
 
         $fallbackLocale = config('app.fallback_locale');

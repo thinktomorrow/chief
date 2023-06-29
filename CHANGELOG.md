@@ -12,6 +12,8 @@ All assets can be managed via the asset index.
 
 The Slim script is replaced by a custom livewire solution. This resulted in less code complexity and easier upload handling.
 
+-   Added: `Field::requiredFallbackLocale()` as a alias of `Field::rules('requireFallbackLocale)`.
+-   Added: callback as fourth optional argument for the Select::sync() method that is called after syncing values.
 -   Removed `Thinktomorrow\Chief\Forms\Fields\Media\MediaType` as a legacy reference to predefined file keys.
 -   Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to file field instead.
 -   Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant` and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These are no longer used and replaced by the Livewire FileComponent upload logic. The latter one was no longer actively used.

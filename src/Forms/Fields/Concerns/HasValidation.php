@@ -30,6 +30,11 @@ trait HasValidation
         return $this;
     }
 
+    public function requiredFallbackLocale(): static
+    {
+        return $this->rules(FallbackLocaleRequiredRule::RULE);
+    }
+
     public function isRequired(): bool
     {
         if (app()->environment('local') && true === config('chief.disable_field_required_validation')) {
@@ -49,7 +54,7 @@ trait HasValidation
             $rules = explode('|', $rules);
         }
 
-        $this->rules = (array) $rules;
+        $this->rules = array_merge($this->rules, (array) $rules);
 
         return $this;
     }

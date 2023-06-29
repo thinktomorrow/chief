@@ -15,19 +15,20 @@ class Select extends Component implements Field
     protected string $view = 'chief-form::fields.select';
     protected string $windowView = 'chief-form::fields.select-window';
 
-    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title'): self
+    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null): self
     {
         if (! $relation) {
             $relation = $this->getKey();
         }
 
-        $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey) {
+        $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey, $afterSaveCallback) {
             $relationModel = $model->{$relation}()->getModel();
 
             $this->options($relationModel::all()->pluck($labelKey, $valueKey)->toArray())
                 ->value($model->{$relation}->pluck($valueKey)->toArray())
-                ->save(function ($model, $field, $input) use ($relation) {
+                ->save(function ($model, $field, $input) use ($relation, $afterSaveCallback) {
                     $model->{$relation}()->sync($input[$relation] ?? []);
+                    if($afterSaveCallback && is_callable($afterSaveCallback)) $afterSaveCallback($model, $field, $input);
                 });
         });
 
