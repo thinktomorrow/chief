@@ -13,7 +13,7 @@ abstract class TestCase extends ChiefTestCase
     {
         return [
             ...parent::getPackageProviders($app),
-//            TimeTableServiceProvider::class, // method is called once on the first run of the testsuite so this is not called. Therefore we set the service provider in the general testsuite...
+            TimeTableServiceProvider::class, // method is called once on the first run of the testsuite so this is not called. Therefore we set the service provider in the general testsuite...
         ];
     }
 }

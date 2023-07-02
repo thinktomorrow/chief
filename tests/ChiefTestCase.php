@@ -44,10 +44,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
             LivewireServiceProvider::class,
-
-            // Plugins TODO: this should not be here but currently index card contains reference to chief-tags component
-            TagsServiceProvider::class,
-            TimeTableServiceProvider::class, // For now here because method is called once on the first run of the testsuite
         ];
     }
 

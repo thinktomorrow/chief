@@ -140,7 +140,7 @@
 
         Livewire.hook('component.initialized', (component) => {
             // Hack to prevent livewire from setting the url to the sidebar url (as used for forms and fragments)
-            if(component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/form/'))) {
+            if(component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/forms/'))) {
                 component.effects.path = undefined;
             }
         });

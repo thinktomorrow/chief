@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\App\Http\Controllers;
+namespace Thinktomorrow\Chief\Plugins\AdminToast;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\AdminToast;
 
@@ -35,7 +36,7 @@ final class ToastController extends Controller
             $request->input('locale')
         );
 
-        $toastView = view('chief-site::admin-toast-element', [
+        $toastView = view('chief-admin-toast::element', [
             'editUrl' => $editUrl,
             'toggleUrl' => route('chief.toast.toggle'),
             'inPreviewMode' => (bool) $request->input('preview_mode', false),

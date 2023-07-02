@@ -1,13 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Tests\Application\Site;
+namespace Thinktomorrow\Chief\Plugins\AdminToast\Tests;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class AdminToastTest extends ChiefTestCase
+class AdminToastTest extends TestCase
 {
     protected function setUp(): void
     {
