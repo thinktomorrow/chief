@@ -7,15 +7,14 @@ namespace Thinktomorrow\Chief\Plugins\AdminToast;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
-use Thinktomorrow\Chief\Site\AdminToast;
 
 final class ToastController extends Controller
 {
-    private AdminToast $adminToast;
+    private GuessEditUrl $guessEditUrl;
 
-    public function __construct(AdminToast $adminToast)
+    public function __construct(GuessEditUrl $guessEditUrl)
     {
-        $this->adminToast = $adminToast;
+        $this->guessEditUrl = $guessEditUrl;
     }
 
     public function toggle()
@@ -31,7 +30,7 @@ final class ToastController extends Controller
             return response()->json(['data' => null]);
         }
 
-        $editUrl = $this->adminToast->discoverEditUrl(
+        $editUrl = $this->guessEditUrl->guessByPathAndLocale(
             $request->input('path'),
             $request->input('locale')
         );

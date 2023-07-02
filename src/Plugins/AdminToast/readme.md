@@ -1,5 +1,5 @@
 # Admin Toast
-Shows the logged in admin user the edit link of a frontend page. Also option to toggle preview mode.
+Shows the logged-in admin user the edit link of a frontend page. Also option to toggle preview mode.
 
 ## What is preview mode?
 Preview mode allows the admin to view offline and hidden fragments and pages. This is handy if you are preparing a draft and
