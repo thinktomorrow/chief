@@ -3,7 +3,9 @@
 All notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## Unreleased
+## Unreleased - 0.8.0 - 2023
+
+In this release are a couple of breaking changes. Please pay attention to the following changes.
 
 Major refactor and improvement of the file asset management.
 Upload, additions, deletions and sorting of files per page is more user-friendly.
@@ -18,6 +20,7 @@ The Slim script is replaced by a custom livewire solution. This resulted in less
 -   Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to file field instead.
 -   Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant` and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These are no longer used and replaced by the Livewire FileComponent upload logic. The latter one was no longer actively used.
 
+-   Changed: Resource::getInstanceAttributes is now an array of arguments. Before the array was considered to be the eloquent model attributes, but now it can be any number of model dependencies. Any existing setup should be revised. Solution is to add an extra array such as: `return ['title' => 'foobar'']` should become `return [ ['title' => 'foobar'] ]`.
 -   Changed: Chief admin toast is refactored as a Chief plugin. This introduces a breaking change in frontend site behaviour. Please refer to its readme file for the frontend setup.
 -   Changed: Updated `<x-chief::nav/>` layout.
 -   Changed: `<x-chief::nav/>` now has a seperate label attribute. This way you can both display a nav title and label.

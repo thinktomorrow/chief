@@ -78,9 +78,4 @@ class Repeat extends Component implements Field
     {
         return $this->sectionView;
     }
-
-    public function getPrefixedKey(?string $locale = null): string
-    {
-        return Fields\Common\FormKey::replaceBracketsByDots($this->getName($locale));
-    }
 }

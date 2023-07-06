@@ -87,11 +87,11 @@ trait ManagerDefaults
         return $this->resource::modelClassName();
     }
 
-    private function managedModelClassInstance(array $attributes = [])
+    private function managedModelClassInstance(...$attributes)
     {
         $modelClass = $this->managedModelClass();
 
-        return new $modelClass($attributes);
+        return new $modelClass(...$attributes);
     }
 
     /**
