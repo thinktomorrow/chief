@@ -19,7 +19,7 @@
                         {{-- Replace --}}
                         @if($previewFile)
                             <label for="{{ $this->id }}" class="relative cursor-pointer">
-                                <x-chief::icon-button x-on:click="showReplaceActions = true" icon="icon-replace"/>
+                                <x-chief::icon-button icon="icon-replace"/>
                                 <input
                                     wire:model="file"
                                     type="file"
