@@ -1,12 +1,13 @@
 @php
     $active = $active ?? false;
+    $disabled = $disabled ?? false;
     $withActions = $withActions ?? false;
 @endphp
 
 <div class="space-y-3">
     <div @class([
-        'relative group overflow-hidden aspect-square rounded-lg bg-grey-100 p-[1px] cursor-pointer',
-        'hover:ring-inset hover:ring-1 hover:ring-primary-500',
+        'relative group overflow-hidden aspect-square rounded-lg bg-grey-100 p-[1px]',
+        'hover:ring-inset hover:ring-1 hover:ring-primary-500 cursor-pointer' => !$disabled,
         'ring-inset ring-1 ring-primary-500 shadow-md' => $active,
     ])>
         @if ($asset->isImage())
@@ -18,6 +19,12 @@
         @elseif($asset->getMimeType())
             <div class="flex items-center justify-center w-full h-full text-grey-500">
                 {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
+            </div>
+        @endif
+
+        @if($disabled)
+            <div class="absolute inset-0 flex items-center justify-center gap-1.5 pointer-events-none bg-black/25">
+                <span class="bg-black/50 p-1 rounded text-sm text-white">Toegevoegd</span>
             </div>
         @endif
 

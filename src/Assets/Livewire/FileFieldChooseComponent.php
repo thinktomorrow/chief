@@ -14,6 +14,7 @@ class FileFieldChooseComponent extends Component
     use InteractsWithGallery;
 
     public $assetIds = [];
+    public array $existingAssetIds = [];
     public $selectedPreviewFiles = [];
     public $parentId;
     protected Gallery $gallery;
@@ -33,6 +34,13 @@ class FileFieldChooseComponent extends Component
         ];
     }
 
+    public function open($arguments)
+    {
+        $this->existingAssetIds = $arguments['existingAssetIds'];
+
+        $this->isOpen = true;
+    }
+
     public function booted()
     {
         $this->gallery = new Gallery($this);
@@ -48,11 +56,7 @@ class FileFieldChooseComponent extends Component
             return;
         }
 
-        // TODO: already selected assetsIds should be disabled, not selectable
-        if(in_array($assetId, $this->assetIds)) {
-            unset($this->assetIds[array_search($assetId, $this->assetIds)]);
-            unset($this->selectedPreviewFiles[$assetId]);
-        } else {
+        if(! in_array($assetId, $this->assetIds) && !in_array($assetId, $this->existingAssetIds)) {
             $this->assetIds[] = $assetId;
             $this->selectedPreviewFiles[$assetId] = PreviewFile::fromAsset(Asset::find($assetId));
         }

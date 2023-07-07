@@ -32,6 +32,7 @@
                             <div wire:click="selectAsset('{{ $asset->id }}')">
                                 @include('chief-assets::_partials.asset-item', [
                                     'asset' => $asset,
+                                    'disabled' => in_array($asset->id, $existingAssetIds),
                                     'active' => in_array($asset->id, $assetIds),
                                     'withActions' => false,
                                 ])

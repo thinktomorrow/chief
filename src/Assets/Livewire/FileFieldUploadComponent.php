@@ -57,6 +57,11 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
             }
         }
 
+        // If asset is already present in the files array, we don't allow it to be added
+        $assetIds = collect($assetIds)
+            ->reject(fn($assetId) => !is_null($this->findPreviewFileIndex($assetId)))
+            ->all();
+
         Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
             $previewFile = PreviewFile::fromAsset($asset);
             $previewFile->isAttachedToModel = false;
@@ -67,7 +72,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 
     public function openFilesChoose()
     {
-        $this->emitDownTo('chief-wire::file-field-choose', 'open');
+        $this->emitDownTo('chief-wire::file-field-choose', 'open', ['existingAssetIds' => collect($this->previewFiles)->map(fn($previewFile) => $previewFile->id)->all()]);
     }
 
     public function render()
