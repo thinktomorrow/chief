@@ -24,7 +24,7 @@
                                     wire:model="file"
                                     type="file"
                                     id="{{ $this->id }}"
-                                    class="absolute inset-0 opacity-0"
+                                    class="absolute inset-0 opacity-0 w-8"
                                 />
                             </label>
 
