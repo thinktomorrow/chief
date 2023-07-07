@@ -4,11 +4,10 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\TemporaryUploadedFile;
 use Livewire\Wireable;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
 
-class PreviewFile implements Wireable
+class UploadedFile implements Wireable
 {
     private function __construct(
         public string $id,
@@ -159,7 +158,7 @@ class PreviewFile implements Wireable
         );
     }
 
-    public function toUploadedFile(): UploadedFile
+    public function toUploadedFile(): \Symfony\Component\HttpFoundation\File\UploadedFile
     {
         return new UploadedFile($this->tempPath, $this->filename, $this->mimeType);
     }

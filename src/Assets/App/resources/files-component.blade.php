@@ -1,7 +1,19 @@
 <div
     x-data="{
         uploadFiles: (files) => {
+
+            var length = @this.get('files').length;
+
+            console.log('length is: ' + length);
+
             files.forEach((file, index) => {
+
+                console.log('old index: ' + index);
+                index = length + index;
+                console.log('new index: ' + index);
+
+                // BEN: YOU ARE SETTING SPECIFIC ID PER UPLOAD - EVEN IF FILENAME IS SAME, WE HAVE PROPER UPLOAD!!!
+                @this.set('files.'+index+'.id', file.name + '_' + index );
                 @this.set('files.'+index+'.fileName', file.name );
                 @this.set('files.'+index+'.fileSize', file.size );
                 @this.set('files.'+index+'.progress', 0 );

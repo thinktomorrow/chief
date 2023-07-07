@@ -10,6 +10,7 @@
         'border' => count($files) > 0
     ])
 >
+
     @foreach ($files as $file)
         @continue(count($files) > 1 && !$allowMultiple() && $file->isQueuedForDeletion)
 
@@ -42,36 +43,46 @@
             </div>
 
             <div class="flex items-center gap-2 py-2 pr-2 shrink-0">
-                @if($file->isQueuedForDeletion)
-                    @if($file->mediaId)
-                        <span class="text-sm text-primary-500">
+                @if(null !== ($index = $this->findUploadingFileIndex($file->id)))
+                    {{--TODO: tijs make the progress pretty! maybe use a div but then we need to set the percentage via alpine--}}
+                    <div x-data="{progress: @entangle('files.'.$index.'.progress')}" class="w-full bg-grey-50 rounded h-2">
+                        <span x-text="progress"></span>%
+                    </div>
+                @else
+                    @if(!$file->isValidated)
+                        INVALID
+                    @endif
+                    @if($file->isQueuedForDeletion)
+                        @if($file->mediaId)
+                            <span class="text-sm text-primary-500">
                             Wordt verwijderd na bewaren. <span class="underline cursor-pointer link link-primary" wire:click="undoDeleteFile('{{ $file->id }}')">Ongedaan maken</span>
                         </span>
-                    @else
-                        <span class="text-sm text-primary-500">
+                        @else
+                            <span class="text-sm text-primary-500">
                             <span class="underline cursor-pointer link link-primary" wire:click="undoDeleteFile('{{ $file->id }}')">Verwijderen ongedaan maken</span>
                         </span>
-                    @endif
-                @else
-                    @if(!$file->isAttachedToModel)
-                        <span class="text-xs text-grey-500" title="Je kan een bestand bewerken van zodra het is bewaard.">
+                        @endif
+                    @else
+                        @if(!$file->isAttachedToModel)
+                            <span class="text-xs text-grey-500" title="Je kan een bestand bewerken van zodra het is bewaard.">
                             Nog niet bewaard
                         </span>
-                    @endif
+                        @endif
 
-                    <button wire:click="openFileEdit('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                        <x-chief::icon-button icon="icon-edit" color="grey" />
-                    </button>
+                        <button wire:click="openFileEdit('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+                            <x-chief::icon-button icon="icon-edit" color="grey" />
+                        </button>
 
-                    @if(count($files) > 1 && $allowMultiple())
-                        <button wire:sortable.handle type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                            <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
+                        @if(count($files) > 1 && $allowMultiple())
+                            <button wire:sortable.handle type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+                                <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
+                            </button>
+                        @endif
+
+                        <button wire:click="deleteFile('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
+                            <x-chief::icon-button icon="icon-trash" color="grey" />
                         </button>
                     @endif
-
-                    <button wire:click="deleteFile('{{ $file->id }}')" type="button" class="focus:ring-1 rounded-xl focus:ring-primary-500">
-                        <x-chief::icon-button icon="icon-trash" color="grey" />
-                    </button>
                 @endif
             </div>
         </div>

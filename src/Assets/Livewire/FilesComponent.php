@@ -11,10 +11,12 @@ use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\UploadsFieldFiles;
 
 class FilesComponent extends Component
 {
     use WithFileUploads;
+    use UploadsFieldFiles;
 
     public ?string $modelReference;
     public string $fieldKey;
@@ -22,22 +24,11 @@ class FilesComponent extends Component
     public string $locale;
     public bool $allowMultiple = false;
     public bool $isReordering = false;
-    public array $rules = [];
-    public array $validationMessages = [];
-    public ?string $validationAttribute = null;
     public array $acceptedMimeTypes = [];
 
     protected FilePreview $filePreview;
     protected FileSelect $fileSelect;
     protected array $components = [];
-
-    /**
-     * The temporary uploaded files. These files
-     * are not yet stored as media records.
-     *
-     * @var TemporaryUploadedFile[]
-     */
-    public $files = [];
 
     /**
      * The temporary uploaded files and the existing ones as previewFile object
@@ -69,45 +60,11 @@ class FilesComponent extends Component
     public function booted()
     {
         $this->filePreview = new FilePreview($this);
-        $this->fileSelect = new FileSelect($this);
+        $this->fileSelect = new FileSelect(
+            $this->id, $this->fieldName, $this->previewFiles, $this->allowMultiple, $this->acceptedMimeTypes
+        );
 
         $this->syncPreviewFiles();
-    }
-
-    /**
-     * After the upload of a file, we convert our passed
-     * filepath to a valid UploadedFile object
-     *
-     * @param $key
-     * @param $value
-     * @return void
-     */
-    public function onUploadFinished($key, $value)
-    {
-        $this->validateUploadedFile($key, $temporaryUploadedFile = TemporaryUploadedFile::createFromLivewire($value[0]));
-
-        // In case only one asset is allowed, we make sure to delete any existing / other uploads.
-        if(! $this->allowMultiple) {
-            foreach($this->previewFiles as $previewFile) {
-
-                // In subsequent uploads it occurs that previewFiles are synced before this listener. In that case we make sure
-                // That current uploaded file is not wrongfully queued for deletion.
-                if($previewFile->id == $value[0]) {
-                    continue;
-                }
-
-                $previewFile->isQueuedForDeletion = true;
-            }
-        }
-
-        Arr::set($this->files, str_replace('files.', '', $key), $temporaryUploadedFile);
-
-        $currentCount = count($this->previewFiles);
-        $this->syncPreviewFiles();
-
-        if(count($this->previewFiles) > $currentCount) {
-            $this->emitSelf('fileAdded');
-        }
     }
 
     public function reorder($orderedIds)
@@ -138,29 +95,6 @@ class FilesComponent extends Component
 
             $this->previewFiles[] = $previewFile;
         });
-    }
-
-    private function syncPreviewFiles()
-    {
-        // Livewire converts the public properties of PreviewFile object to an array. So we need to convert this back to an object
-        $this->previewFiles = array_map(fn (array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
-
-        foreach($this->files as $newFileDetails) {
-
-            // Only proceed if the temp upload has completed
-            if(! isset($newFileDetails['fileRef'])) {
-                continue;
-            }
-
-            // Only add to files is upload is valid
-            if(! isset($newFileDetails['validated']) || ! $newFileDetails['validated']) {
-                continue;
-            }
-
-            if(is_null($this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()))) {
-                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
-            }
-        }
     }
 
     private function findPreviewFileIndex($fileId): ?int
@@ -211,32 +145,6 @@ class FilesComponent extends Component
         $previewFile = PreviewFile::fromArray($previewFileArray);
 
         $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
-    }
-
-    /**
-     * Validation is performed for all fields
-     * Each field is parsed for the proper validation rules and messages.
-     */
-    private function validateUploadedFile(string $key, TemporaryUploadedFile $uploadedFile): void
-    {
-        try {
-            $validator = Validator::make(['files' => [$uploadedFile]], ['files' => $this->rules], [], ['files' => 'bestand']);
-            $validator->validate();
-
-            $this->setFilesValidatedState($key, true);
-        } catch(ValidationException $e) {
-            $this->setFilesValidatedState($key, false);
-            $this->removeUpload($key, $uploadedFile->getFilename());
-
-            throw $e;
-        }
-
-        $this->resetErrorBag();
-    }
-
-    private function setFilesValidatedState(string $key, bool $validatedState)
-    {
-        Arr::set($this->files, str_replace('files.', '', str_replace('fileRef', 'validated', $key)), $validatedState);
     }
 
     public function render()
