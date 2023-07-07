@@ -2,17 +2,17 @@
     @if($isOpen)
         <!-- form prevents enter key in fields in this modal context to trigger submits of other form on the page -->
         <form class="flex max-md:flex-col gap-8 w-full xs:w-96 sm:w-128 md:w-160 lg:w-192 max-h-[80vh] overflow-y-auto">
-            <div class="flex flex-col gap-4 sm:gap-8 md:gap-4 sm:flex-row md:flex-col shrink-0">
-                    <div class="w-full overflow-hidden aspect-square sm:w-64 lg:w-80 bg-grey-100 rounded-xl flex justify-center items-center">
-                        @if($previewFile->isImage())
-                            <img
-                                src="{{ $previewFile->previewUrl }}"
-                                class="object-contain w-full h-full"
-                            >
-                        @else
-                            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
-                        @endif
-                    </div>
+            <div class="sm:w-64 lg:w-80 flex flex-col gap-4 sm:gap-8 md:gap-4 sm:flex-row md:flex-col shrink-0">
+                <div class="w-full overflow-hidden aspect-square bg-grey-100 rounded-xl flex justify-center items-center">
+                    @if($previewFile->isImage())
+                        <img
+                            src="{{ $previewFile->previewUrl }}"
+                            class="object-contain w-full h-full"
+                        >
+                    @else
+                        <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
+                    @endif
+                </div>
 
                 <div class="space-y-4">
                     <div class="flex flex-wrap gap-2">
@@ -32,6 +32,15 @@
                             @if($previewFile->getUrl())
                                 <a href="{{ $previewFile->getUrl() }}" title="Download" class="shrink-0" download>
                                     <x-chief::icon-button icon="icon-download"/>
+                                </a>
+                                <a
+                                    href="{{ $previewFile->getUrl() }}"
+                                    title="{{ $previewFile->getUrl() }}"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="link link-primary"
+                                >
+                                    <x-chief::icon-button icon="icon-link" />
                                 </a>
                             @endif
 
