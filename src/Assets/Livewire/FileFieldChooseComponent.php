@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Assets\Components\Gallery;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
-class FilesChooseComponent extends Component
+class FileFieldChooseComponent extends Component
 {
     use ShowsAsDialog;
     use InteractsWithGallery;
@@ -75,6 +75,6 @@ class FilesChooseComponent extends Component
 
     public function render()
     {
-        return view('chief-assets::files-choose');
+        return view('chief-assets::file-field-choose');
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Validation\Factory;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
-use Thinktomorrow\Chief\Assets\App\SaveFileField;
+use Thinktomorrow\Chief\Assets\App\UpdateFileField;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
@@ -57,7 +57,7 @@ class File extends Component implements Field
         $this->default([]);
 
         $this->save(function ($model, $field, $input, $files) {
-            app(SaveFileField::class)->handle($model, $field, $input, $files);
+            app(UpdateFileField::class)->handle($model, $field, $input, $files);
         });
     }
 

@@ -20,6 +20,7 @@ class GalleryComponent extends Component
     protected $listeners = [
         'assetsDeleted' => 'onAssetsDeleted',
         'assetUpdated' => 'onAssetUpdated',
+        'filesUploaded' => 'onFilesUploaded',
     ];
 
     public function mount()
@@ -30,6 +31,11 @@ class GalleryComponent extends Component
     public function booted()
     {
         $this->table = new Gallery($this);
+    }
+
+    public function openFileUpload()
+    {
+        $this->emitDownTo('chief-wire::file-upload', 'open');
     }
 
     public function openAssetEdit($assetId)
@@ -45,6 +51,11 @@ class GalleryComponent extends Component
     }
 
     public function onAssetUpdated($assetId): void
+    {
+        $this->callMethod('$refresh');
+    }
+
+    public function onFilesUploaded(): void
     {
         $this->callMethod('$refresh');
     }

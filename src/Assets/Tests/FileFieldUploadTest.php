@@ -5,11 +5,12 @@ namespace Thinktomorrow\Chief\Assets\Tests;
 use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
+use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class FilesComponentTest extends ChiefTestCase
+class FileFieldUploadTest extends ChiefTestCase
 {
     private $model;
     private \Livewire\Testing\TestableLivewire $livewireInstance;
@@ -21,7 +22,7 @@ class FilesComponentTest extends ChiefTestCase
         ArticlePage::migrateUp();
         $this->model = ArticlePage::create();
 
-        $this->livewireInstance = Livewire::test(FilesComponent::class, [
+        $this->livewireInstance = Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
@@ -48,7 +49,7 @@ class FilesComponentTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        Livewire::test(FilesComponent::class, [
+        Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
@@ -66,6 +67,7 @@ class FilesComponentTest extends ChiefTestCase
         $this->livewireInstance
             ->assertCount('previewFiles', 0)
             ->set('files', [[
+                'id'       => 'xxx',
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
@@ -116,6 +118,7 @@ class FilesComponentTest extends ChiefTestCase
 
         $this->livewireInstance
             ->set('files', [[
+                'id'       => 'xxx',
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
@@ -145,7 +148,7 @@ class FilesComponentTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        Livewire::test(FilesComponent::class, [
+        Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
@@ -162,7 +165,7 @@ class FilesComponentTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        Livewire::test(FilesComponent::class, [
+        Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
@@ -178,7 +181,7 @@ class FilesComponentTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        Livewire::test(FilesComponent::class, [
+        Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',

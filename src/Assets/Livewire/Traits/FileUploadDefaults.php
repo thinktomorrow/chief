@@ -6,10 +6,32 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Livewire\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
+use Thinktomorrow\Chief\Assets\Components\FilePreview;
+use Thinktomorrow\Chief\Assets\Components\FileSelect;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
-trait UploadsFieldFiles
+trait FileUploadDefaults
 {
+    use WithFileUploads;
+
+    public string $fieldName;
+
+    public bool $allowMultiple = false;
+    public bool $isReordering = false;
+    public array $acceptedMimeTypes = [];
+
+    protected FilePreview $filePreview;
+    protected FileSelect $fileSelect;
+    protected array $components = [];
+
+    /**
+     * The temporary uploaded files and the existing ones as previewFile object
+     *
+     * @var PreviewFile[]
+     */
+    public $previewFiles = [];
+
     /**
      * The temporary uploaded files. These files
      * are not yet stored as media records.
@@ -20,6 +42,32 @@ trait UploadsFieldFiles
     public $files = [];
 
     public array $rules = [];
+
+
+    public function getPreviewFiles(): array
+    {
+        return $this->previewFiles;
+    }
+
+    public function areMultipleFilesAllowed(): bool
+    {
+        return $this->allowMultiple;
+    }
+
+    public function getFieldId(): string
+    {
+        return $this->id.'-'.$this->fieldName;
+    }
+
+    public function getFieldName(): string
+    {
+        return $this->fieldName;
+    }
+
+    public function getAcceptedMimeTypes(): array
+    {
+        return $this->acceptedMimeTypes;
+    }
 
     /**
      * After the upload of a file, we convert our passed
@@ -97,19 +145,6 @@ trait UploadsFieldFiles
 //                continue;
 //                $this->previewFiles[$uploadingIndex]->isValidated = false;
 //            }
-
-
-
-
-
-            // TODO: make temp custom id (based on filename)
-
-
-            //            if(is_null($this->findPreviewFileIndex($newFileDetails['fileRef']->getFilename()) )) {
-            //                $this->previewFiles[] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
-            //            }
-
-
         }
     }
 
@@ -149,5 +184,85 @@ trait UploadsFieldFiles
     {
         Arr::set($this->files, str_replace('files.', '', str_replace('fileRef', 'validated', $key)), $validatedState);
         // $this->previewFiles[$uploadingIndex]->isValidated = false;
+    }
+
+    public function reorder($orderedIds)
+    {
+        $reorderedPreviewFiles = collect($orderedIds)
+            ->map(fn ($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
+            ->all();
+
+        $this->previewFiles = $reorderedPreviewFiles;
+
+        $this->isReordering = false;
+    }
+
+//    public function onAssetsChosen(array $assetIds)
+//    {
+//        if(! $this->allowMultiple) {
+//            // Assert only one file is added.
+//            $assetIds = (array) reset($assetIds);
+//
+//            foreach($this->previewFiles as $previewFile) {
+//                $previewFile->isQueuedForDeletion = true;
+//            }
+//        }
+//
+//        Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
+//            $previewFile = PreviewFile::fromAsset($asset);
+//            $previewFile->isAttachedToModel = false;
+//
+//            $this->previewFiles[] = $previewFile;
+//        });
+//    }
+
+    private function findPreviewFileIndex($fileId): ?int
+    {
+        foreach($this->previewFiles as $index => $previewFile) {
+            if($previewFile->id == $fileId) {
+                return $index;
+            }
+        }
+
+        return null;
+    }
+
+    public function openFileEdit($fileId)
+    {
+        $this->emitDownTo('chief-wire::file-field-edit', 'open', ['previewfile' => $this->previewFiles[$this->findPreviewFileIndex($fileId)]]);
+    }
+
+    public function deleteFile($fileId)
+    {
+        foreach($this->previewFiles as $file) {
+            if($file->id == $fileId) {
+                $file->isQueuedForDeletion = true;
+
+                return;
+            }
+        }
+    }
+
+    public function undoDeleteFile($fileId)
+    {
+        foreach($this->previewFiles as $file) {
+            if($file->id == $fileId) {
+                $file->isQueuedForDeletion = false;
+
+                return;
+            }
+        }
+    }
+
+    public function onAssetUpdated(array $previewFileArray): void
+    {
+        $previewFile = PreviewFile::fromArray($previewFileArray);
+
+        $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
+    }
+
+    private function emitDownTo($name, $event, array $params = [])
+    {
+        $this->emitTo($name, $event . '-' . $this->id, $params);
     }
 }

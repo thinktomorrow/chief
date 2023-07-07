@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
-class AttachedFileEditComponent extends Component
+class FileFieldEditComponent extends Component
 {
     use ShowsAsDialog;
     use WithFileUploads;

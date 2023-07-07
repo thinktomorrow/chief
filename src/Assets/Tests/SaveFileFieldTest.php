@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -27,7 +27,7 @@ class SaveFileFieldTest extends ChiefTestCase
         $this->model = ArticlePage::create();
         $this->resource = app(ArticlePageResource::class);
 
-        $this->livewireInstance = Livewire::test(FilesComponent::class, [
+        $this->livewireInstance = Livewire::test(FileUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',

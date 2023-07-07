@@ -16,12 +16,14 @@
         Upload een nieuw bestand
     </label>
 
-    <button
-        type="button"
-        wire:click="openFilesChoose"
-        class="relative flex gap-2 px-4 py-2 leading-6 text-left rounded-full hover:bg-primary-50 bg-grey-100 body-dark hover:text-primary-500"
-    >
-        <svg class="w-6 h-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /> </svg>
-        Kies uit de mediabibliotheek
-    </button>
+    @if($allowToChooseFiles())
+        <button
+            type="button"
+            wire:click="openFilesChoose"
+            class="relative flex gap-2 px-4 py-2 leading-6 text-left rounded-full hover:bg-primary-50 bg-grey-100 body-dark hover:text-primary-500"
+        >
+            <svg class="w-6 h-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /> </svg>
+            Kies uit de mediabibliotheek
+        </button>
+    @endif
 </div>

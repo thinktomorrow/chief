@@ -13,7 +13,7 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\Fields\File;
 
-class SaveFileField
+class UpdateFileField
 {
     private CreateAsset $createAsset;
     protected AddAsset $addAsset;

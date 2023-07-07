@@ -1,10 +1,10 @@
 <div>
 
-    <livewire:chief-wire::file-upload
+    <livewire:chief-wire::file-field-upload
         :model-reference="$getModel()?->modelReference()->get()"
         :field-key="$field->getKey()"
-        :field-name="$field->getName($locale)"
         :locale="$locale"
+        :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
         :assets="$field->getValue($locale)"
         :components="$field->getComponents()"

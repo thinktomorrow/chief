@@ -2,17 +2,13 @@
     x-data="{
         uploadFiles: (files) => {
 
+            // Each new batch of uploads has its own index
             var length = @this.get('files').length;
-
-            console.log('length is: ' + length);
 
             files.forEach((file, index) => {
 
-                console.log('old index: ' + index);
                 index = length + index;
-                console.log('new index: ' + index);
 
-                // BEN: YOU ARE SETTING SPECIFIC ID PER UPLOAD - EVEN IF FILENAME IS SAME, WE HAVE PROPER UPLOAD!!!
                 @this.set('files.'+index+'.id', file.name + '_' + index );
                 @this.set('files.'+index+'.fileName', file.name );
                 @this.set('files.'+index+'.fileSize', file.size );
@@ -55,47 +51,10 @@
             $data.isDragging = false;
         }
     }"
-     x-on:dragenter.prevent="onDragEnter"
-     x-on:dragover.prevent="onDragOver"
-     x-on:dragleave.prevent="onDragLeave"
-     x-on:drop.prevent="onDrop"
+    x-on:dragenter.prevent="onDragEnter"
+    x-on:dragover.prevent="onDragEnter"
+    x-on:dragleave.prevent="onDragLeave"
+    x-on:drop.prevent="onDrop"
 >
-    {{ $this->filePreview }}
-
-    @error('files.0')
-        <x-chief::inline-notification type="error" class="mt-2">
-            {{ ucfirst($message) }}
-        </x-chief::inline-notification>
-    @enderror
-
-    {{ $this->fileSelect }}
-
-    <div>
-        <livewire:chief-wire::files-choose
-            parent-id="{{ $this->id }}"
-            allowMultiple="{{ $allowMultiple }}"
-        />
-    </div>
-    <div>
-        <livewire:chief-wire::attached-file-edit
-            parent-id="{{ $this->id }}"
-            model-reference="{{ $modelReference }}"
-            field-key="{{ $fieldKey }}"
-            locale="{{ $locale }}"
-            :components="$this->components"
-        />
-    </div>
-
-
-    @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
-        <div>
-            <livewire:is
-                component="{{ $livewireFileComponent }}"
-                parent-id="{{ $this->id }}"
-                model-reference="{{ $modelReference }}"
-                field-key="{{ $fieldKey }}"
-                locale="{{ $locale }}"
-            />
-        </div>
-    @endforeach
+    {{ $slot }}
 </div>

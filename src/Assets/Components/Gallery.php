@@ -34,7 +34,7 @@ class Gallery extends Component implements Htmlable
 
     private function getView(): string
     {
-        return 'chief-assets::gallery';
+        return 'chief-assets::components.gallery';
     }
 
     public function render(): View

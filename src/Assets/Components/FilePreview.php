@@ -6,16 +6,16 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Assets\Livewire\FilesComponent;
+use Thinktomorrow\Chief\Assets\Livewire\HasPreviewFiles;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
 class FilePreview extends Component implements Htmlable
 {
-    private FilesComponent $fileUploadComponent;
+    private HasPreviewFiles $component;
 
-    public function __construct(FilesComponent $fileUploadComponent)
+    public function __construct(HasPreviewFiles $component)
     {
-        $this->fileUploadComponent = $fileUploadComponent;
+        $this->component = $component;
     }
 
     /**
@@ -23,12 +23,12 @@ class FilePreview extends Component implements Htmlable
      */
     public function getFiles(): Collection
     {
-        return collect($this->fileUploadComponent->previewFiles);
+        return collect($this->component->getPreviewFiles());
     }
 
     public function allowMultiple(): bool
     {
-        return $this->fileUploadComponent->allowMultiple;
+        return $this->component->areMultipleFilesAllowed();
     }
 
     public function toHtml()
@@ -38,7 +38,7 @@ class FilePreview extends Component implements Htmlable
 
     public function render(): View
     {
-        $view = 'chief-assets::preview';
+        $view = 'chief-assets::components.preview';
 
         return view($view, array_merge($this->data(), [
 
