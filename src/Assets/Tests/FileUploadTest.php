@@ -42,7 +42,7 @@ class FileUploadTest extends ChiefTestCase
         $this->livewireInstance
             ->assertCount('previewFiles', 0)
             ->set('files', [[
-                'id'       => 'xxx',
+                'id' => 'xxx',
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
@@ -59,7 +59,7 @@ class FileUploadTest extends ChiefTestCase
 
         $this->livewireInstance
             ->set('files', [[
-                'id'       => 'xxx',
+                'id' => 'xxx',
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])

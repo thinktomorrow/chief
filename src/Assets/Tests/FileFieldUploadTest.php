@@ -6,7 +6,6 @@ use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
-use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -67,7 +66,7 @@ class FileFieldUploadTest extends ChiefTestCase
         $this->livewireInstance
             ->assertCount('previewFiles', 0)
             ->set('files', [[
-                'id'       => 'xxx',
+                'id' => 'xxx',
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
@@ -118,7 +117,7 @@ class FileFieldUploadTest extends ChiefTestCase
 
         $this->livewireInstance
             ->set('files', [[
-                'id'       => 'xxx',
+                'id' => 'xxx',
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])

@@ -139,12 +139,12 @@ trait FileUploadDefaults
             /**
              * We can check here if the new upload is validated or not.
              */
-//            if(isset($newFileDetails['validated']) && ! $newFileDetails['validated']) {
-//                // Not validated
-//                // TODO: add validated state to each preview file to show which is not uploaded!
-//                continue;
-//                $this->previewFiles[$uploadingIndex]->isValidated = false;
-//            }
+            //            if(isset($newFileDetails['validated']) && ! $newFileDetails['validated']) {
+            //                // Not validated
+            //                // TODO: add validated state to each preview file to show which is not uploaded!
+            //                continue;
+            //                $this->previewFiles[$uploadingIndex]->isValidated = false;
+            //            }
         }
     }
 
@@ -197,24 +197,24 @@ trait FileUploadDefaults
         $this->isReordering = false;
     }
 
-//    public function onAssetsChosen(array $assetIds)
-//    {
-//        if(! $this->allowMultiple) {
-//            // Assert only one file is added.
-//            $assetIds = (array) reset($assetIds);
-//
-//            foreach($this->previewFiles as $previewFile) {
-//                $previewFile->isQueuedForDeletion = true;
-//            }
-//        }
-//
-//        Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
-//            $previewFile = PreviewFile::fromAsset($asset);
-//            $previewFile->isAttachedToModel = false;
-//
-//            $this->previewFiles[] = $previewFile;
-//        });
-//    }
+    //    public function onAssetsChosen(array $assetIds)
+    //    {
+    //        if(! $this->allowMultiple) {
+    //            // Assert only one file is added.
+    //            $assetIds = (array) reset($assetIds);
+    //
+    //            foreach($this->previewFiles as $previewFile) {
+    //                $previewFile->isQueuedForDeletion = true;
+    //            }
+    //        }
+    //
+    //        Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
+    //            $previewFile = PreviewFile::fromAsset($asset);
+    //            $previewFile->isAttachedToModel = false;
+    //
+    //            $this->previewFiles[] = $previewFile;
+    //        });
+    //    }
 
     private function findPreviewFileIndex($fileId): ?int
     {

@@ -6,7 +6,6 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Assets\Livewire\HasSyncedFormInputs;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 

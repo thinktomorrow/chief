@@ -60,13 +60,13 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
 
     public function countFiles(): int
     {
-        return collect($this->files)->reject(fn ($file) => !isset($file['fileRef']))->count();
+        return collect($this->files)->reject(fn ($file) => ! isset($file['fileRef']))->count();
     }
 
     public function submit($formData)
     {
         $formData = collect($formData)
-            ->mapWithKeys(fn($value, $key) => [FormKey::replaceBracketsByDots($key) => $value])
+            ->mapWithKeys(fn ($value, $key) => [FormKey::replaceBracketsByDots($key) => $value])
             ->undot()
             ->get($this->fieldName);
 

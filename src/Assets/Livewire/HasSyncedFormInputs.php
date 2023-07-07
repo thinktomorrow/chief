@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
-use Illuminate\Support\Collection;
-
 interface HasSyncedFormInputs
 {
     /** @return PreviewFile[] */
