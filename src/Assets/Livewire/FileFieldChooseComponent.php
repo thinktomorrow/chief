@@ -56,7 +56,7 @@ class FileFieldChooseComponent extends Component
             return;
         }
 
-        if(! in_array($assetId, $this->assetIds) && !in_array($assetId, $this->existingAssetIds)) {
+        if(! in_array($assetId, $this->assetIds) && ! in_array($assetId, $this->existingAssetIds)) {
             $this->assetIds[] = $assetId;
             $this->selectedPreviewFiles[$assetId] = PreviewFile::fromAsset(Asset::find($assetId));
         }
