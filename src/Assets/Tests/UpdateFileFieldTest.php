@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
-class SaveFileFieldTest extends ChiefTestCase
+class UpdateFileFieldTest extends ChiefTestCase
 {
     private $model;
     private Resource $resource;

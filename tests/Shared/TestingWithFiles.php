@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Controllers\FileUploadHandler;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Assets\App\StoreFiles;
 use Thinktomorrow\Chief\Assets\App\UpdateFileField;
 use Thinktomorrow\Chief\Resource\Resource;
 
@@ -21,6 +22,15 @@ trait TestingWithFiles
                 'files' => [
                     $fieldKey => $payload,
                 ],
+            ],
+        );
+    }
+
+    /** Store file directly to media-gallery */
+    protected function storeFiles(array $payload)
+    {
+        return app(StoreFiles::class)->handle([
+                'uploads' => $payload,
             ],
         );
     }
