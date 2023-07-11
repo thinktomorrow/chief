@@ -4,10 +4,8 @@ namespace Thinktomorrow\Chief\Assets\Tests;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -16,7 +14,6 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 class SaveFileFieldTest extends ChiefTestCase
 {
     private $model;
-    private \Livewire\Testing\TestableLivewire $livewireInstance;
     private Resource $resource;
 
     protected function setUp(): void
@@ -26,14 +23,6 @@ class SaveFileFieldTest extends ChiefTestCase
         ArticlePage::migrateUp();
         $this->model = ArticlePage::create();
         $this->resource = app(ArticlePageResource::class);
-
-        $this->livewireInstance = Livewire::test(FileUploadComponent::class, [
-            'parentId' => 'xxx',
-            'modelReference' => $this->model->modelReference()->get(),
-            'fieldKey' => 'thumb',
-            'fieldName' => 'thumb',
-            'locale' => 'nl',
-        ]);
     }
 
     protected function tearDown(): void
