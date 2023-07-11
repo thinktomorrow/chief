@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -179,10 +178,10 @@ trait FileUploadDefaults
         $previewFile->isValidated = $validatedState;
         $previewFile->validationMessage = $validationMessage;
 
-//        $previewFile = $this->findPreviewFile($fileId);
-//
-//        $this->updatePreviewFileValueByUploadFileId($fileId, 'isValidated', $validatedState);
-//        $this->updatePreviewFileValueByUploadFileId($fileId, 'validationMessage', $validationMessage);
+        //        $previewFile = $this->findPreviewFile($fileId);
+        //
+        //        $this->updatePreviewFileValueByUploadFileId($fileId, 'isValidated', $validatedState);
+        //        $this->updatePreviewFileValueByUploadFileId($fileId, 'validationMessage', $validationMessage);
         //        $this->files[$filesIndex]['validated'] = $validatedState;
         //        $this->previewFiles[$previewFileIndex]->isValidated = $validatedState;
         //        $this->previewFiles[$previewFileIndex]->validationMessage = $validationMessage;
@@ -261,18 +260,18 @@ trait FileUploadDefaults
         $this->files[$index][$key] = $value;
     }
 
-//    private function updatePreviewFileValueByUploadFileId($uploadFileId, $key, $value): void
-//    {
-//        $index = $this->findPreviewIndex($uploadFileId);
-//
-//        if(is_null($index)) {
-//            dd($uploadFileId, $this->previewFiles);
-//
-//            throw new \InvalidArgumentException('No previewFile found by id ' . $uploadFileId);
-//        }
-//
-//        $this->previewFiles[$index]->{$key} = $value;
-//    }
+    //    private function updatePreviewFileValueByUploadFileId($uploadFileId, $key, $value): void
+    //    {
+    //        $index = $this->findPreviewIndex($uploadFileId);
+    //
+    //        if(is_null($index)) {
+    //            dd($uploadFileId, $this->previewFiles);
+    //
+    //            throw new \InvalidArgumentException('No previewFile found by id ' . $uploadFileId);
+    //        }
+    //
+    //        $this->previewFiles[$index]->{$key} = $value;
+    //    }
 
     private function getUploadFileIdByFileKey(string $fileKey): string
     {

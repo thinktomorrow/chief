@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
-use Illuminate\Support\MessageBag;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
