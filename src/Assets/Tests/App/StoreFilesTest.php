@@ -1,8 +1,10 @@
 <?php
 
-use \Thinktomorrow\AssetLibrary\Asset;
+namespace App;
+
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class StoreFilesTest extends ChiefTestCase

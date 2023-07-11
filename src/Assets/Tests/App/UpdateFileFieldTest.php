@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Assets\Tests;
+namespace App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -54,6 +54,7 @@ class UpdateFileFieldTest extends ChiefTestCase
 
         $this->assertCount(1, $this->model->assets('thumb'));
         $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
+        $this->assertEquals('I belong to this file', $this->model->asset('thumb')->getData('caption'));
     }
 
     public function test_it_can_store_uploads_per_locale()

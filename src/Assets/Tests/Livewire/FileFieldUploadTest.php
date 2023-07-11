@@ -1,9 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Assets\Tests;
+namespace Livewire;
 
 use Illuminate\Http\UploadedFile;
-use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

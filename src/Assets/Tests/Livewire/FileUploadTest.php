@@ -1,12 +1,14 @@
 <?php
 
+namespace Livewire;
+
 use Illuminate\Http\UploadedFile;
-use Livewire\Livewire;
 use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class FileUploadTest extends ChiefTestCase
+class
+FileUploadTest extends ChiefTestCase
 {
     private $model;
     private \Livewire\Testing\TestableLivewire $livewireInstance;
@@ -49,8 +51,8 @@ class FileUploadTest extends ChiefTestCase
             ->call('open')
             ->emit('upload:finished', 'files.0.fileRef', [$filePath])
             ->assertCount('previewFiles', 1)
-            ->assertSeeHtml('name="thumb[uploads][0][id]" value="'.$filePath.'"')
-            ->assertSeeHtml('name="thumb[order][0]" value="'.$filePath.'"');
+            ->assertSeeHtml('name="thumb[uploads][0][id]" value="' . $filePath . '"')
+            ->assertSeeHtml('name="thumb[order][0]" value="' . $filePath . '"');
     }
 
     public function test_it_can_queue_unsaved_uploaded_file_for_deletion()

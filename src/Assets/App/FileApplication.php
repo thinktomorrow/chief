@@ -30,9 +30,9 @@ class FileApplication
         $this->updateAssetData->handle($model, $assetId, $fieldKey, $locale, $values);
     }
 
-    public function updateFileName(string $mediaId, string $basename): void
+    public function updateFileName(string $assetId, string $basename): void
     {
-        $model = Asset::find($mediaId)->getFirstMedia();
+        $model = Asset::find($assetId)->getFirstMedia();
 
         // Strip extension should the user has entered extension
         $basename = basename($basename, '.'.$model->extension);

@@ -15,7 +15,7 @@ trait TestingWithFiles
 {
     protected function saveFileField(Resource $resource, HasAsset $model, $fieldKey, array $payload)
     {
-        return app(UpdateFileField::class)->handle(
+        app(UpdateFileField::class)->handle(
             $model,
             $resource->field($model, 'thumb'),
             [
