@@ -48,7 +48,7 @@ class FileApplicationTest extends ChiefTestCase
                         'mimeType' => 'image/png',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         app(FileApplication::class)->updateFieldValues($this->model->modelReference()->get(), 'thumb', 'nl', $this->model->asset('thumb', 'nl')->id, [
@@ -72,7 +72,7 @@ class FileApplicationTest extends ChiefTestCase
                         'mimeType' => 'image/png',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         app(FileApplication::class)->updateFileName($this->model->asset('thumb', 'nl')->id, 'foobar.jpg');
@@ -97,7 +97,7 @@ class FileApplicationTest extends ChiefTestCase
                         'mimeType' => 'image/png',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         app(FileApplication::class)->replaceMedia($this->model->asset('thumb', 'nl')->id, $otherFile);

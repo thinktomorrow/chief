@@ -7,8 +7,7 @@ use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class
-FileUploadTest extends ChiefTestCase
+class FileUploadTest extends ChiefTestCase
 {
     private $model;
     private \Livewire\Testing\TestableLivewire $livewireInstance;
