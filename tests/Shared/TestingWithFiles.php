@@ -29,7 +29,8 @@ trait TestingWithFiles
     /** Store file directly to media-gallery */
     protected function storeFiles(array $payload)
     {
-        return app(StoreFiles::class)->handle([
+        return app(StoreFiles::class)->handle(
+            [
                 'uploads' => $payload,
             ],
         );
