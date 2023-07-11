@@ -12,7 +12,7 @@ class PreviewFile implements Wireable
 {
     private function __construct(
         public string $id,
-        public ?string $mediaId, // Actually the asset id
+        public ?string $mediaId, // The actual Asset id
         public ?string $previewUrl,
         public bool $isPreviewable,
         public ?string $tempPath,
@@ -28,6 +28,7 @@ class PreviewFile implements Wireable
         public bool $isQueuedForDeletion = false,
         public bool $isAttachedToModel = false,
         public array $fieldValues = [],
+        public ?string $validationMessage = null,
         public ?string $createdAt = null,
         public ?string $updatedAt = null,
 
@@ -77,6 +78,7 @@ class PreviewFile implements Wireable
             [],
             null,
             null,
+            null,
             [],
             [],
         );
@@ -123,6 +125,7 @@ class PreviewFile implements Wireable
             false,
             true,
             $asset->pivot->data ?? [],
+            null,
             $asset->created_at->getTimestamp(),
             $asset->updated_at->getTimestamp(),
             $urls,
@@ -152,6 +155,7 @@ class PreviewFile implements Wireable
             false,
             false,
             [],
+            null,
             null,
             null,
             [],
@@ -184,6 +188,7 @@ class PreviewFile implements Wireable
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
             'isAttachedToModel' => $this->isAttachedToModel,
             'fieldValues' => $this->fieldValues,
+            'validationMessage' => $this->validationMessage,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
             'urls' => $this->urls,

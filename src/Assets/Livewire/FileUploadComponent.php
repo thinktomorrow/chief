@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
+use Illuminate\Support\MessageBag;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
@@ -9,6 +10,7 @@ use Thinktomorrow\Chief\Assets\App\StoreFiles;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 
@@ -17,12 +19,9 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     use WithFileUploads;
     use FileUploadDefaults;
     use ShowsAsDialog;
+    use RenamesErrorBagFileAttribute;
 
     public $parentId;
-
-    protected $validationAttributes = [
-        'files.0.fileRef' => 'bestand',
-    ];
 
     public function mount(string $parentId, string $fieldName, array $assets = [], array $components = [])
     {
@@ -38,6 +37,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
+            'upload:errored' => 'onUploadErrored',
             'upload:finished' => 'onUploadFinished',
             'assetUpdated' => 'onAssetUpdated',
         ];
@@ -48,11 +48,15 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
         $this->filePreview = new FilePreview($this);
         $this->fileSelect = new FileSelect($this, false);
 
+        $this->clearValidation();
+
         $this->syncPreviewFiles();
     }
 
     public function render()
     {
+        $this->renameErrorBagFileAttribute();
+
         return view('chief-assets::file-upload', [
             //
         ]);

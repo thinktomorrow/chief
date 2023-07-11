@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -73,13 +74,15 @@ trait FileUploadDefaults
      * After the upload of a file, we convert our passed
      * filepath to a valid UploadedFile object
      *
-     * @param $key
+     * @param $fileKey e.g. files.0.fileRef
      * @param $value
      * @return void
      */
-    public function onUploadFinished($key, $value)
+    public function onUploadFinished($fileKey, $value)
     {
-        $this->validateUploadedFile($key, $temporaryUploadedFile = TemporaryUploadedFile::createFromLivewire($value[0]));
+        $fileId = $this->getUploadFileIdByFileKey($fileKey);
+
+        $this->validateUploadedFile($fileId, $temporaryUploadedFile = TemporaryUploadedFile::createFromLivewire($value[0]));
 
         // In case only one asset is allowed, we make sure to delete any existing / other uploads.
         if(! $this->allowMultiple) {
@@ -95,14 +98,26 @@ trait FileUploadDefaults
             }
         }
 
-        Arr::set($this->files, str_replace('files.', '', $key), $temporaryUploadedFile);
+        Arr::set($this->files, str_replace('files.', '', $fileKey), $temporaryUploadedFile);
 
         $currentCount = count($this->previewFiles);
         $this->syncPreviewFiles();
 
+
         if(count($this->previewFiles) > $currentCount) {
             $this->emitSelf('fileAdded');
         }
+    }
+
+    public function onUploadErrored($fileKey)
+    {
+        $fileId = $this->getUploadFileIdByFileKey($fileKey);
+
+        $this->findUploadFile($fileId)['validated'] = false;
+
+        $previewFile = $this->findPreviewFile($fileId);
+        $previewFile->isValidated = false;
+        $previewFile->validationMessage = 'Bestand is niet opgeladen';
     }
 
     private function syncPreviewFiles()
@@ -111,8 +126,6 @@ trait FileUploadDefaults
         $this->previewFiles = array_map(fn (array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
 
         foreach($this->files as $newFileDetails) {
-
-            // If the same file is already uploaded, we
 
             /**
              * If the file is still uploading, we'll still add it to the previewFiles.
@@ -131,59 +144,48 @@ trait FileUploadDefaults
              */
             $uploadingIndex = $this->findPreviewFileIndex($newFileDetails['id']);
 
-            if(! is_null($uploadingIndex) && $this->previewFiles[$uploadingIndex]->isUploading) {
+            if(! is_null($uploadingIndex) && $this->previewFiles[$uploadingIndex] && ! $this->previewFiles[$uploadingIndex]->isQueuedForDeletion) {
                 $this->previewFiles[$uploadingIndex] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
-
-            }
-
-            /**
-             * We can check here if the new upload is validated or not.
-             */
-            //            if(isset($newFileDetails['validated']) && ! $newFileDetails['validated']) {
-            //                // Not validated
-            //                // TODO: add validated state to each preview file to show which is not uploaded!
-            //                continue;
-            //                $this->previewFiles[$uploadingIndex]->isValidated = false;
-            //            }
-        }
-    }
-
-    public function findUploadingFileIndex($fileId): ?int
-    {
-        foreach($this->files as $index => $fileArray) {
-            if($fileArray['id'] == $fileId) {
-                return $index;
             }
         }
-
-        return null;
     }
 
     /**
      * Validation is performed for all fields
      * Each field is parsed for the proper validation rules and messages.
      */
-    private function validateUploadedFile(string $key, TemporaryUploadedFile $uploadedFile): void
+    private function validateUploadedFile(string $fileId, TemporaryUploadedFile $uploadedFile): void
     {
         try {
             $validator = Validator::make(['files' => [$uploadedFile]], ['files' => $this->rules], [], ['files' => 'bestand']);
             $validator->validate();
 
-            $this->setFilesValidatedState($key, true);
+            $this->setFilesValidatedState($fileId, true);
         } catch(ValidationException $e) {
-            $this->setFilesValidatedState($key, false);
-            $this->removeUpload($key, $uploadedFile->getFilename());
-
-            throw $e;
+            $this->setFilesValidatedState($fileId, false, $e->validator->errors()->first('files'));
+            $this->removeUpload('files.'.$this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
         }
-
-        $this->resetErrorBag();
     }
 
-    private function setFilesValidatedState(string $key, bool $validatedState)
+    private function setFilesValidatedState(string $fileId, bool $validatedState, ?string $validationMessage = null)
     {
-        Arr::set($this->files, str_replace('files.', '', str_replace('fileRef', 'validated', $key)), $validatedState);
-        // $this->previewFiles[$uploadingIndex]->isValidated = false;
+        $file = $this->findUploadFile($fileId);
+        $this->updateUploadFileValue($fileId, 'validated', $validatedState);
+
+        $previewFile = isset($file['fileRef'])
+            ? $this->findPreviewFile($file['fileRef']->getFileName())
+            : $this->findPreviewFile($fileId);
+
+        $previewFile->isValidated = $validatedState;
+        $previewFile->validationMessage = $validationMessage;
+
+//        $previewFile = $this->findPreviewFile($fileId);
+//
+//        $this->updatePreviewFileValueByUploadFileId($fileId, 'isValidated', $validatedState);
+//        $this->updatePreviewFileValueByUploadFileId($fileId, 'validationMessage', $validationMessage);
+        //        $this->files[$filesIndex]['validated'] = $validatedState;
+        //        $this->previewFiles[$previewFileIndex]->isValidated = $validatedState;
+        //        $this->previewFiles[$previewFileIndex]->validationMessage = $validationMessage;
     }
 
     public function reorder($orderedIds)
@@ -197,34 +199,98 @@ trait FileUploadDefaults
         $this->isReordering = false;
     }
 
-    //    public function onAssetsChosen(array $assetIds)
-    //    {
-    //        if(! $this->allowMultiple) {
-    //            // Assert only one file is added.
-    //            $assetIds = (array) reset($assetIds);
-    //
-    //            foreach($this->previewFiles as $previewFile) {
-    //                $previewFile->isQueuedForDeletion = true;
-    //            }
-    //        }
-    //
-    //        Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
-    //            $previewFile = PreviewFile::fromAsset($asset);
-    //            $previewFile->isAttachedToModel = false;
-    //
-    //            $this->previewFiles[] = $previewFile;
-    //        });
-    //    }
+    private function findPreviewFile($id): ?PreviewFile
+    {
+        foreach($this->previewFiles as $previewFile) {
+            if($previewFile->id == $id) {
+                return $previewFile;
+            }
+        }
 
-    private function findPreviewFileIndex($fileId): ?int
+        return null;
+    }
+
+    /**
+     * The previewFile that has the uploadFileId as its id, is a pending previewFile and
+     * once the file is fully uploaded, the temporaryUploadFile id will be used.
+     *
+    * @param $fileId
+    * @return int|null
+     */
+    private function findPreviewFileIndex($id): ?int
     {
         foreach($this->previewFiles as $index => $previewFile) {
-            if($previewFile->id == $fileId) {
+            if($previewFile->id == $id) {
                 return $index;
             }
         }
 
         return null;
+    }
+
+    public function findUploadFile($fileId): ?array
+    {
+        foreach($this->files as $file) {
+            if($file['id'] == $fileId) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
+
+    private function findUploadFileIndex($fileId): ?int
+    {
+        foreach($this->files as $index => $fileArray) {
+            if($fileArray['id'] == $fileId) {
+                return $index;
+            }
+        }
+
+        return null;
+    }
+
+    private function updateUploadFileValue($fileId, $key, $value): void
+    {
+        $index = $this->findUploadFileIndex($fileId);
+
+        if(is_null($index)) {
+            throw new \InvalidArgumentException('No uploadFile found by id ' . $fileId);
+        }
+
+        $this->files[$index][$key] = $value;
+    }
+
+//    private function updatePreviewFileValueByUploadFileId($uploadFileId, $key, $value): void
+//    {
+//        $index = $this->findPreviewIndex($uploadFileId);
+//
+//        if(is_null($index)) {
+//            dd($uploadFileId, $this->previewFiles);
+//
+//            throw new \InvalidArgumentException('No previewFile found by id ' . $uploadFileId);
+//        }
+//
+//        $this->previewFiles[$index]->{$key} = $value;
+//    }
+
+    private function getUploadFileIdByFileKey(string $fileKey): string
+    {
+        $index = $this->extractIndexFromFileKey($fileKey);
+
+        return $this->files[$index]['id'];
+    }
+
+    /**
+     * This extract the index from a dotted file key reference.
+     * e.g. files.0.fileRef -> 0 (index)
+     */
+    private function extractIndexFromFileKey(string $fileKey): string
+    {
+        $fileKeyWithoutPrefix = substr($fileKey, strpos($fileKey, '.') + 1);
+
+        return substr($fileKeyWithoutPrefix, 0, strpos($fileKeyWithoutPrefix, '.'));
+
     }
 
     public function openFileEdit($fileId)
@@ -236,6 +302,9 @@ trait FileUploadDefaults
     {
         foreach($this->previewFiles as $file) {
             if($file->id == $fileId) {
+
+                // $this->removeUpload($key, $uploadedFile->getFilename())
+
                 $file->isQueuedForDeletion = true;
 
                 return;

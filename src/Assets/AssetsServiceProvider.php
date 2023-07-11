@@ -39,6 +39,16 @@ class AssetsServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
         Livewire::component('chief-wire::asset-delete', AssetDeleteComponent::class);
+
+        // Reset general livewire rules - these rules will be set via chief
+        // instead so we can have a uniform validation flow
+        if($maxFileSize = config('chief.assets.max_file_size_in_bytes')) {
+            config()->set('livewire.temporary_file_upload.rules', [
+                'required','file','max:'.($maxFileSize / 1024),
+            ]);
+
+            config()->set('media-library.max_file_size', $maxFileSize);
+        }
     }
 
     public function register()

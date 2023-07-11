@@ -13,8 +13,10 @@
 
     @foreach ($files as $file)
         @continue(count($files) > 1 && !$allowMultiple() && $file->isQueuedForDeletion)
+        @continue($file->isUploading && $file->isQueuedForDeletion)
+        @continue(!$file->isValidated && $file->isQueuedForDeletion)
 
-        <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2">
+        <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2 {{ !$file->isValidated ? 'opacity-50' : '' }}">
             <div class="shrink-0">
                 @if($file->isPreviewable)
                     <img
@@ -39,19 +41,27 @@
                             <span class="uppercase">{{ $file->extension }}</span>
                         @endif
                     </p>
+
+{{--                    @if(!$file->isValidated)--}}
+{{--                        <p class="text-sm text-red-400">{{ $file->validationMessage }}</p>--}}
+{{--                    @endif--}}
                 </div>
             </div>
 
             <div class="flex items-center gap-2 py-2 pr-2 shrink-0">
-                @if(null !== ($index = $this->findUploadingFileIndex($file->id)))
+                @if(!$file->isValidated)
+                    <span class="text-sm text-red-400">
+                        {{ $file->validationMessage }}
+                    </span>
+                    <button wire:click="deleteFile('{{ $file->id }}')" type="button" class="text-sm text-red-400">
+                        <svg width="18" height="18"><use xlink:href="#icon-x-mark"></use></svg>
+                    </button>
+                @elseif($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
                     {{--TODO: tijs make the progress pretty! maybe use a div but then we need to set the percentage via alpine--}}
-                    <div x-data="{progress: @entangle('files.'.$index.'.progress')}" class="w-full bg-grey-50 rounded h-2">
+                    <div x-data="{progress: @entangle('files.'.$this->findUploadFileIndex($file->id).'.progress')}" class="w-full bg-grey-50 rounded h-2">
                         <span x-text="progress"></span>%
                     </div>
                 @else
-                    @if(!$file->isValidated)
-                        INVALID
-                    @endif
                     @if($file->isQueuedForDeletion)
                         @if($file->mediaId)
                             <span class="text-sm text-primary-500">

@@ -28,6 +28,7 @@ class SaveFileFieldTest extends ChiefTestCase
         $this->resource = app(ArticlePageResource::class);
 
         $this->livewireInstance = Livewire::test(FileUploadComponent::class, [
+            'parentId' => 'xxx',
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',

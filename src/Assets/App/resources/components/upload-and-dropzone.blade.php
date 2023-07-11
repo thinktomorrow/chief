@@ -13,6 +13,7 @@
                 @this.set('files.'+index+'.fileName', file.name );
                 @this.set('files.'+index+'.fileSize', file.size );
                 @this.set('files.'+index+'.progress', 0 );
+
                 @this.upload('files.'+index+'.fileRef', file, (n)=>{}, ()=>{}, (e)=>{
                     // Progress callback
                     @this.set('files.'+index+'.progress', e.detail.progress);

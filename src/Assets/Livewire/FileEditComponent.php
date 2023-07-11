@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FileEditComponent extends Component
@@ -19,7 +20,6 @@ class FileEditComponent extends Component
     public ?PreviewFile $replacedPreviewFile = null;
     public $form = [];
     public $file = null;
-    public bool $showReplaceActions = false;
 
     public function mount(string $parentId)
     {

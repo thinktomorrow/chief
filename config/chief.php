@@ -67,6 +67,17 @@ return [
         'admin-filepath' => null,
     ],
 
+    'assets' => [
+
+        /*
+         * The maximum file size of an asset in bytes.
+         * Adding a larger file will result in an exception.
+         */
+        'max_file_size_in_bytes' => 1024 * 1024 * 10, // 10MB
+
+    //        'chunk_size_in_bytes' => 1024 * 1024 * 6, // 10MB
+    ],
+
     /**
      *
      */

@@ -8,11 +8,13 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 
 class FileFieldUploadComponent extends Component implements HasPreviewFiles, HasSyncedFormInputs
 {
     use WithFileUploads;
     use FileUploadDefaults;
+    use RenamesErrorBagFileAttribute;
 
     public ?string $modelReference;
     public string $fieldKey;
@@ -33,6 +35,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
     {
         return [
             'upload:finished' => 'onUploadFinished',
+            'upload:errored' => 'onUploadErrored',
             'assetUpdated' => 'onAssetUpdated',
             'assetsChosen-'.$this->id => 'onAssetsChosen',
         ];
@@ -77,6 +80,8 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 
     public function render()
     {
+        $this->renameErrorBagFileAttribute();
+
         return view('chief-assets::file-field-upload', [
             //
         ]);

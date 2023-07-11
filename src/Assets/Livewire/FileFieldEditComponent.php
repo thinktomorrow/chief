@@ -28,7 +28,6 @@ class FileFieldEditComponent extends Component
     public $form = [];
     public $components = [];
     public $file = null;
-    public bool $showReplaceActions = false;
 
     public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
     {
@@ -46,6 +45,11 @@ class FileFieldEditComponent extends Component
             'open' => 'open',
             'open-' . $this->parentId => 'open',
         ];
+    }
+
+    public function booted()
+    {
+        $this->clearValidation();
     }
 
     public function getComponents(): array
@@ -79,6 +83,7 @@ class FileFieldEditComponent extends Component
         if (! $this->replacedPreviewFile) {
             $this->replacedPreviewFile = $this->previewFile;
         }
+
         $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
         $this->syncForm();
     }
@@ -108,28 +113,6 @@ class FileFieldEditComponent extends Component
 
         $this->form['basename'] = $this->previewFile->getBaseName();
     }
-
-    //    public function onAssetsChosen(array $assetIds)
-    //    {
-    //        if(empty($assetIds)) return;
-    //
-    //        // Replacement of file can be only one asset.
-    //        $assetId = reset($assetIds);
-    //
-    //        $previewFile = PreviewFile::fromAsset(Asset::where('id', $assetId)->first());
-    //        $previewFile->isAttachedToModel = false;
-    //
-    //        if(!$this->replacedPreviewFile) {
-    //            $this->replacedPreviewFile = $this->previewFile;
-    //        }
-    //
-    //        $this->previewFile = $previewFile;
-    //    }
-
-    //    public function openFilesChoose()
-    //    {
-    //        $this->emitDownTo('chief-wire::files-choose', 'open');
-    //    }
 
     public function openImageCrop()
     {
@@ -166,6 +149,7 @@ class FileFieldEditComponent extends Component
         $this->emitUp('assetUpdated', $this->previewFile);
 
         $this->close();
+        $this->clearValidation();
     }
 
     /**
