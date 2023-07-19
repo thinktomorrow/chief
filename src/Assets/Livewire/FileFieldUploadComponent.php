@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\AssetContract;
+use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
@@ -27,7 +29,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
         $this->fieldName = $fieldName;
         $this->locale = $locale;
 
-        $this->previewFiles = array_map(fn (Asset $asset) => PreviewFile::fromAsset($asset), $assets);
+        $this->previewFiles = array_map(fn (AssetContract $asset) => PreviewFile::fromAsset($asset), $assets);
         $this->components = array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
     }
 
@@ -44,7 +46,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
     public function booted()
     {
         $this->filePreview = new FilePreview($this);
-        $this->fileSelect = new FileSelect($this);
+        $this->fileSelect = new FileSelect($this, true, DriverFactory::any());
 
         $this->syncPreviewFiles();
     }
@@ -65,7 +67,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
             ->reject(fn ($assetId) => ! is_null($this->findPreviewFileIndex($assetId)))
             ->all();
 
-        Asset::whereIn('id', $assetIds)->get()->each(function (Asset $asset) {
+        Asset::whereIn('id', $assetIds)->get()->each(function (AssetContract $asset) {
             $previewFile = PreviewFile::fromAsset($asset);
             $previewFile->isAttachedToModel = false;
 
@@ -76,6 +78,11 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
     public function openFilesChoose()
     {
         $this->emitDownTo('chief-wire::file-field-choose', 'open', ['existingAssetIds' => collect($this->previewFiles)->map(fn ($previewFile) => $previewFile->id)->all()]);
+    }
+
+    public function openFilesChooseExternal()
+    {
+        $this->emitDownTo('chief-wire::file-field-choose-external', 'open', []);
     }
 
     public function render()

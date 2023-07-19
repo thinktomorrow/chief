@@ -16,6 +16,20 @@
                 alt="{{ $asset->getFileName() }}"
                 class="object-contain w-full h-full rounded-lg"
             />
+        @elseif($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
+            <div class="relative flex items-center justify-center w-full h-full text-grey-500">
+
+                <div class="absolute w-full left-0 bottom-0 flex justify-center items-center p-1">
+                    <span class="label label-info text-xs">{{ $asset->getData('external.type') }}</span>
+                </div>
+
+                <img
+                    src="{{ $asset->getPreviewUrl('thumb') }}"
+                    alt="{{ $asset->getFileName() }}"
+                    class="object-contain w-full h-full rounded-lg"
+                />
+            </div>
+
         @elseif($asset->getMimeType())
             <div class="flex items-center justify-center w-full h-full text-grey-500">
                 {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
@@ -38,9 +52,15 @@
                     <x-chief::icon-button icon="icon-trash" color="grey"/>
                 </button>
 
-                <a href="{{ $asset->getUrl() }}" title="Download" download class="pointer-events-auto">
-                    <x-chief::icon-button icon="icon-download" color="grey"/>
-                </a>
+                @if($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
+                    <a href="{{ $asset->getUrl() }}" target="_blank" title="View on platform" class="pointer-events-auto">
+                        <x-chief::icon-button icon="icon-external-link" />
+                    </a>
+                @else
+                    <a href="{{ $asset->getUrl() }}" target="_blank" title="Download" download class="pointer-events-auto">
+                        <x-chief::icon-button icon="icon-download" color="grey"/>
+                    </a>
+                @endif
             </div>
         @endif
     </div>
@@ -52,12 +72,16 @@
 
         <div class="flex justify-between">
             <p class="text-xs body text-grey-500">
-                {{ $asset->getHumanReadableSize() }}
+                @if($asset->getHumanReadableSize())
+                    {{ $asset->getHumanReadableSize() }}
+                @elseif($asset->isVideo() && $asset->getData('external.duration'))
+                    {{ $asset->getData('external.duration') }} secs.
+                @endif
             </p>
 
             <p class="text-xs uppercase body text-grey-500">
-            @if($asset->isImage() && $asset->getImageWidth())
-                {{ $asset->getImageWidth() }} x {{ $asset->getImageHeight() }}
+            @if($asset->getWidth())
+                {{ $asset->getWidth() }} x {{ $asset->getHeight() }}
             @else
                 {{ $asset->getExtension() }}
             @endif

@@ -16,6 +16,12 @@
         />
     </div>
     <div>
+        <livewire:chief-wire::file-field-choose-external
+            parent-id="{{ $this->id }}"
+            allowMultiple="{{ $allowMultiple }}"
+        />
+    </div>
+    <div>
         <livewire:chief-wire::file-field-edit
             parent-id="{{ $this->id }}"
             model-reference="{{ $modelReference }}"

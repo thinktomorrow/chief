@@ -2,37 +2,43 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Livewire\TemporaryUploadedFile;
 use Livewire\Wireable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\AssetContract;
+use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
 
 class PreviewFile implements Wireable
 {
     private function __construct(
-        public string $id,
+        public string  $id,
         public ?string $mediaId, // The actual Asset id
         public ?string $previewUrl,
-        public bool $isPreviewable,
+        public bool    $isPreviewable,
         public ?string $tempPath,
-        public string $filename,
-        public string $size,
-        public string $humanReadableSize,
-        public string $mimeType,
-        public string $extension,
-        public ?string $imageWidth = null,
-        public ?string $imageHeight = null,
-        public bool $isUploading = true,
-        public bool $isValidated = false,
-        public bool $isQueuedForDeletion = false,
-        public bool $isAttachedToModel = false,
-        public array $fieldValues = [],
+        public string  $filename,
+        public string  $size,
+        public string  $humanReadableSize,
+        public string  $mimeType,
+        public string  $extension,
+        public ?string $width = null,
+        public ?string $height = null,
+        public bool    $isUploading = true,
+        public bool    $isValidated = false,
+        public bool    $isQueuedForDeletion = false,
+        public bool    $isAttachedToModel = false,
+        public bool    $isExternalAsset = false,
+        public array   $fieldValues = [],
         public ?string $validationMessage = null,
         public ?string $createdAt = null,
         public ?string $updatedAt = null,
 
         // Asset related values
+        public array $data = [],
         public array $urls = [],
         public array $owners = [],
     ) {
@@ -47,6 +53,11 @@ class PreviewFile implements Wireable
     public function isImage(): bool
     {
         return FileHelper::isImage($this->mimeType);
+    }
+
+    public function isVideo(): bool
+    {
+        return FileHelper::isVideo($this->mimeType);
     }
 
     public function getBaseName(): string
@@ -75,16 +86,27 @@ class PreviewFile implements Wireable
             true,
             false,
             false,
+            false,
             [],
             null,
             null,
             null,
+            [],
             [],
             [],
         );
     }
 
-    public static function fromAsset(Asset $asset): static
+    public static function fromAsset(AssetContract $asset): static
+    {
+        if($asset instanceof ExternalAssetContract) {
+            return static::fromExternalAsset($asset);
+        }
+
+        return static::fromLocalAsset($asset);
+    }
+
+    private static function fromLocalAsset(Asset $asset): static
     {
         $media = $asset->getFirstMedia();
 
@@ -118,17 +140,57 @@ class PreviewFile implements Wireable
             $asset->getHumanReadableSize(),
             $asset->getMimeType() ?: '',
             \Thinktomorrow\Chief\Assets\App\FileHelper::getExtension($asset->getFirstMediaPath()),
-            $asset->getImageWidth(),
-            $asset->getImageHeight(),
+            $asset->getWidth(),
+            $asset->getHeight(),
             false,
             true,
             false,
+            true,
+            false,
+            $asset->pivot->data ?? [],
+            null,
+            $asset->created_at->getTimestamp(),
+            $asset->updated_at->getTimestamp(),
+            ($asset->data ?: []),
+            $urls,
+            $owners,
+        );
+    }
+
+    private static function fromExternalAsset(ExternalAssetContract $asset): static
+    {
+        $previewUrls = [
+            'original' => $asset->getUrl(),
+            'thumb' => $thumbUrl = $asset->getPreviewUrl('thumb'),
+        ];
+
+        $owners = [];
+//        DB::enableQueryLog();
+//dd($asset, $previewUrls, $asset->getUrl(), DB::getQueryLog());
+        return new static(
+            $asset->id,
+            $asset->id,
+            $thumbUrl,
+            ('image' == $asset->getPreviewExtensionType()),
+            null,
+            $asset->getFileName() ?: '',
+            $asset->getSize(),
+            $asset->getHumanReadableSize(),
+            $asset->getMimeType() ?: '',
+            '',
+            $asset->getWidth(),
+            $asset->getHeight(),
+            false,
+            true,
+            false,
+            true,
             true,
             $asset->pivot->data ?? [],
             null,
             $asset->created_at->getTimestamp(),
             $asset->updated_at->getTimestamp(),
-            $urls,
+            ($asset->data ?: []),
+            $previewUrls,
             $owners,
         );
     }
@@ -154,10 +216,12 @@ class PreviewFile implements Wireable
             true,
             false,
             false,
+            false,
             [],
             null,
             null,
             null,
+            [],
             [],
             [],
         );
@@ -181,16 +245,18 @@ class PreviewFile implements Wireable
             'humanReadableSize' => $this->humanReadableSize,
             'mimeType' => $this->mimeType,
             'extension' => $this->extension,
-            'imageWidth' => $this->imageWidth,
-            'imageHeight' => $this->imageHeight,
+            'width' => $this->width,
+            'height' => $this->height,
             'isUploading' => $this->isUploading,
             'isValidated' => $this->isValidated,
             'isQueuedForDeletion' => $this->isQueuedForDeletion,
             'isAttachedToModel' => $this->isAttachedToModel,
+            'isExternalAsset' => $this->isExternalAsset,
             'fieldValues' => $this->fieldValues,
             'validationMessage' => $this->validationMessage,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
+            'data' => $this->data,
             'urls' => $this->urls,
             'owners' => $this->owners,
         ];
@@ -204,5 +270,20 @@ class PreviewFile implements Wireable
     public static function fromArray($value)
     {
         return new static(...$value);
+    }
+
+    public function hasData(string $key): bool
+    {
+        return Arr::has($this->data, $key);
+    }
+
+    public function getData(string $key, $default = null)
+    {
+        return Arr::get($this->data, $key, $default);
+    }
+
+    public function getExternalAssetType(): ?string
+    {
+        return $this->getData('external.type');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
@@ -44,6 +45,7 @@ class FileFieldEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
+            'externalAssetUpdated-'.$this->id => 'onExternalAssetUpdated',
         ];
     }
 
@@ -122,6 +124,35 @@ class FileFieldEditComponent extends Component
     public function openHotSpots()
     {
         $this->emitToSibling('chief-wire::hotspots', 'open', ['previewfile' => $this->previewFile]);
+    }
+
+    public function openFilesChooseExternal()
+    {
+        $this->emitDownTo('chief-wire::file-field-choose-external', 'open', ['assetId' => $this->previewFile->mediaId]);
+    }
+
+    public function updateExternalAsset()
+    {
+        $driver = app(DriverFactory::class)->create($this->previewFile->getData('external.type'));
+
+        $driver->updateAsset(Asset::find($this->previewFile->mediaId), $this->previewFile->getData('external.id'));
+
+        // Update previewfile to reflect the external asset data
+        $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
+
+        $this->emitUp('assetUpdated', $this->previewFile);
+
+        $this->close();
+    }
+
+    public function onExternalAssetUpdated()
+    {
+        // Update previewfile to reflect the external asset data
+        $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
+
+        $this->emitUp('assetUpdated', $this->previewFile);
+
+        $this->close();
     }
 
     public function submit()

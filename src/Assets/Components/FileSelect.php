@@ -13,11 +13,13 @@ class FileSelect extends Component implements Htmlable
 {
     private HasSyncedFormInputs $component;
     private bool $allowToChooseFiles;
+    private bool $allowToChooseExternalFiles;
 
-    public function __construct(HasSyncedFormInputs $component, bool $allowToChooseFiles = true)
+    public function __construct(HasSyncedFormInputs $component, bool $allowToChooseFiles = true, bool $allowToChooseExternalFiles = false)
     {
         $this->component = $component;
         $this->allowToChooseFiles = $allowToChooseFiles;
+        $this->allowToChooseExternalFiles = $allowToChooseExternalFiles;
     }
 
     public function toHtml()
@@ -75,6 +77,11 @@ class FileSelect extends Component implements Htmlable
     public function allowToChooseFiles(): bool
     {
         return $this->allowToChooseFiles;
+    }
+
+    public function allowToChooseExternalFiles(): bool
+    {
+        return $this->allowToChooseExternalFiles;
     }
 
     public function render(): View

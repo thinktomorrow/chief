@@ -54,4 +54,18 @@ class FileApplication
 
         $newAsset->delete();
     }
+
+    public function replaceMediaByUrl(string $assetId, string $url): void
+    {
+        /** @var Asset $existingAsset */
+        $existingAsset = Asset::find($assetId);
+
+        $newAsset = $this->createAsset
+            ->url($url)
+            ->save();
+
+        $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
+
+        $newAsset->delete();
+    }
 }

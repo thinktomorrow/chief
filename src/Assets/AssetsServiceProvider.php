@@ -2,11 +2,13 @@
 
 namespace Thinktomorrow\Chief\Assets;
 
+use ExternalFiles\FileFieldChooseLinkComponent;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
+use Thinktomorrow\Chief\Assets\App\ExternalFiles\FileFieldChooseExternalComponent;
 use Thinktomorrow\Chief\Assets\Livewire\AssetDeleteComponent;
 use Thinktomorrow\Chief\Assets\Livewire\FileEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldChooseComponent;
@@ -35,6 +37,7 @@ class AssetsServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::file-field-upload', FileFieldUploadComponent::class);
         Livewire::component('chief-wire::file-field-edit', FileFieldEditComponent::class);
         Livewire::component('chief-wire::file-field-choose', FileFieldChooseComponent::class);
+        Livewire::component('chief-wire::file-field-choose-external', FileFieldChooseExternalComponent::class);
         Livewire::component('chief-wire::file-upload', FileUploadComponent::class);
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);

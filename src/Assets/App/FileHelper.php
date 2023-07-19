@@ -13,6 +13,13 @@ class FileHelper
         ]);
     }
 
+    public static function isVideo(string $mimeType): bool
+    {
+        return Str::endsWith($mimeType, [
+            'mp4', 'webm', 'mpeg', 'mov', 'video/vimeo',
+        ]);
+    }
+
     public static function getExtension(string $path): string
     {
         return pathinfo($path, PATHINFO_EXTENSION);
