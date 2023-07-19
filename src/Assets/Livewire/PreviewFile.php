@@ -185,7 +185,7 @@ class PreviewFile implements Wireable
             false,
             true,
             true,
-             array_merge($asset->data ?? [], $asset->pivot->data ?? []),
+            array_merge($asset->data ?? [], $asset->pivot->data ?? []),
             null,
             $asset->created_at->getTimestamp(),
             $asset->updated_at->getTimestamp(),
