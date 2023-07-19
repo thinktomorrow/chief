@@ -165,8 +165,8 @@ class PreviewFile implements Wireable
         ];
 
         $owners = [];
-//        DB::enableQueryLog();
-//dd($asset, $previewUrls, $asset->getUrl(), DB::getQueryLog());
+        //        DB::enableQueryLog();
+        //dd($asset, $previewUrls, $asset->getUrl(), DB::getQueryLog());
         return new static(
             $asset->id,
             $asset->id,

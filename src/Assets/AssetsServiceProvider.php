@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Assets;
 
-use ExternalFiles\FileFieldChooseLinkComponent;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;

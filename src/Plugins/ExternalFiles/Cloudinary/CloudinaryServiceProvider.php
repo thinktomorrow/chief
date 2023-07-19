@@ -21,11 +21,11 @@ class CloudinaryServiceProvider extends ChiefPluginServiceProvider
     {
         parent::register();
 
-//        cloudinary.config({
-//  cloud_name: 'think-tomorrow',
-//  api_key: '941447417326192',
-//  api_secret: '3kKkz8cHfy1Rpv3WIGnJaF96g0Y'
-//});
+        //        cloudinary.config({
+        //  cloud_name: 'think-tomorrow',
+        //  api_key: '941447417326192',
+        //  api_secret: '3kKkz8cHfy1Rpv3WIGnJaF96g0Y'
+        //});
         //
     }
 }

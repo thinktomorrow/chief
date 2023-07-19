@@ -16,7 +16,7 @@ class VimeoServiceProvider extends ChiefPluginServiceProvider
     {
         parent::register();
 
-        $this->app->bind(Vimeo::class, function(){
+        $this->app->bind(Vimeo::class, function () {
             return new Vimeo(
                 'f93352aab45a194016dea1f3271076143443dfad',
                 'z9PedDwbBVXsLXR7tCnq2seEvnxMtibRVIy69Agy6BRlOJc5Ze6WvtHftpS5XWHwj7UVgJRzINzXgEE3SoIInnchACWADoacAIVaH3pEehssX+jmG7SrY20prdkKbHiV',
