@@ -8,15 +8,6 @@
     ],
     "license": "none",
     "type": "chief-cms",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../assetlibrary",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "php": "^8.1",
         "ext-json": "*",
