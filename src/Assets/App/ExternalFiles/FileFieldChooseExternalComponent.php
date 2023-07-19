@@ -14,7 +14,7 @@ class FileFieldChooseExternalComponent extends Component
     // v Set asset_type on save
     // refactor PreviewFile
     // previewfile:: account for external asset (in combo with preview asset)
-        // all external asset values and preview values as separate data.
+    // all external asset values and preview values as separate data.
     // assert preview media relation works (with morph class for vimeoAsset)
     // previewFile::fromExternalAsset()
     // external preview blade
@@ -59,9 +59,13 @@ class FileFieldChooseExternalComponent extends Component
 
     private function getDriver(): ?Driver
     {
-        if(!$this->driverType) return null;
+        if(! $this->driverType) {
+            return null;
+        }
 
-        if($this->cachedDriver) return $this->cachedDriver;
+        if($this->cachedDriver) {
+            return $this->cachedDriver;
+        }
 
         return $this->cachedDriver = app(DriverFactory::class)->create($this->driverType);
     }
@@ -70,7 +74,9 @@ class FileFieldChooseExternalComponent extends Component
     {
         $this->validate(['driverId' => 'required'], ['driverId.required' => 'De id of link is verplicht in te vullen']);
 
-        if(!$this->driverId) return;
+        if(! $this->driverId) {
+            return;
+        }
 
         /** @var Driver $driver */
         $driver = $this->getDriver();
