@@ -51,7 +51,7 @@ class FileApplicationTest extends ChiefTestCase
             ],
         ]);
 
-        app(FileApplication::class)->updateFieldValues($this->model->modelReference()->get(), 'thumb', 'nl', $this->model->asset('thumb', 'nl')->id, [
+        app(FileApplication::class)->updateAssociatedAssetData($this->model->modelReference()->get(), 'thumb', 'nl', $this->model->asset('thumb', 'nl')->id, [
             'caption' => 'I belong to this file',
         ]);
 

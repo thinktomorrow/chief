@@ -2,22 +2,19 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
-use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
-use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
 class FileFieldEditComponent extends Component
 {
     use ShowsAsDialog;
     use WithFileUploads;
+    use InteractsWithForm;
 
     public $parentId;
     public string $modelReference;
@@ -26,8 +23,6 @@ class FileFieldEditComponent extends Component
 
     public ?PreviewFile $previewFile = null;
     public ?PreviewFile $replacedPreviewFile = null;
-    public $form = [];
-    public $components = [];
     public $file = null;
 
     public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
@@ -37,7 +32,7 @@ class FileFieldEditComponent extends Component
         $this->locale = $locale;
         $this->parentId = $parentId;
 
-        $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
+        $this->setComponents($components);
     }
 
     public function getListeners()
@@ -54,30 +49,28 @@ class FileFieldEditComponent extends Component
         $this->clearValidation();
     }
 
-    public function getComponents(): array
-    {
-        return array_map(function ($componentArray) {
-            return $componentArray['class']::fromLivewire($componentArray);
-        }, $this->components);
-    }
-
     public function open($value)
     {
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
+
+        $this->addAssetComponents();
 
         $this->isOpen = true;
     }
 
     public function close()
     {
-        $this->reset(['previewFile', 'form']);
+        $this->reset(['previewFile', 'form' ,'components']);
         $this->isOpen = false;
     }
 
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
-        $this->extractFormFromPreviewFile();
+
+        $this->form['basename'] = $this->previewFile->getBaseName();
+
+        $this->extractFormComponents();
     }
 
     public function updatedFile(): void
@@ -88,25 +81,6 @@ class FileFieldEditComponent extends Component
 
         $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
         $this->syncForm();
-    }
-
-    private function extractFormFromPreviewFile()
-    {
-        $this->form['basename'] = $this->previewFile->getBaseName();
-
-        foreach ($this->components as $componentArray) {
-            $component = $componentArray['class']::fromLivewire($componentArray);
-
-            if (! $component instanceof Field) {
-                continue;
-            }
-
-            Arr::set(
-                $this->form,
-                $component->getKey(),
-                data_get($this->previewFile->fieldValues, $component->getKey())
-            );
-        }
     }
 
     private function syncForm()
@@ -174,44 +148,14 @@ class FileFieldEditComponent extends Component
 
         if ($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
-            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
+
+            app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
 
         $this->emitUp('assetUpdated', $this->previewFile);
 
         $this->close();
         $this->clearValidation();
-    }
-
-    /**
-     * Validation is performed for all fields
-     * Each field is parsed for the proper validation rules and messages.
-     */
-    private function validateForm(): void
-    {
-        $rules = [
-            'form.basename' => ['required', 'min:1', 'max:200'],
-        ];
-
-        $messages = [];
-
-        $validationAttributes = [
-            'form.basename' => 'bestandsnaam',
-        ];
-
-        foreach ($this->getComponents() as $component) {
-            if ($component instanceof Field) {
-
-                $component->name(FormKey::replaceDotsByBrackets(LivewireFieldName::get($component->getName())));
-
-                $validationParameters = ValidationParameters::make($component);
-                $rules = array_merge($rules, $validationParameters->getRules());
-                $messages = array_merge($messages, $validationParameters->getMessages());
-                $validationAttributes = array_merge($validationAttributes, $validationParameters->getAttributes());
-            }
-        }
-
-        $this->validate($rules, $messages, $validationAttributes);
     }
 
     public function render()

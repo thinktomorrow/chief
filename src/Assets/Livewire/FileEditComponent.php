@@ -2,23 +2,26 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
+use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 
 class FileEditComponent extends Component
 {
     use ShowsAsDialog;
     use WithFileUploads;
+    use InteractsWithForm;
 
     public $parentId;
 
     public ?PreviewFile $previewFile = null;
     public ?PreviewFile $replacedPreviewFile = null;
-    public $form = [];
     public $file = null;
 
     public function mount(string $parentId)
@@ -38,24 +41,25 @@ class FileEditComponent extends Component
     public function open($value)
     {
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
+
         $this->isOpen = true;
     }
 
     public function close()
     {
-        $this->reset(['previewFile','form']);
+        $this->reset(['previewFile','form', 'components']);
         $this->isOpen = false;
     }
 
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
-        $this->extractFormFromPreviewFile();
-    }
 
-    public function getComponents(): array
-    {
-        return [];
+        $this->form['basename'] = $this->previewFile->getBaseName();
+
+        $this->addAssetComponents();
+
+        $this->extractFormComponents();
     }
 
     public function updatedFile(): void
@@ -65,11 +69,6 @@ class FileEditComponent extends Component
         }
         $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
         $this->syncForm();
-    }
-
-    private function extractFormFromPreviewFile()
-    {
-        $this->form['basename'] = $this->previewFile->getBaseName();
     }
 
     private function syncForm()
@@ -128,6 +127,7 @@ class FileEditComponent extends Component
 
         if($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
+            app(FileApplication::class)->updateAssetData($this->previewFile->mediaId, $this->form);
         }
 
         // Update form values
@@ -136,19 +136,6 @@ class FileEditComponent extends Component
         $this->emitUp('assetUpdated', $this->previewFile);
 
         $this->close();
-    }
-
-    /**
-     * Validation is performed for all fields
-     * Each field is parsed for the proper validation rules and messages.
-     */
-    private function validateForm(): void
-    {
-        $this->validate([
-            'form.basename' => ['required','min:1','max:200'],
-        ], [], [
-            'form.basename' => 'bestandsnaam',
-        ]);
     }
 
     public function render()

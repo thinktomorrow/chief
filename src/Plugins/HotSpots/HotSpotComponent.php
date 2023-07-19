@@ -18,20 +18,14 @@ class HotSpotComponent extends Component
     use ShowsAsDialog;
 
     public $parentId;
-    public string $modelReference;
-    public string $fieldKey;
-    public string $locale;
 
     public ?PreviewFile $previewFile = null;
     public $form = [];
     public $components = [];
     public $file = null;
 
-    public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
+    public function mount(string $parentId, array $components = [])
     {
-        $this->modelReference = $modelReference;
-        $this->fieldKey = $fieldKey;
-        $this->locale = $locale;
         $this->parentId = $parentId;
 
         $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
@@ -124,7 +118,7 @@ class HotSpotComponent extends Component
 
         if($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
-            app(FileApplication::class)->updateFieldValues($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
+            app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
 
         if($this->replacedPreviewFile) {

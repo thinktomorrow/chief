@@ -93,29 +93,32 @@
 
     <div class="space-y-6 grow">
 
+        @if(count($this->getComponents()) > 0)
             <div class="py-6 space-y-2 border-y border-grey-100">
-                <h2 class="text-sm tracking-wider uppercase text-grey-500">Gegevens op deze pagina</h2>
+                <h2 class="text-sm tracking-wider uppercase text-grey-500">Gegevens van de asset</h2>
 
                 <div class="space-y-6">
+                    {{-- TODO(ben): add alt text field --}}
                     @foreach($this->getComponents() as $component)
                         {{ $component }}
                     @endforeach
                 </div>
             </div>
+        @endif
 
-            <div class="space-y-2">
-                @foreach($errors->all() as $error)
-                    <x-chief::inline-notification type="error">
-                        {{ ucfirst($error) }}
-                    </x-chief::inline-notification>
-                @endforeach
-            </div>
+        <div class="space-y-2">
+            @foreach($errors->all() as $error)
+                <x-chief::inline-notification type="error">
+                    {{ ucfirst($error) }}
+                </x-chief::inline-notification>
+            @endforeach
+        </div>
 
-            <div>
-                <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                    Opslaan
-                </button>
-            </div>
+        <div>
+            <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                Opslaan
+            </button>
+        </div>
     </div>
 @endif
 
