@@ -6,7 +6,7 @@
     <div class="space-y-4">
         @if($resource->allowInlineSorting() && $possibleToSortInline)
             <p class="body-dark body">
-                Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
+                Deze items worden op de site weergegeven volgens de handmatige sortering.
             </p>
 
             <button data-sortable-toggle class="btn btn-primary">
@@ -18,7 +18,7 @@
             </p>
         @else
             <p class="body-dark body">
-                Deze pagina's worden op de site weergegeven volgens een handmatige sortering.
+                Deze items worden op de site weergegeven volgens de handmatige sortering.
             </p>
 
             <a href="{{ $manager->route('index-for-sorting') }}" class="btn btn-primary">Sorteer handmatig</a>

@@ -31,7 +31,7 @@ class DeleteFragment
     {
         try {
             // This gives an error when entity_id contains of integer ids (like for fragmentModel) and uuids.
-            $this->detachAsset->detachAll($fragmentModel);
+            $this->detachAsset->handleAll($fragmentModel);
         } catch (\Exception $e) {
             report($e);
         }

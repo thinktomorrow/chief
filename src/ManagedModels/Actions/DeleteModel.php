@@ -38,7 +38,7 @@ class DeleteModel
             DB::beginTransaction();
 
             if ($model instanceof HasAsset) {
-                $this->detachAsset->detachAll($model);
+                $this->detachAsset->handleAll($model);
             }
 
             if ($model instanceof FragmentsOwner) {

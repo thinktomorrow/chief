@@ -2,6 +2,7 @@
     <a
         {{ $attributes->merge($getCustomAttributes()) }}
         href="{{ $getUrl() }}"
+        target="{{ $getTarget() }}"
         title="{{ $getHint() }}"
         class="font-medium body-dark hover:underline"
     >
