@@ -46,7 +46,7 @@ class FileApplication
         $resource = $this->registry->findResourceByModel($model::class);
 
         // Split model specific values and generic ones
-        $fieldKeys = array_map(fn($field) => $field->getKey(), $resource->field($model, $fieldKey)->getComponents());
+        $fieldKeys = array_map(fn ($field) => $field->getKey(), $resource->field($model, $fieldKey)->getComponents());
         $modelValues = Arr::only($values, $fieldKeys);
         $genericValues = Arr::except($values, $fieldKeys);
 

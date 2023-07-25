@@ -35,7 +35,7 @@ trait InteractsWithForm
             if(method_exists($asset, 'fields')) {
                 $this->components = [
                     ...$this->initialComponents,
-                    ...array_map(fn ($component) => $component->toLivewire(), iterator_to_array(Asset::find($this->previewFile->mediaId)->fields()))
+                    ...array_map(fn ($component) => $component->toLivewire(), iterator_to_array(Asset::find($this->previewFile->mediaId)->fields())),
                 ];
             }
         }
