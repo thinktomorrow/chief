@@ -8,6 +8,8 @@ use Thinktomorrow\AssetLibrary\Application\ReplaceMedia;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssociatedAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -42,6 +44,10 @@ class FileApplication
     public function updateAssociatedAssetData(string $modelReference, string $fieldKey, string $locale, string $assetId, array $values): void
     {
         $model = ModelReference::fromString($modelReference)->instance();
+
+        if($model instanceof FragmentModel) {
+            $model = $this->fragmentFactory($model);
+        }
 
         $resource = $this->registry->findResourceByModel($model::class);
 
@@ -96,5 +102,12 @@ class FileApplication
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
 
         $newAsset->delete();
+    }
+
+    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
+    {
+        return ModelReference::fromString($fragmentModel->model_reference)
+            ->instance()
+            ->setFragmentModel($fragmentModel);
     }
 }
