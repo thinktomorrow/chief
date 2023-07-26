@@ -76,7 +76,7 @@ class UpdateFileField
         // Avoid asset duplication
         foreach ($values as $orderIndex => $assetValues) {
 
-            if($existingAssetIds->contains($assetValues['id'])) {
+            if ($existingAssetIds->contains($assetValues['id'])) {
                 continue;
             }
 
