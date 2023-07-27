@@ -12,7 +12,7 @@ class UpdateSettingTest extends ChiefTestCase
 {
     use SettingFormParams;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

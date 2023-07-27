@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class DeleteMenuItemTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

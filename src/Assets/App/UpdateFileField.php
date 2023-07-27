@@ -15,8 +15,8 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 
 class UpdateFileField
 {
-    private CreateAsset $createAsset;
     protected AddAsset $addAsset;
+    private CreateAsset $createAsset;
     private ReorderAssets $reorderAssets;
 
     /** @var string the media disk where the files should be stored. */
@@ -40,6 +40,7 @@ class UpdateFileField
         $existingAssetIds = $model->assetRelation()->get()->pluck('id');
 
         foreach (data_get($input, 'files.' . $field->getName(), []) as $locale => $values) {
+
             $assetsForUpload = $values['uploads'] ?? [];
             $assetsForAttach = $values['attach'] ?? [];
             $assetsForDeletion = $values['queued_for_deletion'] ?? [];
@@ -71,6 +72,28 @@ class UpdateFileField
         }
     }
 
+    private function sluggifyFilename(string $filename): string
+    {
+        if (false === strpos($filename, '.')) {
+            return $filename;
+        }
+
+        $extension = substr($filename, strrpos($filename, '.') + 1);
+        $filename = substr($filename, 0, strrpos($filename, '.'));
+
+        return Str::slug($filename) . '.' . $extension;
+    }
+
+    protected function getDisk(): string
+    {
+        return $this->disk;
+    }
+
+    protected function setDisk(string $disk): void
+    {
+        $this->disk = $disk;
+    }
+
     private function handleAttach(HasAsset $model, File $field, string $locale, array $values, Collection $existingAssetIds): void
     {
         // Avoid asset duplication
@@ -96,27 +119,5 @@ class UpdateFileField
     private function handleReOrder(HasAsset $model, File $field, string $locale, Collection $orderedAssetIds): void
     {
         $this->reorderAssets->handle($model, $field->getKey(), $locale, $orderedAssetIds->all());
-    }
-
-    private function sluggifyFilename(string $filename): string
-    {
-        if (false === strpos($filename, '.')) {
-            return $filename;
-        }
-
-        $extension = substr($filename, strrpos($filename, '.') + 1);
-        $filename = substr($filename, 0, strrpos($filename, '.'));
-
-        return Str::slug($filename) . '.' . $extension;
-    }
-
-    protected function setDisk(string $disk): void
-    {
-        $this->disk = $disk;
-    }
-
-    protected function getDisk(): string
-    {
-        return $this->disk;
     }
 }

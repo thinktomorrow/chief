@@ -9,7 +9,7 @@ class PageRouteResolverTest extends ChiefTestCase
 {
     private $article;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -20,7 +20,7 @@ class PageRouteResolverTest extends ChiefTestCase
         });
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         // Reset the page route resolver.
         app(PageRouteResolver::class)->define(null);
@@ -32,7 +32,7 @@ class PageRouteResolverTest extends ChiefTestCase
     public function a_default_route_resolver_can_be_set()
     {
         // Add links so our url method works properly. These slugs will however be overridden by our custom route resolver.
-        $this->updateLinks($this->article, ['nl' => 'fake-nl','en' => 'fake-en']);
+        $this->updateLinks($this->article, ['nl' => 'fake-nl', 'en' => 'fake-en']);
 
         $this->assertEquals('foobar-nl', $this->article->url());
         $this->assertEquals('foobar-en', $this->article->url('en'));

@@ -4,6 +4,7 @@ namespace Fields\Validation;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -19,7 +20,7 @@ class ValidateFileTest extends ChiefTestCase
     private $model;
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -193,7 +194,6 @@ class ValidateFileTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
             ->save();
 
-
         PageWithAssets::setFieldsDefinition(function () {
             return [
                 File::make('thumb')->rules(['dimensions:min_width=300']),
@@ -221,53 +221,168 @@ class ValidateFileTest extends ChiefTestCase
     /** @test */
     public function it_can_validate_a_max_filesize()
     {
-        $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.png', '1000', '800')],
-            'en' => [],
+        UploadedFile::fake()->image('image.png', '1000', '800')->storeAs('test', 'image-temp-name.png');
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->locales(['nl', 'en'])->rules('max:1'),
+            ];
+        });
+
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name.png'),
+                            'originalName' => 'image.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+                'en' => [],
+            ],
         ]);
 
-        $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb trans NL is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.thumb_trans.nl'));
+        $response->assertSessionHasErrors('files.thumb.nl');
+        $this->assertStringContainsString('thumb NL is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.thumb.nl'));
 
-        $this->assertCount(0, $this->model->assets('thumb_trans'));
+        $this->assertCount(0, $this->model->assets('thumb'));
     }
 
     /** @test */
     public function it_can_validate_a_min_filesize()
     {
-        $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.png', '101', '101')],
-            'en' => [],
+        UploadedFile::fake()->image('image.png', '10', '80')->storeAs('test', 'image-temp-name.png');
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->locales(['nl', 'en'])->rules('min:10'),
+            ];
+        });
+
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name.png'),
+                            'originalName' => 'image.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+                'en' => [],
+            ],
         ]);
 
-        $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb trans NL is te klein en dient groter te zijn dan', session()->get('errors')->first('files.thumb_trans.nl'));
+        $response->assertSessionHasErrors('files.thumb.nl');
+        $this->assertStringContainsString('thumb NL is te klein en dient groter te zijn dan', session()->get('errors')->first('files.thumb.nl'));
 
-        $this->assertCount(0, $this->model->assets('thumb_trans'));
+        $this->assertCount(0, $this->model->assets('thumb'));
     }
 
     /** @test */
     public function it_can_validate_a_mimetype()
     {
-        $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.jpg', '200', '200')],
-            'en' => [],
+        UploadedFile::fake()->image('image.png', '10', '80')->storeAs('test', 'image-temp-name.png');
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->locales(['nl', 'en'])->rules('mimetypes:image/jpg'),
+            ];
+        });
+
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name.png'),
+                            'originalName' => 'image.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+                'en' => [],
+            ],
         ]);
 
-        $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb trans NL is niet het juiste bestandstype', session()->get('errors')->first('files.thumb_trans.nl'));
+        $response->assertSessionHasErrors('files.thumb.nl');
+        $this->assertStringContainsString('thumb NL is niet het juiste bestandstype', session()->get('errors')->first('files.thumb.nl'));
 
-        $this->assertCount(0, $this->model->assets('thumb_trans'));
+        $this->assertCount(0, $this->model->assets('thumb'));
     }
 
     /** @test */
-    public function it_passed_file_validation_when_there_are_already_images_for_model_present()
+    public function it_can_validate_a_mimetype_on_adding_asset()
     {
-        $response = $this->uploadFile('thumb_trans', [
-            'nl' => [2 => 2], // indicates there is already an asset on this model attached.
-            'en' => [],
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
+            ->save();
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->rules(['mimetypes:image/jpg']),
+            ];
+        });
+
+        $response = $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), [
+            'files' => [
+                'thumb' => [
+                    'nl' => [
+                        'attach' => [
+                            ['id' => $asset->id],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
-        $response->assertSessionHasNoErrors();
+        $response->assertSessionHasErrors('files.thumb.nl');
+        $this->assertStringContainsString('thumb is niet het juiste bestandstype', session()->get('errors')->first('files.thumb.nl'));
+
+        $this->assertCount(0, $this->model->assets('thumb'));
+    }
+
+    /** @test */
+    public function test_file_validation_applies_to_already_aded_images_as_well()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
+            ->save();
+
+        app(AddAsset::class)->handle($this->model, $asset, 'thumb', 'nl', 0, []);
+
+        $this->assertCount(1, $this->model->assets('thumb'));
+
+        PageWithAssets::setFieldsDefinition(function () {
+            return [
+                File::make('thumb')->rules(['mimetypes:image/jpg']),
+            ];
+        });
+
+        $response = $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), [
+            'files' => [
+                'thumb' => [
+                    'nl' => [
+                        'attach' => [
+                            ['id' => $asset->id],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $response->assertSessionHasErrors('files.thumb.nl');
+        $this->assertStringContainsString('thumb is niet het juiste bestandstype', session()->get('errors')->first('files.thumb.nl'));
+
+        $this->assertCount(1, $this->model->assets('thumb'));
     }
 }

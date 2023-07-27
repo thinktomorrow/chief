@@ -90,11 +90,11 @@ class File extends Component implements Field
         // For checking the uploads, we convert the livewire upload values to UploadedFile instances first
         $preppedPayload = [];
 
-        foreach($ruleKeys as $ruleKey) {
-            if(Arr::has($payload, $ruleKey.'.uploads')) {
-                $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey.'.uploads'));
-            } elseif(Arr::has($payload, $ruleKey.'.attach')) {
-                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey.'.attach'));
+        foreach ($ruleKeys as $ruleKey) {
+            if (Arr::has($payload, $ruleKey . '.uploads')) {
+                $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey . '.uploads'));
+            } elseif (Arr::has($payload, $ruleKey . '.attach')) {
+                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey . '.attach'));
             }
         }
 
@@ -122,6 +122,6 @@ class File extends Component implements Field
         return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
             return $asset->pivot->locale == $locale;
         })->sortBy('pivot.order')
-        ->all();
+            ->all();
     }
 }

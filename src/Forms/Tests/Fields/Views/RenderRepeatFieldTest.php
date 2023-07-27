@@ -4,9 +4,9 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields\Views;
 
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class RenderRepeatFieldTest extends TestCase
+class RenderRepeatFieldTest extends ChiefTestCase
 {
     public function setUp(): void
     {
@@ -42,7 +42,7 @@ class RenderRepeatFieldTest extends TestCase
     public function it_can_render_a_repeat_field_with_localized_content()
     {
         $component = Repeat::make('xxx')->items([
-            Text::make('title')->locales(['nl','en']),
+            Text::make('title')->locales(['nl', 'en']),
         ])->value([
             [
                 'title' => ['nl' => 'first title nl', 'en' => 'first title en'],
@@ -64,7 +64,7 @@ class RenderRepeatFieldTest extends TestCase
     public function when_repeat_field_misses_locale_it_shows_default()
     {
         $component = Repeat::make('xxx')->items([
-            Text::make('title')->locales(['nl','fr']),
+            Text::make('title')->locales(['nl', 'fr']),
         ])->value([
             [
                 'title' => ['nl' => 'first title nl'],

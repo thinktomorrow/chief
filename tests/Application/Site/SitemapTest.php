@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site;
 
 use Carbon\Carbon;
-use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
@@ -20,32 +19,28 @@ class SitemapTest extends ChiefTestCase
     private $sitemapXml;
     private $mockHandler;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        ArticlePage::migrateUp();
-
-        $this->carbon = Carbon::today();
-        Carbon::setTestNow($this->carbon);
-
-        $this->mockHandler = new MockHandler();
-        $this->sitemapXml = new SitemapXml(new Client(['handler' => $this->mockHandler]));
-
-        $page = ArticlePage::create(['current_state' => PageState::published]);
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
-
-        $page2 = ArticlePage::create(['current_state' => PageState::published]);
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo', 'model_type' => $page2->getMorphClass(), 'model_id' => $page2->id]);
-
-        $this->mockHandler->append(new Response(200));
-        $this->mockHandler->append(new Response(200));
-    }
-
     /** @test */
     public function it_can_generate_an_xml_per_locale()
     {
         $this->assertEquals($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
+    }
+
+    private function getExpectedXml()
+    {
+        return '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    <url>
+        <loc>http://localhost/bar</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+    <url>
+        <loc>http://localhost/foo</loc>
+            <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+            </url>
+</urlset>
+';
     }
 
     /** @test */
@@ -77,23 +72,25 @@ class SitemapTest extends ChiefTestCase
         $this->assertEquals($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
     }
 
-    private function getExpectedXml()
+    public function setUp(): void
     {
-        return '<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-    <url>
-        <loc>http://localhost/bar</loc>
-        <lastmod>'.$this->carbon->format(DateTime::ATOM).'</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-            </url>
-    <url>
-        <loc>http://localhost/foo</loc>
-        <lastmod>'.$this->carbon->format(DateTime::ATOM).'</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-            </url>
-</urlset>
-';
+        parent::setUp();
+
+        ArticlePage::migrateUp();
+
+        $this->carbon = Carbon::today();
+        Carbon::setTestNow($this->carbon);
+
+        $this->mockHandler = new MockHandler();
+        $this->sitemapXml = new SitemapXml(new Client(['handler' => $this->mockHandler]));
+
+        $page = ArticlePage::create(['current_state' => PageState::published]);
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+
+        $page2 = ArticlePage::create(['current_state' => PageState::published]);
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo', 'model_type' => $page2->getMorphClass(), 'model_id' => $page2->id]);
+
+        $this->mockHandler->append(new Response(200));
+        $this->mockHandler->append(new Response(200));
     }
 }

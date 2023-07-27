@@ -10,11 +10,11 @@ class NestableModelRenderTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->app['view']->addNamespace('test-views', __DIR__.'/../../../Shared/stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__ . '/../../../Shared/stubs/views');
 
         chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
@@ -26,7 +26,7 @@ class NestableModelRenderTest extends ChiefTestCase
         $node = $this->findNode('third');
 
         $this->assertStringContainsString(
-            '<h1>'.$node->getModel()->title.'</h1>',
+            '<h1>' . $node->getModel()->title . '</h1>',
             $node->getModel()->response()->getOriginalContent(),
         );
     }
@@ -36,7 +36,7 @@ class NestableModelRenderTest extends ChiefTestCase
         $node = $this->findNode('first');
 
         $this->assertStringContainsString(
-            '<h1>'.$node->getModel()->title.'</h1>',
+            '<h1>' . $node->getModel()->title . '</h1>',
             $node->getModel()->response()->getOriginalContent(),
         );
     }

@@ -10,9 +10,9 @@ use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Fields\Time;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class RenderTextualFieldsTest extends TestCase
+class RenderTextualFieldsTest extends ChiefTestCase
 {
     private array $classes;
 
@@ -81,7 +81,7 @@ class RenderTextualFieldsTest extends TestCase
     /** @test */
     public function it_can_render_a_custom_view()
     {
-        $this->app['view']->addNamespace('test-views', __DIR__.'/../../stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__ . '/../../stubs/views');
 
         $this->assertStringContainsString(
             'this is a custom field view',

@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class HasPeriodTraitTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

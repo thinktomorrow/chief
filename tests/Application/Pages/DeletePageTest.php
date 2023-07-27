@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -19,16 +19,6 @@ final class DeletePageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        ArticlePage::migrateUp();
-
-        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
-        $this->manager = $this->manager(ArticlePage::class);
-    }
-
     /** @test */
     public function a_deleted_model_cannot_be_edited()
     {
@@ -38,7 +28,7 @@ final class DeletePageTest extends ChiefTestCase
         ]);
 
         $this->asAdmin()->get($this->manager->route('edit', $model))
-             ->assertStatus(302);
+            ->assertStatus(302);
     }
 
     /** @test */
@@ -95,7 +85,21 @@ final class DeletePageTest extends ChiefTestCase
             'title' => 'first article',
         ]);
 
-        app(AddAsset::class)->add($model, UploadedFile::fake()->image('image.png'), 'image', 'nl');
+        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
+
+        $this->saveFileField(new ArticlePageResource(), $model, 'thumb', [
+            'nl' => [
+                'uploads' => [
+                    [
+                        'id' => 'xxx',
+                        'path' => Storage::path('test/image-temp-name.png'),
+                        'originalName' => 'image.png',
+                        'mimeType' => 'image/png',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertCount(1, Asset::all());
 
         $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'));
 
@@ -118,5 +122,15 @@ final class DeletePageTest extends ChiefTestCase
         $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'));
 
         $this->assertFragmentCount($model, 0);
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        ArticlePage::migrateUp();
+
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
     }
 }

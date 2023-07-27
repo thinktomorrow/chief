@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic\QuoteWithAstrotomicTranslations;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -13,14 +14,6 @@ use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 class StorePageTest extends ChiefTestCase
 {
     use PageFormParams;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        ArticlePage::migrateUp();
-        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
-    }
 
     /** @test */
     public function it_can_create_a_model()
@@ -101,6 +94,8 @@ class StorePageTest extends ChiefTestCase
     /** @test */
     public function it_can_upload_a_file_field()
     {
+        UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
+
         $this->asAdmin()->post($this->manager(ArticlePage::class)->route('store'), [
             'title' => 'required titel',
             'custom' => 'new-title',
@@ -112,12 +107,27 @@ class StorePageTest extends ChiefTestCase
             'files' => [
                 'thumb' => [
                     'nl' => [
-                        UploadedFile::fake()->image('tt-favicon.png'),
+                        'uploads' => [
+                            [
+                                'id' => 'xxx',
+                                'path' => Storage::path('test/image-temp-name.png'),
+                                'originalName' => 'tt-favicon.png',
+                                'mimeType' => 'image/png',
+                            ],
+                        ],
                     ],
                 ],
             ],
         ]);
 
         $this->assertEquals('tt-favicon.png', ArticlePage::first()->asset('thumb')->filename());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        ArticlePage::migrateUp();
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
     }
 }

@@ -2,72 +2,76 @@
 
 namespace Thinktomorrow\Chief\Forms\Tests\File;
 
-use function app;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
+use function app;
 
 class SortFilesTest extends ChiefTestCase
 {
     use PageFormParams;
     use UploadsFile;
 
-    private $page;
+    private $model;
     private $manager;
+    private $asset;
+    private $asset2;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->page = $this->setupAndCreateArticle();
-        $this->manager = $this->manager($this->page);
+        $this->model = $this->setupAndCreateArticle();
+        $this->manager = $this->manager($this->model);
+
+        $this->asset = app(CreateAsset::class)->uploadedFile(UploadedFile::fake()->image('image-nl.png'))->save();
+        $this->asset2 = app(CreateAsset::class)->uploadedFile(UploadedFile::fake()->image('image-en.png'))->save();
     }
 
-    /** @test */
-    public function assets_can_be_sorted()
+    public function test_assets_can_be_sorted()
     {
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), 'thumb_trans', 'nl');
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image2.png'), 'thumb_trans', 'nl');
+        app(AddAsset::class)->handle($this->model, $this->asset, 'thumb_trans', 'nl', 0, []);
+        app(AddAsset::class)->handle($this->model, $this->asset2, 'thumb_trans', 'nl', 0, []);
 
-        $images = $this->page->fresh()->assets('thumb_trans');
-
-        $this->uploadFileOrder('thumb_trans', [
-            'nl' => [
-                'thumb_trans' => $images->last()->id . ',' . $images->first()->id,
+        $this->uploadFile($this->model, [
+            'thumb_trans' => [
+                'nl' => [
+                    'order' => [$this->asset2->id, $this->asset->id],
+                ],
             ],
         ]);
 
-        $assetIds = $this->page->fresh()->assets('thumb_trans')->pluck('id')->toArray();
-
-        $this->assertEquals([$images->last()->id, $images->first()->id], $assetIds);
+        $assets = $this->model->assets('thumb_trans', 'nl');
+        $this->assertEquals($this->asset2->id, $assets[0]->id);
+        $this->assertEquals($this->asset->id, $assets[1]->id);
     }
 
-    /** @test */
-    public function localized_assets_can_be_sorted()
+    public function test_localized_assets_can_be_sorted()
     {
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), 'thumb_trans', 'nl');
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image2.png'), 'thumb_trans', 'nl');
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image3.png'), 'thumb_trans', 'en');
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image4.png'), 'thumb_trans', 'en');
+        app(AddAsset::class)->handle($this->model, $this->asset, 'thumb_trans', 'nl', 0, []);
+        app(AddAsset::class)->handle($this->model, $this->asset2, 'thumb_trans', 'nl', 0, []);
+        app(AddAsset::class)->handle($this->model, $this->asset, 'thumb_trans', 'en', 0, []);
+        app(AddAsset::class)->handle($this->model, $this->asset2, 'thumb_trans', 'en', 0, []);
 
-        $nl_images = $this->page->assets('thumb_trans', 'nl');
-        $en_images = $this->page->assets('thumb_trans', 'en');
-
-        $this->uploadFileOrder('thumb_trans', [
-            'nl' => [
-                'files-' . 'thumb_trans' => $nl_images[1]->id . ',' . $nl_images[0]->id,
-            ],
-            'en' => [
-                'files-' . 'thumb_trans' => $en_images[3]->id . ',' . $en_images[2]->id,
+        $this->uploadFile($this->model, [
+            'thumb_trans' => [
+                'nl' => [
+                    'order' => [$this->asset2->id, $this->asset->id],
+                ],
+                'en' => [
+                    'order' => [$this->asset->id, $this->asset2->id],
+                ],
             ],
         ]);
+        $assets = $this->model->assets('thumb_trans', 'nl');
+        $this->assertEquals($this->asset2->id, $assets[0]->id);
+        $this->assertEquals($this->asset->id, $assets[1]->id);
 
-        $nl_newImagesSorted = $this->page->refresh()->assets('thumb_trans', 'nl')->pluck('id')->toArray();
-        $en_newImagesSorted = $this->page->assets('thumb_trans', 'en')->pluck('id')->toArray();
-
-        $this->assertEquals([$nl_images[1]->id,$nl_images[0]->id], $nl_newImagesSorted);
-        $this->assertEquals([$en_images[3]->id, $en_images[2]->id], $en_newImagesSorted);
+        $assets = $this->model->assets('thumb_trans', 'en');
+        $this->assertEquals($this->asset->id, $assets[0]->id);
+        $this->assertEquals($this->asset2->id, $assets[1]->id);
     }
 }

@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class UpdateMenuItemTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,6 +52,27 @@ class UpdateMenuItemTest extends ChiefTestCase
         $item = MenuItem::first();
         $this->assertEquals('foobar', $item->label);
         $this->assertEquals('https://thinktomorrow.be', $item->url);
+    }
+
+    private function validParams($overrides = [])
+    {
+        $params = [
+            'type' => 'custom',
+            'allow_parent' => false,      // flag to allow nesting or not
+            'parent_id' => null,
+            'trans' => [
+                'nl' => [
+                    'label' => 'nieuw label',
+                    'url' => 'http://google.com',
+                ],
+            ],
+        ];
+
+        foreach ($overrides as $key => $value) {
+            Arr::set($params, $key, $value);
+        }
+
+        return $params;
     }
 
     /** @test */
@@ -192,26 +213,5 @@ class UpdateMenuItemTest extends ChiefTestCase
             ]));
 
         $this->assertEquals('https://thinktomorrow.be', $menuitem->fresh()->url);
-    }
-
-    private function validParams($overrides = [])
-    {
-        $params = [
-            'type' => 'custom',
-            'allow_parent' => false,      // flag to allow nesting or not
-            'parent_id' => null,
-            'trans' => [
-                'nl' => [
-                    'label' => 'nieuw label',
-                    'url' => 'http://google.com',
-                ],
-            ],
-        ];
-
-        foreach ($overrides as $key => $value) {
-            Arr::set($params, $key, $value);
-        }
-
-        return $params;
     }
 }

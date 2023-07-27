@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Authorization;
 
+use RuntimeException;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
@@ -9,7 +10,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class GenerateRoleCommandTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,7 +20,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
     /** @test */
     public function it_requires_a_name_parameter()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->artisan('chief:role');
     }

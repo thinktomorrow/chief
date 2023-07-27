@@ -17,7 +17,7 @@ final class NestableRepositoryTest extends ChiefTestCase
 
     private NestableRepository $repository;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

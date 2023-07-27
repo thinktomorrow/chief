@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
@@ -14,45 +15,6 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class DuplicatePageTest extends ChiefTestCase
 {
     private $source;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        ArticlePage::migrateUp();
-        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
-        chiefRegister()->fragment(SnippetStub::class);
-
-        $articlePage = ArticlePage::create([
-            'current_state' => PageState::published,
-            'created_at' => now()->subDay(),
-            'updated_at' => now()->subDay(),
-        ]);
-
-        $this->asAdmin()->put($this->manager($articlePage)->route('update', $articlePage), [
-            'title' => 'new title',
-            'custom' => 'custom value',
-            'trans' => [
-                'nl' => [
-                    'content_trans' => 'nl content',
-                ],
-            ],
-            'files' => [
-                'thumb' => [
-                    'nl' => [
-                        UploadedFile::fake()->image('tt-favicon.png'),
-                    ],
-                ],
-            ],
-        ]);
-
-        $this->source = $articlePage->fresh();
-
-        $this->source->changeState(PageState::KEY, PageState::published);
-        $this->source->created_at = now()->subDay();
-        $this->source->updated_at = now()->subDay();
-        $this->source->save();
-    }
 
     /** @test */
     public function it_can_duplicate_all_fields()
@@ -73,7 +35,7 @@ class DuplicatePageTest extends ChiefTestCase
         );
 
         // state is set to draft
-        $this->assertEquals(PageState::draft, $copiedModel->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY));
+        $this->assertEquals(PageState::draft, $copiedModel->getState(PageState::KEY));
 
         // timestamps should be the time of copy
         $this->assertTrue($this->source->created_at->lt($copiedModel->created_at));
@@ -97,7 +59,7 @@ class DuplicatePageTest extends ChiefTestCase
         $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
 
         $snippet2 = $this->createAsFragment(new SnippetStub(), $this->source, 2);
-        $response = $this->asAdmin()-> post($this->manager($this->source)->route('duplicate', $this->source));
+        $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
         $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();
 
@@ -128,5 +90,53 @@ class DuplicatePageTest extends ChiefTestCase
 
         $this->assertCount(1, $copiedModel->assets());
         $this->assertEquals($this->source->asset('thumb')->id, $copiedModel->asset('thumb')->id);
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        ArticlePage::migrateUp();
+        chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
+        chiefRegister()->fragment(SnippetStub::class);
+
+        $articlePage = ArticlePage::create([
+            'current_state' => PageState::published,
+            'created_at' => now()->subDay(),
+            'updated_at' => now()->subDay(),
+        ]);
+
+        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
+
+        $this->asAdmin()->put($this->manager($articlePage)->route('update', $articlePage), [
+            'title' => 'new title',
+            'custom' => 'custom value',
+            'trans' => [
+                'nl' => [
+                    'content_trans' => 'nl content',
+                ],
+            ],
+            'files' => [
+                'thumb' => [
+                    'nl' => [
+                        'uploads' => [
+                            [
+                                'id' => 'xxx',
+                                'path' => Storage::path('test/image-temp-name.png'),
+                                'originalName' => 'image.png',
+                                'mimeType' => 'image/png',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->source = $articlePage->fresh();
+
+        $this->source->changeState(PageState::KEY, PageState::published);
+        $this->source->created_at = now()->subDay();
+        $this->source->updated_at = now()->subDay();
+        $this->source->save();
     }
 }

@@ -8,9 +8,9 @@ use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class RenderFileFieldTest extends TestCase
+class RenderFileFieldTest extends ChiefTestCase
 {
     use RefreshDatabase;
 

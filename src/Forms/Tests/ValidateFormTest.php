@@ -3,32 +3,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests;
 
-use function config;
 use Illuminate\Support\Arr;
-use function session;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use function config;
+use function session;
 
 final class ValidateFormTest extends ChiefTestCase
 {
     private ArticlePage $model;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->model = $this->setupAndCreateArticle(['title' => 'Foobar']);
-
-        config()->set('app.fallback_locale', 'nl');
-    }
 
     /** @test */
     public function a_required_field_can_be_validated()
     {
         $this->assertValidation(
             new ArticlePage(),
-            ['title' => 'validation.required'], // TODO: why is this not translated in test?
-            //            ['title' => 'The title field is required.'],
+            ['title' => 'The title field is required.'],
             $this->payload(['title' => '']),
             $this->manager($this->model)->route('edit', $this->model),
             $this->manager($this->model)->route('update', $this->model),
@@ -37,13 +27,34 @@ final class ValidateFormTest extends ChiefTestCase
         );
     }
 
+    protected function payload($overrides = [])
+    {
+        $params = [
+            'title' => 'title updated',
+            'custom' => 'custom updated',
+            'trans' => [
+                'nl' => [
+                    'content_trans' => 'content_trans nl updated',
+                ],
+                'en' => [
+                    'content_trans' => 'content_trans en updated',
+                ],
+            ],
+        ];
+
+        foreach ($overrides as $key => $value) {
+            Arr::set($params, $key, $value);
+        }
+
+        return $params;
+    }
+
     /** @test */
     public function a_field_can_be_validated()
     {
         $this->assertValidation(
             new ArticlePage(),
-            ['title' => 'validation.min.string'],
-            //            ['title' => 'The title must be at least 4 characters.'], // TODO: why is this not translated in test?
+            ['title' => 'The title must be at least 4 characters.'],
             $this->payload(['title' => 'xx']),
             $this->manager($this->model)->route('edit', $this->model),
             $this->manager($this->model)->route('update', $this->model),
@@ -89,25 +100,12 @@ final class ValidateFormTest extends ChiefTestCase
         $this->assertNull(session('errors'));
     }
 
-    protected function payload($overrides = [])
+    public function setUp(): void
     {
-        $params = [
-            'title' => 'title updated',
-            'custom' => 'custom updated',
-            'trans' => [
-                'nl' => [
-                    'content_trans' => 'content_trans nl updated',
-                ],
-                'en' => [
-                    'content_trans' => 'content_trans en updated',
-                ],
-            ],
-        ];
+        parent::setUp();
 
-        foreach ($overrides as $key => $value) {
-            Arr::set($params, $key, $value);
-        }
+        $this->model = $this->setupAndCreateArticle(['title' => 'Foobar']);
 
-        return $params;
+        config()->set('app.fallback_locale', 'nl');
     }
 }

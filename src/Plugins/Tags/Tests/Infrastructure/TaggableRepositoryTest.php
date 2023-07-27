@@ -2,12 +2,13 @@
 
 namespace Thinktomorrow\Chief\Plugins\Tags\Tests\Infrastructure;
 
+use Generator;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories\EloquentTaggableRepository;
 
 class TaggableRepositoryTest extends TestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +28,7 @@ class TaggableRepositoryTest extends TestCase
         }
     }
 
-    private function repositories(): \Generator
+    private function repositories(): Generator
     {
         yield new EloquentTaggableRepository();
     }

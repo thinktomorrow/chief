@@ -17,7 +17,7 @@ final class CreatePageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +32,7 @@ final class CreatePageTest extends ChiefTestCase
     {
         $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('create'))
-             ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */

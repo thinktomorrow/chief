@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
-use function app;
-use function chiefRegister;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use function app;
+use function chiefRegister;
 
 class StoreFragmentTest extends ChiefTestCase
 {
@@ -81,12 +82,22 @@ class StoreFragmentTest extends ChiefTestCase
     /** @test */
     public function it_can_upload_a_file_field()
     {
+        UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
+
         $response = $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner), [
             'custom' => 'custom-value',
             'files' => [
                 'thumb' => [
                     'nl' => [
-                        UploadedFile::fake()->image('tt-favicon.png'),
+                        'uploads' => [
+                            [
+                                'id' => 'xxx',
+                                'path' => Storage::path('test/image-temp-name.png'),
+                                'originalName' => 'tt-favicon.png',
+                                'mimeType' => 'image/png',
+                                'fieldValues' => [],
+                            ],
+                        ],
                     ],
                 ],
             ],

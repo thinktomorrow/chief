@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class AdminToastTest extends TestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -22,13 +22,13 @@ class AdminToastTest extends TestCase
         $response = $this->get(route('chief.toast.get'));
 
         $response->assertSuccessful()
-                 ->assertJson(['data' => null]);
+            ->assertJson(['data' => null]);
     }
 
     /** @test */
     public function it_can_fetch_toast()
     {
-        $response = $this->asAdmin()->get(route('chief.toast.get').'?path=foo/bar&locale=nl');
+        $response = $this->asAdmin()->get(route('chief.toast.get') . '?path=foo/bar&locale=nl');
 
         $response->assertSuccessful();
         //            ->assertJson(['data' => view('chief-site::admin-toast-element')->render()]);

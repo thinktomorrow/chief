@@ -18,15 +18,7 @@ abstract class TestCase extends OrchestraTestCase
 
     protected $protectTestEnvironment = true;
 
-    protected function getPackageProviders($app)
-    {
-        return [
-            ChiefServiceProvider::class,
-            LivewireServiceProvider::class,
-        ];
-    }
-
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -36,16 +28,24 @@ abstract class TestCase extends OrchestraTestCase
         config()->set('app.fallback_locale', 'nl');
     }
 
-    protected function getEnvironmentSetUp($app)
-    {
-        //
-    }
-
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         // Clear out any memoized values
         Memoize::clear();
 
         parent::tearDown();
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            ChiefServiceProvider::class,
+            LivewireServiceProvider::class,
+        ];
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        //
     }
 }

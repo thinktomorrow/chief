@@ -24,7 +24,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 trait TestingWithManagers
 {
-    protected function setupAndCreateArticle(array $values = [], bool $withSetup = true): ArticlePage
+    public function setUpAndCreateArticle(array $values = [], bool $withSetup = true): ArticlePage
     {
         if ($withSetup) {
             ArticlePage::migrateUp();
@@ -34,7 +34,7 @@ trait TestingWithManagers
         return ArticlePage::create($values);
     }
 
-    protected function setupAndCreateArticleWithBaseSegments(array $values = [], bool $withSetup = true): ArticlePageWithBaseSegments
+    public function setUpAndCreateArticleWithBaseSegments(array $values = [], bool $withSetup = true): ArticlePageWithBaseSegments
     {
         if ($withSetup) {
             ArticlePageWithBaseSegments::migrateUp();
@@ -44,7 +44,7 @@ trait TestingWithManagers
         return ArticlePageWithBaseSegments::create($values);
     }
 
-    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true): Quote
+    public function setUpAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true): Quote
     {
         if ($withSetup) {
             Quote::migrateUp();
@@ -56,7 +56,7 @@ trait TestingWithManagers
         return $this->createAsFragment($quote, $owner, $order);
     }
 
-    protected function setupAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = []): SnippetStub
+    public function setUpAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = []): SnippetStub
     {
         if ($withSetup) {
             chiefRegister()->fragment(SnippetStub::class);
@@ -65,7 +65,7 @@ trait TestingWithManagers
         return $this->createAsFragment(new SnippetStub(), $owner, $order, $values);
     }
 
-    protected function setupAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true): Hero
+    public function setUpAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true): Hero
     {
         if ($withSetup) {
             chiefRegister()->fragment(Hero::class);
@@ -74,7 +74,7 @@ trait TestingWithManagers
         return $this->createAsFragment(new Hero(), $owner, $order);
     }
 
-    protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
+    public function setUpAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
     {
         ArticlePage::migrateUp();
 
@@ -83,7 +83,7 @@ trait TestingWithManagers
         return ArticlePage::create($values);
     }
 
-    protected function setupAndCreateArticleWithRequiredImage(array $values = []): ArticlePage
+    public function setUpAndCreateArticleWithRequiredImage(array $values = []): ArticlePage
     {
         ArticlePage::migrateUp();
 

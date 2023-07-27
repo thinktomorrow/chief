@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site;
 
+use BadMethodCallException;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
@@ -17,7 +18,7 @@ class ChiefResponseTest extends ChiefTestCase
 {
     protected $keepOriginalSiteRoute = true;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -139,7 +140,7 @@ class ChiefResponseTest extends ChiefTestCase
     {
         config()->set('chief.strict', false);
 
-        $this->expectException(\BadMethodCallException::class);
+        $this->expectException(BadMethodCallException::class);
 
         Quote::migrateUp();
         $model = Quote::create();

@@ -3,27 +3,19 @@
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
-use function route;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic\QuoteWithAstrotomicTranslations;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use function route;
 
 class UpdatePageTest extends ChiefTestCase
 {
     use PageFormParams;
 
     private ArticlePage $model;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->model = $this->setupAndCreateArticle([
-            'title' => 'Originele titel',
-        ]);
-    }
 
     /** @test */
     public function it_can_update_a_model()
@@ -101,16 +93,34 @@ class UpdatePageTest extends ChiefTestCase
     /** @test */
     public function it_can_upload_a_file_field()
     {
+        UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
+
         $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), $this->validUpdatePageParams([
             'files' => [
                 'thumb' => [
                     'nl' => [
-                        UploadedFile::fake()->image('tt-favicon.png'),
+                        'uploads' => [
+                            [
+                                'id' => 'xxx',
+                                'path' => Storage::path('test/image-temp-name.png'),
+                                'originalName' => 'tt-favicon.png',
+                                'mimeType' => 'image/png',
+                            ],
+                        ],
                     ],
                 ],
             ],
         ]));
 
         $this->assertEquals('tt-favicon.png', ArticlePage::first()->asset('thumb')->filename());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->model = $this->setupAndCreateArticle([
+            'title' => 'Originele titel',
+        ]);
     }
 }

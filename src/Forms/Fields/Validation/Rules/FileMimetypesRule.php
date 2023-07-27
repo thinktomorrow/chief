@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation\Rules;
 
-use Illuminate\Http\UploadedFile;
-
 class FileMimetypesRule extends FileRule
 {
     public function validate($attribute, array $values, $params, $validator): bool
@@ -20,32 +18,6 @@ class FileMimetypesRule extends FileRule
 
         return true;
     }
-
-    //    public function validateMimetypes($attribute, $value, $parameters)
-    //    {
-    //        //        if ($this->refersToExistingAsset($value)) {
-    //        //            return $this->validateAssetMimetypes($this->existingAsset($value), $parameters);
-    //        //        }
-    //
-    //        // Livewire uploaded file
-    //        //        if(is_array($value) && isset($value['path'])) {
-    //        //            $value = new UploadedFile($value['path'], $value['originalName']);
-    //        //        }
-    //
-    //        //        if (! $this->isValidFileInstance($value)) {
-    //        //            return $this->validateSlimMimetypes($value, $parameters);
-    //        //        }
-    //
-    //        return parent::validateMimetypes($attribute, $value, $parameters);
-    //    }
-
-    //    private function validateSlimMimetypes($value, array $parameters): bool
-    //    {
-    //        $mimetype = json_decode($value)->output->type;
-    //
-    //        return (in_array($mimetype, $parameters) ||
-    //            in_array(explode('/', $mimetype)[0] . '/*', $parameters));
-    //    }
 
     /**
      * @param $attribute

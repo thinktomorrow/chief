@@ -10,7 +10,7 @@ class SortPagesTest extends ChiefTestCase
     private $page;
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,6 +45,6 @@ class SortPagesTest extends ChiefTestCase
         $model2 = ArticlePage::create(['title' => 'Foobar 2', 'order' => 3]);
         $model3 = ArticlePage::create(['title' => 'Foobar 3', 'order' => 2]);
 
-        $this->assertEquals([1,2,3,4], ArticlePage::sortedManually()->get()->pluck('order')->toArray());
+        $this->assertEquals([1, 2, 3, 4], ArticlePage::sortedManually()->get()->pluck('order')->toArray());
     }
 }

@@ -20,7 +20,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PageChangedEventTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

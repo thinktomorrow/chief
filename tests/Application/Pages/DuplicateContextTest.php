@@ -22,7 +22,7 @@ class DuplicateContextTest extends ChiefTestCase
     private $staticFragment;
     private $fragment;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -106,7 +106,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->markTestIncomplete();
 
         $this->asAdmin()->post(route('chief.back.managers.store', 'singles'), array_merge([
-            'template' => get_class($this->page).'@'.$this->page->id,
+            'template' => get_class($this->page) . '@' . $this->page->id,
         ], $this->validPageParams()));
 
         $page = Single::find(3);

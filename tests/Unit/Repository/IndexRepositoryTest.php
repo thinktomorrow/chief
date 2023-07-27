@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\NestableArticlePage;
 
 class IndexRepositoryTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -26,6 +26,11 @@ class IndexRepositoryTest extends ChiefTestCase
             $this->assertIsIterable($repository->getPaginatedResults());
             $this->assertEmpty($repository->getPaginatedResults());
         }
+    }
+
+    private function getRepositories(): iterable
+    {
+        yield app(EloquentIndexRepository::class, ['resourceKey' => NestableArticlePage::resourceKey()]);
     }
 
     public function test_it_can_get_results()
@@ -58,10 +63,5 @@ class IndexRepositoryTest extends ChiefTestCase
 
             $this->assertCount(4, $results);
         }
-    }
-
-    private function getRepositories(): iterable
-    {
-        yield app(EloquentIndexRepository::class, ['resourceKey' => NestableArticlePage::resourceKey()]);
     }
 }

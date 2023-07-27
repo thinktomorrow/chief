@@ -17,7 +17,7 @@ final class ArchivePageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ final class ArchivePageTest extends ChiefTestCase
 
         $response = $this->asAdmin()->get($this->manager->route('archive_index'));
         $response->assertStatus(200)
-                 ->assertViewCount('models', 1);
+            ->assertViewCount('models', 1);
     }
 
     /** @test */
@@ -120,8 +120,8 @@ final class ArchivePageTest extends ChiefTestCase
 
         $this->asAdmin()
             ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'archive'), [
-            'redirect_id' => $redirectModel->modelReference()->getShort(),
-        ])->assertStatus(302);
+                'redirect_id' => $redirectModel->modelReference()->getShort(),
+            ])->assertStatus(302);
 
         $this->assertEquals(PageState::archived, $model->fresh()->getState(PageState::KEY));
 

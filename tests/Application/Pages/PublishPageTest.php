@@ -16,7 +16,7 @@ final class PublishPageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

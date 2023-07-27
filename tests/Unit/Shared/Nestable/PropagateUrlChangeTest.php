@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
@@ -11,7 +12,7 @@ class PropagateUrlChangeTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -34,6 +35,27 @@ class PropagateUrlChangeTest extends ChiefTestCase
 
         // Assert redirect is added
         $this->assertEquals('foobar', UrlRecord::findRecentRedirect(NestableModelStub::find('fifth'), 'nl')->slug);
+    }
+
+    /**
+     * @return mixed
+     * @throws BindingResolutionException
+     */
+    private function prepareModels()
+    {
+        $this->defaultNestables(true);
+
+        $node = $this->findNode('fifth');
+        $this->changeSlug($node->getModel(), 'nl', 'foobar');
+
+        $parentNode = $this->findNode('fourth');
+        $this->changeSlug($parentNode->getModel(), 'nl', 'parent');
+
+        $parentNode = $this->findNode('fourth');
+        $this->assertEquals('http://localhost/parent', $parentNode->getModel()->url());
+
+        $node = $this->findNode('fifth');
+        $this->assertEquals('http://localhost/foobar', $node->getModel()->url());
     }
 
     public function test_it_changes_url_slug_when_parent_url_changes()
@@ -89,26 +111,5 @@ class PropagateUrlChangeTest extends ChiefTestCase
 
         // Because foobar already exists, we'll keeping the former slug
         $this->assertEquals('http://localhost/existing-parent/foobar', $this->findNode('fifth')->getModel()->url());
-    }
-
-    /**
-     * @return mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    private function prepareModels()
-    {
-        $this->defaultNestables(true);
-
-        $node = $this->findNode('fifth');
-        $this->changeSlug($node->getModel(), 'nl', 'foobar');
-
-        $parentNode = $this->findNode('fourth');
-        $this->changeSlug($parentNode->getModel(), 'nl', 'parent');
-
-        $parentNode = $this->findNode('fourth');
-        $this->assertEquals('http://localhost/parent', $parentNode->getModel()->url());
-
-        $node = $this->findNode('fifth');
-        $this->assertEquals('http://localhost/foobar', $node->getModel()->url());
     }
 }

@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class VisitableUrlTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

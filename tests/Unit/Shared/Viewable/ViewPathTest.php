@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class ViewPathTest extends TestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

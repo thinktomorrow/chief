@@ -9,12 +9,12 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class StoreFilesTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         Storage::delete('test/image-temp-name.png');
 

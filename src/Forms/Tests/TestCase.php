@@ -14,6 +14,14 @@ class TestCase extends OrchestraTestCase
 {
     use UnitTestHelpers;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // Set nl as default locale for testing env
+        config()->set('app.fallback_locale', 'nl');
+    }
+
     protected function getPackageProviders($app)
     {
         return [
@@ -22,13 +30,5 @@ class TestCase extends OrchestraTestCase
             LivewireServiceProvider::class,
             AssetsServiceProvider::class,
         ];
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Set nl as default locale for testing env
-        config()->set('app.fallback_locale', 'nl');
     }
 }

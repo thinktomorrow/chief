@@ -13,7 +13,7 @@ class FileMinRuleTest extends ChiefTestCase
 {
     private $model;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -9,7 +9,6 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 class FileApplicationTest extends ChiefTestCase
@@ -17,16 +16,15 @@ class FileApplicationTest extends ChiefTestCase
     private $model;
     private Resource $resource;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        ArticlePage::migrateUp();
-        $this->model = ArticlePage::create();
+        $this->model = $this->setUpAndCreateArticle();
         $this->resource = app(ArticlePageResource::class);
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         Storage::delete('test/image-temp-name.png');
         Storage::delete('test/image-second-temp-name.jpg');

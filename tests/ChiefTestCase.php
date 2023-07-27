@@ -45,7 +45,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         ];
     }
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +55,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         // Register the Chief Exception handler
         $this->app->singleton(ExceptionHandler::class, ChiefExceptionHandler::class);
 
-        Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\'.class_basename($modelName).'Factory');
+        Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\' . class_basename($modelName) . 'Factory');
 
         $this->setUpChiefEnvironment();
 
@@ -65,7 +65,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         $this->app['view']->addLocation(__DIR__ . '/Shared/stubs/views');
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         // Clear out any memoized values
         Memoize::clear();
@@ -104,7 +104,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         // Connection is defined in the phpunit config xml
         $app['config']->set('database.connections.testing', [
             'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
+            'database' => env('DB_DATABASE', __DIR__ . '/../database/testing.sqlite'),
             'prefix' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -154,9 +154,11 @@ abstract class ChiefTestCase extends OrchestraTestCase
             public function __construct()
             {
             }
+
             public function report(\Throwable $e)
             {
             }
+
             public function render($request, \Throwable $e)
             {
                 throw $e;
@@ -182,11 +184,11 @@ abstract class ChiefTestCase extends OrchestraTestCase
         }
 
         if ("testing" !== $this->app->environment()) {
-            throw new \Exception('Make sure your testing environment is properly set. You are now running tests in the ['.$this->app->environment().'] environment');
+            throw new \Exception('Make sure your testing environment is properly set. You are now running tests in the [' . $this->app->environment() . '] environment');
         }
 
         if (DB::getName() != "testing" && DB::getName() != "setup") {
-            throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using ['.DB::getName().']. Are you crazy?');
+            throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using [' . DB::getName() . ']. Are you crazy?');
         }
     }
 
@@ -202,6 +204,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     public function getMediaDirectory($suffix = '')
     {
-        return $this->getTempDirectory().'/media'.($suffix == '' ? '' : '/'.$suffix);
+        return $this->getTempDirectory() . '/media' . ($suffix == '' ? '' : '/' . $suffix);
     }
 }

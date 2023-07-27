@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Factory;
+use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 
@@ -17,11 +18,6 @@ trait HasValidation
     protected array $rules = [];
     protected ?string $validationAttribute = null;
     protected array $validationMessages = [];
-
-    public function hasValidation(): bool
-    {
-        return count($this->rules) > 0 || $this->isRequired();
-    }
 
     public function required(bool $flag = true): static
     {
@@ -35,41 +31,24 @@ trait HasValidation
         return $this->rules(FallbackLocaleRequiredRule::RULE);
     }
 
-    public function isRequired(): bool
-    {
-        if (app()->environment('local') && true === config('chief.disable_field_required_validation')) {
-            return false;
-        }
-
-        return $this->isRequired || $this->hasDefinitionInRules('required', FallbackLocaleRequiredRule::RULE);
-    }
-
     public function rules(string|array|Rule $rules): static
     {
         if (is_array($rules) && $this->isAlreadyKeyed($rules)) {
-            throw new \InvalidArgumentException('Validation rules should be declared without a key. Keys are automatically added.');
+            throw new InvalidArgumentException('Validation rules should be declared without a key. Keys are automatically added.');
         }
 
         if (is_string($rules)) {
             $rules = explode('|', $rules);
         }
 
-        $this->rules = array_merge($this->rules, (array) $rules);
+        $this->rules = array_merge($this->rules, (array)$rules);
 
         return $this;
     }
 
-    public function getRules(): array
+    private function isAlreadyKeyed(array $value): bool
     {
-        if (! $this->hasValidation()) {
-            return [];
-        }
-
-        $rules = ! $this->hasDefinitionInRules('required', 'nullable')
-            ? [$this->isRequired ? 'required' : 'nullable']
-            : [];
-
-        return array_merge($rules, $this->rules);
+        return ! array_is_list($value);
     }
 
     public function validationAttribute(string $validationAttribute): static
@@ -108,9 +87,31 @@ trait HasValidation
         );
     }
 
-    private function isAlreadyKeyed(array $value): bool
+    public function getRules(): array
     {
-        return ! array_is_list($value);
+        if (! $this->hasValidation()) {
+            return [];
+        }
+
+        $rules = ! $this->hasDefinitionInRules('required', 'nullable')
+            ? [$this->isRequired ? 'required' : 'nullable']
+            : [];
+
+        return array_merge($rules, $this->rules);
+    }
+
+    public function hasValidation(): bool
+    {
+        return count($this->rules) > 0 || $this->isRequired();
+    }
+
+    public function isRequired(): bool
+    {
+        if (app()->environment('local') && true === config('chief.disable_field_required_validation')) {
+            return false;
+        }
+
+        return $this->isRequired || $this->hasDefinitionInRules('required', FallbackLocaleRequiredRule::RULE);
     }
 
     private function hasDefinitionInRules(string ...$definitions): bool

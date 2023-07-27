@@ -34,11 +34,44 @@ trait TestHelpers
         });
     }
 
+    public function setUpChiefEnvironment()
+    {
+        $this->setUpDefaultAuthorization();
+
+        $this->disableSiteRouteCatchAll();
+    }
+
+    public function setUpDefaultAuthorization()
+    {
+        AuthorizationDefaults::permissions()->each(function ($permissionName) {
+            Artisan::call('chief:permission', ['name' => $permissionName]);
+        });
+
+        AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
+        });
+    }
+
+    /**
+     * Because our site route catch all is registered on boot, and our tests usually contain registrations of routes after the application boot,
+     * we'll need to make sure the catch all is not in effect so that our testroute endpoints will be hit.
+     */
+    protected function disableSiteRouteCatchAll()
+    {
+        if (isset($this->keepOriginalSiteRoute) && $this->keepOriginalSiteRoute) {
+            return;
+        }
+
+        Route::get('{slug?}', function ($slug = '/') {
+            return ChiefResponse::fromSlug($slug);
+        })->name('pages.show');
+    }
+
     protected function assertValidation(Model $model, $field, array $params, $coming_from_url, $submission_url, $assert_count = 0, $method = 'post'): TestResponse
     {
         $response = $this->actingAs($this->developer(), 'chief')
-                         ->from($coming_from_url)
-                         ->{$method}($submission_url, $params);
+            ->from($coming_from_url)
+            ->{$method}($submission_url, $params);
 
         $response->assertStatus(302);
         $response->assertRedirect($coming_from_url);
@@ -47,37 +80,6 @@ trait TestHelpers
         $this->assertEquals($assert_count, $model->count());
 
         return $response;
-    }
-
-    protected function asAdminWithoutRole()
-    {
-        return $this->actingAs($this->fakeUser(), 'chief');
-    }
-
-    protected function asDeveloper()
-    {
-        return $this->actingAs($this->developer(), 'chief');
-    }
-
-    protected function asAdmin()
-    {
-        // Allow multiple calls in one test run.
-        if (($admin = User::first()) && $this->isAuthenticated('chief')) {
-            return $this->actingAs($admin, 'chief');
-        }
-
-        $admin = $this->fakeUser();
-        $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
-
-        return $this->actingAs($admin, 'chief');
-    }
-
-    protected function asAuthor()
-    {
-        $author = $this->fakeUser();
-        $author->assignRole(Role::firstOrCreate(['name' => 'author']));
-
-        return $this->actingAs($author, 'chief');
     }
 
     protected function developer()
@@ -97,6 +99,24 @@ trait TestHelpers
         ], $values));
     }
 
+    protected function asAdminWithoutRole()
+    {
+        return $this->actingAs($this->fakeUser(), 'chief');
+    }
+
+    protected function asDeveloper()
+    {
+        return $this->actingAs($this->developer(), 'chief');
+    }
+
+    protected function asAuthor()
+    {
+        $author = $this->fakeUser();
+        $author->assignRole(Role::firstOrCreate(['name' => 'author']));
+
+        return $this->actingAs($author, 'chief');
+    }
+
     protected function admin()
     {
         $admin = $this->fakeUser();
@@ -113,30 +133,6 @@ trait TestHelpers
         return $author;
     }
 
-
-
-    protected function setUpChiefEnvironment()
-    {
-        $this->setUpDefaultAuthorization();
-
-        $this->disableSiteRouteCatchAll();
-    }
-
-    /**
-     * Because our site route catch all is registered on boot, and our tests usually contain registrations of routes after the application boot,
-     * we'll need to make sure the catch all is not in effect so that our testroute endpoints will be hit.
-     */
-    protected function disableSiteRouteCatchAll()
-    {
-        if (isset($this->keepOriginalSiteRoute) && $this->keepOriginalSiteRoute) {
-            return;
-        }
-
-        Route::get('{slug?}', function ($slug = '/') {
-            return ChiefResponse::fromSlug($slug);
-        })->name('pages.show');
-    }
-
     protected function updateLinks(Model $model, array $links): TestResponse
     {
         $response = $this->asAdmin()->put(route('chief.back.links.update'), [
@@ -148,15 +144,17 @@ trait TestHelpers
         return $response;
     }
 
-    protected function setUpDefaultAuthorization()
+    protected function asAdmin()
     {
-        AuthorizationDefaults::permissions()->each(function ($permissionName) {
-            Artisan::call('chief:permission', ['name' => $permissionName]);
-        });
+        // Allow multiple calls in one test run.
+        if (($admin = User::first()) && $this->isAuthenticated('chief')) {
+            return $this->actingAs($admin, 'chief');
+        }
 
-        AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
-            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
-        });
+        $admin = $this->fakeUser();
+        $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
+
+        return $this->actingAs($admin, 'chief');
     }
 
     protected function withoutDefaultAuthorization()
@@ -184,7 +182,6 @@ trait TestHelpers
     //
     //        return $method->invokeArgs($object, $parameters);
     //    }
-
 
 
     private function recurse_copy($src, $dst)

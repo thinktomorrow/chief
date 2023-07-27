@@ -8,7 +8,6 @@ use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 class UpdateFileFieldTest extends ChiefTestCase
@@ -16,16 +15,15 @@ class UpdateFileFieldTest extends ChiefTestCase
     private $model;
     private Resource $resource;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        ArticlePage::migrateUp();
-        $this->model = ArticlePage::create();
+        $this->model = $this->setUpAndCreateArticle();
         $this->resource = app(ArticlePageResource::class);
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         Storage::delete('test/image-temp-name.png');
 
@@ -51,10 +49,9 @@ class UpdateFileFieldTest extends ChiefTestCase
                 ],
             ],
         ]);
-
         $this->assertCount(1, $this->model->assets('thumb'));
-        $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
-        $this->assertEquals('I belong to this file', $this->model->asset('thumb')->getData('caption'));
+        $this->assertEquals('image.png', $this->model->asset('thumb', 'nl')->getFileName());
+        $this->assertEquals('I belong to this file', $this->model->asset('thumb', 'nl')->getPivotData('caption'));
     }
 
     public function test_it_can_store_uploads_per_locale()
@@ -211,6 +208,6 @@ class UpdateFileFieldTest extends ChiefTestCase
         ]);
 
         $this->assertCount(1, $this->model->assets('thumb'));
-        $this->assertEquals('I belong to this file', $this->model->asset('thumb')->getData('caption'));
+        $this->assertEquals('I belong to this file', $this->model->asset('thumb')->getPivotData('caption'));
     }
 }

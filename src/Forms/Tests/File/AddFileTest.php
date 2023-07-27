@@ -2,12 +2,9 @@
 
 namespace Thinktomorrow\Chief\Forms\Tests\File;
 
-use function app;
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Forms\Fields\Media\MediaType;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
@@ -18,145 +15,157 @@ class AddFileTest extends ChiefTestCase
     use PageFormParams;
     use UploadsFile;
 
-    private $page;
+    private $model;
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->page = $this->setupAndCreateArticle();
-        $this->manager = $this->manager($this->page);
+        $this->model = $this->setupAndCreateArticle();
+        $this->manager = $this->manager($this->model);
     }
 
-    /** @test */
-    public function it_can_have_a_file()
+    public function test_it_can_add_existing_asset()
     {
-        app(CreateAsset::class)
+        $asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        app(AddAsset::class)->handle($this->page, UploadedFile::fake()->image('image.png'), 'images', 'nl');
-
-        $this->assertCount(1, $this->page->assets());
-    }
-
-    /** @test */
-    public function it_can_add_a_new_file()
-    {
-        $response = $this->uploadFile('thumb', [
-            'nl' => [$this->dummyUploadedFile('tt-document.txt')],
-        ]);
-
-        $response->assertSessionHasNoErrors();
-
-        $this->assertCount(1, $this->page->assets('thumb'));
-    }
-
-    /** @test */
-    public function it_can_add_a_new_image()
-    {
-        $response = $this->uploadFile('thumb_image', [
-            'nl' => [$this->dummySlimImagePayload('image.png', 'image/png', 150, 150)],
-        ]);
-
-        $response->assertSessionHasNoErrors();
-
-        $this->assertCount(1, $this->page->assets('thumb_image'));
-    }
-
-    /** @test */
-    public function an_existing_file_can_be_added()
-    {
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
-
-        $response = $this->uploadFile('thumb_trans', [
-            'nl' => [
-                $existing_asset->id,
-            ],
-        ]);
-
-        $response->assertSessionHasNoErrors();
-
-        $this->assertCount(1, $this->page->fresh()->assets('thumb_trans', 'nl'));
-
-        $this->assertEquals($existing_asset->url(), $this->page->fresh()->asset('thumb_trans', 'nl')->url());
-    }
-
-    /** @test */
-    public function it_can_upload_a_file_via_redactor_wysiwyg()
-    {
-        $response = $this->asAdmin()->post($this->manager->route('asyncRedactorFileUpload', $this->page), [
-            'files' => [
-                [
-                    'data' => $this->dummyBase64Payload(),
-                    'filename' => 'image.png',
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'attach' => [
+                        ['id' => $asset->id],
+                    ],
                 ],
             ],
-            'locale' => 'nl',
         ]);
 
-        $assets = $this->page->assets(MediaType::CONTENT, 'nl');
-        $this->assertCount(1, $assets);
+        $response->assertSessionHasNoErrors();
+        $this->assertCount(1, $this->model->assets());
+    }
 
-        $response->assertStatus(201)
-            ->assertJson([
-                "file-" . $assets->first()->id => [
-                    "url" => $this->page->asset(MediaType::CONTENT)->url(),
-                    "id" => $assets->first()->id,
+    public function test_it_can_add_a_new_file()
+    {
+        UploadedFile::fake()->image('image.png', '10', '80')->storeAs('test', 'image-temp-name.png');
+
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name.png'),
+                            'originalName' => 'image.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
                 ],
-            ]);
-    }
-
-    /** @test */
-    public function adding_same_existing_file_twice_will_only_add_it_once()
-    {
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
-
-        $this->uploadFile('thumb_trans', [
-            'nl' => [
-                $existing_asset->id,
-                $existing_asset->id,
-            ],
-        ]);
-
-        $this->assertCount(1, $this->page->fresh()->assets('thumb_trans'));
-
-        $this->assertEquals($existing_asset->url(), $this->page->fresh()->asset('thumb_trans', 'nl')->url());
-    }
-
-    /** @test */
-    public function it_can_upload_translatable_files()
-    {
-        $this->uploadFile('thumb_trans', [
-            'nl' => [
-                UploadedFile::fake()->image('tt-favicon-nl.png'),
-            ],
-            'en' => [
-                UploadedFile::fake()->image('tt-favicon-en.png'),
-            ],
-        ]);
-
-        $this->assertEquals('tt-favicon-nl.png', $this->page->asset('thumb_trans', 'nl')->filename());
-        $this->assertEquals('tt-favicon-en.png', $this->page->asset('thumb_trans', 'en')->filename());
-    }
-
-    /** @test */
-    public function it_can_add_a_new_file_on_another_disk()
-    {
-        $this->disableExceptionHandling();
-        $response = $this->uploadFile(ArticlePage::FILEFIELD_DISK_KEY, [
-            'nl' => [
-                $this->dummyUploadedFile('tt-document.txt'),
+                'en' => [],
             ],
         ]);
 
         $response->assertSessionHasNoErrors();
+        $this->assertCount(1, $this->model->assets('thumb'));
+    }
 
-        $this->assertCount(1, $this->page->assets(ArticlePage::FILEFIELD_DISK_KEY));
+    public function test_adding_same_existing_file_twice_will_only_add_it_once()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
 
-        $media = $this->page->asset(ArticlePage::FILEFIELD_DISK_KEY)->media->first();
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'attach' => [
+                        ['id' => $asset->id],
+                    ],
+                ],
+            ],
+        ]);
+
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'attach' => [
+                        ['id' => $asset->id],
+                    ],
+                ],
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertCount(1, $this->model->assets());
+    }
+
+    public function test_it_can_upload_translatable_files()
+    {
+        UploadedFile::fake()->image('image-nl.png', '10', '80')->storeAs('test', 'image-temp-name-nl.png');
+        UploadedFile::fake()->image('image-en.png', '10', '80')->storeAs('test', 'image-temp-name-en.png');
+
+        $response = $this->uploadFile($this->model, [
+            'thumb' => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name-nl.png'),
+                            'originalName' => 'image-nl.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+                'en' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name-en.png'),
+                            'originalName' => 'image-en.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertCount(2, $this->model->assets('thumb', null));
+        $this->assertEquals('image-nl.png', $this->model->asset('thumb', 'nl')->getFileName());
+        $this->assertEquals('image-en.png', $this->model->asset('thumb', 'en')->getFileName());
+    }
+
+    public function test_it_can_add_a_new_file_on_another_disk()
+    {
+        UploadedFile::fake()->image('image-nl.png', '10', '80')->storeAs('test', 'image-temp-name-nl.png');
+
+        $response = $this->uploadFile($this->model, [
+            ArticlePage::FILEFIELD_DISK_KEY => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name-nl.png'),
+                            'originalName' => 'image-nl.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+                'en' => [],
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertCount(1, $this->model->assets(ArticlePage::FILEFIELD_DISK_KEY));
+        $this->assertEquals('image-nl.png', $this->model->asset(ArticlePage::FILEFIELD_DISK_KEY, 'nl')->getFileName());
+
+        $media = $this->model->asset(ArticlePage::FILEFIELD_DISK_KEY)->media->first();
         $this->assertEquals('secondMediaDisk', $media->disk);
-        $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
+        $this->assertEquals($this->getTempDirectory('media2/' . $media->id . '/' . $media->file_name), $media->getPath());
     }
 }

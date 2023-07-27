@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class FragmentWithRepeatFieldTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,7 +19,7 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
     {
         $stub = new FragmentStub();
 
-        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values'). '?index=99');
+        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values') . '?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];
@@ -37,7 +37,7 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
         $owner = $this->setupAndCreateArticle();
         $stub = $this->createAsFragment(new FragmentStub(), $owner);
 
-        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->fragmentModel()->id). '?index=99');
+        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->fragmentModel()->id) . '?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];

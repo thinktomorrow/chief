@@ -2,8 +2,9 @@
 
 namespace Fields\Validation;
 
+use Illuminate\Validation\Factory;
+use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 
 class FieldValidationTest extends TestCase
@@ -51,22 +52,22 @@ class FieldValidationTest extends TestCase
     public function it_can_have_localized_rules()
     {
         $field = Text::make('xxx')
-            ->locales(['nl','fr'])
+            ->locales(['nl', 'fr'])
             ->required()
             ->rules('email');
 
-        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, []]);
+        $validator = $field->createValidatorInstance(app(Factory::class), []);
 
         $this->assertEquals([
-            'trans.nl.xxx' => ['required','email'],
-            'trans.fr.xxx' => ['required','email'],
+            'trans.nl.xxx' => ['required', 'email'],
+            'trans.fr.xxx' => ['required', 'email'],
         ], $validator->getRules());
     }
 
     /** @test */
     public function a_custom_rule_attribute_is_not_supported()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $field = Text::make('xxx')
             ->rules(['foobar' => ['required', 'max:200']]);
@@ -77,14 +78,14 @@ class FieldValidationTest extends TestCase
     {
         $field = Text::make('content_trans')
             ->name('foo.:locale.bar')
-            ->rules(['required','max:200'])
+            ->rules(['required', 'max:200'])
             ->locales(['nl', 'fr']);
 
-        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, []]);
+        $validator = $field->createValidatorInstance(app(Factory::class), []);
 
         $this->assertEquals([
-            'foo.nl.bar' => ['required','max:200'],
-            'foo.fr.bar' => ['required','max:200'],
+            'foo.nl.bar' => ['required', 'max:200'],
+            'foo.fr.bar' => ['required', 'max:200'],
         ], $validator->getRules());
     }
 }

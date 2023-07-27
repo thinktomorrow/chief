@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -85,16 +86,21 @@ class DeleteFragmentTest extends ChiefTestCase
     /** @test */
     public function removing_a_static_fragment_deletes_fragment_and_assets()
     {
-        // Add file to static fragment
-        $this->asAdmin()->put($this->manager($this->fragment)->route('fragment-update', $this->fragment), [
-            'files' => [
-                'thumb' => [
-                    'nl' => [
-                        UploadedFile::fake()->image('tt-favicon.png'),
+        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
+
+        $this->saveFileField($this->fragment, $this->fragment->fragmentModel(), 'thumb', [
+            'nl' => [
+                'uploads' => [
+                    [
+                        'id' => 'xxx',
+                        'path' => Storage::path('test/image-temp-name.png'),
+                        'originalName' => 'image.png',
+                        'mimeType' => 'image/png',
+                        'fieldValues' => [],
                     ],
                 ],
             ],
-        ])->assertStatus(200);
+        ]);
 
         $this->assertCount(1, $this->fragment->fragmentModel()->fresh()->assetRelation);
 

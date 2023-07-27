@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class SettingsTest extends ChiefTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

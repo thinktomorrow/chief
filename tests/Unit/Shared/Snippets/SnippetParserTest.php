@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class SnippetParserTest extends TestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

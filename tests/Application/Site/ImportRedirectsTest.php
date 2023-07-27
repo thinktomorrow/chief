@@ -15,7 +15,7 @@ final class ImportRedirectsTest extends ChiefTestCase
 {
     private AddRedirect $addRedirect;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

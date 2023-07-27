@@ -18,7 +18,7 @@ final class EditPageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ final class EditPageTest extends ChiefTestCase
     public function it_can_visit_the_edit_page()
     {
         $this->asAdmin()->get($this->manager->route('edit', ArticlePage::first()))
-                        ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */

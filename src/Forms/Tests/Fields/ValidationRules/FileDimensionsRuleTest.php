@@ -19,7 +19,7 @@ class FileDimensionsRuleTest extends ChiefTestCase
     private $model;
     private $manager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

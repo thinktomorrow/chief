@@ -10,7 +10,7 @@ class ChangePasswordTest extends ChiefTestCase
 {
     private $user;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -39,7 +39,7 @@ class ChangePasswordTest extends ChiefTestCase
     public function when_user_fills_in_password_prompt_password_gets_updated()
     {
         $response = $this->actingAs($this->user, 'chief')
-                         ->put(route('chief.back.password.update'), ['password' => 'new password', 'password_confirmation' => 'new password']);
+            ->put(route('chief.back.password.update'), ['password' => 'new password', 'password_confirmation' => 'new password']);
 
         $response->assertRedirect(route('chief.back.dashboard'));
 
