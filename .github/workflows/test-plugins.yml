@@ -1,4 +1,4 @@
-name: Test
+name: Plugin tests
 
 on: [ push ]
 
@@ -29,5 +29,11 @@ jobs:
         run: |
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
-      - name: Execute tests
-        run: vendor/bin/phpunit src/Assets src/Forms src/Fragments src/Admin src/ManagedModels src/Managers src/Resource src/Site src/Shared src/Table tests
+      - name: Execute AdminToast tests
+        run: vendor/bin/phpunit src/Plugins/AdminToast
+
+      - name: Execute Tags tests
+        run: vendor/bin/phpunit src/Plugins/Tags
+
+      - name: Execute TimeTable tests
+        run: vendor/bin/phpunit src/Plugins/TimeTable
