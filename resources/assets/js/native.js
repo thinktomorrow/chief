@@ -1,3 +1,5 @@
+import Alpine from 'alpinejs';
+import tabs from './alpine/tabs';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -28,4 +30,19 @@ require('./tables/index');
 
 require('./sortable/sortable-livewire');
 
+/**
+ * --------------------------------
+ * Alpine
+ * --------------------------------
+ */
+window.Alpine = Alpine;
+
+Alpine.data('tabs', tabs);
+Alpine.start();
+
+/**
+ * --------------------------------
+ * Vue refresh hook
+ * --------------------------------
+ */
 window.vueFieldsRefresh = (el) => vueFields(el);

@@ -30,15 +30,20 @@
             @include('chief-form::fields._partials.charactercount')
         @endforeach
     @else
-        <div data-vue-fields>
-            <tabs>
+        <div>
+            <x-chief::tabs>
                 @foreach($getLocales() as $locale)
-                    <tab v-cloak id="{{ $locale }}" name="{{ $locale }}">
+                    <div x-bind="tab('{{ $locale }}')" data-tab-id="{{ $locale }}" data-tab-name="{{ $locale }}">
                         @include($getView(), ['component' => $component, 'locale' => $locale])
                         @include('chief-form::fields._partials.charactercount')
-                    </tab>
+                    </div>
+
+                    {{--                    <tab v-cloak id="{{ $locale }}" name="{{ $locale }}">--}}
+                    {{--                        @include($getView(), ['component' => $component, 'locale' => $locale])--}}
+                    {{--                        @include('chief-form::fields._partials.charactercount')--}}
+                    {{--                    </tab>--}}
                 @endforeach
-            </tabs>
+            </x-chief::tabs>
         </div>
     @endif
 

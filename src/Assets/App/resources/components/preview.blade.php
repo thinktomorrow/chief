@@ -24,10 +24,13 @@
 
 @push('custom-scripts-after-vue')
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
         @this.on('fileAdded', () => {
             console.log('file added.');
             // TODO: Tijs: scroll to bottom of this file container so the last added files are shown
             // document.getElementById('test').scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-        })
+        });
+        });
+
     </script>
 @endpush

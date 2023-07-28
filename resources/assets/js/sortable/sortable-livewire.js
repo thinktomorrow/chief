@@ -12,6 +12,7 @@ window.Livewire.directive('sortable', (el) => {
         dataIdAttr: 'wire:sortable.item',
     });
 });
+
 //
 // export default (Alpine) => {
 //     Alpine.directive('sortable', (el) => {
