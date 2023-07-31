@@ -23,24 +23,24 @@ export default () => ({
     // Option to hide the navigation and only show the tabs
     hideNav: false,
 
-    nav: (tab, index) => ({
-        'x-on:click': function (e) {
-            console.log(index);
-            // this.open = !this.open;
-            console.log(e.currentTarget);
-        },
-        // 'x-bind:id': function () {
-        //     return tab.id;
-        // },
-        // 'x-html': function () {
-        //     console.log(tab);
-        //     return tab.name;
-        // },
-    }),
+    // nav: (tab, index) => ({
+    //     'x-on:click': function (e) {
+    //         console.log(index);
+    //         // this.open = !this.open;
+    //         console.log(e.currentTarget);
+    //     },
+    //     // 'x-bind:id': function () {
+    //     //     return tab.id;
+    //     // },
+    //     // 'x-html': function () {
+    //     //     console.log(tab);
+    //     //     return tab.name;
+    //     // },
+    // }),
 
     tab: (id) => ({
         'x-show': function () {
-            return this.activeTabId === id;
+            return this.activeTab === id;
         },
     }),
 });

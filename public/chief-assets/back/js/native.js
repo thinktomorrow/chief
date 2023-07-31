@@ -3247,27 +3247,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     // Option to hide the navigation and only show the tabs
     hideNav: false,
-    nav: function nav(tab, index) {
-      return {
-        'x-on:click': function xOnClick(e) {
-          console.log(index);
-          // this.open = !this.open;
-          console.log(e.currentTarget);
-        }
-        // 'x-bind:id': function () {
-        //     return tab.id;
-        // },
-        // 'x-html': function () {
-        //     console.log(tab);
-        //     return tab.name;
-        // },
-      };
-    },
+    // nav: (tab, index) => ({
+    //     'x-on:click': function (e) {
+    //         console.log(index);
+    //         // this.open = !this.open;
+    //         console.log(e.currentTarget);
+    //     },
+    //     // 'x-bind:id': function () {
+    //     //     return tab.id;
+    //     // },
+    //     // 'x-html': function () {
+    //     //     console.log(tab);
+    //     //     return tab.name;
+    //     // },
+    // }),
 
     tab: function tab(id) {
       return {
         'x-show': function xShow() {
-          return this.activeTabId === id;
+          return this.activeTab === id;
         }
       };
     }
