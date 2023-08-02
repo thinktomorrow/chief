@@ -31,10 +31,16 @@ class SelectOptions
             ->pluck($model->getKeyName(), fn (NestedNode $nestedNode) => $nestedNode->getBreadCrumbLabel());
     }
 
-    public function getTree(Nestable $model): NestedTree
+    public function getTree(Nestable|string $model): NestedTree
     {
-        $resource = $this->registry->findResourceByModel($model::class);
+        $resource = $this->registry->findResourceByModel(is_string($model) ? $model : $model::class);
 
         return app(NestableRepository::class)->getTree($resource::resourceKey());
+    }
+
+    public function getOptions(string $modelClass, string $key = 'id'): array
+    {
+        return $this->getTree($modelClass)
+            ->pluck($key, fn (NestedNode $nestedNode) => $nestedNode->getBreadCrumbLabel());
     }
 }

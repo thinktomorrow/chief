@@ -26,26 +26,6 @@ final class LinkForm
         $this->setFormValues();
     }
 
-    public static function fromModel(Model & Visitable $model, bool $includeRedirects = false): self
-    {
-        return new static($model, ($includeRedirects ? $model->allUrls : $model->urls)
-            ->groupBy('locale')
-            ->map(function ($records) {
-                return $records->sortBy('redirect_id')->sortByDesc('created_at');
-            })
-        );
-    }
-
-    public function links(): Collection
-    {
-        return $this->links;
-    }
-
-    public function formValues(): Collection
-    {
-        return $this->formValues;
-    }
-
     private function setLinks(): void
     {
         $links = [];
@@ -84,15 +64,24 @@ final class LinkForm
         }
     }
 
-    public function isAnyLinkOnline(): bool
+    /**
+     * @param $currentRecord
+     * @param $locale
+     * @return array
+     */
+    private function determineOnlineStatusInfo($currentRecord, $locale): array
     {
-        foreach ($this->links as $links) {
-            if ($links->is_online) {
-                return true;
-            }
+        $inOnlineState = $this->model->inOnlineState();
+
+        $is_online = ($inOnlineState && $currentRecord);
+
+        $offline_reason = 'De pagina staat offline.';
+
+        if (! $is_online && ! $inOnlineState) {
+            $offline_reason = 'Pagina staat nog niet gepubliceerd, is gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
         }
 
-        return false;
+        return [$is_online, $offline_reason];
     }
 
     private function setFormValues(): void
@@ -112,22 +101,6 @@ final class LinkForm
         }
 
         $this->formValues = collect($values);
-    }
-
-    public function exist(): bool
-    {
-        return $this->urlRecords->isNotEmpty();
-    }
-
-    public function hasAnyRedirects(): bool
-    {
-        foreach ($this->links as $links) {
-            if (! $links->redirects->isEmpty()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private function rawSlugValue(string $slug, string $baseUrlSegment): string
@@ -150,23 +123,50 @@ final class LinkForm
         return $slug;
     }
 
-    /**
-     * @param $currentRecord
-     * @param $locale
-     * @return array
-     */
-    private function determineOnlineStatusInfo($currentRecord, $locale): array
+    public static function fromModel(Model & Visitable $model, bool $includeRedirects = false): self
     {
-        $inOnlineState = $this->model->inOnlineState();
+        return new static($model, ($includeRedirects ? $model->allUrls : $model->urls)
+            ->groupBy('locale')
+            ->map(function ($records) {
+                return $records->sortBy('redirect_id')->sortByDesc('created_at');
+            })
+        );
+    }
 
-        $is_online = ($inOnlineState && $currentRecord);
+    public function links(): Collection
+    {
+        return $this->links;
+    }
 
-        $offline_reason = 'De pagina staat offline.';
+    public function formValues(): Collection
+    {
+        return $this->formValues;
+    }
 
-        if (! $is_online && ! $inOnlineState) {
-            $offline_reason = 'Pagina staat nog niet gepubliceerd, is gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
+    public function isAnyLinkOnline(): bool
+    {
+        foreach ($this->links as $links) {
+            if ($links->is_online) {
+                return true;
+            }
         }
 
-        return [$is_online, $offline_reason];
+        return false;
+    }
+
+    public function exist(): bool
+    {
+        return $this->urlRecords->isNotEmpty();
+    }
+
+    public function hasAnyRedirects(): bool
+    {
+        foreach ($this->links as $links) {
+            if (! $links->redirects->isEmpty()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

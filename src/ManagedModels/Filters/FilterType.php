@@ -11,4 +11,5 @@ class FilterType
     const SELECT = 'select';  // Select options
     const CHECKBOX = 'checkbox';
     const RADIO = 'radio';
+    const TAGS = 'tags';
 }

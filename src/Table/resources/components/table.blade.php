@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Route; @endphp
 @props([
     'filters' => [],
     'actions' => null,
@@ -11,9 +12,16 @@
         <div class="flex items-start justify-start gap-12 p-6">
             <div class="w-full">
                 <form data-form-submit-on-change method="GET" class="row-start-end gutter-3">
+
+                    {{-- TODO: reset button for clearing out filter --}}
+                    {{--                    <div>--}}
+                    {{--                        <a class="btn btn-primary-outline text-xs"--}}
+                    {{--                           href="/{{ Route::getCurrentRoute()->uri() }}">Reset</a>--}}
+                    {{--                    </div>--}}
+
                     @foreach ($filters as $filter)
                         <div @class([
-                            'w-full sm:w-1/2 md:w-1/3',
+                            'w-full sm:w-1/2 md:w-1/3' => !$loop->last,
                             'hidden' => $filter->getType() == 'hidden'
                         ])>
                             {!! $filter->render() !!}
@@ -54,15 +62,15 @@
                 <table class="min-w-full border-separate border-spacing-0">
                     @isset($header)
                         <thead>
-                            <x-chief::table.row>
-                                {{ $header }}
-                            </x-chief::table.row>
+                        <x-chief::table.row>
+                            {{ $header }}
+                        </x-chief::table.row>
                         </thead>
                     @endisset
 
                     @isset($body)
                         <tbody>
-                            {{ $body }}
+                        {{ $body }}
                         </tbody>
                     @endisset
                 </table>
@@ -77,15 +85,15 @@
                 <table class="min-w-full border-separate border-spacing-0">
                     @isset($header)
                         <thead>
-                            <x-chief::table.row>
-                                {{ $header }}
-                            </x-chief::table.row>
+                        <x-chief::table.row>
+                            {{ $header }}
+                        </x-chief::table.row>
                         </thead>
                     @endisset
 
                     @isset($body)
                         <tbody {{ $bodyAttributes }}>
-                            {{ $body }}
+                        {{ $body }}
                         </tbody>
                     @endisset
                 </table>

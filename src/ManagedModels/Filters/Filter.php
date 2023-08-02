@@ -15,4 +15,6 @@ interface Filter
     public function query(): Closure;
 
     public function render(): string;
+
+    public function getType(): string;
 }
