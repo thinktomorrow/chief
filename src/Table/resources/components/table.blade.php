@@ -9,25 +9,28 @@
 {{-- TODO: add inner shadow if rows have horizontal scroll --}}
 <div data-table-container class="border divide-y card-without-padding border-grey-200 divide-grey-200">
     @if (count($filters) > 0)
-        <div class="flex items-start justify-start gap-12 p-6">
+        <div class="flex items-start justify-start gap-6 p-6 max-sm:flex-wrap">
             <div class="w-full">
-                <form data-form-submit-on-change method="GET" class="row-start-end gutter-3">
-
-                    {{-- TODO: reset button for clearing out filter --}}
-                    {{--                    <div>--}}
-                    {{--                        <a class="btn btn-primary-outline text-xs"--}}
-                    {{--                           href="/{{ Route::getCurrentRoute()->uri() }}">Reset</a>--}}
-                    {{--                    </div>--}}
-
+                <form data-form-submit-on-change method="GET" class="row-start-start gutter-1.5">
                     @foreach ($filters as $filter)
                         <div @class([
-                            'w-full sm:w-1/2 md:w-1/3' => !$loop->last,
+                            'w-full sm:w-1/2 xl:w-1/3' => !$loop->last,
                             'hidden' => $filter->getType() == 'hidden'
                         ])>
                             {!! $filter->render() !!}
                         </div>
                     @endforeach
                 </form>
+            </div>
+
+            <div class="shrink-0">
+                <a
+                    href="/{{ Route::getCurrentRoute()->uri() }}"
+                    title="Reset alle filters"
+                    class="btn btn-grey"
+                >
+                    Reset alle filters
+                </a>
             </div>
         </div>
     @endif
