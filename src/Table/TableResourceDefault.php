@@ -24,7 +24,7 @@ trait TableResourceDefault
             yield TableColumn::make('Tags')
                 ->value(Blade::render('
                     <div class="flex items-start gap-1">
-                        <x-chief-tags::tags :tags="$tags" size="xs" threshold="3"/>
+                        <x-chief-tags::tags :tags="$tags" size="xs" threshold="2"/>
                     </div>
                 ', [
                     'tags' => $model->getTags(),

@@ -17,8 +17,8 @@
     <style type="text/css">
         [x-cloak] { display: none !important; }
         .v-loading { display: none !important; }
-        /*[v-cloak].v-loading { display: block !important; }*/
-        /*[v-cloak] { display: none !important; }*/
+        [v-cloak].v-loading { display: block !important; }
+        [v-cloak] { display: none !important; }
     </style>
 
     @include('chief::templates.page._partials.favicon')

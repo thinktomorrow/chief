@@ -7,10 +7,10 @@
 
 @foreach ($tags as $tag)
     <a
-        {!! $loop->iteration >= $threshold ? 'data-hidden-tag' : null !!}
+        {!! $loop->iteration > $threshold ? 'data-hidden-tag' : null !!}
         href="{{ route('chief.tags.edit', $tag->getTagId()) }}"
         title="Aanpassen"
-        @class(['hidden animate-pop-in-tag' => $loop->iteration >= $threshold])
+        @class(['hidden animate-pop-in-tag' => $loop->iteration > $threshold])
     >
         <x-chief-tags::tag :color="$tag->getColor()" :size="$size">
             {{ $tag->getLabel() }}
@@ -19,13 +19,17 @@
 @endforeach
 
 @if ($count > $threshold)
+    @php
+        $hiddenTagsCount  = $count - $threshold;
+    @endphp
+
     <button
         type="button"
         data-toggle-class="[data-hidden-tag]|[data-toggle-hidden-tags]"
         data-toggle-hidden-tags
     >
         <x-chief-tags::tag :size="$size">
-            +{{ $count - ($threshold - 1) }} tags
+            +{{ $hiddenTagsCount }} {{ $hiddenTagsCount === 1 ? 'tag' : 'tags' }}
         </x-chief-tags::tag>
     </button>
 @endif

@@ -19,8 +19,8 @@
     <style type="text/css">
         [x-cloak] { display: none !important; }
         .v-loading { display: none !important; }
-        /* [v-cloak].v-loading { display: block !important; }
-        [v-cloak] { display: none !important; } */
+        [v-cloak].v-loading { display: block !important; }
+        [v-cloak] { display: none !important; }
     </style>
 
     <link rel="stylesheet" href="{{ chief_cached_asset('chief-assets/back/css/main.css') }}">
