@@ -17,7 +17,8 @@
 --}}
 
 @props([
-    'wired'
+    'wired',
+    'size' => 'md',
 ])
 
 <div
@@ -28,15 +29,23 @@
     class="fixed inset-0 z-[100] flex items-center justify-center"
     {{ $attributes }}
 >
-    <div x-on:click="open = false" class="absolute inset-0 cursor-pointer bg-black/20 animate-dialog-fade-in"></div>
+    <div x-on:click="open = false" class="absolute inset-0 cursor-pointer bg-black/20 backdrop-filter backdrop-blur-sm animate-dialog-fade-in"></div>
 
     <div class="container relative inline-flex justify-center pointer-events-none max-w-screen-2xl">
-        <div class="relative p-8 bg-white border rounded-lg shadow pointer-events-auto animate-dialog-pop-in border-grey-100">
+        <div @class([
+            'relative p-8 bg-white ring-1 ring-inset rounded-lg shadow pointer-events-auto animate-dialog-pop-in ring-grey-100',
+            'w-xs' => $size === 'xs',
+            'w-sm' => $size === 'sm',
+            'w-md' => $size === 'md',
+            'w-lg' => $size === 'lg',
+            'w-xl' => $size === 'xl',
+            'w-2xl' => $size === '2xl',
+        ])>
             <button type="button" x-on:click="open = false" class="absolute top-3 right-3">
                 <svg class="w-5 h-5 text-grey-500 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
             </button>
 
-            <div>
+            <div class="overflow-auto max-h-[calc(100vh-6rem)]">
                 {{ $slot }}
             </div>
         </div>

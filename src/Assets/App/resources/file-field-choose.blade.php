@@ -1,11 +1,11 @@
-<x-chief::dialog wired>
+<x-chief::dialog wired size="xl">
     @if($isOpen)
         @php
             $rows = $this->getTableRows();
             $count = count($selectedPreviewFiles);
         @endphp
 
-        <div class="w-full lg:w-[56rem] max-h-[80vh] flex flex-col gap-6 overflow-y-auto">
+        <div class="w-full max-h-[80vh] flex flex-col gap-6 overflow-y-auto">
             <div class="flex flex-wrap items-start justify-between gap-3 shrink-0">
                 <div class="relative flex items-center justify-end grow">
                     <svg class="absolute w-5 h-5 pointer-events-none left-3 body-dark">
@@ -44,7 +44,7 @@
 
             @if ($rows->total() > $rows->count())
                 <div class="shrink-0">
-                    {{ $rows->links() }}
+                    {{ $rows->onEachSide(0)->links() }}
                 </div>
             @endif
 

@@ -2,10 +2,10 @@
     $componentId = \Illuminate\Support\Str::random();
 @endphp
 
-<x-chief::dialog wired>
+<x-chief::dialog wired size="sm">
     @if($isOpen)
         <!-- form prevents enter key in fields in this modal context to trigger submits of other form on the page -->
-        <form class="w-full space-y-6 xs:w-96 sm:w-128">
+        <form class="w-full space-y-6">
             <div class="space-y-3">
                 <h2 class="font-medium h2-dark body">
                     Verwijder dit bestand

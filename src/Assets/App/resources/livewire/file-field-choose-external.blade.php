@@ -1,15 +1,15 @@
-<x-chief::dialog wired>
+<x-chief::dialog wired size="sm">
     @if($isOpen)
-
-        <div class="w-full lg:w-[46rem] max-h-[80vh] flex flex-col gap-6 overflow-y-auto">
+        <div class="max-h-[80vh] flex flex-col gap-6 overflow-y-auto">
             <div class="gap-3 shrink-0">
                 <div class="relative gap-3 space-y-4">
-
-                    @if($assetId)
-                        <h3 class="h3">Vervang de externe link</h3>
-                    @else
-                        <h3 class="h3">Voeg een {{ \Illuminate\Support\Arr::join($driverTypes,',',' of ') }} toe</h3>
-                    @endif
+                    <h3 class="text-lg font-medium text-black">
+                        @if($assetId)
+                            Vervang het externe bestand
+                        @else
+                            Voeg een link naar een extern bestand toe
+                        @endif
+                    </h3>
 
                     <x-chief::input.group>
                         <x-chief::input.label for="driverType" unset class="font-medium h6 body-dark">
@@ -20,7 +20,6 @@
                             <x-chief::input.select
                                 id="driverType"
                                 wire:model="driverType"
-                                class=""
                             >
                                 @foreach($driverTypes as $driverTypeOption)
                                     <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
