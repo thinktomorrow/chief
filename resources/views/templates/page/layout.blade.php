@@ -19,17 +19,22 @@
           rel="stylesheet">
 
     {{-- Hide Vue elements until Vue is fully loaded --}}
-    <style type="text/css">
+    <style>
         [x-cloak] {
             display: none !important;
         }
 
-        .v-loading {
-            display: none !important;
-        }
+        /*.v-loading {*/
+        /*    display: none !important;*/
+        /*}*/
 
-        /* [v-cloak].v-loading { display: block !important; }
-        [v-cloak] { display: none !important; } */
+        /*[v-cloak].v-loading {*/
+        /*    display: block !important;*/
+        /*}*/
+
+        /*[v-cloak] {*/
+        /*    display: none !important;*/
+        /*}*/
     </style>
 
     <link rel="stylesheet" href="{{ chief_cached_asset('chief-assets/back/css/main.css') }}">
@@ -142,7 +147,7 @@
 
 @livewireScripts
 {{--TODO: Tijs include these sources in our build step --}}
-<script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>--}}
 
 <script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
 <script>

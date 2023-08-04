@@ -54,9 +54,9 @@
 
                 <div v-if="type == 'custom'">
                     @if(count(config('chief.locales')) > 1)
-                        <tabs v-cloak>
+                        <x-chief::tabs :listen-for-external-tab="true">
                             @foreach(config('chief.locales') as $locale)
-                                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.label')}">
+                                <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                     <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                         <x-chief::input.text
                                             id="trans-{{ $locale }}-url"
@@ -65,9 +65,9 @@
                                             placeholder="e.g. https://google.com"
                                         />
                                     </x-chief::input.group>
-                                </tab>
+                                </x-chief::tabs.tab>
                             @endforeach
-                        </tabs>
+                        </x-chief::tabs>
                     @else
                         @foreach(config('chief.locales') as $locale)
                             <x-chief::input.group :rule="'trans' . $locale . 'url'">

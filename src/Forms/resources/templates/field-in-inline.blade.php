@@ -5,13 +5,11 @@
         @include($getView(), ['component' => $component, 'locale' => $locale])
     @endforeach
 @else
-    <div data-vue-fields>
-        <tabs :hide_nav="true">
-            @foreach($getLocales() as $locale)
-                <tab v-cloak id="{{ $locale }}" name="{{ $locale }}">
-                    @include($getView(), ['component' => $component, 'locale' => $locale])
-                </tab>
-            @endforeach
-        </tabs>
-    </div>
+    <x-chief::tabs :show-nav="false" :listen-for-external-tab="true">
+        @foreach($getLocales() as $locale)
+            <x-chief::tabs.tab tab-id='{{ $locale }}'>
+                @include($getView(), ['component' => $component, 'locale' => $locale])
+            </x-chief::tabs.tab>
+        @endforeach
+    </x-chief::tabs>
 @endif

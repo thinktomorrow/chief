@@ -9,17 +9,14 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\Driver;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
-use Vimeo\Vimeo;
 
 class VimeoDriver implements Driver
 {
-    private Vimeo $vimeo;
     private CreateAsset $createAsset;
     private FileApplication $fileApplication;
 
-    public function __construct(Vimeo $vimeo, CreateAsset $createAsset, FileApplication $fileApplication)
+    public function __construct(CreateAsset $createAsset, FileApplication $fileApplication)
     {
-        $this->vimeo = $vimeo;
         $this->createAsset = $createAsset;
         $this->fileApplication = $fileApplication;
     }

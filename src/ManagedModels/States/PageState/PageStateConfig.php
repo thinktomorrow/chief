@@ -15,7 +15,6 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PageStateConfig implements StateConfig, StateAdminConfig
@@ -110,7 +109,7 @@ class PageStateConfig implements StateConfig, StateAdminConfig
     {
         if ($statefulContract instanceof Visitable) {
             if ($statefulContract->inOnlineState()) {
-                if (LinkForm::fromModel($statefulContract)->isAnyLinkOnline()) {
+                if ($statefulContract->urls->isNotEmpty()) {
                     return '<span class="label label-xs label-success">Online</span>';
                 } else {
                     return '<span class="label label-xs label-warning">Link ontbreekt</span>';

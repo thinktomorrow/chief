@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filter;
+use Thinktomorrow\Chief\ManagedModels\Filters\FilterType;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 
@@ -58,7 +59,7 @@ class TagsFilter implements Filter
     {
         return function (Builder $builder, $value) {
             $builder->whereHas('tags', function ($query) use ($value) {
-                $query->whereIn('id', (array) $value);
+                $query->whereIn('id', (array)$value);
             });
         };
     }
@@ -115,7 +116,7 @@ class TagsFilter implements Filter
     public function filterByOwnerTypes(array|string $ownerTypes): static
     {
         $this->optionType = 'owner_type';
-        $this->ownerTypes = (array) $ownerTypes;
+        $this->ownerTypes = (array)$ownerTypes;
 
         return $this;
     }
@@ -123,18 +124,18 @@ class TagsFilter implements Filter
     public function filterByTagCategory(array|string|int $tagGroupIds): static
     {
         $this->optionType = 'category';
-        $this->tagGroupIds = (array) $tagGroupIds;
+        $this->tagGroupIds = (array)$tagGroupIds;
 
         return $this;
     }
 
     private function getTags(): Collection
     {
-        if(! $this->tags->isEmpty()) {
+        if (! $this->tags->isEmpty()) {
             return $this->tags;
         }
 
-        return match($this->optionType) {
+        return match ($this->optionType) {
             'used' => app(TagReadRepository::class)->getAll()->reject(fn (TagRead $tagRead) => $tagRead->getUsages() < 1),
             'owner_type' => app(TagReadRepository::class)->getAll()->filter(function (TagRead $tagRead) {
                 return $tagRead->getOwnerReferences()->contains(fn ($pivotRow) => in_array($pivotRow->owner_type, $this->ownerTypes));
@@ -156,5 +157,10 @@ class TagsFilter implements Filter
             'default' => $this->default,
             'tags' => $this->getTags(),
         ];
+    }
+
+    public function getType(): string
+    {
+        return FilterType::TAGS;
     }
 }

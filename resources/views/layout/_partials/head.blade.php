@@ -14,17 +14,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- hide alpine / vue elements until vue is loaded -->
-    <style type="text/css">
+    <style>
         [x-cloak] {
             display: none !important;
         }
 
-        .v-loading {
-            display: none !important;
-        }
+        /*.v-loading {*/
+        /*    display: none !important;*/
+        /*}*/
 
-        /*[v-cloak].v-loading { display: block !important; }*/
-        /*[v-cloak] { display: none !important; }*/
+        /*[v-cloak].v-loading {*/
+        /*    display: block !important;*/
+        /*}*/
+
+        /*[v-cloak] {*/
+        /*    display: none !important;*/
+        /*}*/
     </style>
 
     @include('chief::templates.page._partials.favicon')

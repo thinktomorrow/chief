@@ -26,8 +26,11 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 trait CrudAssistant
 {
     abstract protected function fieldsModel($id);
+
     abstract protected function fieldValidator(): FieldValidator;
+
     abstract protected function generateRoute(string $action, $model = null, ...$parameters): string;
+
     abstract protected function guard(string $action, $model = null);
 
     public function routesCrudAssistant(): array

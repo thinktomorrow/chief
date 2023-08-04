@@ -30,21 +30,14 @@
             @include('chief-form::fields._partials.charactercount')
         @endforeach
     @else
-        <div>
-            <x-chief::tabs>
-                @foreach($getLocales() as $locale)
-                    <div x-bind="tab('{{ $locale }}')" data-tab-id="{{ $locale }}" data-tab-name="{{ $locale }}">
-                        @include($getView(), ['component' => $component, 'locale' => $locale])
-                        @include('chief-form::fields._partials.charactercount')
-                    </div>
-
-                    {{--                    <tab v-cloak id="{{ $locale }}" name="{{ $locale }}">--}}
-                    {{--                        @include($getView(), ['component' => $component, 'locale' => $locale])--}}
-                    {{--                        @include('chief-form::fields._partials.charactercount')--}}
-                    {{--                    </tab>--}}
-                @endforeach
-            </x-chief::tabs>
-        </div>
+        <x-chief::tabs :listen-for-external-tab="true">
+            @foreach($getLocales() as $locale)
+                <x-chief::tabs.tab tab-id='{{ $locale }}'>
+                    @include($getView(), ['component' => $component, 'locale' => $locale])
+                    @include('chief-form::fields._partials.charactercount')
+                </x-chief::tabs.tab>
+            @endforeach
+        </x-chief::tabs>
     @endif
 
     @if ($hasLocales())
