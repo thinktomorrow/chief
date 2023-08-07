@@ -1,6 +1,6 @@
-<div class="sm:w-64 lg:w-80 flex flex-col gap-4 sm:gap-8 md:gap-4 sm:flex-row md:flex-col shrink-0">
-    <div class="w-full overflow-hidden aspect-square bg-grey-100 rounded-xl flex justify-center items-center">
-        @if($previewFile->isImage())
+<div class="flex flex-col gap-4 sm:w-64 lg:w-80 sm:gap-8 md:gap-4 sm:flex-row md:flex-col shrink-0">
+    <div class="flex items-center justify-center w-full overflow-hidden aspect-square bg-grey-100 rounded-xl">
+        @if($previewFile && $previewFile->isImage())
             <img
                 src="{{ $previewFile->previewUrl }}"
                 class="object-contain w-full h-full"
@@ -20,7 +20,7 @@
                         wire:model="file"
                         type="file"
                         id="{{ $this->id }}"
-                        class="absolute inset-0 opacity-0 w-8"
+                        class="absolute inset-0 w-8 opacity-0"
                     />
                 </label>
 
