@@ -3,6 +3,8 @@
         $componentCount = count($this->getComponents());
     @endphp
 
+    <x-slot name="title">Extern bestand aanpassen</x-slot>
+
     <form class="flex items-start gap-8 max-lg:flex-wrap">
         <div @class([
             'flex flex-col gap-4 shrink-0 w-full',
@@ -37,26 +39,15 @@
 
                 <div class="flex items-start justify-between gap-2 space-y-2">
                     <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" class="mt-1.5">
-                        <x-chief::link class="underline underline-offset-2">
+                        <x-chief::link underline class="break-all">
                             {{ $previewFile->getUrl() }}
                         </x-chief::link>
                     </a>
 
                     <div class="flex gap-2 shrink-0">
-                        <button
-                            type="button"
-                            x-data="{ showSuccessMessage: false }"
-                            x-on:click="() => {
-                                navigator.clipboard.writeText('{{ $previewFile->getUrl() }}');
-                                showSuccessMessage = true;
-                                setTimeout(() => showSuccessMessage = false, 2000);
-                            }"
-                        >
-                            <x-chief::link>
-                                <svg x-show="!showSuccessMessage"><use xlink:href="#icon-link"></use></svg>
-                                <svg x-show="showSuccessMessage" class="text-green-500 animate-pop-in"><use xlink:href="#icon-check"></use></svg>
-                            </x-chief::link>
-                        </button>
+                        <x-chief-assets::copy-url-button>
+                            {{ $previewFile->getUrl() }}
+                        </x-chief-assets::copy-url-button>
 
                         <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" target="_blank" rel="noopener">
                             <x-chief::link>

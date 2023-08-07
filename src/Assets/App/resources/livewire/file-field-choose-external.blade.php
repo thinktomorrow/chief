@@ -1,15 +1,19 @@
-<x-chief::dialog wired size="sm">
+<x-chief::dialog
+    wired
+    size="xs"
+    :title="$assetId ? 'Vervang het externe bestand' : 'Voeg een link naar een extern bestand toe'"
+>
     @if($isOpen)
         <div class="max-h-[80vh] flex flex-col gap-6 overflow-y-auto">
             <div class="gap-3 shrink-0">
                 <div class="relative gap-3 space-y-4">
-                    <h3 class="text-lg font-medium text-black">
+                    {{-- <h3 class="text-lg font-medium text-black">
                         @if($assetId)
                             Vervang het externe bestand
                         @else
                             Voeg een link naar een extern bestand toe
                         @endif
-                    </h3>
+                    </h3> --}}
 
                     <x-chief::input.group>
                         <x-chief::input.label for="driverType" unset class="font-medium h6 body-dark">

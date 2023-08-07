@@ -18,36 +18,43 @@
                     {{-- Replace --}}
                     @if($previewFile)
                         <label for="{{ $this->id }}" class="relative cursor-pointer">
-                            <x-chief::icon-button icon="icon-replace"/>
                             <input
                                 wire:model="file"
                                 type="file"
                                 id="{{ $this->id }}"
                                 class="absolute inset-0 w-8 opacity-0"
                             />
-                        </label>
 
-                        {{-- Download --}}
-                        @if($previewFile->getUrl())
-                            <a href="{{ $previewFile->getUrl() }}" title="Download" class="shrink-0" download>
-                                <x-chief::icon-button icon="icon-download"/>
-                            </a>
-                            <a
-                                href="{{ $previewFile->getUrl() }}"
-                                title="{{ $previewFile->getUrl() }}"
-                                target="_blank"
-                                rel="noopener"
-                                class="link link-primary"
-                            >
-                                <x-chief::icon-button icon="icon-link" />
-                            </a>
-                        @endif
+                            <x-chief::button>
+                                <svg><use xlink:href="#icon-replace"></use></svg>
+                                Vervang bestand
+                            </x-chief::button>
+                        </label>
 
                         @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
                             @include($livewireFileEditAction)
                         @endforeach
-
                     @endif
+                </div>
+
+                <div class="flex items-start justify-between gap-2 space-y-2">
+                    <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" class="mt-1.5">
+                        <x-chief::link underline class="break-all">
+                            {{ $previewFile->getUrl() }}
+                        </x-chief::link>
+                    </a>
+
+                    <div class="flex gap-2 shrink-0">
+                        <x-chief-assets::copy-url-button>
+                            {{ $previewFile->getUrl() }}
+                        </x-chief-assets::copy-url-button>
+
+                        <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" target="_blank" rel="noopener">
+                            <x-chief::link>
+                                <svg><use xlink:href="#icon-external-link"></use></svg>
+                            </x-chief::link>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="space-y-0.5 text-grey-500 text-sm">
@@ -104,7 +111,7 @@
             </x-chief::input.group>
 
             @if(count($this->getComponents()) > 0)
-                <div class="py-6 space-y-2 border-y border-grey-100">
+                <div class="pt-6 space-y-2 border-t border-grey-100">
                     <h2 class="text-sm tracking-wider uppercase text-grey-500">Gegevens van de asset</h2>
 
                     <div class="space-y-6">
@@ -116,19 +123,28 @@
                 </div>
             @endif
 
-            <div class="space-y-2">
-                @foreach($errors->all() as $error)
-                    <x-chief::inline-notification type="error">
-                        {{ ucfirst($error) }}
-                    </x-chief::inline-notification>
-                @endforeach
-            </div>
+            @if($errors->any())
+                <div class="pt-6 space-y-2 border-t border-grey-100">
+                    @foreach($errors->all() as $error)
+                        <x-chief::inline-notification type="error">
+                            {{ ucfirst($error) }}
+                        </x-chief::inline-notification>
+                    @endforeach
+                </div>
+            @endif
 
-            <div>
-                <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                    Opslaan
-                </button>
-            </div>
+            <x-slot name="footer">
+                <div class="flex flex-wrap justify-end gap-3">
+
+                    <button type="button" x-on:click="open = false" class="btn btn-grey">
+                        Annuleren
+                    </button>
+
+                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                        Opslaan
+                    </button>
+                </div>
+            </x-slot>
         </div>
     </form>
 @endif
