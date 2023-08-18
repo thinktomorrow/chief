@@ -76,9 +76,18 @@ class VimeoDriver implements Driver
 
     }
 
+    public function getCreateFormLabel(): string
+    {
+        return 'Video ID of URL';
+    }
+
     public function getCreateFormDescription(): string
     {
-        return 'uitleg vimeo!!!';
+        return '
+            Nadat je een video geüpload hebt naar Vimeo, kan je de ID van die video hier ingeven.
+            De video ID kan je terugvinden in de URL van de video: https://vimeo.com/video/<b>524933864</b>.
+            Daarnaast kan je ook de volledige URL van de video ingeven.
+        ';
     }
 
     private function createPreviewThumbByResponse(array $oEmbedResponse): AssetContract

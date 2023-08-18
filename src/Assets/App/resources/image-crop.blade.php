@@ -10,7 +10,7 @@
 
             <!-- form prevents enter key in fields in this modal context to trigger submits of other form on the page -->
             <form>
-                <div class="flex items-start gap-12 w-[56rem]">
+                <div class="flex items-start gap-12">
                     <div class="space-y-6 shrink-0">
                         <div class="overflow-hidden w-80 h-80 bg-grey-100 rounded-xl">
                             <img

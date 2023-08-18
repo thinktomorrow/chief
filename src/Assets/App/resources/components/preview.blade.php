@@ -1,6 +1,7 @@
 @php
     $files = $getFiles();
 @endphp
+
 <div
     wire:sortable
     wire:start="$set('isReordering', true)"
@@ -10,7 +11,6 @@
         'border' => count($files) > 0
     ])
 >
-
     @foreach ($files as $file)
         @continue(count($files) > 1 && !$allowMultiple() && $file->isQueuedForDeletion)
         @continue($file->isUploading && $file->isQueuedForDeletion)

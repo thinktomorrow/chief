@@ -1,9 +1,9 @@
 <div>
-    <div class="w-full flex justify-end mb-4">
+    <div class="flex justify-end w-full mb-4">
         <button
             wire:click="openFileUpload"
             type="button"
-            class="btn text-sm btn-primary"
+            class="inline-flex items-start gap-2 leading-5 btn btn-primary"
         >
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /> </svg>
             Voeg bestanden toe
@@ -35,23 +35,21 @@
         </div>
 
         <div>
-            <livewire:chief-wire::file-upload
-                parent-id="{{ $this->id }}"
-                field-name="files"
-                :allow-multiple="true"
-            />
+            <livewire:chief-wire::file-upload parent-id="{{ $this->id }}" field-name="files" :allow-multiple="true"/>
         </div>
-        <div><livewire:chief-wire::file-edit parent-id="{{ $this->id }}"/></div>
-        <div><livewire:chief-wire::asset-delete parent-id="{{ $this->id }}"/></div>
+
+        <div>
+            <livewire:chief-wire::file-edit parent-id="{{ $this->id }}"/>
+        </div>
+
+        <div>
+            <livewire:chief-wire::asset-delete parent-id="{{ $this->id }}"/>
+        </div>
 
         @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
             <div>
-                <livewire:is
-                    component="{{ $livewireFileComponent }}"
-                    parent-id="{{ $this->id }}"
-                />
+                <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->id }}" />
             </div>
         @endforeach
-
     </div>
 </div>

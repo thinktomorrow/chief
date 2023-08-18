@@ -52,7 +52,12 @@ class FileFieldChooseExternalComponent extends Component
         $this->isOpen = true;
     }
 
-    public function getContent()
+    public function getLabel()
+    {
+        return $this->getDriver()?->getCreateFormLabel();
+    }
+
+    public function getDescription()
     {
         return $this->getDriver()?->getCreateFormDescription();
     }

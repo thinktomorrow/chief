@@ -1,8 +1,9 @@
 @props([
     'multiple' => false,
+    'containerClass' => null,
 ])
 
-<div class="relative flex items-center justify-end">
+<div class="relative flex items-center justify-end {{ $containerClass }}">
     <select
         {!! $multiple ? 'multiple' : null !!}
         {{ $attributes->class('form-input-field appearance-none !pr-9') }}

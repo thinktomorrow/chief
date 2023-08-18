@@ -27,12 +27,12 @@
 
 <span {{
     $attributes
-        ->merge(['class' => 'inline-flex items-center p-1.5 rounded-xl link space-x-2 hover:child-svg-scale-110 transition-all duration-75 ease-in-out shadow-card'])
+        ->merge(['class' => 'inline-flex items-center p-1.5 rounded-xl link gap-2 hover:child-svg-scale-110 transition-all duration-75 ease-in-out shadow-card'])
         ->merge(['class' => $colorClasses])
 }}>
     @if($slot->isNotEmpty())
         {!! $slot !!}
     @else
-        <svg width="18" height="18"><use xlink:href="#{{ $icon }}"></use></svg>
+        <svg class="w-5 h-5"><use xlink:href="#{{ $icon }}"></use></svg>
     @endif
 </span>

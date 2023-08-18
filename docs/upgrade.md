@@ -1,4 +1,4 @@
-# upgrade guide from 0.5 to 0.6
+# Upgrade guide from 0.5 to 0.6
 
 In general we don't provide any precaution deprecations and force the upgrade to convey to the changed api. 
 This is meanly done because chief is still in development and currently mainly used by ourselves. That being

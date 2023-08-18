@@ -100,9 +100,10 @@ trait FileUploadDefaults
         Arr::set($this->files, str_replace('files.', '', $fileKey), $temporaryUploadedFile);
 
         $currentCount = count($this->previewFiles);
+
         $this->syncPreviewFiles();
 
-
+        // TODO: $currentCount is always equal to the current count of previewFiles. The event is never triggered.
         if(count($this->previewFiles) > $currentCount) {
             $this->emitSelf('fileAdded');
         }
