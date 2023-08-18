@@ -14,5 +14,6 @@ interface Driver
      */
     public function updateAsset(AssetContract $asset, string $id): AssetContract;
 
+    public function getCreateFormLabel(): string;
     public function getCreateFormDescription(): string;
 }

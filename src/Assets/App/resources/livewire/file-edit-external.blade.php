@@ -3,8 +3,6 @@
         $componentCount = count($this->getComponents());
     @endphp
 
-    <x-slot name="title">Extern bestand aanpassen</x-slot>
-
     <form class="flex items-start gap-8 max-lg:flex-wrap">
         <div @class([
             'flex flex-col gap-4 shrink-0 w-full',
@@ -32,7 +30,7 @@
                     <button wire:click="openFilesChooseExternal" type="button">
                         <x-chief::button>
                             <svg><use xlink:href="#icon-replace"></use></svg>
-                            Vervang link
+                            Vervang extern bestand
                         </x-chief::button>
                     </button>
                 </div>
@@ -68,14 +66,14 @@
                     @if($previewFile->isVideo())
                         <dl class="flex justify-between">
                             <dt>Lengte</dt>
-                            <dd class="text-right">{{ $previewFile->getData('external.duration') }} secs.</dd>
+                            <dd class="text-right">{{ $previewFile->getData('external.duration') }} sec</dd>
                         </dl>
                     @endif
 
                     @if($previewFile->isImage() || $previewFile->isVideo())
                         <dl class="flex justify-between">
                             <dt>Afmetingen</dt>
-                            <dd class="text-right">{{ $previewFile->width }} x {{ $previewFile->height }}</dd>
+                            <dd class="text-right">{{ $previewFile->width }}x{{ $previewFile->height }}</dd>
                         </dl>
                     @endif
 

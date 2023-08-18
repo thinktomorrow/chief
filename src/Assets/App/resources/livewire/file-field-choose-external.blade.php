@@ -1,79 +1,58 @@
 <x-chief::dialog
     wired
     size="xs"
-    :title="$assetId ? 'Vervang het externe bestand' : 'Voeg een link naar een extern bestand toe'"
+    :title="$assetId ? 'Vervang extern bestand' : 'Voeg een link naar een extern bestand toe'"
 >
     @if($isOpen)
-        <div class="max-h-[80vh] flex flex-col gap-6 overflow-y-auto">
-            <div class="gap-3 shrink-0">
-                <div class="relative gap-3 space-y-4">
-                    {{-- <h3 class="text-lg font-medium text-black">
-                        @if($assetId)
-                            Vervang het externe bestand
-                        @else
-                            Voeg een link naar een extern bestand toe
-                        @endif
-                    </h3> --}}
+        <div class="space-y-4">
+            <x-chief::input.group>
+                <x-chief::input.label for="driverType">
+                    Platform
+                </x-chief::input.label>
 
-                    <x-chief::input.group>
-                        <x-chief::input.label for="driverType" unset class="font-medium h6 body-dark">
-                            Platform
-                        </x-chief::input.label>
+                <x-chief::input.select id="driverType" wire:model="driverType" container-class="w-full">
+                    @foreach($driverTypes as $driverTypeOption)
+                        <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
+                    @endforeach
+                </x-chief::input.select>
+            </x-chief::input.group>
 
-                        <div class="flex flex-wrap items-start gap-1">
-                            <x-chief::input.select
-                                id="driverType"
-                                wire:model="driverType"
-                            >
-                                @foreach($driverTypes as $driverTypeOption)
-                                    <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
-                                @endforeach
-                            </x-chief::input.select>
-                        </div>
-                    </x-chief::input.group>
-
-                    @if($driverType)
-                        <x-chief::input.group>
-                            <x-chief::input.label for="driverId" unset class="font-medium h6 body-dark">
-                                De {{ $driverType }} id of link.
-                            </x-chief::input.label>
-
-                            <div class="flex flex-wrap items-start gap-1">
-                                <x-chief::input.text
-                                    id="driverId"
-                                    wire:model="driverId"
-                                    placeholder="de ID of link van het externe bestand"
-                                    class="w-full"
-                                />
-                            </div>
-                        </x-chief::input.group>
-                    @endif
+            @if($driverType)
+                <x-chief::input.group>
+                    <x-chief::input.label for="driverId">
+                        {{ $this->getLabel() }}
+                    </x-chief::input.label>
 
                     <x-chief::input.description>
-                        {!! $this->getContent() !!}
+                        {!! $this->getDescription() !!}
                     </x-chief::input.description>
 
-                </div>
+                    <x-chief::input.text
+                        id="driverId"
+                        wire:model="driverId"
+                        placeholder="{{ $this->getLabel() }}"
+                        class="w-full"
+                    />
+                </x-chief::input.group>
+            @endif
 
-                <div class="space-y-2">
-                    @foreach($errors->all() as $error)
-                        <x-chief::inline-notification type="error">
-                            {{ ucfirst($error) }}
-                        </x-chief::inline-notification>
+            @if($errors && count($errors) > 0)
+                <x-chief::inline-notification type="error" size="small" class="w-full">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ ucfirst($error) }}</p>
                     @endforeach
-                </div>
-
-            </div>
-
-            <div class="flex flex-wrap justify-end gap-3 max-lg:w-full shrink-0">
-                <button wire:click="save" type="button" class="btn btn-primary shrink-0">
-                    @if($assetId)
-                        Vervang extern bestand
-                    @else
-                        Voeg extern bestand toe
-                    @endif
-                </button>
-            </div>
+                </x-chief::inline-notification>
+            @endif
         </div>
+
+        <x-slot name="footer" class="flex justify-end">
+            <button wire:click="save" type="button" class="btn btn-primary">
+                @if($assetId)
+                    Vervang extern bestand
+                @else
+                    Voeg extern bestand toe
+                @endif
+            </button>
+        </x-slot>
     @endif
 </x-chief::dialog>

@@ -17,17 +17,12 @@
                 <div class="flex flex-wrap gap-2">
                     {{-- Replace --}}
                     @if($previewFile)
-                        <label for="{{ $this->id }}" class="relative cursor-pointer">
-                            <input
-                                wire:model="file"
-                                type="file"
-                                id="{{ $this->id }}"
-                                class="absolute inset-0 w-8 opacity-0"
-                            />
+                        <label for="{{ $this->id }}" class="cursor-pointer">
+                            <input wire:model="file" type="file" id="{{ $this->id }}" class="hidden"/>
 
                             <x-chief::button>
                                 <svg><use xlink:href="#icon-replace"></use></svg>
-                                Vervang bestand
+                                Vervang met een nieuw bestand
                             </x-chief::button>
                         </label>
 
@@ -66,7 +61,7 @@
                     @if($previewFile->isImage())
                         <dl class="flex justify-between">
                             <dt>Afmetingen</dt>
-                            <dd class="text-right">{{ $previewFile->width }} x {{ $previewFile->height }}</dd>
+                            <dd class="text-right">{{ $previewFile->width }}x{{ $previewFile->height }}</dd>
                         </dl>
                     @endif
 
@@ -115,7 +110,6 @@
                     <h2 class="text-sm tracking-wider uppercase text-grey-500">Gegevens van de asset</h2>
 
                     <div class="space-y-6">
-                        {{-- TODO(ben): add alt text field --}}
                         @foreach($this->getComponents() as $component)
                             {{ $component }}
                         @endforeach

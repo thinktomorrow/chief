@@ -1,4 +1,3 @@
-{{-- TODO: split in standalone link component, with additional button styling (bg color, padding...) --}}
 <span {{
     $attributes
         ->merge(['class' => 'inline-flex items-start text-sm leading-5 gap-2 py-1.5 px-2 rounded-xl transition-all duration-75 ease-in-out'])
