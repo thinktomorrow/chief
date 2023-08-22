@@ -16,9 +16,7 @@
         @continue($file->isUploading && $file->isQueuedForDeletion)
         @continue(!$file->isValidated && $file->isQueuedForDeletion)
 
-        <div wire:sortable.item="{{ $file->id }}" class="flex gap-4 p-2 {{ !$file->isValidated ? 'opacity-50' : '' }}">
-            @include('chief-assets::_partials.preview-' . ($file->isExternalAsset ? 'external' : 'local'))
-        </div>
+        @include('chief-assets::_partials.preview-item')
     @endforeach
 </div>
 
