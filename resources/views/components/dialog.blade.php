@@ -29,7 +29,7 @@
         ])>
             <div class="relative overflow-auto max-h-[calc(100vh-4rem)]">
                 @if($title || $header)
-                    <div class="sticky top-0 z-[1] px-8 pt-8 pb-6 bg-white space-y-4">
+                    <div class="sticky top-0 z-[1] px-8 pt-8 pb-6 bg-white/90 backdrop-filter backdrop-blur-md space-y-4">
                         @if($title)
                             <div class="flex items-start justify-between gap-4">
                                 <h2 class="text-lg font-medium leading-5 text-black">
@@ -56,7 +56,7 @@
                 </div>
 
                 @if($footer)
-                    <div {{ $footer->attributes->class(['sticky bottom-0 px-8 pb-8 pt-6 bg-white z-[1]']) }}>
+                    <div {{ $footer->attributes->class(['sticky bottom-0 px-8 pb-8 pt-6 bg-white/90 backdrop-filter backdrop-blur-md z-[1]']) }}>
                         {{ $footer }}
                     </div>
                 @endif

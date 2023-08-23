@@ -30,7 +30,6 @@ trait InteractsWithGallery
         if(isset($this->filters['search'])) {
             $builder->whereHas('media', function (Builder $query) {
                 $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
-
             });
         }
 
@@ -41,6 +40,11 @@ trait InteractsWithGallery
         }
 
         return $builder->paginate(24);
+    }
+
+    public function getFilters(): array
+    {
+        return $this->filters;
     }
 
     public function paginationView()
