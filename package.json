@@ -7,6 +7,7 @@
         "test": "jest"
     },
     "devDependencies": {
+        "@tailwindcss/container-queries": "^0.1.1",
         "autoprefixer": "^10.4.14",
         "babel-jest": "^29.3.1",
         "cross-env": "^7.0.3",

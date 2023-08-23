@@ -112,9 +112,14 @@ module.exports = {
                 xl: '1280px',
                 '2xl': '1536px',
             },
+            containers: {
+                // To be used for default container styles. This way, if container queries aren't supported, nothing breaks.
+                '1px': '1px',
+            },
         },
     },
     plugins: [
+        require('@tailwindcss/container-queries'),
         require('./warpaint/ProseSpacing'),
         require('./warpaint/WarpaintSpacing'),
         require('./warpaint/WarpaintGutter'),
