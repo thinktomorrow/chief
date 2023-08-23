@@ -32,7 +32,7 @@ class Gallery extends Component implements Htmlable
         return $this->livewireComponent->getTableRows();
     }
 
-    public function getFilters(): Array
+    public function getFilters(): array
     {
         return $this->livewireComponent->getFilters();
     }
