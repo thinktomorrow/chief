@@ -92,16 +92,11 @@
     };
 </script>
 
-<script src="{{ chief_cached_asset('js/native.js') }}"></script>
-
 <livewire:scripts />
 
-{{--TODO:Tijs include these sources in our build step --}}
-<script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
-<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="{{ chief_cached_asset('js/native.js') }}"></script>
 
 @stack('custom-scripts-after-vue')
-
 
 </body>
 </html>

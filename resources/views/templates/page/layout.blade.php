@@ -133,11 +133,7 @@
 
     <script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
 
-    {{--TODO: Tijs include these sources in our build step --}}
-    <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
-
         Livewire.hook('component.initialized', (component) => {
             // Hack to prevent livewire from setting the url to the sidebar url (as used for forms and fragments)
             if(component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/forms/'))) {
@@ -146,11 +142,7 @@
         });
 
         Livewire.onError((message, response) => {
-
-            console.log(response.status);
-
             if(response.status === 419) {
-
                 // TODO: Show custom refresh
                 confirm('Please refresh the page?') && window.location.reload();
 

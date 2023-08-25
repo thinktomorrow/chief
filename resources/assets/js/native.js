@@ -1,3 +1,4 @@
+import Alpine from 'alpinejs';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -20,10 +21,15 @@ initFormSubmitOnChange();
 initSortable('[data-sortable]');
 registerClassToggles();
 
-/** Form logic - submit forms async or via sidebar */
+// Form logic - submit forms async or via sidebar
 require('./forms/index');
-/** Table logic - bulk actions */
+// Table logic - bulk actions
 require('./tables/index');
 require('./sortable/sortable-livewire');
+// So livewire scripts play nice with vue
+require('livewire-vue');
 
 window.vueFieldsRefresh = (el) => vueFields(el);
+window.Alpine = Alpine;
+
+Alpine.start();
