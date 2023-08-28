@@ -38,6 +38,7 @@
     </main>
 
     @include('chief::templates.page._partials.symbols')
+    @include('chief::templates.page._partials.refresh-modal')
 
     <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
     <script src="{{ asset('assets/back/js/vendor/slim.min.js') }}"></script>
@@ -138,15 +139,6 @@
             // Hack to prevent livewire from setting the url to the sidebar url (as used for forms and fragments)
             if(component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/forms/'))) {
                 component.effects.path = undefined;
-            }
-        });
-
-        Livewire.onError((message, response) => {
-            if(response.status === 419) {
-                // TODO: Show custom refresh
-                confirm('Please refresh the page?') && window.location.reload();
-
-                return false;
             }
         });
     </script>
