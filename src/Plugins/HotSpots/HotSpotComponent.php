@@ -95,7 +95,12 @@ class HotSpotComponent extends Component
         unset($this->hotSpots[$id]);
 
         if ($this->activeHotSpotId == $id) {
-            $this->activeHotSpotId = null;
+            // $this->activeHotSpotId = null;
+
+            // Set first hotspot as active
+            if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
+                $this->activateHotSpot($firstHotSpot['id']);
+            }
         }
 
         $this->extractGroupedFormComponents();

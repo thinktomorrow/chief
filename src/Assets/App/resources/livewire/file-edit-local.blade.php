@@ -30,7 +30,7 @@
                                 <svg>
                                     <use xlink:href="#icon-replace"></use>
                                 </svg>
-                                Vervang met een nieuw bestand
+                                Vervang bestand
                             </x-chief::button>
                         </label>
 
