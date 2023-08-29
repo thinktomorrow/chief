@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
@@ -15,6 +16,7 @@ class FileFieldEditComponent extends Component
     use ShowsAsDialog;
     use WithFileUploads;
     use InteractsWithForm;
+    use EmitsToNestables;
 
     public $parentId;
     public string $modelReference;
@@ -40,7 +42,7 @@ class FileFieldEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
-            'externalAssetUpdated-'.$this->id => 'onExternalAssetUpdated',
+            'externalAssetUpdated-' . $this->id => 'onExternalAssetUpdated',
         ];
     }
 
@@ -56,12 +58,6 @@ class FileFieldEditComponent extends Component
         $this->addAssetComponents();
 
         $this->isOpen = true;
-    }
-
-    public function close()
-    {
-        $this->reset(['previewFile', 'form' ,'components']);
-        $this->isOpen = false;
     }
 
     private function setFile(PreviewFile $previewFile)
@@ -119,6 +115,12 @@ class FileFieldEditComponent extends Component
         $this->close();
     }
 
+    public function close()
+    {
+        $this->reset(['previewFile', 'form', 'components']);
+        $this->isOpen = false;
+    }
+
     public function onExternalAssetUpdated()
     {
         // Update previewfile to reflect the external asset data
@@ -131,7 +133,7 @@ class FileFieldEditComponent extends Component
 
     public function submit()
     {
-        $this->validateForm();
+        $this->validateForm(...$this->addDefaultBasenameValidation());
 
         if ($this->replacedPreviewFile) {
             if ($this->replacedPreviewFile->mediaId) {
@@ -163,15 +165,5 @@ class FileFieldEditComponent extends Component
         return view('chief-assets::file-edit', [
             //
         ]);
-    }
-
-    private function emitDownTo($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->id, $params);
-    }
-
-    private function emitToSibling($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->parentId, $params);
     }
 }

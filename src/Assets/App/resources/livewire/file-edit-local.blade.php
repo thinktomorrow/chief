@@ -1,7 +1,11 @@
+@php use Thinktomorrow\Chief\Plugins\ChiefPluginSections; @endphp
+@php use Carbon\Carbon; @endphp
 @if($isOpen)
     <form class="flex items-start gap-8 max-lg:flex-wrap">
-        <div class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
-            <div class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
+        <div
+            class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
+            <div
+                class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
                 @if($previewFile && $previewFile->isImage())
                     <img
                         src="{{ $previewFile->previewUrl }}"
@@ -9,7 +13,9 @@
                         class="object-contain w-full h-full"
                     >
                 @else
-                    <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip" /></svg>
+                    <svg width="24" height="24" class="text-grey-400">
+                        <use xlink:href="#icon-paper-clip"/>
+                    </svg>
                 @endif
             </div>
 
@@ -21,12 +27,14 @@
                             <input wire:model="file" type="file" id="{{ $this->id }}" class="hidden"/>
 
                             <x-chief::button>
-                                <svg><use xlink:href="#icon-replace"></use></svg>
+                                <svg>
+                                    <use xlink:href="#icon-replace"></use>
+                                </svg>
                                 Vervang met een nieuw bestand
                             </x-chief::button>
                         </label>
 
-                        @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
+                        @foreach(app(ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
                             @include($livewireFileEditAction)
                         @endforeach
                     @endif
@@ -44,9 +52,12 @@
                             {{ $previewFile->getUrl() }}
                         </x-chief-assets::copy-url-button>
 
-                        <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" target="_blank" rel="noopener">
+                        <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" target="_blank"
+                           rel="noopener">
                             <x-chief::link>
-                                <svg><use xlink:href="#icon-external-link"></use></svg>
+                                <svg>
+                                    <use xlink:href="#icon-external-link"></use>
+                                </svg>
                             </x-chief::link>
                         </a>
                     </div>
@@ -73,13 +84,13 @@
                     @if($previewFile && $previewFile->createdAt)
                         <dl class="flex justify-between">
                             <dt>Toegevoegd op</dt>
-                            <dd class="text-right">{{ \Carbon\Carbon::createFromTimestamp($previewFile->createdAt)->format('d/m/Y H:i') }}</dd>
+                            <dd class="text-right">{{ Carbon::createFromTimestamp($previewFile->createdAt)->format('d/m/Y H:i') }}</dd>
                         </dl>
 
                         @if($previewFile->updatedAt !== $previewFile->createdAt)
                             <dl class="flex justify-between">
                                 <dt>Laatst aangepast</dt>
-                                <dd class="text-right">{{ \Carbon\Carbon::createFromTimestamp($previewFile->updatedAt)->format('d/m/Y H:i') }}</dd>
+                                <dd class="text-right">{{ Carbon::createFromTimestamp($previewFile->updatedAt)->format('d/m/Y H:i') }}</dd>
                             </dl>
                         @endif
                     @endif
@@ -101,7 +112,8 @@
                 </x-chief::input.prepend-append>
 
                 @if($replacedPreviewFile)
-                    <span class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
+                    <span
+                        class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
                 @endif
             </x-chief::input.group>
 

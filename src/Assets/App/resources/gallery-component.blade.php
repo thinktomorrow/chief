@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Plugins\ChiefPluginSections; @endphp
 <div>
     <div class="flex justify-end w-full mb-4">
         <button
@@ -5,7 +6,10 @@
             type="button"
             class="inline-flex items-start gap-2 leading-5 btn btn-primary"
         >
-            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /> </svg>
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
             Voeg bestanden toe
         </button>
     </div>
@@ -46,9 +50,9 @@
             <livewire:chief-wire::asset-delete parent-id="{{ $this->id }}"/>
         </div>
 
-        @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
+        @foreach(app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
             <div>
-                <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->id }}" />
+                <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->id }}"/>
             </div>
         @endforeach
     </div>

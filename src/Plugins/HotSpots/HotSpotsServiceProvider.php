@@ -15,7 +15,7 @@ class HotSpotsServiceProvider extends ChiefPluginServiceProvider
         Livewire::component('chief-wire::hotspots', HotSpotComponent::class);
 
         $this->app->make(ChiefPluginSections::class)
-            ->addFooterSection('chief-hotspots::footer')
-            ->addLivewireFileComponent('chief-wire::hotspots');
+            ->addLivewireFileComponent('chief-wire::hotspots')
+            ->addLivewireFileEditAction('chief-hotspots::file-edit-action');
     }
 }

@@ -33,16 +33,21 @@ class GalleryComponent extends Component
         $this->table = new Gallery($this);
     }
 
-    public function openFileUpload()
-    {
-        $this->emitDownTo('chief-wire::file-upload', 'open');
-    }
-
     public function openAssetEdit($assetId)
     {
         $previewFile = PreviewFile::fromAsset(Asset::find($assetId));
 
         $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $previewFile]);
+    }
+
+    private function emitDownTo($name, $event, array $params = [])
+    {
+        $this->emitTo($name, $event . '-' . $this->id, $params);
+    }
+
+    public function openFileUpload()
+    {
+        $this->emitDownTo('chief-wire::file-upload', 'open');
     }
 
     public function deleteAsset($assetId)
@@ -72,10 +77,5 @@ class GalleryComponent extends Component
         return view('chief-assets::gallery-component', [
             //
         ]);
-    }
-
-    private function emitDownTo($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->id, $params);
     }
 }
