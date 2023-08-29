@@ -79,7 +79,7 @@
                 <x-slot name="footer">
                     <div class="flex flex-wrap justify-end gap-3">
 
-                        <button type="button" x-on:click="open = false" class="btn btn-grey">
+                        <button type="button" x-on:click="$wire.close()" class="btn btn-grey">
                             Annuleren
                         </button>
 

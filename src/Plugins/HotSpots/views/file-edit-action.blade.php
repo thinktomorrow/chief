@@ -1,5 +1,5 @@
 <div>
-    @if($previewFile->isImage())
+    @if($previewFile->isImage() && $previewFile->mediaId)
         <a wire:click="openImageHotSpots()" title="Image hotspot tool" class="shrink-0">
             <x-chief::icon-button icon="icon-crop"/>
         </a>
