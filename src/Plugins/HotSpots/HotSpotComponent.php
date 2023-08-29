@@ -20,6 +20,7 @@ class HotSpotComponent extends Component
     use InteractsWithGroupedForms;
 
     public $parentId;
+    public $previousSiblingId;
     public ?PreviewFile $previewFile = null;
 
     public $hotSpots = [];
@@ -40,12 +41,20 @@ class HotSpotComponent extends Component
 
     public function open($value)
     {
+        // The hotspot component is opened from the file edit modal so this is our reference.
+        $this->previousSiblingId = $value['previous_sibling_id'];
+
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
 
         $this->isOpen = true;
 
         if ($this->previewFile->getData('hotspots') && is_array($this->previewFile->getData('hotspots'))) {
             $this->hotSpots = $this->previewFile->getData('hotspots');
+
+            // Set first hotspot as active
+            if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
+                $this->activateHotSpot($firstHotSpot['id']);
+            }
         }
 
         $this->extractGroupedFormComponents();
@@ -58,6 +67,11 @@ class HotSpotComponent extends Component
         $this->addAssetComponents('hotSpotFields');
 
         $this->extractGroupedFormComponents();
+    }
+
+    public function activateHotSpot(string $id)
+    {
+        $this->activeHotSpotId = $id;
     }
 
     public function addHotSpot(float $x, float $y, $relativeTop, $relativeLeft)
@@ -76,14 +90,13 @@ class HotSpotComponent extends Component
         $this->extractGroupedFormComponents();
     }
 
-    public function activateHotSpot(string $id)
-    {
-        $this->activeHotSpotId = $id;
-    }
-
     public function removeHotSpot(string $id)
     {
-        // TODO...
+        unset($this->hotSpots[$id]);
+
+        if ($this->activeHotSpotId == $id) {
+            $this->activeHotSpotId = null;
+        }
 
         $this->extractGroupedFormComponents();
     }
@@ -108,21 +121,20 @@ class HotSpotComponent extends Component
 
         app(FileApplication::class)->updateAssetData($this->previewFile->mediaId, ['hotspots' => $hotspots]);
 
-        $this->syncForm();
+        // Sync previewFile
+        $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
+        $this->previewFile->data = array_merge($this->previewFile->data, ['hotspots' => $hotspots]);
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->emit('assetUpdated-' . $this->previousSiblingId, $this->previewFile);
 
         $this->close();
-    }
-
-    private function syncForm()
-    {
-        $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
     }
 
     public function close()
     {
         $this->reset(['previewFile', 'form', 'components', 'hotSpots', 'activeHotSpotId']);
+        $this->hotSpots = [];
+
         $this->isOpen = false;
     }
 
@@ -131,6 +143,11 @@ class HotSpotComponent extends Component
         return view('chief-hotspots::hotspot-component', [
             //
         ]);
+    }
+
+    private function composeGroupIndex($index)
+    {
+        return 'hotspots.' . $index;
     }
 
     private function componentIndices(): array

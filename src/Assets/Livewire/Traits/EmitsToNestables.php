@@ -11,6 +11,8 @@ trait EmitsToNestables
 
     private function emitToSibling($name, $event, array $params = [])
     {
+        $params = array_merge($params, ['previous_sibling_id' => $this->id]);
+
         $this->emitTo($name, $event . '-' . $this->parentId, $params);
     }
 }

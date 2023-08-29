@@ -99,13 +99,13 @@
         </div>
 
         <div class="space-y-6 grow">
-            <x-chief::input.group rule="basename">
-                <x-chief::input.label for="basename">Bestandsnaam</x-chief::input.label>
+            <x-chief::input.group rule="form.basename">
+                <x-chief::input.label for="form.basename">Bestandsnaam</x-chief::input.label>
 
                 <x-chief::input.prepend-append :append="'.'.$previewFile->extension">
                     <x-chief::input.text
-                        id="basename"
-                        name="basename"
+                        id="form.basename"
+                        name="form[basename]"
                         placeholder="Bestandsnaam"
                         wire:model.lazy="form.basename"
                     />

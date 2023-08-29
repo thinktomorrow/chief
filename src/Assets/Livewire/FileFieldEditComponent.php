@@ -43,6 +43,7 @@ class FileFieldEditComponent extends Component
             'open' => 'open',
             'open-' . $this->parentId => 'open',
             'externalAssetUpdated-' . $this->id => 'onExternalAssetUpdated',
+            'assetUpdated-' . $this->id => 'onAssetUpdated',
         ];
     }
 
@@ -129,6 +130,21 @@ class FileFieldEditComponent extends Component
         $this->emitUp('assetUpdated', $this->previewFile);
 
         $this->close();
+    }
+
+    public function onAssetUpdated($previewFileArray): void
+    {
+        $this->previewFile = PreviewFile::fromArray($previewFileArray);
+    }
+
+    //    public function openImageCrop()
+    //    {
+    //        $this->emitToSibling('chief-wire::image-crop', 'open', ['previewfile' => $this->previewFile]);
+    //    }
+
+    public function openImageHotSpots()
+    {
+        $this->emitToSibling('chief-wire::hotspots', 'open', ['previewfile' => $this->previewFile]);
     }
 
     public function submit()

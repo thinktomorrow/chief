@@ -55,6 +55,9 @@
                 @foreach($this->getGroupedComponents() as $hotSpotId => $componentsPerHotSpot)
                     <div x-show="activeIndex == '{{ $hotSpotId }}'" class="pt-6 space-y-2 border-t border-grey-100">
                         <h2 class="text-sm tracking-wider uppercase text-grey-500">Hotspot {{ $hotSpotId }}</h2>
+                        <button type="button" wire:click="removeHotSpot('{{ $hotSpotId }}')" class="btn btn-grey">
+                            DELETE
+                        </button>
                         <div class="space-y-6">
                             @foreach($componentsPerHotSpot as $component)
                                 {{ $component }}

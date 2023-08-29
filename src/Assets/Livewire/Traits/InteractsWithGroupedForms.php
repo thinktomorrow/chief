@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Support\Arr;
+use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
@@ -31,9 +32,9 @@ trait InteractsWithGroupedForms
             ->mapWithKeys(function ($index) {
 
                 $components = collect($this->getComponents())->map(function ($component) use ($index) {
-                    $component->id(LivewireFieldName::getWithoutPrefix($component->getId(), null, 'hotspots.' . $index)); // For error rule matching
-                    $component->key(LivewireFieldName::getWithoutPrefix($component->getKey(), null, 'hotspots.' . $index));
-                    $component->name(LivewireFieldName::getWithoutPrefix($component->getName(), null, 'hotspots.' . $index));
+                    $component->id(LivewireFieldName::getWithoutPrefix($component->getId(), null, $this->composeGroupIndex($index))); // For error rule matching
+                    $component->key(LivewireFieldName::getWithoutPrefix($component->getKey(), null, $this->composeGroupIndex($index)));
+                    $component->name(FormKey::replaceDotsByBrackets(LivewireFieldName::getWithoutPrefix($component->getName(), null, $this->composeGroupIndex($index))));
 
                     return $component;
                 });
@@ -41,6 +42,11 @@ trait InteractsWithGroupedForms
                 return [$index => $components];
             })
             ->all();
+    }
+
+    private function composeGroupIndex($index)
+    {
+        return $index;
     }
 
     /**
