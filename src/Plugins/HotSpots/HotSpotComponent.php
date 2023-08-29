@@ -97,8 +97,6 @@ class HotSpotComponent extends Component
         if ($this->activeHotSpotId == $id) {
             $this->activeHotSpotId = null;
         }
-
-        $this->extractGroupedFormComponents();
     }
 
     public function getHotSpotComponents(): array
