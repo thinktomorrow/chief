@@ -24,6 +24,7 @@ We have refactored and improved the file asset management.
 
 ### Changed
 
+- Upgraded `thinktomorrow/assetlibrary` dependency to `0.9`.
 - Default NestableRepository class is now the Memoized repository.
 - Resource::getInstanceAttributes is now an array of arguments. Before the array was considered to be the
   eloquent model attributes, but now it can be any number of model dependencies. Any existing setup should be revised.
@@ -41,8 +42,9 @@ We have refactored and improved the file asset management.
   file field instead.
 -
 Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant`
-and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These are no longer used and replaced by the
+and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These have been replaced by the
 Livewire FileComponent upload logic. The latter one was no longer actively used.
+
 - Removed: `chief-site` view reference. This was only used for the admin toast, which is now its own plugin.
 
 ### Fixed

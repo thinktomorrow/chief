@@ -15,7 +15,7 @@ trait RenamesErrorBagFileAttribute
 
                         $index = $this->extractIndexFromFileKey($messageKey);
 
-                        if("" === $index) {
+                        if ("" === $index || ! isset($this->files[$index])) {
                             return $message;
                         }
 
