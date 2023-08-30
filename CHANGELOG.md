@@ -41,6 +41,7 @@ We have refactored and improved the file asset management.
 - Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to
   file field instead.
 -
+
 Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant`
 and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These have been replaced by the
 Livewire FileComponent upload logic. The latter one was no longer actively used.
@@ -50,6 +51,7 @@ Livewire FileComponent upload logic. The latter one was no longer actively used.
 ### Fixed
 
 - Issue when projecting menu data on deleting owning mode
+- Issue where in certain cases multiselect value in index table filtering wasn't used in query.
 
 ## 0.7.25 - 2023-05-24
 
