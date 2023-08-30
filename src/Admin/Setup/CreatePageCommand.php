@@ -85,6 +85,7 @@ class CreatePageCommand extends Command
             '__STUB_CLASSNAME__' => $values['className'],
             '__STUB_FIELDS__' => '',
         ];
+
         // --fields=name:input,online:bool,
         return str_replace(array_keys($replacements), array_values($replacements), $content);
     }

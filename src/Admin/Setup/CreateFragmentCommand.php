@@ -89,6 +89,7 @@ class CreateFragmentCommand extends Command
             '__STUB_FIELDS__' => '',
             '__STUB_VIEWKEY__' => $values['viewkey'],
         ];
+
         // --fields=name:input,online:bool,
         return str_replace(array_keys($replacements), array_values($replacements), $content);
     }
