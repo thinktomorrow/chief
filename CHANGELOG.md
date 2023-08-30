@@ -4,31 +4,38 @@ All notable changes to the `chief` application template will be documented in th
 the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## Unreleased - 0.8.0 - 2023
+## Unreleased - 0.8.0
 
-In this release are a couple of breaking changes. Please pay attention to the following changes.
+In this release are a couple of breaking changes.
+We have refactored and improved the file asset management.
 
-Major refactor and improvement of the file asset management.
-Upload, additions, deletions and sorting of files per page is more user-friendly.
-An asset can be edited and can contain textual fields.
-All assets can be managed via the asset index.
+- The Asset library package has been updated to a new major version.
+- File handling is done via Livewire components and replaces all the prior vue components.
+- The Slim vendor package is no longer in use and replaced by custom Livewire components. This resulted in less code
+  complexity and easier upload
+  handling.
 
-The Slim script is replaced by a custom livewire solution. This resulted in less code complexity and easier upload
-handling.
+### Added
 
-- Added: `Field::requiredFallbackLocale()` as a alias of `Field::rules('requireFallbackLocale)`.
-- Added: callback as fourth optional argument for the Select::sync() method that is called after syncing values.
-- Added: `TableColumnLink::target() to add a target attribute to the link. Defaults to `_self`.
-- Added: `MemoizedMysqlNestableRepository` next to the existing `MysqlNestableRepository`.
-- Changed: Default NestableRepository class is now the Memoized repository.
-- Changed: Resource::getInstanceAttributes is now an array of arguments. Before the array was considered to be the
+- `Field::requiredFallbackLocale()` as a alias of `Field::rules('requireFallbackLocale)`.
+- callback as fourth optional argument for the Select::sync() method that is called after syncing values.
+- `TableColumnLink::target() to add a target attribute to the link. Defaults to `_self`.
+- `MemoizedMysqlNestableRepository` next to the existing `MysqlNestableRepository`.
+
+### Changed
+
+- Default NestableRepository class is now the Memoized repository.
+- Resource::getInstanceAttributes is now an array of arguments. Before the array was considered to be the
   eloquent model attributes, but now it can be any number of model dependencies. Any existing setup should be revised.
   Solution is to add an extra array such as: `return ['title' => 'foobar'']` should
   become `return [ ['title' => 'foobar'] ]`.
-- Changed: Chief admin toast is refactored as a Chief plugin. This introduces a breaking change in frontend site
+- Chief admin toast is refactored as a Chief plugin. This introduces a breaking change in frontend site
   behaviour. Please refer to its readme file for the frontend setup.
-- Changed: Updated `<x-chief::nav/>` layout.
-- Changed: `<x-chief::nav/>` now has a seperate label attribute. This way you can both display a nav title and label.
+- Updated `<x-chief::nav/>` layout.
+- `<x-chief::nav/>` now has a seperate label attribute. This way you can both display a nav title and label.
+
+### Removed
+
 - Removed `Thinktomorrow\Chief\Forms\Fields\Media\MediaType` as a legacy reference to predefined file keys.
 - Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to
   file field instead.
@@ -37,6 +44,10 @@ Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktom
 and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These are no longer used and replaced by the
 Livewire FileComponent upload logic. The latter one was no longer actively used.
 - Removed: `chief-site` view reference. This was only used for the admin toast, which is now its own plugin.
+
+### Fixed
+
+- Issue when projecting menu data on deleting owning mode
 
 ## 0.7.25 - 2023-05-24
 
