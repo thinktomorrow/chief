@@ -1,21 +1,34 @@
-<modal id="delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}" title="Ben je zeker?">
+<x-chief::dialog
+    id="delete-fragment-{{ str_replace('\\', '', $model->modelReference()->get()) }}"
+    title="Verwijder dit fragment"
+    size="xs"
+>
     <form
-        action="{{ $manager->route('fragment-delete', $owner, $model) }}"
-        method="POST"
         id="delete-fragment-form-{{ $model->modelReference()->get() }}"
-        v-cloak
+        method="POST"
+        action="{{ $manager->route('fragment-delete', $owner, $model) }}"
     >
         @method('DELETE')
         @csrf
-
-        <p>Hiermee verwijder je dit fragment van deze pagina. Ben je zeker?</p>
-        <p>Dit zal niet verwijderd worden op eventueel andere pagina's waar dit fragment gebruikt wordt.</p>
-
     </form>
 
-    <div v-cloak slot="modal-action-buttons">
-        <button form="delete-fragment-form-{{ $model->modelReference()->get() }}" type="submit" class="btn btn-error">
-            Verwijderen
-        </button>
+    <div class="prose prose-dark prose-spacing">
+        <p>Hiermee verwijder je dit fragment van deze pagina. Ben je zeker?</p>
+        <p>Dit zal niet verwijderd worden op eventueel andere pagina's waar dit fragment gebruikt wordt.</p>
     </div>
-</modal>
+
+    <x-slot name="footer">
+        <button type="button" x-on:click="open = false" class="btn btn-grey">
+            Annuleer
+        </button>
+
+        <button
+            type="submit"
+            form="delete-fragment-form-{{ $model->modelReference()->get() }}"
+            x-on:click="open = false"
+            class="btn btn-error"
+        >
+            Verwijder fragment
+        </button>
+    </x-slot>
+</x-chief::dialog>

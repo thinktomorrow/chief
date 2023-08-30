@@ -45,7 +45,7 @@
             @endif
         </div>
 
-        <x-slot name="footer" class="flex justify-end">
+        <x-slot name="footer">
             <button wire:click="save" type="button" class="btn btn-primary">
                 @if($assetId)
                     Vervang extern bestand

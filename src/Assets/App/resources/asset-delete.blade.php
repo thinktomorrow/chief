@@ -11,7 +11,7 @@
             </p>
         </form>
 
-        <x-slot name="footer" class="flex flex-wrap justify-end gap-3">
+        <x-slot name="footer">
             <button type="button" x-on:click="open = false" class="btn btn-grey">
                 Annuleer
             </button>

@@ -3,48 +3,41 @@
 @endphp
 
 @if($tag->getUsages() > 0)
-<div data-vue-fields class="space-y-4">
-    <div>
-        <a
-            v-cloak
-            @click="showModal('state-modal-<?= $modalId; ?>')"
-            class="block cursor-pointer"
+    <div data-vue-fields>
+        <button
+            type="button"
+            x-data
+            x-on:click="$dispatch('open-dialog', { 'id': 'state-modal-{{ $modalId }}' })"
         >
             <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
-        </a>
-    </div>
+        </button>
 
-    @push('portals')
-        <modal
-            id="state-modal-{{ $modalId }}"
-            title="Verwijder tag {{ $tag->getLabel() }}"
-        >
-            <p>
-                Als je de tag verwijdert, zal deze ook worden ontkoppeld van alle pagina's.
-            </p>
-
-            <form
-                id="delete-tag-modal-form-{{ $modalId }}"
-                action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
-                method="POST"
-                v-cloak
-            >
-                @csrf
-                @method('DELETE')
-            </form>
-
-            <div v-cloak slot="modal-action-buttons">
-                <button
-                    form="delete-tag-modal-form-{{ $modalId }}"
-                    type="submit"
-                    class="btn btn-error"
+        @push('portals')
+            <x-chief::dialog id="state-modal-{{ $modalId }}" title="Verwijder deze tag" size="xs">
+                <form
+                    id="delete-tag-modal-form-{{ $modalId }}"
+                    method="POST"
+                    action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
                 >
-                    DELETE
-                </button>
-            </div>
-        </modal>
-    @endpush
-</div>
+                    @csrf
+                    @method('DELETE')
+                </form>
+
+                <div class="prose prose-dark prose-spacing">
+                    <p>
+                        Hiermee verwijder je <b>{{ $tag->getLabel() }}</b>. Ben je zeker?
+                        Als je deze tag verwijdert, verdwijnt deze ook van alle gekoppelde pagina's.
+                    </p>
+                </div>
+
+                <x-slot name="footer">
+                    <button form="delete-tag-modal-form-{{ $modalId }}" type="submit" class="btn btn-error">
+                        Verwijder tag
+                    </button>
+                </x-slot>
+            </x-chief::dialog>
+        @endpush
+    </div>
 @else
     <form
         id="delete-tag-form-{{ $tag->getTagId() }}"
@@ -55,14 +48,8 @@
         @csrf
         @method('DELETE')
 
-        <div class="relative space-y-6">
-            <button
-                type="submit"
-                form="delete-tag-form-{{ $tag->getTagId() }}"
-                class="block w-full text-left cursor-pointer"
-            >
-                <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
-            </button>
-        </div>
+        <button type="submit" form="delete-tag-form-{{ $tag->getTagId() }}">
+            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
+        </button>
     </form>
 @endif

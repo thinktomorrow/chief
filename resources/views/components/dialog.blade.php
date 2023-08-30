@@ -87,7 +87,7 @@
                     </div>
 
                     @if($footer)
-                        <div {{ $footer->attributes->class(['px-8 pb-8 pt-6 bg-white/[0.85] backdrop-filter backdrop-blur-md']) }}>
+                        <div {{ $footer->attributes->class(['px-8 pb-8 pt-6 bg-white/[0.85] backdrop-filter backdrop-blur-md flex flex-wrap justify-end gap-3']) }}>
                             {{ $footer }}
                         </div>
                     @endif

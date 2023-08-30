@@ -1,10 +1,6 @@
 <x-chief::page.template title="Sitemap">
     <x-slot name="hero">
-        <x-chief::page.hero title="Sitemap" class="max-w-3xl">
-            <a @click="generateSitemap('generate-sitemap')" title="Vernieuw nu" class="btn btn-primary">
-                Vernieuw nu
-            </a>
-        </x-chief::page.hero>
+        <x-chief::page.hero title="Sitemap" class="max-w-3xl"/>
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
@@ -48,6 +44,40 @@
                     > search console </a>.
                 </p>
 
+                <div x-data="{ isLoading: null, status: null }" class="my-6">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        x-on:click="() => {
+                            isLoading = true;
+                            status = null;
+                            window.axios.post('{{ route('chief.back.sitemap.generate') }}', {
+                                _method: 'POST'
+                            }).then((response) => {
+                                isLoading = false;
+                                status = 'success';
+                            }).catch((errors) => {
+                                isLoading = false;
+                                status = 'error';
+                            })
+                        }"
+                    >
+                        Vernieuw sitemap nu
+                    </button>
+
+                    <p x-show="isLoading" class="mt-4 animate-pulse">
+                        Bezig met het genereren van een sitemap. Dit kan eventjes duren...
+                    </p>
+
+                    <p x-show="status === 'success'" class="mt-4">
+                        De sitemap is succesvol gegenereerd.
+                    </p>
+
+                    <p x-show="status === 'error'" class="mt-4">
+                        Er ging iets mis bij het genereren van de sitemap. Probeer het later opnieuw.
+                    </p>
+                </div>
+
                 <h3>Waarom is een sitemap van belang?</h3>
 
                 <p>
@@ -70,10 +100,4 @@
             </div>
         </div>
     </x-chief::page.grid>
-
-    <modal id="generate-sitemap" title="Sitemap genereren ..." size="large" :active="false">
-        <div class="prose prose-spacing prose-dark">
-            Bezig met het genereren van een sitemap. Dit kan eventjes duren.
-        </div>
-    </modal>
 </x-chief::page.template>

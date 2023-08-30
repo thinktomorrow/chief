@@ -1,11 +1,10 @@
 <?php $formId = 'state-modal-form-' . \Illuminate\Support\Str::random(10); ?>
 
 <div data-form data-form-tags="status,links">
-
     <form
-            id="{{ $formId }}"
-            action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,'archive')"
-            method="POST"
+        id="{{ $formId }}"
+        action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,'archive')"
+        method="POST"
     >
         @csrf
         @method('PUT')

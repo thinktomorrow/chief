@@ -6,7 +6,7 @@
         </p>
     </div>
 
-    <x-slot name="footer" class="flex justify-end">
+    <x-slot name="footer">
         <button x-on:click="window.location.reload()" class="btn btn-primary">
             Herlaad de pagina
         </button>

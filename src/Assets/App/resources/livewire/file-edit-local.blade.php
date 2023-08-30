@@ -140,16 +140,13 @@
             @endif
 
             <x-slot name="footer">
-                <div class="flex flex-wrap justify-end gap-3">
+                <button type="button" x-on:click="open = false" class="btn btn-grey">
+                    Annuleren
+                </button>
 
-                    <button type="button" x-on:click="open = false" class="btn btn-grey">
-                        Annuleren
-                    </button>
-
-                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                        Opslaan
-                    </button>
-                </div>
+                <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                    Opslaan
+                </button>
             </x-slot>
         </div>
     </form>

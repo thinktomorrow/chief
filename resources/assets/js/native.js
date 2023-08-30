@@ -31,19 +31,15 @@ require('livewire-vue');
 
 /**
  * --------------------------------
- * Alpine
- * --------------------------------
- */
-window.Alpine = Alpine;
-
-Alpine.start();
-
-/**
- * --------------------------------
  * Vue refresh hook
  * --------------------------------
  */
 window.vueFieldsRefresh = (el) => vueFields(el);
-window.Alpine = Alpine;
 
+/**
+ * --------------------------------
+ * Alpine
+ * --------------------------------
+ */
+window.Alpine = Alpine;
 Alpine.start();

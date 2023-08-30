@@ -22,7 +22,7 @@
             </x-chief-assets::upload-and-dropzone>
         </form>
 
-        <x-slot name="footer" class="flex justify-end">
+        <x-slot name="footer">
             <button type="submit" form="file-upload-form-{{ $this->id }}" @disabled($this->countFiles() < 1) @class([
                 'btn btn-primary',
                 'btn-disabled' => $this->countFiles() < 1,

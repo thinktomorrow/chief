@@ -5,7 +5,9 @@
 <x-chief::page.template title="Menu item toevoegen">
     <x-slot name="hero">
         <x-chief::page.hero title="Menu item toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <button form="createForm" type="submit" class="btn btn-primary">Menu item toevoegen</button>
+            <button form="createForm" type="submit" class="btn btn-primary">
+                Voeg menu item toe
+            </button>
         </x-chief::page.hero>
     </x-slot>
 

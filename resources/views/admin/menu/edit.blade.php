@@ -6,11 +6,18 @@
     <x-slot name="hero">
         <x-chief::page.hero title="Menu item bewerken" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
             <div class="space-x-3">
-                <span class="btn btn-error-outline" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
-                    Verwijderen
-                </span>
+                <button
+                    type="button"
+                    x-data
+                    x-on:click="$dispatch('open-dialog', { 'id': 'delete-menuitem-{{ $menuitem->id }}'})"
+                    class="btn btn-error-outline"
+                >
+                    Verwijder
+                </button>
 
-                <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
+                <button form="updateForm" type="submit" class="btn btn-primary">
+                    Bewaar
+                </button>
             </div>
         </x-chief::page.hero>
     </x-slot>

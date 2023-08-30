@@ -98,7 +98,7 @@
             @adminCan('fragment-delete', $model)
                 <a
                     v-cloak
-                    @click="showModal('delete-fragment-{{ str_replace('\\','',$model->modelReference()->get()) }}')"
+                    x-on:click="$dispatch('open-dialog', { 'id': 'delete-fragment-{{ str_replace('\\', '', $model->modelReference()->get()) }}' })"
                     class="cursor-pointer link link-grey"
                 >
                     @if($model->fragmentModel()->isShared())

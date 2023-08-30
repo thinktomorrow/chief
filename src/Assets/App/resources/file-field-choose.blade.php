@@ -42,7 +42,7 @@
         </div>
 
         <x-slot name="footer">
-            <div class="space-y-4">
+            <div class="w-full space-y-4">
                 @if ($rows->total() > $rows->count())
                     <div class="shrink-0">
                         {{ $rows->onEachSide(0)->links() }}

@@ -4,24 +4,11 @@
 
 <x-chief::page.template title="Tag aanpassen">
     <x-slot name="hero">
-        <x-chief::page.hero title="Tag aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <a
-                v-cloak
-                @click="showModal('delete-tag-modal-{{ $model->id }}')"
-                class="block cursor-pointer"
-            >
-                <x-chief::icon-label class="text-grey-500 hover:text-red-500">
-                    <x-slot name="icon">
-                        <svg width="18" height="18"><use xlink:href="#icon-trash"/></svg>
-                    </x-slot>
-                    Verwijder tag
-                </x-chief::icon-label>
-            </a>
-        </x-chief::page.hero>
+        <x-chief::page.hero title="Tag aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"/>
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
-        <form id="tagsEditForm" action="{{ route('chief.tags.update', $model->id) }}" method="POST" class="card">
+        <form id="tagsEditForm" method="POST" action="{{ route('chief.tags.update', $model->id) }}" class="card">
             @csrf
             @method('PUT')
 
@@ -30,42 +17,49 @@
                     {!! $field->render() !!}
                 @endforeach
 
-                <button class="btn btn-primary" type="submit">Bewaar aanpassingen</button>
+                <div class="flex justify-between gap-3">
+                    <button class="btn btn-primary" type="submit">Bewaar aanpassingen</button>
+
+                    <button
+                        type="button"
+                        x-data
+                        x-on:click="$dispatch('open-dialog', { 'id': 'delete-tag-modal-{{ $model->id }}' })"
+                        class="btn btn-grey"
+                    >
+                        <x-chief::icon-label class="text-grey-500 hover:text-red-500" icon="icon-trash">
+                            Verwijder tag
+                        </x-chief::icon-label>
+                    </button>
+                </div>
             </div>
         </form>
     </x-chief::page.grid>
 
     @push('portals')
-        <modal
-            id="delete-tag-modal-{{ $model->id }}"
-            title="Wil je deze tag verwijderen?"
-        >
-            <p>
-                Als je de tag verwijdert, zal deze ook worden ontkoppeld van alle pagina's.
-            </p>
-
+        <x-chief::dialog id="delete-tag-modal-{{ $model->id }}" title="Verwijder deze tag" size="xs">
             <form
                 id="delete-tag-modal-form-{{ $model->id }}"
-                action="{{ route('chief.tags.delete', $model->id) }}"
                 method="POST"
-                v-cloak
+                action="{{ route('chief.tags.delete', $model->id) }}"
             >
                 @csrf
                 @method('DELETE')
             </form>
 
-            <div v-cloak slot="modal-action-buttons">
-                <button
-                    form="delete-tag-modal-form-{{ $model->id }}"
-                    type="submit"
-                    class="btn btn-error"
-                >
+            <div class="prose prose-dark prose-spacing">
+                <p>
+                    Hiermee verwijder je <b>{{ $model->label }}</b>. Ben je zeker?
+                    Als je deze tag verwijdert, verdwijnt deze ook van alle gekoppelde pagina's.
+                </p>
+            </div>
+
+            <x-slot name="footer">
+                <button type="submit" form="delete-tag-modal-form-{{ $model->id }}" class="btn btn-error">
                     <x-chief::icon-label icon="icon-trash">
-                        Ja, tag verwijderen
+                        Verwijder tag
                     </x-chief::icon-label>
                 </button>
-            </div>
-        </modal>
+            </x-slot>
+        </x-chief::dialog>
     @endpush
-
 </x-chief::page.template>

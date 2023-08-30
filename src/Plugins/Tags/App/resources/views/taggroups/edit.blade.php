@@ -4,13 +4,16 @@
 
 <x-chief::page.template title="Tag groep aanpassen">
     <x-slot name="hero">
-        <x-chief::page.hero title="Tag groep aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-
-        </x-chief::page.hero>
+        <x-chief::page.hero title="Tag groep aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"/>
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
-        <form id="tagGroupsEditForm" action="{{ route('chief.taggroups.update', $model->id) }}" method="POST" class="card">
+        <form
+            id="tagGroupsEditForm"
+            method="POST"
+            action="{{ route('chief.taggroups.update', $model->id) }}"
+            class="card"
+        >
             @csrf
             @method('PUT')
 
@@ -19,33 +22,26 @@
                     {!! $field->render() !!}
                 @endforeach
 
-                <div class="flex justify-between items-center mt-4">
+                <div class="flex items-center justify-between mt-4">
                     <button class="btn btn-primary" type="submit">Bewaar aanpassingen</button>
 
-                    <a
-                        v-cloak
-                        @click="showModal('delete-taggroup-modal-{{ $model->id }}')"
-                        class="block cursor-pointer"
+                    <button
+                        type="button"
+                        x-data
+                        x-on:click="$dispatch('open-dialog', { 'id': 'delete-taggroup-modal-{{ $model->id }}' })"
+                        class="btn btn-grey"
                     >
-                        <x-chief::icon-label icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500">
+                        <x-chief::icon-label icon="icon-trash" color="grey">
                             Verwijder groep
                         </x-chief::icon-label>
-                    </a>
+                    </button>
                 </div>
             </div>
-
         </form>
 
 
         @push('portals')
-            <modal
-                id="delete-taggroup-modal-{{ $model->id }}"
-                title="Wil je deze groep verwijderen?"
-            >
-                <p>
-
-                </p>
-
+            <x-chief::dialog id="delete-taggroup-modal-{{ $model->id }}" title="Verwijder deze tag groep" size="xs">
                 <form
                     id="delete-taggroup-modal-form-{{ $model->id }}"
                     action="{{ route('chief.taggroups.delete', $model->id) }}"
@@ -56,19 +52,24 @@
                     @method('DELETE')
                 </form>
 
-                <div v-cloak slot="modal-action-buttons">
+                <div class="prose prose-dark prose-spacing">
+                    <p>
+                        Hiermee verwijder je <b>{{ $model->label }}</b>. Ben je zeker?
+                        De tags die onder deze groep horen worden niet verwijderd,
+                        maar zullen getoond worden onder de algemene tags.
+                    </p>
+                </div>
+
+                <x-slot name="footer">
                     <button
-                        form="delete-taggroup-modal-form-{{ $model->id }}"
                         type="submit"
+                        form="delete-taggroup-modal-form-{{ $model->id }}"
                         class="btn btn-error"
                     >
-                        <x-chief::icon-label icon="icon-trash">
-                            Ja, groep verwijderen
-                        </x-chief::icon-label>
+                        Verwijder tag groep
                     </button>
-                </div>
-            </modal>
+                </x-slot>
+            </x-chief::dialog>
         @endpush
-
     </x-chief::page.grid>
 </x-chief::page.template>

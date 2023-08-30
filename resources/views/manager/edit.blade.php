@@ -25,7 +25,7 @@
         <x-chief-form::forms position="main"/>
 
         @adminCan('fragments-index', $model)
-        <x-chief::fragments :owner="$model"/>
+            <x-chief::fragments :owner="$model"/>
         @endAdminCan
 
         <x-chief-form::forms position="main-bottom"/>
@@ -39,12 +39,8 @@
     </x-chief::page.grid>
 
     @push('portals')
-        @adminCan('delete', $model)
-        @include('chief::manager._transitions.modals.delete-modal')
-        @endAdminCan
-
         @adminCan('archive', $model)
-        @include('chief::manager._transitions.modals.archive-modal')
+            @include('chief::manager._transitions.modals.archive-modal')
         @endAdminCan
     @endpush
 
