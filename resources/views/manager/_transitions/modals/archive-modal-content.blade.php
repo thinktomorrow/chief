@@ -1,15 +1,18 @@
-<?php $formId = 'state-modal-form-' . \Illuminate\Support\Str::random(10); ?>
+<form
+    data-form
+    data-form-tags="status,links"
+    id="state-modal-archive-{{ $model->id }}-form"
+    action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,'archive')"
+    method="POST"
+    class="form-light"
+>
+    @csrf
+    @method('PUT')
 
-<div data-form data-form-tags="status,links">
-    <form
-        id="{{ $formId }}"
-        action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,'archive')"
-        method="POST"
-    >
-        @csrf
-        @method('PUT')
-
-        <h2 class="h2 h1-dark">Archiveer: {{ $resource->getPageTitle($model) }}</h2>
+    <div class="prose prose-dark prose-spacing">
+        <p>
+            Je staat op het punt om <b>{{ $resource->getPageTitle($model) }}</b> te archiveren.
+        </p>
 
         @if(contract($model, \Thinktomorrow\Chief\Site\Visitable\Visitable::class))
             <p>
@@ -17,7 +20,7 @@
                 Je kan ook kiezen om door te linken naar een andere pagina:
             </p>
 
-            <select class="mt-3" name="redirect_id" id="redirectId">
+            <x-chief::input.select id="redirectId" name="redirect_id" class="my-4">
                 @foreach($targetModels as $targetModelGroup)
                     <option value="">---</option>
                     <optgroup label="{{ $targetModelGroup['group'] }}">
@@ -26,26 +29,17 @@
                         @endforeach
                     </optgroup>
                 @endforeach
-            </select>
-
+            </x-chief::input.select>
         @else
-            <p>Archiveren haalt de {{ $resource->getPageTitle($model) }} onmiddellijk van de site.</p>
+            <p>
+                Archiveren haalt de {{ $resource->getPageTitle($model) }} onmiddellijk van de site.
+            </p>
         @endif
-    </form>
 
-    @if($content = $stateConfig->getTransitionContent( 'archive' ))
-        <div class="prose prose-dark">
-            <p>{!! $stateConfig->getTransitionContent( 'archive' ) !!}</p>
-        </div>
-    @endif
-
-    <div class="flex items-center mt-8 space-x-4">
-        <button
-            form="{{ $formId }}"
-            type="submit"
-            class="btn btn-primary btn-{{ $stateConfig->getTransitionType('archive') }}"
-        >
-            {{ $stateConfig->getTransitionButtonLabel('archive') }}
-        </button>
+        @if($content = $stateConfig->getTransitionContent('archive'))
+            <p>
+                {!! $content !!}
+            </p>
+        @endif
     </div>
-</div>
+</form>

@@ -85,12 +85,6 @@
                 Eventbus.$on('disable-update-form', this.disableUpdateForm);
             },
             methods: {
-                showModal: function (id, options) {
-                    return window.showModal(id, options);
-                },
-                closeModal: function (id) {
-                    return window.closeModal(id);
-                },
                 closeDropdown: function (id) {
                     return window.closeDropdown(id);
                 },
@@ -120,15 +114,6 @@
             },
         });
 
-        window.showModal = function (id, options) {
-            Eventbus.$emit('open-modal', id, options);
-        };
-
-        Vue.prototype.showModal = window.showModal;
-
-        window.closeModal = function (id) {
-            Eventbus.$emit('close-modal', id);
-        };
 
         // Close dropdown outside of the dropdown - used by backdrop
         window.closeDropdown = function (id) {

@@ -38,12 +38,6 @@
         </x-slot>
     </x-chief::page.grid>
 
-    @push('portals')
-        @adminCan('archive', $model)
-            @include('chief::manager._transitions.modals.archive-modal')
-        @endAdminCan
-    @endpush
-
     @push('custom-scripts-after-vue')
         @include('chief::layout._partials.editor-script')
     @endpush

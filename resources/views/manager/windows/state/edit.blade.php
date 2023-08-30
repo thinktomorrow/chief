@@ -11,91 +11,58 @@
         <div class="space-y-4">
             @foreach($allowedTransitionKeys as $transitionKey)
                 @if($stateConfig->hasConfirmationForTransition($transitionKey))
-                    @php
-                        $modalId = \Illuminate\Support\Str::random(10);
-                    @endphp
+                    <button
+                        type="button"
+                        x-on:click="$dispatch('open-dialog', { id: 'state-modal-{{ $transitionKey }}-{{ $model->id }}'})"
+                        @class([
+                            'btn',
+                            'btn-primary' => $transitionKey === 'publish',
+                            'btn-warning' => $transitionKey === 'archive',
+                            'btn-error' => $transitionKey === 'delete',
+                            'btn-grey' => !in_array($transitionKey, ['publish', 'archive', 'delete']),
+                        ])
+                    >
+                        {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
+                    </button>
 
-                    <div data-vue-fields class="space-y-4">
-                        <div>
-                            <a
-                                v-cloak
-                                @click="showModal('state-modal-<?= $modalId; ?>')"
-                                class="cursor-pointer btn btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
-                            >
+                    <template x-teleport="body">
+                        @include('chief::manager.windows.state.state-modal')
+                    </template>
+                @else
+                    <form
+                        action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,$transitionKey)"
+                        method="POST"
+                    >
+                        @csrf
+                        @method('PUT')
+
+                        <div class="space-y-6">
+                            @foreach($stateConfig->getTransitionFields($transitionKey, $model) as $field)
+                                {{ $field->render() }}
+                            @endforeach
+
+                            <button type="submit" @class([
+                                'btn',
+                                'btn-primary' => $transitionKey === 'publish',
+                                'btn-warning' => $transitionKey === 'archive',
+                                'btn-error' => $transitionKey === 'delete',
+                                'btn-grey' => !in_array($transitionKey, ['publish', 'archive', 'delete']),
+                            ])>
                                 {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
-                            </a>
-                        </div>
+                            </button>
 
-                        <modal
-                            id="state-modal-{{ $modalId }}"
-                            title="Ben je zeker?"
-                            url="{{ $stateConfig->getAsyncModalUrl($transitionKey, $model) }}"
-                            {{ $stateConfig->getAsyncModalUrl($transitionKey, $model) ? ' :footer=false' : '' }}
-                        >
-                            <form
-                                id="state-modal-form-{{ $modalId }}"
-                                action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,$transitionKey)"
-                                method="POST"
-                                v-cloak
-                            >
-                                @csrf
-                                @method('PUT')
-
-                                @foreach($stateConfig->getTransitionFields( $transitionKey, $model ) as $field)
-                                    {{ $field->render() }}
-                                @endforeach
-                            </form>
-
-
-                            @if($content = $stateConfig->getTransitionContent( $transitionKey ))
+                            @if($content = $stateConfig->getTransitionContent($transitionKey))
                                 <x-chief::inline-notification
                                     type="{{ $stateConfig->getTransitionType($transitionKey) }}"
                                     size="large"
                                 >
-                                    <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
+                                    <p>
+                                        {!! $content !!}
+                                    </p>
                                 </x-chief::inline-notification>
                             @endif
-
-                            <div v-cloak slot="modal-action-buttons">
-                                <button
-                                    form="state-modal-form-{{ $modalId }}"
-                                    type="submit"
-                                    class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
-                                >
-                                    {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
-                                </button>
-                            </div>
-                        </modal>
-                    </div>
-                @else
-                    <form action="@adminRoute('state-update', $model, $stateConfig->getStateKey() ,$transitionKey)"
-                        method="POST">
-                        {{ csrf_field() }}
-                        @method('PUT')
-
-                        <div class="relative space-y-6">
-                            @foreach($stateConfig->getTransitionFields( $transitionKey, $model ) as $field)
-                                {{ $field->render() }}
-                            @endforeach
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
-                            >
-                                {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
-                            </button>
                         </div>
-
                     </form>
-
-                    @if($content = $stateConfig->getTransitionContent($transitionKey))
-                        <x-chief::inline-notification
-                            type="{{ $stateConfig->getTransitionType($transitionKey) }}"
-                            size="large"
-                        >
-                            <p>{!! $stateConfig->getTransitionContent( $transitionKey ) !!}</p>
-                        </x-chief::inline-notification>
-                    @endif
                 @endif
             @endforeach
         </div>
