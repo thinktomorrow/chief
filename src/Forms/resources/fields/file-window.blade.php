@@ -5,43 +5,50 @@
 @endphp
 
 <div class="flex flex-wrap -space-x-2">
-    @if($count > 0)
-        @foreach ($files as $file)
-            <div class="flex gap-4">
-                <a href="{{ $file->getUrl() }}" title="Bestand bekijken" target="_blank" rel="noopener" @class([
-                    'border-2 border-white rounded-lg' => $count > 1,
-                ])>
+    @forelse ($files as $file)
+        <div class="flex gap-4">
+            <a href="{{ $file->getUrl() }}" title="Bestand bekijken" target="_blank" rel="noopener" @class([
+                'border-2 border-white rounded-lg' => $count > 1,
+            ])>
+                <div class="flex items-center justify-center overflow-hidden rounded-lg w-14 h-14 shrink-0 bg-grey-100">
                     @if($file->isImage())
+                        {{-- TODO: need previewUrl here --}}
                         <img
                             src="{{ $file->getUrl('thumb') }}"
                             alt="{{ $file->getFileName() }}"
-                            class="object-contain w-16 h-16 rounded-lg bg-grey-100"
+                            class="object-contain w-full h-full"
                         >
                     @else
-                        <div class="flex items-center justify-center w-16 h-16 rounded-lg bg-grey-100">
-                            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip"/></svg>
-                        </div>
+                        <svg class="w-6 h-6 text-grey-400"><use xlink:href="#icon-document"/></svg>
                     @endif
-                </a>
+                </div>
+            </a>
 
-                @if($count === 1)
-                    <div class="flex items-center py-2 grow">
-                        <div class="space-y-0.5 leading-tight">
-                            <p class="text-black">
-                                {{ $file->getFileName() }}
-                            </p>
+            @if($count === 1)
+                <div class="space-y-0.5 leading-tight py-1.5 grow">
+                    <p class="body-dark">
+                        {{ $file->getFileName() }}
+                    </p>
 
-                            <p class="text-sm text-grey-500">
-                                {{ $file->getHumanReadableSize() }} - <span class="uppercase">{{ $file->getExtension() }}</span>
-                            </p>
-                        </div>
-                    </div>
-                @endif
-            </div>
-        @endforeach
-    @else
-        <div class="flex items-center justify-center w-16 h-16 rounded-lg bg-grey-100">
-            <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip"/></svg>
+                    <p class="text-sm text-grey-500">
+                        {{-- TODO: $file->isExternalAsset always return null --}}
+                        @if($file->isExternalAsset)
+                            {{ ucfirst($file->getExternalAssetType()) }} -
+                            {{ $file->getData('external.duration') }} sec
+                        @else
+                            {{ $file->humanReadableSize }} -
+                            @if($file->isImage())
+                                {{ $file->width }}x{{ $file->height }} -
+                            @endif
+                            {{ strtoupper($file->extension) }}
+                        @endif
+                    </p>
+                </div>
+            @endif
         </div>
-    @endif
+    @empty
+        <div class="flex items-center justify-center overflow-hidden rounded-lg w-14 h-14 shrink-0 bg-grey-100">
+            <svg class="w-6 h-6 text-grey-400"><use xlink:href="#icon-document"/></svg>
+        </div>
+    @endforelse
 </div>

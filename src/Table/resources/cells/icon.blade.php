@@ -1,4 +1,4 @@
-<x-chief::table.data>
+<x-chief::table.data class="text-right">
     <a
         {{ $attributes->merge($getCustomAttributes()) }}
         href="{{ $getUrl() }}"

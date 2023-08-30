@@ -11,11 +11,12 @@
     @if($hideSelectOptions)
         <div
             data-fragment-select-open
-            class="absolute flex justify-center w-full h-8 border-none cursor-pointer"
-            style="margin-top: -14px; z-index: 1;"
+            class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]"
         >
             <div class="absolute">
-                <x-chief::icon-button icon="icon-plus" color="grey" />
+                <x-chief::button>
+                    <svg><use xlink:href="#icon-plus"></use></svg>
+                </x-chief::button>
             </div>
         </div>
     @endif

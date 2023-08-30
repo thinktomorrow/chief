@@ -17,50 +17,76 @@
                 class="object-contain w-full h-full rounded-lg"
             />
         @elseif($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
-            <div class="relative flex items-center justify-center w-full h-full text-grey-500">
+            <img
+                src="{{ $asset->getPreviewUrl('thumb') }}"
+                alt="{{ $asset->getFileName() }}"
+                class="object-contain w-full h-full rounded-lg"
+            />
 
-                <div class="absolute w-full left-0 bottom-0 flex justify-center items-center p-1">
-                    <span class="label label-info text-xs">{{ $asset->getData('external.type') }}</span>
-                </div>
-
-                <img
-                    src="{{ $asset->getPreviewUrl('thumb') }}"
-                    alt="{{ $asset->getFileName() }}"
-                    class="object-contain w-full h-full rounded-lg"
-                />
+            <div class="absolute bottom-0 left-0 right-0 flex items-center justify-center p-1">
+                <span class="label label-xs label-grey">{{ ucfirst($asset->getData('external.type')) }}</span>
             </div>
-
         @elseif($asset->getMimeType())
-            <div class="flex items-center justify-center w-full h-full text-grey-500">
+            <div class="flex items-center justify-center w-full h-full text-grey-400">
                 {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
             </div>
         @endif
 
-        @if($disabled)
-            <div class="absolute inset-0 flex items-center justify-center gap-1.5 pointer-events-none bg-black/25">
-                <span class="bg-black/50 p-1 rounded text-sm text-white">Toegevoegd</span>
-            </div>
-        @endif
-
         @if($withActions)
-            <div class="absolute inset-0 items-center justify-center hidden gap-1.5 group-hover:flex pointer-events-none bg-black/25">
-                <button wire:click="openAssetEdit('{{ $asset->id }}')" type="button" class="pointer-events-auto">
-                    <x-chief::icon-button icon="icon-edit" color="grey"/>
+            <div class="absolute inset-0 items-center justify-center hidden gap-1.5 group-hover:flex pointer-events-none bg-black/25 p-1 flex-wrap">
+                <button
+                    type="button"
+                    aria-label="Bewerk bestand"
+                    wire:click="openAssetEdit('{{ $asset->id }}')"
+                    class="pointer-events-auto"
+                >
+                    <x-chief::button>
+                        <svg><use xlink:href="#icon-edit"></use></svg>
+                    </x-chief::button>
                 </button>
 
-                <button wire:click="deleteAsset('{{ $asset->id }}')" type="button" class="pointer-events-auto">
-                    <x-chief::icon-button icon="icon-trash" color="grey"/>
+                <button
+                    type="button"
+                    aria-label="Verwijder bestand"
+                    wire:click="deleteAsset('{{ $asset->id }}')"
+                    class="pointer-events-auto"
+                >
+                    <x-chief::button>
+                        <svg><use xlink:href="#icon-trash"></use></svg>
+                    </x-chief::button>
                 </button>
 
                 @if($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
-                    <a href="{{ $asset->getUrl() }}" target="_blank" title="View on platform" class="pointer-events-auto">
-                        <x-chief::icon-button icon="icon-external-link" />
+                    <a
+                        href="{{ $asset->getUrl() }}"
+                        title="Bekijk op platform"
+                        target="_blank"
+                        rel="noopener"
+                        class="pointer-events-auto"
+                    >
+                        <x-chief::button>
+                            <svg><use xlink:href="#icon-external-link"></use></svg>
+                        </x-chief::button>
                     </a>
                 @else
-                    <a href="{{ $asset->getUrl() }}" target="_blank" title="Download" download class="pointer-events-auto">
-                        <x-chief::icon-button icon="icon-download" color="grey"/>
+                    <a
+                        href="{{ $asset->getUrl() }}"
+                        title="Download"
+                        download
+                        class="pointer-events-auto"
+                    >
+                        <x-chief::button>
+                            <svg><use xlink:href="#icon-download"></use></svg>
+                        </x-chief::button>
                     </a>
                 @endif
+            </div>
+        @endif
+
+        {{-- Shows a label when the asset is already selected --}}
+        @if($disabled)
+            <div class="absolute inset-0 flex items-center justify-center p-1 pointer-events-none bg-black/50">
+                <span class="label label-xs label-grey">Toegevoegd</span>
             </div>
         @endif
     </div>
@@ -75,16 +101,16 @@
                 @if($asset->getHumanReadableSize())
                     {{ $asset->getHumanReadableSize() }}
                 @elseif($asset->isVideo() && $asset->getData('external.duration'))
-                    {{ $asset->getData('external.duration') }} secs.
+                    {{ $asset->getData('external.duration') }} sec
                 @endif
             </p>
 
-            <p class="text-xs uppercase body text-grey-500">
-            @if($asset->getWidth())
-                {{ $asset->getWidth() }} x {{ $asset->getHeight() }}
-            @else
-                {{ $asset->getExtension() }}
-            @endif
+            <p class="text-xs body text-grey-500">
+                @if($asset->getWidth())
+                    {{ $asset->getWidth() }}x{{ $asset->getHeight() }}
+                @else
+                    {{ $asset->getExtension() }}
+                @endif
             </p>
         </div>
     </div>

@@ -14,7 +14,7 @@
         ? 'data-sortable data-sortable-endpoint=' . $manager->route('sort-index') .' data-sortable-id-type='. $resource->getSortableType()
         : '';
 
-    $showOptionsColumn = $manager->can('edit') || $manager->can('preview') || $manager->can('duplicate') || $manager->can('state-update')
+    $showOptionsColumn = $manager->can('edit') || $manager->can('preview') || $manager->can('duplicate') || $manager->can('state-update');
 @endphp
 
 <x-chief::page.template :title="$title">

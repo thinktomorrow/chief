@@ -2,33 +2,33 @@
 
 namespace Thinktomorrow\Chief\Plugins\HotSpots;
 
-use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Livewire\Component;
-use Thinktomorrow\AssetLibrary\Asset;
+use Livewire\WithFileUploads;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGroupedForms;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
 class HotSpotComponent extends Component
 {
     use ShowsAsDialog;
+    use WithFileUploads;
+    use InteractsWithForm;
+    use InteractsWithGroupedForms;
 
     public $parentId;
-
+    public $previousSiblingId;
     public ?PreviewFile $previewFile = null;
-    public $form = [];
-    public $components = [];
-    public $file = null;
 
-    public function mount(string $parentId, array $components = [])
+    public $hotSpots = [];
+    public $activeHotSpotId = null;
+
+    public function mount(string $parentId)
     {
         $this->parentId = $parentId;
-
-        $this->components = array_map(fn ($component) => $component->toLivewire(), $components);
     }
 
     public function getListeners()
@@ -39,126 +39,106 @@ class HotSpotComponent extends Component
         ];
     }
 
-    public function getComponents(): array
-    {
-        return array_map(function ($componentArray) {
-            return $componentArray['class']::fromLivewire($componentArray);
-        }, $this->components);
-    }
-
     public function open($value)
     {
-        $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
-        $this->isOpen = true;
-    }
+        // The hotspot component is opened from the file edit modal so this is our reference.
+        $this->previousSiblingId = $value['previous_sibling_id'];
 
-    public function close()
-    {
-        $this->reset(['previewFile','form']);
-        $this->isOpen = false;
+        $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
+
+        $this->isOpen = true;
+
+        if ($this->previewFile->getData('hotspots') && is_array($this->previewFile->getData('hotspots'))) {
+            $this->hotSpots = $this->previewFile->getData('hotspots');
+
+            // Set first hotspot as active
+            if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
+                $this->activateHotSpot($firstHotSpot['id']);
+            }
+        }
+
+        $this->extractGroupedFormComponents();
     }
 
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
-        $this->extractFormFromPreviewFile();
+
+        $this->addAssetComponents('hotSpotFields');
+
+        $this->extractGroupedFormComponents();
     }
 
-    private function extractFormFromPreviewFile()
+    public function activateHotSpot(string $id)
     {
-        $this->form['basename'] = $this->previewFile->getBaseName();
+        $this->activeHotSpotId = $id;
+    }
 
-        foreach($this->components as $componentArray) {
-            $component = $componentArray['class']::fromLivewire($componentArray);
+    public function addHotSpot(float $x, float $y, $relativeTop, $relativeLeft)
+    {
+        $this->hotSpots[$id = Str::random()] = [
+            'id' => $id,
+            'product_id' => null,
+            'top' => $relativeTop,
+            'left' => $relativeLeft,
+            'x' => (int)$x,
+            'y' => (int)$y,
+        ];
 
-            if(! $component instanceof Field) {
-                continue;
+        $this->activeHotSpotId = $id;
+
+        $this->extractGroupedFormComponents();
+    }
+
+    public function removeHotSpot(string $id)
+    {
+        unset($this->hotSpots[$id]);
+
+        if ($this->activeHotSpotId == $id) {
+            // $this->activeHotSpotId = null;
+
+            // Set first hotspot as active
+            if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
+                $this->activateHotSpot($firstHotSpot['id']);
             }
-
-            Arr::set(
-                $this->form,
-                $component->getKey(),
-                data_get($this->previewFile->fieldValues, $component->getKey())
-            );
         }
     }
 
-    private function syncForm()
+    public function getHotSpotComponents(): array
     {
-        $this->previewFile->fieldValues = $this->form;
+        if (! $this->activeHotSpotId) {
+            return [];
+        }
 
-        $this->form['basename'] = $this->previewFile->getBaseName();
+        return collect($this->getGroupedComponents())->get($this->activeHotSpotId);
     }
-
-    //    public function onAssetsChosen(array $assetIds)
-    //    {
-    //        if(empty($assetIds)) return;
-    //
-    //        // Replacement of file can be only one asset.
-    //        $assetId = reset($assetIds);
-    //
-    //        $previewFile = PreviewFile::fromAsset(Asset::where('id', $assetId)->first());
-    //        $previewFile->isAttachedToModel = false;
-    //
-    //        if(!$this->replacedPreviewFile) {
-    //            $this->replacedPreviewFile = $this->previewFile;
-    //        }
-    //
-    //        $this->previewFile = $previewFile;
-    //    }
-
-    //    public function openFilesChoose()
-    //    {
-    //        $this->emitDownTo('chief-wire::files-choose', 'open');
-    //    }
 
     public function submit()
     {
         $this->validateForm();
 
-        if($this->previewFile->mediaId) {
-            app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
-            app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
-        }
+        // Merge hotspot coordinates with form values
+        $hotspots = collect($this->hotSpots)->mapWithKeys(function ($hotspot) {
+            return [$hotspot['id'] => array_merge($hotspot, $this->form['hotspots'][$hotspot['id']])];
+        })->all();
 
-        if($this->replacedPreviewFile) {
-            if($this->replacedPreviewFile->mediaId) {
-                app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
-                $this->previewFile = PreviewFile::fromAsset(Asset::find($this->replacedPreviewFile->mediaId));
-            } else {
-                $this->previewFile->id = $this->replacedPreviewFile->id;
-            }
-        }
+        app(FileApplication::class)->updateAssetData($this->previewFile->mediaId, ['hotspots' => $hotspots]);
 
-        // Update form values
-        $this->syncForm();
+        // Sync previewFile
+        $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
+        $this->previewFile->data = array_merge($this->previewFile->data, ['hotspots' => $hotspots]);
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->emit('assetUpdated-' . $this->previousSiblingId, $this->previewFile);
 
         $this->close();
     }
 
-    /**
-     * Validation is performed for all fields
-     * Each field is parsed for the proper validation rules and messages.
-     */
-    private function validateForm(): void
+    public function close()
     {
-        $rules = $messages = $validationAttributes = [];
+        $this->reset(['previewFile', 'form', 'components', 'hotSpots', 'activeHotSpotId']);
+        $this->hotSpots = [];
 
-        foreach ($this->getComponents() as $component) {
-            if ($component instanceof Field) {
-
-                $component->name(FormKey::replaceDotsByBrackets(LivewireFieldName::get($component->getName())));
-
-                $validationParameters = ValidationParameters::make($component);
-                $rules = array_merge($rules, $validationParameters->getRules());
-                $messages = array_merge($messages, $validationParameters->getMessages());
-                $validationAttributes = array_merge($validationAttributes, $validationParameters->getAttributes());
-            }
-        }
-
-        $this->validate($rules, $messages, $validationAttributes);
+        $this->isOpen = false;
     }
 
     public function render()
@@ -166,5 +146,25 @@ class HotSpotComponent extends Component
         return view('chief-hotspots::hotspot-component', [
             //
         ]);
+    }
+
+    private function composeGroupIndex($index)
+    {
+        return 'hotspots.' . $index;
+    }
+
+    private function componentIndices(): array
+    {
+        return collect($this->hotSpots)
+            ->map(fn ($hotSpot) => $hotSpot['id'])
+            ->all();
+    }
+
+    private function getFieldsForValidation(): array
+    {
+        return collect($this->getGroupedComponents())
+            ->flatten()
+            ->reject(fn ($component) => ! $component instanceof Field)
+            ->all();
     }
 }

@@ -16,11 +16,13 @@
     </div>
 
     @if($editUrl)
-        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="inline-block mt-2 shrink-0">
+        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="inline-block mt-3 shrink-0">
             @if($icon)
                 {!! $icon !!}
             @else
-                <x-chief::icon-button icon="icon-edit"/>
+                <x-chief::link>
+                    <svg><use xlink:href="#icon-edit"></use></svg>
+                </x-chief::link>
             @endif
         </a>
     @endif

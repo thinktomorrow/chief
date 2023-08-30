@@ -93,16 +93,12 @@
         Eventbus.$emit('close-dropdown', id);
     };
 </script>
-@livewireScripts
 
-{{--TODO:Tijs include these sources in our build step --}}
-<script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
+@livewireScripts
 
 <script src="{{ chief_cached_asset('js/native.js') }}"></script>
 
-
 @stack('custom-scripts-after-vue')
-
 
 </body>
 </html>

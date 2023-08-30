@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
@@ -15,6 +16,7 @@ class FileEditComponent extends Component
     use ShowsAsDialog;
     use WithFileUploads;
     use InteractsWithForm;
+    use EmitsToNestables;
 
     public $parentId;
 
@@ -32,7 +34,8 @@ class FileEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
-            'externalAssetUpdated-'.$this->id => 'onExternalAssetUpdated',
+            'externalAssetUpdated-' . $this->id => 'onExternalAssetUpdated',
+            'assetUpdated-' . $this->id => 'onAssetUpdated',
         ];
     }
 
@@ -41,12 +44,6 @@ class FileEditComponent extends Component
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
 
         $this->isOpen = true;
-    }
-
-    public function close()
-    {
-        $this->reset(['previewFile','form', 'components']);
-        $this->isOpen = false;
     }
 
     private function setFile(PreviewFile $previewFile)
@@ -62,7 +59,7 @@ class FileEditComponent extends Component
 
     public function updatedFile(): void
     {
-        if(! $this->replacedPreviewFile) {
+        if (! $this->replacedPreviewFile) {
             $this->replacedPreviewFile = $this->previewFile;
         }
         $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
@@ -95,6 +92,12 @@ class FileEditComponent extends Component
         $this->close();
     }
 
+    public function close()
+    {
+        $this->reset(['previewFile', 'form', 'components']);
+        $this->isOpen = false;
+    }
+
     public function onExternalAssetUpdated()
     {
         // Update previewfile to reflect the external asset data
@@ -105,15 +108,25 @@ class FileEditComponent extends Component
         $this->close();
     }
 
+    public function onAssetUpdated($previewFileArray): void
+    {
+        $this->previewFile = PreviewFile::fromArray($previewFileArray);
+    }
+
     public function openImageCrop()
     {
         $this->emitToSibling('chief-wire::image-crop', 'open', ['previewfile' => $this->previewFile]);
     }
 
+    public function openImageHotSpots()
+    {
+        $this->emitToSibling('chief-wire::hotspots', 'open', ['previewfile' => $this->previewFile]);
+    }
+
     public function submit()
     {
-        if($this->replacedPreviewFile) {
-            if($this->replacedPreviewFile->mediaId) {
+        if ($this->replacedPreviewFile) {
+            if ($this->replacedPreviewFile->mediaId) {
                 app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
                 $this->previewFile = PreviewFile::fromAsset(Asset::find($this->replacedPreviewFile->mediaId));
             } else {
@@ -121,9 +134,9 @@ class FileEditComponent extends Component
             }
         }
 
-        $this->validateForm();
+        $this->validateForm(...$this->addDefaultBasenameValidation());
 
-        if($this->previewFile->mediaId) {
+        if ($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
             app(FileApplication::class)->updateAssetData($this->previewFile->mediaId, $this->form);
         }
@@ -141,15 +154,5 @@ class FileEditComponent extends Component
         return view('chief-assets::file-edit', [
             //
         ]);
-    }
-
-    private function emitDownTo($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->id, $params);
-    }
-
-    private function emitToSibling($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->parentId, $params);
     }
 }

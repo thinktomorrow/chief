@@ -99,13 +99,9 @@ trait FileUploadDefaults
 
         Arr::set($this->files, str_replace('files.', '', $fileKey), $temporaryUploadedFile);
 
-        $currentCount = count($this->previewFiles);
         $this->syncPreviewFiles();
 
-
-        if(count($this->previewFiles) > $currentCount) {
-            $this->emitSelf('fileAdded');
-        }
+        $this->emit('fileAdded');
     }
 
     public function onUploadErrored($fileKey)

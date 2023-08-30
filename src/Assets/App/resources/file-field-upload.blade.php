@@ -15,12 +15,14 @@
             allowMultiple="{{ $allowMultiple }}"
         />
     </div>
+
     <div>
         <livewire:chief-wire::file-field-choose-external
             parent-id="{{ $this->id }}"
             allowMultiple="{{ $allowMultiple }}"
         />
     </div>
+
     <div>
         <livewire:chief-wire::file-field-edit
             parent-id="{{ $this->id }}"
@@ -30,7 +32,6 @@
             :components="$this->components"
         />
     </div>
-
 
     @foreach(app(\Thinktomorrow\Chief\Plugins\ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
         <div>

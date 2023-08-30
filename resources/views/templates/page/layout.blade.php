@@ -45,138 +45,122 @@
     @stack('custom-styles')
 </head>
 <body class="min-h-screen bg-grey-100">
-<main id="main">
-    {{ $slot }}
+    <main id="main">
+        {{ $slot }}
 
-    @stack('portals')
-</main>
+        @stack('portals')
+    </main>
 
-@include('chief::templates.page._partials.symbols')
+    @include('chief::templates.page._partials.symbols')
+    @include('chief::templates.page._partials.refresh-modal')
 
-<script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
-<script src="{{ asset('assets/back/js/vendor/slim.min.js') }}"></script>
+    <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
+    <script src="{{ asset('assets/back/js/vendor/slim.min.js') }}"></script>
 
-@stack('custom-scripts')
+    @stack('custom-scripts')
 
-{{--<script>--}}
-{{--    /**--}}
-{{--     * Global Eventbus which allows to emit and listen to--}}
-{{--     * events coming from components--}}
-{{--     */--}}
-{{--    window.Eventbus = new Vue();--}}
+    {{--<script>--}}
+    {{--    /**--}}
+    {{--     * Global Eventbus which allows to emit and listen to--}}
+    {{--     * events coming from components--}}
+    {{--     */--}}
+    {{--    window.Eventbus = new Vue();--}}
 
-{{--    /**--}}
-{{--     * Application vue instance. We register the vue instance after our custom--}}
-{{--     * scripts so vue components are loaded properly before the main Vue.--}}
-{{--     */--}}
-{{--    window.App = new Vue({--}}
-{{--        el: "#main",--}}
-{{--        data: {--}}
-{{--            errors: new Errors(),--}}
-{{--        },--}}
-{{--        created: function () {--}}
-{{--            this.errors.record({!! isset($errors) ? json_encode($errors->getMessages()) : json_encode([]) !!});--}}
+    {{--    /**--}}
+    {{--     * Application vue instance. We register the vue instance after our custom--}}
+    {{--     * scripts so vue components are loaded properly before the main Vue.--}}
+    {{--     */--}}
+    {{--    window.App = new Vue({--}}
+    {{--        el: "#main",--}}
+    {{--        data: {--}}
+    {{--            errors: new Errors(),--}}
+    {{--        },--}}
+    {{--        created: function () {--}}
+    {{--            this.errors.record({!! isset($errors) ? json_encode($errors->getMessages()) : json_encode([]) !!});--}}
 
-{{--            Eventbus.$on('clearErrors', (field) => {--}}
-{{--                this.errors.clear(field);--}}
-{{--            });--}}
-{{--            Eventbus.$on('enable-update-form', this.enableUpdateForm);--}}
-{{--            Eventbus.$on('disable-update-form', this.disableUpdateForm);--}}
-{{--        },--}}
-{{--        methods: {--}}
-{{--            showModal: function (id, options) {--}}
-{{--                return window.showModal(id, options);--}}
-{{--            },--}}
-{{--            closeModal: function (id) {--}}
-{{--                return window.closeModal(id);--}}
-{{--            },--}}
-{{--            closeDropdown: function (id) {--}}
-{{--                return window.closeDropdown(id);--}}
-{{--            },--}}
-{{--            selectTab: function (hash) {--}}
-{{--                Eventbus.$emit('select-tab', hash);--}}
-{{--            },--}}
-{{--            clear: function (field) {--}}
-{{--                Eventbus.$emit('clearErrors', field)--}}
-{{--            },--}}
-{{--            generateSitemap: function (id, options) {--}}
-{{--                Eventbus.$emit('open-modal', id, options);--}}
-{{--                axios.post('{{route('chief.back.sitemap.generate')}}', {--}}
-{{--                    _method: 'POST'--}}
-{{--                }).then((response) => {--}}
-{{--                    Eventbus.$emit('close-modal', id);--}}
-{{--                }).catch((errors) => {--}}
-{{--                    alert('error');--}}
-{{--                })--}}
-{{--            },--}}
-{{--            duplicateImageComponent: function (options) {--}}
-{{--                Eventbus.$emit('duplicate-image-component', options);--}}
-{{--            },--}}
-{{--            enableUpdateForm: () => {--}}
-{{--                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');--}}
-{{--                saveButtons.forEach((button) => {--}}
-{{--                    button.disabled = false;--}}
-{{--                    button.style.filter = 'none';--}}
-{{--                })--}}
-{{--            },--}}
-{{--            disableUpdateForm: () => {--}}
-{{--                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');--}}
-{{--                saveButtons.forEach((button) => {--}}
-{{--                    button.disabled = true;--}}
-{{--                    button.style.filter = 'grayscale(100)';--}}
-{{--                });--}}
-{{--            }--}}
-{{--        },--}}
-{{--    });--}}
+    {{--            Eventbus.$on('clearErrors', (field) => {--}}
+    {{--                this.errors.clear(field);--}}
+    {{--            });--}}
+    {{--            Eventbus.$on('enable-update-form', this.enableUpdateForm);--}}
+    {{--            Eventbus.$on('disable-update-form', this.disableUpdateForm);--}}
+    {{--        },--}}
+    {{--        methods: {--}}
+    {{--            showModal: function (id, options) {--}}
+    {{--                return window.showModal(id, options);--}}
+    {{--            },--}}
+    {{--            closeModal: function (id) {--}}
+    {{--                return window.closeModal(id);--}}
+    {{--            },--}}
+    {{--            closeDropdown: function (id) {--}}
+    {{--                return window.closeDropdown(id);--}}
+    {{--            },--}}
+    {{--            selectTab: function (hash) {--}}
+    {{--                Eventbus.$emit('select-tab', hash);--}}
+    {{--            },--}}
+    {{--            clear: function (field) {--}}
+    {{--                Eventbus.$emit('clearErrors', field)--}}
+    {{--            },--}}
+    {{--            generateSitemap: function (id, options) {--}}
+    {{--                Eventbus.$emit('open-modal', id, options);--}}
+    {{--                axios.post('{{route('chief.back.sitemap.generate')}}', {--}}
+    {{--                    _method: 'POST'--}}
+    {{--                }).then((response) => {--}}
+    {{--                    Eventbus.$emit('close-modal', id);--}}
+    {{--                }).catch((errors) => {--}}
+    {{--                    alert('error');--}}
+    {{--                })--}}
+    {{--            },--}}
+    {{--            duplicateImageComponent: function (options) {--}}
+    {{--                Eventbus.$emit('duplicate-image-component', options);--}}
+    {{--            },--}}
+    {{--            enableUpdateForm: () => {--}}
+    {{--                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');--}}
+    {{--                saveButtons.forEach((button) => {--}}
+    {{--                    button.disabled = false;--}}
+    {{--                    button.style.filter = 'none';--}}
+    {{--                })--}}
+    {{--            },--}}
+    {{--            disableUpdateForm: () => {--}}
+    {{--                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');--}}
+    {{--                saveButtons.forEach((button) => {--}}
+    {{--                    button.disabled = true;--}}
+    {{--                    button.style.filter = 'grayscale(100)';--}}
+    {{--                });--}}
+    {{--            }--}}
+    {{--        },--}}
+    {{--    });--}}
 
-{{--    window.showModal = function (id, options) {--}}
-{{--        Eventbus.$emit('open-modal', id, options);--}}
-{{--    };--}}
+    {{--    window.showModal = function (id, options) {--}}
+    {{--        Eventbus.$emit('open-modal', id, options);--}}
+    {{--    };--}}
 
-{{--    Vue.prototype.showModal = window.showModal;--}}
+    {{--    Vue.prototype.showModal = window.showModal;--}}
 
-{{--    window.closeModal = function (id) {--}}
-{{--        Eventbus.$emit('close-modal', id);--}}
-{{--    };--}}
+    {{--    window.closeModal = function (id) {--}}
+    {{--        Eventbus.$emit('close-modal', id);--}}
+    {{--    };--}}
 
-{{--    // Close dropdown outside of the dropdown - used by backdrop--}}
-{{--    window.closeDropdown = function (id) {--}}
-{{--        Eventbus.$emit('close-dropdown', id);--}}
-{{--    };--}}
-{{--</script>--}}
+    {{--    // Close dropdown outside of the dropdown - used by backdrop--}}
+    {{--    window.closeDropdown = function (id) {--}}
+    {{--        Eventbus.$emit('close-dropdown', id);--}}
+    {{--    };--}}
+    {{--</script>--}}
 
-@livewireScripts
-{{--TODO: Tijs include these sources in our build step --}}
-{{--<script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>--}}
+    @livewireScripts
 
-<script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
-<script>
+    <script src="{{ chief_cached_asset('chief-assets/back/js/native.js') }}"></script>
 
-    Livewire.hook('component.initialized', (component) => {
-        // Hack to prevent livewire from setting the url to the sidebar url (as used for forms and fragments)
-        if (component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/forms/'))) {
-            component.effects.path = undefined;
-        }
-    });
+    <script>
+        Livewire.hook('component.initialized', (component) => {
+            // Hack to prevent livewire from setting the url to the sidebar url (as used for forms and fragments)
+            if(component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/forms/'))) {
+                component.effects.path = undefined;
+            }
+        });
+    </script>
 
-    Livewire.onError((message, response) => {
-
-        console.log(response.status);
-
-        if (response.status === 419) {
-
-            // TODO: Show custom refresh
-            confirm('Please refresh the page?') && window.location.reload();
-
-            return false;
-        }
-    });
-</script>
-
-@stack('custom-scripts-after-vue')
-
-@foreach(app(ChiefPluginSections::class)->getFooterSections() as $footerSection)
-    @include($footerSection)
-@endforeach
+    @foreach(app(ChiefPluginSections::class)->getFooterSections() as $footerSection)
+        @include($footerSection)
+    @endforeach
 </body>
 </html>

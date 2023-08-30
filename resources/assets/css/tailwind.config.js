@@ -15,6 +15,7 @@ module.exports = {
         'src/Fragments/resources/**/*.blade.php',
         'src/Table/resources/**/*.blade.php',
         'src/Plugins/**/resources/**/*.blade.php',
+        'src/Plugins/HotSpots/views/**/*.blade.php',
         'src/Assets/App/resources/**/*.blade.php',
     ],
     theme: {
@@ -105,11 +106,21 @@ module.exports = {
                 96: '24rem',
                 128: '32rem',
                 160: '40rem',
-                192: '48rem',
+                xs: '480px',
+                sm: '640px',
+                md: '768px',
+                lg: '1024px',
+                xl: '1280px',
+                '2xl': '1536px',
+            },
+            containers: {
+                // To be used for default container styles. This way, if container queries aren't supported, nothing breaks.
+                '1px': '1px',
             },
         },
     },
     plugins: [
+        require('@tailwindcss/container-queries'),
         require('./warpaint/ProseSpacing'),
         require('./warpaint/WarpaintSpacing'),
         require('./warpaint/WarpaintGutter'),

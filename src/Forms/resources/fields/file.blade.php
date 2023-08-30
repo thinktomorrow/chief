@@ -1,5 +1,4 @@
 <div>
-
     <livewire:chief-wire::file-field-upload
         :model-reference="$getModel()?->modelReference()->get()"
         :field-key="$field->getKey()"
