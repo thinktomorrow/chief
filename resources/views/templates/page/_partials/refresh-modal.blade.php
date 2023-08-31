@@ -16,8 +16,8 @@
 @push('custom-scripts-after-vue')
     <script>
         Livewire.onError((message, response) => {
-            if(response.status === 419) {
-                window.dispatchEvent(new CustomEvent('open-dialog', { detail: { id: 'refresh-modal' } }));
+            if (response.status === 419) {
+                window.dispatchEvent(new CustomEvent('open-dialog', {detail: {id: 'refresh-modal'}}));
 
                 return false;
             }

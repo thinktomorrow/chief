@@ -51,10 +51,7 @@ class HotSpotComponent extends Component
         if ($this->previewFile->getData('hotspots') && is_array($this->previewFile->getData('hotspots'))) {
             $this->hotSpots = $this->previewFile->getData('hotspots');
 
-            // Set first hotspot as active
-            if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
-                $this->activateHotSpot($firstHotSpot['id']);
-            }
+            $this->activateFirstHotSpot();
         }
 
         $this->extractGroupedFormComponents();
@@ -69,6 +66,13 @@ class HotSpotComponent extends Component
         $this->extractGroupedFormComponents();
     }
 
+    private function activateFirstHotSpot()
+    {
+        if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
+            $this->activateHotSpot($firstHotSpot['id']);
+        }
+    }
+
     public function activateHotSpot(string $id)
     {
         $this->activeHotSpotId = $id;
@@ -76,7 +80,7 @@ class HotSpotComponent extends Component
 
     public function addHotSpot(float $x, float $y, $relativeTop, $relativeLeft)
     {
-        $this->hotSpots[$id = Str::random()] = [
+        $this->hotSpots[$id = strtolower(Str::random())] = [
             'id' => $id,
             'product_id' => null,
             'top' => $relativeTop,
@@ -95,12 +99,7 @@ class HotSpotComponent extends Component
         unset($this->hotSpots[$id]);
 
         if ($this->activeHotSpotId == $id) {
-            // $this->activeHotSpotId = null;
-
-            // Set first hotspot as active
-            if (count($this->hotSpots) > 0 && $firstHotSpot = reset($this->hotSpots)) {
-                $this->activateHotSpot($firstHotSpot['id']);
-            }
+            $this->activateFirstHotSpot();
         }
     }
 
@@ -115,7 +114,10 @@ class HotSpotComponent extends Component
 
     public function submit()
     {
-        $this->validateForm();
+        // Only validate when hotspot entries are present - otherwise Livewire complains about a missing $rules property.
+        if (count($this->hotSpots) > 0) {
+            $this->validateForm();
+        }
 
         // Merge hotspot coordinates with form values
         $hotspots = collect($this->hotSpots)->mapWithKeys(function ($hotspot) {

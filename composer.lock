@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31955c62d4fbe8e5b13cd051f8aa6911",
+    "content-hash": "6807422f33d80b0e13b85e52f48e5fdb",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6912,16 +6912,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.9.x-dev",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "c5b39d1c34a24dd1ca06d07042073984e5c4579e"
+                "reference": "f8fa145994f41999f3f80bb7a5f2678545d35b25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/c5b39d1c34a24dd1ca06d07042073984e5c4579e",
-                "reference": "c5b39d1c34a24dd1ca06d07042073984e5c4579e",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/f8fa145994f41999f3f80bb7a5f2678545d35b25",
+                "reference": "f8fa145994f41999f3f80bb7a5f2678545d35b25",
                 "shasum": ""
             },
             "require": {
@@ -6985,9 +6985,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9.0"
             },
-            "time": "2023-07-27T14:13:36+00:00"
+            "time": "2023-08-30T13:38:22+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
@@ -12038,9 +12038,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "thinktomorrow/assetlibrary": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

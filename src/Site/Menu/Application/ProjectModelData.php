@@ -72,7 +72,6 @@ class ProjectModelData
 
     public function onManagedModelDeleted(ManagedModelDeleted $event): void
     {
-        $this->handleByOwner($event->modelReference->shortClassName(), $event->modelReference->id());
         $this->removeOwner($event->modelReference->shortClassName(), $event->modelReference->id());
     }
 
@@ -121,7 +120,7 @@ class ProjectModelData
                  * so we can safely prepend this on each path. However for real missing links
                  * we still set null as url on the menu item.
                  */
-                $menuItem->setUrl($locale, $fullUrl ? '/'.$path : null);
+                $menuItem->setUrl($locale, $fullUrl ? '/' . $path : null);
             }
         }
 

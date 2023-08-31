@@ -5,7 +5,10 @@ const initFormSubmitOnChange = (container = document, selector = '[data-form-sub
 
     forms.forEach((form) => {
         // Trigger form submit if value of a 'normal' input element changes
-        form.addEventListener('change', () => {
+        form.addEventListener('change', (e) => {
+            // Multiselect is handled on its own (see handler below)
+            if (e.target.classList.contains('multiselect__input')) return;
+
             form.submit();
         });
 
