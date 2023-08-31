@@ -5,7 +5,6 @@ module.exports = {
         'resources/views/**/*.blade.php',
         'resources/assets/**/*.js',
         'resources/assets/**/*.vue',
-        'resources/assets/css/components/slim.scss',
         'resources/assets/css/components/redactor.scss',
         'resources/assets/css/components/multiselect.scss',
         'node_modules/vue-multiselect/dist/vue-multiselect.min.css',
