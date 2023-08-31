@@ -1,5 +1,9 @@
-<a data-submit-form="duplicateForm-{{ $model->getKey() }}" class="dropdown-link dropdown-link-success cursor-pointer">Kopieer</a>
+<button type="submit" form="duplicateForm-{{ $model->getKey() }}">
+    <x-chief::dropdown.item>
+        Kopieer
+    </x-chief::dropdown.item>
+</button>
 
-<form class="hidden" id="duplicateForm-{{ $model->getKey() }}" action="@adminRoute('duplicate', $model)" method="POST">
-    {{ csrf_field() }}
+<form id="duplicateForm-{{ $model->getKey() }}" method="POST" action="@adminRoute('duplicate', $model)" class="hidden">
+    @csrf
 </form>

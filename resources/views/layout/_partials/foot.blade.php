@@ -52,9 +52,6 @@
                     alert('error');
                 })
             },
-            duplicateImageComponent: function (options) {
-                Eventbus.$emit('duplicate-image-component', options);
-            },
             enableUpdateForm: () => {
                 let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
                 saveButtons.forEach((button) => {

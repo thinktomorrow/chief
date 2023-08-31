@@ -12,21 +12,33 @@
                     <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
                 @endif
 
-                <options-dropdown>
-                    <div v-cloak class="dropdown-content">
-                        <a class="dropdown-link" href="{{ route('chief.back.invites.resend', $user->id) }}">Stuur nieuwe uitnodiging</a>
+                <button type="button" id="user-edit-options">
+                    <x-chief::button>
+                        <svg class="w-5 h-5"><use xlink:href="#icon-ellipsis-vertical"/></svg>
+                    </x-chief::button>
+                </button>
 
-                        @if($user->isEnabled())
-                            <button form="disableUserForm" form="disableUserForm" type="submit" class="text-left dropdown-link">
+                <x-chief::dropdown trigger="#user-edit-options">
+                    <a href="{{ route('chief.back.invites.resend', $user->id) }}" title="Stuur nieuwe uitnodiging">
+                        <x-chief::dropdown.item>
+                            Stuur nieuwe uitnodiging
+                        </x-chief::dropdown.item>
+                    </a>
+
+                    @if($user->isEnabled())
+                        <button type="submit" form="disableUserForm">
+                            <x-chief::dropdown.item>
                                 {{ ucfirst($user->firstname) }} blokkeren
-                            </button>
-                        @else
-                            <button form="enableUserForm" form="enableUserForm" type="submit" class="text-left dropdown-link">
+                            </x-chief::dropdown.item>
+                        </button>
+                    @else
+                        <button type="submit" form="enableUserForm">
+                            <x-chief::dropdown.item>
                                 {{ ucfirst($user->firstname) }} deblokkeren
-                            </button>
-                        @endif
-                    </div>
-                </options-dropdown>
+                            </x-chief::dropdown.item>
+                        </button>
+                    @endif
+                </x-chief::dropdown>
             </div>
         </x-chief::page.hero>
     </x-slot>

@@ -37,11 +37,11 @@
                         </div>
 
                         @if(chiefAdmin()->can('update-user') && (!$user->hasRole('developer') || chiefAdmin()->hasRole('developer')) )
-                            <options-dropdown class="link link-primary">
-                                <div v-cloak class="dropdown-content">
-                                    <a class="dropdown-link" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
-                                </div>
-                            </options-dropdown>
+                            <a href="{{ route('chief.back.users.edit', $user->id) }}" title="Pas user aan">
+                                <x-chief::button>
+                                    <svg><use xlink:href="#icon-edit"></use></svg>
+                                </x-chief::button>
+                            </a>
                         @endif
                     </div>
                 @endforeach
