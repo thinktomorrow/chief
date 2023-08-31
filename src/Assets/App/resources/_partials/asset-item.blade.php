@@ -1,5 +1,5 @@
 @php
-    $active = $active ?? false;
+    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;use Thinktomorrow\Chief\Assets\App\MimetypeIcon;$active = $active ?? false;
     $disabled = $disabled ?? false;
     $withActions = $withActions ?? false;
 @endphp
@@ -16,7 +16,7 @@
                 alt="{{ $asset->getFileName() }}"
                 class="object-contain w-full h-full rounded-lg"
             />
-        @elseif($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
+        @elseif($asset instanceof ExternalAssetContract)
             <img
                 src="{{ $asset->getPreviewUrl('thumb') }}"
                 alt="{{ $asset->getFileName() }}"
@@ -28,12 +28,13 @@
             </div>
         @elseif($asset->getMimeType())
             <div class="flex items-center justify-center w-full h-full text-grey-400">
-                {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
+                {!! MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
             </div>
         @endif
 
         @if($withActions)
-            <div class="absolute inset-0 items-center justify-center hidden gap-1.5 group-hover:flex pointer-events-none bg-black/25 p-1 flex-wrap">
+            <div
+                class="absolute inset-0 items-center justify-center hidden gap-1.5 group-hover:flex pointer-events-none bg-black/25 p-1 flex-wrap">
                 <button
                     type="button"
                     aria-label="Bewerk bestand"
@@ -41,7 +42,9 @@
                     class="pointer-events-auto"
                 >
                     <x-chief::button>
-                        <svg><use xlink:href="#icon-edit"></use></svg>
+                        <svg>
+                            <use xlink:href="#icon-edit"></use>
+                        </svg>
                     </x-chief::button>
                 </button>
 
@@ -52,11 +55,13 @@
                     class="pointer-events-auto"
                 >
                     <x-chief::button>
-                        <svg><use xlink:href="#icon-trash"></use></svg>
+                        <svg>
+                            <use xlink:href="#icon-trash"></use>
+                        </svg>
                     </x-chief::button>
                 </button>
 
-                @if($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
+                @if($asset instanceof ExternalAssetContract)
                     <a
                         href="{{ $asset->getUrl() }}"
                         title="Bekijk op platform"
@@ -65,7 +70,9 @@
                         class="pointer-events-auto"
                     >
                         <x-chief::button>
-                            <svg><use xlink:href="#icon-external-link"></use></svg>
+                            <svg>
+                                <use xlink:href="#icon-external-link"></use>
+                            </svg>
                         </x-chief::button>
                     </a>
                 @else
@@ -76,7 +83,9 @@
                         class="pointer-events-auto"
                     >
                         <x-chief::button>
-                            <svg><use xlink:href="#icon-download"></use></svg>
+                            <svg>
+                                <use xlink:href="#icon-download"></use>
+                            </svg>
                         </x-chief::button>
                     </a>
                 @endif
