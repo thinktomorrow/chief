@@ -6,7 +6,7 @@
             @csrf
             @method('PUT')
 
-            <div data-vue-fields class="space-y-4">
+            <div class="space-y-4">
                 @foreach($linkForm->formValues() as $locale => $formValues)
                     <x-chief::input.group rule="links" class="space-y-2" x-data="{
                         hint: '',
@@ -62,44 +62,46 @@
 
         @if($linkForm->hasAnyRedirects())
             <div class="space-y-3">
-                <h4 class="h4 h1-dark">Redirects</h4>
+                <x-chief::input.label>
+                    Redirects
+                </x-chief::input.label>
 
-                <div class="space-y-3">
-                    @foreach($linkForm->links() as $locale => $links)
-                        @if(!$links->redirects->isEmpty())
-                            <div class="flex items-start space-x-4">
-                                @if(count(config('chief.locales')) > 1)
-                                    <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
-                                @endif
+                @foreach($linkForm->links() as $locale => $links)
+                    @if(!$links->redirects->isEmpty())
+                        <div class="flex items-start space-x-4">
+                            @if(count(config('chief.locales')) > 1)
+                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
+                            @endif
 
-                                <div class="w-full px-4 py-3">
-                                    <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
-                                        @foreach($links->redirects as $urlRecord)
-                                            <url-redirect
-                                                inline-template
-                                                removeurl="{{ route('chief.back.assistants.url.remove-redirect', $urlRecord->id) }}"
-                                            >
-                                                <div
-                                                    v-show="!this.removed"
-                                                    class="flex items-center justify-between px-4 py-3"
-                                                >
-                                                    <div>{{ $urlRecord->slug }}</div>
+                            <div class="w-full px-4 py-3">
+                                <div class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
+                                    @foreach($links->redirects as $urlRecord)
+                                        <div x-data class="flex items-center justify-between px-4 py-2">
+                                            <div>{{ $urlRecord->slug }}</div>
 
-                                                    <span class="cursor-pointer link link-error" @click="remove">
-                                                        <x-chief::icon-label type="delete"></x-chief::icon-label>
-                                                    </span>
-                                                </div>
-                                            </url-redirect>
-                                        @endforeach
-                                    </div>
+                                            <button type="button" x-on:click="() => {
+                                                window.axios.post('{{ route('chief.back.assistants.url.remove-redirect', $urlRecord->id) }}', {
+                                                    _method: 'DELETE',
+                                                }).then(function ({ data }) {
+                                                    $root.remove();
+                                                });
+                                            }">
+                                                <x-chief::button>
+                                                    <svg><use xlink:href="#icon-trash"></use></svg>
+                                                </x-chief::button>
+                                            </button>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        @endif
-                    @endforeach
-                </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         @endif
 
-        <button class="btn btn-primary" type="submit" form="linksUpdateForm">Wijzigingen opslaan</button>
+        <button type="submit" form="linksUpdateForm" class="btn btn-primary">
+            Wijzigingen opslaan
+        </button>
     </div>
 </div>
