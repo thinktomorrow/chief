@@ -1,102 +1,100 @@
-<x-chief::input.group inner-class="space-y-2">
+<x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
     <x-chief::input.label required>
         Link
     </x-chief::input.label>
 
-    <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
-        <div class="space-y-3">
-            {{-- Option: internal link --}}
-            <div class="space-y-2">
-                <label for="typeInternal" class="flex items-start gap-2">
-                    <input
-                        type="radio"
-                        id="typeInternal"
-                        name="type"
-                        value="internal"
-                        v-on:click="changeType('internal')"
-                        {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"' : null }}
-                        class="form-input-radio"
-                    >
-
-                    <span class="body-dark">Kies een interne pagina</span>
-                </label>
-
-                <div v-if="type == 'internal'">
-                    <x-chief::input.group rule="owner_reference">
-                        <chief-multiselect
-                            name="owner_reference"
-                            :options='@json($pages)'
-                            selected='@json(old('owner_reference', $ownerReference))'
-                            grouplabel="group"
-                            groupvalues="values"
-                            labelkey="label"
-                            valuekey="id"
-                        />
-                    </x-chief::input.group>
-                </div>
-            </div>
-
-            {{-- Option: custom link --}}
-            <div class="space-y-2">
-                <label for="typeCustom" class="flex items-start gap-2">
-                    <input
-                        type="radio"
-                        id="typeCustom"
-                        name="type"
-                        value="custom"
-                        v-on:click="changeType('custom')"
-                        {{ (old('type', $menuitem->type) == 'custom') ? 'checked="checked"' : null }}
-                        class="form-input-radio"
-                    >
-
-                    <span class="body-dark">Kies een eigen link</span>
-                </label>
-
-                <div v-if="type == 'custom'">
-                    @if(count(config('chief.locales')) > 1)
-                        <x-chief::tabs :listen-for-external-tab="true">
-                            @foreach(config('chief.locales') as $locale)
-                                <x-chief::tabs.tab tab-id='{{ $locale }}'>
-                                    <x-chief::input.group :rule="'trans' . $locale . 'url'">
-                                        <x-chief::input.text
-                                            id="trans-{{ $locale }}-url"
-                                            name="trans[{{ $locale }}][url]"
-                                            value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
-                                            placeholder="e.g. https://google.com"
-                                        />
-                                    </x-chief::input.group>
-                                </x-chief::tabs.tab>
-                            @endforeach
-                        </x-chief::tabs>
-                    @else
-                        @foreach(config('chief.locales') as $locale)
-                            <x-chief::input.group :rule="'trans' . $locale . 'url'">
-                                <x-chief::input.text
-                                    id="trans-{{ $locale }}-url"
-                                    name="trans[{{ $locale }}][url]"
-                                    value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
-                                    placeholder="e.g. https://google.com"
-                                />
-                            </x-chief::input.group>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-
-            {{-- Option: no link --}}
-            <label for="typeNolink" class="flex items-start gap-2">
-                <input
-                    id="typeNolink"
+    <div class="space-y-3">
+        {{-- Option: internal link --}}
+        <div class="space-y-2">
+            <div class="flex items-start gap-2">
+                <x-chief::input.radio
+                    id="type-internal"
                     name="type"
-                    type="radio"
-                    value="nolink"
-                    v-on:click="changeType('nolink')"
-                    {{ (old('type', $menuitem->type) == 'nolink') ? 'checked="checked"' : '' }}
-                    class="form-input-radio"
-                >
+                    value="internal"
+                    :checked="old('type', $menuitem->type) == 'internal'"
+                    x-on:click="type = 'internal'"
+                 />
 
-                <span class="body-dark">Geen link toevoegen aan dit menu item</span>
-            </label>
+                <x-chief::input.label for="type-internal" unset class="body body-dark">
+                    Kies een interne pagina
+                </x-chief::input.label>
+            </div>
+
+            <div x-cloak x-show="type == 'internal'">
+                <x-chief::input.group rule="owner_reference">
+                    <chief-multiselect
+                        name="owner_reference"
+                        :options='@json($pages)'
+                        selected='@json(old('owner_reference', $ownerReference))'
+                        grouplabel="group"
+                        groupvalues="values"
+                        labelkey="label"
+                        valuekey="id"
+                    />
+                </x-chief::input.group>
+            </div>
         </div>
-    </radio-options>
+
+        {{-- Option: custom link --}}
+        <div class="space-y-2">
+            <div class="flex items-start gap-2">
+                <x-chief::input.radio
+                    id="type-custom"
+                    name="type"
+                    value="custom"
+                    :checked="old('type', $menuitem->type) == 'custom'"
+                    x-on:click="type = 'custom'"
+                />
+
+                <x-chief::input.label for="type-custom" unset class="body body-dark">
+                    Kies een eigen link
+                </x-chief::input.label>
+            </div>
+
+            <div x-cloak x-show="type == 'custom'">
+                @if(count(config('chief.locales')) > 1)
+                    <x-chief::tabs :listen-for-external-tab="true">
+                        @foreach(config('chief.locales') as $locale)
+                            <x-chief::tabs.tab tab-id='{{ $locale }}'>
+                                <x-chief::input.group :rule="'trans' . $locale . 'url'">
+                                    <x-chief::input.text
+                                        id="trans-{{ $locale }}-url"
+                                        name="trans[{{ $locale }}][url]"
+                                        value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
+                                        placeholder="e.g. https://google.com"
+                                    />
+                                </x-chief::input.group>
+                            </x-chief::tabs.tab>
+                        @endforeach
+                    </x-chief::tabs>
+                @else
+                    @foreach(config('chief.locales') as $locale)
+                        <x-chief::input.group :rule="'trans' . $locale . 'url'">
+                            <x-chief::input.text
+                                id="trans-{{ $locale }}-url"
+                                name="trans[{{ $locale }}][url]"
+                                value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
+                                placeholder="e.g. https://google.com"
+                            />
+                        </x-chief::input.group>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+
+        {{-- Option: no link --}}
+        <div class="flex items-start gap-2">
+            <x-chief::input.radio
+                id="type-nolink"
+                name="type"
+                value="nolink"
+                :checked="old('type', $menuitem->type) == 'nolink'"
+                x-on:click="type = 'nolink'"
+            />
+
+            <x-chief::input.label for="type-nolink" unset class="body body-dark">
+                Geen link toevoegen aan dit menu item
+            </x-chief::input.label>
+        </div>
+    </div>
 </x-chief::input.group>
