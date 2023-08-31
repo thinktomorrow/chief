@@ -56,7 +56,8 @@ class FileFieldUploadTest extends ChiefTestCase
             'assets' => [$asset],
         ])
             ->assertCount('previewFiles', 1)
-            ->assertSeeHtml('name="thumb[order][0]" value="' . $asset->id . '"');
+            ->assertSeeHtml('name="thumb[order][0]"') // Better should be to check this input in one assertion but linebreaks make it difficult
+            ->assertSeeHtml('value="' . $asset->id . '"');
     }
 
     public function test_it_can_upload_new_asset()
@@ -72,8 +73,10 @@ class FileFieldUploadTest extends ChiefTestCase
             ]])
             ->emit('upload:finished', 'files.0.fileRef', [$filePath])
             ->assertCount('previewFiles', 1)
-            ->assertSeeHtml('name="thumb[uploads][0][id]" value="' . $filePath . '"')
-            ->assertSeeHtml('name="thumb[order][0]" value="' . $filePath . '"');
+            ->assertSeeHtml('name="thumb[uploads][0][id]"')
+            ->assertSeeHtml('value="' . $filePath . '"')
+            ->assertSeeHtml('name="thumb[order][0]"')
+            ->assertSeeHtml('value="' . $filePath . '"');
     }
 
     public function test_it_can_add_existing_asset()
@@ -86,8 +89,8 @@ class FileFieldUploadTest extends ChiefTestCase
             ->assertCount('previewFiles', 0)
             ->call('onAssetsChosen', [$asset->id])
             ->assertCount('previewFiles', 1)
-            ->assertSeeHtml('name="thumb[attach][0][id]" value="' . $asset->id . '"')
-            ->assertSeeHtml('name="thumb[order][0]" value="' . $asset->id . '"');
+            ->assertSeeHtmlInOrder(['name="thumb[attach][0][id]"', 'value="' . $asset->id . '"'])
+            ->assertSeeHtmlInOrder(['name="thumb[order][0]"', 'value="' . $asset->id . '"']);
     }
 
     public function test_when_reordering_input_values_reflect_new_order()
@@ -103,11 +106,19 @@ class FileFieldUploadTest extends ChiefTestCase
         $this->livewireInstance
             ->call('onAssetsChosen', [$asset->id, $asset2->id])
             ->assertCount('previewFiles', 2)
-            ->assertSeeHtml('name="thumb[order][0]" value="' . $asset->id . '"')
-            ->assertSeeHtml('name="thumb[order][1]" value="' . $asset2->id . '"')
+            ->assertSeeHtmlInOrder([
+                'name="thumb[order][0]"',
+                'value="' . $asset->id . '"',
+                'name="thumb[order][1]"',
+                'value="' . $asset2->id . '"',
+            ])
             ->call('reorder', [$asset2->id, $asset->id])
-            ->assertSeeHtml('name="thumb[order][0]" value="' . $asset2->id . '"')
-            ->assertSeeHtml('name="thumb[order][1]" value="' . $asset->id . '"');
+            ->assertSeeHtmlInOrder([
+                'name="thumb[order][0]"',
+                'value="' . $asset2->id . '"',
+                'name="thumb[order][1]"',
+                'value="' . $asset->id . '"',
+            ]);
     }
 
 
@@ -155,7 +166,7 @@ class FileFieldUploadTest extends ChiefTestCase
             'assets' => [$asset],
         ])->call('deleteFile', $asset->id)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
-            ->assertSeeHtml('name="thumb[queued_for_deletion][0]" value="' . $asset->id . '"');
+            ->assertSeeHtmlInOrder(['name="thumb[queued_for_deletion][0]"', 'value="' . $asset->id . '"']);
     }
 
     public function test_it_has_existing_file_reference_on_single_field()
@@ -171,7 +182,7 @@ class FileFieldUploadTest extends ChiefTestCase
             'locale' => 'nl',
             'assets' => [$asset],
             'allowMultiple' => false,
-        ])->assertSeeHtml('name="thumb[attach][0][id]" value="' . $asset->id . '"');
+        ])->assertSeeHtmlInOrder(['name="thumb[attach][0][id]"', 'value="' . $asset->id . '"']);
     }
 
     public function test_it_can_queue_existing_file_for_deletion_on_single_field()
@@ -189,6 +200,6 @@ class FileFieldUploadTest extends ChiefTestCase
             'allowMultiple' => false,
         ])->call('deleteFile', $asset->id)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
-            ->assertSeeHtml('name="thumb[queued_for_deletion][0]" value="' . $asset->id . '"');
+            ->assertSeeHtmlInOrder(['name="thumb[queued_for_deletion][0]"', 'value="' . $asset->id . '"']);
     }
 }
