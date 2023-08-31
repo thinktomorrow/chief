@@ -56,7 +56,7 @@ trait FileUploadDefaults
 
     public function getFieldId(): string
     {
-        return $this->id.'-'.$this->fieldName;
+        return $this->getId() . '-' . $this->fieldName;
     }
 
     public function getFieldName(): string
@@ -84,12 +84,12 @@ trait FileUploadDefaults
         $this->validateUploadedFile($fileId, $temporaryUploadedFile = TemporaryUploadedFile::createFromLivewire($value[0]));
 
         // In case only one asset is allowed, we make sure to delete any existing / other uploads.
-        if(! $this->allowMultiple) {
-            foreach($this->previewFiles as $previewFile) {
+        if (! $this->allowMultiple) {
+            foreach ($this->previewFiles as $previewFile) {
 
                 // In subsequent uploads it occurs that previewFiles are synced before this listener. In that case we make sure
                 // That current uploaded file is not wrongfully queued for deletion.
-                if($previewFile->id == $value[0]) {
+                if ($previewFile->id == $value[0]) {
                     continue;
                 }
 
@@ -101,7 +101,7 @@ trait FileUploadDefaults
 
         $this->syncPreviewFiles();
 
-        $this->emit('fileAdded');
+        $this->dispatch('fileAdded');
     }
 
     public function onUploadErrored($fileKey)
@@ -120,14 +120,14 @@ trait FileUploadDefaults
         // Livewire converts the public properties of PreviewFile object to an array. So we need to convert this back to an object
         $this->previewFiles = array_map(fn (array|PreviewFile $file) => $file instanceof PreviewFile ? $file : PreviewFile::fromArray($file), $this->previewFiles);
 
-        foreach($this->files as $newFileDetails) {
+        foreach ($this->files as $newFileDetails) {
 
             /**
              * If the file is still uploading, we'll still add it to the previewFiles.
              * Once fully uploaded, this previewFile will be replaced by the fully uploaded file
              */
-            if(! isset($newFileDetails['fileRef'])) {
-                if(is_null($this->findPreviewFileIndex($newFileDetails['id']))) {
+            if (! isset($newFileDetails['fileRef'])) {
+                if (is_null($this->findPreviewFileIndex($newFileDetails['id']))) {
                     $this->previewFiles[] = PreviewFile::fromPendingUploadedFile($newFileDetails['id'], $newFileDetails['fileName'], $newFileDetails['fileSize']);
                 }
 
@@ -139,7 +139,7 @@ trait FileUploadDefaults
              */
             $uploadingIndex = $this->findPreviewFileIndex($newFileDetails['id']);
 
-            if(! is_null($uploadingIndex) && $this->previewFiles[$uploadingIndex] && ! $this->previewFiles[$uploadingIndex]->isQueuedForDeletion) {
+            if (! is_null($uploadingIndex) && $this->previewFiles[$uploadingIndex] && ! $this->previewFiles[$uploadingIndex]->isQueuedForDeletion) {
                 $this->previewFiles[$uploadingIndex] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
             }
         }
@@ -156,9 +156,9 @@ trait FileUploadDefaults
             $validator->validate();
 
             $this->setFilesValidatedState($fileId, true);
-        } catch(ValidationException $e) {
+        } catch (ValidationException $e) {
             $this->setFilesValidatedState($fileId, false, $e->validator->errors()->first('files'));
-            $this->removeUpload('files.'.$this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
+            $this->removeUpload('files.' . $this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
         }
     }
 
@@ -196,8 +196,8 @@ trait FileUploadDefaults
 
     private function findPreviewFile($id): ?PreviewFile
     {
-        foreach($this->previewFiles as $previewFile) {
-            if($previewFile->id == $id) {
+        foreach ($this->previewFiles as $previewFile) {
+            if ($previewFile->id == $id) {
                 return $previewFile;
             }
         }
@@ -209,13 +209,13 @@ trait FileUploadDefaults
      * The previewFile that has the uploadFileId as its id, is a pending previewFile and
      * once the file is fully uploaded, the temporaryUploadFile id will be used.
      *
-    * @param $fileId
-    * @return int|null
+     * @param $fileId
+     * @return int|null
      */
     private function findPreviewFileIndex($id): ?int
     {
-        foreach($this->previewFiles as $index => $previewFile) {
-            if($previewFile->id == $id) {
+        foreach ($this->previewFiles as $index => $previewFile) {
+            if ($previewFile->id == $id) {
                 return $index;
             }
         }
@@ -225,8 +225,8 @@ trait FileUploadDefaults
 
     public function findUploadFile($fileId): ?array
     {
-        foreach($this->files as $file) {
-            if($file['id'] == $fileId) {
+        foreach ($this->files as $file) {
+            if ($file['id'] == $fileId) {
                 return $file;
             }
         }
@@ -236,8 +236,8 @@ trait FileUploadDefaults
 
     private function findUploadFileIndex($fileId): ?int
     {
-        foreach($this->files as $index => $fileArray) {
-            if($fileArray['id'] == $fileId) {
+        foreach ($this->files as $index => $fileArray) {
+            if ($fileArray['id'] == $fileId) {
                 return $index;
             }
         }
@@ -249,7 +249,7 @@ trait FileUploadDefaults
     {
         $index = $this->findUploadFileIndex($fileId);
 
-        if(is_null($index)) {
+        if (is_null($index)) {
             throw new \InvalidArgumentException('No uploadFile found by id ' . $fileId);
         }
 
@@ -295,8 +295,8 @@ trait FileUploadDefaults
 
     public function deleteFile($fileId)
     {
-        foreach($this->previewFiles as $file) {
-            if($file->id == $fileId) {
+        foreach ($this->previewFiles as $file) {
+            if ($file->id == $fileId) {
 
                 // $this->removeUpload($key, $uploadedFile->getFilename())
 
@@ -309,8 +309,8 @@ trait FileUploadDefaults
 
     public function undoDeleteFile($fileId)
     {
-        foreach($this->previewFiles as $file) {
-            if($file->id == $fileId) {
+        foreach ($this->previewFiles as $file) {
+            if ($file->id == $fileId) {
                 $file->isQueuedForDeletion = false;
 
                 return;
@@ -323,10 +323,5 @@ trait FileUploadDefaults
         $previewFile = PreviewFile::fromArray($previewFileArray);
 
         $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
-    }
-
-    private function emitDownTo($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->id, $params);
     }
 }

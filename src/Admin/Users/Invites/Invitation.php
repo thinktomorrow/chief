@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Admin\Users\Invites;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\URL;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
@@ -14,16 +15,16 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class Invitation extends Model implements StatefulContract
 {
-    public $guarded = [];
-
-    protected $dates = ['expires_at'];
-
     /**
      * Minutes from now that invitation will expire.
      *
      * @var int
      */
     private static $expires = 60 * 24 * 3;
+    public $guarded = [];
+    protected $casts = [
+        'expires_at' => 'datetime',
+    ];
 
     public static function make(string $invitee_id, string $inviter_id, $expires = null)
     {
@@ -43,12 +44,12 @@ class Invitation extends Model implements StatefulContract
         return self::where('token', $token)->first();
     }
 
-    public function invitee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function invitee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'invitee_id');
     }
 
-    public function inviter(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function inviter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'inviter_id');
     }
@@ -61,15 +62,6 @@ class Invitation extends Model implements StatefulContract
     public function denyUrl(): string
     {
         return URL::temporarySignedRoute('invite.deny', $this->expires_at, ['token' => $this->token]);
-    }
-
-    public function getState(string $key): ?State
-    {
-        if (! $this->$key) {
-            return null;
-        }
-
-        return InvitationState::from($this->$key);
     }
 
     public function changeState($key, State $state): void
@@ -96,6 +88,15 @@ class Invitation extends Model implements StatefulContract
     public function inOnlineState(): bool
     {
         return $this->getState(InvitationState::KEY) == InvitationState::accepted;
+    }
+
+    public function getState(string $key): ?State
+    {
+        if (! $this->$key) {
+            return null;
+        }
+
+        return InvitationState::from($this->$key);
     }
 
     public function scopeOnline(Builder $query): void

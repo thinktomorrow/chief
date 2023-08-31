@@ -121,7 +121,7 @@ class HotSpotComponent extends Component
         $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
         $this->previewFile->data = array_merge($this->previewFile->data, ['hotspots' => $hotspots]);
 
-        $this->emit('assetUpdated-' . $this->previousSiblingId, $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->previousSiblingId, $this->previewFile);
 
         $this->close();
     }

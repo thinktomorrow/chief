@@ -32,23 +32,23 @@ class AssetDeleteComponent extends Component
         $this->assetIds = $value['assetIds'];
     }
 
+    public function submit()
+    {
+        if (count($this->assetIds) > 0) {
+            foreach ($this->assetIds as $assetId) {
+                app(DeleteAsset::class)->handle(Asset::find($assetId));
+            }
+
+            $this->dispatch('assetsDeleted', $this->assetIds);
+        }
+
+        $this->close();
+    }
+
     public function close()
     {
         $this->reset(['assetIds']);
         $this->isOpen = false;
-    }
-
-    public function submit()
-    {
-        if(count($this->assetIds) > 0) {
-            foreach($this->assetIds as $assetId) {
-                app(DeleteAsset::class)->handle(Asset::find($assetId));
-            }
-
-            $this->emitUp('assetsDeleted', $this->assetIds);
-        }
-
-        $this->close();
     }
 
     public function render()

@@ -86,7 +86,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
 
         $this->reset(['previewFiles', 'files']);
 
-        $this->emitUp('filesUploaded');
+        $this->dispatch('filesUploaded');
 
         $this->close();
     }

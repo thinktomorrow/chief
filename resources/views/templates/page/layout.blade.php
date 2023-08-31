@@ -1,5 +1,4 @@
 @php use Thinktomorrow\Chief\Plugins\ChiefPluginSections; @endphp
-
 @props([
     'title' => null
 ])
@@ -106,19 +105,21 @@
 
 <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
 
-@stack('custom-scripts')
+    @stack('custom-scripts')
 
 {{-- Deprecated, should use custom-scripts instead --}}
 @stack('custom-scripts-after-vue')
 
 <script>
-    Livewire.hook('component.initialized', (component) => {
+    window.Livewire.hook('component.init', ({component}) => {
         // Hack to prevent livewire from setting the url to the sidebar url (as used for forms and fragments)
         if (component.effects.path !== undefined && (component.effects.path.includes('/fragment/') || component.effects.path.includes('/nestedfragment/') || component.effects.path.includes('/forms/'))) {
             component.effects.path = undefined;
         }
     });
 </script>
+
+@stack('custom-scripts-after-vue')
 
 @foreach(app(ChiefPluginSections::class)->getFooterSections() as $footerSection)
     @include($footerSection)

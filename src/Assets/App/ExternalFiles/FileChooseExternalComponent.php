@@ -89,10 +89,10 @@ class FileChooseExternalComponent extends Component
 
         if ($this->assetId) {
             $asset = $driver->updateAsset(Asset::find($this->assetId), $this->driverId);
-            $this->emit('externalAssetUpdated-' . $this->parentId, [$asset->id]);
+            $this->dispatch('externalAssetUpdated-' . $this->parentId, [$asset->id]);
         } else {
             $asset = $driver->createAsset($this->driverId);
-            $this->emit('assetsChosen-' . $this->parentId, [$asset->id]);
+            $this->dispatch('assetsChosen-' . $this->parentId, [$asset->id]);
         }
 
         $this->reset('driverType', 'driverId', 'assetId');

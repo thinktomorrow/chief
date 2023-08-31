@@ -23,8 +23,8 @@
                 <div class="flex flex-wrap gap-2">
                     {{-- Replace --}}
                     @if($previewFile)
-                        <label for="{{ $this->id }}" class="cursor-pointer">
-                            <input wire:model="file" type="file" id="{{ $this->id }}" class="hidden"/>
+                        <label for="{{ $this->getId() }}" class="cursor-pointer">
+                            <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden"/>
 
                             <x-chief::button>
                                 <svg>

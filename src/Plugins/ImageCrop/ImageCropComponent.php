@@ -34,27 +34,12 @@ class ImageCropComponent extends Component
         $this->isOpen = true;
     }
 
-    public function close()
-    {
-        $this->reset(['previewFile','form']);
-        $this->isOpen = false;
-    }
-
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
 
         // SET FORM EXISTING VALUES: X, Y, ...?
         // $this->form['x'] = '...';
-    }
-
-
-
-    private function syncForm()
-    {
-        $this->previewFile->fieldValues = $this->form;
-
-        $this->form['basename'] = $this->previewFile->getBaseName();
     }
 
     public function submit()
@@ -66,9 +51,22 @@ class ImageCropComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->emitUp('assetCropped', $this->previewFile);
+        $this->dispatch('assetCropped', $this->previewFile);
 
         $this->close();
+    }
+
+    private function syncForm()
+    {
+        $this->previewFile->fieldValues = $this->form;
+
+        $this->form['basename'] = $this->previewFile->getBaseName();
+    }
+
+    public function close()
+    {
+        $this->reset(['previewFile', 'form']);
+        $this->isOpen = false;
     }
 
     public function render()

@@ -151,6 +151,6 @@
             </div>
         @endif
 
-        <livewire:chief-wire::file-field-choose-external parent-id="{{ $this->id }}"/>
+        <livewire:chief-wire::file-field-choose-external parent-id="{{ $this->getId() }}"/>
     </form>
 @endif

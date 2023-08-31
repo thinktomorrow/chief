@@ -8,7 +8,7 @@
     wire:end.stop="reorder($event.target.sortable.toArray())"
     x-init="() => {
         // Scroll to bottom of preview container after a file is added
-        Livewire.on('fileAdded', () => {
+        window.Livewire.on('fileAdded', () => {
             $el.scrollTo({ top: $el.scrollHeight, behavior: 'smooth' });
         });
     }"

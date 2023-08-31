@@ -8,6 +8,7 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithChoosingAssets;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
@@ -16,6 +17,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 {
     use WithFileUploads;
     use FileUploadDefaults;
+    use EmitsToNestables;
     use InteractsWithChoosingAssets;
     use RenamesErrorBagFileAttribute;
 
@@ -41,7 +43,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
             'upload:finished' => 'onUploadFinished',
             'upload:errored' => 'onUploadErrored',
             'assetUpdated' => 'onAssetUpdated',
-            'assetsChosen-' . $this->id => 'onAssetsChosen',
+            'assetsChosen-' . $this->getId() => 'onAssetsChosen',
         ];
     }
 
