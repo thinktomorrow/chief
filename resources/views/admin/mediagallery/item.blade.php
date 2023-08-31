@@ -1,13 +1,14 @@
 @php
     // Account for media files which are not stored on public accessible location. They throw a
-    $assetUrl = null;
+    use Thinktomorrow\Chief\Assets\App\MimetypeIcon;$assetUrl = null;
     try {
         $assetUrl = $asset->url('small');
     } catch(Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined $e) {}
 
 @endphp
 
-<label for="asset_{{ $index }}" class="relative block overflow-hidden rounded-lg cursor-pointer group hover:bg-grey-100">
+<label for="asset_{{ $index }}"
+       class="relative block overflow-hidden rounded-lg cursor-pointer group hover:bg-grey-100">
     <div class="absolute top-0 left-0 m-2 z-[1] form-light">
         <x-chief::input.checkbox id="asset_{{ $index }}" name="asset_ids[]" value="{{ $asset->id }}"/>
     </div>
@@ -16,7 +17,7 @@
         @if($asset->getExtensionType() == "image")
             <img class="object-contain h-48" src="{{ $assetUrl }}">
         @else
-            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
+            {!! MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
         @endif
     </div>
 
@@ -53,10 +54,12 @@
 
             @if (!$asset->isUsed())
                 <div class="flex items-start gap-1.5 text-sm text-red-500">
-                    <svg class="w-4 h-4 shrink-0"><use xlink:href="#icon-unlinked"/></svg>
+                    <svg class="w-4 h-4 shrink-0">
+                        <use xlink:href="#icon-unlinked"/>
+                    </svg>
                     <span class="-mt-[0.1rem]">Bestand niet in gebruik</span>
                 </div>
             @endif
         </div>
-    </label>
+</label>
 </div>

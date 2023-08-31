@@ -4148,31 +4148,31 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "9.12.2",
+            "version": "10.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "9ed0f4a6017f8f0b5b4ef2d9ee7a89a0d0e4919d"
+                "reference": "54d240975662a3d971466434e84625876a0d8b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/9ed0f4a6017f8f0b5b4ef2d9ee7a89a0d0e4919d",
-                "reference": "9ed0f4a6017f8f0b5b4ef2d9ee7a89a0d0e4919d",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/54d240975662a3d971466434e84625876a0d8b46",
+                "reference": "54d240975662a3d971466434e84625876a0d8b46",
                 "shasum": ""
             },
             "require": {
                 "ext-exif": "*",
                 "ext-fileinfo": "*",
                 "ext-json": "*",
-                "illuminate/bus": "^9.0",
-                "illuminate/console": "^9.0",
-                "illuminate/database": "^9.0",
-                "illuminate/pipeline": "^9.0",
-                "illuminate/support": "^9.0",
-                "intervention/image": "^2.7",
-                "maennchen/zipstream-php": "^2.0",
+                "illuminate/bus": "^9.18|^10.0",
+                "illuminate/conditionable": "^9.18|^10.0",
+                "illuminate/console": "^9.18|^10.0",
+                "illuminate/database": "^9.18|^10.0",
+                "illuminate/pipeline": "^9.18|^10.0",
+                "illuminate/support": "^9.18|^10.0",
+                "maennchen/zipstream-php": "^2.0|^3.0",
                 "php": "^8.0",
-                "spatie/image": "^2.2.2",
+                "spatie/image": "^2.2.7",
                 "spatie/temporary-directory": "^2.0",
                 "symfony/console": "^6.0"
             },
@@ -4189,8 +4189,8 @@
                 "league/flysystem-aws-s3-v3": "^3.0",
                 "mockery/mockery": "^1.4",
                 "nunomaduro/larastan": "^2.0",
-                "orchestra/testbench": "7.*",
-                "pestphp/pest": "^1.20",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.21",
                 "phpstan/extension-installer": "^1.1",
                 "spatie/laravel-ray": "^1.28",
                 "spatie/pdf-to-image": "^2.1",
@@ -4199,7 +4199,7 @@
             "suggest": {
                 "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
                 "php-ffmpeg/php-ffmpeg": "Required for generating video thumbnails",
-                "spatie/pdf-to-image": "Required for generating thumbsnails of PDFs and SVGs"
+                "spatie/pdf-to-image": "Required for generating thumbnails of PDFs and SVGs"
             },
             "type": "library",
             "extra": {
@@ -4240,7 +4240,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.12.2"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/10.11.4"
             },
             "funding": [
                 {
@@ -4252,7 +4252,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-22T13:27:17+00:00"
+            "time": "2023-08-25T08:54:08+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -6912,27 +6912,27 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.9.0",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "f8fa145994f41999f3f80bb7a5f2678545d35b25"
+                "reference": "518a2c6cb04cabcfb20b67fb5157adf7f77bb3b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/f8fa145994f41999f3f80bb7a5f2678545d35b25",
-                "reference": "f8fa145994f41999f3f80bb7a5f2678545d35b25",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/518a2c6cb04cabcfb20b67fb5157adf7f77bb3b3",
+                "reference": "518a2c6cb04cabcfb20b67fb5157adf7f77bb3b3",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^3.3",
                 "php": ">=8.1",
-                "spatie/laravel-medialibrary": "^9.10.0"
+                "spatie/laravel-medialibrary": "^10.11"
             },
             "require-dev": {
                 "nesbot/carbon": "^2.67.0",
-                "orchestra/testbench": "^6.28",
-                "phpunit/phpunit": "^9.5"
+                "orchestra/testbench": "^6.28|8.10",
+                "phpunit/phpunit": "^10.3"
             },
             "type": "library",
             "extra": {
@@ -6985,9 +6985,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9.0"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9.1"
             },
-            "time": "2023-08-30T13:38:22+00:00"
+            "time": "2023-08-30T14:33:20+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
