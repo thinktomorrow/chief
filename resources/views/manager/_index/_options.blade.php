@@ -15,29 +15,33 @@
         ($manager->can('state-update', $model) && $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract)
         || $manager->can('duplicate', $model)
     )
-        <options-dropdown>
-            <div v-cloak class="dropdown-content">
-                @if($manager->can('state-update', $model) && $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract)
-                    @foreach ($model->getStateKeys() as $stateKey)
-                        @php
-                            $stateConfig = $model->getStateConfig($stateKey);
-                            $stateMachine = \Thinktomorrow\Chief\ManagedModels\States\State\StateMachine::fromConfig($model, $stateConfig);
-                        @endphp
+        <button type="button" id="index-options-{{ $model->id }}">
+            <x-chief::button>
+                <svg class="w-5 h-5"><use xlink:href="#icon-ellipsis-vertical"/></svg>
+            </x-chief::button>
+        </button>
 
-                        @foreach($stateMachine->getAllowedTransitions() as $transitionKey)
-                            @include('chief::manager.windows.state.transition-options-dropdown-link', [
-                                'model' => $model,
-                                'transitionKey' => $transitionKey,
-                                'stateConfig' => $stateConfig,
-                            ])
-                        @endforeach
+        <x-chief::dropdown trigger="#index-options-{{ $model->id }}">
+            @if($manager->can('state-update', $model) && $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract)
+                @foreach ($model->getStateKeys() as $stateKey)
+                    @php
+                        $stateConfig = $model->getStateConfig($stateKey);
+                        $stateMachine = \Thinktomorrow\Chief\ManagedModels\States\State\StateMachine::fromConfig($model, $stateConfig);
+                    @endphp
+
+                    @foreach($stateMachine->getAllowedTransitions() as $transitionKey)
+                        @include('chief::manager.windows.state.transition-options-dropdown-link', [
+                            'model' => $model,
+                            'transitionKey' => $transitionKey,
+                            'stateConfig' => $stateConfig,
+                        ])
                     @endforeach
-                @endif
+                @endforeach
+            @endif
 
-                @adminCan('duplicate', $model)
-                    @include('chief::manager._transitions.index.duplicate')
-                @endAdminCan
-            </div>
-        </options-dropdown>
+            @adminCan('duplicate', $model)
+                @include('chief::manager._transitions.index.duplicate')
+            @endAdminCan
+        </x-chief::dropdown>
     @endif
 </div>
