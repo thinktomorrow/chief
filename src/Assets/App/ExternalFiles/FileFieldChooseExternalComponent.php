@@ -64,11 +64,11 @@ class FileFieldChooseExternalComponent extends Component
 
     private function getDriver(): ?Driver
     {
-        if(! $this->driverType) {
+        if (! $this->driverType) {
             return null;
         }
 
-        if($this->cachedDriver) {
+        if ($this->cachedDriver) {
             return $this->cachedDriver;
         }
 
@@ -79,7 +79,7 @@ class FileFieldChooseExternalComponent extends Component
     {
         $this->validate(['driverId' => 'required'], ['driverId.required' => 'De id of link is verplicht in te vullen']);
 
-        if(! $this->driverId) {
+        if (! $this->driverId) {
             return;
         }
 
@@ -88,10 +88,10 @@ class FileFieldChooseExternalComponent extends Component
 
         if ($this->assetId) {
             $asset = $driver->updateAsset(Asset::find($this->assetId), $this->driverId);
-            $this->emit('externalAssetUpdated-'.$this->parentId, [$asset->id]);
+            $this->dispatch('externalAssetUpdated-' . $this->parentId, [$asset->id]);
         } else {
             $asset = $driver->createAsset($this->driverId);
-            $this->emit('assetsChosen-'.$this->parentId, [$asset->id]);
+            $this->dispatch('assetsChosen-' . $this->parentId, [$asset->id]);
         }
 
         $this->reset('driverType', 'driverId', 'assetId');

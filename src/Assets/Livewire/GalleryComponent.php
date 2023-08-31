@@ -6,11 +6,13 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\Gallery;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
 
 class GalleryComponent extends Component
 {
     use InteractsWithGallery;
+    use EmitsToNestables;
 
     public $sort = null;
 
@@ -38,11 +40,6 @@ class GalleryComponent extends Component
         $previewFile = PreviewFile::fromAsset(Asset::find($assetId));
 
         $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $previewFile]);
-    }
-
-    private function emitDownTo($name, $event, array $params = [])
-    {
-        $this->emitTo($name, $event . '-' . $this->id, $params);
     }
 
     public function openFileUpload()

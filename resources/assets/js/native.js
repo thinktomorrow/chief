@@ -1,4 +1,3 @@
-import Alpine from 'alpinejs';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -7,6 +6,7 @@ import initSortable from './sortable/sortable-init';
 import initFormSubmitOnChange from './utilities/form-submit-on-change';
 import vueFields from './forms/fields/vue-fields';
 import registerClassToggles from './utilities/toggle-class';
+import { Livewire } from '../../../vendor/livewire/livewire/dist/livewire.esm';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -21,15 +21,20 @@ initFormSubmitOnChange();
 initSortable('[data-sortable]');
 registerClassToggles();
 
+window.vueFieldsRefresh = (el) => vueFields(el);
+
 // Form logic - submit forms async or via sidebar
 require('./forms/index');
 // Table logic - bulk actions
 require('./tables/index');
+
+/**
+ * Livewire scripts
+ */
+Livewire.start();
+
+// wire:sortable
 require('./sortable/sortable-livewire');
+
 // So livewire scripts play nice with vue
 require('livewire-vue');
-
-window.vueFieldsRefresh = (el) => vueFields(el);
-window.Alpine = Alpine;
-
-Alpine.start();

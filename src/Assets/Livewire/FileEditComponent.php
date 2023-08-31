@@ -34,8 +34,8 @@ class FileEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
-            'externalAssetUpdated-' . $this->id => 'onExternalAssetUpdated',
-            'assetUpdated-' . $this->id => 'onAssetUpdated',
+            'externalAssetUpdated-' . $this->getId() => 'onExternalAssetUpdated',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
         ];
     }
 
@@ -87,7 +87,7 @@ class FileEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
 
         $this->close();
     }
@@ -103,7 +103,7 @@ class FileEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
 
         $this->close();
     }
@@ -144,7 +144,7 @@ class FileEditComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
 
         $this->close();
     }

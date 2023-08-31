@@ -15,12 +15,15 @@
 
 @push('custom-scripts-after-vue')
     <script>
-        Livewire.onError((message, response) => {
-            if (response.status === 419) {
-                window.dispatchEvent(new CustomEvent('open-dialog', {detail: {id: 'refresh-modal'}}));
+        window.Livewire.hook('request', ({fail}) => {
+            fail(({status, preventDefault}) => {
+                if (status === 419) {
+                    preventDefault();
+                    window.dispatchEvent(new CustomEvent('open-dialog', {detail: {id: 'refresh-modal'}}));
 
-                return false;
-            }
-        });
+                    return false;
+                }
+            })
+        })
     </script>
 @endpush

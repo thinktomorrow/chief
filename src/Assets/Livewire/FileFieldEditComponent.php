@@ -42,8 +42,8 @@ class FileFieldEditComponent extends Component
         return [
             'open' => 'open',
             'open-' . $this->parentId => 'open',
-            'externalAssetUpdated-' . $this->id => 'onExternalAssetUpdated',
-            'assetUpdated-' . $this->id => 'onAssetUpdated',
+            'externalAssetUpdated-' . $this->getId() => 'onExternalAssetUpdated',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
         ];
     }
 
@@ -111,7 +111,7 @@ class FileFieldEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
 
         $this->close();
     }
@@ -127,7 +127,7 @@ class FileFieldEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
 
         $this->close();
     }
@@ -170,7 +170,7 @@ class FileFieldEditComponent extends Component
             app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
 
         $this->close();
         $this->clearValidation();

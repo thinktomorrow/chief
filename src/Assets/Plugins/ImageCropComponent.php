@@ -36,7 +36,7 @@ class ImageCropComponent extends Component
         $this->previewFile = $previewFile;
         $this->form['basename'] = $previewFile->getBaseName();
 
-        if($previewFile->mediaId) {
+        if ($previewFile->mediaId) {
             $mediaModel = Media::find($previewFile->mediaId);
             $this->mediaFile = MediaFile::fromMedia($mediaModel);
         }
@@ -45,7 +45,7 @@ class ImageCropComponent extends Component
 
     public function openInParentScope($value)
     {
-        if(! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
+        if (! isset($value['parent_id']) || $this->parentId !== $value['parent_id']) {
             return;
         }
 
@@ -57,12 +57,12 @@ class ImageCropComponent extends Component
         $this->setFile(PreviewFile::fromArray($value['previewfile_array']));
         $this->isOpen = true;
 
-        $this->emit('imageCropOpened', $this->previewFile->id);
+        $this->dispatch('imageCropOpened', $this->previewFile->id);
     }
 
     public function close()
     {
-        $this->reset(['previewFile','mediaFile','form']);
+        $this->reset(['previewFile', 'mediaFile', 'form']);
         $this->isOpen = false;
     }
 
@@ -95,11 +95,11 @@ class ImageCropComponent extends Component
 
         // for new file: perform upload and then emitUp with newpath, name and mimeType...
         dd('submitting');
-        if($this->mediaFile) {
+        if ($this->mediaFile) {
             app(FileApplication::class)->updateFileName($this->mediaFile->mediaId, $this->form['basename']);
         }
 
-        $this->emitUp('fileUpdated', $this->previewFile->id, $this->form);
+        $this->dispatch('fileUpdated', $this->previewFile->id, $this->form);
 
         $this->close();
     }

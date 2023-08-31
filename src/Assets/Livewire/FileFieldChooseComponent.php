@@ -49,14 +49,14 @@ class FileFieldChooseComponent extends Component
 
     public function selectAsset($assetId)
     {
-        if(! $this->allowMultiple) {
+        if (! $this->allowMultiple) {
             $this->assetIds = [$assetId];
             $this->selectedPreviewFiles = [$assetId => PreviewFile::fromAsset(Asset::find($assetId))];
 
             return;
         }
 
-        if(! in_array($assetId, $this->assetIds) && ! in_array($assetId, $this->existingAssetIds)) {
+        if (! in_array($assetId, $this->assetIds) && ! in_array($assetId, $this->existingAssetIds)) {
             $this->assetIds[] = $assetId;
             $this->selectedPreviewFiles[$assetId] = PreviewFile::fromAsset(Asset::find($assetId));
         }
@@ -70,7 +70,7 @@ class FileFieldChooseComponent extends Component
 
     public function save()
     {
-        $this->emit('assetsChosen-'.$this->parentId, $this->assetIds);
+        $this->dispatch('assetsChosen-' . $this->parentId, $this->assetIds);
 
         $this->reset('assetIds', 'selectedPreviewFiles');
 

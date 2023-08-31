@@ -9,6 +9,7 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 
@@ -16,6 +17,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 {
     use WithFileUploads;
     use FileUploadDefaults;
+    use EmitsToNestables;
     use RenamesErrorBagFileAttribute;
 
     public ?string $modelReference;
@@ -39,7 +41,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
             'upload:finished' => 'onUploadFinished',
             'upload:errored' => 'onUploadErrored',
             'assetUpdated' => 'onAssetUpdated',
-            'assetsChosen-'.$this->id => 'onAssetsChosen',
+            'assetsChosen-' . $this->getId() => 'onAssetsChosen',
         ];
     }
 
@@ -53,11 +55,11 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 
     public function onAssetsChosen(array $assetIds)
     {
-        if(! $this->allowMultiple) {
+        if (! $this->allowMultiple) {
             // Assert only one file is added.
-            $assetIds = (array) reset($assetIds);
+            $assetIds = (array)reset($assetIds);
 
-            foreach($this->previewFiles as $previewFile) {
+            foreach ($this->previewFiles as $previewFile) {
                 $previewFile->isQueuedForDeletion = true;
             }
         }

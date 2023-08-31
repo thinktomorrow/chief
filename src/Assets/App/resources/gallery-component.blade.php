@@ -39,20 +39,21 @@
         </div>
 
         <div>
-            <livewire:chief-wire::file-upload parent-id="{{ $this->id }}" field-name="files" :allow-multiple="true"/>
+            <livewire:chief-wire::file-upload parent-id="{{ $this->getId() }}" field-name="files"
+                                              :allow-multiple="true"/>
         </div>
 
         <div>
-            <livewire:chief-wire::file-edit parent-id="{{ $this->id }}"/>
+            <livewire:chief-wire::file-edit parent-id="{{ $this->getId() }}"/>
         </div>
 
         <div>
-            <livewire:chief-wire::asset-delete parent-id="{{ $this->id }}"/>
+            <livewire:chief-wire::asset-delete parent-id="{{ $this->getId() }}"/>
         </div>
 
         @foreach(app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
             <div>
-                <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->id }}"/>
+                <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->getId() }}"/>
             </div>
         @endforeach
     </div>

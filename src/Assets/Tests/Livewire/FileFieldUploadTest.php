@@ -70,7 +70,7 @@ class FileFieldUploadTest extends ChiefTestCase
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
-            ->emit('upload:finished', 'files.0.fileRef', [$filePath])
+            ->dispatch('upload:finished', 'files.0.fileRef', [$filePath])
             ->assertCount('previewFiles', 1)
             ->assertSeeHtml('name="thumb[uploads][0][id]" value="' . $filePath . '"')
             ->assertSeeHtml('name="thumb[order][0]" value="' . $filePath . '"');
@@ -121,7 +121,7 @@ class FileFieldUploadTest extends ChiefTestCase
                 'fileName' => $file->getClientOriginalName(),
                 'fileSize' => $file->getSize(),
             ]])
-            ->emit('upload:finished', 'files.0.fileRef', [$filePath])
+            ->dispatch('upload:finished', 'files.0.fileRef', [$filePath])
             ->call('deleteFile', $filePath)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
             ->assertDontSeeHtml('name="thumb[uploads][0][id]"');
