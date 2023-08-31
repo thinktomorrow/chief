@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Admin\Mediagallery\Http;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
@@ -40,7 +39,7 @@ class MediagalleryController extends Controller
 
         if ($unused) {
             $assets->whereNotExists(function ($query) {
-                $query->select(DB::raw(1))
+                $query->selectRaw(1)
                     ->from('assets_pivot')
                     ->whereRaw('assets_pivot.asset_id = assets.id')
                     ->where('assets_pivot.unused', 0);

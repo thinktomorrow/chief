@@ -15,7 +15,10 @@ trait HasPeriodTrait
 
     public function initializeHasPeriodTrait()
     {
-        $this->dates = array_merge($this->dates, ['start_at', 'end_at']);
+        $this->casts = array_merge($this->casts ?? [], [
+            'start_at' => 'datetime',
+            'end_at' => 'datetime',
+        ]);
     }
 
     public function scopePassed($query)

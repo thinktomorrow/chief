@@ -1811,16 +1811,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "d44a24690f16b8c1808bf13b1bd54ae4c63ea048"
+                "reference": "3669d6d5f7a47a93c08ddff335e6d945481a1dd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/d44a24690f16b8c1808bf13b1bd54ae4c63ea048",
-                "reference": "d44a24690f16b8c1808bf13b1bd54ae4c63ea048",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/3669d6d5f7a47a93c08ddff335e6d945481a1dd5",
+                "reference": "3669d6d5f7a47a93c08ddff335e6d945481a1dd5",
                 "shasum": ""
             },
             "require": {
@@ -1913,7 +1913,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-24T15:16:10+00:00"
+            "time": "2023-08-30T16:55:00+00:00"
         },
         {
             "name": "league/config",
@@ -4148,31 +4148,31 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "9.12.2",
+            "version": "10.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "9ed0f4a6017f8f0b5b4ef2d9ee7a89a0d0e4919d"
+                "reference": "54d240975662a3d971466434e84625876a0d8b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/9ed0f4a6017f8f0b5b4ef2d9ee7a89a0d0e4919d",
-                "reference": "9ed0f4a6017f8f0b5b4ef2d9ee7a89a0d0e4919d",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/54d240975662a3d971466434e84625876a0d8b46",
+                "reference": "54d240975662a3d971466434e84625876a0d8b46",
                 "shasum": ""
             },
             "require": {
                 "ext-exif": "*",
                 "ext-fileinfo": "*",
                 "ext-json": "*",
-                "illuminate/bus": "^9.0",
-                "illuminate/console": "^9.0",
-                "illuminate/database": "^9.0",
-                "illuminate/pipeline": "^9.0",
-                "illuminate/support": "^9.0",
-                "intervention/image": "^2.7",
-                "maennchen/zipstream-php": "^2.0",
+                "illuminate/bus": "^9.18|^10.0",
+                "illuminate/conditionable": "^9.18|^10.0",
+                "illuminate/console": "^9.18|^10.0",
+                "illuminate/database": "^9.18|^10.0",
+                "illuminate/pipeline": "^9.18|^10.0",
+                "illuminate/support": "^9.18|^10.0",
+                "maennchen/zipstream-php": "^2.0|^3.0",
                 "php": "^8.0",
-                "spatie/image": "^2.2.2",
+                "spatie/image": "^2.2.7",
                 "spatie/temporary-directory": "^2.0",
                 "symfony/console": "^6.0"
             },
@@ -4189,8 +4189,8 @@
                 "league/flysystem-aws-s3-v3": "^3.0",
                 "mockery/mockery": "^1.4",
                 "nunomaduro/larastan": "^2.0",
-                "orchestra/testbench": "7.*",
-                "pestphp/pest": "^1.20",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.21",
                 "phpstan/extension-installer": "^1.1",
                 "spatie/laravel-ray": "^1.28",
                 "spatie/pdf-to-image": "^2.1",
@@ -4199,7 +4199,7 @@
             "suggest": {
                 "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
                 "php-ffmpeg/php-ffmpeg": "Required for generating video thumbnails",
-                "spatie/pdf-to-image": "Required for generating thumbsnails of PDFs and SVGs"
+                "spatie/pdf-to-image": "Required for generating thumbnails of PDFs and SVGs"
             },
             "type": "library",
             "extra": {
@@ -4240,7 +4240,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.12.2"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/10.11.4"
             },
             "funding": [
                 {
@@ -4252,7 +4252,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-22T13:27:17+00:00"
+            "time": "2023-08-25T08:54:08+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -4316,16 +4316,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.10.2",
+            "version": "5.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "671e46e079cbd4990a98427daaa09f4977b57ca9"
+                "reference": "0a35e99da4cb6f85b07b3b58b718ff659c39a009"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/671e46e079cbd4990a98427daaa09f4977b57ca9",
-                "reference": "671e46e079cbd4990a98427daaa09f4977b57ca9",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/0a35e99da4cb6f85b07b3b58b718ff659c39a009",
+                "reference": "0a35e99da4cb6f85b07b3b58b718ff659c39a009",
                 "shasum": ""
             },
             "require": {
@@ -4386,7 +4386,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.10.2"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.11.0"
             },
             "funding": [
                 {
@@ -4394,7 +4394,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-04T13:38:13+00:00"
+            "time": "2023-08-30T23:41:24+00:00"
         },
         {
             "name": "spatie/laravel-sitemap",
@@ -6912,27 +6912,27 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.9.0",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "f8fa145994f41999f3f80bb7a5f2678545d35b25"
+                "reference": "518a2c6cb04cabcfb20b67fb5157adf7f77bb3b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/f8fa145994f41999f3f80bb7a5f2678545d35b25",
-                "reference": "f8fa145994f41999f3f80bb7a5f2678545d35b25",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/518a2c6cb04cabcfb20b67fb5157adf7f77bb3b3",
+                "reference": "518a2c6cb04cabcfb20b67fb5157adf7f77bb3b3",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^3.3",
                 "php": ">=8.1",
-                "spatie/laravel-medialibrary": "^9.10.0"
+                "spatie/laravel-medialibrary": "^10.11"
             },
             "require-dev": {
                 "nesbot/carbon": "^2.67.0",
-                "orchestra/testbench": "^6.28",
-                "phpunit/phpunit": "^9.5"
+                "orchestra/testbench": "^6.28|8.10",
+                "phpunit/phpunit": "^10.3"
             },
             "type": "library",
             "extra": {
@@ -6985,32 +6985,32 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9.0"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9.1"
             },
-            "time": "2023-08-30T13:38:22+00:00"
+            "time": "2023-08-30T14:33:20+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
-            "version": "0.4.1",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/dynamic-attributes.git",
-                "reference": "122dfdffd68c4f81a8e04b537c5622d1780b700c"
+                "reference": "f7bae846be343083b7045261a7d558c8f3d88dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/122dfdffd68c4f81a8e04b537c5622d1780b700c",
-                "reference": "122dfdffd68c4f81a8e04b537c5622d1780b700c",
+                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/f7bae846be343083b7045261a7d558c8f3d88dd9",
+                "reference": "f7bae846be343083b7045261a7d558c8f3d88dd9",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^3.1",
                 "ext-json": "*",
-                "illuminate/database": "^8.12|^9.0",
+                "illuminate/database": "^8.12|^9.0|^10.0",
                 "php": "^8.1"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.18|^7.5",
+                "orchestra/testbench": "^6.18|^7.5|^8.10",
                 "phpunit/phpunit": "^9.5",
                 "psalm/plugin-laravel": "^1.4|^2.0",
                 "vimeo/psalm": "^4.8"
@@ -7034,37 +7034,37 @@
             "description": "easily store and retrieve document values of an eloquent model",
             "support": {
                 "issues": "https://github.com/thinktomorrow/dynamic-attributes/issues",
-                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/0.4.1"
+                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/0.4.2"
             },
-            "time": "2022-06-13T12:32:19+00:00"
+            "time": "2023-08-30T14:16:41+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "d93170a71843e80768fb29e2f9bc9b5ea1fd4637"
+                "reference": "eced38cb0bd137b06b37ed120cc002225b638ae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/d93170a71843e80768fb29e2f9bc9b5ea1fd4637",
-                "reference": "d93170a71843e80768fb29e2f9bc9b5ea1fd4637",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/eced38cb0bd137b06b37ed120cc002225b638ae2",
+                "reference": "eced38cb0bd137b06b37ed120cc002225b638ae2",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/contracts": "~9.11",
-                "illuminate/database": "~9.11",
-                "illuminate/support": "~9.11",
+                "illuminate/contracts": "~9.11|~10.0",
+                "illuminate/database": "~9.11|~10.0",
+                "illuminate/support": "~9.11|~10.0",
                 "league/flysystem": "~3.0",
                 "php": ">=8.1",
-                "thinktomorrow/dynamic-attributes": "^0.4.1"
+                "thinktomorrow/dynamic-attributes": "^0.4.2"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
                 "nunomaduro/larastan": "^0.7.12",
-                "orchestra/testbench": "^7.5",
+                "orchestra/testbench": "^7.5|^8.10",
                 "phpunit/phpunit": "^9.5",
                 "spatie/temporary-directory": "^1.1",
                 "vimeo/psalm": "^4.3"
@@ -7103,9 +7103,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/squanto/issues",
-                "source": "https://github.com/thinktomorrow/squanto/tree/3.0.1"
+                "source": "https://github.com/thinktomorrow/squanto/tree/3.0.2"
             },
-            "time": "2022-08-23T08:03:12+00:00"
+            "time": "2023-08-30T14:25:04+00:00"
         },
         {
             "name": "thinktomorrow/url",

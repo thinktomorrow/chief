@@ -21,24 +21,6 @@ final class FragmentRepository
         $this->prefetchedRecords = collect();
     }
 
-    /**
-     * @param Model $owner
-     *
-     * @return Collection Fragmentable[]
-     */
-    public function getByOwner(Model $owner): Collection
-    {
-        if (! $context = ContextModel::ownedBy($owner)) {
-            return collect();
-        }
-
-        $fragmentModels = $context->fragments()->get();
-
-        $this->prefetchRecords($fragmentModels);
-
-        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
-    }
-
     public function getAllShared(FragmentsOwner $owner, array $filters = []): Collection
     {
         $isFilteringByType = isset($filters['types']) && count($filters['types']) > 0;
@@ -78,6 +60,31 @@ final class FragmentRepository
         return $collection;
     }
 
+    private function filterByTypes($builder, array $classReferences): Builder
+    {
+        $classReferences = $this->expandedClassReferences($classReferences);
+
+        return $builder->where(function ($query) use ($classReferences) {
+            $query->where(DB::raw("1=0"));
+            foreach ($classReferences as $classReference) {
+                $query->orWhere('model_reference', 'LIKE', $classReference . '@%');
+            }
+        });
+    }
+
+    private function expandedClassReferences(array $classNames): array
+    {
+        $expanded = [];
+
+        foreach ($classNames as $className) {
+            $modelReference = ModelReference::fromStatic($className);
+            $expanded[] = addSlashes($modelReference->className());
+            $expanded[] = $modelReference->shortClassName();
+        }
+
+        return $expanded;
+    }
+
     private function filterByOwners($builder, array $modelReferences): Builder
     {
         $modelReferences = array_map(fn ($value) => ModelReference::fromString($value), $modelReferences);
@@ -99,18 +106,6 @@ final class FragmentRepository
             });
     }
 
-    private function filterByTypes($builder, array $classReferences): Builder
-    {
-        $classReferences = $this->expandedClassReferences($classReferences);
-
-        return $builder->where(function ($query) use ($classReferences) {
-            $query->where(DB::raw("1=0"));
-            foreach ($classReferences as $classReference) {
-                $query->orWhere('model_reference', 'LIKE', $classReference. '@%');
-            }
-        });
-    }
-
     private function filterByUsage($builder): Builder
     {
         return $builder
@@ -120,31 +115,29 @@ final class FragmentRepository
             ->orderBy('usage', 'DESC');
     }
 
-    private function expandedClassReferences(array $classNames): array
+    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
     {
-        $expanded = [];
-
-        foreach ($classNames as $className) {
-            $modelReference = ModelReference::fromStatic($className);
-            $expanded[] = addSlashes($modelReference->className());
-            $expanded[] = $modelReference->shortClassName();
-        }
-
-        return $expanded;
+        return $this->prefetchedRecords
+            ->get($fragmentModel->model_reference, fn () => ModelReference::fromString($fragmentModel->model_reference)->instance())
+            ->setFragmentModel($fragmentModel);
     }
 
     /**
-     * @param int $id
-     * @return Fragmentable
+     * @param Model $owner
+     *
+     * @return Collection Fragmentable[]
      */
-    public function find($id): Fragmentable
+    public function getByOwner(Model $owner): Collection
     {
-        return $this->fragmentFactory(FragmentModel::findOrFail((int) $id));
-    }
+        if (! $context = ContextModel::ownedBy($owner)) {
+            return collect();
+        }
 
-    public function exists($id): bool
-    {
-        return ! is_null(FragmentModel::find((int) $id));
+        $fragmentModels = $context->fragments()->get();
+
+        $this->prefetchRecords($fragmentModels);
+
+        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
 
     private function prefetchRecords(Collection $fragmentModels): void
@@ -165,11 +158,18 @@ final class FragmentRepository
         });
     }
 
-    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
+    public function exists($id): bool
     {
-        return $this->prefetchedRecords
-            ->get($fragmentModel->model_reference,  fn () => ModelReference::fromString($fragmentModel->model_reference)->instance())
-            ->setFragmentModel($fragmentModel);
+        return ! is_null(FragmentModel::find((int)$id));
+    }
+
+    /**
+     * @param int $id
+     * @return Fragmentable
+     */
+    public function find($id): Fragmentable
+    {
+        return $this->fragmentFactory(FragmentModel::findOrFail((int)$id));
     }
 
     public function nextId(): int
