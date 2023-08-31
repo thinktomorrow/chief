@@ -4,10 +4,11 @@ All notable changes to the `chief` application template will be documented in th
 the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## Unreleased - 0.8.0
+## Unreleased
 
-In this release are a couple of breaking changes.
-We have refactored and improved the file asset management.
+## 0.8.0 - 2023-08-31
+
+In this release we have refactored and improved the file asset management.
 
 - The Asset library package has been updated to a new major version.
 - File handling is done via Livewire components and replaces all the prior vue components.
