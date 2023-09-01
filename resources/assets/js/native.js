@@ -28,7 +28,8 @@ require('./forms/index');
 require('./tables/index');
 require('./sortable/sortable-livewire');
 // So livewire scripts play nice with vue
-require('livewire-vue');
+
+// require('livewire-vue');
 
 /**
  * --------------------------------
