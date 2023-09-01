@@ -51,8 +51,12 @@ class FileUploadTest extends ChiefTestCase
             ->call('open')
             ->emit('upload:finished', 'files.0.fileRef', [$filePath])
             ->assertCount('previewFiles', 1)
-            ->assertSeeHtml('name="thumb[uploads][0][id]" value="' . $filePath . '"')
-            ->assertSeeHtml('name="thumb[order][0]" value="' . $filePath . '"');
+            ->assertSeeHtmlInOrder([
+                'name="thumb[uploads][0][id]"',
+                'value="' . $filePath . '"',
+                'name="thumb[order][0]"',
+                'value="' . $filePath . '"',
+            ]);
     }
 
     public function test_it_can_queue_unsaved_uploaded_file_for_deletion()

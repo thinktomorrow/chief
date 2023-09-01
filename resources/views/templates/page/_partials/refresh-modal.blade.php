@@ -7,7 +7,7 @@
     </div>
 
     <x-slot name="footer">
-        <button x-on:click="window.location.reload()" class="btn btn-primary">
+        <button type="button" x-on:click="window.location.reload()" class="btn btn-primary">
             Herlaad de pagina
         </button>
     </x-slot>
@@ -16,8 +16,8 @@
 @push('custom-scripts-after-vue')
     <script>
         Livewire.onError((message, response) => {
-            if(response.status === 419) {
-                window.dispatchEvent(new CustomEvent('open-dialog', { detail: { id: 'refresh-modal' } }));
+            if (response.status === 419) {
+                window.dispatchEvent(new CustomEvent('open-dialog', {detail: {id: 'refresh-modal'}}));
 
                 return false;
             }

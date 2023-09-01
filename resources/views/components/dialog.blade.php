@@ -12,6 +12,9 @@
     x-show="open"
     x-data="{
         open: {{ isset($wired) ? '$wire.entangle(\'isOpen\')' : 'false' }},
+        close() {
+            {{ isset($wired) ? '$wire.close()' : '$data.open = false;' }}
+        },
         toggleInnerShadows() {
             if($refs.container.scrollTop !== 0) {
                 $refs.headerShadow.classList.remove('opacity-0')
@@ -30,7 +33,7 @@
     x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
 >
     <div
-        x-on:click="open = false"
+        x-on:click="close()"
         class="absolute inset-0 cursor-pointer bg-black/20 backdrop-filter backdrop-blur-sm animate-dialog-fade-in"
     ></div>
 
@@ -58,8 +61,10 @@
                                         {{ $title }}
                                     </h2>
 
-                                    <button type="button" x-on:click="open = false" class="ml-auto shrink-0">
-                                        <svg class="w-5 h-5 text-grey-400 hover:body-dark"><use xlink:href="#icon-x-mark"></use></svg>
+                                    <button type="button" x-on:click="close()" class="ml-auto shrink-0">
+                                        <svg class="w-5 h-5 text-grey-400 hover:body-dark">
+                                            <use xlink:href="#icon-x-mark"></use>
+                                        </svg>
                                     </button>
                                 </div>
                             @endif
@@ -72,7 +77,8 @@
                         </div>
                     @endif
 
-                    <div x-ref="headerShadow" class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8">
+                    <div x-ref="headerShadow"
+                         class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8">
                         <div class="h-8 -translate-y-8 bg-black/20 blur"></div>
                     </div>
                 </header>
@@ -82,7 +88,8 @@
                 </div>
 
                 <footer class="sticky bottom-0 z-[1]">
-                    <div x-ref="footerShadow" class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8">
+                    <div x-ref="footerShadow"
+                         class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8">
                         <div class="h-8 translate-y-8 bg-black/20 blur"></div>
                     </div>
 
