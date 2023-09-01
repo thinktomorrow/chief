@@ -6,106 +6,102 @@
             @csrf
             @method('PUT')
 
-            <div data-vue-fields class="space-y-4">
+            <div class="space-y-4">
                 @foreach($linkForm->formValues() as $locale => $formValues)
-                    <link-input
-                        inline-template
-                        checkurl="{{ route('chief.back.links.check') }}"
-                        initial-value="{{ old('links.'.$locale, $formValues->value) }}"
-                        fixed-segment="{{ $formValues->fixedSegment }}"
-                        model-class="{{ $model::class }}"
-                        model-id="{{ $model->id }}"
-                    >
-                        <div>
-                            <div class="mb-1 space-x-1 leading-none">
-                                <span class="font-medium h6 h1-dark">
-                                    {{ strtoupper($locale) }} link
-                                </span>
-                            </div>
+                    <x-chief::input.group rule="links" class="space-y-2" x-data="{
+                        hint: '',
+                    }">
+                        <x-chief::input.label for="links.{{ $locale }}">
+                            {{ strtoupper($locale) }} link
+                        </x-chief::input.label>
 
-                            <div class="mt-2 space-y-2">
-                                <div class="flex w-full form-light">
-                                    <div class="form-input-prepend">
-                                        <span v-if="fixedSegment !== '/'" class="flex items-center space-x-0.5">
-                                            {{-- TODO: better icon --}}
-                                            <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
+                        <x-chief::input.prepend-append>
+                            <x-slot name="prepend">
+                                @if($formValues->fixedSegment !== '/')
+                                    <span class="flex items-center gap-0.5">
+                                        <svg class="w-5 h-5 shrink-0"><use xlink:href="#icon-home"/></svg>
 
-                                            <span class="flex items-center leading-none">
-                                                <span>/</span>
-                                                <span v-text="fixedSegment"></span>
-                                                <span>/</span>
-                                            </span>
+                                        <span class="leading-5">
+                                            /{{ $formValues->fixedSegment }}/
                                         </span>
+                                    </span>
+                                @else
+                                    <svg class="w-5 h-5"><use xlink:href="#icon-home"/></svg>
+                                @endif
+                            </x-slot>
 
-                                        <span v-else>
-                                            <svg width="20" height="20"><use xlink:href="#icon-home"/></svg>
-                                        </span>
-                                    </div>
+                            <x-chief::input.text
+                                id="links.{{ $locale }}"
+                                name="links[{{ $locale }}]"
+                                x-on:input.debounce.300ms="(e) => {
+                                    // An empty value is never checked for uniqueness
+                                    if (!e.target.value) {
+                                        hint = '';
+                                        return;
+                                    }
 
-                                    <input
-                                        @keyup="onInput"
-                                        id="links.{{ $locale }}"
-                                        type="text"
-                                        name="links[{{ $locale }}]"
-                                        v-model="value"
-                                        class="form-input-with-prepend form-input-field"
-                                    >
-                                </div>
+                                    const completeSlug = '{{ $formValues->fixedSegment }}' + '/' + e.target.value;
 
-                                <div
-                                    class="inline-block px-2 py-1 font-medium text-blue-500 rounded-lg bg-blue-50"
-                                    v-if="hint"
-                                    v-html="hint"
-                                ></div>
+                                    window.axios.post('{{ route('chief.back.links.check') }}', {
+                                        modelClass: `{{ str_replace('\\', '\\\\', $model::class) }}`,
+                                        modelId: '{{ $model->id }}',
+                                        slug: completeSlug.replace(/\/\//, ''),
+                                    }).then(({ data }) => {
+                                        console.log(data);
+                                        hint = data.hint;
+                                    });
+                                }"
+                            />
+                        </x-chief::input.prepend-append>
 
-                                <x-chief::input.error rule="links"/>
-                            </div>
-                        </div>
-                    </link-input>
+                        <x-chief::inline-notification type="warning" size="sm" x-html="hint" x-show="hint"/>
+                    </x-chief::input.group>
                 @endforeach
             </div>
         </form>
 
         @if($linkForm->hasAnyRedirects())
             <div class="space-y-3">
-                <h4 class="h4 h1-dark">Redirects</h4>
+                <x-chief::input.label>
+                    Redirects
+                </x-chief::input.label>
 
-                <div class="space-y-3">
-                    @foreach($linkForm->links() as $locale => $links)
-                        @if(!$links->redirects->isEmpty())
-                            <div class="flex items-start space-x-4">
-                                @if(count(config('chief.locales')) > 1)
-                                    <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
-                                @endif
+                @foreach($linkForm->links() as $locale => $links)
+                    @if(!$links->redirects->isEmpty())
+                        <div class="flex items-start space-x-4">
+                            @if(count(config('chief.locales')) > 1)
+                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
+                            @endif
 
-                                <div class="w-full px-4 py-3">
-                                    <div data-vue-fields class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
-                                        @foreach($links->redirects as $urlRecord)
-                                            <url-redirect
-                                                inline-template
-                                                removeurl="{{ route('chief.back.assistants.url.remove-redirect', $urlRecord->id) }}"
-                                            >
-                                                <div
-                                                    v-show="!this.removed"
-                                                    class="flex items-center justify-between px-4 py-3"
-                                                >
-                                                    <div>{{ $urlRecord->slug }}</div>
+                            <div class="w-full px-4 py-3">
+                                <div class="-mx-4 -my-3 border divide-y rounded-lg border-grey-200 divide-grey-200">
+                                    @foreach($links->redirects as $urlRecord)
+                                        <div x-data class="flex items-center justify-between px-4 py-2">
+                                            <div>{{ $urlRecord->slug }}</div>
 
-                                                    <span class="cursor-pointer link link-error" @click="remove">
-                                                        <x-chief::icon-label type="delete"></x-chief::icon-label>
-                                                    </span>
-                                                </div>
-                                            </url-redirect>
-                                        @endforeach
-                                    </div>
+                                            <button type="button" x-on:click="() => {
+                                                window.axios.post('{{ route('chief.back.assistants.url.remove-redirect', $urlRecord->id) }}', {
+                                                    _method: 'DELETE',
+                                                }).then(function ({ data }) {
+                                                    $root.remove();
+                                                });
+                                            }">
+                                                <x-chief::button>
+                                                    <svg><use xlink:href="#icon-trash"></use></svg>
+                                                </x-chief::button>
+                                            </button>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        @endif
-                    @endforeach
-                </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         @endif
 
-        <button class="btn btn-primary" type="submit" form="linksUpdateForm">Wijzigingen opslaan</button>
+        <button type="submit" form="linksUpdateForm" class="btn btn-primary">
+            Wijzigingen opslaan
+        </button>
     </div>
 </div>

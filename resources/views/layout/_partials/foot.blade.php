@@ -5,8 +5,6 @@
 
 @stack('custom-scripts')
 
-<script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
-
 <script>
     /**
      * Global Eventbus which allows to emit and listen to

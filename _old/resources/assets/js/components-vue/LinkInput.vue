@@ -19,6 +19,7 @@ export default {
                 this.hint = '';
                 return;
             }
+            console.log(this.modelClass);
 
             const completeSlug = this.fixedSegment + '/' + value;
 

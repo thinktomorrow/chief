@@ -38,7 +38,6 @@
     </style>
 
     <link rel="stylesheet" href="{{ chief_cached_asset('chief-assets/back/css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/back/css/vendor/slim.min.css') }}">
 
     <livewire:styles/>
 
@@ -55,7 +54,6 @@
 @include('chief::templates.page._partials.refresh-modal')
 
 <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
-<script src="{{ asset('assets/back/js/vendor/slim.min.js') }}"></script>
 
 @stack('custom-scripts')
 

@@ -40,7 +40,6 @@
           rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
 
     @livewireStyles
 

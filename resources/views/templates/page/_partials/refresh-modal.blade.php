@@ -7,7 +7,7 @@
     </div>
 
     <x-slot name="footer">
-        <button x-on:click="window.location.reload()" class="btn btn-primary">
+        <button type="button" x-on:click="window.location.reload()" class="btn btn-primary">
             Herlaad de pagina
         </button>
     </x-slot>
