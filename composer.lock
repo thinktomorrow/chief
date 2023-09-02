@@ -8784,22 +8784,22 @@
         },
         {
             "name": "orchestra/canvas",
-            "version": "v7.7.0",
+            "version": "v7.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/canvas.git",
-                "reference": "a7406173789b45125db9833feafa0888cdc40214"
+                "reference": "70781002107a23c10c9e1febfaeb1fda000515ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/canvas/zipball/a7406173789b45125db9833feafa0888cdc40214",
-                "reference": "a7406173789b45125db9833feafa0888cdc40214",
+                "url": "https://api.github.com/repos/orchestral/canvas/zipball/70781002107a23c10c9e1febfaeb1fda000515ad",
+                "reference": "70781002107a23c10c9e1febfaeb1fda000515ad",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^9.45",
                 "illuminate/support": "^9.45",
-                "orchestra/canvas-core": "^7.4",
+                "orchestra/canvas-core": "^7.5",
                 "php": "^8.0",
                 "symfony/yaml": "^5.4 || ^6.0"
             },
@@ -8848,22 +8848,22 @@
             "description": "Code Generators for Laravel Applications and Packages",
             "support": {
                 "issues": "https://github.com/orchestral/canvas/issues",
-                "source": "https://github.com/orchestral/canvas/tree/v7.7.0"
+                "source": "https://github.com/orchestral/canvas/tree/v7.8.0"
             },
-            "time": "2023-09-01T02:47:28+00:00"
+            "time": "2023-09-01T08:21:30+00:00"
         },
         {
             "name": "orchestra/canvas-core",
-            "version": "v7.4.0",
+            "version": "v7.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/canvas-core.git",
-                "reference": "d60b3790290627b63148052e1ace6934b86bce00"
+                "reference": "4ee85a2ead436cc2910144f16138e5221f0aeb46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/canvas-core/zipball/d60b3790290627b63148052e1ace6934b86bce00",
-                "reference": "d60b3790290627b63148052e1ace6934b86bce00",
+                "url": "https://api.github.com/repos/orchestral/canvas-core/zipball/4ee85a2ead436cc2910144f16138e5221f0aeb46",
+                "reference": "4ee85a2ead436cc2910144f16138e5221f0aeb46",
                 "shasum": ""
             },
             "require": {
@@ -8913,9 +8913,9 @@
             "description": "Code Generators Builder for Laravel Applications and Packages",
             "support": {
                 "issues": "https://github.com/orchestral/canvas/issues",
-                "source": "https://github.com/orchestral/canvas-core/tree/v7.4.0"
+                "source": "https://github.com/orchestral/canvas-core/tree/v7.5.0"
             },
-            "time": "2023-09-01T01:35:33+00:00"
+            "time": "2023-09-01T08:15:17+00:00"
         },
         {
             "name": "orchestra/testbench",
@@ -11149,16 +11149,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.37.2",
+            "version": "1.37.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "dea16182d4bc9d9833adec7e39fbb3d7b553425d"
+                "reference": "ef76965a3e883f2e76a3092f44e2d1e8de3b33df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/dea16182d4bc9d9833adec7e39fbb3d7b553425d",
-                "reference": "dea16182d4bc9d9833adec7e39fbb3d7b553425d",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/ef76965a3e883f2e76a3092f44e2d1e8de3b33df",
+                "reference": "ef76965a3e883f2e76a3092f44e2d1e8de3b33df",
                 "shasum": ""
             },
             "require": {
@@ -11209,7 +11209,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.37.2"
+                "source": "https://github.com/spatie/ray/tree/1.37.3"
             },
             "funding": [
                 {
@@ -11221,7 +11221,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-05-17T06:35:47+00:00"
+            "time": "2023-09-01T13:23:46+00:00"
         },
         {
             "name": "symfony/filesystem",

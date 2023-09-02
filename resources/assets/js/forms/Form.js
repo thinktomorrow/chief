@@ -105,9 +105,6 @@ Form.prototype.refreshCallback = function () {
     }
 
     window.Livewire.rescan(this.el);
-
-    // Specific callbacks...
-    // window.Eventbus.$emit('create-notification', 'success', '️Opgeslagen!', 2000);
 };
 
 export { Form as default };
