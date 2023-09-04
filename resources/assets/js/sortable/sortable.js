@@ -82,13 +82,25 @@ SortableGroup.prototype._init = function () {
                 })
                     .then((response) => response.json())
                     .then(() => {
-                        window.Eventbus.$emit('create-notification', 'success', 'Item is verplaatst.️', 1000);
+                        window.dispatchEvent(
+                            new CustomEvent('create-notification', {
+                                detail: {
+                                    type: 'success',
+                                    content: 'Item is verplaatst.',
+                                    duration: 2000,
+                                },
+                            })
+                        );
                     })
                     .catch((error) => {
-                        window.Eventbus.$emit(
-                            'create-notification',
-                            'error',
-                            'Het item kan niet worden verplaatst. Er is iets misgelopen.️'
+                        window.dispatchEvent(
+                            new CustomEvent('create-notification', {
+                                detail: {
+                                    type: 'error',
+                                    content: 'Het item kan niet worden verplaatst. Er is iets misgelopen.',
+                                    duration: 5000,
+                                },
+                            })
                         );
 
                         console.error(error);
@@ -113,15 +125,23 @@ SortableGroup.prototype._init = function () {
                     })
                         .then((response) => response.json())
                         .then(() => {
-                            window.Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
+                            window.dispatchEvent(
+                                new CustomEvent('create-notification', {
+                                    detail: { type: 'success', content: 'Nieuwe sortering bewaard.', duration: 2000 },
+                                })
+                            );
 
                             EventBus.publish('sortableStored');
                         })
                         .catch((error) => {
-                            window.Eventbus.$emit(
-                                'create-notification',
-                                'error',
-                                'Sortering kan niet worden bewaard. Er is iets misgelopen.️'
+                            window.dispatchEvent(
+                                new CustomEvent('create-notification', {
+                                    detail: {
+                                        type: 'error',
+                                        content: 'Sortering kan niet bewaard worden. Er is iets misgelopen.',
+                                        duration: 5000,
+                                    },
+                                })
                             );
 
                             EventBus.publish('sortableStored');

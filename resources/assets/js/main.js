@@ -11,9 +11,8 @@ import './utilities/chiefRedactorImageUpload';
 window.Errors = Errors;
 
 /** Chief components */
+// Well well well, it's just you and us now...
 window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
-window.Vue.component('notifications', require('./components-vue/Notifications/Notifications.vue').default);
-window.Vue.component('notification', require('./components-vue/Notifications/Notification.vue').default);
 
 // window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);
 // window.Vue.component('options-dropdown', require('./components-vue/OptionsDropdown.vue').default);
@@ -26,3 +25,5 @@ window.Vue.component('notification', require('./components-vue/Notifications/Not
 // window.Vue.component('radio-options', require('./components-vue/RadioOptions.vue').default);
 // window.Vue.component('link-input', require('./components-vue/LinkInput.vue').default);
 // window.Vue.component('url-redirect', require('./components-vue/UrlRedirect.vue').default);
+// window.Vue.component('notifications', require('./components-vue/Notifications/Notifications.vue').default);
+// window.Vue.component('notification', require('./components-vue/Notifications/Notification.vue').default);
