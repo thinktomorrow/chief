@@ -27,6 +27,9 @@
 
         const choices = new Choices($refs.selectEl, {
             allowHTML: true,
+            paste: false,
+            searchResultLimit: 8,
+            shouldSort: false, // Dont sort choices
             removeItems: true,
             removeItemButton: true,
             duplicateItemsAllowed: false,
@@ -60,8 +63,8 @@
 
 ">
     <select
-        {{ $attributes }}
         x-on:change="syncSelection()"
-        multiple
+        {{ $attributes }}
+        {{ $multiple ? '$multiple' : '' }}
         x-ref="selectEl"></select>
 </div>
