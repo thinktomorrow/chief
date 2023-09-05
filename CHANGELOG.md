@@ -6,6 +6,9 @@ principles.
 
 ## Unreleased
 
+- Fixed: default asset type in migration set to correct string 'default'.
+-
+
 ## 0.8.0 - 2023-08-31
 
 In this release we have refactored and improved the file asset management.
