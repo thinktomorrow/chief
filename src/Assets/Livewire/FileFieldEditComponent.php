@@ -56,8 +56,6 @@ class FileFieldEditComponent extends Component
     {
         $this->setFile(is_array($value['previewfile']) ? PreviewFile::fromArray($value['previewfile']) : $value['previewfile']);
 
-        $this->addAssetComponents();
-
         $this->isOpen = true;
     }
 
@@ -66,6 +64,8 @@ class FileFieldEditComponent extends Component
         $this->previewFile = $previewFile;
 
         $this->form['basename'] = $this->previewFile->getBaseName();
+
+        $this->addAssetComponents();
 
         $this->extractFormComponents();
     }

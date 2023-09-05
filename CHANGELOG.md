@@ -6,8 +6,11 @@ principles.
 
 ## Unreleased
 
+## 0.8.1 - 2023-09-05
+
 - Fixed: default asset type in migration set to correct string 'default'.
--
+- Fixed: asset fields were saved but not displayed in input fields
+- Fixed: nested hotspot fields were added to input fields as array
 
 ## 0.8.0 - 2023-08-31
 
