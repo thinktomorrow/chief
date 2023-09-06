@@ -43,10 +43,11 @@ class ArticlePageResource implements PageResource
             Text::make('caption'),
         ]);
         yield File::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
-        yield File::make(ArticlePage::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
         yield Image::make('thumb_image')->tag('edit');
         yield Image::make('thumb_image_trans')->locales(['nl', 'en'])->tag('edit');
+        yield File::make(ArticlePage::FILEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
         yield Image::make(ArticlePage::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
+        yield File::make(ArticlePage::FILEFIELD_ASSETTYPE_KEY)->assetType('custom')->tag('edit');
 
         yield Text::make('title_sanitized')->prepare(function ($value, array $input) {
             if ($value) {

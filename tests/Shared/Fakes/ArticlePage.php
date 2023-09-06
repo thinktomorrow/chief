@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class ArticlePage extends Model implements Page
 {
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
+    const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     use PageDefaults;
@@ -30,12 +31,22 @@ class ArticlePage extends Model implements Page
     public $guarded = [];
 
     public $dynamicKeys = [
-        'title', 'custom', 'title_trans', 'content_trans', 'seo_title','seo_description', 'title_sanitized', 'title_sanitized_trans',
+        'title', 'custom', 'title_trans', 'content_trans', 'seo_title', 'seo_description', 'title_sanitized', 'title_sanitized_trans',
     ];
 
-    protected function dynamicLocales(): array
+    public static function migrateUp()
     {
-        return config('chief.locales', []);
+        Schema::create('article_pages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title')->nullable();
+            $table->string('current_state')->default(PageState::draft->getValueAsString());
+            $table->json('values')->nullable(); // dynamic attributes
+            $table->unsignedInteger('order')->default(0);
+            $table->dateTime('start_at')->nullable();
+            $table->dateTime('end_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     public function allowedFragments(): array
@@ -51,18 +62,8 @@ class ArticlePage extends Model implements Page
         return 'article_page';
     }
 
-    public static function migrateUp()
+    protected function dynamicLocales(): array
     {
-        Schema::create('article_pages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title')->nullable();
-            $table->string('current_state')->default(PageState::draft->getValueAsString());
-            $table->json('values')->nullable(); // dynamic attributes
-            $table->unsignedInteger('order')->default(0);
-            $table->dateTime('start_at')->nullable();
-            $table->dateTime('end_at')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        return config('chief.locales', []);
     }
 }

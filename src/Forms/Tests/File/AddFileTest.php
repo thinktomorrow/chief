@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Forms\Tests\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
+use Thinktomorrow\Chief\Forms\Tests\stubs\CustomAsset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
@@ -167,5 +168,39 @@ class AddFileTest extends ChiefTestCase
         $media = $this->model->asset(ArticlePage::FILEFIELD_DISK_KEY)->media->first();
         $this->assertEquals('secondMediaDisk', $media->disk);
         $this->assertEquals($this->getTempDirectory('media2/' . $media->id . '/' . $media->file_name), $media->getPath());
+    }
+
+    public function test_it_can_add_a_new_file_as_custom_asset_type()
+    {
+        config()->set('thinktomorrow.assetlibrary.types', [
+            'custom' => CustomAsset::class,
+        ]);
+
+        UploadedFile::fake()->image('image-nl.png', '10', '80')->storeAs('test', 'image-temp-name-nl.png');
+
+        $response = $this->uploadFile($this->model, [
+            ArticlePage::FILEFIELD_ASSETTYPE_KEY => [
+                'nl' => [
+                    'uploads' => [
+                        [
+                            'id' => 'xxx',
+                            'path' => Storage::path('test/image-temp-name-nl.png'),
+                            'originalName' => 'image-nl.png',
+                            'mimeType' => 'image/png',
+                            'fieldValues' => [],
+                        ],
+                    ],
+                ],
+                'en' => [],
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertCount(1, $this->model->assets(ArticlePage::FILEFIELD_ASSETTYPE_KEY));
+        $this->assertEquals('image-nl.png', $this->model->asset(ArticlePage::FILEFIELD_ASSETTYPE_KEY, 'nl')->getFileName());
+
+        $asset = $this->model->asset(ArticlePage::FILEFIELD_ASSETTYPE_KEY);
+        $this->assertEquals('custom', $asset->asset_type);
+        $this->assertInstanceOf(CustomAsset::class, $asset);
     }
 }
