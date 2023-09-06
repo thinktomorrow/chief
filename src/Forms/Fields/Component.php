@@ -80,8 +80,19 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         $this->columnName($key);
 
         // This causes livewire to refresh field DOM...
-        $this->elementId($key.'_'.Str::random());
+        $this->elementId($key . '_' . Str::random());
         //        $this->elementId($key);
+    }
+
+    public static function fromLivewire($value)
+    {
+        $component = static::make($value['key']);
+
+        foreach ($value['methods'] as $method => $parameters) {
+            $component->{$method}($parameters);
+        }
+
+        return $component;
     }
 
     public static function make(string $key)
@@ -146,16 +157,5 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->validationAttribute) ? ['validationAttribute' => $this->validationAttribute] : []),
             ],
         ];
-    }
-
-    public static function fromLivewire($value)
-    {
-        $component = static::make($value['key']);
-
-        foreach($value['methods'] as $method => $parameters) {
-            $component->{$method}($parameters);
-        }
-
-        return $component;
     }
 }

@@ -17,15 +17,6 @@ trait HasOptions
         return $this;
     }
 
-    public function getOptions(?string $locale = null): array
-    {
-        if (is_callable($this->options)) {
-            return call_user_func_array($this->options, [$this, $this->getModel(), $locale]);
-        }
-
-        return $this->options;
-    }
-
     /**
      * Convert non-associative array to associative one.
      * If you want to force an non-assoc. array, you can use a Closure.
@@ -44,5 +35,14 @@ trait HasOptions
         }
 
         return array_combine($options, $options);
+    }
+
+    public function getOptions(?string $locale = null): array
+    {
+        if (is_callable($this->options)) {
+            return call_user_func_array($this->options, [$this, $this->getModel(), $locale]);
+        }
+
+        return $this->options;
     }
 }

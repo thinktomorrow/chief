@@ -6,6 +6,9 @@ principles.
 
 ## Unreleased
 
+- Added: Select field can now accept nested options in following
+  syntax: `['value' => 'id', 'label' => 'First product'']`.
+
 ## 0.8.1 - 2023-09-05
 
 - Fixed: default asset type in migration set to correct string 'default'.
