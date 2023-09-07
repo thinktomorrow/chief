@@ -9,6 +9,8 @@ principles.
 - Added:   Select field can now accept nested options in following
   syntax: `['value' => 'id', 'label' => 'First product'']`.
 - Added:   File field can have custom asset type via `File::assetType()`.
+- Added:   parameter to `FilterPresets::state()` and `FilterPresets::simpleState()` to use different column name,
+  instead of default `current_state`.
 - Changed: assetlibrary package to 0.9.2
 
 ## 0.8.1 - 2023-09-05

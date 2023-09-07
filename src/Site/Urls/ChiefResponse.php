@@ -38,7 +38,7 @@ final class ChiefResponse
             }
 
             return static::findModel($urlRecord)->response();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             if (config('chief.strict') || ! static::shouldBeIgnored($e)) {
                 throw $e;
             }
@@ -47,21 +47,9 @@ final class ChiefResponse
         throw new NotFoundHttpException('No url or model found for request [' . $slug . '] for locale [' . $locale . '].');
     }
 
-    private static function shouldBeIgnored(Throwable $e): bool
+    private static function createRedirect(string $url): RedirectResponse
     {
-        return ! is_null(Arr::first(static::ignoredExceptions(), fn ($type) => $e instanceof $type));
-    }
-
-    private static function ignoredExceptions(): array
-    {
-        return [
-            UrlRecordNotFound::class,
-            AuthenticationException::class,
-            AuthorizationException::class,
-            HttpException::class,
-            HttpResponseException::class,
-            ModelNotFoundException::class,
-        ];
+        return new RedirectResponse($url, 301, []);
     }
 
     private static function findModel(UrlRecord $urlRecord): Visitable
@@ -84,8 +72,20 @@ final class ChiefResponse
         return $model;
     }
 
-    private static function createRedirect(string $url): RedirectResponse
+    private static function shouldBeIgnored(Throwable $e): bool
     {
-        return new RedirectResponse($url, 301, []);
+        return ! is_null(Arr::first(static::ignoredExceptions(), fn ($type) => $e instanceof $type));
+    }
+
+    private static function ignoredExceptions(): array
+    {
+        return [
+            UrlRecordNotFound::class,
+            AuthenticationException::class,
+            AuthorizationException::class,
+            HttpException::class,
+            HttpResponseException::class,
+            ModelNotFoundException::class,
+        ];
     }
 }
