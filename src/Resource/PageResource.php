@@ -55,6 +55,8 @@ interface PageResource extends Resource, TableResource
 
     public function getIndexPagination(): int;
 
+    public function showIndexOptionsColumn(): bool;
+
     /**
      * Indicate type of sortable id.
      * Options are int, string. Defaults to int.

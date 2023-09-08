@@ -10,6 +10,8 @@ principles.
   syntax: `['value' => 'id', 'label' => 'First product'']`.
 - Added:   File field can have custom asset type via `File::assetType()`.
 - Added:   parameter to `FilterPresets::state()` and `FilterPresets::simpleState()` to use different column name,
+- Added:   `PageResource::showIndexOptionsColumn()` to show edit and options dropdown for each table row. Defaults to
+  true.
   instead of default `current_state`.
 - Changed: assetlibrary package to 0.9.2
 
