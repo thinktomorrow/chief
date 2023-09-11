@@ -14,6 +14,7 @@ principles.
   true.
   instead of default `current_state`.
 - Changed: assetlibrary package to 0.9.2
+- Changed: CrudAssistant is now split up in three separate traits: Index-, Create- and EditAssistant.
 
 ## 0.8.1 - 2023-09-05
 
