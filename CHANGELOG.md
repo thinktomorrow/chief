@@ -13,6 +13,7 @@ principles.
 - Added:   `PageResource::showIndexOptionsColumn()` to show edit and options dropdown for each table row. Defaults to
   true.
   instead of default `current_state`.
+- Added: `PageResource::getNestableNodeLabels()` to provide custom labels for nestable index nodes.
 - Changed: assetlibrary package to 0.9.2
 - Changed: CrudAssistant is now split up in three separate traits: Index-, Create- and EditAssistant.
 
@@ -36,7 +37,7 @@ In this release we have refactored and improved the file asset management.
 
 - `Field::requiredFallbackLocale()` as a alias of `Field::rules('requireFallbackLocale)`.
 - callback as fourth optional argument for the Select::sync() method that is called after syncing values.
-- `TableColumnLink::target() to add a target attribute to the link. Defaults to `_self`.
+- `TableColumnLink::target() to add a target attribute to the link. Defaults to `\_self`.
 - `MemoizedMysqlNestableRepository` next to the existing `MysqlNestableRepository`.
 
 ### Changed

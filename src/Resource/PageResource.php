@@ -70,4 +70,6 @@ interface PageResource extends Resource, TableResource
      * @return string
      */
     public function indexRepository(): string;
+
+    public function getNestableNodeLabels(): ?string;
 }

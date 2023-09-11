@@ -189,4 +189,9 @@ trait PageResourceDefault
     {
         return EloquentIndexRepository::class;
     }
+
+    public function getNestableNodeLabels(): ?string
+    {
+        return null;
+    }
 }

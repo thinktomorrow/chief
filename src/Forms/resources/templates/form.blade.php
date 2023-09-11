@@ -22,6 +22,12 @@
         @endif
 
         <div class="relative space-y-6">
+            @if($getDescription())
+                <p class="body body-dark">
+                    {!! $getDescription() !!}
+                </p>
+            @endif
+
             @foreach($getComponents() as $childComponent)
                 {{ $childComponent }}
             @endforeach
