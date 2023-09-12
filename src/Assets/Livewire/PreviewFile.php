@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 use Livewire\TemporaryUploadedFile;
 use Livewire\Wireable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -38,31 +38,11 @@ class PreviewFile implements Wireable
         public ?string $updatedAt = null,
 
         // Asset related values
-        public array $data = [],
-        public array $urls = [],
-        public array $owners = [],
+        public array   $data = [],
+        public array   $urls = [],
+        public array   $owners = [],
     ) {
 
-    }
-
-    public function getUrl(string $conversionName = 'original'): ?string
-    {
-        return $this->urls[$conversionName] ?? null;
-    }
-
-    public function isImage(): bool
-    {
-        return FileHelper::isImage($this->mimeType);
-    }
-
-    public function isVideo(): bool
-    {
-        return FileHelper::isVideo($this->mimeType);
-    }
-
-    public function getBaseName(): string
-    {
-        return FileHelper::getBaseName($this->filename);
     }
 
     public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null): static
@@ -99,62 +79,11 @@ class PreviewFile implements Wireable
 
     public static function fromAsset(AssetContract $asset): static
     {
-        if($asset instanceof ExternalAssetContract) {
+        if ($asset instanceof ExternalAssetContract) {
             return static::fromExternalAsset($asset);
         }
 
         return static::fromLocalAsset($asset);
-    }
-
-    private static function fromLocalAsset(Asset $asset): static
-    {
-        $media = $asset->getFirstMedia();
-
-        if(! $media) {
-            throw new \InvalidArgumentException('No media found for asset ' . $asset->id);
-        }
-
-        $urls = [
-            'original' => $media->originalUrl,
-            ...$media->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $asset->getUrl($conversionName)])->all(),
-        ];
-
-        // Owners
-        $owners = [];
-        //        if($asset = $asset->model) {
-        //
-        //        }
-
-        // TODO: convert this to using the new asset library api.
-        // TODO: how to get the smallest conversions if we don't know the field info?
-        $thumbUrl = $asset->getUrl('thumb');
-
-        return new static(
-            $asset->id,
-            $asset->id,
-            $thumbUrl,
-            ('image' == $asset->getExtensionType()),
-            null,
-            $asset->getFileName() ?: '',
-            $asset->getSize(),
-            $asset->getHumanReadableSize(),
-            $asset->getMimeType() ?: '',
-            \Thinktomorrow\Chief\Assets\App\FileHelper::getExtension($asset->getFirstMediaPath()),
-            $asset->getWidth(),
-            $asset->getHeight(),
-            false,
-            true,
-            false,
-            true,
-            false,
-            array_merge($asset->data ?? [], $asset->pivot->data ?? []),
-            null,
-            $asset->created_at->getTimestamp(),
-            $asset->updated_at->getTimestamp(),
-            ($asset->data ?: []),
-            $urls,
-            $owners,
-        );
     }
 
     private static function fromExternalAsset(ExternalAssetContract $asset): static
@@ -196,6 +125,62 @@ class PreviewFile implements Wireable
         );
     }
 
+    public function getUrl(string $conversionName = 'original'): ?string
+    {
+        return $this->urls[$conversionName] ?? null;
+    }
+
+    private static function fromLocalAsset(Asset $asset): static
+    {
+        $media = $asset->getFirstMedia();
+
+        if (! $media) {
+            throw new InvalidArgumentException('No media found for asset ' . $asset->id);
+        }
+
+        $urls = [
+            'original' => $asset->getUrl(),
+            ...$media->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $asset->getUrl($conversionName)])->all(),
+        ];
+
+        // Owners
+        $owners = [];
+        //        if($asset = $asset->model) {
+        //
+        //        }
+
+        // TODO: convert this to using the new asset library api.
+        // TODO: how to get the smallest conversions if we don't know the field info?
+        $thumbUrl = $asset->getUrl('thumb');
+
+        return new static(
+            $asset->id,
+            $asset->id,
+            $thumbUrl,
+            ('image' == $asset->getExtensionType()),
+            null,
+            $asset->getFileName() ?: '',
+            $asset->getSize(),
+            $asset->getHumanReadableSize(),
+            $asset->getMimeType() ?: '',
+            FileHelper::getExtension($asset->getFirstMediaPath()),
+            $asset->getWidth(),
+            $asset->getHeight(),
+            false,
+            true,
+            false,
+            true,
+            false,
+            array_merge($asset->data ?? [], $asset->pivot->data ?? []),
+            null,
+            $asset->created_at->getTimestamp(),
+            $asset->updated_at->getTimestamp(),
+            ($asset->data ?: []),
+            $urls,
+            $owners,
+        );
+    }
+
     public static function fromPendingUploadedFile(string $id, string $fileName, int $fileSize): static
     {
         return new static(
@@ -226,6 +211,31 @@ class PreviewFile implements Wireable
             [],
             [],
         );
+    }
+
+    public static function fromLivewire($value)
+    {
+        return static::fromArray($value);
+    }
+
+    public static function fromArray($value)
+    {
+        return new static(...$value);
+    }
+
+    public function isImage(): bool
+    {
+        return FileHelper::isImage($this->mimeType);
+    }
+
+    public function isVideo(): bool
+    {
+        return FileHelper::isVideo($this->mimeType);
+    }
+
+    public function getBaseName(): string
+    {
+        return FileHelper::getBaseName($this->filename);
     }
 
     public function toUploadedFile(): UploadedFile
@@ -263,28 +273,18 @@ class PreviewFile implements Wireable
         ];
     }
 
-    public static function fromLivewire($value)
-    {
-        return static::fromArray($value);
-    }
-
-    public static function fromArray($value)
-    {
-        return new static(...$value);
-    }
-
     public function hasData(string $key): bool
     {
         return Arr::has($this->data, $key);
     }
 
-    public function getData(string $key, $default = null)
-    {
-        return Arr::get($this->data, $key, $default);
-    }
-
     public function getExternalAssetType(): ?string
     {
         return $this->getData('external.type');
+    }
+
+    public function getData(string $key, $default = null)
+    {
+        return Arr::get($this->data, $key, $default);
     }
 }
