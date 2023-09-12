@@ -20,16 +20,25 @@
 <x-chief::page.template :title="$title">
     <x-slot name="hero">
         <x-chief::page.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
+            @if($resource->getIndexDescription())
+                <x-slot name="description">
+                    {{ $resource->getIndexDescription() }}
+                </x-slot>
+            @endif
+
             @if($resource->getIndexHeaderContent())
                 {!! $resource->getIndexHeaderContent() !!}
             @endif
 
             @if(!$is_archive_index)
                 @adminCan('create')
-                <a href="@adminRoute('create')" title="{{ ucfirst($resource->getLabel()) }} toevoegen"
-                   class="btn btn-primary">
-                    <x-chief::icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief::icon-label>
-                </a>
+                    <a
+                        href="@adminRoute('create')"
+                        title="{{ ucfirst($resource->getLabel()) }} toevoegen"
+                        class="btn btn-primary"
+                    >
+                        <x-chief::icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief::icon-label>
+                    </a>
                 @endAdminCan
             @endif
         </x-chief::page.hero>

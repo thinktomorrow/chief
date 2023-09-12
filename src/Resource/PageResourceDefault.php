@@ -44,6 +44,11 @@ trait PageResourceDefault
         return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
     }
 
+    public function getIndexDescription(): ?string
+    {
+        return null;
+    }
+
     protected function getNavTags(): array
     {
         return ['nav'];

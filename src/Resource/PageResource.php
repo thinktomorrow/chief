@@ -34,6 +34,8 @@ interface PageResource extends Resource, TableResource
 
     public function getIndexTitle(): string;
 
+    public function getIndexDescription(): ?string;
+
     public function getIndexHeaderContent(): ?string;
 
     public function getIndexBreadcrumb(): ?BreadCrumb;
