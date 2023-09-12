@@ -210,16 +210,10 @@
                         <button
                             type="button"
                             class="btn btn-primary"
-                            x-on:click="$dispatch('open-dialog', { 'id': 'yow' })"
+                            x-on:click="$dispatch('open-dialog', { 'id': 'save-file-modal-{{ $this->id }}' })"
                         >
                             Bewaar
                         </button>
-
-                        <template x-teleport="body">
-                            <x-chief::dialog id="yow">
-                                what
-                            </x-chief::dialog>
-                        </template>
                     @else
                         <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
                             Bewaar
@@ -229,4 +223,35 @@
             </x-slot>
         </div>
     </form>
+
+    {{-- TODO: Placed here so the modal spans the entire screen. Should be implemented with x-teleport once Livewire is updated to v3. --}}
+    @if($ownerCount > 1)
+        <x-chief::dialog id="save-file-modal-{{ $this->id }}" title="Bewaar een bestand met meerdere koppelingen">
+            <div class="prose prose-dark prose-spacing">
+                <p>
+                    Dit bestand is gekoppeld aan meerdere pagina's of fragmenten.
+                    De aanpassingen die je gaat bewaren zijn dus van toepassing voor alle gekoppelde plaatsen.
+                </p>
+
+                <p>
+                    Als je deze aanpassingen enkel wil doorvoeren op deze huidige locatie,
+                    kies er dan voor om het bestand los te koppelen en afzonderlijk te bewaren.
+                </p>
+            </div>
+
+            <x-slot name="footer">
+                <div class="flex flex-wrap items-center justify-end gap-3">
+                    <button type="button" class="btn btn-grey">
+                        Koppel bestand los en bewerk afzonderlijk
+                    </button>
+
+                    <p class="body body-dark">Of</p>
+
+                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                        Bewaar voor alle {{ $ownerCount }} pagina's
+                    </button>
+                </div>
+            </x-slot>
+        </x-chief::dialog>
+    @endif
 @endif

@@ -78,8 +78,10 @@
                         </div>
                     @endif
 
-                    <div x-ref="headerShadow"
-                         class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8">
+                    <div
+                        x-ref="headerShadow"
+                        class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8"
+                    >
                         <div class="h-8 -translate-y-8 bg-black/20 blur"></div>
                     </div>
                 </header>
@@ -89,8 +91,10 @@
                 </div>
 
                 <footer class="sticky bottom-0 z-[1]">
-                    <div x-ref="footerShadow"
-                         class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8">
+                    <div
+                        x-ref="footerShadow"
+                        class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8"
+                    >
                         <div class="h-8 translate-y-8 bg-black/20 blur"></div>
                     </div>
 
