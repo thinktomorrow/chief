@@ -1,16 +1,23 @@
-@php use Thinktomorrow\Chief\Plugins\ChiefPluginSections; @endphp
-@php use Carbon\Carbon; @endphp
+@php
+    use Carbon\Carbon;
+    use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
+@endphp
+
 @if($isOpen)
+    @php
+        $ownerCount = count($previewFile->owners);
+    @endphp
+
     <form class="flex items-start gap-8 max-lg:flex-wrap">
         <div
-                class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
+            class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
             <div
-                    class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
+                class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
                 @if($previewFile && $previewFile->isImage())
                     <img
-                            src="{{ $previewFile->previewUrl }}"
-                            alt="Preview image"
-                            class="object-contain w-full h-full"
+                        src="{{ $previewFile->previewUrl }}"
+                        alt="Preview image"
+                        class="object-contain w-full h-full"
                     >
                 @else
                     <svg width="24" height="24" class="text-grey-400">
@@ -41,8 +48,12 @@
                 </div>
 
                 <div class="flex items-start justify-between gap-2 space-y-2">
-                    <a href="{{ $previewFile->getUrl() }}" target="_blank" title="{{ $previewFile->getUrl() }}"
-                       class="mt-1.5">
+                    <a
+                        href="{{ $previewFile->getUrl() }}"
+                        target="_blank"
+                        title="{{ $previewFile->getUrl() }}"
+                        class="mt-1.5"
+                    >
                         <x-chief::link underline class="break-all">
                             {{ $previewFile->getUrl() }}
                         </x-chief::link>
@@ -114,7 +125,7 @@
 
                 @if($replacedPreviewFile)
                     <span
-                            class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
+                        class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
                 @endif
             </x-chief::input.group>
 
@@ -130,22 +141,43 @@
                 </div>
             @endif
 
-            @if(count($previewFile->owners) > 0)
+            @if($ownerCount > 0)
+                <div class="form-light">
+                    <x-chief::input.label>
+                        Koppelingen
+                        <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-grey-100">
+                            <span class="text-xs body-dark">{{ count($previewFile->owners) }}</span>
+                        </span>
+                    </x-chief::input.label>
 
-                <h3>In gebruik op:</h3>
+                    <x-chief::input.description>
+                        Aanpassingen aan deze asset zullen zichtbaar zijn op alle pagina's.
+                        Wil je enkel op deze pagina een aanpassing maken aan dit bestand?
 
-                <p>Aanpassingen aan deze asset zullen zichtbaar zijn op alle pagina's. Wil je een aanpassing maken aan
-                    deze asset enkel op deze pagina?</p>
-                <span wire:click="detachAsset">Loskoppelen en afzonderlijk bewerken</span>
+                        <button type="button" wire:click="detachAsset" class="underline link link-dark">
+                            Koppel het bestand los en bewerk afzonderlijk
+                        </button>
+                    </x-chief::input.description>
 
-                <table>
-                    @foreach($previewFile->owners as $owner)
-                        <tr>
-                            <td>{{ $owner->label }}</td>
-                            <td><a target="_blank" href="{{ $owner->adminUrl }}">Bekijk</a></td>
-                        </tr>
-                    @endforeach
-                </table>
+                    <div class="overflow-hidden border rounded-md border-grey-100">
+                        <div class="overflow-y-auto divide-y max-h-48 divide-grey-100">
+                            @foreach($previewFile->owners as $owner)
+                                <div class="flex items-start justify-between gap-3 px-3 py-2">
+                                    <div class="leading-5 body-dark body">
+                                        {{ $owner->label }}
+                                    </div>
+
+
+                                    <a href="{{ $owner->adminUrl }}" title="Bekijk" target="_blank" rel="noopener">
+                                        <x-chief::link>
+                                            <svg><use xlink:href="#icon-external-link"></use></svg>
+                                        </x-chief::link>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             @endif
 
             @if($errors->any())
@@ -159,13 +191,31 @@
             @endif
 
             <x-slot name="footer">
-                <button type="button" x-on:click="open = false" class="btn btn-grey">
-                    Annuleren
-                </button>
+                <div class="flex flex-wrap justify-end gap-3">
+                    <button type="button" x-on:click="open = false" class="btn btn-grey">
+                        Annuleren
+                    </button>
 
-                <button wire:click.prevent="submit" type="button" class="btn btn-primary">
-                    Opslaan
-                </button>
+                    @if($ownerCount > 1)
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            x-on:click="$dispatch('open-dialog', { 'id': 'yow' })"
+                        >
+                            Bewaar
+                        </button>
+
+                        <template x-teleport="body">
+                            <x-chief::dialog id="yow">
+                                what
+                            </x-chief::dialog>
+                        </template>
+                    @else
+                        <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                            Bewaar
+                        </button>
+                    @endif
+                </div>
             </x-slot>
         </div>
     </form>
