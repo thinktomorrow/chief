@@ -16,6 +16,8 @@ principles.
 - Added: `PageResource::getNestableNodeLabels()` to provide custom labels for nestable index nodes.
 - Changed: assetlibrary package to 0.9.2
 - Changed: CrudAssistant is now split up in three separate traits: Index-, Create- and EditAssistant.
+- Changed: Parent dropdown for nestable pages is now included on create page by default.
+- Fixed: PreviewFile on asset pages now uses Asset::getUrl() instead of Media::getUrl() so custom urls are in effect
 
 ## 0.8.1 - 2023-09-05
 
