@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
-use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\SelectFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
@@ -24,13 +23,13 @@ class FilterPresets
 
     public static function simpleState(string $key = 'current_state'): Filter
     {
-        return RadioFilter::make('online', function ($query, $value) use ($key) {
+        return SelectFilter::make('online', function ($query, $value) use ($key) {
             return $query->where($key, '=', $value);
-        })->options([
+        })->label('Status')->options([
             '' => 'Alle',
             SimpleState::online->getValueAsString() => 'online',
             SimpleState::offline->getValueAsString() => 'offline',
-        ]);
+        ])->default('');
     }
 
     public static function column(string $name, string|array $columns, ?string $label = null): Filter

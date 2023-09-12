@@ -17,6 +17,7 @@ principles.
 -   Changed: assetlibrary package to 0.9.2
 -   Changed: CrudAssistant is now split up in three separate traits: Index-, Create- and EditAssistant.
 -   Changed: Parent dropdown for nestable pages is now included on create page by default.
+-   Changed: FilterPresets::simpleState() returns a select field instead of radio field.
 -   Fixed: PreviewFile on asset pages now uses Asset::getUrl() instead of Media::getUrl() so custom urls are in effect
 
 ## 0.8.1 - 2023-09-05
@@ -60,12 +61,9 @@ In this release we have refactored and improved the file asset management.
 -   Removed `Thinktomorrow\Chief\Forms\Fields\Media\MediaType` as a legacy reference to predefined file keys.
 -   Removed `Thinktomorrow\Chief\Forms\Fields\Media\FileDTO` since now `Thinktomorrow\AssetLibrary\Asset` is passed to
     file field instead.
--
-
-Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant`
-and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These have been replaced by the
-Livewire FileComponent upload logic. The latter one was no longer actively used.
-
+-   Removed `Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant`, `Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant`
+    and `Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant`. These have been replaced by the
+    Livewire FileComponent upload logic. The latter one was no longer actively used.
 -   Removed: `chief-site` view reference. This was only used for the admin toast, which is now its own plugin.
 
 ### Fixed
@@ -80,7 +78,6 @@ Livewire FileComponent upload logic. The latter one was no longer actively used.
 
 ## 0.7.24 - 2023-05-23
 
--
 -   Fixed: Testsuite
 -   Added: Plugins Taggable and TimeTable. Currently still in chief core.
 -   Added: Pagetitle can be shown with svg icons in table index
