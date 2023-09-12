@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Wireable;
@@ -11,6 +12,10 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class PreviewFile implements Wireable
 {
@@ -143,12 +148,6 @@ class PreviewFile implements Wireable
             ...$media->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $asset->getUrl($conversionName)])->all(),
         ];
 
-        // Owners
-        $owners = [];
-        //        if($asset = $asset->model) {
-        //
-        //        }
-
         // TODO: convert this to using the new asset library api.
         // TODO: how to get the smallest conversions if we don't know the field info?
         $thumbUrl = $asset->getUrl('thumb');
@@ -177,7 +176,7 @@ class PreviewFile implements Wireable
             $asset->updated_at->getTimestamp(),
             ($asset->data ?: []),
             $urls,
-            $owners,
+            [],
         );
     }
 
@@ -271,6 +270,47 @@ class PreviewFile implements Wireable
             'urls' => $this->urls,
             'owners' => $this->owners,
         ];
+    }
+
+    public function loadOwners(): void
+    {
+        if (! $this->mediaId) {
+            return;
+        }
+
+        $references = DB::table('assets_pivot')
+            ->select(['entity_type', 'entity_id'])
+            ->where('asset_id', $this->mediaId)
+            ->get();
+
+        foreach($references as $reference) {
+            $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
+
+            if($model instanceof FragmentModel) {
+                $ownerModels = app(FragmentOwnerRepository::class)->getOwners($model);
+                foreach($ownerModels as $ownerModel) {
+                    $this->owners[] = $this->createOwnerFields($ownerModel);
+                }
+
+                continue;
+            }
+
+            $this->owners[] = $this->createOwnerFields($model);
+        }
+    }
+
+    private function createOwnerFields($model): object
+    {
+        try {
+            $resource = app(Registry::class)->findResourceByModel($model::class);
+            $manager = app(Registry::class)->findManagerByModel($model::class);
+
+            return (object)['label' => $resource->getPageTitle($model), 'adminUrl' => $manager->route('edit', $model)];
+        } catch (\Exception $e) {
+            report($e);
+        }
+
+        return (object)['label' => '-', 'adminUrl' => ''];
     }
 
     public function hasData(string $key): bool

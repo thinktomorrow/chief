@@ -130,6 +130,24 @@
                 </div>
             @endif
 
+            @if(count($previewFile->owners) > 0)
+
+                <h3>In gebruik op:</h3>
+
+                <p>Aanpassingen aan deze asset zullen zichtbaar zijn op alle pagina's. Wil je een aanpassing maken aan
+                    deze asset enkel op deze pagina?</p>
+                <span wire:click="detachAsset">Loskoppelen en afzonderlijk bewerken</span>
+
+                <table>
+                    @foreach($previewFile->owners as $owner)
+                        <tr>
+                            <td>{{ $owner->label }}</td>
+                            <td><a target="_blank" href="{{ $owner->adminUrl }}">Bekijk</a></td>
+                        </tr>
+                    @endforeach
+                </table>
+            @endif
+
             @if($errors->any())
                 <div class="pt-6 space-y-2 border-t border-grey-100">
                     @foreach($errors->all() as $error)

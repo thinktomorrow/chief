@@ -49,6 +49,7 @@ class FileEditComponent extends Component
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
+        $this->previewFile->loadOwners();
 
         $this->form['basename'] = $this->previewFile->getBaseName();
 
