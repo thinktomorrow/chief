@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
+use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
@@ -31,6 +32,33 @@ trait PageResourceDefault
         );
     }
 
+    private function assertManager(): void
+    {
+        if (! $this->manager) {
+            throw new RuntimeException('For calling this method a Manager instance should be set to this resource.');
+        }
+    }
+
+    public function getIndexTitle(): string
+    {
+        return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
+    }
+
+    public function getIndexDescription(): ?string
+    {
+        return null;
+    }
+
+    protected function getNavTags(): array
+    {
+        return ['nav'];
+    }
+
+    protected function getNavIcon(): string
+    {
+        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+    }
+
     public function getCreatePageView(): View
     {
         return view('chief::manager.create');
@@ -57,15 +85,6 @@ trait PageResourceDefault
         return new BreadCrumb('Overzicht', $this->manager->route('index'));
     }
 
-    public function getPageTitle($model): string
-    {
-        if (isset($model->{$this->getTitleAttributeKey()}) && $model->{$this->getTitleAttributeKey()}) {
-            return $model->{$this->getTitleAttributeKey()};
-        }
-
-        return $this->getLabel();
-    }
-
     public function getIndexHeaderContent(): ?string
     {
         return null;
@@ -75,7 +94,21 @@ trait PageResourceDefault
     {
         $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
 
-        return $this->getPageTitle($model).$suffix;
+        return $this->getPageTitle($model) . $suffix;
+    }
+
+    public function getPageTitle($model): string
+    {
+        if (isset($model->{$this->getTitleAttributeKey()}) && $model->{$this->getTitleAttributeKey()}) {
+            return $model->{$this->getTitleAttributeKey()};
+        }
+
+        return $this->getLabel();
+    }
+
+    public function getTitleAttributeKey(): string
+    {
+        return 'title';
     }
 
     public function getIndexView(): View
@@ -84,15 +117,6 @@ trait PageResourceDefault
             return ($this instanceof Nestable)
                 ? view('chief-table::nestable.index')
                 : view('chief-table::index');
-        }
-
-        return view('chief::manager.index');
-    }
-
-    public function getArchivedIndexView(): View
-    {
-        if ($this->getIndexViewType() == 'table') {
-            return view('chief-table::index');
         }
 
         return view('chief::manager.index');
@@ -107,9 +131,13 @@ trait PageResourceDefault
         return 'table';
     }
 
-    public function getIndexTitle(): string
+    public function getArchivedIndexView(): View
     {
-        return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
+        if ($this->getIndexViewType() == 'table') {
+            return view('chief-table::index');
+        }
+
+        return view('chief::manager.index');
     }
 
     public function getIndexBreadcrumb(): ?BreadCrumb
@@ -142,14 +170,14 @@ trait PageResourceDefault
         return true;
     }
 
+    public function showIndexOptionsColumn(): bool
+    {
+        return true;
+    }
+
     public function getIndexPagination(): int
     {
         return 20;
-    }
-
-    public function getTitleAttributeKey(): string
-    {
-        return 'title';
     }
 
     public function getSortableType(): string
@@ -167,20 +195,8 @@ trait PageResourceDefault
         return EloquentIndexRepository::class;
     }
 
-    protected function getNavIcon(): string
+    public function getNestableNodeLabels(): ?string
     {
-        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
-    }
-
-    protected function getNavTags(): array
-    {
-        return ['nav'];
-    }
-
-    private function assertManager(): void
-    {
-        if (! $this->manager) {
-            throw new \RuntimeException('For calling this method a Manager instance should be set to this resource.');
-        }
+        return null;
     }
 }

@@ -18,10 +18,13 @@ class UpdateFileField
     protected AddAsset $addAsset;
     private CreateAsset $createAsset;
     private ReorderAssets $reorderAssets;
+    private DetachAsset $detachAsset;
 
     /** @var string the media disk where the files should be stored. */
-    private $disk = '';
-    private DetachAsset $detachAsset;
+    private string $disk = '';
+
+    /** @var string the asset type as which the asset is stored.. */
+    private string $assetType = 'default';
 
     final public function __construct(CreateAsset $createAsset, AddAsset $addAsset, DetachAsset $detachAsset, ReorderAssets $reorderAssets)
     {
@@ -35,6 +38,9 @@ class UpdateFileField
     {
         if ($field->getStorageDisk()) {
             $this->setDisk($field->getStorageDisk());
+        }
+        if ($field->getAssetType()) {
+            $this->setAssetType($field->getAssetType());
         }
 
         $existingAssetIds = $model->assetRelation()->get()->pluck('id');
@@ -53,6 +59,16 @@ class UpdateFileField
         }
     }
 
+    protected function getAssetType(): string
+    {
+        return $this->assetType;
+    }
+
+    protected function setAssetType(string $assetType): void
+    {
+        $this->assetType = $assetType;
+    }
+
     private function handleUploads(HasAsset $model, File $field, string $locale, array $values, Collection &$orderedAssetIds): void
     {
         foreach ($values as $value) {
@@ -63,7 +79,7 @@ class UpdateFileField
             $asset = $this->createAsset
                 ->uploadedFile($uploadedFile)
                 ->filename($filename)
-                ->save($this->getDisk());
+                ->save($this->getDisk(), $this->getAssetType());
 
             $this->addAsset->handle($model, $asset, $field->getKey(), $locale, 0, $value['fieldValues'] ?? []);
 

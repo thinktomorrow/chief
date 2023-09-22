@@ -4,17 +4,16 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
 
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\InputFilter;
-use Thinktomorrow\Chief\ManagedModels\Filters\Presets\RadioFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\SelectFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
 
 class FilterPresets
 {
-    public static function state(): Filter
+    public static function state(string $key = 'current_state'): Filter
     {
-        return SelectFilter::make('online', function ($query, $value) {
-            return $query->where('current_state', '=', $value);
+        return SelectFilter::make('online', function ($query, $value) use ($key) {
+            return $query->where($key, '=', $value);
         })->label('Status')->options([
             '' => 'Alle',
             PageState::published->getValueAsString() => 'online',
@@ -22,15 +21,15 @@ class FilterPresets
         ])->default('');
     }
 
-    public static function simpleState(): Filter
+    public static function simpleState(string $key = 'current_state'): Filter
     {
-        return RadioFilter::make('online', function ($query, $value) {
-            return $query->where('current_state', '=', $value);
-        })->options([
+        return SelectFilter::make('online', function ($query, $value) use ($key) {
+            return $query->where($key, '=', $value);
+        })->label('Status')->options([
             '' => 'Alle',
             SimpleState::online->getValueAsString() => 'online',
             SimpleState::offline->getValueAsString() => 'offline',
-        ]);
+        ])->default('');
     }
 
     public static function column(string $name, string|array $columns, ?string $label = null): Filter
@@ -52,11 +51,11 @@ class FilterPresets
             return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {
                 foreach ($dynamicColumns as $column) {
                     $jsonColumnParts = explode('.', $jsonColumn);
-                    $builder->orWhereRaw('LOWER(json_extract(`'.implode('`.`', $jsonColumnParts).'`, "$.'.$column.'")) LIKE ?', '%'. trim(strtolower($value)) . '%');
+                    $builder->orWhereRaw('LOWER(json_extract(`' . implode('`.`', $jsonColumnParts) . '`, "$.' . $column . '")) LIKE ?', '%' . trim(strtolower($value)) . '%');
                 }
 
                 foreach ($astrotomicColumns as $column) {
-                    $builder->orWhereTranslationLike($column, '%'.$value.'%');
+                    $builder->orWhereTranslationLike($column, '%' . $value . '%');
                 }
 
                 return $builder;

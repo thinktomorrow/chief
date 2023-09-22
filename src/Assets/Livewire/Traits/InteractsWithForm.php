@@ -36,7 +36,6 @@ trait InteractsWithForm
     {
         foreach ($this->components as $componentArray) {
             $component = $componentArray['class']::fromLivewire($componentArray);
-
             if (! $component instanceof Field) {
                 continue;
             }

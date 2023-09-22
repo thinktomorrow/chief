@@ -26,25 +26,22 @@
                 @endforeach
             </div>
         @endforeach
-
         @foreach($getFilesForAttach() as $i => $file)
             <div wire:key="files_for_attach_{{$file->id}}">
                 <input type="hidden" name="{{ $getFieldName() }}[attach][{{ $i }}][id]" value="{{ $file->id }}">
+
                 @foreach(Arr::dot($file->fieldValues) as $fieldKey => $fieldValue)
-                    <input type="hidden"
-                           name="{{ FormKey::replaceDotsByBrackets($getFieldName().'.attach.'.$i.'.fieldValues.' . $fieldKey) }}]"
-                           value="{{$fieldValue}}"/>
-                    {{--                    @if(is_array($fieldValue))--}}
-                    {{--                        @foreach($fieldValue as $key => $value)--}}
-                    {{--                            <input type="hidden"--}}
-                    {{--                                   name="{{ $getFieldName() }}[attach][{{ $i }}][fieldValues][{{ $fieldKey }}][{{ $key }}]"--}}
-                    {{--                                   value="{{$value}}"/>--}}
-                    {{--                        @endforeach--}}
-                    {{--                    @else--}}
-                    {{--                        <input type="hidden"--}}
-                    {{--                               name="{{ $getFieldName() }}[attach][{{ $i }}][fieldValues][{{ $fieldKey }}]"--}}
-                    {{--                               value="{{$fieldValue}}"/>--}}
-                    {{--                    @endif--}}
+                    @if(is_array($fieldValue))
+                        @foreach($fieldValue as $key => $value)
+                            <input type="hidden"
+                                   name="{{ FormKey::replaceDotsByBrackets($getFieldName().'.attach.'.$i.'.fieldValues.' . $fieldKey .'.'.$key) }}"
+                                   value="{{$value}}"/>
+                        @endforeach
+                    @else
+                        <input type="hidden"
+                               name="{{ FormKey::replaceDotsByBrackets($getFieldName().'.attach.'.$i.'.fieldValues.' . $fieldKey) }}"
+                               value="{{$fieldValue}}"/>
+                    @endif
                 @endforeach
             </div>
         @endforeach

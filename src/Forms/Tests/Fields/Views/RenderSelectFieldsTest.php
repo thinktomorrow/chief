@@ -38,6 +38,17 @@ class RenderSelectFieldsTest extends ChiefTestCase
     }
 
     /** @test */
+    public function it_can_render_select_field_with_nested_options()
+    {
+        $component = Select::make('xxx')->options([
+            ['value' => 2, 'label' => 'first product'],
+            ['value' => 5, 'label' => 'second product'],
+            ['value' => 1, 'label' => 'third product'],
+        ]);
+        $this->assertStringContainsString('name="xxx', $component->toHtml());
+    }
+
+    /** @test */
     public function it_can_render_localized_fields()
     {
         /** @var Field $class */

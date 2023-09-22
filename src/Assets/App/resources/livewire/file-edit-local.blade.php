@@ -41,7 +41,8 @@
                 </div>
 
                 <div class="flex items-start justify-between gap-2 space-y-2">
-                    <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" class="mt-1.5">
+                    <a href="{{ $previewFile->getUrl() }}" target="_blank" title="{{ $previewFile->getUrl() }}"
+                       class="mt-1.5">
                         <x-chief::link underline class="break-all">
                             {{ $previewFile->getUrl() }}
                         </x-chief::link>

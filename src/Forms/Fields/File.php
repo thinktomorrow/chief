@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Factory;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
 use Thinktomorrow\Chief\Assets\App\UpdateFileField;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAssetType;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
@@ -29,6 +31,7 @@ class File extends Component implements Field
 {
     use HasMultiple;
     use HasStorageDisk;
+    use HasAssetType;
     use HasCustomUrl;
     use HasUploadButtonLabel;
     use HasEndpoint;
@@ -61,15 +64,12 @@ class File extends Component implements Field
         });
     }
 
-    public function getRules(): array
+    private function getMedia(Model & HasAsset $model, string $locale): array
     {
-        return (new MapValidationRules())->handle(parent::getRules(), [
-            'required' => 'file_required',
-            'mimetypes' => 'file_mimetypes',
-            'dimensions' => 'file_dimensions',
-            'min' => 'file_min',
-            'max' => 'file_max',
-        ]);
+        return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
+            return $asset->pivot->locale == $locale;
+        })->sortBy('pivot.order')
+            ->all();
     }
 
     public function createValidatorInstance(Factory $validatorFactory, array $payload): Validator
@@ -113,15 +113,18 @@ class File extends Component implements Field
         $assetIds = collect($attach)->pluck('id')->all();
 
         return Asset::whereIn('id', $assetIds)->get()
-            ->map(fn (Asset $asset) => new LivewireUploadedFile($asset->getPath(), $asset->getFileName(), $asset->getMimeType()))
+            ->map(fn (AssetContract $asset) => new LivewireUploadedFile($asset->getPath(), $asset->getFileName(), $asset->getMimeType()))
             ->all();
     }
 
-    private function getMedia(Model & HasAsset $model, string $locale): array
+    public function getRules(): array
     {
-        return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
-            return $asset->pivot->locale == $locale;
-        })->sortBy('pivot.order')
-            ->all();
+        return (new MapValidationRules())->handle(parent::getRules(), [
+            'required' => 'file_required',
+            'mimetypes' => 'file_mimetypes',
+            'dimensions' => 'file_dimensions',
+            'min' => 'file_min',
+            'max' => 'file_max',
+        ]);
     }
 }

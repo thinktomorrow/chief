@@ -1,5 +1,5 @@
 @php
-    $title = ucfirst($resource->getIndexTitle());
+    use Illuminate\Contracts\Pagination\Paginator;$title = ucfirst($resource->getIndexTitle());
     $is_archive_index = $is_archive_index ?? false;
 
     $tableActions = $resource->getTableActions($manager);
@@ -14,19 +14,29 @@
         ? 'data-sortable data-sortable-endpoint=' . $manager->route('sort-index') .' data-sortable-id-type='. $resource->getSortableType()
         : '';
 
-    $showOptionsColumn = $manager->can('edit') || $manager->can('preview') || $manager->can('duplicate') || $manager->can('state-update');
+    $showOptionsColumn = $resource->showIndexOptionsColumn() && ($manager->can('edit') || $manager->can('preview') || $manager->can('duplicate') || $manager->can('state-update'));
 @endphp
 
 <x-chief::page.template :title="$title">
     <x-slot name="hero">
         <x-chief::page.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
+            @if($resource->getIndexDescription())
+                <x-slot name="description">
+                    {{ $resource->getIndexDescription() }}
+                </x-slot>
+            @endif
+
             @if($resource->getIndexHeaderContent())
                 {!! $resource->getIndexHeaderContent() !!}
             @endif
 
             @if(!$is_archive_index)
                 @adminCan('create')
-                    <a href="@adminRoute('create')" title="{{ ucfirst($resource->getLabel()) }} toevoegen" class="btn btn-primary">
+                    <a
+                        href="@adminRoute('create')"
+                        title="{{ ucfirst($resource->getLabel()) }} toevoegen"
+                        class="btn btn-primary"
+                    >
                         <x-chief::icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief::icon-label>
                     </a>
                 @endAdminCan
@@ -98,7 +108,7 @@
             </x-slot>
         </x-chief::table>
 
-        @if ($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+        @if ($models instanceof Paginator)
             {!! $models->links('chief::pagination.default') !!}
         @endif
 

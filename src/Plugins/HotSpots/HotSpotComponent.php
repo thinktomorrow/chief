@@ -103,15 +103,6 @@ class HotSpotComponent extends Component
         }
     }
 
-    public function getHotSpotComponents(): array
-    {
-        if (! $this->activeHotSpotId) {
-            return [];
-        }
-
-        return collect($this->getGroupedComponents())->get($this->activeHotSpotId);
-    }
-
     public function submit()
     {
         // Only validate when hotspot entries are present - otherwise Livewire complains about a missing $rules property.

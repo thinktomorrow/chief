@@ -24,7 +24,7 @@
             </span>
 
             {{-- Card label --}}
-            <div class="flex flex-wrap gap-1 mt-[0.2rem] items-start">
+            <div class="flex flex-wrap items-start gap-1 mt-[0.2rem]">
                 @adminCan('edit')
                     <a
                         href="{{ $manager->route('edit', $node->getId()) }}"
@@ -49,8 +49,18 @@
                 )
                     <span class="label label-xs label-error mt-[1px]">Offline</span>
                 @endif
+
+                @if($node->getModel()->getNestableNodeLabels())
+                    {!! $node->getModel()->getNestableNodeLabels() !!}
+                @endif
+
                 @if ($node->getModel() instanceof \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable)
-                    <x-dynamic-component component="chief-tags::tags" :tags="$node->getModel()->getTags()" size="xs" threshold="4"></x-dynamic-component>
+                    <x-dynamic-component
+                        component="chief-tags::tags"
+                        :tags="$node->getModel()->getTags()"
+                        size="xs"
+                        threshold="4"
+                    />
                 @endif
             </div>
         </div>

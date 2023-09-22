@@ -34,6 +34,8 @@ interface PageResource extends Resource, TableResource
 
     public function getIndexTitle(): string;
 
+    public function getIndexDescription(): ?string;
+
     public function getIndexHeaderContent(): ?string;
 
     public function getIndexBreadcrumb(): ?BreadCrumb;
@@ -55,6 +57,8 @@ interface PageResource extends Resource, TableResource
 
     public function getIndexPagination(): int;
 
+    public function showIndexOptionsColumn(): bool;
+
     /**
      * Indicate type of sortable id.
      * Options are int, string. Defaults to int.
@@ -68,4 +72,6 @@ interface PageResource extends Resource, TableResource
      * @return string
      */
     public function indexRepository(): string;
+
+    public function getNestableNodeLabels(): ?string;
 }

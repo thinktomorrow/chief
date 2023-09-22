@@ -44,11 +44,6 @@ trait InteractsWithGroupedForms
             ->all();
     }
 
-    private function composeGroupIndex($index)
-    {
-        return $index;
-    }
-
     /**
      * Allows to group the components per index. This is not used on a form that is set up
      * for one model / file. But can be used to display and handle fields that are dynamically
@@ -58,5 +53,10 @@ trait InteractsWithGroupedForms
     private function componentIndices(): array
     {
         return [];
+    }
+
+    private function composeGroupIndex($index)
+    {
+        return $index;
     }
 }

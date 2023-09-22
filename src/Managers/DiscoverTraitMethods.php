@@ -21,7 +21,7 @@ final class DiscoverTraitMethods
         $traitMethods = [];
 
         foreach (class_uses_recursive($class) as $trait) {
-            $method = $methodPrefix.class_basename($trait);
+            $method = $methodPrefix . class_basename($trait);
 
             if (public_method_exists($class, $method)) {
                 $traitMethods[] = $method;
