@@ -62,6 +62,7 @@ class FileFieldEditComponent extends Component
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
+        $this->previewFile->loadOwners();
 
         $this->form['basename'] = $this->previewFile->getBaseName();
 
@@ -145,6 +146,23 @@ class FileFieldEditComponent extends Component
     public function openImageHotSpots()
     {
         $this->emitToSibling('chief-wire::hotspots', 'open', ['previewfile' => $this->previewFile]);
+    }
+
+    public function isolateAsset()
+    {
+        if (! $this->previewFile->mediaId) {
+            return;
+        }
+
+        $existingPreviewFileId = $this->previewFile->id;
+        $newAsset = app(FileApplication::class)->isolateAsset($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
+        $this->previewFile = PreviewFile::fromAsset($newAsset);
+        $this->previewFile->id = $existingPreviewFileId;
+
+        // Update form values
+        $this->syncForm();
+
+        $this->emitUp('assetUpdated', $this->previewFile);
     }
 
     public function submit()

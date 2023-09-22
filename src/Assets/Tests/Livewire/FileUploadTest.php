@@ -74,4 +74,9 @@ class FileUploadTest extends ChiefTestCase
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
             ->assertDontSeeHtml('name="thumb[uploads][0][id]"');
     }
+
+    public function test_it_can_detach_asset()
+    {
+
+    }
 }

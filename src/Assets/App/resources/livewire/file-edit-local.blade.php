@@ -141,38 +141,48 @@
                 </div>
             @endif
 
-            @if($ownerCount > 0)
+            @if((isset($modelReference) && $ownerCount > 1) || (!isset($modelReference) && $ownerCount > 0))
                 <div class="form-light">
                     <x-chief::input.label>
                         Koppelingen
                         <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-grey-100">
-                            <span class="text-xs body-dark">{{ count($previewFile->owners) }}</span>
+                            <span class="text-xs body-dark">{{ $ownerCount }}</span>
                         </span>
                     </x-chief::input.label>
 
-                    <x-chief::input.description>
-                        Aanpassingen aan deze asset zullen zichtbaar zijn op alle pagina's.
-                        Wil je enkel op deze pagina een aanpassing maken aan dit bestand?
+                    @if(isset($modelReference))
+                        <x-chief::input.description>
+                            Aanpassingen zullen zichtbaar zijn op al deze pagina's.
 
-                        <button type="button" wire:click="detachAsset" class="underline link link-dark">
-                            Koppel het bestand los en bewerk afzonderlijk
-                        </button>
-                    </x-chief::input.description>
+                            <button type="button" wire:click="isolateAsset" class="underline link link-dark">
+                                Koppel bestand los en bewerk afzonderlijk
+                            </button>
+                        </x-chief::input.description>
+                    @endif
 
                     <div class="overflow-hidden border rounded-md border-grey-100">
                         <div class="overflow-y-auto divide-y max-h-48 divide-grey-100">
                             @foreach($previewFile->owners as $owner)
                                 <div class="flex items-start justify-between gap-3 px-3 py-2">
                                     <div class="leading-5 body-dark body">
-                                        {{ $owner->label }}
+                                        {{ $owner['label'] }}
+                                        @if(isset($modelReference) && $owner['modelReference'] == $modelReference)
+                                            <span class="label label-info text-xs">Deze pagina</span>
+                                        @endif
                                     </div>
 
 
-                                    <a href="{{ $owner->adminUrl }}" title="Bekijk" target="_blank" rel="noopener">
-                                        <x-chief::link>
-                                            <svg><use xlink:href="#icon-external-link"></use></svg>
-                                        </x-chief::link>
-                                    </a>
+                                    @if(!isset($modelReference) || $owner['modelReference'] != $modelReference)
+                                        <a href="{{ $owner['adminUrl'] }}" title="Bekijk" target="_blank"
+                                           rel="noopener">
+                                            <x-chief::link>
+                                                <svg>
+                                                    <use xlink:href="#icon-external-link"></use>
+                                                </svg>
+                                            </x-chief::link>
+                                        </a>
+                                    @endif
+
                                 </div>
                             @endforeach
                         </div>

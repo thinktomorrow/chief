@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
@@ -283,12 +284,12 @@ class PreviewFile implements Wireable
             ->where('asset_id', $this->mediaId)
             ->get();
 
-        foreach($references as $reference) {
+        foreach ($references as $reference) {
             $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
 
-            if($model instanceof FragmentModel) {
+            if ($model instanceof FragmentModel) {
                 $ownerModels = app(FragmentOwnerRepository::class)->getOwners($model);
-                foreach($ownerModels as $ownerModel) {
+                foreach ($ownerModels as $ownerModel) {
                     $this->owners[] = $this->createOwnerFields($ownerModel);
                 }
 
@@ -299,18 +300,22 @@ class PreviewFile implements Wireable
         }
     }
 
-    private function createOwnerFields($model): object
+    private function createOwnerFields($model): array
     {
         try {
             $resource = app(Registry::class)->findResourceByModel($model::class);
             $manager = app(Registry::class)->findManagerByModel($model::class);
 
-            return (object)['label' => $resource->getPageTitle($model), 'adminUrl' => $manager->route('edit', $model)];
-        } catch (\Exception $e) {
+            return [
+                'label' => $resource->getPageTitle($model),
+                'adminUrl' => $manager->route('edit', $model),
+                'modelReference' => $model->modelReference()->get(),
+            ];
+        } catch (Exception $e) {
             report($e);
         }
 
-        return (object)['label' => '-', 'adminUrl' => ''];
+        return ['label' => null, 'adminUrl' => null, 'modelReference' => null];
     }
 
     public function hasData(string $key): bool
