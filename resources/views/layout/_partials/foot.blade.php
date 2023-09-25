@@ -5,8 +5,6 @@
 
 @stack('custom-scripts')
 
-<script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
-
 <script>
     /**
      * Global Eventbus which allows to emit and listen to
@@ -23,40 +21,42 @@
         data: {
             errors: new Errors(),
         },
-        created: function(){
+        created: function () {
             this.errors.record({!! isset($errors) ? json_encode($errors->getMessages()) : json_encode([]) !!});
 
-            Eventbus.$on('clearErrors', (field) => { this.errors.clear(field); });
+            Eventbus.$on('clearErrors', (field) => {
+                this.errors.clear(field);
+            });
             Eventbus.$on('enable-update-form', this.enableUpdateForm);
             Eventbus.$on('disable-update-form', this.disableUpdateForm);
         },
-        methods:{
-            showModal: function(id, options){
+        methods: {
+            showModal: function (id, options) {
                 return window.showModal(id, options);
             },
-            closeModal: function(id){
+            closeModal: function (id) {
                 return window.closeModal(id);
             },
-            closeDropdown: function(id){
+            closeDropdown: function (id) {
                 return window.closeDropdown(id);
             },
-            selectTab: function(hash){
-                Eventbus.$emit('select-tab',hash);
+            selectTab: function (hash) {
+                Eventbus.$emit('select-tab', hash);
             },
-            clear: function(field){
+            clear: function (field) {
                 Eventbus.$emit('clearErrors', field)
             },
-            generateSitemap: function(id, options){
+            generateSitemap: function (id, options) {
                 Eventbus.$emit('open-modal', id, options);
                 axios.post('{{route('chief.back.sitemap.generate')}}', {
                     _method: 'POST'
                 }).then((response) => {
-                    Eventbus.$emit('close-modal',id);
+                    Eventbus.$emit('close-modal', id);
                 }).catch((errors) => {
                     alert('error');
                 })
             },
-            duplicateImageComponent: function(options){
+            duplicateImageComponent: function (options) {
                 Eventbus.$emit('duplicate-image-component', options);
             },
             enableUpdateForm: () => {
@@ -76,23 +76,23 @@
         },
     });
 
-    window.showModal = function(id, options){
+    window.showModal = function (id, options) {
         Eventbus.$emit('open-modal', id, options);
     };
 
     Vue.prototype.showModal = window.showModal;
 
-    window.closeModal = function(id){
-        Eventbus.$emit('close-modal',id);
+    window.closeModal = function (id) {
+        Eventbus.$emit('close-modal', id);
     };
 
     // Close dropdown outside of the dropdown - used by backdrop
-    window.closeDropdown = function(id){
-        Eventbus.$emit('close-dropdown',id);
+    window.closeDropdown = function (id) {
+        Eventbus.$emit('close-dropdown', id);
     };
 </script>
 
-<livewire:scripts />
+<livewire:scripts/>
 
 <script src="{{ chief_cached_asset('js/native.js') }}"></script>
 
