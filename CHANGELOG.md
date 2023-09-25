@@ -24,6 +24,7 @@ principles.
 - Changed: FilterPresets::simpleState() returns a select field instead of radio field.
 - Fixed: PreviewFile on asset pages now uses Asset::getUrl() instead of Media::getUrl() so custom urls are in effect
 - Fixed: Enter on media gallery search no longer triggers form submit (of underlying form)
+- Removed: slim scripts and css
 
 ## 0.8.1 - 2023-09-05
 
