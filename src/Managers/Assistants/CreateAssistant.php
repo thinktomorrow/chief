@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
@@ -12,14 +13,6 @@ use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait CreateAssistant
 {
-    abstract protected function fieldsModel($id);
-
-    abstract protected function fieldValidator(): FieldValidator;
-
-    abstract protected function generateRoute(string $action, $model = null, ...$parameters): string;
-
-    abstract protected function guard(string $action, $model = null);
-
     public function routesCreateAssistant(): array
     {
         return [
@@ -44,7 +37,7 @@ trait CreateAssistant
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request)
     {
@@ -78,6 +71,8 @@ trait CreateAssistant
         return redirect()->to($redirectAfterCreate);
     }
 
+    abstract protected function guard(string $action, $model = null);
+
     private function handleStore(Request $request)
     {
         $model = $this->managedModelClassInstance(...$this->resource->getInstanceAttributes($request));
@@ -96,4 +91,10 @@ trait CreateAssistant
 
         return $model;
     }
+
+    abstract protected function fieldValidator(): FieldValidator;
+
+    abstract protected function fieldsModel($id);
+
+    abstract protected function generateRoute(string $action, $model = null, ...$parameters): string;
 }

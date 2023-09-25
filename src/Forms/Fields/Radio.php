@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasOptions;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
 
 class Radio extends Component implements Field
 {

@@ -17,9 +17,9 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAssetType;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStorageDisk;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
+namespace Thinktomorrow\Chief\Forms\Fields\Concerns\Select;
 
 trait HasMultiple
 {

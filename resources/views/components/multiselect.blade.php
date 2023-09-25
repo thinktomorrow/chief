@@ -18,18 +18,19 @@
     x-cloak
     wire:ignore
     x-data="{
-    selection: {{ json_encode($selection) }},
-    options: {{ json_encode($options) }},
-    syncSelection: () => {},
-}" x-init="
+        selection: {{ json_encode((array) $selection) }},
+        options: {{ json_encode($options) }},
+        syncSelection: () => {},
+    }"
+    x-init="
 
     $nextTick(() => {
 
         const choices = new Choices($refs.selectEl, {
             allowHTML: true,
             paste: false,
-            searchResultLimit: 8,
-            shouldSort: false, // Dont sort choices
+            searchResultLimit: 10,
+            shouldSort: false, // Keep sorting as is
             removeItems: true,
             removeItemButton: true,
             duplicateItemsAllowed: false,
@@ -41,18 +42,18 @@
 
         const refreshOptions = () => {
 
+            // Reset all options
             choices.clearStore();
+            choices.setChoices($data.options);
 
-            choices.setChoices($data.options.map( ({value, label}) => ({
-                value,
-                label,
-                selected: $data.selection.includes(value)
-            })));
+            // Set current value
+            choices.setValue($data.selection);
         };
 
         $data.syncSelection = (e) => {
 
-            $data.selection = Array.isArray(choices.getValue(true)) ? choices.getValue(true) : [choices.getValue(true)];
+            const value = choices.getValue(true);
+            $data.selection = Array.isArray(value) ? value : [value];
 
         }
 
@@ -65,6 +66,6 @@
     <select
         x-on:change="syncSelection()"
         {{ $attributes }}
-        {{ $multiple ? '$multiple' : '' }}
+        {{ $multiple ? 'multiple' : '' }}
         x-ref="selectEl"></select>
 </div>
