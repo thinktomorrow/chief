@@ -7,6 +7,9 @@ principles.
 ## Unreleased
 
 - Added: external files (like vimeo) can now be uploaded via media gallery
+- Added: By default, a file field does not have the option to add external files. To allow this,
+  set  `File::allowExternalFiles()` on the field to select external file links such as Vimeo. Note that at least one
+  external driver must be active as well.
 - Added: Select field can now accept nested options in following
   syntax: `['value' => 'id', 'label' => 'First product'']`.
 - Added: File field can have custom asset type via `File::assetType()`.
