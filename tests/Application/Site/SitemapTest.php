@@ -33,12 +33,12 @@ class SitemapTest extends ChiefTestCase
         <loc>http://localhost/bar</loc>
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
-        </url>
+            </url>
     <url>
         <loc>http://localhost/foo</loc>
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
-        </url>
+            </url>
 </urlset>
 ';
     }
