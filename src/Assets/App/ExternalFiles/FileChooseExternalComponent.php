@@ -6,7 +6,7 @@ use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
-class FileFieldChooseExternalComponent extends Component
+class FileChooseExternalComponent extends Component
 {
     use ShowsAsDialog;
 
@@ -48,6 +48,7 @@ class FileFieldChooseExternalComponent extends Component
     public function open($value)
     {
         $this->assetId = $value['assetId'] ?? null;
+        $this->driverType = reset($this->driverTypes);
 
         $this->isOpen = true;
     }
@@ -57,29 +58,29 @@ class FileFieldChooseExternalComponent extends Component
         return $this->getDriver()?->getCreateFormLabel();
     }
 
-    public function getDescription()
-    {
-        return $this->getDriver()?->getCreateFormDescription();
-    }
-
     private function getDriver(): ?Driver
     {
-        if(! $this->driverType) {
+        if (! $this->driverType) {
             return null;
         }
 
-        if($this->cachedDriver) {
+        if ($this->cachedDriver) {
             return $this->cachedDriver;
         }
 
         return $this->cachedDriver = app(DriverFactory::class)->create($this->driverType);
     }
 
+    public function getDescription()
+    {
+        return $this->getDriver()?->getCreateFormDescription();
+    }
+
     public function save()
     {
         $this->validate(['driverId' => 'required'], ['driverId.required' => 'De id of link is verplicht in te vullen']);
 
-        if(! $this->driverId) {
+        if (! $this->driverId) {
             return;
         }
 
@@ -88,10 +89,10 @@ class FileFieldChooseExternalComponent extends Component
 
         if ($this->assetId) {
             $asset = $driver->updateAsset(Asset::find($this->assetId), $this->driverId);
-            $this->emit('externalAssetUpdated-'.$this->parentId, [$asset->id]);
+            $this->emit('externalAssetUpdated-' . $this->parentId, [$asset->id]);
         } else {
             $asset = $driver->createAsset($this->driverId);
-            $this->emit('assetsChosen-'.$this->parentId, [$asset->id]);
+            $this->emit('assetsChosen-' . $this->parentId, [$asset->id]);
         }
 
         $this->reset('driverType', 'driverId', 'assetId');
@@ -106,6 +107,6 @@ class FileFieldChooseExternalComponent extends Component
 
     public function render()
     {
-        return view('chief-assets::livewire.file-field-choose-external');
+        return view('chief-assets::livewire.file-choose-external');
     }
 }

@@ -30,6 +30,21 @@ require('./sortable/sortable-livewire');
 require('livewire-vue');
 
 window.vueFieldsRefresh = (el) => vueFields(el);
-window.Alpine = Alpine;
 
+// eslint-disable-next-line no-empty-pattern
+Alpine.directive('prevent-submit-on-enter', (el, {}, { cleanup }) => {
+    const handler = (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+        }
+    };
+
+    el.addEventListener('keydown', handler);
+
+    cleanup(() => {
+        el.removeEventListener('click', handler);
+    });
+});
+
+window.Alpine = Alpine;
 Alpine.start();

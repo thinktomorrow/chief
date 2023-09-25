@@ -7,13 +7,15 @@
 
         <x-slot name="header">
             <div class="flex flex-wrap items-start justify-between gap-3 grow">
-                <div class="relative flex items-center justify-end grow">
+                <div x-data="{}" class="relative flex items-center justify-end grow">
                     <svg class="absolute w-5 h-5 pointer-events-none left-3 body-dark">
                         <use xlink:href="#icon-magnifying-glass"></use>
                     </svg>
 
                     <x-chief::input.text
                         wire:model.debounce.500ms="filters.search"
+                        x-data="{}" {{-- Prevents directive to be triggered twice --}}
+                        x-prevent-submit-on-enter
                         placeholder="Zoek op bestandsnaam"
                         class="w-full pl-10"
                     />
