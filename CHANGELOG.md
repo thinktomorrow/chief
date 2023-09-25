@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 0.8.2 - 2023-09-25
+
 - Added: external files (like vimeo) can now be uploaded via media gallery
 - Added: By default, a file field does not have the option to add external files. To allow this,
   set  `File::allowExternalFiles()` on the field to select external file links such as Vimeo. Note that at least one
