@@ -1,6 +1,5 @@
 import Sortable from 'sortablejs';
 import EventBus from '../../utilities/EventBus';
-import vueFields from './vue-fields';
 
 function initRepeatFieldsIn(container) {
     const repeatContainerSelector = '[data-repeat]';
@@ -109,8 +108,6 @@ Repeat.prototype.insertSection = function (sectionHtml) {
     } else {
         this.container.prepend(sectionElement);
     }
-
-    vueFields(sectionElement);
 
     // So Redactor can be initialised on the inserted section
     window.dispatchEvent(new CustomEvent('chief::formrefreshed', { detail: { container: sectionElement } }));

@@ -1,9 +1,9 @@
 <template>
-    <div :id="this.id" v-show="isVisible" class="fixed inset-0 z-30" :class="typedclass">
+    <div v-show="isVisible" :id="this.id" :class="typedclass" class="fixed inset-0 z-30">
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="absolute inset-0 bg-black opacity-25 cursor-pointer" @click="close"></div>
 
-            <div class="relative w-full card" :class="sizeClass">
+            <div :class="sizeClass" class="relative w-full card">
                 <div class="space-y-6">
                     <div v-if="title">
                         <span class="text-sm font-semibold tracking-widest uppercase text-grey-500">
@@ -12,11 +12,11 @@
                     </div>
 
                     <div
-                        class="prose prose-spacing prose-dark"
                         v-if="computedCustomHtml"
+                        class="prose prose-spacing prose-dark"
                         v-html="computedCustomHtml"
                     ></div>
-                    <div class="prose prose-spacing prose-dark" v-else>
+                    <div v-else class="prose prose-spacing prose-dark">
                         <slot></slot>
                     </div>
                 </div>
@@ -25,18 +25,20 @@
                     <slot name="footer">
                         <slot name="modal-action-buttons"></slot>
 
-                        <a @click="close" class="btn btn-primary-outline">
+                        <a class="btn btn-primary-outline" @click="close">
                             <slot name="modal-close-btn">Annuleren</slot>
                         </a>
                     </slot>
                 </div>
 
                 <button
+                    class="absolute p-1 bg-white rounded-full -top-3 -right-3 link link-grey icon-label m-7"
                     type="button"
                     @click="close"
-                    class="absolute p-1 bg-white rounded-full -top-3 -right-3 link link-grey icon-label m-7"
                 >
-                    <svg class="icon-label-icon" width="20" height="20"><use xlink:href="#icon-x-mark" /></svg>
+                    <svg class="icon-label-icon" height="20" width="20">
+                        <use xlink:href="#icon-x-mark"/>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -44,17 +46,16 @@
 </template>
 
 <script>
-import vueFields from '../forms/fields/vue-fields';
 
 export default {
     props: {
-        id: { required: true },
-        active: { default: false, type: Boolean },
-        title: { default: '' },
-        type: { default: 'modal' },
-        size: { default: 'small' },
-        url: { default: null },
-        footer: { default: true, type: Boolean },
+        id: {required: true},
+        active: {default: false, type: Boolean},
+        title: {default: ''},
+        type: {default: 'modal'},
+        size: {default: 'small'},
+        url: {default: null},
+        footer: {default: true, type: Boolean},
     },
     data() {
         return {

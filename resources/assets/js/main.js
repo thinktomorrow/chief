@@ -1,4 +1,4 @@
-import Errors from './utilities/Errors';
+// import Errors from './utilities/Errors';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -8,11 +8,11 @@ import Errors from './utilities/Errors';
 import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
-window.Errors = Errors;
+// window.Errors = Errors;
 
 /** Chief components */
 // Well well well, it's just you and us now...
-window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
+// window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
 
 // window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);
 // window.Vue.component('options-dropdown', require('./components-vue/OptionsDropdown.vue').default);

@@ -6,12 +6,11 @@ require('laravel-mix-polyfill');
 require('laravel-mix-eslint');
 
 mix.webpackConfig({
-    stats: { children: true },
+    stats: {children: true},
 })
     .setPublicPath(path.normalize('public/chief-assets/back'))
 
     .js('resources/assets/js/main.js', 'public/chief-assets/back/js')
-    .vue({ version: 2 })
     .js('resources/assets/js/native.js', 'public/chief-assets/back/js')
     .eslint({
         extensions: ['js'],
@@ -29,7 +28,7 @@ mix.webpackConfig({
         require('autoprefixer'),
     ])
 
-    .options({ processCssUrls: false })
+    .options({processCssUrls: false})
 
     .copy('resources/assets/img', 'public/chief-assets/back/img')
     .version(['public/chief-assets/back/img/**/*'])
