@@ -5,7 +5,7 @@
 ])
 
 @once
-    {{-- TODO: Tijs extract to our builds --}}
+    {{--    TODO: Tijs extract to our builds--}}
     @push('custom-styles')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
     @endpush
@@ -17,7 +17,7 @@
     x-data="{
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
-        syncSelection: () => {},
+        syncSelection: () => {}
     }"
     x-multiselect="{
         selectEl: $refs.selectEl,
@@ -33,6 +33,9 @@
             noChoicesText: 'geen opties',
             itemSelectText: '',
             uniqueItemText: 'enkel unieke opties zijn mogelijk',
+            valueComparer: (value1, value2) => {
+              return value1 == value2; // Default is strict equality, we take it loosely.
+            },
         }
     }"
     x-init="
@@ -43,7 +46,7 @@
                 $el.choices.setChoices($data.options);
 
                 // Set current value
-                $el.choices.setValue($data.selection);
+                $el.choices.setChoiceByValue($data.selection);
             };
 
             $data.syncSelection = (e) => {

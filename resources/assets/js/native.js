@@ -9,6 +9,7 @@ import initSortable from './sortable/sortable-init';
 import initFormSubmitOnChange from './utilities/form-submit-on-change';
 import vueFields from './forms/fields/vue-fields';
 import registerClassToggles from './utilities/toggle-class';
+import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -46,21 +47,7 @@ window.vueFieldsRefresh = (el) => vueFields(el);
  */
 Alpine.directive('dropdown', dropdownDirective);
 Alpine.directive('multiselect', multiselectDirective);
-
-// eslint-disable-next-line no-empty-pattern
-Alpine.directive('prevent-submit-on-enter', (el, {}, { cleanup }) => {
-    const handler = (e) => {
-        if (e.keyCode === 13) {
-            e.preventDefault();
-        }
-    };
-
-    el.addEventListener('keydown', handler);
-
-    cleanup(() => {
-        el.removeEventListener('click', handler);
-    });
-});
+Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
 
 window.Alpine = Alpine;
 Alpine.start();
