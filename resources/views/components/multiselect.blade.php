@@ -9,9 +9,6 @@
     @push('custom-styles')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
     @endpush
-    @push('custom-scripts')
-        <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-    @endpush
 @endonce
 
 <div
@@ -22,11 +19,9 @@
         options: {{ json_encode($options) }},
         syncSelection: () => {},
     }"
-    x-init="
-
-    $nextTick(() => {
-
-        const choices = new Choices($refs.selectEl, {
+    x-multiselect="{
+        selectEl: $refs.selectEl,
+        options: {
             allowHTML: true,
             paste: false,
             searchResultLimit: 10,
@@ -38,34 +33,32 @@
             noChoicesText: 'geen opties',
             itemSelectText: '',
             uniqueItemText: 'enkel unieke opties zijn mogelijk',
-        });
-
-        const refreshOptions = () => {
-
-            // Reset all options
-            choices.clearStore();
-            choices.setChoices($data.options);
-
-            // Set current value
-            choices.setValue($data.selection);
-        };
-
-        $data.syncSelection = (e) => {
-
-            const value = choices.getValue(true);
-            $data.selection = Array.isArray(value) ? value : [value];
-
         }
+    }"
+    x-init="
+        $nextTick(() => {
+            const refreshOptions = () => {
+                // Reset all options
+                $el.choices.clearStore();
+                $el.choices.setChoices($data.options);
 
-        refreshOptions();
+                // Set current value
+                $el.choices.setValue($data.selection);
+            };
 
-    });
+            $data.syncSelection = (e) => {
+                const value = $el.choices.getValue(true);
+                $data.selection = Array.isArray(value) ? value : [value];
+            }
 
-
-">
+            refreshOptions();
+        });
+    "
+>
     <select
+        x-ref="selectEl"
         x-on:change="syncSelection()"
         {{ $attributes }}
         {{ $multiple ? 'multiple' : '' }}
-        x-ref="selectEl"></select>
+    ></select>
 </div>
