@@ -49,10 +49,10 @@
     padding: 0;
     background-size: 8px;
     position: absolute;
-    top: 50%;
-    right: 0;
-    margin-top: -10px;
-    margin-right: 25px;
+    top: 0.75rem;
+    right: 1.5rem;
+    /* margin-top: -10px; */
+    /* margin-right: 25px; */
     height: 20px;
     width: 20px;
     border-radius: 10em;
@@ -261,7 +261,7 @@
 [dir='rtl'] .choices__list[aria-expanded] .choices__item {
     text-align: right;
 }
-@media (min-width: 640px) {
+/* @media (min-width: 640px) {
     .choices__list--dropdown .choices__item--selectable,
     .choices__list[aria-expanded] .choices__item--selectable {
         padding-right: 100px;
@@ -287,7 +287,7 @@
         right: auto;
         left: 10px;
     }
-}
+} */
 .choices__list--dropdown .choices__item--selectable.is-highlighted,
 .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
     background-color: theme('colors.grey.100');
