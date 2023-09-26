@@ -10,8 +10,8 @@ class MultiSelectFieldTrigger extends ConditionalFieldTrigger {
     }
 
     _watch() {
-        window.Eventbus.$on(
-            'updated-select',
+        this.element.addEventListener(
+            'change',
             _debounce(() => {
                 this._handle();
             }, 250)
@@ -21,7 +21,9 @@ class MultiSelectFieldTrigger extends ConditionalFieldTrigger {
     _getCurrentValuesFromSelectElement() {
         const selectElement = this.element.querySelector('select');
 
-        return Array.from(selectElement.querySelectorAll('option')).map((element) => element.value);
+        return Array.from(selectElement.querySelectorAll('option'))
+            .filter((option) => option.selected)
+            .map((option) => option.value);
     }
 }
 

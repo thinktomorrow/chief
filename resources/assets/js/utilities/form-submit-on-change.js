@@ -13,8 +13,8 @@ const initFormSubmitOnChange = (container = document, selector = '[data-form-sub
         });
 
         // Trigger form submit if value of custom multiselect field changes
-        window.Eventbus.$on(
-            'updated-select',
+        window.addEventListener(
+            'multiselect-changed',
             _debounce(() => {
                 form.submit();
             }, 250)
