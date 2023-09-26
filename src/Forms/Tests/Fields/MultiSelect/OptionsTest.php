@@ -83,14 +83,14 @@ class OptionsTest extends ChiefTestCase
         $this->assertEquals([
             [
                 'label' => 'Group one',
-                'options' => [
+                'choices' => [
                     ['value' => 'one', 'label' => 'een'],
                     ['value' => 'two', 'label' => 'twee'],
                 ],
             ],
             [
                 'label' => 'Group two',
-                'options' => [
+                'choices' => [
                     ['value' => 'three', 'label' => 'drie'],
                     ['value' => 'four', 'label' => 'vier'],
                 ],
@@ -120,13 +120,13 @@ class OptionsTest extends ChiefTestCase
         $this->assertEquals([
             [
                 'label' => 'Group one',
-                'options' => [
+                'choices' => [
                     ['value' => 'one', 'label' => 'een'],
                 ],
             ],
             [
                 'label' => 'Group two',
-                'options' => [
+                'choices' => [
                     ['value' => 'two', 'label' => 'twee'],
                 ],
             ],

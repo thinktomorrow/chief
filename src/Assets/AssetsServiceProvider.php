@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
-use Thinktomorrow\Chief\Assets\App\ExternalFiles\FileFieldChooseExternalComponent;
+use Thinktomorrow\Chief\Assets\App\ExternalFiles\FileChooseExternalComponent;
 use Thinktomorrow\Chief\Assets\Livewire\AssetDeleteComponent;
 use Thinktomorrow\Chief\Assets\Livewire\FileEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldChooseComponent;
@@ -36,7 +36,7 @@ class AssetsServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::file-field-upload', FileFieldUploadComponent::class);
         Livewire::component('chief-wire::file-field-edit', FileFieldEditComponent::class);
         Livewire::component('chief-wire::file-field-choose', FileFieldChooseComponent::class);
-        Livewire::component('chief-wire::file-field-choose-external', FileFieldChooseExternalComponent::class);
+        Livewire::component('chief-wire::file-field-choose-external', FileChooseExternalComponent::class);
         Livewire::component('chief-wire::file-upload', FileUploadComponent::class);
         Livewire::component('chief-wire::file-edit', FileEditComponent::class);
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
@@ -44,9 +44,9 @@ class AssetsServiceProvider extends ServiceProvider
 
         // Reset general livewire rules - these rules will be set via chief
         // instead so we can have a uniform validation flow
-        if($maxFileSize = config('chief.assets.max_file_size_in_bytes')) {
+        if ($maxFileSize = config('chief.assets.max_file_size_in_bytes')) {
             config()->set('livewire.temporary_file_upload.rules', [
-                'required','file','max:'.($maxFileSize / 1024),
+                'required', 'file', 'max:' . ($maxFileSize / 1024),
             ]);
 
             config()->set('media-library.max_file_size', $maxFileSize);

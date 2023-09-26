@@ -183,6 +183,13 @@ trait TestHelpers
     //        return $method->invokeArgs($object, $parameters);
     //    }
 
+    protected function assertEqualsStringIgnoringStructure($expected, $actual, string $message = ''): void
+    {
+        $expected = preg_replace('/\s*\R\s*/', ' ', trim($expected));
+        $actual = preg_replace('/\s*\R\s*/', ' ', trim($actual));
+
+        $this->assertEquals($expected, $actual, $message);
+    }
 
     private function recurse_copy($src, $dst)
     {

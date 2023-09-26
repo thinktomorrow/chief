@@ -29,5 +29,23 @@ jobs:
         run: |
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
-      - name: Execute tests
-        run: vendor/bin/phpunit src/Assets src/Forms src/Fragments src/Admin src/ManagedModels src/Managers src/Resource src/Site src/Shared src/Table tests
+      - name: Execute unit tests
+        run: vendor/bin/phpunit --testsuite unit
+
+      - name: Execute application tests
+        run: vendor/bin/phpunit --testsuite application
+
+      - name: Execute forms tests
+        run: vendor/bin/phpunit --testsuite forms
+
+      - name: Execute assets tests
+        run: vendor/bin/phpunit --testsuite assets
+
+      - name: Execute fragments tests
+        run: vendor/bin/phpunit --testsuite fragments
+
+      - name: Execute resources tests
+        run: vendor/bin/phpunit --testsuite resources
+
+      - name: Execute admin tests
+        run: vendor/bin/phpunit --testsuite admin

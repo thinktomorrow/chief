@@ -11,5 +11,6 @@
         :validation-messages="$field->getValidationMessages()"
         :validation-attribute="$field->getValidationAttribute()"
         :accepted-mime-types="$field->getAcceptedMimeTypes()"
+        :allow-external-files="$field->getAllowExternalFiles()"
     />
 </div>

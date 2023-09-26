@@ -27,15 +27,21 @@ trait InteractsWithGallery
         $builder = Asset::with('media')
             ->select('assets.*');
 
-        if(isset($this->filters['search'])) {
+        if (isset($this->filters['search'])) {
             $builder->whereHas('media', function (Builder $query) {
-                $query->where('file_name', 'LIKE', '%' . $this->filters['search'] . '%');
+
+                $searchTerms = explode(' ', $this->filters['search']);
+
+                foreach ($searchTerms as $searchTerm) {
+                    $query->where('file_name', 'LIKE', '%' . $searchTerm . '%');
+                }
+
             });
         }
 
-        if($this->sort == 'created_at_asc') {
+        if ($this->sort == 'created_at_asc') {
             $builder = $builder->orderBy('created_at', 'ASC');
-        } elseif($this->sort == 'created_at_desc' || ! $this->sort) {
+        } elseif ($this->sort == 'created_at_desc' || ! $this->sort) {
             $builder = $builder->orderBy('created_at', 'DESC');
         }
 
