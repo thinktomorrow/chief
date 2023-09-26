@@ -47,7 +47,7 @@ trait InteractsWithGroupedForms
     /**
      * Allows to group the components per index. This is not used on a form that is set up
      * for one model / file. But can be used to display and handle fields that are dynamically
-     * added or where there are more then one instance of, e.g. hotSpot forms.
+     * added or where there are more than one instance of, e.g. hotSpot forms.
      * @return array
      */
     private function componentIndices(): array

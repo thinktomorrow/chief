@@ -13,6 +13,7 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
 use Thinktomorrow\Chief\Assets\App\UpdateFileField;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\AllowsExternalFiles;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAssetType;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomUrl;
@@ -36,6 +37,7 @@ class File extends Component implements Field
     use HasUploadButtonLabel;
     use HasEndpoint;
     use HasAcceptedMimeTypes;
+    use AllowsExternalFiles;
 
     protected string $view = 'chief-form::fields.file';
     protected string $windowView = 'chief-form::fields.file-window';

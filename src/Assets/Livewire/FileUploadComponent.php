@@ -5,10 +5,12 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\StoreFiles;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithChoosingAssets;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
@@ -17,6 +19,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
 {
     use WithFileUploads;
     use FileUploadDefaults;
+    use InteractsWithChoosingAssets;
     use ShowsAsDialog;
     use RenamesErrorBagFileAttribute;
 
@@ -39,13 +42,14 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
             'upload:errored' => 'onUploadErrored',
             'upload:finished' => 'onUploadFinished',
             'assetUpdated' => 'onAssetUpdated',
+            'assetsChosen-' . $this->id => 'onAssetsChosen',
         ];
     }
 
     public function booted()
     {
         $this->filePreview = new FilePreview($this);
-        $this->fileSelect = new FileSelect($this, false);
+        $this->fileSelect = new FileSelect($this, false, DriverFactory::any());
 
         $this->clearValidation();
 
@@ -59,6 +63,11 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
         return view('chief-assets::file-upload', [
             //
         ]);
+    }
+
+    public function countUploadedOrSelectedFiles(): int
+    {
+        return count($this->previewFiles);
     }
 
     public function countFiles(): int

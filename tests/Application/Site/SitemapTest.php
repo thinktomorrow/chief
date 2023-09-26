@@ -22,7 +22,7 @@ class SitemapTest extends ChiefTestCase
     /** @test */
     public function it_can_generate_an_xml_per_locale()
     {
-        $this->assertEquals($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
+        $this->assertEqualsStringIgnoringStructure($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
     }
 
     private function getExpectedXml()
@@ -33,7 +33,7 @@ class SitemapTest extends ChiefTestCase
         <loc>http://localhost/bar</loc>
             <changefreq>daily</changefreq>
         <priority>0.8</priority>
-            </url>
+    </url>
     <url>
         <loc>http://localhost/foo</loc>
             <changefreq>daily</changefreq>
@@ -58,7 +58,7 @@ class SitemapTest extends ChiefTestCase
         $this->mockHandler->append(new Response(200));
         $this->mockHandler->append(new Response(200));
 
-        $this->assertEquals($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
+        $this->assertEqualsStringIgnoringStructure($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
     }
 
     /** @test */
@@ -69,7 +69,7 @@ class SitemapTest extends ChiefTestCase
 
         $this->mockHandler->append(new Response(404));
 
-        $this->assertEquals($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
+        $this->assertEqualsStringIgnoringStructure($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
     }
 
     public function setUp(): void

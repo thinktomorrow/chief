@@ -18,19 +18,33 @@
         </report>
     </coverage>
     <testsuites>
-        <testsuite name="Form tests">
-            <directory suffix="Test.php">./src/Forms/Tests</directory>
-        </testsuite>
-        <testsuite name="Asset tests">
-            <directory suffix="Test.php">./src/Assets/Tests</directory>
-        </testsuite>
-        <testsuite name="General Unit Tests">
+        <testsuite name="unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-        <testsuite name="General Application tests">
+        <testsuite name="application">
             <directory suffix="Test.php">./tests/Application</directory>
         </testsuite>
-        <testsuite name="Plugin Tests">
+        <testsuite name="forms">
+            <directory suffix="Test.php">./src/Forms/Tests</directory>
+        </testsuite>
+        <testsuite name="assets">
+            <directory suffix="Test.php">./src/Assets/Tests</directory>
+        </testsuite>
+        <testsuite name="fragments">
+            <directory suffix="Test.php">./src/Fragments</directory>
+        </testsuite>
+        <testsuite name="resources">
+            <directory suffix="Test.php">./src/ManagedModels</directory>
+            <directory suffix="Test.php">./src/Managers</directory>
+            <directory suffix="Test.php">./src/Resource</directory>
+        </testsuite>
+        <testsuite name="admin">
+            <directory suffix="Test.php">./src/Admin</directory>
+            <directory suffix="Test.php">./src/Site</directory>
+            <directory suffix="Test.php">./src/Shared</directory>
+            <directory suffix="Test.php">./src/Table</directory>
+        </testsuite>
+        <testsuite name="plugins">
             <directory suffix="Test.php">./src/Plugins</directory>
         </testsuite>
     </testsuites>

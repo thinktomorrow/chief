@@ -17,17 +17,26 @@
                 {{ $this->fileSelect }}
 
                 <div>
-                    <livewire:chief-wire::file-edit parent-id="{{ $this->id }}" :components="$this->components" />
+                    <livewire:chief-wire::file-field-choose-external
+                        parent-id="{{ $this->id }}"
+                        allowMultiple="{{ $allowMultiple }}"
+                    />
+                </div>
+
+                <div>
+                    <livewire:chief-wire::file-edit parent-id="{{ $this->id }}" :components="$this->components"/>
                 </div>
             </x-chief-assets::upload-and-dropzone>
         </form>
 
         <x-slot name="footer">
-            <button type="submit" form="file-upload-form-{{ $this->id }}" @disabled($this->countFiles() < 1) @class([
+            <button type="submit"
+                    form="file-upload-form-{{ $this->id }}" @disabled($this->countUploadedOrSelectedFiles() < 1) @class([
                 'btn btn-primary',
-                'btn-disabled' => $this->countFiles() < 1,
+                'btn-disabled' => $this->countUploadedOrSelectedFiles() < 1,
             ])>
-                Voeg {{ $this->countFiles() > 1 ? $this->countFiles() . ' bestanden' : 'bestand' }} toe
+                Voeg {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
+                toe
             </button>
         </x-slot>
     @endif
