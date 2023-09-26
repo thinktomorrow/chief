@@ -1,29 +1,45 @@
-// import Errors from './utilities/Errors';
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
-// window.Errors = Errors;
+import Alpine from 'alpinejs';
+import dropdownDirective from './alpine-directives/dropdown';
+import multiselectDirective from './alpine-directives/multiselect';
+import initCopyToClipboard from './utilities/copy-to-clipboard';
+import initCollapsibleNavigation from './utilities/collapsible-navigation';
+import initDropdowns from './utilities/dropdown';
+import initAnimatedToggle from './utilities/animated-toggle';
+import initSortable from './sortable/sortable-init';
+import initFormSubmitOnChange from './utilities/form-submit-on-change';
+import registerClassToggles from './utilities/toggle-class';
+import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 
-/** Chief components */
-// Well well well, it's just you and us now...
-// window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
+/**
+ * List here all the js utilities needed to be loaded after the Vue instantiation
+ */
+initCollapsibleNavigation();
+initDropdowns();
+initCopyToClipboard();
+initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]', {
+    animationClass: 'animate-slide-in-nav lg:animate-none',
+});
+initFormSubmitOnChange();
+initSortable('[data-sortable]');
+registerClassToggles();
 
-// window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);
-// window.Vue.component('options-dropdown', require('./components-vue/OptionsDropdown.vue').default);
-// window.Vue.component('tab', require('./components-vue/Tab.vue').default);
-// window.Vue.component('tabs', require('./components-vue/Tabs.vue').default);
-// window.Vue.component('modal', require('./components-vue/Modal.vue').default);
-// window.Vue.component('mediagallery', require('./components-vue/MediaGallery.vue').default);
-// window.Vue.component('image-component', require('./components-vue/ImageComponent.vue').default);
-// window.Vue.component('imagesupload', require('./components-vue/ImagesUpload.vue').default);
-// window.Vue.component('radio-options', require('./components-vue/RadioOptions.vue').default);
-// window.Vue.component('link-input', require('./components-vue/LinkInput.vue').default);
-// window.Vue.component('url-redirect', require('./components-vue/UrlRedirect.vue').default);
-// window.Vue.component('notifications', require('./components-vue/Notifications/Notifications.vue').default);
-// window.Vue.component('notification', require('./components-vue/Notifications/Notification.vue').default);
+// Form logic - submit forms async or via sidebar
+require('./forms/index');
+// Table logic - bulk actions
+require('./tables/index');
+require('./sortable/sortable-livewire');
+
+/**
+ * --------------------------------
+ * Alpine
+ * --------------------------------
+ */
+Alpine.directive('dropdown', dropdownDirective);
+Alpine.directive('multiselect', multiselectDirective);
+Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
+
+window.Alpine = Alpine;
+Alpine.start();
