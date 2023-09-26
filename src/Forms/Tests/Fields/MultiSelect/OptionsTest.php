@@ -5,9 +5,7 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields\MultiSelect;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\InvalidOptionsForMultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class OptionsTest extends ChiefTestCase
 {

@@ -28,7 +28,7 @@ class ModelReferenceOptionsTest extends ChiefTestCase
         $this->assertEquals([
             ['value' => 'article_page@1', 'label' => 'article page [offline]'],
             ['value' => 'article_page@2', 'label' => 'article page'],
-        ],$result);
+        ], $result);
     }
 
     public function test_it_can_retrieve_options_from_model_references_with_group()
@@ -43,7 +43,7 @@ class ModelReferenceOptionsTest extends ChiefTestCase
         $this->assertEquals([
             ['value' => 'article_page@1', 'label' => 'article page [offline]', 'group' => 'Article page'],
             ['value' => 'article_page@2', 'label' => 'article page', 'group' => 'Article page'],
-        ],$result);
+        ], $result);
     }
 
     public function test_it_can_retrieve_grouped_options_from_model_references()
@@ -63,6 +63,6 @@ class ModelReferenceOptionsTest extends ChiefTestCase
                     ['value' => 'article_page@2', 'label' => 'article page', 'group' => 'Article page'],
                 ],
             ],
-        ],$result);
+        ], $result);
     }
 }

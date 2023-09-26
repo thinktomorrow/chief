@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceTest extends TestCase
