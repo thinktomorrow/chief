@@ -32,7 +32,7 @@
                 {{ $childComponent }}
             @endforeach
 
-            <button type="submit" class="relative gap-2 btn btn-primary" style="z-index: 1;">
+            <button type="submit" class="gap-2 btn btn-primary">
                 Opslaan
                 <svg data-form-submit-spinner class="hidden w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

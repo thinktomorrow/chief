@@ -4,13 +4,6 @@
   'multiple' => false,
 ])
 
-@once
-    {{-- TODO: Tijs extract to our builds --}}
-    @push('custom-styles')
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
-    @endpush
-@endonce
-
 <div
     x-cloak
     wire:ignore

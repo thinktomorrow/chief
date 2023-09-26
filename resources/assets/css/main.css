@@ -22,4 +22,5 @@
 @import './../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';
 
 @import './overrides/redactor';
-@import './overrides/multiselect';
+/* @import './overrides/multiselect'; */
+@import './overrides/choices.css';
