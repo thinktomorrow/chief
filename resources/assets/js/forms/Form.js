@@ -1,6 +1,5 @@
 import Panels from './sidebar/Panels';
 import Api from './Api';
-import vueFields from './fields/vue-fields';
 import initSortable from '../sortable/sortable-init';
 import initConditionalFields from './conditional-fields/init-conditional-fields';
 import registerClassToggles from '../utilities/toggle-class';
@@ -74,10 +73,6 @@ Form.prototype.refresh = function () {
         const DOM = document.createElement('div');
         DOM.innerHTML = data;
         this.el.innerHTML = DOM.firstElementChild.innerHTML;
-
-        // Mount Vue on our vue specific fields. Make sure that Vue mount occurs
-        // before vanilla event listeners so native js can do its thing
-        vueFields(this.el);
 
         // So Redactor can be reinitialised when the form is refreshed
         window.dispatchEvent(new CustomEvent('chief::formrefreshed', { detail: { container: this.el } }));

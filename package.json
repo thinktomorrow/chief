@@ -29,9 +29,7 @@
         "postcss-import": "^14.0.2",
         "prettier": "^2.8.2",
         "shelljs": "^0.8.4",
-        "tailwindcss": "^3.3.1",
-        "vue-loader": "^15.10.2",
-        "vue-template-compiler": "^2.7.14"
+        "tailwindcss": "^3.3.1"
     },
     "dependencies": {
         "@floating-ui/dom": "^1.5.1",

@@ -7,7 +7,6 @@ import initDropdowns from './utilities/dropdown';
 import initAnimatedToggle from './utilities/animated-toggle';
 import initSortable from './sortable/sortable-init';
 import initFormSubmitOnChange from './utilities/form-submit-on-change';
-import vueFields from './forms/fields/vue-fields';
 import registerClassToggles from './utilities/toggle-class';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 
@@ -29,16 +28,6 @@ require('./forms/index');
 // Table logic - bulk actions
 require('./tables/index');
 require('./sortable/sortable-livewire');
-// So livewire scripts play nice with vue
-
-// require('livewire-vue');
-
-/**
- * --------------------------------
- * Vue refresh hook
- * --------------------------------
- */
-window.vueFieldsRefresh = (el) => vueFields(el);
 
 /**
  * --------------------------------
