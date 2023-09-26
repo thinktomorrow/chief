@@ -10,19 +10,25 @@ use Thinktomorrow\Chief\Resource\PageResource;
 
 class ModelReferencePresenter
 {
-    public static function toSelectValues(Collection $collection): Collection
+    /**
+     * Select values prepared for the multiselect options
+     *
+     * @param Collection $collection
+     * @return Collection
+     */
+    public static function toSelectValues(Collection $collection, bool $prepareForGrouping = false): Collection
     {
         /** @var Registry $registry */
         $registry = app(Registry::class);
 
-        return $collection->map(function (ReferableModel $item) use ($registry) {
+        return $collection->map(function (ReferableModel $item) use ($registry, $prepareForGrouping) {
             /** @var PageResource $resource */
             $resource = $registry->findResourceByModel($item::class);
 
             return [
-                'id' => $item->modelReference()->getShort(),
+                'value' => $item->modelReference()->getShort(),
                 'label' => $resource->getPageTitleForSelect($item),
-                'group' => ucfirst($resource->getLabel()),
+                ...($prepareForGrouping ? ['group' => ucfirst($resource->getLabel())] : []),
             ];
         });
     }
@@ -31,11 +37,11 @@ class ModelReferencePresenter
     {
         $grouped = [];
 
-        static::toSelectValues($collection)->each(function ($item) use (&$grouped) {
+        static::toSelectValues($collection, true)->each(function ($item) use (&$grouped) {
             if (isset($grouped[$item['group']])) {
-                $grouped[$item['group']]['values'][] = $item;
+                $grouped[$item['group']]['options'][] = $item;
             } else {
-                $grouped[$item['group']] = ['group' => $item['group'], 'values' => [$item]];
+                $grouped[$item['group']] = ['label' => $item['group'], 'options' => [$item]];
             }
         });
 
