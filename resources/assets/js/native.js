@@ -1,5 +1,6 @@
 import Alpine from 'alpinejs';
 import dropdownDirective from './alpine-directives/dropdown';
+import multiselectDirective from './alpine-directives/multiselect';
 import initCopyToClipboard from './utilities/copy-to-clipboard';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -44,6 +45,7 @@ window.vueFieldsRefresh = (el) => vueFields(el);
  * --------------------------------
  */
 Alpine.directive('dropdown', dropdownDirective);
+Alpine.directive('multiselect', multiselectDirective);
 
 window.Alpine = Alpine;
 
