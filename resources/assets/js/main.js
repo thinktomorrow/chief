@@ -12,7 +12,7 @@ window.Errors = Errors;
 
 /** Chief components */
 // Well well well, it's just you and us now...
-window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
+// window.Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
 
 // window.Vue.component('dropdown', require('./components-vue/Dropdown.vue').default);
 // window.Vue.component('options-dropdown', require('./components-vue/OptionsDropdown.vue').default);

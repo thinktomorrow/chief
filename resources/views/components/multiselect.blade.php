@@ -10,7 +10,7 @@
     x-data="{
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
-        syncSelection: () => {},
+        syncSelection: () => {}
     }"
     x-multiselect="{
         selectEl: $refs.selectEl,
@@ -26,6 +26,9 @@
             noChoicesText: 'Geen opties',
             itemSelectText: '',
             uniqueItemText: 'Enkel unieke opties zijn mogelijk',
+            valueComparer: (value1, value2) => {
+              return value1 == value2; // Default is strict equality, we take it loosely.
+            },
         }
     }"
     x-init="
@@ -36,7 +39,7 @@
                 $el.choices.setChoices($data.options);
 
                 // Set current value
-                $el.choices.setValue($data.selection);
+                $el.choices.setChoiceByValue($data.selection);
             };
 
             $data.syncSelection = (e) => {
