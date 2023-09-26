@@ -5,6 +5,7 @@ const Forms = function (mainContainer, sidebar) {
     this.sidebar = sidebar;
     this.mainContainer = mainContainer;
     this.selector = '[data-form]';
+    this.lastVisitedTabId = null;
 
     EventBus.subscribe('chief-form-submitted', (e) => {
         const inSidebar = this.sidebar.sidebarContainer.el.contains(e.currentElement);
@@ -32,6 +33,9 @@ const Forms = function (mainContainer, sidebar) {
         //         this.refreshIn(e.container, e.panel.getTags());
         //     });
     });
+
+    // Listen for tab changes (so we can direct the visitor to the same tab after form refresh
+    window.addEventListener('chieftab', this.onTabDispatch.bind(this));
 };
 
 Forms.prototype.load = function (container = document) {
@@ -53,6 +57,7 @@ Forms.prototype.refreshIn = function (tags, container = document) {
         const form = new Form(el, this.sidebar);
 
         if (form.hasTag(tags)) {
+            form.lastVisitedTabId = this.lastVisitedTabId;
             form.refresh();
         }
     });
@@ -72,6 +77,10 @@ Forms.prototype.handleSubmitFromSidebar = function (responseData, meta) {
 
     this.sidebar.backAfterSubmit();
     return true;
+};
+
+Forms.prototype.onTabDispatch = function (e) {
+    this.lastVisitedTabId = e.detail;
 };
 
 export { Forms as default };

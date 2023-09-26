@@ -19,7 +19,7 @@
                 @include($getView(), ['component' => $component, 'locale' => $locale])
             @endforeach
         @else
-            <x-chief::tabs :listen-for-external-tab="true">
+            <x-chief::tabs :show-nav="false" :listen-for-external-tab="true">
                 @foreach($getLocales() as $locale)
                     <x-chief::tabs.tab tab-id='{{ $locale }}'>
                         @include($getView(), ['component' => $component, 'locale' => $locale])
