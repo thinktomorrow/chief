@@ -12,6 +12,7 @@ const Form = function (el, sidebar) {
     this.sidebar = sidebar;
     this.triggerSelector = '[data-sidebar-trigger]';
     this.formSelector = '[data-form]';
+    this.lastVisitedTabId = null;
 
     this.sidebarClick = (event) => this.handleSidebarClick(event);
 };
@@ -100,6 +101,13 @@ Form.prototype.refreshCallback = function () {
     }
 
     window.Livewire.rescan(this.el);
+
+    // Trigger tab if any
+    if (this.lastVisitedTabId) {
+        setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('chieftab', { detail: this.lastVisitedTabId }));
+        }, 0);
+    }
 };
 
 export { Form as default };
