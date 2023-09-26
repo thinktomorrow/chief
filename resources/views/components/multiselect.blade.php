@@ -23,9 +23,9 @@
             removeItemButton: true,
             duplicateItemsAllowed: false,
             noResultsText: 'Geen resultaten',
-            noChoicesText: 'geen opties',
+            noChoicesText: 'Geen opties',
             itemSelectText: '',
-            uniqueItemText: 'enkel unieke opties zijn mogelijk',
+            uniqueItemText: 'Enkel unieke opties zijn mogelijk',
         }
     }"
     x-init="
