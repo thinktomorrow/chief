@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <x-chief::page.template title="Sitemap">
     <x-slot name="hero">
         <x-chief::page.hero title="Sitemap" class="max-w-3xl"/>
@@ -25,7 +26,7 @@
                             </div>
 
                             <span class="text-grey-500">
-                                {{ \Carbon\Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }}
+                                {{ Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }}
                                 vernieuwd
                             </span>
                         </div>
@@ -56,6 +57,9 @@
                             }).then((response) => {
                                 isLoading = false;
                                 status = 'success';
+
+                                window.location.reload();
+
                             }).catch((errors) => {
                                 isLoading = false;
                                 status = 'error';

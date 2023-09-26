@@ -26,13 +26,16 @@
                                         </span>
                                     </span>
                                 @else
-                                    <svg class="w-5 h-5"><use xlink:href="#icon-home"/></svg>
+                                    <svg class="w-5 h-5">
+                                        <use xlink:href="#icon-home"/>
+                                    </svg>
                                 @endif
                             </x-slot>
 
                             <x-chief::input.text
                                 id="links.{{ $locale }}"
                                 name="links[{{ $locale }}]"
+                                value="{{ $formValues->value }}"
                                 x-on:input.debounce.300ms="(e) => {
                                     // An empty value is never checked for uniqueness
                                     if (!e.target.value) {
@@ -70,7 +73,8 @@
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
                             @if(count(config('chief.locales')) > 1)
-                                <span class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
+                                <span
+                                    class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
                             @endif
 
                             <div class="w-full px-4 py-3">
@@ -87,7 +91,9 @@
                                                 });
                                             }">
                                                 <x-chief::button>
-                                                    <svg><use xlink:href="#icon-trash"></use></svg>
+                                                    <svg>
+                                                        <use xlink:href="#icon-trash"></use>
+                                                    </svg>
                                                 </x-chief::button>
                                             </button>
                                         </div>
