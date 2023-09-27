@@ -21,7 +21,7 @@ class PrepareMenuItemsForAdminSelect
 
         $menu = $collection->mapRecursive(function (MenuItemNode $node) {
             $node->setLabel(
-                ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())) . '>' : '') .
+                ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())) . '> ' : '') .
                 $node->getLabel()
             );
 
@@ -32,7 +32,7 @@ class PrepareMenuItemsForAdminSelect
         $menu->flatten()->each(function (MenuItemNode $node) use ($menuitems) {
             $menuitems[] = [
                 'label' => $node->getLabel(),
-                'id' => $node->getId(),
+                'value' => $node->getId(),
             ];
         });
 

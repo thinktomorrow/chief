@@ -13,7 +13,7 @@
                     value="internal"
                     :checked="old('type', $menuitem->type) == 'internal'"
                     x-on:click="type = 'internal'"
-                 />
+                />
 
                 <x-chief::input.label for="type-internal" unset class="body body-dark">
                     Kies een interne pagina
@@ -22,15 +22,10 @@
 
             <div x-cloak x-show="type == 'internal'">
                 <x-chief::input.group rule="owner_reference">
-                    <chief-multiselect
+                    <x-chief::multiselect
                         name="owner_reference"
-                        :options='@json($pages)'
-                        selected='@json(old('owner_reference', $ownerReference))'
-                        grouplabel="group"
-                        groupvalues="values"
-                        labelkey="label"
-                        valuekey="id"
-                    />
+                        :options="$pages"
+                        :selection="old('owner_reference', $ownerReference)"/>
                 </x-chief::input.group>
             </div>
         </div>

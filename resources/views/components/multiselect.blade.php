@@ -2,6 +2,7 @@
   'options' => [],
   'selection' => [],
   'multiple' => false,
+  'placeholder' => null,
 ])
 
 <div
@@ -18,6 +19,8 @@
             allowHTML: true,
             paste: false,
             searchResultLimit: 10,
+            placeholder: true,
+            placeholderValue: '{{ $placeholder }}',
             shouldSort: false, // Keep sorting as is
             removeItems: true,
             removeItemButton: true,

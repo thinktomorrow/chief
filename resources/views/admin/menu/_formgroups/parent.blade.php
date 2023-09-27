@@ -39,12 +39,10 @@
 
             <div x-cloak x-show="type == '1'">
                 <x-chief::input.group rule="parent_id">
-                    <chief-multiselect
+                    <x-chief::multiselect
                         name="parent_id"
-                        :options='@json($parents)'
-                        selected='@json(old('parent_id', $menuitem->parent_id))'
-                        labelkey="label"
-                        valuekey="id"
+                        :options="$parents"
+                        :selection="old('parent_id', $menuitem->parent_id)"
                         placeholder="Kies het bovenliggende menu item"
                     />
                 </x-chief::input.group>
