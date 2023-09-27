@@ -9,6 +9,8 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 class RenderSelectTestOld extends ChiefTestCase
 {
 
+    use RefreshDatabase;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -95,6 +97,4 @@ class RenderSelectTestOld extends ChiefTestCase
         $component = Select::make('xxx')->options($options);
         $this->assertStringContainsString('<option value="one">een</option>', $component->toHtml());
     }
-
-    use RefreshDatabase;
 }

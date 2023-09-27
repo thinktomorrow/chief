@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceOptionsTest extends ChiefTestCase
 {
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -64,5 +65,4 @@ class ModelReferenceOptionsTest extends ChiefTestCase
             ],
         ], $result);
     }
-    use RefreshDatabase;
 }

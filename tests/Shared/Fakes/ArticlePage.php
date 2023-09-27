@@ -17,15 +17,15 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
 {
-    const FILEFIELD_DISK_KEY = 'file-on-other-disk';
-    const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
-    const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     use PageDefaults;
     use SoftDeletes;
     use InteractsWithAssets;
     use HasPeriodTrait;
     use Sortable;
+    const FILEFIELD_DISK_KEY = 'file-on-other-disk';
+    const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
+    const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     public $table = 'article_pages';
     public $guarded = [];
