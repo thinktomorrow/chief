@@ -1,9 +1,9 @@
 @php
-    $modalId = \Illuminate\Support\Str::random(10);
+    use Illuminate\Support\Str;$modalId = Str::random(10);
 @endphp
 
 @if($tag->getUsages() > 0)
-    <div data-vue-fields>
+    <div>
         <button
             type="button"
             x-data

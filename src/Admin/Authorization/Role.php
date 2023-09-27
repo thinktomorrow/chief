@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Admin\Authorization;
 
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Models\Role as BaseRole;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 
 class Role extends BaseRole implements RoleContract
 {
@@ -24,7 +25,7 @@ class Role extends BaseRole implements RoleContract
             return $role->name == 'developer';
         });
 
-        return $roles->pluck('name')->toArray();
+        return PairOptions::toMultiSelectPairs($roles->pluck('name')->toArray());
     }
 
     public static function create(array $attributes = [])

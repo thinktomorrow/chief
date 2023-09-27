@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters\Presets;
 
+use Closure;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\ManagedModels\Filters\AbstractFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filter;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterType;
@@ -13,9 +15,8 @@ class SelectFilter extends AbstractFilter implements Filter
     private array $options = [];
 
     private bool $multiple = false;
-    private bool $grouped = false;
 
-    public static function make(string $queryKey, \Closure $query): self
+    public static function make(string $queryKey, Closure $query): self
     {
         return new self(FilterType::SELECT, $queryKey, $query);
     }
@@ -34,6 +35,7 @@ class SelectFilter extends AbstractFilter implements Filter
         return $this;
     }
 
+    /** @deprecated - grouped is now auto determined based on options input. */
     public function grouped(bool $grouped = true): static
     {
         $this->grouped = $grouped;
@@ -41,18 +43,11 @@ class SelectFilter extends AbstractFilter implements Filter
         return $this;
     }
 
-    public function isGrouped(): bool
-    {
-        return $this->grouped;
-    }
-
-
     protected function viewData(): array
     {
         return array_merge(parent::viewData(), [
-            'options' => $this->options,
+            'options' => PairOptions::toMultiSelectPairs($this->options),
             'multiple' => $this->multiple,
-            'isGrouped' => $this->grouped,
         ]);
     }
 }

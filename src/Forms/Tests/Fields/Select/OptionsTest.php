@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\Fields\MultiSelect;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Select;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\InvalidOptionsForMultiSelect;
@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class OptionsTest extends ChiefTestCase
 {
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -83,6 +84,45 @@ class OptionsTest extends ChiefTestCase
         $this->assertEquals([
             [
                 'label' => 'Group one',
+                'options' => [
+                    ['value' => 'one', 'label' => 'een'],
+                    ['value' => 'two', 'label' => 'twee'],
+                ],
+            ],
+            [
+                'label' => 'Group two',
+                'options' => [
+                    ['value' => 'three', 'label' => 'drie'],
+                    ['value' => 'four', 'label' => 'vier'],
+                ],
+            ],
+        ], $component->getOptions());
+    }
+
+    public function test_it_can_set_grouped_options_for_multiselect_choices_library()
+    {
+        $options = [
+            [
+                'label' => 'Group one',
+                'options' => [
+                    ['value' => 'one', 'label' => 'een'],
+                    ['value' => 'two', 'label' => 'twee'],
+                ],
+            ],
+            [
+                'label' => 'Group two',
+                'options' => [
+                    ['value' => 'three', 'label' => 'drie'],
+                    ['value' => 'four', 'label' => 'vier'],
+                ],
+            ],
+        ];
+
+        $component = MultiSelect::make('xxx')->options($options);
+
+        $this->assertEquals([
+            [
+                'label' => 'Group one',
                 'choices' => [
                     ['value' => 'one', 'label' => 'een'],
                     ['value' => 'two', 'label' => 'twee'],
@@ -95,7 +135,7 @@ class OptionsTest extends ChiefTestCase
                     ['value' => 'four', 'label' => 'vier'],
                 ],
             ],
-        ], $component->getOptions());
+        ], $component->getMultiSelectFieldOptions());
     }
 
     public function test_it_can_set_grouped_assoc_options()
@@ -114,19 +154,18 @@ class OptionsTest extends ChiefTestCase
                 ],
             ],
 
-
         ]);
 
         $this->assertEquals([
             [
                 'label' => 'Group one',
-                'choices' => [
+                'options' => [
                     ['value' => 'one', 'label' => 'een'],
                 ],
             ],
             [
                 'label' => 'Group two',
-                'choices' => [
+                'options' => [
                     ['value' => 'two', 'label' => 'twee'],
                 ],
             ],
@@ -138,9 +177,11 @@ class OptionsTest extends ChiefTestCase
         $this->expectException(InvalidOptionsForMultiSelect::class);
         $this->expectExceptionMessage('Invalid MultiSelect option passed: [one:een]');
 
-        MultiSelect::make('xxx')->options([
+        $component = MultiSelect::make('xxx')->options([
             ['one' => 'een'],
             ['two' => 'twee'],
         ]);
+
+        $component->getOptions();
     }
 }

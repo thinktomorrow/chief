@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\View\Components\Fragments;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
@@ -108,8 +109,8 @@ trait FragmentsOwningAssistant
             'owner' => $owner,
             'ownerManager' => $this,
             'order' => $order,
-            'existingTypesOptions' => $existingTypesOptions,
-            'existingOwnersOptions' => $existingOwnersOptions,
+            'existingTypesOptions' => PairOptions::toMultiSelectPairs($existingTypesOptions),
+            'existingOwnersOptions' => PairOptions::toMultiSelectPairs($existingOwnersOptions),
         ]);
     }
 
@@ -122,7 +123,7 @@ trait FragmentsOwningAssistant
          * that these values are excluded. Since a fragment id consist of at least 4 digits,
          * We can safely assume that an index with less than four characters is considered an invalid fragment id.
          */
-        $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string) $index) > 3);
+        $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string)$index) > 3);
 
         app(SortModels::class)->handleFragments($owner->ownerModel(), $indices);
 

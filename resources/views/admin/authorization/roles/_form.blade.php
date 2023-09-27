@@ -19,11 +19,11 @@
         Met welke rechten heeft deze rol toegang tot de admin.
     </x-chief::input.description>
 
-    <chief-multiselect
+    <x-chief::multiselect
         id="permission_names"
         name="permission_names"
-        :options=@json($permission_names)
-        selected='@json(old('permission_names', $role->permissionNames()))'
+        :options="$permission_names"
+        :selection="old('permission_names', $role->permissionNames())"
         :multiple="true"
     />
 </x-chief::input.group>

@@ -12,17 +12,11 @@
         <x-chief::input.description>{{ $description }}</x-chief::input.description>
     @endif
 
-    <chief-multiselect
+    <x-chief::multiselect
         id="{{ $id }}"
         name="{{ $name }}"
-        :options='@json($options)'
-        selected='@json($value ?: $default)'
-        :multiple='@json($multiple)'
-        @if($isGrouped)
-            grouplabel="group"
-            groupvalues="values"
-            labelkey="label"
-            valuekey="id"
-        @endif
+        :options='$options'
+        :selection='$value ?: $default'
+        :multiple='$multiple'
     />
 </x-chief::input.group>

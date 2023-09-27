@@ -4,19 +4,23 @@
 
 @if(count($selected) > 0)
     <div class="flex flex-wrap gap-0.5">
-        @if(isset($isGrouped) && $isGrouped())
-            @foreach($getOptions() as $fieldGroup)
-                @foreach($fieldGroup['values'] as $optionValue)
-                    @if(in_array($optionValue['id'], $selected))
-                        <span class="inline-block label label-sm label-grey">{{ $optionValue['label'] }}</span>
-                    @endif
+        @if($hasOptionGroups())
+            @foreach($selected as $value)
+                @foreach($getOptions() as $group)
+                    @foreach($group['options'] as $optionValue)
+                        @if($optionValue['value'] == $value)
+                            <span class="inline-block label label-sm label-grey">{{ $optionValue['label'] }}</span>
+                        @endif
+                    @endforeach
                 @endforeach
             @endforeach
         @else
-            @foreach($selected as $selectedValue)
-                @if(isset($getOptions()[$selectedValue]))
-                    <span class="inline-block label label-sm label-grey">{{ $getOptions()[$selectedValue] }}</span>
-                @endif
+            @foreach($selected as $value)
+                @foreach($getOptions() as $optionValue)
+                    @if($optionValue['value'] == $value)
+                        <span class="inline-block label label-sm label-grey">{{ $optionValue['label'] }}</span>
+                    @endif
+                @endforeach
             @endforeach
         @endif
     </div>

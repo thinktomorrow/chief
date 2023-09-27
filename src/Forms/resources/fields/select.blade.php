@@ -8,19 +8,25 @@
 >
     <option value="">---</option>
 
-    @foreach ($getOptions() as $key => $value)
-
-        {{-- This allows to give a nested list of ['value' => 12, 'label' => 'title'] so this does not conflict with json reordering on livewire js. --}}
-        @if(is_array($value))
+    @if($hasOptionGroups())
+        @foreach ($getOptions() as $optionGroup)
+            <optgroup label="{{ $optionGroup['label'] }}">
+                @foreach ($optionGroup['options'] as $option)
+                    <option
+                        {{ in_array($option['value'], (array) $getActiveValue($locale ?? null)) ? 'selected' : '' }} value="{{ $option['value'] }}">
+                        {{ $option['label'] }}
+                    </option>
+                @endforeach
+            </optgroup>
+        @endforeach
+    @else
+        @foreach ($getOptions() as $option)
             <option
-                {{ in_array($value['value'], (array) $getActiveValue($locale ?? null)) ? 'selected' : '' }} value="{{ $value['value'] }}">
-                {{ $value['label'] }}
+                {{ in_array($option['value'], (array) $getActiveValue($locale ?? null)) ? 'selected' : '' }} value="{{ $option['value'] }}">
+                {{ $option['label'] }}
             </option>
-        @else
-            <option {{ in_array($key, (array) $getActiveValue($locale ?? null)) ? 'selected' : '' }} value="{{ $key }}">
-                {{ $value }}
-            </option>
-        @endif
+        @endforeach
+    @endif
 
-    @endforeach
+
 </x-chief::input.select>

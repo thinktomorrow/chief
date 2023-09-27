@@ -2,15 +2,18 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 
 class RoleController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -18,19 +21,6 @@ class RoleController extends Controller
 
         return view('chief::admin.authorization.roles.index', [
             'roles' => Role::all(),
-        ]);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function create()
-    {
-        $this->authorize('create-role');
-
-        return view('chief::admin.authorization.roles.create', [
-            'role' => new Role(),
-            'permission_names' => Permission::all()->pluck('name')->toArray(),
         ]);
     }
 
@@ -48,18 +38,31 @@ class RoleController extends Controller
         $role->givePermissionTo($request->permission_names);
 
         return redirect()->route('chief.back.roles.index')
-                         ->with('messages.success', 'Rol ' . $role->name . ' is toegevoegd.');
+            ->with('messages.success', 'Rol ' . $role->name . ' is toegevoegd.');
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
+     */
+    public function create()
+    {
+        $this->authorize('create-role');
+
+        return view('chief::admin.authorization.roles.create', [
+            'role' => new Role(),
+            'permission_names' => PairOptions::toMultiSelectPairs(Permission::all()->pluck('name')->toArray()),
+        ]);
+    }
+
+    /**
+     * @return Factory|View
      */
     public function edit($id)
     {
         $this->authorize('update-role');
 
         $role = Role::findOrFail($id);
-        $permission_names = Permission::all()->pluck('name')->toArray();
+        $permission_names = PairOptions::toMultiSelectPairs(Permission::all()->pluck('name')->toArray());
 
         return view('chief::admin.authorization.roles.edit', compact('role', 'permission_names'));
     }

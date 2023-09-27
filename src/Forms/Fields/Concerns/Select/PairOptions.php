@@ -2,34 +2,19 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns\Select;
 
-use Closure;
-
-trait HasPairedOptions
+class PairOptions
 {
-    protected array|Closure $options = [];
-
-    private bool $sanitizeOptions = true;
-
-    public function rawOptions(array|Closure $options): static
+    public static function toPairs(array $options): array
     {
-        return $this->options($options, false);
-    }
-
-    public function options(array|Closure $options, bool $sanitize = true): static
-    {
-        $this->sanitizeOptions = $sanitize;
-
-        $this->options = $sanitize ? static::enforceKeyValuePairs($options) : $options;
-
-        return $this;
+        return static::enforceKeyValuePairs($options);
     }
 
     /**
      * Convert non-associative array to associative one.
-     * If you want to force an non-assoc. array, you can use a Closure.
+     * If you want to force a non-assoc. array, you can use a Closure.
      * If it's a nested array which is used by the grouping of the Multiselect.
      */
-    private static function enforceKeyValuePairs(array|Closure $options): array|Closure
+    private static function enforceKeyValuePairs(array $options): array
     {
         // Empty array
         if (is_array($options) && empty($options)) {
@@ -52,7 +37,7 @@ trait HasPairedOptions
         return static::enforcePairs($options);
     }
 
-    private static function areOptionsGrouped(array $options): bool
+    public static function areOptionsGrouped(array $options): bool
     {
         $firstGroup = reset($options);
 
@@ -83,25 +68,10 @@ trait HasPairedOptions
         })->values()->all();
     }
 
-    public function getOptions(?string $locale = null): array
-    {
-        $options = $this->options;
-
-        if (is_callable($options)) {
-            $options = call_user_func_array($options, [$this, $this->getModel(), $locale]);
-
-            if ($this->sanitizeOptions) {
-                $options = static::enforceKeyValuePairs($options);
-            }
-        }
-
-        return static::convertOptionsToChoices($options);
-    }
-
     /**
      * Set the right syntax as expected by choices.js
      */
-    private static function convertOptionsToChoices(array $options): array
+    public static function convertOptionsToChoices(array $options): array
     {
         if (static::areOptionsGrouped($options)) {
             foreach ($options as $k => $optionGroup) {
@@ -112,13 +82,4 @@ trait HasPairedOptions
 
         return $options;
     }
-
-    // ASYNC???
-    // DYNAMIC
-    // ONLY ON LOADING OF FIELD -> LIVEWIRE
-
-    // id, value, label, customProperties [description, random, ...], groupValue, keyCode, disabled, selected
-
-    // GROUP
-    //label, id, choices, disabled,
 }

@@ -33,5 +33,10 @@ return (new PhpCsFixer\Config())
             'keep_multiple_spaces_after_comma' => true,
         ],
         'php_unit_method_casing' => ['case' => 'snake_case'],
+        'ordered_class_elements' => [
+            'order' => [
+                'use_trait',
+            ],
+        ],
     ])
     ->setFinder($finder);

@@ -16,9 +16,9 @@ class ModelReferencePresenter
 
         static::toSelectValues($collection, true)->each(function ($item) use (&$grouped) {
             if (isset($grouped[$item['group']])) {
-                $grouped[$item['group']]['choices'][] = $item;
+                $grouped[$item['group']]['options'][] = $item;
             } else {
-                $grouped[$item['group']] = ['label' => $item['group'], 'choices' => [$item]];
+                $grouped[$item['group']] = ['label' => $item['group'], 'options' => [$item]];
             }
         });
 

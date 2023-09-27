@@ -8,24 +8,24 @@
         >
             <input name="order" type="number" hidden value="{{ $order ?? 0 }}">
 
-            <div data-vue-fields class="flex items-center gap-4">
+            <div class="flex items-center gap-4">
                 @if(public_method_exists($owner, 'getRelatedOwners'))
-                    <chief-multiselect
+                    <x-chief::multiselect
                         id="selectExistingOwners"
                         name="owners[]"
                         placeholder="Kies een pagina"
-                        :options='@json($existingOwnersOptions)'
-                        class="w-full"
-                    ></chief-multiselect>
+                        :options="$existingOwnersOptions"
+                        class="w-1/2"
+                    ></x-chief::multiselect>
                 @endif
 
-                <chief-multiselect
+                <x-chief::multiselect
                     id="selectExistingTypes"
                     name="types[]"
                     placeholder="Kies een type"
-                    :options='@json($existingTypesOptions)'
-                    class="w-full"
-                ></chief-multiselect>
+                    :options="$existingTypesOptions"
+                    class="w-1/2"
+                ></x-chief::multiselect>
 
                 {{-- Should be deleted once the onchange/oninput submit on this form works --}}
                 <button class="btn btn-primary" type="submit">Zoek</button>

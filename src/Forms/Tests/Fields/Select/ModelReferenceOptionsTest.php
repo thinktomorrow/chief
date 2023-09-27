@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\Fields\MultiSelect;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Select;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceOptionsTest extends ChiefTestCase
 {
-    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -65,4 +64,5 @@ class ModelReferenceOptionsTest extends ChiefTestCase
             ],
         ], $result);
     }
+    use RefreshDatabase;
 }

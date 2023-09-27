@@ -10,44 +10,39 @@ trait HasOptions
 {
     protected array|Closure $options = [];
 
-    public function options(array|Closure $options): static
+    private bool $sanitizeOptions = true;
+
+    public function rawOptions(array|Closure $options): static
     {
-        $this->options = $this->enforceKeyValuePairs($options);
+        return $this->options($options, false);
+    }
+
+    public function options(array|Closure $options, bool $sanitize = true): static
+    {
+        $this->sanitizeOptions = $sanitize;
+
+        $this->options = $options;
 
         return $this;
     }
 
-    /**
-     * Convert non-associative array to associative one.
-     * If you want to force an non-assoc. array, you can use a Closure.
-     * If it's a nested array which is used by the grouping of the Multiselect.
-     */
-    private function enforceKeyValuePairs(array|Closure $options): array|Closure
+    public function hasOptionGroups(): bool
     {
-        // Empty array
-        if (is_array($options) && empty($options)) {
-            return $options;
-        }
-
-        // Closure, assoc or nested array.
-        if (! is_array($options) || ! array_is_list($options) || is_array($options[0])) {
-            return $options;
-        }
-
-        return array_combine($options, $options);
+        return PairOptions::areOptionsGrouped($this->options);
     }
 
     public function getOptions(?string $locale = null): array
     {
-        if (is_callable($this->options)) {
-            return call_user_func_array($this->options, [$this, $this->getModel(), $locale]);
+        $options = $this->options;
+
+        if (is_callable($options)) {
+            $options = call_user_func_array($options, [$this, $this->getModel(), $locale]);
         }
 
-        return $this->options;
-    }
+        if ($this->sanitizeOptions) {
+            $options = PairOptions::toPairs($options);
+        }
 
-    private function enforceMultiSelectFormatFromOptionPairs(array $options): array
-    {
-        return array_map(fn ($option) => ['value' => $option, 'label' => $option], $options);
+        return $options;
     }
 }

@@ -30,11 +30,11 @@
             Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.
         </x-chief::input.description>
 
-        <chief-multiselect
+        <x-chief::multiselect
             id="roles"
             name="roles"
-            :options=@json($roleNames)
-            selected='@json(old('roles', $user->roleNames()))'
+            :options="$roleNames"
+            :selection="old('roles', $user->roleNames())"
             :multiple="true"
         />
     </x-chief::input.group>

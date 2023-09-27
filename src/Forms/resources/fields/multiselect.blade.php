@@ -1,6 +1,6 @@
 <x-chief::multiselect
     name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
-    :options="$getOptions()"
+    :options="$getMultiSelectFieldOptions()"
     :multiple="$allowMultiple()"
     :selection="$getActiveValue($locale ?? null)"
 />

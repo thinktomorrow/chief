@@ -3,9 +3,11 @@
   'selection' => [],
   'multiple' => false,
   'placeholder' => null,
+  'name' => null,
 ])
 
 <div
+    {{ $attributes }}
     x-cloak
     wire:ignore
     x-data="{
@@ -55,9 +57,9 @@
     "
 >
     <select
+        name="{{ $name }}"
         x-ref="selectEl"
         x-on:change="syncSelection()"
-        {{ $attributes }}
         {{ $multiple ? 'multiple' : '' }}
     ></select>
 </div>
