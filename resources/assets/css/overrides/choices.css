@@ -212,7 +212,7 @@
 .choices__list--dropdown,
 .choices__list[aria-expanded] {
     visibility: hidden;
-    z-index: 1;
+    z-index: 10;
     position: absolute;
     width: 100%;
     background-color: #fff;

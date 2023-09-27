@@ -59,7 +59,10 @@
     <select
         name="{{ $name }}"
         x-ref="selectEl"
-        x-on:change="syncSelection()"
+        x-on:change="() => {
+            $dispatch('multiselect-change');
+            syncSelection();
+        }"
         {{ $multiple ? 'multiple' : '' }}
     ></select>
 </div>
