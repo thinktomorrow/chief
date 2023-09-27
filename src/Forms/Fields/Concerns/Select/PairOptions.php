@@ -68,6 +68,11 @@ class PairOptions
         })->values()->all();
     }
 
+    public static function toMultiSelectPairs(array $options): array
+    {
+        return static::convertOptionsToChoices(static::enforceKeyValuePairs($options));
+    }
+
     /**
      * Set the right syntax as expected by choices.js
      */
