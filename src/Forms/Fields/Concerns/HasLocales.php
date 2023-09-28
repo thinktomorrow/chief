@@ -21,29 +21,23 @@ trait HasLocales
         return $this;
     }
 
-    public function getLocales(): array
-    {
-        return $this->locales;
-    }
-
     public function hasLocales(): bool
     {
         return count($this->locales) > 0;
+    }
+
+    public function getLocalizedKeys(): array
+    {
+        return $this->getLocalizedFormKey()
+            ->dotted()
+            ->matrix($this->getKey(), $this->getLocales());
     }
 
     public function getLocalizedFormKey(): LocalizedFormKey
     {
         return LocalizedFormKey::make()
             ->bracketed()
-            ->template(str_contains($this->name, ':locale') ? ':name' : $this->getLocalizedFormKeyTemplate())
-        ;
-    }
-
-    public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static
-    {
-        $this->localizedFormKeyTemplate = $localizedFormKeyTemplate;
-
-        return $this;
+            ->template(str_contains($this->name, ':locale') ? ':name' : $this->getLocalizedFormKeyTemplate());
     }
 
     public function getLocalizedFormKeyTemplate(): string
@@ -53,5 +47,31 @@ trait HasLocales
         }
 
         return $this->localizedFormKeyTemplate;
+    }
+
+    public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static
+    {
+        $this->localizedFormKeyTemplate = $localizedFormKeyTemplate;
+
+        return $this;
+    }
+
+    public function getLocales(): array
+    {
+        return $this->locales;
+    }
+
+    public function getLocalizedNames(): array
+    {
+        return $this->getLocalizedFormKey()
+            ->bracketed()
+            ->matrix($this->getName(), $this->getLocales());
+    }
+
+    public function getLocalizedDottedNames(): array
+    {
+        return $this->getLocalizedFormKey()
+            ->dotted()
+            ->matrix($this->getName(), $this->getLocales());
     }
 }

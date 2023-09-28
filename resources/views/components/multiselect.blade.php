@@ -7,15 +7,38 @@
 ])
 
 <div
-    {{ $attributes }}
-    x-cloak
-    wire:ignore
-    x-data="{
-        selection: {{ json_encode((array) $selection) }},
+        x-cloak
+        wire:ignore
+        {{ $attributes }}
+        x-data="{
+        // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
+        selection: {{ (empty($selection) && isset($this) && $this->id) ? '$wire.entangle("' . $attributes->wire('model')->value() .'")' : json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
         syncSelection: () => {}
     }"
-    x-multiselect="{
+        x-init="
+        $nextTick(() => {
+            const refreshOptions = () => {
+                // Reset all options
+                $el.choices.clearStore();
+                $el.choices.setChoices($data.options);
+
+                // Set current value
+                $el.choices.setChoiceByValue($data.selection);
+            };
+
+            $data.syncSelection = (e) => {
+                const value = $el.choices.getValue(true);
+                $data.selection = Array.isArray(value) ? value : [value];
+
+                // Notify change event for outside listeners, such as the Conditional fields js.
+                $dispatch('multiselect-change');
+            }
+
+            refreshOptions();
+        });
+    "
+        x-multiselect="{
         selectEl: $refs.selectEl,
         options: {
             allowHTML: true,
@@ -32,37 +55,16 @@
             itemSelectText: '',
             uniqueItemText: 'Enkel unieke opties zijn mogelijk',
             valueComparer: (value1, value2) => {
-              return value1 == value2; // Default is strict equality, we take it loosely.
+              // Default is strict equality, we take it loosely. Otherwise id comparison
+              // where it can be either a string or int are not matched up.
+              return value1 == value2;
             },
         }
-    }"
-    x-init="
-        $nextTick(() => {
-            const refreshOptions = () => {
-                // Reset all options
-                $el.choices.clearStore();
-                $el.choices.setChoices($data.options);
-
-                // Set current value
-                $el.choices.setChoiceByValue($data.selection);
-            };
-
-            $data.syncSelection = (e) => {
-                const value = $el.choices.getValue(true);
-                $data.selection = Array.isArray(value) ? value : [value];
-            }
-
-            refreshOptions();
-        });
-    "
->
+    }">
     <select
-        name="{{ $name }}"
-        x-ref="selectEl"
-        x-on:change="() => {
-            $dispatch('multiselect-change');
-            syncSelection();
-        }"
-        {{ $multiple ? 'multiple' : '' }}
+            name="{{ $name }}"
+            x-ref="selectEl"
+            x-on:change="syncSelection"
+            {{ $multiple ? 'multiple' : '' }}
     ></select>
 </div>

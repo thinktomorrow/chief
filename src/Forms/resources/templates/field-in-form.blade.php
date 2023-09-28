@@ -1,13 +1,13 @@
 @php
-    $fieldType = strtolower(class_basename($component));
+    use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;$fieldType = strtolower(class_basename($component));
 @endphp
 
 <div
-    {!! $getFieldToggles() ? "data-conditional-toggle='" . json_encode($getFieldToggles()) . "'" : null !!}
-    data-field-key="{{ $getId($locale ?? null) }}"
-    data-field-type="{{ $fieldType }}"
-    {!! $fieldType == 'hidden' ? 'hidden' : null !!}
-    class="space-y-1 form-light"
+        {!! $getFieldToggles() ? "data-conditional-toggle='" . json_encode($getFieldToggles()) . "'" : null !!}
+        data-field-key="{{ $getId($locale ?? null) }}"
+        data-field-type="{{ $fieldType }}"
+        {!! $fieldType == 'hidden' ? 'hidden' : null !!}
+        class="space-y-1 form-light"
 >
     @if ($getLabel())
         <x-chief::input.label :required="$isRequired()">
@@ -42,11 +42,12 @@
 
     @if ($hasLocales())
         @foreach($getLocales() as $locale)
-            <x-chief::input.error :rule="\Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getId(),$locale)"/>
+            <x-chief::input.error
+                    :rule="LivewireFieldName::get($getId($locale ?? null))"/>
             <x-chief::input.error :rule="$getId($locale)"/>
         @endforeach
     @else
-        <x-chief::input.error :rule="\Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName::get($getId())"/>
+        <x-chief::input.error :rule="LivewireFieldName::get($getId())"/>
         <x-chief::input.error :rule="$getId()"/>
     @endif
 </div>

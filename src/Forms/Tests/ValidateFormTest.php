@@ -16,6 +16,7 @@ final class ValidateFormTest extends ChiefTestCase
     /** @test */
     public function a_required_field_can_be_validated()
     {
+
         $this->assertValidation(
             new ArticlePage(),
             ['title' => 'The title field is required.'],

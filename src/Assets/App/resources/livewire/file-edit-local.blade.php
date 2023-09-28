@@ -145,7 +145,7 @@
                     Annuleren
                 </button>
 
-                <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                <button wire:click.prevent="submit" type="button" class="btn btn-primary">
                     Opslaan
                 </button>
             </x-slot>

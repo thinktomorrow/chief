@@ -40,12 +40,19 @@ trait InteractsWithForm
                 continue;
             }
 
-            Arr::set(
-                $this->form,
-                $component->getKey(),
-                data_get($this->previewFile->fieldValues, $component->getKey())
-            );
+            if ($component->hasLocales()) {
+                foreach ($component->getLocalizedDottedNames() as $name) {
+                    $this->injectFormValue($name, data_get($this->previewFile->fieldValues, $name));
+                }
+            } else {
+                $this->injectFormValue($component->getName(), data_get($this->previewFile->fieldValues, $component->getName()));
+            }
         }
+    }
+
+    private function injectFormValue(string $key, $value): void
+    {
+        Arr::set($this->form, $key, $value);
     }
 
     /**
@@ -73,6 +80,7 @@ trait InteractsWithForm
         return [$rules, $messages, $validationAttributes];
     }
 
+    // TODO: account for locales...
     private function getFieldsForValidation(): array
     {
         return collect($this->getComponents())

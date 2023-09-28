@@ -1,6 +1,10 @@
+@php use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName; @endphp
+
 <x-chief::multiselect
-    name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
-    :options="$getMultiSelectFieldOptions()"
-    :multiple="$allowMultiple()"
-    :selection="$getActiveValue($locale ?? null)"
+        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
+        :options="$getMultiSelectFieldOptions()"
+        :multiple="$allowMultiple()"
+        :selection="$getActiveValue($locale ?? null)"
 />
+
