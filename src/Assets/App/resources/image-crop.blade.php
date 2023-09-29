@@ -15,9 +15,9 @@
                     <div class="space-y-6 shrink-0">
                         <div class="overflow-hidden w-80 h-80 bg-grey-100 rounded-xl">
                             <img
-                                id="image_crop_{{ $previewFile->id }}"
-                                src="{{ $previewFile->previewUrl }}"
-                                class="object-contain w-full h-full"
+                                    id="image_crop_{{ $previewFile->id }}"
+                                    src="{{ $previewFile->previewUrl }}"
+                                    class="object-contain w-full h-full"
                             >
                         </div>
 
@@ -52,7 +52,7 @@
         </div>
     @endif
 
-    @push('custom-scripts-after-vue')
+    @push('custom-scripts')
         <script src="https://unpkg.com/cropperjs@next"></script>
         <script>
             window.Livewire.on('imageCropOpened', fileId => {

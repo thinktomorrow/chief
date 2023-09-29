@@ -10,7 +10,7 @@
 
         <label for="{{ $id }}" class="flex items-start gap-2">
             <x-chief::input.radio
-                    wire:model.lazy="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+                    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
                     id="{{ $id }}"
                     name="{{ $getName($locale ?? null) }}"
                     value="{{ $value }}"

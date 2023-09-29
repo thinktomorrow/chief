@@ -5,7 +5,7 @@ window.Sortable = Sortable;
 /**
  * Based on the Filament sortable.js livewire integration
  */
-window.Livewire.directive('sortable', (el) => {
+window.Livewire.directive('sortable', ({ el }) => {
     el.sortable = Sortable.create(el, {
         draggable: '[wire\\:sortable\\.item]',
         handle: '[wire\\:sortable\\.handle]',

@@ -2,9 +2,9 @@
 <div>
     <div class="flex justify-end w-full mb-4">
         <button
-            wire:click="openFileUpload"
-            type="button"
-            class="inline-flex items-start gap-2 leading-5 btn btn-primary"
+                wire:click="openFileUpload"
+                type="button"
+                class="inline-flex items-start gap-2 leading-5 btn btn-primary"
         >
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor">
@@ -23,13 +23,13 @@
                     </svg>
 
                     <x-chief::input.text
-                        wire:model.debounce.500ms="filters.search"
-                        placeholder="Zoek op bestandsnaam"
-                        class="w-full pl-10"
+                            wire:model.live.debounce.500ms="filters.search"
+                            placeholder="Zoek op bestandsnaam"
+                            class="w-full pl-10"
                     />
                 </div>
 
-                <x-chief::input.select wire:model="sort">
+                <x-chief::input.select wire:model.live="sort">
                     <option value="created_at_desc">Datum laatst toegevoegd</option>
                     <option value="created_at_asc">Datum eerst toegevoegd</option>
                 </x-chief::input.select>

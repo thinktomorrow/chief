@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 use Livewire\WithPagination;
 use Thinktomorrow\AssetLibrary\Asset;
 
@@ -15,7 +14,7 @@ trait InteractsWithGallery
     public $filters = [];
     public $sort = null;
 
-    public Collection $rows;
+    public $rows;
 
     public function updatedFilters()
     {

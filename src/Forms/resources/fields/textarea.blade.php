@@ -1,6 +1,6 @@
 @php use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName; @endphp
 <x-chief::input.textarea
-        wire:model.lazy="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         v-pre
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"

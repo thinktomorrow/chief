@@ -1,7 +1,7 @@
 @php use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName; @endphp
 
 <x-chief::input.select
-        wire:model.lazy="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
         :multiple="$allowMultiple()"

@@ -3,7 +3,7 @@
         data-editor
         data-locale="{{ $locale ?? app()->getLocale() }}"
         data-custom-redactor-options="{{ json_encode($getRedactorOptions($locale ?? null)) }}"
-        wire:model.lazy="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         v-pre
         id="{{ $getId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"

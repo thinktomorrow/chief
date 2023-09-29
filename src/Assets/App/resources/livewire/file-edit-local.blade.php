@@ -3,14 +3,14 @@
 @if($isOpen)
     <form class="flex items-start gap-8 max-lg:flex-wrap">
         <div
-            class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
+                class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
             <div
-                class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
+                    class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
                 @if($previewFile && $previewFile->isImage())
                     <img
-                        src="{{ $previewFile->previewUrl }}"
-                        alt="Preview image"
-                        class="object-contain w-full h-full"
+                            src="{{ $previewFile->previewUrl }}"
+                            alt="Preview image"
+                            class="object-contain w-full h-full"
                     >
                 @else
                     <svg width="24" height="24" class="text-grey-400">
@@ -105,16 +105,16 @@
 
                 <x-chief::input.prepend-append :append="'.'.$previewFile->extension">
                     <x-chief::input.text
-                        id="form.basename"
-                        name="form[basename]"
-                        placeholder="Bestandsnaam"
-                        wire:model.lazy="form.basename"
+                            id="form.basename"
+                            name="form[basename]"
+                            placeholder="Bestandsnaam"
+                            wire:model="form.basename"
                     />
                 </x-chief::input.prepend-append>
 
                 @if($replacedPreviewFile)
                     <span
-                        class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
+                            class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
                 @endif
             </x-chief::input.group>
 

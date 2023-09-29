@@ -13,17 +13,19 @@
     </x-slot>
 </x-chief::dialog>
 
-@push('custom-scripts-after-vue')
+@push('custom-scripts')
     <script>
-        window.Livewire.hook('request', ({fail}) => {
-            fail(({status, preventDefault}) => {
-                if (status === 419) {
-                    preventDefault();
-                    window.dispatchEvent(new CustomEvent('open-dialog', {detail: {id: 'refresh-modal'}}));
+        document.addEventListener('livewire:initialized', () => {
+            window.Livewire.hook('request', ({fail}) => {
+                fail(({status, preventDefault}) => {
+                    if (status === 419) {
+                        preventDefault();
+                        window.dispatchEvent(new CustomEvent('open-dialog', {detail: {id: 'refresh-modal'}}));
 
-                    return false;
-                }
+                        return false;
+                    }
+                })
             })
-        })
+        });
     </script>
 @endpush

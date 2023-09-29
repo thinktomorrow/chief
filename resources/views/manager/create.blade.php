@@ -15,7 +15,7 @@
                 @csrf
 
                 <div class="space-y-6">
-                    <x-chief-form::fields not-tagged="edit,not-on-create" />
+                    <x-chief-form::fields not-tagged="edit,not-on-create"/>
 
                     <button type="submit" class="btn btn-primary">Aanmaken</button>
                 </div>
@@ -25,6 +25,6 @@
 </x-chief::page.template>
 
 
-@push('custom-scripts-after-vue')
+@push('custom-scripts')
     @include('chief::layout._partials.editor-script')
 @endpush

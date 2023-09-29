@@ -14,16 +14,17 @@
                 @isset($icon)
                     @isset($url)
                         <a
-                            href="{{ $url }}"
-                            title="{!! $label !!}"
-                            data-toggle-dropdown-ignore
-                            class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
-                            {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
+                                href="{{ $url }}"
+                                title="{!! $label !!}"
+                                data-toggle-dropdown-ignore
+                                class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
+                                {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                         >
                             {!! $icon !!}
                         </a>
                     @else
-                        <div data-expand-navigation class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900">
+                        <div data-expand-navigation
+                             class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900">
                             {!! $icon !!}
                         </div>
                     @endisset
@@ -31,19 +32,19 @@
 
                 @isset($url)
                     <a
-                        href="{{ $url }}"
-                        title="{!! $label !!}"
-                        data-toggle-dropdown-ignore
-                        data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
-                        {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
+                            href="{{ $url }}"
+                            title="{!! $label !!}"
+                            data-toggle-dropdown-ignore
+                            data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
+                            class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                            {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
                     </a>
                 @else
                     <span
-                        data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                            data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
+                            class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                     >
                         {!! $label !!}
                     </span>
@@ -52,8 +53,8 @@
 
             @if(!$slot->isEmpty())
                 <div
-                    data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                    class="shrink-0 mt-2.5 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
+                        class="shrink-0 mt-2.5 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
                 >
                     <div class="flex items-center justify-center">
                         <span class="text-grey-700 hover:scale-105">
@@ -67,8 +68,8 @@
 
     @if(!$slot->isEmpty())
         <div
-            data-dropdown="{{ $dropdownIdentifier }}"
-            class="ml-9 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
+                data-dropdown="{{ $dropdownIdentifier }}"
+                class="ml-9 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
         >
             {!! $slot !!}
         </div>

@@ -13,15 +13,15 @@
                     </svg>
 
                     <x-chief::input.text
-                        wire:model.debounce.500ms="filters.search"
-                        x-data="{}" {{-- Prevents directive to be triggered twice --}}
-                        x-prevent-submit-on-enter
-                        placeholder="Zoek op bestandsnaam"
-                        class="w-full pl-10"
+                            wire:model.live.debounce.500ms="filters.search"
+                            x-data="{}" {{-- Prevents directive to be triggered twice --}}
+                            x-prevent-submit-on-enter
+                            placeholder="Zoek op bestandsnaam"
+                            class="w-full pl-10"
                     />
                 </div>
 
-                <x-chief::input.select wire:model="sort" class="w-64 shrink-0">
+                <x-chief::input.select wire:model.live="sort" class="w-64 shrink-0">
                     <option value="created_at_desc">Datum laatst toegevoegd</option>
                     <option value="created_at_asc">Datum eerst toegevoegd</option>
                 </x-chief::input.select>
@@ -61,9 +61,9 @@
                             @foreach($selectedPreviewFiles as $selectedPreviewFile)
                                 <div class="-mr-2 shrink-0">
                                     <img
-                                        src="{{ $selectedPreviewFile->getUrl('thumb') }}"
-                                        alt="{{ $selectedPreviewFile->filename }}"
-                                        class="object-cover w-10 h-10 border-2 border-white rounded-lg bg-grey-100"
+                                            src="{{ $selectedPreviewFile->getUrl('thumb') }}"
+                                            alt="{{ $selectedPreviewFile->filename }}"
+                                            class="object-cover w-10 h-10 border-2 border-white rounded-lg bg-grey-100"
                                     >
                                 </div>
                             @endforeach

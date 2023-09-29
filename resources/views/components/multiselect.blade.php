@@ -10,9 +10,11 @@
         x-cloak
         wire:ignore
         {{ $attributes }}
+        {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
+        x-modelable="selection"
         x-data="{
         // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
-        selection: {{ (empty($selection) && isset($this) && $this->id) ? '$wire.entangle("' . $attributes->wire('model')->value() .'")' : json_encode((array) $selection) }},
+        selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
         syncSelection: () => {}
     }"
@@ -33,6 +35,8 @@
 
                 // Notify change event for outside listeners, such as the Conditional fields js.
                 $dispatch('multiselect-change');
+
+                $dispatch('input', $data.selection);
             }
 
             refreshOptions();

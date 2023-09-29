@@ -25,7 +25,7 @@
         <x-chief-form::forms position="main"/>
 
         @adminCan('fragments-index', $model)
-            <x-chief::fragments :owner="$model"/>
+        <x-chief::fragments :owner="$model"/>
         @endAdminCan
 
         <x-chief-form::forms position="main-bottom"/>
@@ -38,7 +38,7 @@
         </x-slot>
     </x-chief::page.grid>
 
-    @push('custom-scripts-after-vue')
+    @push('custom-scripts')
         @include('chief::layout._partials.editor-script')
     @endpush
 </x-chief::page.template>

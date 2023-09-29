@@ -1,6 +1,6 @@
 @php
-    $title = ucfirst($page->label());
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Vaste teksten', route('squanto.index'));
+    use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;$title = ucfirst($page->label());
+    $breadcrumb = new BreadCrumb('Vaste teksten', route('squanto.index'));
     $collectedLines = collect($lines)->groupBy(function($lineViewModel) {
         return $lineViewModel->sectionKey();
     });
@@ -41,11 +41,11 @@
         </x-chief::page.grid>
     </form>
 
-    @push('custom-scripts-after-vue')
+    @push('custom-scripts')
         <script src="{{ asset('/assets/back/js/vendor/redactor.js') }}"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                if(document.querySelectorAll('.redactor-editor').length > 0) {
+            document.addEventListener('DOMContentLoaded', function () {
+                if (document.querySelectorAll('.redactor-editor').length > 0) {
                     $R('.redactor-editor', {
                         buttons: ['html', 'format', 'bold', 'italic', 'sup', 'sub', 'strikethrough', 'lists', 'link']
                     });
