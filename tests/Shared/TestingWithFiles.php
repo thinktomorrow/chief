@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Controllers\FileUploadHandler;
+use Livewire\Features\SupportFileUploads\FileUploadController;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\StoreFiles;
 use Thinktomorrow\Chief\Assets\App\UpdateFileField;
@@ -40,7 +40,7 @@ trait TestingWithFiles
     {
         Storage::fake('tmp-for-tests');
 
-        $paths = app(FileUploadHandler::class)->validateAndStore([
+        $paths = app(FileUploadController::class)->validateAndStore([
             $file,
         ], 'tmp-for-tests');
 

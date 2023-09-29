@@ -3,7 +3,7 @@
 namespace Livewire;
 
 use Illuminate\Http\UploadedFile;
-use Livewire\Testing\TestableLivewire;
+use Livewire\Features\SupportTesting\Testable;
 use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 class FileUploadTest extends ChiefTestCase
 {
     private $model;
-    private TestableLivewire $livewireInstance;
+    private Testable $livewireInstance;
 
     public function setUp(): void
     {

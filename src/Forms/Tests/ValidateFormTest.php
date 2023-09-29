@@ -55,7 +55,7 @@ final class ValidateFormTest extends ChiefTestCase
     {
         $this->assertValidation(
             new ArticlePage(),
-            ['title' => 'The title must be at least 4 characters.'],
+            ['title' => 'The title field must be at least 4 characters.'],
             $this->payload(['title' => 'xx']),
             $this->manager($this->model)->route('edit', $this->model),
             $this->manager($this->model)->route('update', $this->model),

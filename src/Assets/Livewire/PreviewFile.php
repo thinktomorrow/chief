@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use Livewire\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Wireable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
