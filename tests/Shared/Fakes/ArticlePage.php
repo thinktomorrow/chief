@@ -11,6 +11,7 @@ use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -23,6 +24,7 @@ class ArticlePage extends Model implements Page
     use InteractsWithAssets;
     use HasPeriodTrait;
     use Sortable;
+
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
     const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
@@ -64,6 +66,6 @@ class ArticlePage extends Model implements Page
 
     protected function dynamicLocales(): array
     {
-        return config('chief.locales', []);
+        return ChiefLocaleConfig::getLocales();
     }
 }

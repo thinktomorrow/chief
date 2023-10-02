@@ -30,7 +30,7 @@ final class LinkForm
     {
         $links = [];
 
-        foreach (config('chief.locales') as $locale) {
+        foreach (\Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig::getLocales() as $locale) {
             $records = $this->urlRecords->get($locale, collect());
             $currentRecord = $records->reject->isRedirect()->first();
 
@@ -88,7 +88,7 @@ final class LinkForm
     {
         $values = [];
 
-        foreach (config('chief.locales') as $locale) {
+        foreach (\Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig::getLocales() as $locale) {
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object)[

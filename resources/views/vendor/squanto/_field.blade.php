@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
 <div class="flex flex-wrap justify-between w-full sm:flex-nowrap gap-y-3 gap-x-6">
     <div class="w-full space-y-1 sm:w-64 shrink-0">
         <p class="font-medium h6 h1-dark">
@@ -18,7 +19,7 @@
             @endphp
 
             <div class="flex w-full gap-2">
-                @if(count(config('chief.locales')) > 1)
+                @if(count(ChiefLocaleConfig::getLocales()) > 1)
                     <div class="flex items-center justify-center w-8 p-2 rounded-md shrink-0 bg-grey-50">
                         <span class="text-xs uppercase text-grey-500">{{ $locale }}</span>
                     </div>
@@ -27,15 +28,15 @@
                 <div class="w-full form-light">
                     @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
                         <x-chief::input.textarea
-                            name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
-                            id="{{ $fieldId }}"
-                            class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
+                                name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
+                                id="{{ $fieldId }}"
+                                class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
                         >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</x-chief::input.textarea>
                     @else
                         <x-chief::input.text
-                            name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
-                            id="{{ $fieldId }}"
-                            value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
+                                name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
+                                id="{{ $fieldId }}"
+                                value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
                         />
                     @endif
                 </div>

@@ -6,12 +6,23 @@ principles.
 
 ## Unreleased
 
-- Changed: All Vue components are rebuilt using Blade components, alpine and Livewire.
-- Changed: 'custom-scripts-after-vue' stack is now obsolete, but still supported. Use 'custom-scripts' instead.
-- Fixed: If multiselect sync() was set up, the options of nestable would not show with the breadcrumbs in the select
+### Changed
+
+- All Vue components are rebuilt using Blade components, alpine and Livewire.
+- 'custom-scripts-after-vue' stack is now obsolete, but still supported. Use 'custom-scripts' instead.
+- **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain all
+  available locales
+  and `chief.locales.site`that hold the active locales in usage on the site.
+
+### Fixed
+
+- If multiselect sync() was set up, the options of nestable would not show with the breadcrumbs in the select
   options.
-- Removed: Vue
-- Removed: MultiSelect::grouped() is deprecated and is no longer used. Instead the structure of passed options
+
+### Removed
+
+- Vue components and scripts. Vue is no longer available in the backend.
+- MultiSelect::grouped() is deprecated and is no longer used. Instead the structure of passed options
   determines if it is shown grouped or not.
 
 ## 0.8.2 - 2023-09-25

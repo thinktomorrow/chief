@@ -16,12 +16,13 @@ use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
 {
     use OwningFragments;
-    use HasDynamicAttributes{
+    use HasDynamicAttributes {
         HasDynamicAttributes::dynamicLocaleFallback as standardDynamicLocaleFallback;
     }
     use FragmentableDefaults;
@@ -33,24 +34,6 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans',
     ];
-
-    public function dynamicLocaleFallback(): ?string
-    {
-        return $this->standardDynamicLocaleFallback();
-    }
-
-    public function fields($model): iterable
-    {
-        yield Fields\Text::make('title')->rules('min:4');
-        yield Fields\Text::make('title_trans')->locales(['nl','en']);
-        yield Fields\Text::make('custom')
-            ->required()
-            ->validationMessages(['required' => 'custom error for :attribute'])
-            ->validationAttribute('custom attribute')
-            ->rules('min:4');
-
-        yield File::make('thumb');
-    }
 
     public static function migrateUp()
     {
@@ -64,13 +47,31 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
         });
     }
 
-    protected function dynamicLocales(): array
+    public function dynamicLocaleFallback(): ?string
     {
-        return config('chief.locales', []);
+        return $this->standardDynamicLocaleFallback();
+    }
+
+    public function fields($model): iterable
+    {
+        yield Fields\Text::make('title')->rules('min:4');
+        yield Fields\Text::make('title_trans')->locales(['nl', 'en']);
+        yield Fields\Text::make('custom')
+            ->required()
+            ->validationMessages(['required' => 'custom error for :attribute'])
+            ->validationAttribute('custom attribute')
+            ->rules('min:4');
+
+        yield File::make('thumb');
     }
 
     public function viewKey(): string
     {
         return 'quote';
+    }
+
+    protected function dynamicLocales(): array
+    {
+        return ChiefLocaleConfig::getLocales();
     }
 }

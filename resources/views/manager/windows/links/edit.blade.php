@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
 <div class="pt-6 border-t border-grey-100">
     <div data-form data-form-tags="status,links" class="space-y-6">
         <p class="text-lg h6 h1-dark">Links beheren</p>
@@ -33,10 +34,10 @@
                             </x-slot>
 
                             <x-chief::input.text
-                                id="links.{{ $locale }}"
-                                name="links[{{ $locale }}]"
-                                value="{{ $formValues->value }}"
-                                x-on:input.debounce.300ms="(e) => {
+                                    id="links.{{ $locale }}"
+                                    name="links[{{ $locale }}]"
+                                    value="{{ $formValues->value }}"
+                                    x-on:input.debounce.300ms="(e) => {
                                     // An empty value is never checked for uniqueness
                                     if (!e.target.value) {
                                         hint = '';
@@ -72,9 +73,9 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
-                            @if(count(config('chief.locales')) > 1)
+                            @if(count(ChiefLocaleConfig::getLocales()) > 1)
                                 <span
-                                    class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
+                                        class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
                             @endif
 
                             <div class="w-full px-4 py-3">

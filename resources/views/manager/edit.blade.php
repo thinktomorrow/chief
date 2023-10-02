@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
         <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
@@ -11,9 +12,9 @@
                 </x-slot>
             @endif
 
-            @if(count(config('chief.locales')) > 1)
+            @if(count(ChiefLocaleConfig::getLocales()) > 1)
                 <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">
-                    @foreach(config('chief.locales') as $locale)
+                    @foreach(ChiefLocaleConfig::getLocales() as $locale)
                         <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>
                     @endforeach
                 </x-chief::tabs>

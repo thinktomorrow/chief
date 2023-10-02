@@ -10,16 +10,34 @@ return [
     'strict' => env('APP_DEBUG', false),
 
     /**
-     * Application locales
+     * Locales
      *
-     * The available application locales in which model values can be localized in.
-     * The translatable fields will be editable for each locale accordingly. Note
-     * that you can still override this for each model or individual field.
-     *
-     * The first locale in this list is considered the default required locale.
+     * Chief is designed with localisation in mind. You can set up the different locales
+     * that should be available in the admin and site.
      */
     'locales' => [
-        'nl',
+
+        /**
+         * Application locales
+         *
+         * The available application locales in which model values can be localized in.
+         * The translatable fields will be editable for each locale accordingly. Note
+         * that you can still override this for each model.
+         *
+         * The first locale in this list is considered the default required locale.
+         */
+        'admin' => [
+            'nl',
+        ],
+
+        /**
+         * Which of the available locales should be considered active? These
+         * are the locales that are allowed on the site's frontend.
+         *
+         * Default this value is null, which means that all available locales are active
+         * on the site. You can change this to an array of locales. e.g. ['nl', 'fr']
+         */
+        'site' => null,
     ],
 
     /**

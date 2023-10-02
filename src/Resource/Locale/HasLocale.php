@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Locale;
+namespace Thinktomorrow\Chief\Resource\Locale;
 
 trait HasLocale
 {

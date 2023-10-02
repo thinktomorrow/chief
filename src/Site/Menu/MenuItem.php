@@ -72,8 +72,7 @@ class MenuItem extends Model
     {
         return static::where('owner_type', $ownerType)
             ->where('owner_id', $ownerId)
-            ->get()
-        ;
+            ->get();
     }
 
     public function ofType($type): bool
@@ -89,7 +88,7 @@ class MenuItem extends Model
     public function owner(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo('owner', 'owner_type', 'owner_id')
-                    ->withoutGlobalScopes();
+            ->withoutGlobalScopes();
     }
 
     public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -115,6 +114,6 @@ class MenuItem extends Model
 
     public function dynamicLocales(): array
     {
-        return config('chief.locales', []);
+        return \Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig::getLocales();
     }
 }

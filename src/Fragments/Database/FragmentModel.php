@@ -35,7 +35,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     public $incrementing = false;
 
     // Force integer when query results come back (by default id is a string)
-    protected $casts = [ 'id' => 'integer' , 'meta' => 'array' ];
+    protected $casts = ['id' => 'integer', 'meta' => 'array'];
 
     public $dynamicKeys = ['*'];
     public $dynamicKeysBlacklist = [
@@ -61,7 +61,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
 
     protected function dynamicLocales(): array
     {
-        return config('chief.locales', []);
+        return \Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig::getLocales();
     }
 
     protected function dynamicLocaleFallback(): ?string
@@ -92,7 +92,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
 
     public function isShared(): bool
     {
-        return (bool) $this->getMeta('shared');
+        return (bool)$this->getMeta('shared');
     }
 
     public function setMeta(string $key, $value): void
