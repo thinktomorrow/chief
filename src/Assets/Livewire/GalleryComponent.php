@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
-use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\Gallery;
@@ -16,7 +15,6 @@ class GalleryComponent extends Component
 
     public $sort = null;
 
-    public Collection $rows;
     protected Gallery $table;
 
     protected $listeners = [
@@ -24,11 +22,6 @@ class GalleryComponent extends Component
         'assetUpdated' => 'onAssetUpdated',
         'filesUploaded' => 'onFilesUploaded',
     ];
-
-    public function mount()
-    {
-        $this->rows = collect();
-    }
 
     public function booted()
     {
@@ -54,19 +47,18 @@ class GalleryComponent extends Component
 
     public function onAssetUpdated($assetId): void
     {
-        $this->callMethod('$refresh');
+        //        $this->callMethod('$refresh');
     }
 
     public function onFilesUploaded(): void
     {
-        $this->callMethod('$refresh');
+        //        $this->callMethod('$refresh');
     }
 
     public function onAssetsDeleted(array $assetIds): void
     {
         // TODO: show toast of deletion
-
-        $this->callMethod('$refresh');
+        // $this->callMethod('$refresh');
     }
 
     public function render()

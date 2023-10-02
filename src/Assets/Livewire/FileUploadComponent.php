@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\App\StoreFiles;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithChoosingAssets;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
@@ -22,6 +23,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     use InteractsWithChoosingAssets;
     use ShowsAsDialog;
     use RenamesErrorBagFileAttribute;
+    use EmitsToNestables;
 
     public $parentId;
 

@@ -14,8 +14,6 @@ trait InteractsWithGallery
     public $filters = [];
     public $sort = null;
 
-    public $rows;
-
     public function updatedFilters()
     {
         $this->resetPage();

@@ -1,7 +1,7 @@
 <x-chief::dialog
-    wired
-    size="xs"
-    :title="$assetId ? 'Vervang extern bestand' : 'Voeg een link naar een extern bestand toe'"
+        wired
+        size="xs"
+        :title="$assetId ? 'Vervang extern bestand' : 'Voeg een link naar een extern bestand toe'"
 >
     @if($isOpen)
         <div class="space-y-4">
@@ -28,10 +28,12 @@
                     </x-chief::input.description>
 
                     <x-chief::input.text
-                        id="driverId"
-                        wire:model="driverId"
-                        placeholder="{{ $this->getLabel() }}"
-                        class="w-full"
+                            x-data="{}" {{-- Prevents directive to be triggered twice --}}
+                    x-prevent-submit-on-enter
+                            id="driverId"
+                            wire:model="driverId"
+                            placeholder="{{ $this->getLabel() }}"
+                            class="w-full"
                     />
                 </x-chief::input.group>
             @endif
