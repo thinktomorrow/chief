@@ -32,17 +32,17 @@ class ModelReferencePresenter
      * @param Collection $collection
      * @return Collection
      */
-    public static function toSelectValues(Collection $collection, bool $prepareForGrouping = false): Collection
+    public static function toSelectValues(Collection $collection, bool $prepareForGrouping = false, bool $withModelReferenceAsKey = true): Collection
     {
         /** @var Registry $registry */
         $registry = app(Registry::class);
 
-        return $collection->map(function (ReferableModel $item) use ($registry, $prepareForGrouping) {
+        return $collection->map(function (ReferableModel $item) use ($registry, $prepareForGrouping, $withModelReferenceAsKey) {
             /** @var PageResource $resource */
             $resource = $registry->findResourceByModel($item::class);
 
             return [
-                'value' => $item->modelReference()->getShort(),
+                'value' => $withModelReferenceAsKey ? $item->modelReference()->getShort() : $item->modelReference()->id(),
                 'label' => $resource->getPageTitleForSelect($item),
                 ...($prepareForGrouping ? ['group' => ucfirst($resource->getLabel())] : []),
             ];

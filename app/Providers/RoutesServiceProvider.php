@@ -2,9 +2,13 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Router;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Middleware\MonitorMiddleware;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefAdminLocale;
@@ -28,6 +32,23 @@ class RoutesServiceProvider extends ServiceProvider
         }
     }
 
+    private function autoloadFrontendRoute()
+    {
+        if (true !== config('chief.route.autoload')) {
+            return;
+        }
+
+        app()->booted(function () {
+            $routeName = config('chief.route.name');
+
+            Route::get('{slug?}', function ($slug = '/') {
+                return ChiefResponse::fromSlug($slug);
+            })->name($routeName)
+                ->where('slug', '(.*)?')
+                ->middleware('web');
+        });
+    }
+
     private function loadOpenAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
@@ -49,32 +70,15 @@ class RoutesServiceProvider extends ServiceProvider
         });
     }
 
-    private function autoloadFrontendRoute()
-    {
-        if (true !== config('chief.route.autoload')) {
-            return;
-        }
-
-        app()->booted(function () {
-            $routeName = config('chief.route.name');
-
-            Route::get('{slug?}', function ($slug = '/') {
-                return ChiefResponse::fromSlug($slug);
-            })->name($routeName)
-                ->where('slug', '(.*)?')
-                ->middleware('web');
-        });
-    }
-
     private function autoloadAdminMiddleware(): void
     {
         app(Router::class)->middlewareGroup('web-chief', [
             // The default laravel web middleware - except for the csrf token verification.
             EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            SubstituteBindings::class,
 
             // Chief admin specific middleware
             AuthenticateChiefSession::class,
