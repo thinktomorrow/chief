@@ -1,3 +1,6 @@
+@php use Thinktomorrow\Chief\Admin\Settings\Homepage; @endphp
+@php use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract; @endphp
+@php use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable; @endphp
 <div
     data-sortable-id="{{ $node->getId() }}"
     class="py-3 nested:ptl sortable-item sorting:nested:p-0 sorting:nested:space-y-4"
@@ -26,25 +29,25 @@
             {{-- Card label --}}
             <div class="flex flex-wrap items-start gap-1 mt-[0.2rem]">
                 @adminCan('edit')
-                    <a
-                        href="{{ $manager->route('edit', $node->getId()) }}"
-                        title="{{ $node->getModel()->getPageTitle($node->getModel()) }}"
-                        class="mr-1 font-medium body-dark group-hover:underline"
-                    >
-                        {{ $node->getModel()->getPageTitle($node->getModel()) }}
-                    </a>
+                <a
+                    href="{{ $manager->route('edit', $node->getId()) }}"
+                    title="{{ $node->getModel()->getPageTitle($node->getModel()) }}"
+                    class="mr-1 font-medium body-dark group-hover:underline"
+                >
+                    {{ $node->getModel()->getPageTitle($node->getModel()) }}
+                </a>
                 @elseAdminCan
-                    <span class="mr-1 font-medium body-dark">
+                <span class="mr-1 font-medium body-dark">
                         {{ $node->getModel()->getPageTitle($node->getModel()) }}
                     </span>
                 @endAdminCan
 
-                @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($node->getModel()))
+                @if(Homepage::is($node->getModel()))
                     <span class="label label-xs label-primary mt-[1px]">Home</span>
                 @endif
 
                 @if(
-                    $node->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract
+                    $node->getModel() instanceof StatefulContract
                     && !$node->getModel()->inOnlineState()
                 )
                     <span class="label label-xs label-error mt-[1px]">Offline</span>
@@ -54,7 +57,7 @@
                     {!! $node->getModel()->getNestableNodeLabels() !!}
                 @endif
 
-                @if ($node->getModel() instanceof \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable)
+                @if ($node->getModel() instanceof Taggable)
                     <x-dynamic-component
                         component="chief-tags::tags"
                         :tags="$node->getModel()->getTags()"

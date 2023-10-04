@@ -13,8 +13,8 @@ class NestableFormPresets
             ->position('aside')
             ->items([
                 MultiSelect::make('parent_id')
-                    ->label('Bovenliggende pagina')
-                    ->description('Onder welke pagina hoort deze thuis.')
+                    ->label('Bovenliggend item')
+                    ->description('Onder welk item hoort deze thuis?')
                     ->options(fn () => app(SelectOptions::class)->getParentOptions($model)),
             ]);
     }
