@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
+@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
 <x-chief::input.group>
     <x-chief::input.label required>
         Label

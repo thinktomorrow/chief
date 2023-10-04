@@ -32,6 +32,7 @@ use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Locale\LocaleServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -93,6 +94,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new FormsServiceProvider($this->app))->boot();
         (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
+        (new LocaleServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
 
@@ -139,6 +141,7 @@ class ChiefServiceProvider extends ServiceProvider
             });
 
             (new AssetsServiceProvider($this->app))->register();
+            (new LocaleServiceProvider($this->app))->register();
             (new SquantoManagerServiceProvider($this->app))->register();
             $this->sitemapServiceProvider->register();
         }

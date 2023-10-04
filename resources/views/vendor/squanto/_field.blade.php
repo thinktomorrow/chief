@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
+@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
 <div class="flex flex-wrap justify-between w-full sm:flex-nowrap gap-y-3 gap-x-6">
     <div class="w-full space-y-1 sm:w-64 shrink-0">
         <p class="font-medium h6 h1-dark">

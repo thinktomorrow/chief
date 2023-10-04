@@ -1,16 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Resource\Locale;
+namespace Thinktomorrow\Chief\Locale;
 
 trait HasLocale
 {
     private ?string $locale = null;
-
-    public function setLocale(string $locale): void
-    {
-        $this->locale = $locale;
-    }
 
     protected function getLocale(): string
     {
@@ -19,5 +14,10 @@ trait HasLocale
         }
 
         return $this->locale;
+    }
+
+    public function setLocale(string $locale): void
+    {
+        $this->locale = $locale;
     }
 }

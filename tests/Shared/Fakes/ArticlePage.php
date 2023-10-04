@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -32,6 +32,10 @@ class ArticlePage extends Model implements Page
     public $table = 'article_pages';
     public $guarded = [];
 
+    public $casts = [
+        'locales' => 'array',
+    ];
+
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans', 'seo_title', 'seo_description', 'title_sanitized', 'title_sanitized_trans',
     ];
@@ -40,6 +44,7 @@ class ArticlePage extends Model implements Page
     {
         Schema::create('article_pages', function (Blueprint $table) {
             $table->increments('id');
+            $table->json('locales')->nullable();
             $table->string('title')->nullable();
             $table->string('current_state')->default(PageState::draft->getValueAsString());
             $table->json('values')->nullable(); // dynamic attributes

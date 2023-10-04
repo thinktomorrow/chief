@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
+@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
 <div class="pt-6 border-t border-grey-100">
     <div data-form data-form-tags="status,links" class="space-y-6">
         <p class="text-lg h6 h1-dark">Links beheren</p>

@@ -1,8 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Resource;
+namespace Thinktomorrow\Chief\Tests\Unit\Resource\Locale;
 
-use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class ChiefLocaleConfigTest extends ChiefTestCase

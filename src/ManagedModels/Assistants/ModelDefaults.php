@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;

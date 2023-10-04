@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
+@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
 <x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
     <x-chief::input.label required>
         Link

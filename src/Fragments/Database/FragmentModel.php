@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -35,13 +36,11 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     public $incrementing = false;
 
     // Force integer when query results come back (by default id is a string)
-    protected $casts = ['id' => 'integer', 'meta' => 'array'];
-
     public $dynamicKeys = ['*'];
     public $dynamicKeysBlacklist = [
         'id', 'model_reference', 'meta', 'created_at', 'updated_at',
     ];
-
+    protected $casts = ['id' => 'integer', 'meta' => 'array'];
     private ?string $dynamicLocaleFallback = null;
 
     public static function resourceKey(): string
@@ -54,21 +53,6 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
         return [];
     }
 
-    protected function dynamicDocumentKey(): string
-    {
-        return 'data';
-    }
-
-    protected function dynamicLocales(): array
-    {
-        return \Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig::getLocales();
-    }
-
-    protected function dynamicLocaleFallback(): ?string
-    {
-        return $this->dynamicLocaleFallback;
-    }
-
     public function setDynamicLocaleFallback(?string $dynamicLocaleFallback = null): void
     {
         $this->dynamicLocaleFallback = $dynamicLocaleFallback;
@@ -79,20 +63,29 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
         $this->online_status = $status->value;
     }
 
+    public function isOffline(): bool
+    {
+        return ! $this->isOnline();
+    }
+
     public function isOnline(): bool
     {
         // Default is online, except explicitly set offline
         return (null === $this->online_status || $this->online_status === FragmentStatus::online->value);
     }
 
-    public function isOffline(): bool
-    {
-        return ! $this->isOnline();
-    }
-
     public function isShared(): bool
     {
         return (bool)$this->getMeta('shared');
+    }
+
+    private function getMeta(string $key)
+    {
+        if (! $this->meta || ! array_key_exists($key, $this->meta)) {
+            return false;
+        }
+
+        return $this->meta[$key];
     }
 
     public function setMeta(string $key, $value): void
@@ -104,12 +97,18 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
         $this->meta = array_merge($this->meta, [$key => $value]);
     }
 
-    private function getMeta(string $key)
+    protected function dynamicDocumentKey(): string
     {
-        if (! $this->meta || ! array_key_exists($key, $this->meta)) {
-            return false;
-        }
+        return 'data';
+    }
 
-        return $this->meta[$key];
+    protected function dynamicLocales(): array
+    {
+        return ChiefLocaleConfig::getLocales();
+    }
+
+    protected function dynamicLocaleFallback(): ?string
+    {
+        return $this->dynamicLocaleFallback;
     }
 }

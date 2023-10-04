@@ -14,9 +14,9 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends Model implements Fragment, HasAsset, FragmentsOwner

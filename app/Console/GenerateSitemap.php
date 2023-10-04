@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
 
 class GenerateSitemap extends BaseCommand

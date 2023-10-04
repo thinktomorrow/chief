@@ -6,12 +6,11 @@
     'footer' => null,
 ])
 
-<div
-        {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
-        x-cloak
-        wire:ignore.self
-        x-show="open"
-        x-data="{
+<div {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
+     x-cloak
+     wire:ignore.self
+     x-show="open"
+     x-data="{
         open: {{ isset($wired) ? '$wire.entangle(\'isOpen\')' : 'false' }},
         close() {
             {{ isset($wired) ? '$wire.close()' : '$data.open = false;' }}
@@ -29,9 +28,9 @@
             }
         }
     }"
-        x-on:open-dialog.window="if($el.id === $event.detail.id) { open = true; }"
-        x-on:resize.debounce.250ms.window="toggleInnerShadows()"
-        x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
+     x-on:open-dialog.window="if($el.id === $event.detail.id || $el === $event.detail.el) { open = true; }"
+     x-on:resize.debounce.250ms.window="toggleInnerShadows()"
+     x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
 >
     <div
             x-on:click="close()"

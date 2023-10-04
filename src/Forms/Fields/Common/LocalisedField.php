@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Common;
 
-interface Localizable
+interface LocalisedField
 {
     public function locales(?array $locales = null): static;
 

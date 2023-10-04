@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Resource\Locale;
+namespace Thinktomorrow\Chief\Locale;
 
 class ChiefLocaleConfig
 {

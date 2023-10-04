@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
-use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\Common\LocalisedField;
 use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 
 class ValidationParameters
 {
-    private Validatable & Localizable $source;
+    private Validatable & LocalisedField $source;
     private bool $multiple = false;
 
-    final private function __construct(Validatable & Localizable $source)
+    final private function __construct(Validatable & LocalisedField $source)
     {
         $this->source = $source;
     }
 
-    public static function make(Validatable & Localizable $source): self
+    public static function make(Validatable & LocalisedField $source): self
     {
         return new static($source);
     }
@@ -75,8 +75,8 @@ class ValidationParameters
             ->dotted()
             ->matrix($this->source->getName(), $this->source->getLocales());
 
-        if($this->multiple) {
-            foreach($keys as $i => $key) {
+        if ($this->multiple) {
+            foreach ($keys as $i => $key) {
                 $keys[$i] = $key . '.*';
             }
         }

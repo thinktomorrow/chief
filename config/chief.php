@@ -31,8 +31,8 @@ return [
         ],
 
         /**
-         * Which of the available locales should be considered active? These
-         * are the locales that are allowed on the site's frontend.
+         * Active locales.
+         * These are the locales that are allowed on the site's frontend.
          *
          * Default this value is null, which means that all available locales are active
          * on the site. You can change this to an array of locales. e.g. ['nl', 'fr']

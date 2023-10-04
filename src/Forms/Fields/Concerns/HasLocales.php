@@ -15,7 +15,7 @@ trait HasLocales
     public function locales(?array $locales = null): static
     {
         $this->locales = (null === $locales)
-            ? \Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig::getLocales()
+            ? \Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales()
             : $locales;
 
         return $this;

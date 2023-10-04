@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Resource\Locale\ChiefLocaleConfig; @endphp
+@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;use Thinktomorrow\Chief\Locale\LocaleRepository;use Thinktomorrow\Chief\Locale\Localisable; @endphp
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
         <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
@@ -10,6 +10,12 @@
                 <x-slot name="title">
                     {{ $resource->getPageTitle($model) }}
                 </x-slot>
+            @endif
+
+            @if($resource instanceof LocaleRepository && $model instanceof Localisable)
+                <livewire:chief-wire::model-locales
+                        :modelReference="$model->modelReference()"
+                        :locales="$model->getLocales()"/>
             @endif
 
             @if(count(ChiefLocaleConfig::getLocales()) > 1)
