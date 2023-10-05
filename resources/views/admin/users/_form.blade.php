@@ -32,7 +32,7 @@
 
         <x-chief::multiselect
             id="roles"
-            name="roles"
+            name="roles[]"
             :options="$roleNames"
             :selection="old('roles', $user->roleNames())"
             :multiple="true"

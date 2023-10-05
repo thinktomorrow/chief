@@ -10,6 +10,7 @@ principles.
 - Changed: 'custom-scripts-after-vue' stack is now obsolete, but still supported. Use 'custom-scripts' instead.
 - Fixed: If multiselect sync() was set up, the options of nestable would not show with the breadcrumbs in the select
   options.
+- Fixed: Roles selection on admin invite form was not stored as array.
 - Removed: Vue
 - Removed: MultiSelect::grouped() is deprecated and is no longer used. Instead the structure of passed options
   determines if it is shown grouped or not.

@@ -40,7 +40,7 @@ class UserController extends Controller
         $this->authorize('create-user');
 
         // Sanitize an empty array that is passed as [null]
-        $requestRoles = $request->get('roles');
+        $requestRoles = $request->input('roles');
         if (is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null) {
             $request = $request->merge(['roles' => []]);
         }
