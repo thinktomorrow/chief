@@ -289,14 +289,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
 /* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _sidebar_Panels__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./sidebar/Panels */ "./resources/assets/js/forms/sidebar/Panels.js");
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/forms/Api.js");
-/* harmony import */ var _sortable_sortable_init__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../sortable/sortable-init */ "./resources/assets/js/sortable/sortable-init.js");
-/* harmony import */ var _conditional_fields_init_conditional_fields__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./conditional-fields/init-conditional-fields */ "./resources/assets/js/forms/conditional-fields/init-conditional-fields.js");
-/* harmony import */ var _utilities_toggle_class__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utilities/toggle-class */ "./resources/assets/js/utilities/toggle-class.js");
-/* harmony import */ var _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../fragments/selectFragment */ "./resources/assets/js/fragments/selectFragment.js");
-/* harmony import */ var _Submit__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Submit */ "./resources/assets/js/forms/Submit.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _sidebar_Panels__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sidebar/Panels */ "./resources/assets/js/forms/sidebar/Panels.js");
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/forms/Api.js");
+/* harmony import */ var _sortable_sortable_init__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../sortable/sortable-init */ "./resources/assets/js/sortable/sortable-init.js");
+/* harmony import */ var _conditional_fields_init_conditional_fields__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./conditional-fields/init-conditional-fields */ "./resources/assets/js/forms/conditional-fields/init-conditional-fields.js");
+/* harmony import */ var _utilities_toggle_class__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utilities/toggle-class */ "./resources/assets/js/utilities/toggle-class.js");
+/* harmony import */ var _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../fragments/selectFragment */ "./resources/assets/js/fragments/selectFragment.js");
+/* harmony import */ var _Submit__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Submit */ "./resources/assets/js/forms/Submit.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+
 
 
 
@@ -348,13 +351,13 @@ Form.prototype.listen = function () {
   // Sidebar form
   Array.from(this.el.querySelectorAll(this.triggerSelector)).forEach(function (trigger) {
     // Provide panel id as default tag.
-    _this2.addTag(_sidebar_Panels__WEBPACK_IMPORTED_MODULE_8__["default"].createId(trigger.getAttribute('href')));
+    _this2.addTag(_sidebar_Panels__WEBPACK_IMPORTED_MODULE_9__["default"].createId(trigger.getAttribute('href')));
     trigger.removeEventListener('click', _this2.sidebarClick);
     trigger.addEventListener('click', _this2.sidebarClick);
   });
 
   // Inline form
-  _Api__WEBPACK_IMPORTED_MODULE_9__["default"].listenForFormSubmits(this.el, this.onFormSubmission.bind(this), function () {
+  _Api__WEBPACK_IMPORTED_MODULE_10__["default"].listenForFormSubmits(this.el, this.onFormSubmission.bind(this), function () {
     // TODO: show to user that form hasn't been saved
   });
 };
@@ -365,15 +368,18 @@ Form.prototype.handleSidebarClick = function (event) {
   });
 };
 Form.prototype.onFormSubmission = function (responseData, meta) {
-  _Submit__WEBPACK_IMPORTED_MODULE_14__["default"].handle(responseData, this.el, this.getTags(), meta);
+  _Submit__WEBPACK_IMPORTED_MODULE_15__["default"].handle(responseData, this.el, this.getTags(), meta);
 };
-Form.prototype.refresh = function () {
+Form.prototype.refresh = function (locale) {
   var _this3 = this;
   var url = this.el.dataset.formUrl;
   if (!url) {
     return;
   }
-  _Api__WEBPACK_IMPORTED_MODULE_9__["default"].get(url, function (data) {
+  if (locale && locale !== 'undefined') {
+    url = "".concat(url, "?locale=").concat(locale);
+  }
+  _Api__WEBPACK_IMPORTED_MODULE_10__["default"].get(url, function (data) {
     var DOM = document.createElement('div');
     DOM.innerHTML = data;
     _this3.el.innerHTML = DOM.firstElementChild.innerHTML;
@@ -387,7 +393,7 @@ Form.prototype.refresh = function () {
 
     // Re-init event listeners
     _this3.listen();
-    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_15__["default"].publish('chief-form-refreshed', {
+    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_16__["default"].publish('chief-form-refreshed', {
       element: _this3.el
     });
     _this3.refreshCallback();
@@ -398,11 +404,11 @@ Form.prototype.refresh = function () {
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
   var _this4 = this;
-  (0,_sortable_sortable_init__WEBPACK_IMPORTED_MODULE_10__["default"])('[data-sortable]', this.el);
-  (0,_conditional_fields_init_conditional_fields__WEBPACK_IMPORTED_MODULE_11__["default"])(this.el);
-  (0,_utilities_toggle_class__WEBPACK_IMPORTED_MODULE_12__["default"])();
+  (0,_sortable_sortable_init__WEBPACK_IMPORTED_MODULE_11__["default"])('[data-sortable]', this.el);
+  (0,_conditional_fields_init_conditional_fields__WEBPACK_IMPORTED_MODULE_12__["default"])(this.el);
+  (0,_utilities_toggle_class__WEBPACK_IMPORTED_MODULE_13__["default"])();
   if (this.getTags().includes('fragments')) {
-    new _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_13__["default"](this.el);
+    new _fragments_selectFragment__WEBPACK_IMPORTED_MODULE_14__["default"](this.el);
   }
   window.Livewire.rescan(this.el);
 
@@ -477,6 +483,7 @@ var Forms = function Forms(mainContainer, sidebar) {
 
   // Listen for tab changes (so we can direct the visitor to the same tab after form refresh
   window.addEventListener('chieftab', this.onTabDispatch.bind(this));
+  window.addEventListener('chief-refresh-form', this.onChiefRefreshForm.bind(this));
 };
 Forms.prototype.load = function () {
   var _this2 = this;
@@ -519,6 +526,15 @@ Forms.prototype.handleSubmitFromSidebar = function (responseData, meta) {
 };
 Forms.prototype.onTabDispatch = function (e) {
   this.lastVisitedTabId = e.detail;
+};
+Forms.prototype.onChiefRefreshForm = function (e) {
+  var _this5 = this;
+  var _e$detail = e.detail,
+    selector = _e$detail.selector,
+    locale = _e$detail.locale;
+  Array.from(document.querySelectorAll(selector)).forEach(function (el) {
+    new _Form__WEBPACK_IMPORTED_MODULE_5__["default"](el, _this5.sidebar).refresh(locale);
+  });
 };
 
 

@@ -1,5 +1,6 @@
 <x-chief-form::window
-    :refresh-url="$manager->route('fragments-show', $owner)"
+    data-fragments-window {{-- selector for async fetching via chief tabs --}}
+:refresh-url="$manager->route('fragments-show', $owner)"
     tags="fragments"
     class="card"
 >
@@ -16,6 +17,12 @@
             data-sortable-is-sorting
             class="divide-y divide-grey-100"
         >
+
+            @php
+                $currentLocale = app()->getLocale();
+                app()->setLocale($locale);
+            @endphp
+
             @foreach($fragments as $fragment)
                 @include('chief-fragments::window-item', [
                     'model' => $fragment['model'],
@@ -26,6 +33,10 @@
                     'loop' => $loop,
                 ])
             @endforeach
+
+            @php
+                app()->setLocale($currentLocale);
+            @endphp
         </div>
     </div>
 </x-chief-form::window>

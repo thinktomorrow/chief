@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
+use ReflectionClass;
 use Thinktomorrow\Chief\App\View\Components\Fragments;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
@@ -170,12 +171,16 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->owner($ownerId);
 
+        if ($locale = $request->input('locale')) {
+            app()->setLocale($locale);
+        }
+
         return (new Fragments($owner))->render()->render();
     }
 
     private function owner($ownerId): FragmentsOwner
     {
-        if ((new \ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
+        if ((new ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
             return $this->fragmentRepository->find($ownerId);
         }
 

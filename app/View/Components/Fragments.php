@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\View\Components;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
@@ -18,16 +20,25 @@ class Fragments extends Component
     private Collection $fragments;
     private array $allowedFragments;
     private array $sharedFragments;
+    private string $locale;
 
-    public function __construct(FragmentsOwner $owner)
+    public function __construct(FragmentsOwner $owner, ?string $locale = null)
     {
         $this->repository = new FragmentsComponentRepository(app(FragmentRepository::class), app(Registry::class), $owner);
         $this->owner = $owner;
+        $this->locale = $locale ?: app()->getLocale();
         $this->load();
     }
 
+    public function load(): void
+    {
+        $this->fragments = $this->repository->getFragments();
+        $this->allowedFragments = $this->repository->getAllowedFragments();
+        $this->sharedFragments = $this->repository->getSharedFragments();
+    }
+
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function render()
     {
@@ -37,13 +48,7 @@ class Fragments extends Component
             'sharedFragments' => $this->sharedFragments,
             'manager' => $this->repository->getManager(),
             'owner' => $this->owner,
+            'locale' => $this->locale,
         ]);
-    }
-
-    public function load(): void
-    {
-        $this->fragments = $this->repository->getFragments();
-        $this->allowedFragments = $this->repository->getAllowedFragments();
-        $this->sharedFragments = $this->repository->getSharedFragments();
     }
 }

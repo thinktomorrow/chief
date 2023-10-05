@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Locale\Localisable;
 
 trait HasLocales
 {
@@ -15,10 +17,22 @@ trait HasLocales
     public function locales(?array $locales = null): static
     {
         $this->locales = (null === $locales)
-            ? \Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales()
+            ? ChiefLocaleConfig::getLocales()
             : $locales;
 
+        $this->whenModelIsSet(function ($model, $field) use ($locales) {
+
+            if ($model instanceof Localisable && (null === $locales)) {
+                $this->locales = $model->getLocales();
+            }
+        });
+
         return $this;
+    }
+
+    public function getLocales(): array
+    {
+        return $this->locales;
     }
 
     public function hasLocales(): bool
@@ -54,11 +68,6 @@ trait HasLocales
         $this->localizedFormKeyTemplate = $localizedFormKeyTemplate;
 
         return $this;
-    }
-
-    public function getLocales(): array
-    {
-        return $this->locales;
     }
 
     public function getLocalizedNames(): array

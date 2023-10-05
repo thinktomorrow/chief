@@ -23,4 +23,13 @@ class ChiefLocaleConfig
     {
         return config('chief.locales.admin', []);
     }
+
+    public static function getDefaultLocale(): string
+    {
+        $locales = static::getLocales();
+
+        return (count($locales) > 0)
+            ? reset($locales)
+            : config('app.fallback_locale', 'nl');
+    }
 }

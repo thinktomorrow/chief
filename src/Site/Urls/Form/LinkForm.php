@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Locale\Localisable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Root;
 
@@ -26,11 +27,18 @@ final class LinkForm
         $this->setFormValues();
     }
 
+    private function getLocales(): array
+    {
+        return $this->model instanceof Localisable
+            ? $this->model->getLocales()
+            : \Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales();
+    }
+
     private function setLinks(): void
     {
         $links = [];
 
-        foreach (\Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales() as $locale) {
+        foreach ($this->getLocales() as $locale) {
             $records = $this->urlRecords->get($locale, collect());
             $currentRecord = $records->reject->isRedirect()->first();
 
@@ -88,7 +96,7 @@ final class LinkForm
     {
         $values = [];
 
-        foreach (\Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales() as $locale) {
+        foreach ($this->getLocales() as $locale) {
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object)[

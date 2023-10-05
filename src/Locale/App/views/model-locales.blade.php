@@ -1,12 +1,14 @@
 @php use Illuminate\Support\Arr;use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
 <div class="flex justify-end gap-2">
 
-    <div class="border border-grey-400 flex gap-2 items-center rounded-lg">
-        @foreach($currentLocales as $_locale)
-            <x-chief::button class="cursor-pointer">
-                {{ $_locale }}
-            </x-chief::button>
-        @endforeach
+    <div wire:ignore class="border border-grey-400 flex gap-2 items-center rounded-lg">
+        <x-chief::tabs :show-nav-as-buttons="true" reference="modelLocalesTabs"
+                       class="-mb-3">
+            @foreach($currentLocales as $_locale)
+                <x-chief::tabs.tab tab-id='{{ $_locale }}'></x-chief::tabs.tab>
+            @endforeach
+        </x-chief::tabs>
+
         <x-chief::button wire:click="open" class="cursor-pointer">
             <svg class="w-5 h-5">
                 <use xlink:href="#icon-ellipsis-vertical"/>
@@ -21,10 +23,10 @@
                 <x-chief::input.group class="w-64">
                     <div class="flex items-start gap-2 ">
                         <x-chief::input.checkbox
-                                id="{{ $locale }}"
-                                :checked="in_array($locale, $activeLocales)"
-                                wire:model.live="activeLocales"
-                                value="{{ $locale }}"
+                            id="{{ $locale }}"
+                            :checked="in_array($locale, $activeLocales)"
+                            wire:model.live="activeLocales"
+                            value="{{ $locale }}"
                         ></x-chief::input.checkbox>
                         <x-chief::input.label for="{{ $locale }}">{{ $locale }}</x-chief::input.label>
                     </div>
@@ -56,7 +58,8 @@
                     </button>
                     <button class="gap-2 btn btn-link" wire:click="close" type="button">Annuleren</button>
                 @else
-                    <button class="gap-2 btn btn-primary" x-on:click="showSpinner = true; $wire.submit()"
+                    <button class="gap-2 btn btn-primary"
+                            x-on:click="$wire.isSaving = true; $wire.submit()"
                             type="button">Bewaren
                         <svg x-show="showSpinner" class="w-5 h-5 animate-spin"
                              xmlns="http://www.w3.org/2000/svg"

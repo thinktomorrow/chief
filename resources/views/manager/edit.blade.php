@@ -14,17 +14,17 @@
 
             @if($resource instanceof LocaleRepository && $model instanceof Localisable)
                 <livewire:chief-wire::model-locales
-                        :modelReference="$model->modelReference()"
-                        :locales="$model->getLocales()"/>
+                    :modelReference="$model->modelReference()"
+                    :locales="$model->getLocales()"/>
             @endif
 
-            @if(count(ChiefLocaleConfig::getLocales()) > 1)
-                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">
-                    @foreach(ChiefLocaleConfig::getLocales() as $locale)
-                        <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>
-                    @endforeach
-                </x-chief::tabs>
-            @endif
+            {{--            @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
+            {{--                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
+            {{--                    @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
+            {{--                        <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
+            {{--                    @endforeach--}}
+            {{--                </x-chief::tabs>--}}
+            {{--            @endif--}}
         </x-chief::page.hero>
     </x-slot>
 
@@ -32,7 +32,17 @@
         <x-chief-form::forms position="main"/>
 
         @adminCan('fragments-index', $model)
-        <x-chief::fragments :owner="$model"/>
+        <div x-data="{}"
+             {{-- refresh the fragments window when locale tabs change --}}
+             x-on:chieftab.window="(e) => {
+                if(e.detail.reference === 'modelLocalesTabs') {
+                    $dispatch('chief-refresh-form', {selector: '[data-fragments-window]', locale: e.detail.id});
+                }
+            }"
+        >
+            <x-chief::fragments :owner="$model"
+                                locale="{{ count($model->getLocales()) > 0 ? $model->getLocales()[0] : null }}"/>
+        </div>
         @endAdminCan
 
         <x-chief-form::forms position="main-bottom"/>

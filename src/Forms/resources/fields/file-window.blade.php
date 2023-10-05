@@ -1,6 +1,9 @@
 @php
-    /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
-    $files = $getValue($locale);
+    use Thinktomorrow\AssetLibrary\Asset;
+    use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+
+    /** @var Asset[] $files */
+    $files = $getValue($locale ?? ChiefLocaleConfig::getDefaultLocale());
     $count = count($files);
 @endphp
 
@@ -19,7 +22,9 @@
                             class="object-contain w-full h-full"
                         >
                     @else
-                        <svg class="w-6 h-6 text-grey-400"><use xlink:href="#icon-document"/></svg>
+                        <svg class="w-6 h-6 text-grey-400">
+                            <use xlink:href="#icon-document"/>
+                        </svg>
                     @endif
                 </div>
             </a>
@@ -48,7 +53,9 @@
         </div>
     @empty
         <div class="flex items-center justify-center overflow-hidden rounded-lg w-14 h-14 shrink-0 bg-grey-100">
-            <svg class="w-6 h-6 text-grey-400"><use xlink:href="#icon-document"/></svg>
+            <svg class="w-6 h-6 text-grey-400">
+                <use xlink:href="#icon-document"/>
+            </svg>
         </div>
     @endforelse
 </div>

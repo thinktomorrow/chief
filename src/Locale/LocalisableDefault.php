@@ -6,7 +6,7 @@ trait LocalisableDefault
 {
     public function getLocales(): array
     {
-        return $this->locales;
+        return $this->locales ?: [];
     }
 
     public function setLocales(array $locales): void

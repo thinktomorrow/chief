@@ -35,13 +35,14 @@ class ModelLocales extends Component
         }
 
         // Small timed delay to make it look like a big deal and we can see the spinner
-        sleep(1);
-
+        usleep(400 * 1000);
 
         app(SyncLocales::class)->handle(
             $model = ModelReference::fromString($this->modelReference)->instance(),
             $this->activeLocales,
         );
+
+        $this->js('window.location.reload()');
 
         $this->close();
     }
