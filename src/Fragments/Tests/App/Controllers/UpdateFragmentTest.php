@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use function app;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
@@ -10,7 +11,6 @@ use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use function app;
 
 class UpdateFragmentTest extends ChiefTestCase
 {

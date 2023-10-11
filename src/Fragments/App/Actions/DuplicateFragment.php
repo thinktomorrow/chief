@@ -77,9 +77,9 @@ class DuplicateFragment
         }
 
 
-//
-//        foreach ($nestedContext->fragments()->get() as $i => $nestedFragment) {
-//            $this->handle($copiedFragment, $nestedFragment->fragmentModel(), $i, false, ++$level);
-//        }
+        //
+        //        foreach ($nestedContext->fragments()->get() as $i => $nestedFragment) {
+        //            $this->handle($copiedFragment, $nestedFragment->fragmentModel(), $i, false, ++$level);
+        //        }
     }
 }

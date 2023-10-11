@@ -60,7 +60,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->asAdmin()->delete(route('chief::fragments.nested.delete', [$context->id, $fragment->getFragmentId()]))
             ->assertStatus(200);
 
-        $this->assertFragmentCount(FragmentModel::find($fragmentId), 'nl',0);
+        $this->assertFragmentCount(FragmentModel::find($fragmentId), 'nl', 0);
     }
 
     public function test_removing_a_fragment_multiple_times_only_removes_it_once()
@@ -73,7 +73,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
 
-        $this->assertFragmentCount($this->owner, 'fr',0);
+        $this->assertFragmentCount($this->owner, 'fr', 0);
     }
 
     public function test_removing_a_fragment_emits_event()
@@ -84,7 +84,7 @@ class DeleteFragmentTest extends ChiefTestCase
         Event::fake();
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
-        $this->assertFragmentCount($this->owner, 'nl',0);
+        $this->assertFragmentCount($this->owner, 'nl', 0);
 
         Event::assertDispatched(FragmentDetached::class);
     }

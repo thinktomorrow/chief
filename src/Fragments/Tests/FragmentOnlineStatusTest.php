@@ -4,9 +4,9 @@ namespace Thinktomorrow\Chief\Fragments\Tests;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentPutOffline;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentPutOnline;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

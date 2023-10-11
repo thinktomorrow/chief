@@ -26,23 +26,23 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     use SoftDeletes;
     use InteractsWithAssets;
 
-//    public $table = 'quotes';
-//    public $guarded = [];
-//    public $dynamicKeys = [
-//        'title', 'custom', 'title_trans', 'content_trans',
-//    ];
-//
-//    public static function migrateUp()
-//    {
-//        Schema::create('quotes', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->string('title')->nullable();
-//            $table->string('current_state')->default(PageState::draft->getValueAsString());
-//            $table->json('values')->nullable(); // dynamic attributes
-//            $table->timestamps();
-//            $table->softDeletes();
-//        });
-//    }
+    //    public $table = 'quotes';
+    //    public $guarded = [];
+    //    public $dynamicKeys = [
+    //        'title', 'custom', 'title_trans', 'content_trans',
+    //    ];
+    //
+    //    public static function migrateUp()
+    //    {
+    //        Schema::create('quotes', function (Blueprint $table) {
+    //            $table->increments('id');
+    //            $table->string('title')->nullable();
+    //            $table->string('current_state')->default(PageState::draft->getValueAsString());
+    //            $table->json('values')->nullable(); // dynamic attributes
+    //            $table->timestamps();
+    //            $table->softDeletes();
+    //        });
+    //    }
 
     public function dynamicLocaleFallback(): ?string
     {

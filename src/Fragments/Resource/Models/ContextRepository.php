@@ -9,7 +9,9 @@ class ContextRepository
 {
     public function findOrCreateByOwner(ReferableModel $owner, string $locale): ContextModel
     {
-        if($context = $this->findByOwner($owner, $locale)) return $context;
+        if($context = $this->findByOwner($owner, $locale)) {
+            return $context;
+        }
 
         return $this->createForOwner($owner, $locale);
     }

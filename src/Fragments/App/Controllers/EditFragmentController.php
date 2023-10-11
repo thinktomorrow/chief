@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentUpdated;
 
 class EditFragmentController
 {
@@ -52,9 +52,9 @@ class EditFragmentController
         // Locales for visibility / associatedFragment -> where to show online
 
         // Locales are passed along the request as well to match the current model-fragment context.
-//        if ($request->input('locales')) {
-//            $fragmentable->fragmentModel()->setLocales($request->input('locales'));
-//        }
+        //        if ($request->input('locales')) {
+        //            $fragmentable->fragmentModel()->setLocales($request->input('locales'));
+        //        }
 
         $forms = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->fragmentModel());
@@ -70,10 +70,10 @@ class EditFragmentController
         );
 
         // Now set all locales for fields that require locales so that all values are saved on the fragment
-//        $fragment->fragmentModel()->setLocales(ChiefLocaleConfig::getLocales());
-//        $fields = $forms->fillModel($fragment->fragmentModel())->getFields();
+        //        $fragment->fragmentModel()->setLocales(ChiefLocaleConfig::getLocales());
+        //        $fields = $forms->fillModel($fragment->fragmentModel())->getFields();
 
-//        app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
+        //        app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
 
         //        app(UpdateAssociatedFragment::class)->handle();
 

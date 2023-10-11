@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
-use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;

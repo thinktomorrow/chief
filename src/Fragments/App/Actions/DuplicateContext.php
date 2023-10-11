@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -23,7 +22,7 @@ class DuplicateContext
 
     public function handle(ReferableModel & FragmentsOwner $sourceModel, string $sourceLocale, ReferableModel & FragmentsOwner $targetModel, string $targetLocale): void
     {
-        if(!$sourceContext = $this->contextRepository->findByOwner($sourceModel, $sourceLocale)) {
+        if(! $sourceContext = $this->contextRepository->findByOwner($sourceModel, $sourceLocale)) {
             return;
         }
 

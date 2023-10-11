@@ -20,7 +20,8 @@ class CreateFragmentTest extends ChiefTestCase
     {
         $fragmentId = app(CreateFragment::class)->handle(
             SnippetStub::resourceKey(),
-            ['title' => 'bar'], []
+            ['title' => 'bar'],
+            []
         );
 
         $model = FragmentModel::find($fragmentId);
@@ -38,8 +39,9 @@ class CreateFragmentTest extends ChiefTestCase
                 'trans' => [
                     'nl' => ['title_trans' => 'nl titel'],
                     'en' => ['title_trans' => 'en title'],
-                ]
-            ], []
+                ],
+            ],
+            []
         );
 
         $model = FragmentModel::find($fragmentId);

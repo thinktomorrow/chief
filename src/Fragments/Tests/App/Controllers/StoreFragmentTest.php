@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use function app;
+use function chiefRegister;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
@@ -12,8 +14,6 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use function app;
-use function chiefRegister;
 
 class StoreFragmentTest extends ChiefTestCase
 {
@@ -71,7 +71,8 @@ class StoreFragmentTest extends ChiefTestCase
     {
         $fragmentId = app(CreateFragment::class)->handle(
             SnippetStub::resourceKey(),
-            ['title' => 'owning fragment'], []
+            ['title' => 'owning fragment'],
+            []
         );
 
         $context = ContextModel::create(['owner_type' => FragmentModel::resourceKey(), 'owner_id' => $fragmentId, 'locale' => 'nl']);
