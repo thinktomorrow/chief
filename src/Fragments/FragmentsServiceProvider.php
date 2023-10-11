@@ -15,6 +15,5 @@ class FragmentsServiceProvider extends ServiceProvider
 
         Blade::component(SidebarFragment::class, 'chief-fragments::sidebar');
         Blade::component(Fragments::class, 'chief-fragments::index');
-
     }
 }

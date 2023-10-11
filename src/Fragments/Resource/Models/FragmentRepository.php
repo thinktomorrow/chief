@@ -22,7 +22,7 @@ final class FragmentRepository
         $this->contextRepository = $contextRepository;
     }
 
-    public function getByOwner(Model & ReferableModel $owner, string $locale): Collection
+    public function getByOwner(ReferableModel $owner, string $locale): Collection
     {
         if (! $context = $this->contextRepository->findByOwner($owner, $locale)) {
             return collect();

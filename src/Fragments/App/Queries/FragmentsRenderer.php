@@ -30,7 +30,7 @@ final class FragmentsRenderer
 
     public function getFragments(FragmentsOwner $owner, string $locale): Collection
     {
-        $fragments = $this->fragmentRepository->getByOwner($owner->ownerModel(), $locale);
+        $fragments = $this->fragmentRepository->getByOwner($owner, $locale);
 
         // When admin is logged in and this request is in preview mode, we allow to view all fragments
         if (PreviewMode::fromRequest()->check()) {
