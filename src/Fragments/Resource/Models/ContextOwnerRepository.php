@@ -1,0 +1,44 @@
+<?php
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\Fragments\Resource\Models;
+
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+
+class ContextOwnerRepository
+{
+    private ContextRepository $contextRepository;
+
+    public function __construct(ContextRepository $contextRepository)
+    {
+        $this->contextRepository = $contextRepository;
+    }
+
+    public function getOwnersByFragment(string $fragmentId): Collection
+    {
+        $models = $this->contextRepository->getByFragment($fragmentId);
+
+        return $models
+            ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id))
+            ->unique()
+            ->map(function ($model) {
+                return ($model instanceof FragmentModel) ? $this->fragmentFactory($model) : $model;
+            });
+    }
+
+    private function ownerFactory(string $key, $id)
+    {
+        $key = Relation::getMorphedModel($key) ?? $key;
+
+        return ModelReference::make($key, $id)->instance();
+    }
+
+    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
+    {
+        return app(Relation::getMorphedModel($fragmentModel->key))
+            ->setFragmentModel($fragmentModel);
+    }
+}

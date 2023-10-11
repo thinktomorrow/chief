@@ -14,6 +14,7 @@
 
             @if($resource instanceof LocaleRepository && $model instanceof Localisable)
                 <livewire:chief-wire::model-locales
+                    :resource-key="$resource::resourceKey()"
                     :modelReference="$model->modelReference()"
                     :locales="$model->getLocales()"/>
             @endif
@@ -40,7 +41,7 @@
                 }
             }"
         >
-            <x-chief::fragments :owner="$model"
+            <x-chief-fragments::index :context-id="$context->id"
                                 locale="{{ count($model->getLocales()) > 0 ? $model->getLocales()[0] : null }}"/>
         </div>
         @endAdminCan

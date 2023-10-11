@@ -11,7 +11,7 @@ trait HasOptions
     protected array|Closure $options = [];
 
     private bool $sanitizeOptions = true;
-
+    
     public function rawOptions(array|Closure $options): static
     {
         return $this->options($options, false);
@@ -24,11 +24,6 @@ trait HasOptions
         $this->options = $options;
 
         return $this;
-    }
-
-    public function hasOptionGroups(): bool
-    {
-        return PairOptions::areOptionsGrouped($this->options);
     }
 
     public function getOptions(?string $locale = null): array

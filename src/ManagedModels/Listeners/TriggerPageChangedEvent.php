@@ -4,15 +4,15 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Fragments\Actions\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
-use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
@@ -46,7 +46,20 @@ class TriggerPageChangedEvent
 
     public function onFragmentUpdated(FragmentUpdated $e): void
     {
-        $this->handleFragmentChange($e->fragmentModelId);
+        $this->handleFragmentChange($e->fragmentId);
+    }
+
+    private function handleFragmentChange($fragmentId): void
+    {
+        $models = $this->getOwningModels->get($fragmentId);
+
+        foreach ($models as $model) {
+            if ($model instanceof FragmentModel) {
+                continue;
+            }
+
+            event(new PageChanged($model['model']->modelReference()));
+        }
     }
 
     public function onFragmentsReordered(FragmentsReordered $e): void
@@ -62,35 +75,21 @@ class TriggerPageChangedEvent
 
     public function onFragmentDetached(FragmentDetached $e): void
     {
-        $this->handleFragmentChange($e->fragmentModelId);
+        $this->handleFragmentChange($e->fragmentId);
     }
 
     public function onFragmentAdded(FragmentAdded $e): void
     {
-        $this->handleFragmentChange($e->fragmentModelId);
+        $this->handleFragmentChange($e->fragmentId);
     }
 
     public function onFragmentDuplicated(FragmentDuplicated $e): void
     {
-        $this->handleFragmentChange($e->fragmentModelId);
+        $this->handleFragmentChange($e->fragmentId);
     }
 
     public function onFormUpdated(FormUpdated $e): void
     {
         event(new PageChanged($e->modelReference));
-    }
-
-    private function handleFragmentChange($fragmentModelId): void
-    {
-        $fragment = $this->fragmentRepository->find($fragmentModelId);
-        $models = $this->getOwningModels->get($fragment->fragmentModel());
-
-        foreach ($models as $model) {
-            if ($model instanceof FragmentModel) {
-                continue;
-            }
-
-            event(new PageChanged($model['model']->modelReference()));
-        }
     }
 }

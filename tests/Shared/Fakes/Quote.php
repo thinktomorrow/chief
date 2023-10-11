@@ -5,8 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Forms\Fields;
@@ -16,7 +14,6 @@ use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
@@ -29,23 +26,23 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     use SoftDeletes;
     use InteractsWithAssets;
 
-    public $table = 'quotes';
-    public $guarded = [];
-    public $dynamicKeys = [
-        'title', 'custom', 'title_trans', 'content_trans',
-    ];
-
-    public static function migrateUp()
-    {
-        Schema::create('quotes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title')->nullable();
-            $table->string('current_state')->default(PageState::draft->getValueAsString());
-            $table->json('values')->nullable(); // dynamic attributes
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+//    public $table = 'quotes';
+//    public $guarded = [];
+//    public $dynamicKeys = [
+//        'title', 'custom', 'title_trans', 'content_trans',
+//    ];
+//
+//    public static function migrateUp()
+//    {
+//        Schema::create('quotes', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('title')->nullable();
+//            $table->string('current_state')->default(PageState::draft->getValueAsString());
+//            $table->json('values')->nullable(); // dynamic attributes
+//            $table->timestamps();
+//            $table->softDeletes();
+//        });
+//    }
 
     public function dynamicLocaleFallback(): ?string
     {

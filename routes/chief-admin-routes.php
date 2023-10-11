@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController;
 use Thinktomorrow\Chief\Assets\App\Http\MediaGalleryController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\CreateFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\EditFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\FragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\CreateNestedFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\DeleteNestedFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\EditNestedFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\NestedFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\SelectFragmentController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\CheckLinkController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\RemoveRedirectController;
@@ -25,6 +33,39 @@ Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\Sit
 Route::post('links/check', [CheckLinkController::class, 'check'])->name('chief.back.links.check');
 Route::put('links', [LinksController::class, 'update'])->name('chief.back.links.update');
 Route::delete('remove-redirect/{id}', [RemoveRedirectController::class, 'delete'])->name('chief.back.assistants.url.remove-redirect')->where('id', '[0-9]+');
+
+
+/**
+ * -----------------------------------------------------------------
+ * FRAGMENTS
+ * -----------------------------------------------------------------
+ */
+//Route::get('fragments', [\Thinktomorrow\Chief\Fragments\App\Controllers\FragmentController::class, 'index'])->name('chief.back.fragments.index');
+
+Route::get('fragments/{context_id}/new', [SelectFragmentController::class, 'new'])->name('chief::fragments.new');
+Route::get('fragments/{context_id}/existing', [SelectFragmentController::class, 'existing'])->name('chief::fragments.existing');
+Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\App\Controllers\DeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
+
+Route::post('fragments/{context_id}/{fragment_id}/status', [FragmentController::class, 'status'])->name('chief::fragments.status');
+Route::post('fragments/{context_id}/{fragment_id}/add', [FragmentController::class, 'add'])->name('chief::fragments.add');
+Route::post('fragments/{context_id}/{fragment_id}/copy', [FragmentController::class, 'copy'])->name('chief::fragments.copy');
+Route::post('fragments/{context_id}/{fragment_id}/unshare', [FragmentController::class, 'unshare'])->name('chief::fragments.unshare');
+
+Route::put('fragments/{context_id}/{fragment_id}', [EditFragmentController::class, 'update'])->name('chief::fragments.update');
+Route::get('fragments/{context_id}/{fragment_id}/edit', [EditFragmentController::class, 'edit'])->name('chief::fragments.edit');
+Route::post('fragments/{context_id}/{fragment_type}', [CreateFragmentController::class, 'store'])->name('chief::fragments.store');
+Route::get('fragments/{context_id}/{fragment_type}/create', [CreateFragmentController::class, 'create'])->name('chief::fragments.create');
+
+// Nested fragment routes
+Route::put('fragments/{context_id}/nested/{fragment_id}', [EditNestedFragmentController::class, 'update'])->name('chief::fragments.nested.update');
+Route::get('fragments/{context_id}/nested/{fragment_id}/edit', [EditNestedFragmentController::class, 'edit'])->name('chief::fragments.nested.edit');
+Route::post('fragments/{context_id}/nested/{fragment_type}', [CreateNestedFragmentController::class, 'store'])->name('chief::fragments.nested.store');
+Route::get('fragments/{context_id}/nested/{fragment_type}/create', [CreateNestedFragmentController::class, 'create'])->name('chief::fragments.nested.create');
+Route::delete('fragments/{context_id}/nested/{fragment_id}', [DeleteNestedFragmentController::class, 'delete'])->name('chief::fragments.nested.delete');
+
+Route::post('fragments/{context_id}/nested/{fragment_id}/add', [NestedFragmentController::class, 'add'])->name('chief::fragments.nested.add');
+Route::post('fragments/{context_id}/nested/{fragment_id}/copy', [NestedFragmentController::class, 'copy'])->name('chief::fragments.nested.copy');
+Route::post('fragments/{context_id}/nested/{fragment_id}/unshare', [NestedFragmentController::class, 'unshare'])->name('chief::fragments.nested.unshare');
 
 /**
  * -----------------------------------------------------------------

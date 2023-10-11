@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -55,10 +55,10 @@ class DuplicatePageTest extends ChiefTestCase
     public function context_with_fragments_are_duplicated()
     {
         // Add shared and non-shared fragment
-        $snippet = $this->createAsFragment(new SnippetStub(), $this->source, 1);
+        $snippet = $this->createAndAttachFragment(new SnippetStub(), $this->source, 1);
         $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
 
-        $snippet2 = $this->createAsFragment(new SnippetStub(), $this->source, 2);
+        $snippet2 = $this->createAndAttachFragment(new SnippetStub(), $this->source, 2);
         $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
         $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();
@@ -69,7 +69,7 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertCount(2, $fragments);
 
         // First snippet is shared
-        $this->assertEquals($originalFragments[0]->fragmentModel()->model_reference, $fragments[0]->fragmentModel()->model_reference);
+        $this->assertEquals($originalFragments[0]->fragmentModel()->key, $fragments[0]->fragmentModel()->key);
         $this->assertEquals($originalFragments[0]->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
         $this->assertTrue($originalFragments[0]->fragmentModel()->isShared());
         $this->assertTrue($fragments[0]->fragmentModel()->isShared());

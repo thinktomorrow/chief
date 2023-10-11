@@ -12,6 +12,7 @@ class ModelLocales extends Component
 {
     use ShowsAsDialog;
 
+    public string $resourceKey;
     public array $activeLocales = [];
     public array $currentLocales = [];
     public string $modelReference;
@@ -19,8 +20,9 @@ class ModelLocales extends Component
     public $warningMessage;
     public bool $isSaving = false;
 
-    public function mount(ModelReference $modelReference, array $locales)
+    public function mount(string $resourceKey, ModelReference $modelReference, array $locales)
     {
+        $this->resourceKey = $resourceKey;
         $this->modelReference = $modelReference->get();
         $this->activeLocales = $this->currentLocales = $locales;
     }
@@ -36,8 +38,10 @@ class ModelLocales extends Component
 
         // Small timed delay to make it look like a big deal and we can see the spinner
         usleep(400 * 1000);
+        ;
 
         app(SyncLocales::class)->handle(
+            $this->resourceKey,
             $model = ModelReference::fromString($this->modelReference)->instance(),
             $this->activeLocales,
         );

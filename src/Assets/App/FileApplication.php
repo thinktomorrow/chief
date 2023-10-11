@@ -8,8 +8,8 @@ use Thinktomorrow\AssetLibrary\Application\ReplaceMedia;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssociatedAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -45,7 +45,7 @@ class FileApplication
     {
         $model = ModelReference::fromString($modelReference)->instance();
 
-        if($model instanceof FragmentModel) {
+        if ($model instanceof FragmentModel) {
             $model = $this->fragmentFactory($model);
         }
 
@@ -56,11 +56,11 @@ class FileApplication
         $modelValues = Arr::only($values, $fieldKeys);
         $genericValues = Arr::except($values, $fieldKeys);
 
-        if(count($modelValues) > 0) {
+        if (count($modelValues) > 0) {
             $this->updateAssociatedAssetData->handle($model, $assetId, $fieldKey, $locale, $modelValues);
         }
 
-        if(count($genericValues) > 0) {
+        if (count($genericValues) > 0) {
             $this->updateAssetData($assetId, $genericValues);
         }
     }
@@ -70,7 +70,7 @@ class FileApplication
         $model = Asset::find($assetId)->getFirstMedia();
 
         // Strip extension should the user has entered extension
-        $basename = basename($basename, '.'.$model->extension);
+        $basename = basename($basename, '.' . $model->extension);
 
         $model->file_name = $basename . '.' . $model->extension;
         $model->save();
@@ -82,8 +82,8 @@ class FileApplication
         $existingAsset = Asset::find($assetId);
 
         $newAsset = $this->createAsset
-                ->uploadedFile($uploadedFile)
-                ->save();
+            ->uploadedFile($uploadedFile)
+            ->save();
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
 
@@ -106,7 +106,7 @@ class FileApplication
 
     private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
     {
-        return ModelReference::fromString($fragmentModel->model_reference)
+        return ModelReference::fromString($fragmentModel->key)
             ->instance()
             ->setFragmentModel($fragmentModel);
     }

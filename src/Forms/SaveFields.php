@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use SplFileInfo;
@@ -44,7 +45,6 @@ class SaveFields
 
                 continue;
             }
-
             if ($field->getLocalizedFormKeyTemplate() == ':name.:locale') {
                 foreach (data_get($input, $field->getColumnName()) as $locale => $value) {
                     $this->localizedValueCallable($model, $field, $input)($locale, $field->getColumnName(), $value);
@@ -66,9 +66,29 @@ class SaveFields
         }
     }
 
-    private function localizedValueCallable($model, $field, $input): \Closure
+    private function removeDuplicateFilePayload($input, $files): array
+    {
+        $flatInput = Arr::dot($input);
+        $flatFiles = Arr::dot($files);
+
+        foreach ($flatInput as $key => $entry) {
+            if ($this->isValidFile($entry) && array_key_exists($key, $flatFiles)) {
+                Arr::forget($input, $key);
+            }
+        }
+
+        return [$input, $files];
+    }
+
+    private function isValidFile($file): bool
+    {
+        return $file instanceof SplFileInfo && '' !== $file->getPath();
+    }
+
+    private function localizedValueCallable($model, $field, $input): Closure
     {
         return function ($locale, $key, $value) use ($model, $field, $input) {
+
             if ($key !== $field->getColumnName()) {
                 return;
             }
@@ -85,28 +105,8 @@ class SaveFields
         };
     }
 
-
-    private function removeDuplicateFilePayload($input, $files): array
-    {
-        $flatInput = Arr::dot($input);
-        $flatFiles = Arr::dot($files);
-
-        foreach ($flatInput as $key => $entry) {
-            if ($this->isValidFile($entry) && array_key_exists($key, $flatFiles)) {
-                Arr::forget($input, $key);
-            }
-        }
-
-        return [$input, $files];
-    }
-
     private function isFieldForDynamicValue(Model $model, Field $field): bool
     {
         return method_exists($model, 'isDynamic') && $model->isDynamic($field->getColumnName());
-    }
-
-    private function isValidFile($file): bool
-    {
-        return $file instanceof SplFileInfo && '' !== $file->getPath();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Locale\Actions;
 
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Locale\Events\LocalesUpdated;
 use Thinktomorrow\Chief\Locale\LocaleRepository;
 use Thinktomorrow\Chief\Locale\Localisable;
@@ -17,15 +18,32 @@ class SyncLocales
         $this->registry = $registry;
     }
 
-    public function handle(ReferableModel & Localisable $model, array $locales): void
+    public function handle(string $resourceKey, ReferableModel & Localisable $model, array $locales): void
     {
         /** @var LocaleRepository $repository */
-        $repository = $this->registry->findResourceByModel($model::class);
+        $repository = $this->registry->resource($resourceKey);
 
         $previousState = $model->getLocales();
+
+        $locales = $this->sortLocales($locales);
 
         $repository->saveLocales($model, $locales);
 
         event(new LocalesUpdated($model->modelReference(), $locales, $previousState));
+    }
+
+    private function sortLocales(array $locales): array
+    {
+        $indices = array_flip(ChiefLocaleConfig::getLocales());
+
+        $result = [];
+
+        foreach ($locales as $locale) {
+            $result[$indices[$locale]] = $locale;
+        }
+
+        ksort($result);
+
+        return array_values($result);
     }
 }
