@@ -7,7 +7,9 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
 class MemoizedMysqlNestableRepository implements NestableRepository
 {
-    private static ?NestedTree $tree = null;
+    /** @var NestedTree[] */
+    private static $trees = [];
+
     private MysqlNestableRepository $nestableRepository;
 
     public function __construct(MysqlNestableRepository $nestableRepository)
@@ -17,11 +19,11 @@ class MemoizedMysqlNestableRepository implements NestableRepository
 
     public function getTree(string $resourceKey): NestedTree
     {
-        if (static::$tree) {
-            return static::$tree;
+        if (isset(static::$trees[$resourceKey])) {
+            return static::$trees[$resourceKey];
         }
 
-        return static::$tree = $this->nestableRepository->getTree($resourceKey);
+        return static::$trees[$resourceKey] = $this->nestableRepository->getTree($resourceKey);
     }
 
     public function buildTree(Collection $models): NestedTree
