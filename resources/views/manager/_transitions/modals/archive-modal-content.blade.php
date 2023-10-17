@@ -23,9 +23,9 @@
             <x-chief::input.select id="redirectId" name="redirect_id" class="my-4">
                 @foreach($targetModels as $targetModelGroup)
                     <option value="">---</option>
-                    <optgroup label="{{ $targetModelGroup['group'] }}">
-                        @foreach($targetModelGroup['values'] as $targetModel)
-                            <option value="{{ $targetModel['id'] }}">{{ $targetModel['label'] }}</option>
+                    <optgroup label="{{ $targetModelGroup['label'] }}">
+                        @foreach($targetModelGroup['options'] as $targetModel)
+                            <option value="{{ $targetModel['value'] }}">{{ $targetModel['label'] }}</option>
                         @endforeach
                     </optgroup>
                 @endforeach
