@@ -69,6 +69,27 @@ final class ModelReference
         return $model;
     }
 
+    /**
+     * Recreate a model instance without database touching
+     * By default we assume an eloquent model.
+     *
+     * @param array $attributes
+     * @return mixed
+     */
+    public function object(array $attributes = [])
+    {
+        $className = $this->className();
+
+        if (! class_exists($className)) {
+            throw new CannotInstantiateModelReference('['.$className . '] does not exist as a class.');
+        }
+
+        $model = app()->make($className, $attributes);
+        $model->{$model->getKeyName()} = $this->id;
+
+        return $model;
+    }
+
     public function id(): string
     {
         return $this->id;
