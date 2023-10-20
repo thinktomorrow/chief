@@ -38,7 +38,6 @@ class ContextOwnerRepository
 
     private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
     {
-        return app(Relation::getMorphedModel($fragmentModel->key))
-            ->setFragmentModel($fragmentModel);
+        return app(FragmentFactory::class)->create($fragmentModel);
     }
 }

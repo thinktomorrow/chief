@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
@@ -53,7 +54,7 @@ class Fragments extends Component
             'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
             'sharedFragments' => $this->sharedFragments,
-            'manager' => $this->repository->getManager(),
+//            'manager' => $this->owner instanceof Fragmentable ? null : $this->repository->getManager(),
             'owner' => $this->owner,
             'locale' => $this->locale,
         ]);

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use function auth;
 use function route;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
@@ -29,9 +30,7 @@ class EditFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_edit_form()
     {
-        $this->disableExceptionHandling();
-
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
 
         $this->asAdmin()
             ->get(route('chief::fragments.edit', [$context->id, $this->fragment->fragmentModel()->id]))
@@ -65,12 +64,10 @@ class EditFragmentTest extends ChiefTestCase
 
     public function test_guests_cannot_view_the_edit_form()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
-
         // Make sure that this admin is logged out
         auth()->guard('chief')->logout();
 
-        $this->get(route('chief::fragments.edit', [$context->id, $this->fragment->getFragmentId()]))
+        $this->get(route('chief::fragments.edit', [ContextModel::first()->id, $this->fragment->getFragmentId()]))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }

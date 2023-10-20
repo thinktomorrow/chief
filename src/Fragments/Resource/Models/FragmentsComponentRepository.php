@@ -28,7 +28,7 @@ class FragmentsComponentRepository
 
     public function getManager(): Manager
     {
-        return $this->registry->findManagerByModel($this->owner::class);
+        return $this->registry->findManagerByModel($this->owner->ownerModel()::class);
     }
 
     public function getAllowedFragments(): array

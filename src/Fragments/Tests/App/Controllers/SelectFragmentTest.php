@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use function route;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
@@ -26,9 +27,7 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_new()
     {
-        $this->disableExceptionHandling();
-
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
 
         $this->asAdmin()
             ->get(route('chief::fragments.new', [$context->id]))
@@ -37,7 +36,6 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_existing()
     {
-        $this->disableExceptionHandling();
         $owner = ArticlePage::create();
         $context = ContextModel::create(['owner_type' => $owner->getMorphClass(), 'owner_id' => $owner->id, 'locale' => 'nl']);
 

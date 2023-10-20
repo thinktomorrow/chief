@@ -46,6 +46,21 @@ Route::get('fragments/{context_id}/new', [SelectFragmentController::class, 'new'
 Route::get('fragments/{context_id}/existing', [SelectFragmentController::class, 'existing'])->name('chief::fragments.existing');
 Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\App\Controllers\DeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
 
+Route::get('fragments/{context_id}/', [FragmentController::class, 'index'])->name('chief::fragments.index');
+Route::post('fragments/{context_id}/sort', [FragmentController::class, 'sort'])->name('chief::fragments.sort');
+
+// ManagedRoute::get('fragments-show', 'fragments/{fragmentowner_id}/window'),
+//            ManagedRoute::get('fragments-select-new', 'fragments/{fragmentowner_id}/new-fragment'),
+//            ManagedRoute::get('fragments-select-existing', 'fragments/{fragmentowner_id}/existing'),
+//
+//            ManagedRoute::post('fragments-reorder', 'fragments/{fragmentowner_id}/reorder'),
+//
+//            // Nested fragments - not used in views but only for internal application logic
+//            ManagedRoute::get('nested-fragments-select-new', 'nestedfragments/{fragmentowner_id}/new'),
+//            ManagedRoute::get('nested-fragments-select-existing', 'nestedfragments/{fragmentowner_id}/existing'),
+//            ManagedRoute::post('nested-fragments-reorder', 'nestedfragments/{fragmentmodelowner_id}/reorder'),
+
+
 Route::post('fragments/{context_id}/{fragment_id}/status', [FragmentController::class, 'status'])->name('chief::fragments.status');
 Route::post('fragments/{context_id}/{fragment_id}/add', [FragmentController::class, 'add'])->name('chief::fragments.add');
 Route::post('fragments/{context_id}/{fragment_id}/copy', [FragmentController::class, 'copy'])->name('chief::fragments.copy');
@@ -55,6 +70,8 @@ Route::put('fragments/{context_id}/{fragment_id}', [EditFragmentController::clas
 Route::get('fragments/{context_id}/{fragment_id}/edit', [EditFragmentController::class, 'edit'])->name('chief::fragments.edit');
 Route::post('fragments/{context_id}/{fragment_type}', [CreateFragmentController::class, 'store'])->name('chief::fragments.store');
 Route::get('fragments/{context_id}/{fragment_type}/create', [CreateFragmentController::class, 'create'])->name('chief::fragments.create');
+
+
 
 // Nested fragment routes
 Route::put('fragments/{context_id}/nested/{fragment_id}', [EditNestedFragmentController::class, 'update'])->name('chief::fragments.nested.update');

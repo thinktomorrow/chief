@@ -26,7 +26,7 @@
     @if($model instanceof FragmentsOwner)
         <div class="border-t py-9 border-grey-100">
             {{-- nested fragments --}}
-            <x-chief-fragments::index :owner="$model" :locale="$context->locale"/>
+            <x-chief-fragments::index :context-id="$context->id"/>
         </div>
     @endif
 @endif

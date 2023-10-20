@@ -96,16 +96,18 @@ class StoreFragmentTest extends ChiefTestCase
         $snippet2 = $this->setupAndCreateSnippet($this->owner, 2, false);
         $snippet3 = $this->setupAndCreateSnippet($this->owner, 3, false);
 
-        $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
+        $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
             'order' => 1,
         ])->assertStatus(201);
+
+        $insertedFragmentId = $response->getOriginalContent()['data']['fragmentmodel_id'];
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'nl');
         $this->assertCount(4, $fragments);
 
         $this->assertEquals($snippet1->modelReference(), $fragments[0]->modelReference());
-        $this->assertEquals(ModelReference::make(SnippetStub::class, 0), $fragments[1]->modelReference());
+        $this->assertEquals($insertedFragmentId, $fragments[1]->modelReference()->id());
         $this->assertEquals($snippet2->modelReference(), $fragments[2]->modelReference());
         $this->assertEquals($snippet3->modelReference(), $fragments[3]->modelReference());
 

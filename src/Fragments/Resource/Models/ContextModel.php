@@ -37,6 +37,10 @@ final class ContextModel extends Model
 
         $model_reference = Relation::getMorphedModel($this->owner_type);
 
-        return ModelReference::make($model_reference, $this->owner_id)->instance();
+        $model = ModelReference::make($model_reference, $this->owner_id)->instance();
+
+        return $model instanceof FragmentModel
+            ? app(FragmentFactory::class)->create($model)
+            : $model;
     }
 }

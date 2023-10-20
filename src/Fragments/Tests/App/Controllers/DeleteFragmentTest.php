@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -28,7 +29,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_a_page_can_remove_a_fragment()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
 
         $this->assertFragmentCount($this->owner, 'fr', 1);
@@ -40,15 +41,17 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_it_will_not_be_detached_from_context_where_fragment_does_not_belong_to()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
-        $otherContext = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $otherContext = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'en');
 
         $this->assertFragmentCount($this->owner, 'fr', 1);
+        $this->assertFragmentCount($this->owner, 'en', 0);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$otherContext->id, $fragment->getFragmentId()]));
 
         $this->assertFragmentCount($this->owner, 'fr', 1);
+        $this->assertFragmentCount($this->owner, 'en', 0);
     }
 
     public function test_a_fragment_can_remove_a_nested_fragment()
@@ -65,7 +68,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_multiple_times_only_removes_it_once()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
 
         $this->assertFragmentCount($this->owner, 'fr', 1);
@@ -78,7 +81,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_emits_event()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
 
         Event::fake();
@@ -91,7 +94,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_soft_deletes_fragment_and_assets()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
@@ -104,7 +107,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_deletes_fragment_and_assets()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
 
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
@@ -137,7 +140,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_doesnt_delete_fragment_when_it_is_used_elsewhere()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
         $fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
 
         $owner2 = ArticlePage::create();

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use function app;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,7 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_can_update_a_fragment()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
 
         $this->asAdmin()->put(route('chief::fragments.update', [$context->id, $this->fragment->getFragmentId()]), [
             'title' => 'new-title',
@@ -41,7 +42,7 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_can_update_a_fragment_locale_values()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
 
         $this->asAdmin()->put(route('chief::fragments.update', [$context->id, $this->fragment->getFragmentId()]), [
             'title' => 'new-title',
@@ -79,7 +80,7 @@ class UpdateFragmentTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
 
         $this->asAdmin()->put(route('chief::fragments.update', [$context->id, $this->fragment->getFragmentId()]), [
             'custom' => 'custom-value',

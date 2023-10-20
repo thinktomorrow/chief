@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\Resource\Models;
 
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentsComponentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -24,7 +25,7 @@ class FragmentComponentRepositoryTest extends ChiefTestCase
 
     public function test_it_can_get_all_fragments()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
 
         $fragments = app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getFragments('nl');
@@ -34,7 +35,7 @@ class FragmentComponentRepositoryTest extends ChiefTestCase
 
     public function test_it_can_get_all_fragments_by_locale()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
 
         $this->assertCount(0, app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getFragments('fr'));
@@ -43,7 +44,7 @@ class FragmentComponentRepositoryTest extends ChiefTestCase
 
     public function test_it_retrieves_all_shareable_fragments_including_own()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
 
         $owner2 = ArticlePage::create();
@@ -57,7 +58,7 @@ class FragmentComponentRepositoryTest extends ChiefTestCase
 
     public function test_it_can_retrieve_only_shareable_fragments_when_they_are_allowed_fragments()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(Hero::resourceKey(), $context->id);
 
         $shareableFragments = app()->makeWith(FragmentsComponentRepository::class, ['owner' => $this->owner])->getShareableFragments('nl');
@@ -67,7 +68,7 @@ class FragmentComponentRepositoryTest extends ChiefTestCase
 
     public function test_already_selected_fragments_are_marked_with_a_flag()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
         $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
 
         $owner2 = ArticlePage::create();
