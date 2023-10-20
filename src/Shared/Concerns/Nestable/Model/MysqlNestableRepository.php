@@ -22,7 +22,6 @@ class MysqlNestableRepository implements NestableRepository
 
     public function getTree(string $resourceKey): NestedTree
     {
-        // TODO: memoize...
         $resource = $this->getResource($resourceKey);
 
         return $this->buildTree(
