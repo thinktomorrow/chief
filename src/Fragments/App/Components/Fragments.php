@@ -37,11 +37,9 @@ class Fragments extends Component
 
     public function load(): void
     {
-        $this->locale = 'nl'; // TODO: replace by contextId (better than locale)
-
-        $this->fragments = $this->repository->getFragments($this->locale);
+        $this->fragments = $this->repository->getFragments($this->contextId);
         $this->allowedFragments = $this->repository->getAllowedFragments();
-        $this->sharedFragments = $this->repository->getShareableFragments($this->locale);
+        $this->sharedFragments = $this->repository->getShareableFragments($this->contextId);
     }
 
     /**
@@ -56,7 +54,6 @@ class Fragments extends Component
             'sharedFragments' => $this->sharedFragments,
 //            'manager' => $this->owner instanceof Fragmentable ? null : $this->repository->getManager(),
             'owner' => $this->owner,
-            'locale' => $this->locale,
         ]);
     }
 }

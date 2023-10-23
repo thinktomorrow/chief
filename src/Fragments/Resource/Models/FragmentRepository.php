@@ -27,6 +27,11 @@ final class FragmentRepository
             return collect();
         }
 
+        return $this->getByContext($context);
+    }
+
+    public function getByContext(ContextModel $context): Collection
+    {
         $fragmentModels = $context->fragments()->get();
 
         return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));

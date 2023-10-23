@@ -12,11 +12,12 @@
     </div>
 
     <div>
+        {{ dd($model->fragmentModel()->getLocales()) }}
         {{-- TODO: show all admin locales of owner - activate those of current context --}}
-        {{--        <livewire:chief-wire::model-locales--}}
-        {{--            :resource-key="$resource::resourceKey()"--}}
-        {{--            :modelReference="$model->fragmentModel()->modelReference()"--}}
-        {{--            :locales="$model->fragmentModel()->getLocales()"/>--}}
+{{--        <livewire:chief-wire::fragment-locales--}}
+{{--            :resource-key="$resource::resourceKey()"--}}
+{{--            :modelReference="$model->fragmentModel()->modelReference()"--}}
+{{--            :locales="$model->fragmentModel()->getLocales()"/>--}}
     </div>
 
     {!! $slot !!}

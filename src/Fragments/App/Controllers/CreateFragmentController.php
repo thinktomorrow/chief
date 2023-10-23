@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentFactory;
 
 class CreateFragmentController
 {
@@ -30,11 +31,10 @@ class CreateFragmentController
     {
         $context = ContextModel::find($contextId);
         $order = $request->input('order', 0);
-        $fragment = app(Relation::getMorphedModel($fragmentKey));
+        $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $forms = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->fragmentModel())
-//            ->fillFields($this, $fragment->fragmentModel())
             ->eachForm(function (Form $form) use ($fragment, $contextId, $fragmentKey) {
                 $form->action(route('chief::fragments.store', [$contextId, $fragmentKey]))
                     ->refreshUrl('');
@@ -51,7 +51,7 @@ class CreateFragmentController
 
     public function store(string $contextId, string $fragmentKey, Request $request, ?string $redirectToRouteIfFragmentsOwner = null)
     {
-        $fragment = app(Relation::getMorphedModel($fragmentKey));
+        $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $fields = Forms::make($fragment->fields($fragment))
 //            ->fillLocalesIfEmpty((array)$request->input('admin_locales', []))

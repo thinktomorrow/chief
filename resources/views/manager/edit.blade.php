@@ -1,4 +1,15 @@
-@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;use Thinktomorrow\Chief\Locale\LocaleRepository;use Thinktomorrow\Chief\Locale\Localisable; @endphp
+@php
+    use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+    use Thinktomorrow\Chief\Locale\LocaleRepository;
+    use Thinktomorrow\Chief\Locale\Localisable;
+
+    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository::class)->getOrCreateOfrOwner($model)->map(function($context){ return [
+            'id' => $context->id,
+            'locale' => $context->locale,
+            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
+        ];
+    });
+@endphp
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
         <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
@@ -33,11 +44,17 @@
         <x-chief-form::forms position="main"/>
 
         @adminCan('fragments-index', $model)
-        <div x-data="{}"
+        <div x-data='{
+            contexts: @json($contextsForSwitch)
+        }'
              {{-- refresh the fragments window when locale tabs change --}}
              x-on:chieftab.window="(e) => {
                 if(e.detail.reference === 'modelLocalesTabs') {
-                    $dispatch('chief-refresh-form', {selector: '[data-fragments-window]', locale: e.detail.id});
+                     const matchingContext = $data.contexts.find((context) => context.locale == e.detail.id);
+
+                     if(matchingContext) {
+                        $dispatch('chief-refresh-form', {selector: '[data-fragments-window]', refreshUrl: matchingContext.refreshUrl});
+                     }
                 }
             }"
         >

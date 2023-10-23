@@ -46,7 +46,7 @@ Route::get('fragments/{context_id}/new', [SelectFragmentController::class, 'new'
 Route::get('fragments/{context_id}/existing', [SelectFragmentController::class, 'existing'])->name('chief::fragments.existing');
 Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\App\Controllers\DeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
 
-Route::get('fragments/{context_id}/', [FragmentController::class, 'index'])->name('chief::fragments.index');
+Route::get('fragments/{context_id}/refresh', [FragmentController::class, 'refreshIndex'])->name('chief::fragments.refresh-index');
 Route::post('fragments/{context_id}/sort', [FragmentController::class, 'sort'])->name('chief::fragments.sort');
 
 // ManagedRoute::get('fragments-show', 'fragments/{fragmentowner_id}/window'),

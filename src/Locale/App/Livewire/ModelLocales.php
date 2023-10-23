@@ -38,7 +38,6 @@ class ModelLocales extends Component
 
         // Small timed delay to make it look like a big deal and we can see the spinner
         usleep(400 * 1000);
-        ;
 
         app(SyncLocales::class)->handle(
             $this->resourceKey,
@@ -77,7 +76,7 @@ class ModelLocales extends Component
     private function askConfirmation()
     {
         $this->showConfirmButton = true;
-        $this->warningMessage = 'Opgelet! Als u de talen <strong>' . implode(',', $this->getRemovedLocales()) . '</strong> verwijderd, zullen ook de links en inhoud worden verwijderd van deze pagina.';
+        $this->warningMessage = 'Opgelet! Als u <strong>' . $this->getRemovedLocalesAsString() . '</strong> verwijdert, zullen ook de links en inhoud worden verwijderd van deze pagina.';
     }
 
     public function close()

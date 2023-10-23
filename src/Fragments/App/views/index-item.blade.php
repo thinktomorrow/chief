@@ -20,17 +20,14 @@
                     @endif
                 </span>
             </div>
-
-            @adminCan('fragment-edit')
                 <a
                     data-sidebar-trigger
-                    href="{{ route('fragment-edit', [$context->id, $fragment->getFragmentId()]) }}"
+                    href="{{ route('chief::fragments.edit', [$context->id, $fragment->getFragmentId()]) }}"
                     title="Fragment aanpassen"
                     class="shrink-0"
                 >
                     <x-chief::icon-button icon="icon-edit"/>
                 </a>
-            @endAdminCan
         </div>
 
         @if($adminFragment = $fragment->renderAdminFragment($owner, $loop))

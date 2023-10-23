@@ -21,9 +21,13 @@ class FragmentsComponentRepository
         $this->owner = $owner;
     }
 
-    public function getFragments(string $locale): Collection
+    public function getFragments(string $contextId): Collection
     {
-        return $this->fragmentRepository->getByOwner($this->owner->ownerModel(), $locale);
+        if (! $context = ContextModel::find($contextId)) {
+            return collect();
+        }
+
+        return $this->fragmentRepository->getByContext($context);
     }
 
     public function getManager(): Manager

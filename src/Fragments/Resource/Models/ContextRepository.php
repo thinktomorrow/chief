@@ -33,6 +33,13 @@ class ContextRepository
         ]);
     }
 
+    public function getByOwner(ReferableModel $owner): \Illuminate\Support\Collection
+    {
+        return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
+            ->where('owner_id', $owner->modelReference()->id())
+            ->get();
+    }
+
     public function getByFragment(string $fragmentId): Collection
     {
         return ContextModel::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')

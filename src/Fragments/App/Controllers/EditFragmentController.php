@@ -30,7 +30,7 @@ class EditFragmentController
         $forms = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->fragmentModel())
             ->eachForm(function (Form $form) use ($fragment, $contextId, $fragmentId) {
-                $form->action(route('chief::fragments.update', [$contextId, $fragmentId]))
+                $form->action(route('chief::fragments.update', [$contextId, $fragmentId]), 'PUT')
                     ->refreshUrl('');
             });
 

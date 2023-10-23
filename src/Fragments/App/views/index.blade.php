@@ -1,6 +1,6 @@
 <x-chief-form::window
     data-fragments-window {{-- selector for async fetching via chief tabs --}}
-    refresh-url="{{ route('chief::fragments.index', $context->id) }}"
+    refresh-url="{{ route('chief::fragments.refresh-index', $context->id) }}"
     tags="fragments"
     class="card"
 >

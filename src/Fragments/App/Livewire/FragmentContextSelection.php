@@ -1,39 +1,33 @@
 <?php
 
-namespace Thinktomorrow\Chief\Locale\App\Livewire;
+namespace Thinktomorrow\Chief\Fragments\App\Livewire;
 
-use Illuminate\Support\Arr;
 use Livewire\Component;
-use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Locale\Actions\SyncLocales;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-class FragmentLocales extends Component
+class FragmentContextSelection extends Component
 {
-    use ShowsAsDialog;
+    public string $resourceKey;
+    public array $contextIds = [];
+    public string $modelReference;
+    public string $currentContextId;
 
-    public array $activeLocales = [];
-    public array $currentLocales = [];
-    public string $ownerModelReference;
-    public string $fragmentModelId;
-
-    public function mount(ModelReference $ownerModelReference, string $fragmentModelId, array $locales)
+    public function mount(string $resourceKey, ModelReference $modelReference, string $currentContextId)
     {
-        $this->ownerModelReference = $ownerModelReference->get();
-        $this->fragmentModelId = $fragmentModelId;
-        $this->activeLocales = $this->currentLocales = $locales;
+        $this->resourceKey = $resourceKey;
+        $this->modelReference = $modelReference->get();
+        $this->currentContextId = $currentContextId;
+
+        // Get other contextIds from owner based on the owner->getLocales()
+        // Show contexts as locales
     }
 
     public function submit()
     {
-        dd('submitting');
-
-        // Get context
-
-        // Get
-
         app(SyncLocales::class)->handle(
-            $model = ModelReference::fromString($this->ownerModelReference)->instance(),
+            $this->resourceKey,
+            $model = ModelReference::fromString($this->modelReference)->instance(),
             $this->activeLocales,
         );
 
@@ -68,7 +62,7 @@ class FragmentLocales extends Component
     private function askConfirmation()
     {
         $this->showConfirmButton = true;
-        $this->warningMessage = 'Opgelet! Als u de talen <strong>' . implode(',', $this->getRemovedLocales()) . '</strong> verwijderd, zullen ook de links en inhoud worden verwijderd van deze pagina.';
+        $this->warningMessage = 'Opgelet! Als u <strong>' . $this->getRemovedLocalesAsString() . '</strong> verwijdert, zullen ook de links en inhoud worden verwijderd van deze pagina.';
     }
 
     public function close()
@@ -78,14 +72,9 @@ class FragmentLocales extends Component
         $this->isOpen = false;
     }
 
-    public function getRemovedLocalesAsString(): string
-    {
-        return Arr::join(Arr::map($this->getRemovedLocales(), fn ($locale) => strtoupper($locale)), ', ', ' en ');
-    }
-
     public function render()
     {
-        return view('chief-locale::model-locales', [
+        return view('chief-fragments::components.fragment-context-selection', [
             //
         ]);
     }

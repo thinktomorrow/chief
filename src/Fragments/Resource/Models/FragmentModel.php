@@ -9,6 +9,8 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Locale\Localisable;
+use Thinktomorrow\Chief\Locale\LocalisableDefault;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -35,7 +37,6 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     // Allow for uuid type behaviour
     public $incrementing = false;
 
-    // Force integer when query results come back (by default id is a string)
     public $dynamicKeys = ['*'];
     public $dynamicKeysBlacklist = [
         'id', 'key', 'meta', 'created_at', 'updated_at',

@@ -29,11 +29,17 @@ return new class extends Migration {
             $table->renameColumn('model_reference', 'key');
         });
 
+        Schema::table('context_fragments', function (Blueprint $table) {
+            $table->json('locales')->nullable();
+        });
+
         DB::table('context_fragments')->get()->each(function ($row) {
             DB::table('context_fragments')->where('id', $row->id)->update(
                 ['key' => substr($row->key, 0, strpos($row->key, '@'))]
             );
         });
+
+        DB::table('context_fragments')->update(['locales' => json_encode(['nl'])]);
     }
 
     public function down()

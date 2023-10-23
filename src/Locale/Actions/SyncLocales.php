@@ -30,6 +30,10 @@ class SyncLocales
         $repository->saveLocales($model, $locales);
 
         event(new LocalesUpdated($model->modelReference(), $locales, $previousState));
+
+        // TODO: create new context is locale is added
+        // Option to duplicate existing context??? -> with same fragments (fragment with these two locales, not 2 separate fragments)
+        // TODO: create contexts when page is created (witht hte default locales)
     }
 
     private function sortLocales(array $locales): array

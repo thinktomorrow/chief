@@ -85,9 +85,10 @@ Forms.prototype.onTabDispatch = function (e) {
 };
 
 Forms.prototype.onChiefRefreshForm = function (e) {
-    const { selector, locale } = e.detail;
+    const { selector, refreshUrl } = e.detail;
+
     Array.from(document.querySelectorAll(selector)).forEach((el) => {
-        new Form(el, this.sidebar).refresh(locale);
+        new Form(el, this.sidebar).refresh(refreshUrl);
     });
 };
 
