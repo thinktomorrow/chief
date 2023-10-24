@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 0.8.3 - 2023-10-24
+
 - Changed: All Vue components are rebuilt using Blade components, alpine and Livewire.
 - Changed: 'custom-scripts-after-vue' stack is now obsolete, but still supported. Use 'custom-scripts' instead.
 - Fixed: If multiselect sync() was set up, the options of nestable would not show with the breadcrumbs in the select
