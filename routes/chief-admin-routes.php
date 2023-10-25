@@ -7,6 +7,7 @@
  */
 
 // Dashboard
+use Thinktomorrow\Chief\Fragments\App\Controllers\AttachFragmentController;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController;
@@ -62,7 +63,7 @@ Route::post('fragments/{context_id}/sort', [FragmentController::class, 'sort'])-
 
 
 Route::post('fragments/{context_id}/{fragment_id}/status', [FragmentController::class, 'status'])->name('chief::fragments.status');
-Route::post('fragments/{context_id}/{fragment_id}/add', [FragmentController::class, 'add'])->name('chief::fragments.add');
+Route::post('fragments/{context_id}/{fragment_id}/attach', [AttachFragmentController::class, 'attach'])->name('chief::fragments.attach');
 Route::post('fragments/{context_id}/{fragment_id}/copy', [FragmentController::class, 'copy'])->name('chief::fragments.copy');
 Route::post('fragments/{context_id}/{fragment_id}/unshare', [FragmentController::class, 'unshare'])->name('chief::fragments.unshare');
 

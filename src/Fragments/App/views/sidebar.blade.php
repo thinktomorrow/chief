@@ -12,8 +12,8 @@
     </div>
 
     <div>
-        {{ dd($model->fragmentModel()->getLocales()) }}
-        {{-- TODO: show all admin locales of owner - activate those of current context --}}
+
+        {{-- TODO: show all available contexts of owner - (display them as locales) - activate the current context --}}
 {{--        <livewire:chief-wire::fragment-locales--}}
 {{--            :resource-key="$resource::resourceKey()"--}}
 {{--            :modelReference="$model->fragmentModel()->modelReference()"--}}

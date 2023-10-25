@@ -38,7 +38,7 @@
             <div data-form data-form-tags="fragments">
                 <form
                     method="POST"
-                    action="{{ route('chief::fragments.add', [$context->id, $sharedFragment->getFragmentId()]) . (isset($order) ? '?order=' . $order : '') }}"
+                    action="{{ route('chief::fragments.attach', [$context->id, $sharedFragment->getFragmentId()]) . (isset($order) ? '?order=' . $order : '') }}"
                 >
                     <button
                         class="w-full p-3 space-y-3 text-left transition-all duration-75 ease-in-out border rounded-lg border-grey-100 bg-grey-50 hover:shadow-card hover:border-primary-500"
