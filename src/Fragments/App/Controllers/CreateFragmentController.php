@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
