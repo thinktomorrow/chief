@@ -27,25 +27,6 @@
             </div>
 
             <div class="w-full space-y-4 sm:w-3/5 lg:w-full">
-                <div class="flex flex-wrap gap-2">
-                    {{-- Replace --}}
-                    @if($previewFile)
-                        <label for="{{ $this->getId() }}" class="cursor-pointer">
-                            <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden"/>
-
-                            <x-chief::button>
-                                <svg>
-                                    <use xlink:href="#icon-replace"></use>
-                                </svg>
-                                Vervang bestand
-                            </x-chief::button>
-                        </label>
-
-                        @foreach(app(ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
-                            @include($livewireFileEditAction)
-                        @endforeach
-                    @endif
-                </div>
 
                 <div class="flex items-start justify-between gap-2 space-y-2">
                     <a
@@ -111,6 +92,30 @@
         </div>
 
         <div class="space-y-6 grow">
+
+            @include('chief-assets::_partials.file-owners')
+
+            <div class="flex flex-wrap gap-2">
+                {{-- Replace --}}
+                @if($previewFile)
+                    <label for="{{ $this->getId() }}" class="cursor-pointer">
+                        <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden"/>
+
+                        <x-chief::button>
+                            <svg>
+                                <use xlink:href="#icon-replace"></use>
+                            </svg>
+                            Vervang bestand
+                        </x-chief::button>
+
+                    </label>
+
+                    @foreach(app(ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
+                        @include($livewireFileEditAction)
+                    @endforeach
+                @endif
+            </div>
+
             <x-chief::input.group rule="form.basename">
                 <x-chief::input.label for="form.basename">Bestandsnaam</x-chief::input.label>
 
@@ -141,55 +146,6 @@
                 </div>
             @endif
 
-            @if((isset($modelReference) && $ownerCount > 1) || (!isset($modelReference) && $ownerCount > 0))
-                <div class="form-light">
-                    <x-chief::input.label>
-                        Koppelingen
-                        <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-grey-100">
-                            <span class="text-xs body-dark">{{ $ownerCount }}</span>
-                        </span>
-                    </x-chief::input.label>
-
-                    @if(isset($modelReference))
-                        <x-chief::input.description>
-                            Aanpassingen zullen zichtbaar zijn op al deze pagina's.
-
-                            <button type="button" wire:click="isolateAsset" class="underline link link-dark">
-                                Koppel bestand los en bewerk afzonderlijk
-                            </button>
-                        </x-chief::input.description>
-                    @endif
-
-                    <div class="overflow-hidden border rounded-md border-grey-100">
-                        <div class="overflow-y-auto divide-y max-h-48 divide-grey-100">
-                            @foreach($previewFile->owners as $owner)
-                                <div class="flex items-start justify-between gap-3 px-3 py-2">
-                                    <div class="leading-5 body-dark body">
-                                        {{ $owner['label'] }}
-                                        @if(isset($modelReference) && $owner['modelReference'] == $modelReference)
-                                            <span class="label label-info text-xs">Deze pagina</span>
-                                        @endif
-                                    </div>
-
-
-                                    @if(!isset($modelReference) || $owner['modelReference'] != $modelReference)
-                                        <a href="{{ $owner['adminUrl'] }}" title="Bekijk" target="_blank"
-                                           rel="noopener">
-                                            <x-chief::link>
-                                                <svg>
-                                                    <use xlink:href="#icon-external-link"></use>
-                                                </svg>
-                                            </x-chief::link>
-                                        </a>
-                                    @endif
-
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             @if($errors->any())
                 <div class="pt-6 space-y-2 border-t border-grey-100">
                     @foreach($errors->all() as $error)
@@ -210,7 +166,7 @@
                         <button
                             type="button"
                             class="btn btn-primary"
-                            x-on:click="$dispatch('open-dialog', { 'id': 'save-file-modal-{{ $this->id }}' })"
+                            x-on:click="$dispatch('open-dialog', { 'id': 'save-file-modal-{{ $this->getId() }}' })"
                         >
                             Bewaar
                         </button>
@@ -224,34 +180,4 @@
         </div>
     </form>
 
-    {{-- TODO: Placed here so the modal spans the entire screen. Should be implemented with x-teleport once Livewire is updated to v3. --}}
-    @if($ownerCount > 1)
-        <x-chief::dialog id="save-file-modal-{{ $this->id }}" title="Bewaar een bestand met meerdere koppelingen">
-            <div class="prose prose-dark prose-spacing">
-                <p>
-                    Dit bestand is gekoppeld aan meerdere pagina's of fragmenten.
-                    De aanpassingen die je gaat bewaren zijn dus van toepassing voor alle gekoppelde plaatsen.
-                </p>
-
-                <p>
-                    Als je deze aanpassingen enkel wil doorvoeren op deze huidige locatie,
-                    kies er dan voor om het bestand los te koppelen en afzonderlijk te bewaren.
-                </p>
-            </div>
-
-            <x-slot name="footer">
-                <div class="flex flex-wrap items-center justify-end gap-3">
-                    <button type="button" class="btn btn-grey">
-                        Koppel bestand los en bewerk afzonderlijk
-                    </button>
-
-                    <p class="body body-dark">Of</p>
-
-                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                        Bewaar voor alle {{ $ownerCount }} pagina's
-                    </button>
-                </div>
-            </x-slot>
-        </x-chief::dialog>
-    @endif
 @endif
