@@ -3,8 +3,6 @@
     $currentOwner = null;
 
     foreach($previewFile->owners as $owner) {
-        // dd($modelReference, $owner, $owner['modelReference']);
-
         if(isset($modelReference) && $owner['modelReference'] == $modelReference) {
             $currentOwner = $owner;
         }
@@ -101,6 +99,14 @@
                     <x-chief::link underline class="font-medium break-all text-primary-500">{{ $owner['label'] }}</x-chief::link>
                 </a>
             @endforeach
+        </p>
+    </div>
+@elseif($ownerCount == 0)
+    <div class="flex items-start gap-2 p-3 rounded-lg bg-primary-50">
+        <svg class="w-6 h-6 text-primary-500 shrink-0"><use xlink:href="#icon-information-circle"></use></svg>
+
+        <p class="text-sm body text-primary-500 mt-0.5">
+            Dit bestand wordt momenteel nergens gebruikt.
         </p>
     </div>
 @endif
