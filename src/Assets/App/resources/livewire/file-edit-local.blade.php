@@ -4,10 +4,6 @@
 @endphp
 
 @if($isOpen)
-    @php
-        $ownerCount = count($previewFile->owners);
-    @endphp
-
     <form class="flex items-start gap-8 max-lg:flex-wrap">
         <div
             class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
@@ -162,19 +158,9 @@
                         Annuleren
                     </button>
 
-                    @if($ownerCount > 1)
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            x-on:click="$dispatch('open-dialog', { 'id': 'save-file-modal-{{ $this->getId() }}' })"
-                        >
-                            Bewaar
-                        </button>
-                    @else
-                        <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                            Bewaar
-                        </button>
-                    @endif
+                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                        Bewaar
+                    </button>
                 </div>
             </x-slot>
         </div>

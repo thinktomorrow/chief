@@ -15,7 +15,7 @@
         <div class="flex gap-4">
             {{-- File thumb --}}
             <div class="flex items-center justify-center overflow-hidden rounded-lg w-14 h-14 shrink-0 bg-grey-100">
-                @if($file->isPreviewable)
+                @if($file->isPreviewable && $file->previewUrl)
                     <img
                         src="{{ $file->previewUrl }}"
                         alt="{{ $file->filename }}"

@@ -162,7 +162,7 @@ class FileFieldEditComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->emitUp('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated', $this->previewFile);
     }
 
     public function submit()
