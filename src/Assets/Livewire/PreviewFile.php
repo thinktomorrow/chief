@@ -301,7 +301,9 @@ class PreviewFile implements Wireable
     public function findOwner(string $modelReference): ?array
     {
         foreach($this->owners as $owner) {
-            if($owner['modelReference'] == $modelReference) return $owner;
+            if($owner['modelReference'] == $modelReference) {
+                return $owner;
+            }
         }
 
         return null;
