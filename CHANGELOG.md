@@ -6,6 +6,9 @@ principles.
 
 ## Unreleased
 
+- Fixed: animated gifs and svg images are no longer converted when uploaded. Here the original sources will always be used instead.
+- Changed: upgraded `thinktomorrow/assetlibrary` to 0.9.5
+
 ## 0.8.3 - 2023-10-24
 
 - Changed: All Vue components are rebuilt using Blade components, alpine and Livewire.

@@ -5,10 +5,8 @@
 
 @if($isOpen)
     <form class="flex items-start gap-8 max-lg:flex-wrap">
-        <div
-            class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
-            <div
-                class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
+        <div class="flex flex-col gap-4 sm:gap-8 lg:gap-4 sm:flex-row lg:flex-col shrink-0 w-full lg:w-[calc(30rem-4rem)]">
+            <div class="flex items-center justify-center w-full overflow-hidden sm:w-2/5 lg:w-full aspect-square bg-grey-100 rounded-xl">
                 @if($previewFile && $previewFile->isImage())
                     <img
                         src="{{ $previewFile->previewUrl }}"
@@ -23,7 +21,6 @@
             </div>
 
             <div class="w-full space-y-4 sm:w-3/5 lg:w-full">
-
                 <div class="flex items-start justify-between gap-2 space-y-2">
                     <a
                         href="{{ $previewFile->getUrl() }}"
@@ -88,12 +85,11 @@
         </div>
 
         <div class="space-y-6 grow">
-
             @include('chief-assets::_partials.file-owners')
 
             <div class="flex flex-wrap gap-2">
-                {{-- Replace --}}
                 @if($previewFile)
+                    {{-- Replace file action --}}
                     <label for="{{ $this->getId() }}" class="cursor-pointer">
                         <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden"/>
 
@@ -125,14 +121,17 @@
                 </x-chief::input.prepend-append>
 
                 @if($replacedPreviewFile)
-                    <span
-                        class="text-sm text-grey-500">Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}</span>
+                    <span class="text-sm text-grey-500">
+                        Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}
+                    </span>
                 @endif
             </x-chief::input.group>
 
             @if(count($this->getComponents()) > 0)
                 <div class="pt-6 space-y-2 border-t border-grey-100">
-                    <h2 class="text-sm tracking-wider uppercase text-grey-500">Gegevens van de asset</h2>
+                    <h2 class="text-sm tracking-wider uppercase text-grey-500">
+                        Gegevens van de asset
+                    </h2>
 
                     <div class="space-y-6">
                         @foreach($this->getComponents() as $component)
@@ -165,5 +164,4 @@
             </x-slot>
         </div>
     </form>
-
 @endif
