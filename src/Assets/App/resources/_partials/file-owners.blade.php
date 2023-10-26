@@ -1,12 +1,6 @@
 @php
     $ownerCount = count($previewFile->owners);
-    $currentOwner = null;
-
-    foreach($previewFile->owners as $owner) {
-        if(isset($modelReference) && $owner['modelReference'] == $modelReference) {
-            $currentOwner = $owner;
-        }
-    }
+    $currentOwner = isset($modelReference) ? $previewFile->findOwner($modelReference) : null;
 @endphp
 
 {{-- Notification if more than one owner --}}
@@ -53,7 +47,7 @@
                             </div>
 
 
-                            @if(!isset($modelReference) || $owner['modelReference'] != $modelReference)
+                            @if(!isset($modelReference) || $owner['modelReference'] !== $modelReference)
                                 <a href="{{ $owner['adminUrl'] }}" title="Bekijk" target="_blank" rel="noopener">
                                     <x-chief::link>
                                         <svg> <use xlink:href="#icon-external-link"></use> </svg>

@@ -288,26 +288,39 @@ class PreviewFile implements Wireable
             if ($model instanceof FragmentModel) {
                 $ownerModels = app(FragmentOwnerRepository::class)->getOwners($model);
                 foreach ($ownerModels as $ownerModel) {
-                    $this->owners[] = $this->createOwnerFields($ownerModel);
+                    $this->owners[] = $this->createOwnerFields($ownerModel, $model);
                 }
 
                 continue;
             }
-
             $this->owners[] = $this->createOwnerFields($model);
         }
     }
 
-    private function createOwnerFields($model): array
+    // Find a matching owner by model reference
+    public function findOwner(string $modelReference): ?array
+    {
+        foreach($this->owners as $owner) {
+            if($owner['modelReference'] == $modelReference) return $owner;
+        }
+
+        return null;
+    }
+
+    private function createOwnerFields($resourceModel, ?FragmentModel $fragmentModel = null): array
     {
         try {
-            $resource = app(Registry::class)->findResourceByModel($model::class);
-            $manager = app(Registry::class)->findManagerByModel($model::class);
+            $resource = app(Registry::class)->findResourceByModel($resourceModel::class);
+            $manager = app(Registry::class)->findManagerByModel($resourceModel::class);
 
             return [
-                'label' => $resource->getPageTitle($model),
-                'adminUrl' => $manager->route('edit', $model),
-                'modelReference' => $model->modelReference()->get(),
+                'label' => $resource->getPageTitle($resourceModel),
+                'adminUrl' => $manager->route('edit', $resourceModel),
+                'resourceModelReference' => $resourceModel->modelReference()->get(),
+                'modelReference' => $resourceModel->modelReference()->get(),
+
+                // If a fragmentModel is owner, we use this fragment as the real model reference.
+                ...($fragmentModel) ? ['modelReference' => $fragmentModel->modelReference()->get()] : [],
             ];
         } catch (Exception $e) {
             report($e);
