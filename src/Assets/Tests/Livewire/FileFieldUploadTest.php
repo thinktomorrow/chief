@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Assets\Tests\Livewire;
 
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

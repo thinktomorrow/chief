@@ -117,7 +117,7 @@ class FileApplication
 
     /**
      * Detaches the asset. This basically means that for the given model
-     * the asset is duplicated as a isolated Asset.
+     * the asset is duplicated as an isolated Asset.
      */
     public function isolateAsset(string $modelReference, string $fieldKey, string $locale, string $assetId): AssetContract
     {
