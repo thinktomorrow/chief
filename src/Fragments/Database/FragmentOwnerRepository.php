@@ -21,6 +21,24 @@ class FragmentOwnerRepository
             });
     }
 
+    public function getResourceOwners(FragmentModel $fragmentModel): Collection
+    {
+        $models = ContextModel::owning($fragmentModel)
+                    ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id));
+
+        $result = collect();
+
+        foreach($models as $model) {
+            if($model instanceof FragmentModel) {
+                $result = $result->merge($this->getResourceOwners($model));
+            } else {
+                $result->push($model);
+            }
+        }
+
+        return $result;
+    }
+
     private function ownerFactory(string $model_reference, $id)
     {
         $model_reference = Relation::getMorphedModel($model_reference) ?? $model_reference;

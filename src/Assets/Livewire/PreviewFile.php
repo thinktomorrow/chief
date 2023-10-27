@@ -286,7 +286,8 @@ class PreviewFile implements Wireable
             $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
 
             if ($model instanceof FragmentModel) {
-                $ownerModels = app(FragmentOwnerRepository::class)->getOwners($model);
+                $ownerModels = app(FragmentOwnerRepository::class)->getResourceOwners($model);
+
                 foreach ($ownerModels as $ownerModel) {
                     $this->owners[] = $this->createOwnerFields($ownerModel, $model);
                 }
@@ -295,6 +296,8 @@ class PreviewFile implements Wireable
             }
             $this->owners[] = $this->createOwnerFields($model);
         }
+
+//        dd($this->owners);
     }
 
     // Find a matching owner by model reference
