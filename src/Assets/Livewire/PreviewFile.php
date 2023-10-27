@@ -353,7 +353,7 @@ class PreviewFile implements Wireable
             report($e);
         }
 
-        return ['label' => null, 'adminUrl' => null, 'modelReference' => null];
+        return ['label' => null, 'adminUrl' => null, 'resourceModelReference' => null, 'modelReference' => null];
     }
 
     public function hasData(string $key): bool
