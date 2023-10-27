@@ -8,8 +8,8 @@
         $currentOwner = isset($modelReference) ? $previewFile->findOwner($modelReference) : null;
     @endphp
 
-    <form class="space-y-6">
-        <div class="flex gap-6 max-sm:flex-wrap">
+    <form class="space-y-4">
+        <div class="flex gap-6 p-3 border shadow-sm sm:pr-6 max-sm:flex-wrap rounded-xl border-grey-200">
             <div class="flex items-center justify-center w-full h-64 overflow-hidden sm:h-48 sm:w-48 bg-grey-100 rounded-xl shrink-0">
                 @if($previewFile && $previewFile->isImage())
                     <img
@@ -22,9 +22,11 @@
                 @endif
             </div>
 
-            <div class="space-y-4 sm:py-6">
-                @include('chief-assets::_partials.file-edit-preview-url')
-                @include('chief-assets::_partials.file-edit-metadata')
+            <div class="flex items-center grow">
+                <div class="space-y-4 sm:py-6 grow">
+                    @include('chief-assets::_partials.file-edit-preview-url')
+                    @include('chief-assets::_partials.file-edit-local-metadata')
+                </div>
             </div>
         </div>
 
@@ -91,11 +93,11 @@
     <x-slot name="footer">
         <div class="flex flex-wrap justify-end gap-3">
             <button type="button" x-on:click="open = false" class="btn btn-grey">
-                Annuleren
+                Annuleer
             </button>
 
             <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                Bewaar
+                Bewaar bestand
             </button>
         </div>
     </x-slot>

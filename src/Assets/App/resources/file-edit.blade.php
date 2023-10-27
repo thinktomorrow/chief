@@ -4,7 +4,7 @@
             @include('chief-assets::livewire.file-edit-external')
         </x-chief::dialog>
     @else
-        <x-chief::dialog wired size="xs" title="Pas extern bestand aan">
+        <x-chief::dialog wired size="md" title="Pas extern bestand aan">
             @include('chief-assets::livewire.file-edit-external')
         </x-chief::dialog>
     @endif

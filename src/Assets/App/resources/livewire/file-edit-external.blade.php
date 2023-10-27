@@ -1,102 +1,45 @@
-@php use Carbon\Carbon; @endphp
+@php
+    use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
+@endphp
 
 @if($isOpen)
     @php
-        $componentCount = count($this->getComponents());
+        $ownerCount = count($previewFile->owners);
+        $currentOwner = isset($modelReference) ? $previewFile->findOwner($modelReference) : null;
     @endphp
 
-    <form class="flex items-start gap-8 max-lg:flex-wrap">
-        <div @class([
-            'flex flex-col gap-4 shrink-0 w-full',
-            'sm:flex-row lg:flex-col sm:gap-8 lg:gap-4 lg:w-[calc(30rem-4rem)]' => $componentCount > 0,
-        ])>
-            <div @class([
-                'flex items-center justify-center w-full overflow-hidden aspect-square bg-grey-100 rounded-xl',
-                'sm:w-2/5 lg:w-full' => $componentCount > 0,
-            ])>
+    <form class="space-y-4">
+        <div class="flex gap-6 p-3 border shadow-sm sm:pr-6 max-sm:flex-wrap rounded-xl border-grey-200">
+            <div class="flex items-center justify-center w-full h-64 overflow-hidden sm:h-48 sm:w-48 bg-grey-100 rounded-xl shrink-0">
                 @if($previewFile->isPreviewable)
-                    <img src="{{ $previewFile->previewUrl }}" class="object-contain w-full h-full">
+                    <img
+                        src="{{ $previewFile->previewUrl }}"
+                        alt="Preview image"
+                        class="object-contain w-full h-full"
+                    >
                 @else
-                    <svg width="24" height="24" class="text-grey-400"><use xlink:href="#icon-paper-clip"/></svg>
+                    <svg class="w-6 h-6 text-grey-400"><use xlink:href="#icon-paper-clip"/></svg>
                 @endif
             </div>
 
-            <div @class([
-                'w-full space-y-4',
-                'sm:w-3/5 lg:w-full' => $componentCount > 0,
-            ])>
-                <div class="flex flex-wrap gap-2">
-                    <button wire:click="openFilesChooseExternal" type="button">
-                        <x-chief::button>
-                            <svg><use xlink:href="#icon-replace"></use></svg>
-                            Vervang extern bestand
-                        </x-chief::button>
-                    </button>
+            <div class="flex items-center grow">
+                <div class="space-y-4 sm:py-6 grow">
+                    @include('chief-assets::_partials.file-edit-preview-url')
+                    @include('chief-assets::_partials.file-edit-external-metadata')
                 </div>
+            </div>
+        </div>
 
-                <div class="flex items-start justify-between gap-2 space-y-2">
-                    <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" target="_blank" class="mt-1.5">
-                        <x-chief::link underline class="break-all">
-                            {{ $previewFile->getUrl() }}
-                        </x-chief::link>
-                    </a>
+        <div class="space-y-2">
+            @include('chief-assets::_partials.file-edit-owner-info')
 
-                    <div class="flex gap-2 shrink-0">
-                        <x-chief-assets::copy-url-button>
-                            {{ $previewFile->getUrl() }}
-                        </x-chief-assets::copy-url-button>
-
-                        <a href="{{ $previewFile->getUrl() }}" title="{{ $previewFile->getUrl() }}" target="_blank" rel="noopener">
-                            <x-chief::link>
-                                <svg><use xlink:href="#icon-external-link"></use></svg>
-                            </x-chief::link>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="space-y-0.5 text-grey-500 text-sm">
-                    @if($previewFile->humanReadableSize)
-                        <dl class="flex justify-between">
-                            <dt>Bestandsgrootte</dt>
-                            <dd class="text-right">{{ $previewFile->humanReadableSize }}</dd>
-                        </dl>
-                    @endif
-
-                    @if($previewFile->isVideo())
-                        <dl class="flex justify-between">
-                            <dt>Lengte</dt>
-                            <dd class="text-right">{{ $previewFile->getData('external.duration') }} sec</dd>
-                        </dl>
-                    @endif
-
-                    @if($previewFile->isImage() || $previewFile->isVideo())
-                        <dl class="flex justify-between">
-                            <dt>Afmetingen</dt>
-                            <dd class="text-right">{{ $previewFile->width }}x{{ $previewFile->height }}</dd>
-                        </dl>
-                    @endif
-
-                    @if($previewFile->extension)
-                        <dl class="flex justify-between">
-                            <dt>Bestandsextensie</dt>
-                            <dd class="text-right">{{ $previewFile->extension }}</dd>
-                        </dl>
-                    @endif
-
-                    @if($previewFile && $previewFile->createdAt)
-                        <dl class="flex justify-between">
-                            <dt>Toegevoegd op</dt>
-                            <dd class="text-right">{{ Carbon::createFromTimestamp($previewFile->createdAt)->format('d/m/Y H:i') }}</dd>
-                        </dl>
-
-                        @if($previewFile->updatedAt !== $previewFile->createdAt)
-                            <dl class="flex justify-between">
-                                <dt>Laatst aangepast</dt>
-                                <dd class="text-right">{{ Carbon::createFromTimestamp($previewFile->updatedAt)->format('d/m/Y H:i') }}</dd>
-                            </dl>
-                        @endif
-                    @endif
-                </div>
+            <div class="flex flex-wrap gap-2">
+                <button wire:click="openFilesChooseExternal" type="button">
+                    <x-chief::button>
+                        <svg><use xlink:href="#icon-replace"></use></svg>
+                        Vervang extern bestand
+                    </x-chief::button>
+                </button>
 
                 <button wire:click="updateExternalAsset" type="button">
                     <x-chief::button>
@@ -104,39 +47,41 @@
                         Haal thumbnail opnieuw op van {{ ucfirst($previewFile->getData('external.type')) }}
                     </x-chief::button>
                 </button>
+
+                @include('chief-assets::_partials.file-edit-owner-action')
             </div>
         </div>
 
         @if(count($this->getComponents()) > 0)
-            <div class="space-y-6 grow">
-                @if(count($this->getComponents()) > 0)
-                    <div class="py-6 space-y-2 border-y border-grey-100">
-                        <h2 class="text-sm tracking-wider uppercase text-grey-500">Gegevens van de asset</h2>
-
-                        <div class="space-y-6">
-                            @foreach($this->getComponents() as $component)
-                                {{ $component }}
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
-
-                <div class="space-y-2">
-                    @foreach($errors->all() as $error)
-                        <x-chief::inline-notification type="error">
-                            {{ ucfirst($error) }}
-                        </x-chief::inline-notification>
-                    @endforeach
-                </div>
-
-                <div>
-                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                        Opslaan
-                    </button>
-                </div>
+            <div class="space-y-4">
+                @foreach($this->getComponents() as $component)
+                    {{ $component }}
+                @endforeach
             </div>
         @endif
 
-        <livewire:chief-wire::file-field-choose-external parent-id="{{ $this->getId() }}"/>
+        @if($errors->any())
+            <div class="space-y-2">
+                @foreach($errors->all() as $error)
+                    <x-chief::inline-notification type="error">
+                        {{ ucfirst($error) }}
+                    </x-chief::inline-notification>
+                @endforeach
+            </div>
+        @endif
     </form>
+
+    <livewire:chief-wire::file-field-choose-external parent-id="{{ $this->getId() }}"/>
+
+    <x-slot name="footer">
+        <div class="flex flex-wrap justify-end gap-3">
+            <button type="button" x-on:click="open = false" class="btn btn-grey">
+                Annuleer
+            </button>
+
+            <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                Bewaar bestand
+            </button>
+        </div>
+    </x-slot>
 @endif
