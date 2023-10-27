@@ -45,7 +45,9 @@
                         </x-chief::button>
                     </label>
 
-                    @include('chief-assets::_partials.file-edit-owner-action')
+                    @if($ownerCount > 1)
+                        @include('chief-assets::_partials.file-edit-owner-action')
+                    @endif
 
                     @foreach(app(ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
                         @include($livewireFileEditAction)

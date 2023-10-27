@@ -77,7 +77,7 @@ class FileFieldEditComponent extends Component
             $this->replacedPreviewFile = $this->previewFile;
         }
 
-        $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file);
+        $this->previewFile = PreviewFile::fromTemporaryUploadedFile($this->file, null, ['owners' => $this->previewFile->owners]);
         $this->syncForm();
     }
 
@@ -110,7 +110,7 @@ class FileFieldEditComponent extends Component
         $driver->updateAsset(Asset::find($this->previewFile->mediaId), $this->previewFile->getData('external.id'));
 
         // Update previewfile to reflect the external asset data
-        $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
+        $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId), ['owners' => $this->previewFile->owners]);
 
         $this->dispatch('assetUpdated', $this->previewFile);
 
@@ -126,7 +126,7 @@ class FileFieldEditComponent extends Component
     public function onExternalAssetUpdated()
     {
         // Update previewfile to reflect the external asset data
-        $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
+        $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId), ['owners' => $this->previewFile->owners]);
 
         $this->dispatch('assetUpdated', $this->previewFile);
 
@@ -136,6 +136,7 @@ class FileFieldEditComponent extends Component
     public function onAssetUpdated($previewFileArray): void
     {
         $this->previewFile = PreviewFile::fromArray($previewFileArray);
+        $this->previewFile->loadOwners();
     }
 
     //    public function openImageCrop()
@@ -158,6 +159,7 @@ class FileFieldEditComponent extends Component
         $newAsset = app(FileApplication::class)->isolateAsset($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         $this->previewFile = PreviewFile::fromAsset($newAsset);
         $this->previewFile->id = $existingPreviewFileId;
+        $this->previewFile->loadOwners();
 
         // Update form values
         $this->syncForm();
@@ -172,7 +174,7 @@ class FileFieldEditComponent extends Component
         if ($this->replacedPreviewFile) {
             if ($this->replacedPreviewFile->mediaId) {
                 app(FileApplication::class)->replaceMedia($this->replacedPreviewFile->mediaId, $this->previewFile->toUploadedFile());
-                $this->previewFile = PreviewFile::fromAsset(Asset::find($this->replacedPreviewFile->mediaId));
+                $this->previewFile = PreviewFile::fromAsset(Asset::find($this->replacedPreviewFile->mediaId), ['owners' => $this->replacedPreviewFile->owners]);
             } else {
                 $this->previewFile->id = $this->replacedPreviewFile->id;
             }

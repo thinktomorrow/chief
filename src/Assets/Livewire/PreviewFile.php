@@ -15,6 +15,7 @@ use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -51,9 +52,9 @@ class PreviewFile implements Wireable
 
     }
 
-    public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null): static
+    public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null, array $attributes = []): static
     {
-        return new static(
+        $model = new static(
             $file->getFilename(),
             null,
             $file->isPreviewable() ? $file->temporaryUrl() : null,
@@ -81,18 +82,30 @@ class PreviewFile implements Wireable
             [],
             [],
         );
+
+        foreach($attributes as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
     }
 
-    public static function fromAsset(AssetContract $asset): static
+    public static function fromAsset(AssetContract $asset, array $attributes = []): static
     {
         if ($asset instanceof ExternalAssetContract) {
             return static::fromExternalAsset($asset);
         }
 
-        return static::fromLocalAsset($asset);
+        $model = static::fromLocalAsset($asset);
+
+        foreach($attributes as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
     }
 
-    private static function fromExternalAsset(ExternalAssetContract $asset): static
+    private static function fromExternalAsset(ExternalAssetContract $asset, array $attributes = []): static
     {
         $previewUrls = [
             'original' => $asset->getUrl(),
@@ -101,7 +114,7 @@ class PreviewFile implements Wireable
 
         $owners = [];
 
-        return new static(
+        $model = new static(
             $asset->id,
             $asset->id,
             $thumbUrl,
@@ -127,6 +140,12 @@ class PreviewFile implements Wireable
             $previewUrls,
             $owners,
         );
+
+        foreach($attributes as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
     }
 
     public function getUrl(string $conversionName = 'original'): ?string
@@ -296,8 +315,6 @@ class PreviewFile implements Wireable
             }
             $this->owners[] = $this->createOwnerFields($model);
         }
-
-//        dd($this->owners);
     }
 
     // Find a matching owner by model reference
@@ -314,6 +331,10 @@ class PreviewFile implements Wireable
 
     private function createOwnerFields($resourceModel, ?FragmentModel $fragmentModel = null): array
     {
+        if($fragmentModel) {
+            $fragment = ModelReference::fromString($fragmentModel->model_reference)->instance()->setFragmentModel($fragmentModel);
+        }
+
         try {
             $resource = app(Registry::class)->findResourceByModel($resourceModel::class);
             $manager = app(Registry::class)->findManagerByModel($resourceModel::class);
@@ -326,6 +347,7 @@ class PreviewFile implements Wireable
 
                 // If a fragmentModel is owner, we use this fragment as the real model reference.
                 ...($fragmentModel) ? ['modelReference' => $fragmentModel->modelReference()->get()] : [],
+                ...($fragmentModel) ? ['label' => $resource->getPageTitle($resourceModel) .' > '. $fragment->getLabel()] : [],
             ];
         } catch (Exception $e) {
             report($e);
