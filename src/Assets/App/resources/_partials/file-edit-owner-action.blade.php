@@ -10,7 +10,7 @@
 @teleport('body')
     <x-chief::dialog id="file-owners-modal-{{ $this->getId() }}" title="Dit bestand wordt gebruikt op {{ $ownerCount }} plaatsen">
         <p class="body text-grey-500">
-            Aanpassingen aan dit bestand of het vervangen van dit bestand is van toepassing op alle volgende
+            Het aanpassen of vervangen van dit bestand is van toepassing op volgende
             {{ $ownerCount }} plaatsen:
         </p>
 

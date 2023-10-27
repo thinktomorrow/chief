@@ -4,8 +4,8 @@
         <svg class="w-5 h-5 text-primary-500 shrink-0"><use xlink:href="#icon-information-circle"></use></svg>
 
         <p class="text-sm body text-primary-500">
-            Let op, dit bestand is gekoppeld op {{ $ownerCount }} plaatsen.
-            Als je aanpassingen doet aan dit bestand, worden deze op alle gekoppelde plaatsen doorgevoerd.
+            Dit bestand is gekoppeld op {{ $ownerCount }} plaatsen.
+            Als je aanpassingen doet aan dit bestand of dit bestand vervangt, wordt dit op alle gekoppelde plaatsen doorgevoerd.
             @if(!$currentOwner)
                 <span class="underline cursor-pointer" x-on:click="$dispatch('open-dialog', { 'id': 'file-owners-modal-{{ $this->getId() }}' })">
                     Bekijk koppelingen
