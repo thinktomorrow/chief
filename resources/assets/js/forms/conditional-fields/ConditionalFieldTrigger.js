@@ -16,7 +16,6 @@ class ConditionalFieldTrigger {
 
         this.divider = '|';
         this.formgroupToggleAttribute = 'data-conditional-toggled-by';
-
         this._init();
     }
 
@@ -27,8 +26,12 @@ class ConditionalFieldTrigger {
         // Initially hide all conditional fields toggleable by this condition field trigger
         this._hideConditionalFields();
 
-        this._handle();
         this._watch();
+
+        // Allow next tick in order for all elements to be rendered.
+        setTimeout(() => {
+            this._handle();
+        }, 100);
     }
 
     /**

@@ -61,4 +61,4 @@ const initConditionalFields = () => {
     });
 };
 
-export { initConditionalFields as default };
+export { initConditionalFieldsInContainer, initConditionalFields };
