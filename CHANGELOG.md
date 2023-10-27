@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+- Added: `Select::syncInOrder()` to force synced values in given order. 
+- Fixed: Sorting of select options sync values was not kept in given order. 
 - Fixed: Sorting behavior on asset files was buggy
 - Fixed: animated gifs and svg images are no longer converted when uploaded. Here the original sources will always be used instead.
 - Changed: upgraded `thinktomorrow/assetlibrary` to 0.9.5
