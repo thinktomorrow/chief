@@ -1,4 +1,4 @@
-<div wire:sortable.item="{{ $file->id }}" class="relative @container">
+<div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="relative @container">
     {{-- File upload progress bar --}}
     @if($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
         <div class="absolute inset-0">

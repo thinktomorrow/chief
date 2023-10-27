@@ -13,7 +13,8 @@ class Image extends File
         parent::__construct($key);
 
         $this->acceptedMimeTypes([
-            'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp',
+            'image/jpeg', 'image/png', 'image/webp',
+            'image/gif', 'image/svg+xml',
         ]);
     }
 }

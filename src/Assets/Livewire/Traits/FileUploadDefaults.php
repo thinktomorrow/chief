@@ -19,7 +19,6 @@ trait FileUploadDefaults
     public string $fieldName;
 
     public bool $allowMultiple = false;
-    public bool $isReordering = false;
     public array $acceptedMimeTypes = [];
     /**
      * The temporary uploaded files and the existing ones as previewFile object
@@ -279,8 +278,6 @@ trait FileUploadDefaults
             ->all();
 
         $this->previewFiles = $reorderedPreviewFiles;
-
-        $this->isReordering = false;
     }
 
     public function openFileEdit($fileId)

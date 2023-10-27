@@ -7,13 +7,13 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 
 trait HasEloquentOptionsSync
 {
-    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null): self
+    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null, bool $syncInOrder = false, string $pivotOrderColumn = 'sort'): self
     {
         if (! $relation) {
             $relation = $this->getKey();
         }
 
-        $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey, $afterSaveCallback) {
+        $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey, $afterSaveCallback, $syncInOrder, $pivotOrderColumn) {
             $relationModel = $model->{$relation}()->getModel();
 
             $options = ($relationModel instanceof Nestable)
@@ -22,8 +22,18 @@ trait HasEloquentOptionsSync
 
             $this->options($options)
                 ->value($model->{$relation}->pluck($valueKey)->toArray())
-                ->save(function ($model, $field, $input) use ($relation, $afterSaveCallback) {
-                    $model->{$relation}()->sync($input[$relation] ?? []);
+                ->save(function ($model, $field, $input) use ($relation, $afterSaveCallback, $syncInOrder, $pivotOrderColumn) {
+
+                    $syncData = $input[$relation] ?? [];
+
+                    if($syncInOrder && isset($input[$relation])) {
+                        foreach ($input[$relation] as $i => $id) {
+                            $syncData[$id] = [$pivotOrderColumn => $i];
+                        }
+                    }
+
+                    $model->{$relation}()->sync($syncData);
+
                     if ($afterSaveCallback && is_callable($afterSaveCallback)) {
                         $afterSaveCallback($model, $field, $input);
                     }
@@ -31,5 +41,13 @@ trait HasEloquentOptionsSync
         });
 
         return $this;
+    }
+
+    /**
+     * Sync the relations in given order.
+     */
+    public function syncInOrder(string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null): self
+    {
+        return $this->sync($relation, $valueKey, $labelKey, $afterSaveCallback, true, 'sort');
     }
 }

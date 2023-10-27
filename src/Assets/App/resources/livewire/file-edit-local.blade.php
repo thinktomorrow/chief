@@ -5,13 +5,7 @@
 @if($isOpen)
     @php
         $ownerCount = count($previewFile->owners);
-        $currentOwner = null;
-
-        foreach($previewFile->owners as $owner) {
-            if(isset($modelReference) && $owner['modelReference'] == $modelReference) {
-                $currentOwner = $owner;
-            }
-        }
+        $currentOwner = isset($modelReference) ? $previewFile->findOwner($modelReference) : null;
     @endphp
 
     <form class="space-y-6">

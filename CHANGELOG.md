@@ -6,6 +6,14 @@ principles.
 
 ## Unreleased
 
+- Added: `Select::syncInOrder()` to force synced values in given order. 
+- Fixed: Sorting of select options sync values was not kept in given order. 
+- Fixed: Sorting behavior on asset files was buggy
+- Fixed: animated gifs and svg images are no longer converted when uploaded. Here the original sources will always be used instead.
+- Fixed: Conditional fields were not visible on page/sidebar load when based on the (new) MultiSelect.
+- Fixed: Conditional fields logic was initiated x times every form on the page. Now it is only loaded once.
+- Changed: upgraded `thinktomorrow/assetlibrary` to 0.9.5
+
 ## 0.8.3 - 2023-10-24
 
 - Changed: All Vue components are rebuilt using Blade components, alpine and Livewire.
