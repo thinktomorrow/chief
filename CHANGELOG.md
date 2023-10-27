@@ -6,6 +6,7 @@ principles.
 
 ## Unreleased
 
+- Fixed: Sorting behavior on asset files was buggy
 - Fixed: animated gifs and svg images are no longer converted when uploaded. Here the original sources will always be used instead.
 - Changed: upgraded `thinktomorrow/assetlibrary` to 0.9.5
 

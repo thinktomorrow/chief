@@ -72,9 +72,14 @@ class FileFieldChooseComponent extends Component
     {
         $this->dispatch('assetsChosen-' . $this->parentId, $this->assetIds);
 
+        $this->close();
+    }
+
+    public function close()
+    {
         $this->reset('assetIds', 'selectedPreviewFiles');
 
-        $this->close();
+        $this->isOpen = false;
     }
 
     public function render()
