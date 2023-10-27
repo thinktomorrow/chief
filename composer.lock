@@ -6978,12 +6978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "f06f242f11a2119ea61e95dee29b506b60b45693"
+                "reference": "b1fcce831c86021314ce4e44a1b3dcc6c4df13f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/f06f242f11a2119ea61e95dee29b506b60b45693",
-                "reference": "f06f242f11a2119ea61e95dee29b506b60b45693",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/b1fcce831c86021314ce4e44a1b3dcc6c4df13f7",
+                "reference": "b1fcce831c86021314ce4e44a1b3dcc6c4df13f7",
                 "shasum": ""
             },
             "require": {
@@ -7049,7 +7049,7 @@
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
                 "source": "https://github.com/thinktomorrow/assetlibrary/tree/0.9.5"
             },
-            "time": "2023-10-26T12:43:50+00:00"
+            "time": "2023-10-26T14:28:50+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
@@ -7981,16 +7981,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.35.1",
+            "version": "v3.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "ec1ccc264994b6764882669973ca435cf05bab08"
+                "reference": "e889301f276c6ce2c391d6aafae9a162e785b064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ec1ccc264994b6764882669973ca435cf05bab08",
-                "reference": "ec1ccc264994b6764882669973ca435cf05bab08",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/e889301f276c6ce2c391d6aafae9a162e785b064",
+                "reference": "e889301f276c6ce2c391d6aafae9a162e785b064",
                 "shasum": ""
             },
             "require": {
@@ -8062,7 +8062,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.35.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.36.0"
             },
             "funding": [
                 {
@@ -8070,7 +8070,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-12T13:47:26+00:00"
+            "time": "2023-10-27T10:12:29+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -8652,16 +8652,16 @@
         },
         {
             "name": "orchestra/canvas",
-            "version": "v8.11.1",
+            "version": "v8.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/canvas.git",
-                "reference": "984a1d5a25c334dfffaf709fe1f7b79405298ac8"
+                "reference": "5038b630e2306a8e7486d69628d84fa2d1764cb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/canvas/zipball/984a1d5a25c334dfffaf709fe1f7b79405298ac8",
-                "reference": "984a1d5a25c334dfffaf709fe1f7b79405298ac8",
+                "url": "https://api.github.com/repos/orchestral/canvas/zipball/5038b630e2306a8e7486d69628d84fa2d1764cb1",
+                "reference": "5038b630e2306a8e7486d69628d84fa2d1764cb1",
                 "shasum": ""
             },
             "require": {
@@ -8719,9 +8719,9 @@
             "description": "Code Generators for Laravel Applications and Packages",
             "support": {
                 "issues": "https://github.com/orchestral/canvas/issues",
-                "source": "https://github.com/orchestral/canvas/tree/v8.11.1"
+                "source": "https://github.com/orchestral/canvas/tree/v8.11.2"
             },
-            "time": "2023-10-23T22:49:19+00:00"
+            "time": "2023-10-26T21:59:54+00:00"
         },
         {
             "name": "orchestra/canvas-core",
