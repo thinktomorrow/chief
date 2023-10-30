@@ -23,7 +23,7 @@
             </div>
 
             <div class="flex items-center grow">
-                <div class="space-y-4 sm:py-6 grow">
+                <div class="space-y-4 grow">
                     @include('chief-assets::_partials.file-edit-preview-url')
                     @include('chief-assets::_partials.file-edit-external-metadata')
                 </div>
