@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Plugins\ExternalFiles\Vimeo;
 
-use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 
 class VimeoServiceProvider extends ChiefPluginServiceProvider
 {
