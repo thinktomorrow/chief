@@ -14,8 +14,6 @@ use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
 trait FileUploadDefaults
 {
-    use WithFileUploads;
-
     public string $fieldName;
 
     public bool $allowMultiple = false;
@@ -109,12 +107,11 @@ trait FileUploadDefaults
      * This extract the index from a dotted file key reference.
      * e.g. files.0.fileRef -> 0 (index)
      */
-    private function extractIndexFromFileKey(string $fileKey): string
+    private function extractIndexFromFileKey(string $fileKey): int
     {
         $fileKeyWithoutPrefix = substr($fileKey, strpos($fileKey, '.') + 1);
 
-        return substr($fileKeyWithoutPrefix, 0, strpos($fileKeyWithoutPrefix, '.'));
-
+        return (int) substr($fileKeyWithoutPrefix, 0, strpos($fileKeyWithoutPrefix, '.'));
     }
 
     /**

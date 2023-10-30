@@ -112,7 +112,7 @@ class FileFieldEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId), ['owners' => $this->previewFile->owners]);
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -128,7 +128,7 @@ class FileFieldEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId), ['owners' => $this->previewFile->owners]);
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -164,7 +164,7 @@ class FileFieldEditComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
     }
 
     public function submit()
@@ -190,7 +190,7 @@ class FileFieldEditComponent extends Component
             app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
 
         $this->close();
         $this->clearValidation();

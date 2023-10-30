@@ -149,7 +149,7 @@ class PreviewFile implements Wireable
 
     public function getUrl(string $conversionName = 'original'): ?string
     {
-        return $this->urls[$conversionName] ?? null;
+        return $this->urls[$conversionName] ?? (count($this->urls) > 0 ? reset($this->urls) : null);
     }
 
     private static function fromLocalAsset(Asset $asset): static
@@ -294,6 +294,8 @@ class PreviewFile implements Wireable
         if (! $this->mediaId) {
             return;
         }
+
+        $this->owners = [];
 
         $references = DB::table('assets_pivot')
             ->select(['entity_type', 'entity_id'])

@@ -43,7 +43,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
             'open-' . $this->parentId => 'open',
             'upload:errored' => 'onUploadErrored',
             'upload:finished' => 'onUploadFinished',
-            'assetUpdated' => 'onAssetUpdated',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
             'assetsChosen-' . $this->getId() => 'onAssetsChosen',
         ];
     }
