@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="flex flex-wrap justify-end gap-3 max-lg:w-full shrink-0">
-                        <button wire:click="save" type="button" class="btn btn-grey shrink-0">
+                        <button wire:click="close" type="button" class="btn btn-grey shrink-0">
                             Annuleren
                         </button>
 

@@ -17,11 +17,14 @@ class GalleryComponent extends Component
 
     protected Gallery $table;
 
-    protected $listeners = [
-        'assetsDeleted' => 'onAssetsDeleted',
-        'assetUpdated' => 'onAssetUpdated',
-        'filesUploaded' => 'onFilesUploaded',
-    ];
+    public function getListeners()
+    {
+        return [
+            'assetsDeleted' => 'onAssetsDeleted',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
+            'filesUploaded' => 'onFilesUploaded',
+        ];
+    }
 
     public function booted()
     {
@@ -47,12 +50,12 @@ class GalleryComponent extends Component
 
     public function onAssetUpdated($assetId): void
     {
-        //        $this->callMethod('$refresh');
+        // $this->callMethod('$refresh');
     }
 
     public function onFilesUploaded(): void
     {
-        //        $this->callMethod('$refresh');
+        // $this->callMethod('$refresh');
     }
 
     public function onAssetsDeleted(array $assetIds): void

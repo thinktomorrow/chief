@@ -27,6 +27,11 @@ class FileSelect extends Component implements Htmlable
         return $this->render()->render();
     }
 
+    public function render(): View
+    {
+        return view('chief-assets::components.select', array_merge($this->data()));
+    }
+
     public function getFieldId(): string
     {
         return $this->component->getFieldId();
@@ -82,10 +87,5 @@ class FileSelect extends Component implements Htmlable
     public function allowToChooseExternalFiles(): bool
     {
         return $this->allowToChooseExternalFiles;
-    }
-
-    public function render(): View
-    {
-        return view('chief-assets::components.select', array_merge($this->data()));
     }
 }

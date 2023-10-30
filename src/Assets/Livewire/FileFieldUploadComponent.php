@@ -42,7 +42,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
         return [
             'upload:finished' => 'onUploadFinished',
             'upload:errored' => 'onUploadErrored',
-            'assetUpdated' => 'onAssetUpdated',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
             'assetsChosen-' . $this->getId() => 'onAssetsChosen',
         ];
     }

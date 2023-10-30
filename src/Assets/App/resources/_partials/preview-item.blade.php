@@ -1,4 +1,4 @@
-<div wire:sortable.item="{{ $file->id }}" class="relative @container">
+<div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="relative @container">
     {{-- File upload progress bar --}}
     @if($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
         <div class="absolute inset-0">
@@ -15,7 +15,7 @@
         <div class="flex gap-4">
             {{-- File thumb --}}
             <div class="flex items-center justify-center overflow-hidden rounded-lg w-14 h-14 shrink-0 bg-grey-100">
-                @if($file->isPreviewable)
+                @if($file->isPreviewable && $file->previewUrl)
                     <img
                         src="{{ $file->previewUrl }}"
                         alt="{{ $file->filename }}"

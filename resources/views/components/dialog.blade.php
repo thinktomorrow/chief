@@ -7,11 +7,11 @@
 ])
 
 <div
-        {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
-        x-cloak
-        wire:ignore.self
-        x-show="open"
-        x-data="{
+    {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
+    x-cloak
+    wire:ignore.self
+    x-show="open"
+    x-data="{
         open: {{ isset($wired) ? '$wire.entangle(\'isOpen\')' : 'false' }},
         close() {
             {{ isset($wired) ? '$wire.close()' : '$data.open = false;' }}
@@ -29,13 +29,13 @@
             }
         }
     }"
-        x-on:open-dialog.window="if($el.id === $event.detail.id) { open = true; }"
-        x-on:resize.debounce.250ms.window="toggleInnerShadows()"
-        x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
+    x-on:open-dialog.window="if($el.id === $event.detail.id) { open = true; }"
+    x-on:resize.debounce.250ms.window="toggleInnerShadows()"
+    x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
 >
     <div
-            x-on:click="close()"
-            class="absolute inset-0 cursor-pointer bg-black/20 backdrop-filter backdrop-blur-sm animate-dialog-fade-in"
+        x-on:click="close()"
+        class="absolute inset-0 cursor-pointer bg-black/20 backdrop-filter backdrop-blur-sm animate-dialog-fade-in"
     ></div>
 
     <div class="container relative inline-flex justify-center pointer-events-none max-w-screen-2xl">
@@ -49,9 +49,9 @@
             'w-2xl' => $size === '2xl',
         ])>
             <div
-                    x-ref="container"
-                    x-on:scroll="toggleInnerShadows()"
-                    class="relative overflow-auto max-h-[calc(100vh-4rem)] transition-all duration-150 ease-in-out shadow-black/5"
+                x-ref="container"
+                x-on:scroll="toggleInnerShadows()"
+                class="relative overflow-auto max-h-[calc(100vh-4rem)] transition-all duration-150 ease-in-out shadow-black/5"
             >
                 <header class="sticky top-0 z-[1]">
                     @if($title || $header)
@@ -78,8 +78,10 @@
                         </div>
                     @endif
 
-                    <div x-ref="headerShadow"
-                         class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8">
+                    <div
+                        x-ref="headerShadow"
+                        class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8"
+                    >
                         <div class="h-8 -translate-y-8 bg-black/20 blur"></div>
                     </div>
                 </header>
@@ -89,8 +91,10 @@
                 </div>
 
                 <footer class="sticky bottom-0 z-[1]">
-                    <div x-ref="footerShadow"
-                         class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8">
+                    <div
+                        x-ref="footerShadow"
+                        class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8"
+                    >
                         <div class="h-8 translate-y-8 bg-black/20 blur"></div>
                     </div>
 
