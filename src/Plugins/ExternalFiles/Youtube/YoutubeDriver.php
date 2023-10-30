@@ -64,6 +64,7 @@ class YoutubeDriver implements Driver
 
         try {
             $response = file_get_contents('https://youtube.com/oembed?format=json&url='.urlencode($query));
+
             return json_decode($response, true);
         } catch(\ErrorException $e) {
             throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Youtube verwijzing: ' . '['.$idOrUrl.']']);
@@ -134,23 +135,24 @@ class YoutubeDriver implements Driver
      * @param string $url
      * @return mixed Youtube video ID or FALSE if not found
      */
-    private function getYoutubeIdFromUrl($url) {
+    private function getYoutubeIdFromUrl($url)
+    {
         $parts = parse_url($url);
 
-        if (isset($parts['query'])){
+        if (isset($parts['query'])) {
             parse_str($parts['query'], $qs);
 
-            if (isset($qs['v'])){
+            if (isset($qs['v'])) {
                 return $qs['v'];
-            } else if (isset($qs['vi'])) {
+            } elseif (isset($qs['vi'])) {
                 return $qs['vi'];
             }
         }
 
-        if(isset($parts['path'])){
+        if(isset($parts['path'])) {
             $path = explode('/', trim($parts['path'], '/'));
 
-            return $path[count($path)-1];
+            return $path[count($path) - 1];
         }
 
         return false;
