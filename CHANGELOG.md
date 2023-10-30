@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+- Fixed: Issue where isolating asset without pivot data would break.
 
 ## 0.8.4 - 2023-10-30
 

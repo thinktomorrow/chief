@@ -132,7 +132,7 @@ class FileApplication
         $newAsset->save();
 
         app(DetachAsset::class)->handle($model, $fieldKey, $locale, [$assetId]);
-        app(AddAsset::class)->handle($model, $newAsset, $fieldKey, $locale, $existingAsset->pivot->order, $existingAsset->pivot->data);
+        app(AddAsset::class)->handle($model, $newAsset, $fieldKey, $locale, $existingAsset->pivot->order, $existingAsset->pivot->data ?? []);
 
         return $model->fresh()->assets($fieldKey)->firstWhere(fn ($asset) => $asset->id == $newAsset->id && $asset->pivot->locale == $locale);
     }
