@@ -8,6 +8,8 @@ principles.
 
 ## 0.8.4 - 2023-10-30
 
+- Added: Assets used in multiple relations are shared by default. There is now info on where the asset is used in the file edit dialog.
+- Added: An option in the file edit dialog to isolate such a shared asset - and duplicate it - in order to edit solely for given relation.
 - Added: `Select::syncInOrder()` to force synced values in given order. 
 - Fixed: Sorting of select options sync values was not kept in given order. 
 - Fixed: Sorting behavior on asset files was buggy.
