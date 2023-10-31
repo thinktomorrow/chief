@@ -108,6 +108,8 @@ class VimeoDriver implements Driver
 
     private function updateAssetDataByResponse(AssetContract $asset, array $response)
     {
+        $asset->asset_type = array_search(static::class, DriverFactory::$map);
+
         $asset->setData('external.type', array_search(static::class, DriverFactory::$map));
         $asset->setData('external.id', $response['video_id']);
         $asset->setData('external.width', $response['width']);
