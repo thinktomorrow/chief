@@ -10,7 +10,7 @@
                     Platform
                 </x-chief::input.label>
 
-                <x-chief::input.select id="driverType" wire:model="driverType" container-class="w-full">
+                <x-chief::input.select id="driverType" wire:model.live="driverType" container-class="w-full">
                     @foreach($driverTypes as $driverTypeOption)
                         <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
                     @endforeach
@@ -28,12 +28,12 @@
                     </x-chief::input.description>
 
                     <x-chief::input.text
-                            x-data="{}" {{-- Prevents directive to be triggered twice --}}
-                    x-prevent-submit-on-enter
-                            id="driverId"
-                            wire:model="driverId"
-                            placeholder="{{ $this->getLabel() }}"
-                            class="w-full"
+                        x-data="{}" {{-- Prevents directive to be triggered twice --}}
+                        x-prevent-submit-on-enter
+                        id="driverId"
+                        wire:model="driverId"
+                        placeholder="{{ $this->getLabel() }}"
+                        class="w-full"
                     />
                 </x-chief::input.group>
             @endif

@@ -24,7 +24,7 @@
                 <x-chief::input.group rule="owner_reference">
                     <x-chief::multiselect
                         name="owner_reference"
-                        :options="$pages"
+                        :options="\Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toMultiSelectPairs($pages)"
                         :selection="old('owner_reference', $ownerReference)"/>
                 </x-chief::input.group>
             </div>

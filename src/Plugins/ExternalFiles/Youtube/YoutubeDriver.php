@@ -102,13 +102,13 @@ class YoutubeDriver implements Driver
         return $asset;
     }
 
+    // Duration is not included in the oembed response
     private function updateAssetDataByResponse(AssetContract $asset, string $id, array $response)
     {
         $asset->setData('external.type', array_search(static::class, DriverFactory::$map));
         $asset->setData('external.id', $id);
         $asset->setData('external.width', $response['width']);
         $asset->setData('external.height', $response['height']);
-        $asset->setData('external.duration', 'X'); // TODO: duration is not included in the oembed response
         $asset->setData('external.title', $response['title']);
         $asset->setData('external.filetype', $response['type']);
         $asset->setData('external.mimetype', 'video/youtube');

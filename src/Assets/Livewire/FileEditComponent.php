@@ -76,7 +76,10 @@ class FileEditComponent extends Component
 
     public function openFilesChooseExternal()
     {
-        $this->emitDownTo('chief-wire::file-field-choose-external', 'open', ['assetId' => $this->previewFile->mediaId]);
+        $this->emitDownTo('chief-wire::file-field-choose-external', 'open', [
+            'assetId' => $this->previewFile->mediaId,
+            'driverType' => $this->previewFile->getExternalAssetType(),
+        ]);
     }
 
     public function updateExternalAsset()

@@ -10,14 +10,21 @@
         </dl>
     @endif
 
-    @if($previewFile->isVideo())
+    @if($previewFile->isVideo() && $previewFile->getData('external.duration'))
         <dl class="flex justify-between gap-1">
             <dt>Lengte</dt>
             <dd class="text-right">{{ $previewFile->getData('external.duration') }} sec</dd>
         </dl>
     @endif
 
-    @if($previewFile->isImage() || $previewFile->isVideo())
+    @if($previewFile->isImage())
+        <dl class="flex justify-between gap-1">
+            <dt>Afmetingen</dt>
+            <dd class="text-right">{{ $previewFile->width }}x{{ $previewFile->height }}</dd>
+        </dl>
+    @endif
+
+    @if($previewFile->isVideo())
         <dl class="flex justify-between gap-1">
             <dt>Afmetingen</dt>
             <dd class="text-right">{{ $previewFile->width }}x{{ $previewFile->height }}</dd>

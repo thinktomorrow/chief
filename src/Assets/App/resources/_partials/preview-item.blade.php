@@ -43,7 +43,9 @@
                 <p class="text-sm text-grey-500">
                     @if($file->isExternalAsset)
                         {{ ucfirst($file->getExternalAssetType()) }} -
-                        {{ $file->getData('external.duration') }} sec
+                        @if($file->getData('external.duration'))
+                            {{ $file->getData('external.duration') }} sec
+                        @endif
                     @else
                         {{ $file->humanReadableSize }} -
                         @if($file->isImage())

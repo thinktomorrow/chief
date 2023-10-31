@@ -58,6 +58,11 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
         $this->syncPreviewFiles();
     }
 
+    public function openFileEdit($fileId)
+    {
+        $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $this->previewFiles[$this->findPreviewFileIndex($fileId)]]);
+    }
+
     public function render()
     {
         $this->renameErrorBagFileAttribute();
