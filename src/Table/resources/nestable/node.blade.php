@@ -68,9 +68,34 @@
             </div>
         </div>
 
-        <div data-sortable-hide-when-sorting>
-            @include('chief::manager._index._options', ['model' => $node->getModel()])
-        </div>
+        <?php $model = $node->getModel(); ?>
+
+            <div data-sortable-hide-when-sorting class="flex justify-end gap-1">
+                @adminCan('edit', $model)
+                    <a href="{{ $manager->route('edit', $model->getKey()) }}" title="Aanpassen">
+                        <x-chief::icon-button color="grey" icon="icon-edit"/>
+                    </a>
+                @endAdminCan
+
+                @adminCan('preview', $model)
+                    <a href="@adminRoute('preview', $model)" title="Bekijk op de site" target="_blank" rel="noopener">
+                        <x-chief::icon-button color="grey" icon="icon-external-link"/>
+                    </a>
+                @endAdminCan
+
+                @if (($manager->can('state-update', $model) && $model instanceof StatefulContract) || $manager->can('duplicate', $model))
+                    <button type="button" id="index-options-{{ $model->id }}">
+                        <x-chief::button>
+                            <svg class="w-5 h-5">
+                                <use xlink:href="#icon-ellipsis-vertical"/>
+                            </svg>
+                        </x-chief::button>
+                    </button>
+                @endif
+            </div>
+
+{{--            <livewire:chief-wire::list-options lazy :model-reference="$node->getModel()->modelReference()->get()" />--}}
+{{--            @include('chief::manager._index._options', ['model' => $node->getModel()])--}}
     </div>
 
     <div

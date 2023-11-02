@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Thinktomorrow\Chief\ManagedModels\Livewire\ListOptions;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,8 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief-table::components.row', 'chief::table.row');
         Blade::component('chief-table::components.header', 'chief::table.header');
         Blade::component('chief-table::components.data', 'chief::table.data');
+
+        Livewire::component('chief-wire::list-options', ListOptions::class);
 
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {
