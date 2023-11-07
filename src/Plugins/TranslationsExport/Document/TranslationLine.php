@@ -27,10 +27,10 @@ class TranslationLine implements Line
         return encrypt($this->reference);
     }
 
-//    public function getReference(): string
-//    {
-//        return $this->reference;
-//    }
+    //    public function getReference(): string
+    //    {
+    //        return $this->reference;
+    //    }
 
     public function getLabel(): string
     {

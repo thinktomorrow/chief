@@ -12,13 +12,13 @@ use Thinktomorrow\Chief\Admin\Setup\CreatePageMigrationCommand;
 use Thinktomorrow\Chief\Admin\Setup\CreateViewCommand;
 use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
 use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
-use Thinktomorrow\Chief\App\Console\TranslationsExportCommand;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\App\Console\TranslationsExportCommand;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
