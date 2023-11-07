@@ -1,19 +1,21 @@
 <div class="flex flex-wrap gap-1.5 mt-3">
-    <label for="{{ $getFieldId() }}" class="cursor-pointer">
-        <input
-            type="file"
-            id="{{ $getFieldId() }}"
-            {{ $allowMultiple() ? 'multiple' : '' }}
-            accept="{{ $acceptedMimeTypes() ?: '' }}"
-            x-on:change="() => { uploadFiles([...$el.files]) }"
-            class="hidden"
-        />
+    @if($allowToUploadFiles())
+        <label for="{{ $getFieldId() }}" class="cursor-pointer">
+            <input
+                type="file"
+                id="{{ $getFieldId() }}"
+                {{ $allowMultiple() ? 'multiple' : '' }}
+                accept="{{ $acceptedMimeTypes() ?: '' }}"
+                x-on:change="() => { uploadFiles([...$el.files]) }"
+                class="hidden"
+            />
 
-        <x-chief::button>
-            <svg><use xlink:href="#icon-upload"></use></svg>
-            @if($allowMultiple()) Upload een nieuw bestand @else Upload een ander bestand @endif
-        </x-chief::button>
-    </label>
+            <x-chief::button>
+                <svg><use xlink:href="#icon-upload"></use></svg>
+                @if($allowMultiple()) Upload een nieuw bestand @else Upload een ander bestand @endif
+            </x-chief::button>
+        </label>
+    @endif
 
     @if($allowToChooseFiles())
         <button wire:click="openFilesChoose" type="button">
