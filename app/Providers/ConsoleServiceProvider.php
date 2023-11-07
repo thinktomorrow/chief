@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Admin\Setup\CreatePageMigrationCommand;
 use Thinktomorrow\Chief\Admin\Setup\CreateViewCommand;
 use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
 use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
-use Thinktomorrow\Chief\App\Console\ContentExportCommand;
+use Thinktomorrow\Chief\App\Console\TranslationsExportCommand;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\ImportRedirects;
@@ -53,7 +53,7 @@ class ConsoleServiceProvider extends ServiceProvider
             'command.chief:view',
             'command.chief:project-menu',
             'command.chief:import-redirects',
-            'command.chief:content-export',
+            'command.chief:translations-export',
         ]);
 
         // Bind our commands to the container
@@ -70,7 +70,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:developer', CreateDeveloper::class);
         $this->app->bind('command.chief:project-menu', ProjectMenuCommand::class);
         $this->app->bind('command.chief:import-redirects', ImportRedirects::class);
-        $this->app->bind('command.chief:content-export', ContentExportCommand::class);
+        $this->app->bind('command.chief:translations-export', TranslationsExportCommand::class);
     }
 
     public function register()
