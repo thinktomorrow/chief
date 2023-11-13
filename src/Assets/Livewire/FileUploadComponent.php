@@ -51,7 +51,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     public function booted()
     {
         $this->filePreview = new FilePreview($this);
-        $this->fileSelect = new FileSelect($this, false, DriverFactory::any());
+        $this->fileSelect = new FileSelect($this, true, false, DriverFactory::any());
 
         $this->clearValidation();
 
