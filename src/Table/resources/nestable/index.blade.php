@@ -55,6 +55,8 @@
             @endif
         </div>
 
+        <livewire:chief-wire::row-actions-dropdown />
+
         @if ($resource->showIndexSidebarAside())
             <x-slot name="aside">
                 @include('chief::templates.page.index.default-sidebar')
