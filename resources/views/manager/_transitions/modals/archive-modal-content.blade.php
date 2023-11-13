@@ -25,7 +25,7 @@
                     <option value="">---</option>
                     <optgroup label="{{ $targetModelGroup['label'] }}">
                         @foreach($targetModelGroup['options'] as $targetModel)
-                            <option value="{{ $targetModel['id'] }}">{{ $targetModel['label'] }}</option>
+                            <option value="{{ $targetModel['value'] }}">{{ $targetModel['label'] }}</option>
                         @endforeach
                     </optgroup>
                 @endforeach
