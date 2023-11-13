@@ -6,6 +6,7 @@ principles.
 
 ## Unreleased
 -   Added: File::allowLocalFiles(false) to disallow local uploads or selection. This can be used with File::allowExternalFiles(true) to only allow external files.
+-   Fixed: Archive modal bug where redirect options were not displayed due to old options format.
 
 ## 0.8.5 - 2023-10-30
 -   Added: ExternalFiles Youtube plugin.
