@@ -5,12 +5,16 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+
+## 0.8.6 - 2023-11-15
+
 -   Added: File::allowLocalFiles(false) to disallow local uploads or selection. This can be used with File::allowExternalFiles(true) to only allow external files.
 -   Fixed: Archive modal bug where redirect options were not displayed due to old options format.
 -   Fixed: Bug where replacing media had unexpected results when updating other files afterwards.
 -   Fixed: Asset timestamp was not updated when replacing media.
 
 ## 0.8.5 - 2023-10-30
+
 -   Added: ExternalFiles Youtube plugin.
 -   Fixed: Issue where isolating asset without pivot data would break.
 -   Fixed: Internal pages multiselect in menu item edit didn't show results.
