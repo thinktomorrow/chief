@@ -98,6 +98,8 @@ class FileApplication
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
 
+        $existingAsset->touch('updated_at');
+
         $newAsset->delete();
     }
 
@@ -111,6 +113,8 @@ class FileApplication
             ->save();
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
+
+        $existingAsset->touch('updated_at');
 
         $newAsset->delete();
     }
