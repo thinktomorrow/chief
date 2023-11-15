@@ -98,7 +98,7 @@ class FileEditComponent extends Component
 
     public function close()
     {
-        $this->reset(['previewFile', 'form', 'components']);
+        $this->reset(['previewFile', 'form', 'components', 'replacedPreviewFile']);
         $this->isOpen = false;
     }
 
