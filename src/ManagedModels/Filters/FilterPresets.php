@@ -47,7 +47,7 @@ class FilterPresets
                     if(false !== strpos($column, '.')) {
                         [$relation, $columnName] = explode('.', $column);
 
-                        $builder->whereHas($relation, function($query) use($value, $columnName, $dynamicColumn){
+                        $builder->whereHas($relation, function ($query) use ($value, $columnName, $dynamicColumn) {
                             return static::queryColumnsOrDynamicAttributes($query->whereRaw('1=0'), $value, [$columnName], [], $dynamicColumn);
                         });
 
