@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Added: `FilterPresets::attribute()` for search on column, dynamic key or relation column.
+-   Deprecated: `FilterPresets::text()` and `FilterPresets::column()` in favor of the `FilterPresets::attribute()` function.
 
 ## 0.8.6 - 2023-11-15
 
