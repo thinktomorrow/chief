@@ -101,6 +101,8 @@ class HotSpotComponent extends Component
         if ($this->activeHotSpotId == $id) {
             $this->activateFirstHotSpot();
         }
+
+        $this->resetErrorBag();
     }
 
     public function submit()
