@@ -41,7 +41,7 @@ class FileFieldEditTest extends ChiefTestCase
             ->assertSet('locale', 'nl')
             ->assertSet('parentId', 'xxx')
             ->assertSet('components', [
-                $this->textComponent->toLivewire()
+                $this->textComponent->toLivewire(),
             ])
             ->assertSet('previewFile', null);
     }

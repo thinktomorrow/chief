@@ -6,9 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileEditComponent;
-use Thinktomorrow\Chief\Assets\Livewire\FileFieldEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class FileEditTest extends ChiefTestCase
