@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+
+## 0.8.8 - 2023-11-22
 -   Fixed: issue where model could not attach same asset for different fields.
 
 ## 0.8.7 - 2023-11-22
