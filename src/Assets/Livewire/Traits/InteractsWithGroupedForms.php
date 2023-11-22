@@ -22,7 +22,8 @@ trait InteractsWithGroupedForms
                     $component->getKey(),
                     // Keep the current form value if already present, else use the persisted value
                     data_get(
-                        $this->form, $component->getKey(),
+                        $this->form,
+                        $component->getKey(),
                         data_get($this->previewFile->fieldValues, $component->getKey())
                     )
                 );
