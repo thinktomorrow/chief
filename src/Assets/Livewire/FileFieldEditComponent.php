@@ -81,13 +81,6 @@ class FileFieldEditComponent extends Component
         $this->syncForm();
     }
 
-    private function syncForm()
-    {
-        $this->previewFile->fieldValues = $this->form;
-
-        $this->form['basename'] = $this->previewFile->getBaseName();
-    }
-
     public function openImageCrop()
     {
         $this->emitDownTo('chief-wire::image-crop', 'open', ['previewfile' => $this->previewFile]);

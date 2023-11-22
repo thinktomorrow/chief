@@ -67,13 +67,6 @@ class FileEditComponent extends Component
         $this->syncForm();
     }
 
-    private function syncForm()
-    {
-        $this->previewFile->fieldValues = $this->form;
-
-        $this->form['basename'] = $this->previewFile->getBaseName();
-    }
-
     public function openFilesChooseExternal()
     {
         $this->emitDownTo('chief-wire::file-field-choose-external', 'open', [
