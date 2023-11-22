@@ -5,9 +5,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+
+## 0.8.7 - 2023-11-22
 -   Added: `FilterPresets::attribute()` for search on column, dynamic key or relation column.
 -   Fixed: issue where no more than one hotspot could be added at the same time  
-- Deprecated: `FilterPresets::text()` and `FilterPresets::column()` in favor of the `FilterPresets::attribute()` function.
+-   Deprecated: `FilterPresets::text()` and `FilterPresets::column()` in favor of the `FilterPresets::attribute()` function.
 
 ## 0.8.6 - 2023-11-15
 
