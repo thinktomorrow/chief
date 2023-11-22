@@ -17,7 +17,7 @@ trait TestingWithFiles
     {
         app(UpdateFileField::class)->handle(
             $model,
-            $resource->field($model, 'thumb'),
+            $resource->field($model, $fieldKey),
             [
                 'files' => [
                     $fieldKey => $payload,

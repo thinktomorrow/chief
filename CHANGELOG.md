@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Fixed: issue where model could not attach same asset for different fields.
 
 ## 0.8.7 - 2023-11-22
 -   Added: `FilterPresets::attribute()` for search on column, dynamic key or relation column.
