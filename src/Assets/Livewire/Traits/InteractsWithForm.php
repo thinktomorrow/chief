@@ -100,6 +100,13 @@ trait InteractsWithForm
         $this->components = $this->initialComponents = array_map(fn ($component) => $component->toLivewire(), $components);
     }
 
+    private function syncForm()
+    {
+        $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
+
+        $this->form['basename'] = $this->previewFile->getBaseName();
+    }
+
     private function addDefaultBasenameValidation(array $rules = [], array $messages = [], array $validationAttributes = []): array
     {
         $rules = array_merge($rules, ['form.basename' => ['required', 'min:1', 'max:200']]);

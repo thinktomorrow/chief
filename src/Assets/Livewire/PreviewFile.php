@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Assets\Livewire;
 
+use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Wireable;
@@ -11,6 +13,10 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class PreviewFile implements Wireable
 {
@@ -45,9 +51,9 @@ class PreviewFile implements Wireable
 
     }
 
-    public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null): static
+    public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null, array $attributes = []): static
     {
-        return new static(
+        $model = new static(
             $file->getFilename(),
             null,
             $file->isPreviewable() ? $file->temporaryUrl() : null,
@@ -75,18 +81,30 @@ class PreviewFile implements Wireable
             [],
             [],
         );
+
+        foreach($attributes as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
     }
 
-    public static function fromAsset(AssetContract $asset): static
+    public static function fromAsset(AssetContract $asset, array $attributes = []): static
     {
         if ($asset instanceof ExternalAssetContract) {
             return static::fromExternalAsset($asset);
         }
 
-        return static::fromLocalAsset($asset);
+        $model = static::fromLocalAsset($asset);
+
+        foreach($attributes as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
     }
 
-    private static function fromExternalAsset(ExternalAssetContract $asset): static
+    private static function fromExternalAsset(ExternalAssetContract $asset, array $attributes = []): static
     {
         $previewUrls = [
             'original' => $asset->getUrl(),
@@ -95,9 +113,7 @@ class PreviewFile implements Wireable
 
         $owners = [];
 
-        //        DB::enableQueryLog();
-        //dd($asset, $previewUrls, $asset->getUrl(), DB::getQueryLog());
-        return new static(
+        $model = new static(
             $asset->id,
             $asset->id,
             $thumbUrl,
@@ -123,11 +139,17 @@ class PreviewFile implements Wireable
             $previewUrls,
             $owners,
         );
+
+        foreach($attributes as $key => $value) {
+            $model->$key = $value;
+        }
+
+        return $model;
     }
 
     public function getUrl(string $conversionName = 'original'): ?string
     {
-        return $this->urls[$conversionName] ?? null;
+        return $this->urls[$conversionName] ?? (count($this->urls) > 0 ? reset($this->urls) : null);
     }
 
     private static function fromLocalAsset(Asset $asset): static
@@ -142,12 +164,6 @@ class PreviewFile implements Wireable
             'original' => $asset->getUrl(),
             ...$media->getGeneratedConversions()->reject(fn ($isConverted) => false)->mapWithKeys(fn ($isConverted, $conversionName) => [$conversionName => $asset->getUrl($conversionName)])->all(),
         ];
-
-        // Owners
-        $owners = [];
-        //        if($asset = $asset->model) {
-        //
-        //        }
 
         // TODO: convert this to using the new asset library api.
         // TODO: how to get the smallest conversions if we don't know the field info?
@@ -177,7 +193,7 @@ class PreviewFile implements Wireable
             $asset->updated_at->getTimestamp(),
             ($asset->data ?: []),
             $urls,
-            $owners,
+            [],
         );
     }
 
@@ -271,6 +287,74 @@ class PreviewFile implements Wireable
             'urls' => $this->urls,
             'owners' => $this->owners,
         ];
+    }
+
+    public function loadOwners(): void
+    {
+        if (! $this->mediaId) {
+            return;
+        }
+
+        $this->owners = [];
+
+        $references = DB::table('assets_pivot')
+            ->select(['entity_type', 'entity_id'])
+            ->where('asset_id', $this->mediaId)
+            ->get();
+
+        foreach ($references as $reference) {
+            $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
+
+            if ($model instanceof FragmentModel) {
+                $ownerModels = app(FragmentOwnerRepository::class)->getResourceOwners($model);
+
+                foreach ($ownerModels as $ownerModel) {
+                    $this->owners[] = $this->createOwnerFields($ownerModel, $model);
+                }
+
+                continue;
+            }
+            $this->owners[] = $this->createOwnerFields($model);
+        }
+    }
+
+    // Find a matching owner by model reference
+    public function findOwner(string $modelReference): ?array
+    {
+        foreach($this->owners as $owner) {
+            if($owner['modelReference'] == $modelReference) {
+                return $owner;
+            }
+        }
+
+        return null;
+    }
+
+    private function createOwnerFields($resourceModel, ?FragmentModel $fragmentModel = null): array
+    {
+        if($fragmentModel) {
+            $fragment = ModelReference::fromString($fragmentModel->model_reference)->instance()->setFragmentModel($fragmentModel);
+        }
+
+        try {
+            $resource = app(Registry::class)->findResourceByModel($resourceModel::class);
+            $manager = app(Registry::class)->findManagerByModel($resourceModel::class);
+
+            return [
+                'label' => $resource->getPageTitle($resourceModel),
+                'adminUrl' => $manager->route('edit', $resourceModel),
+                'resourceModelReference' => $resourceModel->modelReference()->get(),
+                'modelReference' => $resourceModel->modelReference()->get(),
+
+                // If a fragmentModel is owner, we use this fragment as the real model reference.
+                ...($fragmentModel) ? ['modelReference' => $fragmentModel->modelReference()->get()] : [],
+                ...($fragmentModel) ? ['label' => $resource->getPageTitle($resourceModel) .' > '. $fragment->getLabel()] : [],
+            ];
+        } catch (Exception $e) {
+            report($e);
+        }
+
+        return ['label' => null, 'adminUrl' => null, 'resourceModelReference' => null, 'modelReference' => null];
     }
 
     public function hasData(string $key): bool

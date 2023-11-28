@@ -49,6 +49,7 @@ class FileEditComponent extends Component
     private function setFile(PreviewFile $previewFile)
     {
         $this->previewFile = $previewFile;
+        $this->previewFile->loadOwners();
 
         $this->form['basename'] = $this->previewFile->getBaseName();
 
@@ -66,16 +67,12 @@ class FileEditComponent extends Component
         $this->syncForm();
     }
 
-    private function syncForm()
-    {
-        $this->previewFile->fieldValues = $this->form;
-
-        $this->form['basename'] = $this->previewFile->getBaseName();
-    }
-
     public function openFilesChooseExternal()
     {
-        $this->emitDownTo('chief-wire::file-field-choose-external', 'open', ['assetId' => $this->previewFile->mediaId]);
+        $this->emitDownTo('chief-wire::file-field-choose-external', 'open', [
+            'assetId' => $this->previewFile->mediaId,
+            'driverType' => $this->previewFile->getExternalAssetType(),
+        ]);
     }
 
     public function updateExternalAsset()
@@ -87,14 +84,14 @@ class FileEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
 
         $this->close();
     }
 
     public function close()
     {
-        $this->reset(['previewFile', 'form', 'components']);
+        $this->reset(['previewFile', 'form', 'components', 'replacedPreviewFile']);
         $this->isOpen = false;
     }
 
@@ -103,7 +100,7 @@ class FileEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -144,7 +141,7 @@ class FileEditComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->dispatch('assetUpdated', $this->previewFile);
+        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
 
         $this->close();
     }

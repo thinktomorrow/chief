@@ -1,18 +1,23 @@
 <?php
 
-namespace App;
+namespace Thinktomorrow\Chief\Assets\Tests\App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
+use Thinktomorrow\Chief\Assets\App\FileHelper;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class FileApplicationTest extends ChiefTestCase
 {
+    use UploadsFile;
+
     private $model;
     private Resource $resource;
 
@@ -34,20 +39,7 @@ class FileApplicationTest extends ChiefTestCase
 
     public function test_it_can_update_field_values()
     {
-        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
-
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
-            'nl' => [
-                'uploads' => [
-                    [
-                        'id' => 'xxx',
-                        'path' => Storage::path('test/image-temp-name.png'),
-                        'originalName' => 'image.png',
-                        'mimeType' => 'image/png',
-                    ],
-                ],
-            ],
-        ]);
+        $this->uploadDefaultAsset();
 
         app(FileApplication::class)->updateAssociatedAssetData($this->model->modelReference()->get(), 'thumb', 'nl', $this->model->asset('thumb', 'nl')->id, [
             'caption' => 'I belong to this file',
@@ -56,22 +48,23 @@ class FileApplicationTest extends ChiefTestCase
         $this->assertEquals('I belong to this file', $this->model->fresh()->asset('thumb', 'nl')->getData('caption'));
     }
 
+    private function uploadDefaultAsset(string $filename = 'image.png', string $mimeType = 'image/png'): void
+    {
+        $tempName = Str::random() . '.' . FileHelper::getExtension($filename);
+        UploadedFile::fake()->image($filename)->storeAs('test', $tempName);
+
+        $this->uploadAsset(
+            'test/' . $tempName,
+            $filename,
+            $mimeType,
+            $this->model,
+            $this->resource,
+        );
+    }
+
     public function test_it_can_update_filename()
     {
-        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
-
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
-            'nl' => [
-                'uploads' => [
-                    [
-                        'id' => 'xxx',
-                        'path' => Storage::path('test/image-temp-name.png'),
-                        'originalName' => 'image.png',
-                        'mimeType' => 'image/png',
-                    ],
-                ],
-            ],
-        ]);
+        $this->uploadDefaultAsset();
 
         app(FileApplication::class)->updateFileName($this->model->asset('thumb', 'nl')->id, 'foobar.jpg');
 

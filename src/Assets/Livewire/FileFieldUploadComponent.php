@@ -25,6 +25,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
     public string $fieldKey;
     public string $locale;
     public bool $allowExternalFiles = false;
+    public bool $allowLocalFiles = true;
 
     public function mount(?string $modelReference, string $fieldKey, string $locale, string $fieldName, array $assets = [], array $components = [])
     {
@@ -42,7 +43,7 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
         return [
             'upload:finished' => 'onUploadFinished',
             'upload:errored' => 'onUploadErrored',
-            'assetUpdated' => 'onAssetUpdated',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
             'assetsChosen-' . $this->getId() => 'onAssetsChosen',
         ];
     }
@@ -52,7 +53,8 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
         $this->filePreview = new FilePreview($this);
         $this->fileSelect = new FileSelect(
             $this,
-            true,
+            $this->allowLocalFiles,
+            $this->allowLocalFiles,
             $this->allowExternalFiles && DriverFactory::any()
         );
 

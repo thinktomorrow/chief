@@ -43,7 +43,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
             'open-' . $this->parentId => 'open',
             'upload:errored' => 'onUploadErrored',
             'upload:finished' => 'onUploadFinished',
-            'assetUpdated' => 'onAssetUpdated',
+            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
             'assetsChosen-' . $this->getId() => 'onAssetsChosen',
         ];
     }
@@ -51,11 +51,16 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     public function booted()
     {
         $this->filePreview = new FilePreview($this);
-        $this->fileSelect = new FileSelect($this, false, DriverFactory::any());
+        $this->fileSelect = new FileSelect($this, true, false, DriverFactory::any());
 
         $this->clearValidation();
 
         $this->syncPreviewFiles();
+    }
+
+    public function openFileEdit($fileId)
+    {
+        $this->emitDownTo('chief-wire::file-edit', 'open', ['previewfile' => $this->previewFiles[$this->findPreviewFileIndex($fileId)]]);
     }
 
     public function render()

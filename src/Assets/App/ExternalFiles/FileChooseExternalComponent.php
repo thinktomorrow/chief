@@ -10,25 +10,13 @@ class FileChooseExternalComponent extends Component
 {
     use ShowsAsDialog;
 
-    // TODO
-    // v Set asset_type on save
-    // refactor PreviewFile
-    // previewfile:: account for external asset (in combo with preview asset)
-    // all external asset values and preview values as separate data.
-    // assert preview media relation works (with morph class for vimeoAsset)
-    // previewFile::fromExternalAsset()
-    // external preview blade
-    // external file edit
-    // Media gallery: filter by type: image - video - file
-    // Rename Driver to Platform or Location ExternalLocation ?
-
     public $parentId;
     public $driverType;
     public $driverTypes = [];
     public $driverId;
     public $assetId = null; // Existing asset id
 
-    private $cachedDriver = null;
+    private array $cachedDrivers = [];
 
     public function mount(string $parentId)
     {
@@ -48,7 +36,9 @@ class FileChooseExternalComponent extends Component
     public function open($value)
     {
         $this->assetId = $value['assetId'] ?? null;
-        $this->driverType = reset($this->driverTypes);
+        $this->driverType = (isset($value['driverType']) && in_array($value['driverType'], $this->driverTypes))
+            ? $value['driverType']
+            : reset($this->driverTypes);
 
         $this->isOpen = true;
     }
@@ -64,11 +54,11 @@ class FileChooseExternalComponent extends Component
             return null;
         }
 
-        if ($this->cachedDriver) {
-            return $this->cachedDriver;
+        if (isset($this->cachedDrivers[$this->driverType])) {
+            return $this->cachedDrivers[$this->driverType];
         }
 
-        return $this->cachedDriver = app(DriverFactory::class)->create($this->driverType);
+        return $this->cachedDrivers[$this->driverType] = app(DriverFactory::class)->create($this->driverType);
     }
 
     public function getDescription()
@@ -100,10 +90,10 @@ class FileChooseExternalComponent extends Component
         $this->close();
     }
 
-    public function updatedDriverType()
-    {
-        $this->cachedDriver = null;
-    }
+    //    public function updatedDriverType()
+    //    {
+    //        $this->cachedDriver = null;
+    //    }
 
     public function render()
     {

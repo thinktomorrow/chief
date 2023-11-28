@@ -16,7 +16,7 @@ class FileHelper
     public static function isVideo(string $mimeType): bool
     {
         return Str::endsWith($mimeType, [
-            'mp4', 'webm', 'mpeg', 'mov', 'video/vimeo',
+            'mp4', 'webm', 'mpeg', 'mov', 'video/vimeo', 'video/youtube',
         ]);
     }
 

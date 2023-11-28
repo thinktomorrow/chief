@@ -43,7 +43,7 @@ class UpdateFileField
             $this->setAssetType($field->getAssetType());
         }
 
-        $existingAssetIds = $model->assetRelation()->get()->pluck('id');
+        $existingAssets = $model->assetRelation()->get();
 
         foreach (data_get($input, 'files.' . $field->getName(), []) as $locale => $values) {
 
@@ -53,7 +53,7 @@ class UpdateFileField
             $assetsForOrder = collect($values['order'] ?? []);
 
             $this->handleUploads($model, $field, $locale, $assetsForUpload, $assetsForOrder);
-            $this->handleAttach($model, $field, $locale, $assetsForAttach, $existingAssetIds);
+            $this->handleAttach($model, $field, $locale, $assetsForAttach, $existingAssets->filter(fn ($asset) => $asset->pivot->type == $field->getKey())->pluck('id'));
             $this->handleDeletions($model, $field, $locale, $assetsForDeletion, $assetsForOrder);
             $this->handleReOrder($model, $field, $locale, $assetsForOrder);
         }

@@ -3,8 +3,8 @@
 @endphp
 
 <div
+    wire:ignore.self
     wire:sortable
-    wire:start="$set('isReordering', true)"
     wire:end.stop="reorder($event.target.sortable.toArray())"
     x-init="() => {
         // Scroll to bottom of preview container after a file is added

@@ -10,6 +10,8 @@ window.Livewire.directive('sortable', ({ el }) => {
         draggable: '[wire\\:sortable\\.item]',
         handle: '[wire\\:sortable\\.handle]',
         dataIdAttr: 'wire:sortable.item',
+        ghostClass: 'bg-primary-50',
+        dragClass: 'bg-white',
     });
 });
 

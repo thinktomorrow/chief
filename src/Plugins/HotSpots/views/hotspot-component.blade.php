@@ -17,7 +17,7 @@
             },
         }">
             <div class="flex items-center justify-center w-full sm:w-3/5">
-                <div x-ref="hotSpotsContainer" x-on:click="addHotSpot" class="relative">
+                <div x-ref="hotSpotsContainer" x-on:click="addHotSpot" class="relative" style="cursor:crosshair">
                     @foreach($hotSpots as $hotSpot)
                         <div
                             class="absolute -translate-x-2 -translate-y-2"

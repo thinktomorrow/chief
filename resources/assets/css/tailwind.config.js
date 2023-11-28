@@ -6,7 +6,6 @@ module.exports = {
         'resources/assets/**/*.js',
         'resources/assets/**/*.vue',
         'resources/assets/css/components/redactor.scss',
-        'resources/assets/css/components/multiselect.scss',
         'src/Forms/resources/**/*.blade.php',
         'src/Forms/Layouts/**/*.php',
         'src/Forms/Concerns/**/*.php',

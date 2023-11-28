@@ -13,8 +13,8 @@
     /* Prepend/append styling */
     .form-input-prepend,
     .form-input-append {
-        @apply inline-flex items-center border bg-primary-50 border-grey-200 shrink-0 shadow-sm;
-        @apply font-medium text-primary-500 px-3 py-2;
+        @apply inline-flex items-center border bg-grey-50 border-grey-200 shrink-0 shadow-sm;
+        @apply text-grey-700 px-3 py-2;
     }
 
     .form-input-prepend {

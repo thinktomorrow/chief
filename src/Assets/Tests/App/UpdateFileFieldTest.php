@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Thinktomorrow\Chief\Assets\Tests\App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -106,7 +106,36 @@ class UpdateFileFieldTest extends ChiefTestCase
         $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
     }
 
-    public function test_it_should_not_attach_already_attached_assets()
+    public function test_it_can_attach_same_asset_per_field()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
+                ],
+            ],
+        ]);
+
+        $this->saveFileField($this->resource, $this->model, 'thumb_image', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
+                ],
+            ],
+        ]);
+
+        $this->assertEquals(2, $this->model->assetRelation()->count());
+        $this->assertCount(1, $this->model->assets('thumb'));
+        $this->assertCount(1, $this->model->assets('thumb_image'));
+        $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
+        $this->assertEquals('image.png', $this->model->asset('thumb_image')->getFileName());
+    }
+
+    public function test_it_cannot_attach_assets_twice_for_same_field()
     {
         $asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image.png'))

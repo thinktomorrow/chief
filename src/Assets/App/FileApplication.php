@@ -3,11 +3,15 @@
 namespace Thinktomorrow\Chief\Assets\App;
 
 use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
+use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceMedia;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssociatedAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -31,15 +35,7 @@ class FileApplication
     }
 
     /**
-     * Update the generic asset data.
-     */
-    public function updateAssetData(string $assetId, array $values): void
-    {
-        $this->updateAssetData->handle($assetId, $values);
-    }
-
-    /**
-     * Update the asset data associated with a specified model..
+     * Update the asset data associated with a specified model.
      */
     public function updateAssociatedAssetData(string $modelReference, string $fieldKey, string $locale, string $assetId, array $values): void
     {
@@ -65,6 +61,14 @@ class FileApplication
         }
     }
 
+    /**
+     * Update the generic asset data.
+     */
+    public function updateAssetData(string $assetId, array $values): void
+    {
+        $this->updateAssetData->handle($assetId, $values);
+    }
+
     public function updateFileName(string $assetId, string $basename): void
     {
         $model = Asset::find($assetId)->getFirstMedia();
@@ -76,7 +80,7 @@ class FileApplication
         $model->save();
     }
 
-    public function replaceMedia(string $assetId, \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile): void
+    public function replaceMedia(string $assetId, UploadedFile $uploadedFile): void
     {
         /** @var Asset $existingAsset */
         $existingAsset = Asset::find($assetId);
@@ -86,6 +90,8 @@ class FileApplication
             ->save();
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
+
+        $existingAsset->touch('updated_at');
 
         $newAsset->delete();
     }
@@ -101,7 +107,31 @@ class FileApplication
 
         $this->replaceMedia->handle($existingAsset->getFirstMedia(), $newAsset->getFirstMedia());
 
+        $existingAsset->touch('updated_at');
+
         $newAsset->delete();
+    }
+
+    /**
+     * Detaches the asset. This basically means that for the given model
+     * the asset is duplicated as an isolated Asset.
+     */
+    public function isolateAsset(string $modelReference, string $fieldKey, string $locale, string $assetId): AssetContract
+    {
+        $model = ModelReference::fromString($modelReference)->instance();
+        $existingAsset = $model->assets($fieldKey)->firstWhere(fn ($asset) => $asset->id == $assetId && $asset->pivot->locale == $locale);
+
+        $newAsset = $this->createAsset
+            ->path($existingAsset->getPath())
+            ->save($existingAsset->getFirstMedia()->disk, $existingAsset->asset_type);
+
+        $newAsset->data = $existingAsset->data;
+        $newAsset->save();
+
+        app(DetachAsset::class)->handle($model, $fieldKey, $locale, [$assetId]);
+        app(AddAsset::class)->handle($model, $newAsset, $fieldKey, $locale, $existingAsset->pivot->order, $existingAsset->pivot->data ?? []);
+
+        return $model->fresh()->assets($fieldKey)->firstWhere(fn ($asset) => $asset->id == $newAsset->id && $asset->pivot->locale == $locale);
     }
 
     private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable

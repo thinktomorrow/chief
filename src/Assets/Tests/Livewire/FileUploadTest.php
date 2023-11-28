@@ -1,9 +1,10 @@
 <?php
 
-namespace Livewire;
+namespace Thinktomorrow\Chief\Assets\Tests\Livewire;
 
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -73,5 +74,10 @@ class FileUploadTest extends ChiefTestCase
             ->call('deleteFile', $filePath)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
             ->assertDontSeeHtml('name="thumb[uploads][0][id]"');
+    }
+
+    public function test_it_can_detach_asset()
+    {
+
     }
 }

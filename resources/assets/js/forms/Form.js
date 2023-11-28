@@ -1,11 +1,11 @@
 import Panels from './sidebar/Panels';
 import Api from './Api';
 import initSortable from '../sortable/sortable-init';
-import initConditionalFields from './conditional-fields/init-conditional-fields';
 import registerClassToggles from '../utilities/toggle-class';
 import SelectFragment from '../fragments/selectFragment';
 import Submit from './Submit';
 import EventBus from '../utilities/EventBus';
+import { initConditionalFieldsInContainer } from './conditional-fields/init-conditional-fields';
 
 const Form = function (el, sidebar) {
     this.el = el;
@@ -93,7 +93,7 @@ Form.prototype.refresh = function (refreshUrl = null) {
 // but should better by outside this Window class...
 Form.prototype.refreshCallback = function () {
     initSortable('[data-sortable]', this.el);
-    initConditionalFields(this.el);
+    initConditionalFieldsInContainer(this.el);
     registerClassToggles();
 
     if (this.getTags().includes('fragments')) {

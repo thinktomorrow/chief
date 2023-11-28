@@ -12,12 +12,14 @@ use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 class FileSelect extends Component implements Htmlable
 {
     private HasSyncedFormInputs $component;
+    private bool $allowToUploadFiles;
     private bool $allowToChooseFiles;
     private bool $allowToChooseExternalFiles;
 
-    public function __construct(HasSyncedFormInputs $component, bool $allowToChooseFiles = true, bool $allowToChooseExternalFiles = false)
+    public function __construct(HasSyncedFormInputs $component, bool $allowToUploadFiles = true, bool $allowToChooseFiles = true, bool $allowToChooseExternalFiles = false)
     {
         $this->component = $component;
+        $this->allowToUploadFiles = $allowToUploadFiles;
         $this->allowToChooseFiles = $allowToChooseFiles;
         $this->allowToChooseExternalFiles = $allowToChooseExternalFiles;
     }
@@ -25,6 +27,11 @@ class FileSelect extends Component implements Htmlable
     public function toHtml()
     {
         return $this->render()->render();
+    }
+
+    public function render(): View
+    {
+        return view('chief-assets::components.select', array_merge($this->data()));
     }
 
     public function getFieldId(): string
@@ -74,6 +81,11 @@ class FileSelect extends Component implements Htmlable
         return implode(', ', $mimeTypes);
     }
 
+    public function allowToUploadFiles(): bool
+    {
+        return $this->allowToUploadFiles;
+    }
+
     public function allowToChooseFiles(): bool
     {
         return $this->allowToChooseFiles;
@@ -82,10 +94,5 @@ class FileSelect extends Component implements Htmlable
     public function allowToChooseExternalFiles(): bool
     {
         return $this->allowToChooseExternalFiles;
-    }
-
-    public function render(): View
-    {
-        return view('chief-assets::components.select', array_merge($this->data()));
     }
 }
