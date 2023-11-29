@@ -9,8 +9,6 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
-use Thinktomorrow\Chief\Locale\Localisable;
-use Thinktomorrow\Chief\Locale\LocalisableDefault;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;

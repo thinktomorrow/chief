@@ -7,11 +7,11 @@
  */
 
 // Dashboard
-use Thinktomorrow\Chief\Fragments\App\Controllers\AttachFragmentController;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController;
 use Thinktomorrow\Chief\Assets\App\Http\MediaGalleryController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\AttachFragmentController;
 use Thinktomorrow\Chief\Fragments\App\Controllers\CreateFragmentController;
 use Thinktomorrow\Chief\Fragments\App\Controllers\EditFragmentController;
 use Thinktomorrow\Chief\Fragments\App\Controllers\FragmentController;

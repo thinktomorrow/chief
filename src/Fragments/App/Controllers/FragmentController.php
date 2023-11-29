@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 
-use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\App\Components\Fragments;
 
 class FragmentController
