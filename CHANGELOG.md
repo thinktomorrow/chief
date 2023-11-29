@@ -6,12 +6,16 @@ principles.
 
 ## Unreleased
 
+-   Changed: TimeTable FieldPresets::timetable now returns a Form component instead of an iterable
+
 ## 0.8.8 - 2023-11-22
+
 -   Fixed: issue where model could not attach same asset for different fields.
 
 ## 0.8.7 - 2023-11-22
+
 -   Added: `FilterPresets::attribute()` for search on column, dynamic key or relation column.
--   Fixed: issue where no more than one hotspot could be added at the same time  
+-   Fixed: issue where no more than one hotspot could be added at the same time
 -   Deprecated: `FilterPresets::text()` and `FilterPresets::column()` in favor of the `FilterPresets::attribute()` function.
 
 ## 0.8.6 - 2023-11-15
