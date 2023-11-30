@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Resource\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class ContextRepository
@@ -40,6 +41,19 @@ class ContextRepository
             ->get();
     }
 
+    public function getOrCreateByOwner(ReferableModel $owner): \Illuminate\Support\Collection
+    {
+        $locales = ChiefLocaleConfig::getLocales();
+        $contexts = $this->getByOwner($owner);
+
+        if(count($contexts) < count($locales)) {
+            $this->createIfNotExistsForOwner($owner, $locales);
+            return $this->getByOwner($owner);
+        }
+
+        return $contexts;
+    }
+
     public function getByFragment(string $fragmentId): Collection
     {
         return ContextModel::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')
@@ -56,4 +70,15 @@ class ContextRepository
             ->where('owner_id', $owner->id)
             ->first();
     }
+
+    private function createIfNotExistsForOwner(ReferableModel $owner, Collection $contexts, array $locales): void
+    {
+        foreach($locales as $locale) {
+            if($contexts->contains(fn(ContextModel $context) => $context->locale == $locale)) continue;
+
+            $this->createForOwner($owner, $locale);
+        }
+
+    }
+
 }

@@ -26,11 +26,11 @@ return new class extends Migration {
         });
 
         Schema::table('context_fragments', function (Blueprint $table) {
-            $table->renameColumn('model_reference', 'key');
+            $table->char('id', 36)->change();
         });
 
         Schema::table('context_fragments', function (Blueprint $table) {
-            $table->json('locales')->nullable();
+            $table->renameColumn('model_reference', 'key');
         });
 
         DB::table('context_fragments')->get()->each(function ($row) {
@@ -38,8 +38,6 @@ return new class extends Migration {
                 ['key' => substr($row->key, 0, strpos($row->key, '@'))]
             );
         });
-
-        DB::table('context_fragments')->update(['locales' => json_encode(['nl'])]);
     }
 
     public function down()

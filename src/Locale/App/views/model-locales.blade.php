@@ -1,13 +1,20 @@
-@php use Illuminate\Support\Arr;use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
+@php
+    use Illuminate\Support\Arr;
+    use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+@endphp
+
 <div class="flex justify-end gap-2">
 
-    <div wire:ignore class="border border-grey-400 flex gap-2 items-center rounded-lg">
-        <x-chief::tabs :show-nav-as-buttons="true" reference="modelLocalesTabs"
-                       class="-mb-3">
-            @foreach($currentLocales as $_locale)
-                <x-chief::tabs.tab tab-id='{{ $_locale }}'></x-chief::tabs.tab>
-            @endforeach
-        </x-chief::tabs>
+    <div wire:ignore class="flex gap-2 items-center">
+        @if(count($currentLocales) > 0)
+            <x-chief::tabs reference="modelLocalesTabs" class="-mb-3">
+                @foreach($currentLocales as $_locale)
+                    <x-chief::tabs.tab tab-id='{{ $_locale }}'></x-chief::tabs.tab>
+                @endforeach
+            </x-chief::tabs>
+        @else
+            <span class="text-sm text-grey-600 py-1 px-2">geen talen actief</span>
+        @endif
 
         <x-chief::button wire:click="open" class="cursor-pointer">
             <svg class="w-5 h-5">

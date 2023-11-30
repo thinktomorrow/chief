@@ -30,7 +30,7 @@
                 </a>
         </div>
 
-        @if($adminFragment = $fragment->renderAdminFragment($owner, $loop))
+        @if($adminFragment = $fragment->renderAdminFragment($context->getOwner(), $loop))
             <div class="px-[2.65rem]">
                 {!! $adminFragment !!}
             </div>

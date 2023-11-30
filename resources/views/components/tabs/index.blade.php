@@ -3,6 +3,7 @@
     'listenForExternalTab' => false,
     'showNav' => true,
     'showNavAsButtons' => false,
+    'dispatchTab' => true,
     'reference' => null, // Reference of this tabs, context that is passed with the event for finetuning listeners
 ])
 
@@ -40,6 +41,9 @@
         },
         showTab: function(id){
             this.activeTab = id
+
+            if(!@js($dispatchTab)) return;
+
             this.$dispatch('chieftab', {id: id, reference: '{{ $reference }}'});
         },
     }"

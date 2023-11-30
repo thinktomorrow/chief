@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\Resource\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 final class ContextModel extends Model
@@ -29,7 +30,7 @@ final class ContextModel extends Model
             ->orderBy('context_fragment_lookup.order');
     }
 
-    public function getOwner()
+    public function getOwner(): ?FragmentsOwner
     {
         if (! $this->owner_type || ! $this->owner_id) {
             return null;

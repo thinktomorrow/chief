@@ -3,12 +3,13 @@
     use Thinktomorrow\Chief\Locale\LocaleRepository;
     use Thinktomorrow\Chief\Locale\Localisable;
 
-    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository::class)->getOrCreateOfrOwner($model)->map(function($context){ return [
+    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
             'id' => $context->id,
             'locale' => $context->locale,
             'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
         ];
     });
+
 @endphp
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
@@ -23,20 +24,20 @@
                 </x-slot>
             @endif
 
-            @if($resource instanceof LocaleRepository && $model instanceof Localisable)
+            @if($model instanceof Localisable)
                 <livewire:chief-wire::model-locales
                     :resource-key="$resource::resourceKey()"
                     :modelReference="$model->modelReference()"
                     :locales="$model->getLocales()"/>
             @endif
 
-            {{--            @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
-            {{--                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
-            {{--                    @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
-            {{--                        <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
-            {{--                    @endforeach--}}
-            {{--                </x-chief::tabs>--}}
-            {{--            @endif--}}
+{{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
+{{--                            <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
+{{--                                @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
+{{--                                    <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
+{{--                                @endforeach--}}
+{{--                            </x-chief::tabs>--}}
+{{--                        @endif--}}
         </x-chief::page.hero>
     </x-slot>
 

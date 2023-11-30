@@ -4,42 +4,30 @@ namespace Thinktomorrow\Chief\Fragments\App\Components;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentsComponentRepository;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 
 // Nested fragments component in sidebar (cannot use livewire for this)
 class Fragments extends Component
 {
+    private FragmentRepository $fragmentRepository;
+    private GetShareableFragments $getShareableFragments;
+
     public FragmentsOwner $owner;
     public string $contextId;
-
-    private FragmentsComponentRepository $repository;
-    private Collection $fragments;
-    private array $allowedFragments;
-    private array $sharedFragments;
     private $context;
 
     public function __construct(string $contextId)
     {
+        $this->fragmentRepository = app(FragmentRepository::class);
+        $this->getShareableFragments = app(GetShareableFragments::class);
+
         $this->contextId = $contextId;
         $this->context = ContextModel::find($contextId);
         $this->owner = $this->context->getOwner();
-
-        $this->repository = new FragmentsComponentRepository(app(FragmentRepository::class), app(Registry::class), $this->owner);
-        $this->load();
-    }
-
-    public function load(): void
-    {
-        $this->fragments = $this->repository->getFragments($this->contextId);
-        $this->allowedFragments = $this->repository->getAllowedFragments();
-        $this->sharedFragments = $this->repository->getShareableFragments($this->contextId);
     }
 
     /**
@@ -49,11 +37,20 @@ class Fragments extends Component
     {
         return view('chief-fragments::index', [
             'context' => $this->context,
-            'fragments' => $this->fragments,
-            'allowedFragments' => $this->allowedFragments,
-            'sharedFragments' => $this->sharedFragments,
-//            'manager' => $this->owner instanceof Fragmentable ? null : $this->repository->getManager(),
             'owner' => $this->owner,
+            'fragments' => $this->fragmentRepository->getByContext($this->contextId),
+            'allowedFragments' => $this->getAllowedFragments(),
+            'sharedFragments' => $this->getShareableFragments
+                ->excludeAlreadySelected()
+                ->filterByTypes($this->owner->allowedFragments())
+                ->get($this->contextId),
         ]);
+    }
+
+    private function getAllowedFragments(): array
+    {
+        return array_map(function ($fragmentableClass) {
+            return app($fragmentableClass);
+        }, $this->owner->allowedFragments());
     }
 }
