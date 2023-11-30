@@ -23,7 +23,6 @@ class CreateFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_create_form()
     {
-        $this->disableExceptionHandling();
         $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
 
         $this->asAdmin()->get(route('chief::fragments.create', [$context->id, SnippetStub::resourceKey(), 1]))

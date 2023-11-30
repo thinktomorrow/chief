@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentsReordered;
@@ -78,7 +78,7 @@ class TriggerPageChangedEvent
         $this->handleFragmentChange($e->fragmentId);
     }
 
-    public function onFragmentAdded(FragmentAdded $e): void
+    public function onFragmentAdded(FragmentAttached $e): void
     {
         $this->handleFragmentChange($e->fragmentId);
     }

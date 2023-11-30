@@ -4,12 +4,10 @@ All notable changes to the `chief` application template will be documented in th
 the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## Unreleased
+## Unreleased - upcoming 0.9.0
 
-- **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain all
-  available locales
-  and `chief.locales.site`that hold the active locales in usage on the site.
-
+-   Changed: **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain all available locales and `chief.locales.site`that hold the active locales in usage on the site.
+-   Changed: Renamed `FragmentAdded` event tot `FragmentAttached` for consistency.
 
 ## 0.8.8 - 2023-11-22
 -   Fixed: issue where model could not attach same asset for different fields.

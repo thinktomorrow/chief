@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
@@ -20,7 +20,7 @@ class UpdateFragmentMetadata
         $this->getOwningModels = $getOwningModels;
     }
 
-    public function onFragmentAdded(FragmentAdded $event): void
+    public function onFragmentAdded(FragmentAttached $event): void
     {
         $this->updateSharedState($event->fragmentId);
     }

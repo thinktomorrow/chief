@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentsReordered;
@@ -71,9 +71,9 @@ class PageChangedEventTest extends ChiefTestCase
     /** @test */
     public function it_can_be_triggered_when_fragment_is_added()
     {
-        Event::fakeExcept(FragmentAdded::class);
+        Event::fakeExcept(FragmentAttached::class);
 
-        event(new FragmentAdded($this->fragment->fragmentModel()->id, 123));
+        event(new FragmentAttached($this->fragment->fragmentModel()->id, 123));
 
         Event::assertDispatched(PageChanged::class);
     }

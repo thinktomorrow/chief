@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Tests;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -49,7 +49,7 @@ class AddFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', ArticlePage::create(), $this->fragment));
 
-        Event::assertDispatched(FragmentAdded::class);
+        Event::assertDispatched(FragmentAttached::class);
     }
 
     /** @test */

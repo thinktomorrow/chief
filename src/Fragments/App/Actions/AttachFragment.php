@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Resource\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
@@ -32,7 +32,7 @@ final class AttachFragment
 
         $this->sortModels->handleFragments($contextId, $indices);
 
-        event(new FragmentAdded($fragmentId, $context->id));
+        event(new FragmentAttached($fragmentId, $context->id));
     }
 
     /**
