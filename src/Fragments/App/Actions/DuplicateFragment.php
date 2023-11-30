@@ -51,29 +51,32 @@ class DuplicateFragment
         }
 
         // Otherwise do a full copy of the fragment instead
-        $copiedFragmentModel = $fragmentModel->replicate();
-        $copiedFragmentModel->id = $this->fragmentRepository->nextId();
-        $copiedFragmentModel->save();
+        $duplicatedFragmentModel = $fragmentModel->replicate();
+        $duplicatedFragmentModel->id = $this->fragmentRepository->nextId();
+        $duplicatedFragmentModel->save();
 
-        $this->attachFragment->handle($targetContext->id, $copiedFragmentModel->id, $index);
+        $this->attachFragment->handle($targetContext->id, $duplicatedFragmentModel->id, $index);
 
         foreach ($fragmentModel->assetRelation()->get() as $asset) {
-            $this->addAsset->handle($copiedFragmentModel, $asset, $asset->pivot->type, $asset->pivot->locale, $asset->pivot->order, $asset->pivot->data);
+            $this->addAsset->handle($duplicatedFragmentModel, $asset, $asset->pivot->type, $asset->pivot->locale, $asset->pivot->order, $asset->pivot->data);
         }
 
-        event(new FragmentDuplicated($sourceContext->id, $fragmentModel->id, $targetContext->id, $copiedFragmentModel->id, ));
+        event(new FragmentDuplicated($fragmentModel->id, $duplicatedFragmentModel->id, $sourceContext->id, $targetContext->id));
 
         // Handle nested fragments
         if(($fragment = $this->fragmentRepository->find($fragmentModel->id)) instanceof FragmentsOwner) {
 
-            $copiedFragment = $this->fragmentRepository->find($copiedFragmentModel->id);
+            $duplicatedFragment = $this->fragmentRepository->find($duplicatedFragmentModel->id);
 
-            app(DuplicateContext::class)->handle(
-                $fragment,
-                ChiefLocaleConfig::getDefaultLocale(),
-                $copiedFragment,
-                ChiefLocaleConfig::getDefaultLocale()
-            );
+            if($fragmentContext = $this->contextRepository->findByOwner($fragment, $sourceContext->locale)) {
+                app(DuplicateContext::class)->handle(
+                    $fragmentContext->id,
+                    $duplicatedFragment,
+                    $targetContext->locale
+                );
+            }
+
+
         }
 
 

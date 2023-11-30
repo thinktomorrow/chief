@@ -8,6 +8,11 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class ContextRepository
 {
+    public function find(string $contextId): ContextModel
+    {
+        return ContextModel::findOrFail($contextId);
+    }
+
     public function findOrCreateByOwner(ReferableModel $owner, string $locale): ContextModel
     {
         if($context = $this->findByOwner($owner, $locale)) {

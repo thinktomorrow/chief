@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Resource\Events;
 
 class FragmentDuplicated
 {
-    public function __construct(public readonly string $fragmentId, public readonly string $originContextId, public readonly string $targetContextId)
+    public function __construct(public readonly string $fragmentId, public readonly string $duplicatedFragmentId, public readonly string $sourceContextId, public readonly string $targetContextId)
     {
     }
 }

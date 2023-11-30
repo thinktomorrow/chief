@@ -47,7 +47,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         ];
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -20,17 +20,14 @@ class DuplicateContext
         $this->contextRepository = $contextRepository;
     }
 
-    public function handle(ReferableModel & FragmentsOwner $sourceModel, string $sourceLocale, ReferableModel & FragmentsOwner $targetModel, string $targetLocale): void
+//    public function handle(ReferableModel & FragmentsOwner $sourceModel, string $sourceLocale, ReferableModel & FragmentsOwner $targetModel, string $targetLocale): void
+    public function handle(string $sourceContextId, ReferableModel & FragmentsOwner $targetModel, string $targetLocale): void
     {
-        if(! $sourceContext = $this->contextRepository->findByOwner($sourceModel, $sourceLocale)) {
-            return;
-        }
-
         if($this->contextRepository->findByOwner($targetModel, $targetLocale)) {
             throw new \InvalidArgumentException('Cannot duplicate to given target context. Context for [' . $targetModel->modelReference()->get() . ', locale: '.$targetLocale.'] already exists.');
         }
 
-        // Create new context
+        $sourceContext = $this->contextRepository->find($sourceContextId);
         $targetContext = $this->contextRepository->createForOwner($targetModel, $targetLocale);
 
         /** @var FragmentModel $fragment */

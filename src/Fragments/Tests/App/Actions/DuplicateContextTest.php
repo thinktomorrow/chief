@@ -40,7 +40,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(1, FragmentModel::count());
 
-        app(DuplicateContext::class)->handle($this->owner, 'nl', $this->owner2, 'en');
+        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
@@ -48,7 +48,7 @@ class DuplicateContextTest extends ChiefTestCase
 
     public function test_fragments_will_be_duplicated()
     {
-        app(DuplicateContext::class)->handle($this->owner, 'nl', $this->owner2, 'en');
+        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
 
         $originalContext = app(ContextRepository::class)->findByOwner($this->owner, 'nl');
         $duplicatedContext = app(ContextRepository::class)->findByOwner($this->owner2, 'en');
@@ -70,7 +70,7 @@ class DuplicateContextTest extends ChiefTestCase
 
         app(AddAsset::class)->handle($this->fragment->fragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
 
-        app(DuplicateContext::class)->handle($this->owner, 'nl', $this->owner2, 'nl');
+        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'nl');
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
@@ -97,7 +97,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
 
-        app(DuplicateContext::class)->handle($this->owner, 'nl', $this->owner2, 'en');
+        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
 
         $this->assertEquals(4, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());
@@ -125,6 +125,6 @@ class DuplicateContextTest extends ChiefTestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        app(DuplicateContext::class)->handle($this->owner, 'nl', $this->owner2, 'en');
+        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
     }
 }
