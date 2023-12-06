@@ -202,6 +202,16 @@ trait FileUploadDefaults
 
         foreach ($this->files as $newFileDetails) {
 
+            // This normally should not happen as the id is passed with the first upload call
+            // However we've seen error issues reporting that id is missing so here we
+            // are going to track it a bit to try to understand why id is missing.
+            if(!isset($newFileDetails['id'])) {
+
+                report(new InvalidArgumentException('id is unexpectedly missing... from file entry: ' . print_r($newFileDetails, true)));
+
+                continue;
+            }
+
             /**
              * If the file is still uploading, we'll still add it to the previewFiles.
              * Once fully uploaded, this previewFile will be replaced by the fully uploaded file
