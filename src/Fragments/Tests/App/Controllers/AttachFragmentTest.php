@@ -5,9 +5,11 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -17,6 +19,7 @@ class AttachFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
     private Quote $fragment;
+    private ContextModel $context;
 
     public function setUp(): void
     {
@@ -24,7 +27,8 @@ class AttachFragmentTest extends ChiefTestCase
 
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
-        $this->fragment = $this->setupAndCreateQuote($this->owner);
+        $this->context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $this->context->id);
     }
 
     public function test_a_context_can_attach_an_fragment()
@@ -35,8 +39,8 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]))
             ->assertStatus(201);
 
-        $this->assertFragmentCount($this->owner, 'nl', 1);
-        $this->assertFragmentCount($this->owner, 'other', 1);
+        FragmentTestAssist::assertFragmentCount($this->owner, 'nl', 1);
+        FragmentTestAssist::assertFragmentCount($this->owner, 'other', 1);
         $this->assertDatabaseCount('context_fragments', 1);
     }
 
@@ -70,7 +74,7 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]))
             ->assertStatus(201);
 
-        $this->assertFragmentCount($ownerFragment, 'other',1);
+        FragmentTestAssist::assertFragmentCount($ownerFragment, 'other',1);
     }
 
 //    public function test_it_can_check_if_a_model_allows_for_adding_a_fragment()
@@ -90,7 +94,7 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
             ->assertStatus(400);
 
-        $this->assertFragmentCount($this->owner, 'other',1);
+        FragmentTestAssist::assertFragmentCount($this->owner, 'other',1);
     }
 
 }

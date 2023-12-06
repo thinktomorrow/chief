@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
+namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
 use Thinktomorrow\Chief\Fragments\App\Queries\FragmentsRenderer;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
@@ -23,7 +24,7 @@ class FragmentsRendererTest extends ChiefTestCase
     public function test_it_can_render_fragments()
     {
         $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
-        $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
+        FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
 
         $this->assertEquals("THIS IS QUOTE FRAGMENT\n", app(FragmentsRenderer::class)->render($this->owner, 'nl'));
         $this->assertEquals("", app(FragmentsRenderer::class)->render($this->owner, 'fr'));

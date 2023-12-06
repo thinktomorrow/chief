@@ -41,7 +41,7 @@ class DuplicateFragment
      * @param int $level
      * @throws FragmentAlreadyAdded
      */
-    public function handle(ContextModel $sourceContext, ContextModel $targetContext, FragmentModel $fragmentModel, int $index, bool $forceDuplicateSharedFragment = false, $level = 0): void
+    public function handle(ContextModel $sourceContext, ContextModel $targetContext, FragmentModel $fragmentModel, int $index, bool $forceDuplicateSharedFragment = false): void
     {
         // If it's already a shared fragment, we'll use the original and share it as well
         if (! $forceDuplicateSharedFragment && $fragmentModel->isShared()) {
@@ -75,14 +75,6 @@ class DuplicateFragment
                     $targetContext->locale
                 );
             }
-
-
         }
-
-
-        //
-        //        foreach ($nestedContext->fragments()->get() as $i => $nestedFragment) {
-        //            $this->handle($copiedFragment, $nestedFragment->fragmentModel(), $i, false, ++$level);
-        //        }
     }
 }

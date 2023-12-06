@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -30,9 +31,8 @@ class DuplicateContextTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->owner2 = ArticlePage::create();
 
-        $this->context = $this->findOrCreateContext($this->owner, 'nl');
-
-        $this->fragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $this->context->id);
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $this->context->id);
     }
 
     public function test_context_can_be_duplicated()
@@ -91,8 +91,8 @@ class DuplicateContextTest extends ChiefTestCase
     public function test_it_can_duplicate_context_with_nested_fragments()
     {
         // Create nested fragment
-        $nestedContext = $this->findOrCreateContext($this->fragment, 'nl');
-        $nestedFragment = $this->createAndAttachFragment(SnippetStub::resourceKey(), $nestedContext->id);
+        $nestedContext = FragmentTestAssist::findOrCreateContext($this->fragment, 'nl');
+        $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $nestedContext->id);
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
@@ -117,9 +117,9 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals($originalNestedFragment->values, $duplicatedNestedFragment->values);
     }
 
-    public function test_it_cannot_duplicate_to_target_context_that_already_exists()
+    public function test_it_cannot_duplicate_to_a_target_context_that_already_exists()
     {
-        $this->findOrCreateContext($this->owner2, 'en');
+        FragmentTestAssist::findOrCreateContext($this->owner2, 'en');
 
         $this->assertEquals(2, ContextModel::count());
 

@@ -51,53 +51,6 @@ trait TestingWithManagers
         return ArticlePageWithBaseSegments::create($values);
     }
 
-    public function setUpAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true, string $locale = 'nl'): Quote
-    {
-        if ($withSetup) {
-            chiefRegister()->resource(Quote::class, FragmentManager::class);
-        }
-
-        $context = app(ContextRepository::class)->findByOwner($owner, $locale) ?: app(ContextRepository::class)->createForOwner($owner, $locale);
-
-        return $this->createAndAttachFragment(Quote::resourceKey(), $context->id, $order, $values);
-    }
-
-    protected function findOrCreateContext($owner, string $locale = 'nl'): ContextModel
-    {
-        return app(ContextRepository::class)->findByOwner($owner, $locale) ?: app(ContextRepository::class)->createForOwner($owner, $locale);
-    }
-
-    protected function createAndAttachFragment(string $fragmentKey, $contextId, $order = 0, array $data = []): Fragmentable
-    {
-        $model = (new (Relation::getMorphedModel($fragmentKey)))->setFragmentModel(FragmentModel::find(app(CreateFragment::class)->handle($fragmentKey, $data)));
-
-        app(AttachFragment::class)->handle($contextId, $model->fragmentModel()->id, $order, []);
-
-        return $model;
-    }
-
-    public function setUpAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = [], string $locale = 'nl'): SnippetStub
-    {
-        if ($withSetup) {
-            chiefRegister()->fragment(SnippetStub::class);
-        }
-
-        $context = $this->findOrCreateContext($owner, $locale);
-
-        return $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id, $order, $values);
-    }
-
-    public function setUpAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true, string $locale = 'nl'): Hero
-    {
-        if ($withSetup) {
-            chiefRegister()->fragment(Hero::class);
-        }
-
-        $context = $this->findOrCreateContext($owner, $locale);
-
-        return $this->createAndAttachFragment(Hero::resourceKey(), $context->id, $order);
-    }
-
     public function setUpAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
     {
         ArticlePage::migrateUp();
@@ -116,10 +69,10 @@ trait TestingWithManagers
         return ArticlePage::create($values);
     }
 
-    protected function addFragment($fragment, $owner)
-    {
-        $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $owner, $fragment));
-    }
+//    protected function addFragment($fragment, $owner)
+//    {
+//        $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $owner, $fragment));
+//    }
 
     protected function manager($managedModel): Manager
     {
@@ -130,28 +83,5 @@ trait TestingWithManagers
         return app(Registry::class)->findManagerByModel($managedModel);
     }
 
-    protected function assertFragmentCount(Model $owner, string $locale, int $count)
-    {
-        $this->assertCount($count, app(FragmentRepository::class)->getByOwner($owner, $locale));
-    }
 
-    protected function assertRenderedFragments(Model $owner, string $expected)
-    {
-        $this->assertEquals($expected, app(FragmentsRenderer::class)->render($owner, []));
-    }
-
-    protected function firstFragment(Model $owner, string $locale, callable $callback = null)
-    {
-        $fragments = app(FragmentRepository::class)->getByOwner($owner, $locale);
-
-        if (! $fragments->first()) {
-            throw new Exception('Test failed. Owner doesn\'t own any fragments.');
-        }
-
-        if ($callback) {
-            $callback($fragments->first());
-        }
-
-        return $fragments->first();
-    }
 }

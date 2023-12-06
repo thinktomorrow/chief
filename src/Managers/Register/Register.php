@@ -51,7 +51,6 @@ final class Register
     }
 
     // Add to eloquent db morph map
-
     private function registerMorphMap(string $key, string $modelClass)
     {
         Relation::morphMap([
