@@ -44,7 +44,7 @@ final class FragmentRepository
 
     public function exists(string $fragmentId): bool
     {
-        return FragmentModel::exists($fragmentId);
+        return FragmentModel::where('id', $fragmentId)->exists();
     }
 
     public function find(string $fragmentId): Fragmentable

@@ -28,7 +28,7 @@ class AttachFragmentTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
         $this->context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $this->context->id);
+        $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $this->context->id);
     }
 
     public function test_a_context_can_attach_an_fragment()

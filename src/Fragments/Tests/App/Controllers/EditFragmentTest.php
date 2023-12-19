@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use function auth;
 use function route;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
@@ -25,7 +26,8 @@ class EditFragmentTest extends ChiefTestCase
 
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
-        $this->fragment = $this->setupAndCreateQuote($this->owner);
+        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
     }
 
     public function test_admin_can_view_the_fragment_edit_form()
@@ -54,7 +56,7 @@ class EditFragmentTest extends ChiefTestCase
         $context = ContextModel::create(['owner_type' => $owner->getMorphClass(), 'owner_id' => $owner->id, 'locale' => 'nl']);
         $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'nl']);
 
-        $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
         app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
 
         $this->asAdmin()
