@@ -41,10 +41,10 @@ class GetShareableFragmentsTest extends ChiefTestCase
         $this->assertCount(2, $shareableFragments);
     }
 
-//    public function test_it_only_gets_fragments_when_they_are_allowed_fragments()
-//    {
-//
-//    }
+    //    public function test_it_only_gets_fragments_when_they_are_allowed_fragments()
+    //    {
+    //
+    //    }
 
     public function test_already_selected_fragments_are_flagged()
     {
@@ -60,7 +60,7 @@ class GetShareableFragmentsTest extends ChiefTestCase
         $this->assertCount(2, $shareableFragments);
 
         // Sort it first so our tests don't fail
-        $shareableFragments = $shareableFragments->sortBy(fn($shareableFragment) => !$shareableFragment->is_already_selected ? 0 : 1)->values();
+        $shareableFragments = $shareableFragments->sortBy(fn ($shareableFragment) => ! $shareableFragment->is_already_selected ? 0 : 1)->values();
 
         $this->assertEquals($shareableFragment->getFragmentId(), $shareableFragments[0]->getFragmentId());
         $this->assertFalse($shareableFragments[0]->is_already_selected);

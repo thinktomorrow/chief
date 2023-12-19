@@ -76,14 +76,15 @@ class GetShareableFragments
         $collection = $builder
             ->get()
             ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel))
-            ->map(function($fragment) use($currentFragmentIds) {
+            ->map(function ($fragment) use ($currentFragmentIds) {
                 $fragment->is_already_selected = in_array($fragment->getFragmentId(), $currentFragmentIds);
+
                 return $fragment;
             });
 
         // Make sure we don't return the fragments that are already used in current context
         if (isset($this->filters['exclude_already_selected']) && $this->filters['exclude_already_selected']) {
-            return $collection->reject(fn($fragment) => $fragment->is_already_selected);
+            return $collection->reject(fn ($fragment) => $fragment->is_already_selected);
         }
 
         return $collection;
