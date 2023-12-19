@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
@@ -22,7 +22,12 @@ trait FragmentableDefaults
 
     public function modelReference(): ModelReference
     {
-        return ModelReference::fromStatic(static::class);
+        return $this->fragmentModel()->modelReference();
+    }
+
+    public function getFragmentId(): ?string
+    {
+        return $this->fragmentModel()->id;
     }
 
     public function viewKey(): string
@@ -59,17 +64,17 @@ trait FragmentableDefaults
         return $this;
     }
 
-    public function fragmentModel(): FragmentModel
-    {
-        if (! isset($this->fragmentModel)) {
-            return new FragmentModel();
-        }
-
-        return $this->fragmentModel;
-    }
-
     public function dynamicLocaleFallback(): ?string
     {
         return null;
+    }
+
+    public function fragmentModel(): FragmentModel
+    {
+        if (! isset($this->fragmentModel)) {
+            return $this->fragmentModel = new FragmentModel();
+        }
+
+        return $this->fragmentModel;
     }
 }

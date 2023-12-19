@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
+use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
@@ -24,14 +26,16 @@ use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
-use Thinktomorrow\Chief\Fragments\Actions\UpdateFragmentMetadata;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
-use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragmentMetadata;
+use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
+use Thinktomorrow\Chief\Locale\LocaleServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -91,8 +95,10 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
+        (new FragmentsServiceProvider($this->app))->boot();
         (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
+        (new LocaleServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
 
@@ -105,43 +111,18 @@ class ChiefServiceProvider extends ServiceProvider
         }
     }
 
-    public function register()
+    private function bootFrontendEssentials()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'chief');
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'chief-settings');
+        (new SquantoServiceProvider($this->app))->boot();
+        (new RoutesServiceProvider($this->app))->boot();
 
-        if ($this->app->runningInConsole()) {
-            (new ConsoleServiceProvider($this->app))->register();
-        }
+        $this->bootChiefAuth();
 
-        $this->app->singleton(Registry::class, function () {
-            return new Registry([]);
+        Relation::morphMap([FragmentModel::resourceKey() => FragmentModel::class]);
+
+        Blade::directive('fragments', function () {
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\App\\Queries\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, app()->getLocale(), get_defined_vars()); ?>';
         });
-
-        $this->app->singleton(Settings::class, function () {
-            return new Settings();
-        });
-
-        $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
-
-        (new SquantoServiceProvider($this->app))->register();
-
-        if ($this->app->make(AdminEnvironment::class)->check(request())) {
-            $this->app->when(SettingsController::class)
-                ->needs(SettingFields::class)
-                ->give(function () {
-                    return new SettingFields(new Settings());
-                });
-
-            // Global chief nav singleton
-            $this->app->singleton(Nav::class, function () {
-                return new Nav();
-            });
-
-            (new AssetsServiceProvider($this->app))->register();
-            (new SquantoManagerServiceProvider($this->app))->register();
-            $this->sitemapServiceProvider->register();
-        }
     }
 
     private function bootChiefAuth(): void
@@ -164,8 +145,8 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Custom models for permission
         $this->app['config']['permission.models'] = [
-            'permission' => \Thinktomorrow\Chief\Admin\Authorization\Permission::class,
-            'role' => \Thinktomorrow\Chief\Admin\Authorization\Role::class,
+            'permission' => Permission::class,
+            'role' => Role::class,
         ];
 
         Auth::provider('chief-eloquent', function ($app, array $config) {
@@ -211,8 +192,8 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentDetached::class, [TriggerPageChangedEvent::class, 'onFragmentDetached']);
         Event::listen(FragmentDetached::class, [DeleteFragment::class, 'onFragmentDetached']);
         Event::listen(FragmentDetached::class, [UpdateFragmentMetadata::class, 'onFragmentDetached']);
-        Event::listen(FragmentAdded::class, [TriggerPageChangedEvent::class, 'onFragmentAdded']);
-        Event::listen(FragmentAdded::class, [UpdateFragmentMetadata::class, 'onFragmentAdded']);
+        Event::listen(FragmentAttached::class, [TriggerPageChangedEvent::class, 'onFragmentAdded']);
+        Event::listen(FragmentAttached::class, [UpdateFragmentMetadata::class, 'onFragmentAdded']);
         Event::listen(FragmentUpdated::class, [TriggerPageChangedEvent::class, 'onFragmentUpdated']);
         Event::listen(FragmentDuplicated::class, [TriggerPageChangedEvent::class, 'onFragmentDuplicated']);
         Event::listen(FragmentDuplicated::class, [UpdateFragmentMetadata::class, 'onFragmentDuplicated']);
@@ -227,17 +208,43 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(MenuItemUpdated::class, [ProjectModelData::class, 'onMenuItemUpdated']);
     }
 
-    private function bootFrontendEssentials()
+    public function register()
     {
-        (new SquantoServiceProvider($this->app))->boot();
-        (new RoutesServiceProvider($this->app))->boot();
+        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'chief');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'chief-settings');
 
-        $this->bootChiefAuth();
+        if ($this->app->runningInConsole()) {
+            (new ConsoleServiceProvider($this->app))->register();
+        }
 
-        Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
-
-        Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';
+        $this->app->singleton(Registry::class, function () {
+            return new Registry([]);
         });
+
+        $this->app->singleton(Settings::class, function () {
+            return new Settings();
+        });
+
+        $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
+
+        (new SquantoServiceProvider($this->app))->register();
+
+        if ($this->app->make(AdminEnvironment::class)->check(request())) {
+            $this->app->when(SettingsController::class)
+                ->needs(SettingFields::class)
+                ->give(function () {
+                    return new SettingFields(new Settings());
+                });
+
+            // Global chief nav singleton
+            $this->app->singleton(Nav::class, function () {
+                return new Nav();
+            });
+
+            (new AssetsServiceProvider($this->app))->register();
+            (new LocaleServiceProvider($this->app))->register();
+            (new SquantoManagerServiceProvider($this->app))->register();
+            $this->sitemapServiceProvider->register();
+        }
     }
 }

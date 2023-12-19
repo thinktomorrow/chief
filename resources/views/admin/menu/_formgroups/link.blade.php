@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
 <x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
     <x-chief::input.label required>
         Link
@@ -47,9 +48,9 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if(count(config('chief.locales')) > 1)
+                @if(count(ChiefLocaleConfig::getLocales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach(config('chief.locales') as $locale)
+                        @foreach(ChiefLocaleConfig::getLocales() as $locale)
                             <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                 <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
@@ -63,7 +64,7 @@
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach(config('chief.locales') as $locale)
+                    @foreach(ChiefLocaleConfig::getLocales() as $locale)
                         <x-chief::input.group :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
                                 id="trans-{{ $locale }}-url"

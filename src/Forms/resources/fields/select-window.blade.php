@@ -4,7 +4,8 @@
 
 @if(count($selected) > 0)
     <div class="flex flex-wrap gap-0.5">
-        @if($hasOptionGroups())
+        {{-- check for existence of option groups (used by select field) because this view is also used by radio/checkbox fields --}}
+        @if(isset($hasOptionGroups) && $hasOptionGroups($locale ?? null))
             @foreach($selected as $value)
                 @foreach($getOptions() as $group)
                     @foreach($group['options'] as $optionValue)

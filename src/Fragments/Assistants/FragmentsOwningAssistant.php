@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\App\View\Components\Fragments;
+use ReflectionClass;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\App\Components\Fragments;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -152,7 +153,7 @@ trait FragmentsOwningAssistant
 
     private function getSharedFragments(FragmentsOwner $owner, Request $request): array
     {
-        return $this->fragmentRepository->getAllShared($owner, [
+        return $this->fragmentRepository->getShareableFragments($owner, [
             'exclude_own' => true,
             'default_top_shared' => true,
             'owners' => array_filter($request->input('owners', []), fn ($val) => $val),
@@ -170,12 +171,16 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->owner($ownerId);
 
+        if ($locale = $request->input('locale')) {
+            app()->setLocale($locale);
+        }
+
         return (new Fragments($owner))->render()->render();
     }
 
     private function owner($ownerId): FragmentsOwner
     {
-        if ((new \ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
+        if ((new ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
             return $this->fragmentRepository->find($ownerId);
         }
 

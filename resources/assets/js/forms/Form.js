@@ -63,8 +63,8 @@ Form.prototype.onFormSubmission = function (responseData, meta) {
     Submit.handle(responseData, this.el, this.getTags(), meta);
 };
 
-Form.prototype.refresh = function () {
-    const url = this.el.dataset.formUrl;
+Form.prototype.refresh = function (refreshUrl = null) {
+    const url = refreshUrl || this.el.dataset.formUrl;
 
     if (!url) {
         return;

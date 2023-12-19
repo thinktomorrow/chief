@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\View;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\Locale\Localisable;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
@@ -44,11 +45,6 @@ trait PageResourceDefault
         return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
     }
 
-    public function getIndexDescription(): ?string
-    {
-        return null;
-    }
-
     protected function getNavTags(): array
     {
         return ['nav'];
@@ -57,6 +53,11 @@ trait PageResourceDefault
     protected function getNavIcon(): string
     {
         return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+    }
+
+    public function getIndexDescription(): ?string
+    {
+        return null;
     }
 
     public function getCreatePageView(): View
@@ -198,5 +199,11 @@ trait PageResourceDefault
     public function getNestableNodeLabels(): ?string
     {
         return null;
+    }
+
+    public function saveLocales(Localisable $model, array $locales): void
+    {
+        $model->setLocales($locales);
+        $model->save();
     }
 }

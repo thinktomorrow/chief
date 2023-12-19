@@ -10,8 +10,7 @@ trait OwningFragments
 {
     public function allowedFragments(): array
     {
-        //TODO: rename config to 'fragments' as the default for every model.
-        return config('chief.children', []);
+        return [];
     }
 
     public function ownerModel(): Model

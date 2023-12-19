@@ -30,9 +30,9 @@ if (! function_exists('chiefAdmin')) {
 
 // Retrieve the online fragments of the current owning model
 if (! function_exists('getFragments')) {
-    function getFragments($owner): Illuminate\Support\Collection
+    function getFragments($owner, ?string $locale = null): Illuminate\Support\Collection
     {
-        return app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->getFragments($owner);
+        return app(\Thinktomorrow\Chief\Fragments\App\Queries\FragmentsRenderer::class)->getFragments($owner, $locale ?? app()->getLocale());
     }
 }
 
