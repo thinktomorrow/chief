@@ -6,7 +6,9 @@ principles.
 
 ## Unreleased
 
+-   Changed: Movee duplicate action from index to create page to improve index pageload
 -   Changed: TimeTable FieldPresets::timetable now returns a Form component instead of an iterable
+-   Removed: State options from index page (such as put online / offline / archive) to improve index pageload
 
 ## 0.8.8 - 2023-11-22
 
