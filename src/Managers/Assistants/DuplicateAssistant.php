@@ -39,7 +39,7 @@ trait DuplicateAssistant
 
     public function duplicate(Request $request, $id)
     {
-        if(!$model = $this->managedModelClass()::findOrFail($id)) {
+        if(! $model = $this->managedModelClass()::findOrFail($id)) {
             throw new \InvalidArgumentException('Missing model id or model not found by [' . $id. '].');
         }
 
@@ -57,7 +57,7 @@ trait DuplicateAssistant
     {
         $modelId = $request->input('model_id');
 
-        if(!$modelId) {
+        if(! $modelId) {
             throw new \InvalidArgumentException('Missing model id');
         }
 
