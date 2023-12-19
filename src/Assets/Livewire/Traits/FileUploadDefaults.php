@@ -205,7 +205,7 @@ trait FileUploadDefaults
             // This normally should not happen as the id is passed with the first upload call
             // However we've seen error issues reporting that id is missing so here we
             // are going to track it a bit to try to understand why id is missing.
-            if(!isset($newFileDetails['id'])) {
+            if(! isset($newFileDetails['id'])) {
 
                 report(new InvalidArgumentException('id is unexpectedly missing... from file entry: ' . print_r($newFileDetails, true)));
 
