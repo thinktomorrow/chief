@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 
 trait CreateAssistant
 {
@@ -45,6 +46,7 @@ trait CreateAssistant
 
         View::share('manager', $this);
         View::share('model', $model);
+        View::share('originalModels', ModelReferencePresenter::toSelectValues($model::all(), false, false));
         View::share('resource', $this->resource);
 
         View::share('forms', Forms::make($this->resource->fields($model))
