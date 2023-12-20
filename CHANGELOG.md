@@ -6,8 +6,10 @@ principles.
 
 ## Unreleased
 
+## 0.8.9 - 2023-12-20
+
 -   Changed: Move duplicate action per index item to the create action on the index. This will improve index pageload
--   Changed: TimeTable FieldPresets::timetable now returns a Form component instead of an iterable
+-   Changed: TimeTable FieldPresets::timetable now returns a Form component instead of an iterable.
 -   Removed: State options from index page (such as put online / offline / archive) to improve index pageload
 
 ## 0.8.8 - 2023-11-22
