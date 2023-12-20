@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 
 trait CreateAssistant
 {
