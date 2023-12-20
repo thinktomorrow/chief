@@ -46,7 +46,6 @@ trait CreateAssistant
 
         View::share('manager', $this);
         View::share('model', $model);
-        View::share('originalModels', ModelReferencePresenter::toSelectValues($model::all(), false, false));
         View::share('resource', $this->resource);
 
         View::share('forms', Forms::make($this->resource->fields($model))

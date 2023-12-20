@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
@@ -14,6 +15,8 @@ use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait IndexAssistant
@@ -65,6 +68,7 @@ trait IndexAssistant
         View::share('resource', $this->resource);
         View::share('model', $model = $this->managedModelClassInstance());
 
+
         if ($model instanceof Nestable) {
             // TODO: this should be changed to the repository pattern like:
             // app($resource->indexRepository(), ['resourceKey' => $resourceKey])->applyFilters(request()->all())->getNestableResults()
@@ -76,7 +80,10 @@ trait IndexAssistant
                 ->shake(fn ($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
 
             View::share('tree', $filteredTree);
+            View::share('originalModels', PairOptions::toPairs($this->getTree()->pluck('id', fn (NestedNode $nestedNode) => $nestedNode->getBreadCrumbLabel())));
         } else {
+            // Used for duplicate action
+            View::share('originalModels', ModelReferencePresenter::toSelectValues($model::all(), false, false));
             View::share('models', $this->indexModels());
         }
 

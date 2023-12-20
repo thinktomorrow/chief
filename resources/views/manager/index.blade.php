@@ -17,11 +17,7 @@
             @endif
 
             @if(!$is_archive_index)
-                @adminCan('create')
-                    <a href="@adminRoute('create')" title="{{ ucfirst($resource->getLabel()) }} toevoegen" class="btn btn-primary">
-                        <x-chief::icon-label type="add">{{ ucfirst($resource->getLabel()) }} toevoegen</x-chief::icon-label>
-                    </a>
-                @endAdminCan
+                @include('chief::manager._index._index_actions')
             @endif
         </x-chief::page.hero>
     </x-slot>
