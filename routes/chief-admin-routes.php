@@ -19,7 +19,7 @@ use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\CreateNestedFragmentCon
 use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\DeleteNestedFragmentController;
 use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\EditNestedFragmentController;
 use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\NestedFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\SelectFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\SelectNewFragmentController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\CheckLinkController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\RemoveRedirectController;
@@ -43,9 +43,9 @@ Route::delete('remove-redirect/{id}', [RemoveRedirectController::class, 'delete'
  */
 //Route::get('fragments', [\Thinktomorrow\Chief\Fragments\App\Controllers\FragmentController::class, 'index'])->name('chief.back.fragments.index');
 
-Route::get('fragments/{context_id}/new', [SelectFragmentController::class, 'new'])->name('chief::fragments.new');
-Route::get('fragments/{context_id}/existing', [SelectFragmentController::class, 'existing'])->name('chief::fragments.existing');
-Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\App\Controllers\DeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
+Route::get('fragments/{context_id}/new', [SelectNewFragmentController::class, 'show'])->name('chief::fragments.new');
+Route::get('fragments/{context_id}/existing', [\Thinktomorrow\Chief\Fragments\App\Controllers\SelectExistingFragmentController::class, 'show'])->name('chief::fragments.existing');
+Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\App\Controllers\DetachOrDeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
 
 Route::get('fragments/{context_id}/refresh', [FragmentController::class, 'refreshIndex'])->name('chief::fragments.refresh-index');
 Route::post('fragments/{context_id}/sort', [FragmentController::class, 'sort'])->name('chief::fragments.sort');

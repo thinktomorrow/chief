@@ -101,19 +101,6 @@ class GetShareableFragments
         });
     }
 
-    private function expandedClassReferences(array $classNames): array
-    {
-        $expanded = [];
-
-        foreach ($classNames as $className) {
-            $modelReference = ModelReference::fromStatic($className);
-            $expanded[] = addSlashes($modelReference->className());
-            $expanded[] = $modelReference->shortClassName();
-        }
-
-        return $expanded;
-    }
-
     private function queryFilterByOwners($builder, array $modelReferences): Builder
     {
         $modelReferences = array_map(fn ($value) => ModelReference::fromString($value), $modelReferences);
@@ -142,5 +129,18 @@ class GetShareableFragments
             ->select(['context_fragments.*', DB::raw("count('context_fragment_lookup.fragment_id') AS 'usage'")])
             ->groupBy('context_fragments.id')
             ->orderBy('usage', 'DESC');
+    }
+
+    private function expandedClassReferences(array $classNames): array
+    {
+        $expanded = [];
+
+        foreach ($classNames as $className) {
+            $modelReference = ModelReference::fromStatic($className);
+            $expanded[] = addSlashes($modelReference->className());
+            $expanded[] = $modelReference->shortClassName();
+        }
+
+        return $expanded;
     }
 }

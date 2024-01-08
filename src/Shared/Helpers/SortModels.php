@@ -1,13 +1,26 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\Actions;
+namespace Thinktomorrow\Chief\Shared\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class SortModels
 {
+
+    public function handle(string $table, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true, string $extraWhere = null): void
+    {
+        static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers, $extraWhere);
+    }
+
+    public function handleByModel(Model $model, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true): void
+    {
+        $table = $model->getTable();
+
+        static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers);
+    }
+
     /**
      * Taken from: https://github.com/laravel/ideas/issues/575
      *
@@ -35,17 +48,5 @@ class SortModels
         }
 
         DB::update("UPDATE `{$table}` SET `{$column}` = CASE `" . $indexColumn . "` {$cases} END WHERE `" . $indexColumn . "` in ({$ids})" . $extraWhere, $params);
-    }
-
-    public function handle(Model $model, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true): void
-    {
-        $table = $model->getTable();
-
-        static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers);
-    }
-
-    public function handleFragments(string $contextId, array $indices): void
-    {
-        static::batchUpdateColumn('context_fragment_lookup', 'order', $indices, 'fragment_id', false, 'context_id = "' . $contextId . '"');
     }
 }

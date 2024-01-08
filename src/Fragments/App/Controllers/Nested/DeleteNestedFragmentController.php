@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Fragments\App\Controllers\Nested;
 
-use Thinktomorrow\Chief\Fragments\App\Controllers\DeleteFragmentController;
+use Thinktomorrow\Chief\Fragments\App\Controllers\DetachOrDeleteFragmentController;
 
 class DeleteNestedFragmentController
 {
-    private DeleteFragmentController $defaultController;
+    private DetachOrDeleteFragmentController $defaultController;
 
-    public function __construct(DeleteFragmentController $defaultController)
+    public function __construct(DetachOrDeleteFragmentController $defaultController)
     {
         $this->defaultController = $defaultController;
     }

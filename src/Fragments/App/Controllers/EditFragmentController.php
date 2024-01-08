@@ -27,6 +27,8 @@ class EditFragmentController
         $context = ContextModel::find($contextId);
         $fragment = $this->fragmentRepository->find($fragmentId);
 
+        // TODO: $fragment->fields($resource, $section)
+
         $forms = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->fragmentModel())
             ->eachForm(function (Form $form) use ($fragment, $contextId, $fragmentId) {

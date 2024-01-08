@@ -12,14 +12,14 @@ use Thinktomorrow\Chief\Resource\PageResource;
 class GetOwningModels
 {
     private ContextOwnerRepository $fragmentOwnerRepository;
-    private Registry $registry;
     private ContextRepository $contextRepository;
+    private Registry $registry;
 
     public function __construct(ContextRepository $contextRepository, ContextOwnerRepository $fragmentOwnerRepository, Registry $registry)
     {
         $this->fragmentOwnerRepository = $fragmentOwnerRepository;
-        $this->registry = $registry;
         $this->contextRepository = $contextRepository;
+        $this->registry = $registry;
     }
 
     public function get(string $fragmentId): array

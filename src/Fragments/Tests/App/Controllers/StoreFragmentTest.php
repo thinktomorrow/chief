@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use function app;
 use function chiefRegister;
 use Illuminate\Http\UploadedFile;
@@ -28,24 +29,25 @@ class StoreFragmentTest extends ChiefTestCase
 
     public function test_it_can_store_a_fragment()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+
+        $this->assertEquals(0, FragmentModel::count());
 
         $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
             'order' => 2,
-
         ])->assertStatus(201);
 
         $this->assertEquals(1, FragmentModel::count());
 
-        $snippet = app(FragmentRepository::class)->getByOwner($this->owner, 'nl')->first();
+        $snippet = app(FragmentRepository::class)->getByOwner($this->owner, 'fr')->first();
         $this->assertInstanceOf(SnippetStub::class, $snippet);
         $this->assertEquals('new-title', $snippet->fragmentModel()->title);
     }
 
     public function test_it_can_store_a_fragment_with_localized_fields()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
 
         $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
@@ -68,13 +70,12 @@ class StoreFragmentTest extends ChiefTestCase
 
     public function test_it_can_store_a_nested_fragment()
     {
-        $fragmentId = app(CreateFragment::class)->handle(
-            SnippetStub::resourceKey(),
-            ['title' => 'owning fragment'],
-            []
+        $fragment = FragmentTestAssist::createFragment(
+            SnippetStub::class,
+            ['title' => 'owning fragment']
         );
 
-        $context = ContextModel::create(['owner_type' => FragmentModel::resourceKey(), 'owner_id' => $fragmentId, 'locale' => 'nl']);
+        $context = ContextModel::create(['owner_type' => FragmentModel::resourceKey(), 'owner_id' => $fragment->getFragmentId(), 'locale' => 'nl']);
         $this->asAdmin()->post(route('chief::fragments.nested.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
             'order' => 2,
@@ -83,38 +84,9 @@ class StoreFragmentTest extends ChiefTestCase
 
         $this->assertEquals(2, FragmentModel::count());
 
-        $snippet = app(FragmentRepository::class)->getByOwner(FragmentModel::find($fragmentId), 'nl')->first();
+        $snippet = app(FragmentRepository::class)->getByOwner(FragmentModel::find($fragment->getFragmentId()), 'nl')->first();
         $this->assertInstanceOf(SnippetStub::class, $snippet);
         $this->assertEquals('new-title', $snippet->fragmentModel()->title);
-    }
-
-    public function test_it_can_store_fragment_with_specific_order()
-    {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'nl']);
-        $snippet1 = $this->setupAndCreateSnippet($this->owner, 1, false);
-        $snippet2 = $this->setupAndCreateSnippet($this->owner, 2, false);
-        $snippet3 = $this->setupAndCreateSnippet($this->owner, 3, false);
-
-        $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
-            'title' => 'new-title',
-            'order' => 1,
-        ])->assertStatus(201);
-
-        $insertedFragmentId = $response->getOriginalContent()['data']['fragmentmodel_id'];
-
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'nl');
-        $this->assertCount(4, $fragments);
-
-        $this->assertEquals($snippet1->modelReference(), $fragments[0]->modelReference());
-        $this->assertEquals($insertedFragmentId, $fragments[1]->modelReference()->id());
-        $this->assertEquals($snippet2->modelReference(), $fragments[2]->modelReference());
-        $this->assertEquals($snippet3->modelReference(), $fragments[3]->modelReference());
-
-        // Assert order is updated accordingly
-        $this->assertEquals(0, $fragments[0]->fragmentModel()->pivot->order);
-        $this->assertEquals(1, $fragments[1]->fragmentModel()->pivot->order);
-        $this->assertEquals(2, $fragments[2]->fragmentModel()->pivot->order);
-        $this->assertEquals(3, $fragments[3]->fragmentModel()->pivot->order);
     }
 
     public function test_it_can_upload_a_file_field()

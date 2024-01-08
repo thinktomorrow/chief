@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\Resource\Exceptions\FragmentAlreadyDetached;
 
-class DeleteFragmentController
+class DetachOrDeleteFragmentController
 {
     public function delete(string $contextId, string $fragmentId)
     {

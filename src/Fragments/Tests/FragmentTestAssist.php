@@ -50,7 +50,7 @@ class FragmentTestAssist
 
     public static function findOrCreateContext($owner, string $locale = 'nl'): ContextModel
     {
-        return app(ContextRepository::class)->findByOwner($owner, $locale) ?: app(ContextRepository::class)->createForOwner($owner, $locale);
+        return app(ContextRepository::class)->findOrCreateByOwner($owner, $locale);
     }
 
     public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragmentable
@@ -71,6 +71,17 @@ class FragmentTestAssist
         app(AttachFragment::class)->handle($contextId, $model->fragmentModel()->id, $order, []);
 
         return $model;
+    }
+
+    public static function createContextAndAttachFragment($owner, string $fragmentClass, string $locale = 'nl', $order = 0, array $data = [], bool $register = true): array
+    {
+        $context = static::findOrCreateContext($owner, $locale);
+
+        $model = static::createFragment($fragmentClass, $data, $register);
+
+        app(AttachFragment::class)->handle($context->id, $model->fragmentModel()->id, $order, []);
+
+        return [$context, $model];
     }
 
 //

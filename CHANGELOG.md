@@ -5,7 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased - upcoming 0.9.0
-
+todo: fields owner as parameter resource owner and fragment if nested. Fields parameter of fragments is not resource so first param fragment is not needed.
 -   Changed: **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain all available locales and `chief.locales.site`that hold the active locales in usage on the site.
 -   Changed: Renamed `FragmentAdded` event tot `FragmentAttached` for consistency.
 

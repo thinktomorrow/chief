@@ -6,15 +6,14 @@ namespace Thinktomorrow\Chief\Fragments\App\Actions;
 use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Resource\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 
 final class AttachFragment
 {
-    private SortModels $sortModels;
+    private ReorderFragments $reorderFragments;
 
-    public function __construct(SortModels $sortModels)
+    public function __construct(ReorderFragments $reorderFragments)
     {
-        $this->sortModels = $sortModels;
+        $this->reorderFragments = $reorderFragments;
     }
 
     public function handle(string $contextId, string $fragmentId, int $order, array $data = []): void
@@ -30,7 +29,7 @@ final class AttachFragment
 
         $context->fragments()->attach($fragmentId, $data);
 
-        $this->sortModels->handleFragments($contextId, $indices);
+        $this->reorderFragments->handle($contextId, $indices);
 
         event(new FragmentAttached($fragmentId, $context->id));
     }
