@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Changed: Duplicate ux improved  
 
 ## 0.8.9 - 2023-12-20
 
