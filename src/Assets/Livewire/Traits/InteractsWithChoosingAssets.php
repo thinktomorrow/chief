@@ -35,7 +35,10 @@ trait InteractsWithChoosingAssets
 
     public function openFilesChoose()
     {
-        $this->emitDownTo('chief-wire::file-field-choose', 'open', ['existingAssetIds' => collect($this->previewFiles)->map(fn ($previewFile) => $previewFile->id)->all()]);
+        $this->emitDownTo('chief-wire::file-field-choose', 'open', [
+            'existingAssetIds' => collect($this->previewFiles)->map(fn ($previewFile) => $previewFile->id)->all(),
+            'allowExternalFiles' => $this->allowExternalFiles ?? true,
+        ]);
     }
 
     public function openFilesChooseExternal()

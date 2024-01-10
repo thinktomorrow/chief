@@ -6,9 +6,10 @@ principles.
 
 ## Unreleased
 
-## 0.8.10 - 2024-01-09
+## 0.8.10 - 2024-01-10
 
--   Changed: Duplicate ux improved  
+-   Fixed: if field disallowed external files via allowExternalFiles(false), external files were still visible and selectable in the media gallery modal.
+-   Changed: Duplicate ux improved
 
 ## 0.8.9 - 2023-12-20
 
