@@ -38,9 +38,9 @@ trait InteractsWithGallery
             });
         }
 
-        if(!$this->allowExternalFiles) {
+        if(! $this->allowExternalFiles) {
             $externalTypes = collect(config('thinktomorrow.assetlibrary.types', []))
-                ->filter(fn($class) => $this->isAssetModelExternal($class))
+                ->filter(fn ($class) => $this->isAssetModelExternal($class))
                 ->keys()->all();
 
             $builder->whereNotIn('asset_type', $externalTypes);
