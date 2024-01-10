@@ -53,6 +53,7 @@ class ContextRepository
 
         if(count($contexts) < count($locales)) {
             $this->createIfNotExistsForOwner($owner, $locales);
+
             return $this->getByOwner($owner);
         }
 
@@ -79,7 +80,9 @@ class ContextRepository
     private function createIfNotExistsForOwner(ReferableModel $owner, Collection $contexts, array $locales): void
     {
         foreach($locales as $locale) {
-            if($contexts->contains(fn(ContextModel $context) => $context->locale == $locale)) continue;
+            if($contexts->contains(fn (ContextModel $context) => $context->locale == $locale)) {
+                continue;
+            }
 
             $this->createForOwner($owner, $locale);
         }

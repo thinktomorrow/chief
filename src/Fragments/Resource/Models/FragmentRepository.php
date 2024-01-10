@@ -3,13 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Resource\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 final class FragmentRepository

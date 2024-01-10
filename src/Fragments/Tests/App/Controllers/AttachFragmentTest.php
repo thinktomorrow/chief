@@ -2,9 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
-use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
@@ -74,14 +72,14 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]))
             ->assertStatus(201);
 
-        FragmentTestAssist::assertFragmentCount($ownerFragment, 'other',1);
+        FragmentTestAssist::assertFragmentCount($ownerFragment, 'other', 1);
     }
 
-//    public function test_it_can_check_if_a_model_allows_for_adding_a_fragment()
-//    {
-//        $this->assertFalse($this->manager($this->owner)->can('chief::fragments.attach'));
-//        $this->assertTrue($this->manager($this->fragment)->can('chief::fragments.attach'));
-//    }
+    //    public function test_it_can_check_if_a_model_allows_for_adding_a_fragment()
+    //    {
+    //        $this->assertFalse($this->manager($this->owner)->can('chief::fragments.attach'));
+    //        $this->assertTrue($this->manager($this->fragment)->can('chief::fragments.attach'));
+    //    }
 
     public function test_adding_a_fragment_multiple_times_only_adds_it_once()
     {
@@ -94,7 +92,7 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
             ->assertStatus(400);
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'other',1);
+        FragmentTestAssist::assertFragmentCount($this->owner, 'other', 1);
     }
 
 }
