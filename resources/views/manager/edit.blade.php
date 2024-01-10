@@ -38,6 +38,9 @@
 {{--                                @endforeach--}}
 {{--                            </x-chief::tabs>--}}
 {{--                        @endif--}}
+
+            @include('chief::manager._edit._edit_actions')
+
         </x-chief::page.hero>
     </x-slot>
 

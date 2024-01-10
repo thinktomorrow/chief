@@ -18,12 +18,13 @@ trait DuplicateAssistant
     {
         return [
             ManagedRoute::post('duplicate', 'duplicate/{id}'),
+            ManagedRoute::post('duplicate-on-create', 'duplicate'),
         ];
     }
 
     public function canDuplicateAssistant(string $action, $model = null): bool
     {
-        if (! in_array($action, ['duplicate'])) {
+        if (! in_array($action, ['duplicate', 'duplicate-on-create'])) {
             return false;
         }
 
@@ -38,7 +39,9 @@ trait DuplicateAssistant
 
     public function duplicate(Request $request, $id)
     {
-        $model = $this->managedModelClass()::findOrFail($id);
+        if(! $model = $this->managedModelClass()::findOrFail($id)) {
+            throw new \InvalidArgumentException('Missing model id or model not found by [' . $id. '].');
+        }
 
         $this->guard('duplicate', $model);
 
@@ -48,5 +51,16 @@ trait DuplicateAssistant
         Audit::activity()->performedOn($model)->log('duplicated');
 
         return redirect()->to($this->route('edit', $copiedModel))->with('messages.success', $this->resource->getPageTitle($model) . ' is gekopieerd.');
+    }
+
+    public function duplicateOnCreate(Request $request)
+    {
+        $modelId = $request->input('model_id');
+
+        if(! $modelId) {
+            throw new \InvalidArgumentException('Missing model id');
+        }
+
+        return $this->duplicate($request, $modelId);
     }
 }

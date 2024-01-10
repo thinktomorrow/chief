@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithPagination;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 
 trait InteractsWithGallery
 {
@@ -13,6 +14,7 @@ trait InteractsWithGallery
 
     public $filters = [];
     public $sort = null;
+    public bool $allowExternalFiles = true;
 
     public function updatedFilters()
     {
@@ -36,6 +38,14 @@ trait InteractsWithGallery
             });
         }
 
+        if(! $this->allowExternalFiles) {
+            $externalTypes = collect(config('thinktomorrow.assetlibrary.types', []))
+                ->filter(fn ($class) => $this->isAssetModelExternal($class))
+                ->keys()->all();
+
+            $builder->whereNotIn('asset_type', $externalTypes);
+        }
+
         if ($this->sort == 'created_at_asc') {
             $builder = $builder->orderBy('created_at', 'ASC');
         } elseif ($this->sort == 'created_at_desc' || ! $this->sort) {
@@ -53,5 +63,10 @@ trait InteractsWithGallery
     public function paginationView()
     {
         return 'chief::pagination.livewire-default';
+    }
+
+    private function isAssetModelExternal(string $modelClass): bool
+    {
+        return (new \ReflectionClass($modelClass))->implementsInterface(ExternalAssetContract::class);
     }
 }

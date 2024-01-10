@@ -37,6 +37,7 @@ class FileFieldChooseComponent extends Component
     public function open($arguments)
     {
         $this->existingAssetIds = $arguments['existingAssetIds'];
+        $this->allowExternalFiles = $arguments['allowExternalFiles'];
 
         $this->isOpen = true;
     }

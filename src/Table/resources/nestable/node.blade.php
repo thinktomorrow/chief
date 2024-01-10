@@ -69,7 +69,7 @@
         </div>
 
         <div data-sortable-hide-when-sorting>
-            @include('chief::manager._index._options', ['model' => $node->getModel()])
+            @include('chief-table::nestable.node-options', ['model' => $node->getModel()])
         </div>
     </div>
 

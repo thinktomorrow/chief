@@ -13,10 +13,7 @@
     </a>
     @endAdminCan
 
-    @if (
-        ($manager->can('state-update', $model) && $model instanceof StatefulContract)
-        || $manager->can('duplicate', $model)
-    )
+    @if (($manager->can('state-update', $model) && $model instanceof StatefulContract))
         <button type="button" id="index-options-{{ $model->id }}">
             <x-chief::button>
                 <svg class="w-5 h-5">
@@ -42,10 +39,6 @@
                     @endforeach
                 @endforeach
             @endif
-
-            @adminCan('duplicate', $model)
-            @include('chief::manager._transitions.index.duplicate')
-            @endAdminCan
         </x-chief::dropdown>
     @endif
 </div>

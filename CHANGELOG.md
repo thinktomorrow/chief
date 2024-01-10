@@ -9,12 +9,25 @@ todo: fields owner as parameter resource owner and fragment if nested. Fields pa
 -   Changed: **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain all available locales and `chief.locales.site`that hold the active locales in usage on the site.
 -   Changed: Renamed `FragmentAdded` event tot `FragmentAttached` for consistency.
 
+## 0.8.10 - 2024-01-10
+
+-   Fixed: if field disallowed external files via allowExternalFiles(false), external files were still visible and selectable in the media gallery modal.
+-   Changed: Duplicate ux improved
+
+## 0.8.9 - 2023-12-20
+
+-   Changed: Move duplicate action per index item to the create action on the index. This will improve index pageload
+-   Changed: TimeTable FieldPresets::timetable now returns a Form component instead of an iterable.
+-   Removed: State options from index page (such as put online / offline / archive) to improve index pageload
+
 ## 0.8.8 - 2023-11-22
+
 -   Fixed: issue where model could not attach same asset for different fields.
 
 ## 0.8.7 - 2023-11-22
+
 -   Added: `FilterPresets::attribute()` for search on column, dynamic key or relation column.
--   Fixed: issue where no more than one hotspot could be added at the same time  
+-   Fixed: issue where no more than one hotspot could be added at the same time
 -   Deprecated: `FilterPresets::text()` and `FilterPresets::column()` in favor of the `FilterPresets::attribute()` function.
 
 ## 0.8.6 - 2023-11-15
