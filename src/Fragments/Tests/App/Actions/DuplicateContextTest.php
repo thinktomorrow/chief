@@ -32,7 +32,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->owner2 = ArticlePage::create();
 
         $this->context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
-        $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $this->context->id);
+        $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
     public function test_context_can_be_duplicated()
@@ -92,7 +92,7 @@ class DuplicateContextTest extends ChiefTestCase
     {
         // Create nested fragment
         $nestedContext = FragmentTestAssist::findOrCreateContext($this->fragment, 'nl');
-        $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $nestedContext->id);
+        $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Tests\Resource;
+namespace Thinktomorrow\Chief\Fragments\Tests\Domain;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;

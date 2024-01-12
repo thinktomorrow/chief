@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Tests\Resource\Models;
+namespace Thinktomorrow\Chief\Fragments\Tests\Domain\Models;
 
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;

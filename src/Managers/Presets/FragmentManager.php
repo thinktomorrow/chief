@@ -20,7 +20,7 @@ final class FragmentManager implements Manager
     use FragmentsOwningAssistant;
     use RepeatFieldAssistant;
 
-    //    private Resource $resource;
+    //    private Domain $resource;
     private FragmentRepository $fragmentRepository;
     private FieldValidator $fieldValidator;
     private Registry $registry;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Tests\Resource;
+namespace Thinktomorrow\Chief\Fragments\Tests\Domain;
 
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

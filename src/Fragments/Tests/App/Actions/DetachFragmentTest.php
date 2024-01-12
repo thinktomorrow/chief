@@ -26,7 +26,7 @@ class DetachFragmentTest extends ChiefTestCase
     public function test_it_can_detach_fragment_from_context()
     {
         $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
-        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
+        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $context2 = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'en']);
         app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
@@ -45,7 +45,7 @@ class DetachFragmentTest extends ChiefTestCase
     public function test_it_deletes_fragment_when_after_detach_fragment_is_no_longer_used()
     {
         $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
-        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
+        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
         $this->assertNotNull(FragmentModel::find($fragment->getFragmentId()));
@@ -59,7 +59,7 @@ class DetachFragmentTest extends ChiefTestCase
     public function test_when_detaching_shared_fragment_it_is_no_longer_considered_shared_when_used_by_one_context()
     {
         $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
-        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::resourceKey(), $context->id);
+        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $owner2 = ArticlePage::create();
         $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'fr']);

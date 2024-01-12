@@ -1,9 +1,9 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Tests\App\Components;
+namespace Thinktomorrow\Chief\Fragments\Tests\UI\Components;
 
-use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
