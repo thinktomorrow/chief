@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 
-use Thinktomorrow\Chief\Fragments\App\Components\Fragments;
+use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 
 class FragmentController
 {

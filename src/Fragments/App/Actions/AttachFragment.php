@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
-use Thinktomorrow\Chief\Fragments\Resource\Exceptions\FragmentAlreadyAdded;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentAttached;
+use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 
 final class AttachFragment
 {

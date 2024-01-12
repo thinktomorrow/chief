@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;

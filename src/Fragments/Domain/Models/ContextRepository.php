@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Resource\Models;
+namespace Thinktomorrow\Chief\Fragments\Domain\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;

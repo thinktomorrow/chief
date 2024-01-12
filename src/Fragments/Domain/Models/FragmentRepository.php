@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Resource\Models;
+namespace Thinktomorrow\Chief\Fragments\Domain\Models;
 
 use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;

@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 final class FragmentsRenderer

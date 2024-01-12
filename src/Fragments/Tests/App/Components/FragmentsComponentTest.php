@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Components;
 
-use Thinktomorrow\Chief\Fragments\App\Components\Fragments;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;

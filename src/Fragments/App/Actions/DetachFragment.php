@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Resource\Exceptions\FragmentAlreadyDetached;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyDetached;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 
 class DetachFragment
 {

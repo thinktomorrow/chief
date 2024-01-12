@@ -28,6 +28,8 @@ class SortModels
      */
     private static function batchUpdateColumn(string $table, string $column, array $indices, string $indexColumn = 'id', bool $castIdToIntegers = true, string $extraWhere = null): void
     {
+        if(count($indices) < 1) return;
+
         $cases = [];
         $ids = [];
         $params = [];

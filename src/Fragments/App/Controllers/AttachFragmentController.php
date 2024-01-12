@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
-use Thinktomorrow\Chief\Fragments\Resource\Exceptions\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyAdded;
 
 class AttachFragmentController
 {

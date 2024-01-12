@@ -3,7 +3,7 @@
     use Thinktomorrow\Chief\Locale\LocaleRepository;
     use Thinktomorrow\Chief\Locale\Localisable;
 
-    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
+    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
             'id' => $context->id,
             'locale' => $context->locale,
             'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
@@ -31,13 +31,13 @@
                     :locales="$model->getLocales()"/>
             @endif
 
-{{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
-{{--                            <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
-{{--                                @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
-{{--                                    <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
-{{--                                @endforeach--}}
-{{--                            </x-chief::tabs>--}}
-{{--                        @endif--}}
+            {{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
+            {{--                            <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
+            {{--                                @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
+            {{--                                    <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
+            {{--                                @endforeach--}}
+            {{--                            </x-chief::tabs>--}}
+            {{--                        @endif--}}
 
             @include('chief::manager._edit._edit_actions')
 
@@ -63,7 +63,7 @@
             }"
         >
             <x-chief-fragments::index :context-id="$context->id"
-                                locale="{{ count($model->getLocales()) > 0 ? $model->getLocales()[0] : null }}"/>
+                                      locale="{{ count($model->getLocales()) > 0 ? $model->getLocales()[0] : null }}"/>
         </div>
         @endAdminCan
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\App\Components;
+namespace Thinktomorrow\Chief\Fragments\UI\Components;
 
 use Illuminate\View\Component;
 

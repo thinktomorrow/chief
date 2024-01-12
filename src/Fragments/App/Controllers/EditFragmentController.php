@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentUpdated;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 class EditFragmentController
 {

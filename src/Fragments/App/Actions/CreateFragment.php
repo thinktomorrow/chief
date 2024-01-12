@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 final class CreateFragment
 {

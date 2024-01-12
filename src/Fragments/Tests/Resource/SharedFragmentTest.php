@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Fragments\Tests\Resource;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;

@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class DuplicateContext

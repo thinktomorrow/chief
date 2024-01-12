@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Resource\Models;
+namespace Thinktomorrow\Chief\Fragments\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\Fragments\FragmentStatus;
+use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;

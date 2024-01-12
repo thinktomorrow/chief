@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\Resource\Models;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;

@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

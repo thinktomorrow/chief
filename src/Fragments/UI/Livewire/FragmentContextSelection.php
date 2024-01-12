@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\App\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Locale\Actions\SyncLocales;

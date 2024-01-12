@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments;
+namespace Thinktomorrow\Chief\Fragments\Domain;
 
 enum FragmentStatus: string
 {

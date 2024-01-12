@@ -1,14 +1,14 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\App\Components;
+namespace Thinktomorrow\Chief\Fragments\UI\Components;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 // Nested fragments component in sidebar (cannot use livewire for this)
 class Fragments extends Component

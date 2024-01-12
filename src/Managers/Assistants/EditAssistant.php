@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;

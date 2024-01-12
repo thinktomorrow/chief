@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class SelectExistingFragmentController

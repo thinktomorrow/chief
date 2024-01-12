@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 
 final class UnshareFragment
 {

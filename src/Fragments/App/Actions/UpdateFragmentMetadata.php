@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentAttached;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Resource\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Resource\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentAttached;
+use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 class UpdateFragmentMetadata
 {

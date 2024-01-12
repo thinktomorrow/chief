@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Resource\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 
 class SelectNewFragmentController
 {

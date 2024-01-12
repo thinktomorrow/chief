@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;use Thinktomorrow\Chief\Fragments\Fragmentable;use Thinktomorrow\Chief\Fragments\FragmentsOwner;use Thinktomorrow\Chief\Fragments\FragmentStatus; @endphp
+@php use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;use Thinktomorrow\Chief\Fragments\Fragmentable;use Thinktomorrow\Chief\Fragments\FragmentsOwner; @endphp
 
 <div class="py-6 space-y-6 border-t border-grey-100">
     <div class="space-y-2">
@@ -14,10 +14,10 @@
     <div>
 
         {{-- TODO: show all available contexts of owner - (display them as locales) - activate the current context --}}
-{{--        <livewire:chief-wire::fragment-locales--}}
-{{--            :resource-key="$resource::resourceKey()"--}}
-{{--            :modelReference="$model->fragmentModel()->modelReference()"--}}
-{{--            :locales="$model->fragmentModel()->getLocales()"/>--}}
+        {{--        <livewire:chief-wire::fragment-locales--}}
+        {{--            :resource-key="$resource::resourceKey()"--}}
+        {{--            :modelReference="$model->fragmentModel()->modelReference()"--}}
+        {{--            :locales="$model->fragmentModel()->getLocales()"/>--}}
     </div>
 
     {!! $slot !!}
