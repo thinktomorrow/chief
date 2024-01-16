@@ -14,7 +14,7 @@
     @endAdminCan
 
     @if (($manager->can('state-update', $model) && $model instanceof StatefulContract))
-        <button type="button" id="index-options-{{ $model->id }}">
+        <button type="button" id="index-options-{{ $model->getKey() }}">
             <x-chief::button>
                 <svg class="w-5 h-5">
                     <use xlink:href="#icon-ellipsis-vertical"/>
@@ -22,7 +22,7 @@
             </x-chief::button>
         </button>
 
-        <x-chief::dropdown trigger="#index-options-{{ $model->id }}">
+        <x-chief::dropdown trigger="#index-options-{{ $model->getKey() }}">
             @if($manager->can('state-update', $model) && $model instanceof StatefulContract)
                 @foreach ($model->getStateKeys() as $stateKey)
                     @php

@@ -156,7 +156,9 @@ trait IndexAssistant
         // if model has no timestamps, updated_at doesn't exist
         if ((new $modelClass)->timestamps) {
             return $filters->add(HiddenFilter::make('updated', function ($query) {
-                return $query->orderBy('updated_at', 'DESC');
+                return is_array($query->getQuery()->orders) && count($query->getQuery()->orders) < 1
+                    ? $query->orderBy('updated_at', 'DESC')
+                    : $query;
             }));
         }
 
