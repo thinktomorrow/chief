@@ -5,9 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
--   Fixed: display of duplicate options on edit
--   Fixed: index options dropdown based on key named different from id
+-   Fixed: display of duplicate options on edit.
+-   Fixed: index options dropdown based on key named different from id.
 -   Fixed: use default updated_at sorting only when no other sorting is applied.
+-   Fixed: create tag link was not available after first tag was created.
 
 ## 0.8.10 - 2024-01-10
 
