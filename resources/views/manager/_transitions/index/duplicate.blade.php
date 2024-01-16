@@ -1,6 +1,6 @@
 <button type="submit" form="duplicateForm-{{ $model->getKey() }}">
     <x-chief::dropdown.item>
-        Kopieer deze {{ lcfirst($resource->getLabel()) }}
+        Kopieer {{ lcfirst($resource->getLabel()) }}
     </x-chief::dropdown.item>
 </button>
 
