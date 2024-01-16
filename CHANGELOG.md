@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 -   Fixed: display of duplicate options on edit
+-   Fixed: index options dropdown based on key named different from id
+-   Fixed: use default updated_at sorting only when no other sorting is applied.
 
 ## 0.8.10 - 2024-01-10
 
