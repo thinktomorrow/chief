@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Fixed: display of duplicate options on edit
 
 ## 0.8.10 - 2024-01-10
 
