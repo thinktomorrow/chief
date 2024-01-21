@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
+use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -83,6 +84,12 @@ class FragmentTestAssist
 
         return [$context, $model];
     }
+
+    public static function findFragment(string $fragmentId): Fragmentable
+    {
+        return app(FragmentRepository::class)->find($fragmentId);
+    }
+
 
 //
 //

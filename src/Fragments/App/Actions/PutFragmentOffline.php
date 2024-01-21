@@ -21,7 +21,9 @@ class PutFragmentOffline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        $fragmentable->fragmentModel()->changeStatus(FragmentStatus::offline);
+        if($fragmentable->fragmentModel()->isOffline()) return;
+
+        $fragmentable->fragmentModel()->setOffline();
         $fragmentable->fragmentModel()->save();
 
         event(new FragmentPutOffline($fragmentId));

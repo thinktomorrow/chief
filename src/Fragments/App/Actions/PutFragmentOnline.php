@@ -21,7 +21,9 @@ class PutFragmentOnline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        $fragmentable->fragmentModel()->changeStatus(FragmentStatus::online);
+        if($fragmentable->fragmentModel()->isOnline()) return;
+
+        $fragmentable->fragmentModel()->setOnline();
         $fragmentable->fragmentModel()->save();
 
         event(new FragmentPutOnline($fragmentId));

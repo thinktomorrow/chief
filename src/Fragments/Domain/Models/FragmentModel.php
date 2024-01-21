@@ -61,7 +61,17 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
         $this->dynamicLocaleFallback = $dynamicLocaleFallback;
     }
 
-    public function changeStatus(FragmentStatus $status): void
+    public function setOnline(): void
+    {
+        $this->changeStatus(FragmentStatus::online);
+    }
+
+    public function setOffline(): void
+    {
+        $this->changeStatus(FragmentStatus::offline);
+    }
+
+    private function changeStatus(FragmentStatus $status): void
     {
         $this->online_status = $status->value;
     }
