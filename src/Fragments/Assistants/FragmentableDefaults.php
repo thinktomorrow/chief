@@ -62,7 +62,7 @@ trait FragmentableDefaults
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
-            return new FragmentModel();
+            return $this->fragmentModel = new FragmentModel();
         }
 
         return $this->fragmentModel;

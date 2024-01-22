@@ -301,6 +301,10 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
+        if(method_exists($fragmentable, 'beforeCreate')) {
+            $fragmentable->beforeCreate($owner, $order);
+        }
+
         $forms = Forms::make($fragmentable->fields($fragmentable))
                     ->fillModel($fragmentable->fragmentModel())
                     ->fillFields($this, $fragmentable->fragmentModel())
