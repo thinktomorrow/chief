@@ -5,7 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
--   Added: Fragmentable::beforeCreate() callback to alter fragment before the create view.
+- Fixed: livewire scripts on old page template was not instantiated correctly  
+- Added: Fragmentable::beforeCreate() callback to alter fragment before the create view.
 
 ## 0.8.11 - 2024-01-16
 -   Fixed: display of duplicate options on edit.
