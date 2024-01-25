@@ -6,11 +6,15 @@ principles.
 
 ## Unreleased
 
+-   Changed: Links window urls are now opening in the same window by default.
+
 ## 0.8.12 - 2024-01-23
-- Fixed: livewire scripts on old page template was not instantiated correctly  
-- Added: Fragmentable::beforeCreate() callback to alter fragment before the create view.
+
+-   Fixed: livewire scripts on old page template was not instantiated correctly.
+-   Added: Fragmentable::beforeCreate() callback to alter fragment before the create view.
 
 ## 0.8.11 - 2024-01-16
+
 -   Fixed: display of duplicate options on edit.
 -   Fixed: index options dropdown based on key named different from id.
 -   Fixed: use default updated_at sorting only when no other sorting is applied.

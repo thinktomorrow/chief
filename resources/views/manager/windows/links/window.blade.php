@@ -32,8 +32,6 @@
                             <a
                                 href="{{ $link->url }}"
                                 title="Bekijk deze pagina"
-                                target="_blank"
-                                rel="noopener"
                                 class="mt-0.5 space-x-1 link {{ $link->is_online ? 'link-primary' : 'link-warning' }} underline"
                                 style="word-break: break-word;"
                             >
