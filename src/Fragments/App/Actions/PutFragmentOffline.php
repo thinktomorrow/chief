@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentPutOffline;
-use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 class PutFragmentOffline
@@ -21,7 +20,9 @@ class PutFragmentOffline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        if($fragmentable->fragmentModel()->isOffline()) return;
+        if($fragmentable->fragmentModel()->isOffline()) {
+            return;
+        }
 
         $fragmentable->fragmentModel()->setOffline();
         $fragmentable->fragmentModel()->save();

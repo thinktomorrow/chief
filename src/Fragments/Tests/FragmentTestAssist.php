@@ -3,17 +3,16 @@
 namespace Thinktomorrow\Chief\Fragments\Tests;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\FragmentsRenderer;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -58,7 +57,7 @@ class FragmentTestAssist
     {
         $fragmentKey = $fragmentClass::resourceKey();
 
-        if($register && !app(Registry::class)->exists($fragmentKey)) {
+        if($register && ! app(Registry::class)->exists($fragmentKey)) {
             chiefRegister()->fragment($fragmentClass);
         }
 
@@ -91,50 +90,50 @@ class FragmentTestAssist
     }
 
 
-//
-//
-//    public static function registerAndCreateFragment(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = [], string $locale = 'nl'): SnippetStub
-//    {
-//        if ($withSetup) {
-//            chiefRegister()->fragment(SnippetStub::class);
-//        }
-//
-//        $context = static::findOrCreateContext($owner, $locale);
-//
-//        return static::createAndAttachFragment(SnippetStub::resourceKey(), $context->id, $order, $values);
-//    }
-//
-//    public static function setUpAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = [], string $locale = 'nl'): SnippetStub
-//    {
-//        if ($withSetup) {
-//            chiefRegister()->fragment(SnippetStub::class);
-//        }
-//
-//        $context = static::findOrCreateContext($owner, $locale);
-//
-//        return static::createAndAttachFragment(SnippetStub::resourceKey(), $context->id, $order, $values);
-//    }
-//
-//    public static function setUpAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true, string $locale = 'nl'): Hero
-//    {
-//        if ($withSetup) {
-//            chiefRegister()->fragment(Hero::class);
-//        }
-//
-//        $context = static::findOrCreateContext($owner, $locale);
-//
-//        return static::createAndAttachFragment(Hero::resourceKey(), $context->id, $order);
-//    }
+    //
+    //
+    //    public static function registerAndCreateFragment(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = [], string $locale = 'nl'): SnippetStub
+    //    {
+    //        if ($withSetup) {
+    //            chiefRegister()->fragment(SnippetStub::class);
+    //        }
+    //
+    //        $context = static::findOrCreateContext($owner, $locale);
+    //
+    //        return static::createAndAttachFragment(SnippetStub::resourceKey(), $context->id, $order, $values);
+    //    }
+    //
+    //    public static function setUpAndCreateSnippet(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = [], string $locale = 'nl'): SnippetStub
+    //    {
+    //        if ($withSetup) {
+    //            chiefRegister()->fragment(SnippetStub::class);
+    //        }
+    //
+    //        $context = static::findOrCreateContext($owner, $locale);
+    //
+    //        return static::createAndAttachFragment(SnippetStub::resourceKey(), $context->id, $order, $values);
+    //    }
+    //
+    //    public static function setUpAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true, string $locale = 'nl'): Hero
+    //    {
+    //        if ($withSetup) {
+    //            chiefRegister()->fragment(Hero::class);
+    //        }
+    //
+    //        $context = static::findOrCreateContext($owner, $locale);
+    //
+    //        return static::createAndAttachFragment(Hero::resourceKey(), $context->id, $order);
+    //    }
 
 
-//    public static function setUpAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true, string $locale = 'nl'): Quote
-//    {
-//        if ($withSetup) {
-//            chiefRegister()->resource(Quote::class, FragmentManager::class);
-//        }
-//
-//        $context = app(ContextRepository::class)->findByOwner($owner, $locale) ?: app(ContextRepository::class)->createForOwner($owner, $locale);
-//
-//        return static::createAndAttachFragment(Quote::resourceKey(), $context->id, $order, $values);
-//    }
+    //    public static function setUpAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true, string $locale = 'nl'): Quote
+    //    {
+    //        if ($withSetup) {
+    //            chiefRegister()->resource(Quote::class, FragmentManager::class);
+    //        }
+    //
+    //        $context = app(ContextRepository::class)->findByOwner($owner, $locale) ?: app(ContextRepository::class)->createForOwner($owner, $locale);
+    //
+    //        return static::createAndAttachFragment(Quote::resourceKey(), $context->id, $order, $values);
+    //    }
 }
