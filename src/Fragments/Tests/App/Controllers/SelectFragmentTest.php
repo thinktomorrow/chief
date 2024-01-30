@@ -20,7 +20,7 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_new()
     {
-       $context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
 
         $this->asAdmin()
             ->get(route('chief::fragments.new', [$context->id]))
@@ -35,7 +35,7 @@ class SelectFragmentTest extends ChiefTestCase
 
         $this->asAdmin()
             ->get(route('chief::fragments.existing', [$context2->id]))
-            ->assertViewHas('sharedFragments', fn($sharedFragments) => count($sharedFragments) == 1)
+            ->assertViewHas('sharedFragments', fn ($sharedFragments) => count($sharedFragments) == 1)
             ->assertStatus(200);
     }
 
@@ -45,7 +45,7 @@ class SelectFragmentTest extends ChiefTestCase
 
         $this->asAdmin()
             ->get(route('chief::fragments.existing', [$context->id]))
-            ->assertViewHas('sharedFragments', fn($sharedFragments) => count($sharedFragments) == 0)
+            ->assertViewHas('sharedFragments', fn ($sharedFragments) => count($sharedFragments) == 0)
             ->assertStatus(200);
     }
 
@@ -55,7 +55,7 @@ class SelectFragmentTest extends ChiefTestCase
 
         $this->asAdmin()
             ->get(route('chief::fragments.existing', [$context->id]))
-            ->assertViewHas('sharedFragments', fn($sharedFragments) => count($sharedFragments) == 0)
+            ->assertViewHas('sharedFragments', fn ($sharedFragments) => count($sharedFragments) == 0)
             ->assertStatus(200);
     }
 }
