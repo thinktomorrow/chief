@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
-use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 

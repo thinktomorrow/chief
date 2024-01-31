@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentsReordered;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -56,7 +55,7 @@ class ReorderFragmentsTest extends ChiefTestCase
         app(ReorderFragments::class)->handle($context->id, [
             300,
             $snippet1->getFragmentId(),
-            200
+            200,
         ]);
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'nl');

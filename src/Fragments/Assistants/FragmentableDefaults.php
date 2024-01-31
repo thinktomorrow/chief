@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;

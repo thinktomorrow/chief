@@ -16,7 +16,9 @@ class ReorderFragments
 
     public function handle(string $contextId, array $indices): void
     {
-        if(count($indices) < 1) return;
+        if(count($indices) < 1) {
+            return;
+        }
 
         $this->sortModels->handle('context_fragment_lookup', $indices, 'order', 'fragment_id', false, 'context_id = "' . $contextId . '"');
 

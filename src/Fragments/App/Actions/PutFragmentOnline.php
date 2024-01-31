@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentPutOnline;
-use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 class PutFragmentOnline
@@ -21,7 +20,9 @@ class PutFragmentOnline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        if($fragmentable->fragmentModel()->isOnline()) return;
+        if($fragmentable->fragmentModel()->isOnline()) {
+            return;
+        }
 
         $fragmentable->fragmentModel()->setOnline();
         $fragmentable->fragmentModel()->save();
