@@ -65,11 +65,16 @@ class FragmentTestAssist
         return (new $fragmentClass)->setFragmentModel(FragmentModel::find(app(CreateFragment::class)->handle($fragmentKey, $data)));
     }
 
+    public static function attachFragment($contextId, $fragmentId, $order = 0, array $data = []): void
+    {
+        app(AttachFragment::class)->handle($contextId, $fragmentId, $order, $data);
+    }
+
     public static function createAndAttachFragment(string $fragmentClass, $contextId, $order = 0, array $data = [], bool $register = true): Fragmentable
     {
         $model = static::createFragment($fragmentClass, $data, $register);
 
-        app(AttachFragment::class)->handle($contextId, $model->fragmentModel()->id, $order, []);
+        static::attachFragment($contextId, $model->getFragmentId(), $order, []);
 
         return $model;
     }
@@ -78,9 +83,7 @@ class FragmentTestAssist
     {
         $context = static::findOrCreateContext($owner, $locale);
 
-        $model = static::createFragment($fragmentClass, $data, $register);
-
-        app(AttachFragment::class)->handle($context->id, $model->fragmentModel()->id, $order, []);
+        $model = static::createAndAttachFragment($fragmentClass, $context->id, $order, $data, $register);
 
         return [$context, $model];
     }

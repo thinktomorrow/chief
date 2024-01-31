@@ -14,29 +14,29 @@ class DeleteFragment
     private FragmentRepository $fragmentRepository;
     private GetOwningModels $getOwningModels;
     private DetachAsset $detachAsset;
-    private DetachFragment $detachFragment;
 
-    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels, DetachFragment $detachFragment, DetachAsset $detachAsset)
+    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels, DetachAsset $detachAsset)
     {
         $this->fragmentRepository = $fragmentRepository;
         $this->getOwningModels = $getOwningModels;
         $this->detachAsset = $detachAsset;
-        $this->detachFragment = $detachFragment;
     }
 
     /**
      * Delete the fragment from this given owner. If this fragment is not
      * shared by other owners, it will be deleted entirely.
      */
-    public function handle(FragmentModel $fragmentModel): void
+    public function handle(string $fragmentId): void
     {
+        $fragment = $this->fragmentRepository->find($fragmentId);
+
         try {
-            $this->detachAsset->handleAll($fragmentModel);
+            $this->detachAsset->handleAll($fragment->fragmentModel());
         } catch (\Exception $e) {
             report($e);
         }
 
-        $fragmentModel->delete();
+        $fragment->fragmentModel()->delete();
     }
 
     public function onFragmentDetached(FragmentDetached $event)

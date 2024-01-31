@@ -25,11 +25,10 @@ class DetachFragmentTest extends ChiefTestCase
 
     public function test_it_can_detach_fragment_from_context()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
-        $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
+        [$context, $fragment] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'fr');
 
-        $context2 = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'en']);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
+        $context2 = FragmentTestAssist::findOrCreateContext($this->owner, 'en');
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
         FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
         FragmentTestAssist::assertFragmentCount($this->owner, 'en', 1);
@@ -44,7 +43,7 @@ class DetachFragmentTest extends ChiefTestCase
 
     public function test_it_deletes_fragment_when_after_detach_fragment_is_no_longer_used()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
@@ -58,7 +57,7 @@ class DetachFragmentTest extends ChiefTestCase
 
     public function test_when_detaching_shared_fragment_it_is_no_longer_considered_shared_when_used_by_one_context()
     {
-        $context = ContextModel::create(['owner_type' => $this->owner->getMorphClass(), 'owner_id' => $this->owner->id, 'locale' => 'fr']);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $owner2 = ArticlePage::create();

@@ -5,24 +5,25 @@ namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 
 final class DeleteContext
 {
+    private ContextRepository $contextRepository;
     private DetachFragment $detachFragment;
 
-    public function __construct(DetachFragment $detachFragment)
+    public function __construct(ContextRepository $contextRepository, DetachFragment $detachFragment)
     {
+        $this->contextRepository = $contextRepository;
         $this->detachFragment = $detachFragment;
     }
 
-    public function handle(Model $owner): void
+    public function handle(string $contextId): void
     {
-        if (! $context = ContextModel::ownedBy($owner)) {
-            return;
-        }
+        $context = $this->contextRepository->find($contextId);
 
         foreach ($context->fragments()->get() as $fragmentModel) {
-            $this->detachFragment->handle($owner, $fragmentModel);
+            $this->detachFragment->handle($contextId, $fragmentModel->id);
         }
 
         $context->delete();
