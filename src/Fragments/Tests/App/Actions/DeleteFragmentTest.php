@@ -3,10 +3,7 @@
 namespace Tests\App\Actions;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -43,7 +40,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $context2 = FragmentTestAssist::findOrCreateContext($this->owner, 'en');
         FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
-        $this->assertDatabaseCount( FragmentModel::class, 1);
+        $this->assertDatabaseCount(FragmentModel::class, 1);
         FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
         FragmentTestAssist::assertFragmentCount($this->owner, 'en', 1);
 

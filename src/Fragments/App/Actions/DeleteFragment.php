@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Fragments\App\Actions;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 class DeleteFragment

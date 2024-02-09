@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 
 final class DeleteContext
