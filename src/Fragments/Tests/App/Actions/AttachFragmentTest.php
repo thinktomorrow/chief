@@ -5,10 +5,13 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\UnshareFragment;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -95,5 +98,16 @@ class AttachFragmentTest extends ChiefTestCase
 
         $this->assertEquals(0, $fragments[0]->fragmentModel()->pivot->order);
         $this->assertEquals(1, $fragments[1]->fragmentModel()->pivot->order);
+    }
+
+    public function test_attaching_fragment_on_contexts_owned_by_same_owner_is_not_considered_shared()
+    {
+        [$context, $fragment] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'fr');
+
+        $context2 = FragmentTestAssist::findOrCreateContext($this->owner, 'en');
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
+
+        $this->assertEquals(1, FragmentModel::count());
+        $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
     }
 }

@@ -25,19 +25,6 @@ class UpdateFragmentMetadata
         $this->updateSharedState($event->fragmentId);
     }
 
-    private function updateSharedState(string $fragmentId): void
-    {
-        if (! $this->fragmentRepository->exists($fragmentId)) {
-            return;
-        }
-
-        $shared = $this->getOwningModels->getCount($fragmentId) > 1;
-
-        $fragmentable = $this->fragmentRepository->find($fragmentId);
-        $fragmentable->fragmentModel()->setMeta('shared', $shared);
-        $fragmentable->fragmentModel()->save();
-    }
-
     public function onFragmentDuplicated(FragmentDuplicated $event): void
     {
         $this->updateSharedState($event->fragmentId);
@@ -46,5 +33,21 @@ class UpdateFragmentMetadata
     public function onFragmentDetached(FragmentDetached $event): void
     {
         $this->updateSharedState($event->fragmentId);
+    }
+
+    private function updateSharedState(string $fragmentId): void
+    {
+        // Which can happen when after detaching the fragment from its last context, it was deleted.
+        if (! $this->fragmentRepository->exists($fragmentId)) {
+            return;
+        }
+
+        // We consider shared state only when the fragment belongs to two or more owners. If the fragment belongs
+        // to multiple contexts of the same owner, it is not shared.
+        $shared = $this->getOwningModels->getCount($fragmentId) > 1;
+
+        $fragmentable = $this->fragmentRepository->find($fragmentId);
+        $fragmentable->fragmentModel()->setMeta('shared', $shared);
+        $fragmentable->fragmentModel()->save();
     }
 }

@@ -3,39 +3,35 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
 final class UnshareFragment
 {
     private DuplicateFragment $duplicateFragment;
     private DetachFragment $detachFragment;
+    private FragmentRepository $fragmentRepository;
+    private ContextRepository $contextRepository;
 
-    public function __construct(DuplicateFragment $duplicateFragment, DetachFragment $detachFragment)
+    public function __construct(ContextRepository $contextRepository, FragmentRepository $fragmentRepository, DuplicateFragment $duplicateFragment, DetachFragment $detachFragment)
     {
         $this->duplicateFragment = $duplicateFragment;
         $this->detachFragment = $detachFragment;
+        $this->fragmentRepository = $fragmentRepository;
+        $this->contextRepository = $contextRepository;
     }
 
-    public function handle(Model $ownerModel, FragmentModel $fragmentModel): void
+    public function handle(string $contextId, string $fragmentId): void
     {
-        $order = $this->findFragmentOrderInContext($ownerModel, $fragmentModel);
+        $context = $this->contextRepository->find($contextId);
+        $fragment = $this->fragmentRepository->findByContext($fragmentId, $contextId);
+
+        $order = $fragment->fragmentModel()->pivot->order;
 
         // Duplicate the shared fragment first
-        $this->duplicateFragment->handle($ownerModel, $fragmentModel, $order, true);
+        $this->duplicateFragment->handle($context, $context, $fragment->fragmentModel(), $order, true);
 
         // Now remove the shared version from current context
-        $this->detachFragment->handle($ownerModel, $fragmentModel);
-    }
-
-    private function findFragmentOrderInContext(Model $owner, FragmentModel $fragmentModel): int
-    {
-        $context = ContextModel::ownedBy($owner);
-
-        // We look up the fragment from within the context so we have the order value on the pivot table available
-        $fragmentModel = $context->findFragmentModel($fragmentModel->id);
-
-        return (int)$fragmentModel->pivot->order ?? 0;
+        $this->detachFragment->handle($contextId, $fragmentId);
     }
 }
