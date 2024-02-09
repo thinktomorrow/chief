@@ -12,9 +12,11 @@
     </a>
 
     <div class="flex items-start gap-2 shrink-0">
-        <x-chief-assets::copy-url-button>
-            {{ $previewFile->getUrl() }}
-        </x-chief-assets::copy-url-button>
+        <x-chief::copy-button :content="$previewFile->getUrl()" successContent="Link naar bestand gekopieerd!">
+            <x-chief::link>
+                <svg><use xlink:href="#icon-link"></use></svg>
+            </x-chief::link>
+        </x-chief::copy-button>
 
         <a
             href="{{ $previewFile->getUrl() }}"
