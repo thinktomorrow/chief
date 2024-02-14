@@ -14,8 +14,9 @@
                 <form data-form-submit-on-change method="GET" class="row-start-start gutter-1.5">
                     @foreach ($filters as $filter)
                         <div @class([
-                            'w-full sm:w-1/2 xl:w-1/3' => !$loop->last,
-                            'hidden' => $filter->getType() == 'hidden'
+                            'w-full',
+                            'sm:w-1/2 xl:w-1/3' => $filter->getType() != 'tags',
+                            'hidden' => $filter->getType() == 'hidden',
                         ])>
                             {!! $filter->render() !!}
                         </div>
