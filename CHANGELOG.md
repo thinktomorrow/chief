@@ -9,6 +9,7 @@ principles.
 -   Added: Copy bookmark button in fragment list
 -   Changed: Links window urls are now opening in the same window by default.
 -   Removed: copy-to-clipboard script in favor of copy-button component
+-   Fixed: last table index header filter had no defined width
 
 ## 0.8.12 - 2024-01-23
 
