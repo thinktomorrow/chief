@@ -50,17 +50,27 @@ class FileFieldChooseComponent extends Component
 
     public function selectAsset($assetId)
     {
-        if (! $this->allowMultiple) {
+        if (!$this->allowMultiple) {
             $this->assetIds = [$assetId];
             $this->selectedPreviewFiles = [$assetId => PreviewFile::fromAsset(Asset::find($assetId))];
 
             return;
         }
 
-        if (! in_array($assetId, $this->assetIds) && ! in_array($assetId, $this->existingAssetIds)) {
+        if (!in_array($assetId, $this->assetIds) && !in_array($assetId, $this->existingAssetIds)) {
             $this->assetIds[] = $assetId;
             $this->selectedPreviewFiles[$assetId] = PreviewFile::fromAsset(Asset::find($assetId));
+
+            return;
         }
+
+        $this->deselectAsset($assetId);
+    }
+
+    public function deselectAsset($assetId)
+    {
+        $this->assetIds = array_diff($this->assetIds, [$assetId]);
+        unset($this->selectedPreviewFiles[$assetId]);
     }
 
     private function syncPreviewFiles()
