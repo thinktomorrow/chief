@@ -6,11 +6,12 @@ principles.
 
 ## Unreleased
 
+-   Fixed: The same asset can now be attached to the same model in different locales. 
+-   Fixed: last table index header filter had no defined width.
+-   Added: In media gallery clicking on a media in current selection now deselects the media asset.
 -   Added: Copy bookmark button in fragment list.
 -   Changed: Links window urls are now opening in the same window by default.
 -   Removed: copy-to-clipboard script in favor of copy-button component.
--   Fixed: last table index header filter had no defined width.
--   Fixed: FileFieldChooseComponent deselecting asset if clicked twice.
 
 ## 0.8.12 - 2024-01-23
 
