@@ -20,17 +20,19 @@
                     <span class="label label-xs label-warning"> Gedeeld fragment </span>
                 @endif
 
-                <x-chief::copy-button
-                    :content="'#'.$model->getBookmark()"
-                    successContent="#{{ $model->getBookmark() }} gekopieerd!"
-                    class="my-0.5 leading-5"
-                >
-                    <x-chief::link class="!text-grey-400 hover:!text-primary-500">
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
-                        </svg>
-                    </x-chief::link>
-                </x-chief::copy-button>
+                @if($model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+                    <x-chief::copy-button
+                        :content="'#'.$model->getBookmark()"
+                        successContent="#{{ $model->getBookmark() }} gekopieerd!"
+                        class="my-0.5 leading-5"
+                    >
+                        <x-chief::link class="!text-grey-400 hover:!text-primary-500">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
+                            </svg>
+                        </x-chief::link>
+                    </x-chief::copy-button>
+                @endif
             </div>
 
             @adminCan('fragment-edit')
