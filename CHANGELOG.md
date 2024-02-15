@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 0.8.13 - 2024-02-15
+
 -   Fixed: The same asset can now be attached to the same model in different locales. 
 -   Fixed: last table index header filter had no defined width.
 -   Added: In media gallery clicking on a media in current selection now deselects the media asset.
