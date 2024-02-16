@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\TableNew\UI\Livewire;
 
-use Laravel\Prompts\Table;
 use Thinktomorrow\Chief\TableNew\UI\Helpers\TableColumn;
 
 class ArticleListing extends Listing
