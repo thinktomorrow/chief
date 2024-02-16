@@ -14,6 +14,8 @@ module.exports = {
         'src/Plugins/**/resources/**/*.blade.php',
         'src/Plugins/HotSpots/views/**/*.blade.php',
         'src/Assets/App/resources/**/*.blade.php',
+
+        'src/TableNew/**/*.blade.php',
     ],
     theme: {
         screens: {
