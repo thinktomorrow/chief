@@ -113,6 +113,11 @@ trait PageResourceDefault
 
     public function getIndexView(): View
     {
+        // TODO: temp
+        if ($this->getIndexViewType() == 'listing') {
+            return view('chief-table-new::index');
+        }
+
         if ($this->getIndexViewType() == 'table') {
             return ($this instanceof Nestable)
                 ? view('chief-table::nestable.index')

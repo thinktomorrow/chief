@@ -93,6 +93,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
         (new TableServiceProvider($this->app))->boot();
+        (new \Thinktomorrow\Chief\TableNew\TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
