@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "/js/main.js": "/js/main.js?id=d702e5dcdd783c6da9d05e50047192b0",
     "/css/main.css": "/css/main.css?id=d205eb508140b4108fcc1cf7d40e74cd",
+=======
+    "/js/main.js": "/js/main.js?id=04159f10ec873ceadc2f704ecc4cb254",
+    "/css/main.css": "/css/main.css?id=dcac80aae3950b864b81dcf017e6ea06",
+>>>>>>> 1145efccf (Change: TableNew index nested icon padding based on level)
     "/img/favicon/android-chrome-192x192.png": "/img/favicon/android-chrome-192x192.png?id=e71d5f22c172b392b72bde45be167362",
     "/img/favicon/android-chrome-512x512.png": "/img/favicon/android-chrome-512x512.png?id=b686090546245688bbcc914a32d1cf60",
     "/img/favicon/apple-touch-icon.png": "/img/favicon/apple-touch-icon.png?id=dabf8d98ce4dc11162135d4b8a03c3f3",
