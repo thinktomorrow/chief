@@ -48,15 +48,15 @@ class Listing extends Component
 
     public function getTableRows(): Paginator
     {
-//
-//
-//        if ($this->sort == 'created_at_asc') {
-//            $builder = $builder->orderBy('created_at', 'ASC');
-//        } elseif ($this->sort == 'created_at_desc' || ! $this->sort) {
-//            $builder = $builder->orderBy('created_at', 'DESC');
-//        }
+        //
+        //
+        //        if ($this->sort == 'created_at_asc') {
+        //            $builder = $builder->orderBy('created_at', 'ASC');
+        //        } elseif ($this->sort == 'created_at_desc' || ! $this->sort) {
+        //            $builder = $builder->orderBy('created_at', 'DESC');
+        //        }
 
-//        return $builder->paginate(24);
+        //        return $builder->paginate(24);
     }
 
     public function getFilters(): array
