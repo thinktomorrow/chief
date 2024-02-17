@@ -1,5 +1,4 @@
 .form-input-checkbox {
-    margin-top: 2px;
     @apply appearance-none relative w-5 h-5 rounded leading-none;
 
     &:before {
