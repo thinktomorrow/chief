@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
 use Thinktomorrow\Chief\TableNew\Filters\Presets\InputFilter;
+use Thinktomorrow\Chief\TableNew\Filters\Presets\SearchFilter;
 use Thinktomorrow\Chief\TableNew\Filters\Presets\SelectFilter;
 
 class FilterPresets
@@ -37,9 +38,9 @@ class FilterPresets
      * Search on a column, relation column or dynamic key.
      * Relation column can be searched by via relation.column
      */
-    public static function attribute(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $label = 'Titel', string $dynamicColumn = 'values'): Filter
+    public static function searchQuery(string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): callable
     {
-        return InputFilter::make($name, function ($query, $value) use ($dynamicKeys, $columns, $dynamicColumn) {
+        return function ($query, $value) use ($dynamicKeys, $columns, $dynamicColumn) {
             return $query->where(function ($builder) use ($value, $dynamicKeys, $columns, $dynamicColumn) {
 
                 // Extract relation searches
@@ -58,7 +59,25 @@ class FilterPresets
                 // Columns or dynamic keys
                 return static::queryColumnsOrDynamicAttributes($builder, $value, $columns, $dynamicKeys, $dynamicColumn);
             });
-        })->label($label);
+        };
+    }
+
+    /**
+     * Search on a column, relation column or dynamic key.
+     * Relation column can be searched by via relation.column
+     */
+    public static function input(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
+    {
+        return InputFilter::make($name, static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
+    }
+
+    /**
+     * Search on a column, relation column or dynamic key.
+     * Relation column can be searched by via relation.column
+     */
+    public static function search(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
+    {
+        return SearchFilter::make($name, static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
     }
 
     private static function queryColumnsOrDynamicAttributes(Builder $builder, $value, $columns, $dynamicKeys, $dynamicColumn): Builder
@@ -73,42 +92,5 @@ class FilterPresets
         }
 
         return $builder;
-    }
-
-    /**
-     * @deprecated use attribute() search instead for an extensive usage range.
-     */
-    public static function column(string $name, string|array $columns, ?string $label = null): Filter
-    {
-        return InputFilter::make($name, function ($query, $value) use ($columns) {
-            return $query->where(function ($builder) use ($value, $columns) {
-                foreach ($columns as $column) {
-                    $builder->orWhere($column, 'LIKE', '%' . $value . '%');
-                }
-
-                return $builder;
-            });
-        })->label($label ?? $name);
-    }
-
-    /**
-     * @deprecated use attribute() search instead for an extensive usage range.
-     */
-    public static function text(string $queryParameter, array $dynamicColumns = ['title'], array $astrotomicColumns = [], string $label = 'Titel', string $jsonColumn = 'values'): Filter
-    {
-        return InputFilter::make($queryParameter, function ($query, $value) use ($dynamicColumns, $astrotomicColumns, $jsonColumn) {
-            return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {
-                foreach ($dynamicColumns as $column) {
-                    $jsonColumnParts = explode('.', $jsonColumn);
-                    $builder->orWhereRaw('LOWER(json_extract(`' . implode('`.`', $jsonColumnParts) . '`, "$.' . $column . '")) LIKE ?', '%' . trim(strtolower($value)) . '%');
-                }
-
-                foreach ($astrotomicColumns as $column) {
-                    $builder->orWhereTranslationLike($column, '%' . $value . '%');
-                }
-
-                return $builder;
-            });
-        })->label($label);
     }
 }
