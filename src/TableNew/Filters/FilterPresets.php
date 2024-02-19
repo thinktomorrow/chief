@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\TableNew\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\InputFilter;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\SelectFilter;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
+use Thinktomorrow\Chief\TableNew\Filters\Presets\InputFilter;
+use Thinktomorrow\Chief\TableNew\Filters\Presets\SelectFilter;
 
 class FilterPresets
 {

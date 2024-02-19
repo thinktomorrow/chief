@@ -8,7 +8,6 @@ use Closure;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\TableNew\Filters\AbstractFilter;
 use Thinktomorrow\Chief\TableNew\Filters\Filter;
-use Thinktomorrow\Chief\TableNew\Filters\FilterType;
 
 class SelectFilter extends AbstractFilter implements Filter
 {
