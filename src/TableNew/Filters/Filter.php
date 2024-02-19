@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\TableNew\Filters;
 
 use Closure;
-use Illuminate\Http\Request;
 
 interface Filter
 {
