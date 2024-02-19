@@ -11,9 +11,17 @@
 
             <div class="flex justify-between px-4 py-4 form-light">
 
-                @foreach($this->getFilters() as $filter)
-                    {!! $filter->render() !!}
-                @endforeach
+                @if($showFilters)
+                    <span wire:click="closeFilters">Sluit</span>
+
+                    <div>
+                        @foreach($this->getFilters() as $filter)
+                            {!! $filter->render() !!}
+                        @endforeach
+                    </div>
+                @else
+                    <span wire:click="$set('showFilters', true)">Filter</span>
+                @endif
 
                 <button type="button"
                         class="inline-flex gap-2 py-2 pl-3 pr-2 font-medium leading-5 rounded-lg shadow ring-1 ring-grey-200 text-grey-700">

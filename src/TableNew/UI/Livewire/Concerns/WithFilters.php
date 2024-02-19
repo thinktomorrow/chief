@@ -10,8 +10,12 @@ trait WithFilters
     // Active filters
     public array $filters = [];
 
+    public bool $showFilters = false;
+
     private function applyDefaultFilters()
     {
+        $this->clearFilters();
+
         foreach($this->getFilters() as $filter) {
             // Active either by present in url or set to active: active(), activeIfNone()
             if($defaultValue = $filter->getValue()) {
@@ -43,6 +47,19 @@ trait WithFilters
     public function getFilters(): iterable
     {
         return [];
+    }
+
+    public function closeFilters()
+    {
+        $this->showFilters = false;
+
+        $this->clearFilters();
+        $this->applyDefaultFilters();
+    }
+
+    private function clearFilters()
+    {
+        $this->filters = [];
     }
 
     private function applyFilters(Builder $builder): void
