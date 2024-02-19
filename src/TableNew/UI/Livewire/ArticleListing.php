@@ -30,7 +30,7 @@ class ArticleListing extends Listing
     {
         // TODO: listen to request input for default as well
         return [
-            FilterPresets::attribute('title', [], ['title'])->value('merk'),
+            FilterPresets::attribute('title', [], ['title']),
             FilterPresets::state(),
         ];
     }
