@@ -61,6 +61,8 @@ trait IndexAssistant
      */
     public function index(Request $request)
     {
+        return $this->resource->getIndexView();
+
         $this->guard('index');
 
         app(VisitedUrl::class)->add(request()->fullUrl());
