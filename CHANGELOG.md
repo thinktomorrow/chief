@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+-   Fixed: sorted order in index was trumped by published_at sorting
+
 ## 0.8.13 - 2024-02-15
 
 -   Fixed: The same asset can now be attached to the same model in different locales. 

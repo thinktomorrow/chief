@@ -27,7 +27,7 @@ final class PageManager implements Manager
     use RepeatFieldAssistant;
 
     use ArchiveAssistant;
-    use StateAssistant;
     use SortAssistant;
+    use StateAssistant;
     use DuplicateAssistant;
 }
