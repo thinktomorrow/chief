@@ -18,7 +18,7 @@
 {{--    @endif--}}
 
     <x-chief::input.text
-        wire:model.live="filters.{{ $name }}"
+        wire:model.live.debounce.300ms="filters.{{ $name }}"
         id="{{ $id }}"
 {{--        name="{{ $name }}"--}}
 {{--        placeholder="{{ $placeholder }}"--}}
