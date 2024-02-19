@@ -13,7 +13,7 @@
     $level = 0;
 @endphp
 
-<x-chief::page.layout>
+<x-chief::page.template>
 
     <livewire:is :component="$listingComponent" />
 
@@ -147,4 +147,4 @@
 {{--            </div>--}}
 {{--        </div>--}}
 {{--    </div>--}}
-</x-chief::page.layout>
+</x-chief::page.template>
