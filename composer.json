@@ -16,7 +16,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^10.21",
         "laravel/ui": "^4.2",
-        "livewire/livewire": "^3.0",
+        "livewire/livewire": "^3.4.4",
         "maennchen/zipstream-php": "^2.4",
         "ramsey/uuid": "^4.7.3",
         "spatie/laravel-activitylog": "^4.7.3",

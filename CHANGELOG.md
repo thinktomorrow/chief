@@ -5,7 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
-
+-   Fixed: dependency livewire fixed to 3.4.4 because of rescan missing since 3.4.5
 -   Fixed: sorted order in index was trumped by published_at sorting
 
 ## 0.8.13 - 2024-02-15
