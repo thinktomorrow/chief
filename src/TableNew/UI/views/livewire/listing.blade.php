@@ -1,3 +1,7 @@
+@php
+    $results = $this->getModels();
+@endphp
+
 <div>
 
     <div class="flex justify-center p-16">
@@ -8,6 +12,10 @@
             ROWACTIES
             FILTER
             SORT --}}
+
+            <div>
+                count: {{ $results->count() }}
+            </div>
 
             <div class="flex justify-between px-4 py-4 form-light">
 
@@ -59,7 +67,7 @@
                 </thead>
 
                 <tbody class="divide-y divide-grey-200">
-                @foreach($this->getModels() as $model)
+                @foreach($results as $model)
                     @php
                         $columns = $this->getRow($model);
                     @endphp
@@ -128,7 +136,7 @@
 
             <div class="body-dark">
                 <div class="py-3 pl-4 pr-4 text-left">
-                    Pagination ...
+                    {{ $results->links() }}
                 </div>
             </div>
         </div>
