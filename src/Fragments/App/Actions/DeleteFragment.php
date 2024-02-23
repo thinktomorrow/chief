@@ -40,8 +40,6 @@ class DeleteFragment
 
     public function onFragmentDetached(FragmentDetached $event)
     {
-        $fragment = $this->fragmentRepository->find($event->fragmentId);
-
         // By now the fragment is removed from the desired owning context. Here we check
         // that if the fragment is still shared (used by another context) then leave britney alone!
         // If the fragment is no longer shared, it will be deleted entirely.
@@ -49,6 +47,6 @@ class DeleteFragment
             return;
         }
 
-        $this->handle($fragment->fragmentModel());
+        $this->handle($event->fragmentId);
     }
 }

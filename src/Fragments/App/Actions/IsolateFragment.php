@@ -6,7 +6,11 @@ namespace Thinktomorrow\Chief\Fragments\App\Actions;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 
-final class UnshareFragment
+/**
+ * Takes a shared fragment and duplicates it as
+ * an isolated fragment for the given context
+ */
+final class IsolateFragment
 {
     private DuplicateFragment $duplicateFragment;
     private DetachFragment $detachFragment;

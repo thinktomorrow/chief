@@ -29,7 +29,6 @@ class DetachSharedFragmentTest extends ChiefTestCase
     /** @test */
     public function detach_a_shared_fragment()
     {
-        $this->disableExceptionHandling();
         // Assert it is a shared fragment
         $this->assertEquals($this->firstFragment($this->owner)->fragmentModel()->id, $this->firstFragment($this->owner2)->fragmentModel()->id);
 

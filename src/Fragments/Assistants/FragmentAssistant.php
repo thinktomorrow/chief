@@ -19,7 +19,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
-use Thinktomorrow\Chief\Fragments\App\Actions\UnshareFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyDetached;
@@ -411,7 +411,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
-        app(UnshareFragment::class)->handle($ownerModel, $fragmentable->fragmentModel());
+        app(IsolateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel());
 
         return response()->json([
             'message' => 'fragment [' . $fragmentModelId . '] detached as shared and now available as isolated fragment',
