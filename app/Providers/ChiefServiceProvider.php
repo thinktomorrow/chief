@@ -235,6 +235,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->bootChiefAuth();
 
         Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
+        Relation::morphMap(['chiefuser' => User::class]);
 
         Blade::directive('fragments', function () {
             return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';

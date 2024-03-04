@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Added: chiefuser as key in db relation morphMap to Chief User model.
 
 ## 0.8.14 - 2024-02-20
 -   Fixed: dependency livewire fixed to 3.4.4 because of rescan missing since 3.4.5
