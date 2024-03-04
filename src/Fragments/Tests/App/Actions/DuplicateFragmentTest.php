@@ -6,7 +6,6 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
@@ -43,7 +42,10 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertCount(0, $targetContext->fragments()->get());
 
         app(DuplicateFragment::class)->handle(
-            $this->context, $targetContext, $this->fragment->fragmentModel(), 1
+            $this->context,
+            $targetContext,
+            $this->fragment->fragmentModel(),
+            1
         );
 
         $this->assertEquals(2, FragmentModel::count());
@@ -59,7 +61,10 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertCount(1, $this->context->fragments()->get());
 
         app(DuplicateFragment::class)->handle(
-            $this->context, $targetContext, $this->fragment->fragmentModel(), 1
+            $this->context,
+            $targetContext,
+            $this->fragment->fragmentModel(),
+            1
         );
 
         $this->assertEquals(2, FragmentModel::count());
@@ -77,7 +82,10 @@ class DuplicateFragmentTest extends ChiefTestCase
         $targetContext = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
 
         app(DuplicateFragment::class)->handle(
-            $this->context, $targetContext, $this->fragment->fragmentModel(), 1
+            $this->context,
+            $targetContext,
+            $this->fragment->fragmentModel(),
+            1
         );
 
         $originalFragmentAsset = $this->context->fragments->first()->assetRelation()->first();
@@ -101,7 +109,7 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertEquals(3, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
 
-        app(DuplicateFragment::class)->handle($this->context, $targetContext, $this->fragment->fragmentModel(),1);
+        app(DuplicateFragment::class)->handle($this->context, $targetContext, $this->fragment->fragmentModel(), 1);
 
         $this->assertEquals(4, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());

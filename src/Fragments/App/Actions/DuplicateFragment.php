@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyAdded;
