@@ -5,9 +5,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
-- Fixed: Some file metadata was missing in file window.  
-- Added: chiefuser as key in db relation morphMap to Chief User model.
-- Added: Tags to eager loading on the index results
+-   Upgraded `livewire/livewire` dependency to `3.4.6`.
+-   Fixed: Some file metadata was missing in file window.  
+-   Fixed: Livewire upgrade to 3.4.6
+-   Added: chiefuser as key in db relation morphMap to Chief User model.
+-   Added: Tags to eager loading on the index results.
 
 ## 0.8.14 - 2024-02-20
 -   Fixed: dependency livewire fixed to 3.4.4 because of rescan missing since 3.4.5
