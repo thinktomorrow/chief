@@ -100,7 +100,7 @@ Form.prototype.refreshCallback = function () {
         new SelectFragment(this.el);
     }
 
-    window.Livewire.rescan(this.el);
+    // window.Livewire.rescan(this.el);
 
     // Trigger tab if any
     if (this.lastVisitedTabId) {

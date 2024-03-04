@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
@@ -105,6 +106,10 @@ trait IndexAssistant
 
         if ($this->managedModelClassInstance() instanceof Visitable) {
             $builder->with(['urls']);
+        }
+
+        if ($this->managedModelClassInstance() instanceof Taggable) {
+            $builder->with(['tags']);
         }
 
         if (! $pagination = $this->resource->getIndexPagination()) {
