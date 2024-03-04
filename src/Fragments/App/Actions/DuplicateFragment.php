@@ -30,14 +30,7 @@ class DuplicateFragment
 
     /**
      * Duplicate a fragment
-     *
-     * Nested fragments are also duplicated
-     *
-     * @param Model $targetModel
-     * @param FragmentModel $fragmentModel
-     * @param int $index
-     * @param bool $forceDuplicateSharedFragment
-     * @param int $level
+     * Nested fragments are duplicated as well
      * @throws FragmentAlreadyAdded
      */
     public function handle(ContextModel $sourceContext, ContextModel $targetContext, FragmentModel $fragmentModel, int $index, bool $forceDuplicateSharedFragment = false): void
