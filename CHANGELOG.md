@@ -7,7 +7,7 @@ principles.
 ## Unreleased
 -   Upgraded `livewire/livewire` dependency to `3.4.6`.
 -   Fixed: cancelling a file edit broke alpine when the dialog was reopened
--   Fixed: Storing localized values on an unsaved asset (commit: 0221d47ab)
+-   Fixed: Storing localized values on an unsaved asset https://github.com/thinktomorrow/chief/commit/0221d47ab
 -   Fixed: Now custom Asset fields are editable on an unsaved asset.
 -   Fixed: Livewire upgrade to 3.4.6
 -   Fixed: Clipboard script was loaded for file without link
