@@ -6,10 +6,11 @@ principles.
 
 ## Unreleased
 -   Upgraded `livewire/livewire` dependency to `3.4.6`.
--   Fixed: Some file metadata was missing in file window.  
+-   Fixed: cancelling a file edit broke alpine when the dialog was reopened
 -   Fixed: Livewire upgrade to 3.4.6
 -   Fixed: Clipboard script was loaded for file without link
 -   Fixed: Custom asset fields on fragment could not be saved.
+-   Fixed: Some file metadata (width, height) was missing in file window.  
 -   Added: chiefuser as key in db relation morphMap to Chief User model.
 -   Added: Tags to eager loading on the index results.
 
