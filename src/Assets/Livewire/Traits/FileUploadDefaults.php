@@ -20,7 +20,7 @@ trait FileUploadDefaults
      * by passing it to the PreviewFile along with the field upload component.
      * For existing assets, this is set when instantiating the PreviewFile.
      */
-    public string $assetType;
+    public string $assetType = PreviewFile::DEFAULT_ASSETTYPE;
 
     public bool $allowMultiple = false;
     public array $acceptedMimeTypes = [];
