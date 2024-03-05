@@ -13,5 +13,6 @@
         :accepted-mime-types="$field->getAcceptedMimeTypes()"
         :allow-external-files="$field->getAllowExternalFiles()"
         :allow-local-files="$field->getAllowLocalFiles()"
+        :asset-type="$field->getAssetType() ?? 'default'"
     />
 </div>

@@ -15,6 +15,13 @@ trait FileUploadDefaults
 {
     public string $fieldName;
 
+    /**
+     * For files that are not yet saved, we determine the expected asset type
+     * by passing it to the PreviewFile along with the field upload component.
+     * For existing assets, this is set when instantiating the PreviewFile.
+     */
+    public string $assetType;
+
     public bool $allowMultiple = false;
     public array $acceptedMimeTypes = [];
     /**
@@ -230,7 +237,7 @@ trait FileUploadDefaults
             $uploadingIndex = $this->findPreviewFileIndex($newFileDetails['id']);
 
             if (! is_null($uploadingIndex) && $this->previewFiles[$uploadingIndex] && ! $this->previewFiles[$uploadingIndex]->isQueuedForDeletion) {
-                $this->previewFiles[$uploadingIndex] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef']);
+                $this->previewFiles[$uploadingIndex] = PreviewFile::fromTemporaryUploadedFile($newFileDetails['fileRef'], null, ['assetType' => $this->assetType]);
             }
         }
     }
