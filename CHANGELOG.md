@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   **Breaking change**: User class is replaced in database by `chiefuser`key. **This requires you to run migrations!**
 -   Upgraded `livewire/livewire` dependency to `3.4.6`.
 -   Fixed: cancelling a file edit broke alpine when the dialog was reopened
 -   Fixed: Storing localized values on an unsaved asset https://github.com/thinktomorrow/chief/commit/0221d47ab
@@ -13,7 +14,6 @@ principles.
 -   Fixed: Clipboard script was loaded for file without link
 -   Fixed: Custom asset fields on fragment could not be saved.
 -   Fixed: Some file metadata (width, height) was missing in file window.  
--   Added: chiefuser as key in db relation morphMap to Chief User model.
 -   Added: Tags to eager loading on the index results.
 
 ## 0.8.14 - 2024-02-20
