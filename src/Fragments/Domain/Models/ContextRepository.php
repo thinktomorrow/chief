@@ -8,22 +8,22 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class ContextRepository
 {
-//    public function findOrCreateByOwner(ReferableModel $owner, string $locale): ContextModel
-//    {
-//        if($context = $this->findByOwner($owner, $locale)) {
-//            return $context;
-//        }
-//
-//        return $this->createForOwner($owner, $locale);
-//    }
-//
-//    public function findByOwner(ReferableModel $owner, string $locale): ?ContextModel
-//    {
-//        return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
-//            ->where('owner_id', $owner->modelReference()->id())
-//            ->where('locale', $locale)
-//            ->first();
-//    }
+    //    public function findOrCreateByOwner(ReferableModel $owner, string $locale): ContextModel
+    //    {
+    //        if($context = $this->findByOwner($owner, $locale)) {
+    //            return $context;
+    //        }
+    //
+    //        return $this->createForOwner($owner, $locale);
+    //    }
+    //
+    //    public function findByOwner(ReferableModel $owner, string $locale): ?ContextModel
+    //    {
+    //        return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
+    //            ->where('owner_id', $owner->modelReference()->id())
+    //            ->where('locale', $locale)
+    //            ->first();
+    //    }
 
     public function getByOwner(ReferableModel $owner): \Illuminate\Support\Collection
     {
@@ -46,20 +46,20 @@ class ContextRepository
     }
 
 
-//
-//    public function getOrCreateByOwner(ReferableModel $owner, array $locales): \Illuminate\Support\Collection
-//    {
-//        $locales = ChiefLocaleConfig::getLocales();
-//        $contexts = $this->getByOwner($owner);
-//
-//        if(count($contexts) < 1) {
-//            $this->createIfNotExistsForOwner($owner, $locales);
-//
-//            return $this->getByOwner($owner);
-//        }
-//
-//        return $contexts;
-//    }
+    //
+    //    public function getOrCreateByOwner(ReferableModel $owner, array $locales): \Illuminate\Support\Collection
+    //    {
+    //        $locales = ChiefLocaleConfig::getLocales();
+    //        $contexts = $this->getByOwner($owner);
+    //
+    //        if(count($contexts) < 1) {
+    //            $this->createIfNotExistsForOwner($owner, $locales);
+    //
+    //            return $this->getByOwner($owner);
+    //        }
+    //
+    //        return $contexts;
+    //    }
 
     public function create(ReferableModel $owner, array $locales): ContextModel
     {
@@ -80,16 +80,16 @@ class ContextRepository
             ->first();
     }
 
-//    private function createIfNotExistsForOwner(ReferableModel $owner, Collection $contexts, array $locales): void
-//    {
-//        foreach($locales as $locale) {
-//            if($contexts->contains(fn (ContextModel $context) => $context->locale == $locale)) {
-//                continue;
-//            }
-//
-//            $this->createForOwner($owner, $locale);
-//        }
-//
-//    }
+    //    private function createIfNotExistsForOwner(ReferableModel $owner, Collection $contexts, array $locales): void
+    //    {
+    //        foreach($locales as $locale) {
+    //            if($contexts->contains(fn (ContextModel $context) => $context->locale == $locale)) {
+    //                continue;
+    //            }
+    //
+    //            $this->createForOwner($owner, $locale);
+    //        }
+    //
+    //    }
 
 }

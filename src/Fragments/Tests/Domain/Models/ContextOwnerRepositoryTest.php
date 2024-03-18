@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\Domain\Models;
 
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
