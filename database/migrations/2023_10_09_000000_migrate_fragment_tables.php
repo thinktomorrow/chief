@@ -9,20 +9,15 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('contexts', function (Blueprint $table) {
-            $table->string('locale',10)->after('owner_id')->nullable();
+            $table->json('locales')->after('owner_id')->nullable();
         });
 
         // DO MIGRATION
         // TODO: migration expand to different contexts per locale
+        DB::table('contexts')->update(['locales' => json_encode(config('chief.locales'))]);
 
-        DB::table('contexts')->update(['locale' => 'nl']);
-
-        Schema::table('contexts', function (Blueprint $table) {
-            $table->string('locale',10)->nullable(false)->change();
-        });
-
-        Schema::table('contexts', function (Blueprint $table) {
-            $table->unique(['owner_type', 'owner_id', 'locale']);
+        Schema::table('chief_urls', function (Blueprint $table) {
+            $table->foreign('context_id')->nullable();
         });
 
         Schema::table('context_fragments', function (Blueprint $table) {

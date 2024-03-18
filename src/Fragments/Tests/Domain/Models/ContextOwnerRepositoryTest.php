@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
@@ -13,6 +14,8 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class ContextOwnerRepositoryTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+    private ContextOwnerRepository $contextOwnerRepository;
+    private ContextRepository $contextRepository;
 
     public function setUp(): void
     {
@@ -20,45 +23,48 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
 
         $this->owner = $this->setUpAndCreateArticle();
         chiefRegister()->fragment(Quote::class);
+
+        $this->contextOwnerRepository = app(ContextOwnerRepository::class);
+        $this->contextRepository = app(ContextRepository::class);
     }
 
     public function test_it_returns_empty_collection()
     {
-        $this->assertCount(0, app(ContextOwnerRepository::class)->getOwnersByFragment('xxx'));
+        $this->assertCount(0, $this->contextOwnerRepository->getOwnersByFragment('xxx'));
     }
 
     public function test_it_can_get_all_owners()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $context = $this->contextRepository->create($this->owner, []);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
 
-        $this->assertCount(1, app(ContextOwnerRepository::class)->getOwnersByFragment($fragment->getFragmentId()));
+        $this->assertCount(1, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }
 
     public function test_it_can_get_all_owners_of_multiple_contexts()
     {
         $owner2 = ArticlePage::create([]);
 
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'nl']);
+        $context = $this->contextRepository->create($this->owner, []);
+        $context2 = $this->contextRepository->create($owner2, []);
 
         // Attach to two contexts
-        $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
         app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
 
-        $this->assertCount(2, app(ContextOwnerRepository::class)->getOwnersByFragment($fragment->getFragmentId()));
+        $this->assertCount(2, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }
 
     public function test_when_getting_owners_it_ignores_same_owners()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = $this->contextRepository->create($this->owner, []);
+        $context2 = $this->contextRepository->create($this->owner, []);
 
         // Attach to two contexts
-        $fragment = $this->createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
         app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
 
-        $this->assertCount(1, app(ContextOwnerRepository::class)->getOwnersByFragment($fragment->getFragmentId()));
+        $this->assertCount(1, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }
 
 }

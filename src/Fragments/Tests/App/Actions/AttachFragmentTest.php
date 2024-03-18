@@ -29,12 +29,10 @@ class AttachFragmentTest extends ChiefTestCase
 
     public function test_it_can_attach_fragment_to_context()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $this->assertCount(0, $context->fragments()->get());
 
-        // Create Fragment and attach
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['foo' => 'bar']);
-        app(AttachFragment::class)->handle($context->id, $fragmentId, 1);
+        $fragmentId = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id, 1)->getFragmentId();
 
         $this->assertCount(1, $context->fragments()->get());
         $this->assertEquals($fragmentId, $context->fragments()->first()->id);
@@ -42,14 +40,12 @@ class AttachFragmentTest extends ChiefTestCase
 
     public function test_it_can_attach_fragment_to_multiple_contexts()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, ['nl']);
+        $context2 = FragmentTestAssist::createContext($this->owner);
         $this->assertCount(0, $context->fragments()->get());
 
-        // Create Fragment and attach
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['foo' => 'bar']);
-        app(AttachFragment::class)->handle($context->id, $fragmentId, 1);
-        app(AttachFragment::class)->handle($context2->id, $fragmentId, 2);
+        $fragmentId = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id, 1)->getFragmentId();
+        app(AttachFragment::class)->handle($context2->id, $fragmentId, 0);
 
         $this->assertCount(1, $context->fragments()->get());
         $this->assertCount(1, $context2->fragments()->get());
@@ -59,36 +55,32 @@ class AttachFragmentTest extends ChiefTestCase
 
     public function test_it_cannot_attach_same_fragment_to_same_context()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner, ['nl']);
 
         $this->assertCount(0, $context->fragments()->get());
 
-        // Create Fragment and attach
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['foo' => 'bar']);
-        app(AttachFragment::class)->handle($context->id, $fragmentId, 1);
+        $fragmentId = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id, 1)->getFragmentId();
 
         $this->expectException(FragmentAlreadyAdded::class);
-        app(AttachFragment::class)->handle($context2->id, $fragmentId, 2);
+        app(AttachFragment::class)->handle($context->id, $fragmentId, 2);
     }
 
     public function test_attaching_a_fragment_emits_event()
     {
         Event::fake();
 
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'other');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
 
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['foo' => 'bar']);
-        app(AttachFragment::class)->handle($context->id, $fragmentId, 2);
+        FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         Event::assertDispatched(FragmentAttached::class);
     }
 
     public function test_a_context_can_attach_an_fragment_with_a_given_order()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['foo' => 'bar']);
-        $fragmentId2 = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['foo' => 'bar']);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragmentId = FragmentTestAssist::createFragment(SnippetStub::class)->getFragmentId();
+        $fragmentId2 = FragmentTestAssist::createFragment(SnippetStub::class)->getFragmentId();
 
         app(AttachFragment::class)->handle($context->id, $fragmentId, 0);
         app(AttachFragment::class)->handle($context->id, $fragmentId2, 0);
@@ -101,9 +93,9 @@ class AttachFragmentTest extends ChiefTestCase
 
     public function test_attaching_fragment_on_contexts_owned_by_same_owner_is_not_considered_shared()
     {
-        [$context, $fragment] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'fr');
+        [$context, $fragment] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class);
 
-        $context2 = FragmentTestAssist::findOrCreateContext($this->owner, 'en');
+        $context2 = FragmentTestAssist::createContext($this->owner);
         FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
         $this->assertEquals(1, FragmentModel::count());

@@ -28,7 +28,7 @@ class DuplicateContext
         }
 
         $sourceContext = $this->contextRepository->find($sourceContextId);
-        $targetContext = $this->contextRepository->createForOwner($targetModel, $targetLocale);
+        $targetContext = $this->contextRepository->create($targetModel, $targetLocale);
 
         /** @var FragmentModel $fragment */
         foreach ($sourceContext->fragments as $index => $fragment) {

@@ -34,7 +34,7 @@ class ContextOwnerRepository
      * This retrieves the root owners (resources) and not
      * any fragment owners in case of nested fragments
      */
-    public function getResourceOwnersByFragment(FragmentModel $fragmentModel): Collection
+    public function getRootOwnersByFragment(FragmentModel $fragmentModel): Collection
     {
         $models = ContextModel::owning($fragmentModel)
             ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id));
@@ -43,7 +43,7 @@ class ContextOwnerRepository
 
         foreach($models as $model) {
             if($model instanceof FragmentModel) {
-                $result = $result->merge($this->getResourceOwnersByFragment($model));
+                $result = $result->merge($this->getRootOwnersByFragment($model));
             } else {
                 $result->push($model);
             }

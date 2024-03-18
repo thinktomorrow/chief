@@ -1,5 +1,18 @@
 ## TODO multilocale
 
+## Locale setup
+- chief_urls as intermediate per locale
+- chief_urls has context_id reference
+- Page can have multiple contexts. Each locale url can have one active context
+- A context can have multiple locales (translations)
+
+- addLocalesToContext
+- removeLocalesFromContext
+- addContext
+- CreateDefaultContext
+- removeContext
+- reorderContexts
+
 ## Testsuite after refactor to Controllers (moving away from Resource)
 - action tests
 - query tests

@@ -15,6 +15,7 @@ final class ContextModel extends Model
     public $guarded = [];
     public $casts = [
         'id' => 'string',
+        'locales' => 'array',
     ];
 
     public function findFragmentModel($fragmentId): ?FragmentModel
@@ -30,6 +31,7 @@ final class ContextModel extends Model
             ->orderBy('context_fragment_lookup.order');
     }
 
+    // TODO: change to ContextOwner interface
     public function getOwner(): ?FragmentsOwner
     {
         if (! $this->owner_type || ! $this->owner_id) {

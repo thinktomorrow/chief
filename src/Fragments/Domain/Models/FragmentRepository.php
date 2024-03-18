@@ -19,10 +19,14 @@ final class FragmentRepository
         $this->fragmentFactory = $fragmentFactory;
     }
 
-    // TODO: can we avoid this method and use getByContext instead?
-    public function getByOwner(ReferableModel $owner, string $locale): Collection
+    /**
+     * @deprecated use GetByContext instead
+     */
+    public function getByOwner(ReferableModel $owner): Collection
     {
-        if (! $context = $this->contextRepository->findByOwner($owner, $locale)) {
+        throw new \Exception('No more usage of FragmentRepository::getByOwner');
+
+        if (! $context = $this->contextRepository->findByOwner($owner)) {
             return collect();
         }
 

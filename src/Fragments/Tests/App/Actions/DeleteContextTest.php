@@ -22,7 +22,7 @@ class DeleteContextTest extends ChiefTestCase
 
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner);
         $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
@@ -46,7 +46,7 @@ class DeleteContextTest extends ChiefTestCase
 
     public function test_fragment_is_not_deleted_when_used_in_more_than_one_context()
     {
-        $otherContext = FragmentTestAssist::findOrCreateContext($this->owner, 'en');
+        $otherContext = FragmentTestAssist::createContext($this->owner);
         FragmentTestAssist::attachFragment($otherContext->id, $this->fragment->getFragmentId());
 
         $this->assertEquals(2, ContextModel::count());

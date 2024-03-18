@@ -22,9 +22,9 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class FragmentTestAssist
 {
-    public static function assertFragmentCount(Model $owner, string $locale, int $count)
+    public static function assertFragmentCount(string $contextId, int $count)
     {
-        Assert::assertCount($count, app(FragmentRepository::class)->getByOwner($owner, $locale));
+        Assert::assertCount($count, app(FragmentRepository::class)->getByContext($contextId));
     }
 
     public static function assertRenderedFragments(Model $owner, string $expected)
@@ -48,9 +48,20 @@ class FragmentTestAssist
     }
 
 
-    public static function findOrCreateContext($owner, string $locale = 'nl'): ContextModel
+    public static function findOrCreateContext($owner, array $locales = []): ContextModel
     {
-        return app(ContextRepository::class)->findOrCreateByOwner($owner, $locale);
+        $contexts = app(ContextRepository::class)->getByOwner($owner);
+
+        if($contexts->isNotEmpty()) {
+            return $contexts->first();
+        }
+
+        return static::createContext($owner, $locales);
+    }
+
+    public static function createContext($owner, array $locales = []): ContextModel
+    {
+        return app(ContextRepository::class)->create($owner, $locales);
     }
 
     public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragmentable
@@ -78,9 +89,9 @@ class FragmentTestAssist
         return $model;
     }
 
-    public static function createContextAndAttachFragment($owner, string $fragmentClass, string $locale = 'nl', $order = 0, array $data = [], bool $register = true): array
+    public static function createContextAndAttachFragment($owner, string $fragmentClass, $order = 0, array $data = [], bool $register = true): array
     {
-        $context = static::findOrCreateContext($owner, $locale);
+        $context = static::findOrCreateContext($owner);
 
         $model = static::createAndAttachFragment($fragmentClass, $context->id, $order, $data, $register);
 
