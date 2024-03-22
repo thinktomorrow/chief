@@ -17,13 +17,13 @@ class ContextRepository
     //        return $this->createForOwner($owner, $locale);
     //    }
     //
-    //    public function findByOwner(ReferableModel $owner, string $locale): ?ContextModel
-    //    {
-    //        return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
-    //            ->where('owner_id', $owner->modelReference()->id())
-    //            ->where('locale', $locale)
-    //            ->first();
-    //    }
+        // Used for nested fragments.
+        public function findByFragmentOwner(ReferableModel $owner): ?ContextModel
+        {
+            return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
+                ->where('owner_id', $owner->modelReference()->id())
+                ->first();
+        }
 
     public function getByOwner(ReferableModel $owner): \Illuminate\Support\Collection
     {

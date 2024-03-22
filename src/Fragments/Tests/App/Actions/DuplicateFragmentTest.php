@@ -29,13 +29,13 @@ class DuplicateFragmentTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
 
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner);
         $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
     public function test_it_can_duplicate_a_fragment_to_other_context()
     {
-        $targetContext = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+        $targetContext = FragmentTestAssist::createContext($this->owner);
 
         $this->assertEquals(1, FragmentModel::count());
         $this->assertCount(1, $this->context->fragments()->get());
@@ -79,7 +79,7 @@ class DuplicateFragmentTest extends ChiefTestCase
             ->save();
         app(AddAsset::class)->handle($this->fragment->fragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
 
-        $targetContext = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+        $targetContext = FragmentTestAssist::findOrCreateContext($this->owner);
 
         app(DuplicateFragment::class)->handle(
             $this->context,
@@ -100,10 +100,10 @@ class DuplicateFragmentTest extends ChiefTestCase
     public function test_it_can_duplicate_fragment_including_child_fragments()
     {
         // TODO: wip
-        $targetContext = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+        $targetContext = FragmentTestAssist::createContext($this->owner);
 
         // Create nested fragment
-        $nestedContext = FragmentTestAssist::findOrCreateContext($this->fragment, 'fr');
+        $nestedContext = FragmentTestAssist::createContext($this->fragment);
         $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
 
         $this->assertEquals(3, ContextModel::count());

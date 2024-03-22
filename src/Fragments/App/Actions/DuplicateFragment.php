@@ -59,7 +59,7 @@ class DuplicateFragment
 
             $duplicatedFragment = $this->fragmentRepository->find($duplicatedFragmentModel->id);
 
-            if($fragmentContext = $this->contextRepository->findByOwner($fragment, $sourceContext->locale)) {
+            if($fragmentContext = $this->contextRepository->findByFragmentOwner($fragment)) {
                 app(DuplicateContext::class)->handle(
                     $fragmentContext->id,
                     $duplicatedFragment,

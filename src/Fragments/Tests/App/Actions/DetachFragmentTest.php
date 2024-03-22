@@ -39,7 +39,7 @@ class DetachFragmentTest extends ChiefTestCase
         $this->assertNotNull(FragmentModel::find($fragment->getFragmentId()));
     }
 
-    public function test_it_deletes_fragment_when_after_detach_fragment_is_no_longer_used()
+    public function test_it_deletes_fragment_when_after_detachment_the_fragment_no_longer_has_an_owner()
     {
         $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);

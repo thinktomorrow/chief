@@ -46,4 +46,9 @@ final class ContextModel extends Model
             ? app(FragmentFactory::class)->create($model)
             : $model;
     }
+
+    public function getLocales(): array
+    {
+        return $this->locales;
+    }
 }
