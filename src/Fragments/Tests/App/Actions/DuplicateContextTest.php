@@ -31,7 +31,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->owner2 = ArticlePage::create();
 
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner,);
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner, );
         $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
