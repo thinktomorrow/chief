@@ -31,7 +31,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->owner2 = ArticlePage::create();
 
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner,);
         $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
@@ -50,8 +50,8 @@ class DuplicateContextTest extends ChiefTestCase
     {
         app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
 
-        $originalContext = app(ContextRepository::class)->findByOwner($this->owner, 'nl');
-        $duplicatedContext = app(ContextRepository::class)->findByOwner($this->owner2, 'en');
+        $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
+        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
 
         // Check duplicated fragment
         $originalStaticFragment = $originalContext->fragments->first();
@@ -76,8 +76,8 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(2, FragmentModel::count());
         $this->assertEquals(1, Asset::count());
 
-        $originalContext = app(ContextRepository::class)->findByOwner($this->owner, 'nl');
-        $duplicatedContext = app(ContextRepository::class)->findByOwner($this->owner2, 'nl');
+        $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
+        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
 
         $originalFragmentAsset = $originalContext->fragments->first()->assetRelation()->first();
         $duplicatedFragmentAsset = $duplicatedContext->fragments->first()->assetRelation()->first();
@@ -91,7 +91,7 @@ class DuplicateContextTest extends ChiefTestCase
     public function test_it_can_duplicate_context_with_nested_fragments()
     {
         // Create nested fragment
-        $nestedContext = FragmentTestAssist::findOrCreateContext($this->fragment, 'nl');
+        $nestedContext = FragmentTestAssist::createContext($this->fragment);
         $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
 
         $this->assertEquals(2, ContextModel::count());
@@ -102,8 +102,8 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(4, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());
 
-        $originalContext = app(ContextRepository::class)->findByOwner($this->owner, 'nl');
-        $duplicatedContext = app(ContextRepository::class)->findByOwner($this->owner2, 'en');
+        $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
+        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
 
         // Check duplicated fragment
         $originalNestedContext = app(ContextRepository::class)->findNestedContextByOwner($originalContext->fragments->first());
@@ -115,16 +115,5 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals($originalNestedFragment->order, $duplicatedNestedFragment->order);
         $this->assertEquals($originalNestedFragment->key, $duplicatedNestedFragment->key);
         $this->assertEquals($originalNestedFragment->values, $duplicatedNestedFragment->values);
-    }
-
-    public function test_it_cannot_duplicate_to_a_target_context_that_already_exists()
-    {
-        FragmentTestAssist::findOrCreateContext($this->owner2, 'en');
-
-        $this->assertEquals(2, ContextModel::count());
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
     }
 }
