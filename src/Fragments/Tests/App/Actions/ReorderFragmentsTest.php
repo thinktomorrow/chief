@@ -25,9 +25,9 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_can_reorder_fragments()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 1);
-        [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 2);
-        [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 3);
+        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
+        [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
 
         app(ReorderFragments::class)->handle($context->id, [
             $snippet3->getFragmentId(),
@@ -35,7 +35,7 @@ class ReorderFragmentsTest extends ChiefTestCase
             $snippet2->getFragmentId(),
         ]);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'nl');
+        $fragments = app(FragmentRepository::class)->getByContext($context->id);
         $this->assertCount(3, $fragments);
 
         $this->assertEquals($snippet3->getFragmentId(), $fragments[0]->getFragmentId());
@@ -50,7 +50,7 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_ignores_unknown_fragment_ids()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 1);
+        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class,  1);
 
         app(ReorderFragments::class)->handle($context->id, [
             300,
@@ -58,7 +58,7 @@ class ReorderFragmentsTest extends ChiefTestCase
             200,
         ]);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'nl');
+        $fragments = app(FragmentRepository::class)->getByContext($context->id);
         $this->assertCount(1, $fragments);
 
         $this->assertEquals($snippet1->getFragmentId(), $fragments[0]->getFragmentId());
@@ -71,7 +71,7 @@ class ReorderFragmentsTest extends ChiefTestCase
     {
         Event::fake();
 
-        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
 
         app(ReorderFragments::class)->handle($context->id, []);
 
@@ -82,7 +82,7 @@ class ReorderFragmentsTest extends ChiefTestCase
     {
         Event::fake();
 
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 1);
+        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
 
         app(ReorderFragments::class)->handle($context->id, [
             $snippet1->getFragmentId(),
@@ -93,9 +93,9 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_can_store_a_new_fragment_with_a_specific_order()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 1);
-        [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 2);
-        [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'nl', 3);
+        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
+        [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
 
         $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
@@ -104,7 +104,7 @@ class ReorderFragmentsTest extends ChiefTestCase
 
         $insertedFragmentId = $response->getOriginalContent()['data']['fragmentmodel_id'];
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'nl');
+        $fragments = app(FragmentRepository::class)->getByContext($context->id);
         $this->assertCount(4, $fragments);
 
         $this->assertEquals($snippet1->modelReference(), $fragments[0]->modelReference());
