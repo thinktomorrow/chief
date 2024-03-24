@@ -32,12 +32,12 @@ class FragmentTestAssist
         Assert::assertEquals($expected, app(FragmentsRenderer::class)->render($owner, []));
     }
 
-    public static function firstFragment(Model $owner, string $locale, callable $callback = null)
+    public static function firstFragment(string $contextId, callable $callback = null)
     {
-        $fragments = app(FragmentRepository::class)->getByOwner($owner, $locale);
+        $fragments = app(FragmentRepository::class)->getByContext($contextId);
 
         if (! $fragments->first()) {
-            throw new \Exception('Test failed. Owner doesn\'t own any fragments.');
+            throw new \Exception('Test failed. Context doesn\'t have any fragments.');
         }
 
         if ($callback) {

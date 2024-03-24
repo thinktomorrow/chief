@@ -28,23 +28,23 @@ class IsolateFragmentTest extends ChiefTestCase
 
     public function test_isolate_fragment_duplicates_fragment()
     {
-        [$context, $fragment] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 'fr');
+        [$context, $fragment] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class);
 
-        $context2 = FragmentTestAssist::findOrCreateContext($this->owner2, 'en');
+        $context2 = FragmentTestAssist::createContext($this->owner2);
         FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
         $this->assertEquals(1, FragmentModel::count());
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
-        FragmentTestAssist::assertFragmentCount($this->owner2, 'en', 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
 
         app(IsolateFragment::class)->handle($context->id, $fragment->getFragmentId());
 
         $this->assertEquals(2, FragmentModel::count());
-        $fragment1 = FragmentTestAssist::firstFragment($this->owner, 'fr');
-        $fragment2 = FragmentTestAssist::firstFragment($this->owner2, 'en');
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
-        FragmentTestAssist::assertFragmentCount($this->owner2, 'en', 1);
+        $fragment1 = FragmentTestAssist::firstFragment($context->id);
+        $fragment2 = FragmentTestAssist::firstFragment($context2->id);
+        FragmentTestAssist::assertFragmentCount($context->id,  1);
+        FragmentTestAssist::assertFragmentCount($context2->id,  1);
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
         $this->assertFalse($fragment1->fragmentModel()->isShared());
         $this->assertFalse($fragment2->fragmentModel()->isShared());
@@ -53,41 +53,41 @@ class IsolateFragmentTest extends ChiefTestCase
 
     public function test_when_it_belongs_to_more_then_two_contexts_it_stays_shared_when_isolated()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $owner2 = ArticlePage::create();
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'fr']);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
+        $context2 = FragmentTestAssist::createContext($owner2);
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
-        FragmentTestAssist::assertFragmentCount($owner2, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id,  1);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
 
         app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 0);
-        FragmentTestAssist::assertFragmentCount($owner2, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id,  0);
+        FragmentTestAssist::assertFragmentCount($context2->id,  1);
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
     }
 
     public function test_when_it_belongs_to_two_contexts_it_is_no_longer_shared_when_isolated()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $owner2 = ArticlePage::create();
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'fr']);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
+        $context2 = FragmentTestAssist::createContext($owner2);
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
-        FragmentTestAssist::assertFragmentCount($owner2, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id,1);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
 
         app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 0);
-        FragmentTestAssist::assertFragmentCount($owner2, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
     }
 }
