@@ -2,10 +2,8 @@
 
 namespace Tests\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -80,7 +78,7 @@ class IsolateFragmentTest extends ChiefTestCase
         $context2 = FragmentTestAssist::createContext($owner2);
         FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
         FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
 
