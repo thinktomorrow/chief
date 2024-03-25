@@ -25,27 +25,27 @@ class AttachFragmentTest extends ChiefTestCase
 
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
-        $this->context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner);
         $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $this->context->id);
     }
 
     public function test_a_context_can_attach_an_fragment()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'other');
+        $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]))
             ->assertStatus(201);
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'nl', 1);
-        FragmentTestAssist::assertFragmentCount($this->owner, 'other', 1);
+        FragmentTestAssist::assertFragmentCount($this->context->id, 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
         $this->assertDatabaseCount('context_fragments', 1);
     }
 
     public function test_a_context_can_attach_an_fragment_with_a_given_order()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'other');
-        $otherFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
+        $context = FragmentTestAssist::createContext($this->owner);
+        $otherFragmentId = FragmentTestAssist::createFragment(Quote::class)->getFragmentId();
 
         $this->asAdmin()
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
@@ -54,7 +54,7 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]) . '?order=0')
             ->assertStatus(201);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner, 'other');
+        $fragments = app(FragmentRepository::class)->getByContext($context->id);
         $this->assertCount(2, $fragments);
 
         $this->assertEquals(0, $fragments[0]->fragmentModel()->pivot->order);
@@ -64,7 +64,7 @@ class AttachFragmentTest extends ChiefTestCase
     public function test_a_fragment_can_attach_a_nested_fragment()
     {
         $ownerFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
-        $context = app(ContextRepository::class)->findOrCreateByOwner($ownerFragment = FragmentModel::find($ownerFragmentId), 'other');
+        $context = FragmentTestAssist::createContext($ownerFragment = FragmentModel::find($ownerFragmentId));
 
         $otherFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
 
@@ -72,7 +72,7 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]))
             ->assertStatus(201);
 
-        FragmentTestAssist::assertFragmentCount($ownerFragment, 'other', 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
     }
 
     //    public function test_it_can_check_if_a_model_allows_for_adding_a_fragment()
@@ -83,7 +83,7 @@ class AttachFragmentTest extends ChiefTestCase
 
     public function test_adding_a_fragment_multiple_times_only_adds_it_once()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'other');
+        $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
@@ -92,7 +92,7 @@ class AttachFragmentTest extends ChiefTestCase
             ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
             ->assertStatus(400);
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'other', 1);
+        FragmentTestAssist::assertFragmentCount($context->id,  1);
     }
 
 }
