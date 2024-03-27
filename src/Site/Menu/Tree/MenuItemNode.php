@@ -53,7 +53,7 @@ class MenuItemNode extends DefaultNode implements Node
         $this->label = $label;
     }
 
-    public function getLabelOrFallback(): string
+    public function getAnyLabel(): string
     {
         return $this->label ?: $this->getAdminUrlLabel();
     }
