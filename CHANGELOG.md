@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Changed: Menu item tree changed to keep empty label and not provide a default label. `MenuItemNode::getLabel()` returns the label as entered for the given menu and null if not entered. To keep using this fallback behaviour, you can use the `MenuItemNode::getLabelOrFallback()` method.
+
+## 0.8.15 - 2024-03-14
 -   **Breaking change**: User class is replaced in database by `chiefuser`key. **This requires you to run migrations!**
 -   Upgraded `livewire/livewire` dependency to `3.4.6`.
 -   Fixed: cancelling a file edit broke alpine when the dialog was reopened

@@ -64,7 +64,7 @@ class MenuTest extends ChiefTestCase
 
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
-        $this->assertEquals('artikel titel', $collection->first()->getLabel());
+        $this->assertEquals('artikel titel', $collection->first()->getLabelOrFallback());
     }
 
     /** @test */

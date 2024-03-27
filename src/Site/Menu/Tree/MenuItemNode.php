@@ -10,11 +10,11 @@ use Thinktomorrow\Vine\Node;
 class MenuItemNode extends DefaultNode implements Node
 {
     private MenuItemStatus $status;
-    private string $label;
+    private ?string $label;
     private ?string $url;
     private string $adminUrlLabel;
 
-    public function __construct(MenuItemStatus $status, string $label, ?string $url, string $adminUrlLabel, string $id, ?string $parentId, int $order)
+    public function __construct(MenuItemStatus $status, ?string $label, ?string $url, string $adminUrlLabel, string $id, ?string $parentId, int $order)
     {
         parent::__construct([
             'id' => $id,
@@ -38,14 +38,14 @@ class MenuItemNode extends DefaultNode implements Node
         return $this->getParentNodeId();
     }
 
-    //    public function getType()
-    //    {
-    //        return $this->type;
-    //    }
-
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
     }
 
     public function setLabel(string $label)
@@ -53,24 +53,18 @@ class MenuItemNode extends DefaultNode implements Node
         $this->label = $label;
     }
 
-    // Extra info when dealing with internal links
-    //    public function getPageLabel()
-    //    {
-    //        return $this->page_label;
-    //    }
-
-    public function getUrl()
+    public function getLabelOrFallback(): string
     {
-        return $this->url;
-    }
-
-    public function isOffline(): bool
-    {
-        return $this->status != MenuItemStatus::online;
+        return $this->label ?: $this->getAdminUrlLabel();
     }
 
     public function getAdminUrlLabel(): string
     {
         return $this->adminUrlLabel;
+    }
+
+    public function isOffline(): bool
+    {
+        return $this->status != MenuItemStatus::online;
     }
 }

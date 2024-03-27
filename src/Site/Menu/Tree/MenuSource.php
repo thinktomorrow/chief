@@ -45,7 +45,7 @@ class MenuSource implements Source
 
         return new MenuItemNode(
             $entry->getStatus(),
-            $entry->getLabel($this->locale) ?: $entry->getAdminUrlLabel($this->locale),
+            $entry->getLabel($this->locale),
             $entry->getUrl($this->locale),
             $entry->getAdminUrlLabel($this->locale),
             (string) $entry->id,
