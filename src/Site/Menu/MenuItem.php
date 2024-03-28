@@ -45,17 +45,20 @@ class MenuItem extends Model
         $this->status = $status->value;
     }
 
-    public function getAdminUrlLabel(string $locale): string
+    public function getOwnerLabel(string $locale): ?string
     {
-        if (self::TYPE_INTERNAL == $this->type) {
-            return $this->dynamic('owner_label', $locale);
-        }
+        return $this->dynamic('owner_label', $locale);
+//        if (self::TYPE_INTERNAL == $this->type) {
+//            return $this->dynamic('owner_label', $locale);
+//        }
+//
+//        return null;
 
-        if (! $url = $this->getUrl($locale)) {
-            return 'geen link';
-        }
-
-        return $url;
+//        if (! $url = $this->getUrl($locale)) {
+//            return 'geen link';
+//        }
+//
+//        return $url;
     }
 
     public function setOwnerLabel(string $locale, string $ownerLabel): void

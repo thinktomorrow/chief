@@ -119,8 +119,8 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
         $this->assertEquals('/foobar-en', $item->getUrl('en'));
 
-        $this->assertEquals('artikel pagetitle nl', $item->getAdminUrlLabel('nl'));
-        $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));
+        $this->assertEquals('artikel pagetitle nl', $item->getOwnerLabel('nl'));
+        $this->assertEquals('artikel pagetitle en', $item->getOwnerLabel('en'));
     }
 
     public function test_using_homepage_as_link_gives_slash_as_link_entry()

@@ -43,7 +43,7 @@ class ProjectModelDataTest extends ChiefTestCase
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel nl', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
     }
 
     /** @test */
@@ -54,12 +54,12 @@ class ProjectModelDataTest extends ChiefTestCase
         // nl
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel nl', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
 
         // en
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
         $this->assertEquals('label en', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel en', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel());
     }
 
     /** @test */
@@ -72,12 +72,12 @@ class ProjectModelDataTest extends ChiefTestCase
         // nl
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel());
 
         // en
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
         $this->assertEquals('label en', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel());
     }
 
     /** @test */
@@ -88,12 +88,12 @@ class ProjectModelDataTest extends ChiefTestCase
         // nl
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals('/foobar-nl', $collection->first()->getUrl('nl'));
-        $this->assertEquals('artikel titel nl', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
 
         // en
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
         $this->assertEquals('/foobar-en', $collection->first()->getUrl('en'));
-        $this->assertEquals('artikel titel en', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel());
     }
 
     /** @test */
@@ -104,7 +104,7 @@ class ProjectModelDataTest extends ChiefTestCase
 
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel nl', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
         $this->assertTrue($collection->first()->isOffline());
     }
 
@@ -130,7 +130,7 @@ class ProjectModelDataTest extends ChiefTestCase
 
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('geen link', $collection->first()->getAdminUrlLabel());
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
         $this->assertEquals(null, $collection->first()->getUrl());
         $this->assertTrue($collection->first()->isOffline());
     }

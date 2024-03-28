@@ -47,7 +47,7 @@ class MenuSource implements Source
             $entry->getStatus(),
             $entry->getLabel($this->locale),
             $entry->getUrl($this->locale),
-            $entry->getAdminUrlLabel($this->locale),
+            $entry->getOwnerLabel($this->locale),
             (string) $entry->id,
             (string) $entry->parent_id,
             $entry->order,

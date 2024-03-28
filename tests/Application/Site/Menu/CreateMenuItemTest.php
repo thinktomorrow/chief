@@ -58,9 +58,8 @@ class CreateMenuItemTest extends ChiefTestCase
 
         $this->assertEquals('label one', $item->getLabel('nl'));
         $this->assertEquals('label two', $item->getLabel('en'));
-
-        $this->assertEquals('https://thinktomorrow.be', $item->getAdminUrlLabel('nl'));
-        $this->assertEquals('https://thinktomorrow.co.uk', $item->getAdminUrlLabel('en'));
+        $this->assertNull( $item->getOwnerLabel('nl'));
+        $this->assertNull( $item->getOwnerLabel('en'));
     }
 
     /** @test */
@@ -98,8 +97,8 @@ class CreateMenuItemTest extends ChiefTestCase
         $this->assertEquals('label one', $item->getLabel('nl'));
         $this->assertEquals('label two', $item->getLabel('en'));
 
-        $this->assertEquals('artikel pagetitle nl', $item->getAdminUrlLabel('nl'));
-        $this->assertEquals('artikel pagetitle en', $item->getAdminUrlLabel('en'));
+        $this->assertEquals('artikel pagetitle nl', $item->getOwnerLabel('nl'));
+        $this->assertEquals('artikel pagetitle en', $item->getOwnerLabel('en'));
     }
 
     /** @test */

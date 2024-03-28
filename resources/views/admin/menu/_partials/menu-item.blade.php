@@ -12,7 +12,7 @@
 
         <x-chief::icon-label type="forward" class="mr-3 text-primary-500"></x-chief::icon-label>
         <a class="label label-primary" href="{{ $item->getUrl() }}" target="_blank">
-            {{ $item->getAdminUrlLabel() }}
+            {{ $item->getOwnerLabel() }}
         </a>
     </div>
 

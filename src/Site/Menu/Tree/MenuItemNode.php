@@ -12,9 +12,9 @@ class MenuItemNode extends DefaultNode implements Node
     private MenuItemStatus $status;
     private ?string $label;
     private ?string $url;
-    private string $adminUrlLabel;
+    private ?string $ownerLabel;
 
-    public function __construct(MenuItemStatus $status, ?string $label, ?string $url, string $adminUrlLabel, string $id, ?string $parentId, int $order)
+    public function __construct(MenuItemStatus $status, ?string $label, ?string $url, ?string $ownerLabel, string $id, ?string $parentId, int $order)
     {
         parent::__construct([
             'id' => $id,
@@ -25,7 +25,7 @@ class MenuItemNode extends DefaultNode implements Node
         $this->status = $status;
         $this->label = $label;
         $this->url = $url;
-        $this->adminUrlLabel = $adminUrlLabel;
+        $this->ownerLabel = $ownerLabel;
     }
 
     public function getId()
@@ -53,14 +53,14 @@ class MenuItemNode extends DefaultNode implements Node
         $this->label = $label;
     }
 
-    public function getAnyLabel(): string
+    public function getAnyLabel(): ?string
     {
-        return $this->label ?: $this->getAdminUrlLabel();
+        return $this->label ?: $this->getOwnerLabel();
     }
 
-    public function getAdminUrlLabel(): string
+    public function getOwnerLabel(): ?string
     {
-        return $this->adminUrlLabel;
+        return $this->ownerLabel;
     }
 
     public function isOffline(): bool
