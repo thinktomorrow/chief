@@ -58,8 +58,8 @@ class CreateMenuItemTest extends ChiefTestCase
 
         $this->assertEquals('label one', $item->getLabel('nl'));
         $this->assertEquals('label two', $item->getLabel('en'));
-        $this->assertNull( $item->getOwnerLabel('nl'));
-        $this->assertNull( $item->getOwnerLabel('en'));
+        $this->assertNull($item->getOwnerLabel('nl'));
+        $this->assertNull($item->getOwnerLabel('en'));
     }
 
     /** @test */

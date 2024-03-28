@@ -48,17 +48,17 @@ class MenuItem extends Model
     public function getOwnerLabel(string $locale): ?string
     {
         return $this->dynamic('owner_label', $locale);
-//        if (self::TYPE_INTERNAL == $this->type) {
-//            return $this->dynamic('owner_label', $locale);
-//        }
-//
-//        return null;
+        //        if (self::TYPE_INTERNAL == $this->type) {
+        //            return $this->dynamic('owner_label', $locale);
+        //        }
+        //
+        //        return null;
 
-//        if (! $url = $this->getUrl($locale)) {
-//            return 'geen link';
-//        }
-//
-//        return $url;
+        //        if (! $url = $this->getUrl($locale)) {
+        //            return 'geen link';
+        //        }
+        //
+        //        return $url;
     }
 
     public function setOwnerLabel(string $locale, string $ownerLabel): void
