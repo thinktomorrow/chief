@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+
+## 0.8.16 - 2024-03-28
 -   Changed: Menu item tree changed to keep empty label and not provide a default label. `MenuItemNode::getLabel()` returns the label as entered for the given menu and null if not entered. To keep using this fallback behaviour, you can use the `MenuItemNode::getAnyLabel()` method.
 -   Changed: `MenuItem::getAdminUrlLabel()` -> `MenuItem::getOwnerLabel()` and only gives owner label if present. It no longer returns 'geen link' or the url if owner label was not present.
 
