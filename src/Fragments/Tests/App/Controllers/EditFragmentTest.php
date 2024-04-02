@@ -19,6 +19,7 @@ class EditFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
     private Quote $fragment;
+    private ContextModel $context;
 
     public function setUp(): void
     {
@@ -26,41 +27,35 @@ class EditFragmentTest extends ChiefTestCase
 
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        $this->context = FragmentTestAssist::createContext($this->owner);
+        $this->fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $this->context->id);
     }
 
     public function test_admin_can_view_the_fragment_edit_form()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-
         $this->asAdmin()
-            ->get(route('chief::fragments.edit', [$context->id, $this->fragment->fragmentModel()->id]))
+            ->get(route('chief::fragments.edit', [$this->context->id, $this->fragment->fragmentModel()->id]))
             ->assertStatus(200);
     }
 
     public function test_admin_can_view_the_edit_form_of_a_nested_fragment()
     {
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['title' => 'owning fragment'], []);
-        $context = ContextModel::create(['owner_type' => FragmentModel::resourceKey(), 'owner_id' => $fragmentId, 'locale' => 'nl']);
-
         $this->asAdmin()
-            ->get(route('chief::fragments.nested.edit', [$context->id, $this->fragment->fragmentModel()->id]))
+            ->get(route('chief::fragments.nested.edit', [$this->context->id, $this->fragment->fragmentModel()->id]))
             ->assertStatus(200);
     }
 
     public function test_admin_can_view_the_edit_form_of_a_shared_fragment()
     {
-        $owner = ArticlePage::create();
         $owner2 = ArticlePage::create();
-        $context = ContextModel::create(['owner_type' => $owner->getMorphClass(), 'owner_id' => $owner->id, 'locale' => 'nl']);
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'nl']);
+        $context2 = FragmentTestAssist::createContext($owner2);
+        FragmentTestAssist::attachFragment($context2->id, $this->fragment->getFragmentId());
 
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
+        // Assert it is shared
+        $this->assertTrue(FragmentTestAssist::findFragment($this->fragment->getFragmentId())->fragmentModel()->isShared());
 
         $this->asAdmin()
-            ->get(route('chief::fragments.edit', [$context->id, $fragment->getFragmentId()]))
+            ->get(route('chief::fragments.edit', [$this->context->id, $this->fragment->getFragmentId()]))
             ->assertStatus(200);
     }
 
@@ -69,7 +64,7 @@ class EditFragmentTest extends ChiefTestCase
         // Make sure that this admin is logged out
         auth()->guard('chief')->logout();
 
-        $this->get(route('chief::fragments.edit', [ContextModel::first()->id, $this->fragment->getFragmentId()]))
+        $this->get(route('chief::fragments.edit', [$this->context->id, $this->fragment->getFragmentId()]))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }

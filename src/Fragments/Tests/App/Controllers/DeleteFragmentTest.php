@@ -30,76 +30,77 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_a_page_can_remove_a_fragment()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
     }
 
     public function test_it_will_not_be_detached_from_context_where_fragment_does_not_belong_to()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
-        $otherContext = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'en');
+        $otherContext = FragmentTestAssist::createContext($this->owner);
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
-        FragmentTestAssist::assertFragmentCount($this->owner, 'en', 0);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
+        FragmentTestAssist::assertFragmentCount($otherContext->id, 0);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$otherContext->id, $fragment->getFragmentId()]));
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
-        FragmentTestAssist::assertFragmentCount($this->owner, 'en', 0);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
+        FragmentTestAssist::assertFragmentCount($otherContext->id, 0);
     }
 
     public function test_a_fragment_can_remove_a_nested_fragment()
     {
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['title' => 'owning fragment'], []);
-        $context = ContextModel::create(['owner_type' => FragmentModel::resourceKey(), 'owner_id' => $fragmentId, 'locale' => 'nl']);
+        $fragment = FragmentTestAssist::createFragment(SnippetStub::class);
+        $context = FragmentTestAssist::createContext($fragment);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
+
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
 
         $this->asAdmin()->delete(route('chief::fragments.nested.delete', [$context->id, $fragment->getFragmentId()]))
             ->assertStatus(200);
 
-        FragmentTestAssist::assertFragmentCount(FragmentModel::find($fragmentId), 'nl', 0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
     }
 
     public function test_removing_a_fragment_multiple_times_only_removes_it_once()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
 
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
     }
 
     public function test_removing_a_fragment_emits_event()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         Event::fake();
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
-        FragmentTestAssist::assertFragmentCount($this->owner, 'nl', 0);
 
         Event::assertDispatched(FragmentDetached::class);
     }
 
     public function test_removing_a_fragment_soft_deletes_fragment_and_assets()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
-        FragmentTestAssist::assertFragmentCount($this->owner, 'nl', 0);
+        FragmentTestAssist::assertFragmentCount($context->id,  0);
 
         $deletedFragmentModel = FragmentModel::withTrashed()->find($fragment->fragmentModel()->id);
         $this->assertTrue($deletedFragmentModel->trashed());
@@ -108,7 +109,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_deletes_fragment_and_assets()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
@@ -130,7 +131,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertCount(1, $fragment->fragmentModel()->fresh()->assetRelation);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
-        FragmentTestAssist::assertFragmentCount($this->owner, 'nl', 0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
 
         $deletedFragmentModel = FragmentModel::withTrashed()->find($fragment->fragmentModel()->id);
         $this->assertTrue($deletedFragmentModel->trashed());
@@ -141,17 +142,16 @@ class DeleteFragmentTest extends ChiefTestCase
 
     public function test_removing_a_fragment_doesnt_delete_fragment_when_it_is_used_elsewhere()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $owner2 = ArticlePage::create();
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'fr']);
-
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1);
+        $context2 = FragmentTestAssist::findOrCreateContext($owner2);
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId(), 1);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
-        FragmentTestAssist::assertFragmentCount($this->owner, 'fr', 0);
-        FragmentTestAssist::assertFragmentCount($owner2, 'fr', 1);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
 
         $fragmentModel = $fragment->fragmentModel()->fresh();
         $this->assertFalse($fragmentModel->trashed());
