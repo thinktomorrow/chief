@@ -51,6 +51,7 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
@@ -236,6 +237,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
         Relation::morphMap(['chiefuser' => User::class]);
+        Relation::morphMap(['menuitem' => MenuItem::class]);
 
         Blade::directive('fragments', function () {
             return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';
