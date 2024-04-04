@@ -20,7 +20,7 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_new()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'nl');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
 
         $this->asAdmin()
             ->get(route('chief::fragments.new', [$context->id]))
@@ -30,8 +30,7 @@ class SelectFragmentTest extends ChiefTestCase
     public function test_admin_can_view_the_fragment_select_existing()
     {
         FragmentTestAssist::createContextAndAttachFragment($this->owner, Quote::class);
-
-        $context2 = FragmentTestAssist::findOrCreateContext(ArticlePage::create(), 'fr');
+        $context2 = FragmentTestAssist::createContext(ArticlePage::create());
 
         $this->asAdmin()
             ->get(route('chief::fragments.existing', [$context2->id]))
@@ -41,7 +40,7 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_existing_without_any_fragments_available()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
 
         $this->asAdmin()
             ->get(route('chief::fragments.existing', [$context->id]))

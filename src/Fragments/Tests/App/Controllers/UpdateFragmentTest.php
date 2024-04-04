@@ -2,39 +2,35 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
-use function app;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class UpdateFragmentTest extends ChiefTestCase
 {
     private $owner;
-    private SnippetStub $fragment;
+    private Fragmentable $fragment;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->owner = $this->setupAndCreateArticle();
-        $this->fragment = $this->setupAndCreateSnippet($this->owner);
+        $this->fragment = FragmentTestAssist::createFragment(SnippetStub::class);
     }
 
     public function test_it_can_update_a_fragment()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()->put(route('chief::fragments.update', [$context->id, $this->fragment->getFragmentId()]), [
             'title' => 'new-title',
         ])->assertStatus(204);
 
-        $snippet = app(FragmentRepository::class)->find($this->fragment->getFragmentId());
+        $snippet = FragmentTestAssist::findFragment($this->fragment->getFragmentId());
 
         $this->assertInstanceOf(SnippetStub::class, $snippet);
         $this->assertEquals('new-title', $snippet->fragmentModel()->title);
@@ -42,7 +38,7 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_can_update_a_fragment_locale_values()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()->put(route('chief::fragments.update', [$context->id, $this->fragment->getFragmentId()]), [
             'title' => 'new-title',
@@ -52,7 +48,7 @@ class UpdateFragmentTest extends ChiefTestCase
             ],
         ])->assertStatus(204);
 
-        $snippet = app(FragmentRepository::class)->find($this->fragment->getFragmentId());
+        $snippet = FragmentTestAssist::findFragment($this->fragment->getFragmentId());
 
         app()->setLocale('nl');
         $this->assertEquals('title_trans nl value', $snippet->fragmentModel()->title_trans);
@@ -63,14 +59,14 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_can_update_a_nested_fragment()
     {
-        $fragmentId = app(CreateFragment::class)->handle(SnippetStub::resourceKey(), ['title' => 'owning fragment'], []);
-        $context = ContextModel::create(['owner_type' => FragmentModel::resourceKey(), 'owner_id' => $fragmentId, 'locale' => 'nl']);
+        $fragment = FragmentTestAssist::createFragment(SnippetStub::class);
+        $context = FragmentTestAssist::createContext($fragment);
 
         $this->asAdmin()->put(route('chief::fragments.nested.update', [$context->id, $this->fragment->getFragmentId()]), [
             'title' => 'new-title',
         ])->assertStatus(204);
 
-        $snippet = app(FragmentRepository::class)->find($this->fragment->getFragmentId());
+        $snippet = FragmentTestAssist::findFragment($this->fragment->getFragmentId());
 
         $this->assertInstanceOf(SnippetStub::class, $snippet);
         $this->assertEquals('new-title', $snippet->fragmentModel()->title);
@@ -80,7 +76,7 @@ class UpdateFragmentTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
+        $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()->put(route('chief::fragments.update', [$context->id, $this->fragment->getFragmentId()]), [
             'custom' => 'custom-value',
@@ -101,7 +97,7 @@ class UpdateFragmentTest extends ChiefTestCase
             ],
         ])->assertStatus(204);
 
-        $snippet = app(FragmentRepository::class)->find($this->fragment->getFragmentId());
+        $snippet = FragmentTestAssist::findFragment($this->fragment->getFragmentId());
 
         $this->assertEquals('tt-favicon.png', $snippet->fragmentModel()->asset('thumb')->filename());
     }

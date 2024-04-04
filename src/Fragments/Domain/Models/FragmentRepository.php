@@ -19,25 +19,11 @@ final class FragmentRepository
         $this->fragmentFactory = $fragmentFactory;
     }
 
-    /**
-     * @deprecated use GetByContext instead
-     */
-    public function getByOwner(ReferableModel $owner): Collection
-    {
-        throw new \Exception('No more usage of FragmentRepository::getByOwner');
-
-        if (! $context = $this->contextRepository->findByOwner($owner)) {
-            return collect();
-        }
-
-        return $context->fragments()
-                        ->get()
-                        ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
-    }
-
     public function getByContext(string $contextId): Collection
     {
-        $fragmentModels = ContextModel::findOrFail($contextId)->fragments()->get();
+        $fragmentModels = ContextModel::findOrFail($contextId)
+            ->fragments()
+            ->get();
 
         return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
@@ -72,5 +58,21 @@ final class FragmentRepository
         }
 
         return $nextId;
+    }
+
+    /**
+     * @deprecated use GetByContext instead
+     */
+    public function getByOwner(ReferableModel $owner): Collection
+    {
+        throw new \Exception('No more usage of FragmentRepository::getByOwner');
+
+        if (! $context = $this->contextRepository->findByOwner($owner)) {
+            return collect();
+        }
+
+        return $context->fragments()
+            ->get()
+            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 }

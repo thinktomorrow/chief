@@ -34,7 +34,7 @@ class FragmentTestAssist
 
     public static function firstFragment(string $contextId, callable $callback = null)
     {
-        $fragments = app(FragmentRepository::class)->getByContext($contextId);
+        $fragments = static::getFragments($contextId);
 
         if (! $fragments->first()) {
             throw new \Exception('Test failed. Context doesn\'t have any fragments.');
@@ -47,6 +47,10 @@ class FragmentTestAssist
         return $fragments->first();
     }
 
+    public static function getFragments(string $contextId)
+    {
+        return app(FragmentRepository::class)->getByContext($contextId);
+    }
 
     public static function findOrCreateContext($owner, array $locales = []): ContextModel
     {
