@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
