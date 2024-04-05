@@ -14,6 +14,12 @@ interface Fragmentable extends FragmentResource, ViewableContract, ReferableMode
 
     public function renderFragment($owner, $loop, $viewData = []): string;
 
+    /**
+     * Check if this fragmentable has a fragment model set. This
+     * means that the fragment is persisted in the database.
+     */
+    public function hasFragmentModel(): bool;
+
     public function setFragmentModel(FragmentModel $fragmentModel): self;
 
     public function fragmentModel(): FragmentModel;

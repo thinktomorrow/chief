@@ -12,7 +12,7 @@ todo: fields owner as parameter resource owner and fragment if nested. Fields pa
 - use: Resource (as base model), Fragment
 - Changed: **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain all available locales and `chief.locales.site`that hold the active locales in usage on the site.
 -   Changed: Renamed `FragmentAdded` event tot `FragmentAttached` for consistency.
-
+- Changed: `Fragmentable::fragmentModel()` always returns an existing model. Else A `MissingFragmentModelException` is thrown.
 
 ## 0.8.10 - 2024-01-10
 

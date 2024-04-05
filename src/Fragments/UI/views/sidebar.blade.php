@@ -6,7 +6,7 @@
             {{ ucfirst($resource->getLabel()) }}
         </p>
 
-        @if($model->fragmentModel()->exists)
+        @if($model->hasFragmentModel())
             @include('chief::layout._partials.fragment_bookmarks')
         @endif
     </div>
@@ -23,7 +23,7 @@
     {!! $slot !!}
 </div>
 
-@if($model->fragmentModel()->exists)
+@if($model->hasFragmentModel())
     @if($model instanceof FragmentsOwner)
         <div class="border-t py-9 border-grey-100">
             {{-- nested fragments --}}
@@ -32,7 +32,7 @@
     @endif
 @endif
 
-@if($model->fragmentModel()->exists)
+@if($model->hasFragmentModel())
     @if($model->fragmentModel()->isShared())
         <div class="p-6 border border-orange-100 rounded-xl bg-orange-50">
             <p class="text-lg h6 h1-dark">Gedeeld fragment</p>
@@ -91,7 +91,7 @@
     @endif
 @endif
 
-@if($model->fragmentModel()->exists)
+@if($model->hasFragmentModel())
     <div @class(['flex flex-wrap items-center gap-4 pt-6', 'border-t border-grey-100' => !$model->fragmentModel()->isShared()])>
         <button
                 type="submit"
@@ -130,7 +130,7 @@
 @endif
 
 
-@if($model->fragmentModel()->exists)
+@if($model->hasFragmentModel())
     <div data-form data-form-tags="fragments">
         <div>
             @include('chief-fragments::components.delete-fragment-modal')

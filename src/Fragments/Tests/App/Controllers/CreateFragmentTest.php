@@ -21,6 +21,7 @@ class CreateFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_create_form()
     {
+        $this->disableExceptionHandling();
         $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()->get(route('chief::fragments.create', [$context->id, SnippetStub::resourceKey(), 1]))

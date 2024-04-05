@@ -19,17 +19,7 @@ trait FragmentableDefaults
     use ReferableStaticModelDefault;
     use Viewable;
 
-    private FragmentModel $fragmentModel;
-
-    public function modelReference(): ModelReference
-    {
-        return $this->fragmentModel()->modelReference();
-    }
-
-    public function getFragmentId(): string
-    {
-        return $this->fragmentModel()->id;
-    }
+    private ?FragmentModel $fragmentModel = null;
 
     public function viewKey(): string
     {
@@ -56,6 +46,11 @@ trait FragmentableDefaults
         return $this->renderView();
     }
 
+    public function hasFragmentModel(): bool
+    {
+        return isset($this->fragmentModel);
+    }
+
     public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable
     {
         $this->fragmentModel = $fragmentModel;
@@ -65,18 +60,27 @@ trait FragmentableDefaults
         return $this;
     }
 
-    public function dynamicLocaleFallback(): ?string
-    {
-        return null;
-    }
-
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
             throw new MissingFragmentModelException('Fragment model is not set. Make sure to set the fragment model before accessing it.');
-//            return $this->fragmentModel = new FragmentModel();
         }
 
         return $this->fragmentModel;
+    }
+
+    public function modelReference(): ModelReference
+    {
+        return $this->fragmentModel()->modelReference();
+    }
+
+    public function getFragmentId(): string
+    {
+        return $this->fragmentModel()->id;
+    }
+
+    public function dynamicLocaleFallback(): ?string
+    {
+        return null;
     }
 }

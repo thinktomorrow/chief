@@ -33,7 +33,7 @@ class CreateFragmentController
         $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $forms = Forms::make($fragment->fields($fragment))
-            ->fillModel($fragment->fragmentModel())
+//            ->fillModel($fragment->fragmentModel())
             ->eachForm(function (Form $form) use ($fragment, $contextId, $fragmentKey) {
                 $form->action(route('chief::fragments.store', [$contextId, $fragmentKey]))
                     ->refreshUrl('');
