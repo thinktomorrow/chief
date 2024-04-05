@@ -96,7 +96,7 @@ class ReorderFragmentsTest extends ChiefTestCase
         [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
         [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
         [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
-$this->disableExceptionHandling();
+        $this->disableExceptionHandling();
         $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
             'order' => 1,
