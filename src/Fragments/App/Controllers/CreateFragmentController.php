@@ -53,8 +53,6 @@ class CreateFragmentController
         $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $fields = Forms::make($fragment->fields($fragment))
-//            ->fillLocalesIfEmpty((array)$request->input('admin_locales', []))
-            ->fillModel($fragment->fragmentModel())
             ->getFields()
             ->notTagged(['edit', 'not-on-create']);
 

@@ -21,5 +21,5 @@ interface Fragmentable extends FragmentResource, ViewableContract, ReferableMode
     /**
      * The unique id reference of this fragment. This refers to the fragment model id.
      */
-    public function getFragmentId(): ?string;
+    public function getFragmentId(): string;
 }

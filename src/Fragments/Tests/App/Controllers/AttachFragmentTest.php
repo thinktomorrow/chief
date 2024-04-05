@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -15,7 +16,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class AttachFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
-    private Quote $fragment;
+    private Fragmentable $fragment;
     private ContextModel $context;
 
     public function setUp(): void

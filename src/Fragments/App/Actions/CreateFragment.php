@@ -21,15 +21,17 @@ final class CreateFragment
     {
         $fragment = app(Relation::getMorphedModel($fragmentKey));
 
-        $fields = Forms::make($fragment->fields($fragment))
-            ->fillModel($fragment->fragmentModel())
-            ->getFields()
-            ->notTagged(['edit', 'not-on-create']);
-
         $fragmentModel = FragmentModel::create([
             'id' => $this->fragmentRepository->nextId(),
             'key' => $fragmentKey,
         ]);
+
+        $fragment->setFragmentModel($fragmentModel);
+
+        $fields = Forms::make($fragment->fields($fragment))
+            ->fillModel($fragment->fragmentModel())
+            ->getFields()
+            ->notTagged(['edit', 'not-on-create']);
 
         // Save Fragment values
         app($fragment->getSaveFieldsClass())->save(

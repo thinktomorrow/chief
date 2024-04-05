@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Fragments\Domain\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
@@ -25,7 +26,7 @@ trait FragmentableDefaults
         return $this->fragmentModel()->modelReference();
     }
 
-    public function getFragmentId(): ?string
+    public function getFragmentId(): string
     {
         return $this->fragmentModel()->id;
     }
@@ -72,7 +73,8 @@ trait FragmentableDefaults
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
-            return $this->fragmentModel = new FragmentModel();
+            throw new MissingFragmentModelException('Fragment model is not set. Make sure to set the fragment model before accessing it.');
+//            return $this->fragmentModel = new FragmentModel();
         }
 
         return $this->fragmentModel;
