@@ -27,7 +27,7 @@ final class RenderFragments
         $this->contextRepository = $contextRepository;
     }
 
-//    public function render(FragmentsOwner $owner, string $locale, array $viewData = []): string
+    //    public function render(FragmentsOwner $owner, string $locale, array $viewData = []): string
     public function render(ContextOwner $owner, string $locale, array $viewData = []): string
     {
         // Get entire tree of all sections and fragments...
@@ -37,8 +37,8 @@ final class RenderFragments
         // fragment 1
         // fragment 2
         // fragment 3
-            // fragment 4
-            // fragment 5
+        // fragment 4
+        // fragment 5
         // fragment 6
 
         // section is a fragment but with children on its own.
@@ -81,7 +81,7 @@ final class RenderFragments
         // TODO: The current chief_urls record contains the context, not the owner...
         // Chief url is the owner ?
         // Page - url - context
-        if(!$contextId = $owner->activeContextId($locale)) {
+        if(! $contextId = $owner->activeContextId($locale)) {
             return new Collection();
         };
 
