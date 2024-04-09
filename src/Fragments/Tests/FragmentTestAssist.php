@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\App\Queries\FragmentsRenderer;
+use Thinktomorrow\Chief\Fragments\App\Queries\RenderFragments;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
@@ -29,7 +29,7 @@ class FragmentTestAssist
 
     public static function assertRenderedFragments(Model $owner, string $expected)
     {
-        Assert::assertEquals($expected, app(FragmentsRenderer::class)->render($owner, []));
+        Assert::assertEquals($expected, app(RenderFragments::class)->render($owner, []));
     }
 
     public static function firstFragment(string $contextId, callable $callback = null)

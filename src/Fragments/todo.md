@@ -25,6 +25,14 @@
 - Check manually and provide test for missed assertions
 
 ## Refactor to nested
+
+// fragmentmodel
+// context_id of all fragments
+// parent_id of nested fragments
+// root fragments have parent_id = null
+- test for nested fragments tree structure
+- test for available view attributes: page, context, fragment, parent fragment, ancestor fragments
+
 - Better nestable structure: context (locale) -> root fragment -> fragment -> fragment
 - Get Root Fragments
 - Get All Fragments
@@ -36,6 +44,7 @@
   - Root Fragment
   - Parent Fragment
   - Fragment
+  - ancestor fragments
 
 ## Locale logic
 proceed with new locale logic
