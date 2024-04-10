@@ -30,7 +30,7 @@
 
         <div class="row-start-start gutter-2">
             @foreach($rows as $i => $asset)
-                <div wire:key="{{ $i.'_'.$asset->id }}" class="w-1/2 sm:w-1/3 md:w-1/4 xl:w-1/5 2xl:w-1/6">
+                <div wire:key="filefield_choose_{{ $i.'_'.$asset->id }}" class="w-1/2 sm:w-1/3 md:w-1/4 xl:w-1/5 2xl:w-1/6">
                     <div wire:click="selectAsset('{{ $asset->id }}')">
                         @include('chief-assets::_partials.asset-item', [
                             'asset' => $asset,

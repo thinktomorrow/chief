@@ -1,7 +1,3 @@
-@php
-    use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
-@endphp
-
 @if($isOpen)
     @php
         $ownerCount = count($previewFile->owners);

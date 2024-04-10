@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Fixed: odd livewire error Uncaught Snapshot missing on Livewire component
 -   Added: Menuitem db morph added as `menuitem`. Currently only used by activity log.
 
 ## 0.8.16 - 2024-03-28
