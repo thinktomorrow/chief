@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Url\Root;
 use Thinktomorrow\Url\Url;
@@ -95,6 +96,9 @@ class MenuRequest extends FormRequest
             // Check if it is a relative
             if ($this->isRelativeUrl($trans['url'])) {
                 $data['trans'][$locale]['url'] = '/' . trim($trans['url'], '/');
+            }
+            elseif(Str::startsWith($trans['url'], ['mailto:', 'tel:', 'https://', 'http://'])) {
+                $data['trans'][$locale]['url'] = $trans['url'];
             } else {
                 $data['trans'][$locale]['url'] = Url::fromString($trans['url'])->secure()->get();
             }
