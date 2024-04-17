@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) Think Tomorrow bvba <info@thinktomorrow.be>
+Copyright (c) Think Tomorrow bv <info@thinktomorrow.be>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
