@@ -8,6 +8,15 @@
     ],
     "license": "none",
     "type": "chief-cms",
+    "repositories": [
+            {
+                "type": "path",
+                "url": "../vine",
+                "options": {
+                    "symlink": true
+                }
+            }
+        ],
     "require": {
         "php": "^8.1",
         "ext-json": "*",
@@ -26,7 +35,7 @@
         "thinktomorrow/dynamic-attributes": "^0.4.2",
         "thinktomorrow/squanto": "^3.0.3",
         "thinktomorrow/url": "~2.0.0",
-        "thinktomorrow/vine": "^0.4.11"
+        "thinktomorrow/vine": "@dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
@@ -34,7 +43,7 @@
         "friendsofphp/php-cs-fixer": "^3.14.3",
         "mockery/mockery": "^1.5.1",
         "nunomaduro/collision": "^7.0",
-        "nunomaduro/larastan": "^2.4",
+        "larastan/larastan": "^2.4",
         "orchestra/testbench": "^8.10",
         "phpunit/phpunit": "^10.3",
         "spatie/opening-hours": "^2.13"
