@@ -1,13 +1,11 @@
-@if($getTitle() || $getDescription())
+@if ($getTitle() || $getDescription())
     <div class="w-full space-y-1">
-        @if($getTitle())
-            <span class="text-sm tracking-wider uppercase h6 body-dark">{{ $getTitle() }}</span>
+        @if ($getTitle())
+            <span class="text-sm font-medium tracking-wider uppercase body-dark">{{ $getTitle() }}</span>
         @endif
 
-        @if($getDescription())
-            <div class="prose prose-spacing prose-dark">
-                <p>{!! $getDescription() !!}</p>
-            </div>
+        @if ($getDescription())
+            <p class="text-sm body text-grey-500">{!! $getDescription() !!}</p>
         @endif
     </div>
 @endif
