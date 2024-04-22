@@ -113,7 +113,7 @@ class MenuRequest extends FormRequest
         $nakedUrl = ltrim($url, '/');
 
         // Check if passed url is not intended as a host instead of a relative path
-        $notIntentedAsRoot = (null == Root::fromString($url)->scheme() && false === strpos($url, '.'));
+        $notIntentedAsRoot = (null == Root::fromString($url)->getScheme() && false === strpos($url, '.'));
 
         return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/' . $nakedUrl]));
     }

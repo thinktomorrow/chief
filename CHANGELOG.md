@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+-   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
 
 ## 0.8.17 - 2024-04-10
 -   Fixed: odd livewire error 'Uncaught Snapshot missing on Livewire component' due to dialog DOM position?
