@@ -38,7 +38,6 @@ class CreateMenuItemTest extends ChiefTestCase
     /** @test */
     public function creating_a_new_menu_item()
     {
-        $this->disableExceptionHandling();
         $response = $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
                 'trans.nl.url' => 'https://thinktomorrow.be',
