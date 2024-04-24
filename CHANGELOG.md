@@ -7,6 +7,7 @@ principles.
 ## Unreleased
 
 -   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
+-   Fixed: multiple select filter options were not all used as filter in the query, only the first one.
 -   Added: `src/Forms/Layouts/Card` HasCollapsible trait to toggle content visibility.
 
 ## 0.8.17 - 2024-04-10
