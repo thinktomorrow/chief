@@ -22,35 +22,29 @@
         // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
+        filteredOptions: {{ json_encode($options) }},
         syncSelection: () => {},
     }"
         x-init="
         $nextTick(() => {
             const refreshOptions = () => {
-                // Reset all options
-                $el.choices.clearStore();
-                $el.choices.setChoices($data.options);
 
-                // Set current value
-                $el.choices.setChoiceByValue($data.selection);
+                // Filter out the selected options from the options list
+                $data.filteredOptions = $data.options.filter(option => !$data.selection.includes(option.value))
+
+                $el.choices.clearStore();
+                $el.choices.setChoices($data.filteredOptions);
             };
 
             $data.syncSelection = (e) => {
 
-                const newValue = $el.choices.getValue(true);
-
                 // Merge newValue with current selection
-                $data.selection = [...$data.selection, ...newValue];
-
-                // Filter out the selected options from the options list
-                const filteredOptions = $data.options.filter(option => !$data.selection.includes(option.value));
+                $data.selection = [...$data.selection, ...$el.choices.getValue(true)];
 
                 // Notify change event for outside listeners, such as the Conditional fields js.
                 $dispatch('select-list-change');
 
-                // Reset select list with filtered options
-                $el.choices.clearStore();
-                $el.choices.setChoices(filteredOptions);
+                refreshOptions();
             }
 
             refreshOptions();
