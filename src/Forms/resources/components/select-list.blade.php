@@ -23,20 +23,25 @@
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
         filteredOptions: {{ json_encode($options) }},
-        syncSelection: () => {},
+        addItem: () => {},
+        refreshOptions: () => {},
+        removeItem: (index) => {
+            $data.selection.splice(index, 1);
+            $data.refreshOptions();
+        }
     }"
         x-init="
         $nextTick(() => {
-            const refreshOptions = () => {
 
+            $data.refreshOptions = () => {
                 // Filter out the selected options from the options list
-                $data.filteredOptions = $data.options.filter(option => !$data.selection.includes(option.value))
+                $data.filteredOptions = $data.options.filter(option => !$data.selection.includes(option.value));
 
                 $el.choices.clearStore();
                 $el.choices.setChoices($data.filteredOptions);
-            };
+            }
 
-            $data.syncSelection = (e) => {
+            $data.addItem = (e) => {
 
                 // Merge newValue with current selection
                 $data.selection = [...$data.selection, ...$el.choices.getValue(true)];
@@ -44,10 +49,10 @@
                 // Notify change event for outside listeners, such as the Conditional fields js.
                 $dispatch('select-list-change');
 
-                refreshOptions();
+                $data.refreshOptions();
             }
 
-            refreshOptions();
+            $data.refreshOptions();
         });
     "
         x-multiselect="{
@@ -80,14 +85,17 @@
 
     <ol>
         <template x-for="(option, index) in selection" :key="index">
-            <li x-text="option"></li>
+            <li >
+                <span x-text="option"></span>
+                <span x-on:click="removeItem(index)">delete</span>
+            </li>
         </template>
     </ol>
 
     <select
             name="{{ $name }}"
             x-ref="selectEl"
-            x-on:change="syncSelection"
+            x-on:change="addItem"
             multiple
     ></select>
 
