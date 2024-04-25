@@ -3,6 +3,7 @@ import './utilities/chiefRedactorImageUpload';
 
 import dropdownDirective from './alpine-directives/dropdown';
 import multiselectDirective from './alpine-directives/multiselect';
+import sortableDirective from './alpine-directives/sortable';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -39,3 +40,4 @@ require('./sortable/sortable-livewire');
 window.Alpine.directive('dropdown', dropdownDirective);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
+window.Alpine.directive('sortable', sortableDirective);

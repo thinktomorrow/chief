@@ -83,9 +83,10 @@
         <input type="hidden" name="{{ $name }}[]" x-bind:value="option" />
     </template>
 
-    <ol>
+    <ol x-sortable>
         <template x-for="(option, index) in selection" :key="index">
-            <li >
+            <li :x-sortable-item="index">
+                <span x-sortable-handle>PULL</span>
                 <span x-text="option"></span>
                 <span x-on:click="removeItem(index)">delete</span>
             </li>
