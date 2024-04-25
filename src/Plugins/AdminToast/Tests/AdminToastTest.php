@@ -31,12 +31,16 @@ class AdminToastTest extends TestCase
         $response = $this->asAdmin()->get(route('chief.toast.get') . '?path=foo/bar&locale=nl');
 
         $response->assertSuccessful();
-        //            ->assertJson(['data' => view('chief-site::admin-toast-element')->render()]);
+        $this->assertStringContainsString('http://localhost/admin/article_page/1/edit', $response->json('data'));
     }
 
     /** @test */
-    public function it_returns_nothing_when_something_went_wrong()
+    public function it_can_fetch_edit_url_when_model_has_custom_locale_segment()
     {
+        $response = $this->asAdmin()->get(route('chief.toast.get') . '?path=nederlands/foo/bar&locale=nl&locale_segment=nederlands');
+
+        $response->assertSuccessful();
+        $this->assertStringContainsString('http://localhost/admin/article_page/1/edit', $response->json('data'));
     }
 
     /** @test */
