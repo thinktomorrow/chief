@@ -12,6 +12,9 @@
 // After adding, the value is removed from select
 // And is not shown in the select dropdown list
 
+// TODO: check if wire:model is possible to use here
+// TODO: allow rich html for each option in the list
+
 <div
         x-cloak
         wire:ignore
@@ -28,6 +31,9 @@
         removeItem: (index) => {
             $data.selection.splice(index, 1);
             $data.refreshOptions();
+        },
+        sortSelection: (sortedSelection) => {
+            $data.selection = sortedSelection;
         }
     }"
         x-init="
@@ -79,16 +85,16 @@
         }
     }">
 
-    <template x-for="(option, index) in selection" :key="index">
+    <template x-for="(option, index) in selection" :key="option">
         <input type="hidden" name="{{ $name }}[]" x-bind:value="option" />
     </template>
 
-    <ol x-sortable>
-        <template x-for="(option, index) in selection" :key="index">
-            <li :x-sortable-item="index">
+    <ol x-sortable x-on:end.stop="sortSelection($event.target.sortable.toArray())">
+        <template x-for="(option, index) in selection" :key="option">
+            <li :x-sortable-item="option">
                 <span x-sortable-handle>PULL</span>
                 <span x-text="option"></span>
-                <span x-on:click="removeItem(index)">delete</span>
+                <span x-on:click="removeItem(option)">delete</span>
             </li>
         </template>
     </ol>
