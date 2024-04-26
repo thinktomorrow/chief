@@ -11,15 +11,19 @@ class AdminToastHTML
      * that the admin toast controller will use to determine edit rights and url. If you use some
      * SSR principle like turbolinks, htmlx or barba.js, place this inside the updatable body.
      */
-    public function metatags(): string
+    public function metatags(?string $localeSegment = null): string
     {
         $requestPath = request()->path();
         $locale = app()->getLocale();
+
+        // Segment support for thinktomorrow/locale package
+        $localeSegment = $localeSegment ?: (function_exists('localeRoutePrefix') ? localeRoutePrefix() : $locale);
         $previewMode = PreviewMode::fromRequest()->check();
 
         return <<<HTML
 <meta id="jsChiefToastPath" content="{$requestPath}">
 <meta id="jsChiefToastLocale" content="{$locale}">
+<meta id="jsChiefToastLocaleSegment" content="{$localeSegment}">
 <meta id="jsChiefToastPreviewMode" content="{$previewMode}">
 HTML;
 
@@ -44,9 +48,10 @@ HTML;
             const toast = document.querySelector(toastElementSelector);
             const toastPath = document.getElementById('jsChiefToastPath').content;
             const toastLocale = document.getElementById('jsChiefToastLocale').content;
+            const toastLocaleSegment = document.getElementById('jsChiefToastLocaleSegment').content;
             const toastPreviewMode = document.getElementById('jsChiefToastPreviewMode').content;
 
-             fetch("{$toastUrl}?path="+toastPath+"&locale="+toastLocale+"&preview_mode=" + toastPreviewMode)
+             fetch("{$toastUrl}?path="+toastPath+"&locale="+toastLocale+"&locale_segment="+toastLocaleSegment+"&preview_mode=" + toastPreviewMode)
                 .then((response) => response.json())
                 .then((data) => {
                     if(data.data) {

@@ -19,11 +19,13 @@ class GuessEditUrl
         $this->registry = $registry;
     }
 
-    public function guessByPathAndLocale(string $path, string $locale): ?string
+    public function guessByPathAndLocale(string $path, string $locale, ?string $localeSegment = null): ?string
     {
         // Remove the locale segment if present - we assume the first segment is the locale
-        if (0 === strpos($path, $locale.'/') || $path === $locale) {
-            $path = substr($path, strlen($locale.'/'));
+        $localeSegment = $localeSegment ?: $locale;
+
+        if (str_starts_with($path, $localeSegment . '/') || $path === $localeSegment) {
+            $path = substr($path, strlen($localeSegment.'/'));
 
             if (! $path) {
                 $path = '/';
