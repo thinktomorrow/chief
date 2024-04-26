@@ -16,30 +16,33 @@
 // TODO: allow rich html for each option in the list
 
 <div
-        x-cloak
-        wire:ignore
-        {{ $attributes }}
-        {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
-        x-modelable="selection"
-        x-data="{
+    x-cloak
+    wire:ignore
+    {{ $attributes }}
+    {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
+    x-modelable="selection"
+    x-data="{
         // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
         filteredOptions: {{ json_encode($options) }},
         addItem: () => {},
+        onSelectionChange: () => {},
         refreshOptions: () => {},
-        removeItem: (index) => {
+        removeItem: (value) => {
+            const index = $data.selection.indexOf(value);
             $data.selection.splice(index, 1);
-            $data.refreshOptions();
+            $data.onSelectionChange();
         },
         sortSelection: (sortedSelection) => {
             $data.selection = sortedSelection;
+            $data.onSelectionChange();
         }
     }"
-        x-init="
+    x-init="
         $nextTick(() => {
 
-            $data.refreshOptions = () => {
+            const refreshOptions = () => {
                 // Filter out the selected options from the options list
                 $data.filteredOptions = $data.options.filter(option => !$data.selection.includes(option.value));
 
@@ -47,26 +50,33 @@
                 $el.choices.setChoices($data.filteredOptions);
             }
 
-            $data.addItem = (e) => {
-
-                // Merge newValue with current selection
-                $data.selection = [...$data.selection, ...$el.choices.getValue(true)];
+            $data.onSelectionChange = () => {
 
                 // Notify change event for outside listeners, such as the Conditional fields js.
                 $dispatch('select-list-change');
 
-                $data.refreshOptions();
+                // Notify wired model
+                $dispatch('input', $data.selection);
+
+                refreshOptions();
             }
 
-            $data.refreshOptions();
+            $data.addItem = (e) => {
+
+                // Merge newValue with current selection
+                $data.selection = [...$data.selection, ...$el.choices.getValue(true)];
+                $data.onSelectionChange();
+            }
+
+            refreshOptions();
         });
     "
-        x-multiselect="{
+    x-multiselect="{
         selectEl: $refs.selectEl,
         options: {
             allowHTML: true,
             paste: false,
-            searchResultLimit: 10,
+            searchResultLimit: 30,
             placeholder: true,
             placeholderValue: '{{ $placeholder }}',
             shouldSort: false, // Keep sorting as is
@@ -93,6 +103,7 @@
         <template x-for="(option, index) in selection" :key="option">
             <li :x-sortable-item="option">
                 <span x-sortable-handle>PULL</span>
+                <span x-text="index"></span>
                 <span x-text="option"></span>
                 <span x-on:click="removeItem(option)">delete</span>
             </li>
@@ -100,10 +111,10 @@
     </ol>
 
     <select
-            name="{{ $name }}"
-            x-ref="selectEl"
-            x-on:change="addItem"
-            multiple
+        name="{{ $name }}"
+        x-ref="selectEl"
+        x-on:change="addItem"
+        multiple
     ></select>
 
 </div>
