@@ -25,50 +25,42 @@
         // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
-        filteredOptions: {{ json_encode($options) }},
-        addItem: () => {},
-        onSelectionChange: () => {},
-        refreshOptions: () => {},
-        removeItem: (value) => {
-            const index = $data.selection.indexOf(value);
-            $data.selection.splice(index, 1);
-            $data.onSelectionChange();
+        get filteredOptions() {
+            return this.options.filter(option => !this.selection.includes(option.value))
         },
-        sortSelection: (sortedSelection) => {
-            $data.selection = sortedSelection;
-            $data.onSelectionChange();
-        }
+        get selectedOptions() {
+            return this.selection.map(value => this.options.find(option => option.value === value));
+        },
+        addItem: function(){
+            this.selection = [...this.selection, ...$el.choices.getValue(true)];
+            this.onSelectionChange();
+        },
+        removeItem: function(value){
+            const index = this.selection.indexOf(value);
+            this.selection.splice(index, 1);
+            this.onSelectionChange();
+        },
+        sortSelection: function(sortedSelection) {
+            this.selection = sortedSelection;
+            this.onSelectionChange();
+        },
+        onSelectionChange: function() {
+            // Notify change event for outside listeners, such as the Conditional fields js.
+            $dispatch('select-list-change');
+
+            // Notify wired model
+            $dispatch('input', this.selection);
+
+            this.updateSelectOptions();
+        },
+        updateSelectOptions: function() {
+            $el.choices.clearStore();
+            $el.choices.setChoices(this.filteredOptions);
+        },
     }"
     x-init="
         $nextTick(() => {
-
-            const refreshOptions = () => {
-                // Filter out the selected options from the options list
-                $data.filteredOptions = $data.options.filter(option => !$data.selection.includes(option.value));
-
-                $el.choices.clearStore();
-                $el.choices.setChoices($data.filteredOptions);
-            }
-
-            $data.onSelectionChange = () => {
-
-                // Notify change event for outside listeners, such as the Conditional fields js.
-                $dispatch('select-list-change');
-
-                // Notify wired model
-                $dispatch('input', $data.selection);
-
-                refreshOptions();
-            }
-
-            $data.addItem = (e) => {
-
-                // Merge newValue with current selection
-                $data.selection = [...$data.selection, ...$el.choices.getValue(true)];
-                $data.onSelectionChange();
-            }
-
-            refreshOptions();
+            updateSelectOptions();
         });
     "
     x-multiselect="{
@@ -95,20 +87,22 @@
         }
     }">
 
-    <template x-for="(option, index) in selection" :key="option">
-        <input type="hidden" name="{{ $name }}[]" x-bind:value="option" />
-    </template>
-
     <ol x-sortable x-on:end.stop="sortSelection($event.target.sortable.toArray())">
-        <template x-for="(option, index) in selection" :key="option">
-            <li :x-sortable-item="option">
+        <template x-for="(option,index) in selectedOptions" x-bind:key="`${option.value}-${index}`">
+            <li x-bind:x-sortable-item="option.value">
                 <span x-sortable-handle>PULL</span>
-                <span x-text="index"></span>
-                <span x-text="option"></span>
-                <span x-on:click="removeItem(option)">delete</span>
+                <span x-html="option.label"></span>
+                <span x-on:click="removeItem(option.value)">delete</span>
             </li>
         </template>
     </ol>
+
+    <ul>
+        <template x-for="option in selectedOptions" :key="option.value">
+            <input type="hidden" name="{{ $name }}[]" x-bind:value="option.value" />
+        </template>
+    </ul>
+
 
     <select
         name="{{ $name }}"
