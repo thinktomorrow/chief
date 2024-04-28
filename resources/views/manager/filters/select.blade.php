@@ -14,7 +14,7 @@
 
     <x-chief::multiselect
         id="{{ $id }}"
-        name="{{ $name }}"
+        name="{{ $name . ($multiple ? '[]' : '') }}"
         :options='$options'
         :selection='$value ?: $default'
         :multiple='$multiple'

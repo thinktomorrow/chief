@@ -7,6 +7,8 @@ const sortableDirective = (el) => {
         draggable: '[x-sortable-item]',
         handle: '[x-sortable-handle]',
         dataIdAttr: 'x-sortable-item',
+        animation: 250,
+        ghostClass: 'opacity-25',
     });
 };
 

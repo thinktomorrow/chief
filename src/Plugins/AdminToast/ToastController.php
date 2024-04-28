@@ -32,13 +32,14 @@ final class ToastController extends Controller
 
         $editUrl = $this->guessEditUrl->guessByPathAndLocale(
             $request->input('path'),
-            $request->input('locale')
+            $request->input('locale'),
+            $request->input('locale_segment')
         );
 
         $toastView = view('chief-admin-toast::element', [
             'editUrl' => $editUrl,
             'toggleUrl' => route('chief.toast.toggle'),
-            'inPreviewMode' => (bool) $request->input('preview_mode', false),
+            'inPreviewMode' => (bool)$request->input('preview_mode', false),
         ])->render();
 
         return response()->json(['data' => $toastView]);
