@@ -8,11 +8,6 @@ use Thinktomorrow\Chief\Fragments\Fragmentable;
 
 trait OwningFragments
 {
-    //    public function activeContextId(string $locale): ?string
-    //    {
-    //        return null;
-    //    }
-
     public function allowedFragments(): array
     {
         return [];

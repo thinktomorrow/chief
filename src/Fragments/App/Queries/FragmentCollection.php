@@ -2,7 +2,9 @@
 
 namespace App\Queries;
 
-class FragmentCollection
+use Thinktomorrow\Vine\NodeCollection;
+
+class FragmentCollection extends NodeCollection
 {
-    //
+
 }

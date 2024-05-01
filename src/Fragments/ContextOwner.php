@@ -5,5 +5,5 @@ namespace Thinktomorrow\Chief\Fragments;
 
 interface ContextOwner
 {
-    public function activeContextId(string $locale): ?string;
+
 }

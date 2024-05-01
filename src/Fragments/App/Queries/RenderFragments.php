@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
+use App\Queries\FragmentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\View\Concerns\ManagesLoops;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
@@ -56,7 +57,7 @@ final class RenderFragments
     }
 
     // TODO: collection should be FragmentCollection (nested tree). Render and loop could be in this collection
-    private function renderFragments(Collection $fragmentables, array $viewData = []): string
+    private function renderFragments(FragmentCollection $fragmentables, array $viewData = []): string
     {
         // Validate each entry as a valid fragment object.
         $fragmentables->each(function (Fragmentable $_fragmentable) {
@@ -74,7 +75,7 @@ final class RenderFragments
         }, '');
     }
 
-    public function getFragments(ContextOwner $owner, string $locale): Collection
+    public function getFragments(\ActiveContextOwner $owner, string $locale): Collection
     {
         // Find active context for this owner and locale
 
