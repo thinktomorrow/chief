@@ -6,5 +6,6 @@
     :options="$getMultiSelectFieldOptions()"
     :multiple="$allowMultiple()"
     :selection="$getActiveValue($locale ?? null)"
+    :grouped="$hasOptionGroups()"
 />
 

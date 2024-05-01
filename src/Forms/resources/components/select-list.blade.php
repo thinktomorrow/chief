@@ -4,6 +4,7 @@
     'multiple' => false,
     'placeholder' => null,
     'name' => null,
+    'grouped' => false,
 ])
 
 // values loop over and create list
@@ -25,11 +26,35 @@
         // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
+        grouped: {{ json_encode($grouped) }},
         get filteredOptions() {
+            if(this.grouped) {
+                return this.options.map((group) => {
+                    group.choices = group.choices.filter((option) => !this.selection.includes(option.value));
+                    return group;
+                });
+            }
+
             return this.options.filter(option => !this.selection.includes(option.value))
         },
         get selectedOptions() {
-            return this.selection.map(value => this.options.find(option => option.value === value));
+        console.log(this.selection.map(value => this.findOptionByValue(value)));
+            return this.selection.map(value => this.findOptionByValue(value));
+        },
+        findOptionByValue: function(value) {
+            if(this.grouped) {
+                for (const group of this.options) {
+                console.log('start', group.choices);
+                    for(const option of group.choices) {
+                        console.log(option.value);
+                    }
+                    console.log('end');
+                console.log(group.choices.find(option => option.value === value));
+                    return group.choices.find(option => option.value === value);
+                }
+            }
+
+            return this.options.find(option => option.value === value);
         },
         addItem: function(){
             this.selection = [...this.selection, ...$el.choices.getValue(true)];
