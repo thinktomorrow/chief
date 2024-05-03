@@ -7,7 +7,7 @@
     'grouped' => false,
 ])
 
-// values loop over and create list
+{{-- // values loop over and create list
 // each list item is sortable and deletable
 // adding item to list is done by selecting from the multiselect
 // After adding, the value is removed from select
@@ -17,9 +17,9 @@
 // TODO: allow rich html for each option in the list --}}
 
 <div
+    {{ $attributes }}
     x-cloak
     wire:ignore
-    {{ $attributes }}
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
     x-modelable="selection"
     x-data="{
@@ -27,40 +27,41 @@
         selection: {{ json_encode((array) $selection) }},
         options: {{ json_encode($options) }},
         grouped: {{ json_encode($grouped) }},
+        showingSelectBox: true,
         get filteredOptions() {
-            if(this.grouped) {
+            if (this.grouped) {
                 return this.options.map((group) => {
                     group.choices = group.choices.filter((option) => !this.selection.includes(option.value));
                     return group;
                 });
             }
-
+    
             return this.options.filter(option => !this.selection.includes(option.value))
         },
         get selectedOptions() {
-        console.log(this.selection.map(value => this.findOptionByValue(value)));
+            console.log(this.selection.map(value => this.findOptionByValue(value)));
             return this.selection.map(value => this.findOptionByValue(value));
         },
         findOptionByValue: function(value) {
-            if(this.grouped) {
+            if (this.grouped) {
                 for (const group of this.options) {
-                console.log('start', group.choices);
-                    for(const option of group.choices) {
+                    console.log('start', group.choices);
+                    for (const option of group.choices) {
                         console.log(option.value);
                     }
                     console.log('end');
-                console.log(group.choices.find(option => option.value === value));
+                    console.log(group.choices.find(option => option.value === value));
                     return group.choices.find(option => option.value === value);
                 }
             }
-
+    
             return this.options.find(option => option.value === value);
         },
-        addItem: function(){
+        addItem: function() {
             this.selection = [...this.selection, ...$el.choices.getValue(true)];
             this.onSelectionChange();
         },
-        removeItem: function(value){
+        removeItem: function(value) {
             const index = this.selection.indexOf(value);
             this.selection.splice(index, 1);
             this.onSelectionChange();
@@ -72,22 +73,38 @@
         onSelectionChange: function() {
             // Notify change event for outside listeners, such as the Conditional fields js.
             $dispatch('select-list-change');
-
+    
             // Notify wired model
             $dispatch('input', this.selection);
-
+    
             this.updateSelectOptions();
         },
         updateSelectOptions: function() {
             $el.choices.clearStore();
             $el.choices.setChoices(this.filteredOptions);
         },
+        showSelectBox: function() {
+            $el.choices.containerOuter.element.classList.remove('hidden');
+            $el.choices.input.element.focus();
+            this.showingSelectBox = true;
+        },
+        hideSelectBox: function() {
+            if (this.selection.length > 0) {
+                $el.choices.containerOuter.element.classList.add('hidden');
+                this.showingSelectBox = false;
+            }
+        },
+        hideSelectBoxWhenUnfocused: function() {
+            $el.choices.input.element.addEventListener('focusout', () => {
+                this.hideSelectBox();
+            });
+        },
     }"
-    x-init="
-        $nextTick(() => {
-            updateSelectOptions();
-        });
-    "
+    x-init="$nextTick(() => {
+        updateSelectOptions();
+        hideSelectBox();
+        hideSelectBoxWhenUnfocused();
+    });"
     x-multiselect="{
         selectEl: $refs.selectEl,
         options: {
@@ -110,39 +127,39 @@
               return value1 == value2;
             },
         }
-    }">
-
-
-    <ol x-sortable x-on:end.stop="sortSelection($event.target.sortable.toArray())" class="border rounded-lg border-grey-200 mt-3">
+    }" class="space-y-2">
+    <ol
+        x-sortable
+        x-on:end.stop="() => {
+            console.log('sorting ...', $event.target.sortable.toArray());
+            sortSelection($event.target.sortable.toArray());
+        }"
+        class="flex flex-wrap gap-1">
         <template x-for="(option, index) in selectedOptions" x-bind:key="`${option.value}-${index}`">
-            <li x-bind:x-sortable-item="option.value" class="py-2 px-1.5 flex gap-2" :class="{ 'border-t border-grey-200': index > 0 }">
-                <button type="button" x-sortable-handle class="shrink-0">
-                    <svg class="w-5 h-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256">
-                        <path d="M104,60A12,12,0,1,1,92,48,12,12,0,0,1,104,60Zm60,12a12,12,0,1,0-12-12A12,12,0,0,0,164,72ZM92,116a12,12,0,1,0,12,12A12,12,0,0,0,92,116Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,116ZM92,184a12,12,0,1,0,12,12A12,12,0,0,0,92,184Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,184Z"></path>
-                    </svg>
-                </button>
-
-                <span x-html="option.label" class="body-dark body leading-5 grow"></span>
+            <li
+                x-sortable-handle
+                x-bind:x-sortable-item="option.value"
+                class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
+                <span x-html="option.label" class="text-sm font-medium leading-5 body body-dark grow"></span>
 
                 <button type="button" x-on:click="removeItem(option.value)" class="shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 my-0.5 text-grey-400 hover:body-dark">
                         <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                     </svg>
                 </button>
             </li>
         </template>
+
+        <button x-show="!showingSelectBox" x-on:click="showSelectBox()" class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 my-0.5 body-dark">
+                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+            </svg>
+        </button>
     </ol>
+
+    <select name="{{ $name }}" x-ref="selectEl" x-on:change="addItem" multiple></select>
 
     <template x-for="option in selectedOptions" :key="option.value">
         <input type="hidden" name="{{ $name }}[]" x-bind:value="option.value" />
     </template>
-
-
-    <select
-        name="{{ $name }}"
-        x-ref="selectEl"
-        x-on:change="addItem"
-        multiple
-    ></select>
-
 </div>
