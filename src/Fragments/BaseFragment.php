@@ -114,9 +114,11 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
      */
     public function getFragments(): array
     {
-        if(!$this->fragmentNode) return [];
+        if(! $this->fragmentNode) {
+            return [];
+        }
 
-        return $this->fragmentNode->getChildNodes()->map(function($node) {
+        return $this->fragmentNode->getChildNodes()->map(function ($node) {
             return $node->getNodeEntry();
         })->all();
     }

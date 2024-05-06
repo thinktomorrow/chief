@@ -6,13 +6,11 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\Concerns\ManagesLoops;
-use Thinktomorrow\Chief\Fragments\ActiveContextOwner;
-use Thinktomorrow\Chief\Fragments\ContextOwner;
+use Thinktomorrow\Chief\Fragments\Domain\CurrentActiveContextId;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
-use Thinktomorrow\Chief\Fragments\Domain\CurrentActiveContextId;
 use Thinktomorrow\Vine\Node;
 
 final class RenderFragments
@@ -43,7 +41,7 @@ final class RenderFragments
 
         $output = '';
 
-        foreach($fragments as $rootNode){
+        foreach($fragments as $rootNode) {
 
             // render fragments like components...
 
