@@ -35,11 +35,10 @@
                     return group;
                 });
             }
-    
+
             return this.options.filter(option => !this.selection.includes(option.value))
         },
         get selectedOptions() {
-            console.log(this.selection.map(value => this.findOptionByValue(value)));
             return this.selection.map(value => this.findOptionByValue(value));
         },
         findOptionByValue: function(value) {
@@ -54,8 +53,8 @@
                     return group.choices.find(option => option.value === value);
                 }
             }
-    
-            return this.options.find(option => option.value === value);
+
+            return this.options.find(option => option.value.toString() === value.toString());
         },
         addItem: function() {
             this.selection = [...this.selection, ...$el.choices.getValue(true)];
@@ -73,10 +72,10 @@
         onSelectionChange: function() {
             // Notify change event for outside listeners, such as the Conditional fields js.
             $dispatch('select-list-change');
-    
+
             // Notify wired model
             $dispatch('input', this.selection);
-    
+
             this.updateSelectOptions();
         },
         updateSelectOptions: function() {
@@ -131,7 +130,6 @@
     <ol
         x-sortable
         x-on:end.stop="() => {
-            console.log('sorting ...', $event.target.sortable.toArray());
             sortSelection($event.target.sortable.toArray());
         }"
         class="flex flex-wrap gap-1">
@@ -150,7 +148,7 @@
             </li>
         </template>
 
-        <button x-show="!showingSelectBox" x-on:click="showSelectBox()" class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
+        <button type="button" x-show="!showingSelectBox" x-on:click="showSelectBox()" class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 my-0.5 body-dark">
                 <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
             </svg>
@@ -159,7 +157,7 @@
 
     <select name="{{ $name }}" x-ref="selectEl" x-on:change="addItem" multiple></select>
 
-    <template x-for="option in selectedOptions" :key="option.value">
+    <template x-for="(option, index) in selectedOptions" x-bind:key="`${option.value}-${index}`">
         <input type="hidden" name="{{ $name }}[]" x-bind:value="option.value" />
     </template>
 </div>
