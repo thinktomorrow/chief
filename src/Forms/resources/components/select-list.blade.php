@@ -31,12 +31,12 @@
         get filteredOptions() {
             if (this.grouped) {
                 return this.options.map((group) => {
-                    group.choices = group.choices.filter((option) => !this.selection.includes(option.value));
+                    group.choices = group.choices.filter(option => !this.selection.some(value => option.value.toString() === value.toString()));
                     return group;
                 });
             }
 
-            return this.options.filter(option => !this.selection.includes(option.value))
+            return this.options.filter(option => !this.selection.some(value => option.value.toString() === value.toString()))
         },
         get selectedOptions() {
             return this.selection.map(value => this.findOptionByValue(value));
@@ -61,7 +61,8 @@
             this.onSelectionChange();
         },
         removeItem: function(value) {
-            const index = this.selection.indexOf(value);
+            const index = this.selection.findIndex(val => val == value);
+
             this.selection.splice(index, 1);
             this.onSelectionChange();
         },
