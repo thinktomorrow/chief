@@ -8,10 +8,10 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class SnippetStub implements Fragmentable, FragmentsOwner
+class SnippetStub implements Fragment, FragmentsOwner
 {
     use FragmentableDefaults;
     use ForwardFragmentProperties;

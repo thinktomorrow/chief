@@ -6,10 +6,10 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class FragmentableStub implements Fragmentable, FragmentsOwner
+class FragmentStub implements Fragment, FragmentsOwner
 {
     use FragmentableDefaults;
     use OwningFragments;

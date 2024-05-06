@@ -3,17 +3,17 @@
 namespace Thinktomorrow\Chief\Fragments\Domain\Models;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 
 class FragmentFactory
 {
-    public function create(FragmentModel $fragmentModel): Fragmentable
+    public function create(FragmentModel $fragmentModel): Fragment
     {
         return $this->createObject($fragmentModel->key)
             ->setFragmentModel($fragmentModel);
     }
 
-    public function createObject(string $fragmentKey): Fragmentable
+    public function createObject(string $fragmentKey): Fragment
     {
         return app()->make($this->findClassName($fragmentKey));
     }

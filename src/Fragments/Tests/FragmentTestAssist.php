@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
@@ -68,7 +68,7 @@ class FragmentTestAssist
         return app(ContextRepository::class)->create($owner, $locales);
     }
 
-    public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragmentable
+    public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragment
     {
         $fragmentKey = $fragmentClass::resourceKey();
 
@@ -84,7 +84,7 @@ class FragmentTestAssist
         app(AttachFragment::class)->handle($contextId, $fragmentId, $order, $data);
     }
 
-    public static function createAndAttachFragment(string $fragmentClass, $contextId, $order = 0, array $data = [], bool $register = true): Fragmentable
+    public static function createAndAttachFragment(string $fragmentClass, $contextId, $order = 0, array $data = [], bool $register = true): Fragment
     {
         $model = static::createFragment($fragmentClass, $data, $register);
 
@@ -102,7 +102,7 @@ class FragmentTestAssist
         return [$context, $model];
     }
 
-    public static function findFragment(string $fragmentId): Fragmentable
+    public static function findFragment(string $fragmentId): Fragment
     {
         return app(FragmentRepository::class)->find($fragmentId);
     }

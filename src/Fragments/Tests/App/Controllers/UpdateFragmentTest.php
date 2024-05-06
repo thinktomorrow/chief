@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class UpdateFragmentTest extends ChiefTestCase
 {
     private $owner;
-    private Fragmentable $fragment;
+    private Fragment $fragment;
 
     public function setUp(): void
     {

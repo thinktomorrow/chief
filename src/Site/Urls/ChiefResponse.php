@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\Fragments\Domain\CurrentActiveContextId;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Throwable;
@@ -57,8 +58,7 @@ final class ChiefResponse
     {
         $model = static::findModel($urlRecord);
 
-        CurrentContext::setUrlRecord($urlRecord);
-        CurrentContext::setPage($model);
+        CurrentActiveContextId::set($urlRecord->context_id);
 
         return $model->response();
     }

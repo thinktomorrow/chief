@@ -121,7 +121,8 @@ class ChiefServiceProvider extends ServiceProvider
         Relation::morphMap([FragmentModel::resourceKey() => FragmentModel::class]);
 
         Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\App\\Queries\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, app()->getLocale(), get_defined_vars()); ?>';
+
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\App\\Queries\\RenderFragments::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, app()->getLocale(), get_defined_vars()); ?>';
         });
     }
 

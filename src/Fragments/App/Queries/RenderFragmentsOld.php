@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\Concerns\ManagesLoops;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
 final class RenderFragmentsOld
@@ -15,14 +15,14 @@ final class RenderFragmentsOld
     public function render(Collection $fragmentables, FragmentsOwner $owner, array $viewData = []): string
     {
         // Validate each entry as a valid fragment object.
-        $fragmentables->each(function (Fragmentable $_fragmentable) {
+        $fragmentables->each(function (Fragment $_fragmentable) {
         });
 
         // Init new loop object
         $this->loopsStack = [];
         $this->addLoop($fragmentables);
 
-        return $fragmentables->reduce(function ($carry, Fragmentable $fragmentable) use ($owner, $viewData) {
+        return $fragmentables->reduce(function ($carry, Fragment $fragmentable) use ($owner, $viewData) {
             $this->incrementLoopIndices();
             $loop = $this->getLastLoop();
 

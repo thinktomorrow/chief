@@ -21,7 +21,6 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     use ReferableModelDefault;
     use HasDynamicAttributes;
     use InteractsWithAssets;
-    use SoftDeletes;
 
     /**
      * Used as reference to the fragmentModel

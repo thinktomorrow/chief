@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
 
+use Illuminate\Contracts\Support\Htmlable;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
-interface Fragmentable extends FragmentResource, ViewableContract, ReferableModel
+interface Fragment extends FragmentResource, ReferableModel, Htmlable
 {
     public function renderAdminFragment($owner, $loop, $viewData = []);
 

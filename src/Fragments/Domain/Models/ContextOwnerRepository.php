@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Domain\Models;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -64,7 +64,7 @@ class ContextOwnerRepository
         return ModelReference::make($key, $id)->instance();
     }
 
-    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
+    private function fragmentFactory(FragmentModel $fragmentModel): Fragment
     {
         return app(FragmentFactory::class)->create($fragmentModel);
     }

@@ -26,7 +26,7 @@ use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyDetached;
 use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -86,12 +86,12 @@ trait FragmentAssistant
             }
 
             // Some fragment edit/update actions have second argument as the fragmentable
-            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-unshare', 'fragment-delete']) && $parameters[0] instanceof Fragmentable) {
+            if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-unshare', 'fragment-delete']) && $parameters[0] instanceof Fragment) {
                 $parameters[0] = $parameters[0]->fragmentModel()->id;
             }
 
             // Nested fragments routes
-            if ($model instanceof Fragmentable) {
+            if ($model instanceof Fragment) {
                 return route('chief.' . $modelKey . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
             }
 
@@ -105,7 +105,7 @@ trait FragmentAssistant
             throw new Exception('Fragment route definition for ' . $action . ' requires a Model or Fragmentable as second argument.');
         }
 
-        $modelId = $model instanceof Fragmentable ? $model->fragmentModel()->id : $model->id;
+        $modelId = $model instanceof Fragment ? $model->fragmentModel()->id : $model->id;
 
         return route('chief.' . $modelKey . '.' . $action, $modelId);
     }
@@ -157,7 +157,7 @@ trait FragmentAssistant
         return view('chief::manager.windows.fragments.create');
     }
 
-    private function fragmentable(): Fragmentable
+    private function fragmentable(): Fragment
     {
         return app($this->managedModelClass());
     }
@@ -234,7 +234,7 @@ trait FragmentAssistant
 
     abstract protected function fieldValidator(): FieldValidator;
 
-    private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): Fragmentable
+    private function storeFragmentable(Model $owner, Fragment $fragmentable, Request $request): Fragment
     {
         $fragmentable->setFragmentModel(app(CreateFragment::class)->create($owner, $fragmentable, $request->order, [], $request->input('locales')));
 
@@ -277,7 +277,7 @@ trait FragmentAssistant
     /**
      * @return Factory|\Illuminate\Contracts\View\View
      */
-    public function handleFragmentEdit(Request $request, FragmentsOwner $ownerModel, Fragmentable $fragmentable)
+    public function handleFragmentEdit(Request $request, FragmentsOwner $ownerModel, Fragment $fragmentable)
     {
         $this->guard('fragment-edit', $fragmentable);
 

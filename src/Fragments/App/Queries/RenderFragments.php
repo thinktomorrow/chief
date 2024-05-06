@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
-use App\Queries\FragmentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\View\Concerns\ManagesLoops;
+use Thinktomorrow\Chief\Fragments\ActiveContextOwner;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
+use Thinktomorrow\Chief\Fragments\Domain\CurrentActiveContextId;
+use Thinktomorrow\Vine\Node;
 
 final class RenderFragments
 {
@@ -29,10 +29,31 @@ final class RenderFragments
     }
 
     //    public function render(FragmentsOwner $owner, string $locale, array $viewData = []): string
-    public function render(ContextOwner $owner, string $locale, array $viewData = []): string
+    public function render(): string
     {
+        // TEMP
+        CurrentActiveContextId::set(1);
+
+        if(! CurrentActiveContextId::exists()) {
+            return '';
+        };
+
         // Get entire tree of all sections and fragments...
-        $fragments = $this->getFragments($owner, $locale);
+        $fragments = $this->getFragments(CurrentActiveContextId::get());
+
+        $output = '';
+
+        foreach($fragments as $rootNode){
+
+            // render fragments like components...
+
+            // Render fragment should be recursive
+            // pass page, owner (page, section), context, section, sectionTree, fragments, ...
+            $output .= $rootNode->getNodeEntry()->toHtml();
+            //TODO: change to render() method (from component)
+        }
+
+        return $output;
 
         // VINE!!
         // fragment 1
@@ -53,21 +74,21 @@ final class RenderFragments
 
         // Render fragment tree
 
-        return $this->renderFragments($fragments, $viewData);
+        //return $this->renderFragments($fragments, $viewData);
     }
 
     // TODO: collection should be FragmentCollection (nested tree). Render and loop could be in this collection
     private function renderFragments(FragmentCollection $fragmentables, array $viewData = []): string
     {
         // Validate each entry as a valid fragment object.
-        $fragmentables->each(function (Fragmentable $_fragmentable) {
+        $fragmentables->each(function (Fragment $_fragmentable) {
         });
 
         // Init new loop object
         $this->loopsStack = [];
         $this->addLoop($fragmentables);
 
-        return $fragmentables->reduce(function ($carry, Fragmentable $fragmentable) use ($owner, $viewData) {
+        return $fragmentables->reduce(function ($carry, Fragment $fragmentable) use ($owner, $viewData) {
             $this->incrementLoopIndices();
             $loop = $this->getLastLoop();
 
@@ -75,28 +96,19 @@ final class RenderFragments
         }, '');
     }
 
-    public function getFragments(\ActiveContextOwner $owner, string $locale): Collection
+    public function getFragments(string $contextId): FragmentCollection
     {
-        // Find active context for this owner and locale
-
-        // TODO: The current chief_urls record contains the context, not the owner...
-        // Chief url is the owner ?
-        // Page - url - context
-        if(! $contextId = $owner->activeContextId($locale)) {
-            return new Collection();
-        };
-
-        // Get fragments for given context
-        $fragments = $this->fragmentRepository->getByContext($contextId);
+        $fragmentCollection = $this->fragmentRepository->getByContext($contextId);
 
         // When admin is logged in and this request is in preview mode, we allow to view all fragments
         if (PreviewMode::fromRequest()->check()) {
-            return $fragments;
+            // TODO: mark all offline fragments as such
+            return $fragmentCollection;
         }
 
         // We don't display offline fragments
-        return $fragments->reject(function (Fragmentable $fragmentable) {
-            return $fragmentable->fragmentModel()->isOffline();
+        return $fragmentCollection->remove(function (Node $node) {
+            return $node->getNodeEntry()->fragmentModel()->isOffline();
         });
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 trait FragmentOnlineAndOfflineHelpers
 {
-    private function prepareOfflineFragment($owner): Fragmentable
+    private function prepareOfflineFragment($owner): Fragment
     {
         [$context,$fragment] = FragmentTestAssist::createContextAndAttachFragment($owner, SnippetStub::class, 0, ['online_status' => 'offline']);
         $fragment->fragmentModel()->setOffline();
@@ -19,7 +19,7 @@ trait FragmentOnlineAndOfflineHelpers
         return $fragment;
     }
 
-    private function prepareOnlineFragment($owner): Fragmentable
+    private function prepareOnlineFragment($owner): Fragment
     {
         [$context,$fragment] = FragmentTestAssist::createContextAndAttachFragment($owner, SnippetStub::class, 0, ['online_status' => 'offline']);
         $fragment->fragmentModel()->setOnline();

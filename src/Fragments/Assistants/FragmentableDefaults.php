@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Fragments\Domain\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
@@ -33,13 +34,27 @@ trait FragmentableDefaults
         return $this->renderFragment($owner, $loop, $viewData);
     }
 
+    public function render(): View
+    {
+        $view = 'view';
+
+        return view($view, array_merge($this->data(), [
+            'component' => $this,
+            'fragment' => $this,
+
+            /** @deprecated use $fragment instead */
+            'model' => $this,
+        ]));
+    }
+
     public function renderFragment($owner, $loop, $viewData = []): string
     {
-        $this->setOwnerViewPath($owner);
+        //$this->setOwnerViewPath($owner);
 
         $this->setViewData(array_merge($viewData, [
-            'owner' => $owner,
-            'loop' => $loop,
+            'fragment' => $this,
+
+            /** @deprecated use $fragment instead */
             'model' => $this,
         ]));
 
@@ -51,7 +66,7 @@ trait FragmentableDefaults
         return isset($this->fragmentModel);
     }
 
-    public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable
+    public function setFragmentModel(FragmentModel $fragmentModel): Fragment
     {
         $this->fragmentModel = $fragmentModel;
 

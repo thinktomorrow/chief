@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 
 trait OwningFragments
 {
@@ -15,7 +15,7 @@ trait OwningFragments
 
     public function ownerModel(): Model
     {
-        return ($this instanceof Fragmentable)
+        return ($this instanceof Fragment)
             ? $this->fragmentModel()
             : $this;
     }

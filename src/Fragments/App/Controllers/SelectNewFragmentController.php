@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Controllers;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
 class SelectNewFragmentController
@@ -26,7 +26,7 @@ class SelectNewFragmentController
     {
         return collect($owner->allowedFragments())->map(function ($fragmentClass) {
             return app($fragmentClass);
-        })->groupBy(function (Fragmentable $fragment) {
+        })->groupBy(function (Fragment $fragment) {
             return $fragment->getCategory();
         })->sortDesc()->all();
     }

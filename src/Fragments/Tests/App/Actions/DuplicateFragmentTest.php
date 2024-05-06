@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -20,7 +20,7 @@ class DuplicateFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
     private ContextModel $context;
-    private Fragmentable $fragment;
+    private Fragment $fragment;
 
     public function setUp(): void
     {

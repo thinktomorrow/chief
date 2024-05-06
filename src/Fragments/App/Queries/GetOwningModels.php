@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 
@@ -27,13 +27,13 @@ class GetOwningModels
         $models = $this->fragmentOwnerRepository->getOwnersByFragment($fragmentId);
 
         return $models->map(function ($model) {
-            $resource = $model instanceof Fragmentable
+            $resource = $model instanceof Fragment
                 ? $model
                 : $this->registry->findResourceByModel($model::class);
 
             return [
                 'model' => $model,
-                'manager' => $model instanceof Fragmentable ? null : $this->registry->findManagerByModel($model::class),
+                'manager' => $model instanceof Fragment ? null : $this->registry->findManagerByModel($model::class),
                 'pageTitle' => $resource instanceof PageResource ? $resource->getPageTitle($model) : $resource->getLabel(),
             ];
         })->all();

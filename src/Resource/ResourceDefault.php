@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Manager;
 
 trait ResourceDefault
@@ -37,7 +37,7 @@ trait ResourceDefault
 
     public function field($model, string $key): Field
     {
-        $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+        $fieldModel = $model instanceof Fragment ? $model->fragmentModel() : $model;
 
         return Fields::make($this->fields($model))->find($key)->model($fieldModel);
     }

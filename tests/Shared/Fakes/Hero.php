@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 
-class Hero implements Fragmentable
+class Hero implements Fragment
 {
     use FragmentableDefaults;
 

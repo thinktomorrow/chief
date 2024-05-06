@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Queries;
+namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Thinktomorrow\Vine\NodeCollection;
 

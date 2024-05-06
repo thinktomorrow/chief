@@ -5,7 +5,8 @@ namespace Thinktomorrow\Chief\Fragments\Domain\Models;
 
 use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\App\Queries\FragmentCollection;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 final class FragmentRepository
@@ -19,13 +20,20 @@ final class FragmentRepository
         $this->fragmentFactory = $fragmentFactory;
     }
 
-    public function getByContext(string $contextId): Collection
+    /**
+     * Get entire fragmentCollection for a given context.
+     * This is used to render all page fragments.
+     */
+    public function getByContext(string $contextId): FragmentCollection
     {
         $fragmentModels = ContextModel::findOrFail($contextId)
             ->fragments()
+            ->with('assetRelation', 'assetRelation.media')
             ->get();
 
-        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
+        return FragmentCollection::fromIterable(
+            $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel))
+        )->eachRecursive(fn ($node) => $node->getNodeEntry()->setFragmentNode($node));
     }
 
     public function exists(string $fragmentId): bool
@@ -33,7 +41,7 @@ final class FragmentRepository
         return FragmentModel::where('id', $fragmentId)->exists();
     }
 
-    public function find(string $fragmentId): Fragmentable
+    public function find(string $fragmentId): Fragment
     {
         return $this->fragmentFactory->create(FragmentModel::findOrFail($fragmentId));
     }
@@ -41,7 +49,7 @@ final class FragmentRepository
     /**
      * Find a fragment including its context pivot data
      */
-    public function findByContext(string $fragmentId, string $contextId): Fragmentable
+    public function findByContext(string $fragmentId, string $contextId): Fragment
     {
         $fragmentModel = ContextModel::findOrFail($contextId)->fragments()->find($fragmentId);
 

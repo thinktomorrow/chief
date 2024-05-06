@@ -8,7 +8,7 @@ use ReflectionClass;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -46,7 +46,7 @@ trait FragmentsOwningAssistant
         }
 
         // TODO: would be great if we could remove this specific 'nested' attitude here and just use the same routes for everything
-        if ($model instanceof Fragmentable) {
+        if ($model instanceof Fragment) {
             $model = $model->fragmentModel();
             //            return route('chief.' . $this->managedModelClass()::resourceKey() . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
         }
@@ -180,7 +180,7 @@ trait FragmentsOwningAssistant
 
     private function owner($ownerId): FragmentsOwner
     {
-        if ((new ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
+        if ((new ReflectionClass($this->managedModelClass()))->implementsInterface(Fragment::class)) {
             return $this->fragmentRepository->find($ownerId);
         }
 
