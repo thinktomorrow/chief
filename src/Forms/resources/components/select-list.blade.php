@@ -28,11 +28,15 @@
         options: {{ json_encode($options) }},
         grouped: {{ json_encode($grouped) }},
         showingSelectBox: true,
+        searchTerm: '',
         get filteredOptions() {
             if (this.grouped) {
                 return this.options.map((group) => {
-                    group.choices = group.choices.filter(option => !this.selection.some(value => option.value.toString() === value.toString()));
-                    return group;
+
+                    const newGroup = {...group};
+
+                    newGroup.choices = group.choices.filter(option => !this.selection.some(value => option.value.toString() === value.toString()));
+                    return newGroup;
                 });
             }
 
@@ -44,14 +48,14 @@
         findOptionByValue: function(value) {
             if (this.grouped) {
                 for (const group of this.options) {
-                    console.log('start', group.choices);
-                    for (const option of group.choices) {
-                        console.log(option.value);
+                    const match = group.choices.find(option => option.value.toString() === value.toString());
+                    if(match !== undefined) {
+                        return match;
                     }
-                    console.log('end');
-                    console.log(group.choices.find(option => option.value === value));
-                    return group.choices.find(option => option.value === value);
                 }
+
+                console.error('No option found for value', value);
+                return null;
             }
 
             return this.options.find(option => option.value.toString() === value.toString());
@@ -94,23 +98,43 @@
                 this.showingSelectBox = false;
             }
         },
+        resetSearchTerm: function() {
+            this.searchTerm = '';
+        },
         hideSelectBoxWhenUnfocused: function() {
             $el.choices.input.element.addEventListener('focusout', () => {
                 this.hideSelectBox();
             });
         },
+        keepSearchTermWhenSelecting: function() {
+            $el.addEventListener('search', (event) => {
+                this.searchTerm = event.detail.value;
+            });
+
+            $el.addEventListener('addItem', (event) => {
+                // search_terms
+                setTimeout(() => {
+                    console.log($el.choices.input.element);
+                    $el.choices.input.element.value = this.searchTerm;
+                    $el.choices.input.setWidth();
+                    $el.choices.input.element.dispatchEvent(new Event('input', { bubbles: true }));
+                }, 500);
+            });
+        }
     }"
     x-init="$nextTick(() => {
         updateSelectOptions();
         hideSelectBox();
         hideSelectBoxWhenUnfocused();
+        keepSearchTermWhenSelecting();
     });"
     x-multiselect="{
         selectEl: $refs.selectEl,
         options: {
             allowHTML: true,
             paste: false,
-            searchResultLimit: 30,
+            searchResultLimit: 20,
+            resetScrollPosition: false, // Keep scroll in position when selecting
             placeholder: true,
             placeholderValue: '{{ $placeholder }}',
             shouldSort: false, // Keep sorting as is
@@ -119,7 +143,7 @@
             duplicateItemsAllowed: false,
             noResultsText: 'Geen resultaten',
             noChoicesText: 'Geen opties',
-            itemSelectText: '',
+            itemSelectText: 'klik op enter om te selecteren',
             uniqueItemText: 'Enkel unieke opties zijn mogelijk',
             valueComparer: (value1, value2) => {
               // Default is strict equality, we take it loosely. Otherwise id comparison
@@ -158,7 +182,7 @@
 
     <select name="{{ $name }}" x-ref="selectEl" x-on:change="addItem" multiple></select>
 
-    <template x-for="(option, index) in selectedOptions" x-bind:key="`${option.value}-${index}`">
+    <template x-for="option in selectedOptions" x-bind:key="`${option.value}`">
         <input type="hidden" name="{{ $name }}[]" x-bind:value="option.value" />
     </template>
 </div>
