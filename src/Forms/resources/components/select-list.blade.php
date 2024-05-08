@@ -13,15 +13,29 @@
 // After adding, the value is removed from select
 // And is not shown in the select dropdown list
 
+// Test: saving + livewire saving (e.g. in file field)
+
+// Testing:
+// - the already selected values are shown in the list
+// - the selected values are updated after adding an item
+// - the selected values are updated after removing an item
+// - hidden input fields are populated with the selected values
+// - the select dropdown is updated after adding an item
+// - the select dropdown is updated after removing an item
+// - the select dropdown is hidden after adding an item
+// - the selected values are updated after sorting
+
+// https://dev.to/thormeier/simple-and-effective-unit-testing-alpine-js-components-with-jest-13ig
+
 // TODO: check if wire:model is possible to use here
 // TODO: allow rich html for each option in the list --}}
+
 
 <div
     {{ $attributes }}
     x-cloak
     wire:ignore
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
-    x-modelable="selection"
     x-data="{
         // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
         selection: {{ json_encode((array) $selection) }},
@@ -97,9 +111,18 @@
                 $el.choices.containerOuter.element.classList.add('hidden');
                 this.showingSelectBox = false;
             }
+
+            this.resetSearchTerm();
         },
         resetSearchTerm: function() {
             this.searchTerm = '';
+
+            $el.choices.clearInput();
+        },
+        forceSearch: function(value) {
+            $el.choices.input.element.value = value;
+            $el.choices.input.setWidth();
+            $el.choices._searchChoices(value);
         },
         hideSelectBoxWhenUnfocused: function() {
             $el.choices.input.element.addEventListener('focusout', () => {
@@ -112,16 +135,13 @@
             });
 
             $el.addEventListener('addItem', (event) => {
-                // search_terms
                 setTimeout(() => {
-                    console.log($el.choices.input.element);
-                    $el.choices.input.element.value = this.searchTerm;
-                    $el.choices.input.setWidth();
-                    $el.choices.input.element.dispatchEvent(new Event('input', { bubbles: true }));
-                }, 500);
+                    this.forceSearch(this.searchTerm);
+                }, 0);
             });
         }
     }"
+    x-modelable="selection"
     x-init="$nextTick(() => {
         updateSelectOptions();
         hideSelectBox();
