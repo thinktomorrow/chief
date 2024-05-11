@@ -35,119 +35,16 @@
     {{ $attributes }}
     x-cloak
     wire:ignore
+    x-data="selectlist({
+        options: @json($options),
+        selection: @json($selection),
+        multiple: @json($multiple),
+        grouped: @json($grouped),
+    })"
+
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
-    x-data="{
-        // Set the selection either if we are in a livewire form based on the given form property value or else on the passed selection
-        selection: {{ json_encode((array) $selection) }},
-        options: {{ json_encode($options) }},
-        grouped: {{ json_encode($grouped) }},
-        showingSelectBox: true,
-        searchTerm: '',
-        get filteredOptions() {
-            if (this.grouped) {
-                return this.options.map((group) => {
-
-                    const newGroup = {...group};
-
-                    newGroup.choices = group.choices.filter(option => !this.selection.some(value => option.value.toString() === value.toString()));
-                    return newGroup;
-                });
-            }
-
-            return this.options.filter(option => !this.selection.some(value => option.value.toString() === value.toString()))
-        },
-        get selectedOptions() {
-            return this.selection.map(value => this.findOptionByValue(value));
-        },
-        findOptionByValue: function(value) {
-            if (this.grouped) {
-                for (const group of this.options) {
-                    const match = group.choices.find(option => option.value.toString() === value.toString());
-                    if(match !== undefined) {
-                        return match;
-                    }
-                }
-
-                console.error('No option found for value', value);
-                return null;
-            }
-
-            return this.options.find(option => option.value.toString() === value.toString());
-        },
-        addItem: function() {
-            this.selection = [...this.selection, ...$el.choices.getValue(true)];
-            this.onSelectionChange();
-        },
-        removeItem: function(value) {
-            const index = this.selection.findIndex(val => val == value);
-
-            this.selection.splice(index, 1);
-            this.onSelectionChange();
-        },
-        sortSelection: function(sortedSelection) {
-            this.selection = sortedSelection;
-            this.onSelectionChange();
-        },
-        onSelectionChange: function() {
-            // Notify change event for outside listeners, such as the Conditional fields js.
-            $dispatch('select-list-change');
-
-            // Notify wired model
-            $dispatch('input', this.selection);
-
-            this.updateSelectOptions();
-        },
-        updateSelectOptions: function() {
-            $el.choices.clearStore();
-            $el.choices.setChoices(this.filteredOptions);
-        },
-        showSelectBox: function() {
-            $el.choices.containerOuter.element.classList.remove('hidden');
-            $el.choices.input.element.focus();
-            this.showingSelectBox = true;
-        },
-        hideSelectBox: function() {
-            if (this.selection.length > 0) {
-                $el.choices.containerOuter.element.classList.add('hidden');
-                this.showingSelectBox = false;
-            }
-
-            this.resetSearchTerm();
-        },
-        resetSearchTerm: function() {
-            this.searchTerm = '';
-
-            $el.choices.clearInput();
-        },
-        forceSearch: function(value) {
-            $el.choices.input.element.value = value;
-            $el.choices.input.setWidth();
-            $el.choices._searchChoices(value);
-        },
-        hideSelectBoxWhenUnfocused: function() {
-            $el.choices.input.element.addEventListener('focusout', () => {
-                this.hideSelectBox();
-            });
-        },
-        keepSearchTermWhenSelecting: function() {
-            $el.addEventListener('search', (event) => {
-                this.searchTerm = event.detail.value;
-            });
-
-            $el.addEventListener('addItem', (event) => {
-                setTimeout(() => {
-                    this.forceSearch(this.searchTerm);
-                }, 0);
-            });
-        }
-    }"
     x-modelable="selection"
-    x-init="$nextTick(() => {
-        updateSelectOptions();
-        hideSelectBox();
-        hideSelectBoxWhenUnfocused();
-        keepSearchTermWhenSelecting();
-    });"
+
     x-multiselect="{
         selectEl: $refs.selectEl,
         options: {

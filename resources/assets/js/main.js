@@ -12,6 +12,7 @@ import initSortable from './sortable/sortable-init';
 
 import initFormSubmitOnChange from './utilities/form-submit-on-change';
 import registerClassToggles from './utilities/toggle-class';
+import selectlist from './alpine-directives/selectlist';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -41,3 +42,4 @@ window.Alpine.directive('dropdown', dropdownDirective);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
 window.Alpine.directive('sortable', sortableDirective);
+window.Alpine.data('selectlist', selectlist);
