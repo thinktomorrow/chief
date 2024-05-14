@@ -3,13 +3,13 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\Domain;
 
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
-class FragmentTest extends ChiefTestCase
+class ForwardFragmentPropertiesTest extends ChiefTestCase
 {
-    /** @test */
-    public function it_cascade_calls_to_fragmentmodel()
+    public function test_it_forwards_calls_to_fragmentmodel()
     {
         $snippet = new SnippetStub();
         $snippet->setFragmentModel(new FragmentModel(['title' => 'foobar']));
@@ -18,10 +18,9 @@ class FragmentTest extends ChiefTestCase
         $this->assertEquals('foobar', $snippet->title);
     }
 
-    /** @test */
-    public function unknown_call_to_fragmentmodel_results_in_null()
+    public function test_non_existing_fragmentmodel_property_results_in_null()
     {
-        $snippet = $this->setupAndCreateSnippet($this->setupAndCreateArticle());
+        $snippet = FragmentTestAssist::createFragment(SnippetStub::class);
 
         $this->assertNull($snippet->unknown_value);
     }

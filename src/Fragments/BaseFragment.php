@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Domain\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
@@ -15,6 +16,7 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
 {
     use \Thinktomorrow\Chief\Resource\FragmentResourceDefault;
     use \Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+    use ForwardFragmentProperties;
 
     protected ?FragmentModel $fragmentModel = null;
     protected ?Node $fragmentNode = null;
