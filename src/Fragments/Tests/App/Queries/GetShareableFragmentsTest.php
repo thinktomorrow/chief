@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
