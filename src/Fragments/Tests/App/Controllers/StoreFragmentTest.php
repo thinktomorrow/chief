@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use function app;
 use function chiefRegister;
 use Illuminate\Http\UploadedFile;
