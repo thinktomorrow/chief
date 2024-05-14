@@ -26,14 +26,13 @@ class GetOwningModelsTest extends ChiefTestCase
 
     public function test_it_can_retrieve_all_owning_resources()
     {
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+
+        // Attach fragment to two contexts
         $owner2 = ArticlePage::create([]);
-
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'nl']);
-
-        // Attach to two contexts
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
+        $context2 = FragmentTestAssist::createContext($owner2);
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
         $owners = app(GetOwningModels::class)->get($fragment->getFragmentId());
 
@@ -47,26 +46,24 @@ class GetOwningModelsTest extends ChiefTestCase
 
     public function test_it_can_get_count_of_different_owners()
     {
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+
+        // Attach fragment to two contexts
         $owner2 = ArticlePage::create([]);
-
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = ContextModel::create(['owner_type' => $owner2->getMorphClass(), 'owner_id' => $owner2->id, 'locale' => 'nl']);
-
-        // Attach to two contexts
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
+        $context2 = FragmentTestAssist::createContext($owner2);
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
         $this->assertEquals(2, app(GetOwningModels::class)->getCount($fragment->getFragmentId()));
     }
 
     public function test_when_getting_count_of_owners_it_ignores_same_owner_with_multiple_contexts()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $context2 = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'fr');
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $context2 = FragmentTestAssist::createContext($this->owner);
 
-        // Attach to two contexts
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
         $this->assertEquals(1, app(GetOwningModels::class)->getCount($fragment->getFragmentId()));
     }

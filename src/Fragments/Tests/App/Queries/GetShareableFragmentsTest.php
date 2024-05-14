@@ -31,29 +31,23 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_gets_all_shareable_fragments_including_own()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
 
-        $context2 = ContextModel::create(['owner_type' => $this->owner2->getMorphClass(), 'owner_id' => $this->owner2->id, 'locale' => 'nl']);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context2->id);
+        $context2 = FragmentTestAssist::createContext($this->owner2);
+        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id);
 
         $shareableFragments = $this->query->get($context->id);
         $this->assertCount(2, $shareableFragments);
     }
 
-    //    public function test_it_only_gets_fragments_when_they_are_allowed_fragments()
-    //    {
-    //
-    //    }
-
     public function test_already_selected_fragments_are_flagged()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id, 0);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id, 0);
 
-        $this->owner2 = ArticlePage::create();
-        $context2 = ContextModel::create(['owner_type' => $this->owner2->getMorphClass(), 'owner_id' => $this->owner2->id, 'locale' => 'nl']);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context2->id, 2);
+        $context2 = FragmentTestAssist::createContext($this->owner2);
+        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id, 2);
 
         $shareableFragments = $this->query->get($context->id);
 
@@ -72,19 +66,19 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_filter_by_type()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        FragmentTestAssist::createAndAttachFragment(Hero::resourceKey(), $context->id);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        FragmentTestAssist::createAndAttachFragment(Hero::class, $context->id);
 
         $this->assertCount(1, $this->query->get($context->id));
         $this->assertCount(0, $this->query->filterByTypes([
-            Quote::class,
+            Quote::resourceKey(),
         ])->get($context->id));
     }
 
     public function test_it_can_filter_by_owner()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        FragmentTestAssist::createAndAttachFragment(Hero::resourceKey(), $context->id);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        FragmentTestAssist::createAndAttachFragment(Hero::class, $context->id);
 
         $this->assertCount(1, $this->query->filterByOwners([
             $this->owner->modelReference()->get(),
@@ -96,11 +90,11 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_exclude_current_fragments()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
 
-        $context2 = ContextModel::create(['owner_type' => $this->owner2->getMorphClass(), 'owner_id' => $this->owner2->id, 'locale' => 'nl']);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context2->id);
+        $context2 = FragmentTestAssist::createContext($this->owner2);
+        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id);
 
         $this->assertCount(2, $this->query->get($context->id));
         $this->assertCount(1, $this->query->excludeAlreadySelected()->get($context->id));
@@ -108,11 +102,11 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_limit_results()
     {
-        $context = app(ContextRepository::class)->findOrCreateByOwner($this->owner, 'nl');
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context->id);
+        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
 
-        $context2 = ContextModel::create(['owner_type' => $this->owner2->getMorphClass(), 'owner_id' => $this->owner2->id, 'locale' => 'nl']);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::resourceKey(), $context2->id);
+        $context2 = FragmentTestAssist::createContext($this->owner2);
+        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id);
 
         $this->assertCount(2, $this->query->get($context->id));
         $this->assertCount(1, $this->query->limit(1)->get($context->id));
