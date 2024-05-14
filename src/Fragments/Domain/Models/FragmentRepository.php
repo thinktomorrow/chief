@@ -20,20 +20,25 @@ final class FragmentRepository
         $this->fragmentFactory = $fragmentFactory;
     }
 
-    /**
-     * Get entire fragmentCollection for a given context.
-     * This is used to render all page fragments.
-     */
-    public function getByContext(string $contextId): FragmentCollection
+    public function getByContext(string $contextId): Collection
     {
         $fragmentModels = ContextModel::findOrFail($contextId)
             ->fragments()
             ->with('assetRelation', 'assetRelation.media')
             ->get();
 
-        return FragmentCollection::fromIterable(
-            $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel))
-        )->eachRecursive(fn ($node) => $node->getNodeEntry()->setFragmentNode($node));
+        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
+    }
+
+    /**
+     * Get entire fragmentCollection for a given context.
+     * This is used to render all page fragments.
+     */
+    public function getTreeByContext(string $contextId): FragmentCollection
+    {
+        $fragmentModels = $this->getByContext($contextId);
+
+        return FragmentCollection::fromIterable($fragmentModels)->eachRecursive(fn ($node) => $node->getNodeEntry()->setFragmentNode($node));
     }
 
     public function exists(string $fragmentId): bool

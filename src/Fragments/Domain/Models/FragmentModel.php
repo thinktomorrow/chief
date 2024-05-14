@@ -31,6 +31,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     public $guarded = [];
 
     // Allow for uuid type behaviour
+    public $keyType = 'string';
     public $incrementing = false;
 
     public $dynamicKeys = ['*'];

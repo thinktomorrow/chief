@@ -8,13 +8,12 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class SnippetStub implements Fragment, FragmentsOwner
+class SnippetStub extends BaseFragment implements Fragment, FragmentsOwner
 {
-    use FragmentableDefaults;
-    use ForwardFragmentProperties;
     use OwningFragments;
 
     public static function resourceKey(): string

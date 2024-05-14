@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
-use Illuminate\Support\Collection;
 use Illuminate\View\Concerns\ManagesLoops;
-use Thinktomorrow\Chief\Fragments\Domain\CurrentActiveContextId;
 use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragment;
@@ -27,17 +25,10 @@ final class RenderFragments
     }
 
     //    public function render(FragmentsOwner $owner, string $locale, array $viewData = []): string
-    public function render(): string
+    public function render(string $contextId): string
     {
-        // TEMP
-        CurrentActiveContextId::set(1);
-
-        if(! CurrentActiveContextId::exists()) {
-            return '';
-        };
-
         // Get entire tree of all sections and fragments...
-        $fragments = $this->getFragments(CurrentActiveContextId::get());
+        $fragments = $this->getFragments($contextId);
 
         $output = '';
 
@@ -76,27 +67,27 @@ final class RenderFragments
     }
 
     // TODO: collection should be FragmentCollection (nested tree). Render and loop could be in this collection
-    private function renderFragments(FragmentCollection $fragmentables, array $viewData = []): string
-    {
-        // Validate each entry as a valid fragment object.
-        $fragmentables->each(function (Fragment $_fragmentable) {
-        });
-
-        // Init new loop object
-        $this->loopsStack = [];
-        $this->addLoop($fragmentables);
-
-        return $fragmentables->reduce(function ($carry, Fragment $fragmentable) use ($owner, $viewData) {
-            $this->incrementLoopIndices();
-            $loop = $this->getLastLoop();
-
-            return $carry . $fragmentable->renderFragment($owner, $loop, $viewData);
-        }, '');
-    }
+    //    private function renderFragments(FragmentCollection $fragmentables, array $viewData = []): string
+    //    {
+    //        // Validate each entry as a valid fragment object.
+    //        $fragmentables->each(function (Fragment $_fragmentable) {
+    //        });
+    //
+    //        // Init new loop object
+    //        $this->loopsStack = [];
+    //        $this->addLoop($fragmentables);
+    //
+    //        return $fragmentables->reduce(function ($carry, Fragment $fragmentable) use ($owner, $viewData) {
+    //            $this->incrementLoopIndices();
+    //            $loop = $this->getLastLoop();
+    //
+    //            return $carry . $fragmentable->renderFragment($owner, $loop, $viewData);
+    //        }, '');
+    //    }
 
     public function getFragments(string $contextId): FragmentCollection
     {
-        $fragmentCollection = $this->fragmentRepository->getByContext($contextId);
+        $fragmentCollection = $this->fragmentRepository->getTreeByContext($contextId);
 
         // When admin is logged in and this request is in preview mode, we allow to view all fragments
         if (PreviewMode::fromRequest()->check()) {

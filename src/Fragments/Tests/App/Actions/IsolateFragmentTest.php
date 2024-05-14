@@ -46,7 +46,7 @@ class IsolateFragmentTest extends ChiefTestCase
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
         $this->assertFalse($fragment1->fragmentModel()->isShared());
         $this->assertFalse($fragment2->fragmentModel()->isShared());
-        $this->assertEquals($fragment2->values, $fragment1->values);
+        $this->assertEquals($fragment2->fragmentModel()->values, $fragment1->fragmentModel()->values);
     }
 
     public function test_when_it_belongs_to_more_then_two_contexts_it_stays_shared_when_isolated()

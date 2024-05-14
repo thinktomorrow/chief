@@ -12,24 +12,25 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('owner_type');
             $table->char('owner_id', 36); // account for integer ids as well as uuids
+            $table->json('locales')->nullable();
             $table->timestamps();
         });
 
         Schema::create('context_fragments', function(Blueprint $table){
-            $table->unsignedBigInteger('id');
-            $table->string('model_reference');
+            $table->char('id', 36);
+            $table->string('key');
             $table->json('data')->nullable();
             $table->json('meta')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->primary('id');
         });
 
         Schema::create('context_fragment_lookup', function (Blueprint $table) {
             $table->unsignedBigInteger('context_id');
-            $table->unsignedBigInteger('fragment_id');
+            $table->char('fragment_id', 36);
             $table->unsignedSmallInteger('order')->default(0);
+
             $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
             $table->foreign('fragment_id')->references('id')->on('context_fragments')->onDelete('cascade');
 

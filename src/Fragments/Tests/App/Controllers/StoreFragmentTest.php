@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use function app;
 use function chiefRegister;
 use Illuminate\Http\UploadedFile;
@@ -113,6 +114,7 @@ class StoreFragmentTest extends ChiefTestCase
         ])->assertStatus(201);
 
         $snippet = FragmentTestAssist::firstFragment($context->id);
+
         $this->assertEquals('tt-favicon.png', $snippet->fragmentModel()->asset('thumb')->filename());
     }
 }

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDetached;
@@ -98,9 +99,8 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
         FragmentTestAssist::assertFragmentCount($context->id,  0);
 
-        $deletedFragmentModel = FragmentModel::withTrashed()->find($fragment->fragmentModel()->id);
-        $this->assertTrue($deletedFragmentModel->trashed());
-        $this->assertNotNull($deletedFragmentModel->deleted_at);
+        $deletedFragmentModel = FragmentModel::find($fragment->fragmentModel()->id);
+        $this->assertNull($deletedFragmentModel);
     }
 
     public function test_removing_a_fragment_deletes_fragment_and_assets()
@@ -129,11 +129,10 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
         FragmentTestAssist::assertFragmentCount($context->id, 0);
 
-        $deletedFragmentModel = FragmentModel::withTrashed()->find($fragment->fragmentModel()->id);
-        $this->assertTrue($deletedFragmentModel->trashed());
-        $this->assertNotNull($deletedFragmentModel->deleted_at);
+        $deletedFragmentModel = FragmentModel::find($fragment->fragmentModel()->id);
+        $this->assertNull($deletedFragmentModel);
 
-        $this->assertEquals(0, $deletedFragmentModel->assetRelation()->count());
+        $this->assertEquals(0, DB::table('assets_pivot')->count());
     }
 
     public function test_removing_a_fragment_doesnt_delete_fragment_when_it_is_used_elsewhere()
@@ -149,7 +148,6 @@ class DeleteFragmentTest extends ChiefTestCase
         FragmentTestAssist::assertFragmentCount($context->id, 0);
         FragmentTestAssist::assertFragmentCount($context2->id, 1);
 
-        $fragmentModel = $fragment->fragmentModel()->fresh();
-        $this->assertFalse($fragmentModel->trashed());
+        $this->assertNotNull(FragmentModel::find($fragment->fragmentModel()->id));
     }
 }

@@ -74,9 +74,11 @@ return new class extends Migration
             $table->string('slug');
             $table->string('model_type');
             $table->integer('model_id')->unsigned();
+            $table->unsignedBigInteger('context_id')->nullable()->after('id');
             $table->timestamps();
 
             $table->unique(['locale', 'slug']);
+            $table->foreign('context_id')->references('id')->on('contexts')->nullOnDelete();
             $table->foreign('redirect_id')->references('id')->on('chief_urls')->onDelete('cascade');
         });
     }

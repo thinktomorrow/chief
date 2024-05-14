@@ -30,8 +30,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
         app(DeleteFragment::class)->handle($fragment->getFragmentId());
 
-        $this->assertEquals(0, FragmentModel::withoutTrashed()->count());
-        $this->assertEquals(1, FragmentModel::withTrashed()->count());
+        $this->assertEquals(0, FragmentModel::count());
     }
 
     public function test_it_deletes_fragment_from_all_contexts()
@@ -46,8 +45,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
         app(DeleteFragment::class)->handle($fragment->getFragmentId());
 
-        $this->assertEquals(0, FragmentModel::withoutTrashed()->count());
-        $this->assertEquals(1, FragmentModel::withTrashed()->count());
+        $this->assertEquals(0, FragmentModel::count());
 
         FragmentTestAssist::assertFragmentCount($context->id, 0);
         FragmentTestAssist::assertFragmentCount($context2->id, 0);

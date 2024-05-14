@@ -25,12 +25,13 @@ class FragmentsRendererTest extends ChiefTestCase
         $context = FragmentTestAssist::createContext($this->owner);
         FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
 
-        $this->assertEquals("THIS IS QUOTE FRAGMENT\n", app(RenderFragments::class)->render($this->owner, 'nl'));
-        $this->assertEquals("", app(RenderFragments::class)->render($this->owner, 'fr'));
+        $this->assertEquals("THIS IS QUOTE FRAGMENT\n", app(RenderFragments::class)->render($context->id));
     }
 
     public function test_it_does_not_render_anything_by_default()
     {
-        $this->assertEquals("", app(RenderFragments::class)->render($this->owner, 'nl'));
+        $context = FragmentTestAssist::createContext($this->owner);
+
+        $this->assertEquals("", app(RenderFragments::class)->render($context->id));
     }
 }
