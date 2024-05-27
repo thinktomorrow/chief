@@ -6,10 +6,10 @@ use Illuminate\Contracts\View\View;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
 
 trait PageResourceDefault

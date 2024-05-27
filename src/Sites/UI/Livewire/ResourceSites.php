@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
 
 class ResourceSites extends Component
 {

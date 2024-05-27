@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 trait MultiSiteableDefault
 {

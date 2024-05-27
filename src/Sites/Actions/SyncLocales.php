@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Sites\Actions;
 
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
 use Thinktomorrow\Chief\Sites\MultiSiteable;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class SyncLocales
 {

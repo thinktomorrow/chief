@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Url\Root;
 
 final class LinkForm

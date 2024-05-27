@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 
 use Livewire\Component;
-use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
 
 class FragmentContextSelection extends Component
 {

@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
-use Livewire\Livewire;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Sites\UI\Livewire\ResourceSites;
 
 class SitesServiceProvider extends ServiceProvider
