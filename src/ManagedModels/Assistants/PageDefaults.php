@@ -4,12 +4,15 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Locale\LocalisableDefault;
+use Thinktomorrow\Chief\Sites\MultiSiteableDefault;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\UsesPageState;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 
+/**
+ * @deprecated use Thinktomorrow\Chief\Pages\PageDefaults instead
+ */
 trait PageDefaults
 {
     use ModelDefaults;
@@ -20,7 +23,7 @@ trait PageDefaults
     use ShowsPageState;
     use Publishable;
     use Archivable;
-    use LocalisableDefault;
+    use MultiSiteableDefault;
 
     /**
      * Get all related models that have at least one fragment.

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
-use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
@@ -71,7 +71,7 @@ trait EditAssistant
         // Find or create the context... TODO: this should be something to do elsewhere?
         $defaultLocale = count($model->getLocales()) > 0
             ? $model->getLocales()[0]
-            : ChiefLocaleConfig::getDefaultLocale();
+            : ChiefSites::getDefaultLocale();
 
         View::share('context', app(ContextRepository::class)->findOrCreateByOwner($model, $defaultLocale));
 

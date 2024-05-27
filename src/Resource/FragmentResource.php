@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Locale\LocaleRepository;
+use Thinktomorrow\Chief\Sites\LocaleRepository;
 
 interface FragmentResource extends Resource, LocaleRepository
 {

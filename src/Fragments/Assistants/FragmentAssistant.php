@@ -13,22 +13,22 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
-use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentUpdated;
-use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyAdded;
-use Thinktomorrow\Chief\Fragments\Domain\Exceptions\FragmentAlreadyDetached;
-use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\Actions\CreateFragment;
+use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
+use Thinktomorrow\Chief\Fragments\Actions\DuplicateFragment;
+use Thinktomorrow\Chief\Fragments\Actions\IsolateFragment;
+use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
+use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOnline;
+use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Fragments\FragmentStatus;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FragmentAssistant
@@ -326,7 +326,7 @@ trait FragmentAssistant
         $this->fieldValidator()->handle($forms->getFields(), $request->all());
 
         // Now set all locales for fields that require locales so that all values are saved on the fragment
-        $fragmentable->fragmentModel()->setLocales(ChiefLocaleConfig::getLocales());
+        $fragmentable->fragmentModel()->setLocales(ChiefSites::getLocales());
         $fields = $forms->fillModel($fragmentable->fragmentModel())->getFields();
 
         app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());

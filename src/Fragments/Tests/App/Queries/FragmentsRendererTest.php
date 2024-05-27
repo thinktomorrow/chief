@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
-use Thinktomorrow\Chief\Fragments\App\Queries\RenderFragments;
+use Thinktomorrow\Chief\Fragments\Render\RenderFragments;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

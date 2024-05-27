@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
+@php use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
 <div class="pt-6 border-t border-grey-100">
     <div data-form data-form-tags="status,links" class="space-y-6">
         <p class="text-lg h6 h1-dark">Links beheren</p>
@@ -73,7 +73,7 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
-                            @if(count(ChiefLocaleConfig::getLocales()) > 1)
+                            @if(count(ChiefSites::getLocales()) > 1)
                                 <span
                                         class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
                             @endif

@@ -26,16 +26,16 @@ use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
-use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragmentMetadata;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentAttached;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDetached;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentsReordered;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentUpdated;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
+use Thinktomorrow\Chief\Fragments\Actions\UpdateFragmentMetadata;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
+use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
-use Thinktomorrow\Chief\Locale\LocaleServiceProvider;
+use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -98,7 +98,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new FragmentsServiceProvider($this->app))->boot();
         (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
-        (new LocaleServiceProvider($this->app))->boot();
+        (new SitesServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
 
@@ -243,7 +243,7 @@ class ChiefServiceProvider extends ServiceProvider
             });
 
             (new AssetsServiceProvider($this->app))->register();
-            (new LocaleServiceProvider($this->app))->register();
+            (new SitesServiceProvider($this->app))->register();
             (new SquantoManagerServiceProvider($this->app))->register();
             $this->sitemapServiceProvider->register();
         }

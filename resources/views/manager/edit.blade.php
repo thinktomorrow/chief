@@ -1,9 +1,7 @@
 @php
-    use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
-    use Thinktomorrow\Chief\Locale\LocaleRepository;
-    use Thinktomorrow\Chief\Locale\Localisable;
+    use Thinktomorrow\Chief\Sites\MultiSiteable;
 
-    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
+    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
             'id' => $context->id,
             'locale' => $context->locale,
             'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
@@ -24,7 +22,7 @@
                 </x-slot>
             @endif
 
-            @if($model instanceof Localisable)
+            @if($model instanceof MultiSiteable)
                 <livewire:chief-wire::model-locales
                     :resource-key="$resource::resourceKey()"
                     :modelReference="$model->modelReference()"

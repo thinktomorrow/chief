@@ -15,33 +15,78 @@ return [
      * Chief is designed with localisation in mind. You can set up the different locales
      * that should be available in the admin and site.
      */
-    'locales' => [
+//    'locales' => [
+//
+//        /**
+//         * Application locales
+//         *
+//         * The available application locales in which model values can be localized in.
+//         * The translatable fields will be editable for each locale accordingly. Note
+//         * that you can still override this for each model.
+//         *
+//         * The first locale in this list is considered the default required locale.
+//         */
+//        'admin' => [
+//            'nl',
+//        ],
+//
+//        /**
+//         * Active sites.
+//         * These are the locales (sites) that are allowed on the frontend.
+//         *
+//         * Default this value is null, which means that all sites are active.
+//         * You can change this to an array of locales. e.g. ['nl', 'fr']
+//         */
+//        'site' => null,
+//    ],
 
-        /**
-         * Application locales
-         *
-         * The available application locales in which model values can be localized in.
-         * The translatable fields will be editable for each locale accordingly. Note
-         * that you can still override this for each model.
-         *
-         * The first locale in this list is considered the default required locale.
-         */
-        'admin' => [
-            'nl',
+    /**
+     * Sites
+     *
+     * Define the different sites that are available in your application. The key of each
+     * site is the locale of the site. The value is an array with the following keys:
+     *
+     * - name        The name of the site used throughout the admin
+     * - short_name  A short name used in admin select lists or tabs.
+     * - url         The root url of the site for this locale
+     * - active      Whether this site is active on the frontend or not
+     *
+     * The first site in the list is considered the default site.
+     */
+    'sites' => [
+        'nl' => [
+            'name' => 'Site (be)',
+            'short_name' => 'be',
+            'url' => env('CHIEF_SITES_URL_DEFAULT', env('APP_URL', 'http://localhost')),
+            'active' => true,
+
+            // IDEA: app and fallback locale,
+
+            'default_locale' => 'nl',
+            // which locale to use for squanto, translations and such: app()->setLocale()
+            //// Usually this is the same as the key locale but it can happen that the app locale is different.
+            ///  This means that for sites with the same app_locale, only one translation field is presented. Then there is no option to
+            ///  set a different translation for this locale.  If you like to do this in some occasions, you can click 'add different translation for 'be' and
+            ///  this adds the be translation tab for this specific field.
+            ///
+            /// If app_locale is already a locale of a site, then this site is not immediately available in the translations and such. Only on demand.
+
+            // ISO 639-1 locale format: language[-region]
+            // e.g. nl, en, en-US, nl-NL, fr-BE
+            // region is based on ISO 3166-1 alpha-2.
+            // Note: language is required, region is optional. Important is that the language is always set first.
+            'iso_code' => 'nl-BE',
         ],
-
-        /**
-         * Active locales.
-         * These are the locales that are allowed on the site's frontend.
-         *
-         * Default this value is null, which means that all available locales are active
-         * on the site. You can change this to an array of locales. e.g. ['nl', 'fr']
-         */
-        'site' => null,
+        'fr' => [
+            'name' => 'Site (fr)',
+            'short_name' => 'fr',
+            'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
+            'active' => false,
+        ],
     ],
 
     /**
-     * App locale
+     * Chief admin locale
      *
      * Determines the locale in which the admin sees the pages and content.
      * This basically sets the app.locale to this value on admin visits.

@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\StyleGuideController;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController;
 use Thinktomorrow\Chief\Assets\App\Http\MediaGalleryController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\AttachFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\CreateFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\EditFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\FragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\CreateNestedFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\DeleteNestedFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\EditNestedFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\Nested\NestedFragmentController;
-use Thinktomorrow\Chief\Fragments\App\Controllers\SelectNewFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\AttachFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\CreateFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\EditFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\FragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\Nested\CreateNestedFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\Nested\DeleteNestedFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\Nested\EditNestedFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\Nested\NestedFragmentController;
+use Thinktomorrow\Chief\Fragments\Controllers\SelectNewFragmentController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\CheckLinkController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController;
 use Thinktomorrow\Chief\Site\Urls\Controllers\RemoveRedirectController;
@@ -41,11 +41,11 @@ Route::delete('remove-redirect/{id}', [RemoveRedirectController::class, 'delete'
  * FRAGMENTS
  * -----------------------------------------------------------------
  */
-//Route::get('fragments', [\Thinktomorrow\Chief\Fragments\App\Controllers\FragmentController::class, 'index'])->name('chief.back.fragments.index');
+//Route::get('fragments', [\Thinktomorrow\Chief\Fragments\Controllers\FragmentController::class, 'index'])->name('chief.back.fragments.index');
 
 Route::get('fragments/{context_id}/new', [SelectNewFragmentController::class, 'show'])->name('chief::fragments.new');
-Route::get('fragments/{context_id}/existing', [\Thinktomorrow\Chief\Fragments\App\Controllers\SelectExistingFragmentController::class, 'show'])->name('chief::fragments.existing');
-Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\App\Controllers\DetachOrDeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
+Route::get('fragments/{context_id}/existing', [\Thinktomorrow\Chief\Fragments\Controllers\SelectExistingFragmentController::class, 'show'])->name('chief::fragments.existing');
+Route::delete('fragments/{context_id}/{fragment_id}', [\Thinktomorrow\Chief\Fragments\Controllers\DetachOrDeleteFragmentController::class, 'delete'])->name('chief::fragments.delete');
 
 Route::get('fragments/{context_id}/refresh', [FragmentController::class, 'refreshIndex'])->name('chief::fragments.refresh-index');
 Route::post('fragments/{context_id}/sort', [FragmentController::class, 'sort'])->name('chief::fragments.sort');

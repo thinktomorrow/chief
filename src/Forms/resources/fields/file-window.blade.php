@@ -1,9 +1,9 @@
 @php
     use Thinktomorrow\AssetLibrary\Asset;
-    use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+    use Thinktomorrow\Chief\Sites\ChiefSites;
 
     /** @var Asset[] $files */
-    $files = $getValue($locale ?? ChiefLocaleConfig::getDefaultLocale());
+    $files = $getValue($locale ?? ChiefSites::getDefaultLocale());
     $count = count($files);
 @endphp
 
@@ -17,9 +17,9 @@
                     @if($file->isImage())
                         {{-- TODO: need previewUrl here --}}
                         <img
-                            src="{{ $file->getUrl('thumb') }}"
-                            alt="{{ $file->getFileName() }}"
-                            class="object-contain w-full h-full"
+                                src="{{ $file->getUrl('thumb') }}"
+                                alt="{{ $file->getFileName() }}"
+                                class="object-contain w-full h-full"
                         >
                     @else
                         <svg class="w-6 h-6 text-grey-400">

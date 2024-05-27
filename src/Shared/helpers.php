@@ -32,7 +32,7 @@ if (! function_exists('chiefAdmin')) {
 if (! function_exists('getFragments')) {
     function getFragments($owner, ?string $locale = null): Illuminate\Support\Collection
     {
-        return app(\Thinktomorrow\Chief\Fragments\App\Queries\RenderFragments::class)->getFragments($owner, $locale ?? app()->getLocale());
+        return app(\Thinktomorrow\Chief\Fragments\Render\RenderFragments::class)->getFragments($owner, $locale ?? app()->getLocale());
     }
 }
 

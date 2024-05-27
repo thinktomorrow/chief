@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

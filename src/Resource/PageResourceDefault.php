@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Locale\Localisable;
+use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
@@ -201,7 +201,7 @@ trait PageResourceDefault
         return null;
     }
 
-    public function saveLocales(Localisable $model, array $locales): void
+    public function saveLocales(MultiSiteable $model, array $locales): void
     {
         $model->setLocales($locales);
         $model->save();

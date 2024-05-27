@@ -5,6 +5,7 @@
 - chief_urls has context_id reference
 - Page can have multiple contexts. Each locale url can have one active context
 - A context can have multiple locales (translations)
+- sites config + sites code namespace (used to be Locales)
 
 - addLocalesToContext
 - removeLocalesFromContext
@@ -12,6 +13,10 @@
 - CreateDefaultContext
 - removeContext
 - reorderContexts
+
+  // TODO: create new context is locale is added
+  // Option to duplicate existing context??? -> with same fragments (fragment with these two locales, not 2 separate fragments)
+  // TODO: create contexts when page is created (witht hte default locales)
 
 ## Testsuite after refactor to Controllers (moving away from Resource)
 - action tests

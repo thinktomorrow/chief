@@ -23,8 +23,9 @@
             @foreach($linkForm->links() as $locale => $link)
                 @if($link->current)
                     <div class="flex items-start gap-4">
-                        @if(count(\Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales()) > 1)
-                            <span class="inline-flex items-center justify-center w-8 p-0 mt-1 shrink-0 label label-grey label-sm">
+                        @if(count(\Thinktomorrow\Chief\Sites\ChiefSites::getLocales()) > 1)
+                            <span
+                                    class="inline-flex items-center justify-center w-8 p-0 mt-1 shrink-0 label label-grey label-sm">
                                     {{ $locale }}
                                 </span>
                         @endif

@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
-use Thinktomorrow\Chief\Fragments\Domain\Events\FragmentsReordered;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Actions\ReorderFragments;
+use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
+use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

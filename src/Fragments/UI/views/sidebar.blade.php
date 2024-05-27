@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;use Thinktomorrow\Chief\Fragments\Domain\FragmentStatus;use Thinktomorrow\Chief\Fragments\Fragment;use Thinktomorrow\Chief\Fragments\FragmentsOwner; @endphp
+@php use Thinktomorrow\Chief\Fragments\Fragment;use Thinktomorrow\Chief\Fragments\FragmentsOwner;use Thinktomorrow\Chief\Fragments\FragmentStatus;use Thinktomorrow\Chief\Fragments\Queries\GetOwningModels; @endphp
 
 <div class="py-6 space-y-6 border-t border-grey-100">
     <div class="space-y-2">

@@ -114,6 +114,6 @@ class MenuItem extends Model
 
     public function dynamicLocales(): array
     {
-        return \Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales();
+        return \Thinktomorrow\Chief\Sites\ChiefSites::getLocales();
     }
 }

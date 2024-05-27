@@ -4,20 +4,15 @@ namespace Thinktomorrow\Chief\Fragments\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Assert;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
-use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\App\Queries\RenderFragments;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Render\RenderFragments;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class FragmentTestAssist
 {

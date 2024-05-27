@@ -19,27 +19,27 @@ todo: fields owner as parameter resource owner and fragment if nested. Fields pa
 - vine dep upgrades...
 
 ### Code architecture
-All the fragment logic has been moved to the `Thinktomorrow\Chief\Fragments` namespace and cleanup up
-- Renamed interface `Thinktomorrow\Chief\Fragments\Fragmentable` to ``Thinktomorrow\Chief\Fragments\Fragment``.
-- Removed `Thinktomorrow\Chief\ManagedModels\Presets\Fragment`. Replaced by `Thinktomorrow\Chief\Fragments\Fragment`.
-  A fragment class should look something like this:
+All the fragment logic has been moved to the `Thinktomorrow\Chief\Fragments` namespace and cleanup up.
+
+- A fragment class should extend the BaseFragment. All of the logic is in that base class.  A fragment class should look something like this:
 ```php
 use Thinktomorrow\Chief\Fragments\BaseFragment;
-use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
 
 class Image extends BaseFragment
 {
-    use ForwardFragmentProperties;
-    ...
-}
-
-{
-    use ForwardFragmentProperties;
-    use BookmarkDefaults;
-    
     ...
 }
 ```
+- Moved trait `Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties` to `Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties`. It can also be removed because this is included in the BaseFragment class.
+- Moved interface`Thinktomorrow\Chief\Fragments\Assistants\HasBookmark` to `Thinktomorrow\Chief\Fragments\Sections\HasBookmark`. 
+- Deprecated interface `Thinktomorrow\Chief\ManagedModels\Presets\Page`. Use `Thinktomorrow\Chief\Models\Page`.
+- Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults`. Use `Thinktomorrow\Chief\Models\PageDefaults`.
+- Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\ModelDefaults`. Use `Thinktomorrow\Chief\Models\ModelDefaults`.
+- Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState`. Use `Thinktomorrow\Chief\Models\ShowsPageState`.
+- Renamed interface `Thinktomorrow\Chief\Fragments\Fragmentable` to ``Thinktomorrow\Chief\Fragments\Fragment``.
+- Removed interface `Thinktomorrow\Chief\ManagedModels\Presets\Fragment`. Replaced by new interface `Thinktomorrow\Chief\Fragments\Fragment`.
+
+- Changed: `Thinktomorrow\Chief\Models\ModelDefaults` no longer has InteractsWithAssets and Viewable trait behaviour included. You'll need to add this and the necessary interfaces to your projects models if required.
 
 - If you have a viewPath property in your fragment, this should be protected or public, not private.
   Replace in each fragment class `private (string) $viewPath` with `protected ?string $viewPath`.

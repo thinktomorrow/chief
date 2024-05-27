@@ -8,6 +8,9 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
+/**
+ * @deprecated use Thinktomorrow\Chief\Pages\ShowsPageState instead
+ */
 trait ShowsPageState
 {
     public function pageStateAsLabel(): string

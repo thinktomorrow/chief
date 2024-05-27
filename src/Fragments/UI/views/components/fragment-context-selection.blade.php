@@ -1,4 +1,4 @@
-@php use Illuminate\Support\Arr;use Thinktomorrow\Chief\Locale\ChiefLocaleConfig; @endphp
+@php use Illuminate\Support\Arr;use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
 <div class="flex justify-end gap-2">
 
     <div wire:ignore class="border border-grey-400 flex gap-2 items-center rounded-lg">
@@ -18,14 +18,14 @@
 
     <x-chief::dialog wired title="Op welke taalversies toont dit fragment" size="xs">
         <div class="block px-4 py-2 text-sm text-grey-700 space-y-4" tabindex="-1">
-            @foreach(ChiefLocaleConfig::getLocales() as $locale)
+            @foreach(ChiefSites::getLocales() as $locale)
                 <x-chief::input.group class="w-64">
                     <div class="flex items-start gap-2 ">
                         <x-chief::input.checkbox
-                            id="{{ $locale }}"
-                            :checked="in_array($locale, $activeLocales)"
-                            wire:model.live="activeLocales"
-                            value="{{ $locale }}"
+                                id="{{ $locale }}"
+                                :checked="in_array($locale, $activeLocales)"
+                                wire:model.live="activeLocales"
+                                value="{{ $locale }}"
                         ></x-chief::input.checkbox>
                         <x-chief::input.label for="{{ $locale }}">{{ $locale }}</x-chief::input.label>
                     </div>

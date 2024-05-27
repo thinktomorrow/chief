@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Resource\Locale;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Locale\Actions\AddLocale;
-use Thinktomorrow\Chief\Locale\Actions\RemoveLocale;
-use Thinktomorrow\Chief\Locale\Actions\SyncLocales;
-use Thinktomorrow\Chief\Locale\Events\LocalesUpdated;
+use Thinktomorrow\Chief\Sites\Actions\AddSite;
+use Thinktomorrow\Chief\Sites\Actions\RemoveLocale;
+use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
+use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class SyncLocalesTest extends ChiefTestCase
@@ -69,7 +69,7 @@ class SyncLocalesTest extends ChiefTestCase
         $page = $this->setUpAndCreateArticle();
         $resource = new LocaleRepositoryStub();
 
-        app(AddLocale::class)->handle($resource, $page, ['nl', 'fr']);
+        app(AddSite::class)->handle($resource, $page, ['nl', 'fr']);
 
         $this->assertEquals(['nl', 'fr'], $page->refresh()->locales);
         $this->assertEquals(['nl', 'fr'], $resource->getLocales($page));

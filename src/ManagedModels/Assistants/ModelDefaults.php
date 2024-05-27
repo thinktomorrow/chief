@@ -3,12 +3,15 @@
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\Locale\ChiefLocaleConfig;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
+/**
+ * @deprecated use Thinktomorrow\Chief\Models\ModelDefaults instead
+ */
 trait ModelDefaults
 {
     use ReferableModelDefault;
@@ -24,7 +27,7 @@ trait ModelDefaults
      */
     public function dynamicLocales(): array
     {
-        return ChiefLocaleConfig::getLocales();
+        return ChiefSites::getLocales();
     }
 
     public function viewKey(): string

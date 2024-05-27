@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Fragments\Domain\Exceptions\MissingFragmentModelException;
-use Thinktomorrow\Chief\Fragments\Domain\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;

@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Locale\Localisable;
+use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Url\Root;
 
@@ -29,9 +29,9 @@ final class LinkForm
 
     private function getLocales(): array
     {
-        return $this->model instanceof Localisable
+        return $this->model instanceof MultiSiteable
             ? $this->model->getLocales()
-            : \Thinktomorrow\Chief\Locale\ChiefLocaleConfig::getLocales();
+            : \Thinktomorrow\Chief\Sites\ChiefSites::getLocales();
     }
 
     private function setLinks(): void
