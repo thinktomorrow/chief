@@ -279,7 +279,7 @@ var selectlist = function selectlist(config) {
     },
     removeItem: function removeItem(value) {
       var index = this.selection.findIndex(function (val) {
-        return val == value;
+        return val.toString() === value.toString();
       });
       this.selection.splice(index, 1);
       this.onSelectionChange();

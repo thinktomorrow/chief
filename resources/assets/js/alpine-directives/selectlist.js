@@ -53,7 +53,7 @@ const selectlist = (config) => ({
         this.onSelectionChange();
     },
     removeItem(value) {
-        const index = this.selection.findIndex((val) => val == value);
+        const index = this.selection.findIndex((val) => val.toString() === value.toString());
 
         this.selection.splice(index, 1);
         this.onSelectionChange();

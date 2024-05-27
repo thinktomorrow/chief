@@ -30,17 +30,16 @@
 // TODO: check if wire:model is possible to use here
 // TODO: allow rich html for each option in the list --}}
 
-
 <div
     {{ $attributes }}
     x-cloak
     wire:ignore
-    x-data="selectlist({
+    x-data='selectlist({
         options: @json($options),
         selection: @json($selection),
         multiple: @json($multiple),
         grouped: @json($grouped),
-    })"
+    })'
 
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
     x-modelable="selection"
