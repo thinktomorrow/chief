@@ -1,4 +1,4 @@
-const selectlist = (config) => ({
+const Selectlist = (config) => ({
     // Set the selection either if we are in a livewire form based on the given
     // form property value or else on the passed selection
     selection: config.selection,
@@ -118,4 +118,4 @@ const selectlist = (config) => ({
     },
 });
 
-export { selectlist as default };
+export { Selectlist as default };

@@ -114,7 +114,7 @@ var preventSubmitOnEnter = function preventSubmitOnEnter(el, _ref, _ref2) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ selectlist; }
+/* harmony export */   "default": function() { return /* binding */ Selectlist; }
 /* harmony export */ });
 /* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
 /* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -204,7 +204,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
-var selectlist = function selectlist(config) {
+var Selectlist = function Selectlist(config) {
   return {
     // Set the selection either if we are in a livewire form based on the given
     // form property value or else on the passed selection

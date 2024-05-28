@@ -71,17 +71,17 @@
     <ol
         x-sortable
         x-on:end.stop="() => {
-            sortSelection($event.target.sortable.toArray());
+            $data.sortSelection($event.target.sortable.toArray());
         }"
         class="flex flex-wrap gap-1">
-        <template x-for="(option, index) in selectedOptions" x-bind:key="`${option.value}-${index}`">
+        <template x-for="(option, index) in $data.selectedOptions" x-bind:key="`${option.value}-${index}`">
             <li
                 x-sortable-handle
                 x-bind:x-sortable-item="option.value"
                 class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
                 <span x-html="option.label" class="text-sm font-medium leading-5 body body-dark grow"></span>
 
-                <button type="button" x-on:click="removeItem(option.value)" class="shrink-0">
+                <button type="button" x-on:click="$data.removeItem(option.value)" class="shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 my-0.5 text-grey-400 hover:body-dark">
                         <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                     </svg>
@@ -89,16 +89,16 @@
             </li>
         </template>
 
-        <button type="button" x-show="!showingSelectBox" x-on:click="showSelectBox()" class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
+        <button type="button" x-show="!$data.showingSelectBox" x-on:click="$data.showSelectBox()" class="px-1.5 py-1 flex gap-0.5 bg-grey-100 hover:bg-grey-200 rounded-md cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 my-0.5 body-dark">
                 <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
             </svg>
         </button>
     </ol>
 
-    <select name="{{ $name }}" x-ref="selectEl" x-on:change="addItem" multiple></select>
+    <select name="{{ $name }}" x-ref="selectEl" x-on:change="$data.addItem()" multiple></select>
 
-    <template x-for="option in selectedOptions" x-bind:key="`${option.value}`">
+    <template x-for="option in $data.selectedOptions" x-bind:key="`${option.value}`">
         <input type="hidden" name="{{ $name }}[]" x-bind:value="option.value" />
     </template>
 </div>
