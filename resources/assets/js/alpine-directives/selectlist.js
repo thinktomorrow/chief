@@ -55,6 +55,8 @@ const Selectlist = (config) => ({
     removeItem(value) {
         const index = this.selection.findIndex((val) => val.toString() === value.toString());
 
+        if (index === -1) return;
+
         this.selection.splice(index, 1);
         this.onSelectionChange();
     },

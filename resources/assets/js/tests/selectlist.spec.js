@@ -37,7 +37,13 @@ describe('Selectlist', () => {
             grouped: false,
         };
         instance = Selectlist(config);
-        instance.$el = { choices: mockChoices, addEventListener: jest.fn(), dispatchEvent: jest.fn() };
+
+        // Use a real EventTarget for $el to handle real event listeners
+        instance.$el = new EventTarget();
+        instance.$el.choices = mockChoices;
+        instance.$el.addEventListener = EventTarget.prototype.addEventListener;
+        instance.$el.dispatchEvent = EventTarget.prototype.dispatchEvent;
+
         instance.$dispatch = jest.fn();
         instance.$nextTick = (callback) => callback();
     });
@@ -48,12 +54,12 @@ describe('Selectlist', () => {
         expect(instance.grouped).toBe(config.grouped);
     });
 
-    it('filters options correctly when not grouped', () => {
+    it('excludes selection from options', () => {
         instance.selection = [1];
         expect(instance.filteredOptions).toEqual([{ value: 2, label: 'Option 2' }]);
     });
 
-    it('filters options correctly when grouped', () => {
+    it('excludes selection from grouped options', () => {
         config.grouped = true;
         config.options = [
             {
@@ -120,5 +126,44 @@ describe('Selectlist', () => {
         instance.preserveSearchTerm();
         instance.$el.dispatchEvent(new CustomEvent('search', { detail: { value: 'new term' } }));
         expect(instance.searchTerm).toBe('new term');
+    });
+
+    it('handles non-existent options in selection for filteredOptions', () => {
+        instance.selection = [{ value: 3 }];
+        expect(instance.filteredOptions).toEqual([
+            { value: 1, label: 'Option 1' },
+            { value: 2, label: 'Option 2' },
+        ]);
+    });
+
+    it('adds an item to the selection with duplicate values', () => {
+        mockChoices.getValue.mockReturnValueOnce([{ value: 1, label: 'Option 1' }]);
+        instance.selection = [{ value: 1, label: 'Option 1' }];
+        instance.addItem();
+        expect(instance.selection).toEqual([
+            { value: 1, label: 'Option 1' },
+            { value: 1, label: 'Option 1' },
+        ]);
+    });
+
+    it('removes an item from the selection with a non-existent value', () => {
+        instance.selection = [1];
+        instance.removeItem(2);
+        expect(instance.selection).toEqual([1]);
+    });
+
+    it('forces a search correctly', () => {
+        instance.forceSearch('new search');
+        expect(mockChoices.input.element.value).toBe('new search');
+        expect(mockChoices.input.setWidth).toHaveBeenCalled();
+        expect(mockChoices._searchChoices).toHaveBeenCalledWith('new search');
+    });
+
+    it('sorts the selection with an empty array', () => {
+        instance.selection = [1, 2];
+        instance.sortSelection([]);
+        expect(instance.selection).toEqual([]);
+        expect(instance.$dispatch).toHaveBeenCalledWith('select-list-change');
+        expect(instance.$dispatch).toHaveBeenCalledWith('input', []);
     });
 });
