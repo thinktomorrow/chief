@@ -21,7 +21,7 @@
         </div>
     </x-chief::page.grid>
 
-    @push('custom-scripts')
+    {{-- @push('custom-scripts')
         @include('chief::layout._partials.editor-script')
-    @endpush
+    @endpush --}}
 </x-chief::page.template>

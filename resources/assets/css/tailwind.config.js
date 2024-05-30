@@ -48,6 +48,17 @@ module.exports = {
         fontFamily: {
             display: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
             body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+            monospace: [
+                'Fira Code VF',
+                'ui-monospace',
+                'SFMono-Regular',
+                'Menlo',
+                'Monaco',
+                'Consolas',
+                'Liberation Mono',
+                'Courier New',
+                'monospace',
+            ],
         },
         fontSize: {
             xs: ['0.75rem', { lineHeight: '1rem' }],

@@ -11,6 +11,7 @@ mix.webpackConfig({
     .setPublicPath(path.normalize('public/chief-assets/back'))
 
     .js('resources/assets/js/main.js', 'public/chief-assets/back/js')
+    .js('resources/assets/js/editor/editor.js', 'public/chief-assets/back/js')
     .eslint({
         extensions: ['js'],
     })
