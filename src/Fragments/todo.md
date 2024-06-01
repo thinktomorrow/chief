@@ -1,7 +1,7 @@
 ## TODO multilocale
 
 ## Locale setup
-- chief_urls as intermediate per locale
+- chief_urls not as intermediate per locale
 - chief_urls has context_id reference
 - Page can have multiple contexts. Each locale url can have one active context
 - A context can have multiple locales (translations)
@@ -67,4 +67,9 @@ goal is to retrieve content as fast as possible
   - cache header and footer
   - cache context
   - dynamic partials (user-context): csrf, session stuff, ...
+
+## General SP improvement
+TODO: use this list to loop over all SP. Each SP should have boot method for frontend essentials
+and a bootAdmin for the admin booting. Also a register and registerAdmin method. This allows
+To make distinction per provider instead of doing this all here in the main service provider.
 

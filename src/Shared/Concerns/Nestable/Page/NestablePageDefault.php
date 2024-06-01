@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
 use DomainException;
-use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
+use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 

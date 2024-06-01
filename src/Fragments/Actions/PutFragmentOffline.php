@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentPutOffline;
-use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
 
 class PutFragmentOffline
 {

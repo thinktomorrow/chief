@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
 
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
-use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\RepeatFieldAssistant;
 use Thinktomorrow\Chief\Managers\Manager;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Render;
 
 use Illuminate\View\Concerns\ManagesLoops;
-use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Vine\Node;
 
@@ -90,7 +90,7 @@ final class RenderFragments
 
         // When admin is logged in and this request is in preview mode, we allow to view all fragments
         if (PreviewMode::fromRequest()->check()) {
-            // TODO: mark all offline fragments as such
+            // TODO: mark all offline fragments as such to better see the difference when admin is in preview mode
             return $fragmentCollection;
         }
 

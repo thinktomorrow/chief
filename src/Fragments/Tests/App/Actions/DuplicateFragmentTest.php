@@ -3,12 +3,12 @@
 namespace Tests\App\Actions;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Fragments\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

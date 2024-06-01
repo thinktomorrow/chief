@@ -17,6 +17,8 @@ class SitesServiceProvider extends ServiceProvider
 
     public function register()
     {
-
+        $this->app->singleton(ChiefSites::class, function () {
+            return ChiefSites::fromArray(config('chief.sites'));
+        });
     }
 }

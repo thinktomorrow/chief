@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
-use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 
 final class DeleteContext
 {

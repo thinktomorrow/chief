@@ -38,8 +38,7 @@ class Image extends BaseFragment
 - Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState`. Use `Thinktomorrow\Chief\Models\ShowsPageState`.
 - Renamed interface `Thinktomorrow\Chief\Fragments\Fragmentable` to ``Thinktomorrow\Chief\Fragments\Fragment``.
 - Removed interface `Thinktomorrow\Chief\ManagedModels\Presets\Fragment`. Replaced by new interface `Thinktomorrow\Chief\Fragments\Fragment`.
-
-- Changed: `Thinktomorrow\Chief\Models\ModelDefaults` no longer has InteractsWithAssets and Viewable trait behaviour included. You'll need to add this and the necessary interfaces to your projects models if required.
+- Changed: `Thinktomorrow\Chief\Models\ModelDefaults` is slimmed down and no longer contains the `Thinktomorrow\AssetLibrary\InteractsWithAssets` and `Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable` trait behaviour. You'll need to add this and the necessary interfaces to your projects models if required.
 
 - If you have a viewPath property in your fragment, this should be protected or public, not private.
   Replace in each fragment class `private (string) $viewPath` with `protected ?string $viewPath`.
@@ -49,6 +48,12 @@ class Image extends BaseFragment
 
 ### Fragment rendering
 Fragments now behave and render in the views as blade components. This is similar to the way the form fields are rendered.
+
+### New glossary
+#### Section 
+Root fragments of each context. This is the top level fragment of a context. A section can contain multiple fragments. 
+Sections generally contain the layout options like background color, text color, positioning of text and images, grid display settings, ... 
+Sections are the html elements that can be referenced via bookmarks.
 
 ### Menu
 - Changed: Menu rendering is now done with the new vine logic. 

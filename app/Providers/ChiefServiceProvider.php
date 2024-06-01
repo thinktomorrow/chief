@@ -64,6 +64,19 @@ class ChiefServiceProvider extends ServiceProvider
 {
     private SitemapServiceProvider $sitemapServiceProvider;
 
+    // TODO: use this list to loop over all SP. Each SP should have boot method for frontend essentials
+    // and a bootAdmin for the admin booting. Also a register and registerAdmin method. This allows
+    // To make distinction per provider instead of doing this all here in the main service provider.
+    // NOt in use yet... perhaps use a ChiefServiceProviderInterface for this.
+    private array $internalProviders = [
+        SitesServiceProvider::class,
+        SquantoServiceProvider::class,
+        RoutesServiceProvider::class,
+        FragmentsServiceProvider::class,
+        SquantoManagerServiceProvider::class,
+        AssetsServiceProvider::class,
+    ];
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -79,7 +92,7 @@ class ChiefServiceProvider extends ServiceProvider
          * Boot required for frontend
          * ------------------------------------
          */
-        $this->bootFrontendEssentials();
+        $this->bootEssentials();
 
         if (! $this->app->make(AdminEnvironment::class)->check(request())) {
             return;
@@ -95,10 +108,9 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
-        (new FragmentsServiceProvider($this->app))->boot();
+        (new FragmentsServiceProvider($this->app))->bootAdmin();
         (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
-        (new SitesServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
 
@@ -111,19 +123,15 @@ class ChiefServiceProvider extends ServiceProvider
         }
     }
 
-    private function bootFrontendEssentials()
+    private function bootEssentials()
     {
+        (new SitesServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new RoutesServiceProvider($this->app))->boot();
 
         $this->bootChiefAuth();
 
-        Relation::morphMap([FragmentModel::resourceKey() => FragmentModel::class]);
-
-        Blade::directive('fragments', function () {
-
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\App\\Queries\\RenderFragments::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, app()->getLocale(), get_defined_vars()); ?>';
-        });
+        (new FragmentsServiceProvider($this->app))->boot();
     }
 
     private function bootChiefAuth(): void
@@ -228,7 +236,9 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
 
+        (new SitesServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
+        (new FragmentsServiceProvider($this->app))->register();
 
         if ($this->app->make(AdminEnvironment::class)->check(request())) {
             $this->app->when(SettingsController::class)
@@ -243,7 +253,6 @@ class ChiefServiceProvider extends ServiceProvider
             });
 
             (new AssetsServiceProvider($this->app))->register();
-            (new SitesServiceProvider($this->app))->register();
             (new SquantoManagerServiceProvider($this->app))->register();
             $this->sitemapServiceProvider->register();
         }

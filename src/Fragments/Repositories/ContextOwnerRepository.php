@@ -1,12 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Models;
+namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class ContextOwnerRepository
@@ -52,12 +55,14 @@ class ContextOwnerRepository
         return $result;
     }
 
-    public function findOwner(string $contextId): ?FragmentsOwner
+    public function findOwner(string $contextId): ContextOwner
     {
-        return ContextModel::findOrFail($contextId)->getOwner();
+        $context = ContextModel::findOrFail($contextId);
+
+        return $this->ownerFactory($context->owner_type, $context->owner_id);
     }
 
-    private function ownerFactory(string $key, $id)
+    private function ownerFactory(string $key, $id): ContextOwner
     {
         $key = Relation::getMorphedModel($key) ?? $key;
 

@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Models;
+namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 
 class FragmentFactory
 {

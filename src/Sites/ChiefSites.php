@@ -47,16 +47,28 @@ class ChiefSites
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
     }
 
-    public function getActiveLocales(): array
+    public function getActiveSites(): array
     {
-        return array_map(
-            fn (ChiefSite $site) => $site->locale,
-            array_filter($this->sites, fn (ChiefSite $site) => $site->isActive)
-        );
+        return array_filter($this->sites, fn (ChiefSite $site) => $site->isActive);
     }
 
     public function getDefaultLocale(): string
     {
         return $this->sites[0]?->locale ?? config('app.fallback_locale', 'nl');
+    }
+
+    public static function locales(): array
+    {
+        return app(ChiefSites::class)->getLocales();
+    }
+
+    public static function activeSites(): array
+    {
+        return app(ChiefSites::class)->getActiveSites();
+    }
+
+    public static function defaultLocale(): string
+    {
+        return app(ChiefSites::class)->getDefaultLocale();
     }
 }

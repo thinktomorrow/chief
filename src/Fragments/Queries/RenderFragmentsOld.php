@@ -8,6 +8,9 @@ use Illuminate\View\Concerns\ManagesLoops;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
+/**
+ * @deprecated
+ */
 final class RenderFragmentsOld
 {
     use ManagesLoops;

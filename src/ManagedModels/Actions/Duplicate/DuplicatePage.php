@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Actions\DuplicateContext;
-use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;

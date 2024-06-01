@@ -116,10 +116,10 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
 
     protected function dynamicLocales(): array
     {
-        return ChiefSites::getLocales();
+        return ChiefSites::locales();
     }
 
-    protected function dynamicLocaleFallback(): ?string
+    public function dynamicLocaleFallback(): ?string
     {
         return $this->dynamicLocaleFallback;
     }

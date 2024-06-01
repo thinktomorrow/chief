@@ -9,13 +9,17 @@ use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
 
 trait PageResourceDefault
 {
     use ResourceDefault;
     use TableResourceDefault;
+
+    public function allowedSections(): array
+    {
+        return [];
+    }
 
     public function getNavItem(): ?NavItem
     {
@@ -199,11 +203,5 @@ trait PageResourceDefault
     public function getNestableNodeLabels(): ?string
     {
         return null;
-    }
-
-    public function saveLocales(MultiSiteable $model, array $locales): void
-    {
-        $model->setLocales($locales);
-        $model->save();
     }
 }

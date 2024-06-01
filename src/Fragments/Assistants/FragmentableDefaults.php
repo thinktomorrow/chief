@@ -14,6 +14,10 @@ use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableStaticModelDefault;
 
+/**
+ * @deprecated use Thinktomorrow\Chief\Fragments\BaseFragment instead
+
+ */
 trait FragmentableDefaults
 {
     use FragmentResourceDefault;

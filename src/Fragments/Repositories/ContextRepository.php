@@ -1,8 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Models;
+namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class ContextRepository
@@ -37,6 +40,13 @@ class ContextRepository
             ->where('context_fragment_lookup.fragment_id', $fragmentId)
             ->select(['contexts.*'])
             ->get();
+    }
+
+    public function countByFragment(string $fragmentId): int
+    {
+        return DB::table('context_fragment_lookup')
+            ->where('fragment_id', $fragmentId)
+            ->count();
     }
 
     public function find(string $contextId): ContextModel

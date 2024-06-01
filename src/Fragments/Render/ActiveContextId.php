@@ -8,7 +8,7 @@ class ActiveContextId
 
     public static function set(null|string|int $activeContextId): void
     {
-        self::$activeContextId = (string) $activeContextId;
+        self::$activeContextId = $activeContextId ? (string) $activeContextId : null;
     }
 
     public static function exists(): bool

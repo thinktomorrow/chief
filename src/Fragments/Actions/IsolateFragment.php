@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
-use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 /**
  * Takes a shared fragment and duplicates it as

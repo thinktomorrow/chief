@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Fragments\Tests;
 
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentPutOffline;
 use Thinktomorrow\Chief\Fragments\Events\FragmentPutOnline;
 use Thinktomorrow\Chief\Fragments\FragmentStatus;
-use Thinktomorrow\Chief\Fragments\Models\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

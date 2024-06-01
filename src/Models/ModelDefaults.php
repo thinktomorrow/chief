@@ -20,7 +20,7 @@ trait ModelDefaults
     public function dynamicLocales(): array
     {
         // TODO: get only the locales that are used by this model
-        return ChiefSites::getLocales();
+        return ChiefSites::locales();
     }
 
     public function viewKey(): string

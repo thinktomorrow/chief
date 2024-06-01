@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\UI\Components;
 
-use Thinktomorrow\Chief\Fragments\Models\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

@@ -3,9 +3,8 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Sites\LocaleRepository;
 
-interface FragmentResource extends Resource, LocaleRepository
+interface FragmentResource extends Resource
 {
     public function adminView(): View;
 

@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Models;
+namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Render\FragmentCollection;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
