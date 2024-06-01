@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Fragments\Queries;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class GetShareableFragments

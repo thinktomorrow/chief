@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 final class CreateFragment
 {

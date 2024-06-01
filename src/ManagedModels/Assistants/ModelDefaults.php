@@ -28,6 +28,7 @@ trait ModelDefaults
     public function dynamicLocales(): array
     {
         dd($this);
+
         return ChiefSites::getLocales();
     }
 
