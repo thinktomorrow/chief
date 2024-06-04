@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
+use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
@@ -11,7 +12,6 @@ use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Queries\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;

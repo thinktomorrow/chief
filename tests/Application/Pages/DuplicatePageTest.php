@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Thinktomorrow\Chief\Fragments\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;

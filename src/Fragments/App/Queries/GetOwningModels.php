@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Queries;
+namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextOwnerRepository;

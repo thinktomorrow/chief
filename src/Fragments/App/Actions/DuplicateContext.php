@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Actions;
+namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;

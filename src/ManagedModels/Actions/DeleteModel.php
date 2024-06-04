@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
+use Thinktomorrow\Chief\Fragments\App\Actions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;

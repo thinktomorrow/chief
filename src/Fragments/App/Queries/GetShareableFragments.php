@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Queries;
+namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Actions;
+namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Events\FragmentPutOffline;
+use Thinktomorrow\Chief\Fragments\Events\FragmentPutOnline;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
-class PutFragmentOffline
+class PutFragmentOnline
 {
     private FragmentRepository $fragmentRepository;
 
@@ -20,13 +20,13 @@ class PutFragmentOffline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        if($fragmentable->fragmentModel()->isOffline()) {
+        if($fragmentable->fragmentModel()->isOnline()) {
             return;
         }
 
-        $fragmentable->fragmentModel()->setOffline();
+        $fragmentable->fragmentModel()->setOnline();
         $fragmentable->fragmentModel()->save();
 
-        event(new FragmentPutOffline($fragmentId));
+        event(new FragmentPutOnline($fragmentId));
     }
 }

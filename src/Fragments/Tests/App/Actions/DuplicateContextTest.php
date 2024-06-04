@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Fragments\Actions\DuplicateContext;
+use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;

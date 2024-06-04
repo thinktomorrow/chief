@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Sections;
+namespace Thinktomorrow\Chief\Fragments\App\Sections;
 
 interface HasBookmark
 {

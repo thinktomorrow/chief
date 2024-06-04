@@ -73,3 +73,8 @@ TODO: use this list to loop over all SP. Each SP should have boot method for fro
 and a bootAdmin for the admin booting. Also a register and registerAdmin method. This allows
 To make distinction per provider instead of doing this all here in the main service provider.
 
+## Fixed fragments
+- hero, cta footer, ... should be provided as editable fragments which are not deletable or sortable.
+- This reduces the need for these type of fields on a page model and allows for content per context.
+- Same for seo fields they can be added per context as they in essence belong to the view.
+

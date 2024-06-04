@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Render;
+namespace Thinktomorrow\Chief\Fragments\App\ActiveContext;
 
 class ActiveContextId
 {

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
-use Thinktomorrow\Chief\Fragments\Render\RenderFragments;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetFragments;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -25,13 +25,13 @@ class FragmentsRendererTest extends ChiefTestCase
         $context = FragmentTestAssist::createContext($this->owner);
         FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
 
-        $this->assertEquals("THIS IS QUOTE FRAGMENT\n", app(RenderFragments::class)->render($context->id));
+        $this->assertEquals("THIS IS QUOTE FRAGMENT\n", app(GetFragments::class)->render($context->id));
     }
 
     public function test_it_does_not_render_anything_by_default()
     {
         $context = FragmentTestAssist::createContext($this->owner);
 
-        $this->assertEquals("", app(RenderFragments::class)->render($context->id));
+        $this->assertEquals("", app(GetFragments::class)->render($context->id));
     }
 }

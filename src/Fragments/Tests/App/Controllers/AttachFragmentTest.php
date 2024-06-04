@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
-use Thinktomorrow\Chief\Fragments\Actions\CreateFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;

@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
+use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\Events\FragmentPutOffline;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

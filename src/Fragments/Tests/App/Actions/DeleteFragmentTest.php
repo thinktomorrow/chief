@@ -3,7 +3,7 @@
 namespace Tests\App\Actions;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

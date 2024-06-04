@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Controllers;
 
-use Thinktomorrow\Chief\Fragments\Actions\DetachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 
 class DetachOrDeleteFragmentController

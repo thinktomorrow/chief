@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
-use Thinktomorrow\Chief\Fragments\Queries\GetOwningModels;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

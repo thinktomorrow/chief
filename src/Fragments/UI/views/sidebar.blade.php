@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Fragments\Fragment;use Thinktomorrow\Chief\Fragments\FragmentsOwner;use Thinktomorrow\Chief\Fragments\FragmentStatus;use Thinktomorrow\Chief\Fragments\Queries\GetOwningModels; @endphp
+@php use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;use Thinktomorrow\Chief\Fragments\Fragment;use Thinktomorrow\Chief\Fragments\FragmentsOwner;use Thinktomorrow\Chief\Fragments\FragmentStatus; @endphp
 
 <div class="py-6 space-y-6 border-t border-grey-100">
     <div class="space-y-2">
@@ -58,9 +58,9 @@
                             </span>
                         @else
                             <a
-                                    href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
-                                    title="{{ $otherOwner['pageTitle'] }}"
-                                    class="underline link link-primary"
+                                href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
+                                title="{{ $otherOwner['pageTitle'] }}"
+                                class="underline link link-primary"
                             >
                                 {{ $otherOwner['pageTitle'] }}
                             </a>
@@ -79,9 +79,9 @@
 
                 <p>
                     <button
-                            type="submit"
-                            form="detachSharedFragment{{ $model->getFragmentId() }}"
-                            class="btn btn-warning-outline"
+                        type="submit"
+                        form="detachSharedFragment{{ $model->getFragmentId() }}"
+                        class="btn btn-warning-outline"
                     >
                         Fragment loskoppelen en afzonderlijk bewerken
                     </button>
@@ -94,9 +94,9 @@
 @if($model->hasFragmentModel())
     <div @class(['flex flex-wrap items-center gap-4 pt-6', 'border-t border-grey-100' => !$model->fragmentModel()->isShared()])>
         <button
-                type="submit"
-                form="changeFragmentStatus{{ $model->getFragmentId() }}"
-                class="btn btn-grey icon-label"
+            type="submit"
+            form="changeFragmentStatus{{ $model->getFragmentId() }}"
+            class="btn btn-grey icon-label"
         >
             @if($model->fragmentModel()->isOnline())
                 <x-chief::icon-label position="append"
@@ -114,9 +114,9 @@
         <div>
             @adminCan('fragment-delete', $model)
             <a
-                    v-cloak
-                    x-on:click="$dispatch('open-dialog', { 'id': 'delete-fragment-{{ $model->getFragmentId() }}' })"
-                    class="cursor-pointer link link-grey"
+                v-cloak
+                x-on:click="$dispatch('open-dialog', { 'id': 'delete-fragment-{{ $model->getFragmentId() }}' })"
+                class="cursor-pointer link link-grey"
             >
                 @if($model->fragmentModel()->isShared())
                     Fragment verwijderen op deze pagina
@@ -137,17 +137,17 @@
         </div>
 
         <form
-                id="detachSharedFragment{{ $model->getFragmentId() }}"
-                method="POST"
-                action="{{ route('chief::fragments.unshare', [$context->id, $model->getFragmentId()]) }}"
+            id="detachSharedFragment{{ $model->getFragmentId() }}"
+            method="POST"
+            action="{{ route('chief::fragments.unshare', [$context->id, $model->getFragmentId()]) }}"
         >
             @csrf
         </form>
 
         <form
-                id="changeFragmentStatus{{ $model->getFragmentId() }}"
-                method="POST"
-                action="{{ route('chief::fragments.status', [$context->id, $model->getFragmentId()]) }}"
+            id="changeFragmentStatus{{ $model->getFragmentId() }}"
+            method="POST"
+            action="{{ route('chief::fragments.status', [$context->id, $model->getFragmentId()]) }}"
         >
             <input type="hidden" name="online_status" value="{{ $model->fragmentModel()->isOnline()
                 ? FragmentStatus::offline->value

@@ -23,9 +23,9 @@ final class ContextModel extends Model
 
     public function fragments(): BelongsToMany
     {
-        return $this->belongsToMany(FragmentModel::class, 'context_fragment_lookup', 'context_id', 'fragment_id')
-            ->withPivot('order')
-            ->orderBy('context_fragment_lookup.order');
+        return $this->belongsToMany(FragmentModel::class, 'context_fragment_tree', 'context_id', 'child_id')
+            ->withPivot(['parent_id','order'])
+            ->orderBy('context_fragment_tree.order');
     }
 
     /** @deprecated use ContextOwnerRepository::findOwner($contextId) instead */

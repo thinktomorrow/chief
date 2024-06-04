@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Actions;
+namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;

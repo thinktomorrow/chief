@@ -15,8 +15,15 @@ class FragmentsServiceProvider extends ServiceProvider
     {
         Relation::morphMap([FragmentModel::resourceKey() => FragmentModel::class]);
 
+        /**
+         * @deprecated use getFragments() instead
+         *
+         * This directive does not make use of the component rendering of fragments.
+         * Best to loop the fragments in the view like:
+         * @foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
+         */
         Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\Render\\RenderFragments::class)->render(\\Thinktomorrow\\Chief\\Fragments\\Render\\ActiveContextId::get(), get_defined_vars()); ?>';
+            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\Render\\RenderFragments::class)->render(\\Thinktomorrow\\Chief\\Fragments\\Render\\ActiveContextId::get()); ?>';
         });
     }
 

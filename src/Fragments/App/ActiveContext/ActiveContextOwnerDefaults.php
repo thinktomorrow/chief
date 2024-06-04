@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fragments\Render;
+namespace Thinktomorrow\Chief\Fragments\App\ActiveContext;
 
 trait ActiveContextOwnerDefaults
 {

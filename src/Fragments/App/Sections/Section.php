@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Sections;
+namespace Thinktomorrow\Chief\Fragments\App\Sections;
 
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\Sections\HasBookmark;
 
 interface Section extends Fragment, HasBookmark
 {

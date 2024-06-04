@@ -5,7 +5,7 @@ namespace Tests\App\Actions;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Fragments\Actions\DuplicateFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;

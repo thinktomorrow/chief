@@ -28,11 +28,15 @@ if (! function_exists('chiefAdmin')) {
     }
 }
 
-// Retrieve the online fragments of the current owning model
+// Retrieve the online fragments of the given or active context
 if (! function_exists('getFragments')) {
-    function getFragments($owner, ?string $locale = null): Illuminate\Support\Collection
+    function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection
     {
-        return app(\Thinktomorrow\Chief\Fragments\Render\RenderFragments::class)->getFragments($owner, $locale ?? app()->getLocale());
+        if(!$contextId) {
+            $contextId = app(\Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId::class)->get();
+        }
+
+        return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get($contextId);
     }
 }
 

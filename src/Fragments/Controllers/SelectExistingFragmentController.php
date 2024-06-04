@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Fragments\Controllers;
 
+use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Queries\GetShareableFragments;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class SelectExistingFragmentController

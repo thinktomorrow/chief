@@ -7,8 +7,9 @@ use Illuminate\Contracts\Support\Htmlable;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Vine\Node;
 
-interface Fragment extends FragmentResource, ReferableModel, Htmlable
+interface Fragment extends FragmentResource, ReferableModel, Htmlable, Node
 {
     public function renderAdminFragment($owner, $loop, $viewData = []);
 

@@ -4,12 +4,12 @@ namespace Thinktomorrow\Chief\Fragments\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Assert;
-use Thinktomorrow\Chief\Fragments\Actions\AttachFragment;
-use Thinktomorrow\Chief\Fragments\Actions\CreateFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetFragments;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Render\RenderFragments;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -23,7 +23,7 @@ class FragmentTestAssist
 
     public static function assertRenderedFragments(Model $owner, string $expected)
     {
-        Assert::assertEquals($expected, app(RenderFragments::class)->render($owner, []));
+        Assert::assertEquals($expected, app(GetFragments::class)->render($owner, []));
     }
 
     public static function firstFragment(string $contextId, callable $callback = null)

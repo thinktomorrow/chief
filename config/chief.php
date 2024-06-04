@@ -142,6 +142,14 @@ return [
     ],
 
     /**
+     * The default view path for all fragment classes. You can override this
+     * per fragment by setting the viewPath property on your Fragment class.
+     * Relative to the resources/views directory. Use dotted syntax for
+     * nested directories, e.g. 'fragments.nested'.
+     */
+    'fragment_viewpath' => 'fragments',
+
+    /**
      *
      */
     'fragments_structure' => [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\Sections;
+namespace Thinktomorrow\Chief\Fragments\App\Sections;
 
 trait SectionDefaults
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
+use Thinktomorrow\Chief\Fragments\App\Actions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;

@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Controllers;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fragments\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 
 class AttachFragmentController

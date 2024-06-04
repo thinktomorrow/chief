@@ -42,9 +42,10 @@ class Image extends BaseFragment
 
 - If you have a viewPath property in your fragment, this should be protected or public, not private.
   Replace in each fragment class `private (string) $viewPath` with `protected ?string $viewPath`.
-- Removed usage of `private $baseViewPath` to set the path of the fragment. To reduce complexity, we allow to set a custom viewPath via a `protected ?string $viewPath` but no longer allow to only set a base path on its own.
+- Removed: Fragment::$baseViewPath property. Usage of `private $baseViewPath` to set the path of the fragment. To reduce complexity, we allow to set a custom viewPath via a `protected ?string $viewPath` but no longer allow to only set a base path on its own.
 - After migration has run, the fragments records will contain a `key` column which represents the fragment class key. This is no longer in the format of <key>@0, but solely the key.
 - Removed: soft deletion state of a fragment. Now a deleted fragment is hard deleted.
+- Added: config option `fragment_viewpath` to set the default view path for fragments.
 
 ### Fragment rendering
 Fragments now behave and render in the views as blade components. This is similar to the way the form fields are rendered.

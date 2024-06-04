@@ -8,18 +8,24 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeDefaults;
 
 abstract class BaseFragment extends \Illuminate\View\Component implements Fragment
 {
     use \Thinktomorrow\Chief\Resource\FragmentResourceDefault;
     use \Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
     use ForwardFragmentProperties;
+    use NodeDefaults;
+
+    public function __construct()
+    {
+        $this->children = new FragmentCollection();
+    }
 
     protected ?FragmentModel $fragmentModel = null;
-    protected ?Node $fragmentNode = null;
 
     public function render(): View
     {
@@ -28,9 +34,7 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
         return view($this->viewPath(), [
             'attributes' => $this->attributes,
             'fragment' => $this,
-            'fragmentNode' => $this->fragmentNode,
-
-            // TODO: add node, tree, root, parent, ...
+            'section' => $this->getRootNode(),
 
             /** @deprecated use $fragment instead */
             'model' => $this,
@@ -48,7 +52,7 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
             return $this->viewPath;
         }
 
-        return 'fragments.' . $this->viewKey();
+        return config('chief.fragment_viewpath', 'fragments') . $this->viewKey();
     }
 
     protected function viewKey(): string
@@ -93,13 +97,6 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
         return $this->fragmentModel;
     }
 
-    public function setFragmentNode(Node $node): self
-    {
-        $this->fragmentNode = $node;
-
-        return $this;
-    }
-
     public function modelReference(): ModelReference
     {
         return $this->fragmentModel()->modelReference();
@@ -114,15 +111,9 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
      * Convenience method to get all child fragments.
      * Ideal for usage in the views
      */
-    public function getFragments(): array
+    public function getFragments(): FragmentCollection
     {
-        if(! $this->fragmentNode) {
-            return [];
-        }
-
-        return $this->fragmentNode->getChildNodes()->map(function ($node) {
-            return $node->getNodeEntry();
-        })->all();
+        return $this->getChildNodes();
     }
 
     public function dynamicLocaleFallback(): ?string
