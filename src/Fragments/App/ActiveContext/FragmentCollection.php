@@ -10,7 +10,7 @@ class FragmentCollection extends NodeCollection
     public function toFragments(): array
     {
         $rootNodes = $this->all();
-dd($rootNodes);
+        dd($rootNodes);
         // TODO: convert all nodes to their entry.
         // TODO: make sure all children nodeCollection are a FragmentCollection so we can iterate over this call.
 

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
-use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;

@@ -32,7 +32,7 @@ if (! function_exists('chiefAdmin')) {
 if (! function_exists('getFragments')) {
     function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection
     {
-        if(!$contextId) {
+        if(! $contextId) {
             $contextId = app(\Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId::class)->get();
         }
 

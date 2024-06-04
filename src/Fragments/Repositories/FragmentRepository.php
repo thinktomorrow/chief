@@ -5,12 +5,11 @@ namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
+use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Vine\DefaultNode;
 
 final class FragmentRepository
 {
@@ -44,9 +43,10 @@ final class FragmentRepository
         // Build up tree structure but be aware that models can occur multiple times. We use
         // the tree structure to build up the tree manually...
 
-        return FragmentCollection::fromIterable($fragmentModels, function(Fragment $fragment){
+        return FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
             $fragment->id = $fragment->fragmentModel()->id;
             $fragment->parent_id = $fragment->fragmentModel()->pivot->parent_id;
+
             return $fragment;
         });
     }
