@@ -85,13 +85,13 @@ final class FragmentRepository
     public function getByOwner(ReferableModel $owner): Collection
     {
         throw new \Exception('No more usage of FragmentRepository::getByOwner');
-//
-//        if (! $context = $this->contextRepository->findByOwner($owner)) {
-//            return collect();
-//        }
-//
-//        return $context->fragments()
-//            ->get()
-//            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
+        //
+        //        if (! $context = $this->contextRepository->findByOwner($owner)) {
+        //            return collect();
+        //        }
+        //
+        //        return $context->fragments()
+        //            ->get()
+        //            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 }
