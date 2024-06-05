@@ -246,9 +246,9 @@ class ChiefServiceProvider extends ServiceProvider
                 ->give(function () {
                     return new SettingFields(new Settings());
                 });
-        Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
-        Relation::morphMap(['chiefuser' => User::class]);
-        Relation::morphMap(['menuitem' => MenuItem::class]);
+            Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
+            Relation::morphMap(['chiefuser' => User::class]);
+            Relation::morphMap(['menuitem' => MenuItem::class]);
 
             // Global chief nav singleton
             $this->app->singleton(Nav::class, function () {
