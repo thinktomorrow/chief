@@ -12,7 +12,7 @@
         </form>
 
         <x-slot name="footer">
-            <button type="button" x-on:click="open = false" class="btn btn-grey">
+            <button type="button" x-on:click="close()" class="btn btn-grey">
                 Annuleer
             </button>
 

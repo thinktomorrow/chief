@@ -11,6 +11,7 @@ use Livewire\Wireable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
+use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
 use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
@@ -20,12 +21,15 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class PreviewFile implements Wireable
 {
+    const DEFAULT_ASSETTYPE = 'default';
+
     private function __construct(
         public string  $id,
         public ?string $mediaId, // The actual Asset id
         public ?string $previewUrl,
         public bool    $isPreviewable,
         public ?string $tempPath,
+        public string $assetType,
         public string  $filename,
         public string  $size,
         public string  $humanReadableSize,
@@ -59,7 +63,7 @@ class PreviewFile implements Wireable
             $file->isPreviewable() ? $file->temporaryUrl() : null,
             $file->isPreviewable(),
             $file->getRealPath(),
-
+            self::DEFAULT_ASSETTYPE,
             // For new files - the basename can be changed so here we'll use the up to date filename
             $current ? $current->filename : $file->getClientOriginalName(),
             $file->getSize(),
@@ -119,6 +123,7 @@ class PreviewFile implements Wireable
             $thumbUrl,
             ('image' == $asset->getPreviewExtensionType()),
             null,
+            AssetTypeFactory::assetTypeByClassName(get_class($asset)),
             $asset->getFileName() ?: '',
             $asset->getSize(),
             $asset->getHumanReadableSize(),
@@ -175,6 +180,7 @@ class PreviewFile implements Wireable
             $thumbUrl,
             ('image' == $asset->getExtensionType()),
             null,
+            AssetTypeFactory::assetTypeByClassName(get_class($asset)),
             $asset->getFileName() ?: '',
             $asset->getSize(),
             $asset->getHumanReadableSize(),
@@ -205,6 +211,7 @@ class PreviewFile implements Wireable
             null,
             false,
             null,
+            self::DEFAULT_ASSETTYPE,
 
             // For new files - the basename can be changed so here we'll use the up to date filename
             $fileName,
@@ -267,6 +274,7 @@ class PreviewFile implements Wireable
             'previewUrl' => $this->previewUrl,
             'isPreviewable' => $this->isPreviewable,
             'tempPath' => $this->tempPath,
+            'assetType' => $this->assetType,
             'filename' => $this->filename,
             'size' => $this->size,
             'humanReadableSize' => $this->humanReadableSize,

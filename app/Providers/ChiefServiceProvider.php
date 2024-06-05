@@ -24,14 +24,15 @@ use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
-use Thinktomorrow\Chief\Fragments\Actions\UpdateFragmentMetadata;
+use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragmentMetadata;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -51,6 +52,7 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
@@ -243,6 +245,9 @@ class ChiefServiceProvider extends ServiceProvider
                 ->give(function () {
                     return new SettingFields(new Settings());
                 });
+        Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
+        Relation::morphMap(['chiefuser' => User::class]);
+        Relation::morphMap(['menuitem' => MenuItem::class]);
 
             // Global chief nav singleton
             $this->app->singleton(Nav::class, function () {

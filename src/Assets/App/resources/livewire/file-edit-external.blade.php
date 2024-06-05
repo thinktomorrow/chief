@@ -1,7 +1,3 @@
-@php
-    use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
-@endphp
-
 @if($isOpen)
     @php
         $ownerCount = count($previewFile->owners);
@@ -75,7 +71,7 @@
 
     <x-slot name="footer">
         <div class="flex flex-wrap justify-end gap-3">
-            <button type="button" x-on:click="open = false" class="btn btn-grey">
+            <button type="button" x-on:click="close()" class="btn btn-grey">
                 Annuleer
             </button>
 

@@ -25,16 +25,16 @@
         "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^10.21",
         "laravel/ui": "^4.2",
-        "livewire/livewire": "^3.0",
+        "livewire/livewire": "^3.4.6",
         "maennchen/zipstream-php": "^2.4",
-        "ramsey/uuid": "^4.7",
+        "ramsey/uuid": "^4.7.3",
         "spatie/laravel-activitylog": "^4.7.3",
         "spatie/laravel-permission": "^5.8",
         "spatie/laravel-sitemap": "^6.4.0",
         "thinktomorrow/assetlibrary": "^0.9.2",
         "thinktomorrow/dynamic-attributes": "^0.4.2",
         "thinktomorrow/squanto": "^3.0.3",
-        "thinktomorrow/url": "~2.0.0",
+        "thinktomorrow/url": "~3.0.0",
         "thinktomorrow/vine": "@dev"
     },
     "require-dev": {
@@ -43,7 +43,7 @@
         "friendsofphp/php-cs-fixer": "^3.14.3",
         "mockery/mockery": "^1.5.1",
         "nunomaduro/collision": "^7.0",
-        "larastan/larastan": "^2.4",
+        "nunomaduro/larastan": "^2.4",
         "orchestra/testbench": "^8.10",
         "phpunit/phpunit": "^10.3",
         "spatie/opening-hours": "^2.13"

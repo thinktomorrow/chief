@@ -53,7 +53,7 @@ class UpdateFileField
             $assetsForOrder = collect($values['order'] ?? []);
 
             $this->handleUploads($model, $field, $locale, $assetsForUpload, $assetsForOrder);
-            $this->handleAttach($model, $field, $locale, $assetsForAttach, $existingAssets->filter(fn ($asset) => $asset->pivot->type == $field->getKey())->pluck('id'));
+            $this->handleAttach($model, $field, $locale, $assetsForAttach, $existingAssets->filter(fn ($asset) => $asset->pivot->type == $field->getKey() && $asset->pivot->locale == $locale)->pluck('id'));
             $this->handleDeletions($model, $field, $locale, $assetsForDeletion, $assetsForOrder);
             $this->handleReOrder($model, $field, $locale, $assetsForOrder);
         }
@@ -88,28 +88,6 @@ class UpdateFileField
         }
     }
 
-    private function sluggifyFilename(string $filename): string
-    {
-        if (false === strpos($filename, '.')) {
-            return $filename;
-        }
-
-        $extension = substr($filename, strrpos($filename, '.') + 1);
-        $filename = substr($filename, 0, strrpos($filename, '.'));
-
-        return Str::slug($filename) . '.' . $extension;
-    }
-
-    protected function getDisk(): string
-    {
-        return $this->disk;
-    }
-
-    protected function setDisk(string $disk): void
-    {
-        $this->disk = $disk;
-    }
-
     private function handleAttach(HasAsset $model, File $field, string $locale, array $values, Collection $existingAssetIds): void
     {
         // Avoid asset duplication
@@ -135,5 +113,27 @@ class UpdateFileField
     private function handleReOrder(HasAsset $model, File $field, string $locale, Collection $orderedAssetIds): void
     {
         $this->reorderAssets->handle($model, $field->getKey(), $locale, $orderedAssetIds->all());
+    }
+
+    private function sluggifyFilename(string $filename): string
+    {
+        if (false === strpos($filename, '.')) {
+            return $filename;
+        }
+
+        $extension = substr($filename, strrpos($filename, '.') + 1);
+        $filename = substr($filename, 0, strrpos($filename, '.'));
+
+        return Str::slug($filename) . '.' . $extension;
+    }
+
+    protected function getDisk(): string
+    {
+        return $this->disk;
+    }
+
+    protected function setDisk(string $disk): void
+    {
+        $this->disk = $disk;
     }
 }

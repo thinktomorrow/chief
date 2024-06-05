@@ -5,7 +5,7 @@
 
         <div class="relative p-12 bg-white rounded-xl">
 
-            <button class="btn btn-primary-outline" type="button" x-on:click="open = false">X</button>
+            <button class="btn btn-primary-outline" type="button" x-on:click="close()">X</button>
 
             <h1>CROPPING</h1>
 

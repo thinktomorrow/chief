@@ -53,8 +53,8 @@ class FileEditComponent extends Component
 
         $this->form['basename'] = $this->previewFile->getBaseName();
 
+        $this->addInitialComponents();
         $this->addAssetComponents();
-
         $this->extractFormComponents();
     }
 

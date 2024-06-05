@@ -43,6 +43,14 @@
                             <span>Tag toevoegen</span>
                         </a>
                     </div>
+                @else
+                    <div class="flex items-start justify-end mb-2">
+                        <a href="{{ route('chief.tags.create') }}" title="Tag toevoegen" class="inline-flex items-center gap-0.5 mt-1 text-sm font-medium text-grey-500 hover:text-primary-500 justify-center">
+                            <svg width="18" height="18"> <use xlink:href="#icon-plus"></use> </svg>
+                            <span>Tag toevoegen</span>
+                        </a>
+                    </div>
+
                 @endif
 
                 <x-chief::table>
@@ -96,7 +104,8 @@
         @endforeach
 
         @if (count($tags) > 0)
-            <div class="text-center">
+            <div class="text-center flex justify-center gap-6">
+
                 <a
                     href="{{ route('chief.taggroups.create') }}"
                     title="Tag groep toevoegen"
@@ -106,6 +115,7 @@
                     <span>Groep toevoegen</span>
                 </a>
             </div>
+
         @else
             <div class="py-4 space-y-4">
                 <h2 class="h6 h6-dark">Nog geen enkele tag te zien... 😭</h2>

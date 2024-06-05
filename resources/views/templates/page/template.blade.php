@@ -29,8 +29,6 @@
                     {{ $slot }}
                 </div>
             </div>
-
-            @include('chief::layout._partials.notifications')
         </section>
 
         {{-- Sidebar --}}
@@ -38,4 +36,6 @@
             @include('chief::templates.page._partials.sidebar')
         </section>
     <div>
+
+    @include('chief::layout._partials.notifications')
 </x-chief::page.layout>

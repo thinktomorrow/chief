@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
@@ -18,15 +19,22 @@ trait InteractsWithForm
     /**
      * Add fields from a specific method from the Asset class.
      */
+    protected function addInitialComponents()
+    {
+        $this->components = $this->initialComponents;
+    }
+
+    /**
+     * Add fields from a specific method from the Asset class.
+     */
     protected function addAssetComponents(string $method = 'fields')
     {
-        if ($this->previewFile->mediaId) {
-            $asset = Asset::find($this->previewFile->mediaId);
-
-            if (method_exists($asset, $method)) {
+        if ($this->previewFile->assetType) {
+            $genericAssetInstance = AssetTypeFactory::instance($this->previewFile->assetType);
+            if (method_exists($genericAssetInstance, $method)) {
                 $this->components = [
-                    ...$this->initialComponents,
-                    ...array_map(fn ($component) => $component->toLivewire(), iterator_to_array($asset->{$method}())),
+                    ...$this->components,
+                    ...array_map(fn ($component) => $component->toLivewire(), iterator_to_array($genericAssetInstance->{$method}())),
                 ];
             }
         }

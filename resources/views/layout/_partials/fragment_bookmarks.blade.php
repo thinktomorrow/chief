@@ -10,18 +10,19 @@
                     rel="noopener"
                     class="link link-primary"
             >
-                <x-chief::icon-button icon="icon-external-link"/>
+                <x-chief::button>
+                    <svg><use xlink:href="#icon-external-link"></use></svg>
+                </x-chief::button>
             </a>
 
-            <span
-                    data-copy-to-clipboard="bookmark"
-                    data-copy-value="{{ $owner->url() }}#{{ $model->getBookmark() }}"
-                    data-copy-success-content="Gekopiëerd!"
-                    title="Kopiëer de link naar deze bookmark"
-                    class="text-sm cursor-pointer link link-primary"
+            <x-chief::copy-button
+                :content="'#'.$model->getBookmark()"
+                successContent="#{{ $model->getBookmark() }} gekopieerd!"
             >
-                <x-chief::icon-button icon="icon-link"/>
-            </span>
+                <x-chief::button>
+                    <svg><use xlink:href="#icon-link"></use></svg>
+                </x-chief::button>
+            </x-chief::copy-button>
         @endif
     </div>
 @endif

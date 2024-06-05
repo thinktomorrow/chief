@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Url\Root;
 use Thinktomorrow\Url\Url;
@@ -95,6 +96,8 @@ class MenuRequest extends FormRequest
             // Check if it is a relative
             if ($this->isRelativeUrl($trans['url'])) {
                 $data['trans'][$locale]['url'] = '/' . trim($trans['url'], '/');
+            } elseif(Str::startsWith($trans['url'], ['mailto:', 'tel:', 'https://', 'http://'])) {
+                $data['trans'][$locale]['url'] = $trans['url'];
             } else {
                 $data['trans'][$locale]['url'] = Url::fromString($trans['url'])->secure()->get();
             }
@@ -110,7 +113,7 @@ class MenuRequest extends FormRequest
         $nakedUrl = ltrim($url, '/');
 
         // Check if passed url is not intended as a host instead of a relative path
-        $notIntentedAsRoot = (null == Root::fromString($url)->scheme() && false === strpos($url, '.'));
+        $notIntentedAsRoot = (null == Root::fromString($url)->getScheme() && false === strpos($url, '.'));
 
         return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/' . $nakedUrl]));
     }

@@ -43,7 +43,7 @@
                 <p class="text-sm text-grey-500">
                     @if($file->isExternalAsset)
                         {{ ucfirst($file->getExternalAssetType()) }} -
-                        @if($file->getData('external.duration'))
+                        @if($file->hasData('external.duration'))
                             {{ $file->getData('external.duration') }} sec
                         @endif
                     @else

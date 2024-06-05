@@ -1,15 +1,8 @@
-@if($previewFile && $previewFile->isExternalAsset)
-    @if(count($this->getComponents()) > 0)
-        <x-chief::dialog wired size="md" title="Pas extern bestand aan">
-            @include('chief-assets::livewire.file-edit-external')
-        </x-chief::dialog>
+<x-chief::dialog wired size="md" title="{{ $previewFile && $previewFile->isExternalAsset ? 'Pas extern bestand aan' : 'Pas bestand aan' }}">
+    @if($previewFile && $previewFile->isExternalAsset)
+        @include('chief-assets::livewire.file-edit-external')
     @else
-        <x-chief::dialog wired size="md" title="Pas extern bestand aan">
-            @include('chief-assets::livewire.file-edit-external')
-        </x-chief::dialog>
-    @endif
-@else
-    <x-chief::dialog wired size="md" title="Pas bestand aan">
         @include('chief-assets::livewire.file-edit-local')
-    </x-chief::dialog>
-@endif
+    @endif
+</x-chief::dialog>
+

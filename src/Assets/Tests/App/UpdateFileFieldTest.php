@@ -135,7 +135,7 @@ class UpdateFileFieldTest extends ChiefTestCase
         $this->assertEquals('image.png', $this->model->asset('thumb_image')->getFileName());
     }
 
-    public function test_it_cannot_attach_assets_twice_for_same_field()
+    public function test_it_cannot_attach_assets_twice_for_same_field_and_locale()
     {
         $asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
@@ -162,6 +162,35 @@ class UpdateFileFieldTest extends ChiefTestCase
 
         $this->model->refresh();
         $this->assertCount(1, $this->model->assets('thumb'));
+    }
+
+    public function test_it_can_attach_assets_twice_for_same_field_but_different_locale()
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
+                ],
+            ],
+        ]);
+
+        $this->assertCount(1, $this->model->assets('thumb'));
+        $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
+
+        $this->saveFileField($this->resource, $this->model, 'thumb', [
+            'en' => [
+                'attach' => [
+                    ['id' => $asset->id],
+                ],
+            ],
+        ]);
+
+        $this->model->refresh();
+        $this->assertCount(2, $this->model->assets('thumb', null));
     }
 
     public function test_it_can_detach_assets()

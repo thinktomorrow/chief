@@ -11,16 +11,16 @@
                 <input type="hidden" name="{{ $getFieldName() }}[uploads][{{ $i }}][mimeType]"
                        value="{{$file->mimeType}}"/>
 
-                @foreach($file->fieldValues as $fieldKey => $fieldValue)
+                @foreach(Arr::dot($file->fieldValues) as $fieldKey => $fieldValue)
                     @if(is_array($fieldValue))
                         @foreach($fieldValue as $key => $value)
                             <input type="hidden"
-                                   name="{{ $getFieldName() }}[uploads][{{ $i }}][fieldValues][{{ $fieldKey }}][{{ $key }}]"
+                                   name="{{ FormKey::replaceDotsByBrackets($getFieldName().'.uploads.'.$i.'.fieldValues.' . $fieldKey .'.'.$key) }}"
                                    value="{{$value}}"/>
                         @endforeach
                     @else
                         <input type="hidden"
-                               name="{{ $getFieldName() }}[uploads][{{ $i }}][fieldValues][{{ $fieldKey }}]"
+                               name="{{ FormKey::replaceDotsByBrackets($getFieldName().'.uploads.'.$i.'.fieldValues.' . $fieldKey) }}"
                                value="{{$fieldValue}}"/>
                     @endif
                 @endforeach

@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
@@ -107,6 +108,10 @@ trait IndexAssistant
             $builder->with(['urls']);
         }
 
+        if ($this->managedModelClassInstance() instanceof Taggable) {
+            $builder->with(['tags']);
+        }
+
         if (! $pagination = $this->resource->getIndexPagination()) {
             return $builder->get();
         }
@@ -156,7 +161,9 @@ trait IndexAssistant
         // if model has no timestamps, updated_at doesn't exist
         if ((new $modelClass)->timestamps) {
             return $filters->add(HiddenFilter::make('updated', function ($query) {
-                return $query->orderBy('updated_at', 'DESC');
+                return is_array($query->getQuery()->orders) && count($query->getQuery()->orders) < 1
+                    ? $query->orderBy('updated_at', 'DESC')
+                    : $query;
             }));
         }
 

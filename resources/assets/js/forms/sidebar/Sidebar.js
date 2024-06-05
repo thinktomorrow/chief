@@ -80,7 +80,7 @@ export default class {
         Api.get(url, (data) => {
             panelEl.innerHTML = data;
 
-            window.Livewire.rescan(panelEl);
+            // window.Livewire.rescan(panelEl);
 
             // TODO: refactor to trigger submit.js for panel submissions...
             // This is somewhat in conflict with the Form.listen() logic.

@@ -6,6 +6,62 @@ principles.
 
 ## Unreleased
 
+-   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
+-   Fixed: multiple select filter options were not all used as filter in the query, only the first one.
+-   Fixed: Editor scripts were not loaded on the create page. Now the Html field works as intended on create.
+-   Added: `src/Forms/Layouts/Card` HasCollapsible trait to toggle content visibility.
+-   Added: support for custom locale segment in the chief admin toast.
+
+## 0.8.17 - 2024-04-10
+
+-   Fixed: odd livewire error 'Uncaught Snapshot missing on Livewire component' due to dialog DOM position?
+-   Fixed: mailto or tel links can now be added as menu item links.
+-   Added: Menuitem db morph added as `menuitem`. Currently only used by activity log.
+
+## 0.8.16 - 2024-03-28
+
+-   Changed: Menu item tree changed to keep empty label and not provide a default label. `MenuItemNode::getLabel()` returns the label as entered for the given menu and null if not entered. To keep using this fallback behaviour, you can use the `MenuItemNode::getAnyLabel()` method.
+-   Changed: `MenuItem::getAdminUrlLabel()` -> `MenuItem::getOwnerLabel()` and only gives owner label if present. It no longer returns 'geen link' or the url if owner label was not present.
+
+## 0.8.15 - 2024-03-14
+
+-   **Breaking change**: User class is replaced in database by `chiefuser`key. **This requires you to run migrations!**
+-   Upgraded `livewire/livewire` dependency to `3.4.6`.
+-   Fixed: cancelling a file edit broke alpine when the dialog was reopened
+-   Fixed: Storing localized values on an unsaved asset https://github.com/thinktomorrow/chief/commit/0221d47ab
+-   Fixed: Now custom Asset fields are editable on an unsaved asset.
+-   Fixed: Livewire upgrade to 3.4.6
+-   Fixed: Clipboard script was loaded for file without link
+-   Fixed: Custom asset fields on fragment could not be saved.
+-   Fixed: Some file metadata (width, height) was missing in file window.
+-   Added: Tags to eager loading on the index results.
+
+## 0.8.14 - 2024-02-20
+
+-   Fixed: dependency livewire fixed to 3.4.4 because of rescan missing since 3.4.5
+-   Fixed: sorted order in index was trumped by published_at sorting
+
+## 0.8.13 - 2024-02-15
+
+-   Fixed: The same asset can now be attached to the same model in different locales.
+-   Fixed: last table index header filter had no defined width.
+-   Added: In media gallery clicking on a media in current selection now deselects the media asset.
+-   Added: Copy bookmark button in fragment list.
+-   Changed: Links window urls are now opening in the same window by default.
+-   Removed: copy-to-clipboard script in favor of copy-button component.
+
+## 0.8.12 - 2024-01-23
+
+-   Fixed: livewire scripts on old page template was not instantiated correctly.
+-   Added: Fragmentable::beforeCreate() callback to alter fragment before the create view.
+
+## 0.8.11 - 2024-01-16
+
+-   Fixed: display of duplicate options on edit.
+-   Fixed: index options dropdown based on key named different from id.
+-   Fixed: use default updated_at sorting only when no other sorting is applied.
+-   Fixed: create tag link was not available after first tag was created.
+
 ## 0.8.10 - 2024-01-10
 
 -   Fixed: if field disallowed external files via allowExternalFiles(false), external files were still visible and selectable in the media gallery modal.

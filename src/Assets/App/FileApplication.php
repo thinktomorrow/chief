@@ -53,7 +53,13 @@ class FileApplication
         $genericValues = Arr::except($values, $fieldKeys);
 
         if (count($modelValues) > 0) {
-            $this->updateAssociatedAssetData->handle($model, $assetId, $fieldKey, $locale, $modelValues);
+            $this->updateAssociatedAssetData->handle(
+                $model instanceof Fragmentable ? $model->fragmentModel() : $model,
+                $assetId,
+                $fieldKey,
+                $locale,
+                $modelValues
+            );
         }
 
         if (count($genericValues) > 0) {

@@ -41,7 +41,7 @@ class ProjectMenuCommandTest extends ChiefTestCase
 
         $item = MenuItem::first();
 
-        $this->assertEquals('artikel titel nl', $item->getAdminUrlLabel('nl'));
-        $this->assertEquals('artikel titel en', $item->getAdminUrlLabel('en'));
+        $this->assertEquals('artikel titel nl', $item->getOwnerLabel('nl'));
+        $this->assertEquals('artikel titel en', $item->getOwnerLabel('en'));
     }
 }

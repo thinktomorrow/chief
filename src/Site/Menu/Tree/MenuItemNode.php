@@ -11,11 +11,11 @@ use Thinktomorrow\Vine\Node;
 class MenuItemNode extends DefaultNode implements Node
 {
     private MenuItemStatus $status;
-    private string $label;
+    private ?string $label;
     private ?string $url;
-    private string $adminUrlLabel;
+    private ?string $ownerLabel;
 
-    private function __construct(MenuItemStatus $status, string $label, ?string $url, string $adminUrlLabel, string $id, ?string $parentId, int $order)
+    public function __construct(MenuItemStatus $status, ?string $label, ?string $url, ?string $ownerLabel, string $id, ?string $parentId, int $order)
     {
         parent::__construct([
             'id' => $id,
@@ -26,7 +26,7 @@ class MenuItemNode extends DefaultNode implements Node
         $this->status = $status;
         $this->label = $label;
         $this->url = $url;
-        $this->adminUrlLabel = $adminUrlLabel;
+        $this->ownerLabel = $ownerLabel;
     }
 
     public static function fromModel(MenuItem $model, string $locale): Node
@@ -52,14 +52,14 @@ class MenuItemNode extends DefaultNode implements Node
         return $this->getParentNodeId();
     }
 
-    //    public function getType()
-    //    {
-    //        return $this->type;
-    //    }
-
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
     }
 
     public function setLabel(string $label)
@@ -67,24 +67,18 @@ class MenuItemNode extends DefaultNode implements Node
         $this->label = $label;
     }
 
-    // Extra info when dealing with internal links
-    //    public function getPageLabel()
-    //    {
-    //        return $this->page_label;
-    //    }
-
-    public function getUrl()
+    public function getAnyLabel(): ?string
     {
-        return $this->url;
+        return $this->label ?: $this->getOwnerLabel();
+    }
+
+    public function getOwnerLabel(): ?string
+    {
+        return $this->ownerLabel;
     }
 
     public function isOffline(): bool
     {
         return $this->status != MenuItemStatus::online;
-    }
-
-    public function getAdminUrlLabel(): string
-    {
-        return $this->adminUrlLabel;
     }
 }

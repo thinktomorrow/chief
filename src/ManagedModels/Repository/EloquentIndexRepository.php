@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class EloquentIndexRepository implements IndexRepository
@@ -33,6 +34,10 @@ class EloquentIndexRepository implements IndexRepository
 
         if ($reflection->implementsInterface(Visitable::class)) {
             $eagerLoading[] = 'urls';
+        }
+
+        if ($reflection->implementsInterface(Taggable::class)) {
+            $eagerLoading[] = 'tags';
         }
 
         if ($reflection->implementsInterface(HasAsset::class)) {

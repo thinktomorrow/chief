@@ -1,5 +1,6 @@
 @php
-    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;use Thinktomorrow\Chief\Assets\App\MimetypeIcon;$active = $active ?? false;
+    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
+    $active = $active ?? false;
     $disabled = $disabled ?? false;
     $withActions = $withActions ?? false;
 @endphp
@@ -7,7 +8,8 @@
 <div class="space-y-3">
     <div @class([
         'relative group overflow-hidden aspect-square rounded-lg bg-grey-100 p-[1px]',
-        'hover:ring-inset hover:ring-1 hover:ring-primary-500 cursor-pointer' => !$disabled,
+        'hover:ring-inset hover:ring-1 cursor-pointer' => !$disabled,
+        'hover:ring-grey-400' => !$active,
         'ring-inset ring-1 ring-primary-500 shadow-md' => $active,
     ])>
         @if ($asset->isImage())
