@@ -13,12 +13,10 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 final class FragmentRepository
 {
-    private ContextRepository $contextRepository;
     private FragmentFactory $fragmentFactory;
 
-    public function __construct(ContextRepository $contextRepository, FragmentFactory $fragmentFactory)
+    public function __construct(FragmentFactory $fragmentFactory)
     {
-        $this->contextRepository = $contextRepository;
         $this->fragmentFactory = $fragmentFactory;
     }
 
@@ -40,15 +38,13 @@ final class FragmentRepository
     {
         $fragmentModels = $this->getByContext($contextId);
 
-        // Build up tree structure but be aware that models can occur multiple times. We use
-        // the tree structure to build up the tree manually...
-
         return FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
             $fragment->id = $fragment->fragmentModel()->id;
             $fragment->parent_id = $fragment->fragmentModel()->pivot->parent_id;
+            $fragment->order = $fragment->fragmentModel()->pivot->order;
 
             return $fragment;
-        });
+        })->sort('order');
     }
 
     public function exists(string $fragmentId): bool
@@ -89,13 +85,13 @@ final class FragmentRepository
     public function getByOwner(ReferableModel $owner): Collection
     {
         throw new \Exception('No more usage of FragmentRepository::getByOwner');
-
-        if (! $context = $this->contextRepository->findByOwner($owner)) {
-            return collect();
-        }
-
-        return $context->fragments()
-            ->get()
-            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
+//
+//        if (! $context = $this->contextRepository->findByOwner($owner)) {
+//            return collect();
+//        }
+//
+//        return $context->fragments()
+//            ->get()
+//            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 }
