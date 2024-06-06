@@ -7,6 +7,7 @@ principles.
 ## Unreleased
 
 -   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
+-   Fixed: issue where repeat field would not work on create of fragment with custom dependencies.
 -   Fixed: multiple select filter options were not all used as filter in the query, only the first one.
 -   Fixed: Editor scripts were not loaded on the create page. Now the Html field works as intended on create.
 -   Added: `src/Forms/Layouts/Card` HasCollapsible trait to toggle content visibility.
