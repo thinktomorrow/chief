@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        $this->addActiveContextIdToUrl();
-
-        return;
         // This migration is meant for existing database setups.
         // It will migrate the existing fragment tables to the new structure.
         // New setups will have this structure by default.
@@ -88,6 +85,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('context_id');
             $table->char('parent_id', 36)->nullable(); // Root fragments have no parent
             $table->char('child_id', 36);
+            $table->json('locales')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
 
             $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
