@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 0.8.19 - 2024-06-06
+
 -   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
 -   Fixed: issue where repeat field would not work on create of fragment with custom dependencies.
 -   Fixed: multiple select filter options were not all used as filter in the query, only the first one.
