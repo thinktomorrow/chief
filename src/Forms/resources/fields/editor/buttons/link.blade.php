@@ -6,7 +6,7 @@
     - Link style (button, text, icon)
 --}}
 <div class="size-5">
-    <button type="button" id="tiptap-header-link">
+    <button type="button" id="tiptap-header-link-{{ $locale }}">
         <svg class="size-5 text-grey-900" viewBox="0 0 24 24" color="currentColor" fill="none">
             <path
                 d="M9.14339 10.691L9.35031 10.4841C11.329 8.50532 14.5372 8.50532 16.5159 10.4841C18.4947 12.4628 18.4947 15.671 16.5159 17.6497L13.6497 20.5159C11.671 22.4947 8.46279 22.4947 6.48405 20.5159C4.50532 18.5372 4.50532 15.329 6.48405 13.3503L6.9484 12.886"
@@ -23,39 +23,100 @@
         </svg>
     </button>
 
-    <x-chief::dropdown trigger="#tiptap-header-link">
-        <div x-data="{ link: null, title: null }" class="px-3 py-2">
+    <x-chief::dropdown trigger="#tiptap-header-link-{{ $locale }}" id="tiptap-header-link-dropdown-{{ $locale }}">
+        <div
+            x-data="{
+                href: null,
+                isNewLink: true,
+                isTargetBlank: false,
+                classList: null,
+
+                setState() {
+                    // TODO: Need to reset class too?
+                    var href = editor().getAttributes('link').href
+                    var target = editor().getAttributes('link').target
+
+                    if (href) {
+                        this.isNewLink = false
+                    } else {
+                        this.isNewLink = true
+                    }
+
+                    this.href = href
+
+                    if (target === '_blank') {
+                        this.isTargetBlank = true
+                    } else {
+                        this.isTargetBlank = false
+                    }
+                },
+            }"
+            x-on:dropdown-opened.window="
+                (event) => {
+                    if (
+                        event.detail.el ===
+                        document.querySelector('#tiptap-header-link-dropdown-{{ $locale }}')
+                    ) {
+                        setState();
+                    }
+                }
+            "
+            class="px-3 py-2"
+        >
             <div class="w-64 space-y-3">
-                <span class="text-sm text-grey-500">Link bewerken</span>
+                <x-chief::input.group>
+                    <x-chief::input.label class="text-sm">URL</x-chief::input.label>
+                    <x-chief::input.text x-model="href" placeholder="https://google.be" />
+                </x-chief::input.group>
+
+                <x-chief::input.group inner-class="flex items-start gap-2">
+                    <x-chief::input.checkbox x-model="isTargetBlank" />
+                    <x-chief::input.label unset class="body body-dark text-sm leading-6">
+                        Open in nieuw tablad
+                    </x-chief::input.label>
+                </x-chief::input.group>
 
                 <x-chief::input.group>
-                    <x-chief::input.label>URL</x-chief::input.label>
-                    <x-chief::input.text x-model="link" placeholder="https://google.be" />
+                    <x-chief::input.label class="text-sm">Class</x-chief::input.label>
+                    <x-chief::multiselect
+                        x-model="classList"
+                        :options="Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::convertOptionsToChoices(
+                            Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toPairs([
+                                'link' => 'Link',
+                                'btn' => 'Knop',
+                            ]),
+                        )"
+                        :selection="['link']"
+                    />
                 </x-chief::input.group>
 
                 <button
                     type="button"
                     x-on:click="
                         () => {
-                            console.log(editor().getAttributes('link'))
-                            editor().commands.setLink({ href: link })
-                            open = false
+                            editor().commands.setLink({
+                                href,
+                                target: isTargetBlank ? '_blank' : null,
+                                rel: isTargetBlank ? 'noopener noreferrer' : null,
+                                class: classList == 'link' ? 'link link-primary' : 'btn btn-primary',
+                            })
+                            close()
                         }
                     "
-                    class="btn btn-primary"
-                >
-                    Link toevoegen
-                </button>
+                    class="btn btn-primary px-3 py-1 text-sm"
+                    x-text="isNewLink ? 'Link toevoegen' : 'Link bewerken'"
+                ></button>
 
                 <button
                     type="button"
                     x-on:click="
                         () => {
                             editor().commands.unsetLink()
-                            open = false
+                            close()
                         }
                     "
                     class="btn btn-grey"
+                    x-show="!isNewLink"
                 >
                     Link verwijderen
                 </button>

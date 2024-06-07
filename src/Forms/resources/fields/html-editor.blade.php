@@ -45,7 +45,7 @@
 >
     <div class="flex items-start gap-3 border-b border-grey-100 bg-white px-3 py-2 first:rounded-t-lg">
         @foreach ($extensions as $extension)
-            {!! $extension::renderButton() !!}
+            {!! $extension::renderButton(['locale' => $locale]) !!}
         @endforeach
     </div>
 

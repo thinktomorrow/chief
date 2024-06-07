@@ -1,5 +1,5 @@
 <div class="size-5">
-    <button type="button" id="tiptap-header-paragraph-styles">
+    <button type="button" id="tiptap-header-paragraph-styles-{{ $locale }}">
         <svg class="size-5 text-grey-900" viewBox="0 0 24 24" color="currentColor" fill="none">
             <path
                 d="M15 3V21M15 3H10M15 3H21M10 12H7.5C5.01472 12 3 9.98528 3 7.5C3 5.01472 5.01472 3 7.5 3H10M10 12V3M10 12V21"
@@ -11,14 +11,14 @@
         </svg>
     </button>
 
-    <x-chief::dropdown trigger="#tiptap-header-paragraph-styles">
+    <x-chief::dropdown trigger="#tiptap-header-paragraph-styles-{{ $locale }}">
         <template x-for="i in 6">
             <button
                 type="button"
                 x-on:click="
                     () => {
                         editor().chain().focus().setHeading({ level: i }).run()
-                        open = false
+                        close()
                     }
                 "
                 class="inline-flex items-start gap-2 px-3 py-1.5 leading-5 text-grey-900 hover:bg-grey-100"
@@ -56,7 +56,7 @@
             x-on:click="
                 () => {
                     editor().chain().focus().setParagraph().run()
-                    open = false
+                    close()
                 }
             "
             class="inline-flex items-start gap-2 px-3 py-1.5 leading-5 text-grey-900 hover:bg-grey-100"

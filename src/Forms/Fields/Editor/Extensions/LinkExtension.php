@@ -8,9 +8,9 @@ class LinkExtension
 {
     protected string $name = 'link';
 
-    public static function renderButton(): ?View
+    public static function renderButton($viewData = []): ?View
     {
-        return view('chief-form::fields.editor.buttons.link');
+        return view('chief-form::fields.editor.buttons.link', $viewData);
     }
 
     public static function renderFooter(): ?View
