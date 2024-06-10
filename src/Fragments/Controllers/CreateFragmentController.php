@@ -41,7 +41,7 @@ class CreateFragmentController
 
         View::share('resource', $fragment);
         View::share('model', $fragment);
-        View::share('owner', $context->getOwner());
+//        View::share('owner', $context->getOwner());
         View::share('forms', $forms);
         View::share('order', $order);
 

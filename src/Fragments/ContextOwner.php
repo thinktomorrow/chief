@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Fragments;
 interface ContextOwner
 {
     /**
-     * List of allowed sections (root fragments) for the context of this owner.
+     * List of allowed fragments for all contexts of this owner.
      */
-    public function allowedSections(): array;
+    public function allowedFragments(): array;
 }

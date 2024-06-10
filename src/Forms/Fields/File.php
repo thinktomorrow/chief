@@ -47,7 +47,7 @@ class File extends Component implements Field
     {
         parent::__construct($key);
 
-        $this->locales([ChiefSites::getDefaultLocale()]);
+        $this->locales([ChiefSites::defaultLocale()]);
         $this->setLocalizedFormKeyTemplate('files.:name.:locale');
 
         $this->uploadButtonLabel('Bestand opladen');

@@ -12,14 +12,17 @@
         <div
             data-fragments-container
             data-sortable
-            data-sortable-endpoint="{{ route('chief::fragments.sort', $context->id) }}"
+            data-sortable-endpoint="{{ route('chief::fragments.reorder', $context->id) }}"
             data-sortable-is-sorting
             class="divide-y divide-grey-100"
         >
 
             @php
                 $currentLocale = app()->getLocale();
-                app()->setLocale($context->locale);
+
+                if($context->getLocales() > 0) {
+                    app()->setLocale($context->getLocales()[0]);
+                }
             @endphp
 
             @foreach($fragments as $fragment)

@@ -67,7 +67,7 @@ return [
             //// Usually this is the same as the key locale but it can happen that the app locale is different.
             ///  This means that for sites with the same app_locale, only one translation field is presented. Then there is no option to
             ///  set a different translation for this locale.  If you like to do this in some occasions, you can click 'add different translation for 'be' and
-            ///  this adds the be translation tab for this specific field.
+            ///  this adds the be translation tab for this specific field. Referencing example: anzapro.nl > anzapro.be
             ///
             /// If app_locale is already a locale of a site, then this site is not immediately available in the translations and such. Only on demand.
 

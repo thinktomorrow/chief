@@ -9,17 +9,20 @@ use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 class EditFragmentController
 {
     private FieldValidator $validator;
     private FragmentRepository $fragmentRepository;
+    private ContextOwnerRepository $contextOwnerRepository;
 
-    public function __construct(FieldValidator $validator, FragmentRepository $fragmentRepository)
+    public function __construct(FieldValidator $validator, ContextOwnerRepository $contextOwnerRepository, FragmentRepository $fragmentRepository)
     {
         $this->validator = $validator;
         $this->fragmentRepository = $fragmentRepository;
+        $this->contextOwnerRepository = $contextOwnerRepository;
     }
 
     public function edit(string $contextId, string $fragmentId, Request $request)
@@ -39,7 +42,7 @@ class EditFragmentController
         View::share('resource', $fragment);
         View::share('model', $fragment);
         View::share('context', $context);
-        View::share('owner', $context->getOwner());
+        View::share('owner', $this->contextOwnerRepository->findOwner($contextId));
         View::share('forms', $forms);
 
         return view('chief-fragments::edit');

@@ -105,7 +105,7 @@ class ProjectModelData
         $resource = $this->registry->findResourceByModel($model::class);
 
         $originalLocale = app()->getLocale();
-        $locales = \Thinktomorrow\Chief\Sites\ChiefSites::getLocales();
+        $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
 
         foreach ($locales as $locale) {
             app()->setLocale($locale); // only way to get localized pagetitle

@@ -20,38 +20,17 @@ class ContextOwnerRepository
         $this->contextRepository = $contextRepository;
     }
 
+    /**
+     * @param string $fragmentId
+     * @return Collection ContextOwner[]
+     */
     public function getOwnersByFragment(string $fragmentId): Collection
     {
         $models = $this->contextRepository->getByFragment($fragmentId);
 
         return $models
             ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id))
-            ->unique()
-            ->map(function ($model) {
-                return ($model instanceof FragmentModel) ? $this->fragmentFactory($model) : $model;
-            });
-    }
-
-    /**
-     * This retrieves the root owners (resources) and not
-     * any fragment owners in case of nested fragments
-     */
-    public function getRootOwnersByFragment(FragmentModel $fragmentModel): Collection
-    {
-        $models = ContextModel::owning($fragmentModel)
-            ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id));
-
-        $result = collect();
-
-        foreach($models as $model) {
-            if($model instanceof FragmentModel) {
-                $result = $result->merge($this->getRootOwnersByFragment($model));
-            } else {
-                $result->push($model);
-            }
-        }
-
-        return $result;
+            ->unique();
     }
 
     public function findOwner(string $contextId): ContextOwner

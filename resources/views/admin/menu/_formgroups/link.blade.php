@@ -48,9 +48,9 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if(count(ChiefSites::getLocales()) > 1)
+                @if(count(ChiefSites::locales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach(ChiefSites::getLocales() as $locale)
+                        @foreach(ChiefSites::locales() as $locale)
                             <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                 <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
@@ -64,7 +64,7 @@
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach(ChiefSites::getLocales() as $locale)
+                    @foreach(ChiefSites::locales() as $locale)
                         <x-chief::input.group :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
                                     id="trans-{{ $locale }}-url"

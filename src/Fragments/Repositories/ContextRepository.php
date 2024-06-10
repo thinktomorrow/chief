@@ -36,15 +36,15 @@ class ContextRepository
 
     public function getByFragment(string $fragmentId): Collection
     {
-        return ContextModel::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')
-            ->where('context_fragment_lookup.fragment_id', $fragmentId)
+        return ContextModel::join('context_fragment_tree', 'contexts.id', '=', 'context_fragment_tree.context_id')
+            ->where('context_fragment_tree.child_id', $fragmentId)
             ->select(['contexts.*'])
             ->get();
     }
 
     public function countByFragment(string $fragmentId): int
     {
-        return DB::table('context_fragment_lookup')
+        return DB::table('context_fragment_tree')
             ->where('fragment_id', $fragmentId)
             ->count();
     }

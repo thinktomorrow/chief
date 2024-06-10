@@ -77,4 +77,6 @@ To make distinction per provider instead of doing this all here in the main serv
 - hero, cta footer, ... should be provided as editable fragments which are not deletable or sortable.
 - This reduces the need for these type of fields on a page model and allows for content per context.
 - Same for seo fields they can be added per context as they in essence belong to the view.
+- api in database: extra fragment column that overwrites the order: position: first, second, middle, penultimate, last, hidden
+- hidden is not rendered in view but available in the view: e.g. modal, seo.
 

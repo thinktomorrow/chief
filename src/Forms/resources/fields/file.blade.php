@@ -3,7 +3,7 @@
 // Assets always expect a locale. We enforce this even when locales are missing
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
-$locale ??= ChiefSites::getDefaultLocale();
+$locale ??= ChiefSites::defaultLocale();
 
 ?>
 

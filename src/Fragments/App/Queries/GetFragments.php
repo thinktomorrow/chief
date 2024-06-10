@@ -24,9 +24,9 @@ final class GetFragments
         $this->contextRepository = $contextRepository;
     }
 
-    public function get(string $contextId): FragmentCollection
+    public function get(string $contextId, string $locale): FragmentCollection
     {
-        $fragmentCollection = $this->fragmentRepository->getTreeByContext($contextId);
+        $fragmentCollection = $this->fragmentRepository->getTreeByContext($contextId, $locale);
 
         // When admin is logged in and this request is in preview mode, we allow to view all fragments
         if (PreviewMode::fromRequest()->check()) {
@@ -38,26 +38,5 @@ final class GetFragments
         return $fragmentCollection->remove(function (Fragment $fragment) {
             return $fragment->fragmentModel()->isOffline();
         });
-    }
-
-    //    public function render(FragmentsOwner $owner, string $locale, array $viewData = []): string
-    /**
-     * @deprecated use GetFragments::get() instead.
-     *
-     *  This render does not make use of the component rendering of fragments.
-     *  Best to loop the fragments yourself in the view like:
-     *  @foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
-     */
-    public function render(string $contextId): string
-    {
-        $fragments = $this->get($contextId);
-
-        $output = '';
-
-        foreach($fragments as $fragment) {
-            $output .= $fragment->toHtml();
-        }
-
-        return $output;
     }
 }

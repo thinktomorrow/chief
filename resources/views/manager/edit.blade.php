@@ -1,13 +1,6 @@
 @php
     use Thinktomorrow\Chief\Sites\MultiSiteable;
 
-    $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
-            'id' => $context->id,
-            'locale' => $context->locale,
-            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
-        ];
-    });
-
 @endphp
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
@@ -23,7 +16,7 @@
             @endif
 
             @if($model instanceof MultiSiteable)
-                <livewire:chief-wire::model-locales
+                <livewire:chief-wire::resource-sites
                     :resource-key="$resource::resourceKey()"
                     :modelReference="$model->modelReference()"
                     :locales="$model->getLocales()"/>

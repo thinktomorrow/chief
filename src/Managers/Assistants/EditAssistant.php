@@ -69,11 +69,19 @@ trait EditAssistant
         View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
 
         // Find or create the context... TODO: this should be something to do elsewhere?
-        $defaultLocale = count($model->getLocales()) > 0
-            ? $model->getLocales()[0]
-            : ChiefSites::getDefaultLocale();
 
-        View::share('context', app(ContextRepository::class)->findOrCreateByOwner($model, $defaultLocale));
+        // WIP
+        $contexts = app(ContextRepository::class)->getByOwner($model);
+        View::share('contexts', $contexts);
+        View::share('context', $contexts->first());
+        View::share('contextsForSwitch', $contexts);
+
+//        $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
+//            'id' => $context->id,
+//            'locale' => $context->locale,
+//            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
+//        ];
+//        });
 
         $stateConfigs = [];
 

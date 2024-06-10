@@ -17,7 +17,7 @@ trait HasLocales
     public function locales(?array $locales = null): static
     {
         $this->locales = (null === $locales)
-            ? ChiefSites::getLocales()
+            ? ChiefSites::locales()
             : $locales;
 
         $this->whenModelIsSet(function ($model, $field) use ($locales) {

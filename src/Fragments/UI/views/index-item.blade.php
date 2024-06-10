@@ -19,14 +19,14 @@
                         <span class="label label-error"> Offline </span>
                     @endif
 
-                    @if($model->fragmentModel()->isShared())
+                    @if($fragment->fragmentModel()->isShared())
                         <span class="label label-xs label-warning"> Gedeeld fragment </span>
                     @endif
 
-                    @if($model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+                    @if($fragment instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
                         <x-chief::copy-button
-                            :content="'#'.$model->getBookmark()"
-                            successContent="#{{ $model->getBookmark() }} gekopieerd!"
+                            :content="'#'.$fragment->getBookmark()"
+                            successContent="#{{ $fragment->getBookmark() }} gekopieerd!"
                             class="my-0.5 leading-5"
                         >
                         <x-chief::link class="!text-grey-400 hover:!text-primary-500">
@@ -50,7 +50,7 @@
             </a>
         </div>
 
-        @if($adminFragment = $fragment->renderAdminFragment($context->getOwner(), $loop))
+        @if($adminFragment = $fragment->renderAdminFragment($owner, $loop))
             <div class="px-[2.65rem]">
                 {!! $adminFragment !!}
             </div>

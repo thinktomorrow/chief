@@ -29,7 +29,7 @@ trait ModelDefaults
     {
         dd($this);
 
-        return ChiefSites::getLocales();
+        return ChiefSites::locales();
     }
 
     public function viewKey(): string

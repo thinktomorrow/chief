@@ -6,14 +6,17 @@ namespace Thinktomorrow\Chief\Fragments\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Thinktomorrow\Chief\Sites\MultiSiteable;
+use Thinktomorrow\Chief\Sites\MultiSiteableDefault;
 
-final class ContextModel extends Model
+final class ContextModel extends Model implements MultiSiteable
 {
+    use MultiSiteableDefault;
+
     public $table = "contexts";
     public $guarded = [];
     public $casts = [
         'id' => 'string',
-        'locales' => 'array',
     ];
 
     public function findFragmentModel($fragmentId): ?FragmentModel
@@ -24,7 +27,7 @@ final class ContextModel extends Model
     public function fragments(): BelongsToMany
     {
         return $this->belongsToMany(FragmentModel::class, 'context_fragment_tree', 'context_id', 'child_id')
-            ->withPivot(['parent_id','order'])
+            ->withPivot(['parent_id', 'locales', 'order'])
             ->orderBy('context_fragment_tree.order');
     }
 
@@ -32,10 +35,5 @@ final class ContextModel extends Model
     public function getOwner()
     {
         throw new Exception('Deprecated method. Use ContextOwnerRepository::findOwner($contextId) instead.');
-    }
-
-    public function getLocales(): array
-    {
-        return $this->locales;
     }
 }

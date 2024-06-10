@@ -20,7 +20,7 @@ class ReorderFragments
             return;
         }
 
-        $this->sortModels->handle('context_fragment_lookup', $indices, 'order', 'fragment_id', false, 'context_id = "' . $contextId . '"');
+        $this->sortModels->handle('context_fragment_tree', $indices, 'order', 'child_id', false, 'context_id = "' . $contextId . '"');
 
         event(new FragmentsReordered($contextId));
     }

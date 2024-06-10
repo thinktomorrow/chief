@@ -30,13 +30,12 @@ if (! function_exists('chiefAdmin')) {
 
 // Retrieve the online fragments of the given or active context
 if (! function_exists('getFragments')) {
-    function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection
+    function getFragments(?string $contextId = null, ?string $locale = null): \Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection
     {
-        if(! $contextId) {
-            $contextId = app(\Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId::class)->get();
-        }
-
-        return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get($contextId);
+        return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get(
+            $contextId ?: app(\Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId::class)->get(),
+            $locale ?: app()->getLocale()
+        );
     }
 }
 

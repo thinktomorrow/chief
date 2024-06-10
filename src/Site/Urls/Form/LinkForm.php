@@ -31,7 +31,7 @@ final class LinkForm
     {
         return $this->model instanceof MultiSiteable
             ? $this->model->getLocales()
-            : \Thinktomorrow\Chief\Sites\ChiefSites::getLocales();
+            : \Thinktomorrow\Chief\Sites\ChiefSites::locales();
     }
 
     private function setLinks(): void

@@ -33,9 +33,7 @@ class MysqlNestableRepository implements NestableRepository
     {
         $nodes = $models->map(fn ($model) => new NestableNode($model));
 
-        return new NestedTree((new NodeCollectionFactory)
-            ->fromSource(new NestedTreeSource($nodes))
-            ->all());
+        return NestedTree::fromIterable($nodes);
     }
 
     public function getResource(string $resourceKey): PageResource

@@ -23,8 +23,17 @@ trait MultiSiteableDefault
         $this->mergeCasts(['locales' => 'array']);
     }
 
-    public function scopeByLocale(Builder $query): void
+    public function scopeByLocale(Builder $query, string $locale): void
     {
-        $query->whereIn($this->getTable().'.'.$this->getStateAttribute(), $this->onlineStates());
+        $query->whereJsonContains($this->getTable().'.locales', $locale);
+    }
+
+    public function scopeByLocaleOrNone(Builder $query, string $locale): void
+    {
+        $query->when($locale, fn ($q, $locale) => $q->where(function ($q) use ($locale) {
+            $q->whereJsonContains($this->getTable().'.locales', $locale)
+                ->orWhereNull($this->getTable().'.locales')
+                ->orWhereJsonLength($this->getTable().'.locales', '=', 0);
+        }));
     }
 }

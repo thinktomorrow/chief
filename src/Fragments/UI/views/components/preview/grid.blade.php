@@ -5,7 +5,7 @@
 ])
 
 @php
-    $items = getFragments($model) ?? [];
+    $items = $model->getFragments();
     $count = count($items);
 
     if($count > $threshold) {

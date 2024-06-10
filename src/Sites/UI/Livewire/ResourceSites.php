@@ -93,7 +93,7 @@ class ResourceSites extends Component
 
     public function render()
     {
-        return view('chief-locale::model-locales', [
+        return view('chief-sites::resource-locales', [
             //
         ]);
     }

@@ -71,6 +71,6 @@ class ArticlePage extends Model implements Page
 
     protected function dynamicLocales(): array
     {
-        return ChiefSites::getLocales();
+        return ChiefSites::locales();
     }
 }

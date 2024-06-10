@@ -20,23 +20,13 @@ final class FragmentRepository
         $this->fragmentFactory = $fragmentFactory;
     }
 
-    public function getByContext(string $contextId): Collection
-    {
-        $fragmentModels = ContextModel::findOrFail($contextId)
-            ->fragments()
-            ->with('assetRelation', 'assetRelation.media')
-            ->get();
-
-        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
-    }
-
     /**
      * Get entire fragmentCollection for a given context.
      * This is used to render all page fragments.
      */
-    public function getTreeByContext(string $contextId): FragmentCollection
+    public function getTreeByContext(string $contextId, ?string $locale = null): FragmentCollection
     {
-        $fragmentModels = $this->getByContext($contextId);
+        $fragmentModels = $this->getByContext($contextId, $locale);
 
         return FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
             $fragment->id = $fragment->fragmentModel()->id;
@@ -45,6 +35,21 @@ final class FragmentRepository
 
             return $fragment;
         })->sort('order');
+    }
+
+    public function getByContext(string $contextId, ?string $locale = null): Collection
+    {
+        $fragmentModels = ContextModel::findOrFail($contextId)
+            ->fragments()
+            ->when($locale, fn ($query, $locale) => $query->where(function ($q) use ($locale) {
+                $q->whereJsonContains('context_fragment_tree.locales', $locale)
+                  ->orWhereNull('context_fragment_tree.locales')
+                  ->orWhereJsonLength('context_fragment_tree.locales', '=', 0);
+            }))
+                ->with('assetRelation', 'assetRelation.media')
+                ->get();
+
+        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 
     public function exists(string $fragmentId): bool

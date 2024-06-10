@@ -35,7 +35,7 @@ class MenuItemNode extends DefaultNode implements Node
             $model->getStatus(),
             $model->getLabel($locale) ?: $model->getAdminUrlLabel($locale),
             $model->getUrl($locale),
-            $model->getAdminUrlLabel($locale),
+            $model->getOwnerLabel($locale),
             (string) $model->id,
             (string) $model->parent_id,
             $model->order,

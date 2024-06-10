@@ -6,8 +6,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 // Nested fragments component in sidebar (cannot use livewire for this)
@@ -16,7 +17,7 @@ class Fragments extends Component
     private FragmentRepository $fragmentRepository;
     private GetShareableFragments $getShareableFragments;
 
-    public FragmentsOwner $owner;
+    public ContextOwner $owner;
     public string $contextId;
     private $context;
 
@@ -27,7 +28,7 @@ class Fragments extends Component
 
         $this->contextId = $contextId;
         $this->context = ContextModel::find($contextId);
-        $this->owner = $this->context->getOwner();
+        $this->owner = app(ContextOwnerRepository::class)->findOwner($contextId);
     }
 
     /**
