@@ -6,6 +6,7 @@
 @props([
     'trigger' => null,
     'reference' => null,
+    'placement' => 'bottom-end',
 ])
 
 <div
@@ -22,7 +23,10 @@
             $dispatch('dropdown-closed')
         },
     }"
-    x-dropdown="{ referenceEl: '{{ $reference ?? $trigger }}' }"
+    x-dropdown="{
+        reference: '{{ $reference ?? $trigger }}',
+        placement: '{{ $placement }}',
+    }"
     x-init="
         () => {
             const trigger = document.querySelector('{{ $trigger }}')

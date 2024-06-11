@@ -4,13 +4,13 @@ namespace Thinktomorrow\Chief\Forms\Fields\Editor\Extensions;
 
 use Illuminate\Contracts\View\View;
 
-class BulletListExtension
+class ListStylesExtension
 {
-    protected string $name = 'bullet_list';
+    protected string $name = 'list_styles';
 
-    public static function renderButton(): ?View
+    public static function renderButton($viewData = []): ?View
     {
-        return view('chief-form::fields.editor.buttons.bullet-list');
+        return view('chief-form::fields.editor.buttons.list-styles', $viewData);
     }
 
     public static function renderFooter(): ?View
@@ -20,7 +20,7 @@ class BulletListExtension
 
     public static function jsExtensions(): array
     {
-        return ['list_item', 'bullet_list'];
+        return ['list_item', 'bullet_list', 'ordered_list'];
     }
 
     public static function roles(): array

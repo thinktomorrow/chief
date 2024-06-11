@@ -1,7 +1,7 @@
 @php
     use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
-    $extensions = [Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\HtmlExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ParagraphStylesExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\BoldExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ItalicExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\UnderlineExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\BulletListExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\OrderedListExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\LinkExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\CharacterCountExtension::class];
+    $extensions = [Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\HtmlExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ParagraphStylesExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\BoldExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ItalicExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\UnderlineExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ListStylesExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\LinkExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\CharacterCountExtension::class];
     $jsExtensions = [];
 
     foreach ($extensions as $extension) {

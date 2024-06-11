@@ -23,7 +23,11 @@
         </svg>
     </button>
 
-    <x-chief::dropdown trigger="#tiptap-header-link-{{ $locale }}" id="tiptap-header-link-dropdown-{{ $locale }}">
+    <x-chief::dropdown
+        trigger="#tiptap-header-link-{{ $locale }}"
+        id="tiptap-header-link-dropdown-{{ $locale }}"
+        placement="bottom-center"
+    >
         <div
             x-data="{
                 href: null,
