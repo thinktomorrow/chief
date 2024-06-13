@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Plugins\TranslationsExport\Document;
 
-interface Line
+use Illuminate\Contracts\Support\Arrayable;
+
+interface Line extends Arrayable
 {
     public function getReference(): string;
 

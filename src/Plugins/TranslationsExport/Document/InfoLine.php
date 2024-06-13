@@ -15,4 +15,14 @@ class InfoLine implements Line
     {
         return $this->columns;
     }
+
+    public function getReference(): string
+    {
+        return '';
+    }
+
+    public function toArray()
+    {
+        return $this->getColumns();
+    }
 }

@@ -4,51 +4,63 @@ namespace Thinktomorrow\Chief\Plugins\TranslationsExport\Document;
 
 class TranslationLine implements Line
 {
-    private string $reference;
-    private string $label;
+    private string $modelReference;
+    private string $fieldKey;
+    private string $modelLabel;
+    private string $fieldLabel;
     private ?string $originalValue;
     private array $targetValues;
 
-    public function __construct(string $reference, string $label, ?string $originalValue, array $targetValues)
+    public function __construct(string $modelReference, string $fieldKey, string $modelLabel, string $fieldLabel, ?string $originalValue, array $targetValues)
     {
-        $this->reference = $reference;
-        $this->label = $label;
+        $this->modelReference = $modelReference;
+        $this->fieldKey = $fieldKey;
+        $this->modelLabel = $modelLabel;
+        $this->fieldLabel = $fieldLabel;
         $this->originalValue = $originalValue;
         $this->targetValues = $targetValues;
     }
 
-    public static function makeLabel(string $label)
-    {
-        return new static('', $label, null, []);
-    }
-
-    public function getEncryptedReference(): string
-    {
-        return encrypt($this->reference);
-    }
-
-//    public function getReference(): string
+//    public static function makeLabel(string $label)
 //    {
-//        return $this->reference;
+//        return new static('', $label, null, []);
 //    }
 
-    public function getLabel(): string
+    public function getColumns(): array
     {
-        return $this->label;
+        return [
+            '',
+            $this->getReference(),
+            $this->modelLabel,
+            $this->fieldLabel,
+            $this->originalValue,
+            ...$this->targetValues,
+        ];
     }
 
-    public function getOriginalValue(): ?string
+    public function getReference(): string
+    {
+//        return $this->modelReference .'|'. $this->fieldKey;
+        return encrypt($this->modelReference .'|'. $this->fieldKey);
+    }
+
+    private function getLabel(): string
+    {
+        return $this->fieldLabel;
+    }
+
+    private function getOriginalValue(): ?string
     {
         return $this->originalValue;
     }
 
-    public function getTargetValue(string $locale): ?string
+    private function getTargetValue(string $locale): ?string
     {
         return $this->targetValues[$locale] ?? null;
     }
 
-    public function getColumns(): array
+    public function toArray()
     {
-        // TODO: Implement getColumns() method.
+        return $this->getColumns();
     }
 }
