@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\MultiSiteable;
 use Thinktomorrow\Url\Root;
 
 final class LinkForm
@@ -26,11 +27,18 @@ final class LinkForm
         $this->setFormValues();
     }
 
+    private function getLocales(): array
+    {
+        return $this->model instanceof MultiSiteable
+            ? $this->model->getLocales()
+            : \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+    }
+
     private function setLinks(): void
     {
         $links = [];
 
-        foreach (config('chief.locales') as $locale) {
+        foreach ($this->getLocales() as $locale) {
             $records = $this->urlRecords->get($locale, collect());
             $currentRecord = $records->reject->isRedirect()->first();
 
@@ -88,7 +96,7 @@ final class LinkForm
     {
         $values = [];
 
-        foreach (config('chief.locales') as $locale) {
+        foreach ($this->getLocales() as $locale) {
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object)[

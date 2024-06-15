@@ -1,14 +1,14 @@
-@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Sections\HasBookmark)
     <div class="flex flex-wrap items-center gap-2">
         <span class="label label-grey">#{{ $model->getBookmark() }}</span>
 
         @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             <a
-                href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
-                title="Ga naar dit fragment op de website"
-                target="_blank"
-                rel="noopener"
-                class="link link-primary"
+                    href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
+                    title="Ga naar dit fragment op de website"
+                    target="_blank"
+                    rel="noopener"
+                    class="link link-primary"
             >
                 <x-chief::button>
                     <svg><use xlink:href="#icon-external-link"></use></svg>

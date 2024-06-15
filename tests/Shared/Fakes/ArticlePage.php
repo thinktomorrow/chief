@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
@@ -23,12 +24,17 @@ class ArticlePage extends Model implements Page
     use InteractsWithAssets;
     use HasPeriodTrait;
     use Sortable;
+
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
     const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     public $table = 'article_pages';
     public $guarded = [];
+
+    public $casts = [
+        'locales' => 'array',
+    ];
 
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans', 'seo_title', 'seo_description', 'title_sanitized', 'title_sanitized_trans',
@@ -38,6 +44,7 @@ class ArticlePage extends Model implements Page
     {
         Schema::create('article_pages', function (Blueprint $table) {
             $table->increments('id');
+            $table->json('locales')->nullable();
             $table->string('title')->nullable();
             $table->string('current_state')->default(PageState::draft->getValueAsString());
             $table->json('values')->nullable(); // dynamic attributes
@@ -64,6 +71,6 @@ class ArticlePage extends Model implements Page
 
     protected function dynamicLocales(): array
     {
-        return config('chief.locales', []);
+        return ChiefSites::locales();
     }
 }

@@ -3,27 +3,28 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableStaticModelDefault;
 
+/**
+ * @deprecated use Thinktomorrow\Chief\Fragments\BaseFragment instead
+
+ */
 trait FragmentableDefaults
 {
     use FragmentResourceDefault;
     use ReferableStaticModelDefault;
     use Viewable;
 
-    private FragmentModel $fragmentModel;
-
-    public function modelReference(): ModelReference
-    {
-        return ModelReference::fromStatic(static::class);
-    }
+    private ?FragmentModel $fragmentModel = null;
 
     public function viewKey(): string
     {
@@ -37,20 +38,39 @@ trait FragmentableDefaults
         return $this->renderFragment($owner, $loop, $viewData);
     }
 
+    public function render(): View
+    {
+        $view = 'view';
+
+        return view($view, array_merge($this->data(), [
+            'component' => $this,
+            'fragment' => $this,
+
+            /** @deprecated use $fragment instead */
+            'model' => $this,
+        ]));
+    }
+
     public function renderFragment($owner, $loop, $viewData = []): string
     {
-        $this->setOwnerViewPath($owner);
+        //$this->setOwnerViewPath($owner);
 
         $this->setViewData(array_merge($viewData, [
-            'owner' => $owner,
-            'loop' => $loop,
+            'fragment' => $this,
+
+            /** @deprecated use $fragment instead */
             'model' => $this,
         ]));
 
         return $this->renderView();
     }
 
-    public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable
+    public function hasFragmentModel(): bool
+    {
+        return isset($this->fragmentModel);
+    }
+
+    public function setFragmentModel(FragmentModel $fragmentModel): Fragment
     {
         $this->fragmentModel = $fragmentModel;
 
@@ -62,10 +82,20 @@ trait FragmentableDefaults
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
-            return $this->fragmentModel = new FragmentModel();
+            throw new MissingFragmentModelException('Fragment model is not set. Make sure to set the fragment model before accessing it.');
         }
 
         return $this->fragmentModel;
+    }
+
+    public function modelReference(): ModelReference
+    {
+        return $this->fragmentModel()->modelReference();
+    }
+
+    public function getFragmentId(): string
+    {
+        return $this->fragmentModel()->id;
     }
 
     public function dynamicLocaleFallback(): ?string

@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Throwable;
@@ -37,7 +38,8 @@ final class ChiefResponse
                 );
             }
 
-            return static::findModel($urlRecord)->response();
+            return static::createResponse($urlRecord);
+
         } catch (Throwable $e) {
             if (config('chief.strict') || ! static::shouldBeIgnored($e)) {
                 throw $e;
@@ -50,6 +52,15 @@ final class ChiefResponse
     private static function createRedirect(string $url): RedirectResponse
     {
         return new RedirectResponse($url, 301, []);
+    }
+
+    private static function createResponse(UrlRecord $urlRecord): BaseResponse
+    {
+        $model = static::findModel($urlRecord);
+
+        ActiveContextId::set($urlRecord->context_id);
+
+        return $model->response();
     }
 
     private static function findModel(UrlRecord $urlRecord): Visitable

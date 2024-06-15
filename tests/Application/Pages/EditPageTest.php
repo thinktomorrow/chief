@@ -45,6 +45,7 @@ final class EditPageTest extends ChiefTestCase
     /** @test */
     public function it_can_visit_the_edit_page()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('edit', ArticlePage::first()))
             ->assertStatus(200);
     }

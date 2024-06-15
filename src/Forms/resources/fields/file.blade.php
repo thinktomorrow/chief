@@ -1,3 +1,12 @@
+<?php
+
+// Assets always expect a locale. We enforce this even when locales are missing
+use Thinktomorrow\Chief\Sites\ChiefSites;
+
+$locale ??= ChiefSites::defaultLocale();
+
+?>
+
 <div>
     <livewire:chief-wire::file-field-upload
         :model-reference="$getModel()?->modelReference()->get()"

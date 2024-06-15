@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace __STUB_NAMESPACE__;
 
-use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Forms\Fields\Html;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
 
-class __STUB_CLASSNAME__ implements Fragmentable
+class __STUB_CLASSNAME__ implements Fragment
 {
     use FragmentableDefaults;
     use ForwardFragmentProperties;

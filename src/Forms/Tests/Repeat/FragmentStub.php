@@ -9,10 +9,10 @@ use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class FragmentStub implements Fragmentable, FragmentsOwner
+class FragmentStub implements Fragment, FragmentsOwner
 {
     use FragmentableDefaults;
     use OwningFragments;

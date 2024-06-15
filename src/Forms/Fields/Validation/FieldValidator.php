@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
 use Illuminate\Contracts\Validation\Factory;
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\Common\LocalisedField;
 
 class FieldValidator
 {
@@ -20,7 +20,7 @@ class FieldValidator
 
     public function handle(Fields $fields, array $payload): void
     {
-        /** @var Validatable & Localizable $field */
+        /** @var Validatable & LocalisedField $field */
         foreach ($fields->all() as $field) {
             if ($field->hasValidation()) {
                 $field->createValidatorInstance($this->validatorFactory, $payload)

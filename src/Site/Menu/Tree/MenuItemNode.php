@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
@@ -26,6 +27,19 @@ class MenuItemNode extends DefaultNode implements Node
         $this->label = $label;
         $this->url = $url;
         $this->ownerLabel = $ownerLabel;
+    }
+
+    public static function fromModel(MenuItem $model, string $locale): Node
+    {
+        return new static(
+            $model->getStatus(),
+            $model->getLabel($locale) ?: $model->getAdminUrlLabel($locale),
+            $model->getUrl($locale),
+            $model->getOwnerLabel($locale),
+            (string) $model->id,
+            (string) $model->parent_id,
+            $model->order,
+        );
     }
 
     public function getId()

@@ -6,8 +6,12 @@ use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
+/**
+ * @deprecated use Thinktomorrow\Chief\Models\ModelDefaults instead
+ */
 trait ModelDefaults
 {
     use ReferableModelDefault;
@@ -23,7 +27,9 @@ trait ModelDefaults
      */
     public function dynamicLocales(): array
     {
-        return config('chief.locales');
+        dd($this);
+
+        return ChiefSites::locales();
     }
 
     public function viewKey(): string

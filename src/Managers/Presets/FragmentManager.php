@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Managers\Presets;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\RepeatFieldAssistant;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -20,7 +20,7 @@ final class FragmentManager implements Manager
     use FragmentsOwningAssistant;
     use RepeatFieldAssistant;
 
-    //    private Resource $resource;
+    //    private Domain $resource;
     private FragmentRepository $fragmentRepository;
     private FieldValidator $fieldValidator;
     private Registry $registry;
@@ -36,6 +36,6 @@ final class FragmentManager implements Manager
 
     private function fieldsModel($id)
     {
-        return $this->fragmentRepository->find((int) $id);
+        return $this->fragmentRepository->find((int)$id);
     }
 }

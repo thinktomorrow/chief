@@ -29,7 +29,7 @@
             }
         }
     }"
-    x-on:open-dialog.window="if($el.id === $event.detail.id) { open = true; }"
+    x-on:open-dialog.window="if($el.id === $event.detail.id || $el === $event.detail.el) { open = true; }"
     x-on:resize.debounce.250ms.window="toggleInnerShadows()"
     x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
 >

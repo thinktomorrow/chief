@@ -5,12 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Events;
 
 class FragmentDuplicated
 {
-    public int $fragmentModelId;
-    public int $contextId;
-
-    public function __construct(int $fragmentModelId, int $contextId)
+    public function __construct(public readonly string $fragmentId, public readonly string $duplicatedFragmentId, public readonly string $sourceContextId, public readonly string $targetContextId)
     {
-        $this->fragmentModelId = $fragmentModelId;
-        $this->contextId = $contextId;
     }
 }

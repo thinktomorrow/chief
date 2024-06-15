@@ -8,8 +8,6 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTreeSource;
-use Thinktomorrow\Vine\NodeCollectionFactory;
 
 class MysqlNestableRepository implements NestableRepository
 {
@@ -33,9 +31,7 @@ class MysqlNestableRepository implements NestableRepository
     {
         $nodes = $models->map(fn ($model) => new NestableNode($model));
 
-        return new NestedTree((new NodeCollectionFactory)
-            ->fromSource(new NestedTreeSource($nodes))
-            ->all());
+        return NestedTree::fromIterable($nodes);
     }
 
     public function getResource(string $resourceKey): PageResource
@@ -43,7 +39,7 @@ class MysqlNestableRepository implements NestableRepository
         $resource = $this->registry->resource($resourceKey);
 
         if (! $resource instanceof PageResource) {
-            throw new \DomainException('Resource [' . $resource::class . '] is expected to be a ' . PageResource::class . ', but it is not.');
+            throw new \DomainException('Domain [' . $resource::class . '] is expected to be a ' . PageResource::class . ', but it is not.');
         }
 
         return $resource;

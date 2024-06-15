@@ -12,8 +12,8 @@ use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssociatedAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -65,13 +65,6 @@ class FileApplication
         if (count($genericValues) > 0) {
             $this->updateAssetData($assetId, $genericValues);
         }
-    }
-
-    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
-    {
-        return ModelReference::fromString($fragmentModel->model_reference)
-            ->instance()
-            ->setFragmentModel($fragmentModel);
     }
 
     /**
@@ -145,5 +138,12 @@ class FileApplication
         app(AddAsset::class)->handle($model, $newAsset, $fieldKey, $locale, $existingAsset->pivot->order, $existingAsset->pivot->data ?? []);
 
         return $model->fresh()->assets($fieldKey)->firstWhere(fn ($asset) => $asset->id == $newAsset->id && $asset->pivot->locale == $locale);
+    }
+
+    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
+    {
+        return ModelReference::fromString($fragmentModel->key)
+            ->instance()
+            ->setFragmentModel($fragmentModel);
     }
 }

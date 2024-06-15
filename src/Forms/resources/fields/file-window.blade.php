@@ -1,4 +1,6 @@
 @php
+    $locale = $locale ?? \Thinktomorrow\Chief\Sites\ChiefSites::defaultLocale();
+
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $assets */
     $assets = $getValue($locale);
     $count = count($assets);

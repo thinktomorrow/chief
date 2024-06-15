@@ -54,7 +54,7 @@ class CreateUrlForPage
             return [];
         }
 
-        foreach (config('chief.locales') as $locale) {
+        foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale) {
             app()->setLocale($locale);
             $slugs[$locale] = Str::slug($resource->getPageTitle($model));
         }
