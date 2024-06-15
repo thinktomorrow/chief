@@ -8,8 +8,6 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTreeSource;
-use Thinktomorrow\Vine\NodeCollectionFactory;
 
 class MysqlNestableRepository implements NestableRepository
 {

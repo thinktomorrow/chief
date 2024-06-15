@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 
 trait EditAssistant
 {
@@ -76,12 +75,12 @@ trait EditAssistant
         View::share('context', $contexts->first());
         View::share('contextsForSwitch', $contexts);
 
-//        $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
-//            'id' => $context->id,
-//            'locale' => $context->locale,
-//            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
-//        ];
-//        });
+        //        $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
+        //            'id' => $context->id,
+        //            'locale' => $context->locale,
+        //            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
+        //        ];
+        //        });
 
         $stateConfigs = [];
 
