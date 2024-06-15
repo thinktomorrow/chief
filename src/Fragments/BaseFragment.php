@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
