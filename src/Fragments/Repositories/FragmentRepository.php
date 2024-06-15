@@ -52,6 +52,17 @@ final class FragmentRepository
         return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 
+    /**
+     * Find a fragment for a specific context.
+     * This includes the context pivot data
+     */
+    public function findByContext(string $fragmentId, string $contextId): Fragment
+    {
+        $fragmentModel = ContextModel::findOrFail($contextId)->fragments()->find($fragmentId);
+
+        return $this->fragmentFactory->create($fragmentModel);
+    }
+
     public function exists(string $fragmentId): bool
     {
         return FragmentModel::where('id', $fragmentId)->exists();
@@ -62,22 +73,11 @@ final class FragmentRepository
         return $this->fragmentFactory->create(FragmentModel::findOrFail($fragmentId));
     }
 
-    /**
-     * Find a fragment including its context pivot data
-     */
-    public function findByContext(string $fragmentId, string $contextId): Fragment
-    {
-        $fragmentModel = ContextModel::findOrFail($contextId)->fragments()->find($fragmentId);
-
-        return $this->fragmentFactory->create($fragmentModel);
-    }
-
     public function nextId(): string
     {
-        // We would like to use uuid like (Uuid::uuid4()->__toString()); but the Asset library currently accepts integer(11) as entity_id in database
         $nextId = Uuid::uuid4()->__toString();
 
-        while (FragmentModel::find($nextId)) {
+        while ($this->exists($nextId)) {
             $nextId = Uuid::uuid4()->__toString();
         }
 

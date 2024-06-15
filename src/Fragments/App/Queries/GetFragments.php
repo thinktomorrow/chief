@@ -24,6 +24,9 @@ final class GetFragments
         $this->contextRepository = $contextRepository;
     }
 
+    /**
+     * Get all fragments for the frontend.
+     */
     public function get(string $contextId, string $locale): FragmentCollection
     {
         $fragmentCollection = $this->fragmentRepository->getTreeByContext($contextId, $locale);

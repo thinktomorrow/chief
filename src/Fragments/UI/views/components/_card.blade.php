@@ -33,7 +33,7 @@
             @endAdminCan
         </div>
 
-        @if($adminFragment = $model->renderAdminFragment($owner, $loop))
+        @if($adminFragment = $model->render())
             <div>
                 {!! $adminFragment !!}
             </div>

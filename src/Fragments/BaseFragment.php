@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Vine\NodeDefaults;
 
@@ -29,21 +28,32 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
 
     public function render(): View
     {
+        return view($this->viewPath(), $this->viewData());
+    }
+
+    public function renderInAdmin(): View
+    {
+        return view($this->adminViewPath(), $this->viewData());
+    }
+
+    public function toHtml(): string
+    {
+        return $this->render()->render();
+    }
+
+    protected function viewData(): array
+    {
         $this->attributes = $this->attributes ?: $this->newAttributeBag();
 
-        return view($this->viewPath(), [
+        return [
             'attributes' => $this->attributes,
             'fragment' => $this,
             'section' => $this->getRootNode(),
 
             /** @deprecated use $fragment instead */
             'model' => $this,
-        ]);
-    }
+        ];
 
-    public function toHtml(): string
-    {
-        return $this->render()->render();
     }
 
     protected function viewPath(): string
@@ -52,27 +62,34 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
             return $this->viewPath;
         }
 
-        return config('chief.fragment_viewpath', 'fragments') . $this->viewKey();
+        return config('chief.fragments.view_path', 'fragments') . '.' . $this->viewKey();
+    }
+
+    protected function adminViewPath(): string
+    {
+        if (property_exists($this, 'adminViewPath') && isset($this->adminViewPath)) {
+            return $this->adminViewPath;
+        }
+
+        return config('chief.fragments.admin_view_path', 'back.fragments') . '.' . $this->viewKey();
     }
 
     protected function viewKey(): string
     {
-        $key = (new ResourceKeyFormat(static::class))->getKey();
-
-        return Str::of($key)->remove('_fragment')->trim()->__toString();
+        return FragmentKey::fromClass(static::class)->getKey();
     }
 
     // TODO: adjust for new component rendering... (remove parameters, return view instead of string)
-    public function renderAdminFragment($owner, $loop, $viewData = [])
-    {
-        return $this->render()->render();
-    }
+    //    public function renderAdminFragment($owner, $loop, $viewData = [])
+    //    {
+    //        return $this->render()->render();
+    //    }
 
     // TODO: adjust for new component rendering... (remove parameters, return view instead of string)
-    public function renderFragment($owner, $loop, $viewData = []): string
-    {
-        return $this->render()->render();
-    }
+    //    public function renderFragment($owner, $loop, $viewData = []): string
+    //    {
+    //        return $this->render()->render();
+    //    }
 
     public function hasFragmentModel(): bool
     {

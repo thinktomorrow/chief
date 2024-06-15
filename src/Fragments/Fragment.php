@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -11,9 +12,13 @@ use Thinktomorrow\Vine\Node;
 
 interface Fragment extends FragmentResource, ReferableModel, Htmlable, Node
 {
-    public function renderAdminFragment($owner, $loop, $viewData = []);
+//    public function renderAdminFragment($owner, $loop, $viewData = []);
 
-    public function renderFragment($owner, $loop, $viewData = []): string;
+//    public function renderFragment($owner, $loop, $viewData = []): string;
+
+    public function render(): View;
+
+    public function renderInAdmin(): View;
 
     /**
      * The unique id reference of this fragment.
