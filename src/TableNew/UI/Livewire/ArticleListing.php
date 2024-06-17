@@ -103,9 +103,9 @@ class ArticleListing extends Listing
     public function getRow($model): iterable
     {
         return [
-            $model->id,
             $model->title,
-//            TableColumn::image($model->asset('image')->url('thumb')),
+            '<span class="label label-xs label-grey">' . $model->current_state . '</span>',
+            '<span class="text-sm text-bui-grey-500">' . $model->updated_at . '</span>',
         ];
     }
 

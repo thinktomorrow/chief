@@ -15,7 +15,7 @@ module.exports = {
         'src/Plugins/HotSpots/views/**/*.blade.php',
         'src/Assets/App/resources/**/*.blade.php',
 
-        'src/TableNew/**/*.blade.php',
+        'src/TableNew/**/*.{blade.php,php}',
     ],
     theme: {
         screens: {
@@ -38,6 +38,36 @@ module.exports = {
             orange: colors.orange,
             green: colors.green,
             blue: colors.sky,
+
+            'bui-primary': {
+                DEFAULT: '#9f87ae',
+                50: '#f8f8fa',
+                100: '#f3f1f6',
+                200: '#e9e5ef',
+                300: '#d8d1e1',
+                400: '#c2b6cf',
+                500: '#ab97bb',
+                600: '#9f87ae',
+                700: '#866c95',
+                800: '#715a7d',
+                900: '#5d4b67',
+                950: '#3d3144',
+            },
+
+            'bui-grey': {
+                DEFAULT: '#7e7881',
+                50: '#f7f7f8',
+                100: '#f0eef0',
+                200: '#dcdadd',
+                300: '#bebabf',
+                400: '#99949c',
+                500: '#7e7881',
+                600: '#666069',
+                700: '#534f55',
+                800: '#474349',
+                900: '#3d3b3f',
+                950: '#29272a',
+            },
         },
         container: {
             center: true,
