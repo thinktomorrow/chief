@@ -67,7 +67,7 @@ class ArticleListing extends Listing
 
         $this->applyFilters($builder);
 
-        return $builder->simplePaginate(20);
+        return $builder->paginate(20);
 
         // GET ALL IDS
         //        $modelIds = DB::table('singles')->select(['id', 'parent_id'])->get()->map(fn($row) => (array) $row)->all();
@@ -105,7 +105,7 @@ class ArticleListing extends Listing
         return [
             $model->title,
             '<span class="label label-xs label-grey">' . $model->current_state . '</span>',
-            '<span class="text-sm text-bui-grey-500">' . $model->updated_at . '</span>',
+            '<span class="text-sm text-bui-grey-500">' . $model->updated_at->format('d/m/y H:m') . '</span>',
         ];
     }
 
