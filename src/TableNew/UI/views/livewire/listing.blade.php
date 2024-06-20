@@ -22,58 +22,60 @@
 @endphp
 
 <div
+    x-data="{
+        selection: [],
+        toggleCheckbox(rowKey, checked) {
+            if (checked) {
+                this.selection.push(rowKey)
+            } else {
+                this.selection = this.selection.filter((key) => key !== rowKey)
+            }
+
+            if (this.selection.length === {{ $results->count() }}) {
+                this.$refs.tableHeaderCheckbox.checked = true
+                this.$refs.tableHeaderCheckbox.indeterminate = false
+            } else if (this.selection.length > 0) {
+                this.$refs.tableHeaderCheckbox.checked = false
+                this.$refs.tableHeaderCheckbox.indeterminate = true
+            } else {
+                this.$refs.tableHeaderCheckbox.checked = false
+                this.$refs.tableHeaderCheckbox.indeterminate = false
+            }
+        },
+        init() {
+            this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
+                const rows = [...this.$root.querySelectorAll('[data-table-row]')]
+
+                if (event.target.checked) {
+                    rows.forEach((row) => {
+                        row.querySelector('[data-table-row-checkbox]').checked =
+                            true
+
+                        this.selection.push(row.getAttribute('data-table-row'))
+                    })
+                } else {
+                    rows.forEach((row) => {
+                        row.querySelector('[data-table-row-checkbox]').checked =
+                            false
+                    })
+
+                    this.selection = []
+                }
+            })
+        },
+    }"
     class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-lg ring-1 ring-grey-200"
 >
-    <div class="flex justify-between gap-3 px-4 py-3">
-        @include('chief-table-new::livewire._partials.filters')
-        @include('chief-table-new::livewire._partials.sorting')
+    <div class="space-y-3 px-4 py-3">
+        <div class="flex justify-between gap-2" :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }">
+            @include('chief-table-new::livewire._partials.filters')
+            @include('chief-table-new::livewire._partials.sorting')
+        </div>
+
+        @include('chief-table-new::livewire._partials.bulk-actions')
     </div>
 
-    <table
-        x-data="{
-            selection: [],
-            toggleCheckbox(rowKey, checked) {
-                if (checked) {
-                    this.selection.push(rowKey)
-                } else {
-                    this.selection = this.selection.filter((key) => key !== rowKey)
-                }
-
-                if (this.selection.length === {{ $results->count() }}) {
-                    this.$refs.tableHeaderCheckbox.checked = true
-                    this.$refs.tableHeaderCheckbox.indeterminate = false
-                } else if (this.selection.length > 0) {
-                    this.$refs.tableHeaderCheckbox.checked = false
-                    this.$refs.tableHeaderCheckbox.indeterminate = true
-                } else {
-                    this.$refs.tableHeaderCheckbox.checked = false
-                    this.$refs.tableHeaderCheckbox.indeterminate = false
-                }
-            },
-            init() {
-                this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
-                    const rows = [...this.$root.querySelectorAll('[data-table-row]')]
-
-                    if (event.target.checked) {
-                        rows.forEach((row) => {
-                            row.querySelector('[data-table-row-checkbox]').checked =
-                                true
-
-                            this.selection.push(row.getAttribute('data-table-row'))
-                        })
-                    } else {
-                        rows.forEach((row) => {
-                            row.querySelector('[data-table-row-checkbox]').checked =
-                                false
-                        })
-
-                        this.selection = []
-                    }
-                })
-            },
-        }"
-        class="min-w-full table-fixed divide-y divide-grey-200"
-    >
+    <table class="min-w-full table-fixed divide-y divide-grey-200">
         <thead>
             <tr>
                 <th scope="col" class="w-5 py-2 pl-4">

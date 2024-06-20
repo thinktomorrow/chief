@@ -1,4 +1,4 @@
-<div class="flex items-start justify-end gap-3">
+<div class="flex items-start justify-end gap-2">
     <button type="button">
         <x-chief-table-new::button size="sm" color="grey" class="mt-[.1875rem]">
             Reset sortering
