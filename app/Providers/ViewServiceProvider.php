@@ -9,7 +9,7 @@ class ViewServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
 
         // Fragment components
         $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');

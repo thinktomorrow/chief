@@ -2,12 +2,16 @@
 
 namespace Thinktomorrow\Chief\TableNew\UI\Livewire;
 
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
+use Illuminate\Contracts\Pagination\Paginator;
 use Thinktomorrow\Chief\TableNew\Filters\Filter;
 use Thinktomorrow\Chief\TableNew\Filters\FilterPresets;
+use Thinktomorrow\Chief\TableNew\Filters\Presets\SelectFilter;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\TableNew\UI\Livewire\Concerns\WithFilters;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
+use Thinktomorrow\Chief\TableNew\Filters\Presets\CheckboxFilter;
+use Thinktomorrow\Chief\TableNew\Filters\Presets\RadioFilter;
 
 class ArticleListing extends Listing
 {
@@ -30,8 +34,15 @@ class ArticleListing extends Listing
     {
         // TODO: listen to request input for default as well
         return [
-            FilterPresets::search('title', [], ['title'])->placeholder('zoek op titel'),
-            FilterPresets::state(),
+            FilterPresets::search('title', [], ['title'])->placeholder('Zoek op titel'),
+            // FilterPresets::state(),
+            RadioFilter::make('online', function ($query, $value) {
+                return $query->where('current_state', '=', $value);
+            })->label('Status')->options([
+                '' => 'Alle',
+                PageState::published->getValueAsString() => 'Online',
+                PageState::draft->getValueAsString() => 'Offline',
+            ])->default('')
         ];
     }
 
@@ -104,9 +115,19 @@ class ArticleListing extends Listing
     {
         return [
             $model->title,
-            '<span class="label label-xs label-grey">' . $model->current_state . '</span>',
-            '<span class="text-sm text-bui-grey-500">' . $model->updated_at->format('d/m/y H:m') . '</span>',
+            $this->createStateLabel($model->current_state),
+            '<span class="text-sm text-grey-500">' . $model->updated_at->format('d/m/y H:m') . '</span>',
         ];
+    }
+
+    public function createStateLabel($state): string
+    {
+        return match ($state) {
+            PageState::published->getValueAsString() => '<span class="bui-label bui-label-xs bui-label-green">Online</span>',
+            PageState::draft->getValueAsString() => '<span class="bui-label bui-label-xs bui-label-red">Offline</span>',
+            PageState::archived->getValueAsString() => '<span class="bui-label bui-label-xs bui-label-red">Gearchiveerd</span>',
+            default => '<span class="bui-label bui-label-xs bui-label-grey">Draft</span>',
+        };
     }
 
     /**

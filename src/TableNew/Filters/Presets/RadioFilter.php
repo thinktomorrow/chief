@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\TableNew\Filters\Presets;
 
 use Thinktomorrow\Chief\TableNew\Filters\AbstractFilter;
 use Thinktomorrow\Chief\TableNew\Filters\Filter;
-use Thinktomorrow\Chief\TableNew\Filters\FilterType;
 
 class RadioFilter extends AbstractFilter implements Filter
 {
@@ -14,9 +13,11 @@ class RadioFilter extends AbstractFilter implements Filter
 
     public static function make(string $queryKey, \Closure $query): self
     {
-        $filter = new self(FilterType::RADIO, $queryKey, $query);
+        $filter = new static($queryKey, $query);
+        $filter->view('chief-table-new::filters.radio')
+            ->value([]);
 
-        return $filter->value([]);
+        return $filter;
     }
 
     public function options(array $options): self

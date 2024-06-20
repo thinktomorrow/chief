@@ -22,41 +22,44 @@
 @endphp
 
 <div
-    class="divide-y divide-bui-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-lg ring-1 ring-bui-grey-200"
+    class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-lg ring-1 ring-grey-200"
 >
+    <div class="flex justify-between gap-3 px-4 py-3">
+        @include('chief-table-new::livewire._partials.filters')
+        @include('chief-table-new::livewire._partials.sorting')
+    </div>
+
     <table
         x-data="{
-            selected: [],
-            toggleSelection(rowKey, checked) {
+            selection: [],
+            toggleCheckbox(rowKey, checked) {
                 if (checked) {
-                    this.selected.push(rowKey)
+                    this.selection.push(rowKey)
                 } else {
-                    this.selected = this.selected.filter((key) => key !== rowKey)
+                    this.selection = this.selection.filter((key) => key !== rowKey)
                 }
 
-                if (this.selected.length === {{ $results->count() }}) {
-                    this.$refs.checkbox_all.checked = true
-                    this.$refs.checkbox_all.indeterminate = false
-                } else if (this.selected.length > 0) {
-                    this.$refs.checkbox_all.checked = false
-                    this.$refs.checkbox_all.indeterminate = true
+                if (this.selection.length === {{ $results->count() }}) {
+                    this.$refs.tableHeaderCheckbox.checked = true
+                    this.$refs.tableHeaderCheckbox.indeterminate = false
+                } else if (this.selection.length > 0) {
+                    this.$refs.tableHeaderCheckbox.checked = false
+                    this.$refs.tableHeaderCheckbox.indeterminate = true
                 } else {
-                    this.$refs.checkbox_all.checked = false
-                    this.$refs.checkbox_all.indeterminate = false
+                    this.$refs.tableHeaderCheckbox.checked = false
+                    this.$refs.tableHeaderCheckbox.indeterminate = false
                 }
             },
             init() {
-                this.$refs.checkbox_all.addEventListener('change', (event) => {
-                    const rows = Array.from(
-                        this.$root.querySelectorAll('[data-table-row]'),
-                    )
+                this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
+                    const rows = [...this.$root.querySelectorAll('[data-table-row]')]
 
                     if (event.target.checked) {
                         rows.forEach((row) => {
                             row.querySelector('[data-table-row-checkbox]').checked =
                                 true
 
-                            this.selected.push(row.getAttribute('data-table-row'))
+                            this.selection.push(row.getAttribute('data-table-row'))
                         })
                     } else {
                         rows.forEach((row) => {
@@ -64,40 +67,82 @@
                                 false
                         })
 
-                        this.selected = []
+                        this.selection = []
                     }
                 })
             },
         }"
-        class="min-w-full table-fixed divide-y divide-bui-grey-200"
+        class="min-w-full table-fixed divide-y divide-grey-200"
     >
         <thead>
             <tr>
                 <th scope="col" class="w-5 py-2 pl-4">
                     <div class="flex items-center">
-                        <x-chief::input.checkbox x-ref="checkbox_all" />
+                        <x-chief::input.checkbox x-ref="tableHeaderCheckbox" />
                     </div>
                 </th>
 
                 <th scope="col" class="py-2 pl-3 text-left">
-                    <span class="text-sm/5 font-medium text-bui-grey-950">Titel</span>
+                    <span class="group inline-flex items-start gap-0.5 text-sm/5 font-medium text-grey-950">
+                        Titel
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="size-5 opacity-0 group-hover:opacity-100"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </span>
                 </th>
 
                 <th scope="col" class="py-2 pl-3 text-left">
-                    <span class="text-sm/5 font-medium text-bui-grey-950">Status</span>
+                    <span class="group inline-flex items-start gap-0.5 text-sm/5 font-medium text-grey-950">
+                        Status
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="size-5 opacity-0 group-hover:opacity-100"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </span>
                 </th>
 
                 <th scope="col" class="py-2 pl-3 text-left">
-                    <span class="text-sm/5 font-medium text-bui-grey-950">Aangepast</span>
+                    <span class="group inline-flex items-start gap-0.5 text-sm/5 font-medium text-grey-950">
+                        Aangepast
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="size-5 opacity-0 group-hover:opacity-100"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </span>
                 </th>
 
                 <th scope="col" class="py-2 pl-3 pr-4 text-right">
-                    <span class="text-sm/5 font-medium text-bui-grey-950">Aanpassen</span>
+                    <span class="text-sm/5 font-medium text-grey-950">Aanpassen</span>
                 </th>
             </tr>
         </thead>
 
-        <tbody class="divide-y divide-bui-grey-200">
+        <tbody class="divide-y divide-grey-200">
             @foreach ($indentedResults as $result)
                 @php
                     $model = $result['model'];
@@ -107,15 +152,18 @@
                 <tr
                     data-table-row="{{ $this->getRowKey($model) }}"
                     wire:key="{{ $this->getRowKey($model) }}"
-                    :class="{ 'bg-bui-grey-50': selected.includes('{{ $this->getRowKey($model) }}') }"
+                    :class="{ 'bg-grey-50': selection.includes('{{ $this->getRowKey($model) }}') }"
                 >
-                    <td class="w-5 py-2 pl-4 text-left">
+                    <td
+                        class="py-2 pl-4 text-left"
+                        :class="{ 'relative before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-0.5 before:bg-primary-500': selection.includes('{{ $this->getRowKey($model) }}') }"
+                    >
                         <div class="flex items-center">
                             <x-chief::input.checkbox
                                 data-table-row-checkbox
                                 name="{{ $this->getRowKey($model)  }}"
                                 id="{{ $this->getRowKey($model)  }}"
-                                x-on:change="toggleSelection('{{ $this->getRowKey($model) }}', $event.target.checked)"
+                                x-on:change="toggleCheckbox('{{ $this->getRowKey($model) }}', $event.target.checked)"
                             />
                         </div>
                     </td>
@@ -126,7 +174,7 @@
                                 @if ($loop->first && $indent > 0)
                                     <div class="flex justify-end" style="width: {{ 20 + ($indent - 1) * 26 }}px">
                                         <svg
-                                            class="h-5 w-5 text-bui-grey-900"
+                                            class="h-5 w-5 text-grey-900"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="currentColor"
                                             viewBox="0 0 256 256"
@@ -138,7 +186,7 @@
                                     </div>
                                 @endif
 
-                                <span class="leading-5 text-bui-grey-900">
+                                <span class="leading-5 text-grey-900">
                                     {!! $column !!}
                                 </span>
                             </div>
