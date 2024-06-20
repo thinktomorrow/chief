@@ -2,16 +2,14 @@
 
 namespace Thinktomorrow\Chief\TableNew\UI\Livewire;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\TableNew\Filters\Filter;
 use Thinktomorrow\Chief\TableNew\Filters\FilterPresets;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\SelectFilter;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\TableNew\UI\Livewire\Concerns\WithFilters;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\CheckboxFilter;
 use Thinktomorrow\Chief\TableNew\Filters\Presets\RadioFilter;
+use Thinktomorrow\Chief\TableNew\UI\Livewire\Concerns\WithFilters;
 
 class ArticleListing extends Listing
 {
@@ -42,7 +40,7 @@ class ArticleListing extends Listing
                 '' => 'Alle',
                 PageState::published->getValueAsString() => 'Online',
                 PageState::draft->getValueAsString() => 'Offline',
-            ])->default('')
+            ])->default(''),
         ];
     }
 
