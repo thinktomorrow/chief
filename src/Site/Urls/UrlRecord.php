@@ -215,7 +215,7 @@ class UrlRecord extends Model
         })->reject(function ($model) {
             return $model == null;
         })->reject(function (Visitable $model) {
-            return !$model->isVisitable();
+            return ! $model->isVisitable();
         });
     }
 
