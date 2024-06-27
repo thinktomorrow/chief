@@ -2,10 +2,8 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Export;
 
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Resource\Resource;
 
 class ExportAllCommand extends BaseCommand
 {

@@ -28,6 +28,7 @@ class ExportResourceCommand extends BaseCommand
 
         if(count(array_intersect($locales, config('chief.locales'))) !== count($locales)) {
             $this->error('One of passed locales "' . $this->option('locales') .'" is not found as Chief locale. Available locales are: ' . implode(',', config('chief.locales')));
+
             return;
         }
 

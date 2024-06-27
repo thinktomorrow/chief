@@ -191,7 +191,7 @@ class ComposeFieldLines
 
         if($field->hasLocales()) {
             $values = collect($locales)->mapWithKeys(fn ($locale) => [$locale => $field->getValue($locale)]);
-            $values = !$this->ignoreNonLocalized ? ['x' => '', ...$values->all()] : $values->all();
+            $values = ! $this->ignoreNonLocalized ? ['x' => '', ...$values->all()] : $values->all();
         }
 
         if($this->ignoreEmptyValues && $this->areAllValuesEmpty($values)) {

@@ -77,7 +77,7 @@ class ComposeFieldLinesTest extends TestCase
             ->ignoreEmptyValues()
             ->compose($resource, $article, ['nl', 'en']);
 
-        $this->assertCount(2,$composeLines->getLines());
+        $this->assertCount(2, $composeLines->getLines());
         $this->assertEquals(['Article_page: article page'], $composeLines->getLines()[0]->toArray());
         $this->assertEquals([], $composeLines->getLines()[1]->toArray()); // Empty line after each row
     }
@@ -91,7 +91,7 @@ class ComposeFieldLinesTest extends TestCase
             ->ignoreNonLocalized()
             ->compose($resource, $article, ['nl', 'en']);
 
-        $this->assertCount(5,$composeLines->getLines());
+        $this->assertCount(5, $composeLines->getLines());
         $this->assertEquals(['Article_page: article page'], $composeLines->getLines()[0]->toArray());
         $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[1]->toArray()[1]));
         $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[2]->toArray()[1]));
@@ -109,7 +109,7 @@ class ComposeFieldLinesTest extends TestCase
             ->ignoreEmptyValues()
             ->compose($resource, $article, ['nl', 'en']);
 
-        $this->assertCount(4,$composeLines->getLines());
+        $this->assertCount(4, $composeLines->getLines());
         $this->assertEquals(['Article_page: article page'], $composeLines->getLines()[0]->toArray());
         $this->assertStringEndsWith('title', decrypt($composeLines->getLines()[1]->toArray()[1]));
         $this->assertStringEndsWith('title', decrypt($composeLines->getLines()[1]->toArray()[1]));
@@ -126,7 +126,7 @@ class ComposeFieldLinesTest extends TestCase
             ->ignoreNonLocalized()
             ->compose($resource, $article, ['nl', 'en']);
 
-        $this->assertCount(5,$composeLines->getLines());
+        $this->assertCount(5, $composeLines->getLines());
         $this->assertEquals(['Article_page: article page'], $composeLines->getLines()[0]->toArray());
         $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[1]->toArray()[1]));
         $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[2]->toArray()[1]));
@@ -149,8 +149,8 @@ class ComposeFieldLinesTest extends TestCase
             ->compose($resource, $row, $locale, $targetLocales);
 
         $this->assertEquals([
-            ['modelReference', 'fieldKey', 'modelLabel', 'fieldLabel', 'originalValue', 'targetValue']
-        ],$composeLines->getLines()->toArray());
+            ['modelReference', 'fieldKey', 'modelLabel', 'fieldLabel', 'originalValue', 'targetValue'],
+        ], $composeLines->getLines()->toArray());
     }
 
     public function test_it_can_export_nested_fragment_fields()

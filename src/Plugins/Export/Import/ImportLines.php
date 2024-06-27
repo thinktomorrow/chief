@@ -5,12 +5,7 @@ namespace Thinktomorrow\Chief\Plugins\Export\Import;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class ImportLines implements ToCollection
@@ -35,7 +30,7 @@ class ImportLines implements ToCollection
                 continue;
             }
 
-            try{
+            try {
                 $fieldReference = FieldReference::fromEncryptedKey($row[$this->fieldReferenceColumnIndex]);
             } catch (DecryptException|ModelNotFoundException $e) {
                 continue;
@@ -45,7 +40,9 @@ class ImportLines implements ToCollection
             $value = $row[$this->columnIndex];
 
             // If it's the same value as original value, skip the import for this value
-            if($value == $fieldReference->getValue($this->locale)) continue;
+            if($value == $fieldReference->getValue($this->locale)) {
+                continue;
+            }
 
             // TODO: in wizard mode, we should present the new value vs the original value to the admin.
 

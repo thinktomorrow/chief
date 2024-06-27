@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Infrastructure;
 
-use Thinktomorrow\Chief\Plugins\Export\ExportServiceProvider;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 abstract class TestCase extends ChiefTestCase

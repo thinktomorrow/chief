@@ -46,7 +46,7 @@ class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyl
     {
         $values = array_reduce(
             $this->locales,
-            fn($carry, $locale) => [...$carry, $row->dynamic('value', $locale)],
+            fn ($carry, $locale) => [...$carry, $row->dynamic('value', $locale)],
             []
         );
 
@@ -60,7 +60,7 @@ class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyl
     {
         return [
             'ID',
-            ...$this->locales
+            ...$this->locales,
         ];
     }
 
@@ -71,7 +71,7 @@ class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyl
 
         return [
             'A' => 50,
-            ...$columns
+            ...$columns,
         ];
     }
 

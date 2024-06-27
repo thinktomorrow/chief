@@ -16,7 +16,6 @@ use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Thinktomorrow\Chief\Resource\Resource;
 
 class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyles, WithStyles, WithHeadings, WithColumnWidths, WithColumnFormatting
 {
@@ -51,7 +50,7 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
     {
         $values = array_reduce(
             $this->locales,
-            fn($carry, $locale) => [...$carry, $row->getUrl($locale), $row->getLabel($locale), $row->getOwnerLabel($locale)],
+            fn ($carry, $locale) => [...$carry, $row->getUrl($locale), $row->getLabel($locale), $row->getOwnerLabel($locale)],
             []
         );
 
@@ -67,7 +66,7 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
     {
         $columns = array_reduce(
             $this->locales,
-            fn($carry, $locale) => [...$carry, "{$locale} url", "{$locale} label", "{$locale} owner label"],
+            fn ($carry, $locale) => [...$carry, "{$locale} url", "{$locale} label", "{$locale} owner label"],
             []
         );
 
@@ -75,7 +74,7 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
             'ID',
             'Menu',
             'Type link',
-            ...$columns
+            ...$columns,
         ];
     }
 

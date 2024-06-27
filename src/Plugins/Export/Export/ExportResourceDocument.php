@@ -85,7 +85,7 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
             'C' => 15,
             'D' => 15,
             ...$this->ignoreNonLocalized ? [] : ['E' => 50],
-            ...$columns
+            ...$columns,
         ];
     }
 
