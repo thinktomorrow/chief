@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TranslationsExport\Import;
+namespace Thinktomorrow\Chief\Plugins\Export\Import;
 
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\App\Console\ReadsCsv;
@@ -8,12 +8,12 @@ use Thinktomorrow\Squanto\Database\DatabaseLine;
 use Thinktomorrow\Squanto\Domain\Exceptions\InvalidLineKeyException;
 use Thinktomorrow\Squanto\Domain\LineKey;
 
-class TranslationsImportCommand extends BaseCommand
+class ImportTextCommand extends BaseCommand
 {
     use ReadsCsv;
 
-    protected $signature = 'chief:trans-import {file}';
-    protected $description = 'Import model translations';
+    protected $signature = 'chief:import-text {file}';
+    protected $description = 'Import text translations';
 
     public function __construct()
     {
@@ -24,18 +24,18 @@ class TranslationsImportCommand extends BaseCommand
     {
         $file = $this->argument('file');
         $headers = $this->getColumnHeaders($file);
-        $locales = config('chief.locales', []);
+        $locales = config('squanto.locales', []);
 
-        $idColumn = $this->ask('which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[1]);
+        $keyColumn = $this->ask('which column contains the squanto keys? Choose one of: '.implode(', ', $headers), $headers[0]);
 
-        if(!$idColumn || !in_array($idColumn, $headers)) {
-            $this->error('No or invalid column for the ID references selected');
+        if(!$keyColumn || !in_array($keyColumn, $headers)) {
+            $this->error('No or invalid column for the key selected');
             return;
         }
 
         $column = $this->ask('which column contains the new translations and should be imported? Choose one of: '.implode(', ', $headers));
 
-        if(!$column || !in_array($column, $headers) || $column === $idColumn) {
+        if(!$column || !in_array($column, $headers) || $column === $keyColumn) {
             $this->error('No or invalid column for translations selected');
             return;
         }
@@ -47,7 +47,7 @@ class TranslationsImportCommand extends BaseCommand
             return;
         }
 
-        $selectedKeyColumnIndex = array_search($idColumn, $headers);
+        $selectedKeyColumnIndex = array_search($keyColumn, $headers);
         $selectedColumnIndex = array_search($column, $headers);
 
         $i = 0;

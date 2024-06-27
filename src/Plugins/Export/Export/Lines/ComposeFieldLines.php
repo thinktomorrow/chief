@@ -1,18 +1,15 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TranslationsExport\Export;
+namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Plugins\TranslationsExport\Document\InfoLine;
-use Thinktomorrow\Chief\Plugins\TranslationsExport\Document\LinesCollection;
-use Thinktomorrow\Chief\Plugins\TranslationsExport\Document\TranslationLine;
 use Thinktomorrow\Chief\Resource\Resource;
 
-class ComposeExportLines
+class ComposeFieldLines
 {
     private Registry $registry;
 
@@ -26,7 +23,7 @@ class ComposeExportLines
     private LinesCollection $lines;
 
     /** Avoid all field values that are not localized */
-    private bool $ignoreNonTranslatable = false;
+    private bool $ignoreNonLocalized = false;
 
     /** Avoid all field values that are not filled in the original locale */
     private bool $ignoreEmptyValues = false;
@@ -43,18 +40,18 @@ class ComposeExportLines
         $this->lines = new LinesCollection();
     }
 
-    public function compose(Resource $resource, $model, string $locale, array $targetLocales): static
+    public function compose(Resource $resource, $model, array $locales): static
     {
         $lines = new LinesCollection();
 
-        $this->addModelMetadata($lines, $resource, $model);
+        $this->modelLabel = $resource->getPageTitle($model);
 
         $lines = $lines->merge(
-            $this->extractFieldValues($resource, $model, $locale, $targetLocales)
+            $this->extractFieldValues($resource, $model, $locales)
         );
 
         if($model instanceof FragmentsOwner) {
-            $lines = $lines->merge($this->addFragmentFieldValues($model, $locale, $targetLocales));
+            $lines = $lines->merge($this->addFragmentFieldValues($model, $locales));
         }
 
         $this->addSeparator($lines);
@@ -64,23 +61,23 @@ class ComposeExportLines
         return $this;
     }
 
-    public function ignoreNonTranslatable(): static
+    public function ignoreNonLocalized(bool $ignoreNonLocaled = true): static
     {
-        $this->ignoreNonTranslatable = true;
+        $this->ignoreNonLocalized = $ignoreNonLocaled;
 
         return $this;
     }
 
-    public function ignoreEmptyValues(): static
+    public function ignoreEmptyValues(bool $ignoreEmptyValues = true): static
     {
-        $this->ignoreEmptyValues = true;
+        $this->ignoreEmptyValues = $ignoreEmptyValues;
 
         return $this;
     }
 
-    public function ignoreOfflineFragments(): static
+    public function ignoreOfflineFragments(bool $ignoreOfflineFragments = true): static
     {
-        $this->ignoreOfflineFragments = true;
+        $this->ignoreOfflineFragments = $ignoreOfflineFragments;
 
         return $this;
     }
@@ -97,28 +94,12 @@ class ComposeExportLines
         return $this->lines;
     }
 
-    public function getStyles(): array
-    {
-        // Infoline rows will be marked with a different style
-        return $this->lines
-            ->filter(fn ($line) => $line instanceof InfoLine)
-            ->map(fn ($line) => ['fill' => ['color' => 'FFD9D9D9']])
-            ->toArray();
-    }
-
-    private function addModelMetadata(LinesCollection $lines, Resource $resource, $model): void
-    {
-        $lines->push(new InfoLine([
-            ucfirst($resource::resourceKey()) . ': ' . $resource->getPageTitle($model),
-        ]));
-    }
-
     private function addSeparator(LinesCollection $lines): void
     {
         $lines->push(new InfoLine([]));
     }
 
-    private function extractFieldValues($resource, $model, string $locale, array $targetLocales): LinesCollection
+    private function extractFieldValues($resource, $model, array $locales): LinesCollection
     {
         $lines = new LinesCollection();
 
@@ -130,14 +111,14 @@ class ComposeExportLines
 
         foreach($modelFields as $field) {
             $lines = $lines->merge(
-                $this->addFieldLines($resource, $model, $field, $locale, $targetLocales)
+                $this->addFieldLines($resource, $model, $field, $locales)
             );
         }
 
         return $lines;
     }
 
-    private function extractRepeatField(Resource $resource, $model, Fields\Repeat $field, string $locale, array $targetLocales): LinesCollection
+    private function extractRepeatField(Resource $resource, $model, Fields\Repeat $field, array $locales): LinesCollection
     {
         $lines = new LinesCollection();
 
@@ -145,12 +126,12 @@ class ComposeExportLines
             return $lines;
         }
 
-        $components = $field->getRepeatedComponents($locale);
+        $components = $field->getRepeatedComponents();
 
         foreach($components as $componentGroup) {
             foreach(Fields::make($componentGroup) as $nestedField) {
                 $lines = $lines->merge(
-                    $this->addFieldLines($resource, $model, $nestedField, $locale, $targetLocales)
+                    $this->addFieldLines($resource, $model, $nestedField, $locales)
                 );
             }
         }
@@ -158,7 +139,7 @@ class ComposeExportLines
         return $lines;
     }
 
-    private function addFragmentFieldValues(FragmentsOwner $model, string $locale, array $targetLocales): LinesCollection
+    private function addFragmentFieldValues(FragmentsOwner $model, array $locales): LinesCollection
     {
         $lines = new LinesCollection();
 
@@ -171,16 +152,18 @@ class ComposeExportLines
                 continue;
             }
 
-            $fragmentResource = $this->registry->resource($fragment::resourceKey());
-
             $lines = $lines->merge(
-                $this->extractFieldValues($fragmentResource, $fragment, $locale, $targetLocales)
+                $this->extractFieldValues(
+                    $this->registry->resource($fragment::resourceKey()),
+                    $fragment,
+                    $locales
+                )
             );
 
-            // Nested fragments ...
+            // Nested fragments
             if($fragment instanceof FragmentsOwner) {
                 $lines = $lines->merge(
-                    $this->addFragmentFieldValues($fragment, $locale, $targetLocales)
+                    $this->addFragmentFieldValues($fragment, $locales)
                 );
             }
         }
@@ -188,7 +171,7 @@ class ComposeExportLines
         return $lines;
     }
 
-    private function addFieldLines($resource, $model, $field, string $locale, array $targetLocales): LinesCollection
+    private function addFieldLines($resource, $model, $field, array $locales): LinesCollection
     {
         $lines = new LinesCollection();
 
@@ -197,14 +180,21 @@ class ComposeExportLines
         }
 
         if($field instanceof Fields\Repeat) {
-            return $lines->merge($this->extractRepeatField($resource, $model, $field, $locale, $targetLocales));
+            return $lines->merge($this->extractRepeatField($resource, $model, $field, $locales));
         }
 
-        if($this->ignoreNonTranslatable && ! $field->hasLocales()) {
+        if($this->ignoreNonLocalized && ! $field->hasLocales()) {
             return $lines;
         }
 
-        if($this->ignoreEmptyValues && ! $field->getValue($locale)) {
+        $values = ['x' => $field->getValue()];
+
+        if($field->hasLocales()) {
+            $values = collect($locales)->mapWithKeys(fn ($locale) => [$locale => $field->getValue($locale)]);
+            $values = !$this->ignoreNonLocalized ? ['x' => '', ...$values->all()] : $values->all();
+        }
+
+        if($this->ignoreEmptyValues && $this->areAllValuesEmpty($values)) {
             return $lines;
         }
 
@@ -214,15 +204,20 @@ class ComposeExportLines
             $fieldLabel = 'SEO ' . $fieldLabel;
         }
 
-        $lines->push(new TranslationLine(
+        $lines->push(new FieldLine(
             $model->modelReference()->get(),
             $field->getKey(),
+            $this->modelLabel,
             ucfirst($resource->getLabel()),
             $fieldLabel,
-            $field->getValue($locale),
-            collect($targetLocales)->mapWithKeys(fn ($targetLocale) => [$targetLocale => $field->getValue($targetLocale)])->all(),
+            $values,
         ));
 
         return $lines;
+    }
+
+    private function areAllValuesEmpty(array $values): bool
+    {
+        return collect($values)->filter(fn ($value) => ! empty($value))->isEmpty();
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TranslationsExport\Export;
+namespace Thinktomorrow\Chief\Plugins\Export\Export;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -16,24 +15,20 @@ use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Squanto\Database\DatabaseLine;
 
-class TranslationsExportDocument implements FromCollection, WithMapping, WithDefaultStyles, WithStyles, WithHeadings, WithColumnWidths, WithColumnFormatting
+class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyles, WithStyles, WithHeadings, WithColumnWidths
 {
     use Exportable;
 
-    private Resource $resource;
     private Collection $models;
-    private string $locale;
-    private array $targetLocales;
+    private array $locales;
     private Collection $styleCollection;
 
-    public function __construct(Resource $resource, Collection $models, string $locale, array $targetLocales)
+    public function __construct(Collection $models, array $locales)
     {
-        $this->resource = $resource;
         $this->models = $models;
-        $this->locale = $locale;
-        $this->targetLocales = $targetLocales;
+        $this->locales = $locales;
 
         $this->styleCollection = collect();
     }
@@ -44,51 +39,39 @@ class TranslationsExportDocument implements FromCollection, WithMapping, WithDef
     }
 
     /**
+     * @param DatabaseLine $row
      * @return array
      */
-    public function columnFormats(): array
-    {
-        return [];
-    }
-
     public function map($row): array
     {
-        $composeLines = app(ComposeExportLines::class)
-            ->ignoreNonTranslatable()
-            ->ignoreEmptyValues()
-            ->ignoreOfflineFragments()
-            ->ignoreFieldKeys(['url'])
-            ->compose($this->resource, $row, $this->locale, $this->targetLocales);
+        $values = array_reduce(
+            $this->locales,
+            fn($carry, $locale) => [...$carry, $row->dynamic('value', $locale)],
+            []
+        );
 
-        $this->styleCollection = $this->styleCollection->merge($composeLines->getStyles());
-
-        return $composeLines->getLines()->toArray();
+        return [
+            $row->key,
+            ...$values,
+        ];
     }
 
     public function headings(): array
     {
         return [
-            'Page',
             'ID',
-            'Fragment',
-            'Element',
-            $this->locale,
-            ...$this->targetLocales,
+            ...$this->locales
         ];
     }
 
     public function columnWidths(): array
     {
+        $keys = array_slice(range('B', 'Z'), 0, count($this->locales));
+        $columns = array_combine($keys, array_fill(0, count($this->locales), 50));
+
         return [
-            'A' => 2,
-            'B' => 2,
-            'C' => 15,
-            'D' => 15,
-            'E' => 50,
-            'F' => 50,
-            'G' => 50,
-            'H' => 50,
-            'I' => 50,
+            'A' => 50,
+            ...$columns
         ];
     }
 
@@ -129,19 +112,6 @@ class TranslationsExportDocument implements FromCollection, WithMapping, WithDef
     {
         return [
             'A' => [
-                'font' => ['bold' => true, 'size' => 14],
-                'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
-            ],
-            'B' => [
-                'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
-            ],
-            'C' => [
-                'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
-            ],
-            'D' => [
                 'alignment' => ['wrapText' => false],
                 'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
             ],

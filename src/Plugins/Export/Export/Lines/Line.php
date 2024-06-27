@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Plugins\TranslationsExport\Document;
+namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 use Illuminate\Contracts\Support\Arrayable;
 
