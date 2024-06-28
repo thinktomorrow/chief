@@ -39,6 +39,7 @@ class ExportMenuCommand extends BaseCommand
             if ($item->parent_id) {
                 $item->grouped_order = $models->find($item->parent_id)->order . str_pad($item->order + 1, 3, '0', STR_PAD_LEFT);
             }
+
             return $item;
         })
             ->sortBy(function ($item) {
