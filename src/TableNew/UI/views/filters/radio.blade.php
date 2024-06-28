@@ -8,7 +8,7 @@
             @foreach ($options as $value => $label)
                 <label for="{{ $id }}-{{ $value }}" class="flex items-start gap-2">
                     <x-chief::input.radio
-                        wire:model.live.debounce.300ms="filters . {{ $name }}"
+                        wire:model.live.debounce.300ms="filters.{{ $name }}"
                         id="{{ $id }}-{{ $value }}"
                         name="{{ $name }}"
                         value="{{ $value }}"

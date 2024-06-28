@@ -14,10 +14,11 @@ class RadioFilter extends AbstractFilter implements Filter
     public static function make(string $queryKey, \Closure $query): self
     {
         $filter = new static($queryKey, $query);
-        $filter->view('chief-table-new::filters.radio')
-            ->value([]);
 
-        return $filter;
+        // $filter->view('chief-table-new::filters.radio');
+        $filter->view('chief-table-new::filters.radio-slider');
+
+        return $filter->value([]);
     }
 
     public function options(array $options): self

@@ -21,6 +21,7 @@
     }
 @endphp
 
+{{-- TODO: Divide table into individual components --}}
 <div
     x-data="{
         selection: [],
@@ -44,7 +45,9 @@
         },
         init() {
             this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
-                const rows = [...this.$root.querySelectorAll('[data-table-row]')]
+                const rows = Array.from(
+                    this.$root.querySelectorAll('[data-table-row]'),
+                )
 
                 if (event.target.checked) {
                     rows.forEach((row) => {
