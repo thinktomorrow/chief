@@ -17,7 +17,7 @@ class ExportTextCommand extends BaseCommand
 
     public function handle(): void
     {
-        $models = DatabaseLine::all();
+        $models = DatabaseLine::orderBy('key')->get();
 
         (new ExportTextDocument($models, config('chief.locales')))
             ->store($filepath = config('app.name') .'-text-'.date('Y-m-d').'.xlsx');

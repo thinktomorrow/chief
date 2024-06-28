@@ -55,7 +55,7 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
         );
 
         return [
-            $row->id,
+            encrypt($row->id),
             $row->menu_type,
             $row->type,
             ...$values,

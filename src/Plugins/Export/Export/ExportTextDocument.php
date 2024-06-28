@@ -16,6 +16,8 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Thinktomorrow\Squanto\Database\DatabaseLine;
+use Thinktomorrow\Squanto\Domain\LineKey;
+use Thinktomorrow\Squanto\Manager\Pages\LineViewModel;
 
 class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyles, WithStyles, WithHeadings, WithColumnWidths
 {
@@ -50,8 +52,16 @@ class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyl
             []
         );
 
+        $page = LineKey::fromString($row->key)->pageKey();
+
+        $lineViewModel = new LineViewModel($row);
+        $label = $lineViewModel->sectionKey() . ($lineViewModel->sectionKey() !== $lineViewModel->label() ? ' ' . $lineViewModel->label() : '');
+        $label = str_replace('_', ' ', $label);
+
         return [
-            $row->key,
+            encrypt($row->key),
+            $page,
+            $label,
             ...$values,
         ];
     }
@@ -60,17 +70,21 @@ class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyl
     {
         return [
             'ID',
+            'Groep',
+            'Label',
             ...$this->locales,
         ];
     }
 
     public function columnWidths(): array
     {
-        $keys = array_slice(range('B', 'Z'), 0, count($this->locales));
+        $keys = array_slice(range('D', 'Z'), 0, count($this->locales));
         $columns = array_combine($keys, array_fill(0, count($this->locales), 50));
 
         return [
-            'A' => 50,
+            'A' => 3,
+            'B' => 20,
+            'C' => 30,
             ...$columns,
         ];
     }

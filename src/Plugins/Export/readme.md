@@ -31,8 +31,12 @@ extra kolom met opmerkingen:
 
 
 ## Install
-First install the package dependency
+Install the package dependency
 ```bash
 composer require maatwebsite/excel
 ```
 
+Add the Plugin Service Provider to the config app providers
+```php
+\Thinktomorrow\Chief\Plugins\Export\ExportServiceProvider::class,
+```
