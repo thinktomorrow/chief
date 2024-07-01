@@ -4,13 +4,13 @@ namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 class FieldLine implements Line
 {
-    private string $encryptedReference;
-    private string $modelReference;
-    private string $fieldKey;
-    private string $resourceLabel;
-    private string $modelLabel;
-    private string $fieldLabel;
-    private array $values;
+    protected string $encryptedReference;
+    protected string $modelReference;
+    protected string $fieldKey;
+    protected string $resourceLabel;
+    protected string $modelLabel;
+    protected string $fieldLabel;
+    protected array $values;
 
     public function __construct(string $modelReference, string $fieldKey, string $resourceLabel, string $modelLabel, string $fieldLabel, array $values)
     {
@@ -32,6 +32,7 @@ class FieldLine implements Line
             $this->modelLabel,
             $this->fieldLabel,
             ...array_values($this->values),
+            $this->getRemarks()
         ];
     }
 
@@ -73,5 +74,28 @@ class FieldLine implements Line
     public function toArray()
     {
         return $this->getColumns();
+    }
+
+    private function getRemarks(): string
+    {
+        $remarks = [];
+
+        foreach($this->values as $value) {
+            if(strip_tags($value) !== $value) {
+                $remarks[] = 'html';
+            }
+
+            // Check if it contains a href attribute
+            if(preg_match('/href=/', $value)) {
+                $remarks[] = 'link';
+            }
+
+            // Check if it contains a placeholder like :name
+            if(preg_match('/\:\w+/', $value)) {
+                $remarks[] = 'placeholder';
+            }
+        }
+
+        return implode(', ', array_unique($remarks));
     }
 }

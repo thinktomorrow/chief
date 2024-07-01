@@ -22,7 +22,7 @@ class ImportResourceCommand extends BaseCommand
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
         $locales = config('chief.locales', []);
 
-        $idColumn = $this->ask('which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[1]);
+        $idColumn = $this->ask('which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
         if(! $idColumn || ! in_array($idColumn, $headers)) {
             $this->error('No or invalid column for the ID references selected');
@@ -30,7 +30,7 @@ class ImportResourceCommand extends BaseCommand
             return;
         }
 
-        $column = $this->ask('which column would you like to import? Choose one of: '.implode(', ', $headers));
+        $column = $this->ask('Which column would you like to import? Choose one of: '.implode(', ', $headers));
 
         if(! $column || ! in_array($column, $headers) || $column === $idColumn) {
             $this->error('No or invalid column for translations selected');
@@ -46,12 +46,12 @@ class ImportResourceCommand extends BaseCommand
             return;
         }
 
-        Excel::import(new ImportLines(
+        Excel::import((new ImportFieldLines(
             array_search($idColumn, $headers),
             array_search($column, $headers),
             $locale
-        ), $file);
+        ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of locale '.$locale . ' 🤘');
+        $this->info('Finished import of fields for locale '.$locale . ' 🤘');
     }
 }

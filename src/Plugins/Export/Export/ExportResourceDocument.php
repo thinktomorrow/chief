@@ -71,6 +71,7 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
             'Element',
             ...($this->ignoreNonLocalized ? [] : ['Tekst']),
             ...$this->locales,
+            'Opmerking',
         ];
     }
 

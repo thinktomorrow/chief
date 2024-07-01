@@ -73,6 +73,7 @@ class ExportTextDocument implements FromCollection, WithMapping, WithDefaultStyl
             'Groep',
             'Label',
             ...$this->locales,
+            'Opmerking',
         ];
     }
 
