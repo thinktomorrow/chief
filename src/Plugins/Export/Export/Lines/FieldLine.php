@@ -32,7 +32,7 @@ class FieldLine implements Line
             $this->modelLabel,
             $this->fieldLabel,
             ...array_values($this->values),
-            $this->getRemarks()
+            $this->getRemarks(),
         ];
     }
 

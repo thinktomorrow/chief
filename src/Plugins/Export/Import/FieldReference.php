@@ -42,7 +42,7 @@ class FieldReference
         }
 
         // Extract the field key and find the field by the dotted field name
-        $fieldKey = strpos($fieldName, '.') !== false ? substr($fieldName,0,strpos($fieldName,'.')) : $fieldName;
+        $fieldKey = strpos($fieldName, '.') !== false ? substr($fieldName, 0, strpos($fieldName, '.')) : $fieldName;
         $field = $resource->field($model, $fieldKey);
 
         return new static($resource, $model, $field, $fieldName);
@@ -103,7 +103,7 @@ class FieldReference
 
         foreach ($arrays as $array) {
 
-            if(!$array) {
+            if(! $array) {
                 continue;
             }
 

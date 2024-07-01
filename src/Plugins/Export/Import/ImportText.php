@@ -4,10 +4,8 @@ namespace Thinktomorrow\Chief\Plugins\Export\Import;
 
 use Illuminate\Console\OutputStyle;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Thinktomorrow\Chief\Plugins\Export\Import\FieldReference;
 use Thinktomorrow\Squanto\Database\DatabaseLine;
 use Thinktomorrow\Squanto\Domain\Exceptions\InvalidLineKeyException;
 use Thinktomorrow\Squanto\Domain\LineKey;
@@ -41,6 +39,7 @@ class ImportText implements ToCollection
                 $lineKey = LineKey::fromString(decrypt($encryptedId));
             } catch (DecryptException|InvalidLineKeyException $e) {
                 $this->writeToOutput('Invalid squanto id reference: ' . $encryptedId, 'error');
+
                 continue;
             }
 
@@ -50,7 +49,9 @@ class ImportText implements ToCollection
                 $values = json_decode($line->values, true);
                 $previousValue = $values['value'][$this->locale] ?? null;
 
-                if($previousValue === $value) continue;
+                if($previousValue === $value) {
+                    continue;
+                }
 
                 $values['value'][$this->locale] = $value;
 

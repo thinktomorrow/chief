@@ -50,10 +50,11 @@ class ImportFieldLines implements ToCollection
     private function handleFieldValue(string $encryptedId, FieldReference $fieldReference, Collection $row): void
     {
         // Our import only deals with localized values for now...
-        if(!$fieldReference->isRepeatField() && !$fieldReference->isLocalized()) {
+        if(! $fieldReference->isRepeatField() && ! $fieldReference->isLocalized()) {
             if($this->output) {
                 $this->output->warning('Field reference is not localized: ' . decrypt($encryptedId));
             }
+
             return;
         }
 
@@ -73,8 +74,8 @@ class ImportFieldLines implements ToCollection
 
         if($this->output) {
             $this->output->info('Imported value for ' . decrypt($encryptedId) . ' (' . $this->locale . ')');
-//            $this->output->writeln('Old value: ' . print_r($currentValue, true));
-//            $this->output->writeln('New value: ' . print_r($value, true));
+            //            $this->output->writeln('Old value: ' . print_r($currentValue, true));
+            //            $this->output->writeln('New value: ' . print_r($value, true));
         }
     }
 

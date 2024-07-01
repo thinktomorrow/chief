@@ -37,6 +37,7 @@ class ImportMenu implements ToCollection
                 $menuItemId = decrypt($encryptedId);
             } catch (DecryptException $e) {
                 $this->writeToOutput('Invalid menu item id reference: ' . $encryptedId, 'error');
+
                 continue;
             }
 

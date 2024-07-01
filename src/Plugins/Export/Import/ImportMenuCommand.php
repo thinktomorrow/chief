@@ -6,9 +6,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\App\Console\ReadsCsv;
-use Thinktomorrow\Squanto\Database\DatabaseLine;
-use Thinktomorrow\Squanto\Domain\Exceptions\InvalidLineKeyException;
-use Thinktomorrow\Squanto\Domain\LineKey;
 
 class ImportMenuCommand extends BaseCommand
 {
@@ -33,6 +30,6 @@ class ImportMenuCommand extends BaseCommand
             $locales
         ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of menu for locale ' . implode(',',$locales) . ' 🤘');
+        $this->info('Finished import of menu for locale ' . implode(',', $locales) . ' 🤘');
     }
 }
