@@ -4,11 +4,6 @@ namespace Thinktomorrow\Chief\Plugins\Export\Tests\Import;
 
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Squanto\Database\Application\AddDatabaseLine;
-use Thinktomorrow\Squanto\Database\DatabaseLine;
-use Thinktomorrow\Squanto\Domain\Line;
-use Thinktomorrow\Squanto\Domain\LineKey;
-use Thinktomorrow\Squanto\Domain\Metadata\Metadata;
 
 class ImportMenuCommandTest extends TestCase
 {

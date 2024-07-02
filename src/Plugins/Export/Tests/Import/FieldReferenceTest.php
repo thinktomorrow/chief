@@ -69,7 +69,7 @@ class FieldReferenceTest extends TestCase
         $fragmentModel = ContextModel::ownedBy(ArticlePage::all()[1])->fragments()->first();
 
         $this->assertEquals([
-            ['title' => ['nl' => 'new title']]
+            ['title' => ['nl' => 'new title']],
         ], $fragmentModel->links);
     }
 
