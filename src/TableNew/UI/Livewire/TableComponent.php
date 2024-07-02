@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\TableNew\UI\Livewire;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Livewire\Component;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\TableNew\Filter;
 use Thinktomorrow\Chief\TableNew\Filters\FilterPresets;
@@ -45,10 +45,10 @@ class TableComponent extends Component
         ];
     }
 
-//    protected function getResource(): string
-//    {
-//        return \App\Models\Resources\Single::class;
-//    }
+    //    protected function getResource(): string
+    //    {
+    //        return \App\Models\Resources\Single::class;
+    //    }
 
     //    private function convertToTree(): Paginator
     //    {

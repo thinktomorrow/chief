@@ -78,14 +78,14 @@ class Table
 }
 
 Table::default()->filters([
-    SelectFilter::make('status', function($query) {
+    SelectFilter::make('status', function ($query) {
         $query->where('status', 'published');
     })->options([
         'published' => 'Published',
         'draft' => 'Draft',
         'archived' => 'Archived',
     ])->displayAsPrimary()->displayInDropdown(),
-    TextFilter::make('title', function($query, $value) {
+    TextFilter::make('title', function ($query, $value) {
         $query->where('title', 'like', '%'.$value.'%');
     }),
 ])->sorters([
