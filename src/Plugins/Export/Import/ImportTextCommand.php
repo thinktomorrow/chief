@@ -25,7 +25,7 @@ class ImportTextCommand extends BaseCommand
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
         $locales = config('chief.locales', []);
 
-        $idColumn = $this->ask('which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
+        $idColumn = $this->ask('Which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
         if(! $idColumn || ! in_array($idColumn, $headers)) {
             $this->error('No or invalid column for the ID references selected');

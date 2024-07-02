@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Plugins\Export\Export\Lines\FieldLine;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -18,7 +19,7 @@ class FieldReference
     private Field $field;
     private string $fieldName;
 
-    private function __construct(Resource $resource, Model $model, Field $field, string $fieldName)
+    public function __construct(Resource $resource, Model $model, Field $field, string $fieldName)
     {
         $this->resource = $resource;
         $this->model = $model;
@@ -58,7 +59,10 @@ class FieldReference
         $fields = Fields::make([$this->field]);
 
         $this->field->name($this->fieldName); // To support nested fields
-        $key = Fields\Common\FormKey::replaceBracketsByDots($this->field->getName($locale));
+        $key = Fields\Common\FormKey::replaceBracketsByDots($locale !== FieldLine::NON_LOCALIZED
+                ? $this->field->getName($locale)
+                : $this->field->getName()
+        );
 
         $payload = Arr::undot([$key => $value]);
 

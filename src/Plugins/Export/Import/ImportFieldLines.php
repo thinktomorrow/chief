@@ -7,6 +7,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Thinktomorrow\Chief\Plugins\Export\Export\Lines\FieldLine;
 
 class ImportFieldLines implements ToCollection
 {
@@ -49,14 +50,22 @@ class ImportFieldLines implements ToCollection
 
     private function handleFieldValue(string $encryptedId, FieldReference $fieldReference, Collection $row): void
     {
-        // Our import only deals with localized values for now...
-        if(! $fieldReference->isRepeatField() && ! $fieldReference->isLocalized()) {
-            if($this->output) {
-                $this->output->warning('Field reference is not localized: ' . decrypt($encryptedId));
-            }
-
+        if($fieldReference->isLocalized() && $this->locale === FieldLine::NON_LOCALIZED) {
             return;
         }
+
+        if(! $fieldReference->isLocalized() && $this->locale !== FieldLine::NON_LOCALIZED) {
+            return;
+        }
+
+        // Our import only deals with localized values for now...
+        //        if(! $fieldReference->isRepeatField() && ! $fieldReference->isLocalized()) {
+        //            if($this->output) {
+        //                $this->output->warning('Field reference is not localized: ' . decrypt($encryptedId));
+        //            }
+        //
+        //            return;
+        //        }
 
         // Column for import
         $value = $row[$this->columnIndex];

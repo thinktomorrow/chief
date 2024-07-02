@@ -54,8 +54,6 @@ class ComposeFieldLines
             $lines = $lines->merge($this->addFragmentFieldValues($model, $locales));
         }
 
-        $this->addSeparator($lines);
-
         $this->lines = $lines;
 
         return $this;
@@ -187,11 +185,11 @@ class ComposeFieldLines
             return $lines;
         }
 
-        $values = ['x' => $field->getValue()];
+        $values = [FieldLine::NON_LOCALIZED => $field->getValue()];
 
         if($field->hasLocales()) {
             $values = collect($locales)->mapWithKeys(fn ($locale) => [$locale => $field->getValue($locale)]);
-            $values = ! $this->ignoreNonLocalized ? ['x' => '', ...$values->all()] : $values->all();
+            $values = ! $this->ignoreNonLocalized ? [FieldLine::NON_LOCALIZED => '', ...$values->all()] : $values->all();
         }
 
         if($this->ignoreEmptyValues && $this->areAllValuesEmpty($values)) {

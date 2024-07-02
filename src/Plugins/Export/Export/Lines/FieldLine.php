@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 class FieldLine implements Line
 {
+    const NON_LOCALIZED = 'x';
+
     protected string $encryptedReference;
     protected string $modelReference;
     protected string $fieldKey;
@@ -67,8 +69,8 @@ class FieldLine implements Line
             return $this->values[$locale] ?? null;
         }
 
-        // If not localized, return the first value
-        return reset($this->values);
+        // x marks a non localized value
+        return $this->values[static::NON_LOCALIZED] ?? null;
     }
 
     public function toArray()
@@ -76,7 +78,7 @@ class FieldLine implements Line
         return $this->getColumns();
     }
 
-    private function getRemarks(): string
+    public function getRemarks(): string
     {
         $remarks = [];
 

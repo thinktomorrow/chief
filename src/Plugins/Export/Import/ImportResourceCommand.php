@@ -22,7 +22,7 @@ class ImportResourceCommand extends BaseCommand
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
         $locales = config('chief.locales', []);
 
-        $idColumn = $this->ask('which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
+        $idColumn = $this->ask('Which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
         if(! $idColumn || ! in_array($idColumn, $headers)) {
             $this->error('No or invalid column for the ID references selected');
@@ -33,17 +33,23 @@ class ImportResourceCommand extends BaseCommand
         $column = $this->ask('Which column would you like to import? Choose one of: '.implode(', ', $headers));
 
         if(! $column || ! in_array($column, $headers) || $column === $idColumn) {
-            $this->error('No or invalid column for translations selected');
+            $this->error('No or invalid column for import selected');
 
             return;
         }
 
-        $locale = $this->ask('Which locale does this column represent? Choose one of: '.implode(', ', $locales), in_array(strtolower($column), $locales) ? strtolower($column) : null);
+        // Fixed non-localized import
+        if($column === 'tekst') {
+            $locale = 'x';
+        } else {
+            $defaultLocale = in_array(strtolower($column), $locales) ? strtolower($column) : null;
+            $locale = $this->ask('Which locale does this column represent? Choose one of: '.implode(', ', $locales), $defaultLocale);
 
-        if(! $locale || ! in_array($locale, $locales)) {
-            $this->error('No or invalid locale selected');
+            if(! $locale || ! in_array($locale, $locales)) {
+                $this->error('No or invalid locale selected');
 
-            return;
+                return;
+            }
         }
 
         Excel::import((new ImportFieldLines(

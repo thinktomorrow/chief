@@ -39,7 +39,7 @@ trait ResourceDefault
     {
         $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
 
-        return Fields::make($this->fields($model))->find($key)->model($fieldModel);
+        return Fields::makeWithoutFlatteningNestedFields($this->fields($model))->find($key)->model($fieldModel);
     }
 
     abstract public function fields($model): iterable;
