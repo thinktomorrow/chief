@@ -42,6 +42,14 @@ trait ResourceDefault
         return Fields::makeWithoutFlatteningNestedFields($this->fields($model))->find($key)->model($fieldModel);
     }
 
+    public function nestedField($model, string $key): Field
+    {
+        $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+
+        // TODO: this fails when the nested field has the same key as one of the other fields. 
+        return Fields::make($this->fields($model))->find($key)->model($fieldModel);
+    }
+
     abstract public function fields($model): iterable;
 
     public function getSaveFieldsClass(): string
