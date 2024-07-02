@@ -46,7 +46,7 @@ trait ResourceDefault
     {
         $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
 
-        // TODO: this fails when the nested field has the same key as one of the other fields. 
+        // TODO: this fails when the nested field has the same key as one of the other fields.
         return Fields::make($this->fields($model))->find($key)->model($fieldModel);
     }
 
