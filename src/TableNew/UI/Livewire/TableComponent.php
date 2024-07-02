@@ -4,12 +4,13 @@ namespace Thinktomorrow\Chief\TableNew\UI\Livewire;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
-use Thinktomorrow\Chief\TableNew\Filters\Filter;
+use Thinktomorrow\Chief\TableNew\Filter;
 use Thinktomorrow\Chief\TableNew\Filters\FilterPresets;
 use Thinktomorrow\Chief\TableNew\UI\Livewire\Concerns\WithFilters;
 
-class ArticleListing extends Listing
+class TableComponent extends Component
 {
     use WithFilters;
 
@@ -35,10 +36,10 @@ class ArticleListing extends Listing
         ];
     }
 
-    protected function getResource(): string
-    {
-        return \App\Models\Resources\Single::class;
-    }
+//    protected function getResource(): string
+//    {
+//        return \App\Models\Resources\Single::class;
+//    }
 
     //    private function convertToTree(): Paginator
     //    {

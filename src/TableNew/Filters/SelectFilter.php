@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\TableNew\Filters\Presets;
+namespace Thinktomorrow\Chief\TableNew\Filters;
 
 use Closure;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
-use Thinktomorrow\Chief\TableNew\Filters\AbstractFilter;
-use Thinktomorrow\Chief\TableNew\Filters\Filter;
+use Thinktomorrow\Chief\TableNew\Filter;
 
 class SelectFilter extends AbstractFilter implements Filter
 {

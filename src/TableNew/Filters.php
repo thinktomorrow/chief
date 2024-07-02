@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\TableNew\Filters;
+namespace Thinktomorrow\Chief\TableNew;
 
 use Illuminate\Database\Eloquent\Builder;
 

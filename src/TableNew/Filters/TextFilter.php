@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\TableNew\Filters\Presets;
+namespace Thinktomorrow\Chief\TableNew\Filters;
 
-use Thinktomorrow\Chief\TableNew\Filters\AbstractFilter;
-use Thinktomorrow\Chief\TableNew\Filters\Filter;
+use Thinktomorrow\Chief\TableNew\Filter;
 
-class InputFilter extends AbstractFilter implements Filter
+class TextFilter extends AbstractFilter implements Filter
 {
     public static function make(string $queryKey, \Closure $query): self
     {

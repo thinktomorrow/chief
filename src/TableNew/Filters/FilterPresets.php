@@ -6,9 +6,7 @@ namespace Thinktomorrow\Chief\TableNew\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\InputFilter;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\SearchFilter;
-use Thinktomorrow\Chief\TableNew\Filters\Presets\SelectFilter;
+use Thinktomorrow\Chief\TableNew\Filter;
 
 class FilterPresets
 {
@@ -68,7 +66,7 @@ class FilterPresets
      */
     public static function input(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
     {
-        return InputFilter::make($name, static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
+        return TextFilter::make($name, static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\TableNew\UI\Livewire\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\TableNew\Filters\Filter;
+use Thinktomorrow\Chief\TableNew\Filter;
 
 trait WithFilters
 {
