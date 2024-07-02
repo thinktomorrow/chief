@@ -1,5 +1,6 @@
 @php
-    use Illuminate\Contracts\Pagination\Paginator;$title = ucfirst($resource->getIndexTitle());
+    use Illuminate\Contracts\Pagination\Paginator;
+    $title = ucfirst($resource->getIndexTitle());
     $is_archive_index = $is_archive_index ?? false;
 
     $tableActions = $resource->getTableActions($manager);
@@ -10,9 +11,7 @@
 
     $tableHeaders = count($models) > 0 ? $resource->getTableHeaders($manager, $models->first()) : [];
 
-    $bodyAttributes = $manager->can('sort-index', $models->first())
-        ? 'data-sortable data-sortable-endpoint=' . $manager->route('sort-index') .' data-sortable-id-type='. $resource->getSortableType()
-        : '';
+    $bodyAttributes = $manager->can('sort-index', $models->first()) ? 'data-sortable data-sortable-endpoint=' . $manager->route('sort-index') . ' data-sortable-id-type=' . $resource->getSortableType() : '';
 
     $showOptionsColumn = $resource->showIndexOptionsColumn() && ($manager->can('edit') || $manager->can('preview') || $manager->can('duplicate') || $manager->can('state-update'));
 @endphp
@@ -20,17 +19,17 @@
 <x-chief::page.template :title="$title">
     <x-slot name="hero">
         <x-chief::page.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
-            @if($resource->getIndexDescription())
+            @if ($resource->getIndexDescription())
                 <x-slot name="description">
                     {{ $resource->getIndexDescription() }}
                 </x-slot>
             @endif
 
-            @if($resource->getIndexHeaderContent())
+            @if ($resource->getIndexHeaderContent())
                 {!! $resource->getIndexHeaderContent() !!}
             @endif
 
-            @if(!$is_archive_index)
+            @if (! $is_archive_index)
                 @include('chief::manager._index._index_actions')
             @endif
         </x-chief::page.hero>
@@ -52,8 +51,8 @@
 
             <x-slot name="header">
                 @if ($tableActionsCount > 0)
-                    <x-chief::table.header class="form-light">
-                        <x-chief::input.checkbox data-bulk-all-checkbox name="bulk_all" id="bulk_all"/>
+                    <x-chief::table.header>
+                        <x-chief::input.checkbox data-bulk-all-checkbox name="bulk_all" id="bulk_all" />
                     </x-chief::table.header>
                 @endif
 
@@ -62,15 +61,15 @@
                 @endforeach
 
                 @if ($showOptionsColumn)
-                    <x-chief::table.header/>
+                    <x-chief::table.header />
                 @endif
             </x-slot>
 
             <x-slot name="body">
                 @forelse ($models as $model)
                     <x-chief::table.row data-sortable-handle data-sortable-id="{{ $resource->getTableRowId($model) }}">
-                        @if($tableActionsCount > 0)
-                            <x-chief::table.data class="form-light">
+                        @if ($tableActionsCount > 0)
+                            <x-chief::table.data>
                                 <x-chief::input.checkbox
                                     data-bulk-item-checkbox
                                     id="item_{{ $loop->index }}"

@@ -1,19 +1,21 @@
 .form-input-radio {
     margin-top: 2px;
-    @apply appearance-none relative w-5 h-5 rounded-full leading-none;
+    @apply relative h-5 w-5 appearance-none rounded-full leading-none;
 
     &:before {
         content: '';
-        @apply inline-block w-5 h-5 border rounded-full shadow-sm;
+        @apply inline-block h-5 w-5 rounded-full border shadow-sm;
+        @apply border-grey-200 bg-white;
     }
 
     &:after {
         content: '';
-        @apply inline-block absolute w-5 h-5 left-0 top-0 scale-0 rounded-full;
+        @apply absolute left-0 top-0 inline-block h-5 w-5 scale-0 rounded-full;
+        @apply bg-primary-500;
     }
 
     &:focus {
-        @apply ring-1 ring-primary-500 outline-none;
+        @apply outline-none ring-1 ring-primary-500;
     }
 
     &:checked {
@@ -24,15 +26,5 @@
 
     &:disabled {
         @apply opacity-50;
-    }
-}
-
-.form-light .form-input-radio {
-    &:before {
-        @apply bg-white border-grey-200;
-    }
-
-    &:after {
-        @apply bg-primary-500;
     }
 }

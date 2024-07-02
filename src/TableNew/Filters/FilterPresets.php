@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\TableNew\Filters;
@@ -16,8 +17,8 @@ class FilterPresets
             return $query->where($key, '=', $value);
         })->label('Status')->options([
             '' => 'Alle',
-            PageState::published->getValueAsString() => 'online',
-            PageState::draft->getValueAsString() => 'offline',
+            PageState::published->getValueAsString() => 'Online',
+            PageState::draft->getValueAsString() => 'Offline',
         ])->default('');
     }
 
@@ -43,7 +44,7 @@ class FilterPresets
 
                 // Extract relation searches
                 foreach ($columns as $i => $column) {
-                    if(false !== strpos($column, '.')) {
+                    if (false !== strpos($column, '.')) {
                         [$relation, $columnName] = explode('.', $column);
 
                         $builder->whereHas($relation, function ($query) use ($value, $columnName, $dynamicColumn) {

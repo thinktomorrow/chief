@@ -10,6 +10,10 @@
 @import './components/card';
 @import './components/sort';
 
+/* New Table UI button */
+@import './components/bui-button';
+@import './components/bui-label';
+
 @import './components/form';
 @import './components/form/index.css';
 

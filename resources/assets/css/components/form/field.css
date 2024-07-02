@@ -1,17 +1,14 @@
 .form-input-field {
-    @apply block border px-3 py-2 shadow-sm rounded-md w-full;
+    @apply block w-full rounded-md border px-3 py-2 shadow-sm;
+    @apply border-grey-200 bg-white text-grey-700;
 
     &:focus {
-        @apply ring-1 ring-primary-500 ring-inset outline-none;
+        @apply outline-none ring-1 ring-inset ring-primary-500;
     }
 
     &:disabled {
         @apply opacity-50;
     }
-}
-
-.form-light .form-input-field {
-    @apply bg-white border-grey-200 text-grey-700;
 
     &::placeholder {
         @apply text-grey-400;

@@ -4,13 +4,21 @@
 
 <x-chief::dropdown trigger="#{{ $id }}-select" placement="bottom-end">
     <div class="space-y-2.5 p-3.5">
-        <x-chief::multiselect
-            wire:model.live.debounce.300ms="filters.{{ $name }}"
-            :options='$options'
-            :selection='$value ?: $default'
-            :multiple='$multiple'
-            class="w-64"
-        />
+        <div class="space-y-1">
+            @foreach ($options as $value => $label)
+                <label for="{{ $id }}-{{ $value }}" class="flex items-start gap-2">
+                    <x-chief::input.radio
+                        wire:model.live.debounce.300ms="filters.{{ $name }}"
+                        id="{{ $id }}-{{ $value }}"
+                        name="{{ $name }}"
+                        value="{{ $value }}"
+                        :checked="in_array($value, (array) $value)"
+                    />
+
+                    <span class="body body-dark">{!! $label !!}</span>
+                </label>
+            @endforeach
+        </div>
 
         <div class="flex items-start justify-between gap-2">
             <button type="button" x-on:click="close()">

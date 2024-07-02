@@ -2,11 +2,12 @@
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 
 const dropdownDirective = (floatingEl, { expression }, { evaluate }) => {
-    const referenceEl = document.querySelector(evaluate(expression).referenceEl);
+    const { reference, placement } = evaluate(expression);
+    const referenceEl = document.querySelector(reference);
 
     function updatePosition() {
         computePosition(referenceEl, floatingEl, {
-            placement: 'bottom-end',
+            placement,
             middleware: [
                 offset(8), // Space between referenceEl and floatingEl
                 flip(), // Flip floatingEl to the other side of the referenceEl if it overflows
