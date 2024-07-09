@@ -45,7 +45,7 @@ class Filters
     {
         foreach ($this->all() as $filter) {
             if ($filter->applicable(request())) {
-                $filter->query()($builder, request()->input($filter->queryKey()));
+                $filter->getQuery()($builder, request()->input($filter->queryKey()));
             }
         }
     }

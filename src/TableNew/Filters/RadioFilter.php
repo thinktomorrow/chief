@@ -4,33 +4,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\TableNew\Filters;
 
-use Thinktomorrow\Chief\TableNew\Filter;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
 
-class RadioFilter extends AbstractFilter implements Filter
+class RadioFilter extends Filter
 {
-    private array $options = [];
+    use HasOptions;
 
-    public static function make(string $queryKey, \Closure $query): self
-    {
-        $filter = new static($queryKey, $query);
+//    protected string $view = 'chief-table-new::filters.radio';
+    protected string $view = 'chief-table-new::filters.radio-slider';
 
-        // $filter->view('chief-table-new::filters.radio');
-        $filter->view('chief-table-new::filters.radio-slider');
-
-        return $filter->value([]);
-    }
-
-    public function options(array $options): self
-    {
-        $this->options = $options;
-
-        return $this;
-    }
-
-    protected function viewData(): array
-    {
-        return array_merge(parent::viewData(), [
-            'options' => $this->options,
-        ]);
-    }
+//    public static function make(string $queryKey, \Closure $query): self
+//    {
+//        $filter = new static($queryKey, $query);
+//
+//        // $filter->view('chief-table-new::filters.radio');
+//        $filter->view('chief-table-new::filters.radio-slider');
+//
+//        return $filter->value([]);
+//    }
 }

@@ -10,6 +10,9 @@ use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
+use Thinktomorrow\Chief\TableNew\Livewire\TableComponent;
+use Thinktomorrow\Chief\TableNew\Table;
+use Thinktomorrow\Chief\TableNew\TableReference;
 
 trait PageResourceDefault
 {
@@ -37,6 +40,15 @@ trait PageResourceDefault
         if (! $this->manager) {
             throw new RuntimeException('For calling this method a Manager instance should be set to this resource.');
         }
+    }
+
+    /**
+     * This is a temporary method to get the index table. In a future release of Chief, a table will be
+     * configured on a Page class instead.
+     */
+    public function getIndexTable(): Table
+    {
+        return Table::make();
     }
 
     public function getIndexTitle(): string
@@ -115,7 +127,7 @@ trait PageResourceDefault
     {
         // TODO: temp
         if ($this->getIndexViewType() == 'listing') {
-            return view('chief-table-new::index');
+            return view('chief::manager.index-with-new-table');
         }
 
         if ($this->getIndexViewType() == 'table') {

@@ -14,6 +14,11 @@
 
     <x-chief::dropdown trigger="#table-sorting" placement="bottom-end">
         <div class="space-y-2.5 p-3.5">
+
+            @foreach ($this->getSorters() as $sorter)
+                {!! $sorter->render() !!}
+            @endforeach
+
             <div class="flex items-start justify-between gap-2">
                 <button type="button" x-on:click="close()">
                     <x-chief-table-new::button size="sm" color="white">Annuleer</x-chief-table-new::button>

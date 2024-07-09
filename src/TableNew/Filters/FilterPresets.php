@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\TableNew\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
-use Thinktomorrow\Chief\TableNew\Filter;
+use Thinktomorrow\Chief\TableNew\Filters\Filter;
 
 class FilterPresets
 {

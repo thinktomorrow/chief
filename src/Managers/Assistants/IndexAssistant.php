@@ -61,8 +61,6 @@ trait IndexAssistant
      */
     public function index(Request $request)
     {
-        return $this->resource->getIndexView();
-
         $this->guard('index');
 
         app(VisitedUrl::class)->add(request()->fullUrl());
@@ -71,6 +69,7 @@ trait IndexAssistant
         View::share('resource', $this->resource);
         View::share('model', $model = $this->managedModelClassInstance());
 
+        return $this->resource->getIndexView();
 
         if ($model instanceof Nestable) {
             // TODO: this should be changed to the repository pattern like:

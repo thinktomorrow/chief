@@ -6,9 +6,8 @@ namespace Thinktomorrow\Chief\TableNew\Filters;
 
 use Closure;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
-use Thinktomorrow\Chief\TableNew\Filter;
 
-class OptionFilter extends AbstractFilter implements Filter
+class OptionFilter extends Filter
 {
     private string $displayType = 'select';
     private array $options = [];
