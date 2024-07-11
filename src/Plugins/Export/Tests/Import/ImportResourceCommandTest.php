@@ -24,8 +24,8 @@ class ImportResourceCommandTest extends TestCase
 
         // Now import it again
         $this->artisan('chief:import-resource', ['file' => $filepath])
-            ->expectsQuestion("Which column contains the ID references? Choose one of: id, pagina, fragment, element, tekst, nl, en, opmerking", 'id')
-            ->expectsQuestion("Which column would you like to import? Choose one of: id, pagina, fragment, element, tekst, nl, en, opmerking", 'nl')
+            ->expectsQuestion("Which column contains the ID references? Choose one of: id, pagina, fragment, element, nl, en, opmerking", 'id')
+            ->expectsQuestion("Which column would you like to import? Choose one of: id, pagina, fragment, element, nl, en, opmerking", 'nl')
             ->expectsQuestion("Which locale does this column represent? Choose one of: nl, en", 'nl');
 
         // Localized values
@@ -42,7 +42,7 @@ class ImportResourceCommandTest extends TestCase
         $article = $this->setUpAndCreateArticle(['title' => 'article title', 'content_trans' => ['nl' => 'content article nl', 'en' => 'content article en']]);
         $snippet = $this->setUpAndCreateSnippet($article, 0, true, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
 
-        $this->artisan('chief:export-resource article_page');
+        $this->artisan('chief:export-resource article_page --include-static');
 
         $filepath = storage_path('app/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
 
