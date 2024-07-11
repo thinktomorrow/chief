@@ -50,7 +50,7 @@ class ImportFieldLines implements ToCollection
 
     private function handleFieldValue(string $encryptedId, FieldReference $fieldReference, Collection $row): void
     {
-        if(!$fieldReference->isRepeatField()) {
+        if(! $fieldReference->isRepeatField()) {
             if($fieldReference->isLocalized() && $this->locale === FieldLine::NON_LOCALIZED) {
                 return;
             }
