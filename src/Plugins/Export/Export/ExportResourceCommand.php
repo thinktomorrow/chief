@@ -11,6 +11,7 @@ class ExportResourceCommand extends BaseCommand
 {
     protected $signature = 'chief:export-resource
                                     {resource : the resource key of the model to export}
+                                    {--include-static : also add the non-localized text as separate column}
                                     {--locales= : specify the locales, comma separated, if you only want to show translations}';
 
     protected $description = 'Export model fields for translations';
@@ -34,7 +35,7 @@ class ExportResourceCommand extends BaseCommand
 
         $models = $this->getModels($resource::resourceKey());
 
-        (new ExportResourceDocument($resource, $models, $locales, true))
+        (new ExportResourceDocument($resource, $models, $locales, !$this->hasOption('include-static')))
             ->store($filepath = config('app.name') .'-'. $resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished '.$resource::resourceKey().' export. File available at: storage/app/' . $filepath);

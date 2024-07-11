@@ -12,7 +12,7 @@ class ExportResourceCommandTest extends TestCase
         $article = $this->setUpAndCreateArticle(['title' => 'article title', 'content_trans' => ['nl' => 'content article nl', 'en' => 'content article en']]);
         $this->setUpAndCreateSnippet($article, 0, true, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
 
-        $this->artisan('chief:export-resource article_page');
+        $this->artisan('chief:export-resource article_page --include-static');
 
         $filepath = storage_path('app/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
 
