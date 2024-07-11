@@ -12,7 +12,7 @@ class TreeSort extends Sorter
     {
         $sort = new static($key);
 
-        $sort->query(function($query) {
+        $sort->query(function ($query) {
 
         });
 

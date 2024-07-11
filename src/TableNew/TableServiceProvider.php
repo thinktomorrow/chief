@@ -44,7 +44,7 @@ class TableServiceProvider extends ServiceProvider
         Builder::macro('whereFragmentsContain', function ($input, $model_type, bool $split_by_spaces = true) {
 
             // Split query up by spaces
-            $values = $split_by_spaces && !is_array($input)
+            $values = $split_by_spaces && ! is_array($input)
                 ? explode(' ', trim($input))
                 : (array) $input;
 

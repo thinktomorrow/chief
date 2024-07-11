@@ -141,7 +141,9 @@ class TableComponent extends Component
 
     private function shouldReturnResultsAsTree(): bool
     {
-        if(count($this->filters) > 0) return false;
+        if(count($this->filters) > 0) {
+            return false;
+        }
 
         return count($this->sorters) == 1 && key($this->sorters) == TreeSort::TREE_SORTING && $this->getTable()->getTreeReference();
     }

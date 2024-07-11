@@ -4,7 +4,8 @@ namespace Thinktomorrow\Chief\TableNew\Filters\Concerns;
 
 use Closure;
 
-trait HasQuery {
+trait HasQuery
+{
 
     protected ?Closure $query = null;
 

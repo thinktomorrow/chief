@@ -2,7 +2,8 @@
 
 namespace Thinktomorrow\Chief\TableNew\Columns\Concerns;
 
-trait HasValueMap {
+trait HasValueMap
+{
 
     protected array $valueMap = [];
 

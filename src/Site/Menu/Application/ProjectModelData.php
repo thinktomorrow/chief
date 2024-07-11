@@ -97,7 +97,9 @@ class ProjectModelData
 
         $model = $menuItem->owner;
 
-        if(!$model) return;
+        if(! $model) {
+            return;
+        }
 
         if ($model instanceof StatefulContract) {
             $menuItem->setStatus(! $model->inOnlineState() ? MenuItemStatus::offline : MenuItemStatus::online);

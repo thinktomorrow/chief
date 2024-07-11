@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\TableNew\Columns;
 
 use Illuminate\Database\Eloquent\Model;
-use Livewire\Wireable;
 
 class Column
 {
@@ -13,7 +12,7 @@ class Column
     public function __construct(array $items)
     {
         // When string is passed, we transform it to a Text Component.
-        $this->items = array_map(fn($item) => !$item instanceof ColumnItem ? ColumnText::make($item) : $item, $items);
+        $this->items = array_map(fn ($item) => ! $item instanceof ColumnItem ? ColumnText::make($item) : $item, $items);
     }
 
     public static function items(array $items): static
@@ -27,23 +26,23 @@ class Column
     }
 
     //    public function getValues(?string $locale = null): iterable
-//    {
-//        // Retrieve value(s)
-//        $value = $this->getEvaluatedValue($locale);
-//
-//        // Split values
-//        if(! is_iterable($value)) {
-//            $value = [$value];
-//        } elseif($value instanceof Collection) {
-//            $value = $value->all();
-//        }
-//
-//        $values = $this->handleEachValue($value);
-//
-//        return array_map(function ($value) {
-//            return $this->replicate()->value($value);
-//        }, $values);
-//    }
+    //    {
+    //        // Retrieve value(s)
+    //        $value = $this->getEvaluatedValue($locale);
+    //
+    //        // Split values
+    //        if(! is_iterable($value)) {
+    //            $value = [$value];
+    //        } elseif($value instanceof Collection) {
+    //            $value = $value->all();
+    //        }
+    //
+    //        $values = $this->handleEachValue($value);
+    //
+    //        return array_map(function ($value) {
+    //            return $this->replicate()->value($value);
+    //        }, $values);
+    //    }
 
     /**
      * Populate all components with the model instance

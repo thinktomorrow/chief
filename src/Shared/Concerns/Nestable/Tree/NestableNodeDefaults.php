@@ -50,7 +50,7 @@ trait NestableNodeDefaults
 
     public function getBreadCrumbLabels(): array
     {
-        $ancestorLabels = array_reduce($this->getAncestorNodes()->all(), function ($carry, NestedNode $node){
+        $ancestorLabels = array_reduce($this->getAncestorNodes()->all(), function ($carry, NestedNode $node) {
             return array_merge($carry, [$node->getLabel()]);
         }, []);
 

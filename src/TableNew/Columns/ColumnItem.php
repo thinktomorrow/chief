@@ -21,7 +21,6 @@ use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasMultipleValues;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasTeaser;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasValueMap;
-use Thinktomorrow\Chief\TableNew\Concerns\CanEvaluateValue;
 
 abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
 {
@@ -53,8 +52,9 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         // If we detect the key contains a dot, we assume it's a relationship key.
         if(strpos($key, '.') !== false) {
             $this->columnName(substr($key, 0, strpos($key, '.')));
-            $this->eachValue(function($value) use($key) {
+            $this->eachValue(function ($value) use ($key) {
                 $key = substr($key, strpos($key, '.') + 1);
+
                 return $value ? $value->{$key} : null;
             });
         } else {

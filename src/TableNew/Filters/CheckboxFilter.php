@@ -14,13 +14,13 @@ class CheckboxFilter extends SelectFilter
 
     protected string $view = 'chief-table-new::filters.checkbox';
 
-//    public static function make(string $queryKey, \Closure $query): self
-//    {
-//        $filter = new static($queryKey, $query);
-//        $filter->view('chief-table-new::filters.checkbox')
-//               ->value([]);
-//
-//        return $filter;
-//    }
+    //    public static function make(string $queryKey, \Closure $query): self
+    //    {
+    //        $filter = new static($queryKey, $query);
+    //        $filter->view('chief-table-new::filters.checkbox')
+    //               ->value([]);
+    //
+    //        return $filter;
+    //    }
 
 }

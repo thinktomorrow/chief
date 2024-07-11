@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
-use Thinktomorrow\Chief\TableNew\Concerns\CanAdjustCollection;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanBeDefault;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanHideFromView;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanShowActiveLabel;
@@ -43,7 +42,7 @@ abstract class Sorter extends Component
          * Default query (for dynamic values) or collection sorter.
          * This can be overridden in the specific sorter.
          */
-        $this->query(function($query, $value) {
+        $this->query(function ($query, $value) {
             if($query instanceof Builder) {
                 $query->orderBy($this->key, $value);
             } else {

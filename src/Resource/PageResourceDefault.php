@@ -55,27 +55,27 @@ trait PageResourceDefault
         return Table::make()
             ->query(static::resourceKey())
             ->filters([
-                TextFilter::make('title')->query(function($builder, $value) {
+                TextFilter::make('title')->query(function ($builder, $value) {
                     $builder->whereJsonLike(['title'], $value);
                 }),
                 SelectFilter::make('current_state')->label('Status')->options([
                     'published' => 'Online',
                     'draft' => 'Offline',
                     'archived' => 'Gearchiveerd',
-                ])
+                ]),
             ])
             ->columns([
-                ColumnText::make('title')->label('Titel')->link(function($model){
+                ColumnText::make('title')->label('Titel')->link(function ($model) {
                     return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
                 }),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
             ])
             ->sorters([
-                Sort::make('title_asc')->label('Titel a-z')->query(function($builder) {
+                Sort::make('title_asc')->label('Titel a-z')->query(function ($builder) {
                     $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
                 }),
-                Sort::make('title_desc')->label('Titel z-a')->query(function($builder) {
+                Sort::make('title_desc')->label('Titel z-a')->query(function ($builder) {
                     $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
                 }),
             ]);

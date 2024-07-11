@@ -4,7 +4,8 @@ namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
 use Thinktomorrow\Chief\TableNew\Livewire\TableComponent;
 
-trait HasLivewireComponent {
+trait HasLivewireComponent
+{
 
     // Default Livewire table component
     private string $livewireComponentClass = TableComponent::class;

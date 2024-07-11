@@ -23,14 +23,14 @@ trait WithSorters
 
     public function getSortersForView(): iterable
     {
-        return array_filter($this->getSorters(), function($sorter) {
+        return array_filter($this->getSorters(), function ($sorter) {
             return ! $sorter->hiddenFromView();
         });
     }
 
     public function getActiveSorters(): array
     {
-        return array_map(function($sorterKey) {
+        return array_map(function ($sorterKey) {
             return $this->findSorter($sorterKey);
         }, array_keys($this->sorters));
     }
@@ -44,6 +44,7 @@ trait WithSorters
         foreach(array_reverse($this->getSorters()) as $sorter) {
             if($sorter->actsAsDefault()) {
                 $this->sorters[$sorter->getKey()] = $sorter->getValue();
+
                 return;
             }
         }

@@ -4,7 +4,8 @@ namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
 use Thinktomorrow\Chief\TableNew\Table\TableReference;
 
-trait HasTableReference {
+trait HasTableReference
+{
     private ?TableReference $tableReference = null;
 
     public function setTableReference(TableReference $tableReference): static

@@ -2,7 +2,8 @@
 
 namespace Thinktomorrow\Chief\TableNew\Columns\Concerns;
 
-trait HasTeaser {
+trait HasTeaser
+{
 
     protected ?array $tease = null;
 
@@ -19,7 +20,9 @@ trait HasTeaser {
 
     protected function teaseValue($value): mixed
     {
-        if(! $this->tease) return $value;
+        if(! $this->tease) {
+            return $value;
+        }
 
         return teaser($value, $this->tease['max'], $this->tease['ending'], $this->tease['clean']);
     }

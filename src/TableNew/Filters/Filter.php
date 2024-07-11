@@ -41,7 +41,7 @@ abstract class Filter extends Component
          * Default query (for dynamic values) or collection filter.
          * This can be overridden in the specific filter.
          */
-        $this->query(function($query, $value) {
+        $this->query(function ($query, $value) {
             if($query instanceof Builder) {
 
                 if(is_array($value)) {
@@ -52,7 +52,7 @@ abstract class Filter extends Component
                 }
 
             } else {
-                return $query->filter(fn($item) => str_contains(strtolower($item[$this->key]), strtolower($value)));
+                return $query->filter(fn ($item) => str_contains(strtolower($item[$this->key]), strtolower($value)));
             }
         });
     }
@@ -67,16 +67,16 @@ abstract class Filter extends Component
         return old($this->key, request()->input($this->key, $this->value));
     }
 
-//    protected function viewData(): array
-//    {
-//        return [
-//            'id' => $this->queryKey,
-//            'name' => $this->queryKey,
-//            'label' => $this->label,
-//            'description' => $this->description,
-//            'value' => $this->getValue(),
-//            'placeholder' => $this->placeholder,
-//            'default' => $this->default,
-//        ];
-//    }
+    //    protected function viewData(): array
+    //    {
+    //        return [
+    //            'id' => $this->queryKey,
+    //            'name' => $this->queryKey,
+    //            'label' => $this->label,
+    //            'description' => $this->description,
+    //            'value' => $this->getValue(),
+    //            'placeholder' => $this->placeholder,
+    //            'default' => $this->default,
+    //        ];
+    //    }
 }

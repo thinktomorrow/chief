@@ -2,7 +2,8 @@
 
 namespace Thinktomorrow\Chief\TableNew\Filters\Concerns;
 
-trait CanBeDefault {
+trait CanBeDefault
+{
 
     private bool $actsAsDefault = false;
 
