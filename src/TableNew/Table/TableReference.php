@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew;
+namespace Thinktomorrow\Chief\TableNew\Table;
 
 use Livewire\Wireable;
 
@@ -38,5 +38,10 @@ class TableReference implements Wireable
     public function getTable(): Table
     {
         return app($this->resourceClass)->getIndexTable($this->tableKey);
+    }
+
+    public function getTableKey(): string
+    {
+        return $this->tableKey;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew\Concerns\Table;
+namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
-use Thinktomorrow\Chief\TableNew\TableReference;
+use Thinktomorrow\Chief\TableNew\Table\TableReference;
 
 trait HasTableReference {
     private ?TableReference $tableReference = null;

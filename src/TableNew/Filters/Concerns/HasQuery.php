@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew\Concerns;
+namespace Thinktomorrow\Chief\TableNew\Filters\Concerns;
 
 use Closure;
 

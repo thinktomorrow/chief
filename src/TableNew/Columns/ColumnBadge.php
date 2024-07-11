@@ -2,8 +2,7 @@
 
 namespace Thinktomorrow\Chief\TableNew\Columns;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
-use Thinktomorrow\Chief\TableNew\Concerns\HasType;
+use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasType;
 
 class ColumnBadge extends ColumnText
 {

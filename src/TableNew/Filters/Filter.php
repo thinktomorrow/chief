@@ -15,7 +15,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
-use Thinktomorrow\Chief\TableNew\Concerns\HasQuery;
+use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanBeDefault;
+use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
 
 abstract class Filter extends Component
 {
@@ -28,6 +29,7 @@ abstract class Filter extends Component
     use HasPlaceholder;
     use HasValue;
     use HasDefault;
+    use CanBeDefault;
 
     use HasQuery;
 

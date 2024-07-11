@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew\Concerns;
+namespace Thinktomorrow\Chief\TableNew\Columns\Concerns;
 
 use Closure;
 
@@ -22,8 +22,7 @@ trait HasLink
 
     public function getLink(): null|string
     {
-        if($model = $this->getModel() && $this->link instanceof Closure) {
-            return 'test';
+        if(($model = $this->getModel()) && $this->link instanceof Closure) {
             return call_user_func($this->link, $model);
         }
 

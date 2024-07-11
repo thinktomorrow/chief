@@ -76,6 +76,8 @@ trait WithFilters
                 unset($this->filters[$key]);
             }
         }
+
+        $this->resetPage($this->getPaginationId());
     }
 
     /**
@@ -127,7 +129,7 @@ trait WithFilters
         $this->applyDefaultFilters();
     }
 
-    private function clearFilters()
+    public function clearFilters()
     {
         $this->filters = [];
     }

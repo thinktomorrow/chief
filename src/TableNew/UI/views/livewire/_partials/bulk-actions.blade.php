@@ -13,7 +13,7 @@
     ></span>
 
     <button type="button" class="text-sm font-medium text-grey-800 hover:underline hover:underline-offset-2">
-        Selecteer alle {{ $results->total() }} items
+        Selecteer alle {{ $total }} items
     </button>
 
     <button type="button">

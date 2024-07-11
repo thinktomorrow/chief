@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\TableNew\TableReference;
+    use Thinktomorrow\Chief\TableNew\Table\TableReference;
 
     $table = $resource->getIndexTable();
     $table->setTableReference(new TableReference($resource::class, 'indexTable'));

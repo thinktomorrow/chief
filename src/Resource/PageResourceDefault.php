@@ -10,9 +10,13 @@ use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
-use Thinktomorrow\Chief\TableNew\Livewire\TableComponent;
-use Thinktomorrow\Chief\TableNew\Table;
-use Thinktomorrow\Chief\TableNew\TableReference;
+use Thinktomorrow\Chief\TableNew\Columns\ColumnBadge;
+use Thinktomorrow\Chief\TableNew\Columns\ColumnDate;
+use Thinktomorrow\Chief\TableNew\Columns\ColumnText;
+use Thinktomorrow\Chief\TableNew\Filters\SelectFilter;
+use Thinktomorrow\Chief\TableNew\Filters\TextFilter;
+use Thinktomorrow\Chief\TableNew\Sorters\Sort;
+use Thinktomorrow\Chief\TableNew\Table\Table;
 
 trait PageResourceDefault
 {
@@ -48,7 +52,33 @@ trait PageResourceDefault
      */
     public function getIndexTable(): Table
     {
-        return Table::make();
+        return Table::make()
+            ->query(static::resourceKey())
+            ->filters([
+                TextFilter::make('title')->query(function($builder, $value) {
+                    $builder->whereJsonLike(['title'], $value);
+                }),
+                SelectFilter::make('current_state')->label('Status')->options([
+                    'published' => 'Online',
+                    'draft' => 'Offline',
+                    'archived' => 'Gearchiveerd',
+                ])
+            ])
+            ->columns([
+                ColumnText::make('title')->label('Titel')->link(function($model){
+                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                }),
+                ColumnBadge::make('current_state')->pageStates()->label('Status'),
+                ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
+            ])
+            ->sorters([
+                Sort::make('title_asc')->label('Titel a-z')->query(function($builder) {
+                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
+                }),
+                Sort::make('title_desc')->label('Titel z-a')->query(function($builder) {
+                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
+                }),
+            ]);
     }
 
     public function getIndexTitle(): string

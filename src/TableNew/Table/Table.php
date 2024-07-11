@@ -1,70 +1,63 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew;
+namespace Thinktomorrow\Chief\TableNew\Table;
 
 use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Table\Concerns\HasView;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
 use Thinktomorrow\Chief\TableNew\Columns\Header;
-use Thinktomorrow\Chief\TableNew\Columns\ColumnText;
-use Thinktomorrow\Chief\TableNew\Concerns\HasQuery;
-use Thinktomorrow\Chief\TableNew\Concerns\Table\HasRows;
-use Thinktomorrow\Chief\TableNew\Concerns\Table\HasTableReference;
-use Thinktomorrow\Chief\TableNew\Filters\SelectFilter;
-use Thinktomorrow\Chief\TableNew\Filters\TextFilter;
-use Thinktomorrow\Chief\TableNew\Livewire\TableComponent;
+use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasLivewireComponent;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasPagination;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRows;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasSorters;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTableReference;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTreeReference;
 
 class Table extends Component
 {
     use HasComponentRendering;
     use HasTableReference;
+    use HasLivewireComponent;
+    use HasTreeReference;
 
     /** Base Query for all table data */
     use HasQuery;
     use HasRows;
+    use HasSorters;
+    use HasPagination;
 
     protected string $view = 'chief-table-new::index';
 
     private array $headers = [];
     private array $columns = [];
     private array $filters = [];
-    private array $sorters = [];
-    private bool $paginate = false;
-    private int $paginatePerPage = 10;
-
-    // Default Livewire table component
-    private string $livewireComponentClass = TableComponent::class;
+    private array $defaultSorters = [];
 
     public static function make()
     {
         return new static();
     }
 
-    public function usesLivewireTable(string $livewireComponentClass): static
-    {
-        $this->livewireComponentClass = $livewireComponentClass;
-
-        return $this;
-    }
-
-    public function getLivewireComponentClass(): string
-    {
-        return $this->livewireComponentClass;
-    }
-
     public function query(Closure|string $query): static
     {
         // A resource key can be passed to automatically resolve the query
         if(is_string($query) && $modelClassName = app(Registry::class)->resource($query)?->modelClassName()) {
-            $query = function() use ($modelClassName) {
+            $query = function () use ($modelClassName) {
                 return $modelClassName::query();
             };
+
+            // Is this a nestable model?
+            // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
+            if (in_array(Nestable::class, class_implements($modelClassName))) {
+                $resourceKey = app(Registry::class)->findResourceByModel($modelClassName)::resourceKey();
+                $this->setTreeReference($resourceKey);
+
+                $this->addDefaultTreeSorting();
+            }
         }
 
         $this->query = $query;
@@ -74,19 +67,27 @@ class Table extends Component
 
     public function headers(array $headers): static
     {
-        $this->headers = $headers;
+        $this->headers = array_map(fn ($header) => (! $header instanceof Header) ? Header::make($header) : $header, $headers);
 
         return $this;
     }
 
     public function getHeaders(): array
     {
-        return array_map(fn ($header) => (! $header instanceof Header) ? Header::make($header) : $header, $this->headers);
+        return $this->headers;
     }
 
     public function columns(array $columns): static
     {
-        $this->columns = array_map(fn ($column) => ! $column instanceof Columns\Column ? Column::items([$column]) : $column, $columns);
+        $this->columns = array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns);
+
+        // If no headers are explicitly set, we will use the column labels as headers
+        if (empty($this->headers)) {
+            $this->headers = collect($this->columns)
+                ->reject(fn ($column) => empty($column->getItems()))
+                ->map(fn ($column) => Header::make($column->getItems()[0]->getLabel()))
+                ->all();
+        }
 
         return $this;
     }
@@ -94,18 +95,12 @@ class Table extends Component
     public function getColumns($model): array
     {
         return $this->columns;
-        //        return [
-        //            $model->title,
-        //            $this->createStateLabel($model->current_state),
-        //            '<span class="text-sm text-grey-500">' . $model->updated_at->format('d/m/y H:m') . '</span>',
-        //        ];
-        //        return $this->columns;
     }
 
     public function filters(array $filters = []): static
     {
         // How to assign: primary, hidden,
-        $this->filters = $filters;
+        $this->filters = array_merge($this->filters, $filters);
 
         return $this;
     }
@@ -113,34 +108,6 @@ class Table extends Component
     public function getFilters(): array
     {
         return $this->filters;
-    }
-
-    public function sorters(array $sorters = []): static
-    {
-        // How to assign: primary, hidden,
-        $this->sorters = $sorters;
-
-        return $this;
-    }
-
-    public function getSorters(): array
-    {
-        return $this->sorters;
-    }
-
-    public function paginate(int $paginatePerPage = 10): static
-    {
-        $this->paginate = true;
-        $this->paginatePerPage = $paginatePerPage;
-
-        return $this;
-    }
-
-    public function noPagination(): static
-    {
-        $this->paginate = false;
-
-        return $this;
     }
 
     public function getView(): string

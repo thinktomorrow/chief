@@ -21,23 +21,30 @@ trait WithSorters
         return $this->getTable()->getSorters();
     }
 
-    public function getActiveSorterValue(string $sorterKey): string
+    public function getSortersForView(): iterable
     {
-        if(($sorterValue = $this->findActiveSorterValue($sorterKey))) {
-            return $sorterValue;
-        }
+        return array_filter($this->getSorters(), function($sorter) {
+            return ! $sorter->hiddenFromView();
+        });
+    }
 
-        return '';
+    public function getActiveSorters(): array
+    {
+        return array_map(function($sorterKey) {
+            return $this->findSorter($sorterKey);
+        }, array_keys($this->sorters));
     }
 
     private function applyDefaultSorters()
     {
         $this->clearSorters();
 
-        foreach($this->getSorters() as $sorter) {
-            // Active either by present in url or set to active: active(), activeIfNone()
-            if($defaultValue = $sorter->getValue()) {
-                $this->sorters[$sorter->getKey()] = $defaultValue;
+        // The last defined default sorting as the default sorting to be used.
+        // This way we can override the baked-in default tree sorting.
+        foreach(array_reverse($this->getSorters()) as $sorter) {
+            if($sorter->actsAsDefault()) {
+                $this->sorters[$sorter->getKey()] = $sorter->getValue();
+                return;
             }
         }
     }
@@ -67,11 +74,18 @@ trait WithSorters
      */
     public function updatedSorters()
     {
+        // We force only one sorting at a time for now.
+        if(count($this->sorters) > 1) {
+            $this->sorters = array_slice($this->sorters, -1, 1, true);
+        }
+
         foreach($this->sorters as $key => $sorterValue) {
             if($this->isEmptySorterValue($sorterValue)) {
                 unset($this->sorters[$key]);
             }
         }
+
+        $this->resetPage($this->getPaginationId());
     }
 
     private function findSorter(string $sorterKey): Sorter

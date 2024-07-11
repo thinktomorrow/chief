@@ -7,23 +7,21 @@ namespace Thinktomorrow\Chief\TableNew\Columns;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
-use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasColumnName;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasDefault;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
-use Thinktomorrow\Chief\Table\Concerns\HasHint;
 use Thinktomorrow\Chief\Table\Concerns\HasView;
+use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasLink;
+use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasMultipleValues;
+use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasTeaser;
+use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasValueMap;
 use Thinktomorrow\Chief\TableNew\Concerns\CanEvaluateValue;
-use Thinktomorrow\Chief\TableNew\Concerns\HasLink;
-use Thinktomorrow\Chief\TableNew\Concerns\HasMultipleValues;
-use Thinktomorrow\Chief\TableNew\Concerns\HasTeaser;
-use Thinktomorrow\Chief\TableNew\Concerns\HasValueMap;
 
 abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
 {
@@ -31,7 +29,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     use HasView;
     use HasCustomAttributes;
     use HasKey;
-    use HasTitle;
+    use HasLabel;
     use HasDescription;
 
     use HasModel;
@@ -49,7 +47,8 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     public function __construct(string $key)
     {
         $this->key($key);
-        $this->title($key);
+        $this->label($key);
+        $this->columnName($key);
 
         // If we detect the key contains a dot, we assume it's a relationship key.
         if(strpos($key, '.') !== false) {

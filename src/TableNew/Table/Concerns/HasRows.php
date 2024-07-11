@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew\Concerns\Table;
+namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
 use Closure;
 use Illuminate\Support\Collection;

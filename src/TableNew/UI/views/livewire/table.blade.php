@@ -25,6 +25,7 @@
 
 @php
     $results = $this->getResults();
+    $total = method_exists($results, 'total') ? $results->total() : $results->count();
 @endphp
 
 {{-- TODO: Divide table into individual components --}}
@@ -75,7 +76,7 @@
     <div class="space-y-3 px-4 py-3">
         <div class="flex justify-between gap-2" :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }">
             @include('chief-table-new::livewire._partials.filters')
-            @include('chief-table-new::livewire._partials.sorting')
+            @include('chief-table-new::livewire._partials.sorters')
         </div>
 
         @include('chief-table-new::livewire._partials.bulk-actions')
@@ -157,33 +158,48 @@
         <tbody class="divide-y divide-grey-200">
             @foreach ($results as $item)
                 @php
-                    $indent = 1;
+                    // Tree support
+                    if($item instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode) {
+                        $model = $item->getModel();
+                        $model->indent = $item->getNodeDepth();
+                        $model->isAncestorRow ??= false;
+
+                        $item = $model;
+                    }
                 @endphp
 
                 <tr
-                    data-table-row="{{ $this->getRowKey($item) }}"
+                    @if(!$item->isAncestorRow)
+                        data-table-row="{{ $this->getRowKey($item) }}"
+                    @endif
                     wire:key="{{ $this->getRowKey($item) }}"
+                    @class([
+                        'bg-grey-100' => $item->isAncestorRow
+                    ])
                     :class="{ 'bg-grey-50': selection.includes('{{ $this->getRowKey($item) }}') }"
                 >
+
                     <td
-                        class="py-2 pl-4 text-left"
-                        :class="{ 'relative before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-0.5 before:bg-primary-500': selection.includes('{{ $this->getRowKey($item) }}') }"
+                        class="py-2 pl-4 text-left relative"
+                        :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-0.5 before:bg-primary-500': selection.includes('{{ $this->getRowKey($item) }}') }"
                     >
-                        <div class="flex items-center">
-                            <x-chief::input.checkbox
-                                data-table-row-checkbox
-                                name="{{ $this->getRowKey($item)  }}"
-                                id="{{ $this->getRowKey($item)  }}"
-                                x-on:change="toggleCheckbox('{{ $this->getRowKey($item) }}', $event.target.checked)"
-                            />
-                        </div>
+                        @if(!$item->isAncestorRow)
+                            <div class="flex items-center">
+                                <x-chief::input.checkbox
+                                    data-table-row-checkbox
+                                    name="{{ $this->getRowKey($item)  }}"
+                                    id="{{ $this->getRowKey($item)  }}"
+                                    x-on:change="toggleCheckbox('{{ $this->getRowKey($item) }}', $event.target.checked)"
+                                />
+                            </div>
+                        @endif
                     </td>
 
                     @foreach ($this->getColumns($item) as $column)
                         <td class="py-2 pl-3 text-left">
                             <div class="flex gap-1.5">
-                                @if ($loop->first && $indent > 0)
-                                    <div class="flex justify-end" style="width: {{ 20 + ($indent - 1) * 26 }}px">
+                                @if ($loop->first && isset($item->indent) && $item->indent > 0)
+                                    <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
                                         <svg
                                             class="h-5 w-5 text-grey-900"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -195,6 +211,7 @@
                                             ></path>
                                         </svg>
                                     </div>
+
                                 @endif
 
                                 <span class="leading-5 text-grey-900">
@@ -216,7 +233,7 @@
         </tbody>
     </table>
 
-    @if ($results->total() > $results->count())
+    @if ($this->hasPagination() && $results->total() > $results->count())
         <div class="px-4 py-2">
             {{ $results->links() }}
         </div>

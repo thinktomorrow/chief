@@ -2,26 +2,25 @@
 
 namespace Thinktomorrow\Chief\TableNew\Livewire;
 
+use Illuminate\Contracts\Pagination\CursorPaginator as CursorPaginatorContract;
 use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Livewire\Component;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
+use Livewire\WithPagination;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
-use Thinktomorrow\Chief\TableNew\Columns\ColumnText;
-use Thinktomorrow\Chief\TableNew\Filters\Filter;
-use Thinktomorrow\Chief\TableNew\Filters\FilterPresets;
-use Thinktomorrow\Chief\TableNew\Filters\RadioFilter;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithFilters;
+use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithSorters;
-use Thinktomorrow\Chief\TableNew\Table;
-use Thinktomorrow\Chief\TableNew\TableReference;
+use Thinktomorrow\Chief\TableNew\Sorters\TreeSort;
+use Thinktomorrow\Chief\TableNew\Table\Table;
+use Thinktomorrow\Chief\TableNew\Table\TableReference;
 
 class TableComponent extends Component
 {
+    use WithPagination;
+    use WithPaginationControl;
     use WithFilters;
     use WithSorters;
 
@@ -35,6 +34,10 @@ class TableComponent extends Component
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
         //$this->applyDefaultFilters();
+        $this->applyDefaultSorters();
+
+        // active sorters - selected by user
+        // default sorters - automatically active when no user selection
     }
 
     public function getTable(): Table
@@ -57,69 +60,97 @@ class TableComponent extends Component
         ]);
     }
 
-    //    protected function getResource(): string
-    //    {
-    //        return \App\Models\Resources\Single::class;
-    //    }
-
-    //    private function convertToTree(): Paginator
-    //    {
-    //
-    //    }
-
-    public function getResults(): PaginatorContract
+    public function getResults(): Collection|PaginatorContract
     {
         // Query source
         if($this->getTable()->hasQuery()) {
             $builder = $this->getTable()->getQuery()();
 
             $this->applyQueryFilters($builder);
+            $this->applyQuerySorters($builder);
 
-            return $builder->paginate(20);
+            return $this->returnQueryResults($builder);
         }
 
         // Collection source
-        $rows = $this->table->getRows();
-        $rows = $this->applyCollectionFilters($rows);
+        if($rows = $this->getTable()->getRows()) {
+            $rows = $this->applyCollectionFilters($rows);
+            $rows = $this->applyCollectionSorters($rows);
 
-        return new LengthAwarePaginator($rows, count($rows), 20);
+            return $this->returnCollectionResults($rows);
+        }
 
-        // GET ALL IDS
-        //        $modelIds = DB::table('singles')->select(['id', 'parent_id'])->get()->map(fn($row) => (array) $row)->all();
-        //        $collection = (new NodeCollectionFactory())->fromSource(new ArraySource($modelIds));
-        //dd($collection);
-        //
-        //        // Paginate tree - flexible number
-        //        dd($this->getTree());
+        throw new \Exception('No query or rows defined for table.');
+    }
 
-        //        $builder = \App\Models\Resources\Single::withoutGlobalScopes()->online();
+    private function returnQueryResults(mixed $builder): Collection|PaginatorContract
+    {
+        // Show tree structure when there are no sorters active
+        if($this->shouldReturnResultsAsTree()) {
+            return $this->getResultsAsTree($builder, $this->getTable()->getTreeReference());
+        }
 
+        if(! $this->hasPagination()) {
+            return $builder->get();
+        }
 
-        //
-        //        if ($model instanceof Nestable) {
-        //            // TODO: this should be changed to the repository pattern like:
-        //            // app($resource->indexRepository(), ['resourceKey' => $resourceKey])->applyFilters(request()->all())->getNestableResults()
-        //            // indexModelIds can then be removed
-        //            $filteredModelIds = $this->indexModelIds();
-        //
-        //            $filteredTree = $this
-        //                ->getTree()
-        //                ->shake(fn ($node) => in_array($node->getModel()->getKey(), $filteredModelIds));
-        //
-        //            View::share('tree', $filteredTree);
-        //            View::share('originalModels', PairOptions::toPairs($this->getTree()->pluck('id', fn (NestedNode $nestedNode) => $nestedNode->getBreadCrumbLabel())));
-        //        } else {
-        //            // Used for duplicate action
-        //            View::share('originalModels', ModelReferencePresenter::toSelectValues($model::all(), false, false));
-        //            View::share('models', $this->indexModels());
-        //        }
+        return $builder->paginate($this->getPaginationPerPage(), ['*'], $this->getPaginationId());
+    }
+
+    private function returnCollectionResults(Collection $rows): Collection|PaginatorContract
+    {
+        if(! $this->hasPagination()) {
+            return $rows;
+        }
+
+        return (new LengthAwarePaginator($rows, count($rows), $this->getPaginationPerPage()))
+            ->setPageName($this->getPaginationId());
+    }
+
+    /**
+     * Get the results as a tree structure. This is used when the tree sorter is active.
+     */
+    private function getResultsAsTree(Builder $builder, string $treeResourceKey): Collection|PaginatorContract|CursorPaginatorContract
+    {
+        $builder->select('id');
+        $result = $builder->get();
+
+        $treeModels = app(TreeModels::class)
+            ->create($treeResourceKey, $result->pluck('id')->toArray())
+            ->all();
+
+        if(! $this->hasPagination()) {
+            return collect($treeModels);
+        }
+
+        // TODO: improve perf here because we know fetch ENTIRE tree for each query...
+        $models = array_slice($treeModels, ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage(), $this->getPaginationPerPage());
+
+        // Prepend the ancestor models to the result if they are not present in the current page
+        if(count($models) > 0) {
+            $models = array_merge($models[0]->getAncestorNodes()->each(function ($node) {
+                $node->getNodeEntry()->setAttribute('isAncestorRow', true);
+
+                return $node;
+            })->all(), $models);
+        }
+
+        return (new LengthAwarePaginator($models, count($result), 20, $this->getCurrentPageIndex()))
+            ->setPageName($this->getPaginationId());
+    }
+
+    private function shouldReturnResultsAsTree(): bool
+    {
+        if(count($this->filters) > 0) return false;
+
+        return count($this->sorters) == 1 && key($this->sorters) == TreeSort::TREE_SORTING && $this->getTable()->getTreeReference();
     }
 
     public function getColumns($model): array
     {
         return array_map(function (Column $column) use ($model) {
             return $column->model($model);
-        }, $this->table->getColumns($model));
+        }, $this->getTable()->getColumns($model));
     }
 
     /**
@@ -134,17 +165,4 @@ class TableComponent extends Component
 
         return (string) $model->getKey();
     }
-
-//    private function getTree(): iterable
-//    {
-//        // TODO: work with the indexRepository
-//        // app($resource->indexRepository(), ['resourceKey' => $resourceKey])->applyFilters(request()->all())->getNestableResults()
-//
-//        return app(NestableRepository::class)->getTree($this->getResource()::resourceKey());
-//    }
-//
-//    private function baseQuery(): Builder
-//    {
-//        return \App\Models\Pages\Page::query();
-//    }
 }

@@ -14,13 +14,6 @@ class ColumnDate extends ColumnText
     protected string $view = 'chief-table-new::columns.text';
     private string $format = 'Y-m-d H:i';
 
-    public function __construct(string $key)
-    {
-        $this->key($key);
-        $this->title($key);
-        $this->columnName($key);
-    }
-
     public function getValue(?string $locale = null): mixed
     {
         $value = $this->getDefaultValue($locale);
@@ -38,12 +31,5 @@ class ColumnDate extends ColumnText
     public function getFormat(): string
     {
         return $this->format;
-    }
-
-    protected function wireableMethods(): array
-    {
-        return [
-            'format' => $this->format,
-        ];
     }
 }

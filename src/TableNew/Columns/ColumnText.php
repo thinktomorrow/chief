@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\TableNew\Columns;
 
 use Illuminate\Support\Collection;
-use Livewire\Wireable;
 
 class ColumnText extends ColumnItem
 {
@@ -48,14 +47,6 @@ class ColumnText extends ColumnItem
             return $this->replicate()
                 ->value($value);
         }, $values);
-    }
-
-
-    protected function wireableMethods(): array
-    {
-        return [
-            'valueMap' => $this->valueMap,
-        ];
     }
 
     protected function replicate(): static
