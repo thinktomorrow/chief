@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+-   Added: Export plugin to export and import text translations for page resources, menu and static squanto content.
+
 ## 0.8.19 - 2024-06-06
 
 -   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
