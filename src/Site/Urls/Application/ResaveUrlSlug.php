@@ -34,16 +34,16 @@ class ResaveUrlSlug
             }
         }
 
-//        if(str_contains($strippedSlug, 'loungeset')) {
-//            dd($baseUrlSegments, $currentSlug, $strippedSlug);
-//        }
+        //        if(str_contains($strippedSlug, 'loungeset')) {
+        //            dd($baseUrlSegments, $currentSlug, $strippedSlug);
+        //        }
 
-//dd($strippedSlug);
-//        $strippedSlug = 0 === strpos($currentSlug, $baseUrlSegment . '/')
-//            ? substr($currentSlug, strlen($baseUrlSegment.'/'))
-//            : $currentSlug;
-//
-//        $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
+        //dd($strippedSlug);
+        //        $strippedSlug = 0 === strpos($currentSlug, $baseUrlSegment . '/')
+        //            ? substr($currentSlug, strlen($baseUrlSegment.'/'))
+        //            : $currentSlug;
+        //
+        //        $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
 
         // Avoid saving the new slug in case that this slug already exists on another model
         if (! (new UniqueUrlSlugRule($model, $model))->passes(null, [$locale => $strippedSlug])) {
