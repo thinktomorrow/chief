@@ -29,6 +29,9 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
 
     private bool $ignoreNonLocalized;
 
+    /** Keep track of the already exported shared fragments, this way we only need to export them once, the first time they appear */
+    private array $ignoredSharedFragments = [];
+
     public function __construct(Resource $resource, Collection $models, array $locales, bool $ignoreNonLocalized = true)
     {
         $this->resource = $resource;
@@ -53,11 +56,15 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
     public function map($row): array
     {
         $composeLines = app(ComposeFieldLines::class)
+            ->ignoreFragments($this->ignoredSharedFragments)
             ->ignoreNonLocalized($this->ignoreNonLocalized)
             ->ignoreEmptyValues()
             ->ignoreOfflineFragments()
             ->ignoreFieldKeys(['url'])
             ->compose($this->resource, $row, $this->locales);
+
+        // Add the new shared fragments to our ignored list
+        $this->ignoredSharedFragments = array_unique(array_merge($this->ignoredSharedFragments, $composeLines->getIgnoredSharedFragments()));
 
         return $composeLines->getLines()->toArray();
     }

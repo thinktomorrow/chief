@@ -73,6 +73,7 @@ class FieldReference
             $nestedFieldKey = substr($this->fieldName, strpos($this->fieldName, '.') + 1);
             $nestedFieldKey .= '.'.$locale;
             $payload = Arr::undot([$nestedFieldKey => $value]);
+
             $payload = $this->array_merge_overwrite($this->field->getValue(), $payload);
 
             $this->model->{$this->field->getColumnName()} = $payload;

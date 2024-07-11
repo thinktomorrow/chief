@@ -31,6 +31,9 @@ class ComposeFieldLines
     /** Avoid all field values that belong to an offline fragment */
     private bool $ignoreOfflineFragments = false;
 
+    /** Only show shared fragment values the first time they appear */
+    private array $ignoredFragments = [];
+
     /** Avoid all field values of fields with one of following field keys */
     private array $ignoredFieldKeys = [];
 
@@ -55,6 +58,13 @@ class ComposeFieldLines
         }
 
         $this->lines = $lines;
+
+        return $this;
+    }
+
+    public function ignoreFragments(array $ignoredFragments = []): static
+    {
+        $this->ignoredFragments = $ignoredFragments;
 
         return $this;
     }
@@ -150,6 +160,16 @@ class ComposeFieldLines
                 continue;
             }
 
+            // Shared fragments are only exported once to reduce translation lines
+            // First time we encounter a shared fragment, we add it to the ignored list
+            if($fragment->fragmentModel()->isShared()) {
+                if(in_array($fragment->fragmentModel()->id, $this->ignoredFragments)) {
+                    continue;
+                } else {
+                    $this->ignoredFragments[] = $fragment->fragmentModel()->id;
+                }
+            }
+
             $lines = $lines->merge(
                 $this->extractFieldValues(
                     $this->registry->resource($fragment::resourceKey()),
@@ -217,5 +237,10 @@ class ComposeFieldLines
     private function areAllValuesEmpty(array $values): bool
     {
         return collect($values)->filter(fn ($value) => ! empty($value))->isEmpty();
+    }
+
+    public function getIgnoredSharedFragments(): array
+    {
+        return $this->ignoredFragments;
     }
 }

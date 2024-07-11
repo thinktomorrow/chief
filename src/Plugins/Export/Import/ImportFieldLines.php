@@ -37,7 +37,7 @@ class ImportFieldLines implements ToCollection
             try {
                 $fieldReference = FieldReference::fromEncryptedKey($encryptedId);
             } catch (DecryptException|ModelNotFoundException $e) {
-                if($this->output) {
+                if($this->output && $encryptedId != 'ID') {
                     $this->output->error('Invalid field reference: ' . $encryptedId);
                 }
 
@@ -50,22 +50,15 @@ class ImportFieldLines implements ToCollection
 
     private function handleFieldValue(string $encryptedId, FieldReference $fieldReference, Collection $row): void
     {
-        if($fieldReference->isLocalized() && $this->locale === FieldLine::NON_LOCALIZED) {
-            return;
-        }
+        if(!$fieldReference->isRepeatField()) {
+            if($fieldReference->isLocalized() && $this->locale === FieldLine::NON_LOCALIZED) {
+                return;
+            }
 
-        if(! $fieldReference->isLocalized() && $this->locale !== FieldLine::NON_LOCALIZED) {
-            return;
+            if(! $fieldReference->isLocalized() && $this->locale !== FieldLine::NON_LOCALIZED) {
+                return;
+            }
         }
-
-        // Our import only deals with localized values for now...
-        //        if(! $fieldReference->isRepeatField() && ! $fieldReference->isLocalized()) {
-        //            if($this->output) {
-        //                $this->output->warning('Field reference is not localized: ' . decrypt($encryptedId));
-        //            }
-        //
-        //            return;
-        //        }
 
         // Column for import
         $value = $row[$this->columnIndex];
@@ -83,8 +76,8 @@ class ImportFieldLines implements ToCollection
 
         if($this->output) {
             $this->output->info('Imported value for ' . decrypt($encryptedId) . ' (' . $this->locale . ')');
-            //            $this->output->writeln('Old value: ' . print_r($currentValue, true));
-            //            $this->output->writeln('New value: ' . print_r($value, true));
+            $this->output->writeln('Old value: ' . print_r($currentValue, true));
+            $this->output->writeln('New value: ' . print_r($value, true));
         }
     }
 
