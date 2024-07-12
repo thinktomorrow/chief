@@ -37,10 +37,12 @@ class PropagateUrlChange
 
             $formerParentSlugs = [];
 
+            // In case of a parent switch, allow to replace the base url segment belonging to a former parent.
             if($formerParent) {
-                $formerParentSlugs[] = UrlRecord::findRecentRedirect($formerParent, $locale)?->slug;
+                $formerParentSlugs[] = UrlRecord::findSlugByModel($formerParent, $locale);
             }
 
+            // In case of parent changing its url, allow to replace the former base url segment belonging the parent.
             if($parentModel) {
                 $formerParentSlugs[] = UrlRecord::findRecentRedirect($parentModel, $locale)?->slug;
             }
