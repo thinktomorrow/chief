@@ -19,16 +19,16 @@ class ResaveUrlSlug
      * This will retrigger the save for a nested page, which will now
      * take the updated parent slug as its base url segment.
      */
-    public function handle(Visitable $model, string $locale, array $baseUrlSegments = []): void
+    public function handle(Visitable $model, string $locale, array $strippableBaseUrlSegments = []): void
     {
         $currentSlug = UrlRecord::findSlugByModel($model, $locale);
         $strippedSlug = $currentSlug;
 
         // These are the base url segments of the parent model that should be removed.
         // Not faulty free...
-        $baseUrlSegments = array_merge($baseUrlSegments, [$model->baseUrlSegment($locale)]);
+        $strippableBaseUrlSegments = array_merge($strippableBaseUrlSegments, [$model->baseUrlSegment($locale)]);
 
-        foreach($baseUrlSegments as $baseUrlSegment) {
+        foreach($strippableBaseUrlSegments as $baseUrlSegment) {
             if(0 === strpos($currentSlug, $baseUrlSegment . '/')) {
                 $strippedSlug = substr($currentSlug, strlen($baseUrlSegment.'/'));
             }

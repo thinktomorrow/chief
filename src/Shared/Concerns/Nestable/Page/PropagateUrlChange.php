@@ -35,19 +35,20 @@ class PropagateUrlChange
         // TODO: how to set locales per page??? Now we always take the general locales from chief
         foreach ($this->locales as $locale) {
 
-            $formerParentSlugs = [];
+            $strippableSlugs = [];
 
             // In case of a parent switch, allow to replace the base url segment belonging to a former parent.
             if($formerParent) {
-                $formerParentSlugs[] = UrlRecord::findSlugByModel($formerParent, $locale);
+                $strippableSlugs[] = UrlRecord::findSlugByModel($formerParent, $locale);
             }
 
             // In case of parent changing its url, allow to replace the former base url segment belonging the parent.
             if($parentModel) {
-                $formerParentSlugs[] = UrlRecord::findRecentRedirect($parentModel, $locale)?->slug;
+                $strippableSlugs[] = UrlRecord::findSlugByModel($parentModel, $locale);
+                $strippableSlugs[] = UrlRecord::findRecentRedirect($parentModel, $locale)?->slug;
             }
 
-            $this->resaveUrlSlug->handle($model, $locale, $formerParentSlugs);
+            $this->resaveUrlSlug->handle($model, $locale, $strippableSlugs);
         }
 
         foreach ($model->getChildren() as $child) {
