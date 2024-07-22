@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+
+## 0.8.20 - 2024-07-22
 -   Fixed: Could not save slug containing slashes on a nestable page.
 -   Added: Export plugin to export and import text translations for page resources, menu and static squanto content.
 
