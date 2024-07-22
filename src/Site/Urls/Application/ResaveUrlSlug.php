@@ -34,7 +34,7 @@ class ResaveUrlSlug
         }
 
         // Former implementation
-//                $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
+        //                $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
 
         // Avoid saving the new slug in case that this slug already exists on another model
         if (! (new UniqueUrlSlugRule($model, $model))->passes(null, [$locale => $strippedSlug])) {
