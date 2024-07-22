@@ -21,7 +21,10 @@ trait NestablePageDefault
                     throw new \DomainException('Cannot assign itself as parent. Model ['.$model->getKey().'] is set with its own id ['.$model->parent_id.'] as parent_id.');
                 }
 
-                app(PropagateUrlChange::class)->handle($model);
+                // When the parent changes or is removed, we need to be able to replace the base url segment belonging to this former parent.
+                $formerParent = static::find($model->getOriginal('parent_id'));
+
+                app(PropagateUrlChange::class)->handle($model, $formerParent);
             }
         });
     }

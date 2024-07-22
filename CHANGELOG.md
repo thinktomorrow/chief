@@ -6,6 +6,10 @@ principles.
 
 ## Unreleased
 
+## 0.8.20 - 2024-07-22
+-   Fixed: Could not save slug containing slashes on a nestable page.
+-   Added: Export plugin to export and import text translations for page resources, menu and static squanto content.
+
 ## 0.8.19 - 2024-06-06
 
 -   Upgraded `thinktomorrow\url` dependency to `3.0.0`.
