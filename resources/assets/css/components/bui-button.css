@@ -52,6 +52,6 @@
     }
 
     .bui-btn-white {
-        @apply bg-white text-grey-800 ring-1 ring-grey-100 hover:ring-grey-200;
+        @apply bg-white text-grey-800 ring-1 ring-grey-200 hover:ring-grey-300;
     }
 }
