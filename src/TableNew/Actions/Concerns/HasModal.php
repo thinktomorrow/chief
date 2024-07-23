@@ -2,7 +2,8 @@
 
 namespace Thinktomorrow\Chief\TableNew\Actions\Concerns;
 
-class HasModal {
+class HasModal
+{
     protected bool $withModal = false;
 
     public function modal(bool $withModal = true): static

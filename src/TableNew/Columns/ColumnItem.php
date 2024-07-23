@@ -67,12 +67,12 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         return new static((string) $key);
     }
 
-//    public function render(): View
-//    {
-//        $view = $this->getView();
-//
-//        return view($view, array_merge($this->data(), [
-//            'component' => $this,
-//        ]));
-//    }
+    //    public function render(): View
+    //    {
+    //        $view = $this->getView();
+    //
+    //        return view($view, array_merge($this->data(), [
+    //            'component' => $this,
+    //        ]));
+    //    }
 }

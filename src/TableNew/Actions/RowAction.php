@@ -19,10 +19,10 @@ class RowAction extends Action
     // ->apply(payload)
 
     // BULKACTION
-        // ->apply(payload)
+    // ->apply(payload)
 
     // Confirmation
-        // content of this?
+    // content of this?
     // Icon
     // Route
     // or Class-Method
@@ -33,9 +33,9 @@ class RowAction extends Action
     // withModal() -> Form::make()...
 
     // Preset actions
-        // DuplicateAction
-        // EditAction
-        // CreateAction
+    // DuplicateAction
+    // EditAction
+    // CreateAction
 
     public function __construct(string $key)
     {
