@@ -157,20 +157,8 @@
 
         <tbody class="divide-y divide-grey-200">
             @foreach ($results as $item)
-                @php
-                    // Tree support
-                    if($item instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode) {
-                        $model = $item->getModel();
-                        $model->indent = $item->getNodeDepth();
-                        $model->isAncestorRow ??= false;
-
-                        $item = $model;
-                    }
-                @endphp
-
                 @includeWhen($item->isAncestorRow, 'chief-table-new::rows.ancestor', ['item' => $item])
                 @includeWhen(!$item->isAncestorRow, 'chief-table-new::rows.default', ['item' => $item])
-
             @endforeach
         </tbody>
     </table>

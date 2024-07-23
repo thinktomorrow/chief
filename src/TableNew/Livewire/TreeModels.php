@@ -15,13 +15,35 @@ class TreeModels
     //        $this->registry = $registry;
     //    }
 
-    public function create(string $resourceKey, array $ids, string $keyName = 'id'): NestedTree
+    public function create(string $resourceKey, array $ids, int $offset, int $limit, string $keyName = 'id'): array
     {
         $tree = $this->getTree($resourceKey);
 
-        return new NestedTree($tree->shake(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all());
+        $models = (new NestedTree($tree->shake(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all()))->all();
 
-        return $tree->findMany($keyName, $ids);
+        // Paginate the models
+        $models = array_slice($models, $offset, $limit);
+
+        // Mark the ancestor models to the result if they are not present in the current page
+        if(count($models) > 0) {
+            $models = array_merge($models[0]->getAncestorNodes()->each(function ($node) {
+                $node->getNodeEntry()->setAttribute('isAncestorRow', true);
+
+                return $node;
+            })->all(), $models);
+        }
+
+        // Return the models instead of the nodes and add any node data to each model
+        return array_map(function ($node) {
+
+            $model = $node->getModel();
+            $model->indent = $node->getNodeDepth();
+
+            // This is a bit of a hack to make sure the ancestor rows are always present in the result
+            $model->isAncestorRow ??= false;
+
+            return $model;
+        }, $models);
     }
 
     //    // Category, Page, ...

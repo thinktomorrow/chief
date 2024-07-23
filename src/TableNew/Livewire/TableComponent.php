@@ -115,27 +115,18 @@ class TableComponent extends Component
         $builder->select('id');
         $result = $builder->get();
 
-        $treeModels = app(TreeModels::class)
-            ->create($treeResourceKey, $result->pluck('id')->toArray())
-            ->all();
+        $treeModels = app(TreeModels::class)->create($treeResourceKey, $result->pluck('id')->toArray(),
+            $this->hasPagination() ? ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage() : 0,
+            $this->hasPagination() ? $this->getPaginationPerPage() : count($result)
+        );
 
         if(! $this->hasPagination()) {
             return collect($treeModels);
         }
 
         // TODO: improve perf here because we know fetch ENTIRE tree for each query...
-        $models = array_slice($treeModels, ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage(), $this->getPaginationPerPage());
 
-        // Prepend the ancestor models to the result if they are not present in the current page
-        if(count($models) > 0) {
-            $models = array_merge($models[0]->getAncestorNodes()->each(function ($node) {
-                $node->getNodeEntry()->setAttribute('isAncestorRow', true);
-
-                return $node;
-            })->all(), $models);
-        }
-
-        return (new LengthAwarePaginator($models, count($result), 20, $this->getCurrentPageIndex()))
+        return (new LengthAwarePaginator($treeModels, count($result), 20, $this->getCurrentPageIndex()))
             ->setPageName($this->getPaginationId());
     }
 
