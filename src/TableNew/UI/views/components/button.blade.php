@@ -22,7 +22,7 @@
         {!! $iconLeft !!}
     @endif
 
-    @if ($slot->isNotEmpty())
+    @if ($slot->isNotEmpty() && $slot->hasActualContent())
         <span class="bui-btn-content">
             {{ $slot }}
         </span>
