@@ -6,6 +6,8 @@ use Closure;
 
 trait HasLink
 {
+    // targetBlank
+
     protected null|string|Closure $link = null;
 
     public function link(string|Closure $link): static

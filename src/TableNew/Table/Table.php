@@ -10,8 +10,11 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
 use Thinktomorrow\Chief\TableNew\Columns\Header;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasActions;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasBulkActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasPagination;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRows;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasSorters;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTableReference;
@@ -29,6 +32,9 @@ class Table extends Component
     use HasRows;
     use HasSorters;
     use HasPagination;
+    use HasActions;
+    use HasBulkActions;
+    use HasRowActions;
 
     protected string $view = 'chief-table-new::index';
 

@@ -54,6 +54,9 @@ trait PageResourceDefault
     {
         return Table::make()
             ->query(static::resourceKey())
+            ->actions([
+
+            ])
             ->filters([
                 TextFilter::make('title')->query(function ($builder, $value) {
                     $builder->whereJsonLike(['title'], $value);
