@@ -74,7 +74,7 @@ trait PageResourceDefault
                     ->hidden()
                     // Primary, secondary
                     // visible, hidden // Or from previous visit or by preference
-                    ->link('/admin/catalogpage/create')
+                    ->link('/admin/catalogpage/create'),
             ])
             ->filters([
                 TextFilter::make('title')->query(function ($builder, $value) {

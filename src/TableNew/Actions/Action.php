@@ -51,12 +51,24 @@ class Action extends \Illuminate\View\Component implements Htmlable
     {
         $action = BulkAction::make($this->key);
 
-        if($this->label) $action->label($this->label);
-        if($this->description) $action->description($this->description);
-        if($this->effect) $action->effect($this->effect);
-        if($this->modal) $action->modal($this->modal);
-        if($this->link) $action->link($this->link);
-        if($this->model) $action->model($this->model);
+        if($this->label) {
+            $action->label($this->label);
+        }
+        if($this->description) {
+            $action->description($this->description);
+        }
+        if($this->effect) {
+            $action->effect($this->effect);
+        }
+        if($this->modal) {
+            $action->modal($this->modal);
+        }
+        if($this->link) {
+            $action->link($this->link);
+        }
+        if($this->model) {
+            $action->model($this->model);
+        }
 
         return $action;
     }
