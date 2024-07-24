@@ -11,7 +11,7 @@ trait HasBulkActions
 
     public function bulkActions(array $bulkActions = []): static
     {
-        $this->bulkActions = array_map(fn(Action $action) => $action->toBulkAction(), $bulkActions);
+        $this->bulkActions = array_map(fn (Action $action) => $action->toBulkAction(), $bulkActions);
 
         return $this;
     }

@@ -16,7 +16,7 @@ trait WithBulkActions
 
     public function getHiddenBulkActions(): array
     {
-        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => !$action->isVisible());
+        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => ! $action->isVisible());
     }
 
     public function applyBulkActionEffect(string $key, $models)
