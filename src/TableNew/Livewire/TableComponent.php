@@ -119,7 +119,9 @@ class TableComponent extends Component
         $builder->select('id');
         $result = $builder->get();
 
-        $treeModels = app(TreeModels::class)->create($treeResourceKey, $result->pluck('id')->toArray(),
+        $treeModels = app(TreeModels::class)->create(
+            $treeResourceKey,
+            $result->pluck('id')->toArray(),
             $this->hasPagination() ? ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage() : 0,
             $this->hasPagination() ? $this->getPaginationPerPage() : count($result)
         );
