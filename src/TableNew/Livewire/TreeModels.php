@@ -29,6 +29,7 @@ class TreeModels
         $ancestors = (count($models) > 0)
             ? $this->convertNodesToModels($models[0]->getAncestorNodes()->each(function ($node) {
                 $node->getNodeEntry()->setAttribute('isAncestorRow', true);
+
                 return $node;
             })->all()) : [];
 
