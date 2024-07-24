@@ -10,8 +10,11 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
+use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithActions;
+use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithFilters;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithPagination as WithPaginationControl;
+use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithRowActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithSorters;
 use Thinktomorrow\Chief\TableNew\Sorters\TreeSort;
 use Thinktomorrow\Chief\TableNew\Table\Table;
@@ -23,14 +26,15 @@ class TableComponent extends Component
     use WithPaginationControl;
     use WithFilters;
     use WithSorters;
+    use WithActions;
+    use WithRowActions;
+    use WithBulkActions;
 
     public TableReference $tableReference;
     private ?Table $table = null;
 
     public function mount(Table $table)
     {
-        // TableId: PageClass where Table is configured and unique table key to retrieve the table
-        // This way we can use closures :-)
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
         //$this->applyDefaultFilters();

@@ -6,7 +6,6 @@ use Closure;
 
 trait HasQuery
 {
-
     protected ?Closure $query = null;
 
     public function query(Closure $query): static

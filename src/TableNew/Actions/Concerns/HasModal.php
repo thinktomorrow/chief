@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\TableNew\Actions\Concerns;
 
-class HasModal
+trait HasModal
 {
     protected bool $withModal = false;
 

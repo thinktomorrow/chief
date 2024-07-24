@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
+use Thinktomorrow\Chief\TableNew\Actions\Action;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnBadge;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnDate;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnText;
@@ -54,8 +55,26 @@ trait PageResourceDefault
     {
         return Table::make()
             ->query(static::resourceKey())
+            ->bulkActions([
+                Action::make('publish')
+                    ->effect(function () {
+                        return 'publish';
+                    }),
+                Action::make('archive')
+                    ->effect(function () {
+                        return 'archive';
+                    }),
+            ])
             ->actions([
-
+                Action::make('export')
+                    ->effect(function () {
+                        return 'export';
+                    }),
+                Action::make('Aanmaken')
+                    ->hidden()
+                    // Primary, secondary
+                    // visible, hidden // Or from previous visit or by preference
+                    ->link('/admin/catalogpage/create')
             ])
             ->filters([
                 TextFilter::make('title')->query(function ($builder, $value) {

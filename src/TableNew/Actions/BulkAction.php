@@ -18,7 +18,7 @@ use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasModal;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasVisibility;
 
-class RowAction extends Action
+class BulkAction extends Action
 {
-    protected string $view = 'chief-table-new::actions.row-action';
+    protected string $view = 'chief-table-new::actions.bulk-action';
 }

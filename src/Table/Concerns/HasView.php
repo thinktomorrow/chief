@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Table\Concerns;
 
 trait HasView
 {
-    protected string $view;
+    //protected string $view;
 
     public function getView(): string
     {
