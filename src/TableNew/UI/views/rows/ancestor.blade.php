@@ -1,13 +1,14 @@
-<tr wire:key="{{ $this->getRowKey($item) }}" class="bg-grey-100">
-    <td class="py-2 pl-4 text-left relative"></td>
+<tr wire:key="{{ $this->getRowKey($item) }}" class="">
+    <td class="relative py-1 pl-4 text-left"></td>
 
     @foreach ($this->getColumns($item) as $column)
-        <td class="py-2 pl-3 text-left">
+        <td class="py-1 pl-3 text-left">
+            @continue(! $loop->first)
             <div class="flex gap-1.5">
                 @if ($loop->first && isset($item->indent) && $item->indent > 0)
                     <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
                         <svg
-                            class="h-5 w-5 text-grey-900"
+                            class="h-5 w-5 text-grey-500"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
                             viewBox="0 0 256 256"
@@ -17,17 +18,16 @@
                             ></path>
                         </svg>
                     </div>
-
                 @endif
 
-                <span class="leading-5 text-grey-900">
-                    @foreach($column->getItems() as $item)
-                        {{$item}}
+                <span class="text-sm leading-5 text-grey-500">
+                    @foreach ($column->getItems() as $item)
+                        {{ $item }}
                     @endforeach
                 </span>
             </div>
         </td>
     @endforeach
 
-    <td class="py-2 pl-3 pr-4 text-right"></td>
+    <td class="py-1 pl-3 pr-4 text-right"></td>
 </tr>
