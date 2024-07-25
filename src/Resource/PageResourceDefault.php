@@ -29,7 +29,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (!$this->manager->can('index')) {
+        if (! $this->manager->can('index')) {
             return null;
         }
 
@@ -43,7 +43,7 @@ trait PageResourceDefault
 
     private function assertManager(): void
     {
-        if (!$this->manager) {
+        if (! $this->manager) {
             throw new RuntimeException('For calling this method a Manager instance should be set to this resource.');
         }
     }
@@ -79,7 +79,7 @@ trait PageResourceDefault
                     // Primary, secondary
                     // visible, hidden // Or from previous visit or by preference
                     ->prependIcon('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5"> <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /> </svg>')
-                    ->link('/admin/catalogpage/create')
+                    ->link('/admin/catalogpage/create'),
             ])
             ->filters([
                 TextFilter::make('title')->query(function ($builder, $value) {
@@ -153,7 +153,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (!$this->manager->can('index')) {
+        if (! $this->manager->can('index')) {
             return null;
         }
 
@@ -167,7 +167,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof StatefulContract && !$model->inOnlineState() ? ' [offline]' : '';
+        $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
 
         return $this->getPageTitle($model) . $suffix;
     }
