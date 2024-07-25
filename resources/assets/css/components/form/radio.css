@@ -10,7 +10,7 @@
 
     &:after {
         content: '';
-        @apply absolute left-0 top-0 inline-block h-5 w-5 scale-0 rounded-full;
+        @apply absolute left-2.5 top-2.5 inline-block size-0 rounded-full;
         @apply bg-primary-500;
     }
 
@@ -20,7 +20,7 @@
 
     &:checked {
         &:after {
-            @apply scale-[0.45];
+            @apply left-1.5 top-1.5 size-2;
         }
     }
 

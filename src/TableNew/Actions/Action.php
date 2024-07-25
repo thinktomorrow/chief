@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
+use Thinktomorrow\Chief\Table\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Concerns\HasView;
 use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasModal;
@@ -28,6 +29,7 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasDescription;
     use HasLocalizableProperties;
     use HasModel;
+    use HasIcon;
 
     use HasVisibility;
     use HasLink;
@@ -51,22 +53,22 @@ class Action extends \Illuminate\View\Component implements Htmlable
     {
         $action = BulkAction::make($this->key);
 
-        if($this->label) {
+        if ($this->label) {
             $action->label($this->label);
         }
-        if($this->description) {
+        if ($this->description) {
             $action->description($this->description);
         }
-        if($this->effect) {
+        if ($this->effect) {
             $action->effect($this->effect);
         }
-        if($this->modal) {
+        if ($this->modal) {
             $action->modal($this->modal);
         }
-        if($this->link) {
+        if ($this->link) {
             $action->link($this->link);
         }
-        if($this->model) {
+        if ($this->model) {
             $action->model($this->model);
         }
 

@@ -12,7 +12,8 @@ class TreeSort extends Sorter
     {
         $sort = new static($key);
 
-        $sort->query(function ($query) {});
+        $sort->query(function ($query) {
+        });
 
         return $sort;
     }
@@ -21,7 +22,7 @@ class TreeSort extends Sorter
     {
         return static::make(static::TREE_SORTING)
             ->actAsDefault()
-            ->hideActiveLabel()
+            // ->hideActiveLabel()
             ->label('Boomstructuur');
     }
 }

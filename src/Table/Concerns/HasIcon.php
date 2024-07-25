@@ -4,16 +4,29 @@ namespace Thinktomorrow\Chief\Table\Concerns;
 
 trait HasIcon
 {
-    protected ?string $icon = null;
+    protected ?string $prependIcon = null;
+    protected ?string $appendIcon = null;
 
-    public function getIcon(): ?string
+    public function getPrependIcon(): ?string
     {
-        return $this->icon;
+        return $this->prependIcon;
     }
 
-    public function icon(string $icon): static
+    public function prependIcon(string $icon): static
     {
-        $this->icon = $icon;
+        $this->prependIcon = $icon;
+
+        return $this;
+    }
+
+    public function getAppendIcon(): ?string
+    {
+        return $this->appendIcon;
+    }
+
+    public function appendIcon(string $icon): static
+    {
+        $this->appendIcon = $icon;
 
         return $this;
     }
