@@ -4,7 +4,7 @@
  **/
 @layer components {
     .bui-btn {
-        @apply inline-flex items-start text-left;
+        @apply flex items-start text-left;
     }
 
     .bui-btn-base {
@@ -32,14 +32,14 @@
     }
 
     .bui-btn-xs {
-        @apply rounded-md p-1;
+        @apply rounded-md p-[0.1875rem];
 
         & > svg {
-            @apply size-4;
+            @apply size-[1.125rem];
         }
 
         & > .bui-btn-content {
-            @apply px-0.5 text-xs leading-4;
+            @apply px-0.5 text-xs leading-[1.125rem];
         }
     }
 
