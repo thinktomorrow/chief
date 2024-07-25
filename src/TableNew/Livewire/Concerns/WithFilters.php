@@ -34,14 +34,14 @@ trait WithFilters
         return '';
     }
 
-    private function applyDefaultFilters()
+    private function setDefaultFilters()
     {
         $this->clearFilters();
 
         foreach($this->getFilters() as $filter) {
             // Active either by present in url or set to active: active(), activeIfNone()
-            if($defaultValue = $filter->getValue()) {
-                $this->filters[$filter->getKey()] = $defaultValue;
+            if($filter->hasValue()) {
+                $this->filters[$filter->getKey()] = $filter->getValue();
             }
         }
     }
@@ -49,7 +49,7 @@ trait WithFilters
     private function applyQueryFilters(Builder $builder): void
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if(($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
+            if(($filter = $this->findFilter($filterKey)) && $filter->isApplicable($filterValue) && $filter->hasQuery()) {
                 $filter->getQuery()($builder, $filterValue);
             }
         }
@@ -126,7 +126,7 @@ trait WithFilters
         $this->showFilters = false;
 
         $this->clearFilters();
-        $this->applyDefaultFilters();
+        $this->setDefaultFilters();
     }
 
     public function clearFilters()

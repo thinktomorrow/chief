@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\TableNew\Actions\Action;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnBadge;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnDate;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnText;
+use Thinktomorrow\Chief\TableNew\Filters\ButtonGroupFilter;
 use Thinktomorrow\Chief\TableNew\Filters\SelectFilter;
 use Thinktomorrow\Chief\TableNew\Filters\TextFilter;
 use Thinktomorrow\Chief\TableNew\Sorters\Sort;
@@ -80,6 +81,12 @@ trait PageResourceDefault
                 TextFilter::make('title')->query(function ($builder, $value) {
                     $builder->whereJsonLike(['title'], $value);
                 }),
+                ButtonGroupFilter::make('current_state')->label('Status')->options([
+                    '' => 'Alle',
+                    'published' => 'Online',
+                    'draft' => 'Offline',
+                    'archived' => 'Gearchiveerd',
+                ]),
                 SelectFilter::make('current_state')->label('Status')->options([
                     'published' => 'Online',
                     'draft' => 'Offline',

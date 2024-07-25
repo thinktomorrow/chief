@@ -12,11 +12,11 @@ use Thinktomorrow\Chief\Forms\Concerns\HasView;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanBeDefault;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanHideFromView;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanShowActiveLabel;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
+use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasValue;
 
 abstract class Sorter extends Component
 {
@@ -54,10 +54,5 @@ abstract class Sorter extends Component
     public static function make(string $key): static
     {
         return new static($key);
-    }
-
-    public function getValue(?string $locale = null): mixed
-    {
-        return old($this->key, request()->input($this->key, $this->value));
     }
 }

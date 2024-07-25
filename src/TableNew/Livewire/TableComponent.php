@@ -41,7 +41,7 @@ class TableComponent extends Component
     {
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
-        //$this->applyDefaultFilters();
+        $this->setDefaultFilters();
         $this->applyDefaultSorters();
 
         // active sorters - selected by user
