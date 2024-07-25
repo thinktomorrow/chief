@@ -98,6 +98,7 @@ class TableComponent extends Component
         // Show tree structure when there are no sorters active
         if($this->shouldReturnResultsAsTree()) {
             $this->areResultsAsTree = true;
+
             return $this->getResultsAsTree($builder, $this->getTable()->getTreeReference());
         }
 
