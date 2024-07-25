@@ -21,6 +21,11 @@ trait WithFilters
         return $this->getTable()->getFilters();
     }
 
+    public function getActiveFilters(): array
+    {
+        return array_filter($this->filters, fn($filterValue) => !$this->isEmptyFilterValue($filterValue));
+    }
+
     public function getActiveFilterValue(string $filterKey): string
     {
         if(($filterValue = $this->findActiveFilterValue($filterKey))) {
@@ -49,7 +54,7 @@ trait WithFilters
     private function applyQueryFilters(Builder $builder): void
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if(($filter = $this->findFilter($filterKey)) && $filter->isApplicable($filterValue) && $filter->hasQuery()) {
+            if(($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
                 $filter->getQuery()($builder, $filterValue);
             }
         }
@@ -72,7 +77,7 @@ trait WithFilters
     public function updatedFilters()
     {
         foreach($this->filters as $key => $filterValue) {
-            if($this->isEmptyFilterValue($filterValue) || (is_array($filterValue) && count($filterValue) == 1 && $this->isEmptyFilterValue(reset($filterValue)))) {
+            if($this->isEmptyFilterValue($filterValue)) {
                 unset($this->filters[$key]);
             }
         }
@@ -142,6 +147,10 @@ trait WithFilters
 
     private function isEmptyFilterValue($value): bool
     {
+        if(is_array($value)) {
+            return count($value) == 1 && $this->isEmptyFilterValue(reset($value));
+        }
+
         return is_null($value) || empty($value) || '' === $value;
     }
 }

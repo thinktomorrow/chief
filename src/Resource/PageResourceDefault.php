@@ -86,7 +86,7 @@ trait PageResourceDefault
                     'published' => 'Online',
                     'draft' => 'Offline',
                     'archived' => 'Gearchiveerd',
-                ]),
+                ])->value(''),
                 SelectFilter::make('current_state')->label('Status')->options([
                     'published' => 'Online',
                     'draft' => 'Offline',

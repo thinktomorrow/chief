@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
-use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanBeApplied;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanBeDefault;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasValue;
@@ -31,7 +30,6 @@ abstract class Filter extends Component
     use HasValue;
     use HasDefault;
     use CanBeDefault;
-    use CanBeApplied;
 
     use HasQuery;
 
@@ -46,8 +44,8 @@ abstract class Filter extends Component
         $this->query(function ($query, $value) {
             if($query instanceof Builder) {
 
-                // Empty value should not be applied
-                if(is_null($value) || $value === '') return;
+                // blank value should not be applied
+                if($value === '') return;
 
                 if(is_array($value)) {
                     $query->whereIn($this->key, $value);

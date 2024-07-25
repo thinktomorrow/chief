@@ -158,7 +158,7 @@ class TableComponent extends Component
 
     private function shouldReturnResultsAsTree(): bool
     {
-        if(count($this->filters) > 0) {
+        if(count($this->getActiveFilters()) > 0) {
             return false;
         }
 
