@@ -2,7 +2,7 @@
     use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 @endphp
 
-<div class="space-y-1">
+<div class="space-y-1.5">
     @foreach ($getOptions() as $option)
         @php
             $value = $option['value'];
@@ -19,7 +19,7 @@
                 :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
             />
 
-            <span class="body body-dark">{!! $label !!}</span>
+            <span class="body body-dark leading-5">{!! $label !!}</span>
         </label>
     @endforeach
 </div>

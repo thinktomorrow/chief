@@ -1,13 +1,11 @@
 <x-chief::input.group rule="allow_parent" x-data="{ type: '{{ !!old('parent_id', $menuitem->parent_id) }}' }">
-    <x-chief::input.label required>
-        Niveau
-    </x-chief::input.label>
+    <x-chief::input.label required>Niveau</x-chief::input.label>
 
     <x-chief::input.description>
         Zet dit item op het hoogste niveau of plaats het onder een bestaand.
     </x-chief::input.description>
 
-    <div class="space-y-3">
+    <div class="space-y-1.5">
         <div class="flex items-start gap-2">
             <x-chief::input.radio
                 id="without-parent-id"
@@ -17,7 +15,7 @@
                 x-on:click="type = '0'"
             />
 
-            <x-chief::input.label for="without-parent-id" unset class="body body-dark">
+            <x-chief::input.label for="without-parent-id" unset class="body body-dark leading-5">
                 Geef dit menu item weer op het hoogste niveau
             </x-chief::input.label>
         </div>
@@ -32,7 +30,7 @@
                     x-on:click="type = '1'"
                 />
 
-                <x-chief::input.label for="parent-id" unset class="body body-dark">
+                <x-chief::input.label for="parent-id" unset class="body body-dark leading-5">
                     Selecteer het menu item waaronder dit item behoort
                 </x-chief::input.label>
             </div>

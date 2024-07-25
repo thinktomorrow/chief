@@ -29,7 +29,7 @@
                 "
                 class="min-w-48 space-y-2.5 p-3.5"
             >
-                <div class="space-y-1">
+                <div class="space-y-1.5">
                     @foreach ($this->getSortersForView() as $sorter)
                         {!! $sorter->render() !!}
                     @endforeach

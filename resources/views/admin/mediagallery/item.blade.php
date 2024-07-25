@@ -4,11 +4,12 @@
     try {
         $assetUrl = $asset->url('small');
     } catch(Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined $e) {}
-
 @endphp
 
-<label for="asset_{{ $index }}"
-       class="relative block overflow-hidden rounded-lg cursor-pointer group hover:bg-grey-100">
+<label
+    for="asset_{{ $index }}"
+    class="relative block overflow-hidden rounded-lg cursor-pointer group hover:bg-grey-100"
+>
     <div class="absolute top-0 left-0 m-2 z-[1]">
         <x-chief::input.checkbox id="asset_{{ $index }}" name="asset_ids[]" value="{{ $asset->id }}"/>
     </div>
@@ -62,4 +63,3 @@
             @endif
         </div>
 </label>
-</div>
