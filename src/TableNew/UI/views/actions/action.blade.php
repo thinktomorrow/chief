@@ -1,9 +1,25 @@
-@if($hasLink())
+@if ($hasLink())
     <a href="{{ $getLink() }}" title="{{ $getDescription() }}">
-        <x-chief-table-new::button size="sm">{{ $getLabel() }}</x-chief-table-new::button>
+        @if ($isVisible())
+            <x-chief-table-new::button color="primary" :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
+                {{ $getLabel() }}
+            </x-chief-table-new::button>
+        @elseif ($isHidden())
+            <x-chief::dropdown.item :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
+                {{ $getLabel() }}
+            </x-chief::dropdown.item>
+        @endif
     </a>
 @else
     <button wire:click="applyActionEffect('{{ $getKey() }}')" title="{{ $getDescription() }}">
-        <x-chief-table-new::button size="sm">{{ $getLabel() }}</x-chief-table-new::button>
+        @if ($isVisible())
+            <x-chief-table-new::button color="primary" :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
+                {{ $getLabel() }}
+            </x-chief-table-new::button>
+        @elseif ($isHidden())
+            <x-chief::dropdown.item :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
+                {{ $getLabel() }}
+            </x-chief::dropdown.item>
+        @endif
     </button>
 @endif
