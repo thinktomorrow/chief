@@ -3,7 +3,7 @@
 
     <div class="space-y-3">
         {{-- Option: internal link --}}
-        <div class="space-y-1.5">
+        <div class="space-y-2">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
                     id="type-internal"
@@ -30,7 +30,7 @@
         </div>
 
         {{-- Option: custom link --}}
-        <div class="space-y-1.5">
+        <div class="space-y-2">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
                     id="type-custom"

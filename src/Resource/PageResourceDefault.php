@@ -29,7 +29,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (! $this->manager->can('index')) {
+        if (!$this->manager->can('index')) {
             return null;
         }
 
@@ -43,7 +43,7 @@ trait PageResourceDefault
 
     private function assertManager(): void
     {
-        if (! $this->manager) {
+        if (!$this->manager) {
             throw new RuntimeException('For calling this method a Manager instance should be set to this resource.');
         }
     }
@@ -101,15 +101,22 @@ trait PageResourceDefault
                 ColumnText::make('title')->label('Titel')->link(function ($model) {
                     return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
                 }),
+                // ColumnText::make('seo_title')->label('SEO Titel'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
             ])
             ->sorters([
-                Sort::make('title_asc')->label('Titel A-Z')->query(function ($builder) {
+                Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
                     $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
                 }),
-                Sort::make('title_desc')->label('Titel Z-A')->query(function ($builder) {
+                Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
                     $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
+                }),
+                Sort::make('created_at_desc')->label('Datum - DESC')->query(function ($builder) {
+                    $builder->orderBy('created_at', 'DESC');
+                }),
+                Sort::make('created_at_asc')->label('Datum - ASC')->query(function ($builder) {
+                    $builder->orderBy('created_at', 'ASC');
                 }),
             ]);
     }
@@ -153,7 +160,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (! $this->manager->can('index')) {
+        if (!$this->manager->can('index')) {
             return null;
         }
 
@@ -167,7 +174,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
+        $suffix = $model instanceof StatefulContract && !$model->inOnlineState() ? ' [offline]' : '';
 
         return $this->getPageTitle($model) . $suffix;
     }

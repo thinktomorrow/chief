@@ -12,7 +12,7 @@
         <x-chief::input.description>{{ $description }}</x-chief::input.description>
     @endif
 
-    <div class="space-y-1.5">
+    <div class="space-y-2">
         @foreach ($options as $option => $optionLabel)
             <div class="flex items-start gap-2">
                 <x-chief::input.radio

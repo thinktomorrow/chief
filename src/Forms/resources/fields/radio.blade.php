@@ -2,7 +2,7 @@
     use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 @endphp
 
-<div class="space-y-1.5">
+<div class="space-y-2">
     @foreach ($getOptions() as $option)
         @php
             $value = $option['value'];

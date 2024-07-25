@@ -55,7 +55,7 @@
 
                 <label
                     for="{{ $id }}-{{ $option['value'] }}"
-                    class="bui-btn bui-btn-base cursor-pointer rounded-lg p-1.5 leading-5"
+                    class="bui-btn bui-btn-base cursor-pointer rounded-lg p-1.5 leading-5 text-grey-800"
                 >
                     <span class="bui-btn-content">{!! $option['label'] !!}</span>
                 </label>

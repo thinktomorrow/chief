@@ -3,7 +3,9 @@
 @endphp
 
 <button id="{{ $triggerId }}" type="button">
-    <x-chief-table-new::filter.select :label="$getLabel() ?? $getKey()" :value="$this->getActiveFilterValue($getKey())" />
+    <x-chief-table-new::filter.select :value="$this->getActiveFilterValue($getKey())">
+        {{ $getLabel() ?? $getKey() }}
+    </x-chief-table-new::filter.select>
 </button>
 
 <x-chief::dropdown trigger="#{{ $triggerId }}" placement="bottom-end">
@@ -21,7 +23,10 @@
                 <x-chief-table-new::button size="sm" color="white">Annuleer</x-chief-table-new::button>
             </button>
 
-            <button type="submit" x-on:click="close(); $wire.addFilter();">
+            <button type="submit" x-on:click="
+                close()
+                $wire.addFilter()
+            ">
                 <x-chief-table-new::button size="sm" color="grey">Pas filter toe</x-chief-table-new::button>
             </button>
         </div>
