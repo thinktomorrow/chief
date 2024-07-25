@@ -16,7 +16,7 @@ trait WithActions
 
     public function getHiddenActions(): array
     {
-        return array_filter($this->getTable()->getActions(), fn (Action $action) => !$action->isVisible());
+        return array_filter($this->getTable()->getActions(), fn (Action $action) => ! $action->isVisible());
     }
 
     public function applyActionEffect(string $key)
@@ -25,7 +25,7 @@ trait WithActions
 
         // Modal??
 
-            // Compose Modal
+        // Compose Modal
 
         // Effect?
 

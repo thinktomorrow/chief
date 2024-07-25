@@ -24,26 +24,30 @@ class TreeModels
         // Paginate the models
         $models = array_slice($models, $offset, $limit);
 
-        // Mark the ancestor models to the result if they are not present in the current page
-        if(count($models) > 0) {
-            $models = array_merge($models[0]->getAncestorNodes()->each(function ($node) {
+        // Add the ancestor models to the result if they are not present in the current page
+        // This allows to show a tree path reference of the current first item.
+        $ancestors = (count($models) > 0)
+            ? $this->convertNodesToModels($models[0]->getAncestorNodes()->each(function ($node) {
                 $node->getNodeEntry()->setAttribute('isAncestorRow', true);
 
                 return $node;
-            })->all(), $models);
-        }
+            })->all()) : [];
 
         // Return the models instead of the nodes and add any node data to each model
+        $models = $this->convertNodesToModels($models);
+
+        return [$ancestors, $models];
+    }
+
+    private function convertNodesToModels($nodes): array
+    {
         return array_map(function ($node) {
 
             $model = $node->getModel();
             $model->indent = $node->getNodeDepth();
 
-            // This is a bit of a hack to make sure the ancestor rows are always present in the result
-            $model->isAncestorRow ??= false;
-
             return $model;
-        }, $models);
+        }, $nodes);
     }
 
     //    // Category, Page, ...

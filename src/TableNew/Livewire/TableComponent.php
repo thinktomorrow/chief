@@ -33,11 +33,15 @@ class TableComponent extends Component
     public TableReference $tableReference;
     private ?Table $table = null;
 
+    // After a tree result, we have the ancestors to show the tree structure and this boolean as flag for tree structure;
+    private bool $areResultsAsTree = false;
+    private array $ancestors = [];
+
     public function mount(Table $table)
     {
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
-        //$this->applyDefaultFilters();
+        $this->setDefaultFilters();
         $this->applyDefaultSorters();
 
         // active sorters - selected by user
@@ -89,8 +93,12 @@ class TableComponent extends Component
 
     private function returnQueryResults(mixed $builder): Collection|PaginatorContract
     {
+        $this->areResultsAsTree = false;
+
         // Show tree structure when there are no sorters active
         if($this->shouldReturnResultsAsTree()) {
+            $this->areResultsAsTree = true;
+
             return $this->getResultsAsTree($builder, $this->getTable()->getTreeReference());
         }
 
@@ -99,6 +107,16 @@ class TableComponent extends Component
         }
 
         return $builder->paginate($this->getPaginationPerPage(), ['*'], $this->getPaginationId());
+    }
+
+    public function areResultsAsTree(): bool
+    {
+        return $this->areResultsAsTree;
+    }
+
+    public function getAncestors(): array
+    {
+        return $this->ancestors;
     }
 
     private function returnCollectionResults(Collection $rows): Collection|PaginatorContract
@@ -119,12 +137,14 @@ class TableComponent extends Component
         $builder->select('id');
         $result = $builder->get();
 
-        $treeModels = app(TreeModels::class)->create(
+        [$ancestors, $treeModels] = app(TreeModels::class)->create(
             $treeResourceKey,
             $result->pluck('id')->toArray(),
             $this->hasPagination() ? ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage() : 0,
             $this->hasPagination() ? $this->getPaginationPerPage() : count($result)
         );
+
+        $this->ancestors = $ancestors;
 
         if(! $this->hasPagination()) {
             return collect($treeModels);

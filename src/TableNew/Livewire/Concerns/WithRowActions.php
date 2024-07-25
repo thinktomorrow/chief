@@ -16,7 +16,7 @@ trait WithRowActions
 
     public function getHiddenRowActions(): array
     {
-        return array_filter($this->getTable()->getRowActions(), fn (Action $action) => !$action->isVisible());
+        return array_filter($this->getTable()->getRowActions(), fn (Action $action) => ! $action->isVisible());
     }
 
     public function applyRowActionEffect(string $key, $model)
