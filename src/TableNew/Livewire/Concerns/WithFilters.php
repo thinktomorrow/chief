@@ -23,7 +23,7 @@ trait WithFilters
 
     public function getActiveFilters(): array
     {
-        return array_filter($this->filters, fn($filterValue) => !$this->isEmptyFilterValue($filterValue));
+        return array_filter($this->filters, fn ($filterValue) => ! $this->isEmptyFilterValue($filterValue));
     }
 
     public function getActiveFilterValue(string $filterKey): string
