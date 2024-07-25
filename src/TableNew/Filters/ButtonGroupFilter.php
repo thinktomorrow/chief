@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\TableNew\Filters;
 
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasBlankValue;
 
 class ButtonGroupFilter extends Filter

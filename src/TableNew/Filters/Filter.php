@@ -47,7 +47,9 @@ abstract class Filter extends Component
             if($query instanceof Builder) {
 
                 // Empty value should not be applied
-                if(is_null($value) || $value === '') return;
+                if(is_null($value) || $value === '') {
+                    return;
+                }
 
                 if(is_array($value)) {
                     $query->whereIn($this->key, $value);
