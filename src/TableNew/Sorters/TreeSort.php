@@ -22,7 +22,7 @@ class TreeSort extends Sorter
     {
         return static::make(static::TREE_SORTING)
             ->actAsDefault()
-            // ->hideActiveLabel()
+            ->hideActiveLabel()
             ->label('Boomstructuur');
     }
 }

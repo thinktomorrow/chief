@@ -1,10 +1,10 @@
 <button id="{{ $id }}-select" type="button">
-    <x-chief-table-new::filter.select :id="$id" :label="$label" :value="$value" />
+    <x-chief-table-new::filter.select :id="$id" :value="$value">{{ $label }}</x-chief-table-new::filter.select>
 </button>
 
 <x-chief::dropdown trigger="#{{ $id }}-select" placement="bottom-end">
-    <div class="space-y-2.5 p-3.5">
-        <div class="space-y-1">
+    <div class="space-y-3.5 p-3.5">
+        <div class="space-y-2">
             @foreach ($options as $value => $label)
                 <label for="{{ $id }}-{{ $value }}" class="flex items-start gap-2">
                     <x-chief::input.radio
@@ -15,7 +15,7 @@
                         :checked="in_array($value, (array) $value)"
                     />
 
-                    <span class="body body-dark">{!! $label !!}</span>
+                    <span class="body body-dark leading-5">{!! $label !!}</span>
                 </label>
             @endforeach
         </div>

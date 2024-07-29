@@ -19,7 +19,6 @@
         },
         init() {
             $nextTick(() => {
-
                 activeRadio = Array.from(this.$root.querySelectorAll('input')).find(
                     (radio) => radio.checked,
                 )
@@ -42,19 +41,24 @@
         </div>
 
         @foreach ($getOptions() as $option)
-            <div wire:key="{{ $id }}-{{ $option['value'] }}" x-on:change="repositionOptionMarker($el)" class="relative">
+            <div
+                wire:key="{{ $id }}-{{ $option['value'] }}"
+                x-on:change="repositionOptionMarker($el)"
+                class="relative"
+            >
+                <x-chief::input.radio
+                    wire:model.change="filters.{{ $getKey() }}"
+                    id="{{ $id }}-{{ $option['value'] }}"
+                    value="{{ $option['value'] }}"
+                    class="peer hidden"
+                />
 
-                    <x-chief::input.radio
-                        wire:model.change="filters.{{ $getKey() }}"
-                        id="{{ $id }}-{{ $option['value'] }}"
-                        value="{{ $option['value'] }}"
-                        class="peer hidden"
-                    />
-
-                    <label for="{{ $id }}-{{ $option['value'] }}" class="bui-btn bui-btn-base cursor-pointer rounded-lg p-1.5">
-                        <span class="bui-btn-content">{!! $option['label'] !!}</span>
-                    </label>
-
+                <label
+                    for="{{ $id }}-{{ $option['value'] }}"
+                    class="bui-btn bui-btn-base cursor-pointer rounded-lg p-1.5 leading-5 text-grey-800"
+                >
+                    <span class="bui-btn-content">{!! $option['label'] !!}</span>
+                </label>
             </div>
         @endforeach
     </div>

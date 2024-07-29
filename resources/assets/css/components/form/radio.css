@@ -1,11 +1,10 @@
 .form-input-radio {
-    margin-top: 2px;
     @apply relative h-5 w-5 appearance-none rounded-full leading-none;
 
     &:before {
         content: '';
-        @apply inline-block h-5 w-5 rounded-full border shadow-sm;
-        @apply border-grey-200 bg-white;
+        @apply inline-block h-5 w-5 rounded-full bg-white shadow-sm ring-1 ring-grey-200;
+        @apply hover:ring-grey-300;
     }
 
     &:after {
@@ -15,12 +14,17 @@
     }
 
     &:focus {
-        @apply outline-none ring-1 ring-primary-500;
+        @apply outline-none ring-primary-500;
     }
 
     &:checked {
+        &:before {
+            @apply bg-primary-200 ring-primary-500;
+            @apply hover:ring-primary-600;
+        }
+
         &:after {
-            @apply left-1.5 top-1.5 size-2;
+            @apply left-[0.3125rem] top-[0.3125rem] size-2.5;
         }
     }
 

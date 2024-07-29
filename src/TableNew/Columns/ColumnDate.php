@@ -7,11 +7,11 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 
 class ColumnDate extends ColumnText
 {
-    use HasValue{
+    use HasValue {
         getValue as getDefaultValue;
     }
 
-    protected string $view = 'chief-table-new::columns.text';
+    protected string $view = 'chief-table-new::columns.date';
     private string $format = 'Y-m-d H:i';
 
     public function getValue(?string $locale = null): mixed

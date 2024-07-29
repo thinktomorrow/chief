@@ -10,5 +10,5 @@
         value="{{ $getValue() }}"
     />
 
-    <span class="body body-dark">{!! $getLabel() ?? $getKey() !!}</span>
+    <span class="body body-dark leading-5">{!! $getLabel() ?? $getKey() !!}</span>
 </label>
