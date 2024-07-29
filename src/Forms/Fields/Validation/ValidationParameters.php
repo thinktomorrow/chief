@@ -71,7 +71,7 @@ class ValidationParameters
 
         if (! $this->source->hasLocales()) {
             return [
-                call_user_func($this->mapKeysCallback,FormKey::replaceBracketsByDots($this->source->getName())) => $value
+                call_user_func($this->mapKeysCallback, FormKey::replaceBracketsByDots($this->source->getName())) => $value,
             ];
         }
 
@@ -86,7 +86,7 @@ class ValidationParameters
         }
 
         foreach($keys as $i => $key) {
-            $keys[$i] = call_user_func($this->mapKeysCallback,$key);
+            $keys[$i] = call_user_func($this->mapKeysCallback, $key);
         }
 
         return is_array($value)

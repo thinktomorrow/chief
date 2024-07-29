@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\Forms\Modals\ConfirmModal;
 use Thinktomorrow\Chief\Forms\Modals\Modal;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
@@ -76,7 +75,7 @@ trait PageResourceDefault
                             ->form([
                                 MultiSelect::make('tags')
                                     ->multiple()
-                                    ->options(fn () => app(TagReadRepository::class)->getAllForSelect())
+                                    ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                             ])
                             ->button('Exporteer')
                     )

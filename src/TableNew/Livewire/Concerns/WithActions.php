@@ -27,6 +27,7 @@ trait WithActions
 
         if($action->hasModal()) {
             $this->showActionModal($actionKey, $this->getActionModalData($action));
+
             return;
         }
 

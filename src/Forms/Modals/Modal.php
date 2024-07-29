@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\Forms\Layouts\Component;
 use Thinktomorrow\Chief\Forms\Modals\Concerns\HasButton;
 use Thinktomorrow\Chief\Forms\Modals\Concerns\HasContent;
 use Thinktomorrow\Chief\Forms\Modals\Concerns\HasSubTitle;
-use Thinktomorrow\Chief\Forms\Modals\Concerns\InteractsWithForm;
 
 class Modal extends Component implements Wireable
 {
@@ -48,12 +47,22 @@ class Modal extends Component implements Wireable
     private static function fromArray(array $values): self
     {
         $modal = new static($values['id']);
-        if(isset($values['title'])) $modal->title($values['title']);
-        if(isset($values['subTitle'])) $modal->subTitle($values['subTitle']);
-        if(isset($values['content'])) $modal->content($values['content']);
-        if($values['form']) $modal->form($values['form']['class']::fromLivewire($values['form']));
-//        if($values['form']) $modal->fields(collect($values['fields'])->map(fn ($field) => $field['class']::fromLivewire($field)));
-        if($values['button']) $modal->button($values['button']);
+        if(isset($values['title'])) {
+            $modal->title($values['title']);
+        }
+        if(isset($values['subTitle'])) {
+            $modal->subTitle($values['subTitle']);
+        }
+        if(isset($values['content'])) {
+            $modal->content($values['content']);
+        }
+        if($values['form']) {
+            $modal->form($values['form']['class']::fromLivewire($values['form']));
+        }
+        //        if($values['form']) $modal->fields(collect($values['fields'])->map(fn ($field) => $field['class']::fromLivewire($field)));
+        if($values['button']) {
+            $modal->button($values['button']);
+        }
         $modal->elementId($values['elementId']);
 
         return $modal;

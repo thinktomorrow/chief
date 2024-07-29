@@ -2,10 +2,6 @@
 
 namespace Thinktomorrow\Chief\Forms\Modals\Concerns;
 
-use Illuminate\Support\Arr;
-use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
@@ -25,7 +21,9 @@ trait InteractsWithForm
         /**
          * Livewire errors out when validation is run without any rules passed
          */
-        if (! $rules) return;
+        if (! $rules) {
+            return;
+        }
 
         $this->validate($rules, $messages, $validationAttributes);
     }
