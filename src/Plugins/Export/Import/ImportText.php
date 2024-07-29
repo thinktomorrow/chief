@@ -42,6 +42,7 @@ class ImportText implements ToCollection
                 $lineKey = LineKey::fromString(decrypt($encryptedId));
             } catch (DecryptException|InvalidLineKeyException $e) {
                 $this->writeToOutput('Invalid squanto id reference: ' . $encryptedId, 'error');
+
                 continue;
             }
 
@@ -54,7 +55,7 @@ class ImportText implements ToCollection
                 // Typecast to string because this is what squanto expects
                 $value = is_null($value) ? null : (string) $value;
 
-                if(!$this->forceUpdate && $previousValue === $value) {
+                if(! $this->forceUpdate && $previousValue === $value) {
                     continue;
                 }
 

@@ -47,11 +47,11 @@ class ImportMenu implements ToCollection
                 $labelValueIndex = array_search($locale.'_label', $this->headers);
                 $urlValueIndex = array_search($locale.'_url', $this->headers);
 
-                if(!$labelValueIndex) {
+                if(! $labelValueIndex) {
                     throw new \Exception('Label column not found for locale: '.$locale . '. Expected column name: '.$locale.'_label');
                 }
 
-                if(!$urlValueIndex) {
+                if(! $urlValueIndex) {
                     throw new \Exception('Url column not found for locale: '.$locale . '. Expected column name: '.$locale.'_url');
                 }
 
