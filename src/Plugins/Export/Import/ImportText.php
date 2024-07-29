@@ -17,6 +17,9 @@ class ImportText implements ToCollection
     private string $columnIndex;
     private ?OutputStyle $output = null;
 
+    // Update the translations even if they are the same
+    private bool $forceUpdate = true;
+
     public function __construct(string $idIndex, string $columnIndex, string $locale)
     {
         $this->idIndex = $idIndex;
@@ -29,7 +32,7 @@ class ImportText implements ToCollection
         foreach($rows as $row) {
 
             // Ignore empty rows or invalid ID references
-            if(! isset($row[$this->idIndex])) {
+            if(! isset($row[$this->idIndex]) || $row[$this->idIndex] == 'ID') {
                 continue;
             }
 
@@ -39,7 +42,6 @@ class ImportText implements ToCollection
                 $lineKey = LineKey::fromString(decrypt($encryptedId));
             } catch (DecryptException|InvalidLineKeyException $e) {
                 $this->writeToOutput('Invalid squanto id reference: ' . $encryptedId, 'error');
-
                 continue;
             }
 
@@ -49,7 +51,10 @@ class ImportText implements ToCollection
                 $values = json_decode($line->values, true);
                 $previousValue = $values['value'][$this->locale] ?? null;
 
-                if($previousValue === $value) {
+                // Typecast to string because this is what squanto expects
+                $value = is_null($value) ? null : (string) $value;
+
+                if(!$this->forceUpdate && $previousValue === $value) {
                     continue;
                 }
 

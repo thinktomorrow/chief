@@ -27,7 +27,7 @@ class ImportMenu implements ToCollection
         foreach($rows as $row) {
 
             // Ignore empty rows or invalid ID references
-            if(! isset($row[$idIndex])) {
+            if(! isset($row[$idIndex]) || $row[$idIndex] == 'ID') {
                 continue;
             }
 
@@ -43,8 +43,20 @@ class ImportMenu implements ToCollection
 
             $menuItem = MenuItem::find($menuItemId);
             foreach($this->locales as $locale) {
-                $menuItem->setDynamic('label.' . $locale, $row[array_search($locale.'_label', $this->headers)]);
-                $menuItem->setDynamic('url.' . $locale, $row[array_search($locale.'_url', $this->headers)]);
+
+                $labelValueIndex = array_search($locale.'_label', $this->headers);
+                $urlValueIndex = array_search($locale.'_url', $this->headers);
+
+                if(!$labelValueIndex) {
+                    throw new \Exception('Label column not found for locale: '.$locale . '. Expected column name: '.$locale.'_label');
+                }
+
+                if(!$urlValueIndex) {
+                    throw new \Exception('Url column not found for locale: '.$locale . '. Expected column name: '.$locale.'_url');
+                }
+
+                $menuItem->setDynamic('label.' . $locale, $row[$labelValueIndex]);
+                $menuItem->setDynamic('url.' . $locale, $row[$urlValueIndex]);
             }
 
             $menuItem->save();
