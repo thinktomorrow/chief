@@ -12,10 +12,12 @@ class ValidationParameters
 {
     private Validatable & Localizable $source;
     private bool $multiple = false;
+    private \Closure $mapKeysCallback;
 
     final private function __construct(Validatable & Localizable $source)
     {
         $this->source = $source;
+        $this->mapKeysCallback = fn ($key) => $key;
     }
 
     public static function make(Validatable & Localizable $source): self
@@ -68,7 +70,9 @@ class ValidationParameters
         }
 
         if (! $this->source->hasLocales()) {
-            return [FormKey::replaceBracketsByDots($this->source->getName()) => $value];
+            return [
+                call_user_func($this->mapKeysCallback,FormKey::replaceBracketsByDots($this->source->getName())) => $value
+            ];
         }
 
         $keys = $this->source->getLocalizedFormKey()
@@ -81,12 +85,23 @@ class ValidationParameters
             }
         }
 
+        foreach($keys as $i => $key) {
+            $keys[$i] = call_user_func($this->mapKeysCallback,$key);
+        }
+
         return is_array($value)
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
                 LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
             );
+    }
+
+    public function mapKeys(\Closure $callback): self
+    {
+        $this->mapKeysCallback = $callback;
+
+        return $this;
     }
 
     private function isAlreadyKeyed(array $value): bool

@@ -51,7 +51,17 @@ class Action extends \Illuminate\View\Component implements Htmlable
 
     public function toRowAction(): static
     {
-        $action = BulkAction::make($this->key);
+        return $this->replicateActionAs(RowAction::class);
+    }
+
+    public function toBulkAction(): static
+    {
+        return $this->replicateActionAs(BulkAction::class);
+    }
+
+    private function replicateActionAs(string $class): static
+    {
+        $action = $class::make($this->key);
 
         if ($this->label) {
             $action->label($this->label);
@@ -71,15 +81,6 @@ class Action extends \Illuminate\View\Component implements Htmlable
         if ($this->model) {
             $action->model($this->model);
         }
-
-        return $action;
-    }
-
-    public function toBulkAction(): static
-    {
-        $action = clone $this;
-
-        $action->view('chief-table-new::actions.bulk-action');
 
         return $action;
     }

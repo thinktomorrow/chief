@@ -11,7 +11,7 @@
         @endif
     </a>
 @else
-    <button wire:click="applyActionEffect('{{ $getKey() }}')" title="{{ $getDescription() }}">
+    <button wire:click="applyAction('{{ $getKey() }}')" title="{{ $getDescription() }}">
         @if ($isVisible())
             <x-chief-table-new::button color="primary" :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
                 {{ $getLabel() }}

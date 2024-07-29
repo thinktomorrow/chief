@@ -7,7 +7,7 @@
 <div
     {{ $attributes->class('space-y-3') }}
     x-cloak
-    wire:ignore.self
+    wire:ignore
     x-on:chieftab.window="listenForExternalTab"
     x-data="{
         activeTab: null,
@@ -40,6 +40,7 @@
     <nav x-show="showNav" aria-label="Tabs" role="tablist" class="flex w-full gap-2 border-b border-grey-100">
         <template x-for="(tab,index) in tabs()">
             <a
+                :key="tab.id"
                 role="tab"
                 x-on:click.prevent="showTab(tab.id)"
                 x-html="tab.label"

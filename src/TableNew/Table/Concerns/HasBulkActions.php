@@ -3,21 +3,19 @@
 namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
 use Thinktomorrow\Chief\TableNew\Actions\Action;
+use Thinktomorrow\Chief\TableNew\Actions\BulkAction;
 
 trait HasBulkActions
 {
-    /** @var Action[] */
-    private array $bulkActions = [];
-
     public function bulkActions(array $bulkActions = []): static
     {
-        $this->bulkActions = array_map(fn (Action $action) => $action->toBulkAction(), $bulkActions);
+        $this->actions = array_merge($this->actions, array_map(fn (Action $action) => $action->toBulkAction(), $bulkActions));
 
         return $this;
     }
 
     public function getBulkActions(): array
     {
-        return $this->bulkActions;
+        return array_filter($this->actions, fn (Action $action) => $action instanceof BulkAction);
     }
 }

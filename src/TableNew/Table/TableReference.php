@@ -37,7 +37,10 @@ class TableReference implements Wireable
 
     public function getTable(): Table
     {
-        return app($this->resourceClass)->getIndexTable($this->tableKey);
+        $table = app($this->resourceClass)->getIndexTable($this->tableKey);
+        $table->setTableReference($this);
+
+        return $table;
     }
 
     public function getTableKey(): string

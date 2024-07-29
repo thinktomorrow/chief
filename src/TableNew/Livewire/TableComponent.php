@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithBulkActions;
+use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithFilters;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithRowActions;
@@ -29,6 +30,7 @@ class TableComponent extends Component
     use WithActions;
     use WithRowActions;
     use WithBulkActions;
+    use WithBulkSelection;
 
     public TableReference $tableReference;
     private ?Table $table = null;
@@ -46,6 +48,13 @@ class TableComponent extends Component
 
         // active sorters - selected by user
         // default sorters - automatically active when no user selection
+    }
+
+    public function getListeners()
+    {
+        return [
+            'modalSaved-' . $this->getId() => 'onActionModalSaved',
+        ];
     }
 
     public function getTable(): Table

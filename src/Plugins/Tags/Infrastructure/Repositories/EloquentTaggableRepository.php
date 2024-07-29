@@ -6,12 +6,21 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 
 class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository
 {
-    public function attachTags(Taggable $taggable, array $tagIds): void
+    public function attachTags(array $taggableIds, array $tagIds): void
     {
-        // TODO: Implement attachTags() method.
+        // Create array for a combination of taggable and tag ids
+        $matrix = collect($taggableIds)->crossJoin($tagIds);
+
+        // Attach tag to pivot if it doesn't exist yet
+        foreach ($taggableIds as $taggableId) {
+            foreach ($tagIds as $tagId) {
+                $taggable = Taggable::find($taggableId);
+                $taggable->tags()->attach($tagId);
+            }
+        }
     }
 
-    public function detachTags(Taggable $taggable, array $tagIds): void
+    public function detachTags(array $taggableIds, array $tagIds): void
     {
         // TODO: Implement detachTags() method.
     }

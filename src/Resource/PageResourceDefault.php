@@ -6,8 +6,16 @@ use Illuminate\Contracts\View\View;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\Forms\Fields\Image;
+use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Modals\ConfirmModal;
+use Thinktomorrow\Chief\Forms\Modals\Modal;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
 use Thinktomorrow\Chief\TableNew\Actions\Action;
@@ -57,21 +65,58 @@ trait PageResourceDefault
         return Table::make()
             ->query(static::resourceKey())
             ->bulkActions([
-                Action::make('publish')
-                    ->effect(function () {
-                        return 'publish';
-                    }),
-                Action::make('archive')
-                    ->effect(function () {
-                        return 'archive';
+                Action::make('tag')
+                    ->label('Tag deze selectie')
+
+                    // MODAL
+                    ->modal(
+                        Modal::make('tagModal')
+                            ->title('Tag')
+                            ->subtitle('Tag alle pagina')
+                            ->form([
+                                MultiSelect::make('tags')
+                                    ->multiple()
+                                    ->options(fn () => app(TagReadRepository::class)->getAllForSelect())
+                            ])
+                            ->button('Exporteer')
+                    )
+
+                    ->effect(function ($formData, $data) {
+                        dd($formData, $data);
+
+                        // All models...
+
+                        app(TaggableRepository::class)->syncTags($_model, (array)($formData['tags'] ?? []));
+
+                        return 'export';
                     }),
             ])
             ->actions([
                 Action::make('export')
                     ->label('Exporteer')
+
+                    // MODAL
+                    ->modal(
+                        Modal::make('test')
+                            ->title('Export')
+                            ->subtitle('Exporteer deze pagina naar csv formaat')
+                            ->content('Een csv bestand kan je gebruiken om de pagina te importeren in een ander systeem.')
+                            ->form([
+                                Text::make('title')->locales(['nl', 'fr'])->label('Titel')->required(),
+                                Image::make('image')->label('Afbeelding'),
+                            ])
+                            ->button('Exporteer')
+                    )
+
+                    // CONFIRM MODAL
+                        //->modal(ConfirmModal::make())
+                    //->confirm('Weet je zeker dat je deze pagina wilt exporteren?', 'Ben je zeker?', 'Ja, Exporteer')
+
                     ->hidden()
                     ->appendIcon('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5"> <path d="M9.25 13.25a.75.75 0 0 0 1.5 0V4.636l2.955 3.129a.75.75 0 0 0 1.09-1.03l-4.25-4.5a.75.75 0 0 0-1.09 0l-4.25 4.5a.75.75 0 1 0 1.09 1.03L9.25 4.636v8.614Z" /> <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" /> </svg>')
-                    ->effect(function () {
+                    ->effect(function ($formData) {
+                        dd($formData);
+
                         return 'export';
                     }),
                 Action::make('create')

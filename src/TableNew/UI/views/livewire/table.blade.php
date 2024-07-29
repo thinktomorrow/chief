@@ -47,6 +47,11 @@
                     this.$refs.tableHeaderCheckbox.checked = false
                     this.$refs.tableHeaderCheckbox.indeterminate = false
                 }
+
+                this.storeSelection();
+            },
+            storeSelection() {
+                $wire.storeBulkSelection(this.selection);
             },
             init() {
                 this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
@@ -68,7 +73,9 @@
 
                         this.selection = []
                     }
-                })
+
+                    this.storeSelection();
+                });
             },
         }"
         class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
@@ -116,4 +123,6 @@
             </div>
         @endif
     </div>
+
+    <livewire:chief-form::modal parent-id="{{ $this->getId() }}" />
 </div>
