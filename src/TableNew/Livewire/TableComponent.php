@@ -59,7 +59,7 @@ class TableComponent extends Component
 
     public function getTable(): Table
     {
-        if (!$this->table) {
+        if (! $this->table) {
             $this->table = $this->tableReference->getTable();
         }
 
@@ -110,7 +110,7 @@ class TableComponent extends Component
             return $this->getResultsAsTree($builder, $this->getTable()->getTreeReference());
         }
 
-        if (!$this->hasPagination()) {
+        if (! $this->hasPagination()) {
             return $builder->get();
         }
 
@@ -129,7 +129,7 @@ class TableComponent extends Component
 
     private function returnCollectionResults(Collection $rows): Collection|PaginatorContract
     {
-        if (!$this->hasPagination()) {
+        if (! $this->hasPagination()) {
             return $rows;
         }
 
@@ -154,7 +154,7 @@ class TableComponent extends Component
 
         $this->ancestors = $ancestors;
 
-        if (!$this->hasPagination()) {
+        if (! $this->hasPagination()) {
             return collect($treeModels);
         }
 
