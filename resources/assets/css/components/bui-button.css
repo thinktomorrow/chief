@@ -5,6 +5,10 @@
 @layer components {
     .bui-btn {
         @apply flex items-start text-left;
+
+        & > .bui-btn-content {
+            @apply mx-auto;
+        }
     }
 
     .bui-btn-base {

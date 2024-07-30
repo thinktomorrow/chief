@@ -59,7 +59,7 @@ class TableComponent extends Component
 
     public function getTable(): Table
     {
-        if(! $this->table) {
+        if (!$this->table) {
             $this->table = $this->tableReference->getTable();
         }
 
@@ -73,14 +73,13 @@ class TableComponent extends Component
 
     public function render()
     {
-        return view('chief-table-new::livewire.table', [
-        ]);
+        return view('chief-table-new::livewire.table', []);
     }
 
     public function getResults(): Collection|PaginatorContract
     {
         // Query source
-        if($this->getTable()->hasQuery()) {
+        if ($this->getTable()->hasQuery()) {
             $builder = $this->getTable()->getQuery()();
 
             $this->applyQueryFilters($builder);
@@ -90,7 +89,7 @@ class TableComponent extends Component
         }
 
         // Collection source
-        if($rows = $this->getTable()->getRows()) {
+        if ($rows = $this->getTable()->getRows()) {
             $rows = $this->applyCollectionFilters($rows);
             $rows = $this->applyCollectionSorters($rows);
 
@@ -105,13 +104,13 @@ class TableComponent extends Component
         $this->areResultsAsTree = false;
 
         // Show tree structure when there are no sorters active
-        if($this->shouldReturnResultsAsTree()) {
+        if ($this->shouldReturnResultsAsTree()) {
             $this->areResultsAsTree = true;
 
             return $this->getResultsAsTree($builder, $this->getTable()->getTreeReference());
         }
 
-        if(! $this->hasPagination()) {
+        if (!$this->hasPagination()) {
             return $builder->get();
         }
 
@@ -130,7 +129,7 @@ class TableComponent extends Component
 
     private function returnCollectionResults(Collection $rows): Collection|PaginatorContract
     {
-        if(! $this->hasPagination()) {
+        if (!$this->hasPagination()) {
             return $rows;
         }
 
@@ -155,7 +154,7 @@ class TableComponent extends Component
 
         $this->ancestors = $ancestors;
 
-        if(! $this->hasPagination()) {
+        if (!$this->hasPagination()) {
             return collect($treeModels);
         }
 
@@ -167,7 +166,7 @@ class TableComponent extends Component
 
     private function shouldReturnResultsAsTree(): bool
     {
-        if(count($this->getActiveFilters()) > 0) {
+        if (count($this->getActiveFilters()) > 0) {
             return false;
         }
 
@@ -187,10 +186,15 @@ class TableComponent extends Component
      */
     public function getRowKey($model): string
     {
-        if(is_array($model)) {
+        if (is_array($model)) {
             return md5(print_r($model, true));
         }
 
         return (string) $model->getKey();
+    }
+
+    public function paginationView()
+    {
+        return 'chief::pagination.livewire-default';
     }
 }

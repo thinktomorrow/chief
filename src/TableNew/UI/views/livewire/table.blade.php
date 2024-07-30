@@ -124,14 +124,14 @@
                         @include('chief-table-new::rows.default', ['item' => $item])
                     @endforeach
                 @else
-                    @include('chief-table-new::rows.empty')
+                    @include('chief-table-new::rows.no-results')
                 @endif
             </tbody>
         </table>
 
         @if ($this->hasPagination() && $results->total() > $results->count())
-            <div class="px-4 py-2">
-                {{ $results->links() }}
+            <div class="px-4 py-3">
+                {{ $results->onEachSide(0)->links() }}
             </div>
         @endif
     </div>
