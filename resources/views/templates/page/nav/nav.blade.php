@@ -14,10 +14,7 @@
 </div>
 
 {{-- Navigation --}}
-<div
-    data-mobile-navigation
-    class="fixed inset-0 hidden animate-slide-in-nav bg-grey-50/90 lg:static lg:block lg:animate-none"
->
+<div data-mobile-navigation class="fixed inset-0 hidden animate-slide-in-nav lg:static lg:block lg:animate-none">
     <div
         data-collapsible-navigation
         class="flex h-screen select-none flex-col justify-between gap-y-9 overflow-y-auto py-6 pl-4"

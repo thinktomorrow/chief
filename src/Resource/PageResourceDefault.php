@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Modals\ConfirmModal;
 use Thinktomorrow\Chief\Forms\Modals\Modal;
 use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -36,7 +35,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (! $this->manager->can('index')) {
+        if (!$this->manager->can('index')) {
             return null;
         }
 
@@ -50,7 +49,7 @@ trait PageResourceDefault
 
     private function assertManager(): void
     {
-        if (! $this->manager) {
+        if (!$this->manager) {
             throw new RuntimeException('For calling this method a Manager instance should be set to this resource.');
         }
     }
@@ -66,27 +65,27 @@ trait PageResourceDefault
             ->bulkActions([
                 Action::make('tag')
                     ->label('Tag deze selectie')
-
-                    // MODAL
                     ->modal(
                         Modal::make('tagModal')
-                            ->title('Tag')
-                            ->subtitle('Tag alle pagina')
+                            ->title('Voeg tags toe aan selectie')
+                            // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
+                            ->subTitle('3 items geselecteerd')
+                            ->content('
+                                <p>
+                                    Tags helpen je om pagina\'s te groeperen en te filteren.
+                                    Kies alle tags die je wil toevoegen aan deze pagina\'s.
+                                </p>
+                            ')
                             ->form([
                                 MultiSelect::make('tags')
                                     ->multiple()
                                     ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                             ])
-                            ->button('Exporteer')
-                    )
-
-                    ->effect(function ($formData, $data) {
+                            ->button('Toevoegen')
+                    )->effect(function ($formData, $data) {
                         dd($formData, $data);
-
                         // All models...
-
                         app(TaggableRepository::class)->syncTags($_model, (array)($formData['tags'] ?? []));
-
                         return 'export';
                     }),
             ])
@@ -108,7 +107,7 @@ trait PageResourceDefault
                     )
 
                     // CONFIRM MODAL
-                        //->modal(ConfirmModal::make())
+                    //->modal(ConfirmModal::make())
                     //->confirm('Weet je zeker dat je deze pagina wilt exporteren?', 'Ben je zeker?', 'Ja, Exporteer')
 
                     ->hidden()
@@ -204,7 +203,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (! $this->manager->can('index')) {
+        if (!$this->manager->can('index')) {
             return null;
         }
 
@@ -218,7 +217,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
+        $suffix = $model instanceof StatefulContract && !$model->inOnlineState() ? ' [offline]' : '';
 
         return $this->getPageTitle($model) . $suffix;
     }

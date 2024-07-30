@@ -1,6 +1,7 @@
-<th scope="col" class="py-2 pl-3 text-left">
+<th x-show="selection.length == 0" scope="col" class="py-2 pl-3 text-left">
     <span class="group inline-flex items-start gap-0.5 text-sm/5 font-medium text-grey-950">
         {{ $getLabel }}
+
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"

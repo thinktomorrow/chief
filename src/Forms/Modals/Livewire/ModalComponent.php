@@ -45,7 +45,7 @@ class ModalComponent extends Component
 
     private function getModal(): Modal
     {
-        if(! $this->modal) {
+        if (!$this->modal) {
             $this->modal = $this->modalReference->getModal();
         }
 
@@ -54,7 +54,7 @@ class ModalComponent extends Component
 
     public function getTitle()
     {
-        return 'Modal title';
+        return $this->getModal()->getTitle();
     }
 
     public function getFields(): iterable

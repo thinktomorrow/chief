@@ -2,6 +2,7 @@
     'wired',
     'size' => 'md',
     'title' => null,
+    'subtitle' => null,
     'header' => null,
     'footer' => null,
 ])
@@ -17,60 +18,84 @@
             {{ isset($wired) ? '$wire.close()' : '$data.open = false;' }}
         },
         toggleInnerShadows() {
-            if($refs.container.scrollTop !== 0) {
+            if ($refs.container.scrollTop !== 0) {
                 $refs.headerShadow.classList.remove('opacity-0')
             } else {
                 $refs.headerShadow.classList.add('opacity-0')
             }
-            if($refs.container.scrollTop !== $refs.container.scrollHeight - $refs.container.clientHeight) {
+            if (
+                $refs.container.scrollTop !==
+                $refs.container.scrollHeight - $refs.container.clientHeight
+            ) {
                 $refs.footerShadow.classList.remove('opacity-0')
             } else {
                 $refs.footerShadow.classList.add('opacity-0')
             }
-        }
+        },
     }"
-    x-on:open-dialog.window="if($el.id === $event.detail.id) { open = true; }"
+    x-on:open-dialog.window="
+        if ($el.id === $event.detail.id) {
+            open = true
+        }
+    "
     x-on:resize.debounce.250ms.window="toggleInnerShadows()"
-    x-init="$watch('open', value => { if(value) $nextTick(() => toggleInnerShadows()) })"
+    x-init="
+        $watch('open', (value) => {
+            if (value) $nextTick(() => toggleInnerShadows())
+        })
+    "
 >
     <div
         x-on:click="close()"
-        class="absolute inset-0 cursor-pointer bg-black/20 backdrop-filter backdrop-blur-sm animate-dialog-fade-in"
+        class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-black/20 backdrop-blur-sm backdrop-filter"
     ></div>
 
-    <div class="container relative inline-flex justify-center pointer-events-none max-w-screen-2xl">
-        <div @class([
-            'bg-white ring-1 ring-inset ring-grey-100 rounded-xl shadow pointer-events-auto animate-dialog-pop-in overflow-hidden',
-            'w-xs' => $size === 'xs',
-            'w-sm' => $size === 'sm',
-            'w-md' => $size === 'md',
-            'w-lg' => $size === 'lg',
-            'w-xl' => $size === 'xl',
-            'w-2xl' => $size === '2xl',
-        ])>
+    <div class="container pointer-events-none relative inline-flex max-w-screen-2xl justify-center">
+        <div
+            @class([
+                'pointer-events-auto animate-dialog-pop-in overflow-hidden rounded-2xl rounded-xl bg-white shadow-lg ring-1 ring-black/5',
+                'w-96' => $size === 'xxs',
+                'w-xs' => $size === 'xs',
+                'w-sm' => $size === 'sm',
+                'w-md' => $size === 'md',
+                'w-lg' => $size === 'lg',
+                'w-xl' => $size === 'xl',
+                'w-2xl' => $size === '2xl',
+            ])
+        >
             <div
                 x-ref="container"
                 x-on:scroll="toggleInnerShadows()"
-                class="relative overflow-auto max-h-[calc(100vh-4rem)] transition-all duration-150 ease-in-out shadow-black/5"
+                class="relative max-h-[calc(100vh-4rem)] overflow-auto shadow-black/5 transition-all duration-150 ease-in-out"
             >
                 <header class="sticky top-0 z-[1]">
-                    @if($title || $header)
-                        <div class="px-8 pt-8 pb-6 space-y-4 bg-white/[0.85] backdrop-filter backdrop-blur-md">
-                            @if($title)
+                    @if ($title || $header || $subtitle)
+                        <div class="space-y-4 bg-white/[0.85] px-6 pb-4 pt-6 backdrop-blur-md backdrop-filter">
+                            @if ($title || $subtitle)
                                 <div class="flex items-start justify-between gap-4">
-                                    <h2 class="text-lg font-medium leading-5 text-black">
-                                        {{ $title }}
-                                    </h2>
+                                    <div class="space-y-1">
+                                        @if ($title)
+                                            <h2 class="text-lg font-medium leading-5 text-black">
+                                                {{ $title }}
+                                            </h2>
+                                        @endif
+
+                                        @if ($subtitle)
+                                            <p class="body text-sm leading-5 text-grey-500">
+                                                {{ $subtitle }}
+                                            </p>
+                                        @endif
+                                    </div>
 
                                     <button type="button" x-on:click="close()" class="ml-auto shrink-0">
-                                        <svg class="w-5 h-5 text-grey-400 hover:body-dark">
+                                        <svg class="hover:body-dark h-5 w-5 text-grey-400">
                                             <use xlink:href="#icon-x-mark"></use>
                                         </svg>
                                     </button>
                                 </div>
                             @endif
 
-                            @if($header)
+                            @if ($header)
                                 <div {{ $header->attributes }}>
                                     {{ $header }}
                                 </div>
@@ -80,26 +105,28 @@
 
                     <div
                         x-ref="headerShadow"
-                        class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -bottom-8"
+                        class="pointer-events-none absolute -bottom-8 left-0 right-0 h-8 overflow-hidden opacity-0 transition-opacity duration-150 ease-in-out"
                     >
                         <div class="h-8 -translate-y-8 bg-black/20 blur"></div>
                     </div>
                 </header>
 
-                <div @class(['relative px-8', 'pt-6' => !$header && !$title, 'pb-6' => !$footer])>
+                <div @class(['relative px-6', 'pt-4' => ! $header && ! $title, 'pb-6' => ! $footer])>
                     {{ $slot }}
                 </div>
 
                 <footer class="sticky bottom-0 z-[1]">
                     <div
                         x-ref="footerShadow"
-                        class="absolute left-0 right-0 h-8 overflow-hidden transition-opacity duration-150 ease-in-out opacity-0 pointer-events-none -top-8"
+                        class="pointer-events-none absolute -top-8 left-0 right-0 h-8 overflow-hidden opacity-0 transition-opacity duration-150 ease-in-out"
                     >
                         <div class="h-8 translate-y-8 bg-black/20 blur"></div>
                     </div>
 
-                    @if($footer)
-                        <div {{ $footer->attributes->class(['px-8 pb-8 pt-6 bg-white/[0.85] backdrop-filter backdrop-blur-md flex flex-wrap justify-end gap-3']) }}>
+                    @if ($footer)
+                        <div
+                            {{ $footer->attributes->class(['flex flex-wrap justify-end gap-2 bg-white/[0.85] px-6 pb-8 pt-6 backdrop-blur-md backdrop-filter']) }}
+                        >
                             {{ $footer }}
                         </div>
                     @endif
