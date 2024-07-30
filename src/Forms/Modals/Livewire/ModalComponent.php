@@ -45,7 +45,7 @@ class ModalComponent extends Component
 
     private function getModal(): Modal
     {
-        if (!$this->modal) {
+        if (! $this->modal) {
             $this->modal = $this->modalReference->getModal();
         }
 

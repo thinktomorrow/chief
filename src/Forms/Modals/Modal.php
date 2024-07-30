@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Modals;
 
-use Livewire\Wireable;
 use Illuminate\Support\Str;
+use Livewire\Wireable;
+use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
+use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
-use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
-use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Modals\Concerns\HasButton;
 use Thinktomorrow\Chief\Forms\Modals\Concerns\HasContent;
 use Thinktomorrow\Chief\Forms\Modals\Concerns\HasSubTitle;

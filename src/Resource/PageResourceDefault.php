@@ -35,7 +35,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (!$this->manager->can('index')) {
+        if (! $this->manager->can('index')) {
             return null;
         }
 
@@ -49,7 +49,7 @@ trait PageResourceDefault
 
     private function assertManager(): void
     {
-        if (!$this->manager) {
+        if (! $this->manager) {
             throw new RuntimeException('For calling this method a Manager instance should be set to this resource.');
         }
     }
@@ -86,6 +86,7 @@ trait PageResourceDefault
                         dd($formData, $data);
                         // All models...
                         app(TaggableRepository::class)->syncTags($_model, (array)($formData['tags'] ?? []));
+
                         return 'export';
                     }),
             ])
@@ -203,7 +204,7 @@ trait PageResourceDefault
     {
         $this->assertManager();
 
-        if (!$this->manager->can('index')) {
+        if (! $this->manager->can('index')) {
             return null;
         }
 
@@ -217,7 +218,7 @@ trait PageResourceDefault
 
     public function getPageTitleForSelect($model): string
     {
-        $suffix = $model instanceof StatefulContract && !$model->inOnlineState() ? ' [offline]' : '';
+        $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
 
         return $this->getPageTitle($model) . $suffix;
     }
