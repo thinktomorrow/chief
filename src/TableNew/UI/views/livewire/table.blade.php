@@ -1,5 +1,6 @@
 @php
     $results = $this->getResults();
+    $resultCount = count($results);
     $total = method_exists($results, 'total') ? $results->total() : $results->count();
 @endphp
 
@@ -48,10 +49,10 @@
                     this.$refs.tableHeaderCheckbox.indeterminate = false
                 }
 
-                this.storeSelection();
+                this.storeSelection()
             },
             storeSelection() {
-                $wire.storeBulkSelection(this.selection);
+                $wire.storeBulkSelection(this.selection)
             },
             init() {
                 this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
@@ -74,8 +75,8 @@
                         this.selection = []
                     }
 
-                    this.storeSelection();
-                });
+                    this.storeSelection()
+                })
             },
         }"
         class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
@@ -109,11 +110,22 @@
             </thead>
 
             <tbody class="divide-y divide-grey-200">
-                @includeWhen(count($this->getAncestors()) > 0, 'chief-table-new::rows.ancestor', ['ancestors' => $this->getAncestors()])
+                @includeWhen(
+                    count($this->getAncestors()) > 0,
+                    'chief-table-new::rows.ancestor',
+                    [
+                        'ancestors' => $this->getAncestors(),
+                        'resultCount' => $resultCount,
+                    ]
+                )
 
-                @foreach ($results as $item)
-                    @include('chief-table-new::rows.default', ['item' => $item])
-                @endforeach
+                @if ($resultCount > 0)
+                    @foreach ($results as $item)
+                        @include('chief-table-new::rows.default', ['item' => $item])
+                    @endforeach
+                @else
+                    @include('chief-table-new::rows.empty')
+                @endif
             </tbody>
         </table>
 

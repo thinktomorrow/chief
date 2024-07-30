@@ -27,7 +27,7 @@
         }
 
         & > .bui-btn-content {
-            @apply px-0.5 text-sm leading-[1.125rem];
+            @apply px-[0.1875rem] text-sm leading-[1.125rem];
         }
     }
 

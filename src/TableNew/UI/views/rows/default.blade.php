@@ -5,7 +5,7 @@
 >
     <td
         class="relative py-1.5 pl-4 text-left"
-        :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-0.5 before:bg-primary-500': selection.includes('{{ $this->getRowKey($item) }}') }"
+        :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-px before:bg-primary-500': selection.includes('{{ $this->getRowKey($item) }}') }"
     >
         <div class="flex min-h-6 items-center">
             <x-chief::input.checkbox
