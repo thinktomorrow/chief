@@ -21,9 +21,13 @@ class ExportAllCommand extends BaseCommand
         $resourceKeys = array_keys(app(Registry::class)->pageResources());
 
         foreach ($resourceKeys as $resourceKey) {
-            $this->call('chief:export-resource', [
-                'resource' => $resourceKey,
-            ]);
+            try{
+                $this->call('chief:export-resource', [
+                    'resource' => $resourceKey,
+                ]);
+            } catch (\Exception $e) {
+                $this->error('Failed to export resource ' . $resourceKey .'. Reason: ' . $e->getMessage());
+            }
         }
 
         $this->call('chief:export-menu');
