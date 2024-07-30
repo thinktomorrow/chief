@@ -11,7 +11,6 @@ use Illuminate\Validation\Factory;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
 use Thinktomorrow\Chief\Assets\App\UpdateFileField;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\AllowsExternalFiles;
