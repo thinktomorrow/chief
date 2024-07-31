@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+- Changed: Exports are now stored in the `storage/app/exports` folder.
 
 ## 0.8.22 - 2024-07-30
 - Fixed: Issue where asset field values weren't saved on asset creation.
