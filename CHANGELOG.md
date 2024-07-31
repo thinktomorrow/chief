@@ -5,7 +5,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+
+## 0.8.22 - 2024-07-30
 - Fixed: Issue where asset field values weren't saved on asset creation.
+
+## 0.8.21 - 2024-07-29
 - Fixed: Import issue where text import of non-string values, like numbers would break squanto translations.
 - Fixed: Import issue where menu headers are not labeled as expected. Now throws an error on import.
 
