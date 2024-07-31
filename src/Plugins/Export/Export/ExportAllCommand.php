@@ -21,7 +21,7 @@ class ExportAllCommand extends BaseCommand
         $resourceKeys = array_keys(app(Registry::class)->pageResources());
 
         foreach ($resourceKeys as $resourceKey) {
-            try{
+            try {
                 $this->call('chief:export-resource', [
                     'resource' => $resourceKey,
                 ]);
