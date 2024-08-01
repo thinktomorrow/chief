@@ -59,8 +59,8 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
             ->ignoreFragments($this->ignoredSharedFragments)
             ->ignoreNonLocalized($this->ignoreNonLocalized)
             ->ignoreEmptyValues()
-            ->ignoreOfflineFragments()
             ->ignoreFieldKeys(['url'])
+            ->ignoreOfflineFragments()
             ->compose($this->resource, $row, $this->locales);
 
         // Add the new shared fragments to our ignored list
