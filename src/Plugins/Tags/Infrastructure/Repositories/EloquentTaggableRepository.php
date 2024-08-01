@@ -10,7 +10,7 @@ class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\Ap
     {
         // Create array for a combination of taggable and tag ids
         $matrix = collect($taggableIds)->crossJoin($tagIds);
-dd($taggableIds, $tagIds, $matrix->all());
+        dd($taggableIds, $tagIds, $matrix->all());
 
 
 
