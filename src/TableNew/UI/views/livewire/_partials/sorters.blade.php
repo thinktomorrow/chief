@@ -2,7 +2,7 @@
 
     @if (count($this->getActiveFilters()) > 0)
         <button type="button" class="mt-[0.1875rem]">
-            <x-chief-table-new::button wire:click="clearFilters" color="grey" size="sm">
+            <x-chief-table-new::button wire:click="resetFilters" color="grey" size="sm">
                 Reset filters
             </x-chief-table-new::button>
         </button>
