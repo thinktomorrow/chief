@@ -43,6 +43,13 @@ class ModalComponent extends Component
         $this->isOpen = true;
     }
 
+    public function close()
+    {
+        $this->resetExcept(['parentId']);
+
+        $this->isOpen = false;
+    }
+
     private function getModal(): Modal
     {
         if (! $this->modal) {
