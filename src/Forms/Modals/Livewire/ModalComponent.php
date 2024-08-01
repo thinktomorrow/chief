@@ -64,17 +64,22 @@ class ModalComponent extends Component
 
     public function getSubTitle()
     {
-        return $this->getModal()->getSubTitle();
+        return str_replace(':count', $this->getItemsCount(), $this->getModal()->getSubTitle());
     }
 
     public function getContent()
     {
-        return $this->getModal()->getContent();
+        return str_replace(':count', $this->getItemsCount(), $this->getModal()->getContent());
     }
 
     public function getButton()
     {
         return $this->getModal()->getButton();
+    }
+
+    private function getItemsCount(): int
+    {
+        return count($this->data['items'] ?? []);
     }
 
     public function save()
@@ -98,7 +103,7 @@ class ModalComponent extends Component
 
         //$this->getModal()->getEffect()($model, $data);
 
-        $this->reset();
+        $this->resetExcept(['parentId']);
 
         $this->close();
     }

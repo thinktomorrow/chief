@@ -54,6 +54,7 @@ class TableComponent extends Component
     {
         return [
             'modalSaved-' . $this->getId() => 'onActionModalSaved',
+            'requestRefresh' => '$refresh',
         ];
     }
 

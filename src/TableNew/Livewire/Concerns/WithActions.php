@@ -68,22 +68,20 @@ trait WithActions
             $values['form'],
             $values['data']
         );
-
-        $action = $this->getTable()->findAction($values['modalReference']['actionKey']);
     }
 
     private function applyActionEffect(string $key, array $formData, array $data = [])
     {
         $action = $this->getTable()->findAction($key);
 
-        // Compose Modal
-
-        // Effect?
-
         if ($action->hasEffect()) {
             // Pass model or model ids or nothing
             $action->getEffect()($formData, $data);
         }
+
+        $this->dispatch('requestRefresh')->self();
+
+        // Dispatch event for notification to user... or to refresh the table
     }
 
     public function openActionModal($params)

@@ -69,7 +69,7 @@ trait PageResourceDefault
                         Modal::make('tagModal')
                             ->title('Voeg tags toe aan selectie')
                             // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
-                            ->subTitle('3 items geselecteerd')
+                            ->subTitle(':count items geselecteerd')
                             ->content('
                                 <p>
                                     Tags helpen je om pagina\'s te groeperen en te filteren.
@@ -83,9 +83,8 @@ trait PageResourceDefault
                             ])
                             ->button('Toevoegen')
                     )->effect(function ($formData, $data) {
-                        dd($formData, $data);
-                        // All models...
-                        app(TaggableRepository::class)->syncTags($_model, (array)($formData['tags'] ?? []));
+
+                        app(TaggableRepository::class)->attachTags($data['items'], (array)($formData['tags'] ?? []));
 
                         return 'export';
                     }),
@@ -145,6 +144,7 @@ trait PageResourceDefault
                 ColumnText::make('title')->label('Titel')->link(function ($model) {
                     return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
                 }),
+                ColumnBadge::make('tags.label')->label('tags'),
                 // ColumnText::make('seo_title')->label('SEO Titel'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
