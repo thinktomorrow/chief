@@ -12,7 +12,7 @@ class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\Ap
         $matrix = collect($taggableIds)->crossJoin($tagIds);
 dd($taggableIds, $tagIds, $matrix->all());
 
-        
+
 
         // Attach tag to pivot if it doesn't exist yet
         foreach ($taggableIds as $taggableId) {
