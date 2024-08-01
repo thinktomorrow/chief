@@ -1,13 +1,13 @@
 <div class="flex items-start justify-end gap-2">
-    {{--
-        @if (count($this->filters) > 0)
+
+    @if (count($this->getActiveFilters()) > 0)
         <button type="button" class="mt-[0.1875rem]">
-        <x-chief-table-new::button wire:click="clearFilters" color="grey" size="sm">
-        Reset sortering
-        </x-chief-table-new::button>
+            <x-chief-table-new::button wire:click="clearFilters" color="grey" size="sm">
+                Reset filters
+            </x-chief-table-new::button>
         </button>
-        @endif
-    --}}
+    @endif
+
 
     @if (count($this->getSortersForView()) > 1)
         <button id="table-sorting" type="button">

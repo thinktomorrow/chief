@@ -83,6 +83,14 @@ trait WithFilters
         }
 
         $this->resetPage($this->getPaginationId());
+
+        // Allow Alpine to listen to this event
+        $this->dispatch($this->getFiltersUpdatedEvent());
+    }
+
+    public function getFiltersUpdatedEvent(): string
+    {
+        return 'filters-updated-' . strtolower($this->getId());
     }
 
     /**

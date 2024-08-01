@@ -17,9 +17,9 @@
             this.$refs.optionMarker.style.width = optionElement.offsetWidth + 'px'
             this.$refs.optionMarker.style.left = optionElement.offsetLeft + 'px'
         },
-        init() {
+        repositionCheckedOptionMarker() {
             $nextTick(() => {
-                activeRadio = Array.from(this.$root.querySelectorAll('input')).find(
+                const activeRadio = Array.from(this.$root.querySelectorAll('input')).find(
                     (radio) => radio.checked,
                 )
 
@@ -28,7 +28,11 @@
                 }
             })
         },
+        init() {
+            this.repositionCheckedOptionMarker();
+        },
     }"
+    x-on:{{ $this->getFiltersUpdatedEvent() }}.window="repositionCheckedOptionMarker"
     class="rounded-[0.625rem] border-2 border-grey-100 bg-grey-100"
 >
     <div class="relative flex items-start justify-start">
