@@ -16,7 +16,7 @@ class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\Ap
 
         // insertIfNotExists($matrix, function ($taggableId, $tagId) {
 
-// INSERT INTO table_name (column1, column2, ...) SELECT value1, value2, ... WHERE NOT EXISTS ( SELECT 1 FROM table_name WHERE condition );
+        // INSERT INTO table_name (column1, column2, ...) SELECT value1, value2, ... WHERE NOT EXISTS ( SELECT 1 FROM table_name WHERE condition );
 
         //place with your actual model // Define the data you want to insert $data = [ 'username' => 'value1', 'passaword' => 'value2' ]; // Write the raw SQL query $query = "INSERT INTO users (username, passaword) SELECT :username WHERE NOT EXISTS ( SELECT 1 FROM users WHERE username = :column1 )"; // Execute the raw SQL query DB::statement($query, $dataToInsert);
 

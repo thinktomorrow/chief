@@ -7,8 +7,6 @@ use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
-use Thinktomorrow\Chief\TableNew\Columns\Column;
-use Thinktomorrow\Chief\TableNew\Columns\Header;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasBulkActions;
