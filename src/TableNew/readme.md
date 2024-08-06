@@ -24,3 +24,6 @@
 - tree perf: https://chatgpt.com/c/33fad494-cb94-44c0-95eb-10d7e9c92d82
 - volgorde in tree sorting in hanolux klopt nog niet...
 - Setting tree sorting (in Table::query()) should also be done when a custom query is passed like Page::online() instead of the resourcekey.
+
+## API
+- Allow for easy Table setup with string definitions instead of classes: for columns, filters and sorters. Only should use the classes for specific demands

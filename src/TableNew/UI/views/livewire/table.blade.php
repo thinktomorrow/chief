@@ -10,7 +10,7 @@
         <div class="flex items-start justify-between gap-4">
             {{-- TODO(ben): make main actions dynamic --}}
             <div class="todo-ben">
-                {{ $this->getFilters()[1]->render() }}
+{{--                {{ $this->getFilters()[1]->render() }}--}}
             </div>
 
             <div class="flex items-center justify-end gap-2">

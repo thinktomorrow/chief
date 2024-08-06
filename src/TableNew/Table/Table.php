@@ -12,6 +12,9 @@ use Thinktomorrow\Chief\TableNew\Columns\Header;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasBulkActions;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasColumns;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasFilters;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasHeaders;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasPagination;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRowActions;
@@ -30,18 +33,16 @@ class Table extends Component
     /** Base Query for all table data */
     use HasQuery;
     use HasRows;
+    use HasFilters;
     use HasSorters;
+    use HasHeaders;
+    use HasColumns;
     use HasPagination;
     use HasActions;
     use HasBulkActions;
     use HasRowActions;
 
     protected string $view = 'chief-table-new::index';
-
-    private array $headers = [];
-    private array $columns = [];
-    private array $filters = [];
-    private array $defaultSorters = [];
 
     public static function make()
     {
@@ -52,6 +53,7 @@ class Table extends Component
     {
         // A resource key can be passed to automatically resolve the query
         if(is_string($query) && $modelClassName = app(Registry::class)->resource($query)?->modelClassName()) {
+            $resourceKey = $query;
             $query = function () use ($modelClassName) {
                 return $modelClassName::query();
             };
@@ -59,9 +61,7 @@ class Table extends Component
             // Is this a nestable model?
             // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
             if (in_array(Nestable::class, class_implements($modelClassName))) {
-                $resourceKey = app(Registry::class)->findResourceByModel($modelClassName)::resourceKey();
                 $this->setTreeReference($resourceKey);
-
                 $this->addDefaultTreeSorting();
             }
         }
@@ -69,51 +69,6 @@ class Table extends Component
         $this->query = $query;
 
         return $this;
-    }
-
-    public function headers(array $headers): static
-    {
-        $this->headers = array_map(fn ($header) => (! $header instanceof Header) ? Header::make($header) : $header, $headers);
-
-        return $this;
-    }
-
-    public function getHeaders(): array
-    {
-        return $this->headers;
-    }
-
-    public function columns(array $columns): static
-    {
-        $this->columns = array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns);
-
-        // If no headers are explicitly set, we will use the column labels as headers
-        if (empty($this->headers)) {
-            $this->headers = collect($this->columns)
-                ->reject(fn ($column) => empty($column->getItems()))
-                ->map(fn ($column) => Header::make($column->getItems()[0]->getLabel()))
-                ->all();
-        }
-
-        return $this;
-    }
-
-    public function getColumns($model): array
-    {
-        return $this->columns;
-    }
-
-    public function filters(array $filters = []): static
-    {
-        // How to assign: primary, hidden,
-        $this->filters = array_merge($this->filters, $filters);
-
-        return $this;
-    }
-
-    public function getFilters(): array
-    {
-        return $this->filters;
     }
 
     public function getView(): string
@@ -128,44 +83,3 @@ class Table extends Component
         return $this;
     }
 }
-//
-//Table::make()
-////    ->columns('title', 'status', 'created_at')
-//    ->headers([
-//        'title' => 'Titel',
-//        'status' => 'Status',
-//        'created_at' => 'Aangemaakt op',
-//    ])
-////    ->columns(function ($model) {
-////        return [
-////            $model->title,
-////            $this->createStateLabel($model->current_state),
-////            '<span class="text-sm text-grey-500">' . $model->updated_at->format('d/m/y H:m') . '</span>',
-////        ];
-////    })
-//    ->filters([
-//    SelectFilter::make('status', function ($query) {
-//        $query->where('status', 'published');
-//    })->options([
-//        'published' => 'Published',
-//        'draft' => 'Draft',
-//        'archived' => 'Archived',
-//    ]),
-////        ->displayAsPrimary()->displayInDropdown(),
-//    TextFilter::make('title', function ($query, $value) {
-//        $query->where('title', 'like', '%'.$value.'%');
-//    }),
-////    TextFilter::make('title')
-////        ->query(function ($query, $value) {
-////            $query->where('title', 'like', '%'.$value.'%');
-////        })
-////        ->label('Titel')
-////        ->displayAsPrimary()
-//])->sorters([
-//    'title' => [
-//        'type' => 'text',
-//    ],
-//    'created_at' => [
-//        'type' => 'date',
-//    ],
-//])->paginate(20);

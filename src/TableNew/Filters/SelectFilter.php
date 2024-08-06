@@ -19,4 +19,9 @@ class SelectFilter extends Filter
     {
         return PairOptions::convertOptionsToChoices($this->getOptions($locale));
     }
+
+    private function getOptionsCallableParameters(?string $locale = null): array
+    {
+        return [$this, $locale];
+    }
 }

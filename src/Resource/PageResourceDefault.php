@@ -134,6 +134,7 @@ trait PageResourceDefault
                     'draft' => 'Offline',
                     'archived' => 'Gearchiveerd',
                 ])->value(''),
+                //SelectFilter::make('brands')->label('Status')->options(),
                 SelectFilter::make('current_state')->label('Status')->options([
                     'published' => 'Online',
                     'draft' => 'Offline',

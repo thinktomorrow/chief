@@ -21,7 +21,7 @@ trait HasRows
         $rows = $this->rows;
 
         if (is_callable($rows)) {
-            $rows = call_user_func_array($rows, [$this, $this->getModel()]);
+            $rows = call_user_func_array($rows, [$this]);
         }
 
         return $rows;

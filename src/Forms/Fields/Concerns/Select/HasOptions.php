@@ -36,7 +36,7 @@ trait HasOptions
         $options = $this->options;
 
         if (is_callable($options)) {
-            $options = call_user_func_array($options, [$this, $this->getModel(), $locale]);
+            $options = call_user_func_array($options, $this->getOptionsCallableParameters($locale));
         }
 
         if ($this->sanitizeOptions) {
@@ -44,5 +44,10 @@ trait HasOptions
         }
 
         return $options;
+    }
+
+    private function getOptionsCallableParameters(?string $locale = null): array
+    {
+        return [$this, $this->getModel(), $locale];
     }
 }
