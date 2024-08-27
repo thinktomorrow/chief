@@ -78,15 +78,16 @@ trait PageResourceDefault
                             ')
                             ->form([
                                 MultiSelect::make('tags')
+                                    ->required()
                                     ->multiple()
                                     ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                             ])
                             ->button('Toevoegen')
                     )->effect(function ($formData, $data) {
 
-                        app(TaggableRepository::class)->attachTags($data['items'], (array)($formData['tags'] ?? []));
+                        // TODO: make tags repo work for attach and detach multiple models
+                        //app(TaggableRepository::class)->attachTags($data['items'], (array)($formData['tags'] ?? []));
 
-                        return 'export';
                     }),
             ])
             ->actions([

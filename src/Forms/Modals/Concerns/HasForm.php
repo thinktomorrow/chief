@@ -6,9 +6,34 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
-trait InteractsWithForm
+trait HasForm
 {
     public array $form = [];
+
+    public function addFormData(array $data): void
+    {
+        $this->form = array_merge($this->form, $data);
+    }
+
+    public function setFormData(array $data): void
+    {
+        $this->form = $data;
+    }
+
+    public function getFormData(): array
+    {
+        return $this->form;
+    }
+
+    public function getFormValue(string $key): mixed
+    {
+        return data_get($this->form, $key);
+    }
+
+    public function setFormValue(string $key, mixed $value): void
+    {
+        data_set($this->form, $key, $value);
+    }
 
     /**
      * Validation is performed for all fields
@@ -18,9 +43,6 @@ trait InteractsWithForm
     {
         list($rules, $messages, $validationAttributes) = $this->createValidation($rules, $messages, $validationAttributes);
 
-        /**
-         * Livewire errors out when validation is run without any rules passed
-         */
         if (! $rules) {
             return;
         }

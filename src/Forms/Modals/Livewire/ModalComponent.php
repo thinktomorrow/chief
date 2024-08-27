@@ -4,13 +4,13 @@ namespace Thinktomorrow\Chief\Forms\Modals\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Modals\Concerns\InteractsWithForm;
+use Thinktomorrow\Chief\Forms\Modals\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Modals\Modal;
 
 class ModalComponent extends Component
 {
     use ShowsAsDialog;
-    use InteractsWithForm;
+    use HasForm;
 
     public $parentId;
 
