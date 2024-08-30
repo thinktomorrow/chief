@@ -1,0 +1,19 @@
+{
+    "plugins": ["prettier-plugin-blade", "prettier-plugin-tailwindcss"],
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "tailwindConfig": "./resources/assets/css/tailwind.config.js",
+    "tailwindPreserveDuplicates": true,
+    "trailingComma": "es5",
+    "overrides": [
+        {
+            "files": ["*.blade.php"],
+            "options": {
+                "parser": "blade",
+                "wrapAttributes": "preserve"
+            }
+        }
+    ]
+}
