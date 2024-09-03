@@ -25,7 +25,13 @@ const Selectlist = (config) => ({
     init() {
         this.$nextTick(() => {
             this.updateSelectOptions();
-            this.hideSelectBox();
+
+            if (this.selection.length === 0) {
+                this.showSelectBox();
+            } else {
+                this.hideSelectBox();
+            }
+
             this.hideSelectBoxWhenUnfocused();
             this.preserveSearchTerm();
         });
@@ -76,6 +82,9 @@ const Selectlist = (config) => ({
     updateSelectOptions() {
         this.$el.choices.clearStore();
         this.$el.choices.setChoices(this.filteredOptions);
+    },
+    get allowSelectBox() {
+        return this.filteredOptions.length > 0;
     },
     showSelectBox() {
         this.$el.choices.containerOuter.element.classList.remove('hidden');
