@@ -301,7 +301,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        if(method_exists($fragmentable, 'beforeCreate')) {
+        if (method_exists($fragmentable, 'beforeCreate')) {
             $fragmentable->beforeCreate($owner, $order);
         }
 

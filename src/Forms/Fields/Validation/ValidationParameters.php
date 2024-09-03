@@ -75,8 +75,8 @@ class ValidationParameters
             ->dotted()
             ->matrix($this->source->getName(), $this->source->getLocales());
 
-        if($this->multiple) {
-            foreach($keys as $i => $key) {
+        if ($this->multiple) {
+            foreach ($keys as $i => $key) {
                 $keys[$i] = $key . '.*';
             }
         }
