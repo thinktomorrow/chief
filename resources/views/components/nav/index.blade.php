@@ -7,17 +7,6 @@
     'prepend',
 ])
 
-@if ($title)
-    <div
-        data-toggle-classes="hidden"
-        class="px-2 mb-2 mt-6 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
-    >
-        <span class="text-xs font-medium body text-grey-500">
-            {{ ucfirst($title) }}
-        </span>
-    </div>
-@endif
-
 @if (!isset($inline) && $items->count() > 0)
     @php
         $icon = (($firstItem = $items->first()) && $firstItem->icon())
@@ -32,6 +21,17 @@
             }
         }
     @endphp
+
+    @if ($title)
+        <div
+            data-toggle-classes="hidden"
+            class="px-2 mb-2 mt-6 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
+        >
+        <span class="text-xs font-medium body text-grey-500">
+            {{ ucfirst($title) }}
+        </span>
+        </div>
+    @endif
 
     <x-chief::nav.item
         label="{{ $label }}"
@@ -55,6 +55,18 @@
         @endif
     </x-chief::nav.item>
 @elseif ($items->count() > 0)
+
+    @if ($title)
+        <div
+            data-toggle-classes="hidden"
+            class="px-2 mb-2 mt-6 {{ $isCollapsedOnPageLoad ? 'hidden' : '' }}"
+        >
+        <span class="text-xs font-medium body text-grey-500">
+            {{ ucfirst($title) }}
+        </span>
+        </div>
+    @endif
+
     @if (!isset($append))
         {{ $slot }}
     @endif

@@ -9,6 +9,7 @@ principles.
 -   Changed: Exports are now stored in the `storage/app/exports` folder.
 -   Changed: squanto is now using the project editor styling and scripts.
 -   Fixed: isolate all throwables while exporting all resources.
+-   Fixed: When no nav items, the title of empty nav block was still shown.
 
 ## 0.8.22 - 2024-07-30
 
