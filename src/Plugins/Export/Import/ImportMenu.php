@@ -24,10 +24,10 @@ class ImportMenu implements ToCollection
     {
         $idIndex = array_search('id', $this->headers);
 
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
 
             // Ignore empty rows or invalid ID references
-            if(! isset($row[$idIndex]) || $row[$idIndex] == 'ID') {
+            if (! isset($row[$idIndex]) || $row[$idIndex] == 'ID') {
                 continue;
             }
 
@@ -42,16 +42,16 @@ class ImportMenu implements ToCollection
             }
 
             $menuItem = MenuItem::find($menuItemId);
-            foreach($this->locales as $locale) {
+            foreach ($this->locales as $locale) {
 
                 $labelValueIndex = array_search($locale.'_label', $this->headers);
                 $urlValueIndex = array_search($locale.'_url', $this->headers);
 
-                if(! $labelValueIndex) {
+                if (! $labelValueIndex) {
                     throw new \Exception('Label column not found for locale: '.$locale . '. Expected column name: '.$locale.'_label');
                 }
 
-                if(! $urlValueIndex) {
+                if (! $urlValueIndex) {
                     throw new \Exception('Url column not found for locale: '.$locale . '. Expected column name: '.$locale.'_url');
                 }
 
@@ -66,7 +66,7 @@ class ImportMenu implements ToCollection
 
     private function writeToOutput($message, string $type = 'info')
     {
-        if($this->output) {
+        if ($this->output) {
             $this->output->{$type}($message);
         }
     }

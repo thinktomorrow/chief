@@ -27,8 +27,8 @@ class ResaveUrlSlug
         // These are the base url segments of the parent model that should be removed.
         $strippableBaseUrlSegments = array_merge($strippableBaseUrlSegments, [$model->baseUrlSegment($locale)]);
 
-        foreach($strippableBaseUrlSegments as $baseUrlSegment) {
-            if(0 === strpos($currentSlug, $baseUrlSegment . '/')) {
+        foreach ($strippableBaseUrlSegments as $baseUrlSegment) {
+            if (0 === strpos($currentSlug, $baseUrlSegment . '/')) {
                 $strippedSlug = substr($currentSlug, strlen($baseUrlSegment.'/'));
             }
         }

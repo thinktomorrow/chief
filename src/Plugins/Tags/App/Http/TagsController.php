@@ -34,7 +34,7 @@ class TagsController extends Controller
         $tags = $this->tagReadRepository->getAll()->sortBy(fn ($tagRead) => $tagRead->getLabel());
         $tagGroups = $this->tagReadRepository->getAllGroups()->sortBy(fn ($tagGroupRead) => $tagGroupRead->getLabel());
 
-        if(! $tags->isEmpty() || ! $tagGroups->isEmpty()) {
+        if (! $tags->isEmpty() || ! $tagGroups->isEmpty()) {
             $tagGroups->push(NullTagGroup::fromMappedData(['label' => 'Algemene tags']));
         }
 

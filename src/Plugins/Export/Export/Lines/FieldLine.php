@@ -65,7 +65,7 @@ class FieldLine implements Line
 
     public function getValue(?string $locale = null): ?string
     {
-        if($locale) {
+        if ($locale) {
             return $this->values[$locale] ?? null;
         }
 
@@ -82,18 +82,18 @@ class FieldLine implements Line
     {
         $remarks = [];
 
-        foreach($this->values as $value) {
-            if(strip_tags($value) !== $value) {
+        foreach ($this->values as $value) {
+            if (strip_tags($value) !== $value) {
                 $remarks[] = 'html';
             }
 
             // Check if it contains a href attribute
-            if(preg_match('/href=/', $value)) {
+            if (preg_match('/href=/', $value)) {
                 $remarks[] = 'link';
             }
 
             // Check if it contains a placeholder like :name
-            if(preg_match('/\:\w+/', $value)) {
+            if (preg_match('/\:\w+/', $value)) {
                 $remarks[] = 'placeholder';
             }
         }

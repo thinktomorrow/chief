@@ -29,10 +29,10 @@ class ImportText implements ToCollection
 
     public function collection(Collection $rows)
     {
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
 
             // Ignore empty rows or invalid ID references
-            if(! isset($row[$this->idIndex]) || $row[$this->idIndex] == 'ID') {
+            if (! isset($row[$this->idIndex]) || $row[$this->idIndex] == 'ID') {
                 continue;
             }
 
@@ -48,14 +48,14 @@ class ImportText implements ToCollection
 
             $value = $row[$this->columnIndex];
 
-            if($line = DatabaseLine::findByKey($lineKey)) {
+            if ($line = DatabaseLine::findByKey($lineKey)) {
                 $values = json_decode($line->values, true);
                 $previousValue = $values['value'][$this->locale] ?? null;
 
                 // Typecast to string because this is what squanto expects
                 $value = is_null($value) ? null : (string) $value;
 
-                if(! $this->forceUpdate && $previousValue === $value) {
+                if (! $this->forceUpdate && $previousValue === $value) {
                     continue;
                 }
 
@@ -74,7 +74,7 @@ class ImportText implements ToCollection
 
     private function writeToOutput($message, string $type = 'info')
     {
-        if($this->output) {
+        if ($this->output) {
             $this->output->{$type}($message);
         }
     }

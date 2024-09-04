@@ -35,7 +35,7 @@ class FieldReference
 
         $model = ModelReference::fromString($modelReference)->instance();
 
-        if($model instanceof FragmentModel) {
+        if ($model instanceof FragmentModel) {
             $resourceKey = ModelReference::fromString($model->model_reference)->shortClassName();
             $resource = app(Registry::class)->resource($resourceKey);
         } else {
@@ -68,7 +68,7 @@ class FieldReference
         $payload = Arr::undot([$key => $value]);
 
         // Hack way to save repeat fields
-        if($this->field instanceof Fields\Repeat) {
+        if ($this->field instanceof Fields\Repeat) {
             // Merge current values with passed value
             $nestedFieldKey = substr($this->fieldName, strpos($this->fieldName, '.') + 1);
             $nestedFieldKey .= '.'.$locale;
@@ -109,7 +109,7 @@ class FieldReference
 
         foreach ($arrays as $array) {
 
-            if(! $array) {
+            if (! $array) {
                 continue;
             }
 

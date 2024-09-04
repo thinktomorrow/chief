@@ -8,8 +8,8 @@ class DriverFactory
 
     public function create(string $driverType): Driver
     {
-        foreach(static::$map as $type => $class) {
-            if($type == $driverType) {
+        foreach (static::$map as $type => $class) {
+            if ($type == $driverType) {
                 return app($class);
             }
         }

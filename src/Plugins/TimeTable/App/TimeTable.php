@@ -24,7 +24,7 @@ class TimeTable extends OpeningHours
     {
         $result = [];
 
-        foreach($from->range($until) as $date) {
+        foreach ($from->range($until) as $date) {
             $result[$date->format('Y-m-d H:i:s')] = $this->forDate($date);
         }
 

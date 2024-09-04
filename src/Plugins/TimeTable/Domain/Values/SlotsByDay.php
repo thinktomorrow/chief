@@ -41,7 +41,7 @@ class SlotsByDay
 
         $slots = $slots
             ->map(function ($slot, $i) use ($slots) {
-                if($i === 0 || ! $previousUntil = $slots[$i - 1]->getUntil()) {
+                if ($i === 0 || ! $previousUntil = $slots[$i - 1]->getUntil()) {
                     return $slot;
                 }
 
@@ -52,18 +52,18 @@ class SlotsByDay
             ->all();
 
         // Next we will merge slots where there are null values, but only when there are more than one slots to merge
-        if(count($slots) < 2) {
+        if (count($slots) < 2) {
             return $slots;
         }
 
         /** @var Slot $slot */
-        foreach($slots as $i => $slot) {
-            if($i > 0 && is_null($slot->getFrom())) {
+        foreach ($slots as $i => $slot) {
+            if ($i > 0 && is_null($slot->getFrom())) {
                 $slots[$i - 1] = Slot::make($slots[$i - 1]->getFrom(), $slot->getUntil());
                 unset($slots[$i]);
             }
 
-            if($i > 0 && is_null($slots[$i - 1]->getUntil())) {
+            if ($i > 0 && is_null($slots[$i - 1]->getUntil())) {
                 $slots[$i - 1] = Slot::make($slots[$i - 1]->getFrom(), $slot->getUntil());
                 unset($slots[$i]);
             }

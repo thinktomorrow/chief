@@ -21,7 +21,7 @@ trait HasTimeTableDefaults
     {
         $timeTableModel = $this->getTimeTableModel();
 
-        if(! $timeTableModel) {
+        if (! $timeTableModel) {
             return null;
         }
 
@@ -32,7 +32,7 @@ trait HasTimeTableDefaults
     {
         $timeTableId = $this->getTimeTableId();
 
-        if(! $timeTableId) {
+        if (! $timeTableId) {
             return null;
         }
 

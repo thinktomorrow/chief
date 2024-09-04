@@ -53,7 +53,7 @@ class ComposeFieldLines
             $this->extractFieldValues($resource, $model, $locales)
         );
 
-        if($model instanceof FragmentsOwner) {
+        if ($model instanceof FragmentsOwner) {
             $lines = $lines->merge($this->addFragmentFieldValues($model, $locales));
         }
 
@@ -117,7 +117,7 @@ class ComposeFieldLines
             ->filterBy(fn ($field) => in_array($field::class, $this->textFields))
             ->model($model);
 
-        foreach($modelFields as $field) {
+        foreach ($modelFields as $field) {
             $lines = $lines->merge(
                 $this->addFieldLines($resource, $model, $field, $locales)
             );
@@ -130,14 +130,14 @@ class ComposeFieldLines
     {
         $lines = new LinesCollection();
 
-        if($this->ignoreEmptyValues && ! $field->getValue()) {
+        if ($this->ignoreEmptyValues && ! $field->getValue()) {
             return $lines;
         }
 
         $components = $field->getRepeatedComponents();
 
-        foreach($components as $componentGroup) {
-            foreach(Fields::make($componentGroup) as $nestedField) {
+        foreach ($components as $componentGroup) {
+            foreach (Fields::make($componentGroup) as $nestedField) {
                 $lines = $lines->merge(
                     $this->addFieldLines($resource, $model, $nestedField, $locales)
                 );
@@ -154,16 +154,16 @@ class ComposeFieldLines
         /** @var Fragmentable[] $fragment */
         $fragments = app(FragmentRepository::class)->getByOwner($model instanceof Fragmentable ? $model->fragmentModel() : $model);
 
-        foreach($fragments as $fragment) {
+        foreach ($fragments as $fragment) {
 
-            if($this->ignoreOfflineFragments && $fragment->fragmentModel()->isOffline()) {
+            if ($this->ignoreOfflineFragments && $fragment->fragmentModel()->isOffline()) {
                 continue;
             }
 
             // Shared fragments are only exported once to reduce translation lines
             // First time we encounter a shared fragment, we add it to the ignored list
-            if($fragment->fragmentModel()->isShared()) {
-                if(in_array($fragment->fragmentModel()->id, $this->ignoredFragments)) {
+            if ($fragment->fragmentModel()->isShared()) {
+                if (in_array($fragment->fragmentModel()->id, $this->ignoredFragments)) {
                     continue;
                 } else {
                     $this->ignoredFragments[] = $fragment->fragmentModel()->id;
@@ -179,7 +179,7 @@ class ComposeFieldLines
             );
 
             // Nested fragments
-            if($fragment instanceof FragmentsOwner) {
+            if ($fragment instanceof FragmentsOwner) {
                 $lines = $lines->merge(
                     $this->addFragmentFieldValues($fragment, $locales)
                 );
@@ -193,32 +193,32 @@ class ComposeFieldLines
     {
         $lines = new LinesCollection();
 
-        if(in_array($field->getKey(), $this->ignoredFieldKeys)) {
+        if (in_array($field->getKey(), $this->ignoredFieldKeys)) {
             return $lines;
         }
 
-        if($field instanceof Fields\Repeat) {
+        if ($field instanceof Fields\Repeat) {
             return $lines->merge($this->extractRepeatField($resource, $model, $field, $locales));
         }
 
-        if($this->ignoreNonLocalized && ! $field->hasLocales()) {
+        if ($this->ignoreNonLocalized && ! $field->hasLocales()) {
             return $lines;
         }
 
         $values = [FieldLine::NON_LOCALIZED => $field->getValue()];
 
-        if($field->hasLocales()) {
+        if ($field->hasLocales()) {
             $values = collect($locales)->mapWithKeys(fn ($locale) => [$locale => $field->getValue($locale)]);
             $values = ! $this->ignoreNonLocalized ? [FieldLine::NON_LOCALIZED => '', ...$values->all()] : $values->all();
         }
 
-        if($this->ignoreEmptyValues && $this->areAllValuesEmpty($values)) {
+        if ($this->ignoreEmptyValues && $this->areAllValuesEmpty($values)) {
             return $lines;
         }
 
         $fieldLabel = $field->getLabel() ?: $field->getKey();
 
-        if(str_starts_with($field->getKey(), 'seo_')) {
+        if (str_starts_with($field->getKey(), 'seo_')) {
             $fieldLabel = 'SEO ' . $fieldLabel;
         }
 
