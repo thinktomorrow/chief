@@ -69,7 +69,7 @@ class RenderSelectListTest extends ChiefTestCase
     public function test_it_can_render_closure_as_option()
     {
         $component = SelectList::make('xxx')->editInSidebar()
-            ->options(function(){
+            ->options(function () {
                 return [
                     ['value' => 'one', 'label' => 'een'],
                     ['value' => 'two', 'label' => 'twee'],
