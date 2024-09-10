@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 0.8.23 - 2024-09-10
+
 -   Changed: Exports are now stored in the `storage/app/exports` folder.
 -   Changed: squanto is now using the project editor styling and scripts.
 -   Fixed: isolate all throwables while exporting all resources.
