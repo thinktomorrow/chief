@@ -24,14 +24,14 @@ class TranslationsExportCommand extends BaseCommand
         $locales = config('chief.locales');
         $locale = $this->argument('locale');
 
-        if(! in_array($locale, $locales)) {
+        if (! in_array($locale, $locales)) {
             throw new \InvalidArgumentException('Passed locale ' . $locale .' is not found as Chief locale. Available locales are ' . implode(',', $locales));
         }
 
         $targetLocales = $locales;
         unset($targetLocales[array_search($locale, $targetLocales)]);
 
-        if($this->option('target')) {
+        if ($this->option('target')) {
             $targetLocales = explode(',', $this->option('target'));
         }
 

@@ -41,8 +41,8 @@ trait WithSorters
 
         // The last defined default sorting as the default sorting to be used.
         // This way we can override the baked-in default tree sorting.
-        foreach(array_reverse($this->getSorters()) as $sorter) {
-            if($sorter->actsAsDefault()) {
+        foreach (array_reverse($this->getSorters()) as $sorter) {
+            if ($sorter->actsAsDefault()) {
                 $this->sorters[$sorter->getKey()] = $sorter->getValue();
 
                 return;
@@ -53,7 +53,7 @@ trait WithSorters
     private function applyQuerySorters(Builder $builder): void
     {
         foreach ($this->sorters as $sorterKey => $sorterValue) {
-            if(($sorter = $this->findSorter($sorterKey)) && $sorter->hasQuery()) {
+            if (($sorter = $this->findSorter($sorterKey)) && $sorter->hasQuery()) {
                 $sorter->getQuery()($builder, $sorterValue);
             }
         }
@@ -62,7 +62,7 @@ trait WithSorters
     private function applyCollectionSorters(Collection $rows): Collection
     {
         foreach ($this->sorters as $sorterKey => $sorterValue) {
-            if(($sorter = $this->findSorter($sorterKey)) && $sorter->hasQuery()) {
+            if (($sorter = $this->findSorter($sorterKey)) && $sorter->hasQuery()) {
                 $rows = $sorter->getQuery()($rows, $sorterValue);
             }
         }
@@ -76,12 +76,12 @@ trait WithSorters
     public function updatedSorters()
     {
         // We force only one sorting at a time for now.
-        if(count($this->sorters) > 1) {
+        if (count($this->sorters) > 1) {
             $this->sorters = array_slice($this->sorters, -1, 1, true);
         }
 
-        foreach($this->sorters as $key => $sorterValue) {
-            if($this->isEmptySorterValue($sorterValue)) {
+        foreach ($this->sorters as $key => $sorterValue) {
+            if ($this->isEmptySorterValue($sorterValue)) {
                 unset($this->sorters[$key]);
             }
         }
@@ -91,8 +91,8 @@ trait WithSorters
 
     private function findSorter(string $sorterKey): Sorter
     {
-        foreach($this->getSorters() as $sorter) {
-            if($sorter->getKey() == $sorterKey) {
+        foreach ($this->getSorters() as $sorter) {
+            if ($sorter->getKey() == $sorterKey) {
                 return $sorter;
             }
         }

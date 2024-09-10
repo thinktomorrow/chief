@@ -56,7 +56,7 @@ class Table extends Component
     public function query(Closure|string $query): static
     {
         // A resource key can be passed to automatically resolve the query
-        if(is_string($query) && $modelClassName = app(Registry::class)->resource($query)?->modelClassName()) {
+        if (is_string($query) && $modelClassName = app(Registry::class)->resource($query)?->modelClassName()) {
             $resourceKey = $query;
             $query = function () use ($modelClassName) {
                 return $modelClassName::query();

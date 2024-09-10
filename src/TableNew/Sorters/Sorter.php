@@ -43,7 +43,7 @@ abstract class Sorter extends Component
          * This can be overridden in the specific sorter.
          */
         $this->query(function ($query, $value) {
-            if($query instanceof Builder) {
+            if ($query instanceof Builder) {
                 $query->orderBy($this->key, $value);
             } else {
                 return $query->sortBy($this->key, SORT_REGULAR, $value === 'desc');

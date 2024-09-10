@@ -97,7 +97,7 @@ class ProjectModelData
 
         $model = $menuItem->owner;
 
-        if(! $model) {
+        if (! $model) {
             return;
         }
 

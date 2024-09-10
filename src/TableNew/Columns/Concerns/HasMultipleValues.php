@@ -17,7 +17,7 @@ trait HasMultipleValues
 
     protected function handleEachValue(array $value): array
     {
-        if($this->evaluateEachValue) {
+        if ($this->evaluateEachValue) {
             return collect($value)->map($this->evaluateEachValue)->all();
         }
 

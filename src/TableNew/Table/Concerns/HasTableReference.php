@@ -17,7 +17,7 @@ trait HasTableReference
 
     public function getTableReference(): TableReference
     {
-        if(! $this->tableReference) {
+        if (! $this->tableReference) {
             throw new \Exception('Table reference not set.');
         }
 

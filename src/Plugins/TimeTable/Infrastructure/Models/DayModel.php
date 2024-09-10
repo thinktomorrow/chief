@@ -70,7 +70,7 @@ class DayModel extends Model
     {
         $existingDays = $model::exists() ? $model::first()->days : collect();
 
-        foreach(range(1, 7) as $weekDay) {
+        foreach (range(1, 7) as $weekDay) {
 
             $day = $existingDays->first(fn ($day) => $day->weekday == $weekDay);
             $slots = $day ? $day->slots : static::defaultSlots($weekDay);

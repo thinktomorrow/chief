@@ -28,8 +28,8 @@ class FragmentOwnerRepository
 
         $result = collect();
 
-        foreach($models as $model) {
-            if($model instanceof FragmentModel) {
+        foreach ($models as $model) {
+            if ($model instanceof FragmentModel) {
                 $result = $result->merge($this->getResourceOwners($model));
             } else {
                 $result->push($model);

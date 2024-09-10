@@ -79,13 +79,13 @@ class ValidationParameters
             ->dotted()
             ->matrix($this->source->getName(), $this->source->getLocales());
 
-        if($this->multiple) {
-            foreach($keys as $i => $key) {
+        if ($this->multiple) {
+            foreach ($keys as $i => $key) {
                 $keys[$i] = $key . '.*';
             }
         }
 
-        foreach($keys as $i => $key) {
+        foreach ($keys as $i => $key) {
             $keys[$i] = call_user_func($this->mapKeysCallback, $key);
         }
 

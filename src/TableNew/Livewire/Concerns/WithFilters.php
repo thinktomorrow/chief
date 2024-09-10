@@ -28,8 +28,8 @@ trait WithFilters
 
     public function getActiveFilterValue(string $filterKey): string
     {
-        if(($filterValue = $this->findActiveFilterValue($filterKey))) {
-            if(is_array($filterValue)) {
+        if (($filterValue = $this->findActiveFilterValue($filterKey))) {
+            if (is_array($filterValue)) {
                 return implode(', ', $this->getFilterValueFromOptions($filterKey, $filterValue));
             } else {
                 return $filterValue;
@@ -43,9 +43,9 @@ trait WithFilters
     {
         $this->clearFilters();
 
-        foreach($this->getFilters() as $filter) {
+        foreach ($this->getFilters() as $filter) {
             // Active either by present in url or set to active: active(), activeIfNone()
-            if($filter->hasValue()) {
+            if ($filter->hasValue()) {
                 $this->filters[$filter->getKey()] = $filter->getValue();
             }
         }
@@ -54,7 +54,7 @@ trait WithFilters
     private function applyQueryFilters(Builder $builder): void
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if(($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
+            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
                 $filter->getQuery()($builder, $filterValue);
             }
         }
@@ -63,7 +63,7 @@ trait WithFilters
     private function applyCollectionFilters(Collection $rows): Collection
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if(($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
+            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
                 $rows = $filter->getQuery()($rows, $filterValue);
             }
         }
@@ -120,8 +120,8 @@ trait WithFilters
 
     private function findFilter(string $filterKey): Filter
     {
-        foreach($this->getFilters() as $filter) {
-            if($filter->getKey() == $filterKey) {
+        foreach ($this->getFilters() as $filter) {
+            if ($filter->getKey() == $filterKey) {
                 return $filter;
             }
         }
@@ -161,7 +161,7 @@ trait WithFilters
 
     private function isEmptyFilterValue($value): bool
     {
-        if(is_array($value)) {
+        if (is_array($value)) {
             return count($value) == 1 && $this->isEmptyFilterValue(reset($value));
         }
 

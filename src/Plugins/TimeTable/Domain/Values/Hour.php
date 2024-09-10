@@ -55,7 +55,7 @@ class Hour
 
     public function beforeOrEqual(self $hour): bool
     {
-        if($this->hour === $hour->hour) {
+        if ($this->hour === $hour->hour) {
             return $this->minutes <= $hour->minutes;
         }
 

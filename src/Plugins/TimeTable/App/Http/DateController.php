@@ -47,7 +47,7 @@ class DateController extends Controller
 
         [$model, $fields] = $this->getModelAndFields();
 
-        if($request->has('closed')) {
+        if ($request->has('closed')) {
             $request = $request->merge(['slots' => [], 'closed' => true]);
         }
 
@@ -67,7 +67,7 @@ class DateController extends Controller
 
         event(new DateCreated(DateId::fromString($model->id)));
 
-        if(count($timetableIds = $request->input('timetables', [])) > 0) {
+        if (count($timetableIds = $request->input('timetables', [])) > 0) {
             return redirect()->route('chief.timetables.edit', reset($timetableIds))->with('messages.success', 'Uitzondering is toegevoegd.');
         }
 
@@ -97,7 +97,7 @@ class DateController extends Controller
 
         [$model, $fields] = $this->getModelAndFields($dateId);
 
-        if($request->has('closed')) {
+        if ($request->has('closed')) {
             $request = $request->merge(['slots' => [], 'closed' => true]);
         }
 
@@ -117,7 +117,7 @@ class DateController extends Controller
 
         event(new DateUpdated(DateId::fromString($model->id)));
 
-        if(count($timetableIds = $request->input('timetables', [])) > 0) {
+        if (count($timetableIds = $request->input('timetables', [])) > 0) {
             return redirect()->route('chief.timetables.edit', reset($timetableIds))->with('messages.success', 'Uitzondering is toegevoegd.');
         }
 

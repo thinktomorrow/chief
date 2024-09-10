@@ -16,7 +16,7 @@ trait HasType
 
     public function getType($value = null): string
     {
-        if(! is_string($value) && ! is_int($value)) {
+        if (! is_string($value) && ! is_int($value)) {
             return $this->type;
         }
 

@@ -25,7 +25,7 @@ trait WithActions
     {
         $action = $this->getTable()->findAction($actionKey);
 
-        if($action->hasModal()) {
+        if ($action->hasModal()) {
             $this->showActionModal($actionKey, $this->getActionModalData($action));
 
             return;
@@ -38,7 +38,7 @@ trait WithActions
 
     private function getActionModalData(Action $action): array
     {
-        if($action instanceof BulkAction) {
+        if ($action instanceof BulkAction) {
             return ['items' => $this->getBulkSelection()];
         }
 

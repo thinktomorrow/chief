@@ -66,7 +66,7 @@ class YoutubeDriver implements Driver
             $response = file_get_contents('https://youtube.com/oembed?format=json&url='.urlencode($query));
 
             return json_decode($response, true);
-        } catch(\ErrorException $e) {
+        } catch (\ErrorException $e) {
             throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Youtube verwijzing: ' . '['.$idOrUrl.']']);
         }
     }
@@ -151,7 +151,7 @@ class YoutubeDriver implements Driver
             }
         }
 
-        if(isset($parts['path'])) {
+        if (isset($parts['path'])) {
             $path = explode('/', trim($parts['path'], '/'));
 
             return $path[count($path) - 1];

@@ -49,7 +49,7 @@ class Column
      */
     public function model(Model|array $model): static
     {
-        foreach($this->items as $item) {
+        foreach ($this->items as $item) {
             $item->model($model);
         }
 
