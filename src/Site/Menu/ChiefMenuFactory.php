@@ -30,7 +30,7 @@ class ChiefMenuFactory
             return static::$loaded[$cacheKey];
         }
 
-        return static::$loaded[$cacheKey] = $this->nodeCollectionFactory->fromSource(
+        return static::$loaded[$cacheKey] = NodeCollection::fromIterable(
             MenuSource::fromCollection(MenuItem::where('menu_type', $key)->get(), $locale)
         )->remove(fn (MenuItemNode $node) => $node->isOffline())
             ->sort('order')

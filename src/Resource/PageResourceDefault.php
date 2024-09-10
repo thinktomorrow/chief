@@ -197,6 +197,14 @@ trait PageResourceDefault
             ]);
     }
 
+    public function getArchivedIndexTable(): Table
+    {
+        return $this->getIndexTable()
+            ->addQuery(function($builder){
+                $builder->archived();
+            });
+    }
+
     public function getOtherIndexTable(): Table
     {
         // Position of general actions: footer
@@ -296,35 +304,6 @@ trait PageResourceDefault
 
     public function getIndexView(): View
     {
-        // TODO: temp
-        if ($this->getIndexViewType() == 'listing') {
-            return view('chief::manager.index-with-new-table');
-        }
-
-        if ($this->getIndexViewType() == 'table') {
-            return ($this instanceof Nestable)
-                ? view('chief-table::nestable.index')
-                : view('chief-table::index');
-        }
-
-        return view('chief::manager.index');
-    }
-
-    /**
-     * Default type of index: options are:
-     * index (default), table
-     */
-    protected function getIndexViewType(): string
-    {
-        return 'table';
-    }
-
-    public function getArchivedIndexView(): View
-    {
-        if ($this->getIndexViewType() == 'table') {
-            return view('chief-table::index');
-        }
-
         return view('chief::manager.index');
     }
 

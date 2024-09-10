@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTreeSource;
+use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\NodeCollectionFactory;
 
 class MysqlNestableRepository implements NestableRepository
@@ -31,11 +32,7 @@ class MysqlNestableRepository implements NestableRepository
 
     public function buildTree(Collection $models): NestedTree
     {
-        $nodes = $models->map(fn ($model) => new NestableNode($model));
-
-        return new NestedTree((new NodeCollectionFactory)
-            ->fromSource(new NestedTreeSource($nodes))
-            ->all());
+        return NestedTree::fromIterable($models);
     }
 
     public function getResource(string $resourceKey): PageResource

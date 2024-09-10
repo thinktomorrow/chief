@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -66,17 +67,17 @@ trait ArchiveAssistant
         ]);
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function archiveIndex(Request $request)
     {
+        $this->guard('archive_index');
+
+        View::share('is_archive_index', true);
         View::share('manager', $this);
         View::share('resource', $this->resource);
-        View::share('models', $this->managedModelClass()::archived()->paginate(20)->withQueryString());
-        View::share('model', $this->managedModelClassInstance());
-        View::share('is_archive_index', true);
+        View::share('model', $model = $this->managedModelClassInstance());
 
-        return $this->resource->getArchivedIndexView();
+        //View::share('models', $this->managedModelClass()::archived()->paginate(20)->withQueryString());
+
+        return $this->resource->getIndexView();
     }
 }

@@ -5,6 +5,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
+Introduce Table component
+
+- `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former options (index and table)
+- `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
+
 - Changed: Exports are now stored in the `storage/app/exports` folder.
 - Fixed: isolate all throwables while exporting all resources.
 

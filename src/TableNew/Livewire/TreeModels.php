@@ -43,7 +43,7 @@ class TreeModels
     {
         return array_map(function ($node) {
 
-            $model = $node->getModel();
+            $model = $node->getNodeEntry();
             $model->indent = $node->getNodeDepth();
 
             return $model;

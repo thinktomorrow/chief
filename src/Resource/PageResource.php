@@ -30,8 +30,6 @@ interface PageResource extends Resource, TableResource
 
     public function getIndexView(): View;
 
-    public function getArchivedIndexView(): View;
-
     public function getIndexTitle(): string;
 
     public function getIndexDescription(): ?string;

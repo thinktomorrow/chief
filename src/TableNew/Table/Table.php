@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanAddQuery;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasBulkActions;
@@ -35,6 +36,7 @@ class Table extends Component
 
     /** Base Query for all table data */
     use HasQuery;
+    use CanAddQuery;
     use HasRows;
     use HasRowViews;
     use HasFilters;
