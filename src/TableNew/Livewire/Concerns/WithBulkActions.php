@@ -19,6 +19,11 @@ trait WithBulkActions
         return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => ! $action->isVisible());
     }
 
+    public function hasAnyBulkActions(): bool
+    {
+        return count($this->getTable()->getBulkActions()) > 0;
+    }
+
     public function applyBulkActionEffect(string $key, $models)
     {
         $action = $this->getTable()->findBulkAction($key);

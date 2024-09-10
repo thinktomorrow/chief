@@ -17,8 +17,10 @@ use Thinktomorrow\Chief\TableNew\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasPagination;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRows;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRowViews;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasSorters;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTableReference;
+use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTreeLabelColumn;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTreeReference;
 
 class Table extends Component
@@ -26,11 +28,15 @@ class Table extends Component
     use HasComponentRendering;
     use HasTableReference;
     use HasLivewireComponent;
+
+    /** Tree support */
     use HasTreeReference;
+    use HasTreeLabelColumn;
 
     /** Base Query for all table data */
     use HasQuery;
     use HasRows;
+    use HasRowViews;
     use HasFilters;
     use HasSorters;
     use HasHeaders;

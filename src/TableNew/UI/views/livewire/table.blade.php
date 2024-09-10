@@ -39,6 +39,7 @@
 
         <div
             x-data="{
+                showCheckboxes: {{ $this->hasAnyBulkActions() ? 'true' : 'false' }},
                 selection: [],
                 toggleCheckbox(rowKey, checked) {
                     if (checked) {
@@ -103,7 +104,7 @@
             <table class="min-w-full table-fixed divide-y divide-grey-200">
                 <thead>
                     <tr>
-                        <th scope="col" class="w-5 py-2 pl-4">
+                        <th x-show="showCheckboxes" scope="col" class="w-5 py-2 pl-4">
                             <div class="flex items-center">
                                 <x-chief::input.checkbox x-ref="tableHeaderCheckbox" />
                             </div>
@@ -113,10 +114,10 @@
                             {{ $header }}
                         @endforeach
 
-                        <th x-show="selection.length == 0" scope="col" class="py-2 pl-3 pr-4"></th>
+                        <th x-show="showCheckboxes && selection.length == 0" scope="col" class="py-2 pl-3 pr-4"></th>
 
                         <th
-                            x-show="selection.length > 0"
+                            x-show="showCheckboxes && selection.length > 0"
                             scope="col"
                             colspan="9999"
                             class="py-2 pl-3 pr-4 text-left font-normal"
@@ -129,11 +130,11 @@
                 </thead>
 
                 <tbody class="divide-y divide-grey-200">
-                    @includeWhen(count($this->getAncestors()) > 0, 'chief-table-new::rows.ancestor', ['ancestors' => $this->getAncestors()])
+                    @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table-new::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                     @if ($resultCount > 0)
                         @foreach ($results as $item)
-                            @include('chief-table-new::rows.default', ['item' => $item])
+                            @include($this->getRowView(), ['item' => $item])
                         @endforeach
                     @else
                         @include('chief-table-new::rows.no-results')

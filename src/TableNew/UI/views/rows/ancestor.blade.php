@@ -1,16 +1,10 @@
 <tr wire:key="ancestor-row" class="bg-grey-50">
-    <td class="py-2 pl-4"></td>
+    <td x-show="showCheckboxes" class="py-2 pl-4"></td>
     <td colspan="{{ $resultCount }}" class="py-2 pl-3 pr-4 text-left">
         <span class="flex gap-1.5 text-sm leading-5 text-grey-700">
             @foreach ($ancestors as $ancestor)
-                @php
-                    $columns = $this->getColumns($ancestor);
-                    $firstColumn = reset($columns);
-                @endphp
 
-                @foreach ($firstColumn->getItems() as $item)
-                    {{ $item }}
-                @endforeach
+                {{ $this->getAncestorTreeLabel($ancestor) }}
 
                 @if (! $loop->last)
                     <svg

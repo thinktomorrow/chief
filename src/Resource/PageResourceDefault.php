@@ -60,6 +60,36 @@ trait PageResourceDefault
      */
     public function getIndexTable(): Table
     {
+        // Position of general actions: footer
+        // Interaction with Livewire component
+        return Table::make()
+            ->query(static::resourceKey())
+//            ->treeLabelColumn('title')
+            ->columns([
+                'title', 'tags.label', 'current_state',
+            ])
+//            ->rowView('chief-table-new::rows.list-item')
+            // Data options: query, model, relation, rows
+//            ->model(static::modelClassName()) // Entire model or relation or query or rows...
+//            ->relation('modelClass', 'id', 'tags')
+
+            // Convenience create action
+//            ->withCreateAction() // Via modal
+//            ->withInlineCreateAction() // Inline create instead of modal (ideal for small forms)
+            // How to know which fields? convenience fields method?
+
+                // Better to have a resource class for this...
+                // But then how to set the 'pivot' fields?
+//            ->pivotFields(function($model) {
+//                return [
+//                    Text::make('title')->label('Titel'),
+//                    Image::make('image')->label('Afbeelding'),
+//                ];
+//            })
+
+        ;
+
+
         return Table::make()
             ->query(static::resourceKey())
             ->bulkActions([
@@ -152,6 +182,31 @@ trait PageResourceDefault
                 ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
             ])
             ->sorters([
+                Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
+                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
+                }),
+                Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
+                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
+                }),
+                Sort::make('created_at_desc')->label('Datum - DESC')->query(function ($builder) {
+                    $builder->orderBy('created_at', 'DESC');
+                }),
+                Sort::make('created_at_asc')->label('Datum - ASC')->query(function ($builder) {
+                    $builder->orderBy('created_at', 'ASC');
+                }),
+            ]);
+    }
+
+    public function getOtherIndexTable(): Table
+    {
+        // Position of general actions: footer
+        // Interaction with Livewire component
+        return Table::make()
+            ->query(static::resourceKey())
+//            ->treeLabelColumn('title')
+            ->columns([
+                'title',
+            ])->sorters([
                 Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
                     $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
                 }),

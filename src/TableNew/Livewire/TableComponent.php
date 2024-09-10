@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
+use Thinktomorrow\Chief\TableNew\Columns\ColumnItem;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithBulkSelection;
@@ -192,6 +193,29 @@ class TableComponent extends Component
         }
 
         return (string) $model->getKey();
+    }
+
+    public function getRowView(): string
+    {
+        return $this->getTable()->getRowView();
+    }
+
+    /**
+     * Used as label in the ancestor breadcrumb
+     */
+    public function getAncestorTreeLabel($model): ?ColumnItem
+    {
+        $columns = $this->getColumns($model);
+
+        foreach($columns as $column) {
+            foreach($column->getItems() as $columnItem) {
+                if($columnItem->getKey() == $this->getTable()->getTreeLabelColumn()) {
+                    return $columnItem;
+                }
+            }
+        }
+
+        return null;
     }
 
     public function paginationView()

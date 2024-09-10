@@ -4,6 +4,7 @@
     :class="{ 'bg-grey-50': selection.includes('{{ $this->getRowKey($item) }}') }"
 >
     <td
+        x-show="showCheckboxes"
         class="relative py-1.5 pl-4 text-left"
         :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-px before:bg-primary-500': selection.includes('{{ $this->getRowKey($item) }}') }"
     >

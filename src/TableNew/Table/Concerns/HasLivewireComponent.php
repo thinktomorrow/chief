@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\TableNew\Livewire\TableComponent;
 
 trait HasLivewireComponent
 {
-
     // Default Livewire table component
     private string $livewireComponentClass = TableComponent::class;
 
