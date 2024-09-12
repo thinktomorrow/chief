@@ -27,15 +27,15 @@ class EloquentIndexRepository implements IndexRepository
         return collect([]);
     }
 
-//    public function getNestableResultsAsIds(): Collection
-//    {
-//        return DB::table('catalog_pages')
-//            ->orderBy('order')
-//            ->select(['id', 'parent_id'])
-//            ->get();
-//    }
+    //    public function getNestableResultsAsIds(): Collection
+    //    {
+    //        return DB::table('catalog_pages')
+    //            ->orderBy('order')
+    //            ->select(['id', 'parent_id'])
+    //            ->get();
+    //    }
 
-//    public function getNestableResultsByIds(array $ids): Collection;
+    //    public function getNestableResultsByIds(array $ids): Collection;
 
     public function getNestableResults(): Collection
     {

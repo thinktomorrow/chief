@@ -39,7 +39,7 @@ class SelectOptions
 
         // TODO: use resource instead
         return NestedTree::fromIterable($resource->getAllTreeModels());
-//        return app(NestableRepository::class)->getTree($resource::resourceKey());
+        //        return app(NestableRepository::class)->getTree($resource::resourceKey());
     }
 
     public function getOptions(string $modelClass, string $key = 'id'): array

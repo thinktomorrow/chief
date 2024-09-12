@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
 use Thinktomorrow\Chief\TableNew\Actions\Action;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnBadge;
@@ -200,7 +199,7 @@ trait PageResourceDefault
     public function getArchivedIndexTable(): Table
     {
         return $this->getIndexTable()
-            ->addQuery(function($builder){
+            ->addQuery(function ($builder) {
                 $builder->archived();
             });
     }
@@ -357,13 +356,13 @@ trait PageResourceDefault
         return false;
     }
 
-//    public function indexRepository(): string
-//    {
-//        return EloquentIndexRepository::class;
-//    }
-//
-//    public function getNestableNodeLabels(): ?string
-//    {
-//        return null;
-//    }
+    //    public function indexRepository(): string
+    //    {
+    //        return EloquentIndexRepository::class;
+    //    }
+    //
+    //    public function getNestableNodeLabels(): ?string
+    //    {
+    //        return null;
+    //    }
 }

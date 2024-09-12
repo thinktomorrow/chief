@@ -6,11 +6,7 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestableNode;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTreeSource;
-use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\NodeCollectionFactory;
 
 class MysqlNestableRepository implements NestableRepository
 {

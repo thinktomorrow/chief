@@ -35,10 +35,10 @@ trait TreeResourceDefault
             $eagerLoading[] = 'tags';
         }
 
-//        if ($reflection->implementsInterface(HasAsset::class)) {
-//            $eagerLoading[] = 'assetRelation';
-//            $eagerLoading[] = 'assetRelation.media';
-//        }
+        //        if ($reflection->implementsInterface(HasAsset::class)) {
+        //            $eagerLoading[] = 'assetRelation';
+        //            $eagerLoading[] = 'assetRelation.media';
+        //        }
 
         return $modelClass::withoutGlobalScopes()
             ->with($eagerLoading)

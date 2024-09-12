@@ -84,7 +84,7 @@ class TableComponent extends Component
         if ($this->getTable()->hasQuery()) {
             $builder = $this->getTable()->getQuery()();
 
-            foreach($this->getTable()->getAddedQueries() as $addedQuery) {
+            foreach ($this->getTable()->getAddedQueries() as $addedQuery) {
                 $addedQuery($builder);
             }
 
