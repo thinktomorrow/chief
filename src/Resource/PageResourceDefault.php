@@ -357,13 +357,13 @@ trait PageResourceDefault
         return false;
     }
 
-    public function indexRepository(): string
-    {
-        return EloquentIndexRepository::class;
-    }
-
-    public function getNestableNodeLabels(): ?string
-    {
-        return null;
-    }
+//    public function indexRepository(): string
+//    {
+//        return EloquentIndexRepository::class;
+//    }
+//
+//    public function getNestableNodeLabels(): ?string
+//    {
+//        return null;
+//    }
 }

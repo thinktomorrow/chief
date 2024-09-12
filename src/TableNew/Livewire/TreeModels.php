@@ -2,39 +2,73 @@
 
 namespace Thinktomorrow\Chief\TableNew\Livewire;
 
+use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
 class TreeModels
 {
+    private Registry $registry;
 
-    //    private Registry $registry;
-    //
-    //    public function __construct(Registry $registry)
-    //    {
-    //        $this->registry = $registry;
-    //    }
-
-    public function create(string $resourceKey, array $ids, int $offset, int $limit, string $keyName = 'id'): array
+    public function __construct(Registry $registry)
     {
-        $tree = $this->getTree($resourceKey);
+        $this->registry = $registry;
+    }
 
-        $models = (new NestedTree($tree->shake(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all()))->all();
+    /**
+     * @return array [ancestors, models]
+     * @throws MissingResourceRegistration
+     */
+    public function get(string $resourceKey, array $ids, int $offset, int $limit, string $keyName = 'id'): array
+    {
+        $resource = $this->registry->resource($resourceKey);
+
+        return $this->create($resource, $ids, $offset, $limit, $keyName);
+    }
+
+    private function create(TreeResource $resource, array $ids, int $offset, int $limit, string $keyName = 'id'): array
+    {
+        // Get the entire tree structure but only the ids to reduce memory load
+        $treeIds = NestedTree::fromIterable($resource->getTreeModelIds());
+
+        // Reduce the tree to only the models that are expected by the current filtering / sorting.
+        $treeIds = (new NestedTree($treeIds->shake(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all()))->all();
 
         // Paginate the models
-        $models = array_slice($models, $offset, $limit);
+        // TODO: reduce this to only the models that are needed...
+        // Can we fetch only the ID's and afterwards the full models?
 
-        // Add the ancestor models to the result if they are not present in the current page
-        // This allows to show a tree path reference of the current first item.
-        $ancestors = (count($models) > 0)
-            ? $this->convertNodesToModels($models[0]->getAncestorNodes()->each(function ($node) {
-                $node->getNodeEntry()->setAttribute('isAncestorRow', true);
+        // Slice the models for the current page
+        $treeIds = collect($treeIds)->slice($offset, $limit)->values();
 
-                return $node;
-            })->all()) : [];
+        // Also get the ancestors of first model so this can be shown as a tree path reference
+        $ancestorTreeIds = collect(isset($treeIds[0]) ? $treeIds[0]->getAncestorNodes() : []);
 
-        // Return the models instead of the nodes and add any node data to each model
-        $models = $this->convertNodesToModels($models);
+        // Fetch the entire models
+        $allModels = $resource->getTreeModelsByIds([
+            ...($modelIds = $treeIds->map(fn ($node) => $node->getNodeId())->all()),
+            ...($ancestorIds = $ancestorTreeIds->map(fn ($node) => $node->getNodeId())->all()),
+        ]);
+
+        // Add indent to models based on the tree depth
+        $models = $allModels
+            ->filter(fn ($model) => in_array($model->id, $modelIds))
+            ->map(function ($model) use ($treeIds) {
+                $model->indent = $treeIds->first(fn ($node) => $node->getNodeId() == $model->id)->getNodeDepth();
+
+                return $model;
+            });
+
+        $ancestors = $allModels
+            ->filter(fn ($model) => in_array($model->id, $ancestorIds))
+            ->map(function ($model) use ($ancestorTreeIds) {
+                $model->indent = $ancestorTreeIds->first(fn ($node) => $node->getNodeId() == $model->id)->getNodeDepth();
+
+                return $model;
+            });
 
         return [$ancestors, $models];
     }
@@ -75,8 +109,19 @@ class TreeModels
     //        return $tree->find($model->getKeyName(), $model->getKey());
     //    }
 
-    private function getTree(string $resourceKey)
+    private function getModelsById(TreeResource $resource, array $ids)
     {
-        return app(NestableRepository::class)->getTree($resourceKey);
+        return $resource->getTreeModelsByIds($ids);
+        //    {
+        //        return app(NestableRepository::class)->getTree($resourceKey);
+    }
+
+    private function getTreeIds(string $resourceKey)
+    {
+        // 1. Get Resource - this should be a TreeResource...
+        // 2. call the getTreeModelIds method on the resource
+        // 3. return the result
+
+        return app(NestableRepository::class)->getTreeIds($resourceKey);
     }
 }

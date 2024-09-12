@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Repository;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
@@ -25,6 +26,16 @@ class EloquentIndexRepository implements IndexRepository
         // TODO: this is the CrudAssistant replacement in time...
         return collect([]);
     }
+
+//    public function getNestableResultsAsIds(): Collection
+//    {
+//        return DB::table('catalog_pages')
+//            ->orderBy('order')
+//            ->select(['id', 'parent_id'])
+//            ->get();
+//    }
+
+//    public function getNestableResultsByIds(array $ids): Collection;
 
     public function getNestableResults(): Collection
     {

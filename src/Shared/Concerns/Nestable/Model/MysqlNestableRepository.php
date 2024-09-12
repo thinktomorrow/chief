@@ -30,6 +30,16 @@ class MysqlNestableRepository implements NestableRepository
         );
     }
 
+    public function getTreeIds(string $resourceKey): NestedTree
+    {
+        $resource = $this->getResource($resourceKey);
+
+        // TODO: simplify this to come from resource instead...
+        return $this->buildTree(
+            app($resource->indexRepository(), ['resourceKey' => $resourceKey])->getNestableResultsAsIds()
+        );
+    }
+
     public function buildTree(Collection $models): NestedTree
     {
         return NestedTree::fromIterable($models);

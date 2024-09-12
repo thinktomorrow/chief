@@ -97,10 +97,6 @@ class ProjectModelData
 
         $model = $menuItem->owner;
 
-        if(! $model) {
-            return;
-        }
-
         if ($model instanceof StatefulContract) {
             $menuItem->setStatus(! $model->inOnlineState() ? MenuItemStatus::offline : MenuItemStatus::online);
         }
@@ -109,7 +105,7 @@ class ProjectModelData
         $resource = $this->registry->findResourceByModel($model::class);
 
         $originalLocale = app()->getLocale();
-        $locales = config('chief.locales');
+        $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
 
         foreach ($locales as $locale) {
             app()->setLocale($locale); // only way to get localized pagetitle

@@ -148,17 +148,20 @@ class TableComponent extends Component
      */
     private function getResultsAsTree(Builder $builder, string $treeResourceKey): Collection|PaginatorContract|CursorPaginatorContract
     {
-        $builder->select('id');
-        $result = $builder->get();
+        // TODO: 'id' is assumed here. This should be configurable...
+        $result = $builder
+            ->select('id')
+            ->toBase()
+            ->get();
 
-        [$ancestors, $treeModels] = app(TreeModels::class)->create(
+        [$ancestors, $treeModels] = app(TreeModels::class)->get(
             $treeResourceKey,
             $result->pluck('id')->toArray(),
             $this->hasPagination() ? ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage() : 0,
             $this->hasPagination() ? $this->getPaginationPerPage() : count($result)
         );
 
-        $this->ancestors = $ancestors;
+        $this->ancestors = $ancestors->all();
 
         if (! $this->hasPagination()) {
             return collect($treeModels);

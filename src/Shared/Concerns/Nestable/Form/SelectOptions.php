@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Form;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
@@ -33,9 +34,12 @@ class SelectOptions
 
     public function getTree(Nestable|string $model): NestedTree
     {
+        /** @var TreeResource $resource */
         $resource = $this->registry->findResourceByModel(is_string($model) ? $model : $model::class);
 
-        return app(NestableRepository::class)->getTree($resource::resourceKey());
+        // TODO: use resource instead
+        return NestedTree::fromIterable($resource->getAllTreeModels());
+//        return app(NestableRepository::class)->getTree($resource::resourceKey());
     }
 
     public function getOptions(string $modelClass, string $key = 'id'): array

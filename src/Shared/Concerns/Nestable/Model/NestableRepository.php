@@ -10,5 +10,7 @@ interface NestableRepository
 {
     public function getTree(string $resourceKey): NestedTree;
 
+    public function getTreeIds(string $resourceKey): NestedTree;
+
     public function buildTree(Collection $models): NestedTree;
 }
