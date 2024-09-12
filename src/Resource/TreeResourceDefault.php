@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
