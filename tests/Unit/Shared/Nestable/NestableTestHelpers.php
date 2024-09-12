@@ -3,37 +3,38 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
+use Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableStub;
 
 trait NestableTestHelpers
 {
     private function defaultNestables(bool $online = false)
     {
-        $modelFirst = new NestedNodeStub(NestableModelStub::create(['id' => 'first', 'order' => '0', 'title' => [
+        $modelFirst = new NestableStub(NestableModelStub::create(['id' => 'first', 'order' => '0', 'title' => [
             'nl' => 'label first nl',
             'fr' => 'label first fr',
         ]]));
 
-        $modelSecond = new NestedNodeStub(NestableModelStub::create(['id' => 'second', 'parent_id' => $modelFirst->getId(), 'order' => '1', 'title' => [
+        $modelSecond = new NestableStub(NestableModelStub::create(['id' => 'second', 'parent_id' => $modelFirst->getNodeId(), 'order' => '1', 'title' => [
             'nl' => 'label second nl',
             'fr' => 'label second fr',
         ]]));
 
-        $modelThird = new NestedNodeStub(NestableModelStub::create(['id' => 'third', 'parent_id' => $modelFirst->getId(), 'order' => '2', 'title' => [
+        $modelThird = new NestableStub(NestableModelStub::create(['id' => 'third', 'parent_id' => $modelFirst->getNodeId(), 'order' => '2', 'title' => [
             'nl' => 'label third nl',
             'fr' => 'label third fr',
         ]]));
 
-        $modelFourth = new NestedNodeStub(NestableModelStub::create(['id' => 'fourth', 'parent_id' => $modelThird->getId(), 'order' => '3', 'title' => [
+        $modelFourth = new NestableStub(NestableModelStub::create(['id' => 'fourth', 'parent_id' => $modelThird->getNodeId(), 'order' => '3', 'title' => [
             'nl' => 'label fourth nl',
             'fr' => 'label fourth fr',
         ]]));
 
-        $modelFifth = new NestedNodeStub(NestableModelStub::create(['id' => 'fifth', 'order' => '4', 'title' => [
+        $modelFifth = new NestableStub(NestableModelStub::create(['id' => 'fifth', 'order' => '4', 'title' => [
             'nl' => 'label fifth nl',
             'fr' => 'label fifth fr',
         ]]));
@@ -47,11 +48,12 @@ trait NestableTestHelpers
         }
     }
 
-    private function findNode($modelId): NestedNode
+    private function findNode($modelId): Nestable
     {
-        $node = app(NestableRepository::class)
-            ->getTree(NestableModelStub::resourceKey())
-            ->find(fn (NestedNode $nestable) => $nestable->getId() == $modelId);
+        $treeResource = app(Registry::class)->resource(NestableModelStub::resourceKey());
+
+        $node = NestableTree::fromIterable($treeResource->getTreeModels())
+            ->find(fn (Nestable $nestable) => $nestable->getNodeId() == $modelId);
 
         if (! $node) {
             throw new \Exception('No node found by id ' . $modelId);

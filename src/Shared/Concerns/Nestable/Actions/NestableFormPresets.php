@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Form;
+namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions;
 
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Form;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
@@ -73,7 +73,7 @@ class NestableModelTest extends ChiefTestCase
 
         $model = $node->getModel();
 
-        $this->assertInstanceOf(NestedTree::class, $model->getDescendants());
+        $this->assertInstanceOf(NestableTree::class, $model->getDescendants());
         $this->assertEquals(3, $model->getDescendants()->total());
 
         $this->assertEquals($this->findNode('second')->getModel()->getAttributes(), $model->getDescendants()[0]->getModel()->getAttributes());
@@ -112,7 +112,7 @@ class NestableModelTest extends ChiefTestCase
         $model = new NestableModelStub();
 
         $this->assertEmpty($model->getDescendantIds());
-        $this->assertInstanceOf(NestedTree::class, $model->getDescendants());
+        $this->assertInstanceOf(NestableTree::class, $model->getDescendants());
         $this->assertEquals(0, $model->getDescendants()->total());
     }
 

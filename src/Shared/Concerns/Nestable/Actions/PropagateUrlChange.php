@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
+namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;

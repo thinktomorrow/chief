@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode;
+use Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestedNodeStub;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableStub;
 
 class NestedNodeTest extends TestCase
 {
@@ -14,22 +14,22 @@ class NestedNodeTest extends TestCase
 
     public function test_it_can_create_nestable_model()
     {
-        $node = new NestedNodeStub(new NestableModelStub());
+        $node = new NestableStub(new NestableModelStub());
 
-        $this->assertInstanceOf(NestedNode::class, $node);
+        $this->assertInstanceOf(Nestable::class, $node);
         $this->assertInstanceOf(NestableModelStub::class, $node->getModel());
     }
 
     public function test_it_can_get_id_values()
     {
-        $node = new NestedNodeStub(new NestableModelStub(['id' => '1', 'parent_id' => '5']));
+        $node = new NestableStub(new NestableModelStub(['id' => '1', 'parent_id' => '5']));
 
-        $this->assertEquals('1', $node->getId());
+        $this->assertEquals('1', $node->getNodeId());
         $this->assertEquals('5', $node->getParentNodeId());
 
-        $node = new NestedNodeStub(new NestableModelStub(['id' => '1']));
+        $node = new NestableStub(new NestableModelStub(['id' => '1']));
 
-        $this->assertEquals('1', $node->getId());
+        $this->assertEquals('1', $node->getNodeId());
         $this->assertNull($node->getParentNodeId());
     }
 
@@ -38,7 +38,7 @@ class NestedNodeTest extends TestCase
         chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
 
-        $model = new NestedNodeStub(NestableModelStub::create(['id' => 'xxx', 'title' => 'custom title']));
+        $model = new NestableStub(NestableModelStub::create(['id' => 'xxx', 'title' => 'custom title']));
 
         $this->assertEquals('custom title', $model->getModel()->title);
         $this->assertEquals('foobar', $model->getModel()->getCustomMethod());
@@ -49,17 +49,17 @@ class NestedNodeTest extends TestCase
         chiefRegister()->resource(NestableModelStub::class);
         NestableModelStub::migrateUp();
 
-        $node = new NestedNodeStub(NestableModelStub::create(['id' => 'xxx', 'title' => [
+        $node = new NestableStub(NestableModelStub::create(['id' => 'xxx', 'title' => [
             'nl' => 'label nl',
             'fr' => 'label fr',
         ]]));
 
         app()->setLocale('nl');
         $this->assertEquals('label nl', $node->getModel()->title);
-        $this->assertEquals('label nl [offline]', $node->getLabel()); // App label
+        $this->assertEquals('label nl [offline]', $node->getNodeLabel()); // App label
 
         app()->setLocale('fr');
         $this->assertEquals('label fr', $node->getModel()->title);
-        $this->assertEquals('label fr [offline]', $node->getLabel());
+        $this->assertEquals('label fr [offline]', $node->getNodeLabel());
     }
 }

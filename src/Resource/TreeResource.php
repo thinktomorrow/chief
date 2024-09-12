@@ -9,24 +9,14 @@ interface TreeResource
     /**
      * For performance reasons we split up the tree model retrieval into two parts:
      * 1. getTreeModelIds() to retrieve the ids of the tree models
-     * 2. getTreeModelsByIds() to retrieve the actual models by these ids
+     * 2. getTreeModels() to retrieve the actual models by these ids
      */
     public function getTreeModelIds(): array;
 
-    public function getTreeModelsByIds(array $ids): Collection;
-
-    //    public function getAllTreeModels(): Collection;
-
-    // REMOVE indexRepository
-    // REMOVE nestedRepository (used in SelectOptions and NestedQueries...)
-
     /**
-     * The class responsible for fetching the results for admin index pages.
-     * @return string
+     * Retrieve the actual models either all or by given ids
      */
-    //    public function indexRepository(): string;
-
-    //    public function getNestableNodeLabels(): ?string;
+    public function getTreeModels(?array $ids = null): Collection;
 
 
 }

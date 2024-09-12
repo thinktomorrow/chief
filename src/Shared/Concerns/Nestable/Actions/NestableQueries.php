@@ -1,29 +1,22 @@
 <?php
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
+namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 
 class NestableQueries
 {
-    private NestableRepository $nestablePageRepository;
-
     /**
      * The depth up until we want to fetch ancestors / descendants
      */
     private int $depth = 10;
 
-    public function __construct(NestableRepository $nestablePageRepository)
+    public function buildNestedTree(Collection $models): NestableTree
     {
-        $this->nestablePageRepository = $nestablePageRepository;
-    }
-
-    public function buildNestedTree(Collection $models): NestedTree
-    {
-        return $this->nestablePageRepository->buildTree($models);
+        return NestableTree::fromIterable($models);
     }
 
     public function getAncestorIds(Model $model): array

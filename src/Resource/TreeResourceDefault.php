@@ -21,7 +21,7 @@ trait TreeResourceDefault
             ->all();
     }
 
-    public function getTreeModelsByIds(array $ids): Collection
+    public function getTreeModels(?array $ids = null): Collection
     {
         $modelClass = static::modelClassName();
         $reflection = (new \ReflectionClass($modelClass));
@@ -35,15 +35,10 @@ trait TreeResourceDefault
             $eagerLoading[] = 'tags';
         }
 
-        //        if ($reflection->implementsInterface(HasAsset::class)) {
-        //            $eagerLoading[] = 'assetRelation';
-        //            $eagerLoading[] = 'assetRelation.media';
-        //        }
-
         return $modelClass::withoutGlobalScopes()
             ->with($eagerLoading)
             ->orderBy('order')
-            ->whereIn('id', $ids)
+            ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();
     }
 }

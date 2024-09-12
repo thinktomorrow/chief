@@ -14,10 +14,12 @@ principles.
 Some documentation:
 - Table can have a query closure, collection rows or resource as data source.
 
-### Simpler tree retrieval
-- Add the `TreeResource` interface to your resource to use the new tree methods.
-- The indexRepository is removed...(wip)
-- The NestableRepository is removed... (wip)
+### Improved and simplified tree retrieval
+- Add the `\Thinktomorrow\Chief\Resource\TreeResource` interface to your resource to use the new two methods straight from the Resource. These methods are: `getTreeModelIds` and `getTreeModels`.
+- Removed `IndexRepository` interface and default implementation. `IndexRepository` is no longer used.
+- Removed `NestableRepository` interface and default implementation. `NestableRepository` is no longer used.
+- Removed `Resource::indexRepository()`. No longer in use by new Table component.
+- Removed `Resource::getNestableNodeLabels()`. No longer in use by new Table component.
 
 - Changed: Exports are now stored in the `storage/app/exports` folder.
 - Fixed: isolate all throwables while exporting all resources.

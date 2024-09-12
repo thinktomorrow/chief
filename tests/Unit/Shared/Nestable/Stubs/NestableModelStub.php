@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageDefaultWithNestableUrl;
 
 class NestableModelStub extends Model implements Page, PageResource, Nestable
 {
     use PageResourceDefault;
-    use NestablePageDefault;
+    use PageDefaultWithNestableUrl;
 
     protected $guarded = [];
     protected $dynamicKeys = ['title'];
