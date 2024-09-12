@@ -26,7 +26,7 @@ trait HasEloquentOptionsSync
 
                     $syncData = $input[$relation] ?? [];
 
-                    if($syncInOrder && isset($input[$relation])) {
+                    if ($syncInOrder && isset($input[$relation])) {
                         foreach ($input[$relation] as $i => $id) {
                             $syncData[$id] = [$pivotOrderColumn => $i];
                         }

@@ -24,7 +24,7 @@ trait HasLink
 
     public function getLink(): null|string
     {
-        if(($model = $this->getModel()) && $this->link instanceof Closure) {
+        if (($model = $this->getModel()) && $this->link instanceof Closure) {
             return call_user_func($this->link, $model);
         }
 

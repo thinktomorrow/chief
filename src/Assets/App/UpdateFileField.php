@@ -99,7 +99,7 @@ class UpdateFileField
             // Replace the temporary upload id with the asset id
             $orderedAssetIds = $orderedAssetIds->map(fn ($orderedAssetId) => $orderedAssetId == $value['id'] ? $asset->id : $orderedAssetId);
 
-            if(isset($value['fieldValues'])) {
+            if (isset($value['fieldValues'])) {
                 app(FileApplication::class)->updateAssociatedAssetData(
                     $model->modelReference(),
                     $field->getKey(),

@@ -24,10 +24,10 @@ class Day
 
     public static function fromDateTime(\DateTime|string $dateTime, string $format = 'Y-m-d H:i:s'): static
     {
-        if(is_string($dateTime)) {
+        if (is_string($dateTime)) {
             $dateTime = \DateTime::createFromFormat($format, $dateTime);
 
-            if(! $dateTime) {
+            if (! $dateTime) {
                 throw new \Exception('Invalid date string passed ' . $dateTime);
             }
         }

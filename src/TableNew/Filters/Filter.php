@@ -42,14 +42,14 @@ abstract class Filter extends Component
          * This can be overridden in the specific filter.
          */
         $this->query(function ($query, $value) {
-            if($query instanceof Builder) {
+            if ($query instanceof Builder) {
 
                 // blank value should not be applied
-                if($value === '') {
+                if ($value === '') {
                     return;
                 }
 
-                if(is_array($value)) {
+                if (is_array($value)) {
                     $query->whereIn($this->key, $value);
                 } else {
                     $query->where($this->key, 'LIKE', '%'.$value.'%');

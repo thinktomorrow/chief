@@ -43,7 +43,7 @@ class DayController extends Controller
 
         [$model, $fields] = $this->getModelAndFields($id);
 
-        if($request->has('closed')) {
+        if ($request->has('closed')) {
             $request = $request->merge(['slots' => [], 'closed' => true]);
         }
 

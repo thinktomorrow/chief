@@ -64,7 +64,7 @@ class VimeoDriver implements Driver
             $response = file_get_contents('https://vimeo.com/api/oembed.json?url='.urlencode($query));
 
             return json_decode($response, true);
-        } catch(\ErrorException $e) {
+        } catch (\ErrorException $e) {
             throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Vimeo verwijzing: ' . '['.$idOrUrl.']']);
         }
         // ERROR/ file_get_contents(): Failed to enable crypto ???

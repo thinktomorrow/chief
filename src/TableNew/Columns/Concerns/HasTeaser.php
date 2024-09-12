@@ -20,7 +20,7 @@ trait HasTeaser
 
     protected function teaseValue($value): mixed
     {
-        if(! $this->tease) {
+        if (! $this->tease) {
             return $value;
         }
 

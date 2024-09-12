@@ -214,9 +214,9 @@ class TableComponent extends Component
     {
         $columns = $this->getColumns($model);
 
-        foreach($columns as $column) {
-            foreach($column->getItems() as $columnItem) {
-                if($columnItem->getKey() == $this->getTable()->getTreeLabelColumn()) {
+        foreach ($columns as $column) {
+            foreach ($column->getItems() as $columnItem) {
+                if ($columnItem->getKey() == $this->getTable()->getTreeLabelColumn()) {
                     return $columnItem;
                 }
             }

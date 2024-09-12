@@ -25,10 +25,10 @@ class ImportFieldLines implements ToCollection
 
     public function collection(Collection $rows)
     {
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
 
             // Ignore empty rows or invalid ID references
-            if(! isset($row[$this->idIndex])) {
+            if (! isset($row[$this->idIndex])) {
                 continue;
             }
 
@@ -37,7 +37,7 @@ class ImportFieldLines implements ToCollection
             try {
                 $fieldReference = FieldReference::fromEncryptedKey($encryptedId);
             } catch (DecryptException|ModelNotFoundException $e) {
-                if($this->output && $encryptedId != 'ID') {
+                if ($this->output && $encryptedId != 'ID') {
                     $this->output->error('Invalid field reference: ' . $encryptedId);
                 }
 
@@ -50,12 +50,12 @@ class ImportFieldLines implements ToCollection
 
     private function handleFieldValue(string $encryptedId, FieldReference $fieldReference, Collection $row): void
     {
-        if(! $fieldReference->isRepeatField()) {
-            if($fieldReference->isLocalized() && $this->locale === FieldLine::NON_LOCALIZED) {
+        if (! $fieldReference->isRepeatField()) {
+            if ($fieldReference->isLocalized() && $this->locale === FieldLine::NON_LOCALIZED) {
                 return;
             }
 
-            if(! $fieldReference->isLocalized() && $this->locale !== FieldLine::NON_LOCALIZED) {
+            if (! $fieldReference->isLocalized() && $this->locale !== FieldLine::NON_LOCALIZED) {
                 return;
             }
         }
@@ -67,14 +67,14 @@ class ImportFieldLines implements ToCollection
 
         // If it's the same value as original value, skip the import for this value
         // Currently all repeat values will get processed every time because the value does not ever match the entire current value.
-        if($value == $currentValue) {
+        if ($value == $currentValue) {
             return;
         }
 
         // TODO: in wizard mode, we should present the new value vs the original value to the admin.
         $fieldReference->saveValue($value, $this->locale);
 
-        if($this->output) {
+        if ($this->output) {
             $this->output->info('Imported value for ' . decrypt($encryptedId) . ' (' . $this->locale . ')');
             $this->output->writeln('Old value: ' . print_r($currentValue, true));
             $this->output->writeln('New value: ' . print_r($value, true));

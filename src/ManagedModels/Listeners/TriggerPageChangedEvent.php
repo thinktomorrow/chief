@@ -82,7 +82,7 @@ class TriggerPageChangedEvent
 
     private function handleFragmentChange($fragmentModelId): void
     {
-        if(! $this->fragmentRepository->exists($fragmentModelId)) {
+        if (! $this->fragmentRepository->exists($fragmentModelId)) {
             return;
         }
 

@@ -16,7 +16,7 @@ class ColumnText extends ColumnItem
         // Retrieve value(s)
         $value = $this->getDefaultValue($locale);
 
-        if(is_iterable($value)) {
+        if (is_iterable($value)) {
             throw new \Exception('Should not be iterable...');
         }
 
@@ -31,7 +31,7 @@ class ColumnText extends ColumnItem
         // Retrieve value(s)
         $value = $this->getDefaultValue($locale);
 
-        if(! is_iterable($value)) {
+        if (! is_iterable($value)) {
             $value = [$value];
         }
 

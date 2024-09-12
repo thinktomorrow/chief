@@ -50,7 +50,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         $this->columnName($key);
 
         // If we detect the key contains a dot, we assume it's a relationship key.
-        if(strpos($key, '.') !== false) {
+        if (strpos($key, '.') !== false) {
             $this->columnName(substr($key, 0, strpos($key, '.')));
             $this->eachValue(function ($value) use ($key) {
                 $key = substr($key, strpos($key, '.') + 1);

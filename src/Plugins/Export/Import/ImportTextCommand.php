@@ -27,7 +27,7 @@ class ImportTextCommand extends BaseCommand
 
         $idColumn = $this->ask('Which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
-        if(! $idColumn || ! in_array($idColumn, $headers)) {
+        if (! $idColumn || ! in_array($idColumn, $headers)) {
             $this->error('No or invalid column for the ID references selected');
 
             return;
@@ -35,7 +35,7 @@ class ImportTextCommand extends BaseCommand
 
         $column = $this->ask('Which column would you like to import? Choose one of: '.implode(', ', $headers));
 
-        if(! $column || ! in_array($column, $headers) || $column === $idColumn) {
+        if (! $column || ! in_array($column, $headers) || $column === $idColumn) {
             $this->error('No or invalid column for translations selected');
 
             return;
@@ -43,7 +43,7 @@ class ImportTextCommand extends BaseCommand
 
         $locale = $this->ask('Which locale does this column represent? Choose one of: '.implode(', ', $locales), in_array(strtolower($column), $locales) ? strtolower($column) : null);
 
-        if(! $locale || ! in_array($locale, $locales)) {
+        if (! $locale || ! in_array($locale, $locales)) {
             $this->error('No or invalid locale selected');
 
             return;

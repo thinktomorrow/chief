@@ -2,9 +2,6 @@
 
 namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
-use Closure;
-use Illuminate\Support\Collection;
-
 /**
  * This enables setting the model's title attribute to be used in ancestor breadcrumbs,
  * which appear when displaying a tree structure in the table. The breadcrumbs show

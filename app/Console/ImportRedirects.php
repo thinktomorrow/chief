@@ -27,11 +27,11 @@ class ImportRedirects extends BaseCommand
         $this->loop($this->argument('file'), function ($row) {
             try {
                 $this->addRedirect->handle($row[0], $row[1], $row[2]);
-            } catch(UrlRecordNotFound $e) {
+            } catch (UrlRecordNotFound $e) {
                 $this->warn('No record found for targeturl ['.$row[2].'], locale ['.$row[0].']');
 
                 return;
-            } catch(RedirectUrlAlreadyExists $e) {
+            } catch (RedirectUrlAlreadyExists $e) {
                 $this->warn('Redirect url already exists as record ['.$row[1].'], locale ['.$row[0].']');
 
                 return;
