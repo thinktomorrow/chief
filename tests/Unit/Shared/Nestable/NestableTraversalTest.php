@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
-class NestedNodeTraversalTest extends ChiefTestCase
+class NestableTraversalTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
@@ -14,8 +15,8 @@ class NestedNodeTraversalTest extends ChiefTestCase
     {
         parent::setUp();
 
-        chiefRegister()->resource(NestableModelStub::class);
-        NestableModelStub::migrateUp();
+        chiefRegister()->resource(NestableModelResourceStub::class);
+        NestableModelResourceStub::migrateUp();
     }
 
     public function test_it_can_get_parent_node()
@@ -23,7 +24,7 @@ class NestedNodeTraversalTest extends ChiefTestCase
         $this->defaultNestables();
         $node = $this->findNode('fourth');
 
-        $this->assertEquals('label third nl', $node->getParentNode()->getModel()->title);
+        $this->assertEquals('label third nl', $node->getParentNode()->title);
     }
 
     public function test_it_can_get_all_children()
@@ -75,12 +76,12 @@ class NestedNodeTraversalTest extends ChiefTestCase
         $node = $this->findNode('fourth');
 
         app()->setLocale('nl');
-        $this->assertEquals('label fourth nl', $node->getModel()->title);
+        $this->assertEquals('label fourth nl', $node->title);
         $this->assertEquals('label third nl > label fourth nl', $node->getBreadCrumbLabelWithoutRoot());
         $this->assertEquals('label first nl: label third nl > label fourth nl', $node->getBreadCrumbLabel());
 
         app()->setLocale('fr');
-        $this->assertEquals('label fourth fr', $node->getModel()->title);
+        $this->assertEquals('label fourth fr', $node->title);
         $this->assertEquals('label third fr > label fourth fr', $node->getBreadCrumbLabelWithoutRoot());
         $this->assertEquals('label first fr: label third fr > label fourth fr', $node->getBreadCrumbLabel());
     }

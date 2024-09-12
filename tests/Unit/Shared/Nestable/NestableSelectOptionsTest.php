@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\SelectOptions;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
 final class NestableSelectOptionsTest extends ChiefTestCase
@@ -15,8 +16,8 @@ final class NestableSelectOptionsTest extends ChiefTestCase
     {
         parent::setUp();
 
-        chiefRegister()->resource(NestableModelStub::class);
-        NestableModelStub::migrateUp();
+        chiefRegister()->resource(NestableModelResourceStub::class);
+        NestableModelResourceStub::migrateUp();
     }
 
     public function test_it_can_get_empty_select_options()

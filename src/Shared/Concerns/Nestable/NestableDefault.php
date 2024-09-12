@@ -6,6 +6,8 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableQueries;
 use Thinktomorrow\Vine\NodeDefaults;
 
@@ -28,7 +30,9 @@ trait NestableDefault
 
     public function getNodeLabel(): string
     {
-        return $this->title ?? '-';
+        $resource = app(Registry::class)->findResourceByModel(static::class);
+
+        return $resource->getPageTitleForSelect($this);
     }
 
     public function getBreadCrumbLabelWithoutRoot(): string

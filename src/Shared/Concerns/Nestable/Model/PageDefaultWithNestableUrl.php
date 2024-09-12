@@ -12,7 +12,7 @@ trait PageDefaultWithNestableUrl
         baseUrlSegment as defaultBaseUrlSegment;
     }
 
-    public static function bootNestablePageDefault()
+    public static function bootPageDefaultWithNestableUrl()
     {
         static::saved(function (self $model) {
             if ($model->exists && $model->isDirty('parent_id')) {
