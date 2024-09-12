@@ -1,4 +1,4 @@
-<x-chief::dialog
+<x-chief::dialog.modal
     id="delete-fragment-{{ str_replace('\\', '', $model->modelReference()->get()) }}"
     title="Verwijder dit fragment"
     size="xs"
@@ -18,9 +18,7 @@
     </div>
 
     <x-slot name="footer">
-        <button type="button" x-on:click="open = false" class="btn btn-grey">
-            Annuleer
-        </button>
+        <button type="button" x-on:click="open = false" class="btn btn-grey">Annuleer</button>
 
         <button
             type="submit"
@@ -31,4 +29,4 @@
             Verwijder fragment
         </button>
     </x-slot>
-</x-chief::dialog>
+</x-chief::dialog.modal>

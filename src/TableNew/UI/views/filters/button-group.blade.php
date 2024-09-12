@@ -19,9 +19,9 @@
         },
         repositionCheckedOptionMarker() {
             $nextTick(() => {
-                const activeRadio = Array.from(this.$root.querySelectorAll('input')).find(
-                    (radio) => radio.checked,
-                )
+                const activeRadio = Array.from(
+                    this.$root.querySelectorAll('input'),
+                ).find((radio) => radio.checked)
 
                 if (activeRadio) {
                     this.repositionOptionMarker(activeRadio.parentElement)
@@ -29,7 +29,7 @@
             })
         },
         init() {
-            this.repositionCheckedOptionMarker();
+            this.repositionCheckedOptionMarker()
         },
     }"
     x-on:{{ $this->getFiltersUpdatedEvent() }}.window="repositionCheckedOptionMarker"

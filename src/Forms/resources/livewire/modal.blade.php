@@ -1,4 +1,4 @@
-<x-chief::dialog wired size="xxs">
+<x-chief::dialog.modal wired size="xxs">
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}
@@ -32,4 +32,4 @@
             </button>
         </x-slot>
     @endif
-</x-chief::dialog>
+</x-chief::dialog.modal>

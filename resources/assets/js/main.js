@@ -1,7 +1,7 @@
 import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
-import dropdownDirective from './alpine-directives/dropdown';
+import dropdown from './alpine-directives/dropdown';
 import multiselectDirective from './alpine-directives/multiselect';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
@@ -36,6 +36,6 @@ require('./tables/index');
  */
 require('./sortable/sortable-livewire');
 
-window.Alpine.directive('dropdown', dropdownDirective);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
+window.Alpine.data('dropdown', dropdown);
