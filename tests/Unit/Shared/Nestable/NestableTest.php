@@ -7,7 +7,6 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableStub;
 
 class NestableTest extends TestCase
 {
@@ -50,7 +49,7 @@ class NestableTest extends TestCase
         chiefRegister()->resource(NestableModelResourceStub::class);
         NestableModelResourceStub::migrateUp();
 
-        $node = NestableModelStub::create(['id' => 'xxx', 'title' =>[
+        $node = NestableModelStub::create(['id' => 'xxx', 'title' => [
             'nl' => 'label nl',
             'fr' => 'label fr',
         ]]);

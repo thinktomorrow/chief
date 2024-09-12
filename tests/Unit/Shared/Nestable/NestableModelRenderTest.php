@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
 class NestableModelRenderTest extends ChiefTestCase
 {

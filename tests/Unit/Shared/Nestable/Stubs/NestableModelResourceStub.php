@@ -6,15 +6,11 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Resource\TreeResourceDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageDefaultWithNestableUrl;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 
 class NestableModelResourceStub implements PageResource, TreeResource
 {

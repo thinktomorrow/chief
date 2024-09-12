@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageDefaultWithNestableUrl;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 
 class NestableModelStub extends Model implements Page, Nestable
