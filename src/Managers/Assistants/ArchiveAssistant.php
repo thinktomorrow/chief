@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;

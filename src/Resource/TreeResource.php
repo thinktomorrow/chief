@@ -15,7 +15,7 @@ interface TreeResource
 
     public function getTreeModelsByIds(array $ids): Collection;
 
-//    public function getAllTreeModels(): Collection;
+    //    public function getAllTreeModels(): Collection;
 
     // REMOVE indexRepository
     // REMOVE nestedRepository (used in SelectOptions and NestedQueries...)
@@ -24,9 +24,9 @@ interface TreeResource
      * The class responsible for fetching the results for admin index pages.
      * @return string
      */
-//    public function indexRepository(): string;
+    //    public function indexRepository(): string;
 
-//    public function getNestableNodeLabels(): ?string;
+    //    public function getNestableNodeLabels(): ?string;
 
 
 }

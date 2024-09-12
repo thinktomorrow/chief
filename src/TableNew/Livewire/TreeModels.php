@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\TableNew\Livewire;
 
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\TreeResource;
