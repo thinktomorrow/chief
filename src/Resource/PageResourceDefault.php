@@ -61,32 +61,32 @@ trait PageResourceDefault
     {
         // Position of general actions: footer
         // Interaction with Livewire component
-//        return Table::make()
-//            ->resource(static::resourceKey())
-////            ->treeLabelColumn('title')
-//            ->columns([
-//                'title', 'tags.label', 'current_state',
-//            ])
-////            ->rowView('chief-table-new::rows.list-item')
-//            // Data options: query, model, relation, rows
-////            ->model(static::modelClassName()) // Entire model or relation or query or rows...
-////            ->relation('modelClass', 'id', 'tags')
-//
-//            // Convenience create action
-////            ->withCreateAction() // Via modal
-////            ->withInlineCreateAction() // Inline create instead of modal (ideal for small forms)
-//            // How to know which fields? convenience fields method?
-//
-//                // Better to have a resource class for this...
-//                // But then how to set the 'pivot' fields?
-////            ->pivotFields(function($model) {
-////                return [
-////                    Text::make('title')->label('Titel'),
-////                    Image::make('image')->label('Afbeelding'),
-////                ];
-////            })
-//
-//        ;
+        //        return Table::make()
+        //            ->resource(static::resourceKey())
+        ////            ->treeLabelColumn('title')
+        //            ->columns([
+        //                'title', 'tags.label', 'current_state',
+        //            ])
+        ////            ->rowView('chief-table-new::rows.list-item')
+        //            // Data options: query, model, relation, rows
+        ////            ->model(static::modelClassName()) // Entire model or relation or query or rows...
+        ////            ->relation('modelClass', 'id', 'tags')
+        //
+        //            // Convenience create action
+        ////            ->withCreateAction() // Via modal
+        ////            ->withInlineCreateAction() // Inline create instead of modal (ideal for small forms)
+        //            // How to know which fields? convenience fields method?
+        //
+        //                // Better to have a resource class for this...
+        //                // But then how to set the 'pivot' fields?
+        ////            ->pivotFields(function($model) {
+        ////                return [
+        ////                    Text::make('title')->label('Titel'),
+        ////                    Image::make('image')->label('Afbeelding'),
+        ////                ];
+        ////            })
+        //
+        //        ;
 
 
         return Table::make()
