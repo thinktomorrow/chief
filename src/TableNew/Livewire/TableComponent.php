@@ -2,14 +2,11 @@
 
 namespace Thinktomorrow\Chief\TableNew\Livewire;
 
-use Illuminate\Contracts\Pagination\CursorPaginator as CursorPaginatorContract;
 use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnItem;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithActions;
@@ -20,7 +17,6 @@ use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithPagination as WithPaginat
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithRowActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithSorters;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithTreeResults;
-use Thinktomorrow\Chief\TableNew\Sorters\TreeSort;
 use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
 use Thinktomorrow\Chief\TableNew\Table\Table;
 

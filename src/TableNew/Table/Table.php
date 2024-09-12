@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\TableNew\Table;
 use Closure;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\CanAddQuery;
 use Thinktomorrow\Chief\TableNew\Filters\Concerns\HasQuery;
@@ -60,7 +59,7 @@ class Table extends Component
     {
         $this->setResourceReference(new ResourceReference($resourceKey));
 
-        if($this->getResourceReference()->isTreeResource()) {
+        if ($this->getResourceReference()->isTreeResource()) {
             $this->addDefaultTreeSorting();
         }
 
@@ -70,14 +69,14 @@ class Table extends Component
             return $modelClassName::query();
         });
 
-//            // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
-//            if (in_array(Nestable::class, class_implements($modelClassName))) {
-//                $this->setResourceReference(new ResourceReference($resourceKey));
-//                $this->addDefaultTreeSorting();
-//            }
-//        }
-//
-//        return $this;
+        //            // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
+        //            if (in_array(Nestable::class, class_implements($modelClassName))) {
+        //                $this->setResourceReference(new ResourceReference($resourceKey));
+        //                $this->addDefaultTreeSorting();
+        //            }
+        //        }
+        //
+        //        return $this;
     }
 
     public function query(Closure $query): static
