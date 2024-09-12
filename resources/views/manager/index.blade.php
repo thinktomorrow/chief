@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\TableNew\Table\TableReference;
+    use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
 
     $is_archive_index = $is_archive_index ?? false;
     $title = ucfirst($resource->getIndexTitle());
@@ -37,7 +37,7 @@
 
     <div class="container space-y-4">
         {{ $table->render() }}
-{{--        {{ $table2->render() }}--}}
+        {{--        {{ $table2->render() }}--}}
 
         <div>
             <div class="row-start-start gutter-3">
@@ -54,17 +54,18 @@
                 {{--            @endAdminCan--}}
 
                 @adminCan('archive_index')
-                    <div class="w-full md:w-1/2 2xl:w-1/3">
-                        @if($is_archive_index)
-                            <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
-                                <x-chief-table-new::button color="white">Terug naar het overzicht</x-chief-table-new::button>
-                            </a>
-                        @else
-                            <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">
-                                <x-chief-table-new::button color="white">Bekijk archief</x-chief-table-new::button>
-                            </a>
-                        @endif
-                    </div>
+                <div class="w-full md:w-1/2 2xl:w-1/3">
+                    @if($is_archive_index)
+                        <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
+                            <x-chief-table-new::button color="white">Terug naar het overzicht
+                            </x-chief-table-new::button>
+                        </a>
+                    @else
+                        <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">
+                            <x-chief-table-new::button color="white">Bekijk archief</x-chief-table-new::button>
+                        </a>
+                    @endif
+                </div>
                 @endAdminCan
             </div>
         </div>

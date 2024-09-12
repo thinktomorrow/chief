@@ -63,7 +63,7 @@ trait PageResourceDefault
         // Position of general actions: footer
         // Interaction with Livewire component
         return Table::make()
-            ->query(static::resourceKey())
+            ->resource(static::resourceKey())
 //            ->treeLabelColumn('title')
             ->columns([
                 'title', 'tags.label', 'current_state',
@@ -210,7 +210,7 @@ trait PageResourceDefault
         // Position of general actions: footer
         // Interaction with Livewire component
         return Table::make()
-            ->query(static::resourceKey())
+            ->resource(static::resourceKey())
 //            ->treeLabelColumn('title')
             ->columns([
                 'title',

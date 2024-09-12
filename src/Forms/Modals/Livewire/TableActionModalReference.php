@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\Modals\Livewire;
 
 use Thinktomorrow\Chief\Forms\Modals\Modal;
-use Thinktomorrow\Chief\TableNew\Table\TableReference;
+use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
 
 class TableActionModalReference implements ModalReference
 {

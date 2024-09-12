@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\TableNew\Columns\Column;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnItem;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithActions;
@@ -18,14 +19,16 @@ use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithFilters;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithRowActions;
 use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithSorters;
+use Thinktomorrow\Chief\TableNew\Livewire\Concerns\WithTreeResults;
 use Thinktomorrow\Chief\TableNew\Sorters\TreeSort;
+use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
 use Thinktomorrow\Chief\TableNew\Table\Table;
-use Thinktomorrow\Chief\TableNew\Table\TableReference;
 
 class TableComponent extends Component
 {
     use WithPagination;
     use WithPaginationControl;
+    use WithTreeResults;
     use WithFilters;
     use WithSorters;
     use WithActions;
@@ -35,10 +38,6 @@ class TableComponent extends Component
 
     public TableReference $tableReference;
     private ?Table $table = null;
-
-    // After a tree result, we have the ancestors to show the tree structure and this boolean as flag for tree structure;
-    private bool $areResultsAsTree = false;
-    private array $ancestors = [];
 
     public function mount(Table $table)
     {
@@ -84,7 +83,7 @@ class TableComponent extends Component
         if ($this->getTable()->hasQuery()) {
             $builder = $this->getTable()->getQuery()();
 
-            foreach($this->getTable()->getAddedQueries() as $addedQuery) {
+            foreach ($this->getTable()->getAddedQueries() as $addedQuery) {
                 $addedQuery($builder);
             }
 
@@ -113,7 +112,7 @@ class TableComponent extends Component
         if ($this->shouldReturnResultsAsTree()) {
             $this->areResultsAsTree = true;
 
-            return $this->getResultsAsTree($builder, $this->getTable()->getTreeReference());
+            return $this->getResultsAsTree($builder, $this->getTable()->getResourceReference()->getResource());
         }
 
         if (! $this->hasPagination()) {
@@ -141,45 +140,6 @@ class TableComponent extends Component
 
         return (new LengthAwarePaginator($rows, count($rows), $this->getPaginationPerPage()))
             ->setPageName($this->getPaginationId());
-    }
-
-    /**
-     * Get the results as a tree structure. This is used when the tree sorter is active.
-     */
-    private function getResultsAsTree(Builder $builder, string $treeResourceKey): Collection|PaginatorContract|CursorPaginatorContract
-    {
-        // TODO: 'id' is assumed here. This should be configurable...
-        $result = $builder
-            ->select('id')
-            ->toBase()
-            ->get();
-
-        [$ancestors, $treeModels] = app(TreeModels::class)->get(
-            $treeResourceKey,
-            $result->pluck('id')->toArray(),
-            $this->hasPagination() ? ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage() : 0,
-            $this->hasPagination() ? $this->getPaginationPerPage() : count($result)
-        );
-
-        $this->ancestors = $ancestors->all();
-
-        if (! $this->hasPagination()) {
-            return collect($treeModels);
-        }
-
-        // TODO: improve perf here because we know fetch ENTIRE tree for each query...
-
-        return (new LengthAwarePaginator($treeModels, count($result), 20, $this->getCurrentPageIndex()))
-            ->setPageName($this->getPaginationId());
-    }
-
-    private function shouldReturnResultsAsTree(): bool
-    {
-        if (count($this->getActiveFilters()) > 0) {
-            return false;
-        }
-
-        return count($this->sorters) == 1 && key($this->sorters) == TreeSort::TREE_SORTING && $this->getTable()->getTreeReference();
     }
 
     public function getColumns($model): array

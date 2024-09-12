@@ -11,25 +11,11 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
 
 class TreeModels
 {
-    private Registry $registry;
-
-    public function __construct(Registry $registry)
-    {
-        $this->registry = $registry;
-    }
-
     /**
      * @return array [ancestors, models]
      * @throws MissingResourceRegistration
      */
-    public function get(string $resourceKey, array $ids, int $offset, int $limit, string $keyName = 'id'): array
-    {
-        $resource = $this->registry->resource($resourceKey);
-
-        return $this->create($resource, $ids, $offset, $limit, $keyName);
-    }
-
-    private function create(TreeResource $resource, array $ids, int $offset, int $limit, string $keyName = 'id'): array
+    public function compose(TreeResource $resource, array $ids, int $offset, int $limit, string $keyName = 'id'): array
     {
         // Get the entire tree structure but only the ids to reduce memory load
         $treeIds = NestedTree::fromIterable($resource->getTreeModelIds());

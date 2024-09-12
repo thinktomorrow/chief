@@ -1,8 +1,9 @@
 <?php
 
-namespace Thinktomorrow\Chief\TableNew\Table;
+namespace Thinktomorrow\Chief\TableNew\Table\References;
 
 use Livewire\Wireable;
+use Thinktomorrow\Chief\TableNew\Table\Table;
 
 class TableReference implements Wireable
 {

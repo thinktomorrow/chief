@@ -20,9 +20,10 @@ use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRows;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasRowViews;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasSorters;
-use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTableReference;
 use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTreeLabelColumn;
-use Thinktomorrow\Chief\TableNew\Table\Concerns\HasTreeReference;
+use Thinktomorrow\Chief\TableNew\Table\References\HasResourceReference;
+use Thinktomorrow\Chief\TableNew\Table\References\HasTableReference;
+use Thinktomorrow\Chief\TableNew\Table\References\ResourceReference;
 
 class Table extends Component
 {
@@ -31,7 +32,7 @@ class Table extends Component
     use HasLivewireComponent;
 
     /** Tree support */
-    use HasTreeReference;
+    use HasResourceReference;
     use HasTreeLabelColumn;
 
     /** Base Query for all table data */
@@ -55,23 +56,32 @@ class Table extends Component
         return new static();
     }
 
-    public function query(Closure|string $query): static
+    public function resource(string $resourceKey): static
     {
-        // A resource key can be passed to automatically resolve the query
-        if (is_string($query) && $modelClassName = app(Registry::class)->resource($query)?->modelClassName()) {
-            $resourceKey = $query;
-            $query = function () use ($modelClassName) {
-                return $modelClassName::query();
-            };
+        $this->setResourceReference(new ResourceReference($resourceKey));
 
-            // Is this a nestable model?
-            // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
-            if (in_array(Nestable::class, class_implements($modelClassName))) {
-                $this->setTreeReference($resourceKey);
-                $this->addDefaultTreeSorting();
-            }
+        if($this->getResourceReference()->isTreeResource()) {
+            $this->addDefaultTreeSorting();
         }
 
+        $modelClassName = $this->getResourceReference()->getResource()->modelClassName();
+
+        return $this->query(function () use ($modelClassName) {
+            return $modelClassName::query();
+        });
+
+//            // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
+//            if (in_array(Nestable::class, class_implements($modelClassName))) {
+//                $this->setResourceReference(new ResourceReference($resourceKey));
+//                $this->addDefaultTreeSorting();
+//            }
+//        }
+//
+//        return $this;
+    }
+
+    public function query(Closure $query): static
+    {
         $this->query = $query;
 
         return $this;
