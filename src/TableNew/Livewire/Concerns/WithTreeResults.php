@@ -43,8 +43,6 @@ trait WithTreeResults
             return collect($treeModels);
         }
 
-        // TODO: improve perf here because we know fetch ENTIRE tree for each query...
-
         return (new LengthAwarePaginator($treeModels, count($result), 20, $this->getCurrentPageIndex()))
             ->setPageName($this->getPaginationId());
     }

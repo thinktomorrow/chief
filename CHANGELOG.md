@@ -5,10 +5,19 @@ the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
 ## Unreleased
-Introduce Table component
+
+### Table component
 
 - `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former options (index and table)
 - `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
+
+Some documentation:
+- Table can have a query closure, collection rows or resource as data source.
+
+### Simpler tree retrieval
+- Add the `TreeResource` interface to your resource to use the new tree methods.
+- The indexRepository is removed...(wip)
+- The NestableRepository is removed... (wip)
 
 - Changed: Exports are now stored in the `storage/app/exports` folder.
 - Fixed: isolate all throwables while exporting all resources.
