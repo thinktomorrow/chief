@@ -54,6 +54,17 @@
         </button>
 
         <x-chief::dialog.modal id="test-modal">Test modal</x-chief::dialog.modal>
+
+        <button
+            type="button"
+            x-data
+            x-on:click="$dispatch('open-dialog', { 'id': 'test-dropdown' })"
+            class="btn btn-primary"
+        >
+            Open dropdown
+        </button>
+
+        <x-chief::dialog.dropdown id="test-dropdown">Test dropdown</x-chief::dialog.dropdown>
     </div>
 
     <div class="container space-y-4">
