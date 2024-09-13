@@ -208,7 +208,7 @@ trait PageResourceDefault
         // Interaction with Livewire component
         return Table::make()
             ->resource(static::resourceKey())
-//            ->treeLabelColumn('title')
+            //            ->treeLabelColumn('title')
             ->columns([
                 'title',
             ])->sorters([

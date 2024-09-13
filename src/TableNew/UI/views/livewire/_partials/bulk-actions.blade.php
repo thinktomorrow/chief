@@ -17,13 +17,14 @@
     </button>
 
     <div class="flex items-center justify-end gap-3">
+        {{-- TODO(ben): get visible action, but not bulk actions --}}
         @foreach ($this->getVisibleBulkActions() as $action)
             {{ $action }}
         @endforeach
 
         @if (count($this->getHiddenBulkActions()) > 0)
             <div>
-                <button id="table-hidden-bulk-actions" type="button">
+                <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-bulk-actions' })">
                     <x-chief-table-new::button
                         size="xs"
                         color="white"
@@ -31,11 +32,11 @@
                     />
                 </button>
 
-                <x-chief::dropdown trigger="#table-hidden-bulk-actions" placement="bottom-end">
+                <x-chief::dialog.dropdown id="table-hidden-bulk-actions" placement="bottom-end">
                     @foreach ($this->getHiddenBulkActions() as $action)
                         {{ $action }}
                     @endforeach
-                </x-chief::dropdown>
+                </x-chief::dialog.dropdown>
             </div>
         @endif
     </div>

@@ -1,23 +1,24 @@
-<x-chief::dialog wired size="xl" title="Kies uit de mediabibliotheek">
-    @if($isOpen)
+<x-chief::dialog.modal wired size="xl" title="Kies uit de mediabibliotheek">
+    @if ($isOpen)
         @php
             $rows = $this->getTableRows();
             $count = count($selectedPreviewFiles);
         @endphp
 
         <x-slot name="header">
-            <div class="flex flex-wrap items-start justify-between gap-3 grow">
-                <div x-data="{}" class="relative flex items-center justify-end grow">
-                    <svg class="absolute w-5 h-5 pointer-events-none left-3 body-dark">
+            <div class="flex grow flex-wrap items-start justify-between gap-3">
+                <div x-data="{}" class="relative flex grow items-center justify-end">
+                    <svg class="body-dark pointer-events-none absolute left-3 h-5 w-5">
                         <use xlink:href="#icon-magnifying-glass"></use>
                     </svg>
 
                     <x-chief::input.text
-                            wire:model.live.debounce.500ms="filters.search"
-                            x-data="{}" {{-- Prevents directive to be triggered twice --}}
-                            x-prevent-submit-on-enter
-                            placeholder="Zoek op bestandsnaam"
-                            class="w-full pl-10"
+                        wire:model.live.debounce.500ms="filters.search"
+                        x-data="{}"
+                        {{-- Prevents directive to be triggered twice --}}
+                        x-prevent-submit-on-enter
+                        placeholder="Zoek op bestandsnaam"
+                        class="w-full pl-10"
                     />
                 </div>
 
@@ -29,15 +30,21 @@
         </x-slot>
 
         <div class="row-start-start gutter-2">
-            @foreach($rows as $i => $asset)
-                <div wire:key="filefield_choose_{{ $i.'_'.$asset->id }}" class="w-1/2 sm:w-1/3 md:w-1/4 xl:w-1/5 2xl:w-1/6">
+            @foreach ($rows as $i => $asset)
+                <div
+                    wire:key="filefield_choose_{{ $i . '_' . $asset->id }}"
+                    class="w-1/2 sm:w-1/3 md:w-1/4 xl:w-1/5 2xl:w-1/6"
+                >
                     <div wire:click="selectAsset('{{ $asset->id }}')">
-                        @include('chief-assets::_partials.asset-item', [
-                            'asset' => $asset,
-                            'disabled' => in_array($asset->id, $existingAssetIds),
-                            'active' => in_array($asset->id, $assetIds),
-                            'withActions' => false,
-                        ])
+                        @include(
+                            'chief-assets::_partials.asset-item',
+                            [
+                                'asset' => $asset,
+                                'disabled' => in_array($asset->id, $existingAssetIds),
+                                'active' => in_array($asset->id, $assetIds),
+                                'withActions' => false,
+                            ]
+                        )
                     </div>
                 </div>
             @endforeach
@@ -51,29 +58,27 @@
                     </div>
                 @endif
 
-                <div class="flex justify-between gap-6 max-lg:flex-wrap shrink-0">
+                <div class="flex shrink-0 justify-between gap-6 max-lg:flex-wrap">
                     <div class="flex items-center gap-5">
-                        <p class="text-sm text-grey-500 body shrink-0">
+                        <p class="body shrink-0 text-sm text-grey-500">
                             {{ $count }} {{ $count == 1 ? 'item' : 'items' }} geselecteerd
                         </p>
 
-                        <div class="flex -mt-0.5 min-w-0 overflow-x-auto pr-2">
-                            @foreach($selectedPreviewFiles as $selectedPreviewFile)
+                        <div class="-mt-0.5 flex min-w-0 overflow-x-auto pr-2">
+                            @foreach ($selectedPreviewFiles as $selectedPreviewFile)
                                 <div class="-mr-2 shrink-0">
                                     <img
-                                            src="{{ $selectedPreviewFile->getUrl('thumb') }}"
-                                            alt="{{ $selectedPreviewFile->filename }}"
-                                            class="object-cover w-10 h-10 border-2 border-white rounded-lg bg-grey-100"
-                                    >
+                                        src="{{ $selectedPreviewFile->getUrl('thumb') }}"
+                                        alt="{{ $selectedPreviewFile->filename }}"
+                                        class="h-10 w-10 rounded-lg border-2 border-white bg-grey-100 object-cover"
+                                    />
                                 </div>
                             @endforeach
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap justify-end gap-3 max-lg:w-full shrink-0">
-                        <button wire:click="close" type="button" class="btn btn-grey shrink-0">
-                            Annuleren
-                        </button>
+                    <div class="flex shrink-0 flex-wrap justify-end gap-3 max-lg:w-full">
+                        <button wire:click="close" type="button" class="btn btn-grey shrink-0">Annuleren</button>
 
                         <button wire:click="save" type="button" class="btn btn-primary shrink-0">
                             Voeg selectie toe
@@ -83,4 +88,4 @@
             </div>
         </x-slot>
     @endif
-</x-chief::dialog>
+</x-chief::dialog.modal>

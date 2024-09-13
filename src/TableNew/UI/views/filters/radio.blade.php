@@ -1,8 +1,8 @@
-<button id="{{ $id }}-select" type="button">
+<button type="button" x-on:click="$dispatch('open-dialog', { 'id': '{{ $id }}-select' })">
     <x-chief-table-new::filter.select :id="$id" :value="$value">{{ $label }}</x-chief-table-new::filter.select>
 </button>
 
-<x-chief::dropdown trigger="#{{ $id }}-select" placement="bottom-end">
+<x-chief::dialog.dropdown id="#{{ $id }}-select" placement="bottom-end">
     <div class="space-y-3.5 p-3.5">
         <div class="space-y-2">
             @foreach ($options as $value => $label)
@@ -30,4 +30,4 @@
             </button>
         </div>
     </div>
-</x-chief::dropdown>
+</x-chief::dialog.dropdown>

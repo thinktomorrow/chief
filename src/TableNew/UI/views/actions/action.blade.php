@@ -5,9 +5,9 @@
                 {{ $getLabel() }}
             </x-chief-table-new::button>
         @elseif ($isHidden())
-            <x-chief::dropdown.item :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
+            <x-chief::dialog.dropdown.item :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
                 {{ $getLabel() }}
-            </x-chief::dropdown.item>
+            </x-chief::dialog.dropdown.item>
         @endif
     </a>
 @else
@@ -17,9 +17,9 @@
                 {{ $getLabel() }}
             </x-chief-table-new::button>
         @elseif ($isHidden())
-            <x-chief::dropdown.item :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
+            <x-chief::dialog.dropdown.item :icon-left="$getPrependIcon()" :icon-right="$getAppendIcon()">
                 {{ $getLabel() }}
-            </x-chief::dropdown.item>
+            </x-chief::dialog.dropdown.item>
         @endif
     </button>
 @endif
