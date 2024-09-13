@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 
 class NestableArticlePage extends ArticlePage implements PageResource, Nestable
 {
