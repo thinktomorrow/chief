@@ -1,24 +1,29 @@
 <?php
+declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
+namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
+use Thinktomorrow\Vine\Node;
 
-interface Nestable
+interface Nestable extends Node
 {
-    public function getParent(): ?Nestable;
+    public function getNodeLabel(): string;
+    public function getBreadCrumbLabel(bool $withoutRoot = false): string;
+    public function getBreadCrumbLabelWithoutRoot(): string;
+
+    public function getParent(): ?self;
 
     /**
      * List of the access path to this nestable model.
      * This array should contain all parents.
      *
      *
-     * @return Nestable[]
+     * @return self[]
      */
     public function getAncestors(): array;
 
     /**
-     * @return Nestable[]
+     * @return self[]
      */
     public function getChildren(): iterable;
 
@@ -27,7 +32,7 @@ interface Nestable
      * belonging to this parent model.
      *
      */
-    public function getDescendants(): NestedTree;
+    public function getDescendants(): NestableTree;
 
     /**
      * List of all the descendant ids.
@@ -35,7 +40,7 @@ interface Nestable
     public function getDescendantIds(): array;
 
     /**
-     * @return Nestable[]
+     * @return self[]
      */
     public function getSiblings(): iterable;
 }

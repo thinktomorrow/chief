@@ -20,8 +20,6 @@ use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\MysqlNestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
@@ -56,9 +54,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         // Register the Chief Exception handler
         $this->app->singleton(ExceptionHandler::class, ChiefExceptionHandler::class);
-
-        // Don't use the default memoized repository for our testsuite
-        $this->app->bind(NestableRepository::class, MysqlNestableRepository::class);
 
         Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\' . class_basename($modelName) . 'Factory');
 

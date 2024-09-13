@@ -10,10 +10,8 @@ use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Modals\Modal;
-use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
-use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
 use Thinktomorrow\Chief\TableNew\Actions\Action;
 use Thinktomorrow\Chief\TableNew\Columns\ColumnBadge;
@@ -109,7 +107,7 @@ trait PageResourceDefault
                                 MultiSelect::make('tags')
                                     ->required()
                                     ->multiple()
-                                    ->options(fn() => app(TagReadRepository::class)->getAllForSelect()),
+                                    ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                             ])
                             ->button('Toevoegen')
                     )->effect(function ($formData, $data) {
@@ -355,14 +353,4 @@ trait PageResourceDefault
     {
         return false;
     }
-
-    //    public function indexRepository(): string
-    //    {
-    //        return EloquentIndexRepository::class;
-    //    }
-    //
-    //    public function getNestableNodeLabels(): ?string
-    //    {
-    //        return null;
-    //    }
 }

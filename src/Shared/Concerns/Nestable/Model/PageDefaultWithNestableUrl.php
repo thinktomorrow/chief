@@ -1,19 +1,18 @@
 <?php
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
+namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
 
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
-trait NestablePageDefault
+trait PageDefaultWithNestableUrl
 {
     use PageDefaults{
         baseUrlSegment as defaultBaseUrlSegment;
     }
-    use NestableDefault;
 
-    public static function bootNestablePageDefault()
+    public static function bootPageDefaultWithNestableUrl()
     {
         static::saved(function (self $model) {
             if ($model->exists && $model->isDirty('parent_id')) {

@@ -2,14 +2,69 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
+namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedTree;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableQueries;
+use Thinktomorrow\Vine\NodeDefaults;
 
+/**
+ * Model logic for handling nesting based on the parent_id construct.
+ */
 trait NestableDefault
 {
+    use NodeDefaults;
+
+    public function initializeNestableDefault(): void
+    {
+        $this->children = new NestableTree();
+    }
+
+    public function getId(): string
+    {
+        return $this->getNodeId();
+    }
+
+    public function getNodeLabel(): string
+    {
+        $resource = app(Registry::class)->findResourceByModel(static::class);
+
+        return $resource->getPageTitleForSelect($this);
+    }
+
+    public function getBreadCrumbLabelWithoutRoot(): string
+    {
+        return $this->getBreadcrumbLabel(true);
+    }
+
+    public function getBreadCrumbLabel(bool $withoutRoot = false): string
+    {
+        $label = $this->getNodeLabel();
+
+        if (! $this->isRootNode()) {
+            $label = array_reduce(array_reverse($this->getAncestorNodes()->all()), function ($carry, Nestable $node) use ($withoutRoot) {
+                if ($node->isRootNode()) {
+                    return $withoutRoot ? $carry : $node->getNodeLabel() . ': ' . $carry;
+                }
+
+                return $node->getNodeLabel() . ' > ' . $carry;
+            }, $this->getNodeLabel());
+        }
+
+        return $label;
+    }
+
+    public function getBreadCrumbLabels(): array
+    {
+        $ancestorLabels = array_reduce($this->getAncestorNodes()->all(), function ($carry, Nestable $node) {
+            return array_merge($carry, [$node->getNodeLabel()]);
+        }, []);
+
+        return array_merge($ancestorLabels, [$this->getNodeLabel()]);
+    }
+
     public function getParent(): ?Nestable
     {
         if (! $this->parent_id) {
@@ -59,7 +114,7 @@ trait NestableDefault
      * Nested array of the complete child structure
      * belonging to this parent model.
      */
-    public function getDescendants(): NestedTree
+    public function getDescendants(): NestableTree
     {
         $descendants = static::whereIn(
             $this->getKeyName(),
