@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Modals\Concerns;
+namespace Thinktomorrow\Chief\Forms\Dialogs\Concerns;
 
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;

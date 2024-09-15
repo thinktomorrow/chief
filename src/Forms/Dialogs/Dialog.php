@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Modals;
+namespace Thinktomorrow\Chief\Forms\Dialogs;
 
 use Illuminate\Support\Str;
 use Livewire\Wireable;
@@ -11,11 +11,11 @@ use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
-use Thinktomorrow\Chief\Forms\Modals\Concerns\HasButton;
-use Thinktomorrow\Chief\Forms\Modals\Concerns\HasContent;
-use Thinktomorrow\Chief\Forms\Modals\Concerns\HasSubTitle;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasButton;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 
-class Modal extends Component implements Wireable
+class Dialog extends Component implements Wireable
 {
     use HasModel;
     use HasFields;
@@ -32,6 +32,20 @@ class Modal extends Component implements Wireable
         parent::__construct($id);
 
         $this->elementId($this->id . '_' . Str::random());
+    }
+
+    public function asModal(): self
+    {
+        $this->view = 'chief-form::modals.modal';
+
+        return $this;
+    }
+
+    public function asDrawer(): self
+    {
+        $this->view = 'chief-form::modals.drawer';
+
+        return $this;
     }
 
     public function toLivewire()

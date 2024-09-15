@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\TableNew\Table\Concerns;
 
-use Thinktomorrow\Chief\Forms\Modals\Modal;
+use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\TableNew\Actions\Action;
 
 trait HasActions
@@ -28,10 +28,10 @@ trait HasActions
 
     // TODO: this should work for all type of actions.
     // BUT THEN ASSERT THAT ACTION KEYS ARE UNIQUE ACROSS ALL ACTIONS
-    public function findActionModal(string $actionKey, string $modalKey): ?Modal
+    public function findActionDialog(string $actionKey, string $dialogKey): ?Dialog
     {
         $action = $this->findAction($actionKey);
 
-        return $action?->getModal();
+        return $action?->getDialog();
     }
 }

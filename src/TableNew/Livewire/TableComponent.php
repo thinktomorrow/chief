@@ -49,7 +49,7 @@ class TableComponent extends Component
     public function getListeners()
     {
         return [
-            'modalSaved-' . $this->getId() => 'onActionModalSaved',
+            'dialogSaved-' . $this->getId() => 'onActionDialogSaved',
             'requestRefresh' => '$refresh',
         ];
     }

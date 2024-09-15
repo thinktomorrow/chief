@@ -1,11 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Modals\Livewire;
+namespace Thinktomorrow\Chief\Forms\Dialogs\Livewire;
 
-use Thinktomorrow\Chief\Forms\Modals\Modal;
+use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
 
-class TableActionModalReference implements ModalReference
+class TableActionDialogReference implements DialogReference
 {
     private TableReference $tableReference;
     private string $actionKey;
@@ -44,8 +44,8 @@ class TableActionModalReference implements ModalReference
         );
     }
 
-    public function getModal(): Modal
+    public function getDialog(): Dialog
     {
-        return $this->tableReference->getTable()->findActionModal($this->actionKey, $this->modalKey);
+        return $this->tableReference->getTable()->findActionDialog($this->actionKey, $this->modalKey);
     }
 }

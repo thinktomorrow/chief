@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
-use Thinktomorrow\Chief\Forms\Modals\Livewire\ModalComponent;
+use Thinktomorrow\Chief\Forms\Dialogs\Livewire\DialogComponent;
 
 class FormsServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,7 @@ class FormsServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-form', __DIR__ . '/resources');
 
-        Livewire::component('chief-form::modal', ModalComponent::class);
+        Livewire::component('chief-form::modal', DialogComponent::class);
 
         // Custom validation rules
         Validator::extendImplicit(FallbackLocaleRequiredRule::RULE, FallbackLocaleRequiredRule::class.'@validate');
