@@ -19,7 +19,7 @@ class FormsServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-form', __DIR__ . '/resources');
 
-        Livewire::component('chief-form::modal', DialogComponent::class);
+        Livewire::component('chief-form::dialog', DialogComponent::class);
 
         // Custom validation rules
         Validator::extendImplicit(FallbackLocaleRequiredRule::RULE, FallbackLocaleRequiredRule::class.'@validate');

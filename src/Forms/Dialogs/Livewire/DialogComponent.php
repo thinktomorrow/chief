@@ -50,8 +50,10 @@ class DialogComponent extends Component
         $this->isOpen = false;
     }
 
-    private function getDialog(): Dialog
+    private function getDialog(): ?Dialog
     {
+        if(!$this->dialogReference) return null;
+
         if (! $this->dialog) {
             $this->dialog = $this->dialogReference->getDialog();
         }
@@ -117,6 +119,12 @@ class DialogComponent extends Component
 
     public function render()
     {
-        return view('chief-form::livewire.modal');
+        $type = 'modal';
+
+        if($this->getDialog()) {
+            $type = $this->getDialog()->getType()->value;
+        }
+
+        return view('chief-form::livewire.' . $type);
     }
 }

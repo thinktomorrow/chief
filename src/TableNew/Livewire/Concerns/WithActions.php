@@ -87,6 +87,6 @@ trait WithActions
     public function openActionDialog($params)
     {
         // TODO:: modal or drawer or else ...
-        $this->dispatch('open' . '-' . $this->getId(), $params)->to('chief-form::modal');
+        $this->dispatch('open' . '-' . $this->getId(), $params)->to('chief-form::dialog');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogType;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
@@ -17,6 +18,7 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 
 class Dialog extends Component implements Wireable
 {
+    use HasDialogType;
     use HasModel;
     use HasFields;
     use HasElementId;
@@ -25,27 +27,11 @@ class Dialog extends Component implements Wireable
     use HasContent;
     use HasButton;
 
-    protected string $view = 'chief-form::modals.modal';
-
     public function __construct(string $id = 'modal')
     {
         parent::__construct($id);
 
         $this->elementId($this->id . '_' . Str::random());
-    }
-
-    public function asModal(): self
-    {
-        $this->view = 'chief-form::modals.modal';
-
-        return $this;
-    }
-
-    public function asDrawer(): self
-    {
-        $this->view = 'chief-form::modals.drawer';
-
-        return $this;
     }
 
     public function toLivewire()
@@ -60,32 +46,36 @@ class Dialog extends Component implements Wireable
 
     private static function fromArray(array $values): self
     {
-        $modal = new static($values['id']);
+        $dialog = new static($values['id']);
+
+        $dialog->asType(DialogType::from($values['dialogType']));
+
         if (isset($values['title'])) {
-            $modal->title($values['title']);
+            $dialog->title($values['title']);
         }
         if (isset($values['subTitle'])) {
-            $modal->subTitle($values['subTitle']);
+            $dialog->subTitle($values['subTitle']);
         }
         if (isset($values['content'])) {
-            $modal->content($values['content']);
+            $dialog->content($values['content']);
         }
         if ($values['form']) {
-            $modal->form($values['form']['class']::fromLivewire($values['form']));
+            $dialog->form($values['form']['class']::fromLivewire($values['form']));
         }
         //        if($values['form']) $modal->fields(collect($values['fields'])->map(fn ($field) => $field['class']::fromLivewire($field)));
         if ($values['button']) {
-            $modal->button($values['button']);
+            $dialog->button($values['button']);
         }
-        $modal->elementId($values['elementId']);
+        $dialog->elementId($values['elementId']);
 
-        return $modal;
+        return $dialog;
     }
 
     private function toArray()
     {
         return [
             'id' => $this->id,
+            'dialogType' => $this->dialogType->value,
             'title' => $this->title,
             'subTitle' => $this->subTitle,
             'content' => $this->content,
