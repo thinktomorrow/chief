@@ -8,13 +8,13 @@ use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasButton;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogType;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
-use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasButton;
-use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
-use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 
 class Dialog extends Component implements Wireable
 {

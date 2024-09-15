@@ -14,8 +14,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Table\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Concerns\HasView;
-use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasDialog;
+use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasVisibility;
 

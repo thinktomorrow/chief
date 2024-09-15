@@ -5,13 +5,13 @@ namespace Thinktomorrow\Chief\Forms;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\Forms\Dialogs\Livewire\DialogComponent;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMimetypesRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMinRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileRequiredRule;
-use Thinktomorrow\Chief\Forms\Dialogs\Livewire\DialogComponent;
 
 class FormsServiceProvider extends ServiceProvider
 {

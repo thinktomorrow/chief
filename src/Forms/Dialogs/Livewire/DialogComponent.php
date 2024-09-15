@@ -52,7 +52,9 @@ class DialogComponent extends Component
 
     private function getDialog(): ?Dialog
     {
-        if(!$this->dialogReference) return null;
+        if (! $this->dialogReference) {
+            return null;
+        }
 
         if (! $this->dialog) {
             $this->dialog = $this->dialogReference->getDialog();
@@ -121,7 +123,7 @@ class DialogComponent extends Component
     {
         $type = 'modal';
 
-        if($this->getDialog()) {
+        if ($this->getDialog()) {
             $type = $this->getDialog()->getType()->value;
         }
 
