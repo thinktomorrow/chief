@@ -88,7 +88,7 @@ class Action extends \Illuminate\View\Component implements Htmlable
         if ($this->notificationOnFailure) {
             $action->notifyOnFailure($this->notificationOnFailure);
         }
-        if($this->refreshTable) {
+        if ($this->refreshTable) {
             $action->refreshTable();
         }
         if ($this->model) {
