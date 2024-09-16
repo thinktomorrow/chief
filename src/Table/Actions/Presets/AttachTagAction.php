@@ -8,7 +8,8 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
-class AttachTagAction extends Action {
+class AttachTagAction extends Action
+{
 
     public static function default(string $resourceKey): static
     {
@@ -32,16 +33,18 @@ class AttachTagAction extends Action {
                                 ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                         ])
                         ->button('Toevoegen')
-                )->effect(function ($formData, $data) use($resourceKey) {
+                )->effect(function ($formData, $data) use ($resourceKey) {
 
                     $tagIds = (array) ($formData['tags'] ?? []);
                     $modelIds = $data['items'];
 
-                    try{
+                    try {
                         app(TaggableRepository::class)->attachTags($resourceKey, $modelIds, $tagIds);
+
                         return true;
-                    } catch(\Exception $e) {
+                    } catch (\Exception $e) {
                         report($e);
+
                         return false;
                     }
                 })
