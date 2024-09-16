@@ -93,14 +93,14 @@
             }"
             class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
         >
-            <div class="space-y-3 px-4 py-3">
-                <div
-                    class="flex justify-between gap-2"
-                    :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }"
-                >
-                    @include('chief-table::livewire._partials.filters')
-                    @include('chief-table::livewire._partials.sorters')
-                </div>
+            <div
+                id="table-header"
+                class="flex justify-between gap-2 px-4 py-3"
+                :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }"
+            >
+                @include('chief-table::livewire._partials.filters')
+                {{-- <livewire:chief-table-livewire::table-filters :filters="$this->getLivewirePropertyFilters()" /> --}}
+                @include('chief-table::livewire._partials.sorters')
             </div>
 
             <table class="min-w-full table-fixed divide-y divide-grey-200">
@@ -150,7 +150,7 @@
                 </div>
             @endif
         </div>
-    </div>
 
-    <livewire:chief-form::dialog :parent-id="$this->getId()" />
+        <livewire:chief-form::dialog :parent-id="$this->getId()" />
+    </div>
 </div>

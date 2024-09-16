@@ -128,21 +128,27 @@ trait PageResourceDefault
                     ->link('/admin/catalogpage/create'),
             ])
             ->filters([
-                TextFilter::make('title')->query(function ($builder, $value) {
-                    $builder->whereJsonLike(['title'], $value);
-                }),
-                ButtonGroupFilter::make('current_state')->label('Status')->options([
-                    '' => 'Alle',
-                    'published' => 'Online',
-                    'draft' => 'Offline',
-                    'archived' => 'Gearchiveerd',
-                ])->value(''),
-                //SelectFilter::make('brands')->label('Status')->options(),
-                SelectFilter::make('current_state')->label('Status')->options([
-                    'published' => 'Online',
-                    'draft' => 'Offline',
-                    'archived' => 'Gearchiveerd',
-                ]),
+                TextFilter::make('title')
+                    ->label('Titel')
+                    ->description('Zoek op pagina titel')
+                    ->query(function ($builder, $value) {
+                        $builder->whereJsonLike(['title'], $value);
+                    }),
+                ButtonGroupFilter::make('current_state_button_group')
+                    ->label('Status')
+                    ->options([
+                        '' => 'Alle',
+                        'published' => 'Online',
+                        'draft' => 'Offline',
+                        'archived' => 'Gearchiveerd',
+                    ])->value(''),
+                SelectFilter::make('current_state')
+                    ->label('Status')
+                    ->options([
+                        'published' => 'Online',
+                        'draft' => 'Offline',
+                        'archived' => 'Gearchiveerd',
+                    ]),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) {

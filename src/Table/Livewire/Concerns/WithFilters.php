@@ -8,9 +8,7 @@ use Thinktomorrow\Chief\Table\Filters\Filter;
 
 trait WithFilters
 {
-    // Active filters
     public array $filters = [];
-
     public bool $showFilters = false;
 
     /**
@@ -19,6 +17,18 @@ trait WithFilters
     public function getFilters(): iterable
     {
         return $this->getTable()->getFilters();
+    }
+
+    public function getLivewirePropertyFilters(): array
+    {
+        return collect($this->getTable()->getFilters())->map(function ($filter) {
+            return [
+                'key' => $filter->getKey(),
+                'label' => $filter->getLabel(),
+                'description' => $filter->getDescription(),
+                'value' => $filter->getValue(),
+            ];
+        })->toArray();
     }
 
     public function getActiveFilters(): array
