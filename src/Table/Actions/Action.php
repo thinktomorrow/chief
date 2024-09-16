@@ -53,17 +53,17 @@ class Action extends \Illuminate\View\Component implements Htmlable
         return new static((string) $key);
     }
 
-    public function toRowAction(): static
+    public function toRowAction(): RowAction
     {
         return $this->replicateActionAs(RowAction::class);
     }
 
-    public function toBulkAction(): static
+    public function toBulkAction(): BulkAction
     {
         return $this->replicateActionAs(BulkAction::class);
     }
 
-    private function replicateActionAs(string $class): static
+    private function replicateActionAs(string $class): Action|BulkAction|RowAction
     {
         $action = $class::make($this->key);
 

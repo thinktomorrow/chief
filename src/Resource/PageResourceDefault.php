@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
@@ -90,7 +91,8 @@ trait PageResourceDefault
         return Table::make()
             ->resource(static::resourceKey())
             ->bulkActions([
-                AttachTagAction::default(),
+                AttachTagAction::default(static::resourceKey()),
+                DetachTagAction::default(static::resourceKey()),
             ])
             ->actions([
                 Action::make('export')

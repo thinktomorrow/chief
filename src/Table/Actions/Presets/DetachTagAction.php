@@ -8,44 +8,37 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
-class AttachTagAction extends Action {
+class DetachTagAction extends Action {
 
     public static function default(string $resourceKey): static
     {
-        return static::make('attach-tag')
-                ->label('Tag deze selectie')
+        return static::make('detach-tag')
+                ->label('Verwijder tags')
                 ->dialog(
                     Dialog::make('tagModal')
-                        ->title('Voeg tags toe aan selectie')
+                        ->title('Verwijder tags van aan selectie')
                         // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
                         ->subTitle(':count items geselecteerd')
-                        ->content('
-                                <p>
-                                    Tags helpen je om pagina\'s te groeperen en te filteren.
-                                    Kies alle tags die je wil toevoegen aan deze pagina\'s.
-                                </p>
-                            ')
                         ->form([
                             MultiSelect::make('tags')
-                                ->required()
                                 ->multiple()
                                 ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                         ])
-                        ->button('Toevoegen')
+                        ->button('Verwijderen')
                 )->effect(function ($formData, $data) use($resourceKey) {
 
                     $tagIds = (array) ($formData['tags'] ?? []);
                     $modelIds = $data['items'];
 
                     try{
-                        app(TaggableRepository::class)->attachTags($resourceKey, $modelIds, $tagIds);
+                        app(TaggableRepository::class)->detachTags($resourceKey, $modelIds, $tagIds);
                         return true;
                     } catch(\Exception $e) {
                         report($e);
                         return false;
                     }
                 })
-                ->notifyOnSuccess('Tags toegevoegd!')
-                ->notifyOnFailure('Er is iets misgegaan bij het toevoegen van de tags.');
+                ->notifyOnSuccess('Tags verwijderd!')
+                ->notifyOnFailure('Er is iets misgegaan bij het verwijderen van de tags.');
     }
 }
