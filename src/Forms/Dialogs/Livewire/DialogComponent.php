@@ -1,24 +1,24 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Modals\Livewire;
+namespace Thinktomorrow\Chief\Forms\Dialogs\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Modals\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Modals\Modal;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 
-class ModalComponent extends Component
+class DialogComponent extends Component
 {
     use ShowsAsDialog;
     use HasForm;
 
     public $parentId;
 
-    // Data is passed from the table component to the modal component, depending on the action type
+    // Data is passed from the table component to the dialog component, depending on the action type
     public array $data = [];
 
-    public ?ModalReference $modalReference = null;
-    private ?Modal $modal = null;
+    public ?DialogReference $dialogReference = null;
+    private ?Dialog $dialog = null;
 
     public function mount(string $parentId)
     {
@@ -35,7 +35,7 @@ class ModalComponent extends Component
 
     public function open($value)
     {
-        $this->modalReference = $value['modalReference']['class']::fromLivewire($value['modalReference']);
+        $this->dialogReference = $value['dialogReference']['class']::fromLivewire($value['dialogReference']);
 
         // how to convert to model(s) from data;
         $this->data = $value['data'];
@@ -50,38 +50,42 @@ class ModalComponent extends Component
         $this->isOpen = false;
     }
 
-    private function getModal(): Modal
+    private function getDialog(): ?Dialog
     {
-        if (! $this->modal) {
-            $this->modal = $this->modalReference->getModal();
+        if (! $this->dialogReference) {
+            return null;
         }
 
-        return $this->modal;
+        if (! $this->dialog) {
+            $this->dialog = $this->dialogReference->getDialog();
+        }
+
+        return $this->dialog;
     }
 
     public function getTitle()
     {
-        return $this->getModal()->getTitle();
+        return $this->getDialog()->getTitle();
     }
 
     public function getFields(): iterable
     {
-        return $this->getModal()->getComponents();
+        return $this->getDialog()->getComponents();
     }
 
     public function getSubTitle()
     {
-        return str_replace(':count', $this->getItemsCount(), $this->getModal()->getSubTitle());
+        return str_replace(':count', $this->getItemsCount(), $this->getDialog()->getSubTitle());
     }
 
     public function getContent()
     {
-        return str_replace(':count', $this->getItemsCount(), $this->getModal()->getContent());
+        return str_replace(':count', $this->getItemsCount(), $this->getDialog()->getContent());
     }
 
     public function getButton()
     {
-        return $this->getModal()->getButton();
+        return $this->getDialog()->getButton();
     }
 
     private function getItemsCount(): int
@@ -93,8 +97,8 @@ class ModalComponent extends Component
     {
         $this->validateForm();
 
-        $this->dispatch('modalSaved-' . $this->parentId, [
-            'modalReference' => $this->modalReference->toLivewire(),
+        $this->dispatch('dialogSaved-' . $this->parentId, [
+            'dialogReference' => $this->dialogReference->toLivewire(),
             'form' => $this->form,
             'data' => $this->data,
         ]);
@@ -106,7 +110,7 @@ class ModalComponent extends Component
 
         //$this->validate(['driverId' => 'required'], ['driverId.required' => 'De id of link is verplicht in te vullen']);
 
-        // execute effect of modal...
+        // execute effect of dialog...
 
         //$this->getModal()->getEffect()($model, $data);
 
@@ -117,6 +121,12 @@ class ModalComponent extends Component
 
     public function render()
     {
-        return view('chief-form::livewire.modal');
+        $type = 'modal';
+
+        if ($this->getDialog()) {
+            $type = $this->getDialog()->getType()->value;
+        }
+
+        return view('chief-form::livewire.' . $type);
     }
 }

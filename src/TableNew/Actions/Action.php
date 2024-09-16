@@ -14,8 +14,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Table\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Concerns\HasView;
+use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasDialog;
 use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasEffect;
-use Thinktomorrow\Chief\TableNew\Actions\Concerns\HasModal;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\TableNew\Columns\Concerns\HasVisibility;
 
@@ -34,7 +34,7 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasVisibility;
     use HasLink;
     use HasEffect;
-    use HasModal;
+    use HasDialog;
 
     protected string $view = 'chief-table-new::actions.action';
 
@@ -72,8 +72,8 @@ class Action extends \Illuminate\View\Component implements Htmlable
         if ($this->effect) {
             $action->effect($this->effect);
         }
-        if ($this->modal) {
-            $action->modal($this->modal);
+        if ($this->dialog) {
+            $action->dialog($this->dialog);
         }
         if ($this->link) {
             $action->link($this->link);

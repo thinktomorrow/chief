@@ -152,5 +152,5 @@
         </div>
     </div>
 
-    <livewire:chief-form::modal :parent-id="$this->getId()" />
+    <livewire:chief-form::dialog :parent-id="$this->getId()" />
 </div>

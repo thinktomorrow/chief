@@ -6,10 +6,10 @@ use Illuminate\Contracts\View\View;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Modals\Modal;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Table\TableResourceDefault;
@@ -92,8 +92,8 @@ trait PageResourceDefault
             ->bulkActions([
                 Action::make('tag')
                     ->label('Tag deze selectie')
-                    ->modal(
-                        Modal::make('tagModal')
+                    ->dialog(
+                        Dialog::make('tagModal')
                             ->title('Voeg tags toe aan selectie')
                             // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
                             ->subTitle(':count items geselecteerd')
@@ -122,8 +122,8 @@ trait PageResourceDefault
                     ->label('Exporteer')
 
                     // MODAL
-                    ->modal(
-                        Modal::make('test')
+                    ->dialog(
+                        Dialog::make('test')
                             ->title('Export')
                             ->subtitle('Exporteer deze pagina naar csv formaat')
                             ->content('Een csv bestand kan je gebruiken om de pagina te importeren in een ander systeem.')

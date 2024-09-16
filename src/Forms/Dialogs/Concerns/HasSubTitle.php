@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Modals\Concerns;
+namespace Thinktomorrow\Chief\Forms\Dialogs\Concerns;
 
 trait HasSubTitle
 {

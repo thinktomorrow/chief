@@ -6,13 +6,13 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 
-class NestableArticlePage extends ArticlePage implements PageResource, Nestable
+class NestableArticlePage extends ArticlePage implements Page, Nestable
 {
     use PageResourceDefault;
     use NestableDefault;

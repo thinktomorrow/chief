@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired size="xxs">
+<x-chief::dialog.drawer wired size="xxs">
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}

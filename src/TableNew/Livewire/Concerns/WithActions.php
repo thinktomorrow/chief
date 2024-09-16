@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\TableNew\Livewire\Concerns;
 
-use Thinktomorrow\Chief\Forms\Modals\Livewire\TableActionModalReference;
+use Thinktomorrow\Chief\Forms\Dialogs\Livewire\TableActionDialogReference;
 use Thinktomorrow\Chief\TableNew\Actions\Action;
 use Thinktomorrow\Chief\TableNew\Actions\BulkAction;
 
@@ -25,8 +25,8 @@ trait WithActions
     {
         $action = $this->getTable()->findAction($actionKey);
 
-        if ($action->hasModal()) {
-            $this->showActionModal($actionKey, $this->getActionModalData($action));
+        if ($action->hasDialog()) {
+            $this->showActionDialog($actionKey, $this->getActionDialogData($action));
 
             return;
         }
@@ -36,7 +36,7 @@ trait WithActions
         }
     }
 
-    private function getActionModalData(Action $action): array
+    private function getActionDialogData(Action $action): array
     {
         if ($action instanceof BulkAction) {
             return ['items' => $this->getBulkSelection()];
@@ -45,26 +45,26 @@ trait WithActions
         return [];
     }
 
-    private function showActionModal($actionKey, array $data = [])
+    private function showActionDialog($actionKey, array $data = [])
     {
         $action = $this->getTable()->findAction($actionKey);
 
-        $modalReference = new TableActionModalReference(
+        $dialogReference = new TableActionDialogReference(
             $this->getTable()->getTableReference(),
             $action->getKey(),
-            $action->getModal()->getId()
+            $action->getDialog()->getId()
         );
 
-        $this->openActionModal([
-            'modalReference' => $modalReference->toLivewire(),
+        $this->openActionDialog([
+            'dialogReference' => $dialogReference->toLivewire(),
             'data' => $data,
         ]);
     }
 
-    public function onActionModalSaved($values)
+    public function onActionDialogSaved($values)
     {
         $this->applyActionEffect(
-            $values['modalReference']['actionKey'],
+            $values['dialogReference']['actionKey'],
             $values['form'],
             $values['data']
         );
@@ -84,8 +84,9 @@ trait WithActions
         // Dispatch event for notification to user... or to refresh the table
     }
 
-    public function openActionModal($params)
+    public function openActionDialog($params)
     {
-        $this->dispatch('open' . '-' . $this->getId(), $params)->to('chief-form::modal');
+        // TODO:: modal or drawer or else ...
+        $this->dispatch('open' . '-' . $this->getId(), $params)->to('chief-form::dialog');
     }
 }
