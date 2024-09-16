@@ -75,13 +75,22 @@ trait WithActions
         $action = $this->getTable()->findAction($key);
 
         if ($action->hasEffect()) {
-            // Pass model or model ids or nothing
-            $action->getEffect()($formData, $data);
+
+            // Perform effect
+            $effectResult = $action->getEffect()($formData, $data);
+
+            // Effect notification
+            if($effectResult && $action->hasNotificationOnSuccess()) {
+                $this->showNotification($action->getNotificationOnSuccess(), 'success');
+            } elseif(!$effectResult && $action->hasNotificationOnFailure()) {
+                $this->showNotification($action->getNotificationOnFailure(), 'error');
+            }
         }
 
-        $this->dispatch('requestRefresh')->self();
-
-        // Dispatch event for notification to user... or to refresh the table
+        if($action->shouldRefreshTable()) {
+            dd('sisi');
+            $this->dispatch('requestRefresh')->self();
+        }
     }
 
     public function openActionDialog($params): void

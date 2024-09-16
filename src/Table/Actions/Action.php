@@ -14,6 +14,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasEffect;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
@@ -35,6 +37,8 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasLink;
     use HasEffect;
     use HasDialog;
+    use HasNotification;
+    use HasRefresh;
 
     protected string $view = 'chief-table::actions.action';
 

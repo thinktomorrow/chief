@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
@@ -89,33 +90,7 @@ trait PageResourceDefault
         return Table::make()
             ->resource(static::resourceKey())
             ->bulkActions([
-                Action::make('tag')
-                    ->label('Tag deze selectie')
-                    ->dialog(
-                        Dialog::make('tagModal')
-                            ->title('Voeg tags toe aan selectie')
-                            // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
-                            ->subTitle(':count items geselecteerd')
-                            ->content('
-                                <p>
-                                    Tags helpen je om pagina\'s te groeperen en te filteren.
-                                    Kies alle tags die je wil toevoegen aan deze pagina\'s.
-                                </p>
-                            ')
-                            ->form([
-                                MultiSelect::make('tags')
-                                    ->required()
-                                    ->multiple()
-                                    ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
-                            ])
-                            ->button('Toevoegen')
-                    )->effect(function ($formData, $data) {
-
-                        $tagIds = (array) ($formData['tags'] ?? []);
-                        $modelIds = $data['items'];
-
-                        app(TaggableRepository::class)->attachTags($modelIds, $tagIds);
-                    }),
+                AttachTagAction::default(),
             ])
             ->actions([
                 Action::make('export')
