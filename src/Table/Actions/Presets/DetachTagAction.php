@@ -8,7 +8,8 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
-class DetachTagAction extends Action {
+class DetachTagAction extends Action
+{
 
     public static function default(string $resourceKey): static
     {
@@ -25,16 +26,18 @@ class DetachTagAction extends Action {
                                 ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                         ])
                         ->button('Verwijderen')
-                )->effect(function ($formData, $data) use($resourceKey) {
+                )->effect(function ($formData, $data) use ($resourceKey) {
 
                     $tagIds = (array) ($formData['tags'] ?? []);
                     $modelIds = $data['items'];
 
-                    try{
+                    try {
                         app(TaggableRepository::class)->detachTags($resourceKey, $modelIds, $tagIds);
+
                         return true;
-                    } catch(\Exception $e) {
+                    } catch (\Exception $e) {
                         report($e);
+
                         return false;
                     }
                 })
