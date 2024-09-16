@@ -30,7 +30,7 @@ class AttachTagAction extends Action
                         MultiSelect::make('tags')
                             ->required()
                             ->multiple()
-                            ->options(fn() => app(TagReadRepository::class)->getAllForSelect()),
+                            ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                     ])
                     ->button('Toevoegen')
             )->effect(function ($formData, $data) use ($resourceKey) {
