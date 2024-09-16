@@ -14,6 +14,8 @@ principles.
   - `getTableRow` defined the columns. This is now done via `Table::columns()`.
   - `getTableRowActions` defined the actions. This is now done via `Table::rowActions()`.
   - `displayTableHeaderAsSticky` option to set table header sticky is no longer used.
+  - Tags plugin repository has two new methods: `Repository::attachTags(string $ownerType, array $ownerIds, array $tagIds)` and `Repository::detachTags(string $ownerType, array $ownerIds, array $tagIds)`.
+  - Tags plugin repository API for syncing tags has changed. Usage is now as: `Repository::syncTags(string $ownerType, array $ownerIds, array $tagIds)`.
 
 Some documentation:
 - Table can have a query closure, collection rows or resource as data source.

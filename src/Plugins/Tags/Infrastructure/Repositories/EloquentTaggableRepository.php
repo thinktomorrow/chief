@@ -7,35 +7,43 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 
 class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository
 {
-    public function attachTags(array $taggableIds, array $tagIds): void
+    public function attachTags(string $ownerType, array $taggableIds, array $tagIds): void
     {
-        // Create array for a combination of taggable and tag ids
+        // Create combination of taggable and tag ids
         $matrix = collect($taggableIds)->crossJoin($tagIds);
-        dd($taggableIds, $tagIds, $matrix->all());
 
+        // Create insert query
+        $insertQuery = [];
 
-        // insertIfNotExists($matrix, function ($taggableId, $tagId) {
+        foreach ($matrix->all() as $pair) {
+            $insertQuery[] = ['owner_type' => $ownerType, 'owner_id' => $pair[0], 'tag_id' => $pair[1]];
+        }
 
-        // INSERT INTO table_name (column1, column2, ...) SELECT value1, value2, ... WHERE NOT EXISTS ( SELECT 1 FROM table_name WHERE condition );
+        DB::table('chief_tags_pivot')->insertOrIgnore($insertQuery);
+    }
 
-        //place with your actual model // Define the data you want to insert $data = [ 'username' => 'value1', 'passaword' => 'value2' ]; // Write the raw SQL query $query = "INSERT INTO users (username, passaword) SELECT :username WHERE NOT EXISTS ( SELECT 1 FROM users WHERE username = :column1 )"; // Execute the raw SQL query DB::statement($query, $dataToInsert);
+    public function detachTags(string $ownerType, array $taggableIds, array $tagIds): void
+    {
+        // Create combination of taggable and tag ids
+        $matrix = collect($taggableIds)->crossJoin($tagIds);
 
-        // Attach tag to pivot if it doesn't exist yet
-        foreach ($taggableIds as $taggableId) {
-            foreach ($tagIds as $tagId) {
-                $taggable = Taggable::find($taggableId);
-                $taggable->tags()->attach($tagId);
-            }
+        foreach ($matrix->all() as $pair) {
+            DB::table('chief_tags_pivot')
+                ->where('owner_type', $ownerType)
+                ->where('owner_id', $pair[0])
+                ->where('tag_id', $pair[1])
+                ->delete();
         }
     }
 
-    public function detachTags(array $taggableIds, array $tagIds): void
+    public function syncTags(string $ownerType, array $taggableIds, array $tagIds): void
     {
-        // TODO: Implement detachTags() method.
-    }
+        DB::table('chief_tags_pivot')
+            ->where('owner_type', $ownerType)
+            ->whereIn('owner_id', $taggableIds)
+            ->whereNotIn('tag_id', $tagIds)
+            ->delete();
 
-    public function syncTags(Taggable $taggable, array $tagIds): void
-    {
-        $taggable->tags()->sync($tagIds);
+        $this->attachTags($ownerType, $taggableIds, $tagIds);
     }
 }

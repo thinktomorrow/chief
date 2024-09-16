@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
@@ -109,10 +110,11 @@ trait PageResourceDefault
                             ])
                             ->button('Toevoegen')
                     )->effect(function ($formData, $data) {
-dd($formData, $data);
-                        // TODO: make tags repo work for attach and detach multiple models
-                        //app(TaggableRepository::class)->attachTags($data['items'], (array)($formData['tags'] ?? []));
 
+                        $tagIds = (array) ($formData['tags'] ?? []);
+                        $modelIds = $data['items'];
+
+                        app(TaggableRepository::class)->attachTags($modelIds, $tagIds);
                     }),
             ])
             ->actions([
