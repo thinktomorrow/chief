@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithFilters;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithRowActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithSorters;
@@ -31,6 +32,7 @@ class TableComponent extends Component
     use WithRowActions;
     use WithBulkActions;
     use WithBulkSelection;
+    use WithNotifications;
 
     public TableReference $tableReference;
     private ?Table $table = null;

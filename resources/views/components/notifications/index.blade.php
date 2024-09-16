@@ -11,6 +11,9 @@
         }"
         x-init="() => {
             window.addEventListener('create-notification', (event) => {
+
+            console.log(event);
+
                 asyncNotifications.push({
                     type: event.detail.type || 'success',
                     content: event.detail.content || '',

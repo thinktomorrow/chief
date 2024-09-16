@@ -32,7 +32,11 @@ trait WithActions
         }
 
         if ($action->hasEffect()) {
-            $action->getEffect()();
+            $this->applyActionEffect(
+                $actionKey,
+                [],
+                $this->getActionDialogData($action)
+            );
         }
     }
 
@@ -81,14 +85,13 @@ trait WithActions
 
             // Effect notification
             if ($effectResult && $action->hasNotificationOnSuccess()) {
-                $this->showNotification($action->getNotificationOnSuccess(), 'success');
+                $this->showNotification($action->getNotificationOnSuccess()($effectResult, $formData, $data), 'success');
             } elseif (! $effectResult && $action->hasNotificationOnFailure()) {
-                $this->showNotification($action->getNotificationOnFailure(), 'error');
+                $this->showNotification($action->getNotificationOnFailure()($effectResult, $formData, $data), 'error');
             }
         }
 
         if ($action->shouldRefreshTable()) {
-            dd('sisi');
             $this->dispatch('requestRefresh')->self();
         }
     }
