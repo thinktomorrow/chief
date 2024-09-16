@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
+    use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
     $is_archive_index = $is_archive_index ?? false;
     $title = ucfirst($resource->getIndexTitle());
@@ -77,13 +77,13 @@
                 <div class="w-full md:w-1/2 2xl:w-1/3">
                     @if ($is_archive_index)
                         <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
-                            <x-chief-table-new::button color="white">
+                            <x-chief-table::button color="white">
                                 Terug naar het overzicht
-                            </x-chief-table-new::button>
+                            </x-chief-table::button>
                         </a>
                     @else
                         <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">
-                            <x-chief-table-new::button color="white">Bekijk archief</x-chief-table-new::button>
+                            <x-chief-table::button color="white">Bekijk archief</x-chief-table::button>
                         </a>
                     @endif
                 </div>

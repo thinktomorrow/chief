@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\Dialogs\Livewire;
 
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
-use Thinktomorrow\Chief\TableNew\Table\References\TableReference;
+use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 class TableActionDialogReference implements DialogReference
 {

@@ -10,6 +10,10 @@ principles.
 
 - `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former options (index and table)
 - `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
+- Removed `TableResource` interface and `TableResourceDefault` trait and methods. Any implementations of these methods should be replaced by a Table method.
+  - `getTableRow` defined the columns. This is now done via `Table::columns()`.
+  - `getTableRowActions` defined the actions. This is now done via `Table::rowActions()`.
+  - `displayTableHeaderAsSticky` option to set table header sticky is no longer used.
 
 Some documentation:
 - Table can have a query closure, collection rows or resource as data source.
