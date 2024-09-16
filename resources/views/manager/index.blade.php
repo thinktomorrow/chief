@@ -36,6 +36,20 @@
         <button
             type="button"
             x-data
+            x-on:click="
+                $dispatch('create-notification', {
+                    'type': 'success',
+                    'content': 'This is a test notification',
+                })
+            "
+            class="btn btn-primary"
+        >
+            Create notification
+        </button>
+
+        <button
+            type="button"
+            x-data
             x-on:click="$dispatch('open-dialog', { 'id': 'test-drawer' })"
             class="btn btn-primary"
         >
@@ -88,9 +102,7 @@
                 <div class="w-full md:w-1/2 2xl:w-1/3">
                     @if ($is_archive_index)
                         <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
-                            <x-chief-table::button color="white">
-                                Terug naar het overzicht
-                            </x-chief-table::button>
+                            <x-chief-table::button color="white">Terug naar het overzicht</x-chief-table::button>
                         </a>
                     @else
                         <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">

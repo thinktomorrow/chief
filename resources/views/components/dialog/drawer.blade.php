@@ -10,8 +10,11 @@
             class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-black/20 backdrop-blur-sm backdrop-filter"
         ></div>
 
-        <div x-on:click.outside="close()" class="relative flex h-full w-full justify-end">
-            <div class="flex w-full flex-col bg-white shadow xs:w-xs">
+        <div class="pointer-events-none relative flex h-full w-full justify-end">
+            <div
+                x-on:click.outside="close()"
+                class="pointer-events-auto flex w-full flex-col bg-white shadow xs:w-xs"
+            >
                 <div class="flex shrink-0 justify-between border-b border-grey-200 p-6">
                     <h2 class="text-lg font-medium leading-5 text-black">
                         {{ $title ?? 'Default drawer title' }}
