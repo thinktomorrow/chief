@@ -109,7 +109,7 @@ trait PageResourceDefault
                             ])
                             ->button('Toevoegen')
                     )->effect(function ($formData, $data) {
-dd($formData, $data);
+                        dd($formData, $data);
                         // TODO: make tags repo work for attach and detach multiple models
                         //app(TaggableRepository::class)->attachTags($data['items'], (array)($formData['tags'] ?? []));
 
