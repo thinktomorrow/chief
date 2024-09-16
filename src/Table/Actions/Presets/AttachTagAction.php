@@ -40,9 +40,11 @@ class AttachTagAction extends Action
 
                 try {
                     app(TaggableRepository::class)->attachTags($resourceKey, $modelIds, $tagIds);
+
                     return true;
                 } catch (\Exception $e) {
                     report($e);
+
                     return false;
                 }
             })
