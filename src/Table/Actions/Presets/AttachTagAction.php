@@ -8,7 +8,8 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
-class AttachTagAction extends Action {
+class AttachTagAction extends Action
+{
 
     public static function default(): static
     {
@@ -37,11 +38,13 @@ class AttachTagAction extends Action {
                     $tagIds = (array) ($formData['tags'] ?? []);
                     $modelIds = $data['items'];
 
-                    try{
+                    try {
                         app(TaggableRepository::class)->attachTags(static::resourceKey(), $modelIds, $tagIds);
+
                         return true;
-                    } catch(\Exception $e) {
+                    } catch (\Exception $e) {
                         report($e);
+
                         return false;
                     }
                 })

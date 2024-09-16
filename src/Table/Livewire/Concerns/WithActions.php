@@ -80,14 +80,14 @@ trait WithActions
             $effectResult = $action->getEffect()($formData, $data);
 
             // Effect notification
-            if($effectResult && $action->hasNotificationOnSuccess()) {
+            if ($effectResult && $action->hasNotificationOnSuccess()) {
                 $this->showNotification($action->getNotificationOnSuccess(), 'success');
-            } elseif(!$effectResult && $action->hasNotificationOnFailure()) {
+            } elseif (! $effectResult && $action->hasNotificationOnFailure()) {
                 $this->showNotification($action->getNotificationOnFailure(), 'error');
             }
         }
 
-        if($action->shouldRefreshTable()) {
+        if ($action->shouldRefreshTable()) {
             dd('sisi');
             $this->dispatch('requestRefresh')->self();
         }
