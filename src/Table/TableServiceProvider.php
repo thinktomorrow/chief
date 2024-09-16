@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
+use Thinktomorrow\Chief\Table\Livewire\TableFiltersComponent;
 
 class TableServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         Livewire::component('chief-table-livewire::table', TableComponent::class);
+        Livewire::component('chief-table-livewire::table-filters', TableFiltersComponent::class);
 
         $this->app['view']->addNamespace('chief-table', __DIR__ . '/UI/views');
 

@@ -93,6 +93,7 @@
             }"
             class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
         >
+<<<<<<< Updated upstream:src/Table/UI/views/livewire/table.blade.php
             <div class="space-y-3 px-4 py-3">
                 <div
                     class="flex justify-between gap-2"
@@ -101,6 +102,16 @@
                     @include('chief-table::livewire._partials.filters')
                     @include('chief-table::livewire._partials.sorters')
                 </div>
+=======
+            <div
+                id="table-header"
+                class="flex justify-between gap-2 px-4 py-3"
+                :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }"
+            >
+                @include('chief-table-new::livewire._partials.filters')
+                {{-- <livewire:chief-table-new-livewire::table-filters :filters="$this->getLivewirePropertyFilters()" /> --}}
+                @include('chief-table-new::livewire._partials.sorters')
+>>>>>>> Stashed changes:src/TableNew/UI/views/livewire/table.blade.php
             </div>
 
             <table class="min-w-full table-fixed divide-y divide-grey-200">

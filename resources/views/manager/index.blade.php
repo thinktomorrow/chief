@@ -31,7 +31,7 @@
         </x-chief::page.hero>
     </x-slot>
 
-    {{-- Testing drawer component ... --}}
+    {{-- Testing dialog components ... --}}
     <div>
         <button
             type="button"

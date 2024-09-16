@@ -1,4 +1,4 @@
-<div class="flex items-start justify-end gap-2">
+<div id="table-header-sorters" class="flex items-start justify-end gap-2">
     @if (count($this->getActiveFilters()) > 0)
         <button type="button" class="mt-[0.1875rem]">
             <x-chief-table::button wire:click="resetFilters" color="grey" size="sm">
