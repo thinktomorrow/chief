@@ -51,7 +51,6 @@ use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
-use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 
@@ -90,8 +89,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
-        (new TableServiceProvider($this->app))->boot();
-        (new \Thinktomorrow\Chief\TableNew\TableServiceProvider($this->app))->boot();
+        (new \Thinktomorrow\Chief\Table\TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();

@@ -5,10 +5,9 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Table\TableResource;
 
 // App specific resource methods
-interface PageResource extends Resource, TableResource
+interface PageResource extends Resource
 {
     // Nav
     public function getNavItem(): ?NavItem;

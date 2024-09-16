@@ -12,21 +12,20 @@ use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
-use Thinktomorrow\Chief\Table\TableResourceDefault;
-use Thinktomorrow\Chief\TableNew\Actions\Action;
-use Thinktomorrow\Chief\TableNew\Columns\ColumnBadge;
-use Thinktomorrow\Chief\TableNew\Columns\ColumnDate;
-use Thinktomorrow\Chief\TableNew\Columns\ColumnText;
-use Thinktomorrow\Chief\TableNew\Filters\ButtonGroupFilter;
-use Thinktomorrow\Chief\TableNew\Filters\SelectFilter;
-use Thinktomorrow\Chief\TableNew\Filters\TextFilter;
-use Thinktomorrow\Chief\TableNew\Sorters\Sort;
-use Thinktomorrow\Chief\TableNew\Table\Table;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
+use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
+use Thinktomorrow\Chief\Table\Columns\ColumnDate;
+use Thinktomorrow\Chief\Table\Columns\ColumnText;
+use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
+use Thinktomorrow\Chief\Table\Filters\SelectFilter;
+use Thinktomorrow\Chief\Table\Filters\TextFilter;
+use Thinktomorrow\Chief\Table\Sorters\Sort;
+use Thinktomorrow\Chief\Table\Table;
 
 trait PageResourceDefault
 {
     use ResourceDefault;
-    use TableResourceDefault;
 
     public function getNavItem(): ?NavItem
     {
@@ -65,7 +64,7 @@ trait PageResourceDefault
         //            ->columns([
         //                'title', 'tags.label', 'current_state',
         //            ])
-        ////            ->rowView('chief-table-new::rows.list-item')
+        ////            ->rowView('chief-table::rows.list-item')
         //            // Data options: query, model, relation, rows
         ////            ->model(static::modelClassName()) // Entire model or relation or query or rows...
         ////            ->relation('modelClass', 'id', 'tags')
@@ -112,9 +111,10 @@ trait PageResourceDefault
                             ->button('Toevoegen')
                     )->effect(function ($formData, $data) {
 
-                        // TODO: make tags repo work for attach and detach multiple models
-                        //app(TaggableRepository::class)->attachTags($data['items'], (array)($formData['tags'] ?? []));
+                        $tagIds = (array) ($formData['tags'] ?? []);
+                        $modelIds = $data['items'];
 
+                        app(TaggableRepository::class)->attachTags($modelIds, $tagIds);
                     }),
             ])
             ->actions([

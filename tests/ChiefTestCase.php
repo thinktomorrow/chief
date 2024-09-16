@@ -21,6 +21,7 @@ use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
+use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
@@ -42,6 +43,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
             LivewireServiceProvider::class,
+            TableServiceProvider::class,
         ];
     }
 

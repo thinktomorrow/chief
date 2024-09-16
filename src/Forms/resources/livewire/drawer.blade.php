@@ -22,13 +22,13 @@
 
         <x-slot name="footer">
             <button wire:click="close" type="button" class="shrink-0">
-                <x-chief-table-new::button>Annuleer</x-chief-table-new::button>
+                <x-chief-table::button>Annuleer</x-chief-table::button>
             </button>
 
             <button wire:click="save" type="button" class="shrink-0">
-                <x-chief-table-new::button color="primary">
+                <x-chief-table::button color="primary">
                     {{ $this->getButton() }}
-                </x-chief-table-new::button>
+                </x-chief-table::button>
             </button>
         </x-slot>
     @endif
