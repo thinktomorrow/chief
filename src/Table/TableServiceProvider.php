@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table;
 
-use Livewire\Livewire;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
 use Thinktomorrow\Chief\Table\Livewire\TableFiltersComponent;
 
