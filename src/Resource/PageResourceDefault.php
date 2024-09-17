@@ -129,6 +129,7 @@ trait PageResourceDefault
             ])
             ->filters([
                 TextFilter::make('title')
+                    ->hidden()
                     ->label('Titel')
                     ->description('Zoek op pagina titel')
                     ->query(function ($builder, $value) {

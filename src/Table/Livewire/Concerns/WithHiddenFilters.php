@@ -21,6 +21,11 @@ trait WithHiddenFilters
         return array_filter($this->getFilters(), fn ($filter) => in_array($filter->getKey(), $this->hiddenFilterKeys));
     }
 
+    public function areAnyHiddenFiltersActive(): bool
+    {
+        return count(array_filter(array_keys($this->getActiveFilters()), fn ($filterKey) => in_array($filterKey, $this->hiddenFilterKeys))) > 0;
+    }
+
     public function hideFilter($filterKey)
     {
         $this->hiddenFilterKeys[] = $filterKey;
