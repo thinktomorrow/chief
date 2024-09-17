@@ -28,7 +28,8 @@ trait HasOptions
 
     public function hasOptionGroups(): bool
     {
-        return PairOptions::areOptionsGrouped($this->options);
+        return PairOptions::areOptionsGrouped($this->getOptions());
+        //        return PairOptions::areOptionsGrouped($this->options);
     }
 
     public function getOptions(?string $locale = null): array
