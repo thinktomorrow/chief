@@ -8,27 +8,16 @@ use Thinktomorrow\Chief\Table\Filters\Filter;
 
 trait WithFilters
 {
+    /** @var array Active filters */
     public array $filters = [];
+
+    /** @var bool flag indicates if filter bar should be shown */
     public bool $showFilters = false;
 
-    /**
-     * @return Filter[]
-     */
+    /** @return Filter[] */
     public function getFilters(): iterable
     {
         return $this->getTable()->getFilters();
-    }
-
-    public function getLivewirePropertyFilters(): array
-    {
-        return collect($this->getTable()->getFilters())->map(function ($filter) {
-            return [
-                'key' => $filter->getKey(),
-                'label' => $filter->getLabel(),
-                'description' => $filter->getDescription(),
-                'value' => $filter->getValue(),
-            ];
-        })->toArray();
     }
 
     public function getActiveFilters(): array

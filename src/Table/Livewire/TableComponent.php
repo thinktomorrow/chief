@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithFilters;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithHiddenFilters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithRowActions;
@@ -27,6 +28,7 @@ class TableComponent extends Component
     use WithPaginationControl;
     use WithTreeResults;
     use WithFilters;
+    use WithHiddenFilters;
     use WithSorters;
     use WithActions;
     use WithRowActions;

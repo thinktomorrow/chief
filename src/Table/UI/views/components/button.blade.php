@@ -8,7 +8,7 @@
 <span
     {{
         $attributes->class([
-            'bui-btn font-medium',
+            'bui-btn font-medium cursor-pointer',
             'bui-btn-grey' => $color === 'grey',
             'bui-btn-primary' => $color === 'primary',
             'bui-btn-white' => $color === 'white',

@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
@@ -133,27 +134,35 @@ trait PageResourceDefault
                     ->query(function ($builder, $value) {
                         $builder->whereJsonLike(['title'], $value);
                     }),
-                ButtonGroupFilter::make('current_state_button_group')
+                TextFilter::make('content')
+                    ->label('Inhoud')
+                    ->description('Zoek op pagina inhoud')
+                    ->query(function ($builder, $value) {
+                        $builder->whereJsonLike(['hero_content'], $value);
+                    }),
+                ButtonGroupFilter::make('current_state')
                     ->label('Status')
                     ->options([
                         '' => 'Alle',
                         'published' => 'Online',
                         'draft' => 'Offline',
-                        'archived' => 'Gearchiveerd',
                     ])->value(''),
-                SelectFilter::make('current_state')
-                    ->label('Status')
-                    ->options([
-                        'published' => 'Online',
-                        'draft' => 'Offline',
-                        'archived' => 'Gearchiveerd',
-                    ]),
+//                SelectFilter::make('current_state')
+//                    ->label('Status')
+//                    ->options([
+//                        'published' => 'Online',
+//                        'draft' => 'Offline',
+//                        'archived' => 'Gearchiveerd',
+//                    ]),
             ])
             ->columns([
-                ColumnText::make('title')->label('Titel')->link(function ($model) {
-                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                }),
-                ColumnBadge::make('tags.label')->label('tags'),
+                Column::items([
+                    ColumnText::make('title')->label('Titel')->link(function ($model) {
+                        return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                    }),
+                    ColumnBadge::make('tags.label')->label('tags'),
+                ]),
+
                 // ColumnText::make('seo_title')->label('SEO Titel'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),

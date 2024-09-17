@@ -25,25 +25,6 @@ class Column
         return $this->items;
     }
 
-    //    public function getValues(?string $locale = null): iterable
-    //    {
-    //        // Retrieve value(s)
-    //        $value = $this->getEvaluatedValue($locale);
-    //
-    //        // Split values
-    //        if(! is_iterable($value)) {
-    //            $value = [$value];
-    //        } elseif($value instanceof Collection) {
-    //            $value = $value->all();
-    //        }
-    //
-    //        $values = $this->handleEachValue($value);
-    //
-    //        return array_map(function ($value) {
-    //            return $this->replicate()->value($value);
-    //        }, $values);
-    //    }
-
     /**
      * Populate all components with the model instance
      */
