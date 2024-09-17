@@ -1,4 +1,4 @@
-<div x-cloak x-show="selection.length > 0" class="flex flex-wrap items-center gap-2">
+<div x-cloak x-show="selection.length > 0" class="flex flex-wrap items-center gap-3">
     <span
         x-text="
             () => {
@@ -16,7 +16,7 @@
         Selecteer alle {{ $total }} items
     </button>
 
-    <div class="flex items-center justify-end gap-3">
+    <div class="flex items-center justify-end gap-1.5">
         {{-- TODO(ben): get visible action, but not bulk actions --}}
         @foreach ($this->getVisibleBulkActions() as $action)
             {{ $action }}
