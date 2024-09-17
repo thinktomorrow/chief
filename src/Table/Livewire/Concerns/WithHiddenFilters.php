@@ -2,10 +2,6 @@
 
 namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Table\Filters\Filter;
-
 trait WithHiddenFilters
 {
     /** @var array Which filters are hidden in the drawer */
