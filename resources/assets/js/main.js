@@ -3,6 +3,7 @@ import './utilities/chiefRedactorImageUpload';
 
 import dropdown from './alpine-directives/dropdown';
 import multiselectDirective from './alpine-directives/multiselect';
+import sortableDirective from './alpine-directives/sortable';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 import initCollapsibleNavigation from './utilities/collapsible-navigation';
 import initDropdowns from './utilities/dropdown';
@@ -11,6 +12,7 @@ import initSortable from './sortable/sortable-init';
 
 import initFormSubmitOnChange from './utilities/form-submit-on-change';
 import registerClassToggles from './utilities/toggle-class';
+import selectlist from './alpine-directives/selectlist';
 
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
@@ -36,6 +38,8 @@ require('./tables/index');
  */
 require('./sortable/sortable-livewire');
 
+window.Alpine.data('dropdown', dropdown);
+window.Alpine.data('selectlist', selectlist);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
-window.Alpine.data('dropdown', dropdown);
+window.Alpine.directive('sortable', sortableDirective);

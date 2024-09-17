@@ -29,7 +29,7 @@
             })
         }
     "
-    {{ $attributes }}
+    {{ $attributes->class(['absolute']) }}
 >
     {{ $slot }}
 </div>
