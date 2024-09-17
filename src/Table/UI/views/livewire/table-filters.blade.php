@@ -1,13 +1,13 @@
 <div x-data="tableFilters" class="flex items-start gap-2">
-    @foreach ($this->containerFilters as $filter)
+    @foreach ($this->visibleFilters as $filter)
         {{-- {!! $filter->render() !!} --}}
-        <div data-container-filter="{{ $filter['key'] }}" class="bg-grey-100 p-1">
+        <div data-filter-key="{{ $filter['key'] }}" class="bg-grey-100 p-1">
             {{ $filter['key'] }} - {{ $filter['label'] }}
         </div>
     @endforeach
 
     <div>
-        @if (count($this->drawerFilters) > 0)
+        @if (count($this->hiddenFilters) > 0)
             <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })">
                 <x-chief-table::button
                     color="white"
@@ -19,7 +19,7 @@
         <x-chief::dialog.drawer id="table-filters-drawer" title="Meer filters">
             <div class="space-y-6">
                 {{-- TODO: these filters shouldn't auto update on change, but use the submit button in drawer footer instead --}}
-                @foreach ($this->drawerFilters as $filter)
+                @foreach ($this->hiddenFilters as $filter)
                     <div class="space-y-2">
                         <div>
                             <h3 class="font-medium text-grey-900">{{ $filter['label'] }}</h3>
@@ -62,10 +62,10 @@
 
                 // Adding in 64px for the drawer button
                 if (tableHeaderFiltersWidth > tableHeaderWidth - tableHeaderSortersWidth - 64) {
-                    const containerFilters = Array.from(document.querySelectorAll('[data-container-filter]'));
-                    const lastFilter = containerFilters[containerFilters.length - 1];
+                    const visibleFilters = Array.from(document.querySelectorAll('[data-filter-key]'));
+                    const lastFilter = visibleFilters[visibleFilters.length - 1];
 
-                    this.$wire.moveFilterToDrawer(lastFilter.getAttribute('data-container-filter'));
+                    this.$wire.hideFilter(lastFilter.getAttribute('data-filter-key'));
 
                     lastFilter.remove();
 

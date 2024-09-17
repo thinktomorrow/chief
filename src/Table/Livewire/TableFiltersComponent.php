@@ -7,22 +7,22 @@ use Livewire\Component;
 class TableFiltersComponent extends Component
 {
     public $filters;
-    public $containerFilters = [];
-    public $drawerFilters = [];
+    public $visibleFilters = [];
+    public $hiddenFilters = [];
 
     public function mount(array $filters)
     {
         $this->filters = $filters;
 
         foreach ($filters as $filter) {
-            $this->containerFilters[$filter['key']] = $filter;
+            $this->visibleFilters[$filter['key']] = $filter;
         }
     }
 
-    public function moveFilterToDrawer($filterKey)
+    public function hideFilter($filterKey)
     {
-        $this->drawerFilters[$filterKey] = $this->containerFilters[$filterKey];
-        unset($this->containerFilters[$filterKey]);
+        $this->hiddenFilters[$filterKey] = $this->visibleFilters[$filterKey];
+        unset($this->visibleFilters[$filterKey]);
     }
 
     public function render()
