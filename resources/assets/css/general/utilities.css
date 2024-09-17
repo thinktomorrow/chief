@@ -1,7 +1,7 @@
 /* Nice bottom border hover effect; mostly used for navigation */
 .with-bottomline {
     transition: 0.3s all ease;
-    @apply no-underline relative;
+    @apply relative no-underline;
 
     &:after {
         content: '';
@@ -9,7 +9,7 @@
         /* transform: translateX(-50%); */
         transition: 0.26s cubic-bezier(0.69, 0.14, 0.05, 1.31);
 
-        @apply block absolute h-0 left-0 w-0 bg-primary-500;
+        @apply absolute left-0 block h-0 w-0 bg-primary-500;
     }
 
     &:hover,
@@ -27,7 +27,7 @@
 /* Icon label hover effect */
 .icon-label {
     .icon-label-icon {
-        @apply inline-block transition-all ease-in-out duration-75;
+        @apply inline-block transition-all duration-75 ease-in-out;
     }
 
     &:hover {
@@ -50,7 +50,7 @@
 
     &:first-child {
         .fragment-select-options {
-            @apply border-t-0 border-b-2;
+            @apply border-b-2 border-t-0;
         }
     }
 
@@ -63,7 +63,7 @@
 
 .hover\:child-svg-scale-110 {
     svg {
-        @apply inline-block transition-all ease-in-out duration-75;
+        @apply inline-block transition-all duration-75 ease-in-out;
     }
 
     &:hover svg {
@@ -77,5 +77,29 @@
     }
     & ~ .bulk-actions-counter-is-1\:hidden {
         display: none;
+    }
+}
+
+.sortable-drag-class {
+    @apply opacity-90;
+}
+
+.sortable-ghost-class {
+    @apply opacity-25;
+}
+
+.sortable-table-row-drag-class {
+    @apply bg-white opacity-90;
+
+    .sortable-table-row-indent-class {
+        @apply hidden;
+    }
+}
+
+.sortable-table-row-ghost-class {
+    @apply opacity-25;
+
+    .sortable-table-row-indent-class {
+        @apply hidden;
     }
 }

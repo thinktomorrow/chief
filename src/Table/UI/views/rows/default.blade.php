@@ -1,4 +1,6 @@
 <tr
+    x-sortable-item="{{ $this->getRowKey($item) }}"
+    x-sortable-handle
     data-table-row="{{ $this->getRowKey($item) }}"
     wire:key="{{ $this->getRowKey($item) }}"
     :class="{ 'bg-grey-50': selection.includes('{{ $this->getRowKey($item) }}') }"
@@ -22,7 +24,10 @@
         <td class="py-1.5 pl-3 text-left">
             <div class="flex min-h-6 items-center gap-1.5">
                 @if ($loop->first && isset($item->indent) && $item->indent > 0)
-                    <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
+                    <div
+                        class="sortable-table-row-indent-class flex justify-end"
+                        style="width: {{ 20 + ($item->indent - 1) * 26 }}px"
+                    >
                         <svg
                             class="h-5 w-5 text-grey-800"
                             xmlns="http://www.w3.org/2000/svg"

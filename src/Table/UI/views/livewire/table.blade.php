@@ -130,7 +130,12 @@
                     </tr>
                 </thead>
 
-                <tbody class="divide-y divide-grey-200">
+                <tbody
+                    x-sortable
+                    x-sortable-drag-class="sortable-table-row-drag-class"
+                    x-sortable-ghost-class="sortable-table-row-ghost-class"
+                    class="divide-y divide-grey-200"
+                >
                     @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                     @if ($resultCount > 0)
@@ -149,6 +154,8 @@
                 </div>
             @endif
         </div>
+
+        @include('chief-table::livewire.table-for-sorting')
 
         <livewire:chief-form::dialog :parent-id="$this->getId()" />
     </div>
