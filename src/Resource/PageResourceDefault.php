@@ -131,12 +131,14 @@ trait PageResourceDefault
                 TextFilter::make('title')
                     ->hidden()
                     ->label('Titel')
+                    ->placeholder('titeltje')
                     ->description('Zoek op pagina titel')
                     ->query(function ($builder, $value) {
                         $builder->whereJsonLike(['title'], $value);
                     }),
                 TextFilter::make('content')
                     ->label('Inhoud')
+                    ->placeholder('contentje')
                     ->description('Zoek op pagina inhoud')
                     ->query(function ($builder, $value) {
                         $builder->whereJsonLike(['hero_content'], $value);

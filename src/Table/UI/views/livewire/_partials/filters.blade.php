@@ -23,9 +23,21 @@
                 {{-- TODO: these filters shouldn't auto update on change, but use the submit button in drawer footer instead --}}
                 @foreach ($this->getHiddenFilters() as $filter)
                     <div class="space-y-2">
-                        <div data-drawer-filter x-ref="hiddenFilter-{{ $filter->getKey() }}">
-                            {!! $filter->render() !!}
+                        <div>
+                            @if($filter->getLabel())
+                                <x-chief::input.label>
+                                    {{ $filter->getLabel() }}
+                                </x-chief::input.label>
+                            @endif
+
+                            @if ($filter->getDescription())
+                                <x-chief::input.description>
+                                    {!! $filter->getDescription() !!}
+                                </x-chief::input.description>
+                            @endif
                         </div>
+
+                        {!! $filter->render() !!}
                     </div>
                 @endforeach
             </div>
