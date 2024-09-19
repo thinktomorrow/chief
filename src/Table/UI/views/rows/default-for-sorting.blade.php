@@ -24,18 +24,16 @@
     {{-- This extra div is necessary to be able to properly style the sortable drag state --}}
     <div class="relative">
         <div x-sortable-handle class="group inline-flex min-h-6 items-center gap-2 px-2 py-1">
-            <button type="button" class="shrink-0 text-grey-300 group-hover:text-grey-800">
-                <svg class="size-5">
-                    <use href="#icon-drag"></use>
-                </svg>
-            </button>
+            <svg class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800">
+                <use href="#icon-drag"></use>
+            </svg>
 
             <svg data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800">
                 <use href="#icon-indent"></use>
             </svg>
 
             @foreach ($columns as $column)
-                <div class="flex items-center gap-1.5">
+                <div class="flex items-center gap-1">
                     @foreach ($column->getItems() as $columnItem)
                         {{ $columnItem }}
                     @endforeach
