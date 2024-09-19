@@ -38,91 +38,11 @@
         </div>
 
         <div
-            x-data="{
+            x-data="bulkselect({
                 showCheckboxes: {{ $this->hasAnyBulkActions() ? 'true' : 'false' }},
                 selection: @entangle('bulkSelection'),
                 paginators: @entangle('paginators'),
-                maxItemCount: @entangle('resultTotal'),
-                maxItemCountOnCurrentPage: @entangle('resultPageCount'),
-                isAllSelectedOnPage: false,
-                isIndeterminateOnPage: false, // One or more but not all selected on page
-                init() {
-
-                    // No longer header checkbox work after filtering
-                    // when total changed after filtering does not work ... best to entangle??
-
-                    this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
-                        if (event.target.checked) {
-                            const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
-
-                            // Merge with current selection and make sure they are unique
-                            this.selection = [...this.selection, ...Array.from(checkboxes).map((checkbox) => checkbox.value)].filter((value, index, self) => self.indexOf(value) === index);
-                        } else {
-
-                            // Remove all items from current page from selection
-                            this.selection = this.selection.filter((item) => !this.pageItems.some((pageItem) => pageItem == item));
-                        }
-                    })
-
-                    $watch('selection', (selection) => {
-                        this.evaluateHeaderCheckboxState();
-                    })
-
-                    $watch('isIndeterminateOnPage', (value) => {
-                    console.log('indeterminate on page', value);
-                        this.$refs.tableHeaderCheckbox.indeterminate = value
-                    });
-
-                    $watch('isAllSelectedOnPage', (value) => {
-                    console.log('all selected on page', value);
-                        this.$refs.tableHeaderCheckbox.checked = value;
-                    });
-
-                    $watch('paginators', (value) => {
-                        console.log('paginators', value);
-                        this.$nextTick(() => {
-                            this.setPageItems();
-                            this.evaluateHeaderCheckboxState();
-                        });
-                    });
-
-                    // On initial load
-                    this.$nextTick(() => {
-                        this.setPageItems();
-                        this.evaluateHeaderCheckboxState();
-                    });
-                },
-                getPageItems() {
-                    return this.pageItems;
-                },
-                setPageItems() {
-                    this.pageItems = Array.from(this.$el.querySelectorAll('[data-table-row-checkbox]')).map((checkbox) => checkbox.value);
-                },
-                getSelectedPageItems() {
-                    return this.pageItems.filter((item) => this.selection.some((selectedItem) => selectedItem == item));
-                },
-                evaluateHeaderCheckboxState(){
-
-                    const pageItems = this.getPageItems();
-                    const selectedPageItems = this.getSelectedPageItems();
-                    console.log(this.selection, pageItems, selectedPageItems);
-                    if(pageItems.every((item) => this.selection.some((selectedItem) => selectedItem == item))) {
-                        console.log('eval: all selected on page');
-                            this.isAllSelectedOnPage = true;
-                        } else {
-                        console.log('eval: not all selected on page');
-                            this.isAllSelectedOnPage = false;
-                        }
-
-                        if(selectedPageItems.length === pageItems.length || selectedPageItems.length == 0) {
-                        console.log('indeterminate false');
-                            this.isIndeterminateOnPage = false;
-                        } else {
-                        console.log('indeterminate true');
-                            this.isIndeterminateOnPage = true;
-                        }
-                }
-            }"
+            })"
             class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
         >
             <div

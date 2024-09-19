@@ -1,5 +1,5 @@
 @php
-    $tree = Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree::fromIterable(\App\Models\Resources\Catalog\CatalogPage::all());
+    $tree = Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree::fromIterable(\App\Models\Resources\Catalog\CatalogPage::with(['tags'])->get());
     $sortableGroup = 'index-table-for-sorting';
 @endphp
 
