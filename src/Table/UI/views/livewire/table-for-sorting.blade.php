@@ -6,8 +6,9 @@
 <div
     x-sortable
     x-sortable-group="{{ $sortableGroup }}"
-    class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
-    style="--indent: 0"
+    x-sortable-ghost-class="sortable-table-row-ghost-class"
+    x-sortable-drag-class="sortable-table-row-drag-class"
+    class="overflow-x-auto whitespace-nowrap rounded-xl bg-white px-1 py-2 shadow-md ring-1 ring-grey-200"
 >
     @foreach ($tree as $branch)
         @include(

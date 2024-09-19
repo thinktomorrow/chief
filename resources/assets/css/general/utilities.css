@@ -87,19 +87,3 @@
 .sortable-ghost-class {
     @apply opacity-25;
 }
-
-.sortable-table-row-drag-class {
-    @apply bg-white opacity-90;
-
-    .sortable-table-row-indent-class {
-        @apply hidden;
-    }
-}
-
-.sortable-table-row-ghost-class {
-    @apply opacity-25;
-
-    .sortable-table-row-indent-class {
-        @apply hidden;
-    }
-}

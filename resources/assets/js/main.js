@@ -22,6 +22,7 @@ initDropdowns();
 initAnimatedToggle('[data-mobile-navigation]', '[data-mobile-navigation-toggle]', {
     animationClass: 'animate-slide-in-nav lg:animate-none',
 });
+
 initFormSubmitOnChange();
 initSortable('[data-sortable]');
 registerClassToggles();

@@ -4,62 +4,67 @@
 
 <div
     x-sortable-item="{{ $item->id }}"
-    x-sortable-handle
-    @class(['border-t border-grey-200', 'first:border-t-0' => $indent === 0])
+    @class([
+        '[&.table-sort-ghost]:rounded-md',
+        '[&.table-sort-ghost]:border',
+        '[&.table-sort-ghost]:border-dashed',
+        '[&.table-sort-ghost]:border-primary-500',
+        '[&.table-sort-ghost]:bg-primary-50',
+        '[&.table-sort-ghost]:shadow',
+        '[&.table-sort-ghost]:shadow-primary-50',
+        '[&.table-sort-ghost_[x-sortable]]:hidden',
+        '[&.table-sort-drag>*]:inline-block',
+        '[&.table-sort-drag>*]:max-h-28',
+        '[&.table-sort-drag>*]:overflow-hidden',
+        '[&.table-sort-drag>*]:rounded-md',
+        '[&.table-sort-drag>*]:bg-white',
+        '[&.table-sort-drag_[data-slot=fade]]:block',
+    ])
 >
-    @if (count($columns) > 0)
-        <div class="flex gap-2 px-3 py-1.5">
-            @foreach ($columns as $column)
-                <div class="flex w-64 gap-2">
-                    @if ($loop->first)
-                        @if ($indent > 0)
-                            <div
-                                class="sortable-table-row-indent-class flex justify-end"
-                                style="width: calc(var(--indent) * 26px)"
-                            >
-                                <svg
-                                    class="h-5 w-5 text-grey-800"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor"
-                                    viewBox="0 0 256 256"
-                                >
-                                    <path
-                                        d="M229.66,157.66l-48,48a8,8,0,0,1-11.32-11.32L204.69,160H128A104.11,104.11,0,0,1,24,56a8,8,0,0,1,16,0,88.1,88.1,0,0,0,88,88h76.69l-34.35-34.34a8,8,0,0,1,11.32-11.32l48,48A8,8,0,0,1,229.66,157.66Z"
-                                    ></path>
-                                </svg>
-                            </div>
-                        @endif
-                    @endif
+    {{-- This extra div is necessary to be able to properly style the sortable drag state --}}
+    <div class="relative">
+        <div x-sortable-handle class="group inline-flex min-h-6 items-center gap-2 px-2 py-1">
+            <button type="button" class="shrink-0 text-grey-300 group-hover:text-grey-800">
+                <svg class="size-5">
+                    <use href="#icon-drag"></use>
+                </svg>
+            </button>
 
-                    <div class="flex min-h-6 items-center gap-1.5">
-                        @foreach ($column->getItems() as $columnItem)
-                            {{ $columnItem }}
-                        @endforeach
-                    </div>
+            <svg data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800">
+                <use href="#icon-indent"></use>
+            </svg>
+
+            @foreach ($columns as $column)
+                <div class="flex items-center gap-1.5">
+                    @foreach ($column->getItems() as $columnItem)
+                        {{ $columnItem }}
+                    @endforeach
                 </div>
             @endforeach
         </div>
-    @endif
 
-    @php
-        $indent++;
-    @endphp
+        <div
+            x-sortable
+            x-sortable-group="{{ $sortableGroup }}"
+            x-sortable-ghost-class="table-sort-ghost"
+            x-sortable-drag-class="table-sort-drag"
+            class="nested-sortable [&_.nested-sortable]:ml-[28px] [&_[data-slot=indent-icon]]:block"
+        >
+            @foreach ($item->getChildNodes() as $_item)
+                @include(
+                    'chief-table::rows.default-for-sorting',
+                    [
+                        'item' => $_item,
+                        'sortableGroup' => $sortableGroup,
+                        'indent' => ++$indent,
+                    ]
+                )
+            @endforeach
+        </div>
 
-    <div
-        x-sortable
-        x-sortable-group="{{ $sortableGroup }}"
-        class="divide-y divide-grey-200"
-        style="--indent: {{ $indent }}"
-    >
-        @foreach ($item->getChildNodes() as $_item)
-            @include(
-                'chief-table::rows.default-for-sorting',
-                [
-                    'item' => $_item,
-                    'sortableGroup' => $sortableGroup,
-                    'indent' => $indent,
-                ]
-            )
-        @endforeach
+        <div
+            data-slot="fade"
+            class="absolute left-0 right-0 top-14 hidden h-14 bg-gradient-to-b from-transparent to-white/90"
+        ></div>
     </div>
 </div>
