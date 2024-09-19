@@ -1,6 +1,6 @@
 <tr wire:key="ancestor-row" class="bg-grey-50">
     <td x-show="showCheckboxes" class="py-2 pl-4"></td>
-    <td colspan="{{ $resultCount }}" class="py-2 pl-3 pr-4 text-left">
+    <td colspan="10" class="py-2 pl-3 pr-4 text-left">
         <span class="flex gap-1.5 text-sm leading-5 text-grey-700">
             @foreach ($ancestors as $ancestor)
 

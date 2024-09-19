@@ -22,24 +22,24 @@ trait WithTreeResults
     /**
      * Get the results as a tree structure. This is used when the tree sorter is active.
      */
-    private function getResultsAsTree(Builder $builder, TreeResource $treeResource): Collection|PaginatorContract|CursorPaginatorContract
+    private function getResultsAsTree(Builder $builder, TreeResource $treeResource, bool $forceAsCollection = false): Collection|PaginatorContract|CursorPaginatorContract
     {
-        // TODO: 'id' is assumed here. This should be configurable...
         $result = $builder
-            ->select('id')
+            ->select($this->getModelKeyName())
             ->toBase()
             ->get();
 
         [$ancestors, $treeModels] = app(TreeModels::class)->compose(
             $treeResource,
-            $result->pluck('id')->toArray(),
+            $result->pluck($this->getModelKeyName())->toArray(),
             $this->hasPagination() ? ($this->getCurrentPageIndex() - 1) * $this->getPaginationPerPage() : 0,
-            $this->hasPagination() ? $this->getPaginationPerPage() : count($result)
+            $this->hasPagination() ? $this->getPaginationPerPage() : count($result),
+            $this->getModelKeyName()
         );
 
         $this->ancestors = $ancestors->all();
 
-        if (! $this->hasPagination()) {
+        if (! $this->hasPagination() || $forceAsCollection) {
             return collect($treeModels);
         }
 

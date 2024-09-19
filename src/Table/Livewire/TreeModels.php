@@ -39,16 +39,16 @@ class TreeModels
         // Add indent to models based on the tree depth
         $models = $allModels
             ->filter(fn ($model) => in_array($model->id, $modelIds))
-            ->map(function ($model) use ($treeIds) {
-                $model->indent = $treeIds->first(fn ($node) => $node->getNodeId() == $model->id)->getNodeDepth();
+            ->map(function ($model) use ($treeIds, $keyName) {
+                $model->indent = $treeIds->first(fn ($node) => $node->getNodeId() == $model->{$keyName})->getNodeDepth();
 
                 return $model;
             });
 
         $ancestors = $allModels
             ->filter(fn ($model) => in_array($model->id, $ancestorIds))
-            ->map(function ($model) use ($ancestorTreeIds) {
-                $model->indent = $ancestorTreeIds->first(fn ($node) => $node->getNodeId() == $model->id)->getNodeDepth();
+            ->map(function ($model) use ($ancestorTreeIds, $keyName) {
+                $model->indent = $ancestorTreeIds->first(fn ($node) => $node->getNodeId() == $model->{$keyName})->getNodeDepth();
 
                 return $model;
             });

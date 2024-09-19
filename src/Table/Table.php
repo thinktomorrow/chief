@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasColumns;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasFilters;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasHeaders;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireComponent;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasModelKeyName;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPagination;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRows;
@@ -36,6 +37,7 @@ class Table extends Component
     /** Base Query for all table data */
     use HasQuery;
     use CanAddQuery;
+    use HasModelKeyName;
     use HasRows;
     use HasRowViews;
     use HasFilters;
@@ -63,6 +65,8 @@ class Table extends Component
         }
 
         $modelClassName = $this->getResourceReference()->getResource()->modelClassName();
+
+        $this->modelKeyName((new $modelClassName)->getKeyName());
 
         return $this->query(function () use ($modelClassName) {
             return $modelClassName::query();

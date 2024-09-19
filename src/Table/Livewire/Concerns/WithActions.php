@@ -91,6 +91,8 @@ trait WithActions
             }
         }
 
+        $this->bulkDeselectAll();
+
         if ($action->shouldRefreshTable()) {
             $this->dispatch('requestRefresh')->self();
         }

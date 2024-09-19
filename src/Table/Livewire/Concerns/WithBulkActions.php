@@ -23,19 +23,4 @@ trait WithBulkActions
     {
         return count($this->getTable()->getBulkActions()) > 0;
     }
-
-    public function applyBulkActionEffect(string $key, $models)
-    {
-        $action = $this->getTable()->findBulkAction($key);
-
-        // Modal??
-
-        // Compose Modal
-
-        // Effect?
-
-        if ($action->hasEffect()) {
-            $action->getEffect()($models);
-        }
-    }
 }

@@ -39,6 +39,9 @@ class TableComponent extends Component
     public TableReference $tableReference;
     private ?Table $table = null;
 
+    public ?int $resultPageCount = null;
+    public ?int $resultTotal = null;
+
     public function mount(Table $table)
     {
         $this->table = $table;
@@ -68,6 +71,11 @@ class TableComponent extends Component
         return $this->table;
     }
 
+    protected function getModelKeyName(): string
+    {
+        return $this->getTable()->getModelKeyName();
+    }
+
     public function getHeaders(): array
     {
         return $this->getTable()->getHeaders();
@@ -78,7 +86,7 @@ class TableComponent extends Component
         return view('chief-table::livewire.table', []);
     }
 
-    public function getResults(): Collection|PaginatorContract
+    public function getResults(bool $forceAsCollection = false): Collection|PaginatorContract
     {
         // Query source
         if ($this->getTable()->hasQuery()) {
@@ -91,29 +99,40 @@ class TableComponent extends Component
             $this->applyQueryFilters($builder);
             $this->applyQuerySorters($builder);
 
-            return $this->returnQueryResults($builder);
-        }
-
-        // Collection source
-        if ($rows = $this->getTable()->getRows()) {
+            $results = $this->returnQueryResults($builder, $forceAsCollection);
+        } elseif ($rows = $this->getTable()->getRows()) {
             $rows = $this->applyCollectionFilters($rows);
             $rows = $this->applyCollectionSorters($rows);
 
-            return $this->returnCollectionResults($rows);
+            $results = $this->returnCollectionResults($rows);
+        } else {
+            throw new \Exception('No query or rows defined for table.');
         }
 
-        throw new \Exception('No query or rows defined for table.');
+        $this->resultPageCount = $results->count();
+        $this->resultTotal = method_exists($results, 'total') ? $results->total() : $this->resultPageCount;
+
+        return $results;
     }
 
-    private function returnQueryResults(mixed $builder): Collection|PaginatorContract
+    public function getResultsAsCollection(): Collection
     {
+        return $this->getResults(true);
+    }
+
+    private function returnQueryResults(mixed $builder, bool $forceAsCollection = false): Collection|PaginatorContract
+    {
+        if ($forceAsCollection) {
+            return $builder->get();
+        }
+
         $this->areResultsAsTree = false;
 
         // Show tree structure when there are no sorters active
         if ($this->shouldReturnResultsAsTree()) {
             $this->areResultsAsTree = true;
 
-            return $this->getResultsAsTree($builder, $this->getTable()->getResourceReference()->getResource());
+            return $this->getResultsAsTree($builder, $this->getTable()->getResourceReference()->getResource(), $forceAsCollection);
         }
 
         if (! $this->hasPagination()) {
@@ -160,7 +179,7 @@ class TableComponent extends Component
             return md5(print_r($model, true));
         }
 
-        return (string) $model->getKey();
+        return (string) $model->{$this->getModelKeyName()};
     }
 
     public function getRowView(): string

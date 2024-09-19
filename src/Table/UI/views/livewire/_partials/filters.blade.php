@@ -45,7 +45,7 @@
             <x-slot name="footer" class="flex justify-start items-center gap-2">
                 <x-chief-table::button color="primary" x-on:click="close">Bekijk resultaten</x-chief-table::button>
                 <div>
-                    <span>{{ $total }} resultaten gevonden</span>
+                    <span>{{ $this->resultTotal }} resultaten gevonden</span>
                 </div>
             </x-slot>
         </x-chief::dialog.drawer>

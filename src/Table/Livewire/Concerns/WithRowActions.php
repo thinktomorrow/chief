@@ -18,19 +18,19 @@ trait WithRowActions
     {
         return array_filter($this->getTable()->getRowActions(), fn (Action $action) => ! $action->isVisible());
     }
-
-    public function applyRowActionEffect(string $key, $model)
-    {
-        $action = $this->getTable()->findRowAction($key);
-
-        // Modal??
-
-        // Compose Modal
-
-        // Effect?
-
-        if ($action->hasEffect()) {
-            $action->getEffect()($model);
-        }
-    }
+//
+//    public function applyRowActionEffect(string $key, $model)
+//    {
+//        $action = $this->getTable()->findRowAction($key);
+//
+//        // Modal??
+//
+//        // Compose Modal
+//
+//        // Effect?
+//
+//        if ($action->hasEffect()) {
+//            $action->getEffect()($model);
+//        }
+//    }
 }
