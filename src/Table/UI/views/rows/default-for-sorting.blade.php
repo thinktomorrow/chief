@@ -1,7 +1,3 @@
-@php
-    $columns = $this->getColumns($item);
-@endphp
-
 <div
     x-sortable-item="{{ $item->id }}"
     @class([
@@ -23,7 +19,7 @@
 >
     {{-- This extra div is necessary to be able to properly style the sortable drag state --}}
     <div class="relative">
-        <div x-sortable-handle class="group inline-flex min-h-6 items-center gap-2 px-2 py-1">
+        <div x-sortable-handle class="group inline-flex min-h-6 cursor-pointer items-center gap-2 px-2 py-1">
             <svg class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800">
                 <use href="#icon-drag"></use>
             </svg>
@@ -32,7 +28,7 @@
                 <use href="#icon-indent"></use>
             </svg>
 
-            @foreach ($columns as $column)
+            @foreach ($this->getColumns($item) as $column)
                 <div class="flex items-center gap-1">
                     @foreach ($column->getItems() as $columnItem)
                         {{ $columnItem }}
@@ -62,7 +58,7 @@
 
         <div
             data-slot="fade"
-            class="absolute left-0 right-0 top-14 hidden h-14 bg-gradient-to-b from-transparent to-white/90"
+            class="absolute bottom-0 left-0 right-0 top-14 hidden bg-gradient-to-b from-transparent to-white/90"
         ></div>
     </div>
 </div>
