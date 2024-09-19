@@ -60,30 +60,3 @@
         }
     }
 }
-
-.hover\:child-svg-scale-110 {
-    svg {
-        @apply inline-block transition-all duration-75 ease-in-out;
-    }
-
-    &:hover svg {
-        @apply scale-110;
-    }
-}
-
-.siblings\:bulk-actions-counter-condition[data-bulk-actions-counter='1'] {
-    & ~ .bulk-actions-counter-is-1\:inline {
-        display: inline;
-    }
-    & ~ .bulk-actions-counter-is-1\:hidden {
-        display: none;
-    }
-}
-
-.sortable-drag-class {
-    @apply opacity-90;
-}
-
-.sortable-ghost-class {
-    @apply opacity-25;
-}

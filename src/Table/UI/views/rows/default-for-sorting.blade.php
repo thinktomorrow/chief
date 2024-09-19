@@ -17,6 +17,7 @@
         '[&.table-sort-drag_[data-slot=fade]]:block',
     ])
 >
+    <x-chief::icon-button icon="icon-crop" />
     {{-- This extra div is necessary to be able to properly style the sortable drag state --}}
     <div class="relative">
         <div x-sortable-handle class="group inline-flex min-h-6 cursor-pointer items-center gap-2 px-2 py-1">
