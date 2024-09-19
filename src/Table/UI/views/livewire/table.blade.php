@@ -182,6 +182,8 @@
             @endif
         </div>
 
+        @include('chief-table::livewire.table-for-sorting')
+
         <livewire:chief-form::dialog :parent-id="$this->getId()" />
     </div>
 </div>

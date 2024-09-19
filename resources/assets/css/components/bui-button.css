@@ -7,7 +7,7 @@
         @apply flex items-start text-left;
 
         & > .bui-btn-content {
-            @apply mx-auto;
+            @apply grow;
         }
     }
 
@@ -15,7 +15,7 @@
         @apply rounded-[0.625rem] p-2;
 
         & > svg {
-            @apply size-5;
+            @apply size-5 shrink-0;
         }
 
         & > .bui-btn-content {

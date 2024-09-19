@@ -3,12 +3,14 @@
 ])
 
 <span
-    @class([
-        'bui-btn bg-white text-grey-500 shadow ring-1 ring-grey-200 focus-within:text-grey-800 focus-within:ring-grey-300 hover:ring-grey-300',
-        'bui-btn-base' => $size === 'base',
-        'bui-btn-sm' => $size === 'sm',
-        'bui-btn-xs' => $size === 'xs',
-    ])
+    {{
+        $attributes->class([
+            'bui-btn bg-white text-grey-500 shadow ring-1 ring-grey-200 focus-within:text-grey-800 focus-within:ring-grey-300 hover:ring-grey-300',
+            'bui-btn-base' => $size === 'base',
+            'bui-btn-sm' => $size === 'sm',
+            'bui-btn-xs' => $size === 'xs',
+        ])
+    }}
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path
