@@ -11,15 +11,15 @@ trait WithBulkSelection
         return $this->bulkSelection;
     }
 
-//    public function bulkSelect(array $modelIds): void
-//    {
-//        $this->bulkSelection = array_values(array_unique(array_merge($this->bulkSelection, $modelIds)));
-//    }
-//
-//    public function bulkDeselect(array $modelIds): void
-//    {
-//        $this->bulkSelection = array_values(array_diff($this->bulkSelection, $modelIds));
-//    }
+    //    public function bulkSelect(array $modelIds): void
+    //    {
+    //        $this->bulkSelection = array_values(array_unique(array_merge($this->bulkSelection, $modelIds)));
+    //    }
+    //
+    //    public function bulkDeselect(array $modelIds): void
+    //    {
+    //        $this->bulkSelection = array_values(array_diff($this->bulkSelection, $modelIds));
+    //    }
 
     public function bulkSelectAll(): void
     {
