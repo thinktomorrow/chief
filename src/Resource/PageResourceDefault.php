@@ -153,21 +153,25 @@ trait PageResourceDefault
                         'published' => 'Online',
                         'draft' => 'Offline',
                     ])->value(''),
-//                SelectFilter::make('current_state')
-//                    ->label('Status')
-//                    ->options([
-//                        'published' => 'Online',
-//                        'draft' => 'Offline',
-//                        'archived' => 'Gearchiveerd',
-//                    ]),
+                //                SelectFilter::make('current_state')
+                //                    ->label('Status')
+                //                    ->options([
+                //                        'published' => 'Online',
+                //                        'draft' => 'Offline',
+                //                        'archived' => 'Gearchiveerd',
+                //                    ]),
             ])
             ->columns([
-                Column::items([
-                    ColumnText::make('title')->label('Titel')->link(function ($model) {
-                        return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                    }),
-                    ColumnBadge::make('tags.label')->label('tags'),
-                ]),
+                // Column::items([
+                //     ColumnText::make('title')->label('Titel')->link(function ($model) {
+                //         return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                //     }),
+                //     ColumnBadge::make('tags.label')->label('tags'),
+                // ]),
+                ColumnText::make('title')->label('Titel')->link(function ($model) {
+                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                }),
+                ColumnBadge::make('tags.label')->label('tags'),
 
                 // ColumnText::make('seo_title')->label('SEO Titel'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
