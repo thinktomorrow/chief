@@ -31,87 +31,21 @@
         </x-chief::page.hero>
     </x-slot>
 
-    {{-- Testing dialog components ... --}}
-    <div>
-        <button
-            type="button"
-            x-data
-            x-on:click="
-                $dispatch('create-notification', {
-                    'type': 'success',
-                    'content': 'This is a test notification',
-                })
-            "
-            class="btn btn-primary"
-        >
-            Create notification
-        </button>
-
-        <button
-            type="button"
-            x-data
-            x-on:click="$dispatch('open-dialog', { 'id': 'test-drawer' })"
-            class="btn btn-primary"
-        >
-            Open drawer
-        </button>
-
-        <x-chief::dialog.drawer id="test-drawer">Test drawer</x-chief::dialog.drawer>
-
-        <button
-            type="button"
-            x-data
-            x-on:click="$dispatch('open-dialog', { 'id': 'test-modal' })"
-            class="btn btn-primary"
-        >
-            Open modal
-        </button>
-
-        <x-chief::dialog.modal id="test-modal">Test modal</x-chief::dialog.modal>
-
-        <button
-            type="button"
-            x-data
-            x-on:click="$dispatch('open-dialog', { 'id': 'test-dropdown' })"
-            class="btn btn-primary"
-        >
-            Open dropdown
-        </button>
-
-        <x-chief::dialog.dropdown id="test-dropdown">Test dropdown</x-chief::dialog.dropdown>
-    </div>
-
-    <div class="container space-y-4">
+    <div class="container">
         {{ $table->render() }}
-        {{-- {{ $table2->render() }} --}}
+
+        @adminCan('archive_index')
         <div>
-            <div class="row-start-start gutter-3">
-                @if ($resource->getIndexSidebar())
-                    <div class="w-full md:w-1/2 2xl:w-1/3">
-                        {!! $resource->getIndexSidebar() !!}
-                    </div>
-                @endif
-
-                {{-- @adminCan('sort-index', $models->first()) --}}
-                {{-- <div class="w-full md:w-1/2 2xl:w-1/3"> --}}
-                {{-- @include('chief::manager._index.sort_card') --}}
-                {{-- </div> --}}
-                {{-- @endAdminCan --}}
-
-                @adminCan('archive_index')
-                <div class="w-full md:w-1/2 2xl:w-1/3">
-                    @if ($is_archive_index)
-                        <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
-                            <x-chief-table::button color="white">Terug naar het overzicht</x-chief-table::button>
-                        </a>
-                    @else
-                        <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">
-                            <x-chief-table::button color="white">Bekijk archief</x-chief-table::button>
-                        </a>
-                    @endif
-                </div>
-                @endAdminCan
-            </div>
+            @if ($is_archive_index)
+                <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
+                    <x-chief-table::button color="white">Terug naar het overzicht</x-chief-table::button>
+                </a>
+            @else
+                <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">
+                    <x-chief-table::button color="white">Bekijk archief</x-chief-table::button>
+                </a>
+            @endif
         </div>
+        @endAdminCan
     </div>
 </x-chief::page.template>
