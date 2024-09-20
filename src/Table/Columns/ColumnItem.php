@@ -35,7 +35,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     use HasDefault;
     use HasLocalizableProperties;
     use HasTeaser;
-    use HasValue{
+    use HasValue {
         getValue as getDefaultValue;
     }
     use HasMultipleValues;

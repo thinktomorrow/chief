@@ -2,26 +2,26 @@
 
 namespace Thinktomorrow\Chief\Resource;
 
-use Illuminate\Contracts\View\View;
 use RuntimeException;
-use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
+use Illuminate\Contracts\View\View;
+use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
-use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Forms\Fields\Image;
+use Thinktomorrow\Chief\Table\Sorters\Sort;
+use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
+use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Table\Actions\Action;
-use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Columns\Column;
-use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
-use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
-use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 use Thinktomorrow\Chief\Table\Filters\TextFilter;
-use Thinktomorrow\Chief\Table\Sorters\Sort;
-use Thinktomorrow\Chief\Table\Table;
+use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
+use Thinktomorrow\Chief\Table\Columns\ColumnImage;
+use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
+use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait PageResourceDefault
 {
@@ -162,15 +162,12 @@ trait PageResourceDefault
                 //                    ]),
             ])
             ->columns([
-                // Column::items([
-                //     ColumnText::make('title')->label('Titel')->link(function ($model) {
-                //         return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                //     }),
-                //     ColumnBadge::make('tags.label')->label('tags'),
-                // ]),
-                ColumnText::make('title')->label('Titel')->link(function ($model) {
-                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                }),
+                Column::items([
+                    ColumnImage::make('image')->label('Afbeelding'),
+                    ColumnText::make('title')->label('Titel')->link(function ($model) {
+                        return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                    }),
+                ]),
                 ColumnBadge::make('tags.label')->label('tags'),
 
                 // ColumnText::make('seo_title')->label('SEO Titel'),

@@ -32,8 +32,8 @@
                     </div>
                 @endif
 
-                @foreach ($column->getItems() as $item)
-                    {{ $item }}
+                @foreach ($column->getItems() as $columnItem)
+                    {{ $columnItem }}
                 @endforeach
             </div>
         </td>

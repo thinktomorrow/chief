@@ -1,5 +1,5 @@
 @props([
-    'aside'
+    'aside',
 ])
 
 <div {{ $attributes->merge(['class' => 'container']) }}>
@@ -8,7 +8,7 @@
             {{ $slot }}
         </div>
 
-        @isset ($aside)
+        @isset($aside)
             <div class="w-full space-y-6 lg:w-1/3">
                 {{ $aside }}
             </div>
