@@ -2,13 +2,12 @@ const Bulkselect = (config) => ({
     showCheckboxes: config.showCheckboxes || true,
     selection: config.selection || [],
     paginators: config.paginators || [],
+    pageItems: [],
     isAllSelectedOnPage: false,
     isIndeterminateOnPage: false, // One or more but not all selected on page
 
     init() {
-        // No longer header checkbox work after filtering
-        // when total changed after filtering does not work ... best to entangle??
-
+        // todo: when total changed after filtering does not work ... best to entangle??
         this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
                 const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
@@ -47,6 +46,7 @@ const Bulkselect = (config) => ({
 
         // On initial load
         this.$nextTick(() => {
+            console.log('EIEIEIEIEIEI --------');
             this.setPageItems();
             this.evaluateHeaderCheckboxState();
         });
