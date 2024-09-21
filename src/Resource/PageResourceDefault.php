@@ -16,9 +16,9 @@ use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
+use Thinktomorrow\Chief\Table\Columns\ColumnImage;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
-use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 use Thinktomorrow\Chief\Table\Filters\TextFilter;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
@@ -162,15 +162,12 @@ trait PageResourceDefault
                 //                    ]),
             ])
             ->columns([
-                // Column::items([
-                //     ColumnText::make('title')->label('Titel')->link(function ($model) {
-                //         return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                //     }),
-                //     ColumnBadge::make('tags.label')->label('tags'),
-                // ]),
-                ColumnText::make('title')->label('Titel')->link(function ($model) {
-                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                }),
+                Column::items([
+                    ColumnImage::make('image')->label('Afbeelding'),
+                    ColumnText::make('title')->label('Titel')->link(function ($model) {
+                        return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                    }),
+                ]),
                 ColumnBadge::make('tags.label')->label('tags'),
 
                 // ColumnText::make('seo_title')->label('SEO Titel'),
