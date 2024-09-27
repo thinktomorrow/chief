@@ -37,3 +37,6 @@ jobs:
 
       - name: Execute TimeTable tests
         run: vendor/bin/phpunit src/Plugins/TimeTable
+
+      - name: Execute Export tests
+        run: vendor/bin/phpunit src/Plugins/Export

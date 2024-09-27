@@ -14,7 +14,7 @@
             @if (count(config('chief.locales')) > 1)
                 <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">
                     @foreach (config('chief.locales') as $locale)
-                        <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>
+                        <x-chief::tabs.tab tab-id="{{ $locale }}"></x-chief::tabs.tab>
                     @endforeach
                 </x-chief::tabs>
             @endif
@@ -27,7 +27,11 @@
         <x-chief-form::forms position="main" />
 
         @adminCan('fragments-index', $model)
+<<<<<<< HEAD
             <x-chief::fragments :owner="$model" />
+=======
+        <x-chief::fragments :owner="$model" />
+>>>>>>> master
         @endAdminCan
 
         <x-chief-form::forms position="main-bottom" />
@@ -40,7 +44,11 @@
         </x-slot>
     </x-chief::page.grid>
 
+<<<<<<< HEAD
     {{-- @push('custom-scripts')
         @include('chief::layout._partials.editor-script')
     @endpush --}}
+=======
+    @include('chief::layout._partials.editor-script')
+>>>>>>> master
 </x-chief::page.template>

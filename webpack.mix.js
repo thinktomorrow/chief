@@ -32,44 +32,43 @@ mix.webpackConfig({
 
     .copy('resources/assets/img', 'public/chief-assets/back/img')
 
-    .version(['public/chief-assets/back/img/**/*']);
+    .version(['public/chief-assets/back/img/**/*'])
 
-// Imagine not having to publish chief assets manually every time webpack recompiles them.
-// Sounds like a dream right? Not anymore.
-// TODO: fix this, cuz it will break compilation
-// .then(() => {
-//     if (mix.inProduction()) return;
+    // Imagine not having to publish chief assets manually every time webpack recompiles them.
+    // Sounds like a dream right? Not anymore.
+    .then(() => {
+        if (mix.inProduction()) return;
 
-//     const currentDir = process.cwd();
-//     const symlinkedProjectDir = process.env.SYMLINKED_PROJECT_PATH;
+        const currentDir = process.cwd();
+        const symlinkedProjectDir = process.env.SYMLINKED_PROJECT_PATH;
 
-//     // If SYMLINKED_PROJECT_PATH is defined but empty, do nothing.
-//     if (symlinkedProjectDir === '') return;
+        // If SYMLINKED_PROJECT_PATH is defined but empty, do nothing.
+        if (symlinkedProjectDir === '') return;
 
-//     // If SYMLINKED_PROJECT_PATH is undefined, show info.
-//     if (symlinkedProjectDir === undefined) {
-//         shell.echo(
-//             'Make sure SYMLINKED_PROJECT_PATH is set in your .env file if you want to automatically publish chief assets on compilation.\n'
-//         );
-//         return;
-//     }
+        // If SYMLINKED_PROJECT_PATH is undefined, show info.
+        if (symlinkedProjectDir === undefined) {
+            shell.echo(
+                'Make sure SYMLINKED_PROJECT_PATH is set in your .env file if you want to automatically publish chief assets on compilation.\n'
+            );
+            return;
+        }
 
-//     // Change directory to symlinked project directory.
-//     if (shell.cd(symlinkedProjectDir).code !== 0) {
-//         shell.echo('Error: SYMLINKED_PROJECT_PATH needs to be a VALID path to the symlinked project directory.\n');
-//         shell.exit(1);
-//     }
+        // Change directory to symlinked project directory.
+        if (shell.cd(symlinkedProjectDir).code !== 0) {
+            shell.echo('Error: SYMLINKED_PROJECT_PATH needs to be a VALID path to the symlinked project directory.\n');
+            shell.exit(1);
+        }
 
-//     // Publish chief assets in the symlinked project.
-//     if (shell.exec('php artisan vendor:publish --tag=chief-assets --force').code !== 0) {
-//         shell.echo(`Error: couldn't publish chief assets in directory ${process.env.SYMLINKED_PROJECT_PATH}.\n`);
-//         shell.exit(1);
-//     }
+        // Publish chief assets in the symlinked project.
+        if (shell.exec('php artisan vendor:publish --tag=chief-assets --force').code !== 0) {
+            shell.echo(`Error: couldn't publish chief assets in directory ${process.env.SYMLINKED_PROJECT_PATH}.\n`);
+            shell.exit(1);
+        }
 
-//     // Change directory back to current directory.
-//     shell.cd(currentDir);
+        // Change directory back to current directory.
+        shell.cd(currentDir);
 
-//     shell.echo(`Published chief assets in project ${process.env.SYMLINKED_PROJECT_PATH}.\n`);
+        shell.echo(`Published chief assets in project ${process.env.SYMLINKED_PROJECT_PATH}.\n`);
 
-//     return 0;
-// });
+        return 0;
+    });

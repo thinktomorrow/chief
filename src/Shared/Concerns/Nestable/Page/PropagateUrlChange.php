@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Page;
 
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Site\Urls\Application\ResaveUrlSlug;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PropagateUrlChange
@@ -26,15 +28,31 @@ class PropagateUrlChange
      * When a nestable url gets saved, we'll make sure that all
      * underlying children will have their urls updated.
      */
-    public function handle(Nestable & Visitable $model): void
+    public function handle(Nestable & Visitable $model, ?Model $formerParent = null): void
     {
+        $parentModel = $model->getParent();
+
         // TODO: how to set locales per page??? Now we always take the general locales from chief
         foreach ($this->locales as $locale) {
-            $this->resaveUrlSlug->handle($model, $locale);
+
+            $strippableSlugs = [];
+
+            // In case of a parent switch, allow to replace the base url segment belonging to a former parent.
+            if ($formerParent) {
+                $strippableSlugs[] = UrlRecord::findSlugByModel($formerParent, $locale);
+            }
+
+            // In case of parent changing its url, allow to replace the former base url segment belonging the parent.
+            if ($parentModel) {
+                $strippableSlugs[] = UrlRecord::findSlugByModel($parentModel, $locale);
+                $strippableSlugs[] = UrlRecord::findRecentRedirect($parentModel, $locale)?->slug;
+            }
+
+            $this->resaveUrlSlug->handle($model, $locale, $strippableSlugs);
         }
 
         foreach ($model->getChildren() as $child) {
-            $this->handle($child);
+            $this->handle($child, );
         }
     }
 

@@ -91,7 +91,11 @@ trait ManagerDefaults
     {
         $modelClass = $this->managedModelClass();
 
-        return new $modelClass(...$attributes);
+        if (! empty($attributes)) {
+            return new $modelClass(...$attributes);
+        }
+
+        return app()->make($modelClass);
     }
 
     /**

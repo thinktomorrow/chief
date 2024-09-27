@@ -53,6 +53,8 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     /** @test */
     public function it_can_retrieve_a_nested_repeat_section()
     {
+        $this->disableExceptionHandling();
+
         $pageStub = PageStub::create();
 
         $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'nested', $pageStub) . '?index=0&prefix=repeat_values[99][nested]');

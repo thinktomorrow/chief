@@ -301,7 +301,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        if(method_exists($fragmentable, 'beforeCreate')) {
+        if (method_exists($fragmentable, 'beforeCreate')) {
             $fragmentable->beforeCreate($owner, $order);
         }
 
@@ -359,7 +359,7 @@ trait FragmentAssistant
 
         app($this->resource->getSaveFieldsClass())->save(
             $fragmentable->fragmentModel(),
-            Fields::make($fragmentable->fields($fragmentable))->notTagged('edit'),
+            Fields::makeWithoutFlatteningNestedFields($fragmentable->fields($fragmentable))->notTagged('edit'),
             $request->all(),
             $request->allFiles()
         );
