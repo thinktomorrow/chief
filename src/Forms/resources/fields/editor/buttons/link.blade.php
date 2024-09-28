@@ -6,7 +6,7 @@
     - Link style (button, text, icon)
 --}}
 <div class="size-5">
-    <button type="button" id="tiptap-header-link-{{ $locale }}">
+    <button type="button" x-on:click="$dispatch('open-dialog', { id: 'tiptap-header-link-dropdown-{{ $locale }}' })">
         <svg class="size-5 text-grey-900" viewBox="0 0 24 24" color="currentColor" fill="none">
             <path
                 d="M9.14339 10.691L9.35031 10.4841C11.329 8.50532 14.5372 8.50532 16.5159 10.4841C18.4947 12.4628 18.4947 15.671 16.5159 17.6497L13.6497 20.5159C11.671 22.4947 8.46279 22.4947 6.48405 20.5159C4.50532 18.5372 4.50532 15.329 6.48405 13.3503L6.9484 12.886"
@@ -23,11 +23,7 @@
         </svg>
     </button>
 
-    <x-chief::dropdown
-        trigger="#tiptap-header-link-{{ $locale }}"
-        id="tiptap-header-link-dropdown-{{ $locale }}"
-        placement="bottom-center"
-    >
+    <x-chief::dialog.dropdown id="tiptap-header-link-dropdown-{{ $locale }}" placement="bottom-center">
         <div
             x-data="{
                 href: null,
@@ -126,5 +122,5 @@
                 </button>
             </div>
         </div>
-    </x-chief::dropdown>
+    </x-chief::dialog.dropdown>
 </div>

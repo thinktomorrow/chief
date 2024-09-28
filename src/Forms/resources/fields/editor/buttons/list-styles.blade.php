@@ -1,5 +1,5 @@
 <div class="size-5">
-    <button type="button" id="tiptap-header-list-styles-{{ $locale }}">
+    <button type="button" x-on:click="$dispatch('open-dialog', { id: 'tiptap-header-list-styles-{{ $locale }}' })">
         <svg class="size-5 text-grey-900" viewBox="0 0 24 24" color="currentColor" fill="none">
             <path d="M8 5L20 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
             <path
@@ -28,7 +28,7 @@
         </svg>
     </button>
 
-    <x-chief::dropdown trigger="#tiptap-header-list-styles-{{ $locale }}" placement="bottom-center">
+    <x-chief::dialog.dropdown id="tiptap-header-list-styles-{{ $locale }}" placement="bottom-center">
         <button
             type="button"
             x-on:click="
@@ -99,5 +99,5 @@
             </svg>
             Ordered list
         </button>
-    </x-chief::dropdown>
+    </x-chief::dialog.dropdown>
 </div>

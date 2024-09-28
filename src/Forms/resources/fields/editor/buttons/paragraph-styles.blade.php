@@ -1,5 +1,8 @@
 <div class="size-5">
-    <button type="button" id="tiptap-header-paragraph-styles-{{ $locale }}">
+    <button
+        type="button"
+        x-on:click="$dispatch('open-dialog', { id: 'tiptap-header-paragraph-styles-{{ $locale }}' })"
+    >
         <svg class="size-5 text-grey-900" viewBox="0 0 24 24" color="currentColor" fill="none">
             <path
                 d="M15 3V21M15 3H10M15 3H21M10 12H7.5C5.01472 12 3 9.98528 3 7.5C3 5.01472 5.01472 3 7.5 3H10M10 12V3M10 12V21"
@@ -11,7 +14,7 @@
         </svg>
     </button>
 
-    <x-chief::dropdown trigger="#tiptap-header-paragraph-styles-{{ $locale }}" placement="bottom-center">
+    <x-chief::dialog.dropdown id="tiptap-header-paragraph-styles-{{ $locale }}" placement="bottom-center">
         <button
             type="button"
             x-on:click="
@@ -297,5 +300,5 @@
             </svg>
             Paragraph
         </button>
-    </x-chief::dropdown>
+    </x-chief::dialog.dropdown>
 </div>
