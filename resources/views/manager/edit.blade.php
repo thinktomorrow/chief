@@ -40,5 +40,5 @@
         </x-slot>
     </x-chief::page.grid>
 
-    @include('chief::layout._partials.editor-script')
+    {{-- @include('chief::layout._partials.editor-script') --}}
 </x-chief::page.template>

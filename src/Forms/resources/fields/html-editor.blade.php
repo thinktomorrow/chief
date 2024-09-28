@@ -1,7 +1,17 @@
 @php
     use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
-    $extensions = [Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\HtmlExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ParagraphStylesExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\BoldExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ItalicExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\UnderlineExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ListStylesExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\LinkExtension::class, Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\CharacterCountExtension::class];
+    $extensions = [
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\HtmlExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ParagraphStylesExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\BoldExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ItalicExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\UnderlineExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ListStylesExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\LinkExtension::class,
+        Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\CharacterCountExtension::class,
+    ];
+
     $jsExtensions = [];
 
     foreach ($extensions as $extension) {
@@ -41,7 +51,7 @@
             return window.TipTapEditors[this.id];
         }
     }"
-    class="form-input-field rounded-lg p-0"
+    class="rounded-lg border border-grey-200 bg-white shadow-sm"
 >
     <div class="flex items-start gap-3 border-b border-grey-100 bg-white px-3 py-2 first:rounded-t-lg">
         @foreach ($extensions as $extension)
@@ -49,7 +59,7 @@
         @endforeach
     </div>
 
-    <div x-ref="editor" class="prose prose-dark prose-spacing px-3 py-2"></div>
+    <div x-ref="editor" class="prose prose-dark prose-spacing px-3 py-3"></div>
 
     <x-chief::input.textarea
         id="{{ $getId($locale ?? null) }}"
@@ -58,9 +68,6 @@
         x-ref="textarea"
         x-text="content"
         :attributes="$attributes->merge($getCustomAttributes())"
-        v-pre="v-pre"
-        cols="10"
-        rows="10"
         class="hidden"
     >
         {{ $getActiveValue($locale ?? null) }}
