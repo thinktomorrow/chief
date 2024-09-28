@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Forms\Fields\Editor\Extensions;
 
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\Extension;
-use Thinktomorrow\Chief\Forms\Fields\Editor\Extensions\ExtensionDefault;
 
 class ItalicExtension implements Extension
 {
