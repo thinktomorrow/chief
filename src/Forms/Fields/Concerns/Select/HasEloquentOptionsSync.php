@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns\Select;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\SelectOptions;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\SelectOptions;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 
 trait HasEloquentOptionsSync

@@ -5,19 +5,19 @@
     'breadcrumbs' => [], // should be an array of breadcrumbs
 ])
 
-<div {{ $attributes->merge(['class' => 'container space-y-2']) }}>
+<div {{ $attributes->merge(['class' => 'container']) }}>
     @include('chief::templates.page._partials.breadcrumbs', [
         'breadcrumbs' => $breadcrumbs
     ])
 
     @if($title || $description || $customTitle || $slot->isNotEmpty())
-        <div class="pb-8 space-y-4">
+        <div class="space-y-4">
             @if ($title || $customTitle || $slot->isNotEmpty())
                 <div class="flex items-end justify-between gap-y-4 gap-x-6">
                     @if ($customTitle)
                         {{ $customTitle }}
                     @else
-                        <h1 class="h1 h1-dark">{{ $title }}</h1>
+                        <h1 class="h2 h2-dark">{{ $title }}</h1>
                     @endif
 
                     @if ($slot->isNotEmpty())

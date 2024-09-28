@@ -15,7 +15,7 @@ class CreateMenuItemTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertViewIs('chief::admin.menu.create')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -23,7 +23,7 @@ class CreateMenuItemTest extends ChiefTestCase
     {
         $response = $this->get(route('chief.back.menuitem.create', 'main'));
         $response->assertStatus(302)
-                 ->assertRedirect(route('chief.back.login'));
+            ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */

@@ -9,7 +9,7 @@
     "license": "none",
     "type": "chief-cms",
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "ext-json": "*",
         "astrotomic/laravel-translatable": "^11.11",
         "doctrine/dbal": "^3.5.3",
@@ -26,7 +26,7 @@
         "thinktomorrow/dynamic-attributes": "^0.4.2",
         "thinktomorrow/squanto": "^3.0.2",
         "thinktomorrow/url": "^3.0.0",
-        "thinktomorrow/vine": "^0.4.11"
+        "thinktomorrow/vine": "dev-perf-improvement"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

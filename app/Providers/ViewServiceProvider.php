@@ -9,7 +9,7 @@ class ViewServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
 
         // Fragment components
         $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
@@ -29,12 +29,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::templates.solo.template', 'chief::solo.template');
         Blade::component('chief::templates.mail.layout', 'chief::mail.layout');
         Blade::component('chief::templates.mail.template', 'chief::mail.template');
-
-        // Table components
-        Blade::component('chief-table::components.table', 'chief::table');
-        Blade::component('chief-table::components.row', 'chief::table.row');
-        Blade::component('chief-table::components.header', 'chief::table.header');
-        Blade::component('chief-table::components.data', 'chief::table.data');
 
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {

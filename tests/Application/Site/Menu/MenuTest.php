@@ -141,7 +141,7 @@ class MenuTest extends ChiefTestCase
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
-        $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getLabel());
+        $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getNodeLabel());
     }
 
     /** @test */
@@ -154,7 +154,7 @@ class MenuTest extends ChiefTestCase
         $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
         $this->assertInstanceof(NodeCollection::class, $collection);
 
-        $this->assertEquals("last item", $collection->first()->getChildNodes()->first()->getLabel());
+        $this->assertEquals("last item", $collection->first()->getChildNodes()->first()->getNodeLabel());
 
         $second->order = 1;
         $second->save();

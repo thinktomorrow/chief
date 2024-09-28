@@ -1,4 +1,4 @@
-<x-chief::dialog id="state-modal-{{ $transitionKey }}-{{ $model->id }}" title="Ben je zeker?" size="xs">
+<x-chief::dialog.modal id="state-modal-{{ $transitionKey }}-{{ $model->id }}" title="Ben je zeker?" size="xs">
     @if ($asyncModalUrl = $stateConfig->getAsyncModalUrl($transitionKey, $model))
         <div
             x-data="{ customHtml: null }"
@@ -52,4 +52,4 @@
             {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
         </button>
     </x-slot>
-</x-chief::dialog>
+</x-chief::dialog.modal>

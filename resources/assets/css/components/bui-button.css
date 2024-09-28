@@ -1,0 +1,61 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .bui-btn {
+        @apply flex items-start text-left;
+
+        & > .bui-btn-content {
+            @apply grow;
+        }
+    }
+
+    .bui-btn-base {
+        @apply rounded-[0.625rem] p-2;
+
+        & > svg {
+            @apply size-5 shrink-0;
+        }
+
+        & > .bui-btn-content {
+            @apply px-1 text-base leading-5;
+        }
+    }
+
+    .bui-btn-sm {
+        @apply rounded-lg p-1.5;
+
+        & > svg {
+            @apply size-[1.125rem];
+        }
+
+        & > .bui-btn-content {
+            @apply px-[0.1875rem] text-sm leading-[1.125rem];
+        }
+    }
+
+    .bui-btn-xs {
+        @apply rounded-md p-[0.1875rem];
+
+        & > svg {
+            @apply size-[1.125rem];
+        }
+
+        & > .bui-btn-content {
+            @apply px-0.5 text-xs leading-[1.125rem];
+        }
+    }
+
+    .bui-btn-grey {
+        @apply bg-grey-100 text-grey-800 hover:bg-grey-200;
+    }
+
+    .bui-btn-primary {
+        @apply bg-primary-500 text-white hover:bg-primary-600;
+    }
+
+    .bui-btn-white {
+        @apply bg-white text-grey-800 ring-1 ring-grey-200 hover:ring-grey-300;
+    }
+}

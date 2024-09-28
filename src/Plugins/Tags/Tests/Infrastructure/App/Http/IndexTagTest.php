@@ -8,6 +8,7 @@ class IndexTagTest extends TestCase
 {
     public function test_it_can_visit_the_index()
     {
+        $this->disableExceptionHandling();
         $model = $this->createTagModel();
 
         $response = $this->asAdmin()->get(route('chief.tags.index'));

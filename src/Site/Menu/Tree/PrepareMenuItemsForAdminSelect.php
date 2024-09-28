@@ -32,7 +32,7 @@ class PrepareMenuItemsForAdminSelect
         $menu->flatten()->each(function (MenuItemNode $node) use ($menuitems) {
             $menuitems[] = [
                 'label' => $node->getAnyLabel(),
-                'value' => $node->getId(),
+                'value' => $node->getNodeId(),
             ];
         });
 

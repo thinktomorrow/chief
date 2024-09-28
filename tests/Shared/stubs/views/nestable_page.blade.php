@@ -15,6 +15,6 @@
     {!! implode(' > ', array_map(fn($model) => $model->title, $model->getSiblings()->all())) !!}
 
     <!-- get descendants -->
-    {!! implode(',', array_map(fn($node) => $node->getModel()->title, $model->getDescendants()->flatten()->all())) !!}
+    {!! implode(',', array_map(fn($node) => $node->title, $model->getDescendants()->flatten()->all())) !!}
 </div>
 

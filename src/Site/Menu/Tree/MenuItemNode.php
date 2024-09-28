@@ -28,11 +28,6 @@ class MenuItemNode extends DefaultNode implements Node
         $this->ownerLabel = $ownerLabel;
     }
 
-    public function getId()
-    {
-        return $this->getNodeId();
-    }
-
     public function getParentId()
     {
         return $this->getParentNodeId();

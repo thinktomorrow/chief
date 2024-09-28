@@ -5,10 +5,9 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Table\TableResource;
 
 // App specific resource methods
-interface PageResource extends Resource, TableResource
+interface PageResource extends Resource
 {
     // Nav
     public function getNavItem(): ?NavItem;
@@ -29,8 +28,6 @@ interface PageResource extends Resource, TableResource
     public function getTitleAttributeKey(): string; // Which attribute identifies the title value - defaults to 'title' ($model->title).
 
     public function getIndexView(): View;
-
-    public function getArchivedIndexView(): View;
 
     public function getIndexTitle(): string;
 
@@ -66,12 +63,4 @@ interface PageResource extends Resource, TableResource
     public function getSortableType(): string;
 
     public function allowInlineSorting(): bool;
-
-    /**
-     * The class responsible for fetching the results for admin index pages.
-     * @return string
-     */
-    public function indexRepository(): string;
-
-    public function getNestableNodeLabels(): ?string;
 }

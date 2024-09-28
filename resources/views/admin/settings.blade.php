@@ -5,13 +5,19 @@
         </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form" class="card">
+    <x-chief::page.grid class="mt-8 max-w-3xl">
+        <form
+            action="{{ route('chief.back.settings.update') }}"
+            id="updateForm"
+            method="POST"
+            role="form"
+            class="card"
+        >
             @csrf
             @method('put')
 
             <div class="space-y-6">
-                @foreach($fields as $field)
+                @foreach ($fields as $field)
                     {!! $field->render() !!}
                 @endforeach
             </div>

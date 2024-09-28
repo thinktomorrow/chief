@@ -1,0 +1,37 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .bui-label {
+        @apply inline-block font-medium;
+    }
+
+    .bui-label-base {
+        @apply rounded-lg px-2 py-1.5 text-base leading-5;
+    }
+
+    .bui-label-sm {
+        @apply rounded-lg px-1.5 py-1 text-sm leading-4;
+    }
+
+    .bui-label-xs {
+        @apply rounded-md px-1.5 py-1 text-xs leading-[.875rem];
+    }
+
+    .bui-label-green {
+        @apply bg-green-100 text-green-800;
+    }
+
+    .bui-label-red {
+        @apply bg-red-100 text-red-800;
+    }
+
+    .bui-label-orange {
+        @apply bg-orange-100 text-orange-800;
+    }
+
+    .bui-label-grey {
+        @apply bg-grey-100 text-grey-800;
+    }
+}

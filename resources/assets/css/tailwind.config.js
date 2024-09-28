@@ -14,6 +14,8 @@ module.exports = {
         'src/Plugins/**/resources/**/*.blade.php',
         'src/Plugins/HotSpots/views/**/*.blade.php',
         'src/Assets/App/resources/**/*.blade.php',
+
+        'src/Table/**/*.{blade.php,php}',
     ],
     theme: {
         screens: {
@@ -41,8 +43,7 @@ module.exports = {
             center: true,
             padding: {
                 DEFAULT: '1rem',
-                sm: '2rem',
-                lg: '3rem',
+                sm: '1.5rem',
             },
         },
         fontFamily: {
@@ -81,8 +82,8 @@ module.exports = {
                 'pop-in': 'popIn 200ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in-tag': 'popIn 100ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in-out': 'popInOut 2000ms cubic-bezier(0.83, 0, 0.17, 1)',
-                'dialog-pop-in': 'dialogPopIn 150ms ease-out',
-                'dialog-fade-in': 'dialogFadeIn 150ms ease-out',
+                'dialog-pop-in': 'dialogPopIn 100ms ease-out',
+                'dialog-fade-in': 'dialogFadeIn 100ms ease-out',
             },
             keyframes: {
                 slideInNavigation: {
@@ -99,7 +100,7 @@ module.exports = {
                     '100%': { transform: 'scale(0)' },
                 },
                 dialogPopIn: {
-                    '0%': { transform: 'scale(0.9)' },
+                    '0%': { transform: 'scale(0.95)' },
                     '100%': { transform: 'scale(1)' },
                 },
                 dialogFadeIn: {

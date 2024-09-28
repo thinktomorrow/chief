@@ -1,61 +1,51 @@
 @php
-    $title = ucfirst($resource->getIndexTitle());
+    use Thinktomorrow\Chief\Table\Table\References\TableReference;
+
     $is_archive_index = $is_archive_index ?? false;
+    $title = ucfirst($resource->getIndexTitle());
+
+    if ($is_archive_index) {
+        $table = $resource->getArchivedIndexTable();
+        $table->setTableReference(new TableReference($resource::class, 'getArchivedIndexTable'));
+    } else {
+        $table = $resource->getIndexTable();
+        $table->setTableReference(new TableReference($resource::class, 'getIndexTable'));
+
+        $table2 = $resource->getOtherIndexTable();
+        $table2->setTableReference(new TableReference($resource::class, 'getOtherIndexTable'));
+    }
 @endphp
 
-<x-chief::page.template :title="$title">
+<x-chief::page.template>
     <x-slot name="hero">
         <x-chief::page.hero :title="$title" :breadcrumbs="$is_archive_index ? [$resource->getPageBreadCrumb()] : []">
-            @if($resource->getIndexDescription())
+            @if ($resource->getIndexDescription())
                 <x-slot name="description">
                     {{ $resource->getIndexDescription() }}
                 </x-slot>
             @endif
 
-            @if($resource->getIndexHeaderContent())
+            @if ($resource->getIndexHeaderContent())
                 {!! $resource->getIndexHeaderContent() !!}
-            @endif
-
-            @if(!$is_archive_index)
-                @include('chief::manager._index._index_actions')
             @endif
         </x-chief::page.hero>
     </x-slot>
 
-    <x-chief::page.grid>
-        @if(count($models))
-            <div class="card">
-                @adminCan('sort-index', $models->first())
-                    <div
-                        data-sortable
-                        data-sortable-endpoint="{{ $manager->route('sort-index') }}"
-                        data-sortable-id-type="{{ $resource->getSortableType() }}"
-                        class="-my-4 divide-y divide-grey-100"
-                    >
-                @elseAdminCan
-                    <div class="-my-4 divide-y divide-grey-100">
-                @endAdminCan
-                        @foreach($models as $model)
-                            @include($resource->getIndexCardView())
-                        @endforeach
-                    </div>
-            </div>
+    <div class="container">
+        {{ $table->render() }}
 
-            @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                {!! $models->links('chief::pagination.default') !!}
+        @adminCan('archive_index')
+        <div>
+            @if ($is_archive_index)
+                <a href="@adminRoute('index')" class="inline-block" title="Terug naar het overzicht">
+                    <x-chief-table::button color="white">Terug naar het overzicht</x-chief-table::button>
+                </a>
+            @else
+                <a href="@adminRoute('archive_index')" class="inline-block" title="Bekijk archief">
+                    <x-chief-table::button color="white">Bekijk archief</x-chief-table::button>
+                </a>
             @endif
-        @else
-            <div class="card">
-                <p class="text-grey-500">Geen resultaten gevonden.</p>
-            </div>
-        @endif
-
-        @if ($resource->showIndexSidebarAside())
-            <x-slot name="aside">
-                @include('chief::templates.page.index.default-sidebar')
-            </x-slot>
-        @else
-            @include('chief::templates.page.index.inline-sidebar')
-        @endif
-    </x-chief::page.grid>
+        </div>
+        @endAdminCan
+    </div>
 </x-chief::page.template>

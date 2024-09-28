@@ -13,6 +13,32 @@ principles.
 -   Fixed: isolate all throwables while exporting all resources.
 -   Fixed: When no nav items, the title of empty nav block was still shown.
 
+### Table component
+
+-   `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former options (index and table)
+-   `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
+-   Removed `TableResource` interface and `TableResourceDefault` trait and methods. Any implementations of these methods should be replaced by a Table method.
+    -   `getTableRow` defined the columns. This is now done via `Table::columns()`.
+    -   `getTableRowActions` defined the actions. This is now done via `Table::rowActions()`.
+    -   `displayTableHeaderAsSticky` option to set table header sticky is no longer used.
+    -   Tags plugin repository has two new methods: `Repository::attachTags(string $ownerType, array $ownerIds, array $tagIds)` and `Repository::detachTags(string $ownerType, array $ownerIds, array $tagIds)`.
+    -   Tags plugin repository API for syncing tags has changed. Usage is now as: `Repository::syncTags(string $ownerType, array $ownerIds, array $tagIds)`.
+
+Some documentation:
+
+-   Table can have a query closure, collection rows or resource as data source.
+
+### Improved and simplified tree retrieval
+
+-   Add the `\Thinktomorrow\Chief\Resource\TreeResource` interface to your resource to use the new two methods straight from the Resource. These methods are: `getTreeModelIds` and `getTreeModels`.
+-   Removed `IndexRepository` interface and default implementation. `IndexRepository` is no longer used.
+-   Removed `NestableRepository` interface and default implementation. `NestableRepository` is no longer used.
+-   Removed `Resource::indexRepository()`. No longer in use by new Table component.
+-   Removed `Resource::getNestableNodeLabels()`. No longer in use by new Table component.
+
+-   Changed: Exports are now stored in the `storage/app/exports` folder.
+-   Fixed: isolate all throwables while exporting all resources.
+
 ## 0.8.22 - 2024-07-30
 
 -   Fixed: Issue where asset field values weren't saved on asset creation.

@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasModel
 {
-    protected ?Model $model = null;
+    protected null|Model|array $model = null;
     protected array $whenModelIsSetCallbacks = [];
 
-    public function model(Model $model): static
+    public function model(Model|array $model): static
     {
         $this->model = $model;
 
@@ -20,7 +20,7 @@ trait HasModel
         return $this;
     }
 
-    public function getModel(): ?Model
+    public function getModel(): null|Model|array
     {
         return $this->model;
     }

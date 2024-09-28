@@ -45,15 +45,12 @@ use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\MemoizedMysqlNestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PropagateUrlChange;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
-use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 
@@ -92,7 +89,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
-        (new TableServiceProvider($this->app))->boot();
+        (new \Thinktomorrow\Chief\Table\TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
@@ -122,8 +119,6 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->singleton(Settings::class, function () {
             return new Settings();
         });
-
-        $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
 
         (new SquantoServiceProvider($this->app))->register();
 

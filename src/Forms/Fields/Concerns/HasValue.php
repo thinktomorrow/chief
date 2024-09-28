@@ -37,6 +37,10 @@ trait HasValue
                 return $this->getDefault($locale);
             }
 
+            if (is_array($this->getModel())) {
+                return data_get($this->getModel(), $this->getColumnName(), $this->getDefault($locale));
+            }
+
             return $this->defaultEloquentValueResolver()($this->getModel(), $locale);
         }
 
