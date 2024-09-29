@@ -53,7 +53,7 @@
     }"
     class="rounded-lg border border-grey-200 bg-white shadow-sm"
 >
-    <div class="flex items-start gap-3 border-b border-grey-100 bg-white px-3 py-2 first:rounded-t-lg">
+    <div class="flex items-start gap-0.5 border-b border-grey-100 bg-white px-1.5 py-1 first:rounded-t-lg">
         @foreach ($extensions as $extension)
             {!! $extension::renderButton(['locale' => $locale]) !!}
         @endforeach
