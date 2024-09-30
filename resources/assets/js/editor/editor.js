@@ -24,5 +24,5 @@ window.TipTapExtensions = [
     { name: 'list_item', extension: ListItem },
     { name: 'bullet_list', extension: BulletList },
     { name: 'ordered_list', extension: OrderedList },
-    { name: 'link', extension: Link.configure({ linkOnPaste: true }) },
+    { name: 'link', extension: Link.configure({ openOnClick: false, linkOnPaste: true }) },
 ];

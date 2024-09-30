@@ -49,6 +49,15 @@
         },
         editor() {
             return window.TipTapEditors[this.id];
+        },
+        selectedText() {
+            const { from, to, empty } = this.editor().state.selection
+
+            if (empty) {
+                return null
+            }
+
+            return this.editor().state.doc.textBetween(from, to, ' ')
         }
     }"
     class="rounded-lg border border-grey-200 bg-white shadow-sm"
