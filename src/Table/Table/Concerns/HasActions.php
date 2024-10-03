@@ -23,6 +23,15 @@ trait HasActions
         return array_filter($this->actions, fn (Action $action) => ! $action instanceof BulkAction && ! $action instanceof RowAction);
     }
 
+    public function removeAction(string|array $keys): static
+    {
+        $keys = (array) $keys;
+
+        $this->actions = array_filter($this->actions, fn ($action) => ! in_array($action->getKey(), $keys));
+
+        return $this;
+    }
+
     public function findAction(string $key): ?Action
     {
         return collect($this->actions)->first(fn (Action $action) => $action->getKey() === $key);

@@ -1,10 +1,17 @@
 <div id="table-container-header-sorters" class="flex items-start justify-end gap-2">
+
     @if (count($this->getActiveFilters()) > 0)
-        <button type="button" class="mt-[0.1875rem]">
-            <x-chief-table::button wire:click="resetFilters" color="grey" size="sm">
-                Reset filters
-            </x-chief-table::button>
-        </button>
+        <div class="flex items-center justify-end gap-2">
+            <span class="text-sm leading-5 text-grey-500">
+                {{ $this->resultTotal }} items
+            </span>
+            <button type="button" class="mt-[0.1875rem]">
+                <x-chief-table::button wire:click="resetFilters" color="grey" size="sm">
+                    Reset filters
+                </x-chief-table::button>
+            </button>
+        </div>
+
     @endif
 
     @if (count($this->getSortersForView()) > 1)

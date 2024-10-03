@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
@@ -98,6 +99,7 @@ trait PageResourceDefault
             ])
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey()),
+                VisitArchiveAction::makeDefault(static::resourceKey()),
             ])
             ->filters([
                 TitleFilter::makeDefault(),
@@ -136,7 +138,10 @@ trait PageResourceDefault
         return $this->getIndexTable()
             ->addQuery(function ($builder) {
                 $builder->archived();
-            });
+            })
+            ->removeFilter('current_state')
+            ->removeAction('create')
+            ->removeAction('archive-index');
     }
 
     public function getOtherIndexTable(): Table
@@ -207,7 +212,7 @@ trait PageResourceDefault
             return null;
         }
 
-        return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        return null;
     }
 
     public function getIndexHeaderContent(): ?string
