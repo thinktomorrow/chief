@@ -1,5 +1,5 @@
 .form-input-field {
-    @apply block w-full rounded-md border px-3 py-2 shadow-sm;
+    @apply block w-full rounded-[0.625rem] border px-3 py-2 shadow-sm;
     @apply border-grey-200 bg-white text-grey-700;
 
     &:focus {

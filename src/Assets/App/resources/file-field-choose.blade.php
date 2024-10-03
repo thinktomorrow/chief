@@ -8,9 +8,7 @@
         <x-slot name="header">
             <div class="flex grow flex-wrap items-start justify-between gap-3">
                 <div x-data="{}" class="relative flex grow items-center justify-end">
-                    <svg class="body-dark pointer-events-none absolute left-3 h-5 w-5">
-                        <use xlink:href="#icon-magnifying-glass"></use>
-                    </svg>
+                    <x-chief::icon.search class="body-dark pointer-events-none absolute left-3 size-5" />
 
                     <x-chief::input.text
                         wire:model.live.debounce.500ms="filters.search"

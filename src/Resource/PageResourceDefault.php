@@ -2,26 +2,24 @@
 
 namespace Thinktomorrow\Chief\Resource;
 
-use Illuminate\Contracts\View\View;
 use RuntimeException;
-use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
+use Illuminate\Contracts\View\View;
+use Thinktomorrow\Chief\Table\Table;
+use Illuminate\Support\Facades\Blade;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Table\Actions\Action;
-use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
+use Thinktomorrow\Chief\Table\Sorters\Sort;
+use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Table\Columns\Column;
-use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
-use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
+use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
-use Thinktomorrow\Chief\Table\Sorters\Sort;
-use Thinktomorrow\Chief\Table\Table;
+use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
+use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
+use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait PageResourceDefault
 {
@@ -105,6 +103,7 @@ trait PageResourceDefault
             ])
             ->columns([
                 Column::items([
+                    // ColumnImage::make('image')->label('Afbeelding'),
                     ColumnText::make('title')->label('Titel')->link(function ($model) {
                         return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
                     }),
@@ -184,7 +183,7 @@ trait PageResourceDefault
 
     protected function getNavIcon(): string
     {
-        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+        return Blade::render('<x-chief::icon.folder-library />');
     }
 
     public function getCreatePageView(): View

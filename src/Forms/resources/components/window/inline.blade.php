@@ -9,21 +9,21 @@
     data-form
     data-form-url="{{ $refreshUrl }}"
     data-form-tags="{{ $tags }}"
-    {{ $attributes->class('flex flex-wrap sm:flex-nowrap items-start gap-4') }}
+    {{ $attributes->class('flex flex-wrap items-start gap-4 sm:flex-nowrap') }}
 >
     <div class="w-full">
         {!! $slot !!}
-    </div>
 
-    @if($editUrl)
-        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="inline-block sm:mt-6 shrink-0">
-            @if($icon)
-                {!! $icon !!}
-            @else
-                <x-chief::link>
-                    <svg><use xlink:href="#icon-edit"></use></svg>
-                </x-chief::link>
-            @endif
-        </a>
-    @endif
+        @if ($editUrl)
+            <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="inline-block shrink-0 sm:mt-2">
+                @if ($icon)
+                    {!! $icon !!}
+                @else
+                    <x-chief-table::button color="white" size="sm">
+                        <x-chief::icon.quill-write />
+                    </x-chief-table::button>
+                @endif
+            </a>
+        @endif
+    </div>
 </div>

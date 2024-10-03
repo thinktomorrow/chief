@@ -14,7 +14,7 @@
 
                 <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'user-edit-options' })">
                     <x-chief::button>
-                        <svg class="h-5 w-5"><use xlink:href="#icon-ellipsis-vertical" /></svg>
+                        <x-chief::icon.more-vertical-circle class="size-5" />
                     </x-chief::button>
                 </button>
 

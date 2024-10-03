@@ -3,8 +3,14 @@
 @endphp
 
 <button type="button" x-on:click="$dispatch('open-dialog', { 'id': '{{ $triggerId }}' })">
-    <x-chief-table::filter.select :value="$this->getActiveFilterValue($getKey())">
+    <x-chief-table::filter.select>
         {{ $getLabel() ?? $getKey() }}
+
+        @if ($this->getActiveFilterValue($getKey()))
+            <span class="text-grey-200">|</span>
+
+            <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+        @endif
     </x-chief-table::filter.select>
 </button>
 

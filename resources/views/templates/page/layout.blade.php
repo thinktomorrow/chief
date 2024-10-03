@@ -39,7 +39,7 @@
 
         @stack('custom-styles')
     </head>
-    <body class="min-h-screen bg-grey-50/50">
+    <body class="min-h-screen bg-grey-50">
         <main id="main">
             {{ $slot }}
 

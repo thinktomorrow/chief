@@ -2,8 +2,9 @@
 
 namespace Thinktomorrow\Chief\Resource;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 
 trait FragmentResourceDefault
 {
@@ -23,7 +24,7 @@ trait FragmentResourceDefault
 
     public function getIcon(): string
     {
-        return '<svg><use xlink:href="#icon-rectangle-group"></use></svg>';
+        return Blade::render('<x-chief::icon.folder-library />');
     }
 
     public function getHint(): ?string

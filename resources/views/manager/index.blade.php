@@ -7,7 +7,7 @@
     if ($is_archive_index) {
         $title .= ' archief ';
         $table = $resource->getArchivedIndexTable();
-        $table->setTableReference(new TableReference($resource::class, 'getArchivedIndexTable'));;
+        $table->setTableReference(new TableReference($resource::class, 'getArchivedIndexTable'));
     } else {
         $table = $resource->getIndexTable();
         $table->setTableReference(new TableReference($resource::class, 'getIndexTable'));
@@ -16,9 +16,12 @@
 
 <x-chief::page.template>
     <x-slot name="hero">
-        <x-chief::page.hero :title="$title" :breadcrumbs="!$is_archive_index ? [$resource->getPageBreadCrumb()] : [
-            new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', $manager->route('index'))
-        ]">
+        <x-chief::page.hero
+            :title="$title"
+            :breadcrumbs="!$is_archive_index ? [$resource->getPageBreadCrumb()] : [
+                new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', $manager->route('index'))
+            ]"
+        >
             @if ($resource->getIndexDescription())
                 <x-slot name="description">
                     {{ $resource->getIndexDescription() }}

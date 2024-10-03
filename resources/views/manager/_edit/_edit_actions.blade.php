@@ -1,10 +1,8 @@
 @adminCan('duplicate')
-<button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'edit-options' })">
-    <x-chief::button>
-        <svg class="h-5 w-5">
-            <use xlink:href="#icon-ellipsis-vertical" />
-        </svg>
-    </x-chief::button>
+<button x-data type="button" x-on:click="$dispatch('open-dialog', { 'id': 'edit-options' })">
+    <x-chief-table::button color="white">
+        <x-chief::icon.more-vertical-circle />
+    </x-chief-table::button>
 </button>
 
 <x-chief::dialog.dropdown id="edit-options">
