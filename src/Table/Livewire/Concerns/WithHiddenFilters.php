@@ -9,7 +9,9 @@ trait WithHiddenFilters
 
     public function getVisibleFilters(): array
     {
-        return array_filter($this->getFilters(), fn ($filter) => ! in_array($filter->getKey(), $this->hiddenFilterKeys));
+        $visibleFilters = array_filter($this->getFilters(), fn ($filter) => ! in_array($filter->getKey(), $this->hiddenFilterKeys));
+
+        return $this->rejectMainFilters($visibleFilters);
     }
 
     public function getHiddenFilters(): array

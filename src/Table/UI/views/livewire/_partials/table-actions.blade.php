@@ -1,7 +1,7 @@
-<div class="flex items-start justify-between gap-4">
+<div class="flex items-start justify-between gap-4 mt-2">
     <div>
         <div class="flex items-start gap-2">
-            @foreach ($this->getVisibleFilters() as $filter)
+            @foreach ($this->getMainFilters() as $filter)
                 <div data-filter-key="{{ $filter->getKey() }}">
                     {!! $filter->render() !!}
                 </div>

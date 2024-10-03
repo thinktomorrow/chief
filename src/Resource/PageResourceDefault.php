@@ -134,7 +134,7 @@ trait PageResourceDefault
             ])
             ->filters([
                 TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault(),
+                OnlineStateFilter::makeDefault()->main(),
             ])
             ->columns([
                 Column::items([
