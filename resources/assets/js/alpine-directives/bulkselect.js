@@ -46,7 +46,6 @@ const Bulkselect = (config) => ({
 
         // On initial load
         this.$nextTick(() => {
-            console.log('EIEIEIEIEIEI --------');
             this.setPageItems();
             this.evaluateHeaderCheckboxState();
         });
