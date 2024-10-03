@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Blade;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
-use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
+use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
@@ -54,36 +54,6 @@ trait PageResourceDefault
      */
     public function getIndexTable(): Table
     {
-        // Position of general actions: footer
-        // Interaction with Livewire component
-        //        return Table::make()
-        //            ->resource(static::resourceKey())
-        ////            ->treeLabelColumn('title')
-        //            ->columns([
-        //                'title', 'tags.label', 'current_state',
-        //            ])
-        ////            ->rowView('chief-table::rows.list-item')
-        //            // Data options: query, model, relation, rows
-        ////            ->model(static::modelClassName()) // Entire model or relation or query or rows...
-        ////            ->relation('modelClass', 'id', 'tags')
-        //
-        //            // Convenience create action
-        ////            ->withCreateAction() // Via modal
-        ////            ->withInlineCreateAction() // Inline create instead of modal (ideal for small forms)
-        //            // How to know which fields? convenience fields method?
-        //
-        //                // Better to have a resource class for this...
-        //                // But then how to set the 'pivot' fields?
-        ////            ->pivotFields(function($model) {
-        ////                return [
-        ////                    Text::make('title')->label('Titel'),
-        ////                    Image::make('image')->label('Afbeelding'),
-        ////                ];
-        ////            })
-        //
-        //        ;
-
-
         return Table::make()
             ->resource(static::resourceKey())
             ->addQuery(function ($builder) {
@@ -99,20 +69,16 @@ trait PageResourceDefault
             ])
             ->filters([
                 TitleFilter::makeDefault(),
+                TagFilter::makeDefault(static::resourceKey()),
                 OnlineStateFilter::makeDefault()->main(),
             ])
             ->columns([
-                Column::items([
-                    // ColumnImage::make('image')->label('Afbeelding'),
-                    ColumnText::make('title')->label('Titel')->link(function ($model) {
-                        return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                    }),
-                ]),
+                ColumnText::make('title')->label('Titel')->link(function ($model) {
+                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
+                }),
                 ColumnBadge::make('tags.label')->label('tags'),
-
-                // ColumnText::make('seo_title')->label('SEO Titel'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
+                ColumnDate::make('updated_at')->label('Aangepast')->format('d/m/Y H:i'),
             ])
             ->sorters([
                 Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
@@ -121,11 +87,8 @@ trait PageResourceDefault
                 Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
                     $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
                 }),
-                Sort::make('created_at_desc')->label('Datum - DESC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'DESC');
-                }),
-                Sort::make('created_at_asc')->label('Datum - ASC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'ASC');
+                Sort::make('updated_at_desc')->label('Laatst aangepast')->query(function ($builder) {
+                    $builder->orderBy('updated_at', 'DESC');
                 }),
             ]);
     }
@@ -139,31 +102,6 @@ trait PageResourceDefault
             ->removeFilter('current_state')
             ->removeAction('create')
             ->removeAction('archive-index');
-    }
-
-    public function getOtherIndexTable(): Table
-    {
-        // Position of general actions: footer
-        // Interaction with Livewire component
-        return Table::make()
-            ->resource(static::resourceKey())
-            //            ->treeLabelColumn('title')
-            ->columns([
-                'title',
-            ])->sorters([
-                Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
-                }),
-                Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
-                }),
-                Sort::make('created_at_desc')->label('Datum - DESC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'DESC');
-                }),
-                Sort::make('created_at_asc')->label('Datum - ASC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'ASC');
-                }),
-            ]);
     }
 
     public function getIndexTitle(): string
