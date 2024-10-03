@@ -60,19 +60,19 @@ const Bulkselect = (config) => ({
         );
     },
     getSelectedPageItems() {
-        // eslint-disable-next-line max-len
-        return this.pageItems.filter((item) =>
-            this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
-        );
+        // eslint-disable-next-line arrow-body-style
+        return this.pageItems.filter((item) => {
+            return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
+        });
     },
     evaluateHeaderCheckboxState() {
         const pageItems = this.getPageItems();
         const selectedPageItems = this.getSelectedPageItems();
 
-        // eslint-disable-next-line max-len
-        this.isAllSelectedOnPage = !!pageItems.every((item) =>
-            this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
-        );
+        // eslint-disable-next-line arrow-body-style
+        this.isAllSelectedOnPage = !!pageItems.every((item) => {
+            return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
+        });
 
         this.isIndeterminateOnPage = !(selectedPageItems.length === pageItems.length || selectedPageItems.length === 0);
     },
