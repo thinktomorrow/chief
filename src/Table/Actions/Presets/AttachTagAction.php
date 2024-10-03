@@ -7,10 +7,10 @@ use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Table\Actions\BulkAction;
 
-class AttachTagAction extends Action
+class AttachTagAction extends BulkAction
 {
-
     public static function makeDefault(string $resourceKey): static
     {
         return static::make('attach-tag')

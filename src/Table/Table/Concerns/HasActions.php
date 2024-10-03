@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Table\Actions\BulkAction;
+use Thinktomorrow\Chief\Table\Actions\RowAction;
 
 trait HasActions
 {
@@ -18,7 +20,7 @@ trait HasActions
 
     public function getActions(): array
     {
-        return $this->actions;
+        return array_filter($this->actions, fn (Action $action) => ! $action instanceof BulkAction && ! $action instanceof RowAction);
     }
 
     public function findAction(string $key): ?Action
