@@ -23,7 +23,7 @@ class TagFilter extends SelectFilter
             ->filterByUsedTags()
             ->filterByOwnerTypes([$resourceKey])
             ->label('Tags')
-            ->options(function($filter){
+            ->options(function ($filter) {
 
                 return [
                     ...$filter->getTags()->map(function (TagRead $tagRead) {
@@ -31,17 +31,18 @@ class TagFilter extends SelectFilter
                     })->all(),
                     'none' => 'Zonder tags',
                 ];
-            })->query(function($builder, $value){
+            })->query(function ($builder, $value) {
 
-                if(is_array($value) && reset($value) === 'none'){
+                if (is_array($value) && reset($value) === 'none') {
                     $builder->doesnthave('tags');
+
                     return;
                 }
 
                 $tagIds = (array) $value;
 
                 // Enforce AND clause for filtering on multiple tags
-                foreach($tagIds as $tagId){
+                foreach ($tagIds as $tagId) {
                     $builder->whereHas('tags', function ($query) use ($tagId) {
                         $query->where('id', $tagId);
                     });
@@ -88,5 +89,3 @@ class TagFilter extends SelectFilter
         };
     }
 }
-
-
