@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 class DetachTagAction extends Action
 {
 
-    public static function default(string $resourceKey): static
+    public static function makeDefault(string $resourceKey): static
     {
         return static::make('detach-tag')
                 ->label('Verwijder tags')

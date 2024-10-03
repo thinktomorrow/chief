@@ -1,4 +1,13 @@
 <div class="flex items-start justify-between gap-4">
+    <div>
+        <div class="flex items-start gap-2">
+            @foreach ($this->getVisibleFilters() as $filter)
+                <div data-filter-key="{{ $filter->getKey() }}">
+                    {!! $filter->render() !!}
+                </div>
+            @endforeach
+        </div>
+    </div>
     <div class="ml-auto flex items-center justify-end gap-2">
         @foreach ($this->getVisibleActions() as $action)
             {{ $action }}

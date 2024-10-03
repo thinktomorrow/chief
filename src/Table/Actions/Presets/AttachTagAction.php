@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 class AttachTagAction extends Action
 {
 
-    public static function default(string $resourceKey): static
+    public static function makeDefault(string $resourceKey): static
     {
         return static::make('attach-tag')
             ->label('Tag deze selectie')

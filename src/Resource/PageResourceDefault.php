@@ -19,6 +19,8 @@ use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnImage;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
+use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
+use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
 use Thinktomorrow\Chief\Table\Filters\TextFilter;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
@@ -92,8 +94,8 @@ trait PageResourceDefault
                 $builder->with(['tags']);
             })
             ->bulkActions([
-                AttachTagAction::default(static::resourceKey()),
-                DetachTagAction::default(static::resourceKey()),
+                AttachTagAction::makeDefault(static::resourceKey()),
+                DetachTagAction::makeDefault(static::resourceKey()),
             ])
             ->actions([
                 Action::make('export')
@@ -131,35 +133,8 @@ trait PageResourceDefault
                     ->link('/admin/catalogpage/create'),
             ])
             ->filters([
-                TextFilter::make('title')
-                    ->hidden()
-                    ->label('Titel')
-                    ->placeholder('titeltje')
-                    ->description('Zoek op pagina titel')
-                    ->query(function ($builder, $value) {
-                        $builder->whereJsonLike(['title'], $value);
-                    }),
-                TextFilter::make('content')
-                    ->label('Inhoud')
-                    ->placeholder('contentje')
-                    ->description('Zoek op pagina inhoud')
-                    ->query(function ($builder, $value) {
-                        $builder->whereJsonLike(['hero_content'], $value);
-                    }),
-                ButtonGroupFilter::make('current_state')
-                    ->label('Status')
-                    ->options([
-                        '' => 'Alle',
-                        'published' => 'Online',
-                        'draft' => 'Offline',
-                    ])->value(''),
-                //                SelectFilter::make('current_state')
-                //                    ->label('Status')
-                //                    ->options([
-                //                        'published' => 'Online',
-                //                        'draft' => 'Offline',
-                //                        'archived' => 'Gearchiveerd',
-                //                    ]),
+                TitleFilter::makeDefault(),
+                OnlineStateFilter::makeDefault(),
             ])
             ->columns([
                 Column::items([
