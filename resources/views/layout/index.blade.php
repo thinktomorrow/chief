@@ -11,7 +11,7 @@
         @isset($breadcrumbs)
             {{ $breadcrumbs }}
         @else
-            @if($indexBreadCrumb = $resource->getIndexBreadCrumb())
+            @if ($indexBreadCrumb = $resource->getIndexBreadCrumb())
                 <a href="{{ $indexBreadCrumb->url }}" class="link link-primary">
                     <x-chief::icon-label type="back">{{ $indexBreadCrumb->label }}</x-chief::icon-label>
                 </a>
@@ -24,13 +24,13 @@
             {!! $header !!}
         @else
             <div class="flex flex-wrap items-end justify-between gap-6">
-                <h1 class="h1 h1-dark">{{ ucfirst($resource->getIndexTitle()) }}</h1>
+                <h1 class="h2 h2-dark">{{ ucfirst($resource->getIndexTitle()) }}</h1>
 
-                @if(!isset($is_archive_index) || !$is_archive_index)
+                @if (! isset($is_archive_index) || ! $is_archive_index)
                     @adminCan('create')
-                        <a href="@adminRoute('create')" class="btn btn-primary-outline">
-                            <x-chief::icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief::icon-label>
-                        </a>
+                    <a href="@adminRoute('create')" class="btn btn-primary-outline">
+                        <x-chief::icon-label type="add">{{ $resource->getLabel() }} toevoegen</x-chief::icon-label>
+                    </a>
                     @endAdminCan
                 @endif
             </div>
@@ -39,23 +39,23 @@
 
     {!! $slot !!}
 
-    @if($sidebar)
+    @if ($sidebar)
         <x-slot name="aside">
             @isset($aside)
                 {!! $aside !!}
             @else
-                @if($resource->getIndexSidebar())
+                @if ($resource->getIndexSidebar())
                     {!! $resource->getIndexSidebar() !!}
                 @endif
 
                 @include('chief::manager._index.filter_card')
 
                 @adminCan('sort-index', $model)
-                    @include('chief::manager._index.sort_card')
+                @include('chief::manager._index.sort_card')
                 @endAdminCan
 
                 @adminCan('archive_index')
-                    @include('chief::manager._index.archive_card')
+                @include('chief::manager._index.archive_card')
                 @endAdminCan
             @endisset
         </x-slot>

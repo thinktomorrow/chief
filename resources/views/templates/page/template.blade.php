@@ -18,7 +18,7 @@
         <section id="content" class="w-full min-w-0">
             @include('chief::templates.page._partials.healthbar')
 
-            <div class="py-4 sm:py-8 lg:py-12">
+            <div class="py-4 sm:py-8">
                 @if ($hero)
                     {{ $hero }}
                 @else

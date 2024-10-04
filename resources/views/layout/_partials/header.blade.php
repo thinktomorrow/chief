@@ -1,5 +1,5 @@
 @php
-    $isDefaultSlotEmpty = ($slot == '');
+    $isDefaultSlotEmpty = $slot == '';
     $hasDefaultTitle = $hasDefaultTitle ?? true;
 @endphp
 
@@ -11,8 +11,8 @@
     @endisset
 
     <div class="{{ $isDefaultSlotEmpty ? 'w-full' : 'w-full lg:w-1/2' }}">
-        @if($hasDefaultTitle)
-            <h1 class="h1 h1-dark">
+        @if ($hasDefaultTitle)
+            <h1 class="h2 h2-dark">
                 {{ ucfirst($title) }}
             </h1>
         @else
@@ -20,15 +20,15 @@
         @endif
     </div>
 
-    @if(!$isDefaultSlotEmpty)
-        <div class="flex items-center justify-end w-full shrink-0 lg:w-1/2">
+    @if (! $isDefaultSlotEmpty)
+        <div class="flex w-full shrink-0 items-center justify-end lg:w-1/2">
             {{ $slot }}
         </div>
     @endif
 
     @isset($extra)
         <div class="w-full">
-            {{ $extra ??  '' }}
+            {{ $extra ?? '' }}
         </div>
     @endisset
 </div>
