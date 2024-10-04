@@ -7,7 +7,7 @@
     <div
         x-data="dropdown({ placement: '{{ $placement }}' })"
         x-on:click.outside="close()"
-        {{ $attributes->class(['absolute right-0 top-0 z-10 w-max animate-dialog-pop-in rounded-md bg-white shadow-lg ring-1 ring-black/5']) }}
+        {{ $attributes->class(['absolute right-0 top-0 z-50 w-max animate-dialog-pop-in rounded-md bg-white shadow-lg ring-1 ring-black/5']) }}
     >
         <div class="flex flex-col py-1 [&>*]:w-full [&>*]:text-left">
             {{ $slot }}
