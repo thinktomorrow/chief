@@ -40,9 +40,9 @@
         <div
             x-ref="optionMarker"
             x-show="activeRadio"
-            class="bui-btn bui-btn-base bui-btn-white absolute left-0 rounded-lg p-1.5 ring-grey-200 duration-300 ease-out"
+            class="bui-btn bui-btn-sm bui-btn-white absolute left-0 py-1.5 transition-all duration-150 ease-out"
         >
-            <span class="bui-btn-content h-5"></span>
+            <span class="h-5"></span>
         </div>
 
         @foreach ($getOptions() as $option)
@@ -60,9 +60,9 @@
 
                 <label
                     for="{{ $id }}-{{ $option['value'] }}"
-                    class="bui-btn bui-btn-base cursor-pointer rounded-lg p-1.5 leading-5 text-grey-800"
+                    class="bui-btn bui-btn-sm cursor-pointer py-1.5 text-base/5 text-grey-800"
                 >
-                    <span class="bui-btn-content">{!! $option['label'] !!}</span>
+                    {!! $option['label'] !!}
                 </label>
             </div>
         @endforeach

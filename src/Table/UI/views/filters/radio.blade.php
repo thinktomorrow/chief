@@ -1,5 +1,13 @@
 <button type="button" x-on:click="$dispatch('open-dialog', { 'id': '{{ $id }}-select' })">
-    <x-chief-table::filter.select :id="$id" :value="$value">{{ $label }}</x-chief-table::filter.select>
+    <x-chief-table::filter.select :id="$id" :value="$value">
+        {{ $label }}
+
+        @if ($value)
+            <span class="text-grey-200">|</span>
+
+            <span class="text-nowrap text-primary-500">{{ $value }}</span>
+        @endif
+    </x-chief-table::filter.select>
 </button>
 
 <x-chief::dialog.dropdown id="#{{ $id }}-select" placement="bottom-end">

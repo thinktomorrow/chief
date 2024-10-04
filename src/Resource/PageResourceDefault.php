@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
@@ -120,7 +121,7 @@ trait PageResourceDefault
 
     protected function getNavIcon(): string
     {
-        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+        return Blade::render('<x-chief::icon.folder-library />');
     }
 
     public function getCreatePageView(): View

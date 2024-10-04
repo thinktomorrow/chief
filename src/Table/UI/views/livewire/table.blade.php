@@ -11,13 +11,13 @@
                     selection: @entangle('bulkSelection'),
                     paginators: @entangle('paginators'),
                 })"
-        class="divide-y divide-grey-200 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-200"
+        class="divide-y divide-grey-100 overflow-x-auto whitespace-nowrap rounded-xl bg-white shadow-md ring-1 ring-grey-100"
     >
         @include('chief-table::livewire._partials.table-container-header')
 
-        <table class="min-w-full table-fixed divide-y divide-grey-200">
+        <table class="min-w-full table-fixed divide-y divide-grey-100">
             <thead>
-                <tr class="*:py-2 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4">
+                <tr class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4">
                     {{-- This header contains the checkbox to select/deselect all items. It will only show if bulk actions are available --}}
                     <th x-show="showCheckboxes" scope="col" class="w-5">
                         <div class="flex items-center">
@@ -37,7 +37,7 @@
                         x-show="showCheckboxes && selection.length > 0"
                         scope="col"
                         colspan="9999"
-                        class="ext-left font-normal"
+                        class="text-left font-normal"
                     >
                         <div class="flex min-h-6 items-center">
                             @include('chief-table::livewire._partials.bulk-actions')
@@ -46,7 +46,7 @@
                 </tr>
             </thead>
 
-            <tbody class="divide-y divide-grey-200">
+            <tbody class="divide-y divide-grey-100">
                 @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                 @if ($this->resultPageCount > 0)

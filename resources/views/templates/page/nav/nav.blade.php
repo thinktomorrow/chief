@@ -6,7 +6,7 @@
             data-expand-navigation
             class="shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-200"
         >
-            <svg class="h-6 w-6 text-grey-700"><use xlink:href="#icon-bars-4"></use></svg>
+            <x-chief::icon.menu class="size-6 text-grey-700" />
         </div>
 
         <span class="py-2 font-semibold text-grey-700">Menu</span>
@@ -23,19 +23,7 @@
             {{-- Desktop Chief title --}}
             <div class="hidden items-center justify-start lg:flex">
                 <div data-toggle-navigation class="group shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-50">
-                    <svg
-                        data-toggle-classes="hidden"
-                        class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} h-6 w-6 text-grey-500 group-hover:text-grey-900"
-                    >
-                        <use xlink:href="#icon-arrows-pointing-in"></use>
-                    </svg>
-
-                    <svg
-                        data-toggle-classes="!block"
-                        class="{{ $isCollapsedOnPageLoad ? '!block' : null }} hidden h-6 w-6 text-grey-500 group-hover:text-grey-900"
-                    >
-                        <use xlink:href="#icon-arrows-pointing-out"></use>
-                    </svg>
+                    <x-chief::icon.sidebar-left class="size-6 text-grey-500 group-hover:text-grey-900" />
                 </div>
 
                 <a

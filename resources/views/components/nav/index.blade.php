@@ -17,10 +17,7 @@
 
 @if (! isset($inline) && $items->count() > 0)
     @php
-        $icon =
-            ($firstItem = $items->first()) && $firstItem->icon()
-                ? $firstItem->icon()
-                : '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+        $icon = ($firstItem = $items->first()) && $firstItem->icon() ? $firstItem->icon() : '';
 
         $isActive = false;
 

@@ -2,18 +2,22 @@
     'title' => null,
     'description' => null,
     'customTitle' => null,
-    'breadcrumbs' => [], // should be an array of breadcrumbs
+    'breadcrumbs' => [],
+    //shouldbeanarrayofbreadcrumbs,
 ])
 
-<div {{ $attributes->merge(['class' => 'container']) }}>
-    @include('chief::templates.page._partials.breadcrumbs', [
-        'breadcrumbs' => $breadcrumbs
-    ])
+<div {{ $attributes->merge(['class' => 'container mb-6']) }}>
+    @include(
+        'chief::templates.page._partials.breadcrumbs',
+        [
+            'breadcrumbs' => $breadcrumbs,
+        ]
+    )
 
-    @if($title || $description || $customTitle || $slot->isNotEmpty())
+    @if ($title || $description || $customTitle || $slot->isNotEmpty())
         <div class="space-y-4">
             @if ($title || $customTitle || $slot->isNotEmpty())
-                <div class="flex items-end justify-between gap-y-4 gap-x-6">
+                <div class="flex items-end justify-between gap-x-6 gap-y-4">
                     @if ($customTitle)
                         {{ $customTitle }}
                     @else
@@ -21,15 +25,15 @@
                     @endif
 
                     @if ($slot->isNotEmpty())
-                        <div class="shrink-0 flex">
+                        <div class="flex shrink-0">
                             {{ $slot }}
                         </div>
                     @endif
                 </div>
             @endif
 
-            @if($description)
-                <div class="max-w-2xl prose prose-dark prose-spacing">
+            @if ($description)
+                <div class="prose prose-dark prose-spacing max-w-2xl">
                     <p>{!! $description !!}</p>
                 </div>
             @endif

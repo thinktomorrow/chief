@@ -1,34 +1,24 @@
 @props([
     'size' => 'base',
     'color' => 'grey',
-    'iconLeft' => null,
-    'iconRight' => null,
 ])
 
 <span
     {{
         $attributes->class([
-            'bui-btn font-medium cursor-pointer',
-            'bui-btn-grey' => $color === 'grey',
-            'bui-btn-primary' => $color === 'primary',
-            'bui-btn-white' => $color === 'white',
-            'bui-btn-base' => $size === 'base',
-            'bui-btn-sm' => $size === 'sm',
-            'bui-btn-xs' => $size === 'xs',
+            'bui-btn cursor-pointer font-medium',
+            match ($color) {
+                'grey' => 'bui-btn-grey',
+                'primary' => 'bui-btn-primary',
+                'white' => 'bui-btn-white',
+            },
+            match ($size) {
+                'base' => 'bui-btn-base',
+                'sm' => 'bui-btn-sm',
+                'xs' => 'bui-btn-xs',
+            },
         ])
     }}
 >
-    @if ($iconLeft)
-        {!! $iconLeft !!}
-    @endif
-
-    @if ($slot->isNotEmpty() && $slot->hasActualContent())
-        <span class="bui-btn-content">
-            {{ $slot }}
-        </span>
-    @endif
-
-    @if ($iconRight)
-        {!! $iconRight !!}
-    @endif
+    {{ $slot }}
 </span>
