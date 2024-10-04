@@ -2,7 +2,7 @@
     $results = $this->getResults();
 @endphp
 
-<div class="space-y-6">
+<div class="space-y-4">
     @include('chief-table::livewire._partials.table-actions')
 
     <div

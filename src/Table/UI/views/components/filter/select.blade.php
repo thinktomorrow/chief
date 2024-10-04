@@ -10,5 +10,9 @@
         'bui-btn-xs' => $size === 'xs',
     ])
 >
-    {{ $slot }}
+    <span class="flex items-start gap-1">
+        {{ $slot }}
+    </span>
+
+    <x-chief::icon.arrow-down class="text-grey-500" />
 </span>

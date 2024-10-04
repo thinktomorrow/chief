@@ -1,17 +1,17 @@
 @php
-    $hideSelectOptions = !isset($inOpenState) || !$inOpenState;
+    $hideSelectOptions = ! isset($inOpenState) || ! $inOpenState;
 @endphp
 
 <div
     data-fragment-select
     data-sortable-ignore
-    class="relative w-full {{ $hideSelectOptions ? 'with-fragment-select-options' : null }}"
+    class="{{ $hideSelectOptions ? 'with-fragment-select-options' : null }} relative w-full"
 >
     <!-- plus icon -->
-    @if($hideSelectOptions)
+    @if ($hideSelectOptions)
         <div
             data-fragment-select-open
-            class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]"
+            class="absolute z-[1] -mt-4 flex h-8 w-full cursor-pointer justify-center border-none"
         >
             <div class="absolute">
                 <x-chief::button>
@@ -24,18 +24,20 @@
     <!-- select options: create new or add existing -->
     <div
         data-fragment-select-options
-        class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative py-6 pop fragment-select-options"
+        class="{{ $hideSelectOptions ? 'hidden' : '' }} pop fragment-select-options relative py-6"
     >
-        <div class="flex flex-col-reverse flex-wrap items-end justify-center gap-4 sm:gap-6 sm:items-stretch sm:flex-nowrap sm:flex-row">
+        <div
+            class="flex flex-col-reverse flex-wrap items-end justify-center gap-4 sm:flex-row sm:flex-nowrap sm:items-stretch sm:gap-6"
+        >
             <div class="w-8 shrink-0"></div>
 
             <div class="w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-new', $owner) }}"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-center label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
+                    class="label label-primary label-xl transition-75 flex h-full flex-col items-center justify-center space-y-1 text-center hover:bg-primary-500 hover:text-white"
                 >
-                    <svg width="24" height="24"> <use xlink:href="#icon-squares-plus"/> </svg>
+                    <svg width="24" height="24"><use xlink:href="#icon-squares-plus" /></svg>
 
                     <span class="font-semibold">Nieuw fragment</span>
                 </a>
@@ -45,16 +47,16 @@
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-center label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
+                    class="label label-primary label-xl transition-75 flex h-full flex-col items-center justify-center space-y-1 text-center hover:bg-primary-500 hover:text-white"
                 >
-                    <svg width="24" height="24"> <use xlink:href="#icon-square-2-stack"/> </svg>
+                    <svg width="24" height="24"><use xlink:href="#icon-square-2-stack" /></svg>
 
                     <span class="font-semibold">Bestaand fragment</span>
                 </a>
             </div>
 
-            <div class="flex justify-end w-8 shrink-0">
-                @if($hideSelectOptions)
+            <div class="flex w-8 shrink-0 justify-end">
+                @if ($hideSelectOptions)
                     <span data-fragment-select-close class="cursor-pointer">
                         <x-chief::icon-button icon="icon-x-mark" color="grey" />
                     </span>

@@ -4,7 +4,7 @@
  **/
 @layer components {
     .bui-btn {
-        @apply inline-flex items-start text-left;
+        @apply flex w-max items-start text-left;
     }
 
     .bui-btn-base {
