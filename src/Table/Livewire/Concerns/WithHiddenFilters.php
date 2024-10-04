@@ -9,19 +9,24 @@ trait WithHiddenFilters
 
     public function getVisibleFilters(): array
     {
-        $visibleFilters = array_filter($this->getFilters(), fn ($filter) => ! in_array($filter->getKey(), $this->hiddenFilterKeys));
+        $visibleFilters = array_filter($this->getFilters(), fn($filter) => ! in_array($filter->getKey(), $this->hiddenFilterKeys));
 
         return $this->rejectMainFilters($visibleFilters);
     }
 
     public function getHiddenFilters(): array
     {
-        return array_filter($this->getFilters(), fn ($filter) => in_array($filter->getKey(), $this->hiddenFilterKeys));
+        return array_filter($this->getFilters(), fn($filter) => in_array($filter->getKey(), $this->hiddenFilterKeys));
     }
 
     public function areAnyHiddenFiltersActive(): bool
     {
-        return count(array_filter(array_keys($this->getActiveFilters()), fn ($filterKey) => in_array($filterKey, $this->hiddenFilterKeys))) > 0;
+        return $this->getHiddenFilterCount() > 0;
+    }
+
+    public function getHiddenFilterCount(): int
+    {
+        return count(array_filter(array_keys($this->getActiveFilters()), fn($filterKey) => in_array($filterKey, $this->hiddenFilterKeys)));
     }
 
     public function hideFilter($filterKey)

@@ -32,13 +32,8 @@
 >
     <div class="relative">
         <div x-sortable-handle class="group inline-flex min-h-6 cursor-pointer items-center gap-2 px-2 py-1">
-            <svg class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800">
-                <use href="#icon-drag"></use>
-            </svg>
-
-            <svg data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800">
-                <use href="#icon-indent"></use>
-            </svg>
+            <x-chief::icon.drag-drop-vertical class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800" />
+            <x-chief::icon.arrow-bend-down-right data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800" />
 
             @foreach ($columns as $column)
                 <div class="flex items-center gap-1">

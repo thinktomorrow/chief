@@ -26,9 +26,7 @@
             <div class="flex min-h-6 items-center gap-1.5">
                 @if ($loop->first && isset($item->indent) && $item->indent > 0)
                     <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
-                        <svg class="size-5 text-grey-800">
-                            <use xlink:href="#icon-indent"></use>
-                        </svg>
+                        <x-chief::icon.arrow-bend-down-right class="size-5 text-grey-800" />
                     </div>
                 @endif
 

@@ -2,24 +2,24 @@
 
 namespace Thinktomorrow\Chief\Resource;
 
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Blade;
 use RuntimeException;
-use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
+use Illuminate\Contracts\View\View;
+use Thinktomorrow\Chief\Table\Table;
+use Illuminate\Support\Facades\Blade;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
-use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
+use Thinktomorrow\Chief\Table\Sorters\Sort;
+use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
-use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
+use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
-use Thinktomorrow\Chief\Table\Sorters\Sort;
-use Thinktomorrow\Chief\Table\Table;
+use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
+use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
+use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 trait PageResourceDefault
 {

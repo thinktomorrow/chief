@@ -34,7 +34,9 @@
     }"
     x-on:{{ $this->getFiltersUpdatedEvent() }}.window="repositionCheckedOptionMarker"
     x-on:dialog-opened.window="repositionCheckedOptionMarker"
-    class="rounded-[0.625rem] border-2 border-grey-100 bg-grey-100"
+    @class([
+        'rounded-[0.625rem] border-2 border-transparent bg-grey-950/5',
+    ])
 >
     <div class="relative flex items-start justify-start">
         <div

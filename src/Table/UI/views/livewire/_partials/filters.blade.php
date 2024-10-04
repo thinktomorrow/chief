@@ -9,12 +9,21 @@
         @if (count($this->getHiddenFilters()) > 0)
             <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })">
                 {{-- TODO(tijs): check this layout --}}
-                <x-chief-table::button
-                    color="white"
-                    @class(['border border-primary-500 bg-primary-50' => $this->areAnyHiddenFiltersActive()])
-                >
-                    <x-chief::icon.filter-edit />
-                </x-chief-table::button>
+                <div class="relative">
+                    <x-chief-table::button color="white">
+                        <x-chief::icon.filter-edit />
+                    </x-chief-table::button>
+
+                    @if (($hiddenFilterCount = $this->getHiddenFilterCount()) > 0)
+                        <div class="absolute -bottom-1.5 -right-1.5">
+                            <div class="flex size-5 items-center justify-center rounded-full bg-primary-500">
+                                <span class="text-xs font-medium text-white">
+                                    {{ $hiddenFilterCount }}
+                                </span>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </button>
         @endif
 

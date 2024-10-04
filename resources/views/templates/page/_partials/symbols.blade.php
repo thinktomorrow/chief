@@ -412,11 +412,6 @@
         >
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
         </symbol>
-        <symbol id="icon-indent" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256">
-            <path
-                d="M229.66,157.66l-48,48a8,8,0,0,1-11.32-11.32L204.69,160H128A104.11,104.11,0,0,1,24,56a8,8,0,0,1,16,0,88.1,88.1,0,0,0,88,88h76.69l-34.35-34.34a8,8,0,0,1,11.32-11.32l48,48A8,8,0,0,1,229.66,157.66Z"
-            ></path>
-        </symbol>
         <symbol id="icon-drag" width="100%" height="100%" viewBox="0 0 24 24" color="currentColor" fill="none">
             <path
                 d="M8 6H8.00635M8 12H8.00635M8 18H8.00635M15.9937 6H16M15.9937 12H16M15.9937 18H16"

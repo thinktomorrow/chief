@@ -5,9 +5,9 @@
     fill="none"
 >
     <path
-        d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18"
+        d="M8 6H8.00635M8 12H8.00635M8 18H8.00635M15.9937 6H16M15.9937 12H16M15.9937 18H16"
         stroke="currentColor"
-        stroke-width="1.5"
+        stroke-width="2.5"
         stroke-linecap="round"
         stroke-linejoin="round"
     />

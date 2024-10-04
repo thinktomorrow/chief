@@ -1,4 +1,9 @@
-<svg {{ $attributes }} viewBox="0 0 24 24" color="currentColor" fill="none">
+<svg
+    {{ $attributes->merge(['data-slot' => 'icon']) }}
+    viewBox="0 0 24 24"
+    color="currentColor"
+    fill="none"
+>
     <path
         d="M12 14.5L12 4.5M12 14.5C11.2998 14.5 9.99153 12.5057 9.5 12M12 14.5C12.7002 14.5 14.0085 12.5057 14.5 12"
         stroke="currentColor"
