@@ -9,7 +9,7 @@
 <x-chief::page.layout :title="$title">
     <div class="flex flex-wrap items-start lg:flex-nowrap">
         {{-- Navigation --}}
-        <section class="relative top-0 z-20 max-lg:w-full shrink-0 lg:sticky">
+        <section class="relative top-0 max-lg:w-full shrink-0 lg:sticky">
             @include('chief::templates.page.nav.nav')
         </section>
 
