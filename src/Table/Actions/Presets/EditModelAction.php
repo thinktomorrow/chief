@@ -14,9 +14,9 @@ class EditModelAction extends Action
 
         return static::make('edit')
             ->label("Bewerk {$resource->getLabel()}");
-//            ->icon('<x-chief::icon.quill-write />')
-//            ->rowLink(function ($model) use ($manager) {
-//                return $manager->route('edit', $model);
-//            });
+        //            ->icon('<x-chief::icon.quill-write />')
+        //            ->rowLink(function ($model) use ($manager) {
+        //                return $manager->route('edit', $model);
+        //            });
     }
 }
