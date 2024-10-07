@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Table\Filters\Filter;
 
 trait WithFilters
 {
-    /** @var array Active filters */
+    #[Url(history: true)]
     public array $filters = [];
 
     /** @var bool flag indicates if filter bar should be shown */

@@ -38,12 +38,6 @@
     @endforeach
 
     <td>
-        <div class="flex min-h-6 items-center justify-end gap-1.5">
-            <a href="#" title="...">
-                <x-chief-table::button color="white" size="xs">
-                    <x-chief::icon.quill-write />
-                </x-chief-table::button>
-            </a>
-        </div>
+        @include('chief-table::livewire._partials.row-actions')
     </td>
 </tr>

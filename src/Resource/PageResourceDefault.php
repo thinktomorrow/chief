@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
@@ -66,6 +67,9 @@ trait PageResourceDefault
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey()),
                 VisitArchiveAction::makeDefault(static::resourceKey()),
+            ])
+            ->rowActions([
+                EditModelAction::makeDefault(static::resourceKey()),
             ])
             ->filters([
                 TitleFilter::makeDefault(),
