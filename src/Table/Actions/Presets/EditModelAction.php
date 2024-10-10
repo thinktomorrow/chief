@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class EditModelAction extends Action
 {
@@ -13,10 +13,6 @@ class EditModelAction extends Action
         $manager = app(Registry::class)->manager($resourceKey);
 
         return static::make('edit')
-            ->label("Bewerk {$resource->getLabel()}");
-        //            ->icon('<x-chief::icon.quill-write />')
-        //            ->rowLink(function ($model) use ($manager) {
-        //                return $manager->route('edit', $model);
-        //            });
+            ->iconEdit();
     }
 }

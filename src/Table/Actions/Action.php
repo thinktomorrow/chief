@@ -67,9 +67,8 @@ class Action extends \Illuminate\View\Component implements Htmlable
     {
         $action = $class::make($this->key);
 
-        if ($this->label) {
-            $action->label($this->label);
-        }
+        $action->label($this->label);
+
         if ($this->description) {
             $action->description($this->description);
         }
