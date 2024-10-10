@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 use Thinktomorrow\Chief\Forms\Dialogs\Livewire\TableActionDialogReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\BulkAction;
-use Thinktomorrow\Chief\Table\Actions\RowAction;
 
 trait WithActions
 {
