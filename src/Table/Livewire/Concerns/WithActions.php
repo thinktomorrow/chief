@@ -22,12 +22,12 @@ trait WithActions
         return array_filter($this->getTable()->getActions(), fn (Action $action) => ! $action->isVisible());
     }
 
-    public function applyAction($actionKey)
+    public function applyAction($actionKey, array $payload = []): void
     {
         $action = $this->getTable()->findAction($actionKey);
 
         if ($action->hasDialog()) {
-            $this->showActionDialog($actionKey, $this->getActionDialogData($action));
+            $this->showActionDialog($actionKey, $this->getActionDialogData($action, $payload));
 
             return;
         }
@@ -36,15 +36,24 @@ trait WithActions
             $this->applyActionEffect(
                 $actionKey,
                 [],
-                $this->getActionDialogData($action)
+                $this->getActionDialogData($action, $payload)
             );
         }
     }
 
-    private function getActionDialogData(Action $action): array
+    public function applyRowAction($actionKey, string $modelReference): void
+    {
+        $this->applyAction($actionKey, ['modelReference' => $modelReference]);
+    }
+
+    private function getActionDialogData(Action $action, array $payload = []): array
     {
         if ($action instanceof BulkAction) {
             return ['items' => $this->getBulkSelection()];
+        }
+
+        if ($action instanceof RowAction) {
+            return ['item' => $payload['modelReference']];
         }
 
         return [];

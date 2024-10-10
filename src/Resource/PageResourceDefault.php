@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
@@ -67,6 +68,7 @@ trait PageResourceDefault
             ])
             ->rowActions([
                 EditModelAction::makeDefault(static::resourceKey()),
+                DuplicateModelAction::makeDefault(static::resourceKey())->hidden(),
             ])
             ->filters([
                 TitleFilter::makeDefault(),
