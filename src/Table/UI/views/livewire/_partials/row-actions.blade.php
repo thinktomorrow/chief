@@ -7,7 +7,31 @@
 
 <div class="flex min-h-6 items-center justify-end gap-1.5">
     @foreach ($visibleRowActions as $action)
-        <x-chief-table::action.button :action="$action" size="xs" color="white" />
+        @if ($action->hasLink())
+            <a href="{{ $action->getLink() }}" title="{{ $action->getLabel() }}">
+                <x-chief-table::button size="xs" color="white">
+                    {!! $action->getPrependIcon() !!}
+
+                    @if ($action->getLabel())
+                        <span>{{ $action->getLabel() }}</span>
+                    @endif
+
+                    {!! $action->getAppendIcon() !!}
+                </x-chief-table::button>
+            </a>
+        @else
+            <button wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')" title="{{ $action->getLabel() }}">
+                <x-chief-table::button size="xs" color="white">
+                    {!! $action->getPrependIcon() !!}
+
+                    @if ($action->getLabel())
+                        <span>{{ $action->getLabel() }}</span>
+                    @endif
+
+                    {!! $action->getAppendIcon() !!}
+                </x-chief-table::button>
+            </button>
+        @endif
     @endforeach
 </div>
 
@@ -20,7 +44,15 @@
 
     <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">
         @foreach ($hiddenRowActions as $action)
-            {{ $action }}
+            @if($hasLink())
+                <a href="{{ $getLink() }}" title="{{ $getDescription() }}">
+                    <x-chief-table::button size="sm">{{ $getLabel() }}</x-chief-table::button>
+                </a>
+            @else
+                <button wire:click="applyRowAction('{{ $getKey() }}', '{{ $item->modelReference()->getShort() }}')" title="{{ $getDescription() }}">
+                    <x-chief-table::button size="sm">{{ $getLabel() }}</x-chief-table::button>
+                </button>
+            @endif
         @endforeach
     </x-chief::dialog.dropdown>
 @endif

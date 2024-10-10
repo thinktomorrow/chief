@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasRedirectTo;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
@@ -39,6 +40,7 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasDialog;
     use HasNotification;
     use HasRefresh;
+    use HasRedirectTo;
 
     protected string $view = 'chief-table::actions.action';
 
@@ -106,30 +108,4 @@ class Action extends \Illuminate\View\Component implements Htmlable
 
         return $action;
     }
-
-
-    // icon('name')
-
-    // link()
-
-    // ->apply(payload)
-
-    // BULKACTION
-    // ->apply(payload)
-
-    // Confirmation
-    // content of this?
-    // Icon
-    // Route
-    // or Class-Method
-    // or inline, callable
-
-    // isItemSelectable(): bool on table
-
-    // withModal() -> Form::make()...
-
-    // Preset actions
-    // DuplicateAction
-    // EditAction
-    // CreateAction
 }

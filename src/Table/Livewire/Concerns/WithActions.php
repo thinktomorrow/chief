@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 use Thinktomorrow\Chief\Forms\Dialogs\Livewire\TableActionDialogReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\BulkAction;
+use Thinktomorrow\Chief\Table\Actions\RowAction;
 
 trait WithActions
 {
@@ -92,7 +93,12 @@ trait WithActions
             // Perform effect
             $effectResult = $action->getEffect()($formData, $data);
 
-            // Effect notification
+            // Redirect after success
+            if ($effectResult && $action->hasRedirectTo()) {
+                return redirect()->to($action->getRedirectTo()($effectResult, $formData, $data));
+            }
+
+            // Effect notification on success or failure
             if ($effectResult && $action->hasNotificationOnSuccess()) {
                 $this->showNotification($action->getNotificationOnSuccess()($effectResult, $formData, $data), 'success');
             } elseif (! $effectResult && $action->hasNotificationOnFailure()) {
