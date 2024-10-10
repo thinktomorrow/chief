@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
-use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
