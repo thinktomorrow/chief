@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
-use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Table\Actions\Action;
 
 class EditModelAction extends Action
 {
