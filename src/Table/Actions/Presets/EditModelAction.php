@@ -13,10 +13,6 @@ class EditModelAction extends Action
         $manager = app(Registry::class)->manager($resourceKey);
 
         return static::make('edit')
-            ->label("Bewerk {$resource->getLabel()}");
-        //            ->icon('<x-chief::icon.quill-write />')
-        //            ->rowLink(function ($model) use ($manager) {
-        //                return $manager->route('edit', $model);
-        //            });
+            ->iconEdit();
     }
 }
