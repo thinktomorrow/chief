@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasHeaders;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasModelKeyName;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPagination;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasPresets;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRows;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowViews;
@@ -29,6 +30,7 @@ class Table extends Component
     use HasComponentRendering;
     use HasTableReference;
     use HasLivewireComponent;
+    use HasPresets;
 
     /** Tree support */
     use HasResourceReference;

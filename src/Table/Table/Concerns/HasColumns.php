@@ -11,15 +11,12 @@ trait HasColumns
 
     public function columns(array $columns): static
     {
-        $this->columns = array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns);
+        $this->columns = array_merge($this->columns, array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns));
 
-        // If no headers are explicitly set, we will use the column labels as headers
-        if (empty($this->headers)) {
-            $this->headers = collect($this->columns)
-                ->reject(fn ($column) => empty($column->getItems()))
-                ->map(fn ($column) => Header::make($column->getItems()[0]->getLabel()))
-                ->all();
-        }
+        $this->headers = collect($this->columns)
+            ->reject(fn ($column) => empty($column->getItems()))
+            ->map(fn ($column) => Header::make($column->getItems()[0]->getLabel()))
+            ->all();
 
         return $this;
     }

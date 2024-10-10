@@ -8,6 +8,7 @@ use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
@@ -55,11 +56,11 @@ trait PageResourceDefault
      */
     public function getIndexTable(): Table
     {
-        return Table::make()
+        $table = Table::make()
             ->resource(static::resourceKey())
-            ->addQuery(function ($builder) {
-                $builder->with(['tags']);
-            })
+//            ->addQuery(function ($builder) {
+//                $builder->with(['tags']);
+//            })
             ->bulkActions([
                 AttachTagAction::makeDefault(static::resourceKey()),
                 DetachTagAction::makeDefault(static::resourceKey()),
@@ -73,14 +74,12 @@ trait PageResourceDefault
             ])
             ->filters([
                 TitleFilter::makeDefault(),
-                TagFilter::makeDefault(static::resourceKey()),
                 OnlineStateFilter::makeDefault()->main(),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) {
                     return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
                 }),
-                ColumnBadge::make('tags.label')->label('tags'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('updated_at')->label('Aangepast')->format('d/m/Y H:i'),
             ])
@@ -95,6 +94,13 @@ trait PageResourceDefault
                     $builder->orderBy('updated_at', 'DESC');
                 }),
             ]);
+
+        // Check support for tags on model
+        if ((new \ReflectionClass(static::modelClassName()))->implementsInterface(Taggable::class)) {
+            $table->tagPresets(static::resourceKey());
+        }
+
+        return $table;
     }
 
     public function getArchivedIndexTable(): Table
