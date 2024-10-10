@@ -195,7 +195,7 @@ class Form extends Component
                 call_user_func($logic, $childComponent);
 
                 // Temp fix for nested components while also allowing readonly / layout elements on the page.
-                if(method_exists($childComponent, 'getComponents')) {
+                if (method_exists($childComponent, 'getComponents')) {
                     $this->recursiveEach($logic, $childComponent->getComponents(), ++$level);
                 }
             }
