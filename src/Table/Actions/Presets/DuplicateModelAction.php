@@ -23,12 +23,13 @@ class DuplicateModelAction extends Action
             $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
 
             Audit::activity()->performedOn($model)->log('duplicated');
+
             return redirect()->to($manager->route('edit', $copiedModel))->with('messages.success', $resource->getPageTitle($model) . ' is gekopieerd.');
         })->redirectTo(function ($formData, $data) use ($manager) {
             return $manager->route('edit', ModelReference::fromString($data['item'])->id());
         });
-//            ->call('POST', function ($model) use ($manager) {
-//                return $manager->route('duplicate', $model);
-//            });
+        //            ->call('POST', function ($model) use ($manager) {
+        //                return $manager->route('duplicate', $model);
+        //            });
     }
 }
