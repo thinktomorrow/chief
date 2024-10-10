@@ -58,9 +58,6 @@ trait PageResourceDefault
     {
         $table = Table::make()
             ->resource(static::resourceKey())
-//            ->addQuery(function ($builder) {
-//                $builder->with(['tags']);
-//            })
             ->bulkActions([
                 AttachTagAction::makeDefault(static::resourceKey()),
                 DetachTagAction::makeDefault(static::resourceKey()),

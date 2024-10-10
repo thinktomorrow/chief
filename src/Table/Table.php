@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table;
 
 use Closure;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanAddQuery;
@@ -25,7 +26,7 @@ use Thinktomorrow\Chief\Table\Table\References\HasResourceReference;
 use Thinktomorrow\Chief\Table\Table\References\HasTableReference;
 use Thinktomorrow\Chief\Table\Table\References\ResourceReference;
 
-class Table extends Component
+class Table extends Component implements Htmlable
 {
     use HasComponentRendering;
     use HasTableReference;
