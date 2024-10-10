@@ -95,6 +95,16 @@ class Action extends \Illuminate\View\Component implements Htmlable
             $action->model($this->model);
         }
 
+        if($this->prependIcon) {
+            $action->prependIcon($this->prependIcon);
+        }
+
+        if($this->appendIcon) {
+            $action->appendIcon($this->appendIcon);
+        }
+
+        $action->visible($this->visible);
+
         return $action;
     }
 

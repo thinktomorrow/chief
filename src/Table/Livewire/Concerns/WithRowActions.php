@@ -9,28 +9,13 @@ trait WithRowActions
     /**
      * @return Action[]
      */
-    public function getVisibleRowActions(): array
+    public function getVisibleRowActions($model): array
     {
-        return array_filter($this->getTable()->getRowActions(), fn (Action $action) => $action->isVisible());
+        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => $action->isVisible());
     }
 
-    public function getHiddenRowActions(): array
+    public function getHiddenRowActions($model): array
     {
-        return array_filter($this->getTable()->getRowActions(), fn (Action $action) => ! $action->isVisible());
+        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => ! $action->isVisible());
     }
-    //
-    //    public function applyRowActionEffect(string $key, $model)
-    //    {
-    //        $action = $this->getTable()->findRowAction($key);
-    //
-    //        // Modal??
-    //
-    //        // Compose Modal
-    //
-    //        // Effect?
-    //
-    //        if ($action->hasEffect()) {
-    //            $action->getEffect()($model);
-    //        }
-    //    }
 }

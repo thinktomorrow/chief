@@ -14,8 +14,10 @@ trait HasRowActions
         return $this;
     }
 
-    public function getRowActions(): array
+    public function getRowActions($model): array
     {
-        return array_filter($this->actions, fn (Action $action) => $action instanceof RowAction);
+        $actions = array_filter($this->actions, fn (Action $action) => $action instanceof RowAction);
+
+        return array_map(fn (RowAction $action) => $action->model($model), $actions);
     }
 }
