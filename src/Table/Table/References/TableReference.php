@@ -40,7 +40,7 @@ class TableReference implements Wireable
     {
         $table = app($this->resourceClass)->{$this->tableKey}();
 
-        if(! $table instanceof Table) {
+        if (! $table instanceof Table) {
             throw new \RuntimeException('The table method ['.$this->resourceClass.'::'.$this->tableKey.'] in the TableReference should return a Table instance.');
         }
 
