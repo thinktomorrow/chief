@@ -6,25 +6,26 @@
         </span>
 
         <div class="flex items-center justify-end gap-1.5">
-            {{-- TODO(ben): get visible action, but not bulk actions --}}
             @foreach ($this->getVisibleBulkActions() as $action)
-                {{ $action }}
+                <x-chief-table::action.button :action="$action" wire:click="applyAction('{{ $action->getKey() }}')" />
             @endforeach
 
             @if (count($this->getHiddenBulkActions()) > 0)
                 <div>
-                    <button
-                        type="button"
+                    <x-chief-table::button
                         x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-bulk-actions' })"
+                        size="xs"
+                        variant="tertiary"
                     >
-                        <x-chief-table::button size="xs" color="white">
-                            <x-chief::icon.more-vertical-circle />
-                        </x-chief-table::button>
-                    </button>
+                        <x-chief::icon.more-vertical-circle />
+                    </x-chief-table::button>
 
                     <x-chief::dialog.dropdown id="table-hidden-bulk-actions" placement="bottom-end">
                         @foreach ($this->getHiddenBulkActions() as $action)
-                            {{ $action }}
+                            <x-chief-table::action.dropdown.item
+                                :action="$action"
+                                wire:click="applyAction('{{ $action->getKey() }}')"
+                            />
                         @endforeach
                     </x-chief::dialog.dropdown>
                 </div>
@@ -32,24 +33,15 @@
         </div>
     </div>
 
-    <div>
+    <div class="flex items-start gap-1">
         @if ($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
-            <button
-                type="button"
-                wire:click="bulkSelectAll"
-                class="text-sm font-medium text-grey-800 hover:underline hover:underline-offset-2"
-            >
+            <x-chief-table::button wire:click="bulkSelectAll" variant="tertiary" size="xs">
                 Selecteer alle {{ $this->resultTotal }}
-            </button>
+            </x-chief-table::button>
         @endif
 
-        <button
-            x-show="selection.length > 0"
-            type="button"
-            wire:click="bulkDeselectAll"
-            class="text-sm font-medium text-grey-800 hover:underline hover:underline-offset-2"
-        >
+        <x-chief-table::button x-show="selection.length > 0" wire:click="bulkDeselectAll" variant="tertiary" size="xs">
             Deselecteer alle
-        </button>
+        </x-chief-table::button>
     </div>
 </div>

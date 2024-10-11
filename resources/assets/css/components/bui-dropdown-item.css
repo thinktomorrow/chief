@@ -1,0 +1,35 @@
+@layer components {
+    .bui-dropdown-item {
+        @apply flex w-max items-start text-left;
+    }
+
+    .bui-dropdown-item-base {
+        @apply gap-1.5 px-3.5 py-2 text-base leading-5;
+
+        & > [data-slot='icon'],
+        & > svg {
+            @apply size-5 shrink-0;
+            @apply first:-ml-1 last:-mr-1;
+        }
+    }
+
+    /* .bui-dropdown-item-sm {
+        @apply gap-[0.1875rem] px-[0.8135rem] py-1.5 text-sm leading-[1.125rem];
+
+        & > [data-slot='icon'],
+        & > svg {
+            @apply size-[1.125rem] shrink-0;
+            @apply first:-ml-[0.1875rem] last:-mr-[0.1875rem];
+        }
+    } */
+
+    .bui-dropdown-item-default {
+        @apply bg-white text-bui-primary-800 hover:bg-bui-grey-50 hover:text-bui-primary-950;
+        @apply transition-all duration-150 ease-in-out;
+    }
+
+    /* .bui-dropdown-item-danger {
+        @apply bg-white text-red-600 hover:bg-red-50 hover:text-red-800;
+        @apply transition-all duration-150 ease-in-out;
+    } */
+}

@@ -29,13 +29,17 @@
         </div>
 
         <div class="flex items-start justify-between gap-2">
-            <button type="button" x-on:click="close()">
-                <x-chief-table::button size="sm" color="white">Annuleer</x-chief-table::button>
-            </button>
-
-            <button type="button">
-                <x-chief-table::button size="sm" color="grey">Pas filter toe</x-chief-table::button>
-            </button>
+            <x-chief-table::button x-on:click="close()" size="sm" variant="secondary">Annuleer</x-chief-table::button>
+            <x-chief-table::button
+                x-on:click="() => {
+                    close()
+                    $wire.addFilter()
+                }"
+                size="sm"
+                variant="primary"
+            >
+                Pas filter toe
+            </x-chief-table::button>
         </div>
     </div>
 </x-chief::dialog.dropdown>

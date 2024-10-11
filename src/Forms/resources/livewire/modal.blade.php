@@ -21,15 +21,10 @@
         </div>
 
         <x-slot name="footer">
-            <button wire:click="close" type="button" class="shrink-0">
-                <x-chief-table::button>Annuleer</x-chief-table::button>
-            </button>
-
-            <button wire:click="save" type="button" class="shrink-0">
-                <x-chief-table::button color="primary">
+            <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+            <x-chief-table::button wire:click="save" variant="primary" class="shrink-0">
                     {{ $this->getButton() }}
-                </x-chief-table::button>
-            </button>
+            </x-chief-table::button>
         </x-slot>
     @endif
 </x-chief::dialog.drawer>

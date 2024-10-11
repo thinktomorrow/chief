@@ -16,14 +16,15 @@
     </div>
 
     @if ($editUrl)
-        <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" class="inline-block shrink-0 sm:mb-0.5">
-            @if ($icon)
-                {!! $icon !!}
-            @else
-                <x-chief-table::button color="white" size="sm">
-                    <x-chief::icon.quill-write />
-                </x-chief-table::button>
-            @endif
-        </a>
+        <x-chief-table::button
+            data-sidebar-trigger
+            href="{{ $editUrl }}"
+            title="Aanpassen"
+            size="sm"
+            variant="tertiary"
+            class="inline-block shrink-0 sm:mb-0.5"
+        >
+            <x-chief::icon.quill-write />
+        </x-chief-table::button>
     @endif
 </div>
