@@ -6,5 +6,5 @@ namespace Thinktomorrow\Chief\Table\Actions;
 
 class RowAction extends Action
 {
-    protected string $view = 'chief-table::actions.row-action';
+    // protected string $view = 'chief-table::actions.row-action';
 }

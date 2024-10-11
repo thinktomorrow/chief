@@ -6,5 +6,5 @@ namespace Thinktomorrow\Chief\Table\Actions;
 
 class BulkAction extends Action
 {
-    protected string $view = 'chief-table::actions.bulk-action';
+    // protected string $view = 'chief-table::actions.bulk-action';
 }

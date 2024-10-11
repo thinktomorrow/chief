@@ -9,33 +9,31 @@
                             <span>Vorige</span>
                         </x-chief-table::button>
                     @else
-                        <button
-                            type="button"
+                        <x-chief-table::button
                             wire:click="previousPage('{{ $paginator->getPageName() }}')"
                             wire:loading.attr="disabled"
                             dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before"
+                            size="sm"
+                            variant="tertiary"
                         >
-                            <x-chief-table::button size="sm" variant="tertiary">
-                                <x-chief::icon.arrow-left />
-                                <span>Vorige</span>
-                            </x-chief-table::button>
-                        </button>
+                            <x-chief::icon.arrow-left />
+                            <span>Vorige</span>
+                        </x-chief-table::button>
                     @endif
                 </span>
 
                 <span>
                     @if ($paginator->hasMorePages())
-                        <button
-                            type="button"
+                        <x-chief-table::button
                             wire:click="nextPage('{{ $paginator->getPageName() }}')"
                             wire:loading.attr="disabled"
                             dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before"
+                            size="sm"
+                            variant="tertiary"
                         >
-                            <x-chief-table::button size="sm" variant="tertiary">
-                                <span>Vorige</span>
-                                <x-chief::icon.arrow-right />
-                            </x-chief-table::button>
-                        </button>
+                            <span>Vorige</span>
+                            <x-chief::icon.arrow-right />
+                        </x-chief-table::button>
                     @else
                         <x-chief-table::button size="sm" variant="tertiary" class="pointer-events-none text-grey-400">
                             <span>Vorige</span>
@@ -72,21 +70,17 @@
                                     </x-chief-table::button>
                                 </span>
                             @else
-                                <button
-                                    type="button"
+                                <x-chief-table::button
                                     wire:click="previousPage('{{ $paginator->getPageName() }}')"
                                     dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after"
                                     rel="prev"
                                     aria-label="{{ __('pagination.previous') }}"
+                                    size="sm"
+                                    variant="tertiary"
+                                    class="rounded-r-none hover:relative"
                                 >
-                                    <x-chief-table::button
-                                        size="sm"
-                                        variant="tertiary"
-                                        class="rounded-r-none hover:relative"
-                                    >
-                                        <x-chief::icon.arrow-left />
-                                    </x-chief-table::button>
-                                </button>
+                                    <x-chief::icon.arrow-left />
+                                </x-chief-table::button>
                             @endif
                         </span>
 
@@ -120,19 +114,15 @@
                                                 </x-chief-table::button>
                                             </span>
                                         @else
-                                            <button
-                                                type="button"
+                                            <x-chief-table::button
                                                 wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
                                                 aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
+                                                size="sm"
+                                                variant="tertiary"
+                                                class="min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"
                                             >
-                                                <x-chief-table::button
-                                                    size="sm"
-                                                    variant="tertiary"
-                                                    class="min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"
-                                                >
-                                                    {{ $page }}
-                                                </x-chief-table::button>
-                                            </button>
+                                                {{ $page }}
+                                            </x-chief-table::button>
                                         @endif
                                     </span>
                                 @endforeach
@@ -142,21 +132,17 @@
                         <span>
                             {{-- Next Page Link --}}
                             @if ($paginator->hasMorePages())
-                                <button
-                                    type="button"
+                                <x-chief-table::button
                                     wire:click="nextPage('{{ $paginator->getPageName() }}')"
                                     dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after"
                                     rel="next"
                                     aria-label="{{ __('pagination.next') }}"
+                                    size="sm"
+                                    variant="tertiary"
+                                    class="rounded-l-none hover:relative"
                                 >
-                                    <x-chief-table::button
-                                        size="sm"
-                                        variant="tertiary"
-                                        class="rounded-l-none hover:relative"
-                                    >
-                                        <x-chief::icon.arrow-right />
-                                    </x-chief-table::button>
-                                </button>
+                                    <x-chief::icon.arrow-right />
+                                </x-chief-table::button>
                             @else
                                 <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
                                     <x-chief-table::button

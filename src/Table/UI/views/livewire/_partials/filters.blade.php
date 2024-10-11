@@ -7,24 +7,22 @@
 
     <div>
         @if (count($this->getHiddenFilters()) > 0)
-            <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })">
-                {{-- TODO(tijs): check this layout --}}
-                <div class="relative">
-                    <x-chief-table::button variant="tertiary">
-                        <x-chief::icon.filter-edit />
-                    </x-chief-table::button>
-
-                    @if (($hiddenFilterCount = $this->getHiddenFilterCount()) > 0)
-                        <div class="absolute -bottom-1.5 -right-1.5">
-                            <div class="flex size-5 items-center justify-center rounded-full bg-primary-500">
-                                <span class="text-xs font-medium text-white">
-                                    {{ $hiddenFilterCount }}
-                                </span>
-                            </div>
+            <x-chief-table::button
+                x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })"
+                variant="tertiary"
+                class="relative"
+            >
+                <x-chief::icon.filter-edit />
+                @if (($hiddenFilterCount = $this->getHiddenFilterCount()) > 0)
+                    <div class="absolute -bottom-1.5 -right-1.5">
+                        <div class="flex size-5 items-center justify-center rounded-full bg-primary-500">
+                            <span class="text-xs font-medium text-white">
+                                {{ $hiddenFilterCount }}
+                            </span>
                         </div>
-                    @endif
-                </div>
-            </button>
+                    </div>
+                @endif
+            </x-chief-table::button>
         @endif
 
         <x-chief::dialog.drawer id="table-filters-drawer" title="Meer filters">

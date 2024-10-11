@@ -28,7 +28,7 @@
     }
 
     .bui-btn-xs {
-        @apply gap-0.5 rounded-lg px-[0.3125rem] py-[0.1875rem] text-xs leading-[1.125rem];
+        @apply gap-0.5 rounded-md px-[0.3125rem] py-[0.1875rem] text-xs leading-[1.125rem];
 
         & > [data-slot='icon'],
         & > svg {

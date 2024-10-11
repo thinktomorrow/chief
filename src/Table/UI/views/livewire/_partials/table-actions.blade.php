@@ -13,11 +13,12 @@
         @endforeach
 
         @if (count($this->getHiddenActions()) > 0)
-            <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-actions' })">
-                <x-chief-table::button variant="tertiary">
-                    <x-chief::icon.more-vertical-circle />
-                </x-chief-table::button>
-            </button>
+            <x-chief-table::button
+                x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-actions' })"
+                variant="tertiary"
+            >
+                <x-chief::icon.more-vertical-circle />
+            </x-chief-table::button>
 
             <x-chief::dialog.dropdown id="table-hidden-actions" placement="bottom-end">
                 @foreach ($this->getHiddenActions() as $action)
