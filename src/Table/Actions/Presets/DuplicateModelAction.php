@@ -17,19 +17,20 @@ class DuplicateModelAction extends Action
 
         return static::make('duplicate')
             ->label("Kopieer")
-        //            ->icon('<x-chief::icon.quill-write />')
-        ->effect(function ($formData, $data) use ($resource, $manager) {
-            $model = ModelReference::fromString($data['item'])->instance();
-            $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
+            ->prependIcon('<x-chief::icon.copy />')
+            ->hidden()
+            ->effect(function ($formData, $data) use ($resource, $manager) {
+                $model = ModelReference::fromString($data['item'])->instance();
+                $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
 
-            Audit::activity()->performedOn($model)->log('duplicated');
+                Audit::activity()->performedOn($model)->log('duplicated');
 
-            return redirect()->to($manager->route('edit', $copiedModel))->with('messages.success', $resource->getPageTitle($model) . ' is gekopieerd.');
-        })->redirectTo(function ($formData, $data) use ($manager) {
-            return $manager->route('edit', ModelReference::fromString($data['item'])->id());
-        });
-        //            ->call('POST', function ($model) use ($manager) {
-        //                return $manager->route('duplicate', $model);
-        //            });
+                return redirect()->to($manager->route('edit', $copiedModel))->with('messages.success', $resource->getPageTitle($model) . ' is gekopieerd.');
+            })->redirectTo(function ($formData, $data) use ($manager) {
+                return $manager->route('edit', ModelReference::fromString($data['item'])->id());
+            });
+        // ->call('POST', function ($model) use ($manager) {
+        //     return $manager->route('duplicate', $model);
+        // });
     }
 }

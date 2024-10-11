@@ -2,9 +2,10 @@
     @if (count($this->getActiveFilters()) > 0)
         <div class="flex items-center justify-end gap-2">
             <span class="text-sm leading-5 text-grey-500">{{ $this->resultTotal }} items</span>
-            <button type="button" class="mt-[0.1875rem]">
-                <x-chief-table::button wire:click="resetFilters" color="grey" size="sm">
-                    Reset filters
+            <button type="button">
+                <x-chief-table::button wire:click="resetFilters" variant="secondary">
+                    <x-chief::icon.filter-remove />
+                    <span>Reset filters</span>
                 </x-chief-table::button>
             </button>
         </div>
@@ -12,7 +13,7 @@
 
     @if (count($this->getSortersForView()) > 1)
         <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-sorting' })">
-            <x-chief-table::button color="white">
+            <x-chief-table::button variant="tertiary">
                 <x-chief::icon.sorting />
 
                 @if (count($this->getActiveSorters()) > 0)
@@ -43,7 +44,7 @@
 
                 <div class="flex items-start justify-between gap-2">
                     <button type="button" x-on:click="close()">
-                        <x-chief-table::button size="sm" color="white">Annuleer</x-chief-table::button>
+                        <x-chief-table::button size="sm" variant="secondary">Annuleer</x-chief-table::button>
                     </button>
                 </div>
             </div>

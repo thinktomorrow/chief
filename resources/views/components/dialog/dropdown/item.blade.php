@@ -1,22 +1,24 @@
 @props([
-    'iconLeft' => null,
-    'iconRight' => null,
+    'size' => 'base',
+    'variant' => 'default',
 ])
 
-<div
-    class="flex items-start gap-1 px-3 py-2 text-base font-medium leading-5 text-grey-800 hover:bg-grey-100 hover:text-grey-900 [&>svg]:size-5"
-    role="menuitem"
-    tabindex="-1"
+<span
+    {{
+        $attributes->class([
+            'bui-dropdown-item cursor-pointer font-medium',
+            match ($variant) {
+                'default' => 'bui-dropdown-item-default',
+                {{-- 'danger' => 'bui-dropdown-item-danger', --}}
+                default => 'bui-dropdown-item-default',
+            },
+            match ($size) {
+                'base' => 'bui-dropdown-item-base',
+                {{-- 'sm' => 'bui-dropdown-item-sm', --}}
+                default => 'bui-dropdown-item-base',
+            },
+        ])
+    }}
 >
-    @if ($iconLeft)
-        {!! $iconLeft !!}
-    @endif
-
-    @if ($slot->isNotEmpty() && $slot->hasActualContent())
-        {{ $slot }}
-    @endif
-
-    @if ($iconRight)
-        {!! $iconRight !!}
-    @endif
-</div>
+    {{ $slot }}
+</span>

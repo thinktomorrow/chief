@@ -10,7 +10,7 @@
             <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })">
                 {{-- TODO(tijs): check this layout --}}
                 <div class="relative">
-                    <x-chief-table::button color="white">
+                    <x-chief-table::button variant="tertiary">
                         <x-chief::icon.filter-edit />
                     </x-chief-table::button>
 
@@ -52,7 +52,7 @@
             </div>
 
             <x-slot name="footer" class="flex items-center justify-start gap-2">
-                <x-chief-table::button color="primary" x-on:click="close">Bekijk resultaten</x-chief-table::button>
+                <x-chief-table::button variant="primary" x-on:click="close">Bekijk resultaten</x-chief-table::button>
                 <div>
                     <span>{{ $this->resultTotal }} resultaten gevonden</span>
                 </div>

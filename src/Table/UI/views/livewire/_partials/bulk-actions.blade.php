@@ -17,7 +17,7 @@
                         type="button"
                         x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-bulk-actions' })"
                     >
-                        <x-chief-table::button size="xs" color="white">
+                        <x-chief-table::button size="xs" variant="tertiary">
                             <x-chief::icon.more-vertical-circle />
                         </x-chief-table::button>
                     </button>

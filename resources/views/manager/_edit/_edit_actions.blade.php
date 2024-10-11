@@ -1,6 +1,6 @@
 @adminCan('duplicate')
 <button x-data type="button" x-on:click="$dispatch('open-dialog', { 'id': 'edit-options' })">
-    <x-chief-table::button color="white">
+    <x-chief-table::button variant="tertiary">
         <x-chief::icon.more-vertical-circle />
     </x-chief-table::button>
 </button>

@@ -20,7 +20,7 @@
             @if ($icon)
                 {!! $icon !!}
             @else
-                <x-chief-table::button color="white" size="sm">
+                <x-chief-table::button size="sm" variant="tertiary">
                     <x-chief::icon.quill-write />
                 </x-chief-table::button>
             @endif

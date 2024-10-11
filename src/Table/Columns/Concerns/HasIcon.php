@@ -28,7 +28,7 @@ trait HasIcon
 
     public function appendIcon(string $icon): static
     {
-        $this->prependIcon = $this->renderIcon($icon);
+        $this->appendIcon = $this->renderIcon($icon);
 
         return $this;
     }

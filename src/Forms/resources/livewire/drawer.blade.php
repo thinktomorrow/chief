@@ -26,7 +26,7 @@
             </button>
 
             <button wire:click="save" type="button" class="shrink-0">
-                <x-chief-table::button color="primary">
+                <x-chief-table::button variant="primary">
                     {{ $this->getButton() }}
                 </x-chief-table::button>
             </button>

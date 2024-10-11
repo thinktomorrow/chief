@@ -16,7 +16,7 @@
 
                 <div class="flex justify-center">
                     <button type="button" wire:click="resetFilters()">
-                        <x-chief-table::button size="sm">
+                        <x-chief-table::button size="sm" variant="secondary">
                             <x-chief::icon.filter-remove />
                             <span>Reset filters</span>
                         </x-chief-table::button>

@@ -1,7 +1,7 @@
 @if ($hasLink())
     <a href="{{ $getLink() }}" title="{{ $getDescription() }}">
         @if ($isVisible())
-            <x-chief-table::button color="primary">
+            <x-chief-table::button variant="primary">
                 {!! $getPrependIcon() !!}
                 <span>{{ $getLabel() }}</span>
                 {!! $getAppendIcon() !!}
@@ -15,7 +15,7 @@
 @else
     <button wire:click="applyAction('{{ $getKey() }}')" title="{{ $getDescription() }}">
         @if ($isVisible())
-            <x-chief-table::button color="primary">
+            <x-chief-table::button variant="primary">
                 {!! $getPrependIcon() !!}
                 <span>{{ $getLabel() }}</span>
                 {!! $getAppendIcon() !!}
