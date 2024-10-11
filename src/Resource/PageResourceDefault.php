@@ -68,7 +68,7 @@ trait PageResourceDefault
             ])
             ->rowActions([
                 EditModelAction::makeDefault(static::resourceKey()),
-                DuplicateModelAction::makeDefault(static::resourceKey()),
+                DuplicateModelAction::makeDefault(static::resourceKey())->hidden(),
             ])
             ->filters([
                 TitleFilter::makeDefault(),

@@ -1,5 +1,5 @@
 @php
-    $dropdownId = 'table-hidden-row-actions';
+    $dropdownId = 'table-hidden-row-actions-' . $this->getRowKey($item);
 
     $visibleRowActions = $this->getVisibleRowActions($item);
     $hiddenRowActions = $this->getHiddenRowActions($item);
@@ -44,13 +44,13 @@
 
     <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">
         @foreach ($hiddenRowActions as $action)
-            @if($hasLink())
-                <a href="{{ $getLink() }}" title="{{ $getDescription() }}">
-                    <x-chief-table::button size="sm">{{ $getLabel() }}</x-chief-table::button>
+            @if($action->hasLink())
+                <a href="{{ $action->getLink() }}" title="{{ $action->getDescription() }}">
+                    <x-chief-table::button size="sm">{{ $action->getLabel() }}</x-chief-table::button>
                 </a>
             @else
-                <button wire:click="applyRowAction('{{ $getKey() }}', '{{ $item->modelReference()->getShort() }}')" title="{{ $getDescription() }}">
-                    <x-chief-table::button size="sm">{{ $getLabel() }}</x-chief-table::button>
+                <button wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')" title="{{ $action->getDescription() }}">
+                    <x-chief-table::button size="sm">{{ $action->getLabel() }}</x-chief-table::button>
                 </button>
             @endif
         @endforeach

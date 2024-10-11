@@ -94,8 +94,8 @@ trait WithActions
             $effectResult = $action->getEffect()($formData, $data);
 
             // Redirect after success
-            if ($effectResult && $action->hasRedirectTo()) {
-                return redirect()->to($action->getRedirectTo()($effectResult, $formData, $data));
+            if ($effectResult && $action->hasRedirectOnSuccess()) {
+                return redirect()->to($action->getRedirectOnSuccess()($effectResult, $formData, $data));
             }
 
             // Effect notification on success or failure

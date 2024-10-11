@@ -19,15 +19,20 @@ class DuplicateModelAction extends Action
             ->label("Kopieer")
         //            ->icon('<x-chief::icon.quill-write />')
         ->effect(function ($formData, $data) use ($resource, $manager) {
-            $model = ModelReference::fromString($data['item'])->instance();
-            $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
+
+            try{
+                $model = ModelReference::fromString($data['item'])->instance();
+                $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
+            } catch (\Exception $e) {
+                report($e);
+                return false;
+            }
 
             Audit::activity()->performedOn($model)->log('duplicated');
-
-            return redirect()->to($manager->route('edit', $copiedModel))->with('messages.success', $resource->getPageTitle($model) . ' is gekopieerd.');
-        })->redirectTo(function ($formData, $data) use ($manager) {
+            return true;
+        })->redirectOnSuccess(function ($formData, $data) use ($manager) {
             return $manager->route('edit', ModelReference::fromString($data['item'])->id());
-        });
+        })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.');
         //            ->call('POST', function ($model) use ($manager) {
         //                return $manager->route('duplicate', $model);
         //            });
