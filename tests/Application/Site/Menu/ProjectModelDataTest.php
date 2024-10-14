@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
+use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -35,91 +35,72 @@ class ProjectModelDataTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_project_page_data()
+    public function test_it_can_project_page_data()
     {
         app(ProjectModelData::class)->handleByOwner($this->page->getMorphClass(), $this->page->id);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertEquals('label nl', $collection->first()->getLabel());
         $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
     }
 
-    /** @test */
-    public function it_can_project_page_data_for_all_locales()
+    public function test_it_can_project_page_data_for_all_locales()
     {
         app(ProjectModelData::class)->handleByOwner($this->page->getMorphClass(), $this->page->id);
 
-        // nl
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
-        $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
-
-        // en
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
-        $this->assertEquals('label en', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel());
+        $collection = Menu::tree('main');
+        $this->assertEquals('label nl', $collection->first()->getLabel('nl'));
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel('nl'));
+        $this->assertEquals('label en', $collection->first()->getLabel('en'));
+        $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel('en'));
     }
 
-    /** @test */
-    public function it_can_project_page_data_when_page_is_updated()
+    public function test_it_can_project_page_data_when_page_is_updated()
     {
         $this->asAdmin()->put($this->manager($this->page)->route('update', $this->page), $this->validUpdatePageParams([
             'custom' => 'artikel titel',
         ]));
 
-        // nl
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
-        $this->assertEquals('label nl', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel());
-
-        // en
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
-        $this->assertEquals('label en', $collection->first()->getLabel());
-        $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel());
+        $collection = Menu::tree('main');
+        $this->assertEquals('label nl', $collection->first()->getLabel('nl'));
+        $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel('nl'));
+        $this->assertEquals('label en', $collection->first()->getLabel('en'));
+        $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel('en'));
     }
 
-    /** @test */
-    public function it_can_project_page_data_when_url_is_updated()
+    public function test_it_can_project_page_data_when_url_is_updated()
     {
         $this->updateLinks($this->page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
-        // nl
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertEquals('/foobar-nl', $collection->first()->getUrl('nl'));
-        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
-
-        // en
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'en');
+        $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel('nl'));
         $this->assertEquals('/foobar-en', $collection->first()->getUrl('en'));
-        $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel());
+        $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel('en'));
     }
 
-    /** @test */
-    public function it_can_project_page_data_when_page_has_archived()
+    public function test_it_can_project_page_data_when_page_has_archived()
     {
         $this->asAdmin()
             ->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'archive'));
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertEquals('label nl', $collection->first()->getLabel());
         $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
         $this->assertTrue($collection->first()->isOffline());
     }
 
-    /** @test */
-    public function it_can_project_page_data_when_page_has_published()
+    public function test_it_can_project_page_data_when_page_has_published()
     {
         $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'unpublish'));
         $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'publish'));
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertFalse($collection->first()->isOffline());
     }
 
-    /** @test */
-    public function it_can_project_page_data_when_page_is_deleted()
+    public function test_it_can_project_page_data_when_page_is_deleted()
     {
         $this->asAdmin()
             ->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'archive'));
@@ -128,7 +109,7 @@ class ProjectModelDataTest extends ChiefTestCase
 
         $this->assertNull(MenuItem::first()->owner);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertEquals('label nl', $collection->first()->getLabel());
         $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
         $this->assertEquals(null, $collection->first()->getUrl());

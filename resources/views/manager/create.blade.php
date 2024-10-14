@@ -4,7 +4,7 @@
 
 <x-chief::page.template :title="$title">
     <x-slot name="hero">
-        <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getPageBreadCrumb()]" class="max-w-3xl" />
+        <x-chief::page.hero :title="$title" :breadcrumbs="[$resource->getPageBreadCrumb('create')]" class="max-w-3xl" />
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">

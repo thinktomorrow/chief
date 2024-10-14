@@ -1,6 +1,6 @@
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
-        <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
+        <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb('edit')]">
             @if ($forms->has('pagetitle'))
                 <x-slot name="customTitle">
                     <x-chief-form::forms id="pagetitle" />
