@@ -14,7 +14,7 @@ class AttachTagAction extends BulkAction
     public static function makeDefault(string $resourceKey): static
     {
         return static::make('attach-tag')
-            ->label('Tag deze selectie')
+            ->label('Tags toevoegen')
             ->dialog(
                 Dialog::make('tagModal')
                     ->title('Voeg tags toe aan selectie')
@@ -30,7 +30,7 @@ class AttachTagAction extends BulkAction
                         MultiSelect::make('tags')
                             ->required()
                             ->multiple()
-                            ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
+                            ->options(fn() => app(TagReadRepository::class)->getAllForSelect()),
                     ])
                     ->button('Toevoegen')
             )->effect(function ($formData, $data) use ($resourceKey) {

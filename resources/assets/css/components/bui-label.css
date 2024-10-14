@@ -4,7 +4,7 @@
  **/
 @layer components {
     .bui-label {
-        @apply inline-block font-medium;
+        @apply inline-block font-normal;
     }
 
     .bui-label-base {
