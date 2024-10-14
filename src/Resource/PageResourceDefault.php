@@ -147,12 +147,16 @@ trait PageResourceDefault
         return view('chief::manager.edit');
     }
 
-    public function getPageBreadCrumb(): ?BreadCrumb
+    public function getPageBreadCrumb(?string $pageType = null): ?BreadCrumb
     {
         $this->assertManager();
 
         if (! $this->manager->can('index')) {
             return null;
+        }
+
+        if($pageType == 'edit' || $pageType == 'create') {
+            return new BreadCrumb('Overzicht', $this->manager->route('index'));
         }
 
         return null;
