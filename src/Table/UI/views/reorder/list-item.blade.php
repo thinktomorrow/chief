@@ -38,8 +38,7 @@
             x-sortable-group="{{ $sortableGroup }}"
             x-sortable-ghost-class="table-sort-ghost"
             x-sortable-drag-class="table-sort-drag"
-            x-on:end.stop="console.log($event.target.sortable)"
-{{--            x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"--}}
+            x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
             class="nested-sortable [&_.nested-sortable]:ml-[28px] [&_[data-slot=indent-icon]]:block"
         >
             @foreach ($item->getChildNodes() as $_item)
