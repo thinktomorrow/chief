@@ -17,7 +17,7 @@
 }
 .choices.is-disabled .choices__inner,
 .choices.is-disabled .choices__input {
-    background-color: theme('colors.grey.300');
+    background-color: theme('colors.grey.200');
     cursor: not-allowed;
     -webkit-user-select: none;
     user-select: none;
@@ -39,7 +39,7 @@
     display: block;
     width: 100%;
     /* padding: 10px; */
-    border-bottom: 1px solid theme('colors.grey.200');
+    border-bottom: 1px solid theme('colors.grey.100');
     background-color: #fff;
     margin: 0;
     @apply px-3 py-2;
@@ -138,16 +138,16 @@
     /* min-height: 44px; */
     overflow: hidden;
 
-    @apply inline-flex min-h-[2.5rem] w-full flex-wrap items-start gap-1.5 rounded-md border border-grey-200 bg-white px-3 py-2;
+    @apply inline-flex min-h-[2.5rem] w-full flex-wrap items-start gap-1.5 rounded-[0.625rem] border border-grey-100 bg-white px-3 py-2;
 }
 .is-focused .choices__inner,
 .is-open .choices__inner {
-    border-color: theme('colors.grey.300');
+    border-color: theme('colors.grey.200');
 }
 .is-open .choices__inner {
     /* border-radius: 2.5px 2.5px 0 0; */
 
-    @apply rounded-b-none rounded-t-md;
+    @apply rounded-b-none rounded-t-[0.625rem];
 }
 .is-flipped.is-open .choices__inner {
     /* border-radius: 0 0 2.5px 2.5px; */
@@ -216,22 +216,25 @@
     position: absolute;
     width: 100%;
     background-color: #fff;
-    border: 1px solid theme('colors.grey.200');
+    border: 1px solid theme('colors.grey.100');
     top: 100%;
     margin-top: -1px;
-    border-bottom-left-radius: 2.5px;
-    border-bottom-right-radius: 2.5px;
+    /* border-bottom-left-radius: 2.5px;
+    border-bottom-right-radius: 2.5px; */
     overflow: hidden;
     word-break: break-all;
     will-change: visibility;
+    @apply rounded-b-[0.625rem];
 }
+
 .is-active.choices__list--dropdown,
 .is-active.choices__list[aria-expanded] {
     visibility: visible;
 }
+
 .is-open .choices__list--dropdown,
 .is-open .choices__list[aria-expanded] {
-    border-color: theme('colors.grey.300');
+    border-color: theme('colors.grey.200');
 }
 .is-flipped .choices__list--dropdown,
 .is-flipped .choices__list[aria-expanded] {
@@ -240,14 +243,16 @@
     margin-top: 0;
     margin-bottom: -1px;
     border-radius: 0.25rem 0.25rem 0 0;
+    /* @apply rounded-t-[0.625rem]; */
 }
 .choices__list--dropdown .choices__list,
 .choices__list[aria-expanded] .choices__list {
     position: relative;
-    max-height: 300px;
+    /* max-height: 300px; */
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
+    @apply max-h-48;
 }
 .choices__list--dropdown .choices__item,
 .choices__list[aria-expanded] .choices__item {
@@ -290,7 +295,7 @@
 } */
 .choices__list--dropdown .choices__item--selectable.is-highlighted,
 .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
-    background-color: theme('colors.grey.100');
+    background-color: theme('colors.grey.50');
 }
 .choices__list--dropdown .choices__item--selectable.is-highlighted::after,
 .choices__list[aria-expanded] .choices__item--selectable.is-highlighted::after {
@@ -317,7 +322,7 @@
     /* font-weight: 600; */
     /* font-size: theme('fontSize.base'); */
     /* padding: 10px; */
-    border-bottom: 1px solid theme('colors.grey.200');
+    border-bottom: 1px solid theme('colors.grey.100');
     /* color: gray; */
 
     @apply body px-3 py-2 text-xs font-medium text-grey-500;
@@ -372,4 +377,16 @@
 .choices__placeholder {
     opacity: 0.5;
 }
-/* =====  End of Choices  ====== */
+
+/**
+ * Choices with static dropdown
+ * Additional option for Chief so the dropdown isn't positioned absolutely (weird behaviour in dropdowns)
+ */
+.choices-with-static-dropdown .choices__list--dropdown,
+.choices-with-static-dropdown .choices__list[aria-expanded] {
+    @apply visible static;
+}
+
+.choices-with-static-dropdown .choices__inner {
+    @apply rounded-b-none;
+}

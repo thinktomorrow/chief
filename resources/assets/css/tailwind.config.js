@@ -29,16 +29,24 @@ module.exports = {
         colors: {
             current: 'currentColor',
             transparent: 'transparent',
-            white: colors.white,
-            grey: colors.gray,
             black: colors.black,
+            white: colors.white,
+            grey: {
+                50: '#f7f7f8',
+                100: '#f0eef0',
+                200: '#dcdadd',
+                300: '#bebabf',
+                400: '#99949c',
+                500: '#7e7881',
+                600: '#666069',
+                700: '#534f55',
+                800: '#474349',
+                900: '#3d3b3f',
+                950: '#29272a',
+            },
+
             primary: colors.indigo,
             secondary: colors.teal,
-            red: colors.red,
-            orange: colors.orange,
-            green: colors.green,
-            blue: colors.sky,
-
             // Better UI colors added for Tables v2 release that should be adopted by the rest of the app over time
             'bui-primary': {
                 50: '#f9f8fb',
@@ -53,19 +61,11 @@ module.exports = {
                 900: '#4c3d52',
                 950: '#2d2032',
             },
-            'bui-grey': {
-                50: '#f7f7f8',
-                100: '#f0eef0',
-                200: '#dcdadd',
-                300: '#bebabf',
-                400: '#99949c',
-                500: '#7e7881',
-                600: '#666069',
-                700: '#534f55',
-                800: '#474349',
-                900: '#3d3b3f',
-                950: '#29272a',
-            },
+
+            red: colors.red,
+            orange: colors.orange,
+            green: colors.green,
+            blue: colors.sky,
         },
         container: {
             center: true,

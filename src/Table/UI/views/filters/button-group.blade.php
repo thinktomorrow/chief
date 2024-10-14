@@ -35,7 +35,7 @@
     x-on:{{ $this->getFiltersUpdatedEvent() }}.window="repositionCheckedOptionMarker"
     x-on:dialog-opened.window="repositionCheckedOptionMarker"
     @class([
-        'ring-bui-grey-950/5 bg-bui-grey-950/5 rounded-[0.625rem] ring-1',
+        'rounded-[0.625rem] bg-grey-100 ring-1 ring-grey-100',
     ])
 >
     <div class="relative flex items-start justify-start">
@@ -62,7 +62,7 @@
 
                 <label
                     for="{{ $id }}-{{ $option['value'] }}"
-                    class="bui-btn bui-btn-base cursor-pointer text-grey-800"
+                    class="bui-btn bui-btn-base cursor-pointer text-grey-800 shadow-none peer-checked:text-grey-950"
                 >
                     {!! $option['label'] !!}
                 </label>

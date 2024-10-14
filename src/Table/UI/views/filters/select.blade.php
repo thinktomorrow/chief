@@ -21,6 +21,7 @@
             :options='$getMultiSelectFieldOptions()'
             :selection='$getValue() ?: $getDefault()'
             :multiple='$allowMultiple()'
+            :staticDropdown='true'
             class="w-64"
         />
 
