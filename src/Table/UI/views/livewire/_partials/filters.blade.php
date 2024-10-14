@@ -1,23 +1,23 @@
 <div x-data="tableFilters" class="flex items-start gap-2">
-    @foreach ($this->getVisibleFilters() as $filter)
+    @foreach ($this->getSecondaryFilters() as $filter)
         <div data-filter-key="{{ $filter->getKey() }}">
             {!! $filter->render() !!}
         </div>
     @endforeach
 
     <div>
-        @if (count($this->getHiddenFilters()) > 0)
+        @if (count($this->getTertiaryFilters()) > 0)
             <x-chief-table::button
                 x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })"
                 variant="tertiary"
                 class="relative"
             >
                 <x-chief::icon.filter-edit />
-                @if (($hiddenFilterCount = $this->getHiddenFilterCount()) > 0)
+                @if (($tertiaryFilterCount = $this->getTertiaryFilterCount()) > 0)
                     <div class="absolute -bottom-1.5 -right-1.5">
                         <div class="flex size-5 items-center justify-center rounded-full bg-primary-500">
                             <span class="text-xs font-medium text-white">
-                                {{ $hiddenFilterCount }}
+                                {{ $tertiaryFilterCount }}
                             </span>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
         <x-chief::dialog.drawer id="table-filters-drawer" title="Meer filters">
             <div class="space-y-6">
                 {{-- TODO: these filters shouldn't auto update on change, but use the submit button in drawer footer instead --}}
-                @foreach ($this->getHiddenFilters() as $filter)
+                @foreach ($this->getTertiaryFilters() as $filter)
                     <div class="space-y-2">
                         <div>
                             @if ($filter->getLabel())
@@ -90,7 +90,7 @@
                     const visibleFilters = Array.from(document.querySelectorAll('[data-filter-key]'));
                     const lastFilter = visibleFilters[visibleFilters.length - 1];
 
-                    this.$wire.hideFilter(lastFilter.getAttribute('data-filter-key'));
+                    this.$wire.setFilterAsTertiary(lastFilter.getAttribute('data-filter-key'));
 
                     lastFilter.remove();
 

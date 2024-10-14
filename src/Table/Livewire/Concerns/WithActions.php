@@ -9,17 +9,22 @@ use Thinktomorrow\Chief\Table\Actions\RowAction;
 
 trait WithActions
 {
-    /**
-     * @return Action[]
-     */
-    public function getVisibleActions(): array
+    /** @return Action[] */
+    public function getPrimaryActions(): array
     {
-        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isVisible());
+        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isPrimary());
     }
 
-    public function getHiddenActions(): array
+    /** @return Action[] */
+    public function getSecondaryActions(): array
     {
-        return array_filter($this->getTable()->getActions(), fn (Action $action) => ! $action->isVisible());
+        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isSecondary());
+    }
+
+    /** @return Action[] */
+    public function getTertiaryActions(): array
+    {
+        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isTertiary());
     }
 
     public function applyAction($actionKey, array $payload = []): void

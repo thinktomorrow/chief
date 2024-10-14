@@ -66,17 +66,17 @@ trait PageResourceDefault
                 DetachTagAction::makeDefault(static::resourceKey()),
             ])
             ->actions([
-                CreateModelAction::makeDefault(static::resourceKey()),
-                VisitArchiveAction::makeDefault(static::resourceKey()),
-                ReorderAction::makeDefault(static::resourceKey()),
+                CreateModelAction::makeDefault(static::resourceKey())->primary(),
+                VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
+                ReorderAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->rowActions([
-                EditModelAction::makeDefault(static::resourceKey()),
-                DuplicateModelAction::makeDefault(static::resourceKey())->hidden(),
+                EditModelAction::makeDefault(static::resourceKey())->primary(),
+                DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->filters([
                 TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault()->main(),
+                OnlineStateFilter::makeDefault()->primary(),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) {

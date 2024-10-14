@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Url;
 use Thinktomorrow\Chief\Table\Filters\Filter;
 
 trait WithFilters

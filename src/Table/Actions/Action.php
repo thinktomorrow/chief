@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\Table\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRedirectOnSuccess;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
@@ -25,7 +26,6 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasVisibility;
 class Action extends \Illuminate\View\Component implements Htmlable
 {
     use HasComponentRendering;
-    use HasView;
     use HasCustomAttributes;
     use HasKey;
     use HasLabel;
@@ -34,15 +34,13 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasModel;
     use HasIcon;
 
-    use HasVisibility;
+    use HasVariant;
     use HasLink;
     use HasEffect;
     use HasDialog;
     use HasNotification;
     use HasRefresh;
     use HasRedirectOnSuccess;
-
-    protected string $view = 'chief-table::actions.action';
 
     public function __construct(string $key)
     {
@@ -108,7 +106,7 @@ class Action extends \Illuminate\View\Component implements Htmlable
             $action->redirectOnSuccess($this->redirectOnSuccess);
         }
 
-        $action->visible($this->visible);
+        $action->setVariant($this->variant);
 
         return $action;
     }

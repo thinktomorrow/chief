@@ -6,22 +6,27 @@
         </span>
 
         <div class="flex items-center justify-end gap-1.5">
-            @foreach ($this->getVisibleBulkActions() as $action)
+
+            @foreach ($this->getPrimaryBulkActions() as $action)
+                <x-chief-table::action.button :action="$action" variant="primary" wire:click="applyAction('{{ $action->getKey() }}')" />
+            @endforeach
+
+            @foreach ($this->getSecondaryBulkActions() as $action)
                 <x-chief-table::action.button :action="$action" wire:click="applyAction('{{ $action->getKey() }}')" />
             @endforeach
 
-            @if (count($this->getHiddenBulkActions()) > 0)
+            @if (count($this->getTertiaryBulkActions()) > 0)
                 <div>
                     <x-chief-table::button
-                        x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-bulk-actions' })"
+                        x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-bulk-actions' })"
                         size="xs"
                         variant="tertiary"
                     >
                         <x-chief::icon.more-vertical-circle />
                     </x-chief-table::button>
 
-                    <x-chief::dialog.dropdown id="table-hidden-bulk-actions" placement="bottom-end">
-                        @foreach ($this->getHiddenBulkActions() as $action)
+                    <x-chief::dialog.dropdown id="table-tertiary-bulk-actions" placement="bottom-end">
+                        @foreach ($this->getTertiaryBulkActions() as $action)
                             <x-chief-table::action.dropdown.item
                                 :action="$action"
                                 wire:click="applyAction('{{ $action->getKey() }}')"

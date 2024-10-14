@@ -6,16 +6,21 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 
 trait WithRowActions
 {
-    /**
-     * @return Action[]
-     */
-    public function getVisibleRowActions($model): array
+    /** @return Action[] */
+    public function getPrimaryRowActions($model): array
     {
-        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => $action->isVisible());
+        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => $action->isPrimary());
     }
 
-    public function getHiddenRowActions($model): array
+    /** @return Action[] */
+    public function getSecondaryRowActions($model): array
     {
-        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => ! $action->isVisible());
+        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => $action->isSecondary());
+    }
+
+    /** @return Action[] */
+    public function getTertiaryRowActions($model): array
+    {
+        return array_filter($this->getTable()->getRowActions($model), fn (Action $action) => $action->isTertiary());
     }
 }

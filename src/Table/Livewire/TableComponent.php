@@ -13,8 +13,7 @@ use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithFilters;
-use Thinktomorrow\Chief\Table\Livewire\Concerns\WithHiddenFilters;
-use Thinktomorrow\Chief\Table\Livewire\Concerns\WithMainFilters;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithVariantFilters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithReordering;
@@ -30,8 +29,7 @@ class TableComponent extends Component
     use WithPaginationControl;
     use WithTreeResults;
     use WithFilters;
-    use WithHiddenFilters;
-    use WithMainFilters;
+    use WithVariantFilters;
     use WithSorters;
     use WithActions;
     use WithRowActions;
@@ -51,7 +49,7 @@ class TableComponent extends Component
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
         $this->setDefaultFilters();
-        $this->resetHiddenFilters();
+        $this->resetTertiaryFilters();
         $this->applyDefaultSorters();
 
         // active sorters - selected by user

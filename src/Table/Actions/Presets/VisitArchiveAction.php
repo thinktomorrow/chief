@@ -16,7 +16,6 @@ class VisitArchiveAction extends Action
             ->label('Archief bekijken')
             ->description('In het archief kan je alle gearchiveerde ' . $resource->getPluralLabel() . ' terugvinden.')
             ->prependIcon('<x-chief::icon.archive />')
-            ->link($manager->route('archive_index'))
-            ->hidden();
+            ->link($manager->route('archive_index'));
     }
 }

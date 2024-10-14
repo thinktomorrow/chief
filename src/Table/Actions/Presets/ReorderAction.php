@@ -14,7 +14,6 @@ class ReorderAction extends Action
         return static::make('reorder')
             ->label("Herschikken")
             ->prependIcon('<x-chief::icon.sorting />')
-            ->link($manager->route('index-for-sorting'))
-            ->hidden();
+            ->link($manager->route('index-for-sorting'));
     }
 }

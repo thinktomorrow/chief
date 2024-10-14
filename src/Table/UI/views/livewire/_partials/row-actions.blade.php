@@ -1,12 +1,13 @@
 @php
     $dropdownId = 'table-hidden-row-actions-' . $this->getRowKey($item);
 
-    $visibleRowActions = $this->getVisibleRowActions($item);
-    $hiddenRowActions = $this->getHiddenRowActions($item);
+    $primaryRowActions = $this->getPrimaryRowActions($item);
+    $secondaryRowActions = $this->getSecondaryRowActions($item);
+    $tertiaryRowActions = $this->getTertiaryRowActions($item);
 @endphp
 
 <div class="flex min-h-6 items-center justify-end gap-1">
-    @foreach ($visibleRowActions as $action)
+    @foreach ($secondaryRowActions as $action)
         <x-chief-table::action.button
             :action="$action"
             wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
@@ -15,7 +16,16 @@
         />
     @endforeach
 
-    @if (count($hiddenRowActions) > 0)
+        @foreach ($primaryRowActions as $action)
+            <x-chief-table::action.button
+                :action="$action"
+                wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
+                size="xs"
+                variant="primary"
+            />
+        @endforeach
+
+    @if (count($tertiaryRowActions) > 0)
         <x-chief-table::button
             size="xs"
             variant="quarternary"
@@ -25,7 +35,7 @@
         </x-chief-table::button>
 
         <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">
-            @foreach ($hiddenRowActions as $action)
+            @foreach ($tertiaryRowActions as $action)
                 <x-chief-table::action.dropdown.item
                     wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
                     :action="$action"
