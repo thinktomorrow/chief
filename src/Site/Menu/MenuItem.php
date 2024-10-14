@@ -53,7 +53,9 @@ class MenuItem extends Model implements Node
 
     private function getLocale(?string $locale = null): string
     {
-        if($locale) return $locale;
+        if ($locale) {
+            return $locale;
+        }
 
         return $this->locale ?: app()->getLocale();
     }

@@ -47,7 +47,7 @@ class Menu
     public static function forSite(string $key): NodeCollection
     {
         return static::tree($key)
-            ->remove(fn($menuItem) => $menuItem->isOffline());
+            ->remove(fn ($menuItem) => $menuItem->isOffline());
     }
 
     public static function tree(string $key): NodeCollection
