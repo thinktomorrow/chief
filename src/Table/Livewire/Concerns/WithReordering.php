@@ -4,7 +4,8 @@ namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 
-trait WithReordering {
+trait WithReordering
+{
     public bool $isReordering = true;
 
     public function startReordering()
@@ -25,10 +26,10 @@ trait WithReordering {
     public function reorder()
     {
         dd(func_get_args());
-//        $reorderedPreviewFiles = collect($orderedIds)
-//            ->map(fn ($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
-//            ->all();
-//
-//        $this->previewFiles = $reorderedPreviewFiles;
+        //        $reorderedPreviewFiles = collect($orderedIds)
+        //            ->map(fn ($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
+        //            ->all();
+        //
+        //        $this->previewFiles = $reorderedPreviewFiles;
     }
 }

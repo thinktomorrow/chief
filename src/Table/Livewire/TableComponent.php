@@ -7,7 +7,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
@@ -88,7 +87,7 @@ class TableComponent extends Component
 
     public function render()
     {
-        if($this->isReordering) {
+        if ($this->isReordering) {
             return view('chief-table::reorder.list', []);
         }
 
