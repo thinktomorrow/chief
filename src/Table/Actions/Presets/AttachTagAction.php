@@ -14,7 +14,7 @@ class AttachTagAction extends BulkAction
     public static function makeDefault(string $resourceKey): static
     {
         return static::make('attach-tag')
-            ->label('Tag deze selectie')
+            ->label('Tags toevoegen')
             ->dialog(
                 Dialog::make('tagModal')
                     ->title('Voeg tags toe aan selectie')

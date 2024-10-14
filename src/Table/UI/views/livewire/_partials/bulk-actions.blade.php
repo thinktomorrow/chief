@@ -1,18 +1,33 @@
 <div x-cloak x-show="selection.length > 0" class="flex w-full flex-wrap items-center justify-between gap-3">
-    <div class="flex flex-wrap items-center gap-3">
-        <span class="text-sm text-grey-500">
-            <span x-text="selection.length"></span>
-            geselecteerd
-        </span>
+    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
+            <span class="text-xs text-grey-500">
+                <span x-text="selection.length"></span>
+                geselecteerd
+            </span>
+
+            <div class="flex items-start gap-1">
+                @if ($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
+                    <x-chief-table::button wire:click="bulkSelectAll" variant="tertiary" size="xs">
+                        Selecteer alle {{ $this->resultTotal }}
+                    </x-chief-table::button>
+                @endif
+
+                @if (count($this->bulkSelection) > 0)
+                    <x-chief-table::button wire:click="bulkDeselectAll" variant="tertiary" size="xs">
+                        Deselecteer alle {{ $this->resultTotal }}
+                    </x-chief-table::button>
+                @endif
+            </div>
+        </div>
 
         <div class="flex items-center justify-end gap-1.5">
-
             @foreach ($this->getPrimaryBulkActions() as $action)
-                <x-chief-table::action.button :action="$action" variant="primary" wire:click="applyAction('{{ $action->getKey() }}')" />
+                <x-chief-table::action.button :action="$action" variant="primary" wire:click="applyAction('{{ $action->getKey() }}')" size="xs" />
             @endforeach
 
             @foreach ($this->getSecondaryBulkActions() as $action)
-                <x-chief-table::action.button :action="$action" wire:click="applyAction('{{ $action->getKey() }}')" />
+                <x-chief-table::action.button :action="$action" wire:click="applyAction('{{ $action->getKey() }}')" size="xs" />
             @endforeach
 
             @if (count($this->getTertiaryBulkActions()) > 0)
@@ -36,19 +51,5 @@
                 </div>
             @endif
         </div>
-    </div>
-
-    <div class="flex items-start gap-1">
-        @if ($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
-            <x-chief-table::button wire:click="bulkSelectAll" variant="tertiary" size="xs">
-                Selecteer alle {{ $this->resultTotal }}
-            </x-chief-table::button>
-        @endif
-
-        @if(count($this->bulkSelection) > 0)
-            <x-chief-table::button wire:click="bulkDeselectAll" variant="tertiary" size="xs">
-                Deselecteer alle
-            </x-chief-table::button>
-        @endif
     </div>
 </div>

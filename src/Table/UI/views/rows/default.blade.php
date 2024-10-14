@@ -37,7 +37,7 @@
         </td>
     @endforeach
 
-    <td>
+    <td class="sticky right-0 bg-white">
         @include('chief-table::livewire._partials.row-actions')
     </td>
 </tr>
