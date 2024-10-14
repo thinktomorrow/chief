@@ -32,9 +32,10 @@ class DuplicateModelAction extends Action
                 return true;
             })->redirectOnSuccess(function ($formData, $data) use ($manager) {
                 return $manager->route('edit', ModelReference::fromString($data['item'])->id());
-            })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.');
-            //            ->call('POST', function ($model) use ($manager) {
-            //                return $manager->route('duplicate', $model);
-            //            });
+            })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.')
+//            ->call('POST', function ($model) use ($manager) {
+//                return $manager->route('duplicate', $model);
+//            })
+            ;
     }
 }

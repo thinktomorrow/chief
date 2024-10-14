@@ -104,6 +104,10 @@ class Action extends \Illuminate\View\Component implements Htmlable
             $action->appendIcon($this->appendIcon);
         }
 
+        if($this->redirectOnSuccess) {
+            $action->redirectOnSuccess($this->redirectOnSuccess);
+        }
+
         $action->visible($this->visible);
 
         return $action;
