@@ -13,13 +13,13 @@ use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithFilters;
-use Thinktomorrow\Chief\Table\Livewire\Concerns\WithVariantFilters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithReordering;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithRowActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithSorters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithTreeResults;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithVariantFilters;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
