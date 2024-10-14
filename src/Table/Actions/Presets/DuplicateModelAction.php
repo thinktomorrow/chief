@@ -20,15 +20,17 @@ class DuplicateModelAction extends Action
             ->prependIcon('<x-chief::icon.copy />')
             ->effect(function ($formData, $data) use ($resource, $manager) {
 
-                try{
+                try {
                     $model = ModelReference::fromString($data['item'])->instance();
                     $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
                 } catch (\Exception $e) {
                     report($e);
+
                     return false;
                 }
 
                 Audit::activity()->performedOn($model)->log('duplicated');
+
                 return true;
             })->redirectOnSuccess(function ($formData, $data) use ($manager) {
                 return $manager->route('edit', ModelReference::fromString($data['item'])->id());
