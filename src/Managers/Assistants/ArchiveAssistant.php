@@ -73,9 +73,7 @@ trait ArchiveAssistant
         View::share('is_archive_index', true);
         View::share('manager', $this);
         View::share('resource', $this->resource);
-        View::share('model', $model = $this->managedModelClassInstance());
-
-        //View::share('models', $this->managedModelClass()::archived()->paginate(20)->withQueryString());
+        View::share('table', $this->resource->getArchivedIndexTable());
 
         return $this->resource->getIndexView();
     }

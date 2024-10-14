@@ -1,16 +1,3 @@
-@php
-    // TODO(ben): This is a temporary fix to make sure empty columns are not rendered. Probably not the best way to do it.
-    $columns = collect($this->getColumns($item))
-        ->filter(function ($column) {
-            return count(
-                collect($column->getItems())
-                    ->first()
-                    ->getValues(),
-            ) > 0;
-        })
-        ->toArray();
-@endphp
-
 <div
     x-sortable-item="{{ $item->id }}"
     @class([
@@ -35,7 +22,9 @@
             <x-chief::icon.drag-drop-vertical class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800" />
             <x-chief::icon.arrow-bend-down-right data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800" />
 
-            @foreach ($columns as $column)
+            <span class="p-3 bg-red-50">{{ $item->id }}</span> -
+
+            @foreach ($this->getColumns($item) as $column)
                 <div class="flex items-center gap-1">
                     @foreach ($column->getItems() as $columnItem)
                         {{ $columnItem }}
@@ -49,11 +38,13 @@
             x-sortable-group="{{ $sortableGroup }}"
             x-sortable-ghost-class="table-sort-ghost"
             x-sortable-drag-class="table-sort-drag"
+            x-on:end.stop="console.log($event.target.sortable)"
+{{--            x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"--}}
             class="nested-sortable [&_.nested-sortable]:ml-[28px] [&_[data-slot=indent-icon]]:block"
         >
             @foreach ($item->getChildNodes() as $_item)
                 @include(
-                    'chief-table::rows.default-for-sorting',
+                    'chief-table::reorder.list-item',
                     [
                         'item' => $_item,
                         'sortableGroup' => $sortableGroup,

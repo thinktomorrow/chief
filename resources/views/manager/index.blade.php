@@ -2,15 +2,13 @@
     use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
     $is_archive_index = $is_archive_index ?? false;
+    $is_reorder_index = $is_reorder_index ?? false;
     $title = ucfirst($resource->getIndexTitle());
 
     if ($is_archive_index) {
         $title .= ' archief ';
-        $table = $resource->getArchivedIndexTable();
-        $table->setTableReference(new TableReference($resource::class, 'getArchivedIndexTable'));
-    } else {
-        $table = $resource->getIndexTable();
-        $table->setTableReference(new TableReference($resource::class, 'getIndexTable'));
+    } elseif ($is_reorder_index) {
+        $title .= ' herschikken ';
     }
 @endphp
 
@@ -18,7 +16,7 @@
     <x-slot name="hero">
         <x-chief::page.hero
             :title="$title"
-            :breadcrumbs="!$is_archive_index ? [$resource->getPageBreadCrumb()] : [
+            :breadcrumbs="(!$is_archive_index && !$is_reorder_index) ? [$resource->getPageBreadCrumb()] : [
                 new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', $manager->route('index'))
             ]"
         >

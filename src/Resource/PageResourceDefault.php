@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
@@ -22,6 +23,7 @@ use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
+use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 trait PageResourceDefault
 {
@@ -57,6 +59,7 @@ trait PageResourceDefault
     public function getIndexTable(): Table
     {
         $table = Table::make()
+            ->setTableReference(new TableReference(static::class, 'getIndexTable'))
             ->resource(static::resourceKey())
             ->bulkActions([
                 AttachTagAction::makeDefault(static::resourceKey()),
@@ -65,6 +68,7 @@ trait PageResourceDefault
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey()),
                 VisitArchiveAction::makeDefault(static::resourceKey()),
+                ReorderAction::makeDefault(static::resourceKey()),
             ])
             ->rowActions([
                 EditModelAction::makeDefault(static::resourceKey()),
@@ -104,11 +108,21 @@ trait PageResourceDefault
     public function getArchivedIndexTable(): Table
     {
         return $this->getIndexTable()
+            ->setTableReference(new TableReference(static::class, 'getArchivedIndexTable'))
             ->addQuery(function ($builder) {
                 $builder->archived();
             })
             ->removeFilter('current_state')
             ->removeAction('create')
+            ->removeAction('archive-index');
+    }
+
+    public function getReorderTable(): Table
+    {
+        return $this->getIndexTable()
+            ->setTableReference(new TableReference(static::class, 'getReorderTable'))
+            ->removeAction('create')
+            ->removeAction('reorder')
             ->removeAction('archive-index');
     }
 

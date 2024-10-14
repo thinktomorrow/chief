@@ -7,6 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
@@ -17,6 +18,7 @@ use Thinktomorrow\Chief\Table\Livewire\Concerns\WithHiddenFilters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithMainFilters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithReordering;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithRowActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithSorters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithTreeResults;
@@ -37,6 +39,7 @@ class TableComponent extends Component
     use WithBulkActions;
     use WithBulkSelection;
     use WithNotifications;
+    use WithReordering;
 
     public TableReference $tableReference;
     private ?Table $table = null;
@@ -85,6 +88,10 @@ class TableComponent extends Component
 
     public function render()
     {
+        if($this->isReordering) {
+            return view('chief-table::reorder.list', []);
+        }
+
         return view('chief-table::livewire.table', []);
     }
 

@@ -102,12 +102,15 @@ trait SortAssistant
      */
     public function indexForSorting()
     {
+        View::share('is_reorder_index', true);
+
         View::share('manager', $this);
         View::share('resource', $this->resource);
-        View::share('models', $this->indexModelsForSorting());
-        View::share('model', $this->managedModelClassInstance());
+//        View::share('models', $this->indexModelsForSorting());
+//        View::share('model', $this->managedModelClassInstance());
+        View::share('table', $this->resource->getReorderTable());
 
-        return view('chief::manager.index-for-sorting');
+        return $this->resource->getIndexView();
     }
 
     protected function indexModelsForSorting(): LengthAwarePaginator

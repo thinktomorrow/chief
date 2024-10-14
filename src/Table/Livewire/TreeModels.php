@@ -20,10 +20,6 @@ class TreeModels
         // Reduce the tree to only the models that are expected by the current filtering / sorting.
         $treeIds = (new NestableTree($treeIds->shake(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all()))->all();
 
-        // Paginate the models
-        // TODO: reduce this to only the models that are needed...
-        // Can we fetch only the ID's and afterwards the full models?
-
         // Slice the models for the current page
         $treeIds = collect($treeIds)->slice($offset, $limit)->values();
 

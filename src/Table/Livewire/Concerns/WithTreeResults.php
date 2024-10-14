@@ -39,7 +39,7 @@ trait WithTreeResults
 
         $this->ancestors = $ancestors->all();
 
-        if (! $this->hasPagination() || $forceAsCollection) {
+        if ($this->isReordering || ! $this->hasPagination() || $forceAsCollection) {
             return collect($treeModels);
         }
 
