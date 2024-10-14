@@ -20,8 +20,6 @@ use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasVisibility;
 
 class Action extends \Illuminate\View\Component implements Htmlable
 {
