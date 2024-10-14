@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 
 trait WithReordering
 {
-    public bool $isReordering = true;
+    public bool $isReordering = false;
 
     public function startReordering()
     {
