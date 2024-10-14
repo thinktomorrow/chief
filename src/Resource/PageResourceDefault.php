@@ -155,7 +155,7 @@ trait PageResourceDefault
             return null;
         }
 
-        if($pageType == 'edit' || $pageType == 'create') {
+        if ($pageType == 'edit' || $pageType == 'create') {
             return new BreadCrumb('Overzicht', $this->manager->route('index'));
         }
 
