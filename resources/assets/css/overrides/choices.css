@@ -4,7 +4,7 @@
     overflow: hidden;
     /* margin-bottom: 24px; */
     font-size: 16px;
-    @apply shadow-sm;
+    @apply drop-shadow-sm;
 }
 .choices:focus {
     outline: none;
@@ -69,15 +69,19 @@
     display: none;
 }
 .choices::after {
-    content: '';
+    /* content: '';
     height: 0;
     width: 0;
+    top: 1.2rem;
     border-style: solid;
     border-color: theme('colors.grey.500') transparent transparent transparent;
-    border-width: 5px;
+    border-width: 5px; */
+    content: url('data:image/svg+xml, <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" color="%237e7881" fill="none" > <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>');
+    height: 20px;
+    width: 20px;
     position: absolute;
-    right: 1rem;
-    top: 1.2rem;
+    right: 0.75rem;
+    top: 0.75rem;
     pointer-events: none;
 }
 .choices.is-open::after {
@@ -176,7 +180,7 @@
 
 .choices__list--multiple {
     /* display: inline; */
-    @apply inline-flex flex-wrap items-start gap-1;
+    @apply inline-flex flex-wrap items-start gap-1 empty:hidden;
 }
 .choices__list--multiple .choices__item {
     /* display: inline-block; */
@@ -304,7 +308,7 @@
 
 .choices__item {
     cursor: default;
-    @apply text-grey-700;
+    @apply leading-5 text-grey-700;
 }
 
 .choices__item--selectable {

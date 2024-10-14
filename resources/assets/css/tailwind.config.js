@@ -31,6 +31,7 @@ module.exports = {
             transparent: 'transparent',
             black: colors.black,
             white: colors.white,
+            // grey: colors.gray,
             grey: {
                 50: '#f7f7f8',
                 100: '#f0eef0',
