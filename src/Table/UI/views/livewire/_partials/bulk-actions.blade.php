@@ -40,8 +40,10 @@
             </x-chief-table::button>
         @endif
 
-        <x-chief-table::button x-show="selection.length > 0" wire:click="bulkDeselectAll" variant="tertiary" size="xs">
-            Deselecteer alle
-        </x-chief-table::button>
+        @if(count($this->bulkSelection) > 0)
+            <x-chief-table::button wire:click="bulkDeselectAll" variant="tertiary" size="xs">
+                Deselecteer alle
+            </x-chief-table::button>
+        @endif
     </div>
 </div>
