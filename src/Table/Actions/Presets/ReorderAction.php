@@ -9,10 +9,12 @@ class ReorderAction extends Action
 {
     public static function makeDefault(string $resourceKey): static
     {
+        $resource = app(Registry::class)->resource($resourceKey);
         $manager = app(Registry::class)->manager($resourceKey);
 
         return static::make('reorder')
-            ->label("Herschikken")
+            ->label('Herschikken')
+            ->description('Hiermee kunt u de volgorde van de ' . $resource->getPluralLabel() . ' wijzigen.')
             ->prependIcon('<x-chief::icon.sorting />')
             ->link($manager->route('index-for-sorting'));
     }

@@ -71,7 +71,7 @@ trait PageResourceDefault
                 ReorderAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->rowActions([
-                EditModelAction::makeDefault(static::resourceKey())->primary(),
+                EditModelAction::makeDefault(static::resourceKey())->secondary(),
                 DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->filters([

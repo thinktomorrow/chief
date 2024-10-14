@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Table\Filters\Presets;
 
-use Thinktomorrow\Chief\Table\Filters\TextFilter;
+use Thinktomorrow\Chief\Table\Filters\SearchFilter;
 
-class TitleFilter extends TextFilter
+class TitleFilter extends SearchFilter
 {
     public static function makeDefault(array $columns = [], array $dynamicKeys = ['title'], string $dynamicColumn = 'values'): self
     {

@@ -12,9 +12,5 @@
         ])
     }}
 >
-    <x-chief::icon.search />
-
-    <span class="text-grey-800 *:placeholder:text-grey-500">
-        {{ $slot }}
-    </span>
+    {{ $slot }}
 </span>

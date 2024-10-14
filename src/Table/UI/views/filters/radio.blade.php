@@ -10,7 +10,7 @@
     </x-chief-table::filter.select>
 </button>
 
-<x-chief::dialog.dropdown id="#{{ $id }}-select" placement="bottom-end">
+<x-chief::dialog.dropdown id="#{{ $id }}-select" placement="bottom-start">
     <div class="space-y-3.5 p-3.5">
         <div class="space-y-2">
             @foreach ($options as $value => $label)

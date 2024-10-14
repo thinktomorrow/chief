@@ -16,14 +16,14 @@
         />
     @endforeach
 
-        @foreach ($primaryRowActions as $action)
-            <x-chief-table::action.button
-                :action="$action"
-                wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
-                size="xs"
-                variant="primary"
-            />
-        @endforeach
+    @foreach ($primaryRowActions as $action)
+        <x-chief-table::action.button
+            :action="$action"
+            wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
+            size="xs"
+            variant="primary"
+        />
+    @endforeach
 
     @if (count($tertiaryRowActions) > 0)
         <x-chief-table::button
@@ -34,13 +34,15 @@
             <x-chief::icon.more-vertical-circle />
         </x-chief-table::button>
 
-        <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">
-            @foreach ($tertiaryRowActions as $action)
-                <x-chief-table::action.dropdown.item
-                    wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
-                    :action="$action"
-                />
-            @endforeach
-        </x-chief::dialog.dropdown>
+        <template x-teleport="body">
+            <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">
+                @foreach ($tertiaryRowActions as $action)
+                    <x-chief-table::action.dropdown.item
+                        wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
+                        :action="$action"
+                    />
+                @endforeach
+            </x-chief::dialog.dropdown>
+        </template>
     @endif
 </div>
