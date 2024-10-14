@@ -24,7 +24,7 @@ class DetachTagAction extends BulkAction
                     ->form([
                         MultiSelect::make('tags')
                             ->multiple()
-                            ->options(fn() => app(TagReadRepository::class)->getAllForSelect()),
+                            ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                     ])
                     ->button('Verwijderen')
             )->effect(function ($formData, $data) use ($resourceKey) {
