@@ -24,7 +24,7 @@
     } */
 
     .bui-dropdown-item-default {
-        @apply bg-white text-bui-primary-800 hover:bg-bui-grey-50 hover:text-bui-primary-950;
+        @apply bg-white text-bui-primary-800 hover:bg-grey-50 hover:text-bui-primary-950;
         @apply transition-all duration-150 ease-in-out;
     }
 
