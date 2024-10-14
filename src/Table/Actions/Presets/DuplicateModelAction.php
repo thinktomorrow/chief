@@ -38,6 +38,6 @@ class DuplicateModelAction extends Action
 //            ->call('POST', function ($model) use ($manager) {
 //                return $manager->route('duplicate', $model);
 //            })
-            ;
+        ;
     }
 }
