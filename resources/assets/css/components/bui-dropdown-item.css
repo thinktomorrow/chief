@@ -27,9 +27,12 @@
         @apply bg-white text-bui-primary-800 hover:bg-grey-50 hover:text-bui-primary-950;
         @apply transition-all duration-150 ease-in-out;
     }
-
-    /* .bui-dropdown-item-danger {
+    .bui-dropdown-item-info {
+        @apply bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-800;
+        @apply transition-all duration-150 ease-in-out;
+    }
+    .bui-dropdown-item-danger {
         @apply bg-white text-red-600 hover:bg-red-50 hover:text-red-800;
         @apply transition-all duration-150 ease-in-out;
-    } */
+    }
 }

@@ -95,6 +95,42 @@
         }
     }
 
+    .prose-size-sm {
+        h1 {
+            @extend .h1-size;
+        }
+        h2 {
+            @extend .h2-size;
+        }
+        h3 {
+            @extend .h3-size;
+        }
+        h4 {
+            @extend .h4-size;
+        }
+        h5 {
+            @extend .h5-size;
+        }
+        h6 {
+            @extend .h6-size;
+        }
+
+        p,
+        ol,
+        ul,
+        blockquote,
+        code,
+        img,
+        iframe,
+        form,
+        table,
+        figcaption,
+        cite,
+        li {
+            @apply text-sm;
+        }
+    }
+
     /* Styling to specific elements, mainly added by Chief editor */
     .prose-editor {
         img {
@@ -102,11 +138,11 @@
         }
 
         ul {
-            @apply pl-5 list-disc;
+            @apply list-disc pl-5;
         }
 
         ol {
-            @apply pl-5 list-decimal;
+            @apply list-decimal pl-5;
         }
 
         strong,
@@ -115,7 +151,7 @@
         }
 
         table {
-            @apply inline-block max-w-full overflow-x-auto border-t border-l border-r whitespace-nowrap;
+            @apply inline-block max-w-full overflow-x-auto whitespace-nowrap border-l border-r border-t;
 
             tr {
                 @apply border-b;
