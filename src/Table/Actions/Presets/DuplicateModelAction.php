@@ -16,7 +16,8 @@ class DuplicateModelAction extends Action
         $manager = app(Registry::class)->manager($resourceKey);
 
         return static::make('duplicate')
-            ->label("Kopieer")
+            ->label('Kopiëer ' . $resource->getLabel())
+            ->description('Hiermee maak je een kopie van deze pagina aan, die je meteen kan bewerken.')
             ->prependIcon('<x-chief::icon.copy />')
             ->effect(function ($formData, $data) use ($resource, $manager) {
 
@@ -35,9 +36,9 @@ class DuplicateModelAction extends Action
             })->redirectOnSuccess(function ($formData, $data) use ($manager) {
                 return $manager->route('edit', ModelReference::fromString($data['item'])->id());
             })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.')
-//            ->call('POST', function ($model) use ($manager) {
-//                return $manager->route('duplicate', $model);
-//            })
+            //            ->call('POST', function ($model) use ($manager) {
+            //                return $manager->route('duplicate', $model);
+            //            })
         ;
     }
 }
