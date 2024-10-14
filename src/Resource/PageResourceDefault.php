@@ -198,39 +198,9 @@ trait PageResourceDefault
         return null;
     }
 
-    public function getIndexCardView(): string
-    {
-        return 'chief::manager._index._card';
-    }
-
-    public function getIndexCardTitle($model): string
-    {
-        return $this->getPageTitle($model);
-    }
-
-    public function getIndexCardContent($model): string
-    {
-        return view('chief::manager._index._card-content', ['model' => $model])->render();
-    }
-
     public function getIndexSidebar(): string
     {
         return '';
-    }
-
-    public function showIndexSidebarAside(): bool
-    {
-        return true;
-    }
-
-    public function showIndexOptionsColumn(): bool
-    {
-        return true;
-    }
-
-    public function getIndexPagination(): int
-    {
-        return 20;
     }
 
     public function getSortableType(): string

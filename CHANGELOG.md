@@ -10,9 +10,13 @@ principles.
 
 ### Table component
 
--   `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former options (index and table)
--   `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
--   Removed `TableResource` interface and `TableResourceDefault` trait and methods. Any implementations of these methods should be replaced by a Table method.
+-   Removed `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former options (index and table)
+-   Removed `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
+-   Removed `PageResource::showIndexSidebarAside()` is no longer used and removed from the interface. 
+-   Removed `PageResource::getIndexPagination()()` is no longer used and removed. Use the `Table::paginate()` method instead which defaults to 20 per page. 
+-   Removed `PageResource::showIndexOptionsColumn()` to show edit and options dropdown for each table row. Now set the row actions via the `Table::rowActions()` method.
+-   Removed `PageResource::getIndexCardView()`, `PageResource::getIndexCardTitle(()` and `PageResource::getIndexCardContent(()` to show the index as cards. This is no longer used as table is the only overview layout.
+- Removed `TableResource` interface and `TableResourceDefault` trait and methods. Any implementations of these methods should be replaced by a Table method.
     -   `getTableRow` defined the columns. This is now done via `Table::columns()`.
     -   `getTableRowActions` defined the actions. This is now done via `Table::rowActions()`.
     -   `displayTableHeaderAsSticky` option to set table header sticky is no longer used.
