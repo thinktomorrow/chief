@@ -14,22 +14,23 @@ class PrepareMenuItemsForAdminSelect
         $collection = $items;
 
         if ($model) {
-            $collection = $collection->prune(function (MenuItemNode $node) use ($model) {
+            $collection = $collection->prune(function (MenuItem $node) use ($model) {
                 return ! in_array($model->id, $node->pluckAncestorNodes('id'));
             });
         }
 
-        $menu = $collection->mapRecursive(function (MenuItemNode $node) {
+        $menu = $collection->mapRecursive(function (MenuItem $node) {
             $node->setLabel(
                 ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())) . '> ' : '') .
-                $node->getAnyLabel()
+                $node->getAnyLabel(),
+                app()->getLocale()
             );
 
             return $node;
         });
 
         $menuitems = collect();
-        $menu->flatten()->each(function (MenuItemNode $node) use ($menuitems) {
+        $menu->flatten()->each(function (MenuItem $node) use ($menuitems) {
             $menuitems[] = [
                 'label' => $node->getAnyLabel(),
                 'value' => $node->getNodeId(),

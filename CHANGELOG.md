@@ -31,6 +31,15 @@ Some documentation:
 -   Removed `Resource::indexRepository()`. No longer in use by new Table component.
 -   Removed `Resource::getNestableNodeLabels()`. No longer in use by new Table component.
 
+### Improved and simplified Menu tree retrieval
+
+Menu tree retrieval is now simpler. All the node data is available on the Menu item model. 
+This should not impose a breaking change but you should check your implementation to see if it still works as expected.
+
+-   Removed `MenuItemNode`, `MenuSource` and `ChiefMenuFactory` classes. These are no longer used.
+
+### General improvements
+
 -   Changed: Exports are now stored in the `storage/app/exports` folder.
 -   Fixed: isolate all throwables while exporting all resources.
 

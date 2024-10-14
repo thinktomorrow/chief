@@ -27,7 +27,7 @@ trait WithActions
         $action = $this->getTable()->findAction($actionKey);
 
         if ($action->hasDialog()) {
-            $this->showActionDialog($actionKey, $this->getActionDialogData($action, $payload));
+            $this->showActionDialog($actionKey, $this->getActionPayload($action, $payload));
 
             return;
         }
@@ -36,7 +36,7 @@ trait WithActions
             $this->applyActionEffect(
                 $actionKey,
                 [],
-                $this->getActionDialogData($action, $payload)
+                $this->getActionPayload($action, $payload)
             );
         }
     }
@@ -46,7 +46,7 @@ trait WithActions
         $this->applyAction($actionKey, ['modelReference' => $modelReference]);
     }
 
-    private function getActionDialogData(Action $action, array $payload = []): array
+    private function getActionPayload(Action $action, array $payload = []): array
     {
         if ($action instanceof BulkAction) {
             return ['items' => $this->getBulkSelection()];
@@ -59,32 +59,7 @@ trait WithActions
         return [];
     }
 
-    private function showActionDialog($actionKey, array $data = [])
-    {
-        $action = $this->getTable()->findAction($actionKey);
-
-        $dialogReference = new TableActionDialogReference(
-            $this->getTable()->getTableReference(),
-            $action->getKey(),
-            $action->getDialog()->getId()
-        );
-
-        $this->openActionDialog([
-            'dialogReference' => $dialogReference->toLivewire(),
-            'data' => $data,
-        ]);
-    }
-
-    public function onActionDialogSaved($values)
-    {
-        $this->applyActionEffect(
-            $values['dialogReference']['actionKey'],
-            $values['form'],
-            $values['data']
-        );
-    }
-
-    private function applyActionEffect(string $key, array $formData, array $data = [])
+    private function applyActionEffect(string $key, array $formData, array $data = []): void
     {
         $action = $this->getTable()->findAction($key);
 
@@ -95,7 +70,8 @@ trait WithActions
 
             // Redirect after success
             if ($effectResult && $action->hasRedirectOnSuccess()) {
-                return redirect()->to($action->getRedirectOnSuccess()($formData, $data));
+                redirect()->to($action->getRedirectOnSuccess()($formData, $data));
+                return;
             }
 
             // Effect notification on success or failure
@@ -116,5 +92,30 @@ trait WithActions
     public function openActionDialog($params): void
     {
         $this->dispatch('open' . '-' . $this->getId(), $params)->to('chief-form::dialog');
+    }
+
+    private function showActionDialog($actionKey, array $data = []): void
+    {
+        $action = $this->getTable()->findAction($actionKey);
+
+        $dialogReference = new TableActionDialogReference(
+            $this->getTable()->getTableReference(),
+            $action->getKey(),
+            $action->getDialog()->getId()
+        );
+
+        $this->openActionDialog([
+            'dialogReference' => $dialogReference->toLivewire(),
+            'data' => $data,
+        ]);
+    }
+
+    public function onActionDialogSaved($values): void
+    {
+        $this->applyActionEffect(
+            $values['dialogReference']['actionKey'],
+            $values['form'],
+            $values['data']
+        );
     }
 }

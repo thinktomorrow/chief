@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -17,8 +16,6 @@ class MenuForSiteTest extends ChiefTestCase
 
     public function tearDown(): void
     {
-        ChiefMenuFactory::clearLoaded();
-
         parent::tearDown();
     }
 
@@ -41,7 +38,7 @@ class MenuForSiteTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $collection = chiefmenu('main', 'nl');
+        $collection = chiefmenu('main');
 
         $this->assertCount(2, $collection);
     }
@@ -62,7 +59,7 @@ class MenuForSiteTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $collection = chiefmenu('main', 'nl');
+        $collection = chiefmenu('main');
 
         $this->assertCount(1, $collection);
     }

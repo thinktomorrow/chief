@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Menu;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Menu
 {
@@ -41,5 +42,18 @@ class Menu
     public function label(): string
     {
         return $this->label;
+    }
+
+    public static function forSite(string $key): NodeCollection
+    {
+        return static::tree($key)
+            ->remove(fn($menuItem) => $menuItem->isOffline());
+    }
+
+    public static function tree(string $key): NodeCollection
+    {
+        return NodeCollection::fromIterable(
+            MenuItem::where('menu_type', $key)->get()
+        )->sort('order');
     }
 }
