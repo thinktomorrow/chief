@@ -44,6 +44,7 @@ This should not impose a breaking change but you should check your implementatio
 
 ### General improvements
 
+-   Changed: Extracted partial logic from `StateAssistant` to a `UpdateState` as an action for reuse between commands.
 -   Changed: Exports are now stored in the `storage/app/exports` folder.
 -   Fixed: isolate all throwables while exporting all resources.
 

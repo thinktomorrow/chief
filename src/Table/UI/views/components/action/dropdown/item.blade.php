@@ -3,6 +3,7 @@
 ])
 
 <x-chief::dialog.dropdown.item
+    x-on:click="{{ $action->shouldCloseDialog() ? 'close()' : '' }}"
     :attributes="$action->hasLink() ? $attributes->merge(['href' => $action->getLink(), 'title' => $action->getLabel()]) : $attributes"
 >
     {!! $action->getPrependIcon() !!}

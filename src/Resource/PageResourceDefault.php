@@ -14,6 +14,8 @@ use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateModelAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
@@ -71,6 +73,8 @@ trait PageResourceDefault
             ])
             ->rowActions([
                 EditModelAction::makeDefault(static::resourceKey())->secondary(),
+                OnlineStateModelAction::makeDefault(static::resourceKey())->tertiary(),
+                OfflineStateModelAction::makeDefault(static::resourceKey())->tertiary(),
                 DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->filters([
