@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\Managers\Register\Registry;

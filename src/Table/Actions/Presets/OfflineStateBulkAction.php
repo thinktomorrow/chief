@@ -2,12 +2,8 @@
 
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
-use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
@@ -22,8 +18,8 @@ class OfflineStateBulkAction extends Action
                 $modelIds = $data['items'];
                 $failedModelIds = [];
 
-                foreach($modelIds as $modelId) {
-                    try{
+                foreach ($modelIds as $modelId) {
+                    try {
                         app(UpdateState::class)->handle(
                             $resourceKey,
                             ModelReference::fromString($resourceKey .'@'. $modelId),
@@ -37,9 +33,9 @@ class OfflineStateBulkAction extends Action
                 }
 
                 // TODO: allow to pass effect data to notification to show amount of fails...
-//                if(count($failedModelIds) > 0) {
-//                    return false;
-//                }
+                //                if(count($failedModelIds) > 0) {
+                //                    return false;
+                //                }
 
                 return true;
             })
