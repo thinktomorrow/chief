@@ -12,8 +12,10 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateModelAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateModelAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateBulkAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateRowAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateBulkAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
@@ -62,7 +64,8 @@ trait PageResourceDefault
             ->setTableReference(new TableReference(static::class, 'getIndexTable'))
             ->resource(static::resourceKey())
             ->bulkActions([
-
+                OnlineStateBulkAction::makeDefault(static::resourceKey()),
+                OfflineStateBulkAction::makeDefault(static::resourceKey()),
             ])
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey())->primary(),
@@ -71,8 +74,8 @@ trait PageResourceDefault
             ])
             ->rowActions([
                 EditModelAction::makeDefault(static::resourceKey())->secondary(),
-                OnlineStateModelAction::makeDefault(static::resourceKey())->tertiary(),
-                OfflineStateModelAction::makeDefault(static::resourceKey())->tertiary(),
+                OnlineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
+                OfflineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
                 DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->filters([

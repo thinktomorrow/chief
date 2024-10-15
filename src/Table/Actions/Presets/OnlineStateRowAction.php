@@ -10,12 +10,12 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
-class OfflineStateModelAction extends Action
+class OnlineStateRowAction extends Action
 {
-    public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'unpublish'): static
+    public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'publish'): static
     {
-        return static::make('offline-state')
-            ->label('Zet offline')
+        return static::make('online-state-row')
+            ->label('Zet online')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
 
                 app(UpdateState::class)->handle(
@@ -28,10 +28,9 @@ class OfflineStateModelAction extends Action
 
                 return true;
             })
-            ->keepDialogOpen()
-            ->notifyOnSuccess('Staat nu offline')->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.')
+            ->notifyOnSuccess('Staat nu online!')->notifyOnFailure('Er is iets misgegaan bij het online zetten van dit item.')
             ->when(function ($model) {
-                return $model instanceof StatefulContract && $model->inOnlineState();
+                return $model instanceof StatefulContract && !$model->inOnlineState();
             })
         ;
     }

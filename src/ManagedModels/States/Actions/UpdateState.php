@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -24,7 +25,7 @@ class UpdateState {
         $this->registry = $registry;
     }
 
-    public function handle(string $resourceKey, ModelReference $modelReference, string $stateKey, string $transitionKey, array $data = [], array $files = [])
+    public function handle(string $resourceKey, ModelReference $modelReference, string $stateKey, string $transitionKey, array $data = [], array $files = []): void
     {
         $resource = $this->registry->resource($resourceKey);
         $model = $modelReference->instance();
