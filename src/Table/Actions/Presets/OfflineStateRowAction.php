@@ -13,8 +13,8 @@ class OfflineStateRowAction extends Action
     {
         return static::make('offline-state-row')
             ->label('Zet offline')
+            ->prependIcon('<x-chief::icon.view-off-slash />')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
-
                 app(UpdateState::class)->handle(
                     $resourceKey,
                     ModelReference::fromString($data['item']),

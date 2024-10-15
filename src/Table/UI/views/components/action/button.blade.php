@@ -2,9 +2,17 @@
     'action',
 ])
 
-<x-chief-table::button
-    :attributes="$action->hasLink() ? $attributes->merge(['href' => $action->getLink(), 'title' => $action->getLabel()]) : $attributes"
->
+@php
+    if ($action->hasLink()) {
+        $attributes = $attributes->merge(['href' => $action->getLink(), 'title' => $action->getLabel()]);
+    }
+
+    if ($action->getVariant()) {
+        $attributes = $attributes->filter(fn ($value, $key) => $key !== 'variant')->merge(['variant' => $action->getVariant()]);
+    }
+@endphp
+
+<x-chief-table::button :attributes="$attributes">
     {!! $action->getPrependIcon() !!}
 
     @if ($action->getLabel())

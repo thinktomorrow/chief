@@ -6,7 +6,7 @@
                 title="herschikken"
                 class="shrink-0"
                 size="sm"
-                variant="tertiary"
+                variant="outline-white"
             >
                 <x-chief::icon.drag-drop-vertical />
             </x-chief-table::button>
@@ -57,7 +57,7 @@
                 title="Fragment aanpassen"
                 class="shrink-0"
                 size="sm"
-                variant="secondary"
+                variant="grey"
             >
                 <x-chief::icon.quill-write />
             </x-chief-table::button>

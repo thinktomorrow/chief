@@ -22,7 +22,7 @@
 
         <x-slot name="footer">
             <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
-            <x-chief-table::button wire:click="save" variant="primary" class="shrink-0">
+            <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">
                     {{ $this->getButton() }}
             </x-chief-table::button>
         </x-slot>

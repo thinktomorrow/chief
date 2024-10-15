@@ -1,6 +1,6 @@
 @props([
     'size' => 'base',
-    'variant' => 'default',
+    'variant' => 'grey',
 ])
 
 @php
@@ -8,14 +8,15 @@
         'bui-dropdown-item cursor-pointer font-medium',
         match ($size) {
             'base' => 'bui-dropdown-item-base',
-            //'sm' => 'bui-dropdown-item-sm',
             default => 'bui-dropdown-item-base',
         },
         match ($variant) {
-            'default' => 'bui-dropdown-item-default',
-            'info' => 'bui-dropdown-item-info',
-            'danger' => 'bui-dropdown-item-danger',
-            default => 'bui-dropdown-item-default',
+            'grey' => 'bui-dropdown-item-grey',
+            'red' => 'bui-dropdown-item-red',
+            'orange' => 'bui-dropdown-item-orange',
+            'light-blue' => 'bui-dropdown-item-light-blue',
+            'green' => 'bui-dropdown-item-green',
+            default => 'bui-dropdown-item-grey',
         },
     ]);
 @endphp

@@ -4,7 +4,11 @@
             <div class="flex flex-1 justify-between sm:hidden">
                 <span>
                     @if ($paginator->onFirstPage())
-                        <x-chief-table::button size="sm" variant="tertiary" class="pointer-events-none text-grey-400">
+                        <x-chief-table::button
+                            size="sm"
+                            variant="outline-white"
+                            class="pointer-events-none text-grey-400"
+                        >
                             <x-chief::icon.arrow-left />
                             <span>Vorige</span>
                         </x-chief-table::button>
@@ -14,7 +18,7 @@
                             wire:loading.attr="disabled"
                             dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before"
                             size="sm"
-                            variant="tertiary"
+                            variant="outline-white"
                         >
                             <x-chief::icon.arrow-left />
                             <span>Vorige</span>
@@ -29,13 +33,17 @@
                             wire:loading.attr="disabled"
                             dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before"
                             size="sm"
-                            variant="tertiary"
+                            variant="outline-white"
                         >
                             <span>Vorige</span>
                             <x-chief::icon.arrow-right />
                         </x-chief-table::button>
                     @else
-                        <x-chief-table::button size="sm" variant="tertiary" class="pointer-events-none text-grey-400">
+                        <x-chief-table::button
+                            size="sm"
+                            variant="outline-white"
+                            class="pointer-events-none text-grey-400"
+                        >
                             <span>Vorige</span>
                             <x-chief::icon.arrow-right />
                         </x-chief-table::button>
@@ -63,7 +71,7 @@
                                 <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
                                     <x-chief-table::button
                                         size="sm"
-                                        variant="tertiary"
+                                        variant="outline-white"
                                         class="rounded-r-none text-grey-400"
                                     >
                                         <x-chief::icon.arrow-left />
@@ -76,7 +84,7 @@
                                     rel="prev"
                                     aria-label="{{ __('pagination.previous') }}"
                                     size="sm"
-                                    variant="tertiary"
+                                    variant="outline-white"
                                     class="rounded-r-none hover:relative"
                                 >
                                     <x-chief::icon.arrow-left />
@@ -91,7 +99,7 @@
                                 <span aria-disabled="true">
                                     <x-chief-table::button
                                         size="sm"
-                                        variant="tertiary"
+                                        variant="outline-white"
                                         class="pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
                                     >
                                         {{ $element }}
@@ -107,7 +115,7 @@
                                             <span aria-current="page">
                                                 <x-chief-table::button
                                                     size="sm"
-                                                    variant="tertiary"
+                                                    variant="outline-white"
                                                     class="pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
                                                 >
                                                     {{ $page }}
@@ -118,7 +126,7 @@
                                                 wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
                                                 aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
                                                 size="sm"
-                                                variant="tertiary"
+                                                variant="outline-white"
                                                 class="min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"
                                             >
                                                 {{ $page }}
@@ -138,7 +146,7 @@
                                     rel="next"
                                     aria-label="{{ __('pagination.next') }}"
                                     size="sm"
-                                    variant="tertiary"
+                                    variant="outline-white"
                                     class="rounded-l-none hover:relative"
                                 >
                                     <x-chief::icon.arrow-right />
@@ -147,7 +155,7 @@
                                 <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
                                     <x-chief-table::button
                                         size="sm"
-                                        variant="tertiary"
+                                        variant="outline-white"
                                         class="rounded-l-none text-grey-400"
                                     >
                                         <x-chief::icon.arrow-right />

@@ -8,13 +8,13 @@
 
             <div class="flex items-start gap-1">
                 @if ($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
-                    <x-chief-table::button wire:click="bulkSelectAll" variant="tertiary" size="xs">
+                    <x-chief-table::button wire:click="bulkSelectAll" variant="outline-white" size="xs">
                         Selecteer alle {{ $this->resultTotal }}
                     </x-chief-table::button>
                 @endif
 
                 @if (count($this->bulkSelection) > 0)
-                    <x-chief-table::button wire:click="bulkDeselectAll" variant="tertiary" size="xs">
+                    <x-chief-table::button wire:click="bulkDeselectAll" variant="outline-white" size="xs">
                         Deselecteer alle {{ $this->resultTotal }}
                     </x-chief-table::button>
                 @endif
@@ -27,7 +27,7 @@
                     :action="$action"
                     wire:click="applyAction('{{ $action->getKey() }}')"
                     size="xs"
-                    variant="primary"
+                    variant="blue"
                 />
             @endforeach
 
@@ -36,7 +36,7 @@
                     :action="$action"
                     wire:click="applyAction('{{ $action->getKey() }}')"
                     size="xs"
-                    variant="secondary"
+                    variant="grey"
                 />
             @endforeach
 
@@ -45,7 +45,7 @@
                     <x-chief-table::button
                         x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-bulk-actions' })"
                         size="xs"
-                        variant="tertiary"
+                        variant="outline-white"
                     >
                         <x-chief::icon.more-vertical-circle />
                     </x-chief-table::button>

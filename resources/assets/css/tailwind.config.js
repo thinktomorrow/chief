@@ -68,6 +68,7 @@ module.exports = {
             orange: colors.orange,
             green: colors.green,
             blue: colors.sky,
+            'light-blue': colors.sky,
         },
         container: {
             center: true,

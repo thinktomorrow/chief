@@ -1,8 +1,10 @@
 @layer components {
     .bui-dropdown-item {
         @apply flex w-max items-start text-left;
+        @apply transition-all duration-150 ease-in-out;
     }
 
+    /* Sizes */
     .bui-dropdown-item-base {
         @apply gap-1.5 px-3.5 py-2 text-base leading-5;
 
@@ -12,7 +14,6 @@
             @apply first:-ml-1 last:-mr-1;
         }
     }
-
     /* .bui-dropdown-item-sm {
         @apply gap-[0.1875rem] px-[0.8135rem] py-1.5 text-sm leading-[1.125rem];
 
@@ -23,16 +24,20 @@
         }
     } */
 
-    .bui-dropdown-item-default {
+    /* Variants */
+    .bui-dropdown-item-grey {
         @apply bg-white text-bui-primary-800 hover:bg-grey-50 hover:text-bui-primary-950;
-        @apply transition-all duration-150 ease-in-out;
     }
-    .bui-dropdown-item-info {
-        @apply bg-white text-blue-600 hover:bg-blue-50 hover:text-blue-800;
-        @apply transition-all duration-150 ease-in-out;
+    .bui-dropdown-item-red {
+        @apply bg-white text-red-800 hover:bg-red-50 hover:text-red-600;
     }
-    .bui-dropdown-item-danger {
-        @apply bg-white text-red-600 hover:bg-red-50 hover:text-red-800;
-        @apply transition-all duration-150 ease-in-out;
+    .bui-dropdown-item-orange {
+        @apply bg-white text-orange-800 hover:bg-orange-50 hover:text-orange-600;
+    }
+    .bui-dropdown-item-light-blue {
+        @apply bg-white text-light-blue-800 hover:bg-light-blue-50 hover:text-light-blue-600;
+    }
+    .bui-dropdown-item-green {
+        @apply bg-white text-green-800 hover:bg-green-50 hover:text-green-600;
     }
 }

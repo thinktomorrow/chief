@@ -72,16 +72,16 @@
                 @endif
 
                 @if (count($files) > 1 && $allowMultiple())
-                    <x-chief-table::button wire:sortable.handle size="sm" variant="secondary">
+                    <x-chief-table::button wire:sortable.handle size="sm" variant="grey">
                         <x-chief::icon.drag-drop-vertical />
                     </x-chief-table::button>
                 @endif
 
-                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="tertiary">
+                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="outline-white">
                     <x-chief::icon.delete />
                 </x-chief-table::button>
 
-                <x-chief-table::button wire:click="openFileEdit('{{ $file->id }}')" size="sm" variant="secondary">
+                <x-chief-table::button wire:click="openFileEdit('{{ $file->id }}')" size="sm" variant="grey">
                     <x-chief::icon.quill-write />
                 </x-chief-table::button>
             </div>
@@ -95,7 +95,7 @@
                     {{ ucfirst($file->validationMessage) }}
                 </span>
 
-                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="secondary">
+                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="grey">
                     <x-chief::icon.cancel />
                 </x-chief-table::button>
             </div>
@@ -109,7 +109,7 @@
                     <span class="body body-dark text-sm">{{ $file->filename }} wordt niet bewaard</span>
                 @endif
 
-                <x-chief-table::button wire:click="undoDeleteFile('{{ $file->id }}')" size="sm" variant="secondary">
+                <x-chief-table::button wire:click="undoDeleteFile('{{ $file->id }}')" size="sm" variant="grey">
                     <x-chief::icon.arrow-turn-backward />
                     <span>Ongedaan maken</span>
                 </x-chief-table::button>
