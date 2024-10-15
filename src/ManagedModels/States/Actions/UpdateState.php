@@ -13,7 +13,8 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-class UpdateState {
+class UpdateState
+{
 
     private FieldValidator $fieldValidator;
     private Registry $registry;
@@ -30,7 +31,7 @@ class UpdateState {
         $resource = $this->registry->resource($resourceKey);
         $model = $modelReference->instance();
 
-        if(!$model instanceof StatefulContract) {
+        if (! $model instanceof StatefulContract) {
             throw new \Exception('Model does not implement StatefulContract');
         }
 
