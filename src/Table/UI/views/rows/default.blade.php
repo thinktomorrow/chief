@@ -7,7 +7,7 @@
 >
     <td
         x-show="showCheckboxes"
-        class="relative text-left"
+        class="relative text-left align-top"
         :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-px before:bg-primary-500': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
     >
         <div class="flex min-h-6 items-center">
@@ -22,7 +22,7 @@
     </td>
 
     @foreach ($this->getColumns($item) as $column)
-        <td class="text-left">
+        <td class="text-left align-top">
             <div class="flex min-h-6 items-center gap-1.5">
                 @if ($loop->first && isset($item->indent) && $item->indent > 0)
                     <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
@@ -37,7 +37,7 @@
         </td>
     @endforeach
 
-    <td data-slot="actions" class="sticky right-0 bg-white">
+    <td data-slot="actions" class="sticky right-0 bg-white align-top">
         @include('chief-table::livewire._partials.row-actions')
     </td>
 </tr>

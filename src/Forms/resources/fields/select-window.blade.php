@@ -9,7 +9,7 @@
                 @foreach ($getOptions() as $group)
                     @foreach ($group['options'] as $optionValue)
                         @if ($optionValue['value'] == $value)
-                            <span class="bui-label bui-label-sm bui-label-grey inline-block">
+                            <span class="badge badge-sm badge-grey inline-block">
                                 {{ $optionValue['label'] }}
                             </span>
                         @endif
@@ -20,7 +20,7 @@
             @foreach ($selected as $value)
                 @foreach ($getOptions() as $optionValue)
                     @if ($optionValue['value'] == $value)
-                        <span class="bui-label bui-label-sm bui-label-grey inline-block">
+                        <span class="badge badge-sm badge-grey inline-block">
                             {{ $optionValue['label'] }}
                         </span>
                     @endif
