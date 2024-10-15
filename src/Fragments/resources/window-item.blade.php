@@ -1,11 +1,15 @@
 <div data-fragment data-sortable-id="{{ $model->fragmentModel()->id }}" class="w-full">
     <div class="space-y-4 py-4">
         <div class="flex items-start justify-end space-x-3">
-            <button type="button" data-sortable-handle class="shrink-0">
-                <x-chief::button>
-                    <svg><use xlink:href="#icon-chevron-up-down"></use></svg>
-                </x-chief::button>
-            </button>
+            <x-chief-table::button
+                data-sortable-handle
+                title="herschikken"
+                class="shrink-0"
+                size="sm"
+                variant="tertiary"
+            >
+                <x-chief::icon.drag-drop-vertical />
+            </x-chief-table::button>
 
             <div class="my-1 flex grow flex-wrap items-start gap-1">
                 <span class="h1-dark font-medium leading-6">
@@ -47,16 +51,16 @@
             </div>
 
             @adminCan('fragment-edit')
-            <a
+            <x-chief-table::button
                 data-sidebar-trigger
-                href="@adminRoute('fragment-edit', $owner, $model)"
+                :href="$manager->route('fragment-edit', $owner, $model)"
                 title="Fragment aanpassen"
                 class="shrink-0"
+                size="sm"
+                variant="secondary"
             >
-                <x-chief::button>
-                    <svg><use xlink:href="#icon-edit"></use></svg>
-                </x-chief::button>
-            </a>
+                <x-chief::icon.quill-write />
+            </x-chief-table::button>
             @endAdminCan
         </div>
 

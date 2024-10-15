@@ -2,7 +2,7 @@
     data-table-row="{{ $this->getRowKey($item) }}"
     x-key="{{ $this->getRowKey($item) }}"
     wire:key="{{ $this->getRowKey($item) }}"
-    :class="{ 'bg-grey-25': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
+    :class="{ 'bg-grey-25 [&_[data-slot=actions]]:bg-grey-25': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
     class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4"
 >
     <td
@@ -37,7 +37,7 @@
         </td>
     @endforeach
 
-    <td class="sticky right-0 bg-white">
+    <td data-slot="actions" class="sticky right-0 bg-white">
         @include('chief-table::livewire._partials.row-actions')
     </td>
 </tr>

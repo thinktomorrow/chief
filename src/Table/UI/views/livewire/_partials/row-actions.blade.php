@@ -1,6 +1,5 @@
 @php
     $dropdownId = 'table-hidden-row-actions-' . $this->getRowKey($item);
-
     $primaryRowActions = $this->getPrimaryRowActions($item);
     $secondaryRowActions = $this->getSecondaryRowActions($item);
     $tertiaryRowActions = $this->getTertiaryRowActions($item);
@@ -28,7 +27,7 @@
     @if (count($tertiaryRowActions) > 0)
         <x-chief-table::button
             size="xs"
-            variant="quarternary"
+            variant="quaternary"
             x-on:click="$dispatch('open-dialog', { 'id': '{{ $dropdownId }}' })"
         >
             <x-chief::icon.more-vertical-circle />

@@ -18,9 +18,9 @@
     @if($editUrl || $buttons)
         <x-slot name="buttons">
             @if($editUrl)
-                <a data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen">
-                    <x-chief::icon-button icon="icon-edit" />
-                </a>
+                <x-chief-table::button data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" size="sm" variant="secondary">
+                    <x-chief::icon.quill-write />
+                </x-chief-table::button>
             @endif
 
             @if($buttons)

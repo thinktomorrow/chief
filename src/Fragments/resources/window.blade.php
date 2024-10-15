@@ -1,5 +1,10 @@
-<x-chief-form::window :refresh-url="$manager->route('fragments-show', $owner)" tags="fragments" class="card">
-    <div class="relative -my-4">
+<x-chief-form::window
+    title="Fragmenten"
+    :refresh-url="$manager->route('fragments-show', $owner)"
+    tags="fragments"
+    class="card"
+>
+    <div class="relative -mb-4">
         @include(
             'chief::manager.windows.fragments.component.fragment-select',
             [
@@ -9,11 +14,11 @@
         )
 
         <div
-            data-fragments-container
             data-sortable
             data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
             data-sortable-is-sorting
-            class="divide-y divide-grey-100"
+            data-fragments-container
+            class="divide-y divide-grey-100 border-t border-grey-100"
         >
             @foreach ($fragments as $fragment)
                 @include(

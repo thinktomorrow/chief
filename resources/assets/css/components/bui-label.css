@@ -4,11 +4,11 @@
  **/
 @layer components {
     .bui-label {
-        @apply inline-block font-normal;
+        @apply inline-block;
     }
 
     .bui-label-base {
-        @apply rounded-lg px-2 py-1.5 text-base leading-5;
+        @apply rounded-xl px-2 py-1.5 text-base leading-5;
     }
 
     .bui-label-sm {
@@ -16,7 +16,7 @@
     }
 
     .bui-label-xs {
-        @apply rounded-md px-1.5 py-1 text-xs leading-[.875rem];
+        @apply rounded-lg px-1.5 py-1 text-xs leading-[.875rem];
     }
 
     .bui-label-green {
