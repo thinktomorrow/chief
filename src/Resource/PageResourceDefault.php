@@ -9,9 +9,7 @@ use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
-use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
@@ -62,8 +60,7 @@ trait PageResourceDefault
             ->setTableReference(new TableReference(static::class, 'getIndexTable'))
             ->resource(static::resourceKey())
             ->bulkActions([
-                AttachTagAction::makeDefault(static::resourceKey()),
-                DetachTagAction::makeDefault(static::resourceKey()),
+
             ])
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey())->primary(),
