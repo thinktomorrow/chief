@@ -7,19 +7,9 @@
 >
     {!! $action->getPrependIcon() !!}
 
-    @if ($action->getLabel() || $action->getDescription())
-        <div class="max-w-80 space-y-1">
-            @if ($action->getLabel())
-                <p>{{ $action->getLabel() }}</p>
-            @endif
-
-            @if ($action->getDescription())
-                <div class="prose-format prose-editor prose-size-sm text-wrap text-grey-500">
-                    <p>{!! $action->getDescription() !!}</p>
-                </div>
-            @endif
-        </div>
-    @endif
+    <x-chief::dialog.dropdown.item.content label="{{ $action->getLabel() }}">
+        <p>{!! $action->getDescription() !!}</p>
+    </x-chief::dialog.dropdown.item.content>
 
     {!! $action->getAppendIcon() !!}
 </x-chief::dialog.dropdown.item>
