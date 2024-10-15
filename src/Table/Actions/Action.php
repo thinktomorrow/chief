@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Table\Actions;
 
 use Illuminate\Contracts\Support\Htmlable;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
+use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
+use Thinktomorrow\Chief\Table\Actions\Concerns\CloseDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasEffect;
-use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
-use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
-use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
-use Thinktomorrow\Chief\Table\Actions\Concerns\CloseDialog;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
-use Thinktomorrow\Chief\Table\Actions\Concerns\HasWhenCondition;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRedirectOnSuccess;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasWhenCondition;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
 
 class Action extends \Illuminate\View\Component implements Htmlable
 {

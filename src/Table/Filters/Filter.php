@@ -57,7 +57,7 @@ abstract class Filter extends Component
                     //$query->whereJsonLike($this->key, $value);
                 }
             } else {
-                return $query->filter(fn($item) => str_contains(strtolower($item[$this->key]), strtolower($value)));
+                return $query->filter(fn ($item) => str_contains(strtolower($item[$this->key]), strtolower($value)));
             }
         });
     }
