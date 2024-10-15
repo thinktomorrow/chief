@@ -40,10 +40,12 @@
 
     /* Variants */
     .bui-btn-primary {
+        @apply shadow-none;
         @apply bg-primary-500 text-white hover:bg-primary-600;
         @apply transition-all duration-150 ease-in-out;
     }
     .bui-btn-secondary {
+        @apply shadow-none;
         @apply bg-grey-100 text-bui-primary-800 hover:bg-grey-200 hover:text-bui-primary-950;
         @apply transition-all duration-150 ease-in-out;
     }
@@ -51,9 +53,9 @@
         @apply bg-white text-bui-primary-800 ring-1 ring-inset ring-grey-100 hover:text-bui-primary-950 hover:ring-grey-200;
         @apply transition-all duration-150 ease-in-out;
     }
-    .bui-btn-quarternary {
+    .bui-btn-quaternary {
         @apply shadow-none;
-        @apply bg-white text-bui-primary-800 hover:bg-grey-950/5 hover:text-bui-primary-950;
+        @apply bg-transparent text-bui-primary-800 hover:bg-grey-950/5 hover:text-bui-primary-950;
         @apply transition-all duration-150 ease-in-out;
     }
 }

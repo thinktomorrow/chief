@@ -9,29 +9,24 @@
 >
     <!-- plus icon -->
     @if ($hideSelectOptions)
-        <div
-            data-fragment-select-open
-            class="absolute z-[1] -mt-4 flex h-8 w-full cursor-pointer justify-center border-none"
-        >
-            <div class="absolute">
-                <x-chief::button>
-                    <svg><use xlink:href="#icon-plus"></use></svg>
-                </x-chief::button>
-            </div>
+        <div class="absolute z-[1] flex h-8 w-full justify-center">
+            <x-chief-table::button data-fragment-select-open size="sm" class="absolute -top-3.5">
+                <x-chief::icon.plus-sign />
+            </x-chief-table::button>
         </div>
     @endif
 
     <!-- select options: create new or add existing -->
     <div
         data-fragment-select-options
-        class="{{ $hideSelectOptions ? 'hidden' : '' }} pop fragment-select-options relative py-6"
+        class="{{ $hideSelectOptions ? 'hidden' : '' }} fragment-select-options relative border-t border-grey-100 py-6"
     >
         <div
-            class="flex flex-col-reverse flex-wrap items-end justify-center gap-4 sm:flex-row sm:flex-nowrap sm:items-stretch sm:gap-6"
+            class="flex flex-col-reverse flex-wrap items-end justify-center gap-3 sm:flex-row sm:flex-nowrap sm:items-stretch"
         >
-            <div class="w-8 shrink-0"></div>
+            <div class="w-7 shrink-0"></div>
 
-            <div class="w-full">
+            <div class="pop w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-new', $owner) }}"
@@ -43,7 +38,7 @@
                 </a>
             </div>
 
-            <div class="w-full">
+            <div class="pop w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
@@ -55,11 +50,11 @@
                 </a>
             </div>
 
-            <div class="flex w-8 shrink-0 justify-end">
+            <div class="flex w-7 shrink-0 items-start justify-end">
                 @if ($hideSelectOptions)
-                    <span data-fragment-select-close class="cursor-pointer">
-                        <x-chief::icon-button icon="icon-x-mark" color="grey" />
-                    </span>
+                    <x-chief-table::button data-fragment-select-close size="sm" variant="quaternary">
+                        <x-chief::icon.cancel />
+                    </x-chief-table::button>
                 @endif
             </div>
         </div>

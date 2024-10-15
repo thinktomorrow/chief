@@ -23,11 +23,21 @@
 
         <div class="flex items-center justify-end gap-1.5">
             @foreach ($this->getPrimaryBulkActions() as $action)
-                <x-chief-table::action.button :action="$action" variant="primary" wire:click="applyAction('{{ $action->getKey() }}')" size="xs" />
+                <x-chief-table::action.button
+                    :action="$action"
+                    wire:click="applyAction('{{ $action->getKey() }}')"
+                    size="xs"
+                    variant="primary"
+                />
             @endforeach
 
             @foreach ($this->getSecondaryBulkActions() as $action)
-                <x-chief-table::action.button :action="$action" wire:click="applyAction('{{ $action->getKey() }}')" size="xs" />
+                <x-chief-table::action.button
+                    :action="$action"
+                    wire:click="applyAction('{{ $action->getKey() }}')"
+                    size="xs"
+                    variant="secondary"
+                />
             @endforeach
 
             @if (count($this->getTertiaryBulkActions()) > 0)

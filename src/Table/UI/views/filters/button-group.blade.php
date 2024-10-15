@@ -35,14 +35,14 @@
     x-on:{{ $this->getFiltersUpdatedEvent() }}.window="repositionCheckedOptionMarker"
     x-on:dialog-opened.window="repositionCheckedOptionMarker"
     @class([
-        'rounded-[0.625rem] bg-grey-100 ring-1 ring-grey-100',
+        'rounded-[0.625rem] bg-grey-100',
     ])
 >
-    <div class="relative flex items-start justify-start">
+    <div class="relative flex items-start justify-start border border-transparent">
         <div
             x-ref="optionMarker"
             x-show="activeRadio"
-            class="bui-btn bui-btn-base bui-btn-tertiary absolute left-0 rounded-[0.5625rem] transition-all duration-150 ease-out"
+            class="bui-btn bui-btn-base bui-btn-tertiary absolute left-0 rounded-[0.5625rem] py-[0.4375rem] ring-0 transition-all duration-150 ease-out"
         >
             <span class="h-5"></span>
         </div>
@@ -62,7 +62,7 @@
 
                 <label
                     for="{{ $id }}-{{ $option['value'] }}"
-                    class="bui-btn bui-btn-base cursor-pointer text-grey-800 shadow-none peer-checked:text-grey-950"
+                    class="bui-btn bui-btn-base cursor-pointer py-[0.4375rem] text-grey-800 shadow-none peer-checked:text-grey-950"
                 >
                     {!! $option['label'] !!}
                 </label>

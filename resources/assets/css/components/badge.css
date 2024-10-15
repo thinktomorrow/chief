@@ -3,35 +3,35 @@
  * This will make them responsive and combinable with variants
  **/
 @layer components {
-    .bui-label {
-        @apply inline-block font-normal;
+    .badge {
+        @apply inline-block;
     }
 
-    .bui-label-base {
-        @apply rounded-lg px-2 py-1.5 text-base leading-5;
+    .badge-base {
+        @apply rounded-xl px-2 py-1.5 text-base leading-5;
     }
 
-    .bui-label-sm {
+    .badge-sm {
         @apply rounded-lg px-1.5 py-1 text-sm leading-4;
     }
 
-    .bui-label-xs {
-        @apply rounded-md px-1.5 py-1 text-xs leading-[.875rem];
+    .badge-xs {
+        @apply rounded-lg px-1.5 py-1 text-xs leading-[.875rem];
     }
 
-    .bui-label-green {
+    .badge-green {
         @apply bg-green-100 text-green-800;
     }
 
-    .bui-label-red {
+    .badge-red {
         @apply bg-red-100 text-red-800;
     }
 
-    .bui-label-orange {
+    .badge-orange {
         @apply bg-orange-100 text-orange-800;
     }
 
-    .bui-label-grey {
+    .badge-grey {
         @apply bg-grey-100 text-grey-800;
     }
 }

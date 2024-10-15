@@ -25,7 +25,7 @@
 @endphp
 
 @if ($slot->isNotEmpty())
-    <div {{ $attributes }} @class(['h-full rounded-lg bg-grey-100 p-3', $spaceClass])>
+    <div {{ $attributes }} @class(['h-full rounded-lg bg-grey-50 p-3', $spaceClass])>
         {{ $slot }}
     </div>
 @endif

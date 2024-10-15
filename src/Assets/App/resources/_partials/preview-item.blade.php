@@ -60,38 +60,30 @@
         @if ($file->isValidated && ! $file->isQueuedForDeletion)
             <div class="ml-auto flex items-center gap-1.5">
                 @if ($file->isExternalAsset)
-                    <a
+                    <x-chief-table::button
                         href="{{ $file->getUrl() }}"
                         title="{{ $file->getUrl() }}"
                         target="_blank"
                         rel="noopener"
-                        class="link link-primary"
+                        size="sm"
                     >
-                        <x-chief::icon-button icon="icon-external-link" />
-                    </a>
+                        <x-chief::icon.link-square />
+                    </x-chief-table::button>
                 @endif
-
-                <button
-                    wire:click="openFileEdit('{{ $file->id }}')"
-                    type="button"
-                    class="rounded-xl focus:ring-1 focus:ring-primary-500"
-                >
-                    <x-chief::icon-button icon="icon-edit" color="grey" />
-                </button>
 
                 @if (count($files) > 1 && $allowMultiple())
-                    <button wire:sortable.handle type="button" class="rounded-xl focus:ring-1 focus:ring-primary-500">
-                        <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
-                    </button>
+                    <x-chief-table::button wire:sortable.handle size="sm" variant="secondary">
+                        <x-chief::icon.drag-drop-vertical />
+                    </x-chief-table::button>
                 @endif
 
-                <button
-                    wire:click="deleteFile('{{ $file->id }}')"
-                    type="button"
-                    class="rounded-xl focus:ring-1 focus:ring-primary-500"
-                >
-                    <x-chief::icon-button icon="icon-trash" color="grey" />
-                </button>
+                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="tertiary">
+                    <x-chief::icon.delete />
+                </x-chief-table::button>
+
+                <x-chief-table::button wire:click="openFileEdit('{{ $file->id }}')" size="sm" variant="secondary">
+                    <x-chief::icon.quill-write />
+                </x-chief-table::button>
             </div>
         @endif
 
@@ -103,13 +95,9 @@
                     {{ ucfirst($file->validationMessage) }}
                 </span>
 
-                <button type="button" wire:click="deleteFile('{{ $file->id }}')" class="ml-auto shrink-0">
-                    <x-chief::button>
-                        <svg>
-                            <use xlink:href="#icon-x-mark"></use>
-                        </svg>
-                    </x-chief::button>
-                </button>
+                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="secondary">
+                    <x-chief::icon.cancel />
+                </x-chief-table::button>
             </div>
         @elseif ($file->isQueuedForDeletion)
             <div
@@ -121,14 +109,10 @@
                     <span class="body body-dark text-sm">{{ $file->filename }} wordt niet bewaard</span>
                 @endif
 
-                <button type="button" wire:click="undoDeleteFile('{{ $file->id }}')" class="ml-auto shrink-0">
-                    <x-chief::button>
-                        Ongedaan maken
-                        <svg>
-                            <use xlink:href="#icon-undo"></use>
-                        </svg>
-                    </x-chief::button>
-                </button>
+                <x-chief-table::button wire:click="undoDeleteFile('{{ $file->id }}')" size="sm" variant="secondary">
+                    <x-chief::icon.arrow-turn-backward />
+                    <span>Ongedaan maken</span>
+                </x-chief-table::button>
             </div>
         @endif
     </div>

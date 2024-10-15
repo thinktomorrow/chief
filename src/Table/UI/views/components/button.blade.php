@@ -10,7 +10,7 @@
             'primary' => 'bui-btn-primary',
             'secondary' => 'bui-btn-secondary',
             'tertiary' => 'bui-btn-tertiary',
-            'quarternary' => 'bui-btn-quarternary',
+            'quaternary' => 'bui-btn-quaternary',
             default => 'bui-btn-secondary',
         },
         match ($size) {
@@ -26,6 +26,10 @@
     <a {{ $attributes }}>
         {{ $slot }}
     </a>
+@elseif ($attributes->has('for'))
+    <label {{ $attributes }}>
+        {{ $slot }}
+    </label>
 @else
     <button {{ $attributes->merge(['type' => 'button']) }}>
         {{ $slot }}

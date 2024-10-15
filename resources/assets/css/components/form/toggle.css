@@ -7,7 +7,7 @@
 
 .form-input-toggle:before {
     content: '';
-    @apply absolute inset-0 cursor-pointer rounded-full bg-grey-200 transition-all duration-300 ease-in-out;
+    @apply absolute inset-0 cursor-pointer rounded-full bg-grey-100 transition-all duration-300 ease-in-out;
 }
 
 .form-input-toggle:after {
