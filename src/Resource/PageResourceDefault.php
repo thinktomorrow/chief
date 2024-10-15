@@ -62,8 +62,7 @@ trait PageResourceDefault
             ->setTableReference(new TableReference(static::class, 'getIndexTable'))
             ->resource(static::resourceKey())
             ->bulkActions([
-                AttachTagAction::makeDefault(static::resourceKey()),
-                DetachTagAction::makeDefault(static::resourceKey()),
+
             ])
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey())->primary(),
