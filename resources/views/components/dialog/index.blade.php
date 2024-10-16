@@ -1,4 +1,4 @@
-@aware(['wired'])
+@props(['wired' => false, 'id' => null])
 
 <div
     x-cloak
@@ -31,5 +31,6 @@
     "
     {{ $attributes->class(['absolute']) }}
 >
+    <div>{{ $wired ? 'ja - wired' : 'nee - wired' }}</div>
     {{ $slot }}
 </div>
