@@ -4,7 +4,7 @@
     'footer' => null,
 ])
 
-<x-chief::dialog>
+<x-chief::dialog :wired="isset($wired)">
     <div {{ $attributes->class(['fixed inset-0 z-50']) }}>
         <div
             class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-black/20 backdrop-blur-sm backdrop-filter"

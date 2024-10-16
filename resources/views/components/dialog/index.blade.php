@@ -1,4 +1,4 @@
-@aware(['wired'])
+@props(['wired' => false])
 
 <div
     x-cloak

@@ -7,7 +7,7 @@
     'footer' => null,
 ])
 
-<x-chief::dialog>
+<x-chief::dialog :wired="isset($wired)">
     <div
         x-data="{
             toggleInnerShadows() {
