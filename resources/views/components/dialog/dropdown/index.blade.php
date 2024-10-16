@@ -3,7 +3,7 @@
     'placement' => 'bottom-end',
 ])
 
-<x-chief::dialog class="absolute">
+<x-chief::dialog :wired="isset($wired)" class="absolute">
     <div
         x-data="dropdown({ placement: '{{ $placement }}' })"
         x-on:click.outside="close()"

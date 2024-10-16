@@ -5,7 +5,6 @@
     'subtitle' => null,
     'header' => null,
     'footer' => null,
-    'id' => null,
 ])
 
 <x-chief::dialog :wired="isset($wired)">

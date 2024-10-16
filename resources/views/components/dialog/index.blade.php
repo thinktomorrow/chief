@@ -1,4 +1,4 @@
-@props(['wired' => false, 'id' => null])
+@props(['wired' => false])
 
 <div
     x-cloak
