@@ -63,19 +63,19 @@ trait PageResourceDefault
         $table = Table::make()
             ->setTableReference(new TableReference(static::class, 'getIndexTable'))
             ->resource(static::resourceKey())
-            ->bulkActions([
-                OnlineStateBulkAction::makeDefault(static::resourceKey()),
-                OfflineStateBulkAction::makeDefault(static::resourceKey()),
-            ])
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey())->primary(),
                 VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
                 ReorderAction::makeDefault(static::resourceKey())->tertiary(),
             ])
+            ->bulkActions([
+                OnlineStateBulkAction::makeDefault(static::resourceKey()),
+                OfflineStateBulkAction::makeDefault(static::resourceKey()),
+            ])
             ->rowActions([
-                EditModelAction::makeDefault(static::resourceKey())->secondary(),
-                OnlineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
-                OfflineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
+                EditModelAction::makeDefault(static::resourceKey())->primary(),
+                OnlineStateRowAction::makeDefault(static::resourceKey())->tertiary()->variant('green'),
+                OfflineStateRowAction::makeDefault(static::resourceKey())->tertiary()->variant('red'),
                 DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->filters([

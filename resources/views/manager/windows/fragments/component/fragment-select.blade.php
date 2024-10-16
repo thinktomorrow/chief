@@ -52,7 +52,7 @@
 
             <div class="flex w-7 shrink-0 items-start justify-end">
                 @if ($hideSelectOptions)
-                    <x-chief-table::button data-fragment-select-close size="sm" variant="quaternary">
+                    <x-chief-table::button data-fragment-select-close size="sm" variant="transparent">
                         <x-chief::icon.cancel />
                     </x-chief-table::button>
                 @endif

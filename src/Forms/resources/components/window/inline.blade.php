@@ -21,7 +21,7 @@
             href="{{ $editUrl }}"
             title="Aanpassen"
             size="sm"
-            variant="secondary"
+            variant="grey"
             class="inline-block shrink-0 sm:mb-0.5"
         >
             <x-chief::icon.quill-write />

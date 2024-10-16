@@ -42,7 +42,7 @@
         <div
             x-ref="optionMarker"
             x-show="activeRadio"
-            class="bui-btn bui-btn-base bui-btn-tertiary absolute left-0 rounded-[0.5625rem] py-[0.4375rem] ring-0 transition-all duration-150 ease-out"
+            class="bui-btn bui-btn-base bui-btn-outline-white absolute left-0 rounded-[0.5625rem] py-[0.4375rem] ring-0 transition-all duration-150 ease-out"
         >
             <span class="h-5"></span>
         </div>

@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Table\Actions\Concerns\CloseDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRedirectOnSuccess;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
@@ -33,8 +34,8 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasLocalizableProperties;
     use HasModel;
     use HasIcon;
-
     use HasVariant;
+    use HasOrdinalLevel;
     use HasLink;
     use HasEffect;
     use CloseDialog;
@@ -95,24 +96,21 @@ class Action extends \Illuminate\View\Component implements Htmlable
         if ($this->model) {
             $action->model($this->model);
         }
-
         if ($this->prependIcon) {
             $action->prependIcon($this->prependIcon);
         }
-
         if ($this->appendIcon) {
             $action->appendIcon($this->appendIcon);
         }
-
         if ($this->redirectOnSuccess) {
             $action->redirectOnSuccess($this->redirectOnSuccess);
         }
-
         if ($this->hasWhen()) {
             $action->when($this->when);
         }
 
-        $action->setVariant($this->variant);
+        $action->variant($this->variant);
+        $action->ordinalLevel($this->ordinalLevel);
         $action->closeDialog($this->closeDialog);
 
         return $action;

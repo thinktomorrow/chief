@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
-use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanBeDefault;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasValue;
@@ -31,8 +31,7 @@ abstract class Filter extends Component
     use HasValue;
     use HasDefault;
     use CanBeDefault;
-    use HasVariant;
-
+    use HasOrdinalLevel;
     use HasQuery;
 
     public function __construct(string $key)
@@ -54,10 +53,9 @@ abstract class Filter extends Component
                 if (is_array($value)) {
                     $query->whereIn($this->key, $value);
                 } else {
-                    $query->where($this->key, 'LIKE', '%'.$value.'%');
+                    $query->where($this->key, 'LIKE', '%' . $value . '%');
                     //$query->whereJsonLike($this->key, $value);
                 }
-
             } else {
                 return $query->filter(fn ($item) => str_contains(strtolower($item[$this->key]), strtolower($value)));
             }

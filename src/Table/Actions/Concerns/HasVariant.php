@@ -4,42 +4,22 @@ namespace Thinktomorrow\Chief\Table\Actions\Concerns;
 
 trait HasVariant
 {
-    protected string $variant = 'secondary';
+    protected ?string $variant = null;
 
-    private function setVariant(string $variant): static
+    /**
+     * TODO: This should not be just any string. It should be one of some possible strings. Maybe an enum?
+     * At the moment, if the variant does not exist or is not set, the default variant is used.
+     * For buttons, the default is 'outline-white'. For dropdown items, the default is 'grey'.
+     */
+    public function variant(?string $variant): static
     {
         $this->variant = $variant;
 
         return $this;
     }
 
-    public function primary(): static
+    public function getVariant(): ?string
     {
-        return $this->setVariant('primary');
-    }
-
-    public function secondary(): static
-    {
-        return $this->setVariant('secondary');
-    }
-
-    public function tertiary(): static
-    {
-        return $this->setVariant('tertiary');
-    }
-
-    public function isPrimary(): bool
-    {
-        return $this->variant === 'primary';
-    }
-
-    public function isSecondary(): bool
-    {
-        return $this->variant === 'secondary';
-    }
-
-    public function isTertiary(): bool
-    {
-        return $this->variant === 'tertiary';
+        return $this->variant;
     }
 }
