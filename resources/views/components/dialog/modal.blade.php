@@ -29,9 +29,9 @@
         }"
         x-on:resize.debounce.250ms.window="toggleInnerShadows()"
         x-init="
-{{--            $watch('isOpen', (value) => {--}}
-{{--                if (value) $nextTick(() => toggleInnerShadows())--}}
-{{--            })--}}
+            $watch('isOpen', (value) => {
+                if (value) $nextTick(() => toggleInnerShadows())
+            })
         "
         {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
     >

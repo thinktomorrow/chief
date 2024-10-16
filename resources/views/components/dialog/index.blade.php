@@ -31,6 +31,5 @@
     "
     {{ $attributes->class(['absolute']) }}
 >
-    <div>{{ $wired ? 'ja - wired' : 'nee - wired' }}</div>
     {{ $slot }}
 </div>
