@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+-   Added: `Field::prepareValue()` method to prepare the value before rendering it in the field view.   
+
 ## 0.8.23 - 2024-09-10
 
 -   Changed: Exports are now stored in the `storage/app/exports` folder.
