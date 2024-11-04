@@ -1,6 +1,6 @@
 @layer components {
     .bui-dropdown-item {
-        @apply flex w-max items-start text-left;
+        @apply col-span-full grid w-max grid-cols-subgrid items-start text-left;
         @apply transition-all duration-150 ease-in-out;
     }
 

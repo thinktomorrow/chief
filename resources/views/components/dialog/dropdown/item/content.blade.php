@@ -3,7 +3,7 @@
 ])
 
 @if ($label || $slot->isNotEmpty())
-    <div class="max-w-80 space-y-1">
+    <div {{ $attributes->merge(['class' => 'max-w-80 space-y-1 col-start-2']) }}>
         @if ($label)
             <p>{{ $label }}</p>
         @endif

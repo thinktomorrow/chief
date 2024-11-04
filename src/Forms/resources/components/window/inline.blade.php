@@ -9,7 +9,7 @@
     data-form
     data-form-url="{{ $refreshUrl }}"
     data-form-tags="{{ $tags }}"
-    {{ $attributes->class('flex flex-wrap items-end gap-4 sm:flex-nowrap') }}
+    {{ $attributes->class('flex flex-wrap items-end gap-3 sm:flex-nowrap') }}
 >
     <div class="w-full">
         {!! $slot !!}
