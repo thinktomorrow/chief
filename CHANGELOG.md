@@ -6,7 +6,8 @@ principles.
 
 ## Unreleased
 
--   Added: `Field::prepareValue()` method to prepare the value before rendering it in the field view.   
+-   Added: `Field::prepareValue()` method to prepare the value before rendering it in the field view.
+-   Fixed: HasStep trait now also expects float values.
 
 ## 0.8.23 - 2024-09-10
 
