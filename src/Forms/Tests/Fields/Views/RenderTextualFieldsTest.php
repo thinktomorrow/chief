@@ -92,7 +92,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
     public function test_number_field_accepts_floats()
     {
         $numberField = Number::make('number')->step(0.2)->value(2.5);
-        
+
         $this->assertEquals(2.5, $numberField->getValue());
         $this->assertEquals(0.2, $numberField->getStep());
     }

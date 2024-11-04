@@ -6,8 +6,10 @@ principles.
 
 ## Unreleased
 
+## 0.8.24 - 2024-10-04
+
 -   Added: `Field::prepareValue()` method to prepare the value before rendering it in the field view.
--   Fixed: HasStep trait now also expects float values.
+-   Fixed: Number field now accepts floats like 0.01. Set the `Number::step(0.1)` to a decimal value to allow decimal input.
 
 ## 0.8.23 - 2024-09-10
 
