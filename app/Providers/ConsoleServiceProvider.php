@@ -77,6 +77,7 @@ class ConsoleServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
             $schedule->command('chief:sitemap')->dailyAt('01:00');
+            $schedule->command('chief:image-sitemap')->weekly();
         });
 
         // Setup commands

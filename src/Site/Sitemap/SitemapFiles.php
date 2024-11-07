@@ -27,7 +27,7 @@ class SitemapFiles
         $files = $this->filesystem->files($directory);
 
         return collect($files)->filter(function ($file) {
-            return (Str::startsWith($file->getFileName(), 'sitemap-') && Str::endsWith($file->getFileName(), '.xml'));
+            return (Str::startsWith($file->getFileName(), ['sitemap-', 'image-sitemap-']) && Str::endsWith($file->getFileName(), '.xml'));
         });
     }
 }
