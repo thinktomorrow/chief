@@ -38,7 +38,7 @@ class ImageSitemapXml
 
     private function generateXml(Collection $models, $locale): string
     {
-        foreach($models as $model) {
+        foreach ($models as $model) {
             $urlTag = Url::create($model->url($locale));
             $urlTag->setPriority(0.5);
             $urlTag->setChangeFrequency('monthly');
@@ -47,9 +47,9 @@ class ImageSitemapXml
             $assets = $this->getAssetsFromModel($model, $locale);
 
             /** @var AssetContract $asset */
-            foreach($assets as $asset) {
+            foreach ($assets as $asset) {
                 $caption = $asset->getData('alt.'.$locale, $asset->getData('alt', ''));
-                if(is_array($caption) || ! $caption) {
+                if (is_array($caption) || ! $caption) {
                     $caption = '';
                 }
 
@@ -78,7 +78,7 @@ class ImageSitemapXml
             return $fragment->fragmentModel()->isOffline();
         });
 
-        foreach($fragments as $fragment) {
+        foreach ($fragments as $fragment) {
             $assets = $assets->merge($fragment->fragmentModel()->assets(null, $locale));
         }
 
