@@ -13,8 +13,8 @@
 @endphp
 
 <x-chief::dialog.dropdown.item
-    :attributes="$attributes"
     x-on:click="{{ $action->shouldCloseDialog() ? 'close()' : '' }}"
+    :attributes="$attributes"
 >
     {!! $action->getPrependIcon() !!}
 
