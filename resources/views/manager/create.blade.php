@@ -22,6 +22,6 @@
     </x-chief::page.grid>
 
     @push('custom-scripts')
-        @include('chief::layout._partials.editor-script')
+        @include('chief::templates.page._partials.editor-script')
     @endpush
 </x-chief::page.template>

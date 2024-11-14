@@ -1,8 +1,8 @@
-@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
+@if ($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Assistants\HasBookmark)
     <div class="flex flex-wrap items-center gap-2">
         <span class="label label-grey">#{{ $model->getBookmark() }}</span>
 
-        @if($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
+        @if ($owner instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             <a
                 href="{{ $owner->url() }}#{{ $model->getBookmark() }}"
                 title="Ga naar dit fragment op de website"

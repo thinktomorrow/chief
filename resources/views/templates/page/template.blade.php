@@ -37,5 +37,5 @@
         </section>
     <div>
 
-    @include('chief::layout._partials.notifications')
+    @include('chief::templates.page._partials.notifications')
 </x-chief::page.layout>

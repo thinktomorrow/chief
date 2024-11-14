@@ -7210,12 +7210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "ac1731366663c08df8fb0a7c4dacb4dd5faf46a1"
+                "reference": "a09398b1231e8488541b727b61d79e16d6127574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/ac1731366663c08df8fb0a7c4dacb4dd5faf46a1",
-                "reference": "ac1731366663c08df8fb0a7c4dacb4dd5faf46a1",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/a09398b1231e8488541b727b61d79e16d6127574",
+                "reference": "a09398b1231e8488541b727b61d79e16d6127574",
                 "shasum": ""
             },
             "require": {
@@ -7247,7 +7247,7 @@
                 "issues": "https://github.com/thinktomorrow/vine/issues",
                 "source": "https://github.com/thinktomorrow/vine/tree/perf-improvement"
             },
-            "time": "2024-09-12T19:28:03+00:00"
+            "time": "2024-11-14T14:27:23+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
