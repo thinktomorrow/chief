@@ -13,6 +13,7 @@ class OnlineStateRowAction extends Action
     {
         return static::make('online-state-row')
             ->label('Zet online')
+            ->variant('green')
             ->prependIcon('<x-chief::icon.view />')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
 

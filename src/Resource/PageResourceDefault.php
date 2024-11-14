@@ -74,8 +74,8 @@ trait PageResourceDefault
             ])
             ->rowActions([
                 EditModelAction::makeDefault(static::resourceKey())->primary(),
-                OnlineStateRowAction::makeDefault(static::resourceKey())->tertiary()->variant('green'),
-                OfflineStateRowAction::makeDefault(static::resourceKey())->tertiary()->variant('red'),
+                OnlineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
+                OfflineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
                 DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->filters([
