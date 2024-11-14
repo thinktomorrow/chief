@@ -19,7 +19,7 @@
                 </x-chief::tabs>
             @endif
 
-            @include('chief::manager._edit._edit_actions')
+            @include('chief::manager._partials.edit-actions')
         </x-chief::page.hero>
     </x-slot>
 
@@ -40,5 +40,5 @@
         </x-slot>
     </x-chief::page.grid>
 
-    @include('chief::layout._partials.editor-script')
+    @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

@@ -33,6 +33,7 @@ use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -90,6 +91,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
+        (new FragmentsServiceProvider($this->app))->boot();
         (new \Thinktomorrow\Chief\Table\TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
