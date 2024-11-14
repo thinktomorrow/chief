@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\App\Console\GenerateImageSitemap;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
@@ -96,7 +97,9 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Sitemap command is used by both cli and web scripts
         $this->commands(['command.chief:sitemap']);
+        $this->commands(['command.chief:image-sitemap']);
         $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
+        $this->app->bind('command.chief:image-sitemap', GenerateImageSitemap::class);
 
         if ($this->app->runningInConsole()) {
             (new ConsoleServiceProvider($this->app))->boot();

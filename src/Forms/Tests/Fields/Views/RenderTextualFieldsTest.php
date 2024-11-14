@@ -23,7 +23,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
         $this->classes = [
             Textarea::class => 'given value',
             Text::class => 'given value',
-            Number::class => 'given value',
+            Number::class => '2',
             Slider::class => 5,
             Date::class => '2022-02-02',
             Time::class => '9:23',
@@ -87,5 +87,13 @@ class RenderTextualFieldsTest extends ChiefTestCase
             'this is a custom field view',
             Text::make('xxx')->setView('test-views::custom-field')->render()
         );
+    }
+
+    public function test_number_field_accepts_floats()
+    {
+        $numberField = Number::make('number')->step(0.2)->value(2.5);
+
+        $this->assertEquals(2.5, $numberField->getValue());
+        $this->assertEquals(0.2, $numberField->getStep());
     }
 }

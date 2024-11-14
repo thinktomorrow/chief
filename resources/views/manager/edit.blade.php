@@ -40,7 +40,5 @@
         </x-slot>
     </x-chief::page.grid>
 
-    @push('custom-scripts')
-        @include('chief::layout._partials.editor-script')
-    @endpush
+    @include('chief::layout._partials.editor-script')
 </x-chief::page.template>

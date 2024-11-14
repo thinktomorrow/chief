@@ -9,7 +9,6 @@
 
 <x-chief::page.template :title="$title">
     @push('custom-styles')
-        <link rel="stylesheet" href="{{ asset('assets/back/css/vendor/redactor.css') }}">
         @include('squanto::_preventDuplicateSubmissions')
     @endpush
 
@@ -41,17 +40,5 @@
         </x-chief::page.grid>
     </form>
 
-    @push('custom-scripts')
-        <script src="{{ asset('/assets/back/js/vendor/redactor.js') }}"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                if (document.querySelectorAll('.redactor-editor').length > 0) {
-                    $R('.redactor-editor', {
-                        buttons: ['html', 'format', 'bold', 'italic', 'sup', 'sub', 'strikethrough', 'lists', 'link']
-                    });
-                }
-            });
-            console.log('teeeeeest');
-        </script>
-    @endpush
+    @include('chief::layout._partials.editor-script')
 </x-chief::page.template>

@@ -4,16 +4,16 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 trait HasStep
 {
-    protected ?int $step = null;
+    protected float|int|null $step = null;
 
-    public function step(int $step): static
+    public function step(float|int|null $step): static
     {
         $this->step = $step;
 
         return $this;
     }
 
-    public function getStep(): ?int
+    public function getStep(): float|int|null
     {
         return $this->step;
     }
