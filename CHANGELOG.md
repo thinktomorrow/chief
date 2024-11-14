@@ -6,6 +6,7 @@ principles.
 
 ## Unreleased
 
+-   Changed: `thinktomorrow/vine` dependency to `0.5.*`. This will affect menu retrieval in your project files.
 -   Removed: Some icons in the main symbols file weren't in use anymore and are therefore removed from Chief. This might cause some project specific icons to not show up anymore, e.g. `#icon-rectangle-group` in project nav files.
 
 ### Table component
