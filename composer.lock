@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "344b47a124ffe4c58a9d828a44d1322e",
+    "content-hash": "e44a9c598eab1b2c1197a76637475426",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -7206,16 +7206,16 @@
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "dev-perf-improvement",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "ac1731366663c08df8fb0a7c4dacb4dd5faf46a1"
+                "reference": "a09398b1231e8488541b727b61d79e16d6127574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/ac1731366663c08df8fb0a7c4dacb4dd5faf46a1",
-                "reference": "ac1731366663c08df8fb0a7c4dacb4dd5faf46a1",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/a09398b1231e8488541b727b61d79e16d6127574",
+                "reference": "a09398b1231e8488541b727b61d79e16d6127574",
                 "shasum": ""
             },
             "require": {
@@ -7245,9 +7245,9 @@
             "description": "Generate a tree from an adjacent database structure",
             "support": {
                 "issues": "https://github.com/thinktomorrow/vine/issues",
-                "source": "https://github.com/thinktomorrow/vine/tree/perf-improvement"
+                "source": "https://github.com/thinktomorrow/vine/tree/0.5.0"
             },
-            "time": "2024-09-12T19:28:03+00:00"
+            "time": "2024-11-14T14:27:23+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -12967,9 +12967,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "thinktomorrow/vine": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -12977,5 +12975,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
