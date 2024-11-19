@@ -20,12 +20,12 @@ trait HasColumns
 
     public function removeColumn(string $key): static
     {
-        foreach($this->columns as $k => $column) {
-            foreach($column->getItems() as $item) {
+        foreach ($this->columns as $k => $column) {
+            foreach ($column->getItems() as $item) {
                 if ($item->getKey() === $key) {
                     $column->removeItem($key);
 
-                    if(empty($column->getItems())) {
+                    if (empty($column->getItems())) {
                         unset($this->columns[$k]);
                     }
                 }

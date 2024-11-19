@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
-use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
@@ -111,7 +110,7 @@ trait PageResourceDefault
 
         // Check if model has updated_at timestamp
         $modelClass = static::modelClassName();
-        if (!(new $modelClass)->usesTimestamps()) {
+        if (! (new $modelClass)->usesTimestamps()) {
             $table->removeColumn('updated_at');
         }
 
