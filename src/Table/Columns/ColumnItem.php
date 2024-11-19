@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Table\Columns;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Stringable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
@@ -15,14 +16,19 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasItemMapping;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasItems;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasMultipleValues;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasValueMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasTeaser;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasValueMap;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariantMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
 
 abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
 {
+    use HasItems;
+    use HasItemMapping;
     use HasComponentRendering;
     use HasView;
     use HasCustomAttributes;
@@ -38,9 +44,10 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     use HasValue {
         getValue as getDefaultValue;
     }
-    use HasMultipleValues;
-    use HasValueMap;
+    use HasValueMapping;
     use HasLink;
+    use HasVariant;
+    use HasVariantMapping;
 
     public function __construct(string $key)
     {
@@ -48,30 +55,28 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         $this->label($key);
         $this->columnName($key);
 
-        // If we detect the key contains a dot, we assume it's a relationship key.
-        if (strpos($key, '.') !== false) {
-            $this->columnName(substr($key, 0, strpos($key, '.')));
-            $this->eachValue(function ($value) use ($key) {
-                $key = substr($key, strpos($key, '.') + 1);
-
-                return $value ? $value->{$key} : null;
-            });
-        } else {
-            $this->columnName($key);
+        if ($this->isRelationKey($key)) {
+            $this->itemsFromRelationKey($key);
         }
     }
 
-    public static function make(string|int|null $key)
+    public static function make(string|int $key): static
     {
         return new static((string) $key);
     }
 
-    //    public function render(): View
-    //    {
-    //        $view = $this->getView();
-    //
-    //        return view($view, array_merge($this->data(), [
-    //            'component' => $this,
-    //        ]));
-    //    }
+    /**
+     * Retrieve the renderable value for this column.
+     */
+    public function getValue(?string $locale = null): string|int|null|float|Stringable
+    {
+        // Retrieve value(s)
+        $value = $this->getDefaultValue($locale);
+
+        if (is_iterable($value)) {
+            throw new \Exception('Non expected iterable value. The column item ['.$this->getKey().'] is expected to have a scalar value.');
+        }
+
+        return $this->teaseValue($value);
+    }
 }

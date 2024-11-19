@@ -4,10 +4,9 @@
 
 <div class="space-y-4">
     @include('chief-table::livewire._partials.table-actions')
-
     <div
         x-data="bulkselect({
-                    showCheckboxes: {{ $this->hasAnyBulkActions() ? 'true' : 'false' }},
+                    showCheckboxes: {{ $this->hasAnyBulkActions() ? true : false }},
                     selection: @entangle('bulkSelection'),
                     paginators: @entangle('paginators'),
                 })"

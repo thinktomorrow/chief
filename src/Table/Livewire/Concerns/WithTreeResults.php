@@ -49,7 +49,7 @@ trait WithTreeResults
 
     private function shouldReturnResultsAsTree(): bool
     {
-        if (! $this->getTable()->getResourceReference()->isTreeResource()) {
+        if (! $this->getTable()->shouldReturnResultsAsTree()) {
             return false;
         }
 

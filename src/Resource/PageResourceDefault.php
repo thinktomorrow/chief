@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
@@ -65,7 +66,7 @@ trait PageResourceDefault
             ->resource(static::resourceKey())
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey())->primary(),
-                VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
+//                VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
                 ReorderAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->bulkActions([
@@ -87,7 +88,10 @@ trait PageResourceDefault
                     return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
                 }),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                ColumnDate::make('updated_at')->label('Aangepast')->format('d/m/Y H:i'),
+                ColumnDate::make('updated_at')
+                    ->label('Aangepast')
+                    ->format('d/m/Y H:i'),
+
             ])
             ->sorters([
                 Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
@@ -101,9 +105,14 @@ trait PageResourceDefault
                 }),
             ]);
 
-        // Check support for tags on model
         if ((new \ReflectionClass(static::modelClassName()))->implementsInterface(Taggable::class)) {
             $table->tagPresets(static::resourceKey());
+        }
+
+        // Check if model has updated_at timestamp
+        $modelClass = static::modelClassName();
+        if (!(new $modelClass)->usesTimestamps()) {
+            $table->removeColumn('updated_at');
         }
 
         return $table;

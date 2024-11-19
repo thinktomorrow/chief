@@ -7,8 +7,9 @@ namespace Thinktomorrow\Chief\Table\Table\Concerns;
  * which appear when displaying a tree structure in the table. The breadcrumbs show
  * the (missing) parent hierarchy for the first row.
  */
-trait HasTreeLabelColumn
+trait HasTreeStructure
 {
+    protected bool $shouldReturnResultsAsTree = false;
     protected string $treeLabelColumn = 'title';
 
     public function treeLabelColumn(string $treeLabelColumn): static
@@ -21,5 +22,17 @@ trait HasTreeLabelColumn
     public function getTreeLabelColumn(): string
     {
         return $this->treeLabelColumn;
+    }
+
+    public function shouldReturnResultsAsTree(): bool
+    {
+        return $this->shouldReturnResultsAsTree;
+    }
+
+    public function returnResultsAsTree(bool $returnResultsAsTree = true): static
+    {
+        $this->shouldReturnResultsAsTree = $returnResultsAsTree;
+
+        return $this;
     }
 }

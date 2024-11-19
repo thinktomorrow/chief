@@ -19,10 +19,10 @@ use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRedirectOnSuccess;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
-use Thinktomorrow\Chief\Table\Actions\Concerns\HasVariant;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasWhenCondition;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
 
 class Action extends \Illuminate\View\Component implements Htmlable
 {

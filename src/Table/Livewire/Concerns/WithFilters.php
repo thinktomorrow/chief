@@ -167,4 +167,9 @@ trait WithFilters
 
         return is_null($value) || empty($value) || '' === $value;
     }
+
+    public function hasAnyFiltersOrSorters(): bool
+    {
+        return count($this->filters) > 0 || count($this->sorters) > 0;
+    }
 }

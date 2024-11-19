@@ -31,7 +31,10 @@ Some documentation:
 ### Improved and simplified tree retrieval
 
 -   Add the `\Thinktomorrow\Chief\Resource\TreeResource` interface to your resource to use the new two methods straight from the Resource. These methods are: `getTreeModelIds` and `getTreeModels`.
--   Removed `IndexRepository` interface and default implementation. `IndexRepository` is no longer used.
+- Moved and renamed `Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault` to `Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageDefaultWithNestableUrl`.
+- Moved `Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable` to `Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable`.
+- Moved `Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets` to `Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets`.
+- Removed `IndexRepository` interface and default implementation. `IndexRepository` is no longer used.
 -   Removed `NestableRepository` interface and default implementation. `NestableRepository` is no longer used.
 -   Removed `Resource::indexRepository()`. No longer in use by new Table component.
 -   Removed `Resource::getNestableNodeLabels()`. No longer in use by new Table component.

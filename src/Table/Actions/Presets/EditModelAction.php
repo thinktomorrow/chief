@@ -2,18 +2,16 @@
 
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
 class EditModelAction extends Action
 {
     public static function makeDefault(string $resourceKey): static
     {
-        $resource = app(Registry::class)->resource($resourceKey);
-        $manager = app(Registry::class)->manager($resourceKey);
-
-        // TODO: Add edit action
         return static::make('edit')
+            ->link(function ($model) use ($resourceKey) {
+                return '/admin/' . $resourceKey . '/' . $model->getKey() . '/edit';
+            })
             ->iconEdit();
     }
 }
