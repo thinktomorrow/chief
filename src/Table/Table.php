@@ -64,7 +64,7 @@ class Table extends Component implements Htmlable
         $this->setResourceReference(new ResourceReference($resourceKey));
 
         if ($this->getResourceReference()->isTreeResource()) {
-            $this->shouldReturnResultsAsTree();
+            $this->returnResultsAsTree();
             $this->addDefaultTreeSorting();
         }
 
