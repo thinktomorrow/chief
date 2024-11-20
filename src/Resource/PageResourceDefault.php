@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateBulkAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
@@ -64,7 +65,7 @@ trait PageResourceDefault
             ->resource(static::resourceKey())
             ->actions([
                 CreateModelAction::makeDefault(static::resourceKey())->primary(),
-                //                VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
+                VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
                 ReorderAction::makeDefault(static::resourceKey())->tertiary(),
             ])
             ->bulkActions([

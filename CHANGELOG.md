@@ -59,6 +59,19 @@ class Page extends Model implements PageContract, PageResource, Nestable
     ...
 ```
 
+The Resource for the tree should now also implement the `TreeResource` interface. 
+```php
+use Thinktomorrow\Chief\Resource\TreeResource;
+use Thinktomorrow\Chief\Resource\TreeResourceDefault;
+use ... 
+
+class Category implements TreeResource
+{
+    use TreeResourceDefault
+    ...
+```
+
+
 - Add the `\Thinktomorrow\Chief\Resource\TreeResource` interface to your resource to use the new two methods straight
   from the Resource. These methods are: `getTreeModelIds` and `getTreeModels`.
 - Moved and renamed `Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault` to
