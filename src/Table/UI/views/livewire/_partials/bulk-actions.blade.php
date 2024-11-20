@@ -15,7 +15,8 @@
 
                 @if (count($this->bulkSelection) > 0)
                     <x-chief-table::button wire:click="bulkDeselectAll" variant="outline-white" size="xs">
-                        Deselecteer alle {{ $this->resultTotal }}
+                        Deselecteer alle
+                        <span x-text="selection.length"></span>
                     </x-chief-table::button>
                 @endif
             </div>
