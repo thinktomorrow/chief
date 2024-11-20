@@ -211,6 +211,15 @@ class TableComponent extends Component
         return null;
     }
 
+    /**
+     * TODO(ben): Implement this
+     * Should return false when there aren't any records created yet
+     */
+    public function hasRecords(): bool
+    {
+        return true;
+    }
+
     public function paginationView()
     {
         return 'chief::pagination.livewire-default';
