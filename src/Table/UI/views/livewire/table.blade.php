@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="divide-y divide-grey-100">
+                <tbody class="divide-y divide-grey-100 [&>*:last-child_[data-slot=actions]]:rounded-br-xl">
                     @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                     @if ($this->resultPageCount > 0)
