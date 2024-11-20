@@ -11,6 +11,7 @@ principles.
 - Removed: Some icons in the main symbols file weren't in use anymore and are therefore removed from Chief. This might
   cause some project specific icons to not show up anymore, e.g. `#icon-rectangle-group` in project nav files.
 - Changed: Extracted partial logic from `StateAssistant` to a `UpdateState` as an action for reuse between commands.
+- Nestable logic has changed so any nestable resources, like Page, need to be adjusted. Below you can find the specific changes in the Tree retrieval section.
 
 ### Table component
 
@@ -40,6 +41,23 @@ principles.
 
 The nestable logic has been simplified. The vine package is updated and the Chief tree retrieval has been updated
 accordingly.
+
+- Any nestable resource need to adjust it's tree retrieval traits and interface. It should look something like this:
+```php
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageDefaultWithNestableUrl;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
+use ... 
+
+class Page extends Model implements PageContract, PageResource, Nestable
+{
+    use PageResourceDefault;
+    use PageDefaultWithNestableUrl;
+    use NestableDefault;
+
+    ...
+```
 
 - Add the `\Thinktomorrow\Chief\Resource\TreeResource` interface to your resource to use the new two methods straight
   from the Resource. These methods are: `getTreeModelIds` and `getTreeModels`.
