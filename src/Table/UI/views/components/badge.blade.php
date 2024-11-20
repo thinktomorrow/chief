@@ -1,5 +1,5 @@
 @props([
-    'size' => 'base',
+    'size' => 'xs',
     'variant' => 'grey',
 ])
 
@@ -11,7 +11,7 @@
                 'base' => 'badge-base',
                 'sm' => 'badge-sm',
                 'xs' => 'badge-xs',
-                default => 'badge-base',
+                default => 'badge-xs',
             },
             match ($variant) {
                 'grey' => 'badge-grey',

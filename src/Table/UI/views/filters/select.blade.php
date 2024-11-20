@@ -15,13 +15,13 @@
 </button>
 
 <x-chief::dialog.dropdown id="{{ $triggerId }}" placement="bottom-start">
-    <div class="space-y-2.5 p-3.5">
+    <div class="space-y-3.5 p-3.5">
         <x-chief::multiselect
             wire:model="filters.{{ $getKey() }}"
             :options='$getMultiSelectFieldOptions()'
             :selection='$getValue() ?: $getDefault()'
             :multiple='$allowMultiple()'
-            :staticDropdown='true'
+            dropdown-position="static"
             class="w-64"
         />
 

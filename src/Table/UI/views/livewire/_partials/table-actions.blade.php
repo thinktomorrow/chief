@@ -1,7 +1,10 @@
 <div class="mt-2 flex items-start justify-between gap-4">
     <div class="flex items-start gap-2">
         @foreach ($this->getPrimaryFilters() as $filter)
-            <div data-filter-key="{{ $filter->getKey() }}">
+            <div
+                data-filter-key="{{ $filter->getKey() }}"
+                :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }"
+            >
                 {!! $filter->render() !!}
             </div>
         @endforeach

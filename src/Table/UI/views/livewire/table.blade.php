@@ -2,16 +2,17 @@
     $results = $this->getResults();
 @endphp
 
-<div class="space-y-4">
+<div
+    x-data="bulkselect({
+                showCheckboxes: {{ $this->hasAnyBulkActions() ? true : false }},
+                selection: @entangle('bulkSelection'),
+                paginators: @entangle('paginators'),
+            })"
+    class="space-y-4"
+>
     @include('chief-table::livewire._partials.table-actions')
-    <div
-        x-data="bulkselect({
-                    showCheckboxes: {{ $this->hasAnyBulkActions() ? true : false }},
-                    selection: @entangle('bulkSelection'),
-                    paginators: @entangle('paginators'),
-                })"
-        class="divide-y divide-grey-100 rounded-xl bg-white shadow-md ring-1 ring-grey-100"
-    >
+
+    <div class="divide-y divide-grey-100 rounded-xl bg-white shadow-md ring-1 ring-grey-100">
         @include('chief-table::livewire._partials.table-container-header')
 
         <div class="overflow-x-auto whitespace-nowrap">

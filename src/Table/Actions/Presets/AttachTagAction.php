@@ -27,10 +27,12 @@ class AttachTagAction extends BulkAction
                                 </p>
                             ')
                     ->form([
+                        // TODO(ben): dropdown position should be set to static by default in Dialogs
                         MultiSelect::make('tags')
                             ->required()
                             ->multiple()
-                            ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
+                            ->dropdownPosition('static')
+                            ->options(fn() => app(TagReadRepository::class)->getAllForSelect()),
                     ])
                     ->button('Toevoegen')
             )->effect(function ($formData, $data) use ($resourceKey) {
