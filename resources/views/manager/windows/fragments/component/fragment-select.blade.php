@@ -9,8 +9,8 @@
 >
     <!-- plus icon -->
     @if ($hideSelectOptions)
-        <div class="absolute z-[1] flex h-8 w-full justify-center">
-            <x-chief-table::button data-fragment-select-open size="sm" class="absolute -top-3.5">
+        <div class="absolute z-[1] flex h-8 w-full justify-center pointer-events-none">
+            <x-chief-table::button data-fragment-select-open size="sm" class="absolute -top-3.5 pointer-events-auto">
                 <x-chief::icon.plus-sign />
             </x-chief-table::button>
         </div>
