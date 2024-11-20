@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasTaggable;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasGroupedOptions;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasEloquentOptionsSync;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\MultiSelect\HasDropdownPosition;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasEloquentOptionsSync;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasGroupedOptions;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 
 class MultiSelect extends Component implements Field
 {

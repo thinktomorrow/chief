@@ -32,7 +32,7 @@ class AttachTagAction extends BulkAction
                             ->required()
                             ->multiple()
                             ->dropdownPosition('static')
-                            ->options(fn() => app(TagReadRepository::class)->getAllForSelect()),
+                            ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                     ])
                     ->button('Toevoegen')
             )->effect(function ($formData, $data) use ($resourceKey) {
