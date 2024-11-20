@@ -16,6 +16,11 @@
             </div>
 
             @foreach ($this->getFields() as $field)
+                @php
+                    if($field instanceof \Thinktomorrow\Chief\Forms\Fields\MultiSelect && !$field->hasDropdownPosition()) {
+                        $field->dropdownPositionStatic();
+                    }
+                @endphp
                 {{ $field }}
             @endforeach
         </div>
