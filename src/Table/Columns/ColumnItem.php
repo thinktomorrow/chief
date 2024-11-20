@@ -74,7 +74,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         $value = $this->getDefaultValue($locale);
 
         if (is_iterable($value)) {
-            throw new \Exception('Non expected iterable value. The column item ['.$this->getKey().'] is expected to have a scalar value.');
+            throw new \Exception('Non expected iterable value. The column item [' . $this->getKey() . '] is expected to have a scalar value.');
         }
 
         return $this->teaseValue($value);
