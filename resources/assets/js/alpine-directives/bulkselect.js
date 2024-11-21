@@ -69,9 +69,11 @@ const Bulkselect = (config) => ({
         const selectedPageItems = this.getSelectedPageItems();
 
         // eslint-disable-next-line arrow-body-style
-        this.isAllSelectedOnPage = !!pageItems.every((item) => {
-            return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
-        });
+        this.isAllSelectedOnPage =
+            pageItems.length > 0 &&
+            !!pageItems.every((item) => {
+                return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
+            });
 
         this.isIndeterminateOnPage = !(selectedPageItems.length === pageItems.length || selectedPageItems.length === 0);
     },
