@@ -6,7 +6,7 @@
     @if ($this->hasRecords())
         <div
             x-data="bulkselect({
-                        showCheckboxes: {{ $this->hasAnyBulkActions() ? true : false }},
+                        showCheckboxes: @js($this->hasAnyBulkActions() ? true : false),
                         selection: @entangle('bulkSelection'),
                         paginators: @entangle('paginators'),
                     })"
