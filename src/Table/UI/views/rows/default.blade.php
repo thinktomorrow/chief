@@ -1,7 +1,7 @@
 <tr
     data-table-row="{{ $this->getRowKey($item) }}"
-    x-key="{{ $this->getRowKey($item) }}"
-    wire:key="{{ $this->getRowKey($item) }}"
+    {{-- The row, especially the checkbox, needs to be reevaluated after sorting/filtering so the alpine reactivity remains intact --}}
+    wire:key="{{ $this->getRowKey($item) .'-table-checkbox-' . Str::random() }}"
     :class="{ 'bg-grey-25 [&_[data-slot=actions]]:bg-grey-25': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
     class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4"
 >
