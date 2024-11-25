@@ -6,7 +6,7 @@
     @if ($this->hasRecords())
         <div
             x-data="bulkselect({
-                        showCheckboxes: {{ $this->hasAnyBulkActions() ? true : false }},
+                        showCheckboxes: @js($this->hasAnyBulkActions() ? true : false),
                         selection: @entangle('bulkSelection'),
                         paginators: @entangle('paginators'),
                     })"
@@ -66,9 +66,11 @@
                 @include('chief-table::livewire._partials.table-container-footer')
             </div>
 
-            <livewire:chief-form::dialog :parent-id="$this->getId()" />
         </div>
     @else
         @include('chief-table::index-no-records')
     @endif
+
+    <livewire:chief-form::dialog :parent-id="$this->getId()" />
+
 </div>
