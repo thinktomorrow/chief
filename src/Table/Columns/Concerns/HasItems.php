@@ -81,8 +81,16 @@ trait HasItems
     {
         $item = static::make($this->getKey())->value($value);
 
+        if($this->model){
+            $item->model($this->model);
+        }
+
         if ($this->tease) {
             $item->tease(...$this->tease);
+        }
+
+        if ($this->link) {
+            $item->link($this->link);
         }
 
         return $item;
