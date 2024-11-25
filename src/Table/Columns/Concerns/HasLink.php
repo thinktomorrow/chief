@@ -6,20 +6,14 @@ use Closure;
 
 trait HasLink
 {
-    // targetBlank
-
     protected null|string|Closure $link = null;
+    protected bool $openInNewTab = false;
 
     public function link(string|Closure $link): static
     {
         $this->link = $link;
 
         return $this;
-    }
-
-    public function hasLink(): bool
-    {
-        return ! is_null($this->link);
     }
 
     public function getLink(): null|string
@@ -29,5 +23,22 @@ trait HasLink
         }
 
         return $this->link;
+    }
+
+    public function hasLink(): bool
+    {
+        return ! is_null($this->link);
+    }
+
+    public function openInNewTab(bool $openInNewTab = true): static
+    {
+        $this->openInNewTab = $openInNewTab;
+
+        return $this;
+    }
+
+    public function shouldOpenInNewTab(): bool
+    {
+        return $this->openInNewTab;
     }
 }
