@@ -67,12 +67,13 @@ const Bulkselect = (config) => ({
         const pageItems = this.getPageItems();
         const selectedPageItems = this.getSelectedPageItems();
 
-        // eslint-disable-next-line arrow-body-style
+        /* eslint-disable */
         this.isAllSelectedOnPage =
             pageItems.length > 0 &&
             !!pageItems.every((item) =>
                 this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
             );
+        /* eslint-enable */
 
         this.isIndeterminateOnPage = !(selectedPageItems.length === pageItems.length || selectedPageItems.length === 0);
     },

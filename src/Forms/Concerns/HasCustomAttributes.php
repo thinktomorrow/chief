@@ -17,4 +17,11 @@ trait HasCustomAttributes
     {
         return $this->customAttributes;
     }
+
+    public function getCustomAttributesAsString(): ?string
+    {
+        return collect($this->customAttributes)->map(function ($value, $key) {
+            return $key . '="' . $value . '"';
+        })->implode(' ');
+    }
 }
