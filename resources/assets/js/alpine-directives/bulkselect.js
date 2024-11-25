@@ -7,7 +7,6 @@ const Bulkselect = (config) => ({
     isIndeterminateOnPage: false, // One or more but not all selected on page
 
     init() {
-        // todo: when total changed after filtering does not work ... best to entangle??
         this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
                 const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
@@ -71,9 +70,9 @@ const Bulkselect = (config) => ({
         // eslint-disable-next-line arrow-body-style
         this.isAllSelectedOnPage =
             pageItems.length > 0 &&
-            !!pageItems.every((item) => {
-                return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
-            });
+            !!pageItems.every((item) =>
+                this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
+            );
 
         this.isIndeterminateOnPage = !(selectedPageItems.length === pageItems.length || selectedPageItems.length === 0);
     },

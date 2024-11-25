@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 trait TreeResourceDefault
@@ -34,10 +35,13 @@ trait TreeResourceDefault
             $eagerLoading[] = 'tags';
         }
 
-        return $modelClass::withoutGlobalScopes()
+        $models = $modelClass::withoutGlobalScopes()
             ->with($eagerLoading)
             ->orderBy('order')
             ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();
+
+        // Sort by parent
+        return collect(NestableTree::fromIterable($models)->sort('order')->flatten());
     }
 }
