@@ -81,7 +81,7 @@ trait HasItems
     {
         $item = static::make($this->getKey())->value($value);
 
-        if($this->model){
+        if ($this->model) {
             $item->model($this->model);
         }
 

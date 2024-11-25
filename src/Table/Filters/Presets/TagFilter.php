@@ -33,11 +33,11 @@ class TagFilter extends SelectFilter
                 ];
             })->query(function ($builder, $value) {
 
-//                if (is_array($value) && reset($value) === 'none') {
-//                    $builder->doesnthave('tags');
-//
-//                    return;
-//                }
+                //                if (is_array($value) && reset($value) === 'none') {
+                //                    $builder->doesnthave('tags');
+                //
+                //                    return;
+                //                }
 
                 $tagIds = (array) $value;
 
