@@ -29,15 +29,15 @@ class TagFilter extends SelectFilter
                     ...$filter->getTags()->map(function (TagRead $tagRead) {
                         return ['label' => $tagRead->getLabel(), 'value' => $tagRead->getTagId()];
                     })->all(),
-                    'none' => 'Zonder tags',
+//                    'none' => 'Zonder tags',
                 ];
             })->query(function ($builder, $value) {
 
-                if (is_array($value) && reset($value) === 'none') {
-                    $builder->doesnthave('tags');
-
-                    return;
-                }
+//                if (is_array($value) && reset($value) === 'none') {
+//                    $builder->doesnthave('tags');
+//
+//                    return;
+//                }
 
                 $tagIds = (array) $value;
 

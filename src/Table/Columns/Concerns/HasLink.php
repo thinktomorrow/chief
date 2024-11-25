@@ -27,7 +27,7 @@ trait HasLink
         if ($this->link instanceof Closure) {
             return call_user_func($this->link, $this->getModel());
         }
-        
+
         return $this->link;
     }
 }
