@@ -60,61 +60,7 @@ trait PageResourceDefault
      */
     public function getIndexTable(): Table
     {
-        $table = Table::make()
-            ->setTableReference(new TableReference(static::class, 'getIndexTable'))
-            ->resource(static::resourceKey())
-            ->actions([
-                CreateModelAction::makeDefault(static::resourceKey())->primary(),
-                VisitArchiveAction::makeDefault(static::resourceKey())->tertiary(),
-                ReorderAction::makeDefault(static::resourceKey())->tertiary(),
-            ])
-            ->bulkActions([
-                OnlineStateBulkAction::makeDefault(static::resourceKey()),
-                OfflineStateBulkAction::makeDefault(static::resourceKey()),
-            ])
-            ->rowActions([
-                EditModelAction::makeDefault(static::resourceKey())->primary(),
-                OnlineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
-                OfflineStateRowAction::makeDefault(static::resourceKey())->tertiary(),
-                DuplicateModelAction::makeDefault(static::resourceKey())->tertiary(),
-            ])
-            ->filters([
-                TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault()->primary(),
-            ])
-            ->columns([
-                ColumnText::make('title')->label('Titel')->link(function ($model) {
-                    return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                })->prependIcon('<x-chief::icon.quill-write />'),
-                ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                ColumnDate::make('updated_at')
-                    ->label('Aangepast')
-                    ->format('d/m/Y H:i'),
-
-            ])
-            ->sorters([
-                Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
-                }),
-                Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
-                }),
-                Sort::make('updated_at_desc')->label('Laatst aangepast')->query(function ($builder) {
-                    $builder->orderBy('updated_at', 'DESC');
-                }),
-            ]);
-
-        if ((new \ReflectionClass(static::modelClassName()))->implementsInterface(Taggable::class)) {
-            $table->tagPresets(static::resourceKey());
-        }
-
-        // Check if model has updated_at timestamp
-        $modelClass = static::modelClassName();
-        if (! (new $modelClass)->usesTimestamps()) {
-            $table->removeColumn('updated_at');
-        }
-
-        return $table;
+        return Table\Presets\PageTable::makeDefault(static::resourceKey());
     }
 
     public function getArchivedIndexTable(): Table
