@@ -8,17 +8,15 @@
 
             <div class="flex items-start gap-1">
                 @if ($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
-                    <x-chief-table::button wire:click="bulkSelectAll" variant="outline-white" size="xs">
+                    <x-chief-table::button wire:key="bulk-select-all" wire:click="bulkSelectAll" variant="outline-white" size="xs">
                         Selecteer alle {{ $this->resultTotal }}
                     </x-chief-table::button>
                 @endif
 
-                @if (count($this->bulkSelection) > 0)
-                    <x-chief-table::button wire:click="bulkDeselectAll" variant="outline-white" size="xs">
-                        Deselecteer alle
-                        <span x-text="selection.length"></span>
-                    </x-chief-table::button>
-                @endif
+                <x-chief-table::button wire:key="bulk-deselect-all" x-show="selection.length > 0" wire:click="bulkDeselectAll" variant="outline-white" size="xs">
+                    Deselecteer alle
+                    <span x-text="selection.length"></span>
+                </x-chief-table::button>
             </div>
         </div>
 
