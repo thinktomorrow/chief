@@ -93,6 +93,14 @@ trait HasItems
             $item->link($this->link);
         }
 
+        if($this->prependIcon){
+            $item->prependIcon($this->prependIcon);
+        }
+
+        if($this->appendIcon){
+            $item->appendIcon($this->appendIcon);
+        }
+
         return $item;
     }
 }

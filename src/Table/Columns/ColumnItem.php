@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasItemMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasItems;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
@@ -45,9 +46,10 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         getValue as getDefaultValue;
     }
     use HasValueMapping;
-    use HasLink;
-    use HasVariant;
     use HasVariantMapping;
+    use HasVariant;
+    use HasLink;
+    use HasIcon;
 
     public function __construct(string $key)
     {
