@@ -67,7 +67,7 @@
             <p
                 data-toggle-classes="hidden"
                 @class([
-                    'mt-3 px-3 text-xs text-grey-400',
+                    'mt-3 px-2 text-xs text-grey-400',
                     'hidden' => $isCollapsedOnPageLoad,
                 ])
             >
