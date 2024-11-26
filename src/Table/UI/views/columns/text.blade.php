@@ -7,11 +7,11 @@
             {!! $item->getCustomAttributesAsString() !!}
             class="leading-5 text-grey-800 hover:underline hover:underline-offset-2"
         >
-            {{ $item->getValue() }}
+            {!! $item->getValue() !!}
         </a>
     @else
         <span class="leading-5 text-grey-800" {!! $item->getCustomAttributesAsString() !!}>
-            {{ $item->getValue() }}
+            {!! $item->getValue() !!}
         </span>
     @endif
 @endforeach
