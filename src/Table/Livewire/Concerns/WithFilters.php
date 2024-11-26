@@ -170,6 +170,6 @@ trait WithFilters
 
     public function hasAnyFiltersOrSorters(): bool
     {
-        return count($this->filters) > 0 || count($this->sorters) > 0;
+        return count($this->getFilters()) > 0 || count($this->getSorters()) > 0;
     }
 }
