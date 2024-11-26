@@ -1,5 +1,5 @@
 const Bulkselect = (config) => ({
-    showCheckboxes: config.showCheckboxes || true,
+    showCheckboxes: config.showCheckboxes || false,
     selection: config.selection || [],
     paginators: config.paginators || [],
     pageItems: [],

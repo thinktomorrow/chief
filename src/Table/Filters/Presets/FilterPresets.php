@@ -2,17 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Table\Filters;
+namespace Thinktomorrow\Chief\Table\Filters\Presets;
 
 use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\SimpleState;
+use Thinktomorrow\Chief\Table\Filters\Filter;
+use Thinktomorrow\Chief\Table\Filters\SearchFilter;
+use Thinktomorrow\Chief\Table\Filters\SelectFilter;
+use Thinktomorrow\Chief\Table\Filters\TextFilter;
 
 class FilterPresets
 {
     public static function state(string $key = 'current_state'): Filter
     {
-        return SelectFilter::make('online', function ($query, $value) use ($key) {
+        return SelectFilter::make('online')->query(function ($query, $value) use ($key) {
             return $query->where($key, '=', $value);
         })->label('Status')->options([
             '' => 'Alle',
@@ -23,7 +27,7 @@ class FilterPresets
 
     public static function simpleState(string $key = 'current_state'): Filter
     {
-        return SelectFilter::make('online', function ($query, $value) use ($key) {
+        return SelectFilter::make('online')->query(function ($query, $value) use ($key) {
             return $query->where($key, '=', $value);
         })->label('Status')->options([
             '' => 'Alle',
@@ -66,7 +70,7 @@ class FilterPresets
      */
     public static function input(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
     {
-        return TextFilter::make($name, static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
+        return TextFilter::make($name)->query(static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
     }
 
     /**
@@ -75,7 +79,7 @@ class FilterPresets
      */
     public static function search(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
     {
-        return SearchFilter::make($name, static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
+        return SearchFilter::make($name)->query(static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
     }
 
     private static function queryColumnsOrDynamicAttributes(Builder $builder, $value, $columns, $dynamicKeys, $dynamicColumn): Builder
