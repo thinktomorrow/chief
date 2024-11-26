@@ -13,7 +13,7 @@ trait HasItems
     public function items(array|Closure $itemsResolver): static
     {
         $this->itemsResolver = (! $itemsResolver instanceof Closure)
-            ? fn(): iterable => $itemsResolver
+            ? fn (): iterable => $itemsResolver
             : $itemsResolver;
 
         return $this;
