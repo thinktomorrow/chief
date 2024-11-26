@@ -22,7 +22,8 @@ use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
-class PageTable extends Table {
+class PageTable extends Table
+{
     public static function makeDefault(string $resourceKey): Table
     {
         $resource = app(Registry::class)->resource($resourceKey);
@@ -51,7 +52,7 @@ class PageTable extends Table {
                 OnlineStateFilter::makeDefault()->primary(),
             ])
             ->columns([
-                ColumnText::make('title')->label('Titel')->link(function ($model) use($resourceKey) {
+                ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {
                     return '/admin/' . $resourceKey . '/' . $model->getKey() . '/edit';
                 })->tease(64, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
