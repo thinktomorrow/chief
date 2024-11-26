@@ -10,7 +10,7 @@
             {!! $item->getValue() !!}
         </a>
     @else
-        <span class="leading-5 text-grey-800" {!! $item->getCustomAttributesAsString() !!}>
+        <span class="leading-5 text-grey-500" {!! $item->getCustomAttributesAsString() !!}>
             {!! $item->getValue() !!}
         </span>
     @endif
