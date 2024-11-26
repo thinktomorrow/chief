@@ -49,7 +49,6 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     use HasVariantMapping;
     use HasVariant;
     use HasLink;
-    use HasIcon;
 
     public function __construct(string $key)
     {

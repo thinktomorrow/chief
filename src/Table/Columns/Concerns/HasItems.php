@@ -13,7 +13,7 @@ trait HasItems
     public function items(array|Closure $itemsResolver): static
     {
         $this->itemsResolver = (! $itemsResolver instanceof Closure)
-            ? fn (): iterable => $itemsResolver
+            ? fn(): iterable => $itemsResolver
             : $itemsResolver;
 
         return $this;
@@ -59,7 +59,6 @@ trait HasItems
                 $this->handleVariantMapping($item);
             })
             ->all();
-
     }
 
     private function resolveItems(): Collection
@@ -91,14 +90,6 @@ trait HasItems
 
         if ($this->link) {
             $item->link($this->link);
-        }
-
-        if ($this->prependIcon) {
-            $item->prependIcon($this->prependIcon);
-        }
-
-        if ($this->appendIcon) {
-            $item->appendIcon($this->appendIcon);
         }
 
         return $item;
