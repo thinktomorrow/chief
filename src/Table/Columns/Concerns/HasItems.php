@@ -93,11 +93,11 @@ trait HasItems
             $item->link($this->link);
         }
 
-        if($this->prependIcon){
+        if ($this->prependIcon) {
             $item->prependIcon($this->prependIcon);
         }
 
-        if($this->appendIcon){
+        if ($this->appendIcon) {
             $item->appendIcon($this->appendIcon);
         }
 
