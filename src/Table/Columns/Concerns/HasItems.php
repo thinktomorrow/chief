@@ -59,7 +59,6 @@ trait HasItems
                 $this->handleVariantMapping($item);
             })
             ->all();
-
     }
 
     private function resolveItems(): Collection
@@ -91,14 +90,6 @@ trait HasItems
 
         if ($this->link) {
             $item->link($this->link);
-        }
-
-        if ($this->prependIcon) {
-            $item->prependIcon($this->prependIcon);
-        }
-
-        if ($this->appendIcon) {
-            $item->appendIcon($this->appendIcon);
         }
 
         return $item;

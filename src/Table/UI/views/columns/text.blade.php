@@ -1,7 +1,4 @@
 @foreach ($getItems() as $item)
-
-    {!! $item->getPrependIcon() !!}
-
     @if ($item->hasLink())
         <a
             href="{{ $item->getLink() }}"
@@ -17,6 +14,4 @@
             {!! $item->getValue() !!}
         </span>
     @endif
-
-    {!! $item->getAppendIcon() !!}
 @endforeach
