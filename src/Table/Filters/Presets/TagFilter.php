@@ -37,40 +37,40 @@ class TagFilter extends SelectFilter
 
                 // WITH TAG GROUPS: (not yet supported) but should be a select list field instead of multiple
 
-//                $tagGroups = app(TagReadRepository::class)->getAllGroups()->sortBy('order');
-//                $tagGroups->push(NullTagGroup::fromMappedData([]));
-//
-//                $groupedTags = $filter->getTags()->groupBy(fn (TagRead $tagRead) => $tagRead->getTagGroupId());
-//
-//                $tagGroups = $tagGroups->reject(fn (TagGroupRead $tagGroupRead) => ! $groupedTags->has($tagGroupRead->getTagGroupId()))
-//                    ->map(function (TagGroupRead $tagGroupRead) use ($groupedTags) {
-//                        return [
-//                            'label' => $tagGroupRead->getLabel(),
-//                            'options' => $groupedTags->get($tagGroupRead->getTagGroupId())->map(function (TagRead $tagRead) {
-//                                return [
-//                                    'label' => $tagRead->getLabel(),
-//                                    'value' => $tagRead->getTagId(),
-//                                ];
-//                            })->all(),
-//                        ];
-//                    });
-//
-//                return PairOptions::toPairs($tagGroups->toArray());
+                //                $tagGroups = app(TagReadRepository::class)->getAllGroups()->sortBy('order');
+                //                $tagGroups->push(NullTagGroup::fromMappedData([]));
+                //
+                //                $groupedTags = $filter->getTags()->groupBy(fn (TagRead $tagRead) => $tagRead->getTagGroupId());
+                //
+                //                $tagGroups = $tagGroups->reject(fn (TagGroupRead $tagGroupRead) => ! $groupedTags->has($tagGroupRead->getTagGroupId()))
+                //                    ->map(function (TagGroupRead $tagGroupRead) use ($groupedTags) {
+                //                        return [
+                //                            'label' => $tagGroupRead->getLabel(),
+                //                            'options' => $groupedTags->get($tagGroupRead->getTagGroupId())->map(function (TagRead $tagRead) {
+                //                                return [
+                //                                    'label' => $tagRead->getLabel(),
+                //                                    'value' => $tagRead->getTagId(),
+                //                                ];
+                //                            })->all(),
+                //                        ];
+                //                    });
+                //
+                //                return PairOptions::toPairs($tagGroups->toArray());
 
             })->query(function ($builder, $value) {
 
                 // Set to true enforce AND clause for filtering on multiple tags - default is OR
                 $mustMatchAllTags = false;
 
-//                if (is_array($value) && reset($value) === 'none') {
-//                    $builder->doesnthave('tags');
-//
-//                    return;
-//                }
+                //                if (is_array($value) && reset($value) === 'none') {
+                //                    $builder->doesnthave('tags');
+                //
+                //                    return;
+                //                }
 
                 $tagIds = (array) $value;
 
-                if($mustMatchAllTags) {
+                if ($mustMatchAllTags) {
                     foreach ($tagIds as $tagId) {
                         $builder->whereHas('tags', function ($query) use ($tagId) {
                             $query->where('id', $tagId);
