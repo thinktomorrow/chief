@@ -85,7 +85,7 @@ trait PageResourceDefault
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) {
                     return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                })->prependIcon('<x-chief::icon.quill-write />'),
+                }),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('updated_at')
                     ->label('Aangepast')
