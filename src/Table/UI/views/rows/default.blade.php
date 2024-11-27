@@ -6,8 +6,7 @@
     class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4"
 >
     <td
-        x-show="showCheckboxes"
-        class="relative text-left align-top"
+        class="relative text-left align-top {{ $this->hasAnyBulkActions() ? '' : 'hidden' }}"
         :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-px before:bg-primary-500': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
     >
         <div class="flex min-h-6 items-center">

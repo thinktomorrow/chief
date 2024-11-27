@@ -19,7 +19,7 @@
 
                 <x-chief-table::button
                     wire:key="bulk-deselect-all"
-                    x-show="selection.length > 0"
+                    x-show="hasSelectionAcrossPages"
                     wire:click="bulkDeselectAll"
                     variant="outline-white"
                     size="xs"

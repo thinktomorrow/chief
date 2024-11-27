@@ -70,6 +70,10 @@ class TagFilter extends SelectFilter
 
                 $tagIds = (array) $value;
 
+                if (count($tagIds) < 1) {
+                    return;
+                }
+
                 if ($mustMatchAllTags) {
                     foreach ($tagIds as $tagId) {
                         $builder->whereHas('tags', function ($query) use ($tagId) {
