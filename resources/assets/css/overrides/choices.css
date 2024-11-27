@@ -5,7 +5,7 @@
     overflow: hidden;
     /* margin-bottom: 24px; */
     font-size: 16px;
-    @apply z-[1] drop-shadow-sm;
+    @apply drop-shadow-sm;
 }
 .choices:focus {
     outline: none;
@@ -15,6 +15,7 @@
 }
 .choices.is-open {
     overflow: visible;
+    @apply z-[1];
 }
 .choices.is-disabled .choices__inner,
 .choices.is-disabled .choices__input {
