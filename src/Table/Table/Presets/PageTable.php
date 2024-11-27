@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateBulkAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\ViewOnSiteAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
@@ -43,6 +44,7 @@ class PageTable extends Table
             ])
             ->rowActions([
                 EditModelAction::makeDefault($resourceKey)->primary(),
+                ViewOnSiteAction::makeDefault($resourceKey)->tertiary(),
                 OnlineStateRowAction::makeDefault($resourceKey)->tertiary(),
                 OfflineStateRowAction::makeDefault($resourceKey)->tertiary(),
                 DuplicateModelAction::makeDefault($resourceKey)->tertiary(),
