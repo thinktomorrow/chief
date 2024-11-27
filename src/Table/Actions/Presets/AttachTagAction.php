@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
-use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\BulkAction;
 
 class AttachTagAction extends BulkAction
@@ -18,7 +17,6 @@ class AttachTagAction extends BulkAction
             ->dialog(
                 Dialog::make('tagModal')
                     ->title('Voeg tags toe aan selectie')
-                    // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
                     ->subTitle(':count items geselecteerd')
                     ->content('
                                 <p>
@@ -27,11 +25,9 @@ class AttachTagAction extends BulkAction
                                 </p>
                             ')
                     ->form([
-                        // TODO(ben): dropdown position should be set to static by default in Dialogs
                         MultiSelect::make('tags')
                             ->required()
                             ->multiple()
-                            ->dropdownPosition('static')
                             ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
                     ])
                     ->button('Toevoegen')

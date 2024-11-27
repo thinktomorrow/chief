@@ -9,7 +9,7 @@ class TableActionDialogReference implements DialogReference
 {
     private TableReference $tableReference;
     private string $actionKey;
-    private string $modalKey;
+    private string $dialogKey;
 
     /**
      * Unique Modal reference.
@@ -18,11 +18,11 @@ class TableActionDialogReference implements DialogReference
      * modal present in Livewire Table component.
      *
      */
-    public function __construct(TableReference $tableReference, string $actionKey, string $modalKey)
+    public function __construct(TableReference $tableReference, string $actionKey, string $dialogKey)
     {
         $this->tableReference = $tableReference;
         $this->actionKey = $actionKey;
-        $this->modalKey = $modalKey;
+        $this->dialogKey = $dialogKey;
     }
 
     public function toLivewire()
@@ -31,7 +31,7 @@ class TableActionDialogReference implements DialogReference
             'class' => static::class,
             'tableReference' => $this->tableReference->toLivewire(),
             'actionKey' => $this->actionKey,
-            'modalKey' => $this->modalKey,
+            'dialogKey' => $this->dialogKey,
         ];
     }
 
@@ -40,12 +40,12 @@ class TableActionDialogReference implements DialogReference
         return new static(
             TableReference::fromLivewire($value['tableReference']),
             $value['actionKey'],
-            $value['modalKey']
+            $value['dialogKey']
         );
     }
 
-    public function getDialog(): Dialog
+    public function getDialog(array $parameters = []): Dialog
     {
-        return $this->tableReference->getTable()->findActionDialog($this->actionKey, $this->modalKey);
+        return $this->tableReference->getTable()->findActionDialog($this->actionKey, $this->dialogKey, $parameters);
     }
 }
