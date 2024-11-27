@@ -21,7 +21,7 @@
             )
         }
         if (firstChild.id === $event.detail.id) {
-            open()
+            $data.open()
             $dispatch('dialog-opened', {
                 id: $event.detail.id,
                 el: $el,

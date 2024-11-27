@@ -50,7 +50,6 @@
                                         modelId: '{{ $model->id }}',
                                         slug: completeSlug.replace(/\/\//, ''),
                                     }).then(({ data }) => {
-                                        console.log(data);
                                         hint = data.hint;
                                     });
                                 }"

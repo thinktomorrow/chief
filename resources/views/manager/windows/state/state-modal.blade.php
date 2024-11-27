@@ -9,7 +9,6 @@
                         .then((response) => response.json())
                         .then((data) => {
                             customHtml = data.data
-                            console.log(data.data)
                         })
                         .catch((error) => {
                             console.error(error)

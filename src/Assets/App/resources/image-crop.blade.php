@@ -57,7 +57,6 @@
         <script>
             window.Livewire.on('imageCropOpened', fileId => {
                 const cropper = new Cropper.default('#image_crop_' + fileId, {});
-                console.log(cropper);
 
                 const selection = {x: 30, y: 50, width: 20, height: 50};
                 // trigger livewire model
