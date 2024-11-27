@@ -35,7 +35,7 @@ class DuplicateModelAction extends Action
 
                 return true;
             })->redirectOnSuccess(function ($formData, $data) use ($manager) {
-                if(isset($data['copied_model'])) {
+                if (isset($data['copied_model'])) {
                     return $manager->route('edit', $data['copied_model']->id);
                 }
             })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.')
