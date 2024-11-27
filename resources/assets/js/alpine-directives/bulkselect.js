@@ -25,7 +25,9 @@ const Bulkselect = (config) => ({
         });
 
         this.$watch('selection', () => {
-            this.evaluateHeaderCheckboxState();
+            this.$nextTick(() => {
+                this.evaluateHeaderCheckboxState();
+            });
         });
 
         this.$watch('isIndeterminateOnPage', (value) => {
@@ -67,15 +69,24 @@ const Bulkselect = (config) => ({
         const pageItems = this.getPageItems();
         const selectedPageItems = this.getSelectedPageItems();
 
-        /* eslint-disable */
-        this.isAllSelectedOnPage =
-            pageItems.length > 0 &&
-            !!pageItems.every((item) =>
-                this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
-            );
-        /* eslint-enable */
+        if (this.selection.length < 1) {
+            this.isAllSelectedOnPage = false;
+            this.isIndeterminateOnPage = false;
+            this.$refs.tableHeaderCheckbox.checked = false;
+        } else {
+            /* eslint-disable */
+            this.isAllSelectedOnPage =
+                pageItems.length > 0 &&
+                !!pageItems.every((item) =>
+                    this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
+                );
+            /* eslint-enable */
 
-        this.isIndeterminateOnPage = !(selectedPageItems.length === pageItems.length || selectedPageItems.length === 0);
+            // eslint-disable-next-line max-len
+            this.isIndeterminateOnPage = !(
+                selectedPageItems.length === pageItems.length || selectedPageItems.length === 0
+            );
+        }
     },
 });
 
