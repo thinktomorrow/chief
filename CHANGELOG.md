@@ -43,12 +43,13 @@ The nestable logic has been simplified. The vine package is updated and the Chie
 accordingly.
 
 - Any nestable resource need to adjust it's tree retrieval traits and interface. It should look something like this:
+
 ```php
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\PageDefaultWithNestableUrl;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
-use ... 
+use ...
 
 class Page extends Model implements PageContract, PageResource, Nestable
 {
@@ -59,18 +60,18 @@ class Page extends Model implements PageContract, PageResource, Nestable
     ...
 ```
 
-The Resource for the tree should now also implement the `TreeResource` interface. 
+The Resource for the tree should now also implement the `TreeResource` interface.
+
 ```php
 use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Resource\TreeResourceDefault;
-use ... 
+use ...
 
 class Category implements TreeResource
 {
     use TreeResourceDefault
     ...
 ```
-
 
 - Add the `\Thinktomorrow\Chief\Resource\TreeResource` interface to your resource to use the new two methods straight
   from the Resource. These methods are: `getTreeModelIds` and `getTreeModels`.
@@ -105,7 +106,7 @@ Some Chief classes are removed because retrieval is now simpler. Removed classes
 ## 0.8.23 - 2024-09-10
 
 - Changed: Exports are now stored in the `storage/app/exports` folder.
-- Changed: squanto is now using the project editor styling and scripts.
+- Changed: squanto is now using the project editor styling and scripts. If you have custom Chief views, make sure it's not referring to the old squanto `editor-script`.
 - Fixed: isolate all throwables while exporting all resources.
 - Fixed: When no nav items, the title of empty nav block was still shown.
 
