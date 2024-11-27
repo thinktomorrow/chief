@@ -11,7 +11,7 @@
                     Selecteer alle {{ $this->resultTotal }}
                 </x-chief-table::button>
 
-                <x-chief-table::button wire:key="bulk-deselect-all" x-show="selection.length > 0" wire:click="bulkDeselectAll" variant="outline-white" size="xs">
+                <x-chief-table::button wire:key="bulk-deselect-all" x-show="hasSelectionAcrossPages" wire:click="bulkDeselectAll" variant="outline-white" size="xs">
                     Deselecteer alle
                     <span x-text="selection.length"></span>
                 </x-chief-table::button>

@@ -5,6 +5,7 @@ const Bulkselect = (config) => ({
     pageItems: [],
     isAllSelectedOnPage: false,
     isIndeterminateOnPage: false, // One or more but not all selected on page
+    hasSelectionAcrossPages: false,
 
     init() {
         this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
@@ -27,6 +28,7 @@ const Bulkselect = (config) => ({
         this.$watch('selection', () => {
             this.$nextTick(() => {
                 this.evaluateHeaderCheckboxState();
+                this.evaluateSelectionAcrossPages();
             });
         });
 
@@ -87,6 +89,11 @@ const Bulkselect = (config) => ({
                 selectedPageItems.length === pageItems.length || selectedPageItems.length === 0
             );
         }
+    },
+    evaluateSelectionAcrossPages() {
+        const selectedPageItems = this.getSelectedPageItems();
+
+        this.hasSelectionAcrossPages = this.selection.length > 0 && selectedPageItems.length !== this.selection.length;
     },
 });
 
