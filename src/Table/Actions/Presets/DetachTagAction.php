@@ -55,19 +55,19 @@ class DetachTagAction extends BulkAction
 //            )
         ->effect(function ($formData, $data) use ($resourceKey) {
 
-                $tagIds = (array) ($formData['tags'] ?? []);
-                $modelIds = $data['items'];
+            $tagIds = (array) ($formData['tags'] ?? []);
+            $modelIds = $data['items'];
 
-                try {
-                    app(TaggableRepository::class)->detachTags($resourceKey, $modelIds, $tagIds);
+            try {
+                app(TaggableRepository::class)->detachTags($resourceKey, $modelIds, $tagIds);
 
-                    return true;
-                } catch (\Exception $e) {
-                    report($e);
+                return true;
+            } catch (\Exception $e) {
+                report($e);
 
-                    return false;
-                }
-            })
+                return false;
+            }
+        })
             ->notifyOnSuccess('Tags verwijderd!')
             ->notifyOnFailure('Er is iets misgegaan bij het verwijderen van de tags.');
     }

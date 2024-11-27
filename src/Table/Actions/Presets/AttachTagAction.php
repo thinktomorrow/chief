@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
-use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\BulkAction;
 
 class AttachTagAction extends BulkAction

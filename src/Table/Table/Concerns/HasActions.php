@@ -42,12 +42,14 @@ trait HasActions
     {
         $action = $this->findAction($actionKey);
 
-        if(!$action) return null;
+        if (! $action) {
+            return null;
+        }
 
         // TODO: here we should use the dialogKey to get the correct dialog in case of multiple...
         $dialog = call_user_func_array($action->getDialogResolver(), $parameters);
 
-        if(!$dialog instanceof Dialog) {
+        if (! $dialog instanceof Dialog) {
             throw new InvalidArgumentException('Dialog resolver should return a Dialog instance.');
         }
 
