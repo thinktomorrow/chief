@@ -36,7 +36,11 @@
         </td>
     @endforeach
 
-    <td data-slot="actions" class="align-center sticky right-0 bg-white">
+    <td
+        data-slot="actions"
+        class="align-center sticky right-0 bg-white"
+        :class="{ '*:opacity-40 *:pointer-events-none cursor-not-allowed': selection.length > 0 }"
+    >
         @include('chief-table::livewire._partials.row-actions')
     </td>
 </tr>

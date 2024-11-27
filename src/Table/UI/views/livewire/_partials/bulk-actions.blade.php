@@ -7,11 +7,23 @@
             </span>
 
             <div class="flex items-start gap-1">
-                <x-chief-table::button wire:key="bulk-select-all" :class="$this->shouldShowSelectAll() ? '' : 'hidden'" wire:click="bulkSelectAll" variant="outline-white" size="xs">
+                <x-chief-table::button
+                    wire:key="bulk-select-all"
+                    :class="$this->shouldShowSelectAll() ? '' : 'hidden'"
+                    wire:click="bulkSelectAll"
+                    variant="outline-white"
+                    size="xs"
+                >
                     Selecteer alle {{ $this->resultTotal }}
                 </x-chief-table::button>
 
-                <x-chief-table::button wire:key="bulk-deselect-all" x-show="hasSelectionAcrossPages" wire:click="bulkDeselectAll" variant="outline-white" size="xs">
+                <x-chief-table::button
+                    wire:key="bulk-deselect-all"
+                    x-show="hasSelectionAcrossPages"
+                    wire:click="bulkDeselectAll"
+                    variant="outline-white"
+                    size="xs"
+                >
                     Deselecteer alle
                     <span x-text="selection.length"></span>
                 </x-chief-table::button>
