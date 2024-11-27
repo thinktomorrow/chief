@@ -70,7 +70,9 @@ class TagFilter extends SelectFilter
 
                 $tagIds = (array) $value;
 
-                if(count($tagIds) < 1) return;
+                if (count($tagIds) < 1) {
+                    return;
+                }
 
                 if ($mustMatchAllTags) {
                     foreach ($tagIds as $tagId) {
