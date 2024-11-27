@@ -76,11 +76,11 @@ trait WithFilters
      */
     public function updatedFilters()
     {
-        //        foreach($this->filters as $key => $filterValue) {
-        //            if($this->isEmptyFilterValue($filterValue)) {
-        //                unset($this->filters[$key]);
-        //            }
-        //        }
+//            foreach($this->filters as $key => $filterValue) {
+//                if($this->isEmptyFilterValue($filterValue)) {
+//                    unset($this->filters[$key]);
+//                }
+//            }
 
         $this->resetPage($this->getPaginationId());
 

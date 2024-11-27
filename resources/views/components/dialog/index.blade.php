@@ -14,7 +14,6 @@
     }"
     x-show="$data.isOpen"
     x-on:open-dialog.window="
-        console.log('test')
         const firstChild = $el.firstElementChild
         if (! firstChild) {
             throw new Error(
