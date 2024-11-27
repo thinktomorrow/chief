@@ -35,7 +35,7 @@ class PageTable extends Table
             ->resource($resourceKey)
             ->actions([
                 CreateModelAction::makeDefault($resourceKey)->primary(),
-                ...((new \ReflectionClass($modelClass))->hasMethod('scopeArchived') ? [VisitArchiveAction::makeDefault($resourceKey)->tertiary()] : []),
+                ...((new \ReflectionClass($modelClass))->hasMethod('scopeArchived') && $modelClass::archived()->count() > 0 ? [VisitArchiveAction::makeDefault($resourceKey)->tertiary()] : []),
                 ...((new \ReflectionClass($modelClass))->hasMethod('sortableAttribute') ? [ReorderAction::makeDefault($resourceKey)->secondary()] : []),
             ])
             ->bulkActions([
