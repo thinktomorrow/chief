@@ -4,7 +4,12 @@
             x-data="{ customHtml: null }"
             x-html="customHtml"
             x-init="
-                $watch('open', (value) => {
+                $watch('isOpen', (value) => {
+
+                    if(value === false) {
+                        return
+                    }
+
                     fetch('{{ $stateConfig->getAsyncModalUrl($transitionKey, $model) }}')
                         .then((response) => response.json())
                         .then((data) => {
