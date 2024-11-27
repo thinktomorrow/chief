@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
-use Thinktomorrow\Chief\Table\Columns\ColumnTag;
-use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
-use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
+use Thinktomorrow\Chief\Table\Columns\ColumnTag;
+use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 
 trait HasPresets
 {
