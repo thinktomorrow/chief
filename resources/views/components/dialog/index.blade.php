@@ -3,7 +3,6 @@
 <div
     x-cloak
     wire:ignore.self
-    x-show="isOpen"
     x-data="{
         isOpen: {{ $wired ? '$wire.entangle(\'isOpen\')' : 'false' }},
         open() {
@@ -13,6 +12,7 @@
             {{ $wired ? '$wire.close()' : '$data.isOpen = false;' }}
         },
     }"
+    x-show="$data.isOpen"
     x-on:open-dialog.window="
         const firstChild = $el.firstElementChild
         if (! firstChild) {

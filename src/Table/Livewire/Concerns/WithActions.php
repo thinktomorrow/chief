@@ -97,17 +97,19 @@ trait WithActions
 
     public function openActionDialog($params): void
     {
-        $this->dispatch('open' . '-' . $this->getId(), $params)->to('chief-form::dialog');
+        $this->dispatch('open-' . $this->getId(), $params)->to('chief-form::dialog');
     }
 
     private function showActionDialog($actionKey, array $data = []): void
     {
         $action = $this->getTable()->findAction($actionKey);
 
+        $dialog = $this->getTable()->findActionDialog($actionKey, '', [$data]);
+
         $dialogReference = new TableActionDialogReference(
             $this->getTable()->getTableReference(),
             $action->getKey(),
-            $action->getDialog()->getId()
+            $dialog->getId()
         );
 
         $this->openActionDialog([

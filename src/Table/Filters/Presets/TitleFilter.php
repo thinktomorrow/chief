@@ -8,21 +8,10 @@ class TitleFilter extends SearchFilter
 {
     public static function makeDefault(array $columns = [], array $dynamicKeys = ['title'], string $dynamicColumn = 'values'): self
     {
-        // $keys, $input, $column = 'values', $table = null, bool $split_by_spaces = true, bool $orClause = false
-        $object = static::make('title')
+        return static::make('title')
             ->label('Titel')
             ->placeholder('Zoek op titel')
             ->description('Zoek op pagina titel')
-            ->query(function ($builder, $value) use ($columns, $dynamicKeys, $dynamicColumn) {
-
-                foreach ($columns as $column) {
-                    $builder->orWhere($column, 'LIKE', '%' . $value . '%');
-                }
-
-                $builder->orWhereJsonLike($dynamicKeys, $value, $dynamicColumn);
-            });
-
-
-        return $object;
+            ->query(FilterPresets::searchQuery($columns, $dynamicKeys, $dynamicColumn));
     }
 }

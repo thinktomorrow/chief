@@ -4,7 +4,7 @@
     'multiple' => false,
     'placeholder' => null,
     'name' => null,
-    'staticDropdown' => false,
+    'dropdownPosition' => 'absolute',
 ])
 
 <div
@@ -65,7 +65,7 @@
             },
         },
     }"
-    {{ $attributes->class(['choices-with-static-dropdown' => $staticDropdown]) }}
+    {{ $attributes->class(['choices-with-static-dropdown' => $dropdownPosition === 'static']) }}
 >
     <select
         name="{{ $name }}"

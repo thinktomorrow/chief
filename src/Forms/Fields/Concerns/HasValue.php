@@ -8,6 +8,8 @@ use Closure;
 
 trait HasValue
 {
+    use HasValuePreparation;
+
     protected $value;
 
     /**
@@ -31,6 +33,13 @@ trait HasValue
     }
 
     public function getValue(?string $locale = null): mixed
+    {
+        $value = $this->getRawValue($locale);
+
+        return $this->hasPrepareValue() ? $this->getPrepareValue()($value) : $value;
+    }
+
+    private function getRawValue(?string $locale = null): mixed
     {
         if (! $this->valueGiven) {
             if (! $this->getModel()) {

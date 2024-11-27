@@ -20,4 +20,9 @@ trait WithBulkSelection
     {
         $this->bulkSelection = [];
     }
+
+    public function shouldShowSelectAll(): bool
+    {
+        return $this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection);
+    }
 }

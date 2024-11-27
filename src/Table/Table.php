@@ -21,7 +21,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRows;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowViews;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasSorters;
-use Thinktomorrow\Chief\Table\Table\Concerns\HasTreeLabelColumn;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasTreeStructure;
 use Thinktomorrow\Chief\Table\Table\References\HasResourceReference;
 use Thinktomorrow\Chief\Table\Table\References\HasTableReference;
 use Thinktomorrow\Chief\Table\Table\References\ResourceReference;
@@ -35,7 +35,7 @@ class Table extends Component implements Htmlable
 
     /** Tree support */
     use HasResourceReference;
-    use HasTreeLabelColumn;
+    use HasTreeStructure;
 
     /** Base Query for all table data */
     use HasQuery;
@@ -64,6 +64,7 @@ class Table extends Component implements Htmlable
         $this->setResourceReference(new ResourceReference($resourceKey));
 
         if ($this->getResourceReference()->isTreeResource()) {
+            $this->returnResultsAsTree();
             $this->addDefaultTreeSorting();
         }
 
@@ -74,15 +75,6 @@ class Table extends Component implements Htmlable
         return $this->query(function () use ($modelClassName) {
             return $modelClassName::query();
         });
-
-        //            // TODO: this should also be done when a custom query is passed like Page::online() instead of the resourcekey.
-        //            if (in_array(Nestable::class, class_implements($modelClassName))) {
-        //                $this->setResourceReference(new ResourceReference($resourceKey));
-        //                $this->addDefaultTreeSorting();
-        //            }
-        //        }
-        //
-        //        return $this;
     }
 
     public function query(Closure $query): static

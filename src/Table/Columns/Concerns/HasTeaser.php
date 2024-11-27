@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Table\Columns\Concerns;
 
 trait HasTeaser
 {
-
     protected ?array $tease = null;
 
     public function tease($max = null, $ending = null, $clean = ''): static
@@ -24,6 +23,6 @@ trait HasTeaser
             return $value;
         }
 
-        return teaser($value, $this->tease['max'], $this->tease['ending'], $this->tease['clean']);
+        return teaser($value, (int) $this->tease['max'], $this->tease['ending'], $this->tease['clean']);
     }
 }

@@ -25,6 +25,7 @@ class SitemapController extends Controller
     public function generate()
     {
         Artisan::call('chief:sitemap');
+        Artisan::call('chief:image-sitemap');
 
         return response()->json([
             'status' => 200,

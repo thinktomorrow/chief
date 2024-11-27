@@ -19,11 +19,12 @@ class DuplicateModelAction extends Action
             ->label('Kopiëer ' . $resource->getLabel())
             ->description('Hiermee maak je een kopie van deze pagina aan, die je meteen kan bewerken.')
             ->prependIcon('<x-chief::icon.copy />')
-            ->effect(function ($formData, $data) use ($resource, $manager) {
-
+            ->effect(function ($formData, &$data) use ($resource, $manager) {
                 try {
                     $model = ModelReference::fromString($data['item'])->instance();
                     $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
+
+                    $data['copied_model'] = $copiedModel;
                 } catch (\Exception $e) {
                     report($e);
 
@@ -34,11 +35,10 @@ class DuplicateModelAction extends Action
 
                 return true;
             })->redirectOnSuccess(function ($formData, $data) use ($manager) {
-                return $manager->route('edit', ModelReference::fromString($data['item'])->id());
+                if (isset($data['copied_model'])) {
+                    return $manager->route('edit', $data['copied_model']->id);
+                }
             })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.')
-            //            ->call('POST', function ($model) use ($manager) {
-            //                return $manager->route('duplicate', $model);
-            //            })
         ;
     }
 }

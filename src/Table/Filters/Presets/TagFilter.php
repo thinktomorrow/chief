@@ -3,8 +3,11 @@
 namespace Thinktomorrow\Chief\Table\Filters\Presets;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
+use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagGroupRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
+use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\NullTagGroup;
 use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 
 class TagFilter extends SelectFilter
@@ -25,26 +28,61 @@ class TagFilter extends SelectFilter
             ->label('Tags')
             ->options(function ($filter) {
 
-                return [
-                    ...$filter->getTags()->map(function (TagRead $tagRead) {
-                        return ['label' => $tagRead->getLabel(), 'value' => $tagRead->getTagId()];
-                    })->all(),
-                    'none' => 'Zonder tags',
-                ];
+                return $filter->getTags()->map(function (TagRead $tagRead) {
+                    return [
+                        'label' => $tagRead->getLabel(),
+                        'value' => $tagRead->getTagId(),
+                    ];
+                })->all();
+
+                // WITH TAG GROUPS: (not yet supported) but should be a select list field instead of multiple
+
+                //                $tagGroups = app(TagReadRepository::class)->getAllGroups()->sortBy('order');
+                //                $tagGroups->push(NullTagGroup::fromMappedData([]));
+                //
+                //                $groupedTags = $filter->getTags()->groupBy(fn (TagRead $tagRead) => $tagRead->getTagGroupId());
+                //
+                //                $tagGroups = $tagGroups->reject(fn (TagGroupRead $tagGroupRead) => ! $groupedTags->has($tagGroupRead->getTagGroupId()))
+                //                    ->map(function (TagGroupRead $tagGroupRead) use ($groupedTags) {
+                //                        return [
+                //                            'label' => $tagGroupRead->getLabel(),
+                //                            'options' => $groupedTags->get($tagGroupRead->getTagGroupId())->map(function (TagRead $tagRead) {
+                //                                return [
+                //                                    'label' => $tagRead->getLabel(),
+                //                                    'value' => $tagRead->getTagId(),
+                //                                ];
+                //                            })->all(),
+                //                        ];
+                //                    });
+                //
+                //                return PairOptions::toPairs($tagGroups->toArray());
+
             })->query(function ($builder, $value) {
 
-                if (is_array($value) && reset($value) === 'none') {
-                    $builder->doesnthave('tags');
+                // Set to true enforce AND clause for filtering on multiple tags - default is OR
+                $mustMatchAllTags = false;
 
-                    return;
-                }
+                //                if (is_array($value) && reset($value) === 'none') {
+                //                    $builder->doesnthave('tags');
+                //
+                //                    return;
+                //                }
 
                 $tagIds = (array) $value;
 
-                // Enforce AND clause for filtering on multiple tags
-                foreach ($tagIds as $tagId) {
-                    $builder->whereHas('tags', function ($query) use ($tagId) {
-                        $query->where('id', $tagId);
+                if (count($tagIds) < 1) {
+                    return;
+                }
+
+                if ($mustMatchAllTags) {
+                    foreach ($tagIds as $tagId) {
+                        $builder->whereHas('tags', function ($query) use ($tagId) {
+                            $query->where('id', $tagId);
+                        });
+                    }
+                } else {
+                    $builder->whereHas('tags', function ($query) use ($tagIds) {
+                        $query->whereIn('id', $tagIds);
                     });
                 }
             });

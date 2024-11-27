@@ -10,18 +10,15 @@
             imageFigure: false,
             definedlinks: '{{ route('chief.api.internal-links') }}',
             customClasses: [
-                { title: 'link als knop', 'class': 'btn btn-default', tags: ['a'] },
-                { title: 'link als primaire knop', 'class': 'btn btn-primary', tags: ['a'] },
-                { title: 'link as secundaire knop', 'class': 'btn btn-primary-outline', tags: ['a'] },
-                { title: 'geen knop weergave', 'class': '', tags: ['a'] },
+                { title: 'link als knop', class: 'btn btn-default', tags: ['a'] },
+                { title: 'link als primaire knop', class: 'btn btn-primary', tags: ['a'] },
+                { title: 'link as secundaire knop', class: 'btn btn-primary-outline', tags: ['a'] },
+                { title: 'geen knop weergave', class: '', tags: ['a'] },
             ],
             toolbarFixedTopOffset: 80,
         };
+
+        // Load redactor for all data-editor instances
+        $R('[data-editor]');
     </script>
-
 @endpush
-
-<script>
-    // Load redactor for all data-editor instances
-    $R('[data-editor]');
-</script>

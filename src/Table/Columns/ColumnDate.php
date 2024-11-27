@@ -3,22 +3,21 @@
 namespace Thinktomorrow\Chief\Table\Columns;
 
 use Carbon\Carbon;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 
-class ColumnDate extends ColumnText
+class ColumnDate extends ColumnItem
 {
-    use HasValue {
-        getValue as getDefaultValue;
-    }
-
     protected string $view = 'chief-table::columns.date';
     private string $format = 'Y-m-d H:i';
 
-    public function getValue(?string $locale = null): mixed
+    public function getValue(?string $locale = null): string|int|null|float|\Stringable
     {
-        $value = $this->getDefaultValue($locale);
+        $value = parent::getValue($locale);
 
-        return ($value && $value instanceof Carbon) ? $value->format($this->format) : null;
+        if (! $value) {
+            return null;
+        }
+
+        return ($value instanceof Carbon) ? $value->format($this->format) : $value;
     }
 
     public function format(string $format): static

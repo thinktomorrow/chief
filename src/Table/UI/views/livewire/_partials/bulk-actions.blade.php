@@ -7,17 +7,26 @@
             </span>
 
             <div class="flex items-start gap-1">
-                @if ($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
-                    <x-chief-table::button wire:click="bulkSelectAll" variant="outline-white" size="xs">
-                        Selecteer alle {{ $this->resultTotal }}
-                    </x-chief-table::button>
-                @endif
+                <x-chief-table::button
+                    wire:key="bulk-select-all"
+                    :class="$this->shouldShowSelectAll() ? '' : 'hidden'"
+                    wire:click="bulkSelectAll"
+                    variant="outline-white"
+                    size="xs"
+                >
+                    Selecteer alle {{ $this->resultTotal }}
+                </x-chief-table::button>
 
-                @if (count($this->bulkSelection) > 0)
-                    <x-chief-table::button wire:click="bulkDeselectAll" variant="outline-white" size="xs">
-                        Deselecteer alle {{ $this->resultTotal }}
-                    </x-chief-table::button>
-                @endif
+                <x-chief-table::button
+                    wire:key="bulk-deselect-all"
+                    x-show="hasSelectionAcrossPages"
+                    wire:click="bulkDeselectAll"
+                    variant="outline-white"
+                    size="xs"
+                >
+                    Deselecteer alle
+                    <span x-text="selection.length"></span>
+                </x-chief-table::button>
             </div>
         </div>
 

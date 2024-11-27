@@ -23,12 +23,16 @@
     @endif
 
     @if (! $hasLocales())
-        @include($getView())
-        @include('chief-form::fields._partials.charactercount')
+        <div>
+            @include($getView())
+            @include('chief-form::fields._partials.charactercount')
+        </div>
     @elseif (count($getLocales()) == 1)
         @foreach ($getLocales() as $locale)
-            @include($getView(), ['component' => $component, 'locale' => $locale])
-            @include('chief-form::fields._partials.charactercount')
+            <div>
+                @include($getView(), ['component' => $component, 'locale' => $locale])
+                @include('chief-form::fields._partials.charactercount')
+            </div>
         @endforeach
     @else
         <x-chief::tabs :listen-for-external-tab="true">

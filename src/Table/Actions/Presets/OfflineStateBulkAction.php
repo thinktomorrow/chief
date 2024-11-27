@@ -39,7 +39,8 @@ class OfflineStateBulkAction extends Action
 
                 return true;
             })
-            ->notifyOnSuccess('De selectie staat offline!')->notifyOnFailure('Er is iets misgegaan bij het offline plaatsen.')
+            ->notifyOnSuccess('De selectie staat offline!')
+            ->notifyOnFailure('Er is iets misgegaan bij het offline plaatsen.')
         ;
     }
 }

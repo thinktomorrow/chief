@@ -57,7 +57,7 @@ class DialogComponent extends Component
         }
 
         if (! $this->dialog) {
-            $this->dialog = $this->dialogReference->getDialog();
+            $this->dialog = $this->dialogReference->getDialog([$this->data]);
         }
 
         return $this->dialog;
