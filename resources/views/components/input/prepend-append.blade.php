@@ -6,21 +6,19 @@
 <div class="flex">
     @if ($prepend)
         <div class="form-input-prepend">
-            <span> {!! $prepend !!} </span>
+            <span>{!! $prepend !!}</span>
         </div>
     @endif
 
-    <div @class([
-        'w-full relative',
-        '[&>*]:form-input-with-prepend' => $prepend,
-        '[&>*]:form-input-with-append' => $append
-    ])>
+    <div
+        @class(['relative w-full', '[&>*]:form-input-with-prepend' => $prepend, '[&>*]:form-input-with-append' => $append])
+    >
         {{ $slot }}
     </div>
 
     @if ($append)
         <div class="form-input-append">
-            <span> {!! $append !!} </span>
+            <span>{!! $append !!}</span>
         </div>
     @endif
 </div>
