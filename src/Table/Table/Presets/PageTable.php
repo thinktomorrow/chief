@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Table\Table\Presets;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
@@ -34,8 +35,8 @@ class PageTable extends Table
             ->resource($resourceKey)
             ->actions([
                 CreateModelAction::makeDefault($resourceKey)->primary(),
-                VisitArchiveAction::makeDefault($resourceKey)->tertiary(),
-                ReorderAction::makeDefault($resourceKey)->tertiary(),
+                ...((new \ReflectionClass($modelClass))->hasMethod('scopeArchived') ? [VisitArchiveAction::makeDefault($resourceKey)->tertiary()] : []),
+                ...((new \ReflectionClass($modelClass))->hasMethod('sortableAttribute') ? [ReorderAction::makeDefault($resourceKey)->secondary()] : []),
             ])
             ->bulkActions([
                 OnlineStateBulkAction::makeDefault($resourceKey),
