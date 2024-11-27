@@ -14,14 +14,14 @@ class TitleFilter extends SearchFilter
             ->placeholder('Zoek op titel')
             ->description('Zoek op pagina titel')
             ->query(FilterPresets::searchQuery($columns, $dynamicKeys, $dynamicColumn));
-//            ->query(function ($builder, $value) use ($columns, $dynamicKeys, $dynamicColumn) {
-//
-//                foreach ($columns as $column) {
-//                    $builder->orWhere($column, 'LIKE', '%' . $value . '%');
-//                }
-//
-//                $builder->orWhereJsonLike($dynamicKeys, $value, $dynamicColumn);
-//            });
+        //            ->query(function ($builder, $value) use ($columns, $dynamicKeys, $dynamicColumn) {
+        //
+        //                foreach ($columns as $column) {
+        //                    $builder->orWhere($column, 'LIKE', '%' . $value . '%');
+        //                }
+        //
+        //                $builder->orWhereJsonLike($dynamicKeys, $value, $dynamicColumn);
+        //            });
 
 
         return $object;
