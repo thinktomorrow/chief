@@ -1,6 +1,6 @@
 <div
     class="mt-2 flex items-start justify-between gap-4"
-    :class="{ 'opacity-50 pointer-events-none': selection.length > 0 }"
+    :class="{ '*:opacity-40 *:pointer-events-none cursor-not-allowed': selection.length > 0 }"
 >
     <div class="flex items-start gap-2">
         @foreach ($this->getPrimaryFilters() as $filter)
