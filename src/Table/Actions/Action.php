@@ -78,8 +78,8 @@ class Action extends \Illuminate\View\Component implements Htmlable
         if ($this->effect) {
             $action->effect($this->effect);
         }
-        if ($this->dialog) {
-            $action->dialog($this->dialog);
+        if ($this->dialogResolver) {
+            $action->dialog($this->dialogResolver);
         }
         if ($this->link) {
             $action->link($this->link);
