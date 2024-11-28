@@ -19,7 +19,7 @@ trait HasPresets
         ])->columns([
             // ColumnBadge::make('tags.label')->label('tags'),
             ColumnTag::make('tags.label')
-                ->eachItem(function($columnItem, $tagModel) {
+                ->eachItem(function ($columnItem, $tagModel) {
                     $columnItem->value($tagModel->label)
                                ->color($tagModel->color);
                 })
