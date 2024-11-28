@@ -46,7 +46,7 @@
     @endif
 
     <x-slot name="footer">
-        <button type="submit" x-on:click="open = false" class="btn btn-grey">Annuleer</button>
+        <button type="submit" x-on:click="close()" class="btn btn-grey">Annuleer</button>
 
         <button
             type="submit"
