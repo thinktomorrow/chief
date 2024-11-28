@@ -29,7 +29,7 @@ trait HasVariantMapping
 
     protected function handleVariantMapping(ColumnItem $columnItem): void
     {
-        foreach($this->variantMapResolvers as $variantMapResolver) {
+        foreach ($this->variantMapResolvers as $variantMapResolver) {
             call_user_func($variantMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
         }
     }
