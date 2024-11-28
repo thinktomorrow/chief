@@ -18,12 +18,12 @@
     </div>
 
     <x-slot name="footer">
-        <button type="button" x-on:click="open = false" class="btn btn-grey">Annuleer</button>
+        <button type="button" x-on:click="close()" class="btn btn-grey">Annuleer</button>
 
         <button
             type="submit"
             form="delete-fragment-form-{{ $model->modelReference()->get() }}"
-            x-on:click="open = false"
+            x-on:click="close()"
             class="btn btn-error"
         >
             Verwijder fragment
