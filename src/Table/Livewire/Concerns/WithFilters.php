@@ -43,7 +43,7 @@ trait WithFilters
     {
         foreach ($this->getFilters() as $filter) {
             // Active either by present in url or set to active: active(), activeIfNone()
-            if ($filter->hasValue() && !isset($this->filters[$filter->getKey()])) {
+            if ($filter->hasValue() && ! isset($this->filters[$filter->getKey()])) {
                 $this->filters[$filter->getKey()] = $filter->getValue();
             }
         }
