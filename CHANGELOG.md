@@ -12,6 +12,7 @@ principles.
   cause some project specific icons to not show up anymore, e.g. `#icon-rectangle-group` in project nav files.
 - Changed: Extracted partial logic from `StateAssistant` to a `UpdateState` as an action for reuse between commands.
 - Nestable logic has changed so any nestable resources, like Page, need to be adjusted. Below you can find the specific changes in the Tree retrieval section.
+- Fixed: dashboard widgets can now be displayed on the same row
 
 ### Table component
 
