@@ -1,24 +1,24 @@
-{{-- TODO(ben): make this work --}}
-{{-- <x-chief-tags::tags :tags="$getValues()" /> --}}
+@php
+    $threshold = 3;
+    $count = count($getItems());
+@endphp
 
-<div class="flex max-w-80 flex-wrap items-start gap-1">
+<div x-data="{ isShowingMore: false }" class="flex max-w-80 flex-wrap items-start gap-1">
     @foreach ($getItems() as $item)
-        {{--
-            @if ($item->hasLink())
-            <a href="{{ $item->getLink() }}" title="{{ $item->getValue() }}">
-            <x-chief-table::badge size="xs" :variant="$item->getVariant()">
-            {{ $item->getValue() }}
-            </x-chief-table::badge>
-            </a>
-            @else
-            <x-chief-table::badge size="xs" :variant="$item->getVariant()">
-            {{ $item->getValue() }}
-            </x-chief-table::badge>
-            @endif
-        --}}
+        @php
+            $index = $count === $threshold ? $loop->index : $loop->iteration;
+        @endphp
 
-        <x-chief-tags::tag color="blue" size="xs">
+        <x-chief-tags::tag color="blue" size="xs" x-show="{{ $index >= $threshold ? 'isShowingMore' : 'true' }}">
             {{ $item->getValue() }}
         </x-chief-tags::tag>
     @endforeach
+
+    @if ($count > $threshold)
+        <button type="button" x-on:click="isShowingMore = true" x-show="!isShowingMore" class="inline-flex">
+            <x-chief-tags::tag size="xs" class="hover:ring-grey-200">
+                +{{ $count - $threshold + 1 }} {{ $count - $threshold === 1 ? 'tag' : 'tags' }}
+            </x-chief-tags::tag>
+        </button>
+    @endif
 </div>
