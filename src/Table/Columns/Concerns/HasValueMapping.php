@@ -7,14 +7,14 @@ use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 
 trait HasValueMapping
 {
-    private ?Closure $valueMapResolver = null;
+    private array $valueMapResolvers = [];
 
     public function mapValue(array|Closure $valueMapResolver): static
     {
         if ($valueMapResolver instanceof Closure) {
-            $this->valueMapResolver = $valueMapResolver;
+            $this->valueMapResolvers[] = $valueMapResolver;
         } else {
-            $this->valueMapResolver = function (ColumnItem $columnItem) use ($valueMapResolver) {
+            $this->valueMapResolvers[] = function (ColumnItem $columnItem) use ($valueMapResolver) {
 
                 $originalValue = $columnItem->getValue();
 
@@ -29,8 +29,8 @@ trait HasValueMapping
 
     protected function handleValueMapping(ColumnItem $columnItem): void
     {
-        if ($this->valueMapResolver) {
-            call_user_func($this->valueMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+        foreach ($this->valueMapResolvers as $valueMapResolver) {
+            call_user_func($valueMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
         }
     }
 

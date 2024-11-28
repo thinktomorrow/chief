@@ -7,14 +7,14 @@ use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 
 trait HasVariantMapping
 {
-    private ?Closure $variantMapResolver = null;
+    private array $variantMapResolvers = [];
 
     public function mapVariant(array|Closure $variantMapResolver): static
     {
         if ($variantMapResolver instanceof Closure) {
-            $this->variantMapResolver = $variantMapResolver;
+            $this->variantMapResolvers[] = $variantMapResolver;
         } else {
-            $this->variantMapResolver = function (ColumnItem $columnItem) use ($variantMapResolver) {
+            $this->variantMapResolvers[] = function (ColumnItem $columnItem) use ($variantMapResolver) {
 
                 $originalValue = $columnItem->getValue();
 
@@ -29,8 +29,8 @@ trait HasVariantMapping
 
     protected function handleVariantMapping(ColumnItem $columnItem): void
     {
-        if ($this->variantMapResolver) {
-            call_user_func($this->variantMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+        foreach($this->variantMapResolvers as $variantMapResolver) {
+            call_user_func($variantMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
         }
     }
 }

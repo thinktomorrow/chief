@@ -7,19 +7,19 @@ use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 
 trait HasItemMapping
 {
-    private ?Closure $itemMapResolver = null;
+    private array $itemMapResolvers = [];
 
     public function eachItem(Closure $itemMapResolver): static
     {
-        $this->itemMapResolver = $itemMapResolver;
+        $this->itemMapResolvers[] = $itemMapResolver;
 
         return $this;
     }
 
     protected function handleItemMapping(ColumnItem $columnItem): void
     {
-        if ($this->itemMapResolver) {
-            call_user_func($this->itemMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+        foreach($this->itemMapResolvers as $itemMapResolver) {
+            call_user_func($itemMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
         }
     }
 }
