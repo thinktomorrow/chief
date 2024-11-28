@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
-use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnTag;
 use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 
@@ -18,7 +17,7 @@ trait HasPresets
             TagFilter::makeDefault($resourceKey),
         ])->columns([
             ColumnTag::make('tags')
-                ->items(function($model) {
+                ->items(function ($model) {
                     return $model->tags;
                 })
                 ->eachItem(function ($columnItem, $tagModel) {
