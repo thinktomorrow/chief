@@ -21,7 +21,7 @@ trait HasPresets
                 ->items(function($model) {
                     return $model->tags;
                 })
-                ->eachItem(function($columnItem, $tagModel) {
+                ->eachItem(function ($columnItem, $tagModel) {
                     $columnItem->value($tagModel->label)
                                ->color($tagModel->color);
                 })
