@@ -9,7 +9,7 @@
             $index = $count === $threshold ? $loop->index : $loop->iteration;
         @endphp
 
-        <x-chief-tags::tag color="blue" size="xs" x-show="{{ $index >= $threshold ? 'isShowingMore' : 'true' }}">
+        <x-chief-tags::tag color="{{ $item->getColor() ?: '' }}" size="xs" x-show="{{ $index >= $threshold ? 'isShowingMore' : 'true' }}">
             {{ $item->getValue() }}
         </x-chief-tags::tag>
     @endforeach
