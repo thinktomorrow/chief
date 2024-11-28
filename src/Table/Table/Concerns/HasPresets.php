@@ -17,8 +17,10 @@ trait HasPresets
         })->filters([
             TagFilter::makeDefault($resourceKey),
         ])->columns([
-            // ColumnBadge::make('tags.label')->label('tags'),
-            ColumnTag::make('tags.label')
+            ColumnTag::make('tags')
+                ->items(function($model) {
+                    return $model->tags;
+                })
                 ->eachItem(function($columnItem, $tagModel) {
                     $columnItem->value($tagModel->label)
                                ->color($tagModel->color);
