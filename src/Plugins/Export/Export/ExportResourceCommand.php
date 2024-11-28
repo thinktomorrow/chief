@@ -36,7 +36,7 @@ class ExportResourceCommand extends BaseCommand
         $models = $this->getModels($resource::resourceKey());
 
         (new ExportResourceDocument($resource, $models, $locales, ! $this->option('include-static')))
-            ->store($filepath = 'exports/' . date('Ymd-His') .'/'.config('app.name') .'-'. $resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
+            ->store($filepath = 'exports/' . date('Ymd') .'/'.config('app.name') .'-'. $resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished '.$resource::resourceKey().' export. File available at: storage/app/' . $filepath);
     }

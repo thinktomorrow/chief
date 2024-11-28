@@ -19,7 +19,7 @@ class ExportTextCommandTest extends TestCase
 
         $this->artisan('chief:export-text');
 
-        $filepath = storage_path('app/exports/'.date('Ymd-His').'/'.config('app.name') .'-text-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-text-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 
