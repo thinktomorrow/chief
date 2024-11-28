@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\ComposeFieldLines;
@@ -50,7 +51,9 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
      */
     public function columnFormats(): array
     {
-        return [];
+        return [
+            ...array_fill_keys(range('A', 'Z'), NumberFormat::FORMAT_TEXT),
+        ];
     }
 
     public function map($row): array

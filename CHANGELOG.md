@@ -6,7 +6,11 @@ principles.
 
 ## Unreleased
 
+## 0.8.26 - 2024-11-28
+
 - Fixed: dashboard widgets can now be displayed on the same row
+- Fixed: issue where numeric values were cut off by excel on export
+- Changed: Export results are now grouped per export in their own folder
 
 ## 0.8.25 - 2024-10-07
 

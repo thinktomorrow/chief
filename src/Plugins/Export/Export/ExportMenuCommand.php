@@ -26,7 +26,7 @@ class ExportMenuCommand extends BaseCommand
         $models = $this->sortModels($models);
 
         (new ExportMenuDocument($models, config('chief.locales')))
-            ->store($filepath = 'exports/' . config('app.name') .'-menu-'.date('Y-m-d').'.xlsx');
+            ->store($filepath = 'exports/' . date('Ymd-His') .'/'.config('app.name') .'-menu-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished export. File available at: storage/app/' . $filepath);
     }
