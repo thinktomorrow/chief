@@ -50,7 +50,7 @@ class FragmentTestAssist
     {
         $contexts = app(ContextRepository::class)->getByOwner($owner);
 
-        if($contexts->isNotEmpty()) {
+        if ($contexts->isNotEmpty()) {
             return $contexts->first();
         }
 
@@ -66,7 +66,7 @@ class FragmentTestAssist
     {
         $fragmentKey = $fragmentClass::resourceKey();
 
-        if($register && ! app(Registry::class)->exists($fragmentKey)) {
+        if ($register && ! app(Registry::class)->exists($fragmentKey)) {
             chiefRegister()->fragment($fragmentClass);
         }
 

@@ -15,7 +15,7 @@ abstract class ChiefPluginServiceProvider extends ServiceProvider
 
     protected function loadPluginAdminRoutes(string $path): void
     {
-        if(! $this->isRequestInAdminEnvironment()) {
+        if (! $this->isRequestInAdminEnvironment()) {
             return;
         }
 

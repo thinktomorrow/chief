@@ -18,7 +18,7 @@ class ActiveContextId
 
     public static function get(): string
     {
-        if(! self::exists()) {
+        if (! self::exists()) {
             throw new \InvalidArgumentException('No active context id set.');
         }
 

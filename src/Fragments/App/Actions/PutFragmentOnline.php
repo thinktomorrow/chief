@@ -20,7 +20,7 @@ class PutFragmentOnline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        if($fragmentable->fragmentModel()->isOnline()) {
+        if ($fragmentable->fragmentModel()->isOnline()) {
             return;
         }
 

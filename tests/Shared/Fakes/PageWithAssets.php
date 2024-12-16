@@ -32,7 +32,7 @@ class PageWithAssets extends Model implements Page, PageResource
 
     public function fields($model): iterable
     {
-        if(! static::$fieldsDefinition) {
+        if (! static::$fieldsDefinition) {
             return [];
         }
 
