@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait MultiSiteableDefault
 {
-    public function getLocales(): array
+    public function getSiteLocales(): array
     {
         return $this->locales ?: [];
     }
 
-    public function saveLocales(array $locales): void
+    public function saveSiteLocales(array $locales): void
     {
         $this->locales = $locales;
 

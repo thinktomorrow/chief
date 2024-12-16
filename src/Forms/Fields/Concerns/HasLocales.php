@@ -23,7 +23,7 @@ trait HasLocales
         $this->whenModelIsSet(function ($model, $field) use ($locales) {
 
             if ($model instanceof MultiSiteable && (null === $locales)) {
-                $this->locales = $model->getLocales();
+                $this->locales = $model->getSiteLocales();
             }
         });
 

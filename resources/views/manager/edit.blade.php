@@ -54,7 +54,7 @@
             }"
         >
             <x-chief-fragments::index :context-id="$context->id"
-                                      locale="{{ count($model->getLocales()) > 0 ? $model->getLocales()[0] : null }}"/>
+                                      locale="{{ count($model->getSiteLocales()) > 0 ? $model->getSiteLocales()[0] : null }}"/>
         </div>
         @endAdminCan
 

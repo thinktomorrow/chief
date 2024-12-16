@@ -30,7 +30,7 @@ final class LinkForm
     private function getLocales(): array
     {
         return $this->model instanceof MultiSiteable
-            ? $this->model->getLocales()
+            ? $this->model->getSiteLocales()
             : \Thinktomorrow\Chief\Sites\ChiefSites::locales();
     }
 

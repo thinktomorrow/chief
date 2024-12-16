@@ -8,7 +8,7 @@ interface MultiSiteable
      * All available sites for this model.
      * Each locale here represents a site.
      */
-    public function getLocales(): array;
+    public function getSiteLocales(): array;
 
-    public function saveLocales(array $locales): void;
+    public function saveSiteLocales(array $locales): void;
 }

@@ -10,10 +10,10 @@ class SyncLocales
 {
     public function handle(MultiSiteable & ReferableModel $model, array $locales): void
     {
-        $previousState = $model->getLocales();
+        $previousState = $model->getSiteLocales();
 
-        $model->saveLocales($model, $locales);
+        $model->saveSiteLocales($model, $locales);
 
-        event(new LocalesUpdated($model->modelReference(), $model->getLocales(), $previousState));
+        event(new LocalesUpdated($model->modelReference(), $model->getSiteLocales(), $previousState));
     }
 }
