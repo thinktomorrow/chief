@@ -28,7 +28,7 @@ class ColumnMapVariantTest extends TestCase
         $model->tags()->create(['label' => 'second tag label']);
 
         $column = ColumnText::make('tags')
-            ->mapVariant(fn($tag) => match($tag->label) {
+            ->mapVariant(fn ($tag) => match($tag->label) {
                 'first tag label' => 'green',
                 'second tag label' => 'blue',
             })

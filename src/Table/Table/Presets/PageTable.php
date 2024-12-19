@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateBulkAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\ViewOnSiteAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;

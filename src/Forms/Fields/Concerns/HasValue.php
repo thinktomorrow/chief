@@ -107,7 +107,7 @@ trait HasValue
             }
 
             // Only relation methods can be called as a property. Other methods are treated as regular methods.
-            if(method_exists($model, $this->getColumnName())) {
+            if (method_exists($model, $this->getColumnName())) {
 
                 $value = $model->{$this->getColumnName()}();
 

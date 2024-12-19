@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ViewOnSiteAction;
@@ -36,7 +35,7 @@ trait HasPresets
         return $this->addQuery(function ($builder) {
             $builder->with(['urls']);
         })->rowActions([
-            ViewOnSiteAction::makeDefault($resourceKey)->tertiary()
+            ViewOnSiteAction::makeDefault($resourceKey)->tertiary(),
         ]);
     }
 }

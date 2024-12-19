@@ -16,7 +16,7 @@ trait HasVariantMapping
         } else {
             $this->variantMapResolvers[] = function ($rawValue, ColumnItem $columnItem) use ($variantMapResolver) {
 
-                if(is_scalar($rawValue)) {
+                if (is_scalar($rawValue)) {
                     return $variantMapResolver[$rawValue] ?? $rawValue;
                 }
 

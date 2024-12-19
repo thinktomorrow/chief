@@ -7,14 +7,15 @@ use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\ModelFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
 
-class ColumnMapValueTest extends TestCase {
+class ColumnMapValueTest extends TestCase
+{
 
     public function test_it_can_map_value()
     {
         ModelFixture::migrateUp();
 
         $column = ColumnText::make('title')
-            ->mapValue(fn($value) => strtoupper($value))
+            ->mapValue(fn ($value) => strtoupper($value))
             ->model(ModelFixture::create(['title' => 'test title']));
 
         $this->assertCount(1, $column->getItems());
@@ -26,7 +27,7 @@ class ColumnMapValueTest extends TestCase {
         ModelFixture::migrateUp();
 
         $column = ColumnText::make('xxx')
-            ->mapValue(fn($value) => $value)
+            ->mapValue(fn ($value) => $value)
             ->model(ModelFixture::create(['title' => 'test title']));
 
         $this->assertCount(1, $column->getItems());
@@ -41,7 +42,7 @@ class ColumnMapValueTest extends TestCase {
         $model->tags()->create(['label' => 'second tag label']);
 
         $column = ColumnText::make('tags')
-            ->mapValue(fn(TagModel $tag) => $tag->label)
+            ->mapValue(fn (TagModel $tag) => $tag->label)
             ->model($model);
 
         $this->assertCount(2, $column->getItems());
@@ -85,8 +86,8 @@ class ColumnMapValueTest extends TestCase {
         ]];
 
         $column = ColumnText::make('books')
-            ->mapValue(fn($book) => $book['title'])
-            ->mapValue(fn($title) => strtoupper($title))
+            ->mapValue(fn ($book) => $book['title'])
+            ->mapValue(fn ($title) => strtoupper($title))
             ->model($model);
 
         $this->assertCount(2, $column->getItems());

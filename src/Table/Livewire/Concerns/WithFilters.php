@@ -74,8 +74,8 @@ trait WithFilters
      */
     public function updatedFilters()
     {
-        foreach($this->filters as $key => $filterValue) {
-            if($this->isEmptyFilterValue($filterValue)) {
+        foreach ($this->filters as $key => $filterValue) {
+            if ($this->isEmptyFilterValue($filterValue)) {
                 unset($this->filters[$key]);
             }
         }

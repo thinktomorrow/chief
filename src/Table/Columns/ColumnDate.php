@@ -36,7 +36,7 @@ class ColumnDate extends ColumnItem
     {
         $item = parent::replicateToItem($value);
 
-        if($this->format) {
+        if ($this->format) {
             $item->format($this->format);
         }
 
