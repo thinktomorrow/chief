@@ -42,16 +42,20 @@ return [
 
     /**
      * Sites
+     * Define the different sites that are available in your application.
+     * The first site in the list is considered the default site.
      *
-     * Define the different sites that are available in your application. The key of each
-     * site is the locale of the site. The value is an array with the following keys:
+     * The key of each site is the locale of the site:
+     * This value will be set as app_locale and should also correspond
+     * to the Laravel translation locale in resources/lang.
+     *  e.g. nl, en, en-US, nl-NL, fr-BE
      *
+     * The value is an array with the following keys:
      * - name        The name of the site used throughout the admin
      * - short_name  A short name used in admin select lists or tabs.
      * - url         The root url of the site for this locale
      * - active      Whether this site is active on the frontend or not
      *
-     * The first site in the list is considered the default site.
      */
     'sites' => [
         'nl' => [
@@ -76,22 +80,13 @@ return [
             'url' => env('CHIEF_SITES_URL_DEFAULT', env('APP_URL', 'http://localhost')),
 
             /**
-             * Locales
-             * This value should correspond to the Laravel translation locale in resources/lang.
-             * Language is required, region is optional. If you use the ISO 639-1 locale
-             * format language[-region], make sure that the language is always set first
-             * e.g. nl, en, en-US, nl-NL, fr-BE
-             */
-            'locale' => 'nl',
-
-            /**
              * Fallback locale
              * This locale is used as a fallback when a field (or asset)
              * value is not available in the requested locale. Leave
              * null if you don't want to use a fallback strategy.
              */
             'fallback_locale' => 'be',
-//            'default_locale' => 'nl',
+
             // which locale to use for squanto, translations and such: app()->setLocale()
             //// Usually this is the same as the key locale but it can happen that the app locale is different.
             ///  This means that for sites with the same app_locale, only one translation field is presented. Then there is no option to

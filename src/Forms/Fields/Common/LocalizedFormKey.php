@@ -83,6 +83,11 @@ class LocalizedFormKey
         return $this;
     }
 
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
     public function bracketed(): self
     {
         $this->bracketed = true;
