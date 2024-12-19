@@ -30,7 +30,7 @@ interface LocalisedField
      */
     public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static;
 
-//    public function getLocalizedFormKeyTemplate(): string;
+    //    public function getLocalizedFormKeyTemplate(): string;
 
     public function getLocalizedFormKey(): LocalizedFormKey;
 
