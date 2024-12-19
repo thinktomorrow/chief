@@ -1,5 +1,5 @@
 <div
-    class="bg-grey-100 px-3 py-1 last:rounded-b-lg"
+    class="bg-grey-50 px-3 py-1 last:rounded-b-lg"
     x-init="
         () => {
             editor().on('update', () => {

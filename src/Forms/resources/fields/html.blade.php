@@ -1,4 +1,6 @@
-@php use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName; @endphp
+@php
+    use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+@endphp
 
 <x-chief::input.textarea
     wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
@@ -9,4 +11,7 @@
     v-pre
     cols="10"
     rows="5"
-    style="resize: vertical">{{ $getActiveValue($locale ?? null) }}</x-chief::input.textarea>
+    style="resize: vertical"
+>
+    {{ $getActiveValue($locale ?? null) }}
+</x-chief::input.textarea>

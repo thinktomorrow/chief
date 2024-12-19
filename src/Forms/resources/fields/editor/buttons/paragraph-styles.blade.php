@@ -12,6 +12,7 @@
         }"
     >
         <x-chief-form::editor.icon.heading-one />
+
         Heading 1
     </x-chief-form::editor.dropdown.item>
 
