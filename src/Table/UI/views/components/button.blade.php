@@ -1,34 +1,41 @@
 @props([
     'size' => 'base',
-    'color' => 'grey',
-    'iconLeft' => null,
-    'iconRight' => null,
+    'variant' => 'outline-white',
 ])
 
-<span
-    {{
-        $attributes->class([
-            'bui-btn font-medium cursor-pointer',
-            'bui-btn-grey' => $color === 'grey',
-            'bui-btn-primary' => $color === 'primary',
-            'bui-btn-white' => $color === 'white',
-            'bui-btn-base' => $size === 'base',
-            'bui-btn-sm' => $size === 'sm',
-            'bui-btn-xs' => $size === 'xs',
-        ])
-    }}
->
-    @if ($iconLeft)
-        {!! $iconLeft !!}
-    @endif
+@php
+    $attributes = $attributes->class([
+        'bui-btn cursor-pointer font-medium',
+        match ($size) {
+            'base' => 'bui-btn-base',
+            'sm' => 'bui-btn-sm',
+            'xs' => 'bui-btn-xs',
+            default => 'bui-btn-base',
+        },
+        match ($variant) {
+            'blue' => 'bui-btn-blue',
+            'grey' => 'bui-btn-grey',
+            'outline-white' => 'bui-btn-outline-white',
+            'transparent' => 'bui-btn-transparent',
+            'red' => 'bui-btn-red',
+            'orange' => 'bui-btn-orange',
+            'light-blue' => 'bui-btn-light-blue',
+            'green' => 'bui-btn-green',
+            default => 'bui-btn-outline-white',
+        },
+    ]);
+@endphp
 
-    @if ($slot->isNotEmpty() && $slot->hasActualContent())
-        <span class="bui-btn-content">
-            {{ $slot }}
-        </span>
-    @endif
-
-    @if ($iconRight)
-        {!! $iconRight !!}
-    @endif
-</span>
+@if ($attributes->has('href'))
+    <a {{ $attributes }}>
+        {{ $slot }}
+    </a>
+@elseif ($attributes->has('for'))
+    <label {{ $attributes }}>
+        {{ $slot }}
+    </label>
+@else
+    <button {{ $attributes->merge(['type' => 'button']) }}>
+        {{ $slot }}
+    </button>
+@endif

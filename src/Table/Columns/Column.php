@@ -25,6 +25,15 @@ class Column
         return $this->items;
     }
 
+    public function removeItem(string $key): static
+    {
+        $this->items = collect($this->items)
+            ->reject(fn ($item) => $item->getKey() === $key)
+            ->all();
+
+        return $this;
+    }
+
     /**
      * Populate all components with the model instance
      */

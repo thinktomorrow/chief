@@ -48,7 +48,7 @@
             x-show="notifications.length + asyncNotifications.length > 0"
             class="pop relative cursor-pointer rounded-full border border-grey-100 bg-white p-3 text-grey-900 shadow-lg hover:bg-grey-50"
         >
-            <svg class="h-5 w-5"><use xlink:href="#icon-bell"></use></svg>
+            <x-chief::icon.bell class="size-5" />
 
             <div
                 x-show="closedNotifications > 0"

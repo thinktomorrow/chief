@@ -39,7 +39,7 @@ trait WithTreeResults
 
         $this->ancestors = $ancestors->all();
 
-        if (! $this->hasPagination() || $forceAsCollection) {
+        if ($this->isReordering || ! $this->hasPagination() || $forceAsCollection) {
             return collect($treeModels);
         }
 
@@ -49,7 +49,7 @@ trait WithTreeResults
 
     private function shouldReturnResultsAsTree(): bool
     {
-        if (! $this->getTable()->getResourceReference()->isTreeResource()) {
+        if (! $this->getTable()->shouldReturnResultsAsTree()) {
             return false;
         }
 

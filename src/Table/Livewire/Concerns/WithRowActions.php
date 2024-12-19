@@ -6,31 +6,28 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 
 trait WithRowActions
 {
-    /**
-     * @return Action[]
-     */
-    public function getVisibleRowActions(): array
+    /** @return Action[] */
+    public function getPrimaryRowActions($model): array
     {
-        return array_filter($this->getTable()->getRowActions(), fn (Action $action) => $action->isVisible());
+        return $this->getRowActionsByVariant('primary', $model);
     }
 
-    public function getHiddenRowActions(): array
+    /** @return Action[] */
+    public function getSecondaryRowActions($model): array
     {
-        return array_filter($this->getTable()->getRowActions(), fn (Action $action) => ! $action->isVisible());
+        return $this->getRowActionsByVariant('secondary', $model);
     }
-    //
-    //    public function applyRowActionEffect(string $key, $model)
-    //    {
-    //        $action = $this->getTable()->findRowAction($key);
-    //
-    //        // Modal??
-    //
-    //        // Compose Modal
-    //
-    //        // Effect?
-    //
-    //        if ($action->hasEffect()) {
-    //            $action->getEffect()($model);
-    //        }
-    //    }
+
+    /** @return Action[] */
+    public function getTertiaryRowActions($model): array
+    {
+        return $this->getRowActionsByVariant('tertiary', $model);
+    }
+
+    private function getRowActionsByVariant(string $variant, $model): array
+    {
+        $variantActions = array_filter($this->getTable()->getRowActions($model), fn (Action $action) => $action->{'is'.ucfirst($variant)}());
+
+        return array_filter($variantActions, fn (Action $action) => ! $action->hasWhen() || $action->getWhen()($model));
+    }
 }

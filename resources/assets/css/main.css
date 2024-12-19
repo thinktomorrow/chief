@@ -12,7 +12,9 @@
 
 /* New Table UI button */
 @import './components/bui-button';
-@import './components/bui-label';
+@import './components/bui-dropdown-item';
+@import './components/badge';
+@import './components/tag';
 
 @import './components/form';
 @import './components/form/index.css';

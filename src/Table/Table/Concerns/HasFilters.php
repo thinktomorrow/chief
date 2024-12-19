@@ -18,4 +18,13 @@ trait HasFilters
     {
         return $this->filters;
     }
+
+    public function removeFilter(string|array $keys): static
+    {
+        $keys = (array) $keys;
+
+        $this->filters = array_filter($this->filters, fn ($filter) => ! in_array($filter->getKey(), $keys));
+
+        return $this;
+    }
 }

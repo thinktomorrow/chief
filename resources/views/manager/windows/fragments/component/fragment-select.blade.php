@@ -1,63 +1,60 @@
 @php
-    $hideSelectOptions = !isset($inOpenState) || !$inOpenState;
+    $hideSelectOptions = ! isset($inOpenState) || ! $inOpenState;
 @endphp
 
 <div
     data-fragment-select
     data-sortable-ignore
-    class="relative w-full {{ $hideSelectOptions ? 'with-fragment-select-options' : null }}"
+    class="{{ $hideSelectOptions ? 'with-fragment-select-options' : null }} relative w-full"
 >
     <!-- plus icon -->
-    @if($hideSelectOptions)
-        <div
-            data-fragment-select-open
-            class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]"
-        >
-            <div class="absolute">
-                <x-chief::button>
-                    <svg><use xlink:href="#icon-plus"></use></svg>
-                </x-chief::button>
-            </div>
+    @if ($hideSelectOptions)
+        <div class="absolute z-[1] flex h-8 w-full justify-center pointer-events-none">
+            <x-chief-table::button data-fragment-select-open size="sm" class="absolute -top-3.5 pointer-events-auto">
+                <x-chief::icon.plus-sign />
+            </x-chief-table::button>
         </div>
     @endif
 
     <!-- select options: create new or add existing -->
     <div
         data-fragment-select-options
-        class="{{ ($hideSelectOptions) ? 'hidden' : '' }} relative py-6 pop fragment-select-options"
+        class="{{ $hideSelectOptions ? 'hidden' : '' }} fragment-select-options relative border-t border-grey-100 py-6"
     >
-        <div class="flex flex-col-reverse flex-wrap items-end justify-center gap-4 sm:gap-6 sm:items-stretch sm:flex-nowrap sm:flex-row">
-            <div class="w-8 shrink-0"></div>
+        <div
+            class="flex flex-col-reverse flex-wrap items-end justify-center gap-3 sm:flex-row sm:flex-nowrap sm:items-stretch"
+        >
+            <div class="w-7 shrink-0"></div>
 
-            <div class="w-full">
+            <div class="pop w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-new', $owner) }}"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-center label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
+                    class="label label-primary label-xl transition-75 flex h-full flex-col items-center justify-center space-y-1 text-center hover:bg-primary-500 hover:text-white"
                 >
-                    <svg width="24" height="24"> <use xlink:href="#icon-squares-plus"/> </svg>
+                    <svg width="24" height="24"><use xlink:href="#icon-squares-plus" /></svg>
 
                     <span class="font-semibold">Nieuw fragment</span>
                 </a>
             </div>
 
-            <div class="w-full">
+            <div class="pop w-full">
                 <a
                     data-sidebar-trigger
                     href="{{ $ownerManager->route('fragments-select-existing', $owner) }}"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-center label label-primary label-xl hover:bg-primary-500 hover:text-white transition-75"
+                    class="label label-primary label-xl transition-75 flex h-full flex-col items-center justify-center space-y-1 text-center hover:bg-primary-500 hover:text-white"
                 >
-                    <svg width="24" height="24"> <use xlink:href="#icon-square-2-stack"/> </svg>
+                    <svg width="24" height="24"><use xlink:href="#icon-square-2-stack" /></svg>
 
                     <span class="font-semibold">Bestaand fragment</span>
                 </a>
             </div>
 
-            <div class="flex justify-end w-8 shrink-0">
-                @if($hideSelectOptions)
-                    <span data-fragment-select-close class="cursor-pointer">
-                        <x-chief::icon-button icon="icon-x-mark" color="grey" />
-                    </span>
+            <div class="flex w-7 shrink-0 items-start justify-end">
+                @if ($hideSelectOptions)
+                    <x-chief-table::button data-fragment-select-close size="sm" variant="transparent">
+                        <x-chief::icon.cancel />
+                    </x-chief-table::button>
                 @endif
             </div>
         </div>

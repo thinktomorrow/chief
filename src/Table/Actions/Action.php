@@ -12,19 +12,21 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
+use Thinktomorrow\Chief\Table\Actions\Concerns\CloseDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasDialog;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasEffect;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasNotification;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasRedirectOnSuccess;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasRefresh;
+use Thinktomorrow\Chief\Table\Actions\Concerns\HasWhenCondition;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
-use Thinktomorrow\Chief\Table\Columns\Concerns\HasVisibility;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
 
 class Action extends \Illuminate\View\Component implements Htmlable
 {
     use HasComponentRendering;
-    use HasView;
     use HasCustomAttributes;
     use HasKey;
     use HasLabel;
@@ -32,15 +34,16 @@ class Action extends \Illuminate\View\Component implements Htmlable
     use HasLocalizableProperties;
     use HasModel;
     use HasIcon;
-
-    use HasVisibility;
+    use HasVariant;
+    use HasOrdinalLevel;
     use HasLink;
     use HasEffect;
+    use CloseDialog;
     use HasDialog;
     use HasNotification;
     use HasRefresh;
-
-    protected string $view = 'chief-table::actions.action';
+    use HasRedirectOnSuccess;
+    use HasWhenCondition;
 
     public function __construct(string $key)
     {
@@ -67,17 +70,16 @@ class Action extends \Illuminate\View\Component implements Htmlable
     {
         $action = $class::make($this->key);
 
-        if ($this->label) {
-            $action->label($this->label);
-        }
+        $action->label($this->label);
+
         if ($this->description) {
             $action->description($this->description);
         }
         if ($this->effect) {
             $action->effect($this->effect);
         }
-        if ($this->dialog) {
-            $action->dialog($this->dialog);
+        if ($this->dialogResolver) {
+            $action->dialog($this->dialogResolver);
         }
         if ($this->link) {
             $action->link($this->link);
@@ -94,33 +96,23 @@ class Action extends \Illuminate\View\Component implements Htmlable
         if ($this->model) {
             $action->model($this->model);
         }
+        if ($this->prependIcon) {
+            $action->prependIcon($this->prependIcon);
+        }
+        if ($this->appendIcon) {
+            $action->appendIcon($this->appendIcon);
+        }
+        if ($this->redirectOnSuccess) {
+            $action->redirectOnSuccess($this->redirectOnSuccess);
+        }
+        if ($this->hasWhen()) {
+            $action->when($this->when);
+        }
+
+        $action->variant($this->variant);
+        $action->ordinalLevel($this->ordinalLevel);
+        $action->closeDialog($this->closeDialog);
 
         return $action;
     }
-
-
-    // icon('name')
-
-    // link()
-
-    // ->apply(payload)
-
-    // BULKACTION
-    // ->apply(payload)
-
-    // Confirmation
-    // content of this?
-    // Icon
-    // Route
-    // or Class-Method
-    // or inline, callable
-
-    // isItemSelectable(): bool on table
-
-    // withModal() -> Form::make()...
-
-    // Preset actions
-    // DuplicateAction
-    // EditAction
-    // CreateAction
 }

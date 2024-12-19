@@ -6,54 +6,46 @@
                     @if ($paginator->onFirstPage())
                         <x-chief-table::button
                             size="sm"
-                            color="white"
-                            iconLeft='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
+                            variant="outline-white"
                             class="pointer-events-none text-grey-400"
                         >
-                            Vorige
+                            <x-chief::icon.arrow-left />
+                            <span>Vorige</span>
                         </x-chief-table::button>
                     @else
-                        <button
-                            type="button"
+                        <x-chief-table::button
                             wire:click="previousPage('{{ $paginator->getPageName() }}')"
                             wire:loading.attr="disabled"
                             dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before"
+                            size="sm"
+                            variant="outline-white"
                         >
-                            <x-chief-table::button
-                                size="sm"
-                                color="white"
-                                iconLeft='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
-                            >
-                                Vorige
-                            </x-chief-table::button>
-                        </button>
+                            <x-chief::icon.arrow-left />
+                            <span>Vorige</span>
+                        </x-chief-table::button>
                     @endif
                 </span>
 
                 <span>
                     @if ($paginator->hasMorePages())
-                        <button
-                            type="button"
+                        <x-chief-table::button
                             wire:click="nextPage('{{ $paginator->getPageName() }}')"
                             wire:loading.attr="disabled"
                             dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before"
+                            size="sm"
+                            variant="outline-white"
                         >
-                            <x-chief-table::button
-                                size="sm"
-                                color="white"
-                                iconRight='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
-                            >
-                                Volgende
-                            </x-chief-table::button>
-                        </button>
+                            <span>Vorige</span>
+                            <x-chief::icon.arrow-right />
+                        </x-chief-table::button>
                     @else
                         <x-chief-table::button
                             size="sm"
-                            color="white"
-                            iconRight='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
+                            variant="outline-white"
                             class="pointer-events-none text-grey-400"
                         >
-                            Volgende
+                            <span>Vorige</span>
+                            <x-chief::icon.arrow-right />
                         </x-chief-table::button>
                     @endif
                 </span>
@@ -72,33 +64,31 @@
                 </div>
 
                 <div>
-                    <span class="relative z-0 inline-flex rounded-md shadow-sm">
+                    <span class="relative z-0 inline-flex -space-x-px rounded-md shadow-sm">
                         <span>
                             {{-- Previous Page Link --}}
                             @if ($paginator->onFirstPage())
                                 <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
                                     <x-chief-table::button
                                         size="sm"
-                                        color="white"
-                                        iconLeft='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
+                                        variant="outline-white"
                                         class="rounded-r-none text-grey-400"
-                                    />
+                                    >
+                                        <x-chief::icon.arrow-left />
+                                    </x-chief-table::button>
                                 </span>
                             @else
-                                <button
-                                    type="button"
+                                <x-chief-table::button
                                     wire:click="previousPage('{{ $paginator->getPageName() }}')"
                                     dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after"
                                     rel="prev"
                                     aria-label="{{ __('pagination.previous') }}"
+                                    size="sm"
+                                    variant="outline-white"
+                                    class="rounded-r-none hover:relative"
                                 >
-                                    <x-chief-table::button
-                                        size="sm"
-                                        color="white"
-                                        iconLeft='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
-                                        class="rounded-r-none hover:relative"
-                                    />
-                                </button>
+                                    <x-chief::icon.arrow-left />
+                                </x-chief-table::button>
                             @endif
                         </span>
 
@@ -109,8 +99,8 @@
                                 <span aria-disabled="true">
                                     <x-chief-table::button
                                         size="sm"
-                                        color="white"
-                                        class="pointer-events-none min-w-[1.875rem] rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
+                                        variant="outline-white"
+                                        class="pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
                                     >
                                         {{ $element }}
                                     </x-chief-table::button>
@@ -125,26 +115,22 @@
                                             <span aria-current="page">
                                                 <x-chief-table::button
                                                     size="sm"
-                                                    color="white"
-                                                    class="pointer-events-none min-w-[1.875rem] rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
+                                                    variant="outline-white"
+                                                    class="pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
                                                 >
                                                     {{ $page }}
                                                 </x-chief-table::button>
                                             </span>
                                         @else
-                                            <button
-                                                type="button"
+                                            <x-chief-table::button
                                                 wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
                                                 aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
+                                                size="sm"
+                                                variant="outline-white"
+                                                class="min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"
                                             >
-                                                <x-chief-table::button
-                                                    size="sm"
-                                                    color="white"
-                                                    class="min-w-[1.875rem] rounded-l-none rounded-r-none font-normal hover:relative"
-                                                >
-                                                    {{ $page }}
-                                                </x-chief-table::button>
-                                            </button>
+                                                {{ $page }}
+                                            </x-chief-table::button>
                                         @endif
                                     </span>
                                 @endforeach
@@ -154,28 +140,26 @@
                         <span>
                             {{-- Next Page Link --}}
                             @if ($paginator->hasMorePages())
-                                <button
-                                    type="button"
+                                <x-chief-table::button
                                     wire:click="nextPage('{{ $paginator->getPageName() }}')"
                                     dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after"
                                     rel="next"
                                     aria-label="{{ __('pagination.next') }}"
+                                    size="sm"
+                                    variant="outline-white"
+                                    class="rounded-l-none hover:relative"
                                 >
-                                    <x-chief-table::button
-                                        size="sm"
-                                        color="white"
-                                        iconLeft='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
-                                        class="rounded-l-none hover:relative"
-                                    />
-                                </button>
+                                    <x-chief::icon.arrow-right />
+                                </x-chief-table::button>
                             @else
                                 <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
                                     <x-chief-table::button
                                         size="sm"
-                                        color="white"
-                                        iconLeft='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
+                                        variant="outline-white"
                                         class="rounded-l-none text-grey-400"
-                                    />
+                                    >
+                                        <x-chief::icon.arrow-right />
+                                    </x-chief-table::button>
                                 </span>
                             @endif
                         </span>

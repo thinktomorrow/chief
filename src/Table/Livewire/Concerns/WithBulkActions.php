@@ -6,21 +6,26 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 
 trait WithBulkActions
 {
-    /**
-     * @return Action[]
-     */
-    public function getVisibleBulkActions(): array
+    /** @return Action[] */
+    public function getPrimaryBulkActions(): array
     {
-        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isVisible());
+        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isPrimary());
     }
 
-    public function getHiddenBulkActions(): array
+    /** @return Action[] */
+    public function getSecondaryBulkActions(): array
     {
-        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => ! $action->isVisible());
+        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isSecondary());
+    }
+
+    /** @return Action[] */
+    public function getTertiaryBulkActions(): array
+    {
+        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isTertiary());
     }
 
     public function hasAnyBulkActions(): bool
     {
-        return count($this->getTable()->getBulkActions()) > 0;
+        return count($this->getResults()) > 0 && count($this->getTable()->getBulkActions()) > 0;
     }
 }

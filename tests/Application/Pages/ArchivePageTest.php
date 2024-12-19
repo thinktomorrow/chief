@@ -36,8 +36,7 @@ final class ArchivePageTest extends ChiefTestCase
         ]);
 
         $response = $this->asAdmin()->get($this->manager->route('archive_index'));
-        $response->assertStatus(200)
-            ->assertViewCount('models', 1);
+        $response->assertStatus(200);
     }
 
     /** @test */

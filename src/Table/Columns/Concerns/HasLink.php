@@ -6,9 +6,8 @@ use Closure;
 
 trait HasLink
 {
-    // targetBlank
-
     protected null|string|Closure $link = null;
+    protected bool $openInNewTab = false;
 
     public function link(string|Closure $link): static
     {
@@ -17,17 +16,29 @@ trait HasLink
         return $this;
     }
 
+    public function getLink(): null|string
+    {
+        if ($this->link instanceof Closure) {
+            return call_user_func($this->link, $this->getModel());
+        }
+
+        return $this->link;
+    }
+
     public function hasLink(): bool
     {
         return ! is_null($this->link);
     }
 
-    public function getLink(): null|string
+    public function openInNewTab(bool $openInNewTab = true): static
     {
-        if (($model = $this->getModel()) && $this->link instanceof Closure) {
-            return call_user_func($this->link, $model);
-        }
+        $this->openInNewTab = $openInNewTab;
 
-        return $this->link;
+        return $this;
+    }
+
+    public function shouldOpenInNewTab(): bool
+    {
+        return $this->openInNewTab;
     }
 }

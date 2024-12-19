@@ -3,35 +3,40 @@
 @endphp
 
 <button type="button" x-on:click="$dispatch('open-dialog', { 'id': '{{ $triggerId }}' })">
-    <x-chief-table::filter.select :value="$this->getActiveFilterValue($getKey())">
+    <x-chief-table::filter.select>
         {{ $getLabel() ?? $getKey() }}
+
+        @if ($this->getActiveFilterValue($getKey()))
+            <span class="text-grey-200">|</span>
+
+            <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+        @endif
     </x-chief-table::filter.select>
 </button>
 
-<x-chief::dialog.dropdown id="{{ $triggerId }}" placement="bottom-end">
-    <div class="space-y-2.5 p-3.5">
+<x-chief::dialog.dropdown id="{{ $triggerId }}" placement="bottom-start">
+    <div class="space-y-3.5 p-3.5">
         <x-chief::multiselect
             wire:model="filters.{{ $getKey() }}"
             :options='$getMultiSelectFieldOptions()'
             :selection='$getValue() ?: $getDefault()'
             :multiple='$allowMultiple()'
+            dropdown-position="static"
             class="w-64"
         />
 
         <div class="flex items-start justify-between gap-2">
-            <button type="button" x-on:click="close()">
-                <x-chief-table::button size="sm" color="white">Annuleer</x-chief-table::button>
-            </button>
-
-            <button
-                type="submit"
-                x-on:click="
+            <x-chief-table::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief-table::button>
+            <x-chief-table::button
+                x-on:click="() => {
                     close()
                     $wire.addFilter()
-                "
+                }"
+                size="sm"
+                variant="blue"
             >
-                <x-chief-table::button size="sm" color="grey">Pas filter toe</x-chief-table::button>
-            </button>
+                Pas filter toe
+            </x-chief-table::button>
         </div>
     </div>
 </x-chief::dialog.dropdown>

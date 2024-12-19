@@ -8,13 +8,13 @@
 
 .redactor-box {
     overflow: hidden !important;
-    border-radius: theme('borderRadius.md') !important;
-    border-color: theme('borderColor.grey.200') !important;
+    border-radius: 0.625rem !important;
+    border-color: theme('borderColor.grey.100') !important;
     box-shadow: theme('boxShadow.sm') !important;
 }
 
 .redactor-box.redactor-focus.redactor-styles-on {
-    border-color: theme('borderColor.primary.500') !important;
+    border-color: theme('borderColor.grey.200') !important;
 }
 
 .redactor-statusbar {
@@ -38,5 +38,5 @@
 }
 
 .redactor-box .redactor-styles {
-    @apply font-body px-3 py-2.5;
+    @apply px-3 py-2.5 font-body;
 }

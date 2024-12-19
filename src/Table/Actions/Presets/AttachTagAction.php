@@ -6,19 +6,17 @@ use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
-use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Table\Actions\BulkAction;
 
-class AttachTagAction extends Action
+class AttachTagAction extends BulkAction
 {
-
-    public static function default(string $resourceKey): static
+    public static function makeDefault(string $resourceKey): static
     {
         return static::make('attach-tag')
-            ->label('Tag deze selectie')
+            ->label('Tags toevoegen')
             ->dialog(
                 Dialog::make('tagModal')
                     ->title('Voeg tags toe aan selectie')
-                    // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
                     ->subTitle(':count items geselecteerd')
                     ->content('
                                 <p>

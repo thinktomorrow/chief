@@ -1,42 +1,74 @@
-<div x-cloak x-show="selection.length > 0" class="w-full flex flex-wrap justify-between items-center gap-3">
-    <div class="flex flex-wrap items-center gap-3">
-        <span class="text-sm text-grey-500"><span x-text="selection.length"></span> geselecteerd</span>
+<div x-cloak x-show="selection.length > 0" class="flex w-full flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
+            <span class="text-xs text-grey-500">
+                <span x-text="selection.length"></span>
+                geselecteerd
+            </span>
+
+            <div class="flex items-start gap-1">
+                <x-chief-table::button
+                    wire:key="bulk-select-all"
+                    :class="$this->shouldShowSelectAll() ? '' : 'hidden'"
+                    wire:click="bulkSelectAll"
+                    variant="outline-white"
+                    size="xs"
+                >
+                    Selecteer alle {{ $this->resultTotal }}
+                </x-chief-table::button>
+
+                <x-chief-table::button
+                    wire:key="bulk-deselect-all"
+                    x-show="hasSelectionAcrossPages"
+                    wire:click="bulkDeselectAll"
+                    variant="outline-white"
+                    size="xs"
+                >
+                    Deselecteer alle
+                    <span x-text="selection.length"></span>
+                </x-chief-table::button>
+            </div>
+        </div>
 
         <div class="flex items-center justify-end gap-1.5">
-            {{-- TODO(ben): get visible action, but not bulk actions --}}
-            @foreach ($this->getVisibleBulkActions() as $action)
-                {{ $action }}
+            @foreach ($this->getPrimaryBulkActions() as $action)
+                <x-chief-table::action.button
+                    :action="$action"
+                    wire:click="applyAction('{{ $action->getKey() }}')"
+                    size="xs"
+                    variant="blue"
+                />
             @endforeach
 
-            @if (count($this->getHiddenBulkActions()) > 0)
-                <div>
-                    <button type="button" x-on:click="$dispatch('open-dialog', { 'id': 'table-hidden-bulk-actions' })">
-                        <x-chief-table::button
-                            size="xs"
-                            color="white"
-                            iconRight='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M11.992 12H12.001" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /> <path d="M11.9842 18H11.9932" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /> <path d="M11.9998 6H12.0088" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /> </svg>'
-                        />
-                    </button>
+            @foreach ($this->getSecondaryBulkActions() as $action)
+                <x-chief-table::action.button
+                    :action="$action"
+                    wire:click="applyAction('{{ $action->getKey() }}')"
+                    size="xs"
+                    variant="grey"
+                />
+            @endforeach
 
-                    <x-chief::dialog.dropdown id="table-hidden-bulk-actions" placement="bottom-end">
-                        @foreach ($this->getHiddenBulkActions() as $action)
-                            {{ $action }}
+            @if (count($this->getTertiaryBulkActions()) > 0)
+                <div>
+                    <x-chief-table::button
+                        x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-bulk-actions' })"
+                        size="xs"
+                        variant="outline-white"
+                    >
+                        <x-chief::icon.more-vertical-circle />
+                    </x-chief-table::button>
+
+                    <x-chief::dialog.dropdown id="table-tertiary-bulk-actions" placement="bottom-end">
+                        @foreach ($this->getTertiaryBulkActions() as $action)
+                            <x-chief-table::action.dropdown.item
+                                :action="$action"
+                                wire:click="applyAction('{{ $action->getKey() }}')"
+                            />
                         @endforeach
                     </x-chief::dialog.dropdown>
                 </div>
             @endif
         </div>
-    </div>
-
-    <div>
-        @if($this->resultTotal > $this->resultPageCount && $this->resultTotal > count($this->bulkSelection))
-            <button type="button" wire:click="bulkSelectAll" class="text-sm font-medium text-grey-800 hover:underline hover:underline-offset-2">
-                Selecteer alle {{ $this->resultTotal }}
-            </button>
-        @endif
-
-        <button x-show="selection.length > 0" type="button" wire:click="bulkDeselectAll" class="text-sm font-medium text-grey-800 hover:underline hover:underline-offset-2">
-            Deselecteer alle
-        </button>
     </div>
 </div>

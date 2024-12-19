@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\App\Console\GenerateImageSitemap;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
@@ -32,6 +33,7 @@ use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -89,6 +91,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
+        (new FragmentsServiceProvider($this->app))->boot();
         (new \Thinktomorrow\Chief\Table\TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
@@ -96,7 +99,9 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Sitemap command is used by both cli and web scripts
         $this->commands(['command.chief:sitemap']);
+        $this->commands(['command.chief:image-sitemap']);
         $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
+        $this->app->bind('command.chief:image-sitemap', GenerateImageSitemap::class);
 
         if ($this->app->runningInConsole()) {
             (new ConsoleServiceProvider($this->app))->boot();

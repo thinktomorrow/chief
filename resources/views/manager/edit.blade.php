@@ -1,6 +1,6 @@
 <x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="hero">
-        <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb()]">
+        <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb('edit')]">
             @if ($forms->has('pagetitle'))
                 <x-slot name="customTitle">
                     <x-chief-form::forms id="pagetitle" />
@@ -12,14 +12,14 @@
             @endif
 
             @if (count(config('chief.locales')) > 1)
-                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">
+                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3 mt-1">
                     @foreach (config('chief.locales') as $locale)
                         <x-chief::tabs.tab tab-id="{{ $locale }}"></x-chief::tabs.tab>
                     @endforeach
                 </x-chief::tabs>
             @endif
 
-            @include('chief::manager._edit._edit_actions')
+            @include('chief::manager._partials.edit-actions')
         </x-chief::page.hero>
     </x-slot>
 
@@ -40,5 +40,5 @@
         </x-slot>
     </x-chief::page.grid>
 
-    {{-- @include('chief::layout._partials.editor-script') --}}
+    {{-- @include('chief::templates.page._partials.editor-script') --}}
 </x-chief::page.template>

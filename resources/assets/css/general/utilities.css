@@ -42,21 +42,3 @@
         @apply block;
     }
 }
-
-.with-fragment-select-options {
-    .fragment-select-options {
-        @apply border-t border-grey-100;
-    }
-
-    &:first-child {
-        .fragment-select-options {
-            @apply border-b-2 border-t-0;
-        }
-    }
-
-    &:only-child {
-        .fragment-select-options {
-            @apply border-0;
-        }
-    }
-}

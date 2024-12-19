@@ -7,14 +7,20 @@ namespace Thinktomorrow\Chief\Site\Menu;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeDefaults;
 
-class MenuItem extends Model
+class MenuItem extends Model implements Node
 {
+    use NodeDefaults;
     use HasDynamicAttributes;
 
     public const TYPE_INTERNAL = 'internal';
     public const TYPE_CUSTOM = 'custom';
     public const TYPE_NOLINK = 'nolink';
+
+    private ?string $locale = null;
 
     public $dynamicKeys = [
         'label', 'url', 'owner_label',
@@ -23,16 +29,11 @@ class MenuItem extends Model
     public $timestamps = false;
     public $guarded = [];
 
-    public function getLabel(string $locale): ?string
+    public function __construct(array $attributes = [])
     {
-        // Prefer localized version over non-localized
-        return $this->dynamic('label', $locale, $this->label);
-    }
+        parent::__construct($attributes);
 
-    public function getUrl(string $locale): ?string
-    {
-        // Prefer localized version over non-localized
-        return $this->dynamic('url', $locale, $this->url);
+        $this->children = new NodeCollection();
     }
 
     public function getStatus(): MenuItemStatus
@@ -45,28 +46,58 @@ class MenuItem extends Model
         $this->status = $status->value;
     }
 
-    public function getOwnerLabel(string $locale): ?string
+    public function setLocale(string $locale): void
     {
-        return $this->dynamic('owner_label', $locale);
-        //        if (self::TYPE_INTERNAL == $this->type) {
-        //            return $this->dynamic('owner_label', $locale);
-        //        }
-        //
-        //        return null;
-
-        //        if (! $url = $this->getUrl($locale)) {
-        //            return 'geen link';
-        //        }
-        //
-        //        return $url;
+        $this->locale = $locale;
     }
 
-    public function setOwnerLabel(string $locale, string $ownerLabel): void
+    private function getLocale(?string $locale = null): string
+    {
+        if ($locale) {
+            return $locale;
+        }
+
+        return $this->locale ?: app()->getLocale();
+    }
+
+    public function isOffline(): bool
+    {
+        return $this->status != MenuItemStatus::online->value;
+    }
+
+    public function getLabel(?string $locale = null): ?string
+    {
+        // Prefer localized version over non-localized
+        return $this->dynamic('label', $this->getLocale($locale), $this->label);
+    }
+
+    public function setLabel(string $label, string $locale): void
+    {
+        $this->setDynamic('label.' . $locale, $label);
+    }
+
+    public function getOwnerLabel(?string $locale = null): ?string
+    {
+        return $this->dynamic('owner_label', $this->getLocale($locale));
+    }
+
+    public function getAnyLabel(?string $locale = null): ?string
+    {
+        return $this->label ?: $this->getOwnerLabel($locale);
+    }
+
+    public function setOwnerLabel(string $ownerLabel, string $locale): void
     {
         $this->setDynamic('owner_label.' . $locale, $ownerLabel);
     }
 
-    public function setUrl(string $locale, ?string $url): void
+    public function getUrl(?string $locale = null): ?string
+    {
+        // Prefer localized version over non-localized
+        return $this->dynamic('url', $this->getLocale($locale), $this->url);
+    }
+
+    public function setUrl(?string $url, string $locale): void
     {
         $this->setDynamic('url.' . $locale, $url);
     }
@@ -117,6 +148,16 @@ class MenuItem extends Model
 
     public function dynamicLocales(): array
     {
-        return \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+        return config('chief.locales', []);
+    }
+
+    public function getId()
+    {
+        return $this->getNodeId();
+    }
+
+    public function getParentId()
+    {
+        return $this->getParentNodeId();
     }
 }

@@ -4,125 +4,125 @@
  **/
 @layer components {
     .btn {
-        @apply inline-flex items-center border-2 cursor-pointer leading-tight px-4 py-2.5 font-medium rounded-lg text-center;
-        @apply transition-all ease-in-out duration-75;
+        @apply inline-flex cursor-pointer items-center rounded-lg border-2 px-4 py-2.5 text-center font-medium leading-tight;
+        @apply transition-all duration-75 ease-in-out;
     }
 
     .btn-primary {
-        @apply bg-primary-500 border-primary-500 text-white shadow-sm;
+        @apply border-primary-500 bg-primary-500 text-white shadow-sm;
 
         &:hover,
         &:focus {
-            @apply bg-primary-600 border-primary-600;
+            @apply border-primary-600 bg-primary-600;
         }
     }
 
     .btn-primary-outline {
-        @apply bg-transparent border-primary-500 text-primary-500;
+        @apply border-primary-500 bg-transparent text-primary-500;
 
         &:hover,
         &:focus {
-            @apply bg-primary-500 border-primary-500 text-white;
+            @apply border-primary-500 bg-primary-500 text-white;
         }
     }
 
     .btn-grey {
-        @apply bg-grey-100 border-grey-100 text-grey-700 shadow-sm;
+        @apply border-grey-100 bg-grey-100 text-grey-700 shadow-sm;
 
         &:hover,
         &:focus {
-            @apply bg-grey-200 border-grey-200;
+            @apply border-grey-200 bg-grey-200;
         }
     }
 
     .btn-grey-outline {
-        @apply bg-transparent border-grey-500 text-grey-700;
+        @apply border-grey-500 bg-transparent text-grey-700;
 
         &:hover,
         &:focus {
-            @apply bg-grey-500 border-grey-500 text-white;
+            @apply border-grey-500 bg-grey-500 text-white;
         }
     }
 
     .btn-error {
-        @apply bg-red-500 border-red-500 text-white shadow-sm;
+        @apply border-red-500 bg-red-500 text-white shadow-sm;
 
         &:hover,
         &:focus {
-            @apply bg-red-600 border-red-600;
+            @apply border-red-600 bg-red-600;
         }
     }
 
     .btn-error-outline {
-        @apply bg-transparent border-red-500 text-red-500;
+        @apply border-red-500 bg-transparent text-red-500;
 
         &:hover,
         &:focus {
-            @apply bg-red-500 border-red-500 text-white;
+            @apply border-red-500 bg-red-500 text-white;
         }
     }
 
     .btn-warning {
-        @apply bg-orange-500 border-orange-500 text-white shadow-sm;
+        @apply border-orange-500 bg-orange-500 text-white shadow-sm;
 
         &:hover,
         &:focus {
-            @apply bg-orange-600 border-orange-600;
+            @apply border-orange-600 bg-orange-600;
         }
     }
 
     .btn-warning-outline {
-        @apply bg-transparent border-orange-500 text-orange-500;
+        @apply border-orange-500 bg-transparent text-orange-500;
 
         &:hover,
         &:focus {
-            @apply bg-orange-500 border-orange-500 text-white;
+            @apply border-orange-500 bg-orange-500 text-white;
         }
     }
 
     .btn-info {
-        @apply bg-blue-500 border-blue-500 text-white shadow-sm;
+        @apply border-blue-500 bg-blue-500 text-white shadow-sm;
 
         &:hover,
         &:focus {
-            @apply bg-blue-600 border-blue-600;
+            @apply border-blue-600 bg-blue-600;
         }
     }
 
     .btn-info-outline {
-        @apply bg-transparent border-blue-500 text-blue-500;
+        @apply border-blue-500 bg-transparent text-blue-500;
 
         &:hover,
         &:focus {
-            @apply bg-blue-500 border-blue-500 text-white;
+            @apply border-blue-500 bg-blue-500 text-white;
         }
     }
 
     .btn-success {
-        @apply bg-green-500 border-green-500 text-white shadow-sm;
+        @apply border-green-500 bg-green-500 text-white shadow-sm;
 
         &:hover,
         &:focus {
-            @apply bg-green-600 border-green-600;
+            @apply border-green-600 bg-green-600;
         }
     }
 
     .btn-success-outline {
-        @apply bg-transparent border-green-500 text-green-500;
+        @apply border-green-500 bg-transparent text-green-500;
 
         &:hover,
         &:focus {
-            @apply bg-green-500 border-green-500 text-white;
+            @apply border-green-500 bg-green-500 text-white;
         }
     }
 
     /* purgecss start ignore */
     .btn-disabled {
-        @apply bg-grey-100 border-grey-100 text-grey-400 pointer-events-none select-none;
+        @apply pointer-events-none select-none border-grey-100 bg-grey-100 text-grey-400;
     }
 
     .btn-outline-disabled {
-        @apply bg-transparent border-grey-200 text-grey-400 pointer-events-none select-none;
+        @apply pointer-events-none select-none border-grey-200 bg-transparent text-grey-400;
     }
     /* purgecss end ignore */
 }

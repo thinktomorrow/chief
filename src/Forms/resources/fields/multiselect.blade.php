@@ -8,4 +8,5 @@
     :options="$getMultiSelectFieldOptions()"
     :multiple="$allowMultiple()"
     :selection="$getActiveValue($locale ?? null)"
+    :dropdown-position="$getDropdownPosition()"
 />

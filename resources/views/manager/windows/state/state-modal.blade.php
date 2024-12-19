@@ -4,12 +4,16 @@
             x-data="{ customHtml: null }"
             x-html="customHtml"
             x-init="
-                $watch('open', (value) => {
+                $watch('isOpen', (value) => {
+
+                    if(value === false) {
+                        return
+                    }
+
                     fetch('{{ $stateConfig->getAsyncModalUrl($transitionKey, $model) }}')
                         .then((response) => response.json())
                         .then((data) => {
                             customHtml = data.data
-                            console.log(data.data)
                         })
                         .catch((error) => {
                             console.error(error)
@@ -42,7 +46,7 @@
     @endif
 
     <x-slot name="footer">
-        <button type="submit" x-on:click="open = false" class="btn btn-grey">Annuleer</button>
+        <button type="submit" x-on:click="close()" class="btn btn-grey">Annuleer</button>
 
         <button
             type="submit"

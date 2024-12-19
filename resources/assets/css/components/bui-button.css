@@ -4,58 +4,65 @@
  **/
 @layer components {
     .bui-btn {
-        @apply flex items-start text-left;
-
-        & > .bui-btn-content {
-            @apply grow;
-        }
+        @apply flex w-max items-start text-left;
+        @apply transition-all duration-150 ease-in-out;
+        /**
+         * TODO(tijs): Ideally the outlines shouldn't be removed.
+         * Each button variant should have a specific focus styling, so they are clearly visible when tabbing
+         **/
+        @apply outline-none;
     }
 
+    /* Sizes */
     .bui-btn-base {
-        @apply rounded-[0.625rem] p-2;
-
+        @apply gap-1 rounded-[0.625rem] px-3 py-2 text-base leading-5;
+        & > [data-slot='icon'],
         & > svg {
             @apply size-5 shrink-0;
-        }
-
-        & > .bui-btn-content {
-            @apply px-1 text-base leading-5;
+            @apply first:-ml-1 last:-mr-1;
         }
     }
-
     .bui-btn-sm {
-        @apply rounded-lg p-1.5;
-
+        @apply gap-[0.1875rem] rounded-lg px-[0.5625rem] py-1.5 text-sm leading-[1.125rem];
+        & > [data-slot='icon'],
         & > svg {
-            @apply size-[1.125rem];
-        }
-
-        & > .bui-btn-content {
-            @apply px-[0.1875rem] text-sm leading-[1.125rem];
+            @apply size-[1.125rem] shrink-0;
+            @apply first:-ml-[0.1875rem] last:-mr-[0.1875rem];
         }
     }
-
     .bui-btn-xs {
-        @apply rounded-md p-[0.1875rem];
-
+        @apply gap-0.5 rounded-md px-[0.3125rem] py-[0.1875rem] text-xs leading-[1.125rem];
+        & > [data-slot='icon'],
         & > svg {
-            @apply size-[1.125rem];
-        }
-
-        & > .bui-btn-content {
-            @apply px-0.5 text-xs leading-[1.125rem];
+            @apply size-[1.125rem] shrink-0;
+            @apply first:-ml-0.5 last:-mr-0.5;
         }
     }
 
-    .bui-btn-grey {
-        @apply bg-grey-100 text-grey-800 hover:bg-grey-200;
-    }
-
-    .bui-btn-primary {
+    /* Variants */
+    .bui-btn-blue {
         @apply bg-primary-500 text-white hover:bg-primary-600;
     }
-
-    .bui-btn-white {
-        @apply bg-white text-grey-800 ring-1 ring-grey-200 hover:ring-grey-300;
+    .bui-btn-grey {
+        @apply bg-grey-100 text-bui-primary-800 hover:bg-grey-200 hover:text-bui-primary-950;
+    }
+    .bui-btn-outline-white {
+        @apply shadow-sm;
+        @apply bg-white text-bui-primary-800 ring-1 ring-inset ring-grey-100 hover:text-bui-primary-950 hover:ring-grey-200;
+    }
+    .bui-btn-transparent {
+        @apply bg-transparent text-bui-primary-800 hover:bg-grey-950/5 hover:text-bui-primary-950;
+    }
+    .bui-btn-red {
+        @apply bg-red-500 text-white hover:bg-red-600;
+    }
+    .bui-btn-orange {
+        @apply bg-orange-500 text-white hover:bg-orange-600;
+    }
+    .bui-btn-light-blue {
+        @apply bg-light-blue-500 text-white hover:bg-light-blue-600;
+    }
+    .bui-btn-green {
+        @apply bg-green-500 text-white hover:bg-green-600;
     }
 }

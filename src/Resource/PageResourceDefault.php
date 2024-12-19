@@ -3,25 +3,13 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
-use Thinktomorrow\Chief\Forms\Fields\Image;
-use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Table\Actions\Action;
-use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
-use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
-use Thinktomorrow\Chief\Table\Columns\Column;
-use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
-use Thinktomorrow\Chief\Table\Columns\ColumnDate;
-use Thinktomorrow\Chief\Table\Columns\ColumnImage;
-use Thinktomorrow\Chief\Table\Columns\ColumnText;
-use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
-use Thinktomorrow\Chief\Table\Filters\TextFilter;
-use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
+use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 trait PageResourceDefault
 {
@@ -56,171 +44,28 @@ trait PageResourceDefault
      */
     public function getIndexTable(): Table
     {
-        // Position of general actions: footer
-        // Interaction with Livewire component
-        //        return Table::make()
-        //            ->resource(static::resourceKey())
-        ////            ->treeLabelColumn('title')
-        //            ->columns([
-        //                'title', 'tags.label', 'current_state',
-        //            ])
-        ////            ->rowView('chief-table::rows.list-item')
-        //            // Data options: query, model, relation, rows
-        ////            ->model(static::modelClassName()) // Entire model or relation or query or rows...
-        ////            ->relation('modelClass', 'id', 'tags')
-        //
-        //            // Convenience create action
-        ////            ->withCreateAction() // Via modal
-        ////            ->withInlineCreateAction() // Inline create instead of modal (ideal for small forms)
-        //            // How to know which fields? convenience fields method?
-        //
-        //                // Better to have a resource class for this...
-        //                // But then how to set the 'pivot' fields?
-        ////            ->pivotFields(function($model) {
-        ////                return [
-        ////                    Text::make('title')->label('Titel'),
-        ////                    Image::make('image')->label('Afbeelding'),
-        ////                ];
-        ////            })
-        //
-        //        ;
-
-
-        return Table::make()
-            ->resource(static::resourceKey())
-            ->addQuery(function ($builder) {
-                $builder->with(['tags']);
-            })
-            ->bulkActions([
-                AttachTagAction::default(static::resourceKey()),
-                DetachTagAction::default(static::resourceKey()),
-            ])
-            ->actions([
-                Action::make('export')
-                    ->label('Exporteer')
-
-                    // MODAL
-                    ->dialog(
-                        Dialog::make('test')
-                            ->title('Export')
-                            ->subtitle('Exporteer deze pagina naar csv formaat')
-                            ->content('Een csv bestand kan je gebruiken om de pagina te importeren in een ander systeem.')
-                            ->form([
-                                Text::make('title')->locales(['nl', 'fr'])->label('Titel')->required(),
-                                Image::make('image')->label('Afbeelding'),
-                            ])
-                            ->button('Exporteer')
-                    )
-
-                    // CONFIRM MODAL
-                    //->modal(ConfirmModal::make())
-                    //->confirm('Weet je zeker dat je deze pagina wilt exporteren?', 'Ben je zeker?', 'Ja, Exporteer')
-
-                    ->hidden()
-                    ->appendIcon('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5"> <path d="M9.25 13.25a.75.75 0 0 0 1.5 0V4.636l2.955 3.129a.75.75 0 0 0 1.09-1.03l-4.25-4.5a.75.75 0 0 0-1.09 0l-4.25 4.5a.75.75 0 1 0 1.09 1.03L9.25 4.636v8.614Z" /> <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" /> </svg>')
-                    ->effect(function ($formData) {
-                        dd($formData);
-
-                        return 'export';
-                    }),
-                Action::make('create')
-                    ->label('Voeg pagina toe')
-                    // Primary, secondary
-                    // visible, hidden // Or from previous visit or by preference
-                    ->prependIcon('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5"> <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /> </svg>')
-                    ->link('/admin/catalogpage/create'),
-            ])
-            ->filters([
-                TextFilter::make('title')
-                    ->hidden()
-                    ->label('Titel')
-                    ->placeholder('titeltje')
-                    ->description('Zoek op pagina titel')
-                    ->query(function ($builder, $value) {
-                        $builder->whereJsonLike(['title'], $value);
-                    }),
-                TextFilter::make('content')
-                    ->label('Inhoud')
-                    ->placeholder('contentje')
-                    ->description('Zoek op pagina inhoud')
-                    ->query(function ($builder, $value) {
-                        $builder->whereJsonLike(['hero_content'], $value);
-                    }),
-                ButtonGroupFilter::make('current_state')
-                    ->label('Status')
-                    ->options([
-                        '' => 'Alle',
-                        'published' => 'Online',
-                        'draft' => 'Offline',
-                    ])->value(''),
-                //                SelectFilter::make('current_state')
-                //                    ->label('Status')
-                //                    ->options([
-                //                        'published' => 'Online',
-                //                        'draft' => 'Offline',
-                //                        'archived' => 'Gearchiveerd',
-                //                    ]),
-            ])
-            ->columns([
-                Column::items([
-                    ColumnImage::make('image')->label('Afbeelding'),
-                    ColumnText::make('title')->label('Titel')->link(function ($model) {
-                        return '/admin/' . static::resourceKey() . '/' . $model->getKey() . '/edit';
-                    }),
-                ]),
-                ColumnBadge::make('tags.label')->label('tags'),
-
-                // ColumnText::make('seo_title')->label('SEO Titel'),
-                ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                ColumnDate::make('created_at')->label('Aangemaakt op')->format('d/m/Y H:i'),
-            ])
-            ->sorters([
-                Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
-                }),
-                Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
-                }),
-                Sort::make('created_at_desc')->label('Datum - DESC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'DESC');
-                }),
-                Sort::make('created_at_asc')->label('Datum - ASC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'ASC');
-                }),
-            ]);
+        return Table\Presets\PageTable::makeDefault(static::resourceKey());
     }
 
     public function getArchivedIndexTable(): Table
     {
         return $this->getIndexTable()
+            ->setTableReference(new TableReference(static::class, 'getArchivedIndexTable'))
             ->addQuery(function ($builder) {
                 $builder->archived();
-            });
+            })
+            ->removeFilter('current_state')
+            ->removeAction('create')
+            ->removeAction('archive-index');
     }
 
-    public function getOtherIndexTable(): Table
+    public function getReorderTable(): Table
     {
-        // Position of general actions: footer
-        // Interaction with Livewire component
-        return Table::make()
-            ->resource(static::resourceKey())
-            //            ->treeLabelColumn('title')
-            ->columns([
-                'title',
-            ])->sorters([
-                Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) ASC');
-                }),
-                Sort::make('title_desc')->label('Titel - Z-A')->query(function ($builder) {
-                    $builder->orderByRaw('json_unquote(json_extract(`values`, \'$."title"."nl"\')) DESC');
-                }),
-                Sort::make('created_at_desc')->label('Datum - DESC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'DESC');
-                }),
-                Sort::make('created_at_asc')->label('Datum - ASC')->query(function ($builder) {
-                    $builder->orderBy('created_at', 'ASC');
-                }),
-            ]);
+        return $this->getIndexTable()
+            ->setTableReference(new TableReference(static::class, 'getReorderTable'))
+            ->removeAction('create')
+            ->removeAction('reorder')
+            ->removeAction('archive-index');
     }
 
     public function getIndexTitle(): string
@@ -240,7 +85,7 @@ trait PageResourceDefault
 
     protected function getNavIcon(): string
     {
-        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+        return Blade::render('<x-chief::icon.folder-library />');
     }
 
     public function getCreatePageView(): View
@@ -258,7 +103,7 @@ trait PageResourceDefault
         return view('chief::manager.edit');
     }
 
-    public function getPageBreadCrumb(): ?BreadCrumb
+    public function getPageBreadCrumb(?string $pageType = null): ?BreadCrumb
     {
         $this->assertManager();
 
@@ -266,7 +111,11 @@ trait PageResourceDefault
             return null;
         }
 
-        return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        //        if ($pageType == 'edit' || $pageType == 'create') {
+        //            return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        //        }
+
+        return null;
     }
 
     public function getIndexHeaderContent(): ?string
@@ -305,39 +154,9 @@ trait PageResourceDefault
         return null;
     }
 
-    public function getIndexCardView(): string
-    {
-        return 'chief::manager._index._card';
-    }
-
-    public function getIndexCardTitle($model): string
-    {
-        return $this->getPageTitle($model);
-    }
-
-    public function getIndexCardContent($model): string
-    {
-        return view('chief::manager._index._card-content', ['model' => $model])->render();
-    }
-
     public function getIndexSidebar(): string
     {
         return '';
-    }
-
-    public function showIndexSidebarAside(): bool
-    {
-        return true;
-    }
-
-    public function showIndexOptionsColumn(): bool
-    {
-        return true;
-    }
-
-    public function getIndexPagination(): int
-    {
-        return 20;
     }
 
     public function getSortableType(): string

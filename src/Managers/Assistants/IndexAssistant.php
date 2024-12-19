@@ -57,6 +57,7 @@ trait IndexAssistant
         View::share('manager', $this);
         View::share('resource', $this->resource);
         View::share('model', $model = $this->managedModelClassInstance());
+        View::share('table', $this->resource->getIndexTable());
 
         return $this->resource->getIndexView();
     }

@@ -9,6 +9,7 @@ class TableReference implements Wireable
 {
     private string $resourceClass;
     private string $tableKey;
+    private array $parameters;
 
     /**
      * Unique Table reference.
@@ -17,10 +18,11 @@ class TableReference implements Wireable
      * and the fixed getIndexTable method. In a next phase, this will need to be the PageClass and
      * unique table key value.
      */
-    public function __construct(string $resourceClass, string $tableKey)
+    public function __construct(string $resourceClass, string $tableKey, $parameters = [])
     {
         $this->resourceClass = $resourceClass;
         $this->tableKey = $tableKey;
+        $this->parameters = (array) $parameters;
     }
 
     public function toLivewire()
@@ -28,17 +30,23 @@ class TableReference implements Wireable
         return [
             'resourceClass' => $this->resourceClass,
             'tableKey' => $this->tableKey,
+            'parameters' => $this->parameters,
         ];
     }
 
     public static function fromLivewire($value)
     {
-        return new static($value['resourceClass'], $value['tableKey']);
+        return new static($value['resourceClass'], $value['tableKey'], $value['parameters']);
     }
 
     public function getTable(): Table
     {
-        $table = app($this->resourceClass)->{$this->tableKey}();
+        $table = app($this->resourceClass)->{$this->tableKey}(...$this->parameters);
+
+        if (! $table instanceof Table) {
+            throw new \RuntimeException('The table method ['.$this->resourceClass.'::'.$this->tableKey.'] in the TableReference should return a Table instance.');
+        }
+
         $table->setTableReference($this);
 
         return $table;
@@ -47,5 +55,10 @@ class TableReference implements Wireable
     public function getTableKey(): string
     {
         return $this->tableKey;
+    }
+
+    public function getParameters(): array
+    {
+        return $this->parameters;
     }
 }

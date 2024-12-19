@@ -7,20 +7,9 @@
     'prepend',
 ])
 
-@if ($title)
-    <div data-toggle-classes="hidden" class="mb-2 mt-6 px-2">
-        <span class="{{ $isCollapsedOnPageLoad ? 'hidden' : '' }} body text-xs font-medium text-grey-500">
-            {{ ucfirst($title) }}
-        </span>
-    </div>
-@endif
-
 @if (! isset($inline) && $items->count() > 0)
     @php
-        $icon =
-            ($firstItem = $items->first()) && $firstItem->icon()
-                ? $firstItem->icon()
-                : '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+        $icon = ($firstItem = $items->first()) && $firstItem->icon() ? $firstItem->icon() : '';
 
         $isActive = false;
 
@@ -31,6 +20,14 @@
             }
         }
     @endphp
+
+    @if ($title)
+        <div data-toggle-classes="hidden" class="{{ $isCollapsedOnPageLoad ? 'hidden' : '' }} mb-2 mt-6 px-2">
+            <span class="body text-xs font-medium text-grey-500">
+                {{ ucfirst($title) }}
+            </span>
+        </div>
+    @endif
 
     <x-chief::nav.item label="{{ $label }}" icon="{!! $icon !!}" collapsible {{ $attributes }}>
         @if (! isset($append))
@@ -46,6 +43,14 @@
         @endif
     </x-chief::nav.item>
 @elseif ($items->count() > 0)
+    @if ($title)
+        <div data-toggle-classes="hidden" class="{{ $isCollapsedOnPageLoad ? 'hidden' : '' }} mb-2 mt-6 px-2">
+            <span class="body text-xs font-medium text-grey-500">
+                {{ ucfirst($title) }}
+            </span>
+        </div>
+    @endif
+
     @if (! isset($append))
         {{ $slot }}
     @endif

@@ -1,6 +1,6 @@
 @layer utilities {
     .card {
-        @apply rounded-xl bg-white p-6 shadow ring-1 ring-grey-200;
+        @apply rounded-xl bg-white p-4 shadow-md shadow-grey-200 ring-1 ring-grey-100;
     }
 
     .card-without-padding {

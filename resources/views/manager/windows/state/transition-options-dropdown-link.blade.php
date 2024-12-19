@@ -1,13 +1,10 @@
 @if ($stateConfig->hasConfirmationForTransition($transitionKey))
-    <button
-        type="button"
+    <x-chief::dialog.dropdown.item
         x-data
         x-on:click="$dispatch('open-dialog', { id: 'state-modal-{{ $transitionKey }}-{{ $model->id }}' })"
     >
-        <x-chief::dialog.dropdown.item>
-            {{ ucfirst($stateConfig->getTransitionButtonLabel($transitionKey)) }}
-        </x-chief::dialog.dropdown.item>
-    </button>
+        {{ ucfirst($stateConfig->getTransitionButtonLabel($transitionKey)) }}
+    </x-chief::dialog.dropdown.item>
 
     @push('portals')
         @include('chief::manager.windows.state.state-modal')
@@ -28,9 +25,7 @@
         </div>
     </form>
 
-    <button type="submit" form="state-form-{{ $transitionKey }}-{{ $model->id }}">
-        <x-chief::dialog.dropdown.item>
-            {{ ucfirst($stateConfig->getTransitionButtonLabel($transitionKey)) }}
-        </x-chief::dialog.dropdown.item>
-    </button>
+    <x-chief::dialog.dropdown.item form="state-form-{{ $transitionKey }}-{{ $model->id }}">
+        {{ ucfirst($stateConfig->getTransitionButtonLabel($transitionKey)) }}
+    </x-chief::dialog.dropdown.item>
 @endif

@@ -18,10 +18,7 @@
             </div>
 
             @if ($widgets)
-                {{-- TODO: widgets should be an array/collection instead of a string. That way it's possible to render them in a grid. --}}
-                <div class="w-full">
-                    {!! $widgets !!}
-                </div>
+                {!! $widgets !!}
             @endif
         </div>
     </div>

@@ -11,9 +11,6 @@ class ViewServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
 
-        // Fragment components
-        $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/../../src/Fragments/resources');
-
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
         // Manager components

@@ -4,11 +4,12 @@ namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Url;
 use Thinktomorrow\Chief\Table\Filters\Filter;
 
 trait WithFilters
 {
-    /** @var array Active filters */
+    #[Url(history: true)]
     public array $filters = [];
 
     /** @var bool flag indicates if filter bar should be shown */
@@ -40,11 +41,9 @@ trait WithFilters
 
     private function setDefaultFilters()
     {
-        $this->clearFilters();
-
         foreach ($this->getFilters() as $filter) {
             // Active either by present in url or set to active: active(), activeIfNone()
-            if ($filter->hasValue()) {
+            if ($filter->hasValue() && ! isset($this->filters[$filter->getKey()])) {
                 $this->filters[$filter->getKey()] = $filter->getValue();
             }
         }
@@ -75,11 +74,11 @@ trait WithFilters
      */
     public function updatedFilters()
     {
-        //        foreach($this->filters as $key => $filterValue) {
-        //            if($this->isEmptyFilterValue($filterValue)) {
-        //                unset($this->filters[$key]);
+        //            foreach($this->filters as $key => $filterValue) {
+        //                if($this->isEmptyFilterValue($filterValue)) {
+        //                    unset($this->filters[$key]);
+        //                }
         //            }
-        //        }
 
         $this->resetPage($this->getPaginationId());
 
@@ -165,5 +164,10 @@ trait WithFilters
         }
 
         return is_null($value) || empty($value) || '' === $value;
+    }
+
+    public function hasAnyFiltersOrSorters(): bool
+    {
+        return count($this->getFilters()) > 0 || count($this->getSorters()) > 0;
     }
 }

@@ -4,12 +4,12 @@
     'multiple' => false,
     'placeholder' => null,
     'name' => null,
+    'dropdownPosition' => 'absolute',
 ])
 
 <div
     x-cloak
     wire:ignore
-    {{ $attributes }}
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
     x-modelable="selection"
     x-data="{
@@ -65,6 +65,7 @@
             },
         },
     }"
+    {{ $attributes->class(['choices-with-static-dropdown' => $dropdownPosition === 'static']) }}
 >
     <select
         name="{{ $name }}"

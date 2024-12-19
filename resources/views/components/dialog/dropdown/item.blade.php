@@ -1,22 +1,32 @@
 @props([
-    'iconLeft' => null,
-    'iconRight' => null,
+    'size' => 'base',
+    'variant' => 'grey',
 ])
 
-<div
-    class="flex items-start gap-1 px-3 py-2 text-base font-medium leading-5 text-grey-800 hover:bg-grey-100 hover:text-grey-900 [&>svg]:size-5"
-    role="menuitem"
-    tabindex="-1"
->
-    @if ($iconLeft)
-        {!! $iconLeft !!}
-    @endif
+@php
+    $attributes = $attributes->class([
+        'bui-dropdown-item cursor-pointer font-medium',
+        match ($size) {
+            'base' => 'bui-dropdown-item-base',
+            default => 'bui-dropdown-item-base',
+        },
+        match ($variant) {
+            'grey' => 'bui-dropdown-item-grey',
+            'red' => 'bui-dropdown-item-red',
+            'orange' => 'bui-dropdown-item-orange',
+            'light-blue' => 'bui-dropdown-item-light-blue',
+            'green' => 'bui-dropdown-item-green',
+            default => 'bui-dropdown-item-grey',
+        },
+    ]);
+@endphp
 
-    @if ($slot->isNotEmpty() && $slot->hasActualContent())
+@if ($attributes->has('href'))
+    <a {{ $attributes }}>
         {{ $slot }}
-    @endif
-
-    @if ($iconRight)
-        {!! $iconRight !!}
-    @endif
-</div>
+    </a>
+@else
+    <button {{ $attributes->merge(['type' => 'button']) }}>
+        {{ $slot }}
+    </button>
+@endif

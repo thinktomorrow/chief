@@ -2,27 +2,28 @@
 
 namespace Thinktomorrow\Chief\Table\Actions\Concerns;
 
+use Closure;
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 
 trait HasDialog
 {
-    protected ?Dialog $dialog = null;
+    protected ?Closure $dialogResolver = null;
 
-    public function dialog(Dialog $dialog): static
+    public function dialog(Closure|Dialog $dialogResolver): static
     {
-        $this->dialog = $dialog;
+        $this->dialogResolver = $dialogResolver instanceof Dialog ? fn () => $dialogResolver : $dialogResolver;
 
         return $this;
     }
 
     public function hasDialog(): bool
     {
-        return isset($this->dialog);
+        return ! is_null($this->dialogResolver);
     }
 
-    public function getDialog(): ?Dialog
+    public function getDialogResolver(): Closure
     {
-        return $this->dialog;
+        return $this->dialogResolver;
     }
 
 }

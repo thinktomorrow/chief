@@ -2,6 +2,7 @@ import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
 import dropdown from './alpine-directives/dropdown';
+import tableFilters from './alpine-directives/tablefilters';
 import multiselectDirective from './alpine-directives/multiselect';
 import sortableDirective from './alpine-directives/sortable';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
@@ -43,6 +44,7 @@ require('./sortable/sortable-livewire');
 window.Alpine.data('dropdown', dropdown);
 window.Alpine.data('selectlist', selectlist);
 window.Alpine.data('bulkselect', bulkselect);
+window.Alpine.data('tableFilters', tableFilters);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
 window.Alpine.directive('sortable', sortableDirective);

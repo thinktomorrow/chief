@@ -1,13 +1,13 @@
 const Bulkselect = (config) => ({
-    showCheckboxes: config.showCheckboxes || true,
+    showCheckboxes: config.showCheckboxes || false,
     selection: config.selection || [],
     paginators: config.paginators || [],
     pageItems: [],
     isAllSelectedOnPage: false,
     isIndeterminateOnPage: false, // One or more but not all selected on page
+    hasSelectionAcrossPages: false,
 
     init() {
-        // todo: when total changed after filtering does not work ... best to entangle??
         this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
                 const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
@@ -26,7 +26,10 @@ const Bulkselect = (config) => ({
         });
 
         this.$watch('selection', () => {
-            this.evaluateHeaderCheckboxState();
+            this.$nextTick(() => {
+                this.evaluateHeaderCheckboxState();
+                this.evaluateSelectionAcrossPages();
+            });
         });
 
         this.$watch('isIndeterminateOnPage', (value) => {
@@ -46,7 +49,6 @@ const Bulkselect = (config) => ({
 
         // On initial load
         this.$nextTick(() => {
-            console.log('EIEIEIEIEIEI --------');
             this.setPageItems();
             this.evaluateHeaderCheckboxState();
         });
@@ -69,12 +71,29 @@ const Bulkselect = (config) => ({
         const pageItems = this.getPageItems();
         const selectedPageItems = this.getSelectedPageItems();
 
-        // eslint-disable-next-line arrow-body-style
-        this.isAllSelectedOnPage = !!pageItems.every((item) => {
-            return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
-        });
+        if (this.selection.length < 1) {
+            this.isAllSelectedOnPage = false;
+            this.isIndeterminateOnPage = false;
+            this.$refs.tableHeaderCheckbox.checked = false;
+        } else {
+            /* eslint-disable */
+            this.isAllSelectedOnPage =
+                pageItems.length > 0 &&
+                !!pageItems.every((item) =>
+                    this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
+                );
+            /* eslint-enable */
 
-        this.isIndeterminateOnPage = !(selectedPageItems.length === pageItems.length || selectedPageItems.length === 0);
+            // eslint-disable-next-line max-len
+            this.isIndeterminateOnPage = !(
+                selectedPageItems.length === pageItems.length || selectedPageItems.length === 0
+            );
+        }
+    },
+    evaluateSelectionAcrossPages() {
+        const selectedPageItems = this.getSelectedPageItems();
+
+        this.hasSelectionAcrossPages = this.selection.length > 0 && selectedPageItems.length !== this.selection.length;
     },
 });
 

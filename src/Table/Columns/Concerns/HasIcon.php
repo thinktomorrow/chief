@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Table\Columns\Concerns;
 
+use Illuminate\Support\Facades\Blade;
+
 trait HasIcon
 {
     protected ?string $prependIcon = null;
@@ -14,7 +16,7 @@ trait HasIcon
 
     public function prependIcon(string $icon): static
     {
-        $this->prependIcon = $icon;
+        $this->prependIcon = $this->renderIcon($icon);
 
         return $this;
     }
@@ -26,8 +28,27 @@ trait HasIcon
 
     public function appendIcon(string $icon): static
     {
-        $this->appendIcon = $icon;
+        $this->appendIcon = $this->renderIcon($icon);
 
         return $this;
+    }
+
+    public function icon(string $icon): static
+    {
+        return $this->prependIcon($icon)->label('');
+    }
+
+    public function iconEdit(): static
+    {
+        return $this->icon('<x-chief::icon.quill-write />');
+    }
+
+    private function renderIcon(string $icon): string
+    {
+        if (str_starts_with($icon, '<x-chief::icon')) {
+            return Blade::render($icon);
+        }
+
+        return $icon;
     }
 }
