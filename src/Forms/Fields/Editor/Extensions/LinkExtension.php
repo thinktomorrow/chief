@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Forms\Fields\Editor\Extensions;
 
 use Illuminate\Contracts\View\View;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class LinkExtension implements Extension
 {
