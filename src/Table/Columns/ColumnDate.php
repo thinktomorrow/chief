@@ -31,4 +31,15 @@ class ColumnDate extends ColumnItem
     {
         return $this->format;
     }
+
+    protected function replicateToItem($value): static
+    {
+        $item = parent::replicateToItem($value);
+
+        if($this->format) {
+            $item->format($this->format);
+        }
+
+        return $item;
+    }
 }

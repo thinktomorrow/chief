@@ -55,9 +55,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         $this->label($key);
         $this->columnName($key);
 
-        if ($this->isRelationKey($key)) {
-            $this->itemsFromRelationKey($key);
-        }
+        $this->itemsFromKey($key);
     }
 
     public static function make(string|int $key): static

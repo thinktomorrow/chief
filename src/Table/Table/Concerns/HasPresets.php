@@ -2,8 +2,10 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\ViewOnSiteAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnTag;
 use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
 
@@ -17,9 +19,6 @@ trait HasPresets
             TagFilter::makeDefault($resourceKey),
         ])->columns([
             ColumnTag::make('tags')
-                ->items(function ($model) {
-                    return $model->tags;
-                })
                 ->eachItem(function ($columnItem, $tagModel) {
                     $columnItem->value($tagModel->label)
                                ->color($tagModel->color);
@@ -30,5 +29,14 @@ trait HasPresets
                 AttachTagAction::makeDefault($resourceKey),
                 DetachTagAction::makeDefault($resourceKey),
             ]);
+    }
+
+    public function visitablePresets(string $resourceKey): self
+    {
+        return $this->addQuery(function ($builder) {
+            $builder->with(['urls']);
+        })->rowActions([
+            ViewOnSiteAction::makeDefault($resourceKey)->tertiary()
+        ]);
     }
 }

@@ -2,14 +2,12 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
-use Illuminate\Database\Eloquent\Model;
-
 trait HasModel
 {
-    protected null|Model|array $model = null;
+    protected null|object $model = null;
     protected array $whenModelIsSetCallbacks = [];
 
-    public function model(Model|array $model): static
+    public function model(object $model): static
     {
         $this->model = $model;
 
@@ -20,7 +18,7 @@ trait HasModel
         return $this;
     }
 
-    public function getModel(): null|Model|array
+    public function getModel(): null|object
     {
         return $this->model;
     }

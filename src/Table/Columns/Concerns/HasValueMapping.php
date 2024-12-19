@@ -14,13 +14,12 @@ trait HasValueMapping
         if ($valueMapResolver instanceof Closure) {
             $this->valueMapResolvers[] = $valueMapResolver;
         } else {
-            $this->valueMapResolvers[] = function (ColumnItem $columnItem) use ($valueMapResolver) {
-
-                $originalValue = $columnItem->getValue();
-
-                if (is_scalar($originalValue) && isset($valueMapResolver[$originalValue])) {
-                    $columnItem->value($valueMapResolver[$originalValue]);
+            $this->valueMapResolvers[] = function ($rawValue, ColumnItem $columnItem) use ($valueMapResolver) {
+                if (is_scalar($rawValue)) {
+                    return $valueMapResolver[$rawValue] ?? $rawValue;
                 }
+
+                return $rawValue;
             };
         }
 
@@ -30,7 +29,10 @@ trait HasValueMapping
     protected function handleValueMapping(ColumnItem $columnItem): void
     {
         foreach ($this->valueMapResolvers as $valueMapResolver) {
-            call_user_func($valueMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+            $columnItem->value(
+                call_user_func($valueMapResolver, $columnItem->getRawValue(), $columnItem, $this->getModel())
+            );
+
         }
     }
 

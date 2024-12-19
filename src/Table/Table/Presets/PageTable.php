@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Table\Table\Presets;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
@@ -44,7 +45,6 @@ class PageTable extends Table
             ])
             ->rowActions([
                 EditModelAction::makeDefault($resourceKey)->primary(),
-                ViewOnSiteAction::makeDefault($resourceKey)->tertiary(),
                 OnlineStateRowAction::makeDefault($resourceKey)->tertiary(),
                 OfflineStateRowAction::makeDefault($resourceKey)->tertiary(),
                 DuplicateModelAction::makeDefault($resourceKey)->tertiary(),
@@ -77,6 +77,10 @@ class PageTable extends Table
 
         if ((new \ReflectionClass($modelClass))->implementsInterface(Taggable::class)) {
             $table->tagPresets($resourceKey);
+        }
+
+        if ((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) {
+            $table->visitablePresets($resourceKey);
         }
 
         // Check if model has updated_at timestamp
