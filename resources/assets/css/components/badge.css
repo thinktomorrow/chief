@@ -34,4 +34,8 @@
     .badge-grey {
         @apply bg-grey-100 text-grey-800;
     }
+
+    .badge-outline-transparent {
+        @apply ring-1 ring-inset ring-grey-100;
+    }
 }
