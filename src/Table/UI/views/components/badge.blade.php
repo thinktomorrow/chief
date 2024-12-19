@@ -18,6 +18,7 @@
                 'red' => 'badge-red',
                 'orange' => 'badge-orange',
                 'green' => 'badge-green',
+                'outline-transparent' => 'badge-outline-transparent',
                 default => 'badge-grey',
             },
         ])
