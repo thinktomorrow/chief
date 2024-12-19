@@ -86,7 +86,7 @@ class PreviewFile implements Wireable
             [],
         );
 
-        foreach($attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             $model->$key = $value;
         }
 
@@ -101,7 +101,7 @@ class PreviewFile implements Wireable
 
         $model = static::fromLocalAsset($asset);
 
-        foreach($attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             $model->$key = $value;
         }
 
@@ -145,7 +145,7 @@ class PreviewFile implements Wireable
             $owners,
         );
 
-        foreach($attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             $model->$key = $value;
         }
 
@@ -329,8 +329,8 @@ class PreviewFile implements Wireable
     // Find a matching owner by model reference
     public function findOwner(string $modelReference): ?array
     {
-        foreach($this->owners as $owner) {
-            if($owner['modelReference'] == $modelReference) {
+        foreach ($this->owners as $owner) {
+            if ($owner['modelReference'] == $modelReference) {
                 return $owner;
             }
         }
@@ -340,7 +340,7 @@ class PreviewFile implements Wireable
 
     private function createOwnerFields($resourceModel, ?FragmentModel $fragmentModel = null): array
     {
-        if($fragmentModel) {
+        if ($fragmentModel) {
             $fragment = ModelReference::fromString($fragmentModel->model_reference)->instance()->setFragmentModel($fragmentModel);
         }
 

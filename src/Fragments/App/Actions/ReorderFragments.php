@@ -16,7 +16,7 @@ class ReorderFragments
 
     public function handle(string $contextId, array $indices): void
     {
-        if(count($indices) < 1) {
+        if (count($indices) < 1) {
             return;
         }
 

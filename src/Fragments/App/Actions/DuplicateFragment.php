@@ -56,11 +56,11 @@ class DuplicateFragment
 
         // Handle nested fragments
         // TODO: contexts will no longer be the method by which fragments contain nested fragments. We will use the adjacent structure instead.
-        if(($fragment = $this->fragmentRepository->find($fragmentModel->id)) instanceof FragmentsOwner) {
+        if (($fragment = $this->fragmentRepository->find($fragmentModel->id)) instanceof FragmentsOwner) {
 
             $duplicatedFragment = $this->fragmentRepository->find($duplicatedFragmentModel->id);
 
-            if($fragmentContext = $this->contextRepository->findByFragmentOwner($fragment)) {
+            if ($fragmentContext = $this->contextRepository->findByFragmentOwner($fragment)) {
                 app(DuplicateContext::class)->handle(
                     $fragmentContext->id,
                     $duplicatedFragment,

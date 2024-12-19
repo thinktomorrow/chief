@@ -16,7 +16,7 @@ class ChiefSites
     {
         $chiefSites = [];
 
-        foreach($sites as $locale => $site) {
+        foreach ($sites as $locale => $site) {
             $chiefSites[] = new ChiefSite(
                 $locale,
                 $site['name'],
@@ -33,7 +33,7 @@ class ChiefSites
 
     public function find(string $locale): ?ChiefSite
     {
-        foreach($this->sites as $site) {
+        foreach ($this->sites as $site) {
             if ($site->locale === $locale) {
                 return $site;
             }

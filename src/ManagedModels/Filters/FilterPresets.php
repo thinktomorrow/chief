@@ -44,7 +44,7 @@ class FilterPresets
 
                 // Extract relation searches
                 foreach ($columns as $i => $column) {
-                    if(false !== strpos($column, '.')) {
+                    if (false !== strpos($column, '.')) {
                         [$relation, $columnName] = explode('.', $column);
 
                         $builder->whereHas($relation, function ($query) use ($value, $columnName, $dynamicColumn) {

@@ -32,7 +32,7 @@ class DuplicatePage
             $copiedModel->save();
         }
 
-        foreach($this->contextRepository->getByOwner($model) as $context) {
+        foreach ($this->contextRepository->getByOwner($model) as $context) {
             $this->duplicateContext->handle($context->id, $copiedModel, $context->locale);
         }
 
