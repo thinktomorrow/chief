@@ -11,6 +11,7 @@
                         paginators: @entangle('paginators'),
                     })"
             class="space-y-4"
+            wire:loading.delay.class="animate-pulse"
         >
             @include('chief-table::livewire._partials.table-actions')
 

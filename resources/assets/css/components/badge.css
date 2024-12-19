@@ -36,6 +36,6 @@
     }
 
     .badge-outline-transparent {
-        @apply ring-1 ring-inset ring-grey-100;
+        @apply text-grey-800 ring-1 ring-inset ring-grey-100;
     }
 }
