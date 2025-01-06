@@ -25,6 +25,11 @@ class ImportMenuCommand extends BaseCommand
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
         $locales = config('chief.locales', []);
 
+        // Remove headers which are added automatically - these are integers
+        $headers = array_filter($headers, function ($header) {
+            return ! is_int($header);
+        });
+
         Excel::import((new ImportMenu(
             $headers,
             $locales

@@ -22,6 +22,11 @@ class ImportResourceCommand extends BaseCommand
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
         $locales = config('chief.locales', []);
 
+        // Remove headers which are added automatically - these are integers
+        $headers = array_filter($headers, function ($header) {
+            return ! is_int($header);
+        });
+
         $idColumn = $this->ask('Which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
         if (! $idColumn || ! in_array($idColumn, $headers)) {

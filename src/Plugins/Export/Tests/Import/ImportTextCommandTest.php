@@ -20,7 +20,7 @@ class ImportTextCommandTest extends TestCase
         );
 
         $this->artisan('chief:export-text');
-        $filepath = storage_path('app/exports/'.config('app.name') .'-text-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-text-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         $line = DatabaseLine::findByKey(LineKey::fromString('about.title'));

@@ -14,7 +14,7 @@ class ExportResourceCommandTest extends TestCase
 
         $this->artisan('chief:export-resource article_page --include-static');
 
-        $filepath = storage_path('app/exports/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 

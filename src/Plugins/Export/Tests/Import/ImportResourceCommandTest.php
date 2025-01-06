@@ -13,7 +13,7 @@ class ImportResourceCommandTest extends TestCase
 
         $this->artisan('chief:export-resource article_page');
 
-        $filepath = storage_path('app/exports/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         $article->update(['title' => 'changed title']);
@@ -44,7 +44,7 @@ class ImportResourceCommandTest extends TestCase
 
         $this->artisan('chief:export-resource article_page --include-static');
 
-        $filepath = storage_path('app/exports/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         $article->update(['title' => 'changed title']);
