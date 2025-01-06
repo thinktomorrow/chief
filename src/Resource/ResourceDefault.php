@@ -35,6 +35,11 @@ trait ResourceDefault
         return (new ResourceKeyFormat(static::modelClassName()))->getLabel();
     }
 
+    public function getPluralLabel(): string
+    {
+        return (new ResourceKeyFormat(static::modelClassName()))->getPluralLabel();
+    }
+
     public function field($model, string $key): Field
     {
         $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;

@@ -28,7 +28,8 @@ trait HasOptions
 
     public function hasOptionGroups(): bool
     {
-        return PairOptions::areOptionsGrouped($this->options);
+        return PairOptions::areOptionsGrouped($this->getOptions());
+        //        return PairOptions::areOptionsGrouped($this->options);
     }
 
     public function getOptions(?string $locale = null): array
@@ -36,7 +37,7 @@ trait HasOptions
         $options = $this->options;
 
         if (is_callable($options)) {
-            $options = call_user_func_array($options, [$this, $this->getModel(), $locale]);
+            $options = call_user_func_array($options, $this->getOptionsCallableParameters($locale));
         }
 
         if ($this->sanitizeOptions) {
@@ -44,5 +45,10 @@ trait HasOptions
         }
 
         return $options;
+    }
+
+    private function getOptionsCallableParameters(?string $locale = null): array
+    {
+        return [$this, $this->getModel(), $locale];
     }
 }

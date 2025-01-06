@@ -3,10 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Site\Menu\Tree\MenuItemNode;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Vine\NodeCollection;
 
@@ -23,7 +21,7 @@ class MenuTest extends ChiefTestCase
         $parent = MenuItem::create(['label.nl' => 'first item']);
         MenuItem::create(['label.nl' => 'second item', 'parent_id' => $parent->id]);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
 
@@ -44,7 +42,7 @@ class MenuTest extends ChiefTestCase
                 'trans' => [],
             ])->assertSessionHasNoErrors();
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel());
     }
@@ -62,7 +60,7 @@ class MenuTest extends ChiefTestCase
                 'trans' => [],
             ])->assertSessionHasNoErrors();
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertEquals('artikel titel', $collection->first()->getAnyLabel());
     }
@@ -76,7 +74,7 @@ class MenuTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertNotNull($collection->find(function ($node) {
             return $node->getUrl() == 'https://google.com';
@@ -104,11 +102,11 @@ class MenuTest extends ChiefTestCase
 
         MenuItem::create(['type' => 'custom', 'label' => ['nl' => 'second item'], 'url' => ['nl' => 'https://google.com']]);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertCount(2, $collection);
         $check = 0;
-        $collection->each(function (MenuItemNode $node) use (&$check) {
+        $collection->each(function (MenuItem $node) use (&$check) {
             $this->assertNotNull($node->getLabel());
             $this->assertNotNull($node->getUrl());
             $check++;
@@ -124,7 +122,7 @@ class MenuTest extends ChiefTestCase
         MenuItem::create(['label' => 'second item', 'parent_id' => $parent->id]);
         MenuItem::create(['label' => 'last item']);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals(2, $collection->count());
@@ -138,7 +136,7 @@ class MenuTest extends ChiefTestCase
         MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
         MenuItem::create(['label' => ['nl' => 'last item'], 'parent_id' => $parent->id, 'order' => 1]);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
 
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getLabel());
@@ -151,7 +149,7 @@ class MenuTest extends ChiefTestCase
         $second = MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
         $third = MenuItem::create(['label' => 'last item', 'parent_id' => $parent->id, 'order' => 1]);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertInstanceof(NodeCollection::class, $collection);
 
         $this->assertEquals("last item", $collection->first()->getChildNodes()->first()->getLabel());
@@ -162,7 +160,7 @@ class MenuTest extends ChiefTestCase
         $third->order = 2;
         $third->save();
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertEquals("second item", $collection->first()->getChildNodes()->first()->getLabel());
     }
 
@@ -173,10 +171,10 @@ class MenuTest extends ChiefTestCase
         $second = MenuItem::create(['label' => 'second item', 'menu_type' => 'main']);
         $third = MenuItem::create(['label' => 'first item', 'menu_type' => 'footer']);
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('main', 'nl');
+        $collection = Menu::tree('main');
         $this->assertEquals(2, $collection->total());
 
-        $collection = app(ChiefMenuFactory::class)->forAdmin('footer', 'nl');
+        $collection = Menu::tree('footer');
         $this->assertEquals(1, $collection->total());
     }
 

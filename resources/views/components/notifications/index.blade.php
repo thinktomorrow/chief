@@ -1,4 +1,4 @@
-<div class="fixed z-20 pointer-events-none bottom-6 right-6">
+<div class="pointer-events-none fixed bottom-6 right-6 z-20">
     <div
         x-cloak
         x-data="{
@@ -6,28 +6,38 @@
             asyncNotifications: [],
             closedNotifications: 0,
             toggleNotifications() {
-                this.closedNotifications > 0 ? $dispatch('open-all-notifications') : $dispatch('close-all-notifications');
+                this.closedNotifications > 0
+                    ? $dispatch('open-all-notifications')
+                    : $dispatch('close-all-notifications')
             },
         }"
-        x-init="() => {
-            window.addEventListener('create-notification', (event) => {
-                asyncNotifications.push({
-                    type: event.detail.type || 'success',
-                    content: event.detail.content || '',
-                    duration: event.detail.duration || 5000,
-                });
-            });
+        x-init="
+            () => {
+                window.addEventListener('create-notification', (event) => {
+                    asyncNotifications.push({
+                        type: event.detail.type || 'success',
+                        content: event.detail.content || '',
+                        duration: event.detail.duration || 5000,
+                    })
+                })
 
-            window.addEventListener('notification-opened', () => { closedNotifications-- });
-            window.addEventListener('notification-closed', () => { closedNotifications++ });
-        }"
-        class="flex items-end justify-end max-w-3xl gap-4 pointer-events-auto"
+                window.addEventListener('notification-opened', () => {
+                    closedNotifications--
+                })
+                window.addEventListener('notification-closed', () => {
+                    closedNotifications++
+                })
+            }
+        "
+        class="pointer-events-auto flex max-w-3xl items-end justify-end gap-4"
     >
         <div class="flex flex-col items-end space-y-4">
             {{ $slot }}
 
             <template x-for="notification in asyncNotifications">
-                <x-chief::notifications.item x-data="{ type: notification.type, duration: notification.duration, isOpen: true }">
+                <x-chief::notifications.item
+                    x-data="{ type: notification.type, duration: notification.duration, isOpen: true }"
+                >
                     <div x-html="notification.content"></div>
                 </x-chief::notifications.item>
             </template>
@@ -36,11 +46,14 @@
         <div
             x-on:click="toggleNotifications"
             x-show="notifications.length + asyncNotifications.length > 0"
-            class="relative p-3 bg-white border rounded-full shadow-lg cursor-pointer text-grey-900 border-grey-100 hover:bg-grey-50 pop"
+            class="pop relative cursor-pointer rounded-full border border-grey-100 bg-white p-3 text-grey-900 shadow-lg hover:bg-grey-50"
         >
-            <svg class="w-5 h-5"><use xlink:href="#icon-bell"></use></svg>
+            <x-chief::icon.bell class="size-5" />
 
-            <div x-show="closedNotifications > 0" class="absolute flex items-center justify-center w-6 h-6 rounded-full -bottom-2 -right-2 bg-gradient-to-br from-primary-500 to-primary-600 pop">
+            <div
+                x-show="closedNotifications > 0"
+                class="pop absolute -bottom-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600"
+            >
                 <span class="text-xs font-bold leading-none text-white" x-text="closedNotifications"></span>
             </div>
         </div>

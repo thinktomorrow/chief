@@ -7,24 +7,26 @@
     $dropdownIdentifier = uniqid();
 @endphp
 
-<div class="relative group">
-    <div data-toggle-dropdown="{{ $dropdownIdentifier }}" class="rounded-md cursor-pointer hover:bg-grey-100">
+<div class="group relative">
+    <div data-toggle-dropdown="{{ $dropdownIdentifier }}" class="cursor-pointer rounded-md hover:bg-grey-100">
         <div class="flex justify-between gap-3 px-2">
-            <div class="flex gap-3 grow">
+            <div class="flex grow gap-2">
                 @isset($icon)
                     @isset($url)
                         <a
-                                href="{{ $url }}"
-                                title="{!! $label !!}"
-                                data-toggle-dropdown-ignore
-                                class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
-                                {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
+                            href="{{ $url }}"
+                            title="{!! $label !!}"
+                            data-toggle-dropdown-ignore
+                            class="shrink-0 py-1.5 [&>*]:h-6 [&>*]:w-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
+                            {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                         >
                             {!! $icon !!}
                         </a>
                     @else
-                        <div data-expand-navigation
-                             class="py-1.5 shrink-0 [&>*]:w-6 [&>*]:h-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900">
+                        <div
+                            data-expand-navigation
+                            class="shrink-0 py-1.5 [&>*]:h-6 [&>*]:w-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
+                        >
                             {!! $icon !!}
                         </div>
                     @endisset
@@ -32,33 +34,33 @@
 
                 @isset($url)
                     <a
-                            href="{{ $url }}"
-                            title="{!! $label !!}"
-                            data-toggle-dropdown-ignore
-                            data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                            class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
-                            {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
+                        href="{{ $url }}"
+                        title="{!! $label !!}"
+                        data-toggle-dropdown-ignore
+                        data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
+                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm font-medium leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
+                        {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
                     </a>
                 @else
                     <span
-                            data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                            class="py-1.5 inline-block leading-6 font-medium text-sm text-grey-700 group-hover:text-grey-900 w-full lg:w-48 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                        data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
+                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm font-medium leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
                     >
                         {!! $label !!}
                     </span>
                 @endisset
             </div>
 
-            @if(!$slot->isEmpty())
+            @if (! $slot->isEmpty())
                 <div
-                        data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="shrink-0 mt-2.5 {{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }}"
+                    data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
+                    class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} mt-2.5 shrink-0"
                 >
                     <div class="flex items-center justify-center">
                         <span class="text-grey-700 hover:scale-105">
-                            <svg class="w-4 h-4"><use xlink:href="#icon-chevron-down"></use></svg>
+                            <svg class="h-4 w-4"><use xlink:href="#icon-chevron-down"></use></svg>
                         </span>
                     </div>
                 </div>
@@ -66,10 +68,10 @@
         </div>
     </div>
 
-    @if(!$slot->isEmpty())
+    @if (! $slot->isEmpty())
         <div
-                data-dropdown="{{ $dropdownIdentifier }}"
-                class="ml-9 {{ $open && !$isCollapsedOnPageLoad ?: 'hidden' }}"
+            data-dropdown="{{ $dropdownIdentifier }}"
+            class="{{ $open && ! $isCollapsedOnPageLoad ?: 'hidden' }} ml-8"
         >
             {!! $slot !!}
         </div>

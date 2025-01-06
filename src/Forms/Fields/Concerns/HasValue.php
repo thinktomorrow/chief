@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait HasValue
 {
@@ -44,6 +46,10 @@ trait HasValue
         if (! $this->valueGiven) {
             if (! $this->getModel()) {
                 return $this->getDefault($locale);
+            }
+
+            if (is_array($this->getModel())) {
+                return data_get($this->getModel(), $this->getColumnName(), $this->getDefault($locale));
             }
 
             return $this->defaultEloquentValueResolver()($this->getModel(), $locale);
@@ -100,7 +106,18 @@ trait HasValue
                 }
             }
 
-            $value = $model->{$this->getColumnName()};
+            // Only relation methods can be called as a property. Other methods are treated as regular methods.
+            if (method_exists($model, $this->getColumnName())) {
+
+                $value = $model->{$this->getColumnName()}();
+
+                if ($value instanceof Relation) {
+                    $value = $model->{$this->getColumnName()};
+                }
+            } else {
+                // Default Eloquent value retrieval as a property (or relation)
+                $value = $model->{$this->getColumnName()};
+            }
 
             // Relationships are retrieved as collections - if they
             // are empty, we can return the default instead

@@ -3,18 +3,17 @@
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Thinktomorrow\Chief\ManagedModels\Repository\EloquentIndexRepository;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
-use Thinktomorrow\Chief\Table\TableResourceDefault;
+use Thinktomorrow\Chief\Table\Table;
+use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 trait PageResourceDefault
 {
     use ResourceDefault;
-    use TableResourceDefault;
 
     public function getNavItem(): ?NavItem
     {
@@ -39,6 +38,36 @@ trait PageResourceDefault
         }
     }
 
+    /**
+     * This is a temporary method to get the index table. In a future release of Chief, a table will be
+     * configured on a Page class instead.
+     */
+    public function getIndexTable(): Table
+    {
+        return Table\Presets\PageTable::makeDefault(static::resourceKey());
+    }
+
+    public function getArchivedIndexTable(): Table
+    {
+        return $this->getIndexTable()
+            ->setTableReference(new TableReference(static::class, 'getArchivedIndexTable'))
+            ->addQuery(function ($builder) {
+                $builder->archived();
+            })
+            ->removeFilter('current_state')
+            ->removeAction('create')
+            ->removeAction('archive-index');
+    }
+
+    public function getReorderTable(): Table
+    {
+        return $this->getIndexTable()
+            ->setTableReference(new TableReference(static::class, 'getReorderTable'))
+            ->removeAction('create')
+            ->removeAction('reorder')
+            ->removeAction('archive-index');
+    }
+
     public function getIndexTitle(): string
     {
         return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
@@ -56,7 +85,7 @@ trait PageResourceDefault
 
     protected function getNavIcon(): string
     {
-        return '<svg><use xlink:href="#icon-rectangle-stack"></use></svg>';
+        return Blade::render('<x-chief::icon.folder-library />');
     }
 
     public function getCreatePageView(): View
@@ -74,7 +103,7 @@ trait PageResourceDefault
         return view('chief::manager.edit');
     }
 
-    public function getPageBreadCrumb(): ?BreadCrumb
+    public function getPageBreadCrumb(?string $pageType = null): ?BreadCrumb
     {
         $this->assertManager();
 
@@ -82,7 +111,11 @@ trait PageResourceDefault
             return null;
         }
 
-        return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        //        if ($pageType == 'edit' || $pageType == 'create') {
+        //            return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        //        }
+
+        return null;
     }
 
     public function getIndexHeaderContent(): ?string
@@ -113,30 +146,6 @@ trait PageResourceDefault
 
     public function getIndexView(): View
     {
-        if ($this->getIndexViewType() == 'table') {
-            return ($this instanceof Nestable)
-                ? view('chief-table::nestable.index')
-                : view('chief-table::index');
-        }
-
-        return view('chief::manager.index');
-    }
-
-    /**
-     * Default type of index: options are:
-     * index (default), table
-     */
-    protected function getIndexViewType(): string
-    {
-        return 'table';
-    }
-
-    public function getArchivedIndexView(): View
-    {
-        if ($this->getIndexViewType() == 'table') {
-            return view('chief-table::index');
-        }
-
         return view('chief::manager.index');
     }
 
@@ -145,39 +154,9 @@ trait PageResourceDefault
         return null;
     }
 
-    public function getIndexCardView(): string
-    {
-        return 'chief::manager._index._card';
-    }
-
-    public function getIndexCardTitle($model): string
-    {
-        return $this->getPageTitle($model);
-    }
-
-    public function getIndexCardContent($model): string
-    {
-        return view('chief::manager._index._card-content', ['model' => $model])->render();
-    }
-
     public function getIndexSidebar(): string
     {
         return '';
-    }
-
-    public function showIndexSidebarAside(): bool
-    {
-        return true;
-    }
-
-    public function showIndexOptionsColumn(): bool
-    {
-        return true;
-    }
-
-    public function getIndexPagination(): int
-    {
-        return 20;
     }
 
     public function getSortableType(): string
@@ -188,15 +167,5 @@ trait PageResourceDefault
     public function allowInlineSorting(): bool
     {
         return false;
-    }
-
-    public function indexRepository(): string
-    {
-        return EloquentIndexRepository::class;
-    }
-
-    public function getNestableNodeLabels(): ?string
-    {
-        return null;
     }
 }

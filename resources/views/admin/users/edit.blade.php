@@ -8,42 +8,42 @@
             <div class="flex items-center gap-4">
                 {!! $user->present()->enabledAsLabel() !!}
 
-                @if($user->isEnabled())
+                @if ($user->isEnabled())
                     <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
                 @endif
 
-                <button type="button" id="user-edit-options">
-                    <x-chief::button>
-                        <svg class="w-5 h-5"><use xlink:href="#icon-ellipsis-vertical"/></svg>
-                    </x-chief::button>
-                </button>
+                <x-chief::button x-data x-on:click="$dispatch('open-dialog', { 'id': 'user-edit-options' });">
+                    <x-chief::icon.more-vertical-circle class="size-5" />
+                </x-chief::button>
 
-                <x-chief::dropdown trigger="#user-edit-options">
-                    <a href="{{ route('chief.back.invites.resend', $user->id) }}" title="Stuur nieuwe uitnodiging">
-                        <x-chief::dropdown.item>
-                            Stuur nieuwe uitnodiging
-                        </x-chief::dropdown.item>
-                    </a>
+                <x-chief::dialog.dropdown id="user-edit-options">
+                    <x-chief::dialog.dropdown.item
+                        href="{{ route('chief.back.invites.resend', $user->id) }}"
+                        title="Stuur nieuwe uitnodiging"
+                    >
+                        <x-chief::icon.mail-add />
+                        <x-chief::dialog.dropdown.item.content label="Stuur nieuwe uitnodiging" />
+                    </x-chief::dialog.dropdown.item>
 
-                    @if($user->isEnabled())
-                        <button type="submit" form="disableUserForm">
-                            <x-chief::dropdown.item>
-                                {{ ucfirst($user->firstname) }} blokkeren
-                            </x-chief::dropdown.item>
-                        </button>
+                    @if ($user->isEnabled())
+                        <x-chief::dialog.dropdown.item type="submit" form="disableUserForm" variant="red">
+                            <x-chief::icon.square-lock />
+                            <x-chief::dialog.dropdown.item.content label="{{ ucfirst($user->firstname) }} blokkeren" />
+                        </x-chief::dialog.dropdown.item>
                     @else
-                        <button type="submit" form="enableUserForm">
-                            <x-chief::dropdown.item>
-                                {{ ucfirst($user->firstname) }} deblokkeren
-                            </x-chief::dropdown.item>
-                        </button>
+                        <x-chief::dialog.dropdown.item type="submit" form="enableUserForm" variant="green">
+                            <x-chief::icon.square-unlock />
+                            <x-chief::dialog.dropdown.item.content
+                                label="{{ ucfirst($user->firstname) }} deblokkeren"
+                            />
+                        </x-chief::dialog.dropdown.item>
                     @endif
-                </x-chief::dropdown>
+                </x-chief::dialog.dropdown>
             </div>
         </x-chief::page.hero>
     </x-slot>
 
-    @if($user->isEnabled())
+    @if ($user->isEnabled())
         <form id="disableUserForm" method="POST" action="{{ route('chief.back.users.disable', $user->id) }}">
             @csrf
         </form>
@@ -54,7 +54,7 @@
     @endif
 
     <x-chief::page.grid class="max-w-3xl">
-        <form id="updateForm" action="{{ route('chief.back.users.update',$user->id) }}" method="POST" class="card">
+        <form id="updateForm" action="{{ route('chief.back.users.update', $user->id) }}" method="POST" class="card">
             @csrf
             @method('put')
 

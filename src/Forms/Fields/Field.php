@@ -25,8 +25,8 @@ interface Field extends Validatable, Localizable
     public function getDescription(): ?string;
 
     // Saving and retrieving field values
-    public function model(Model $model): static;
-    public function getModel(): ?Model;
+    public function model(object $model): static;
+    public function getModel(): null|object;
 
     public function columnName(string $columnName): static;
     public function getColumnName(): string;

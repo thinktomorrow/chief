@@ -40,5 +40,5 @@
         </x-chief::page.grid>
     </form>
 
-    @include('chief::layout._partials.editor-script')
+    @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

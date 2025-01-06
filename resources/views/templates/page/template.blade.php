@@ -9,7 +9,7 @@
 <x-chief::page.layout :title="$title">
     <div class="flex flex-wrap items-start lg:flex-nowrap">
         {{-- Navigation --}}
-        <section class="relative top-0 z-20 max-lg:w-full shrink-0 lg:sticky">
+        <section class="relative top-0 max-lg:w-full shrink-0 lg:sticky">
             @include('chief::templates.page.nav.nav')
         </section>
 
@@ -18,7 +18,7 @@
         <section id="content" class="w-full min-w-0">
             @include('chief::templates.page._partials.healthbar')
 
-            <div class="py-4 sm:py-8 lg:py-12">
+            <div class="py-4 sm:py-8">
                 @if ($hero)
                     {{ $hero }}
                 @else
@@ -37,5 +37,5 @@
         </section>
     <div>
 
-    @include('chief::layout._partials.notifications')
+    @include('chief::templates.page._partials.notifications')
 </x-chief::page.layout>

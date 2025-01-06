@@ -26,7 +26,6 @@ class AdminToastHTML
 <meta id="jsChiefToastLocaleSegment" content="{$localeSegment}">
 <meta id="jsChiefToastPreviewMode" content="{$previewMode}">
 HTML;
-
     }
 
     /**
@@ -85,12 +84,12 @@ HTML;
     /** Blade expression */
     public static function chiefAdminToastMetatags($expression)
     {
-        return '{!! app(\Thinktomorrow\Chief\Plugins\AdminToast\AdminToastHTML::class)->metatags('.$expression.') !!}';
+        return '{!! app(\Thinktomorrow\Chief\Plugins\AdminToast\AdminToastHTML::class)->metatags(' . $expression . ') !!}';
     }
 
     /** Blade expression */
     public static function chiefAdminToastScripts($expression)
     {
-        return '{!! app(\Thinktomorrow\Chief\Plugins\AdminToast\AdminToastHTML::class)->scripts('.$expression.') !!}';
+        return '{!! app(\Thinktomorrow\Chief\Plugins\AdminToast\AdminToastHTML::class)->scripts(' . $expression . ') !!}';
     }
 }
