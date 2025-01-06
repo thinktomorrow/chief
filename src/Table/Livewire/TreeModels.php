@@ -15,16 +15,15 @@ class TreeModels
     public function compose(TreeResource $resource, array $ids, int $offset, int $limit, string $keyName = 'id'): array
     {
         // Get the entire tree structure but only the ids to reduce memory load
-        $treeIds = NestableTree::fromIterable($resource->getTreeModelIds());
+        $treeModelIds = NestableTree::fromIterable($resource->getTreeModelIds());
 
         // Reduce the tree to only the models that are expected by the current filtering / sorting.
-        $treeIds = (new NestableTree($treeIds->shake(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all()))->all();
-
-        // Slice the models for the current page
-        $treeIds = collect($treeIds)->slice($offset, $limit)->values();
+        $treeIds = collect(
+            (new NestableTree($treeModelIds->prune(fn ($node) => in_array($node->getNodeId(), $ids))->flatten()->all()))->all()
+        )->slice($offset, $limit)->values();
 
         // Also get the ancestors of first model so this can be shown as a tree path reference
-        $ancestorTreeIds = collect(isset($treeIds[0]) ? $treeIds[0]->getAncestorNodes() : []);
+        $ancestorTreeIds = collect(isset($treeIds[0]) ? $treeModelIds->find(fn ($node) => $node->getNodeId() == $treeIds[0]->getNodeId())->getAncestorNodes() : []);
 
         // Fetch the entire models
         $allModels = $resource->getTreeModels([
@@ -35,11 +34,11 @@ class TreeModels
         // Add indent to models based on the tree depth
         $models = $allModels
             ->filter(fn ($model) => in_array($model->id, $modelIds))
-            ->map(function ($model) use ($treeIds, $keyName) {
-                $model->indent = $treeIds->first(fn ($node) => $node->getNodeId() == $model->{$keyName})->getNodeDepth();
+            ->map(function ($model) use ($treeModelIds, $keyName) {
+                $model->indent = $treeModelIds->find(fn ($node) => $node->getNodeId() == $model->{$keyName})->getNodeDepth();
 
                 return $model;
-            });
+            })->values();
 
         $ancestors = $allModels
             ->filter(fn ($model) => in_array($model->id, $ancestorIds))
