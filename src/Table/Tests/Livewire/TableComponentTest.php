@@ -4,10 +4,8 @@ namespace Thinktomorrow\Chief\Table\Tests\Livewire;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
-use Thinktomorrow\Chief\Table\Livewire\TreeModels;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeModelFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeResourceFixture;
@@ -39,7 +37,7 @@ class TableComponentTest extends TestCase
     {
         $table = Table::make()
             ->setTableReference(new Table\References\TableReference('xxx', 'table'))
-            ->query(fn() => TreeModelFixture::query())
+            ->query(fn () => TreeModelFixture::query())
             ->columns([
                 ColumnText::make('id'),
                 ColumnText::make('title'),
