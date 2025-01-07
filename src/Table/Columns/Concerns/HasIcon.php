@@ -43,6 +43,21 @@ trait HasIcon
         return $this->icon('<x-chief::icon.quill-write />');
     }
 
+    public function iconView(): static
+    {
+        return $this->icon('<x-chief::icon.view />');
+    }
+
+    public function iconAdd(): static
+    {
+        return $this->icon('<x-chief::icon.plus-sign />');
+    }
+
+    public function iconDelete(): static
+    {
+        return $this->icon('<x-chief::icon.delete />');
+    }
+
     private function renderIcon(string $icon): string
     {
         if (str_starts_with($icon, '<x-chief::icon')) {
