@@ -32,8 +32,7 @@ class SelectOptions
 
     public function getTree(Nestable|string $model): NestableTree
     {
-        /** @var TreeResource $resource */
-        $resource = $this->registry->findResourceByModel(is_string($model) ? $model : $model::class);
+        $resource = $this->registry->findTreeResourceByModel(is_string($model) ? $model : $model::class);
 
         return NestableTree::fromIterable($resource->getTreeModels());
     }
