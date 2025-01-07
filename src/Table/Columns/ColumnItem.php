@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Table\Columns;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Str;
 use Stringable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
@@ -51,9 +52,10 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
 
     public function __construct(string $key)
     {
-        $this->key($key);
         $this->label($key);
-        $this->columnName($key);
+
+        $this->key(strtolower($key));
+        $this->columnName(strtolower($key));
 
         $this->itemsFromKey($key);
     }
