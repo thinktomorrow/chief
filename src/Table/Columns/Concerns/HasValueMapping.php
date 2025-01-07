@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table\Columns\Concerns;
 
 use Closure;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 
 trait HasValueMapping
@@ -41,16 +42,39 @@ trait HasValueMapping
      */
     public function pageStates(): static
     {
-        $this->mapValue([
-            'published' => 'online',
-            'draft' => 'offline',
-            'archived' => 'archived',
-        ]);
+//        $this->mapValue([
+//            'published' => 'online',
+//            'draft' => 'offline',
+//            'archived' => 'archived',
+//        ]);
+
+        $this->mapValue(function ($rawValue, ColumnItem $columnItem, $model) {
+            if($model instanceof Visitable) {
+
+                if ($model->inOnlineState()) {
+                    if ($model->urls->isNotEmpty()) {
+                        return 'online';
+                    } else {
+                        return 'link ontbreekt';
+                    }
+                }
+
+                return 'offline';
+            }
+
+            return match($rawValue) {
+                'published' => 'online',
+                'draft' => 'offline',
+                'archived' => 'archived',
+                default => $rawValue,
+            };
+        });
 
         return $this->mapVariant([
             'online' => 'green',
             'offline' => 'red',
             'archived' => 'red',
+            'link ontbreekt' => 'orange',
         ]);
     }
 }
