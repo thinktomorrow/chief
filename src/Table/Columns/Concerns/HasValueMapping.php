@@ -43,7 +43,7 @@ trait HasValueMapping
     public function pageStates(): static
     {
         $this->mapValue(function ($rawValue, ColumnItem $columnItem, $model) {
-            if($model instanceof Visitable) {
+            if ($model instanceof Visitable) {
 
                 if ($model->inOnlineState()) {
                     if ($model->urls->isNotEmpty()) {
