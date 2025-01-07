@@ -8,13 +8,16 @@ principles.
 
 - Changed: minimum PHP version required is 8.2.
 - Changed: `thinktomorrow/vine` dependency to `0.5.*`. This will affect menu retrieval in your project files.
+- Added: new table component for index views. This replaces old index views and related resource methods.
+- Added: new set of UI components, originating from the new table component.
+- Changed: Tree retrieval. Nestable logic, classes and tree retrieval has changed. All nestable resources and models, like Page, need to be adjusted.
+
+### General
 - Removed: Some icons in the main symbols file weren't in use anymore and are therefore removed from Chief. This might
   cause some project specific icons to not show up anymore, e.g. `#icon-rectangle-group` in project nav files.
 - Changed: Extracted partial logic from `StateAssistant` to a `UpdateState` as an action for reuse between commands.
-- Nestable logic has changed so any nestable resources, like Page, need to be adjusted. Below you can find the specific changes in the Tree retrieval section.
 
-### Table component
-
+### A new Table component
 - Removed `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former
   options (index and table)
 - Removed `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
@@ -38,7 +41,6 @@ principles.
       `Repository::syncTags(string $ownerType, array $ownerIds, array $tagIds)`.
 
 ### Tree retrieval
-
 The nestable logic has been simplified. The vine package is updated and the Chief tree retrieval has been updated
 accordingly.
 
@@ -92,11 +94,7 @@ Menu tree retrieval is now simpler. Also due to the change of the underlying Vin
 This should not impose a breaking change but you should check your implementation to see if it still works as expected.
 Some Chief classes are removed because retrieval is now simpler. Removed classes are: `MenuItemNode`, `MenuSource` and `ChiefMenuFactory`.
 
-### Chief UI
-
-#### Components
-
-The new table component will also be shipping with a new group of UI components. Some will be adding new functionality to Chief. Others were already available before but are updated to match the new table styling:
+### Chief UI components
 
 ##### General components
 
