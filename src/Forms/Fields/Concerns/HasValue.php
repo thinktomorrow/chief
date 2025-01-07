@@ -55,7 +55,8 @@ trait HasValue
             return $this->defaultEloquentValueResolver()($this->getModel(), $locale);
         }
 
-        if (is_callable($this->value)) {
+        // Check if it is a closure
+        if ($this->value instanceof Closure) {
             return call_user_func_array($this->value, [$this->getModel(), $locale, $this]);
         }
 
