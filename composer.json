@@ -17,7 +17,7 @@
         "laravel/framework": "^10.21",
         "laravel/ui": "^4.2",
         "livewire/livewire": "^3.4.6",
-        "maennchen/zipstream-php": "^2.4",
+        "maennchen/zipstream-php": "^3.1",
         "ramsey/uuid": "^4.7.3",
         "spatie/laravel-activitylog": "^4.7.3",
         "spatie/laravel-permission": "^5.8",
