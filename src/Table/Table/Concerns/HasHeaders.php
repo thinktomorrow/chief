@@ -17,6 +17,8 @@ trait HasHeaders
 
     public function getHeaders(): array
     {
+        $this->moveColumnsInOrder();
+
         return $this->headers;
     }
 }

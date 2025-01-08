@@ -9,6 +9,11 @@ trait HasColumns
 {
     private array $columns = [];
 
+    /** Specific order of columns given by the sequence of the keys. */
+    private array $columnKeysInOrder = [];
+
+    private bool $areColumnsOrdered = false;
+
     public function columns(array $columns): static
     {
         $this->columns = array_merge($this->columns, array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns));
@@ -37,9 +42,47 @@ trait HasColumns
         return $this;
     }
 
+    public function orderColumns(array $columnKeysInOrder): static
+    {
+        $this->columnKeysInOrder = $columnKeysInOrder;
+
+        return $this;
+    }
+
     public function getColumns(): array
     {
+        $this->moveColumnsInOrder();
+
         return $this->columns;
+    }
+
+    private function moveColumnsInOrder(): void
+    {
+        if($this->areColumnsOrdered || count($this->columnKeysInOrder) === 0) {
+            return;
+        }
+
+        $columns = [];
+        $unOrderedColumns = [];
+
+        foreach($this->columns as $column) {
+            foreach($column->getItems() as $item) {
+                if(in_array($item->getKey(), $this->columnKeysInOrder)) {
+                    $columns[(int) array_search($item->getKey(), $this->columnKeysInOrder)] = $column;
+                    break;
+                } else {
+                    $unOrderedColumns[] = $column;
+                    break;
+                }
+            }
+        }
+
+        sort($columns);
+
+        $this->columns = array_merge($columns, $unOrderedColumns);
+
+        $this->areColumnsOrdered = true;
+        $this->updateHeaders();
     }
 
     private function updateHeaders(): void
