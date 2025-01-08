@@ -18,8 +18,7 @@ class CopyFragmentTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
     }
 
-    /** @test */
-    public function it_can_copy_a_static_fragment()
+    public function test_it_can_copy_a_static_fragment()
     {
         $snippet = $this->setupAndCreateSnippet($this->owner);
         $newOwner = ArticlePage::create();
@@ -35,8 +34,7 @@ class CopyFragmentTest extends ChiefTestCase
         $this->assertEquals($existingFragmentFresh->fragmentModel()->model_reference, $fragmentFresh->fragmentModel()->model_reference);
     }
 
-    /** @test */
-    public function a_shared_fragment_is_copied_as_shared()
+    public function test_a_shared_fragment_is_copied_as_shared()
     {
         // Make snippet shared
         $snippet = $this->setupAndCreateSnippet($this->owner);
@@ -60,8 +58,7 @@ class CopyFragmentTest extends ChiefTestCase
         $this->assertTrue($fragmentFresh->fragmentModel()->isShared());
     }
 
-    /** @test */
-    public function nested_fragments_are_also_copied()
+    public function test_nested_fragments_are_also_copied()
     {
         $quote = $this->setupAndCreateQuote($this->owner);
         $newOwner = ArticlePage::create();
@@ -83,8 +80,7 @@ class CopyFragmentTest extends ChiefTestCase
         $this->assertNotEquals($existingNestedFragmentFresh->fragmentModel()->id, $nestedFragmentFresh->fragmentModel()->id);
     }
 
-    /** @test */
-    public function shared_nested_fragments_are_also_shared()
+    public function test_shared_nested_fragments_are_also_shared()
     {
         $snippet = $this->setupAndCreateSnippet($this->owner);
 

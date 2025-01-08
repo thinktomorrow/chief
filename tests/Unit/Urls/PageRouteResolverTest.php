@@ -28,8 +28,7 @@ class PageRouteResolverTest extends ChiefTestCase
         parent::tearDown();
     }
 
-    /** @test */
-    public function a_default_route_resolver_can_be_set()
+    public function test_a_default_route_resolver_can_be_set()
     {
         // Add links so our url method works properly. These slugs will however be overridden by our custom route resolver.
         $this->updateLinks($this->article, ['nl' => 'fake-nl', 'en' => 'fake-en']);

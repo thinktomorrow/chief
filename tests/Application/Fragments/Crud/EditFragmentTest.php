@@ -24,16 +24,14 @@ class EditFragmentTest extends ChiefTestCase
         $this->fragmentManager = $this->manager($this->model);
     }
 
-    /** @test */
-    public function admin_can_view_the_fragment_edit_form()
+    public function test_admin_can_view_the_fragment_edit_form()
     {
         $this->asAdmin()
             ->get($this->fragmentManager->route('fragment-edit', $this->owner, $this->model))
             ->assertStatus(200);
     }
 
-    /** @test */
-    public function admin_can_view_the_edit_form_of_a_nested_fragment()
+    public function test_admin_can_view_the_edit_form_of_a_nested_fragment()
     {
         $model = $this->setupAndCreateQuote($this->model, [], 0, false);
 
@@ -42,8 +40,7 @@ class EditFragmentTest extends ChiefTestCase
             ->assertStatus(200);
     }
 
-    /** @test */
-    public function admin_can_view_the_edit_form_of_a_shared_fragment()
+    public function test_admin_can_view_the_edit_form_of_a_shared_fragment()
     {
         $model = $this->setupAndCreateQuote($this->model, [], 0, false);
 
@@ -55,8 +52,7 @@ class EditFragmentTest extends ChiefTestCase
             ->assertStatus(200);
     }
 
-    /** @test */
-    public function guests_cannot_view_the_edit_form()
+    public function test_guests_cannot_view_the_edit_form()
     {
         // Make sure that this admin is logged out
         auth()->guard('chief')->logout();

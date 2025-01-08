@@ -16,8 +16,7 @@ class DuplicatePageTest extends ChiefTestCase
 {
     private $source;
 
-    /** @test */
-    public function it_can_duplicate_all_fields()
+    public function test_it_can_duplicate_all_fields()
     {
         $this->disableExceptionHandling();
         $this->assertCount(1, ArticlePage::all());
@@ -42,8 +41,7 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertTrue($this->source->updated_at->lt($copiedModel->updated_at));
     }
 
-    /** @test */
-    public function after_duplicating_we_go_to_the_duplicated_page()
+    public function test_after_duplicating_we_go_to_the_duplicated_page()
     {
         $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
@@ -51,8 +49,7 @@ class DuplicatePageTest extends ChiefTestCase
         $response->assertRedirect($this->manager($copiedModel)->route('edit', $copiedModel));
     }
 
-    /** @test */
-    public function context_with_fragments_are_duplicated()
+    public function test_context_with_fragments_are_duplicated()
     {
         // Add shared and non-shared fragment
         $snippet = $this->createAsFragment(new SnippetStub(), $this->source, 1);
@@ -81,8 +78,7 @@ class DuplicatePageTest extends ChiefTestCase
         // Or dedicated duplicate class Duplicator() => Duplicate::handle()
     }
 
-    /** @test */
-    public function page_assets_are_not_duplicated_but_refer_to_same_asset()
+    public function test_page_assets_are_not_duplicated_but_refer_to_same_asset()
     {
         $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 

@@ -33,8 +33,7 @@ class SharedFragmentTest extends ChiefTestCase
         $this->fragmentRepo = app(FragmentRepository::class);
     }
 
-    /** @test */
-    public function a_fragment_can_be_shared()
+    public function test_a_fragment_can_be_shared()
     {
         $owner2 = ArticlePage::create([]);
         $this->asAdmin()->post($this->fragmentManager->route('fragment-add', $owner2, $this->fragment));
@@ -49,8 +48,7 @@ class SharedFragmentTest extends ChiefTestCase
         $this->assertEquals(Arr::except($ownerFragment->fragmentModel()->toArray(), 'pivot'), Arr::except($owner2Fragment->fragmentModel()->toArray(), 'pivot'));
     }
 
-    /** @test */
-    public function when_a_fragment_is_shared_is_it_flagged_as_shareable()
+    public function test_when_a_fragment_is_shared_is_it_flagged_as_shareable()
     {
         $this->assertFalse($this->fragment->fragmentModel()->isShared());
 
@@ -60,8 +58,7 @@ class SharedFragmentTest extends ChiefTestCase
         $this->assertTrue($this->fragment->fragmentModel()->fresh()->isShared());
     }
 
-    /** @test */
-    public function it_can_retrieve_all_owning_models()
+    public function test_it_can_retrieve_all_owning_models()
     {
         $owner2 = ArticlePage::create([]);
         $this->asAdmin()->post($this->fragmentManager->route('fragment-add', $owner2, $this->fragment));
@@ -76,8 +73,7 @@ class SharedFragmentTest extends ChiefTestCase
         }
     }
 
-    /** @test */
-    public function it_can_retrieve_all_shareable_fragments()
+    public function test_it_can_retrieve_all_shareable_fragments()
     {
         $this->setupAndCreateSnippet($this->owner);
 
@@ -86,8 +82,7 @@ class SharedFragmentTest extends ChiefTestCase
         $this->assertCount(2, $sharedFragments);
     }
 
-    /** @test */
-    public function it_can_retrieve_only_shareable_fragments_when_they_are_allowed_fragments()
+    public function test_it_can_retrieve_only_shareable_fragments_when_they_are_allowed_fragments()
     {
         $this->setupAndCreateHero(ArticlePage::create());
 
@@ -96,8 +91,7 @@ class SharedFragmentTest extends ChiefTestCase
         $this->assertCount(1, $sharedFragments);
     }
 
-    /** @test */
-    public function already_selected_fragments_are_marked_with_a_flag()
+    public function test_already_selected_fragments_are_marked_with_a_flag()
     {
         $this->setupAndCreateSnippet(ArticlePage::create());
 

@@ -26,8 +26,7 @@ class SortFragmentTest extends ChiefTestCase
         $this->fragment3 = $this->setupAndCreateQuote($this->owner, [], 2, false);
     }
 
-    /** @test */
-    public function fragments_can_be_sorted()
+    public function test_fragments_can_be_sorted()
     {
         $this->asAdmin()->post($this->manager($this->owner)->route('fragments-reorder', $this->owner), [
             'indices' => [
@@ -44,8 +43,7 @@ class SortFragmentTest extends ChiefTestCase
         $this->assertEquals($this->fragment->fragmentModel()->id, $fragments[2]->fragmentModel()->id);
     }
 
-    /** @test */
-    public function invalid_fragmentids_are_ignored()
+    public function test_invalid_fragmentids_are_ignored()
     {
         $this->asAdmin()->post($this->manager($this->owner)->route('fragments-reorder', $this->owner), [
             'indices' => [
@@ -64,8 +62,7 @@ class SortFragmentTest extends ChiefTestCase
         $this->assertEquals($this->fragment->fragmentModel()->id, $fragments[2]->fragmentModel()->id);
     }
 
-    /** @test */
-    public function it_emits_event_after_sorting()
+    public function test_it_emits_event_after_sorting()
     {
         Event::fake();
 

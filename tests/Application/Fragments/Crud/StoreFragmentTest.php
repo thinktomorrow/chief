@@ -27,8 +27,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->fragmentManager = $this->manager(SnippetStub::class);
     }
 
-    /** @test */
-    public function it_can_store_a_fragment()
+    public function test_it_can_store_a_fragment()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner), [
             'title' => 'new-title',
@@ -52,8 +51,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->assertEquals('title_trans en value', $snippet->fragmentModel()->title_trans);
     }
 
-    /** @test */
-    public function it_can_store_fragment_with_specific_order()
+    public function test_it_can_store_fragment_with_specific_order()
     {
         $snippet1 = $this->setupAndCreateSnippet($this->owner, 1, false);
         $snippet2 = $this->setupAndCreateSnippet($this->owner, 2, false);
@@ -79,8 +77,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->assertEquals(3, $fragments[3]->fragmentModel()->pivot->order);
     }
 
-    /** @test */
-    public function it_can_upload_a_file_field()
+    public function test_it_can_upload_a_file_field()
     {
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 

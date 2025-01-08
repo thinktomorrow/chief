@@ -33,8 +33,7 @@ class ProjectMenuCommandTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_project_all_menu_items()
+    public function test_it_can_project_all_menu_items()
     {
         $this->artisan('chief:project-menu')
             ->assertExitCode(0);

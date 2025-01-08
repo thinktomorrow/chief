@@ -12,8 +12,7 @@ class LinkFormTest extends ChiefTestCase
         parent::setUp();
     }
 
-    /** @test */
-    public function the_fixed_base_segment_is_prepended_to_the_slug()
+    public function test_the_fixed_base_segment_is_prepended_to_the_slug()
     {
         $model = $this->setupAndCreateArticleWithBaseSegments();
 

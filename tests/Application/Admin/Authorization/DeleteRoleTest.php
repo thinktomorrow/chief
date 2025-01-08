@@ -19,8 +19,7 @@ class DeleteRoleTest extends ChiefTestCase
         $this->newRole = $role;
     }
 
-    /** @test */
-    public function deleting_a_new_role()
+    public function test_deleting_a_new_role()
     {
         $response = $this->actingAs($this->developer(), 'chief')
             ->delete(route('chief.back.roles.destroy', $this->newRole->id));
@@ -33,8 +32,7 @@ class DeleteRoleTest extends ChiefTestCase
         $this->assertDatabaseMissing('role_has_permissions', ['role_id' => $this->newRole->id]);
     }
 
-    /** @test */
-    public function only_authenticated_developer_can_delete_a_role()
+    public function test_only_authenticated_developer_can_delete_a_role()
     {
         $response = $this->asAdminWithoutRole()
             ->delete(route('chief.back.roles.destroy', $this->newRole->id));
@@ -44,8 +42,7 @@ class DeleteRoleTest extends ChiefTestCase
         $this->assertNotNull(Role::whereName('new name')->first());
     }
 
-    /** @test */
-    public function role_is_deleted_for_connected_admin()
+    public function test_role_is_deleted_for_connected_admin()
     {
         $developer = $this->developer();
         $developer->assignRole('new name');

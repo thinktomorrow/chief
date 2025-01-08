@@ -8,8 +8,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PermissionTest extends ChiefTestCase
 {
-    /** @test */
-    public function an_user_can_be_checked_for_permission()
+    public function test_an_user_can_be_checked_for_permission()
     {
         $admin = $this->fakeUser();
 
@@ -23,16 +22,14 @@ class PermissionTest extends ChiefTestCase
         $this->assertFalse($admin->cant('create-article'));
     }
 
-    /** @test */
-    public function an_unknown_permission_does_not_authorize()
+    public function test_an_unknown_permission_does_not_authorize()
     {
         $admin = $this->fakeUser();
 
         $this->assertFalse($admin->can('unknown-permission'));
     }
 
-    /** @test */
-    public function an_user_can_have_multiple_roles()
+    public function test_an_user_can_have_multiple_roles()
     {
         $admin = $this->fakeUser();
 

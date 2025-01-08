@@ -12,8 +12,7 @@ class InternalLinksTest extends ChiefTestCase
         parent::setUp();
     }
 
-    /** @test */
-    public function it_retrieves_empty_response_when_no_links_found()
+    public function test_it_retrieves_empty_response_when_no_links_found()
     {
         $response = $this->asAdmin()->get(route('chief.api.internal-links'));
         $response->assertSuccessful();
@@ -23,8 +22,7 @@ class InternalLinksTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_retrieve_links_of_online_models()
+    public function test_it_can_retrieve_links_of_online_models()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -38,8 +36,7 @@ class InternalLinksTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_retrieve_links_of_online_models_for_specific_locale()
+    public function test_it_can_retrieve_links_of_online_models_for_specific_locale()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);

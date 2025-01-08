@@ -24,8 +24,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->fragment = $this->setupAndCreateSnippet($this->owner);
     }
 
-    /** @test */
-    public function a_page_can_remove_a_fragment()
+    public function test_a_page_can_remove_a_fragment()
     {
         $this->assertFragmentCount($this->owner, 1);
 
@@ -34,8 +33,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertFragmentCount($this->owner, 0);
     }
 
-    /** @test */
-    public function a_fragment_can_remove_a_nested_fragment()
+    public function test_a_fragment_can_remove_a_nested_fragment()
     {
         $nestedFragment = $this->createAsFragment(new SnippetStub(), $this->fragment->fragmentModel());
 
@@ -44,14 +42,12 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertFragmentCount($this->fragment->fragmentModel(), 0);
     }
 
-    /** @test */
-    public function it_can_check_if_a_model_allows_for_removing_a_fragment()
+    public function test_it_can_check_if_a_model_allows_for_removing_a_fragment()
     {
         $this->assertTrue($this->manager($this->fragment)->can('fragment-delete'));
     }
 
-    /** @test */
-    public function removing_a_fragment_multiple_times_only_removes_it_once()
+    public function test_removing_a_fragment_multiple_times_only_removes_it_once()
     {
         $this->assertFragmentCount($this->owner, 1);
 
@@ -61,8 +57,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertFragmentCount($this->owner, 0);
     }
 
-    /** @test */
-    public function removing_a_fragment_emits_event()
+    public function test_removing_a_fragment_emits_event()
     {
         Event::fake();
 
@@ -72,8 +67,7 @@ class DeleteFragmentTest extends ChiefTestCase
         Event::assertDispatched(FragmentDetached::class);
     }
 
-    /** @test */
-    public function removing_a_fragment_soft_deletes_fragment_and_assets()
+    public function test_removing_a_fragment_soft_deletes_fragment_and_assets()
     {
         $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-delete', $this->owner, $this->fragment));
         $this->assertFragmentCount($this->owner, 0);
@@ -83,8 +77,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertNotNull($deletedFragmentModel->deleted_at);
     }
 
-    /** @test */
-    public function removing_a_static_fragment_deletes_fragment_and_assets()
+    public function test_removing_a_static_fragment_deletes_fragment_and_assets()
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
@@ -114,8 +107,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertEquals(0, $deletedFragmentModel->assetRelation()->count());
     }
 
-    /** @test */
-    public function removing_a_fragment_doesnt_delete_fragment_when_it_is_used_elsewhere()
+    public function test_removing_a_fragment_doesnt_delete_fragment_when_it_is_used_elsewhere()
     {
         $owner2 = ArticlePage::create();
         $this->addFragment($this->fragment, $owner2);
@@ -128,8 +120,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $this->assertFalse($fragmentModel->trashed());
     }
 
-    /** @test */
-    public function softdeleted_fragments_and_assets_are_cleaned_up_by_garbage_collection()
+    public function test_softdeleted_fragments_and_assets_are_cleaned_up_by_garbage_collection()
     {
         $this->markTestSkipped();
     }

@@ -19,8 +19,7 @@ class SnippetParserTest extends TestCase
         SnippetCollection::refresh();
     }
 
-    /** @test */
-    public function it_does_not_parse_value_without_valid_snippet_key()
+    public function test_it_does_not_parse_value_without_valid_snippet_key()
     {
         $this->assertEquals('<p>This is untouched</p>', SnippetParser::parse('<p>This is untouched</p>'));
         $this->assertEquals('<p>This is [also] untouched</p>', SnippetParser::parse('<p>This is [also] untouched</p>'));
@@ -30,14 +29,12 @@ class SnippetParserTest extends TestCase
         $this->assertEquals('<p>This is [[also]] untouched</p>', SnippetParser::parse('<p>This is [[also]] untouched</p>'));
     }
 
-    /** @test */
-    public function it_can_parse_a_value_that_contains_a_snippet_key()
+    public function test_it_can_parse_a_value_that_contains_a_snippet_key()
     {
         $this->assertEquals('<p>This is <p>This is a snippet</p> untouched</p>', SnippetParser::parse('<p>This is [[snippet-stub]] untouched</p>'));
     }
 
-    /** @test */
-    public function it_can_parse_multiple_snippet_keys_in_one_string()
+    public function test_it_can_parse_multiple_snippet_keys_in_one_string()
     {
         $this->assertEquals('<p>This is <p>This is a snippet</p> <p>This is a snippet</p> untouched</p>', SnippetParser::parse('<p>This is [[snippet-stub]] [[snippet-stub]] untouched</p>'));
     }

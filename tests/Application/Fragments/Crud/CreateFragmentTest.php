@@ -9,8 +9,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class CreateFragmentTest extends ChiefTestCase
 {
-    /** @test */
-    public function admin_can_view_the_fragment_create_form()
+    public function test_admin_can_view_the_fragment_create_form()
     {
         chiefRegister()->fragment(SnippetStub::class);
 
@@ -22,8 +21,7 @@ class CreateFragmentTest extends ChiefTestCase
             ->assertViewIs('chief::manager.windows.fragments.create');
     }
 
-    /** @test */
-    public function admin_can_view_create_form_for_a_nested_fragment()
+    public function test_admin_can_view_create_form_for_a_nested_fragment()
     {
         $model = $this->setupAndCreateSnippet($this->setupAndCreateArticle());
         $manager = $this->manager($model);
@@ -33,8 +31,7 @@ class CreateFragmentTest extends ChiefTestCase
             ->assertViewIs('chief::manager.windows.fragments.create');
     }
 
-    /** @test */
-    public function guests_cannot_view_the_create_form()
+    public function test_guests_cannot_view_the_create_form()
     {
         $model = $this->setupAndCreateSnippet($this->setupAndCreateArticle());
         $manager = $this->manager($model);

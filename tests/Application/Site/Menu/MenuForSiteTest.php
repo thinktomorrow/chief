@@ -19,8 +19,7 @@ class MenuForSiteTest extends ChiefTestCase
         parent::tearDown();
     }
 
-    /** @test */
-    public function it_can_render_for_site()
+    public function test_it_can_render_for_site()
     {
         $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
@@ -43,8 +42,7 @@ class MenuForSiteTest extends ChiefTestCase
         $this->assertCount(2, $collection);
     }
 
-    /** @test */
-    public function rendering_for_site_does_not_include_offline_items()
+    public function test_rendering_for_site_does_not_include_offline_items()
     {
         MenuItem::create([
             'label' => ['nl' => 'first item'],

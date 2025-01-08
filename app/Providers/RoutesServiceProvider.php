@@ -78,7 +78,6 @@ class RoutesServiceProvider extends ServiceProvider
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
-            SubstituteBindings::class,
 
             // Chief admin specific middleware
             AuthenticateChiefSession::class,

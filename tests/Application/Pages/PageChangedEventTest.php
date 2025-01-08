@@ -28,8 +28,7 @@ class PageChangedEventTest extends ChiefTestCase
         $this->fragment = $this->setupAndCreateQuote($this->model);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_model_is_updated()
+    public function test_it_can_be_triggered_when_model_is_updated()
     {
         Event::fakeExcept(ManagedModelUpdated::class);
 
@@ -38,8 +37,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_form_is_updated()
+    public function test_it_can_be_triggered_when_form_is_updated()
     {
         Event::fakeExcept(FormUpdated::class);
 
@@ -48,8 +46,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_fragments_are_updated()
+    public function test_it_can_be_triggered_when_fragments_are_updated()
     {
         Event::fakeExcept(FragmentUpdated::class);
 
@@ -58,8 +55,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_fragments_is_detached()
+    public function test_it_can_be_triggered_when_fragments_is_detached()
     {
         Event::fakeExcept(FragmentDetached::class);
 
@@ -68,8 +64,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_fragment_is_added()
+    public function test_it_can_be_triggered_when_fragment_is_added()
     {
         Event::fakeExcept(FragmentAdded::class);
 
@@ -78,8 +73,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_fragment_is_duplicated()
+    public function test_it_can_be_triggered_when_fragment_is_duplicated()
     {
         Event::fakeExcept(FragmentDuplicated::class);
 
@@ -88,8 +82,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_url_is_updated()
+    public function test_it_can_be_triggered_when_url_is_updated()
     {
         Event::fakeExcept(ManagedModelUrlUpdated::class);
 
@@ -98,8 +91,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_state_is_updated()
+    public function test_it_can_be_triggered_when_state_is_updated()
     {
         Event::fake();
 
@@ -108,8 +100,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_model_is_deleted()
+    public function test_it_can_be_triggered_when_model_is_deleted()
     {
         Event::fakeExcept(ManagedModelDeleted::class);
 
@@ -118,8 +109,7 @@ class PageChangedEventTest extends ChiefTestCase
         Event::assertDispatched(PageChanged::class);
     }
 
-    /** @test */
-    public function it_can_be_triggered_when_fragments_are_reordered()
+    public function test_it_can_be_triggered_when_fragments_are_reordered()
     {
         Event::fakeExcept(FragmentsReordered::class);
 

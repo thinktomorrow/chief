@@ -21,8 +21,7 @@ class PageStateTest extends TestCase
         $this->machine = StateMachine::fromConfig($this->page, $this->page->getStateConfig(PageState::KEY));
     }
 
-    /** @test */
-    public function it_can_apply_transition()
+    public function test_it_can_apply_transition()
     {
         $this->assertEquals(PageState::draft, $this->page->getState(PageState::KEY));
 
@@ -33,24 +32,21 @@ class PageStateTest extends TestCase
         $this->assertEquals(PageState::archived, $this->page->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function it_cannot_change_to_invalid_state()
+    public function test_it_cannot_change_to_invalid_state()
     {
         $this->expectException(StateException::class);
 
         $this->machine->apply('foobar');
     }
 
-    /** @test */
-    public function it_ignores_change_to_current_state()
+    public function test_it_ignores_change_to_current_state()
     {
         $this->assertEquals(PageState::draft, $this->page->getState(PageState::KEY));
         $this->page->changeState(PageState::KEY, PageState::draft);
         $this->assertEquals(PageState::draft, $this->page->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function it_only_allows_transition_to_allowed_state()
+    public function test_it_only_allows_transition_to_allowed_state()
     {
         $this->expectException(StateException::class);
 

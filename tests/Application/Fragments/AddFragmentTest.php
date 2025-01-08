@@ -22,8 +22,7 @@ class AddFragmentTest extends ChiefTestCase
         $this->fragment = $this->setupAndCreateQuote($this->owner);
     }
 
-    /** @test */
-    public function a_page_can_add_an_existing_fragment()
+    public function test_a_page_can_add_an_existing_fragment()
     {
         $owner2 = ArticlePage::create();
 
@@ -32,8 +31,7 @@ class AddFragmentTest extends ChiefTestCase
         $this->assertFragmentCount($owner2, 1);
     }
 
-    /** @test */
-    public function adding_a_fragment_emits_event()
+    public function test_adding_a_fragment_emits_event()
     {
         Event::fake();
 
@@ -42,8 +40,7 @@ class AddFragmentTest extends ChiefTestCase
         Event::assertDispatched(FragmentAdded::class);
     }
 
-    /** @test */
-    public function a_page_can_add_an_existing_fragment_with_a_given_order()
+    public function test_a_page_can_add_an_existing_fragment_with_a_given_order()
     {
         $owner2 = ArticlePage::create();
         $snippet = $this->createAsFragment(new SnippetStub(), $this->owner);
@@ -55,8 +52,7 @@ class AddFragmentTest extends ChiefTestCase
         $this->assertEquals(SnippetStub::class, get_class($this->firstFragment($owner2)));
     }
 
-    /** @test */
-    public function a_nested_fragment_can_add_an_existing_fragment()
+    public function test_a_nested_fragment_can_add_an_existing_fragment()
     {
         $fragment = $this->createAsFragment(Quote::create(), $this->owner);
 
@@ -65,15 +61,13 @@ class AddFragmentTest extends ChiefTestCase
         $this->assertFragmentCount($this->fragment->fragmentModel(), 1);
     }
 
-    /** @test */
-    public function it_can_check_if_a_model_allows_for_adding_a_fragment()
+    public function test_it_can_check_if_a_model_allows_for_adding_a_fragment()
     {
         $this->assertFalse($this->manager($this->owner)->can('fragment-add'));
         $this->assertTrue($this->manager($this->fragment)->can('fragment-add'));
     }
 
-    /** @test */
-    public function adding_a_fragment_multiple_times_only_adds_it_once()
+    public function test_adding_a_fragment_multiple_times_only_adds_it_once()
     {
         $owner2 = ArticlePage::create();
 

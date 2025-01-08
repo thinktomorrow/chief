@@ -15,8 +15,7 @@ class PublishableTraitTest extends ChiefTestCase
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function it_can_check_if_the_model_is_published()
+    public function test_it_can_check_if_the_model_is_published()
     {
         $page = new ArticlePage(['current_state' => PageState::published->getValueAsString()]);
         $this->assertTrue($page->isPublished());
@@ -27,8 +26,7 @@ class PublishableTraitTest extends ChiefTestCase
         $this->assertTrue($page->isDraft());
     }
 
-    /** @test */
-    public function it_can_get_all_the_published_models()
+    public function test_it_can_get_all_the_published_models()
     {
         ArticlePage::create(['current_state' => PageState::published->getValueAsString()]);
         ArticlePage::create(['current_state' => PageState::published->getValueAsString()]);

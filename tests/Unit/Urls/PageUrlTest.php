@@ -27,8 +27,7 @@ class PageUrlTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function the_fixed_base_segment_is_prepended_to_the_slug()
+    public function test_the_fixed_base_segment_is_prepended_to_the_slug()
     {
         app()->setLocale('nl');
         $this->assertEquals(url('/artikels/foobar'), $this->model->url());
@@ -36,8 +35,7 @@ class PageUrlTest extends ChiefTestCase
         $this->assertEquals(url('/articles/foobar'), $this->model->url('en'));
     }
 
-    /** @test */
-    public function url_is_by_default_based_on_current_locale()
+    public function test_url_is_by_default_based_on_current_locale()
     {
         app()->setLocale('nl');
         $this->assertEquals(url('/artikels/foobar'), $this->model->url());
@@ -46,8 +44,7 @@ class PageUrlTest extends ChiefTestCase
         $this->assertEquals(url('/articles/foobar'), $this->model->url());
     }
 
-    /** @test */
-    public function the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
+    public function test_the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
     {
         config()->set('app.fallback_locale', 'en');
         $this->assertEquals('articles', $this->model->baseUrlSegment('fr'));

@@ -15,8 +15,7 @@ class StorePageTest extends ChiefTestCase
 {
     use PageFormParams;
 
-    /** @test */
-    public function it_can_create_a_model()
+    public function test_it_can_create_a_model()
     {
         $this->asAdmin()->post($this->manager(ArticlePage::class)->route('store'), $this->validPageParams(['title' => 'new-title']));
 
@@ -24,8 +23,7 @@ class StorePageTest extends ChiefTestCase
         $this->assertEquals('new-title', ArticlePage::first()->title);
     }
 
-    /** @test */
-    public function it_can_create_a_model_with_dynamic_field()
+    public function test_it_can_create_a_model_with_dynamic_field()
     {
         $model = ArticlePage::class;
 
@@ -43,8 +41,7 @@ class StorePageTest extends ChiefTestCase
         $this->assertEquals('new-title', $model::first()->custom);
     }
 
-    /** @test */
-    public function it_can_create_a_model_with_dynamic_localized_field()
+    public function test_it_can_create_a_model_with_dynamic_localized_field()
     {
         $model = ArticlePage::class;
 
@@ -67,8 +64,7 @@ class StorePageTest extends ChiefTestCase
         $this->assertEquals('dynamic title en', $model::first()->dynamic('title_trans', 'en'));
     }
 
-    /** @test */
-    public function it_can_create_a_model_with_localized_field()
+    public function test_it_can_create_a_model_with_localized_field()
     {
         QuoteWithAstrotomicTranslations::migrateUp();
         chiefRegister()->resource(QuoteWithAstrotomicTranslations::class, PageManager::class);
@@ -91,8 +87,7 @@ class StorePageTest extends ChiefTestCase
         $this->assertEquals('title en', $model::first()->{'title_trans:en'});
     }
 
-    /** @test */
-    public function it_can_upload_a_file_field()
+    public function test_it_can_upload_a_file_field()
     {
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 

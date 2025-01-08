@@ -31,8 +31,7 @@ class HomepageTest extends ChiefTestCase
         $this->manager = $this->manager(ArticlePage::class);
     }
 
-    /** @test */
-    public function when_setting_homepage_url_is_set_as_well()
+    public function test_when_setting_homepage_url_is_set_as_well()
     {
         $model = ArticlePage::create([]);
 
@@ -48,8 +47,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertEquals($model->modelReference()->id(), UrlRecord::findBySlug('/', 'nl')->model_id);
     }
 
-    /** @test */
-    public function when_setting_single_homepage_all_urls_are_changed()
+    public function test_when_setting_single_homepage_all_urls_are_changed()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -91,8 +89,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertEquals($enHomepageUrlRecord->id, $enRedirectUrlRecord->redirect_id);
     }
 
-    /** @test */
-    public function when_setting_homepage_per_locale_only_those_localized_urls_of_the_model_are_changed()
+    public function test_when_setting_homepage_per_locale_only_those_localized_urls_of_the_model_are_changed()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -132,8 +129,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertFalse(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
     }
 
-    /** @test */
-    public function passing_homepage_setting_to_null_is_not_allowed()
+    public function test_passing_homepage_setting_to_null_is_not_allowed()
     {
         $response = $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
@@ -145,8 +141,7 @@ class HomepageTest extends ChiefTestCase
         $response->assertSessionHasErrors('homepage.en');
     }
 
-    /** @test */
-    public function when_setting_homepage_to_another_url_the_previous_one_is_reset_to_its_recent_redirect()
+    public function test_when_setting_homepage_to_another_url_the_previous_one_is_reset_to_its_recent_redirect()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -188,8 +183,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
     }
 
-    /** @test */
-    public function when_setting_a_homepage_url_the_homepage_setting_is_set_as_well()
+    public function test_when_setting_a_homepage_url_the_homepage_setting_is_set_as_well()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -207,8 +201,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertNull(chiefSetting('homepage', 'en'));
     }
 
-    /** @test */
-    public function helper_can_check_if_page_is_homepage()
+    public function test_helper_can_check_if_page_is_homepage()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();

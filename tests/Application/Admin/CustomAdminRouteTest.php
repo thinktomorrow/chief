@@ -13,8 +13,7 @@ class CustomAdminRouteTest extends TestCase
         $app['config']->set('chief.route.admin-filepath', __DIR__ . '/../../Shared/stubs/config/admin-filepaths.php');
     }
 
-    /** @test */
-    public function a_custom_admin_filepath_can_add_chief_admin_routes()
+    public function test_a_custom_admin_filepath_can_add_chief_admin_routes()
     {
         // There is a dummy.route route defined in the config test stub
         $this->assertStringEndsWith('/admin/dummy-route', route('dummy.route'));

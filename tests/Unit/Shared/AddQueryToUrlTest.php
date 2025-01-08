@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 
 class AddQueryToUrlTest extends TestCase
@@ -24,11 +25,8 @@ class AddQueryToUrlTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider queryProvider
-     */
-    public function add_query_to_url_adds_query_to_url($url, $query_params, $expected, $overrides = [])
+    #[DataProvider('queryProvider')]
+    public function test_add_query_to_url_adds_query_to_url($url, $query_params, $expected, $overrides = [])
     {
         $this->assertEquals($expected, addQueryToUrl($url, $query_params, $overrides));
     }

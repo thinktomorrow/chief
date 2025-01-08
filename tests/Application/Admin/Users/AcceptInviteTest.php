@@ -31,8 +31,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->invitee->save();
     }
 
-    /** @test */
-    public function signature_of_accept_url_is_validated()
+    public function test_signature_of_accept_url_is_validated()
     {
         // Manipulate the signature to mimic false request
         $parts = parse_url($this->invitation->acceptUrl());
@@ -43,8 +42,7 @@ class AcceptInviteTest extends ChiefTestCase
         $response->assertRedirect(route('invite.expired'));
     }
 
-    /** @test */
-    public function accept_url_with_invalid_token_is_declined()
+    public function test_accept_url_with_invalid_token_is_declined()
     {
         // Manipulate the token but with valid signature
         $this->invitation->token = 'fake-token';
@@ -55,8 +53,7 @@ class AcceptInviteTest extends ChiefTestCase
         $response->assertRedirect(route('invite.expired'));
     }
 
-    /** @test */
-    public function accept_url_is_only_valid_when_used_before_expiration()
+    public function test_accept_url_is_only_valid_when_used_before_expiration()
     {
         $this->invitation->expires_at = now()->subDays(4);
         $url = $this->invitation->acceptUrl();
@@ -66,8 +63,7 @@ class AcceptInviteTest extends ChiefTestCase
         $response->assertRedirect(route('invite.expired'));
     }
 
-    /** @test */
-    public function accepting_invite_enables_user_account()
+    public function test_accepting_invite_enables_user_account()
     {
         $this->assertFalse($this->invitee->isEnabled());
 
@@ -82,8 +78,7 @@ class AcceptInviteTest extends ChiefTestCase
         $response->assertRedirect(route('chief.back.dashboard'));
     }
 
-    /** @test */
-    public function non_enabled_invitee_cannot_log_in()
+    public function test_non_enabled_invitee_cannot_log_in()
     {
         $response = $this->post(route('chief.back.login.store'), [
             'email' => $this->invitee->email,
@@ -93,8 +88,7 @@ class AcceptInviteTest extends ChiefTestCase
         $response->assertRedirect('/');
     }
 
-    /** @test */
-    public function accept_url_should_not_be_processed_when_invitation_is_revoked()
+    public function test_accept_url_should_not_be_processed_when_invitation_is_revoked()
     {
         // Force invitation state on revoked
         $this->invitation->changeState(InvitationState::KEY, InvitationState::revoked);
@@ -105,8 +99,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->assertFalse($this->invitee->fresh()->isEnabled());
     }
 
-    /** @test */
-    public function accept_url_logs_user_in_and_redirects_to_getting_started_page()
+    public function test_accept_url_logs_user_in_and_redirects_to_getting_started_page()
     {
         // Assert we are not yet logged in
         $this->assertFalse(auth()->guard('chief')->check());
@@ -119,8 +112,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->assertEquals($this->invitee->id, auth()->guard('chief')->id());
     }
 
-    /** @test */
-    public function accept_url_redirects_user_to_password_edit_page_if_password_is_not_filled_in_yet()
+    public function test_accept_url_redirects_user_to_password_edit_page_if_password_is_not_filled_in_yet()
     {
         Notification::fake();
 
@@ -138,8 +130,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->assertTrue(auth()->guard('chief')->check());
     }
 
-    /** @test */
-    public function after_invite_accepted_invite_cannot_be_used()
+    public function test_after_invite_accepted_invite_cannot_be_used()
     {
         Notification::fake();
 
@@ -164,8 +155,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->assertFalse(auth()->guard('chief')->check());
     }
 
-    /** @test */
-    public function after_invite_accepted_invite_can_only_be_reused_by_same_user_if_he_is_logged()
+    public function test_after_invite_accepted_invite_can_only_be_reused_by_same_user_if_he_is_logged()
     {
         Notification::fake();
 

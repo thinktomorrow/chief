@@ -4,11 +4,15 @@ namespace Thinktomorrow\Chief\Tests;
 
 use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\ApplicationBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Livewire\LivewireServiceProvider;
+use Orchestra\Testbench\Concerns\CreatesApplication;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
@@ -35,6 +39,17 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected $protectTestEnvironment = true;
 
+    protected function resolveApplication()
+    {
+        return (new ApplicationBuilder(new Application($this->getBasePath())))
+            ->withProviders()
+            ->withMiddleware(static function ($middleware) {
+                $middleware->redirectGuestsTo('/admin/login');
+            })
+            ->withCommands()
+            ->create();
+    }
+
     protected function getPackageProviders($app)
     {
         return [
@@ -49,6 +64,14 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     public function setUp(): void
     {
+        $this->afterApplicationCreated(function () {
+            // Code after application created.
+        });
+
+        $this->beforeApplicationDestroyed(function () {
+            // Code before application destroyed.
+        });
+
         parent::setUp();
 
         $this->protectTestEnvironment();
@@ -77,7 +100,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function resolveApplicationHttpKernel($app)
     {
-        $app->singleton('Illuminate\Contracts\Http\Kernel', Kernel::class);
+        $app->singleton(HttpKernel::class, Kernel::class);
     }
 
     protected function getEnvironmentSetUp($app)

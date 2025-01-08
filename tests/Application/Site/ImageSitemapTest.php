@@ -14,15 +14,14 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ImageSitemapTest extends ChiefTestCase
 {
-    private $carbon;
-    private $sitemapXml;
+    private ImageSitemapXml $sitemapXml;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->carbon = Carbon::today();
-        Carbon::setTestNow($this->carbon);
+        $carbon = Carbon::today();
+        Carbon::setTestNow($carbon);
 
         $this->sitemapXml = new ImageSitemapXml();
 
@@ -49,8 +48,7 @@ class ImageSitemapTest extends ChiefTestCase
         app(AddAsset::class)->handle($fragment->fragmentModel(), $asset, 'image', 'nl', 0, []);
     }
 
-    /** @test */
-    public function it_can_generate_an_xml_per_locale()
+    public function test_it_can_generate_an_xml_per_locale()
     {
         $this->assertEqualsStringIgnoringStructure($this->getExpectedXml(), $this->sitemapXml->generate('nl'));
     }
@@ -61,8 +59,6 @@ class ImageSitemapTest extends ChiefTestCase
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
     <loc>http://localhost/bar</loc>
-            <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
     <image:image>
       <image:loc>http://localhost/storage/1/image.png</image:loc>
       <image:caption>caption</image:caption>
@@ -77,8 +73,7 @@ class ImageSitemapTest extends ChiefTestCase
 ';
     }
 
-    /** @test */
-    public function redirected_or_offline_urls_will_be_excluded()
+    public function test_redirected_or_offline_urls_will_be_excluded()
     {
         $redirect = ArticlePage::create();
         UrlRecord::create(['locale' => 'nl', 'redirect_id' => 99, 'slug' => 'baz', 'model_type' => $redirect->getMorphClass(), 'model_id' => $redirect->id]);

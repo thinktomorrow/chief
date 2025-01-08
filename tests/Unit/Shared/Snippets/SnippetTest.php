@@ -17,8 +17,7 @@ class SnippetTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_fetch_a_snippet()
+    public function test_it_can_fetch_a_snippet()
     {
         $snippet = SnippetCollection::find('snippet-stub');
 
@@ -28,21 +27,18 @@ class SnippetTest extends ChiefTestCase
         $this->assertEquals(realpath(__DIR__ . '/snippet-stub.html'), $snippet->path());
     }
 
-    /** @test */
-    public function it_can_render_a_snippet()
+    public function test_it_can_render_a_snippet()
     {
         $this->assertEquals('<p>This is a snippet</p>', SnippetCollection::find('snippet-stub')->render());
     }
 
-    /** @test */
-    public function it_can_list_all_snippets()
+    public function test_it_can_list_all_snippets()
     {
         $this->assertCount(1, SnippetCollection::load());
         $this->assertInstanceOf(Snippet::class, SnippetCollection::load()->first());
     }
 
-    /** @test */
-    public function it_ignores_invalid_loading_path()
+    public function test_it_ignores_invalid_loading_path()
     {
         $this->app['config']->set('chief.loadSnippetsFrom', [
             false,

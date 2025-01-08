@@ -27,24 +27,21 @@ final class CreatePageTest extends ChiefTestCase
         $this->manager = $this->manager(ArticlePage::class);
     }
 
-    /** @test */
-    public function it_can_visit_the_create_page()
+    public function test_it_can_visit_the_create_page()
     {
         $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('create'))
             ->assertStatus(200);
     }
 
-    /** @test */
-    public function guests_cannot_view_the_create_form()
+    public function test_guests_cannot_view_the_create_form()
     {
         $this->get($this->manager->route('create'))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }
 
-    /** @test */
-    public function it_can_create_a_page()
+    public function test_it_can_create_a_page()
     {
         $this->asAdmin()->post($this->manager->route('store'), [
             'title' => 'new title',
@@ -64,8 +61,7 @@ final class CreatePageTest extends ChiefTestCase
         $this->assertEquals('nl content', $article->content_trans);
     }
 
-    /** @test */
-    public function it_emits_an_model_created_event()
+    public function test_it_emits_an_model_created_event()
     {
         Event::fake();
 
@@ -82,8 +78,7 @@ final class CreatePageTest extends ChiefTestCase
         Event::assertDispatched(ManagedModelCreated::class);
     }
 
-    /** @test */
-    public function when_creating_a_page_an_url_is_automatically_set_based_on_the_title()
+    public function test_when_creating_a_page_an_url_is_automatically_set_based_on_the_title()
     {
         $this->asAdmin()->post($this->manager->route('store'), [
             'title' => 'new title',

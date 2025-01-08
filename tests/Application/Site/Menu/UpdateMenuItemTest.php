@@ -17,8 +17,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         app()->setLocale('nl');
     }
 
-    /** @test */
-    public function admin_can_view_the_edit_form()
+    public function test_admin_can_view_the_edit_form()
     {
         $menuitem = MenuItem::create();
 
@@ -26,8 +25,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $response->assertSuccessful();
     }
 
-    /** @test */
-    public function guests_cannot_view_the_update_form()
+    public function test_guests_cannot_view_the_update_form()
     {
         $menuitem = MenuItem::create();
 
@@ -35,8 +33,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
-    /** @test */
-    public function editing_a_new_menu_item()
+    public function test_editing_a_new_menu_item()
     {
         $menuitem = MenuItem::create(['menu_type' => 'main']);
 
@@ -75,8 +72,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         return $params;
     }
 
-    /** @test */
-    public function only_authenticated_admin_can_update_a_menu_item()
+    public function test_only_authenticated_admin_can_update_a_menu_item()
     {
         $menuitem = MenuItem::create(['label' => ['nl' => 'existing label']]);
 
@@ -86,8 +82,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertEquals('existing label', MenuItem::first()->label);
     }
 
-    /** @test */
-    public function updating_a_new_menu_item_emits_event()
+    public function test_updating_a_new_menu_item_emits_event()
     {
         Event::fake();
 
@@ -98,8 +93,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         Event::assertDispatched(MenuItemUpdated::class);
     }
 
-    /** @test */
-    public function editing_an_internal_menu_item()
+    public function test_editing_an_internal_menu_item()
     {
         $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
         $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -143,8 +137,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertEquals('/en', $item->getUrl('en'));
     }
 
-    /** @test */
-    public function a_relative_url_is_sanitized_to_proper_relative_url()
+    public function test_a_relative_url_is_sanitized_to_proper_relative_url()
     {
         $menuitem = MenuItem::create();
 
@@ -157,8 +150,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertEquals('/contact', $menuitem->fresh()->url);
     }
 
-    /** @test */
-    public function a_menuitem_can_be_nested()
+    public function test_a_menuitem_can_be_nested()
     {
         $parent = MenuItem::create();
         $child = MenuItem::create();
@@ -182,8 +174,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertNull(MenuItem::find(2)->parent_id); // Hardcoded assumption that newly created has id of 2
     }
 
-    /** @test */
-    public function a_menuitem_can_be_sorted()
+    public function test_a_menuitem_can_be_sorted()
     {
         $secondItem = MenuItem::create(['type' => 'custom', 'order' => 2]);
         $firstItem = MenuItem::create(['type' => 'custom', 'order' => 1]);
@@ -201,8 +192,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->assertEquals($thirdItem->id, $items[2]->id);
     }
 
-    /** @test */
-    public function url_field_is_sanitized_to_valid_url()
+    public function test_url_field_is_sanitized_to_valid_url()
     {
         $menuitem = MenuItem::create(['type' => 'custom', 'url' => ['nl' => 'http://google.com']]);
 

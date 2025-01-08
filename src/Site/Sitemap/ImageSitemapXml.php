@@ -40,8 +40,6 @@ class ImageSitemapXml
     {
         foreach ($models as $model) {
             $urlTag = Url::create($model->url($locale));
-            $urlTag->setPriority(0.5);
-            $urlTag->setChangeFrequency('monthly');
 
             // Get images on model and its fragments...
             $assets = $this->getAssetsFromModel($model, $locale);

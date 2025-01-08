@@ -25,8 +25,7 @@ class FragmentOwningHandlingTest extends ChiefTestCase
         $this->fragmentRepo = app(FragmentRepository::class);
     }
 
-    /** @test */
-    public function it_can_select_new_fragments()
+    public function test_it_can_select_new_fragments()
     {
         $response = $this->asAdmin()->get($this->manager($this->owner)->route('fragments-select-new', $this->owner));
         $response->assertSuccessful();
@@ -37,8 +36,7 @@ class FragmentOwningHandlingTest extends ChiefTestCase
         $this->assertCount(2, reset($viewData['fragments']));
     }
 
-    /** @test */
-    public function it_can_select_existing_fragments()
+    public function test_it_can_select_existing_fragments()
     {
         // Create shareable fragment
         $owner2 = ArticlePage::create();
@@ -53,8 +51,7 @@ class FragmentOwningHandlingTest extends ChiefTestCase
         $this->assertCount(1, $viewData['sharedFragments']);
     }
 
-    /** @test */
-    public function it_can_show_refreshed_fragment()
+    public function test_it_can_show_refreshed_fragment()
     {
         $response = $this->asAdmin()->get($this->manager($this->owner)->route('fragments-show', $this->owner));
         $response->assertSuccessful();

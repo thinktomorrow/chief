@@ -10,16 +10,14 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Viewless;
 
 class ViewableTest extends ChiefTestCase
 {
-    /** @test */
-    public function it_can_render_a_view()
+    public function test_it_can_render_a_view()
     {
         $page = $this->setupAndCreateArticle();
 
         $this->assertEquals("THIS IS ARTICLE PAGE VIEW\n", $page->renderView());
     }
 
-    /** @test */
-    public function it_can_render_a_fragment_view()
+    public function test_it_can_render_a_fragment_view()
     {
         $owner = $this->setupAndCreateArticle();
         $quote = $this->setupAndCreateQuote($owner);
@@ -27,8 +25,7 @@ class ViewableTest extends ChiefTestCase
         $this->assertEquals("THIS IS ARTICLE PAGE VIEW\nTHIS IS QUOTE FRAGMENT\n", $owner->renderView());
     }
 
-    /** @test */
-    public function it_throws_exception_when_view_isnt_found()
+    public function test_it_throws_exception_when_view_isnt_found()
     {
         $this->expectException(NotFoundView::class);
 

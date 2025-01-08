@@ -26,8 +26,7 @@ final class PublishPageTest extends ChiefTestCase
         $this->manager = $this->manager(ArticlePage::class);
     }
 
-    /** @test */
-    public function an_admin_can_only_publish_a_page_with_the_proper_permissions()
+    public function test_an_admin_can_only_publish_a_page_with_the_proper_permissions()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -40,8 +39,7 @@ final class PublishPageTest extends ChiefTestCase
         $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function an_admin_can_publish_a_page()
+    public function test_an_admin_can_publish_a_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -56,8 +54,7 @@ final class PublishPageTest extends ChiefTestCase
         $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function an_admin_can_unpublish_an_published_page()
+    public function test_an_admin_can_unpublish_an_published_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -72,8 +69,7 @@ final class PublishPageTest extends ChiefTestCase
         $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function it_cannot_publish_a_deleted_page()
+    public function test_it_cannot_publish_a_deleted_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',

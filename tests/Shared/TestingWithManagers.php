@@ -121,7 +121,7 @@ trait TestingWithManagers
         $this->assertEquals($expected, app(FragmentsRenderer::class)->render($owner, []));
     }
 
-    protected function firstFragment(Model $owner, callable $callback = null)
+    protected function firstFragment(Model $owner, ?callable $callback = null)
     {
         $fragments = app(FragmentRepository::class)->getByOwner($owner);
 

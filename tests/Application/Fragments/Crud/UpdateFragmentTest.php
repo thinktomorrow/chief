@@ -24,8 +24,7 @@ class UpdateFragmentTest extends ChiefTestCase
         $this->fragmentManager = $this->manager(SnippetStub::class);
     }
 
-    /** @test */
-    public function it_can_update_a_model()
+    public function test_it_can_update_a_model()
     {
         $model = app(FragmentRepository::class)->getByOwner($this->owner)->first();
 
@@ -48,8 +47,7 @@ class UpdateFragmentTest extends ChiefTestCase
         $this->assertEquals('title_trans en value', $snippet->fragmentModel()->title_trans);
     }
 
-    /** @test */
-    public function it_can_upload_a_file_field()
+    public function test_it_can_upload_a_file_field()
     {
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 

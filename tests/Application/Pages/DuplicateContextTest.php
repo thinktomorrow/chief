@@ -50,8 +50,7 @@ class DuplicateContextTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function fragments_can_be_duplicated()
+    public function test_fragments_can_be_duplicated()
     {
         $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
@@ -80,8 +79,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals($originalFragment->model_reference, $copiedFragment->model_reference);
     }
 
-    /** @test */
-    public function fragments_assets_can_be_duplicated()
+    public function test_fragments_assets_can_be_duplicated()
     {
         $this->markTestSkipped();
 
@@ -100,8 +98,7 @@ class DuplicateContextTest extends ChiefTestCase
         $copiedStaticFragment = $copiedContext->fragments->first();
     }
 
-    /** @test */
-    public function the_pagebuilder_setup_of_an_existing_page_can_be_duplicated()
+    public function test_the_pagebuilder_setup_of_an_existing_page_can_be_duplicated()
     {
         $this->markTestIncomplete();
 

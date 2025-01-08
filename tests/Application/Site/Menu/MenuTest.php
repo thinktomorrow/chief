@@ -15,8 +15,7 @@ class MenuTest extends ChiefTestCase
         parent::setUp();
     }
 
-    /** @test */
-    public function it_can_nest_a_menu_item()
+    public function test_it_can_nest_a_menu_item()
     {
         $parent = MenuItem::create(['label.nl' => 'first item']);
         MenuItem::create(['label.nl' => 'second item', 'parent_id' => $parent->id]);
@@ -29,8 +28,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals(2, $collection->total());
     }
 
-    /** @test */
-    public function it_can_reference_an_internal_page()
+    public function test_it_can_reference_an_internal_page()
     {
         $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
@@ -47,8 +45,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals('artikel titel', $collection->first()->getOwnerLabel());
     }
 
-    /** @test */
-    public function it_takes_page_title_as_label_if_no_label_is_given()
+    public function test_it_takes_page_title_as_label_if_no_label_is_given()
     {
         $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
@@ -65,8 +62,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals('artikel titel', $collection->first()->getAnyLabel());
     }
 
-    /** @test */
-    public function it_can_contain_a_custom_link()
+    public function test_it_can_contain_a_custom_link()
     {
         $item = MenuItem::create([
             'label' => ['nl' => 'second item'],
@@ -81,8 +77,7 @@ class MenuTest extends ChiefTestCase
         }));
     }
 
-    /** @test */
-    public function it_can_be_rendered_with_a_generic_api()
+    public function test_it_can_be_rendered_with_a_generic_api()
     {
         $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel titel', 'current_state' => PageState::published]);
         $this->updateLinks($page, ['nl' => 'pagelink-nl']);
@@ -115,8 +110,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals(2, $check);
     }
 
-    /** @test */
-    public function menu_item_without_parent_is_considered_top_level()
+    public function test_menu_item_without_parent_is_considered_top_level()
     {
         $parent = MenuItem::create(['label' => 'first item']);
         MenuItem::create(['label' => 'second item', 'parent_id' => $parent->id]);
@@ -129,8 +123,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals(3, $collection->total());
     }
 
-    /** @test */
-    public function it_can_be_sorted()
+    public function test_it_can_be_sorted()
     {
         $parent = MenuItem::create(['label' => ['nl' => 'first item']]);
         MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
@@ -142,8 +135,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getLabel());
     }
 
-    /** @test */
-    public function it_can_order_the_menu_items()
+    public function test_it_can_order_the_menu_items()
     {
         $parent = MenuItem::create(['label' => ['nl' => 'first item']]);
         $second = MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
@@ -164,8 +156,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals("second item", $collection->first()->getChildNodes()->first()->getLabel());
     }
 
-    /** @test */
-    public function it_can_get_menu_by_type()
+    public function test_it_can_get_menu_by_type()
     {
         $first = MenuItem::create(['label' => 'first item', 'menu_type' => 'main']);
         $second = MenuItem::create(['label' => 'second item', 'menu_type' => 'main']);
@@ -178,8 +169,7 @@ class MenuTest extends ChiefTestCase
         $this->assertEquals(1, $collection->total());
     }
 
-    /** @test */
-    public function it_can_get_all_menu_types()
+    public function test_it_can_get_all_menu_types()
     {
         $this->assertCount(1, Menu::all());
     }
