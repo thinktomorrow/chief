@@ -12,7 +12,6 @@ use Illuminate\Foundation\Configuration\ApplicationBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Livewire\LivewireServiceProvider;
-use Orchestra\Testbench\Concerns\CreatesApplication;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
