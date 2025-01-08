@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c94e293aeef649ae903b7a2825139da",
+    "content-hash": "c0567de29410ca23bfbacd7e1a316c79",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -7156,23 +7156,23 @@
         },
         {
             "name": "thinktomorrow/url",
-            "version": "3.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/url.git",
-                "reference": "fa8b335789ec223c89f8996b774ce0b309c6021b"
+                "reference": "7c6d4bae631693dc480a6089b45fdd124494be20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/url/zipball/fa8b335789ec223c89f8996b774ce0b309c6021b",
-                "reference": "fa8b335789ec223c89f8996b774ce0b309c6021b",
+                "url": "https://api.github.com/repos/thinktomorrow/url/zipball/7c6d4bae631693dc480a6089b45fdd124494be20",
+                "reference": "7c6d4bae631693dc480a6089b45fdd124494be20",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1"
+                "php": ">=8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5"
+                "phpunit/phpunit": "^11.5"
             },
             "type": "library",
             "autoload": {
@@ -7199,9 +7199,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/url/issues",
-                "source": "https://github.com/thinktomorrow/url/tree/3.0.0"
+                "source": "https://github.com/thinktomorrow/url/tree/4.0.0"
             },
-            "time": "2024-04-20T21:14:21+00:00"
+            "time": "2025-01-07T14:21:11+00:00"
         },
         {
             "name": "thinktomorrow/vine",
@@ -12187,13 +12187,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2",
         "ext-json": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

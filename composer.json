@@ -25,7 +25,7 @@
         "thinktomorrow/assetlibrary": "^0.9.2",
         "thinktomorrow/dynamic-attributes": "^0.4.2",
         "thinktomorrow/squanto": "^3.0.2",
-        "thinktomorrow/url": "^3.0.0",
+        "thinktomorrow/url": "^4.0.0",
         "thinktomorrow/vine": "^0.5.0"
     },
     "require-dev": {
