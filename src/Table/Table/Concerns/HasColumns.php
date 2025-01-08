@@ -58,20 +58,22 @@ trait HasColumns
 
     private function moveColumnsInOrder(): void
     {
-        if($this->areColumnsOrdered || count($this->columnKeysInOrder) === 0) {
+        if ($this->areColumnsOrdered || count($this->columnKeysInOrder) === 0) {
             return;
         }
 
         $columns = [];
         $unOrderedColumns = [];
 
-        foreach($this->columns as $column) {
-            foreach($column->getItems() as $item) {
-                if(in_array($item->getKey(), $this->columnKeysInOrder)) {
+        foreach ($this->columns as $column) {
+            foreach ($column->getItems() as $item) {
+                if (in_array($item->getKey(), $this->columnKeysInOrder)) {
                     $columns[(int) array_search($item->getKey(), $this->columnKeysInOrder)] = $column;
+
                     break;
                 } else {
                     $unOrderedColumns[] = $column;
+
                     break;
                 }
             }
