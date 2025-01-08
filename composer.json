@@ -21,7 +21,7 @@
         "ramsey/uuid": "^4.7.3",
         "spatie/laravel-activitylog": "^4.7.3",
         "spatie/laravel-permission": "^5.8",
-        "spatie/laravel-sitemap": "^6.4.0",
+        "spatie/laravel-sitemap": "^7.3.1",
         "thinktomorrow/assetlibrary": "^0.9.2",
         "thinktomorrow/dynamic-attributes": "^0.4.2",
         "thinktomorrow/squanto": "^3.0.2",
