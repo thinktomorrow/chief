@@ -53,7 +53,6 @@ use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Site\Sitemap\ImageSitemapXml;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
@@ -130,7 +129,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new SquantoServiceProvider($this->app))->register();
 
-        $this->app->bind(SitemapXml::class, function(){
+        $this->app->bind(SitemapXml::class, function () {
             return new SitemapXml(new Client(['verify' => false]));
         });
 
