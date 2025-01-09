@@ -17,7 +17,7 @@ class DuplicateModelAction extends Action
 
         return static::make('duplicate')
             ->label('Kopiëer ' . $resource->getLabel())
-            ->description('Hiermee maak je een kopie van deze pagina aan, die je meteen kan bewerken.')
+            ->description('Hiermee maak je een kopie aan, die je meteen kan bewerken.')
             ->prependIcon('<x-chief::icon.copy />')
             ->effect(function ($formData, &$data) use ($resource, $manager) {
                 try {
