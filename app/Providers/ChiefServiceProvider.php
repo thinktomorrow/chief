@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,8 @@ use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Sitemap\ImageSitemapXml;
+use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
@@ -126,6 +129,10 @@ class ChiefServiceProvider extends ServiceProvider
         });
 
         (new SquantoServiceProvider($this->app))->register();
+
+        $this->app->bind(SitemapXml::class, function(){
+            return new SitemapXml(new Client(['verify' => false]));
+        });
 
         if ($this->app->make(AdminEnvironment::class)->check(request())) {
             $this->app->when(SettingsController::class)
