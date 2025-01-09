@@ -78,7 +78,7 @@ final class LinkForm
         $offline_reason = 'De pagina staat offline.';
 
         if (! $is_online && ! $inOnlineState) {
-            $offline_reason = 'Pagina staat nog niet gepubliceerd, is gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
+            $offline_reason = 'Offline, gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
         }
 
         return [$is_online, $offline_reason];
