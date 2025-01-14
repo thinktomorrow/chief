@@ -17,16 +17,14 @@ class GenerateRoleCommandTest extends ChiefTestCase
         $this->withoutDefaultAuthorization();
     }
 
-    /** @test */
-    public function it_requires_a_name_parameter()
+    public function test_it_requires_a_name_parameter()
     {
         $this->expectException(RuntimeException::class);
 
         $this->artisan('chief:role');
     }
 
-    /** @test */
-    public function a_role_can_be_generated()
+    public function test_a_role_can_be_generated()
     {
         $this->artisan('chief:role', [
             'name' => 'new role',
@@ -38,8 +36,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
         $this->assertEquals('chief', Role::first()->guard_name);
     }
 
-    /** @test */
-    public function a_role_can_be_given_permissions()
+    public function test_a_role_can_be_given_permissions()
     {
         Permission::create(['name' => 'view-user']);
 
@@ -52,8 +49,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
         $this->assertCount(1, $role->permissions);
     }
 
-    /** @test */
-    public function a_role_can_be_given_permissions_by_scope()
+    public function test_a_role_can_be_given_permissions_by_scope()
     {
         Permission::create(['name' => 'view-user']);
         Permission::create(['name' => 'create-user']);
@@ -69,8 +65,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
         $this->assertCount(4, $role->permissions);
     }
 
-    /** @test */
-    public function when_assigning_permission_scope_all_permissions_must_be_existing()
+    public function test_when_assigning_permission_scope_all_permissions_must_be_existing()
     {
         $this->expectException(PermissionDoesNotExist::class);
 
@@ -82,8 +77,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function permissions_can_be_assigned_to_multiple_roles()
+    public function test_permissions_can_be_assigned_to_multiple_roles()
     {
         Permission::create(['name' => 'view-user']);
         Permission::create(['name' => 'create-user']);
@@ -99,8 +93,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
         $this->assertCount(2, $role->permissions);
     }
 
-    /** @test */
-    public function permissions_can_be_assigned_as_scopes()
+    public function test_permissions_can_be_assigned_as_scopes()
     {
         Permission::create(['name' => 'view-user']);
         Permission::create(['name' => 'create-user']);

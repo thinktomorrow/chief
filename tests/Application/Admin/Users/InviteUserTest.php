@@ -13,16 +13,14 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class InviteUserTest extends ChiefTestCase
 {
-    /** @test */
-    public function only_admin_can_view_the_invite_form()
+    public function test_only_admin_can_view_the_invite_form()
     {
         $response = $this->asAdmin()->get(route('chief.back.users.create'));
         $response->assertViewIs('chief::admin.users.create')
                  ->assertStatus(200);
     }
 
-    /** @test */
-    public function regular_author_cannot_view_the_invite_form()
+    public function test_regular_author_cannot_view_the_invite_form()
     {
         $response = $this->asAuthor()->get(route('chief.back.users.create'));
 
@@ -31,8 +29,7 @@ class InviteUserTest extends ChiefTestCase
             ->assertSessionHas('messages.error');
     }
 
-    /** @test */
-    public function inviting_a_new_user()
+    public function test_inviting_a_new_user()
     {
         Notification::fake();
 
@@ -51,8 +48,7 @@ class InviteUserTest extends ChiefTestCase
         Notification::assertSentTo(new AnonymousNotifiable(), InvitationMail::class);
     }
 
-    /** @test */
-    public function it_can_render_the_invitation_mail()
+    public function test_it_can_render_the_invitation_mail()
     {
         $invitee = $this->fakeUser();
         $inviter = $this->developer();
@@ -62,8 +58,7 @@ class InviteUserTest extends ChiefTestCase
         $this->verifyMailRender((new InvitationMail($invitation))->toMail('foobar@example.com'));
     }
 
-    /** @test */
-    public function only_authenticated_admin_can_invite_an_user()
+    public function test_only_authenticated_admin_can_invite_an_user()
     {
         $response = $this->post(route('chief.back.users.store'), $this->validParams());
 
@@ -71,8 +66,7 @@ class InviteUserTest extends ChiefTestCase
         $this->assertCount(0, User::all());
     }
 
-    /** @test */
-    public function regular_author_cannot_invite_an_user()
+    public function test_regular_author_cannot_invite_an_user()
     {
         $response = $this->asAuthor()->post(route('chief.back.users.store'), $this->validParams());
 
@@ -80,8 +74,7 @@ class InviteUserTest extends ChiefTestCase
         $this->assertCount(1, User::all()); // Existing author
     }
 
-    /** @test */
-    public function when_creating_user_firstname_is_required()
+    public function test_when_creating_user_firstname_is_required()
     {
         $this->assertValidation(
             new User(),
@@ -93,8 +86,7 @@ class InviteUserTest extends ChiefTestCase
         );
     }
 
-    /** @test */
-    public function when_creating_user_lastname_is_required()
+    public function test_when_creating_user_lastname_is_required()
     {
         $this->assertValidation(
             new User(),
@@ -106,8 +98,7 @@ class InviteUserTest extends ChiefTestCase
         );
     }
 
-    /** @test */
-    public function when_creating_user_role_is_required()
+    public function test_when_creating_user_role_is_required()
     {
         $this->assertValidation(
             new User(),

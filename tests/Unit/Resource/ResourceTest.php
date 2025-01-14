@@ -9,8 +9,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ResourceTest extends TestCase
 {
-    /** @test */
-    public function it_provides_chief_with_resource_info()
+    public function test_it_provides_chief_with_resource_info()
     {
         $stub = new ResourceStub();
 

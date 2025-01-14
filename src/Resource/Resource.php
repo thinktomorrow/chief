@@ -23,6 +23,11 @@ interface Resource
 
     public function field($model, string $key): Field;
 
+    /**
+     * Retrieve a nested field (from RepeatField)
+     */
+    public function nestedField($model, string $key): Field;
+
     public function getSaveFieldsClass(): string;
 
     /**

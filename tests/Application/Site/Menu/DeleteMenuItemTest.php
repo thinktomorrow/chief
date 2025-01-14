@@ -16,8 +16,7 @@ class DeleteMenuItemTest extends ChiefTestCase
         app()->setLocale('nl');
     }
 
-    /** @test */
-    public function it_can_delete_a_menu_item()
+    public function test_it_can_delete_a_menu_item()
     {
         $menuitem = MenuItem::create(['menu_type' => 'main']);
 
@@ -30,8 +29,7 @@ class DeleteMenuItemTest extends ChiefTestCase
         $this->assertCount(0, MenuItem::all());
     }
 
-    /** @test */
-    public function only_authenticated_admin_can_delete_a_menu_item()
+    public function test_only_authenticated_admin_can_delete_a_menu_item()
     {
         $menuitem = MenuItem::create();
 
@@ -41,8 +39,7 @@ class DeleteMenuItemTest extends ChiefTestCase
         $this->assertCount(1, MenuItem::all());
     }
 
-    /** @test */
-    public function deleting_a_new_menu_item_emits_event()
+    public function test_deleting_a_new_menu_item_emits_event()
     {
         Event::fake();
 

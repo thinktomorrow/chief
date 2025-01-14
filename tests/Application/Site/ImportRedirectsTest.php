@@ -22,8 +22,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->addRedirect = app(AddRedirect::class);
     }
 
-    /** @test */
-    public function it_can_add_redirect()
+    public function test_it_can_add_redirect()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -37,8 +36,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->assertEquals('foobar-redirect-en', UrlRecord::findRecentRedirect($article, 'en')->slug);
     }
 
-    /** @test */
-    public function it_can_add_redirect_without_slash()
+    public function test_it_can_add_redirect_without_slash()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -49,8 +47,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->assertEquals('foobar-redirect-nl', UrlRecord::findRecentRedirect($article, 'nl')->slug);
     }
 
-    /** @test */
-    public function redirect_is_stripped_from_host()
+    public function test_redirect_is_stripped_from_host()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -61,8 +58,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->assertEquals('foobar-redirect-nl', UrlRecord::findRecentRedirect($article, 'nl')->slug);
     }
 
-    /** @test */
-    public function it_can_redirect_to_different_locale()
+    public function test_it_can_redirect_to_different_locale()
     {
         // Can redirect to different locale
         // Locale segment should be included in slug...
@@ -71,8 +67,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->markTestIncomplete();
     }
 
-    /** @test */
-    public function it_should_not_import_redirect_when_url_already_exists_ignoring_slash()
+    public function test_it_should_not_import_redirect_when_url_already_exists_ignoring_slash()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -86,8 +81,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->assertNull(UrlRecord::findRecentRedirect($article, 'nl'));
     }
 
-    /** @test */
-    public function it_should_not_import_redirect_when_url_already_exists()
+    public function test_it_should_not_import_redirect_when_url_already_exists()
     {
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -101,8 +95,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->assertNull(UrlRecord::findRecentRedirect($article, 'nl'));
     }
 
-    /** @test */
-    public function it_cannot_import_redirect_when_target_url_does_not_exist()
+    public function test_it_cannot_import_redirect_when_target_url_does_not_exist()
     {
         $this->expectException(UrlRecordNotFound::class);
 
@@ -111,8 +104,7 @@ final class ImportRedirectsTest extends ChiefTestCase
         $this->assertCount(0, UrlRecord::all());
     }
 
-    /** @test */
-    public function it_can_import_redirect_for_external_target_url()
+    public function test_it_can_import_redirect_for_external_target_url()
     {
         $this->markTestIncomplete();
     }

@@ -3,18 +3,10 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 
 class MenuController extends Controller
 {
-    private ChiefMenuFactory $chiefMenuFactory;
-
-    public function __construct(ChiefMenuFactory $chiefMenuFactory)
-    {
-        $this->chiefMenuFactory = $chiefMenuFactory;
-    }
-
     public function index()
     {
         $this->authorize('view-page');
@@ -41,7 +33,7 @@ class MenuController extends Controller
         $menu = Menu::find($type);
 
         return view('chief::admin.menu.show', [
-            'menuItems' => $this->chiefMenuFactory->forAdmin($type, config('app.fallback_locale')),
+            'menuItems' => Menu::tree($type, config('app.fallback_locale')),
             'menu' => $menu,
         ]);
     }

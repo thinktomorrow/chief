@@ -1,42 +1,46 @@
 @php
-    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
+    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
+    use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
     $active = $active ?? false;
     $disabled = $disabled ?? false;
     $withActions = $withActions ?? false;
 @endphp
 
 <div class="space-y-3">
-    <div @class([
-        'relative group overflow-hidden aspect-square rounded-lg bg-grey-100 p-[1px]',
-        'hover:ring-inset hover:ring-1 cursor-pointer' => !$disabled,
-        'hover:ring-grey-400' => !$active,
-        'ring-inset ring-1 ring-primary-500 shadow-md' => $active,
-    ])>
+    <div
+        @class([
+            'group relative aspect-square overflow-hidden rounded-lg bg-grey-100 p-[1px]',
+            'cursor-pointer hover:ring-1 hover:ring-inset' => ! $disabled,
+            'hover:ring-grey-400' => ! $active,
+            'shadow-md ring-1 ring-inset ring-primary-500' => $active,
+        ])
+    >
         @if ($asset->isImage())
             <img
                 src="{{ $asset->getUrl('thumb') }}"
                 alt="{{ $asset->getFileName() }}"
-                class="object-contain w-full h-full rounded-lg"
+                class="h-full w-full rounded-lg object-contain"
             />
-        @elseif($asset instanceof ExternalAssetContract)
+        @elseif ($asset instanceof ExternalAssetContract)
             <img
                 src="{{ $asset->getPreviewUrl('thumb') }}"
                 alt="{{ $asset->getFileName() }}"
-                class="object-contain w-full h-full rounded-lg"
+                class="h-full w-full rounded-lg object-contain"
             />
 
             <div class="absolute bottom-0 left-0 right-0 flex items-center justify-center p-1">
                 <span class="label label-xs label-grey">{{ ucfirst($asset->getData('external.type')) }}</span>
             </div>
-        @elseif($asset->getMimeType())
-            <div class="flex items-center justify-center w-full h-full text-grey-400">
+        @elseif ($asset->getMimeType())
+            <div class="flex h-full w-full items-center justify-center text-grey-400">
                 {!! MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
             </div>
         @endif
 
-        @if($withActions)
+        @if ($withActions)
             <div
-                class="absolute inset-0 items-center justify-center hidden gap-1.5 group-hover:flex pointer-events-none bg-black/25 p-1 flex-wrap">
+                class="pointer-events-none absolute inset-0 hidden flex-wrap items-center justify-center gap-1.5 bg-black/25 p-1 group-hover:flex"
+            >
                 <button
                     type="button"
                     aria-label="Bewerk bestand"
@@ -63,7 +67,7 @@
                     </x-chief::button>
                 </button>
 
-                @if($asset instanceof ExternalAssetContract)
+                @if ($asset instanceof ExternalAssetContract)
                     <a
                         href="{{ $asset->getUrl() }}"
                         title="Bekijk op platform"
@@ -78,16 +82,9 @@
                         </x-chief::button>
                     </a>
                 @else
-                    <a
-                        href="{{ $asset->getUrl() }}"
-                        title="Download"
-                        download
-                        class="pointer-events-auto"
-                    >
+                    <a href="{{ $asset->getUrl() }}" title="Download" download class="pointer-events-auto">
                         <x-chief::button>
-                            <svg>
-                                <use xlink:href="#icon-download"></use>
-                            </svg>
+                            <x-chief::icon.download />
                         </x-chief::button>
                     </a>
                 @endif
@@ -95,29 +92,29 @@
         @endif
 
         {{-- Shows a label when the asset is already selected --}}
-        @if($disabled)
-            <div class="absolute inset-0 flex items-center justify-center p-1 pointer-events-none bg-black/50">
+        @if ($disabled)
+            <div class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/50 p-1">
                 <span class="label label-xs label-grey">Toegevoegd</span>
             </div>
         @endif
     </div>
 
     <div class="space-y-0.5">
-        <p class="overflow-hidden text-sm body body-dark text-ellipsis whitespace-nowrap">
+        <p class="body body-dark overflow-hidden text-ellipsis whitespace-nowrap text-sm">
             {{ $asset->getFileName() }}
         </p>
 
         <div class="flex justify-between">
-            <p class="text-xs body text-grey-500">
-                @if($asset->getHumanReadableSize())
+            <p class="body text-xs text-grey-500">
+                @if ($asset->getHumanReadableSize())
                     {{ $asset->getHumanReadableSize() }}
-                @elseif($asset->isVideo() && $asset->getData('external.duration'))
+                @elseif ($asset->isVideo() && $asset->getData('external.duration'))
                     {{ $asset->getData('external.duration') }} sec
                 @endif
             </p>
 
-            <p class="text-xs body text-grey-500">
-                @if($asset->getWidth())
+            <p class="body text-xs text-grey-500">
+                @if ($asset->getWidth())
                     {{ $asset->getWidth() }}x{{ $asset->getHeight() }}
                 @else
                     {{ $asset->getExtension() }}

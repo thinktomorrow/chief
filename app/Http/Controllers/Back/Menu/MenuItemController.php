@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\Site\Menu\Application\CreateMenuItem;
 use Thinktomorrow\Chief\Site\Menu\Application\DeleteMenuItem;
 use Thinktomorrow\Chief\Site\Menu\Application\UpdateMenuItem;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
+use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\Tree\PrepareMenuItemsForAdminSelect;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
@@ -16,12 +16,10 @@ use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 class MenuItemController extends Controller
 {
     private PrepareMenuItemsForAdminSelect $prepareMenuItemsForAdminSelect;
-    private ChiefMenuFactory $chiefMenuFactory;
 
-    public function __construct(ChiefMenuFactory $chiefMenuFactory, PrepareMenuItemsForAdminSelect $prepareMenuItemsForAdminSelect)
+    public function __construct(PrepareMenuItemsForAdminSelect $prepareMenuItemsForAdminSelect)
     {
         $this->prepareMenuItemsForAdminSelect = $prepareMenuItemsForAdminSelect;
-        $this->chiefMenuFactory = $chiefMenuFactory;
     }
 
     /**
@@ -36,7 +34,7 @@ class MenuItemController extends Controller
         $menuitem->menu_type = $menutype;
 
         $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
-            $this->chiefMenuFactory->forAdmin($menutype, config('app.fallback_locale'))
+            Menu::tree($menutype, config('app.fallback_locale'))
         );
 
         return view('chief::admin.menu.create', [
@@ -70,7 +68,7 @@ class MenuItemController extends Controller
         $menuitem = MenuItem::findOrFail($id);
 
         $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
-            $this->chiefMenuFactory->forAdmin(
+            Menu::tree(
                 $menuitem->menuType(),
                 config('app.fallback_locale')
             ),

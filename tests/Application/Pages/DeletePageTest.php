@@ -19,8 +19,7 @@ final class DeletePageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    /** @test */
-    public function a_deleted_model_cannot_be_edited()
+    public function test_a_deleted_model_cannot_be_edited()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -31,8 +30,7 @@ final class DeletePageTest extends ChiefTestCase
             ->assertStatus(302);
     }
 
-    /** @test */
-    public function an_admin_can_only_delete_a_page_with_the_proper_permissions()
+    public function test_an_admin_can_only_delete_a_page_with_the_proper_permissions()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -47,8 +45,7 @@ final class DeletePageTest extends ChiefTestCase
         $this->assertFalse($model->fresh()->trashed());
     }
 
-    /** @test */
-    public function an_admin_can_delete_a_page()
+    public function test_an_admin_can_delete_a_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -63,8 +60,7 @@ final class DeletePageTest extends ChiefTestCase
         $this->assertTrue($model->fresh()->trashed());
     }
 
-    /** @test */
-    public function an_admin_cannot_delete_a_published_page()
+    public function test_an_admin_cannot_delete_a_published_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -78,8 +74,7 @@ final class DeletePageTest extends ChiefTestCase
         $this->assertFalse($model->fresh()->trashed());
     }
 
-    /** @test */
-    public function deleting_a_page_also_unlinks_any_assets()
+    public function test_deleting_a_page_also_unlinks_any_assets()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -109,8 +104,7 @@ final class DeletePageTest extends ChiefTestCase
         $this->assertCount(1, Asset::all());
     }
 
-    /** @test */
-    public function deleting_a_page_also_deletes_the_context()
+    public function test_deleting_a_page_also_deletes_the_context()
     {
         $model = ArticlePage::create([
             'title' => 'first article',

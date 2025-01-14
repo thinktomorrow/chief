@@ -35,10 +35,23 @@ trait ResourceDefault
         return (new ResourceKeyFormat(static::modelClassName()))->getLabel();
     }
 
+    public function getPluralLabel(): string
+    {
+        return (new ResourceKeyFormat(static::modelClassName()))->getPluralLabel();
+    }
+
     public function field($model, string $key): Field
     {
         $fieldModel = $model instanceof Fragment ? $model->fragmentModel() : $model;
 
+        return Fields::makeWithoutFlatteningNestedFields($this->fields($model))->find($key)->model($fieldModel);
+    }
+
+    public function nestedField($model, string $key): Field
+    {
+        $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+
+        // TODO: this fails when the nested field has the same key as one of the other fields.
         return Fields::make($this->fields($model))->find($key)->model($fieldModel);
     }
 

@@ -6,8 +6,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class FragmentTest extends ChiefTestCase
 {
-    /** @test */
-    public function it_cascade_calls_to_fragmentmodel()
+    public function test_it_cascade_calls_to_fragmentmodel()
     {
         $snippet = $this->setupAndCreateSnippet($this->setupAndCreateArticle(), 0, true, [
             'title' => 'foobar',

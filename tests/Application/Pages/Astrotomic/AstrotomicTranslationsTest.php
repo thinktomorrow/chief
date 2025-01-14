@@ -19,8 +19,7 @@ class AstrotomicTranslationsTest extends ChiefTestCase
         chiefRegister()->resource(QuoteWithAstrotomicTranslations::class, PageManager::class);
     }
 
-    /** @test */
-    public function it_can_store_a_model_with_astrotomic_translations()
+    public function test_it_can_store_a_model_with_astrotomic_translations()
     {
         $this->asAdmin()->post($this->manager(QuoteWithAstrotomicTranslations::class)->route('store'), [
             'trans' => [
@@ -39,8 +38,7 @@ class AstrotomicTranslationsTest extends ChiefTestCase
         $this->assertEquals('title_trans en value', $model->title_trans);
     }
 
-    /** @test */
-    public function it_can_update_a_model_with_astrotomic_translations()
+    public function test_it_can_update_a_model_with_astrotomic_translations()
     {
         $model = QuoteWithAstrotomicTranslations::create([
             'title_trans:nl' => 'existing nl value',

@@ -5,10 +5,9 @@ namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
+use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -88,21 +87,8 @@ trait StateAssistant
 
         $this->guard('state-edit', $model);
 
-        $stateConfig = $model->getStateConfig($key);
-
-        if ($stateConfig instanceof StateAdminConfig) {
-            $this->saveTransitionFields($model, $stateConfig->getTransitionFields($transitionKey, $model), $request);
-        }
-
-        $machine = StateMachine::fromConfig($model, $stateConfig);
-
         try {
-            $machine->apply($transitionKey);
-            $model->save();
-
-            $stateConfig->emitEvent($model, $transitionKey, $request->all());
-
-            event(new PageChanged($model->modelReference()));
+            app(UpdateState::class)->handle($this->resource::resourceKey(), $model->modelReference(), $key, $transitionKey, $request->all(), $request->allFiles());
         } catch (StateException $e) {
             return response()->json([
                 'message' => 'Transition ['.$transitionKey.'] not applied',
@@ -111,6 +97,7 @@ trait StateAssistant
 
         // In case that the state makes the model inaccessible (such as a deletion)
         // we'll want to redirect to a different page.
+        $stateConfig = $model->getStateConfig($key);
         $redirect = $stateConfig->getRedirectAfterTransition($transitionKey, $model);
 
         // A custom redirect is present so we'll return to the redirect.
@@ -135,19 +122,6 @@ trait StateAssistant
             'message' => 'Transition ['.$transitionKey.'] applied',
             'redirect_to' => $redirect,
         ]);
-    }
-
-    private function saveTransitionFields($model, iterable $fields, Request $request)
-    {
-        $fields = Fields::make($fields);
-
-        if ($fields->isEmpty()) {
-            return;
-        }
-
-        $this->fieldValidator()->handle($fields, $request->all());
-
-        app($this->resource->getSaveFieldsClass())->save($model, $fields, $request->all(), $request->allFiles());
     }
 
     public function filtersStateAssistant(): Filters

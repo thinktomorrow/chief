@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
@@ -102,12 +103,20 @@ trait SortAssistant
      */
     public function indexForSorting()
     {
+        View::share('is_reorder_index', true);
+
         View::share('manager', $this);
         View::share('resource', $this->resource);
+
+        // For the time being, while we work on the reorder table, we'll use the old sorting table
         View::share('models', $this->indexModelsForSorting());
         View::share('model', $this->managedModelClassInstance());
 
         return view('chief::manager.index-for-sorting');
+
+        // TODO: this is the future sorting table but not quite there yet...
+        // View::share('table', $this->resource->getReorderTable());
+        // return $this->resource->getIndexView();
     }
 
     protected function indexModelsForSorting(): LengthAwarePaginator

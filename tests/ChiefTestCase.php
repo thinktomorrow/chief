@@ -4,8 +4,11 @@ namespace Thinktomorrow\Chief\Tests;
 
 use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\ApplicationBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Livewire\LivewireServiceProvider;
@@ -20,9 +23,8 @@ use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\MysqlNestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
+use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
@@ -36,6 +38,17 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected $protectTestEnvironment = true;
 
+    protected function resolveApplication()
+    {
+        return (new ApplicationBuilder(new Application($this->getBasePath())))
+            ->withProviders()
+            ->withMiddleware(static function ($middleware) {
+                $middleware->redirectGuestsTo('/admin/login');
+            })
+            ->withCommands()
+            ->create();
+    }
+
     protected function getPackageProviders($app)
     {
         return [
@@ -44,11 +57,20 @@ abstract class ChiefTestCase extends OrchestraTestCase
             ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
             LivewireServiceProvider::class,
+            TableServiceProvider::class,
         ];
     }
 
     protected function setUp(): void
     {
+        $this->afterApplicationCreated(function () {
+            // Code after application created.
+        });
+
+        $this->beforeApplicationDestroyed(function () {
+            // Code before application destroyed.
+        });
+
         parent::setUp();
 
         $this->protectTestEnvironment();
@@ -56,9 +78,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         // Register the Chief Exception handler
         $this->app->singleton(ExceptionHandler::class, ChiefExceptionHandler::class);
-
-        // Don't use the default memoized repository for our testsuite
-        $this->app->bind(NestableRepository::class, MysqlNestableRepository::class);
 
         Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\' . class_basename($modelName) . 'Factory');
 
@@ -80,7 +99,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function resolveApplicationHttpKernel($app)
     {
-        $app->singleton('Illuminate\Contracts\Http\Kernel', Kernel::class);
+        $app->singleton(HttpKernel::class, Kernel::class);
     }
 
     protected function getEnvironmentSetUp($app)

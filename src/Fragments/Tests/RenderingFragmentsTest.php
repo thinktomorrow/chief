@@ -16,8 +16,7 @@ class RenderingFragmentsTest extends ChiefTestCase
         parent::setUp();
     }
 
-    /** @test */
-    public function fragments_can_be_rendered()
+    public function test_fragments_can_be_rendered()
     {
         $owner = $this->setupAndCreateArticle();
         $this->setupAndCreateSnippet($owner, 1);
@@ -26,16 +25,14 @@ class RenderingFragmentsTest extends ChiefTestCase
         $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW \nTHIS IS SNIPPET STUB VIEW foobar\n");
     }
 
-    /** @test */
-    public function no_fragments_render_an_empty_string()
+    public function test_no_fragments_render_an_empty_string()
     {
         $owner = $this->setupAndCreateArticle();
 
         $this->assertRenderedFragments($owner, '');
     }
 
-    /** @test */
-    public function fragments_can_be_rendered_with_fallback_locale()
+    public function test_fragments_can_be_rendered_with_fallback_locale()
     {
         $owner = $this->setupAndCreateArticle();
 

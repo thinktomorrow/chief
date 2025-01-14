@@ -5,7 +5,7 @@
 
 <x-chief::input.group :rule="$id" inner-class="space-y-2">
     @if ($label)
-        <x-chief::input.label unset class="font-medium h6 body-dark">{{ $label }}</x-chief::input.label>
+        <x-chief::input.label unset class="h6 body-dark font-medium">{{ $label }}</x-chief::input.label>
     @endif
 
     @if ($description)
@@ -13,7 +13,7 @@
     @endif
 
     <div class="space-y-1">
-        @foreach($options as $option => $optionLabel)
+        @foreach ($options as $option => $optionLabel)
             <div class="flex items-start gap-2">
                 <x-chief::input.checkbox
                     id="{{ $id . '-' . $option }}"
@@ -22,7 +22,7 @@
                     :checked="($option == ($value ?: $default))"
                 />
 
-                <x-chief::input.label for="{{ $id . '-' . $option }}" unset class="body body-dark">
+                <x-chief::input.label for="{{ $id . '-' . $option }}" unset class="body body-dark leading-5">
                     {{ $optionLabel }}
                 </x-chief::input.label>
             </div>

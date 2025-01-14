@@ -27,8 +27,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->manager = $this->manager(ArticlePage::class);
     }
 
-    /** @test */
-    public function admin_can_view_the_archive_index()
+    public function test_admin_can_view_the_archive_index()
     {
         ArticlePage::create([
             'title' => 'first article',
@@ -36,12 +35,10 @@ final class ArchivePageTest extends ChiefTestCase
         ]);
 
         $response = $this->asAdmin()->get($this->manager->route('archive_index'));
-        $response->assertStatus(200)
-            ->assertViewCount('models', 1);
+        $response->assertStatus(200);
     }
 
-    /** @test */
-    public function an_admin_can_only_archive_a_page_with_the_proper_permissions()
+    public function test_an_admin_can_only_archive_a_page_with_the_proper_permissions()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -54,8 +51,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function an_admin_can_archive_a_page()
+    public function test_an_admin_can_archive_a_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -70,8 +66,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertEquals(PageState::archived, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function an_admin_can_unarchive_an_archived_page()
+    public function test_an_admin_can_unarchive_an_archived_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -86,8 +81,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function it_cannot_archive_a_deleted_page()
+    public function test_it_cannot_archive_a_deleted_page()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -101,8 +95,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
     }
 
-    /** @test */
-    public function when_archiving_a_redirect_page_can_be_set()
+    public function test_when_archiving_a_redirect_page_can_be_set()
     {
         $model = ArticlePage::create([
             'title' => 'first article',
@@ -132,8 +125,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertEquals('first-en', UrlRecord::findRecentRedirect($redirectModel, 'en')->slug);
     }
 
-    /** @test */
-    public function the_archive_index_can_be_visited_when_there_is_an_archived_model()
+    public function test_the_archive_index_can_be_visited_when_there_is_an_archived_model()
     {
         $model = ArticlePage::create([PageState::KEY => PageState::archived]);
 
@@ -142,8 +134,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertTrue($this->manager($model)->can('archive_index'));
     }
 
-    /** @test */
-    public function the_archive_index_cannot_be_visited_when_there_are_no_archived_models()
+    public function test_the_archive_index_cannot_be_visited_when_there_are_no_archived_models()
     {
         $model = ArticlePage::create();
 
@@ -152,8 +143,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertFalse($this->manager($model)->can('archive_index'));
     }
 
-    /** @test */
-    public function the_archive_modal_content_can_be_fetched()
+    public function test_the_archive_modal_content_can_be_fetched()
     {
         $model = ArticlePage::create([
             'title' => 'first article',

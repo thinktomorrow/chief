@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\App\Console\GenerateImageSitemap;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
@@ -32,8 +34,8 @@ use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
-use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -47,13 +49,12 @@ use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\MemoizedMysqlNestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\PropagateUrlChange;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
 use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
@@ -116,7 +117,9 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Sitemap command is used by both cli and web scripts
         $this->commands(['command.chief:sitemap']);
+        $this->commands(['command.chief:image-sitemap']);
         $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
+        $this->app->bind('command.chief:image-sitemap', GenerateImageSitemap::class);
 
         if ($this->app->runningInConsole()) {
             (new ConsoleServiceProvider($this->app))->boot();

@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\MenuItemStatus;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -17,13 +16,10 @@ class MenuForSiteTest extends ChiefTestCase
 
     public function tearDown(): void
     {
-        ChiefMenuFactory::clearLoaded();
-
         parent::tearDown();
     }
 
-    /** @test */
-    public function it_can_render_for_site()
+    public function test_it_can_render_for_site()
     {
         $page = $this->setupAndCreateArticle(['custom' => 'artikel titel', 'current_state' => PageState::published]);
 
@@ -41,13 +37,12 @@ class MenuForSiteTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $collection = chiefmenu('main', 'nl');
+        $collection = chiefmenu('main');
 
         $this->assertCount(2, $collection);
     }
 
-    /** @test */
-    public function rendering_for_site_does_not_include_offline_items()
+    public function test_rendering_for_site_does_not_include_offline_items()
     {
         MenuItem::create([
             'label' => ['nl' => 'first item'],
@@ -62,7 +57,7 @@ class MenuForSiteTest extends ChiefTestCase
             'url' => ['nl' => 'https://google.com'],
         ]);
 
-        $collection = chiefmenu('main', 'nl');
+        $collection = chiefmenu('main');
 
         $this->assertCount(1, $collection);
     }

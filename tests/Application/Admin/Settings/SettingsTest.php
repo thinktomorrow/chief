@@ -14,22 +14,19 @@ class SettingsTest extends ChiefTestCase
         $this->app['config']->set('chief-settings.homepage', 1);
     }
 
-    /** @test */
-    public function if_setting_is_missing_in_database_it_retrieves_setting_from_config()
+    public function test_if_setting_is_missing_in_database_it_retrieves_setting_from_config()
     {
         $this->assertEquals(1, chiefSetting('homepage'));
     }
 
-    /** @test */
-    public function setting_from_database_overrules_the_config_one()
+    public function test_setting_from_database_overrules_the_config_one()
     {
         Setting::create(['key' => 'homepage', 'value' => 'foobar']);
 
         $this->assertEquals('foobar', chiefSetting('homepage'));
     }
 
-    /** @test */
-    public function it_can_change_a_setting_at_runtime()
+    public function test_it_can_change_a_setting_at_runtime()
     {
         $this->assertEquals('1', chiefSetting('homepage'));
 
@@ -38,22 +35,19 @@ class SettingsTest extends ChiefTestCase
         $this->assertEquals('foobar', chiefSetting('homepage'));
     }
 
-    /** @test */
-    public function if_value_is_null_the_default_is_used()
+    public function test_if_value_is_null_the_default_is_used()
     {
         $this->app['config']->set('chief-settings.homepage', null);
 
         $this->assertEquals('foobar', chiefSetting('homepage', null, 'foobar'));
     }
 
-    /** @test */
-    public function unknown_setting_returns_default()
+    public function test_unknown_setting_returns_default()
     {
         $this->assertEquals('foobar', chiefSetting('xxx', null, 'foobar'));
     }
 
-    /** @test */
-    public function it_can_store_new_settings_value()
+    public function test_it_can_store_new_settings_value()
     {
         $setting = Setting::create(['key' => 'foo', 'value' => 'bar']);
 
@@ -65,8 +59,7 @@ class SettingsTest extends ChiefTestCase
         $this->assertEquals('baz', chiefSetting()->fresh()->get('foo'));
     }
 
-    /** @test */
-    public function it_can_store_new_translatable_settings_value()
+    public function test_it_can_store_new_translatable_settings_value()
     {
         Setting::create(['key' => 'foo', 'value' => [
             'nl' => 'nl value',

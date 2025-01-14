@@ -27,12 +27,12 @@
         @break
     @case(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::draft)
         <div class="prose prose-spacing prose-dark">
-            <p> Deze pagina is nog niet gepubliceerd en niet zichtbaar voor de gebruiker. </p>
+            <p> Offline en niet zichtbaar voor de bezoeker. </p>
         </div>
         @break
     @case(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::archived)
         <div class="prose prose-spacing prose-dark">
-            <p> Deze pagina is gearchiveerd. </p>
+            <p> Gearchiveerd. </p>
         </div>
         @break
     @default

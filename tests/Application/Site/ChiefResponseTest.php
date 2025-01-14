@@ -25,8 +25,7 @@ class ChiefResponseTest extends ChiefTestCase
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function it_returns_a_laravel_response()
+    public function test_it_returns_a_laravel_response()
     {
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
@@ -37,8 +36,7 @@ class ChiefResponseTest extends ChiefTestCase
         $this->assertEquals("THIS IS ARTICLE PAGE VIEW\n", $response->getContent());
     }
 
-    /** @test */
-    public function if_it_cannot_find_a_matching_url_record_it_throws_404_exception()
+    public function test_if_it_cannot_find_a_matching_url_record_it_throws_404_exception()
     {
         config()->set('chief.strict', false);
 
@@ -47,8 +45,7 @@ class ChiefResponseTest extends ChiefTestCase
         ChiefResponse::fromSlug('xxx');
     }
 
-    /** @test */
-    public function if_the_model_reference_is_invalid_it_throws_the_correct_exception()
+    public function test_if_the_model_reference_is_invalid_it_throws_the_correct_exception()
     {
         config()->set('chief.strict', false);
 
@@ -59,8 +56,7 @@ class ChiefResponseTest extends ChiefTestCase
         ChiefResponse::fromSlug('foo/bar');
     }
 
-    /** @test */
-    public function if_the_page_is_not_published_it_throws_404_exception()
+    public function test_if_the_page_is_not_published_it_throws_404_exception()
     {
         config()->set('chief.strict', false);
 
@@ -72,8 +68,7 @@ class ChiefResponseTest extends ChiefTestCase
         ChiefResponse::fromSlug('foo/bar');
     }
 
-    /** @test */
-    public function if_the_page_is_archived_it_throws_404_exception()
+    public function test_if_the_page_is_archived_it_throws_404_exception()
     {
         config()->set('chief.strict', false);
 
@@ -85,8 +80,7 @@ class ChiefResponseTest extends ChiefTestCase
         ChiefResponse::fromSlug('foo/bar');
     }
 
-    /** @test */
-    public function if_the_page_is_not_published_admin_can_view_with_preview_mode()
+    public function test_if_the_page_is_not_published_admin_can_view_with_preview_mode()
     {
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::draft]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
@@ -99,8 +93,7 @@ class ChiefResponseTest extends ChiefTestCase
         $this->assertTrue(PreviewMode::fromRequest()->check());
     }
 
-    /** @test */
-    public function if_the_page_is_not_published_admin_cannot_view_without_preview_mode()
+    public function test_if_the_page_is_not_published_admin_cannot_view_without_preview_mode()
     {
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::draft]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
@@ -112,8 +105,7 @@ class ChiefResponseTest extends ChiefTestCase
         $this->assertFalse(PreviewMode::fromRequest()->check());
     }
 
-    /** @test */
-    public function it_can_find_a_model_for_a_localized_request()
+    public function test_it_can_find_a_model_for_a_localized_request()
     {
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);
         $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
@@ -122,8 +114,7 @@ class ChiefResponseTest extends ChiefTestCase
         $this->assertEquals("THIS IS ARTICLE PAGE VIEW\n", $response->getContent());
     }
 
-    /** @test */
-    public function it_cannot_respond_when_url_does_not_exist_for_given_locale()
+    public function test_it_cannot_respond_when_url_does_not_exist_for_given_locale()
     {
         config()->set('chief.strict', false);
 
@@ -135,8 +126,7 @@ class ChiefResponseTest extends ChiefTestCase
         $response = ChiefResponse::fromSlug('foo/bar', 'nl');
     }
 
-    /** @test */
-    public function it_throws_exception_when_model_does_not_provide_url()
+    public function test_it_throws_exception_when_model_does_not_provide_url()
     {
         config()->set('chief.strict', false);
 
@@ -149,8 +139,7 @@ class ChiefResponseTest extends ChiefTestCase
         $response = ChiefResponse::fromSlug('foo/bar', 'nl');
     }
 
-    /** @test */
-    public function it_can_redirect_an_archived_url()
+    public function test_it_can_redirect_an_archived_url()
     {
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::archived]);
         $model2 = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::published]);

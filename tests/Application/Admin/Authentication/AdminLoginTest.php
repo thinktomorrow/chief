@@ -12,15 +12,13 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AdminLoginTest extends ChiefTestCase
 {
-    /** @test */
-    public function non_authenticated_are_kept_out()
+    public function test_non_authenticated_are_kept_out()
     {
         $response = $this->get('/admin');
         $response->assertRedirect('/admin/login');
     }
 
-    /** @test */
-    public function entering_valid_login_credentials_for_disabled_user_wont_let_you_pass()
+    public function test_entering_valid_login_credentials_for_disabled_user_wont_let_you_pass()
     {
         $admin = $this->fakeUser([
             'email' => 'foo@example.com',
@@ -37,8 +35,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect('/');
     }
 
-    /** @test */
-    public function entering_valid_login_credentials_lets_you_pass()
+    public function test_entering_valid_login_credentials_lets_you_pass()
     {
         $admin = $this->fakeUser([
             'email' => 'foo@example.com',
@@ -57,8 +54,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect(route('chief.back.dashboard'));
     }
 
-    /** @test */
-    public function entering_invalid_login_credentials_keeps_you_out()
+    public function test_entering_invalid_login_credentials_keeps_you_out()
     {
         $this->fakeUser([
             'email' => 'foo@example.com',
@@ -75,8 +71,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect('/');
     }
 
-    /** @test */
-    public function it_displays_admin_page_for_authenticated()
+    public function test_it_displays_admin_page_for_authenticated()
     {
         $admin = $this->fakeUser();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
@@ -87,8 +82,7 @@ class AdminLoginTest extends ChiefTestCase
         $this->assertFalse(session()->has('errors'));
     }
 
-    /** @test */
-    public function it_redirects_authenticated_admin_to_intended_page()
+    public function test_it_redirects_authenticated_admin_to_intended_page()
     {
         $admin = $this->fakeUser([
             'email' => 'foo@example.com',
@@ -110,8 +104,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect(route('chief.back.menus.index'));
     }
 
-    /** @test */
-    public function it_can_log_you_out()
+    public function test_it_can_log_you_out()
     {
         $admin = $this->fakeUser();
 
@@ -126,8 +119,7 @@ class AdminLoginTest extends ChiefTestCase
         $this->assertNull(Auth::guard('chief')->user());
     }
 
-    /** @test */
-    public function it_can_send_a_password_reset_mail()
+    public function test_it_can_send_a_password_reset_mail()
     {
         Notification::fake();
 
@@ -144,8 +136,7 @@ class AdminLoginTest extends ChiefTestCase
         Notification::assertSentTo($admin, ResetAdminPassword::class);
     }
 
-    /** @test */
-    public function it_can_reset_your_password()
+    public function test_it_can_reset_your_password()
     {
         $admin = $this->fakeUser([
             'email' => 'foo@example.com',
@@ -175,8 +166,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect(route('chief.back.dashboard'));
     }
 
-    /** @test */
-    public function it_will_redirect_if_logged_in_when_trying_to_log_in()
+    public function test_it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
         $admin = $this->fakeUser([
             'email' => 'foo@example.com',
@@ -194,8 +184,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect(route('chief.back.dashboard'));
     }
 
-    /** @test */
-    public function it_returns_a_json_error_if_unauthenticated_request_expects_json_response()
+    public function test_it_returns_a_json_error_if_unauthenticated_request_expects_json_response()
     {
         $response = $this->get('/admin', [
             'Accept' => 'application/json',
@@ -204,8 +193,7 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertStatus(401);
     }
 
-    /** @test */
-    public function it_can_access_admin_via_helper()
+    public function test_it_can_access_admin_via_helper()
     {
         $admin = $this->fakeUser([
             'email' => 'foo@example.com',

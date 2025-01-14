@@ -21,8 +21,7 @@ class UpdateSettingTest extends ChiefTestCase
         resolve(Settings::class)->fresh();
     }
 
-    /** @test */
-    public function update_a_setting()
+    public function test_update_a_setting()
     {
         Setting::create([
             'key' => 'app_name',

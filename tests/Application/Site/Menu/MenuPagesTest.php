@@ -7,8 +7,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MenuPagesTest extends ChiefTestCase
 {
-    /** @test */
-    public function admin_can_view_the_menu_index()
+    public function test_admin_can_view_the_menu_index()
     {
         config()->set('chief.menus.footer', [
             'label' => 'Hoofdnavigatie',
@@ -20,8 +19,7 @@ class MenuPagesTest extends ChiefTestCase
                  ->assertStatus(200);
     }
 
-    /** @test */
-    public function menu_index_route_shows_menu_show_if_there_is_only_one_menu()
+    public function test_menu_index_route_shows_menu_show_if_there_is_only_one_menu()
     {
         $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
@@ -29,8 +27,7 @@ class MenuPagesTest extends ChiefTestCase
                  ->assertStatus(200);
     }
 
-    /** @test */
-    public function admin_can_view_the_menu_show()
+    public function test_admin_can_view_the_menu_show()
     {
         $menu = Menu::all()->first();
 

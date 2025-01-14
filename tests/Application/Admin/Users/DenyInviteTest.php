@@ -28,8 +28,7 @@ class DenyInviteTest extends ChiefTestCase
         $this->invitee->save();
     }
 
-    /** @test */
-    public function signature_of_deny_url_is_validated()
+    public function test_signature_of_deny_url_is_validated()
     {
         // Manipulate the signature to mimic false request
         $parts = parse_url($this->invitation->denyUrl());
@@ -40,8 +39,7 @@ class DenyInviteTest extends ChiefTestCase
         $response->assertRedirect(route('invite.expired'));
     }
 
-    /** @test */
-    public function deny_url_with_invalid_token_is_declined()
+    public function test_deny_url_with_invalid_token_is_declined()
     {
         // Manipulate the token but with valid signature
         $this->invitation->token = 'fake-token';
@@ -52,8 +50,7 @@ class DenyInviteTest extends ChiefTestCase
         $response->assertRedirect(route('invite.expired'));
     }
 
-    /** @test */
-    public function deny_url_is_only_valid_when_used_before_expiration()
+    public function test_deny_url_is_only_valid_when_used_before_expiration()
     {
         $this->invitation->expires_at = now()->subDays(4);
         $url = $this->invitation->denyUrl();
@@ -63,8 +60,7 @@ class DenyInviteTest extends ChiefTestCase
         $response->assertRedirect(route('invite.expired'));
     }
 
-    /** @test */
-    public function deny_url_should_not_be_processed_when_invitation_is_revoked()
+    public function test_deny_url_should_not_be_processed_when_invitation_is_revoked()
     {
         // Force invitation state on revoked
         $this->invitation->changeState(InvitationState::KEY, InvitationState::revoked);
@@ -75,8 +71,7 @@ class DenyInviteTest extends ChiefTestCase
         $this->assertFalse($this->invitee->fresh()->isEnabled());
     }
 
-    /** @test */
-    public function deny_url_sets_invitation_to_denied()
+    public function test_deny_url_sets_invitation_to_denied()
     {
         $response = $this->get($this->invitation->denyUrl());
 

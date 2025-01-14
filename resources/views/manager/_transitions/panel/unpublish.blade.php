@@ -8,12 +8,12 @@
             <button type="submit" class="btn btn-error-outline">Haal offline</button>
         </form>
     @else
-        <p>De pagina staat gepubliceerd maar zal zonder link nog niet bereikbaar zijn. Voeg hieronder nog een link toe!</p>
+        <p>De pagina staat klaar voor publicatie maar er ontbreekt nog een link. Voeg hieronder nog een link toe!</p>
 
         <form action="@adminRoute('unpublish', $model)" method="POST">
             {{ csrf_field() }}
 
-            <button type="submit" class="btn btn-error-outline">Zet terug in draft</button>
+            <button type="submit" class="btn btn-error-outline">Zet terug offline</button>
         </form>
     @endif
 </div>

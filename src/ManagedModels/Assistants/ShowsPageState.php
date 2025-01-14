@@ -32,11 +32,11 @@ trait ShowsPageState
         }
 
         if (PageState::published === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-            return '<span class="label label-xs label-success">Gepubliceerd</span>';
+            return '<span class="label label-xs label-success">Online</span>';
         }
 
         if (PageState::draft === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
-            return '<span class="label label-xs label-error">In draft</span>';
+            return '<span class="label label-xs label-error">Offline</span>';
         }
 
         if (PageState::archived === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {

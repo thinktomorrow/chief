@@ -20,16 +20,14 @@ class UpdateRoleTest extends ChiefTestCase
         $this->newRole = $role;
     }
 
-    /** @test */
-    public function only_developer_can_view_the_update_form()
+    public function test_only_developer_can_view_the_update_form()
     {
         $response = $this->actingAs($this->developer(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
         $response->assertViewIs('chief::admin.authorization.roles.edit')
                  ->assertStatus(200);
     }
 
-    /** @test */
-    public function regular_admin_cannot_view_the_update_form()
+    public function test_regular_admin_cannot_view_the_update_form()
     {
         $response = $this->actingAs($this->fakeUser(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
 
@@ -38,8 +36,7 @@ class UpdateRoleTest extends ChiefTestCase
             ->assertSessionHas('messages.error');
     }
 
-    /** @test */
-    public function updating_a_role()
+    public function test_updating_a_role()
     {
         // Now update it
         $response = $this->actingAs($this->developer(), 'chief')
@@ -51,8 +48,7 @@ class UpdateRoleTest extends ChiefTestCase
         $this->assertUpdatedValues($this->newRole->fresh());
     }
 
-    /** @test */
-    public function only_authenticated_developer_can_update_a_role()
+    public function test_only_authenticated_developer_can_update_a_role()
     {
         $response = $this->put(route('chief.back.roles.update', $this->newRole->id), $this->validUpdateParams());
 
@@ -62,26 +58,22 @@ class UpdateRoleTest extends ChiefTestCase
         $this->assertNewValues($this->newRole->fresh());
     }
 
-    /** @test */
-    public function when_updating_role_name_is_required()
+    public function test_when_updating_role_name_is_required()
     {
         $this->assertValidation(new Role(), 'name', $this->validUpdateParams(['name' => '']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
-    /** @test */
-    public function when_updating_role_permissions_are_required()
+    public function test_when_updating_role_permissions_are_required()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
-    /** @test */
-    public function when_updating_role_name_must_be_unique()
+    public function test_when_updating_role_name_must_be_unique()
     {
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
-    /** @test */
-    public function when_updating_role_permissions_must_be_passed_as_array()
+    public function test_when_updating_role_permissions_must_be_passed_as_array()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }

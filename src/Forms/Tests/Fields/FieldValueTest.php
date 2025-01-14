@@ -148,4 +148,15 @@ class FieldValueTest extends TestCase
 
         $this->assertEquals('custom value', $field->getValue());
     }
+
+    /** @test */
+    public function it_can_prepare_value_for_view()
+    {
+        $field = Text::make('title')->prepareValue(function ($value) {
+            return strtoupper($value);
+        });
+
+        $field->value('some-value');
+        $this->assertEquals('SOME-VALUE', $field->getValue());
+    }
 }

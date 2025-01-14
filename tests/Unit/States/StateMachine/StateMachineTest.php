@@ -22,8 +22,7 @@ class StateMachineTest extends TestCase
         $this->machine = StateMachine::fromConfig($this->statefulStub, $this->statefulStub->getStateConfig('online_state'));
     }
 
-    /** @test */
-    public function it_can_apply_transition()
+    public function test_it_can_apply_transition()
     {
         $this->assertSame(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
 
@@ -31,24 +30,21 @@ class StateMachineTest extends TestCase
         $this->assertEquals(OnlineStateStub::online, $this->statefulStub->getState('online_state'));
     }
 
-    /** @test */
-    public function it_cannot_change_to_invalid_state()
+    public function test_it_cannot_change_to_invalid_state()
     {
         $this->expectException(StateException::class);
 
         $this->machine->apply('foobar');
     }
 
-    /** @test */
-    public function it_ignores_change_to_current_state()
+    public function test_it_ignores_change_to_current_state()
     {
         $this->assertSame(OnlineStateStub::offline, $this->statefulStub->getState('online_state'));
         $this->statefulStub->changeState('online_state', OnlineStateStub::online);
         $this->assertSame(OnlineStateStub::online, $this->statefulStub->getState('online_state'));
     }
 
-    /** @test */
-    public function it_only_allows_transition_to_allowed_state()
+    public function test_it_only_allows_transition_to_allowed_state()
     {
         $this->expectException(StateException::class);
 

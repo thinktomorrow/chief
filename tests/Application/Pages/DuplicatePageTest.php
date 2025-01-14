@@ -17,8 +17,7 @@ class DuplicatePageTest extends ChiefTestCase
 {
     private $source;
 
-    /** @test */
-    public function it_can_duplicate_all_fields()
+    public function test_it_can_duplicate_all_fields()
     {
         $this->assertCount(1, ArticlePage::all());
 
@@ -42,8 +41,7 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertTrue($this->source->updated_at->lt($copiedModel->updated_at));
     }
 
-    /** @test */
-    public function after_duplicating_we_go_to_the_duplicated_page()
+    public function test_after_duplicating_we_go_to_the_duplicated_page()
     {
         $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
@@ -103,8 +101,7 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertTrue($fragments[0]->fragmentModel()->isShared());
     }
 
-    /** @test */
-    public function page_assets_are_not_duplicated_but_refer_to_same_asset()
+    public function test_page_assets_are_not_duplicated_but_refer_to_same_asset()
     {
         $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 

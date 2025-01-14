@@ -17,8 +17,7 @@ class UpdatePageTest extends ChiefTestCase
 
     private ArticlePage $model;
 
-    /** @test */
-    public function it_can_update_a_model()
+    public function test_it_can_update_a_model()
     {
         $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), $this->validUpdatePageParams([
             'title' => 'nieuwe titel',
@@ -27,8 +26,7 @@ class UpdatePageTest extends ChiefTestCase
         $this->assertEquals('nieuwe titel', $this->model->fresh()->title);
     }
 
-    /** @test */
-    public function a_non_admin_cannot_update_a_model()
+    public function test_a_non_admin_cannot_update_a_model()
     {
         $this->put($this->manager($this->model)->route('update', $this->model), $this->validUpdatePageParams([
             'title' => 'nieuwe titel',
@@ -38,8 +36,7 @@ class UpdatePageTest extends ChiefTestCase
         $this->assertEquals('Originele titel', $this->model->fresh()->title);
     }
 
-    /** @test */
-    public function it_can_update_a_model_with_dynamic_field()
+    public function test_it_can_update_a_model_with_dynamic_field()
     {
         $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), $this->validUpdatePageParams([
             'custom' => 'nieuwe titel',
@@ -48,8 +45,7 @@ class UpdatePageTest extends ChiefTestCase
         $this->assertEquals('nieuwe titel', $this->model->fresh()->custom);
     }
 
-    /** @test */
-    public function it_can_update_a_model_with_dynamic_localized_field()
+    public function test_it_can_update_a_model_with_dynamic_localized_field()
     {
         $this->asAdmin()->put($this->manager($this->model)->route('update', $this->model), $this->validUpdatePageParams([
             'trans' => [
@@ -66,8 +62,7 @@ class UpdatePageTest extends ChiefTestCase
         $this->assertEquals('new title', $this->model->fresh()->dynamic('title_trans', 'en'));
     }
 
-    /** @test */
-    public function it_can_update_a_model_with_localized_field()
+    public function test_it_can_update_a_model_with_localized_field()
     {
         QuoteWithAstrotomicTranslations::migrateUp();
         chiefRegister()->resource(QuoteWithAstrotomicTranslations::class, PageManager::class);
@@ -90,8 +85,7 @@ class UpdatePageTest extends ChiefTestCase
         $this->assertEquals('title en', $model::first()->{'title_trans:en'});
     }
 
-    /** @test */
-    public function it_can_upload_a_file_field()
+    public function test_it_can_upload_a_file_field()
     {
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 

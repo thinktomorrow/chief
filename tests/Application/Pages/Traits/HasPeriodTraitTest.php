@@ -15,8 +15,7 @@ class HasPeriodTraitTest extends ChiefTestCase
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function can_have_a_period()
+    public function test_can_have_a_period()
     {
         $start_at = Carbon::now()->addDays(1);
         $end_at = Carbon::now()->addWeeks(1);
@@ -26,8 +25,7 @@ class HasPeriodTraitTest extends ChiefTestCase
         $this->assertTrue($end_at->toDateTimeString() == ArticlePage::first()->end_at->toDateTimeString());
     }
 
-    /** @test */
-    public function it_can_get_only_passed_articles()
+    public function test_it_can_get_only_passed_articles()
     {
         ArticlePage::create([
             'start_at' => Carbon::now()->subWeeks(1),
@@ -41,8 +39,7 @@ class HasPeriodTraitTest extends ChiefTestCase
         $this->assertCount(1, ArticlePage::passed()->get());
     }
 
-    /** @test */
-    public function it_can_get_only_upcoming_articles()
+    public function test_it_can_get_only_upcoming_articles()
     {
         ArticlePage::create([
             'start_at' => Carbon::now()->subWeeks(1),
@@ -56,8 +53,7 @@ class HasPeriodTraitTest extends ChiefTestCase
         $this->assertCount(1, ArticlePage::upcoming()->get());
     }
 
-    /** @test */
-    public function it_can_get_only_ongoing_articles()
+    public function test_it_can_get_only_ongoing_articles()
     {
         ArticlePage::create([
             'start_at' => Carbon::now()->subWeeks(1),
@@ -71,8 +67,7 @@ class HasPeriodTraitTest extends ChiefTestCase
         $this->assertCount(1, ArticlePage::ongoing()->get());
     }
 
-    /** @test */
-    public function it_can_articles_sorted_by_start_date()
+    public function test_it_can_articles_sorted_by_start_date()
     {
         $article1 = ArticlePage::create([
             'start_at' => Carbon::now()->subDays(1),

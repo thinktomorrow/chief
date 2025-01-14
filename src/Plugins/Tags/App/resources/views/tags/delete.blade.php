@@ -1,19 +1,16 @@
 @php
-    use Illuminate\Support\Str;$modalId = Str::random(10);
+    use Illuminate\Support\Str;
+    $modalId = Str::random(10);
 @endphp
 
-@if($tag->getUsages() > 0)
+@if ($tag->getUsages() > 0)
     <div>
-        <button
-            type="button"
-            x-data
-            x-on:click="$dispatch('open-dialog', { 'id': 'state-modal-{{ $modalId }}' })"
-        >
-            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
+        <button type="button" x-data x-on:click="$dispatch('open-dialog', { 'id': 'state-modal-{{ $modalId }}' })">
+            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white text-grey-500 shadow-none" />
         </button>
 
         @push('portals')
-            <x-chief::dialog id="state-modal-{{ $modalId }}" title="Verwijder deze tag" size="xs">
+            <x-chief::dialog.modal id="state-modal-{{ $modalId }}" title="Verwijder deze tag" size="xs">
                 <form
                     id="delete-tag-modal-form-{{ $modalId }}"
                     method="POST"
@@ -25,8 +22,9 @@
 
                 <div class="prose prose-dark prose-spacing">
                     <p>
-                        Hiermee verwijder je <b>{{ $tag->getLabel() }}</b>. Ben je zeker?
-                        Als je deze tag verwijdert, verdwijnt deze ook van alle gekoppelde pagina's.
+                        Hiermee verwijder je
+                        <b>{{ $tag->getLabel() }}</b>
+                        . Ben je zeker? Als je deze tag verwijdert, verdwijnt deze ook van alle gekoppelde pagina's.
                     </p>
                 </div>
 
@@ -35,7 +33,7 @@
                         Verwijder tag
                     </button>
                 </x-slot>
-            </x-chief::dialog>
+            </x-chief::dialog.modal>
         @endpush
     </div>
 @else
@@ -49,7 +47,7 @@
         @method('DELETE')
 
         <button type="submit" form="delete-tag-form-{{ $tag->getTagId() }}">
-            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white shadow-none text-grey-500"/>
+            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white text-grey-500 shadow-none" />
         </button>
     </form>
 @endif

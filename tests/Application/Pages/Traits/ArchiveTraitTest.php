@@ -15,8 +15,7 @@ class ArchiveTraitTest extends ChiefTestCase
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function it_can_check_if_the_model_is_archived()
+    public function test_it_can_check_if_the_model_is_archived()
     {
         $page = new ArticlePage(['current_state' => PageState::archived->getValueAsString()]);
         $this->assertTrue($page->isArchived());
@@ -25,8 +24,7 @@ class ArchiveTraitTest extends ChiefTestCase
         $this->assertFalse($page->isArchived());
     }
 
-    /** @test */
-    public function it_can_get_archived_pages()
+    public function test_it_can_get_archived_pages()
     {
         ArticlePage::create(['current_state' => PageState::archived->getValueAsString()]);
         ArticlePage::create(['current_state' => PageState::archived->getValueAsString()]);

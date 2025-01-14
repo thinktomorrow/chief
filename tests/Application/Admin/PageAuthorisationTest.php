@@ -16,8 +16,7 @@ class PageAuthorisationTest extends ChiefTestCase
         $this->page = $this->setupAndCreateArticle();
     }
 
-    /** @test */
-    public function guests_cannot_view_the_create_form()
+    public function test_guests_cannot_view_the_create_form()
     {
         $manager = $this->manager($this->page);
 
@@ -26,8 +25,7 @@ class PageAuthorisationTest extends ChiefTestCase
             ->assertRedirect(route('chief.back.login'));
     }
 
-    /** @test */
-    public function a_non_admin_cannot_update_a_page()
+    public function test_a_non_admin_cannot_update_a_page()
     {
         $manager = $this->manager($this->page);
 

@@ -4,7 +4,7 @@
 
 <x-chief::page.template title="Tag aanpassen">
     <x-slot name="hero">
-        <x-chief::page.hero title="Tag aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"/>
+        <x-chief::page.hero title="Tag aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl" />
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
@@ -13,7 +13,7 @@
             @method('PUT')
 
             <div class="space-y-4">
-                @foreach($fields as $field)
+                @foreach ($fields as $field)
                     {!! $field->render() !!}
                 @endforeach
 
@@ -36,7 +36,7 @@
     </x-chief::page.grid>
 
     @push('portals')
-        <x-chief::dialog id="delete-tag-modal-{{ $model->id }}" title="Verwijder deze tag" size="xs">
+        <x-chief::dialog.modal id="delete-tag-modal-{{ $model->id }}" title="Verwijder deze tag" size="xs">
             <form
                 id="delete-tag-modal-form-{{ $model->id }}"
                 method="POST"
@@ -48,18 +48,17 @@
 
             <div class="prose prose-dark prose-spacing">
                 <p>
-                    Hiermee verwijder je <b>{{ $model->label }}</b>. Ben je zeker?
-                    Als je deze tag verwijdert, verdwijnt deze ook van alle gekoppelde pagina's.
+                    Hiermee verwijder je
+                    <b>{{ $model->label }}</b>
+                    . Ben je zeker? Als je deze tag verwijdert, verdwijnt deze ook van alle gekoppelde pagina's.
                 </p>
             </div>
 
             <x-slot name="footer">
                 <button type="submit" form="delete-tag-modal-form-{{ $model->id }}" class="btn btn-error">
-                    <x-chief::icon-label icon="icon-trash">
-                        Verwijder tag
-                    </x-chief::icon-label>
+                    <x-chief::icon-label icon="icon-trash">Verwijder tag</x-chief::icon-label>
                 </button>
             </x-slot>
-        </x-chief::dialog>
+        </x-chief::dialog.modal>
     @endpush
 </x-chief::page.template>

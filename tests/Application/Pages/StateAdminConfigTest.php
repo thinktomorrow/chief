@@ -20,8 +20,7 @@ class StateAdminConfigTest extends ChiefTestCase
         $this->page = ArticleWithStateAdminConfig::create(['article_state' => 'offline']);
     }
 
-    /** @test */
-    public function it_can_change_state()
+    public function test_it_can_change_state()
     {
         $this->asAdmin()
             ->put($this->manager($this->page)->route('state-update', $this->page, 'article_state', 'publish'));
@@ -29,8 +28,7 @@ class StateAdminConfigTest extends ChiefTestCase
         $this->assertEquals(ArticleState::online, $this->page->refresh()->getState('article_state'));
     }
 
-    /** @test */
-    public function it_can_submit_extra_fields_when_setting_state()
+    public function test_it_can_submit_extra_fields_when_setting_state()
     {
         $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, 'article_state', 'publish'));
         $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, 'article_state', 'draft'), [
@@ -41,8 +39,7 @@ class StateAdminConfigTest extends ChiefTestCase
         $this->assertEquals('foobar', $this->page->refresh()->draft_note);
     }
 
-    /** @test */
-    public function it_can_validate_extra_fields()
+    public function test_it_can_validate_extra_fields()
     {
         $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, 'article_state', 'publish'));
         $response = $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, 'article_state', 'draft'), []);

@@ -1,7 +1,7 @@
 <div class="flex items-start justify-between w-full space-x-4">
     <div class="flex flex-wrap items-center">
         <div class="mr-3 space-x-1">
-            <a href="{{ route('chief.back.menuitem.edit', $item->getId()) }}">
+            <a href="{{ route('chief.back.menuitem.edit', $item->getNodeId()) }}">
                 <span class="font-medium leading-normal text-grey-700">{{ $item->getLabel() }}</span>
             </a>
 
@@ -18,7 +18,7 @@
 
     <div data-sortable-ignore class="flex items-center shrink-0 cursor-pointer -my-0.5">
         <a
-            href="{{ route('chief.back.menuitem.edit', $item->getId()) }}"
+            href="{{ route('chief.back.menuitem.edit', $item->getNodeId()) }}"
             title="Aanpassen"
             class="link link-primary"
         >

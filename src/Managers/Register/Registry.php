@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Register;
 
 use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
+use Thinktomorrow\Chief\Managers\Exceptions\MissingTreeResource;
 use Thinktomorrow\Chief\Managers\Exceptions\ResourceAlreadyRegistered;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Resource\TreeResource;
 
 final class Registry
 {
@@ -52,6 +54,17 @@ final class Registry
         } catch (MissingResourceRegistration $e) {
             throw new MissingResourceRegistration('No registered resource found for class ['.$modelClass.'].');
         }
+    }
+
+    public function findTreeResourceByModel(string $modelClass): TreeResource
+    {
+        $resource = $this->findResourceByModel($modelClass);
+
+        if (! $resource instanceof TreeResource || ! $resource instanceof Resource) {
+            throw new MissingTreeResource('Class ['.$modelClass.'] should implement ' . TreeResource::class .'.');
+        }
+
+        return $resource;
     }
 
     public function findManagerByModel(string $modelClass): Manager

@@ -4,15 +4,15 @@
 ])
 
 @php
-    switch($color) {
+    switch ($color) {
         case 'primary':
             $colorClasses = 'link-primary bg-grey-100 hover:bg-primary-50';
             break;
         case 'grey':
-            $colorClasses = 'link-grey bg-grey-100 hover:link-primary hover:bg-primary-50';
+            $colorClasses = 'link-grey hover:link-primary bg-grey-100 hover:bg-primary-50';
             break;
         case 'white':
-            $colorClasses = 'link-grey bg-white hover:link-primary hover:bg-primary-50';
+            $colorClasses = 'link-grey hover:link-primary bg-white hover:bg-primary-50';
             break;
         case 'error':
             $colorClasses = 'link-error bg-grey-100 hover:bg-red-50';
@@ -25,14 +25,18 @@
     }
 @endphp
 
-<span {{
-    $attributes
-        ->merge(['class' => 'inline-flex items-center p-1.5 rounded-xl link gap-2 hover:child-svg-scale-110 transition-all duration-75 ease-in-out shadow-card'])
-        ->merge(['class' => $colorClasses])
-}}>
-    @if($slot->isNotEmpty())
+<span
+    {{
+        $attributes->class([
+            'link inline-flex items-center gap-2 rounded-xl p-1.5 shadow-card transition-all duration-75 ease-in-out',
+            '[&:hover>svg]:scale-110 [&>svg]:inline-block [&>svg]:size-5 [&>svg]:transition-all [&>svg]:duration-75 [&>svg]:ease-in-out',
+            $colorClasses,
+        ])
+    }}
+>
+    @if ($slot->isNotEmpty())
         {!! $slot !!}
     @else
-        <svg class="w-5 h-5"><use xlink:href="#{{ $icon }}"></use></svg>
+        <svg><use xlink:href="{{ '#' . $icon }}"></use></svg>
     @endif
 </span>

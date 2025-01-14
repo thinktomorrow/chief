@@ -26,15 +26,25 @@ class UpdateFileField
     /** @var string the asset type as which the asset is stored.. */
     private string $assetType = 'default';
 
+    // Result log of the update process
+    private array $result = [];
+
     final public function __construct(CreateAsset $createAsset, AddAsset $addAsset, DetachAsset $detachAsset, ReorderAssets $reorderAssets)
     {
         $this->createAsset = $createAsset;
         $this->addAsset = $addAsset;
         $this->reorderAssets = $reorderAssets;
         $this->detachAsset = $detachAsset;
+
+        $this->result = [
+            'uploaded' => [],
+            'attached' => [],
+            'detached' => [],
+            'reordered' => [],
+        ];
     }
 
-    public function handle(HasAsset $model, File $field, array $input): void
+    public function handle(HasAsset $model, File $field, array $input): array
     {
         if ($field->getStorageDisk()) {
             $this->setDisk($field->getStorageDisk());
@@ -57,6 +67,8 @@ class UpdateFileField
             $this->handleDeletions($model, $field, $locale, $assetsForDeletion, $assetsForOrder);
             $this->handleReOrder($model, $field, $locale, $assetsForOrder);
         }
+
+        return $this->result;
     }
 
     protected function getAssetType(): string
@@ -81,10 +93,23 @@ class UpdateFileField
                 ->filename($filename)
                 ->save($this->getDisk(), $this->getAssetType());
 
-            $this->addAsset->handle($model, $asset, $field->getKey(), $locale, 0, $value['fieldValues'] ?? []);
+            // Asset fields are not stored via this method - should be done after file is uploaded
+            $this->addAsset->handle($model, $asset, $field->getKey(), $locale, 0, []);
 
             // Replace the temporary upload id with the asset id
             $orderedAssetIds = $orderedAssetIds->map(fn ($orderedAssetId) => $orderedAssetId == $value['id'] ? $asset->id : $orderedAssetId);
+
+            if (isset($value['fieldValues'])) {
+                app(FileApplication::class)->updateAssociatedAssetData(
+                    $model->modelReference(),
+                    $field->getKey(),
+                    $locale,
+                    $asset->id,
+                    $value['fieldValues']
+                );
+            }
+
+            $this->result['uploaded'][] = $asset->id;
         }
     }
 
@@ -98,6 +123,8 @@ class UpdateFileField
             }
 
             $this->addAsset->handle($model, Asset::find($assetValues['id']), $field->getKey(), $locale, $orderIndex, $assetValues['fieldValues'] ?? []);
+
+            $this->result['attached'][] = $assetValues['id'];
         }
     }
 
@@ -107,12 +134,16 @@ class UpdateFileField
             $this->detachAsset->handle($model, $field->getKey(), $locale, [$assetId]);
 
             $orderedAssetIds = $orderedAssetIds->reject(fn ($orderedAssetId) => $orderedAssetId == $assetId);
+
+            $this->result['detached'][] = $assetId;
         }
     }
 
     private function handleReOrder(HasAsset $model, File $field, string $locale, Collection $orderedAssetIds): void
     {
         $this->reorderAssets->handle($model, $field->getKey(), $locale, $orderedAssetIds->all());
+
+        $this->result['reordered'][] = $orderedAssetIds->all();
     }
 
     private function sluggifyFilename(string $filename): string

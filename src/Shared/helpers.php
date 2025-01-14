@@ -90,7 +90,7 @@ if (! function_exists('chiefmenu')) {
             $locale = app()->getLocale();
         }
 
-        return app(\Thinktomorrow\Chief\Site\Menu\ChiefMenuFactory::class)->forSite($key, $locale);
+        return \Thinktomorrow\Chief\Site\Menu\Menu::forSite($key, $locale);
     }
 }
 

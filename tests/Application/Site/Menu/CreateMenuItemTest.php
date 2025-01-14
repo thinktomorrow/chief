@@ -10,24 +10,22 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class CreateMenuItemTest extends ChiefTestCase
 {
-    /** @test */
-    public function admin_can_view_the_create_form()
+    public function test_admin_can_view_the_create_form()
     {
+        $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertViewIs('chief::admin.menu.create')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
-    /** @test */
-    public function guests_cannot_view_the_create_form()
+    public function test_guests_cannot_view_the_create_form()
     {
         $response = $this->get(route('chief.back.menuitem.create', 'main'));
         $response->assertStatus(302)
-                 ->assertRedirect(route('chief.back.login'));
+            ->assertRedirect(route('chief.back.login'));
     }
 
-    /** @test */
-    public function only_authenticated_admin_can_create_a_menu_item()
+    public function test_only_authenticated_admin_can_create_a_menu_item()
     {
         $response = $this->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url' => 'https://thinktomorrow.be']));
 
@@ -35,8 +33,7 @@ class CreateMenuItemTest extends ChiefTestCase
         $this->assertCount(0, MenuItem::all());
     }
 
-    /** @test */
-    public function creating_a_new_menu_item()
+    public function test_creating_a_new_menu_item()
     {
         $response = $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
@@ -62,8 +59,7 @@ class CreateMenuItemTest extends ChiefTestCase
         $this->assertNull($item->getOwnerLabel('en'));
     }
 
-    /** @test */
-    public function creating_a_new_menu_item_emits_event()
+    public function test_creating_a_new_menu_item_emits_event()
     {
         Event::fake();
 
@@ -72,8 +68,7 @@ class CreateMenuItemTest extends ChiefTestCase
         Event::assertDispatched(MenuItemCreated::class);
     }
 
-    /** @test */
-    public function creating_a_new_internal_menu_item()
+    public function test_creating_a_new_internal_menu_item()
     {
         $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
         $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
@@ -101,8 +96,7 @@ class CreateMenuItemTest extends ChiefTestCase
         $this->assertEquals('artikel pagetitle en', $item->getOwnerLabel('en'));
     }
 
-    /** @test */
-    public function a_menuitem_can_be_nested()
+    public function test_a_menuitem_can_be_nested()
     {
         $parent = MenuItem::create(['type' => 'custom', 'label' => ['nl' => 'foobar'], 'url' => ['nl' => 'http://google.com']]);
 
@@ -119,8 +113,7 @@ class CreateMenuItemTest extends ChiefTestCase
         $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
     }
 
-    /** @test */
-    public function url_field_is_sanitized_if_scheme_is_missing()
+    public function test_url_field_is_sanitized_if_scheme_is_missing()
     {
         $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
@@ -131,14 +124,12 @@ class CreateMenuItemTest extends ChiefTestCase
         $this->assertEquals('https://thinktomorrow.be', MenuItem::first()->url);
     }
 
-    /** @test */
-    public function label_is_required()
+    public function test_label_is_required()
     {
         $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
     }
 
-    /** @test */
-    public function type_internal_makes_owner_required()
+    public function test_type_internal_makes_owner_required()
     {
         $this->assertValidation(new MenuItem(), 'owner_reference', $this->validParams(['type' => 'internal', 'owner_reference' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
     }

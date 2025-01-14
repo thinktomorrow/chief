@@ -27,16 +27,14 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         $this->fragmentManager = $this->manager($this->fragment);
     }
 
-    /** @test */
-    public function a_fragment_is_default_online()
+    public function test_a_fragment_is_default_online()
     {
         $this->firstFragment($this->owner, function ($fragment) {
             $this->assertTrue($fragment->fragmentModel()->isOnline());
         });
     }
 
-    /** @test */
-    public function it_can_be_put_offline()
+    public function test_it_can_be_put_offline()
     {
         Event::fake();
 
@@ -54,8 +52,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         Event::assertDispatched(FragmentPutOffline::class);
     }
 
-    /** @test */
-    public function it_can_be_put_online()
+    public function test_it_can_be_put_online()
     {
         Event::fake();
 
@@ -70,8 +67,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         Event::assertDispatched(FragmentPutOnline::class);
     }
 
-    /** @test */
-    public function it_only_renders_children_that_are_online()
+    public function test_it_only_renders_children_that_are_online()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
             'online_status' => FragmentStatus::offline->value,
@@ -81,8 +77,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         $this->assertRenderedFragments($this->owner, "");
     }
 
-    /** @test */
-    public function it_renders_offline_children_when_admin_is_previewing()
+    public function test_it_renders_offline_children_when_admin_is_previewing()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
             'online_status' => FragmentStatus::offline->value,
@@ -97,8 +92,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         $this->assertRenderedFragments($this->owner, "THIS IS QUOTE FRAGMENT\n");
     }
 
-    /** @test */
-    public function it_does_not_render_offline_children_when_admin_is_not_previewing()
+    public function test_it_does_not_render_offline_children_when_admin_is_not_previewing()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
             'online_status' => FragmentStatus::offline->value,

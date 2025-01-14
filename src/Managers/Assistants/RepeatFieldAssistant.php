@@ -33,7 +33,7 @@ trait RepeatFieldAssistant
 
         $model = $id ? $this->fieldsModel($id) : $this->managedModelClassInstance(...$this->resource->getInstanceAttributes($request));
 
-        $field = $this->resource->field($model, $fieldKey);
+        $field = $this->resource->nestedField($model, $fieldKey);
 
         $repeatSection = $field->getRepeatSection((int) $index, [], $locale, $prefix);
 

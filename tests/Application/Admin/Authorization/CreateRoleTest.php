@@ -9,8 +9,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class CreateRoleTest extends ChiefTestCase
 {
-    /** @test */
-    public function only_developer_can_view_the_create_form()
+    public function test_only_developer_can_view_the_create_form()
     {
         $this->disableExceptionHandling();
         $developer = $this->fakeUser();
@@ -21,8 +20,7 @@ class CreateRoleTest extends ChiefTestCase
                  ->assertStatus(200);
     }
 
-    /** @test */
-    public function regular_admin_cannot_view_the_create_form()
+    public function test_regular_admin_cannot_view_the_create_form()
     {
         $response = $this->asAdminWithoutRole()->get(route('chief.back.roles.create'));
 
@@ -31,8 +29,7 @@ class CreateRoleTest extends ChiefTestCase
                  ->assertSessionHas('messages.error');
     }
 
-    /** @test */
-    public function storing_a_new_role()
+    public function test_storing_a_new_role()
     {
         $response = $this->actingAs($this->developer(), 'chief')
             ->post(route('chief.back.roles.store'), $this->validParams());
@@ -44,8 +41,7 @@ class CreateRoleTest extends ChiefTestCase
         $this->assertNewValues(Role::findByName('new name'));
     }
 
-    /** @test */
-    public function only_authenticated_developer_can_store_a_role()
+    public function test_only_authenticated_developer_can_store_a_role()
     {
         $response = $this->post(route('chief.back.roles.store'), $this->validParams());
 
@@ -53,8 +49,7 @@ class CreateRoleTest extends ChiefTestCase
         $this->assertCount(AuthorizationDefaults::roles()->count(), Role::all()); // default roles were already present
     }
 
-    /** @test */
-    public function when_creating_role_name_is_required()
+    public function test_when_creating_role_name_is_required()
     {
         $this->assertValidation(
             new Role(),
@@ -66,8 +61,7 @@ class CreateRoleTest extends ChiefTestCase
         );
     }
 
-    /** @test */
-    public function when_creating_role_name_must_be_unique()
+    public function test_when_creating_role_name_must_be_unique()
     {
         $this->assertValidation(
             new Role(),
@@ -79,8 +73,7 @@ class CreateRoleTest extends ChiefTestCase
         );
     }
 
-    /** @test */
-    public function when_creating_role_permissions_are_required()
+    public function test_when_creating_role_permissions_are_required()
     {
         $this->assertValidation(
             new Role(),
@@ -92,8 +85,7 @@ class CreateRoleTest extends ChiefTestCase
         );
     }
 
-    /** @test */
-    public function when_creating_role_permissions_must_be_passed_as_array()
+    public function test_when_creating_role_permissions_must_be_passed_as_array()
     {
         $this->assertValidation(
             new Role(),

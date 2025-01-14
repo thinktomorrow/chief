@@ -51,7 +51,8 @@ class UpdateFileFieldTest extends ChiefTestCase
         ]);
         $this->assertCount(1, $this->model->assets('thumb'));
         $this->assertEquals('image.png', $this->model->asset('thumb', 'nl')->getFileName());
-        $this->assertEquals('I belong to this file', $this->model->asset('thumb', 'nl')->getPivotData('caption'));
+        $this->assertEquals('I belong to this file', $this->model->asset('thumb', 'nl')->getData('caption'));
+        $this->assertNull($this->model->asset('thumb', 'nl')->getPivotData('caption'));
     }
 
     public function test_it_can_store_uploads_per_locale()
@@ -258,7 +259,7 @@ class UpdateFileFieldTest extends ChiefTestCase
                         'originalName' => 'image.png',
                         'mimeType' => 'image/png',
                         'fieldValues' => [
-                            'caption' => 'I belong to this file',
+                            'caption' => 'I am a generic field value',
                         ],
                     ],
                 ],
@@ -266,6 +267,62 @@ class UpdateFileFieldTest extends ChiefTestCase
         ]);
 
         $this->assertCount(1, $this->model->assets('thumb'));
-        $this->assertEquals('I belong to this file', $this->model->asset('thumb')->getPivotData('caption'));
+        $this->assertEquals('I am a generic field value', $this->model->asset('thumb')->getData('caption'));
+        $this->assertNull($this->model->asset('thumb')->getPivotData('caption'));
+    }
+
+    public function test_it_can_store_model_specific_field_values_on_uploads()
+    {
+        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
+
+        $this->saveFileField($this->resource, $this->model, 'thumb_enhanced', [
+            'nl' => [
+                'uploads' => [
+                    [
+                        'id' => 'xxx',
+                        'path' => Storage::path('test/image-temp-name.png'),
+                        'originalName' => 'image.png',
+                        'mimeType' => 'image/png',
+                        'fieldValues' => [
+                            'caption' => 'I belong to this file',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertCount(1, $this->model->assets('thumb_enhanced'));
+        $this->assertEquals('I belong to this file', $this->model->asset('thumb_enhanced')->getPivotData('caption'));
+        $this->assertNull($this->model->asset('thumb_enhanced')->getData('caption'));
+    }
+
+    public function test_it_can_store_model_specific_localized_field_values_on_uploads()
+    {
+        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
+
+        $this->saveFileField($this->resource, $this->model, 'thumb_enhanced', [
+            'nl' => [
+                'uploads' => [
+                    [
+                        'id' => 'xxx',
+                        'path' => Storage::path('test/image-temp-name.png'),
+                        'originalName' => 'image.png',
+                        'mimeType' => 'image/png',
+                        'fieldValues' => [
+                            'alt' => [
+                                'nl' => 'Ik ben een alternatieve tekst',
+                                'en' => 'I am an alternative text',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertCount(1, $this->model->assets('thumb_enhanced'));
+        $this->assertEquals([
+            'nl' => 'Ik ben een alternatieve tekst',
+            'en' => 'I am an alternative text',
+        ], $this->model->asset('thumb_enhanced')->getPivotData('alt'));
     }
 }

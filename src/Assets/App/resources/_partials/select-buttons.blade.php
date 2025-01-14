@@ -1,37 +1,43 @@
-<div class="flex flex-wrap gap-1.5 mt-3">
-    @if($allowToUploadFiles())
-        <label for="{{ $getFieldId() }}" class="cursor-pointer">
+<div class="mt-3 flex flex-wrap gap-1.5">
+    @if ($allowToUploadFiles())
+        <div>
             <input
                 type="file"
                 id="{{ $getFieldId() }}"
                 {{ $allowMultiple() ? 'multiple' : '' }}
                 accept="{{ $acceptedMimeTypes() ?: '' }}"
-                x-on:change="() => { uploadFiles([...$el.files]) }"
+                x-on:change="
+                    () => {
+                        uploadFiles([...$el.files])
+                    }
+                "
                 class="hidden"
             />
 
-            <x-chief::button>
-                <svg><use xlink:href="#icon-upload"></use></svg>
-                @if($allowMultiple()) Upload een nieuw bestand @else Upload een ander bestand @endif
-            </x-chief::button>
-        </label>
+            <x-chief-table::button for="{{ $getFieldId() }}" size="sm" variant="grey">
+                <x-chief::icon.upload />
+                <span>
+                    @if ($allowMultiple())
+                        Upload een nieuw bestand
+                    @else
+                        Upload een ander bestand
+                    @endif
+                </span>
+            </x-chief-table::button>
+        </div>
     @endif
 
-    @if($allowToChooseFiles())
-        <button wire:click="openFilesChoose" type="button">
-            <x-chief::button>
-                <svg><use xlink:href="#icon-plus"></use></svg>
-                Kies uit de mediabibliotheek
-            </x-chief::button>
-        </button>
+    @if ($allowToChooseFiles())
+        <x-chief-table::button wire:click="openFilesChoose" size="sm" variant="grey">
+            <x-chief::icon.plus-sign />
+            <span>Kies uit de mediabibliotheek</span>
+        </x-chief-table::button>
     @endif
 
-    @if($allowToChooseExternalFiles())
-        <button wire:click="openFilesChooseExternal" type="button">
-            <x-chief::button>
-                <svg><use xlink:href="#icon-link"></use></svg>
-                Link een extern bestand
-            </x-chief::button>
-        </button>
+    @if ($allowToChooseExternalFiles())
+        <x-chief-table::button wire:click="openFilesChooseExternal" size="sm" variant="grey">
+            <x-chief::icon.link />
+            <span>Link een extern bestand</span>
+        </x-chief-table::button>
     @endif
 </div>

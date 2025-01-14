@@ -17,8 +17,7 @@ class HealthMonitorTest extends ChiefTestCase
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function checks_must_implement_healthcheck_interface()
+    public function test_checks_must_implement_healthcheck_interface()
     {
         $this->expectException(InvalidClassException::class);
 
@@ -29,8 +28,7 @@ class HealthMonitorTest extends ChiefTestCase
         app(Monitor::class)->check();
     }
 
-    /** @test */
-    public function the_homepagecheck_notifies_if_no_homepage_is_set()
+    public function test_the_homepagecheck_notifies_if_no_homepage_is_set()
     {
         ArticlePage::create();
 
@@ -39,8 +37,7 @@ class HealthMonitorTest extends ChiefTestCase
         $this->assertStringContainsString('Het lijkt erop dat er geen homepagina ingesteld is', session('alertbarmessage'));
     }
 
-    /** @test */
-    public function the_homepagecheck_notifies_if_the_homepage_is_offline()
+    public function test_the_homepagecheck_notifies_if_the_homepage_is_offline()
     {
         $model = ArticlePage::create();
 

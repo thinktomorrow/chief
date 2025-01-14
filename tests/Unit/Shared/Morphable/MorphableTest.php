@@ -24,8 +24,7 @@ class MorphableTest extends ChiefTestCase
         parent::tearDown();
     }
 
-    /** @test */
-    public function it_returns_expected_instance_on_create()
+    public function test_it_returns_expected_instance_on_create()
     {
         $model = MorphableModel::create(['morph_key' => ArticleModel::class]);
         $this->assertInstanceOf(ArticleModel::class, $model);
@@ -37,8 +36,7 @@ class MorphableTest extends ChiefTestCase
         $this->assertInstanceOf(ArticleModel::class, $instance);
     }
 
-    /** @test */
-    public function it_can_use_key_from_relation_morphmap()
+    public function test_it_can_use_key_from_relation_morphmap()
     {
         $instance = MorphableModel::create(['morph_key' => 'article']);
         $this->assertInstanceOf(ArticleModel::class, $instance);
@@ -50,8 +48,7 @@ class MorphableTest extends ChiefTestCase
         $this->assertInstanceOf(ArticleModel::class, $instance);
     }
 
-    /** @test */
-    public function it_returns_expected_instance_on_find()
+    public function test_it_returns_expected_instance_on_find()
     {
         $page = MorphableModel::create(['morph_key' => 'article']);
 
@@ -68,8 +65,7 @@ class MorphableTest extends ChiefTestCase
         $this->assertInstanceOf(ArticleModel::class, $instance);
     }
 
-    /** @test */
-    public function a_morph_key_is_by_default_based_on_the_morph_class()
+    public function test_a_morph_key_is_by_default_based_on_the_morph_class()
     {
         $page = ArticleModel::create();
 
@@ -78,8 +74,7 @@ class MorphableTest extends ChiefTestCase
         $this->assertEquals($instance->getMorphClass(), $instance->morph_key);
     }
 
-    /** @test */
-    public function it_returns_expected_instance_on_relations()
+    public function test_it_returns_expected_instance_on_relations()
     {
         $this->disableExceptionHandling();
         $parent = ArticleModel::create();
@@ -91,8 +86,7 @@ class MorphableTest extends ChiefTestCase
         $this->assertInstanceOf(ArticleModel::class, $parent->children->first());
     }
 
-    /** @test */
-    public function it_throws_exception_when_morph_key_cannot_be_found()
+    public function test_it_throws_exception_when_morph_key_cannot_be_found()
     {
         $this->expectException(NotFoundMorphKey::class);
 

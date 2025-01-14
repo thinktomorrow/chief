@@ -11,7 +11,7 @@ trait HasOptions
     protected array|Closure $options = [];
 
     private bool $sanitizeOptions = true;
-    
+
     public function rawOptions(array|Closure $options): static
     {
         return $this->options($options, false);
@@ -26,12 +26,18 @@ trait HasOptions
         return $this;
     }
 
+    public function hasOptionGroups(): bool
+    {
+        return PairOptions::areOptionsGrouped($this->getOptions());
+        //        return PairOptions::areOptionsGrouped($this->options);
+    }
+
     public function getOptions(?string $locale = null): array
     {
         $options = $this->options;
 
         if (is_callable($options)) {
-            $options = call_user_func_array($options, [$this, $this->getModel(), $locale]);
+            $options = call_user_func_array($options, $this->getOptionsCallableParameters($locale));
         }
 
         if ($this->sanitizeOptions) {
@@ -39,5 +45,10 @@ trait HasOptions
         }
 
         return $options;
+    }
+
+    private function getOptionsCallableParameters(?string $locale = null): array
+    {
+        return [$this, $this->getModel(), $locale];
     }
 }

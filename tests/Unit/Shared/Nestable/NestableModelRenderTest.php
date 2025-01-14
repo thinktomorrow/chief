@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 
 class NestableModelRenderTest extends ChiefTestCase
 {
@@ -16,8 +16,8 @@ class NestableModelRenderTest extends ChiefTestCase
 
         $this->app['view']->addNamespace('test-views', __DIR__ . '/../../../Shared/stubs/views');
 
-        chiefRegister()->resource(NestableModelStub::class);
-        NestableModelStub::migrateUp();
+        chiefRegister()->resource(NestableModelResourceStub::class);
+        NestableModelResourceStub::migrateUp();
         $this->defaultNestables();
     }
 
@@ -26,8 +26,8 @@ class NestableModelRenderTest extends ChiefTestCase
         $node = $this->findNode('third');
 
         $this->assertStringContainsString(
-            '<h1>' . $node->getModel()->title . '</h1>',
-            $node->getModel()->response()->getOriginalContent(),
+            '<h1>' . $node->title . '</h1>',
+            $node->response()->getOriginalContent(),
         );
     }
 
@@ -36,8 +36,8 @@ class NestableModelRenderTest extends ChiefTestCase
         $node = $this->findNode('first');
 
         $this->assertStringContainsString(
-            '<h1>' . $node->getModel()->title . '</h1>',
-            $node->getModel()->response()->getOriginalContent(),
+            '<h1>' . $node->title . '</h1>',
+            $node->response()->getOriginalContent(),
         );
     }
 }

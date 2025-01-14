@@ -42,16 +42,14 @@ final class EditPageTest extends ChiefTestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_visit_the_edit_page()
+    public function test_it_can_visit_the_edit_page()
     {
         $this->disableExceptionHandling();
         $this->asAdmin()->get($this->manager->route('edit', ArticlePage::first()))
             ->assertStatus(200);
     }
 
-    /** @test */
-    public function guests_cannot_visit_the_edit_form()
+    public function test_guests_cannot_visit_the_edit_form()
     {
         auth('chief')->logout();
 
@@ -60,8 +58,7 @@ final class EditPageTest extends ChiefTestCase
             ->assertRedirect(route('chief.back.login'));
     }
 
-    /** @test */
-    public function it_can_update_a_page()
+    public function test_it_can_update_a_page()
     {
         $this->asAdmin()->put($this->manager->route('update', ArticlePage::first()), [
             'title' => 'updated title',
@@ -81,8 +78,7 @@ final class EditPageTest extends ChiefTestCase
         $this->assertEquals('updated nl content', $article->content_trans);
     }
 
-    /** @test */
-    public function it_emits_an_model_updated_event()
+    public function test_it_emits_an_model_updated_event()
     {
         Event::fake();
 

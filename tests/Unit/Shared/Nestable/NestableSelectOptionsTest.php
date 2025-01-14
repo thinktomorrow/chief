@@ -3,23 +3,21 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\SelectOptions;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableRepository;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\SelectOptions;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
 
 final class NestableSelectOptionsTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    private NestableRepository $repository;
-
     public function setUp(): void
     {
         parent::setUp();
 
-        chiefRegister()->resource(NestableModelStub::class);
-        NestableModelStub::migrateUp();
+        chiefRegister()->resource(NestableModelResourceStub::class);
+        NestableModelResourceStub::migrateUp();
     }
 
     public function test_it_can_get_empty_select_options()

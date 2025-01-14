@@ -41,6 +41,7 @@ class ArticlePageResource implements PageResource
         yield File::make('thumb');
         yield File::make('thumb_enhanced')->items([
             Text::make('caption'),
+            Text::make('alt')->locales(['nl', 'en']),
         ]);
         yield File::make('thumb_trans')->locales(['nl', 'en'])->tag('edit');
         yield Image::make('thumb_image')->tag('edit');
