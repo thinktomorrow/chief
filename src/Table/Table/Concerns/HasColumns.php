@@ -9,16 +9,11 @@ trait HasColumns
 {
     private array $columns = [];
 
-    /** Specific order of columns given by the sequence of the keys. */
-    private array $columnKeysInOrder = [];
-
-    private bool $areColumnsOrdered = false;
-
     public function columns(array $columns): static
     {
         $this->columns = array_merge($this->columns, array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns));
 
-        $this->updateHeaders();
+        $this->rebaseHeaders();
 
         return $this;
     }
@@ -37,42 +32,24 @@ trait HasColumns
             }
         }
 
-        $this->updateHeaders();
+        $this->rebaseHeaders();
 
         return $this;
     }
 
-    public function orderColumns(array $columnKeysInOrder): static
+    public function orderColumns(array $keysInOrder): static
     {
-        $this->columnKeysInOrder = $columnKeysInOrder;
-
-        return $this;
-    }
-
-    public function getColumns(): array
-    {
-        $this->moveColumnsInOrder();
-
-        return $this->columns;
-    }
-
-    private function moveColumnsInOrder(): void
-    {
-        if ($this->areColumnsOrdered || count($this->columnKeysInOrder) === 0) {
-            return;
-        }
-
-        $columns = [];
-        $unOrderedColumns = [];
+        $ordered = [];
+        $unOrdered = [];
 
         foreach ($this->columns as $column) {
             foreach ($column->getItems() as $item) {
-                if (in_array($item->getKey(), $this->columnKeysInOrder)) {
-                    $columns[(int) array_search($item->getKey(), $this->columnKeysInOrder)] = $column;
+                if (in_array($item->getKey(), $keysInOrder)) {
+                    $ordered[(int) array_search($item->getKey(), $keysInOrder)] = $column;
 
                     break;
                 } else {
-                    $unOrderedColumns[] = $column;
+                    $unOrdered[] = $column;
 
                     break;
                 }
@@ -80,15 +57,21 @@ trait HasColumns
         }
 
         // Sort by non-assoc keys so the desired order is maintained
-        ksort($columns);
+        ksort($ordered);
 
-        $this->columns = array_merge($columns, $unOrderedColumns);
+        $this->columns = array_merge($ordered, $unOrdered);
 
-        $this->areColumnsOrdered = true;
-        $this->updateHeaders();
+        $this->rebaseHeaders();
+
+        return $this;
     }
 
-    private function updateHeaders(): void
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+    private function rebaseHeaders(): void
     {
         $this->headers = collect($this->columns)
             ->reject(fn ($column) => empty($column->getItems()))
