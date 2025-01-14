@@ -79,7 +79,8 @@ trait HasColumns
             }
         }
 
-        sort($columns);
+        // Sort by non-assoc keys so the desired order is maintained
+        ksort($columns);
 
         $this->columns = array_merge($columns, $unOrderedColumns);
 
