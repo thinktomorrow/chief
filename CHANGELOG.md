@@ -4,6 +4,10 @@ All notable changes to the `chief` application template will be documented in th
 the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
+## Unreleased
+
+Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
+
 ## 2025-01-06 - 0.9.0
 
 - Changed: minimum PHP version required is 8.2.
@@ -13,11 +17,13 @@ principles.
 - Changed: Tree retrieval. Nestable logic, classes and tree retrieval has changed. All nestable resources and models, like Page, need to be adjusted.
 
 ### General
+
 - Removed: Some icons in the main symbols file weren't in use anymore and are therefore removed from Chief. This might
   cause some project specific icons to not show up anymore, e.g. `#icon-rectangle-group` in project nav files.
 - Changed: Extracted partial logic from `StateAssistant` to a `UpdateState` as an action for reuse between commands.
 
 ### A new Table component
+
 - Removed `Resource::getIndexViewType` is no longer used. From now on only one index view is used instead of the former
   options (index and table)
 - Removed `Resource::getArchivedIndexView` is no longer used. The index view is used for the archived models as well.
@@ -41,6 +47,7 @@ principles.
       `Repository::syncTags(string $ownerType, array $ownerIds, array $tagIds)`.
 
 ### Tree retrieval
+
 The nestable logic has been simplified. The vine package is updated and the Chief tree retrieval has been updated
 accordingly.
 
@@ -126,4 +133,3 @@ Previously all Chief icons were defined in a single `symbols.blade.php` file. Th
 - Changed: `x-chief::window` has a more compact styling to match the new table component.
 - Removed: All old layout views. These only existed to provide a fallback for custom Chief views in older projects.
 - Probably so much more...
-
