@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 trait PageDefaultWithNestableUrl
 {
-    use PageDefaults{
+    use PageDefaults {
         baseUrlSegment as defaultBaseUrlSegment;
     }
 

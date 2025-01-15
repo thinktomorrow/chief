@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
 
-interface Field extends Validatable, Localizable
+interface Field extends Validatable, LocalizedField
 {
     public function key(string $key): static;
+
     public function getKey(): string;
 
     // Formgroup elements
     public function id(string $id): static;
+
     public function getId(?string $locale = null): string;
     public function name(string $name): static;
     public function getName(?string $locale = null): string;

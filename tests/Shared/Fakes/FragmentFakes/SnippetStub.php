@@ -6,16 +6,13 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class SnippetStub implements Fragmentable, FragmentsOwner
+class SnippetStub extends BaseFragment implements Fragment, FragmentsOwner
 {
-    use FragmentableDefaults;
-    use ForwardFragmentProperties;
     use OwningFragments;
 
     public static function resourceKey(): string

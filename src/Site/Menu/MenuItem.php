@@ -148,7 +148,7 @@ class MenuItem extends Model implements Node
 
     public function dynamicLocales(): array
     {
-        return config('chief.locales', []);
+        return \Thinktomorrow\Chief\Sites\ChiefSites::locales();
     }
 
     public function getId()

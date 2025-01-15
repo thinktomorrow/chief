@@ -61,7 +61,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         ];
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->afterApplicationCreated(function () {
             // Code after application created.
@@ -136,7 +136,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         // For our tests is it required to have 2 languages: nl and en.
         $app['config']->set('app.locale', 'nl'); // Default locale is considered nl
-        $app['config']->set('chief.locales', ['nl', 'en']);
+        $app['config']->set('chief.locales.admin', ['nl', 'en']);
         $app['config']->set('squanto', require $this->getTempDirectory('config/squanto.php'));
 
         $app['config']->set('activitylog.default_log_name', 'default');

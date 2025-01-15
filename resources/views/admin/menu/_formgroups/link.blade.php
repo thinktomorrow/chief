@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
 <x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
     <x-chief::input.label required>Link</x-chief::input.label>
 
@@ -6,11 +7,11 @@
         <div class="space-y-2">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
-                    id="type-internal"
-                    name="type"
-                    value="internal"
-                    :checked="old('type', $menuitem->type) == 'internal'"
-                    x-on:click="type = 'internal'"
+                        id="type-internal"
+                        name="type"
+                        value="internal"
+                        :checked="old('type', $menuitem->type) == 'internal'"
+                        x-on:click="type = 'internal'"
                 />
 
                 <x-chief::input.label for="type-internal" unset class="body body-dark leading-5">
@@ -46,29 +47,29 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if (count(config('chief.locales')) > 1)
+                @if(count(ChiefSites::locales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach (config('chief.locales') as $locale)
-                            <x-chief::tabs.tab tab-id="{{ $locale }}">
+                        @foreach(ChiefSites::locales() as $locale)
+                            <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                 <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
-                                        id="trans-{{ $locale }}-url"
-                                        name="trans[{{ $locale }}][url]"
-                                        value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
-                                        placeholder="e.g. https://google.com"
+                                            id="trans-{{ $locale }}-url"
+                                            name="trans[{{ $locale }}][url]"
+                                            value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
+                                            placeholder="e.g. https://google.com"
                                     />
                                 </x-chief::input.group>
                             </x-chief::tabs.tab>
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach (config('chief.locales') as $locale)
+                    @foreach(ChiefSites::locales() as $locale)
                         <x-chief::input.group :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
-                                id="trans-{{ $locale }}-url"
-                                name="trans[{{ $locale }}][url]"
-                                value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
-                                placeholder="e.g. https://google.com"
+                                    id="trans-{{ $locale }}-url"
+                                    name="trans[{{ $locale }}][url]"
+                                    value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
+                                    placeholder="e.g. https://google.com"
                             />
                         </x-chief::input.group>
                     @endforeach
