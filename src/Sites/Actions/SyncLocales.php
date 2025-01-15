@@ -4,16 +4,16 @@ namespace Thinktomorrow\Chief\Sites\Actions;
 
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
+use Thinktomorrow\Chief\Sites\BelongsToSites;
 
 class SyncLocales
 {
-    public function handle(MultiSiteable & ReferableModel $model, array $locales): void
+    public function handle(BelongsToSites & ReferableModel $model, array $locales): void
     {
-        $previousState = $model->getSiteLocales();
+        $previousState = $model->getSites();
 
         $model->saveSiteLocales($model, $locales);
 
-        event(new LocalesUpdated($model->modelReference(), $model->getSiteLocales(), $previousState));
+        event(new LocalesUpdated($model->modelReference(), $model->getSites(), $previousState));
     }
 }

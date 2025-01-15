@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
+use Thinktomorrow\Chief\Sites\BelongsToSites;
 
-interface Page extends ReferableModel, MultiSiteable, ContextOwner, FragmentsOwner, Visitable, ViewableContract, StatefulContract, HasAsset
+interface Page extends ReferableModel, BelongsToSites, ContextOwner, FragmentsOwner, Visitable, ViewableContract, StatefulContract, HasAsset
 {
 }

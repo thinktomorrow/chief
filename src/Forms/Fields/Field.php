@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalisedField;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
 
-interface Field extends Validatable, LocalisedField
+interface Field extends Validatable, LocalizedField
 {
     public function key(string $key): static;
 

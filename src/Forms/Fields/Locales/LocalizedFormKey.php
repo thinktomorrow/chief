@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields\Common;
+namespace Thinktomorrow\Chief\Forms\Fields\Locales;
+
+use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 
 class LocalizedFormKey
 {

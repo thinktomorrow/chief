@@ -2,9 +2,11 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Sites\UI\Livewire\ResourceSites;
+use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SitesBox;
 
 class SitesServiceProvider extends ServiceProvider
 {
@@ -12,13 +14,17 @@ class SitesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-sites', __DIR__ . '/UI/views');
 
-        Livewire::component('chief-wire::resource-sites', ResourceSites::class);
+        Livewire::component('chief-wire::resource-sites', SitesBox::class);
     }
 
     public function register()
     {
-        $this->app->singleton(ChiefSites::class, function () {
-            return ChiefSites::fromArray(config('chief.sites'));
+//        $this->app->singleton(ChiefSites::class, function () {
+//            return ChiefSites::fromArray(config('chief.sites'));
+//        });
+
+        $this->app->bind(SitemapXml::class, function () {
+            return new SitemapXml(new Client(['verify' => false]));
         });
     }
 }

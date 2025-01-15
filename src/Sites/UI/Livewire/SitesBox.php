@@ -7,24 +7,27 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
-class ResourceSites extends Component
+class SitesBox extends Component
 {
     use ShowsAsDialog;
 
     public string $resourceKey;
+    public string $modelReference;
+    public array $modelSites;
+
     public array $activeLocales = [];
     public array $currentLocales = [];
-    public string $modelReference;
     public bool $showConfirmButton = false;
     public $warningMessage;
     public bool $isSaving = false;
 
-    public function mount(string $resourceKey, ModelReference $modelReference, array $locales)
+    public function mount(string $resourceKey, ModelReference $modelReference, ChiefSites $sites)
     {
         $this->resourceKey = $resourceKey;
         $this->modelReference = $modelReference->get();
-        $this->activeLocales = $this->currentLocales = $locales;
+        $this->modelSites = $sites->toArray();
     }
 
     public function submit()
@@ -93,7 +96,7 @@ class ResourceSites extends Component
 
     public function render()
     {
-        return view('chief-sites::resource-locales', [
+        return view('chief-sites::sites-box', [
             //
         ]);
     }

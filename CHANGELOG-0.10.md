@@ -4,7 +4,7 @@ All notable changes to the `chief` application template will be documented in th
 the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## Unreleased - upcoming 0.9.0
+## Unreleased - upcoming 0.10.0
 Not backward compatible for fragment. Please run migrations since this update involves some database changes as well.
 
 todo: fields owner as parameter resource owner and fragment if nested. Fields parameter of fragments is not resource so first param fragment is not needed.
@@ -31,12 +31,13 @@ class Image extends BaseFragment
 }
 ```
 - Moved trait `Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties` to `Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties`. It can also be removed because this is included in the BaseFragment class.
+- Renamed interface `Thinktomorrow\Chief\Fragments\Fragmentable` to `Thinktomorrow\Chief\Fragments\Fragment`.
+- Deprecated trait `Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults` in favor of the BaseFragment abstract class.
 - Moved interface`Thinktomorrow\Chief\Fragments\Assistants\HasBookmark` to `Thinktomorrow\Chief\Fragments\Sections\HasBookmark`. 
 - Deprecated interface `Thinktomorrow\Chief\ManagedModels\Presets\Page`. Use `Thinktomorrow\Chief\Models\Page`.
 - Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults`. Use `Thinktomorrow\Chief\Models\PageDefaults`.
 - Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\ModelDefaults`. Use `Thinktomorrow\Chief\Models\ModelDefaults`.
 - Deprecated interface `Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState`. Use `Thinktomorrow\Chief\Models\ShowsPageState`.
-- Renamed interface `Thinktomorrow\Chief\Fragments\Fragmentable` to ``Thinktomorrow\Chief\Fragments\Fragment``.
 - Removed interface `Thinktomorrow\Chief\ManagedModels\Presets\Fragment`. Replaced by new interface `Thinktomorrow\Chief\Fragments\Fragment`.
 - Changed: `Thinktomorrow\Chief\Models\ModelDefaults` is slimmed down and no longer contains the `Thinktomorrow\AssetLibrary\InteractsWithAssets` and `Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable` trait behaviour. You'll need to add this and the necessary interfaces to your projects models if required.
 

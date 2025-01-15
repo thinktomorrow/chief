@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
-use Thinktomorrow\Chief\Fragments\UI\Components\SidebarFragment;
 
 class FragmentsServiceProvider extends ServiceProvider
 {

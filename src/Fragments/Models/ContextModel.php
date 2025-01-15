@@ -6,12 +6,12 @@ namespace Thinktomorrow\Chief\Fragments\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
-use Thinktomorrow\Chief\Sites\MultiSiteableDefault;
+use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\BelongsToSitesDefault;
 
-final class ContextModel extends Model implements MultiSiteable
+final class ContextModel extends Model implements BelongsToSites
 {
-    use MultiSiteableDefault;
+    use BelongsToSitesDefault;
 
     public $table = "contexts";
     public $guarded = [];

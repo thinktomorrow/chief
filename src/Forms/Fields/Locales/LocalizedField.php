@@ -1,8 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Fields\Common;
+namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
-interface LocalisedField
+interface LocalizedField
 {
     public function locales(?array $locales = null): static;
 

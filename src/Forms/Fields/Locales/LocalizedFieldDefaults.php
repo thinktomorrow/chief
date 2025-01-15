@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
+namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\MultiSiteable;
+use Thinktomorrow\Chief\Sites\BelongsToSites;
 
-trait HasLocales
+trait LocalizedFieldDefaults
 {
     protected array $locales = [];
 
@@ -22,7 +21,7 @@ trait HasLocales
 
         $this->whenModelIsSet(function ($model, $field) use ($locales) {
 
-            if ($model instanceof MultiSiteable && (null === $locales)) {
+            if ($model instanceof BelongsToSites && (null === $locales)) {
                 $this->locales = $model->getSiteLocales();
             }
         });
@@ -77,7 +76,7 @@ trait HasLocales
             ->matrix($this->getName(), $this->getLocales());
     }
 
-    public function getLocalizedDottedNames(): array
+    public function getLocalizedNamesDotted(): array
     {
         return $this->getLocalizedFormKey()
             ->dotted()

@@ -24,8 +24,6 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasFieldToggle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasId;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocales;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModelValuePreparation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasName;
@@ -33,6 +31,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
+use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
@@ -55,7 +55,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasColumnName;
     use HasId;
     use HasValue;
-    use HasLocales;
+    use LocalizedFieldDefaults;
     use HasDefault;
     use HasPlaceholder;
     use HasAutofocus;

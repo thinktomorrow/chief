@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
 use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalisedField;
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFormKey;
 
 class ValidationParameters
 {
-    private Validatable & LocalisedField $source;
+    private Validatable & LocalizedField $source;
     private bool $multiple = false;
     private \Closure $mapKeysCallback;
 
-    final private function __construct(Validatable & LocalisedField $source)
+    final private function __construct(Validatable & LocalizedField $source)
     {
         $this->source = $source;
         $this->mapKeysCallback = fn ($key) => $key;
     }
 
-    public static function make(Validatable & LocalisedField $source): self
+    public static function make(Validatable & LocalizedField $source): self
     {
         return new static($source);
     }

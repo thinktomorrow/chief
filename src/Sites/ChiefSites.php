@@ -16,59 +16,99 @@ class ChiefSites
     {
         $chiefSites = [];
 
-        foreach ($sites as $locale => $site) {
-            $chiefSites[] = new ChiefSite(
-                $locale,
-                $site['name'],
-                $site['short_name'] ?? $site['name'],
-                $site['url'],
-                $site['active'] ?? true,
-                $site['iso_code'] ?? $locale,
-                $site['default_locale'] ?? null
-            );
+        foreach ($sites as $site) {
+            $chiefSites[] = ChiefSite::fromArray($site);
         }
 
         return new static(...$chiefSites);
     }
 
-    public function find(string $locale): ?ChiefSite
-    {
-        foreach ($this->sites as $site) {
-            if ($site->locale === $locale) {
-                return $site;
-            }
-        }
-
-        return null;
-    }
+//    public function findByLocale(string $locale): ?ChiefSite
+//    {
+//        foreach ($this->sites as $site) {
+//            if ($site->locale === $locale) {
+//                return $site;
+//            }
+//        }
+//
+//        return null;
+//    }
 
     public function getLocales(): array
     {
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
     }
 
-    public function getActiveSites(): array
+    /**
+     * Grouped locales by fallback logic. First locale is the fallback locale.
+     */
+    public function getGroupedLocales(): array
     {
-        return array_filter($this->sites, fn (ChiefSite $site) => $site->isActive);
+        $grouped = [];
+
+        foreach($this->sites as $site) {
+
+            if($site->fallbackLocale) {
+                if(!isset($grouped[$site->fallbackLocale])) {
+                    $grouped[$site->fallbackLocale] = [];
+                }
+
+                $grouped[$site->fallbackLocale][] = $site->locale;
+            } elseif(!isset($grouped[$site->locale])) {
+                $grouped[$site->locale] = [];
+            }
+        }
+
+        return $grouped;
     }
 
-    public function getDefaultLocale(): string
+    public function onlyActive(): self
     {
-        return $this->sites[0]?->locale ?? config('app.fallback_locale', 'nl');
+        return new static(...array_filter($this->sites, fn (ChiefSite $site) => $site->isActive));
     }
 
+    public function getPrimaryLocale(): string
+    {
+        return $this->sites[0]?->locale;
+    }
+
+    /**
+     * ['nl', 'be']
+     * ['fr']
+     * @return array
+     */
     public static function locales(): array
     {
-        return app(ChiefSites::class)->getLocales();
+        // Get all locales... but those with fallback logic are grouped together...
+        static $locales;
+
+        if($locales) {
+            return $locales;
+        }
+
+        return $locales = static::fromArray(config('chief.sites'))->getGroupedLocales();
     }
 
-    public static function activeSites(): array
+    public static function primaryLocale(): string
     {
-        return app(ChiefSites::class)->getActiveSites();
+        static $primaryLocale;
+
+        if($primaryLocale) {
+            return $primaryLocale;
+        }
+
+        return $primaryLocale = static::fromArray(config('chief.sites'))->getPrimaryLocale();
     }
 
-    public static function defaultLocale(): string
+    public function toArray(): array
     {
-        return app(ChiefSites::class)->getDefaultLocale();
+        return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);
     }
+
+    //
+//    public static function activeSites(): array
+//    {
+//        return app(ChiefSites::class)->getActiveSites();
+//    }
+//
 }

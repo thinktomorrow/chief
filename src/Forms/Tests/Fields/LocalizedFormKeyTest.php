@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\Tests\Fields;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFormKey;
 
 class LocalizedFormKeyTest extends TestCase
 {

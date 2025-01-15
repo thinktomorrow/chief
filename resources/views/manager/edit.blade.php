@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\Sites\MultiSiteable;
+    use Thinktomorrow\Chief\Sites\BelongsToSites;
 
 @endphp
 <x-chief::page.template :title="$resource->getPageTitle($model)">
@@ -7,7 +7,7 @@
         <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb('edit')]">
             @if ($forms->has('pagetitle'))
                 <x-slot name="customTitle">
-                    <x-chief-form::forms id="pagetitle" />
+                    <x-chief-form::forms id="pagetitle"/>
                 </x-slot>
             @else
                 <x-slot name="title">
@@ -23,27 +23,27 @@
                 </x-chief::tabs>
             @endif
 
-            @if($model instanceof MultiSiteable)
+            @if($model instanceof BelongsToSites)
                 <livewire:chief-wire::resource-sites
                     :resource-key="$resource::resourceKey()"
                     :modelReference="$model->modelReference()"
-                    :locales="$model->getLocales()"/>
+                    :sites="$model->getSites()"/>
             @endif
 
-                {{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
-                {{--                            <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
-                {{--                                @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
-                {{--                                    <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
-                {{--                                @endforeach--}}
-                {{--                            </x-chief::tabs>--}}
-                {{--                        @endif--}}
+            {{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
+            {{--                            <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
+            {{--                                @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
+            {{--                                    <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
+            {{--                                @endforeach--}}
+            {{--                            </x-chief::tabs>--}}
+            {{--                        @endif--}}
 
             @include('chief::manager._partials.edit-actions')
         </x-chief::page.hero>
     </x-slot>
 
     <x-chief::page.grid>
-        <x-chief-form::forms position="main" />
+        <x-chief-form::forms position="main"/>
 
         @adminCan('fragments-index', $model)
         <div x-data='{
@@ -61,17 +61,17 @@
             }"
         >
             <x-chief-fragments::index :context-id="$context->id"
-                                      locale="{{ count($model->getSiteLocales()) > 0 ? $model->getSiteLocales()[0] : null }}"/>
+                                      locale="{{ count($model->getSites()) > 0 ? $model->getSites()[0] : null }}"/>
         </div>
         @endAdminCan
 
-        <x-chief-form::forms position="main-bottom" />
+        <x-chief-form::forms position="main-bottom"/>
 
         <x-slot name="aside">
-            <x-chief-form::forms position="aside-top" />
-            <x-chief::window.states />
-            <x-chief::window.links />
-            <x-chief-form::forms position="aside" />
+            <x-chief-form::forms position="aside-top"/>
+            <x-chief::window.states/>
+            <x-chief::window.links/>
+            <x-chief-form::forms position="aside"/>
         </x-slot>
     </x-chief::page.grid>
 

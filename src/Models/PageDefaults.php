@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\MultiSiteableDefault;
+use Thinktomorrow\Chief\Sites\BelongsToSitesDefault;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait PageDefaults
@@ -28,7 +28,7 @@ trait PageDefaults
     use UsesPageState;
     use ShowsPageState;
     use Archivable;
-    use MultiSiteableDefault;
+    use BelongsToSitesDefault;
 
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for

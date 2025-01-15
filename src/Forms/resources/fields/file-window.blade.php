@@ -1,5 +1,5 @@
 @php
-    $locale = $locale ?? \Thinktomorrow\Chief\Sites\ChiefSites::defaultLocale();
+    $locale = $locale ?? \Thinktomorrow\Chief\Sites\ChiefSites::primaryLocale();
 
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $assets */
     $assets = $getValue($locale);
@@ -15,15 +15,15 @@
                 <div class="flex items-center justify-center overflow-hidden rounded-lg w-14 h-14 shrink-0 bg-grey-100">
                     @if($asset->isImage())
                         <img
-                            src="{{ $asset->getUrl('thumb') }}"
-                            alt="{{ $asset->getFileName() }}"
-                            class="object-contain w-full h-full"
+                                src="{{ $asset->getUrl('thumb') }}"
+                                alt="{{ $asset->getFileName() }}"
+                                class="object-contain w-full h-full"
                         >
                     @elseif($asset instanceof \Thinktomorrow\AssetLibrary\External\ExternalAssetContract)
                         <img
-                            src="{{ $asset->getPreviewUrl('thumb') }}"
-                            alt="{{ $asset->getFileName() }}"
-                            class="object-contain w-full h-full"
+                                src="{{ $asset->getPreviewUrl('thumb') }}"
+                                alt="{{ $asset->getFileName() }}"
+                                class="object-contain w-full h-full"
                         >
                     @else
                         <svg class="w-6 h-6 text-grey-400">
