@@ -31,8 +31,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
-use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
 use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable

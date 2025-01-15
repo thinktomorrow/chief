@@ -10,6 +10,7 @@ trait BelongsToSitesDefault
     {
         // TODO: TEMP: TEST
         return ChiefSites::fromArray(config('chief.sites'));
+
         return ChiefSites::fromArray($this->sites ?? []);
     }
 

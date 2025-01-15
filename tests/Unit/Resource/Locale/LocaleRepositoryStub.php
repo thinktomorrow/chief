@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Resource\Locale;
 
-use Thinktomorrow\Chief\Sites\LocaleRepository;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\LocaleRepository;
 
 class LocaleRepositoryStub implements LocaleRepository
 {

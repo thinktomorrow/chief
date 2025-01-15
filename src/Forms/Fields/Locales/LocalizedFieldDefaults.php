@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
-use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 trait LocalizedFieldDefaults
 {

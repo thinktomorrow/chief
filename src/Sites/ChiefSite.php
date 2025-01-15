@@ -18,7 +18,7 @@ readonly class ChiefSite
 
     public static function fromArray(array $site): self
     {
-        if(!isset($site['handle'], $site['locale'])) {
+        if (! isset($site['handle'], $site['locale'])) {
             throw new \InvalidArgumentException('Site array should contain at least a handle and locale key.');
         }
 

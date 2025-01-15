@@ -23,16 +23,16 @@ class ChiefSites
         return new static(...$chiefSites);
     }
 
-//    public function findByLocale(string $locale): ?ChiefSite
-//    {
-//        foreach ($this->sites as $site) {
-//            if ($site->locale === $locale) {
-//                return $site;
-//            }
-//        }
-//
-//        return null;
-//    }
+    //    public function findByLocale(string $locale): ?ChiefSite
+    //    {
+    //        foreach ($this->sites as $site) {
+    //            if ($site->locale === $locale) {
+    //                return $site;
+    //            }
+    //        }
+    //
+    //        return null;
+    //    }
 
     public function getLocales(): array
     {
@@ -46,15 +46,15 @@ class ChiefSites
     {
         $grouped = [];
 
-        foreach($this->sites as $site) {
+        foreach ($this->sites as $site) {
 
-            if($site->fallbackLocale) {
-                if(!isset($grouped[$site->fallbackLocale])) {
+            if ($site->fallbackLocale) {
+                if (! isset($grouped[$site->fallbackLocale])) {
                     $grouped[$site->fallbackLocale] = [];
                 }
 
                 $grouped[$site->fallbackLocale][] = $site->locale;
-            } elseif(!isset($grouped[$site->locale])) {
+            } elseif (! isset($grouped[$site->locale])) {
                 $grouped[$site->locale] = [];
             }
         }
@@ -82,7 +82,7 @@ class ChiefSites
         // Get all locales... but those with fallback logic are grouped together...
         static $locales;
 
-        if($locales) {
+        if ($locales) {
             return $locales;
         }
 
@@ -93,7 +93,7 @@ class ChiefSites
     {
         static $primaryLocale;
 
-        if($primaryLocale) {
+        if ($primaryLocale) {
             return $primaryLocale;
         }
 
@@ -106,9 +106,9 @@ class ChiefSites
     }
 
     //
-//    public static function activeSites(): array
-//    {
-//        return app(ChiefSites::class)->getActiveSites();
-//    }
-//
+    //    public static function activeSites(): array
+    //    {
+    //        return app(ChiefSites::class)->getActiveSites();
+    //    }
+    //
 }

@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Sites\Actions;
 
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
 
 class SyncLocales
 {
