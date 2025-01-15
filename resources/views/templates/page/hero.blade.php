@@ -3,7 +3,6 @@
     'description' => null,
     'customTitle' => null,
     'breadcrumbs' => [],
-    //shouldbeanarrayofbreadcrumbs,
 ])
 
 <div {{ $attributes->merge(['class' => 'container mb-6']) }}>

@@ -1,3 +1,7 @@
+@php
+    use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
+@endphp
+
 <div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="@container relative">
     {{-- File upload progress bar --}}
     @if ($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
@@ -21,10 +25,13 @@
                         alt="{{ $file->filename }}"
                         class="h-full w-full object-contain"
                     />
+                @elseif ($file->mimeType)
+                    <x-dynamic-component
+                        :component="MimetypeIcon::fromString($file->mimeType)->icon()"
+                        class="size-6 text-grey-400"
+                    />
                 @else
-                    <svg class="h-6 w-6 text-grey-400">
-                        <use xlink:href="#icon-document" />
-                    </svg>
+                    <x-chief::icon.attachment class="size-6 text-grey-400" />
                 @endif
             </div>
 

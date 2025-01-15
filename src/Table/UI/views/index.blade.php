@@ -1,1 +1,1 @@
-<livewire:is :component="$getLivewireComponentClass()" :table="$component"/>
+<livewire:is :component="$getLivewireComponentClass()" :table="$component" />
