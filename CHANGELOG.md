@@ -7,6 +7,7 @@ principles.
 ## Unreleased
 
 Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
+Fixed: Redactor toolbar z-index issue where the toolbar was overlapping multiselect dropdowns.
 
 ## 2025-01-06 - 0.9.0
 

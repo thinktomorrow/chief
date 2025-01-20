@@ -11,6 +11,7 @@
     border-radius: 0.625rem !important;
     border-color: theme('borderColor.grey.100') !important;
     box-shadow: theme('boxShadow.sm') !important;
+    @apply isolate;
 }
 
 .redactor-box.redactor-focus.redactor-styles-on {
