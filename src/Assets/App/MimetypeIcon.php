@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Assets\App;
@@ -7,13 +8,18 @@ use Illuminate\Support\Str;
 
 class MimetypeIcon
 {
-    private static $fallback = '<svg width="24" height="24"><use xlink:href="#icon-document"></use></svg>';
-    private $mapping = [
-        'application/pdf' => '<svg width="24" height="24"><use xlink:href="#icon-document"></use></svg>',
-        'video' => '<svg width="24" height="24"><use xlink:href="#icon-video"></use></svg>',
-    ];
     /** @var string */
     private $mimetype;
+
+    /** @var array */
+    private $mapping = [
+        'application/pdf' => 'chief::icon.pdf',
+        'video' => 'chief::icon.video',
+        'audio' => 'chief::icon.music-note',
+        'application/vnd.ms-excel' => 'chief::icon.xls',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'chief::icon.xls',
+        'text/csv' => 'chief::icon.csv',
+    ];
 
     private function __construct(string $mimetype)
     {
@@ -40,6 +46,6 @@ class MimetypeIcon
             }
         }
 
-        return self::$fallback;
+        return 'chief::icon.attachment';
     }
 }

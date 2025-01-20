@@ -18,7 +18,7 @@
         @if($asset->getExtensionType() == "image")
             <img class="object-contain h-48" src="{{ $assetUrl }}">
         @else
-            {!! MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
+            <x-dynamic-component :component="MimetypeIcon::fromString($asset->getMimeType())->icon()" class="size-6" />
         @endif
     </div>
 

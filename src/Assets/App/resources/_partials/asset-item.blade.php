@@ -32,8 +32,11 @@
                 <span class="label label-xs label-grey">{{ ucfirst($asset->getData('external.type')) }}</span>
             </div>
         @elseif ($asset->getMimeType())
-            <div class="flex h-full w-full items-center justify-center text-grey-400">
-                {!! MimetypeIcon::fromString($asset->getMimeType())->icon() !!}
+            <div class="flex h-full w-full items-center justify-center">
+                <x-dynamic-component
+                    :component="MimetypeIcon::fromString($asset->getMimeType())->icon()"
+                    class="size-8 text-grey-400"
+                />
             </div>
         @endif
 

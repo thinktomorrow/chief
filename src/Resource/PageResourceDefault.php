@@ -116,9 +116,9 @@ trait PageResourceDefault
             return null;
         }
 
-        //        if ($pageType == 'edit' || $pageType == 'create') {
-        //            return new BreadCrumb('Overzicht', $this->manager->route('index'));
-        //        }
+        if ($pageType == 'edit' || $pageType == 'create') {
+            return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        }
 
         return null;
     }
