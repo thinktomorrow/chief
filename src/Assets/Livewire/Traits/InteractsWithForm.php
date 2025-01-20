@@ -49,7 +49,7 @@ trait InteractsWithForm
             }
 
             if ($component->hasLocales()) {
-                foreach ($component->getLocalizedDottedNames() as $name) {
+                foreach ($component->getDottedLocalizedNames() as $name) {
                     $this->injectFormValue($name, data_get($this->previewFile->fieldValues, $name));
                 }
             } else {

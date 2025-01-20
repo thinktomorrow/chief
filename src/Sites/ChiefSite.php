@@ -12,7 +12,7 @@ readonly class ChiefSite
         public bool    $isPrimary,
         public string  $name,
         public string  $shortName,
-        public string  $url,
+        public ?string  $url,
     ) {
     }
 

@@ -22,9 +22,9 @@
             <div x-cloak x-show="type == 'internal'">
                 <x-chief::input.group rule="owner_reference">
                     <x-chief::multiselect
-                        name="owner_reference"
-                        :options="\Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toMultiSelectPairs($pages)"
-                        :selection="old('owner_reference', $ownerReference)"
+                            name="owner_reference"
+                            :options="\Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toMultiSelectPairs($pages)"
+                            :selection="old('owner_reference', $ownerReference)"
                     />
                 </x-chief::input.group>
             </div>
@@ -34,11 +34,11 @@
         <div class="space-y-2">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
-                    id="type-custom"
-                    name="type"
-                    value="custom"
-                    :checked="old('type', $menuitem->type) == 'custom'"
-                    x-on:click="type = 'custom'"
+                        id="type-custom"
+                        name="type"
+                        value="custom"
+                        :checked="old('type', $menuitem->type) == 'custom'"
+                        x-on:click="type = 'custom'"
                 />
 
                 <x-chief::input.label for="type-custom" unset class="body body-dark leading-5">
@@ -47,9 +47,9 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if(count(ChiefSites::locales()) > 1)
+                @if(count(ChiefSites::fieldLocales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach(ChiefSites::locales() as $locale)
+                        @foreach(ChiefSites::fieldLocales() as $locale)
                             <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                 <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
@@ -63,7 +63,7 @@
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach(ChiefSites::locales() as $locale)
+                    @foreach(ChiefSites::fieldLocales() as $locale)
                         <x-chief::input.group :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
                                     id="trans-{{ $locale }}-url"
@@ -80,11 +80,11 @@
         {{-- Option: no link --}}
         <div class="flex items-start gap-2">
             <x-chief::input.radio
-                id="type-nolink"
-                name="type"
-                value="nolink"
-                :checked="old('type', $menuitem->type) == 'nolink'"
-                x-on:click="type = 'nolink'"
+                    id="type-nolink"
+                    name="type"
+                    value="nolink"
+                    :checked="old('type', $menuitem->type) == 'nolink'"
+                    x-on:click="type = 'nolink'"
             />
 
             <x-chief::input.label for="type-nolink" unset class="body body-dark leading-5">

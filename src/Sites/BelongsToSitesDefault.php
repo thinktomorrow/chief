@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\Forms\Fields\Locales\FieldLocales;
 
 trait BelongsToSitesDefault
 {
@@ -14,9 +15,9 @@ trait BelongsToSitesDefault
         return ChiefSites::fromArray($this->sites ?? []);
     }
 
-    public function getSiteLocales(): array
+    public function getFieldLocales(): FieldLocales
     {
-        return $this->getSites()->getLocales();
+        return $this->getSites()->getFieldLocales();
     }
 
     protected function initializeBelongsToSitesDefault()

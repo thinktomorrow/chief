@@ -10,9 +10,6 @@ use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\Chief\Sites\BelongsToSitesDefault;
 
-/**
- * @deprecated use Thinktomorrow\Chief\Pages\PageDefaults instead
- */
 trait PageDefaults
 {
     use ModelDefaults;

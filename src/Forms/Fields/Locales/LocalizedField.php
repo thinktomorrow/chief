@@ -17,6 +17,8 @@ interface LocalizedField
     /**
      * Get all locales the content should be available in.
      */
+    public function getFieldLocales(): ?FieldLocales;
+
     public function getLocales(): array;
 
     /**
@@ -38,11 +40,11 @@ interface LocalizedField
      * Get all the localized keys for this field in bracketed format
      * e.g. ['name[nl]', 'name[en]']
      */
-    public function getLocalizedNames(): array;
+    public function getBracketedLocalizedNames(): array;
 
     /**
      * Get all the localized keys for this field in dotted format
      * e.g. ['name.nl', 'name.en']
      */
-    public function getLocalizedNamesDotted(): array;
+    public function getDottedLocalizedNames(): array;
 }

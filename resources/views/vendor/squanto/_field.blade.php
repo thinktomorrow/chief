@@ -19,7 +19,7 @@
             @endphp
 
             <div class="flex w-full gap-2">
-                @if(count(ChiefSites::locales()) > 1)
+                @if(count(ChiefSites::fieldLocales()) > 1)
                     <div class="flex items-center justify-center w-8 p-2 rounded-md shrink-0 bg-grey-50">
                         <span class="text-xs uppercase text-grey-500">{{ $locale }}</span>
                     </div>

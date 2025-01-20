@@ -11,7 +11,7 @@ class ChiefLocaleConfigTest extends ChiefTestCase
     {
         config()->set('chief.locales.admin', ['nl', 'fr']);
 
-        $this->assertEquals(['nl', 'fr'], ChiefSites::locales());
+        $this->assertEquals(['nl', 'fr'], ChiefSites::fieldLocales());
     }
 
     public function test_it_gives_active_locales_by_default_same_as_all_available()
@@ -34,7 +34,7 @@ class ChiefLocaleConfigTest extends ChiefTestCase
     {
         config()->set('chief.locales.admin', []);
 
-        $this->assertEquals([], ChiefSites::locales());
+        $this->assertEquals([], ChiefSites::fieldLocales());
         $this->assertEquals([], ChiefSites::getSiteLocales());
     }
 }

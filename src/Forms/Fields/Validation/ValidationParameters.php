@@ -45,7 +45,7 @@ class ValidationParameters
     {
         if (! $attribute = $this->source->getValidationAttribute()) {
             $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
-            $attribute .= ($this->source->hasLocales() && count($this->source->getLocales()) > 1) ? ' :locale' : '';
+            $attribute .= ($this->source->hasLocales() && count($this->source->getFieldLocales()) > 1) ? ' :locale' : '';
         }
 
         return $this->createEntryForEachLocale($attribute);
@@ -77,7 +77,7 @@ class ValidationParameters
 
         $keys = $this->source->getLocalizedFormKey()
             ->dotted()
-            ->matrix($this->source->getName(), $this->source->getLocales());
+            ->matrix($this->source->getName(), $this->source->getFieldLocales());
 
         if ($this->multiple) {
             foreach ($keys as $i => $key) {
@@ -93,7 +93,7 @@ class ValidationParameters
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
-                LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
+                LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getFieldLocales()))
             );
     }
 

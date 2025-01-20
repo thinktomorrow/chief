@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
+use Thinktomorrow\Chief\Forms\Fields\Locales\FieldLocales;
+
 class ChiefSites
 {
     /** @var ChiefSite[] */
@@ -9,6 +11,10 @@ class ChiefSites
 
     private function __construct(ChiefSite ...$sites)
     {
+        if(empty($sites)) {
+            throw new \InvalidArgumentException('At least one site should be provided.');
+        }
+
         $this->sites = $sites;
     }
 
@@ -23,43 +29,23 @@ class ChiefSites
         return new static(...$chiefSites);
     }
 
-    //    public function findByLocale(string $locale): ?ChiefSite
-    //    {
-    //        foreach ($this->sites as $site) {
-    //            if ($site->locale === $locale) {
-    //                return $site;
-    //            }
-    //        }
-    //
-    //        return null;
-    //    }
-
     public function getLocales(): array
     {
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
     }
 
     /**
-     * Grouped locales by fallback logic. First locale is the fallback locale.
+     * Grouped locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
      */
-    public function getGroupedLocales(): array
+    public function getFieldLocales(): FieldLocales
     {
-        $grouped = [];
+        $fieldLocales = new FieldLocales();
 
         foreach ($this->sites as $site) {
-
-            if ($site->fallbackLocale) {
-                if (! isset($grouped[$site->fallbackLocale])) {
-                    $grouped[$site->fallbackLocale] = [];
-                }
-
-                $grouped[$site->fallbackLocale][] = $site->locale;
-            } elseif (! isset($grouped[$site->locale])) {
-                $grouped[$site->locale] = [];
-            }
+            $fieldLocales->add($site->locale, $site->fallbackLocale);
         }
 
-        return $grouped;
+        return $fieldLocales;
     }
 
     public function onlyActive(): self
@@ -72,32 +58,28 @@ class ChiefSites
         return $this->sites[0]?->locale;
     }
 
-    /**
-     * ['nl', 'be']
-     * ['fr']
-     * @return array
-     */
-    public static function locales(): array
+    public static function fieldLocales(): FieldLocales
     {
-        // Get all locales... but those with fallback logic are grouped together...
         static $locales;
 
         if ($locales) {
             return $locales;
         }
 
-        return $locales = static::fromArray(config('chief.sites'))->getGroupedLocales();
+        return $locales = static::fromArray(config('chief.sites', []))->getFieldLocales();
     }
 
-    public static function primaryLocale(): string
+    public static function primaryFieldLocale(): FieldLocales
     {
-        static $primaryLocale;
+        static $primaryFieldLocale;
 
-        if ($primaryLocale) {
-            return $primaryLocale;
+        if ($primaryFieldLocale) {
+            return $primaryFieldLocale;
         }
 
-        return $primaryLocale = static::fromArray(config('chief.sites'))->getPrimaryLocale();
+        $primaryLocale = static::fromArray(config('chief.sites', []))->getPrimaryLocale();
+
+        return $primaryFieldLocale = !$primaryLocale ? new FieldLocales() : (new FieldLocales())->add($primaryLocale);;
     }
 
     public function toArray(): array

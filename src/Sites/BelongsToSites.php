@@ -2,13 +2,12 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
+use Thinktomorrow\Chief\Forms\Fields\Locales\FieldLocales;
+
 interface BelongsToSites
 {
-    /**
-     * All sites for this model.
-     * Each site here has info on whether it is the active for the model or not.
-     */
+    /** All sites where this model is active in. */
     public function getSites(): ChiefSites;
 
-    public function getSiteLocales(): array;
+    public function getFieldLocales(): FieldLocales;
 }

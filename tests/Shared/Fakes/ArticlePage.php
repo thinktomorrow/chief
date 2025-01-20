@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
 {
-
     use PageDefaults;
     use SoftDeletes;
     use InteractsWithAssets;
@@ -71,6 +70,6 @@ class ArticlePage extends Model implements Page
 
     protected function dynamicLocales(): array
     {
-        return ChiefSites::locales();
+        return ChiefSites::fieldLocales();
     }
 }

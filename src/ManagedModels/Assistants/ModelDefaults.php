@@ -9,9 +9,6 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-/**
- * @deprecated use Thinktomorrow\Chief\Models\ModelDefaults instead
- */
 trait ModelDefaults
 {
     use ReferableModelDefault;
@@ -29,7 +26,7 @@ trait ModelDefaults
     {
         dd($this);
 
-        return ChiefSites::locales();
+        return ChiefSites::fieldLocales();
     }
 
     public function viewKey(): string

@@ -26,7 +26,7 @@
 
     <x-chief::dialog wired title="Taalversies van deze pagina" size="xs">
         <div class="block px-4 py-2 text-sm text-grey-700 space-y-4" tabindex="-1">
-            @foreach(ChiefSites::locales() as $fallbackLocale => $locales)
+            @foreach(ChiefSites::fieldLocales() as $fallbackLocale => $locales)
                 <x-chief::input.group class="w-64">
                     <div class="flex items-start gap-2 ">
                         <x-chief::input.checkbox

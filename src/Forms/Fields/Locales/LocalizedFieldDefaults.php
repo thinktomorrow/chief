@@ -9,34 +9,42 @@ use Thinktomorrow\Chief\Sites\ChiefSites;
 
 trait LocalizedFieldDefaults
 {
-    protected array $locales = [];
+    protected ?FieldLocales $fieldLocales = null;
 
     protected ?string $localizedFormKeyTemplate = null;
 
-    public function locales(?array $locales = null): static
+    public function locales(null|array|FieldLocales $locales = null): static
     {
-        $this->locales = (null === $locales)
-            ? ChiefSites::locales()
-            : $locales;
+        if((null === $locales)) {
+            $this->fieldLocales = ChiefSites::fieldLocales();
+        } elseif($locales instanceof FieldLocales) {
+            $this->fieldLocales = $locales;
+        } else {
+            $this->fieldLocales = FieldLocales::fromArray($locales);
+        }
 
         $this->whenModelIsSet(function ($model, $field) use ($locales) {
-
             if ($model instanceof BelongsToSites && (null === $locales)) {
-                $this->locales = $model->getSiteLocales();
+                $field->fieldLocales = $model->getFieldLocales();
             }
         });
 
         return $this;
     }
 
+    public function getFieldLocales(): ?FieldLocales
+    {
+        return $this->fieldLocales;
+    }
+
     public function getLocales(): array
     {
-        return $this->locales;
+        return $this->fieldLocales ? $this->fieldLocales->getLocales() : [];
     }
 
     public function hasLocales(): bool
     {
-        return count($this->locales) > 0;
+        return count($this->getLocales()) > 0;
     }
 
     public function getLocalizedKeys(): array
@@ -44,6 +52,20 @@ trait LocalizedFieldDefaults
         return $this->getLocalizedFormKey()
             ->dotted()
             ->matrix($this->getKey(), $this->getLocales());
+    }
+
+    public function getBracketedLocalizedNames(): array
+    {
+        return $this->getLocalizedFormKey()
+            ->bracketed()
+            ->matrix($this->getName(), $this->getLocales());
+    }
+
+    public function getDottedLocalizedNames(): array
+    {
+        return $this->getLocalizedFormKey()
+            ->dotted()
+            ->matrix($this->getName(), $this->getLocales());
     }
 
     public function getLocalizedFormKey(): LocalizedFormKey
@@ -67,19 +89,5 @@ trait LocalizedFieldDefaults
         $this->localizedFormKeyTemplate = $localizedFormKeyTemplate;
 
         return $this;
-    }
-
-    public function getLocalizedNames(): array
-    {
-        return $this->getLocalizedFormKey()
-            ->bracketed()
-            ->matrix($this->getName(), $this->getLocales());
-    }
-
-    public function getLocalizedNamesDotted(): array
-    {
-        return $this->getLocalizedFormKey()
-            ->dotted()
-            ->matrix($this->getName(), $this->getLocales());
     }
 }

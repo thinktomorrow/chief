@@ -1,20 +1,18 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\Fields;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Locales;
 
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFormKey;
 
 class LocalizedFormKeyTest extends TestCase
 {
-    /** @test */
-    public function it_returns_the_default_localized_format()
+    public function test_it_returns_the_default_localized_format()
     {
         $this->assertEquals('trans.nl.xxx', LocalizedFormKey::make()->get('xxx', 'nl'));
     }
 
-    /** @test */
-    public function it_returns_the_matrix_of_different_locales()
+    public function test_it_returns_the_matrix_of_different_locales()
     {
         $this->assertEquals(
             ['trans.nl.xxx', 'trans.en.xxx'],
@@ -22,8 +20,7 @@ class LocalizedFormKeyTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_returns_the_key_with_brackets()
+    public function test_it_returns_the_key_with_brackets()
     {
         $this->assertEquals(
             'trans[nl][xxx]',
@@ -33,16 +30,14 @@ class LocalizedFormKeyTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_use_a_custom_template()
+    public function test_it_can_use_a_custom_template()
     {
         $this->assertEquals('custom_nl_xxx', LocalizedFormKey::make()
             ->template('custom_:locale_:name')
             ->get('xxx', 'nl'));
     }
 
-    /** @test */
-    public function unused_placeholders_are_removed()
+    public function test_unused_placeholders_are_removed()
     {
         $this->assertEquals('custom.xxx', LocalizedFormKey::make()
             ->template('custom.:locale.:name')
@@ -53,16 +48,14 @@ class LocalizedFormKeyTest extends TestCase
             ->get('xxx', 'nl'));
     }
 
-    /** @test */
-    public function unused_placeholders_can_be_preserved()
+    public function test_unused_placeholders_can_be_preserved()
     {
         $this->assertEquals('custom.:locale.xxx', LocalizedFormKey::make()
             ->template('custom.:locale.:name')
             ->get('xxx', null, false));
     }
 
-    /** @test */
-    public function it_can_replace_a_placeholder_value_in_the_key()
+    public function test_it_can_replace_a_placeholder_value_in_the_key()
     {
         $this->assertEquals(
             'trans.nl.foobar',
@@ -72,8 +65,7 @@ class LocalizedFormKeyTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_replace_a_placeholder_value_that_contains_brackets()
+    public function test_it_can_replace_a_placeholder_value_that_contains_brackets()
     {
         $formKey = LocalizedFormKey::make()
             ->template(':prefix.:name.:locale')
@@ -84,8 +76,7 @@ class LocalizedFormKeyTest extends TestCase
         $this->assertEquals('repeat_values[2][repeat_values_nested][nested-value]', $formKey);
     }
 
-    /** @test */
-    public function it_can_cross_join_multiple_locale_keys()
+    public function test_it_can_cross_join_multiple_locale_keys()
     {
         $this->assertEquals(
             [
