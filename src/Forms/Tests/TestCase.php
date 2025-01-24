@@ -8,6 +8,7 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Providers\ViewServiceProvider;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\Unit\UnitTestHelpers;
 
 class TestCase extends OrchestraTestCase
@@ -20,6 +21,13 @@ class TestCase extends OrchestraTestCase
 
         // Set nl as default locale for testing env
         config()->set('app.fallback_locale', 'nl');
+    }
+
+    protected function tearDown(): void
+    {
+        ChiefSites::clearCache();
+
+        parent::tearDown();
     }
 
     protected function getPackageProviders($app)

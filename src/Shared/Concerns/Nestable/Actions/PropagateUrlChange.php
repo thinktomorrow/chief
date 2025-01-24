@@ -20,7 +20,7 @@ class PropagateUrlChange
 
     public function __construct(Registry $registry, ResaveUrlSlug $resaveUrlSlug)
     {
-        $this->locales = ChiefSites::fieldLocales();
+        $this->locales = ChiefLocales::fieldLocales();
         $this->registry = $registry;
         $this->resaveUrlSlug = $resaveUrlSlug;
     }

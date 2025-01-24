@@ -21,9 +21,9 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStorageDisk;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
+use Thinktomorrow\Chief\Sites\ChiefLocales;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 
 /**
  * Default field settings are overriden mostly because values of file inputs
@@ -46,8 +46,8 @@ class File extends Component implements Field
     public function __construct(string $key)
     {
         parent::__construct($key);
-        $this->locales(ChiefSites::primaryFieldLocale());
-        $this->setLocalizedFormKeyTemplate('files.:name.:locale');
+        $this->locales([ChiefLocales::primaryLocale()]);
+        $this->setLocalizedFieldNameTemplate('files.:name.:locale');
 
         $this->uploadButtonLabel('Bestand opladen');
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee85908c9bfdbe9a481294352f147317",
+    "content-hash": "cf42e82575d20c8843177b6af9767732",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6784,16 +6784,16 @@
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/dynamic-attributes.git",
-                "reference": "3f8cd56caefa14eb64e057a1de08337526c660e4"
+                "reference": "0b14497f3b3faf28876680e7df6ddc25d385ed7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/3f8cd56caefa14eb64e057a1de08337526c660e4",
-                "reference": "3f8cd56caefa14eb64e057a1de08337526c660e4",
+                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/0b14497f3b3faf28876680e7df6ddc25d385ed7a",
+                "reference": "0b14497f3b3faf28876680e7df6ddc25d385ed7a",
                 "shasum": ""
             },
             "require": {
@@ -6825,9 +6825,9 @@
             "description": "easily store and retrieve document values of an eloquent model",
             "support": {
                 "issues": "https://github.com/thinktomorrow/dynamic-attributes/issues",
-                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/1.0.0"
+                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/1.0.1"
             },
-            "time": "2025-01-08T09:40:15+00:00"
+            "time": "2025-01-20T15:11:38+00:00"
         },
         {
             "name": "thinktomorrow/squanto",

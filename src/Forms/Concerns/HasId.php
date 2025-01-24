@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Concerns;
 
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 
 trait HasId
 {
@@ -19,6 +19,6 @@ trait HasId
 
     public function getId(): string
     {
-        return FormKey::replaceBracketsByDots($this->id);
+        return FieldNameHelpers::replaceBracketsByDots($this->id);
     }
 }

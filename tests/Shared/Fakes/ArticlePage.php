@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
+use Thinktomorrow\Chief\Sites\ChiefLocales;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
 use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
@@ -70,6 +71,6 @@ class ArticlePage extends Model implements Page
 
     protected function dynamicLocales(): array
     {
-        return ChiefSites::fieldLocales();
+        return ChiefLocales::locales();
     }
 }

@@ -6,7 +6,9 @@ use Illuminate\Support\Arr;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
+use Thinktomorrow\Chief\Sites\BelongsToSites;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class SitesBox extends Component
@@ -15,19 +17,19 @@ class SitesBox extends Component
 
     public string $resourceKey;
     public string $modelReference;
-    public array $modelSites;
+    public array $siteIds = [];
 
-    public array $activeLocales = [];
+    public array $activeSites = [];
     public array $currentLocales = [];
     public bool $showConfirmButton = false;
     public $warningMessage;
     public bool $isSaving = false;
 
-    public function mount(string $resourceKey, ModelReference $modelReference, ChiefSites $sites)
+    public function mount(string $resourceKey, BelongsToSites & ReferableModel $model)
     {
         $this->resourceKey = $resourceKey;
-        $this->modelReference = $modelReference->get();
-        $this->modelSites = $sites->toArray();
+        $this->modelReference = $model->modelReference()->get();
+        $this->siteIds = $model->getSiteIds();
     }
 
     public function submit()

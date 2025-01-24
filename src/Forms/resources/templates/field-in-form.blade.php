@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
     $fieldType = strtolower(class_basename($component));
 @endphp
 
@@ -47,11 +47,11 @@
 
     @if ($hasLocales())
         @foreach ($getLocales() as $locale)
-            <x-chief::input.error :rule="LivewireFieldName::get($getId($locale ?? null))" />
-            <x-chief::input.error :rule="$getId($locale)" />
+            <x-chief::input.error :rule="LivewireFieldName::get($getId($locale ?? null))"/>
+            <x-chief::input.error :rule="$getId($locale)"/>
         @endforeach
     @else
-        <x-chief::input.error :rule="LivewireFieldName::get($getId())" />
-        <x-chief::input.error :rule="$getId()" />
+        <x-chief::input.error :rule="LivewireFieldName::get($getId())"/>
+        <x-chief::input.error :rule="$getId()"/>
     @endif
 </div>

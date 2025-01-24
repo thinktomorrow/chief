@@ -224,7 +224,7 @@ class ComposeFieldLines
 
         $lines->push(new FieldLine(
             $model->modelReference()->get(),
-            Fields\Common\FormKey::replaceBracketsByDots($field->getName()),
+            Fields\FieldName\FieldNameHelpers::replaceBracketsByDots($field->getName()),
             $this->modelLabel,
             ucfirst($resource->getLabel()),
             $fieldLabel,

@@ -8,9 +8,9 @@
         Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.
     </x-chief::input.description>
 
-    @if(count(ChiefSites::fieldLocales()) > 1)
+    @if(count(ChiefLocales::fieldLocales()) > 1)
         <x-chief::tabs :listen-for-external-tab="true">
-            @foreach(ChiefSites::fieldLocales() as $locale)
+            @foreach(ChiefLocales::fieldLocales() as $locale)
                 <x-chief::tabs.tab tab-id='{{ $locale }}'>
                     <x-chief::input.group :rule="'trans.' . $locale . '.label'">
                         <x-chief::input.text
@@ -24,7 +24,7 @@
             @endforeach
         </x-chief::tabs>
     @else
-        @foreach(ChiefSites::fieldLocales() as $locale)
+        @foreach(ChiefLocales::fieldLocales() as $locale)
             <x-chief::input.group :rule="'trans.' . $locale . '.label'">
                 <x-chief::input.text
                         name="trans[{{ $locale }}][label]"

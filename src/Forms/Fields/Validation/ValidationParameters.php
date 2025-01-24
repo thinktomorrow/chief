@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
-use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFormKey;
 
 class ValidationParameters
 {
@@ -45,7 +45,7 @@ class ValidationParameters
     {
         if (! $attribute = $this->source->getValidationAttribute()) {
             $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
-            $attribute .= ($this->source->hasLocales() && count($this->source->getFieldLocales()) > 1) ? ' :locale' : '';
+            $attribute .= ($this->source->hasLocales() && count($this->source->getLocales()) > 1) ? ' :locale' : '';
         }
 
         return $this->createEntryForEachLocale($attribute);
@@ -71,13 +71,13 @@ class ValidationParameters
 
         if (! $this->source->hasLocales()) {
             return [
-                call_user_func($this->mapKeysCallback, FormKey::replaceBracketsByDots($this->source->getName())) => $value,
+                call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
             ];
         }
 
-        $keys = $this->source->getLocalizedFormKey()
+        $keys = $this->source->getLocalizedFieldName()
             ->dotted()
-            ->matrix($this->source->getName(), $this->source->getFieldLocales());
+            ->matrix($this->source->getName(), $this->source->getLocales());
 
         if ($this->multiple) {
             foreach ($keys as $i => $key) {
@@ -93,7 +93,7 @@ class ValidationParameters
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
-                LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getFieldLocales()))
+                LocalizedFieldName::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
             );
     }
 

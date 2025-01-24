@@ -18,11 +18,9 @@
         >
 
             @php
-                $currentLocale = app()->getLocale();
-
-                if($context->getLocales() > 0) {
-                    app()->setLocale($context->getLocales()[0]);
-                }
+//                if($context->getSites() > 0) {
+//                    app()->setLocale($context->getLocales()[0]);
+//                }
             @endphp
 
             @foreach($fragments as $fragment)
@@ -33,9 +31,9 @@
                 ])
             @endforeach
 
-            @php
-                app()->setLocale($currentLocale);
-            @endphp
+{{--            @php--}}
+{{--                app()->setLocale($currentLocale);--}}
+{{--            @endphp--}}
         </div>
     </div>
 </x-chief-form::window>

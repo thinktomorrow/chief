@@ -73,7 +73,7 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
-                            @if(count(ChiefSites::fieldLocales()) > 1)
+                            @if(count(ChiefLocales::fieldLocales()) > 1)
                                 <span
                                         class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
                             @endif

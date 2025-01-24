@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 @endphp
 
 <div class="space-y-1">
@@ -12,12 +12,12 @@
 
         <label for="{{ $id }}" class="flex items-start gap-2">
             <x-chief::input.checkbox
-                wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
-                id="{{ $id }}"
-                name="{{ $getName($locale ?? null) . '[]' }}"
-                value="{{ $value }}"
-                :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
-                class="{{ $optedForToggleDisplay() ? 'appearance-none hidden' : null }}"
+                    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+                    id="{{ $id }}"
+                    name="{{ $getName($locale ?? null) . '[]' }}"
+                    value="{{ $value }}"
+                    :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
+                    class="{{ $optedForToggleDisplay() ? 'appearance-none hidden' : null }}"
             />
 
             @if ($optedForToggleDisplay())

@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithChoosingAssets;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 
 class FileUploadComponent extends Component implements HasPreviewFiles, HasSyncedFormInputs
 {
@@ -85,7 +85,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     public function submit($formData)
     {
         $formData = collect($formData)
-            ->mapWithKeys(fn ($value, $key) => [FormKey::replaceBracketsByDots($key) => $value])
+            ->mapWithKeys(fn ($value, $key) => [FieldNameHelpers::replaceBracketsByDots($key) => $value])
             ->undot()
             ->get($this->fieldName);
 

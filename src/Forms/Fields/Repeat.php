@@ -44,7 +44,7 @@ class Repeat extends Component implements Field
         // Populate fields with the correct name and the given values
         Fields::make($clonedComponents, fn ($field) => ! $field instanceof self)
             ->each(function (Field $field) use ($index, $locale, $values, $prefix) {
-                $fieldName = Locales\LocalizedFormKey::make()
+                $fieldName = FieldName\LocalizedFieldName::make()
                     ->template(':prefix.'.$index.'.:name.:locale')
                     ->replace('prefix', $prefix ?: $this->getName())
                     ->bracketed()

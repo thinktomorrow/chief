@@ -326,7 +326,7 @@ trait FragmentAssistant
         $this->fieldValidator()->handle($forms->getFields(), $request->all());
 
         // Now set all locales for fields that require locales so that all values are saved on the fragment
-        $fragmentable->fragmentModel()->setLocales(ChiefSites::fieldLocales());
+        $fragmentable->fragmentModel()->setLocales(ChiefLocales::fieldLocales());
         $fields = $forms->fillModel($fragmentable->fragmentModel())->getFields();
 
         app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());

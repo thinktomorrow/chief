@@ -3,21 +3,12 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\Forms\Fields\Locales\FieldLocales;
 
 trait BelongsToSitesDefault
 {
-    public function getSites(): ChiefSites
+    public function getSiteIds(): array
     {
-        // TODO: TEMP: TEST
-        return ChiefSites::fromArray(config('chief.sites'));
-
-        return ChiefSites::fromArray($this->sites ?? []);
-    }
-
-    public function getFieldLocales(): FieldLocales
-    {
-        return $this->getSites()->getFieldLocales();
+        return $this->sites ?? [];
     }
 
     protected function initializeBelongsToSitesDefault()
@@ -31,7 +22,7 @@ trait BelongsToSitesDefault
         // Locale is for fields and such... can be used by multiple sites.
         // Site is selection, choice. Locale is language, not WHAT is shown.
         // WHAT,HOW = site, language = locale
-        $query->whereJsonContains($this->getTable().'.locales', $locale);
+        $query->whereJsonContains($this->getTable().'.sites', $site);
     }
 
     public function scopeByLocaleOrNone(Builder $query, string $locale): void

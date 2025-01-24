@@ -23,7 +23,7 @@ class GenerateSitemap extends BaseCommand
 
     public function handle(): void
     {
-        $locales = ChiefSites::fieldLocales();
+        $locales = ChiefLocales::fieldLocales();
 
         foreach ($locales as $locale) {
             $filepath = public_path('sitemap-' . $locale . '.xml');

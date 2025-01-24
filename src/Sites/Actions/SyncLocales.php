@@ -10,10 +10,10 @@ class SyncLocales
 {
     public function handle(BelongsToSites & ReferableModel $model, array $locales): void
     {
-        $previousState = $model->getSites();
+        $previousState = $model->getSiteIds();
 
         $model->saveSiteLocales($model, $locales);
 
-        event(new LocalesUpdated($model->modelReference(), $model->getSites(), $previousState));
+        event(new LocalesUpdated($model->modelReference(), $model->getSiteIds(), $previousState));
     }
 }

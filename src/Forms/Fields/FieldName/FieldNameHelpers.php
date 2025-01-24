@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields\Common;
+namespace Thinktomorrow\Chief\Forms\Fields\FieldName;
 
-class FormKey
+class FieldNameHelpers
 {
     public static function replaceDotsByBrackets(string $value): string
     {

@@ -48,6 +48,6 @@ class Quote extends BaseFragment implements HasAsset, FragmentsOwner
 
     protected function dynamicLocales(): array
     {
-        return ChiefSites::fieldLocales();
+        return ChiefLocales::fieldLocales();
     }
 }

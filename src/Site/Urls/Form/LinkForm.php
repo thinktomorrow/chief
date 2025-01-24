@@ -30,8 +30,8 @@ final class LinkForm
     private function getLocales(): array
     {
         return $this->model instanceof BelongsToSites
-            ? $this->model->getSites()
-            : \Thinktomorrow\Chief\Sites\ChiefSites::fieldLocales();
+            ? $this->model->getSiteIds()
+            : \Thinktomorrow\Chief\Sites\ChiefLocales::fieldLocales();
     }
 
     private function setLinks(): void

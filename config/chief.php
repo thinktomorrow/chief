@@ -45,12 +45,12 @@ return [
      *
      * Define the different sites that are available in your application.
      *
-     * The handle of each site is the unique site identifier and also the handle in the db and views.
+     * The id of each site is the unique site identifier and also the handle in the db and views.
      * The locale / fallback_locale value will be set as app_locale and should also correspond
      * to the Laravel translation locale in resources/lang. e.g. nl, en, en-US, nl-NL, fr-BE
      *
      * Each site entry contains the following values:
-     * - handle             The unique identifier of the site - used in the db and views. Don't alter this!
+     * - id                 The unique identifier of the site - used in the db and views. Don't alter this!
      * - locale             The locale used for this site
      * - fallback_locale    The locale to fall back to when a field value is not available in the locale
      * - active             Whether this site is active on the frontend or not
@@ -63,7 +63,7 @@ return [
     'sites' => [
         [
 
-            'handle' => 'nl-be',
+            'id' => 'nl-be',
 
             'locale' => 'nl',
 
@@ -81,7 +81,7 @@ return [
             /**
              * Admin naming of the site. Used in the Chief admin interface.
              */
-            'name' => 'Site (be)',
+            'name' => 'België (nl)',
             'short_name' => 'be',
 
             /**
@@ -98,17 +98,9 @@ return [
             'active' => true,
 
             'primary' => true,
-
-            // which locale to use for squanto, translations and such: app()->setLocale()
-            //// Usually this is the same as the key locale but it can happen that the app locale is different.
-            ///  This means that for sites with the same app_locale, only one translation field is presented. Then there is no option to
-            ///  set a different translation for this locale.  If you like to do this in some occasions, you can click 'add different translation for 'be' and
-            ///  this adds the be translation tab for this specific field. Referencing example: anzapro.nl > anzapro.be
-            ///
-            /// If app_locale is already a locale of a site, then this site is not immediately available in the translations and such. Only on demand.
         ],
         [
-            'handle' => 'fr-site',
+            'id' => 'fr-site',
             'locale' => 'fr',
             'name' => 'Site (fr)',
             'short_name' => 'fr',

@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
+use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
+
 interface LocalizedField
 {
     public function locales(?array $locales = null): static;
@@ -14,12 +16,13 @@ interface LocalizedField
     // If locale value is not present, we assume this locale value should fallback to the fallback locale value.
     // If locale value is null or empty ('', null), we assume this value is explicitly set to empty and should not fallback.
 
-    /**
-     * Get all locales the content should be available in.
-     */
-    public function getFieldLocales(): ?FieldLocales;
-
     public function getLocales(): array;
+
+    /**
+     * Grouped locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
+     * This is used to determine the tabs shown in the admin for the field.
+     */
+    public function getLocaleGroups(): array;
 
     /**
      * Indicates whether this field is localized or not.
@@ -30,11 +33,11 @@ interface LocalizedField
      * Define a specific format for the locale key.
      * e.g. ':name.:locale' or 'trans.:locale.:name'
      */
-    public function setLocalizedFormKeyTemplate(string $localizedFormKeyTemplate): static;
+    public function setLocalizedFieldNameTemplate(string $localizedFieldNameTemplate): static;
 
     //    public function getLocalizedFormKeyTemplate(): string;
 
-    public function getLocalizedFormKey(): LocalizedFormKey;
+    public function getLocalizedFieldName(): LocalizedFieldName;
 
     /**
      * Get all the localized keys for this field in bracketed format

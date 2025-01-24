@@ -3,12 +3,11 @@
 namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Support\Arr;
-use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
 trait InteractsWithForm
 {
@@ -77,7 +76,7 @@ trait InteractsWithForm
     private function addFormComponentValidation(array $rules, array $messages, array $validationAttributes): array
     {
         foreach ($this->getFieldsForValidation() as $component) {
-            $component->name(FormKey::replaceDotsByBrackets(LivewireFieldName::get($component->getName())));
+            $component->name(FieldNameHelpers::replaceDotsByBrackets(LivewireFieldName::get($component->getName())));
 
             $validationParameters = ValidationParameters::make($component);
             $rules = array_merge($rules, $validationParameters->getRules());

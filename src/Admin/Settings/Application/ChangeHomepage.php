@@ -19,7 +19,7 @@ class ChangeHomepage
 
         $modelReferences = is_array($setting->value)
             ? $setting->value
-            : array_fill_keys(\Thinktomorrow\Chief\Sites\ChiefSites::fieldLocales(), $setting->value);
+            : array_fill_keys(\Thinktomorrow\Chief\Sites\ChiefLocales::fieldLocales(), $setting->value);
 
         $this->assertNoEmptyValues($modelReferences);
 

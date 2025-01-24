@@ -27,7 +27,7 @@
                 <livewire:chief-wire::resource-sites
                     :resource-key="$resource::resourceKey()"
                     :modelReference="$model->modelReference()"
-                    :sites="$model->getSites()"/>
+                    :sites="$model->getSiteIds()"/>
             @endif
 
             {{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
@@ -60,8 +60,7 @@
                 }
             }"
         >
-            <x-chief-fragments::index :context-id="$context->id"
-                                      locale="{{ count($model->getSites()) > 0 ? $model->getSites()[0] : null }}"/>
+            <x-chief-fragments::index :context-id="$context->id"/>
         </div>
         @endAdminCan
 

@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Forms\Dialogs\Concerns;
 
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
 
 trait HasForm
 {

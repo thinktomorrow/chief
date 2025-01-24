@@ -116,7 +116,8 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
 
     protected function dynamicLocales(): array
     {
-        return ChiefSites::fieldLocales();
+        // Locales based on the sites of the model.
+        return ChiefLocales::fieldLocales();
     }
 
     public function dynamicLocaleFallback(): ?string

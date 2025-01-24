@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields\Locales;
+namespace Thinktomorrow\Chief\Forms\Fields\FieldName;
 
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
-
-class LocalizedFormKey
+class LocalizedFieldName
 {
     const DEFAULT_TEMPLATE = 'trans.:locale.:name';
 
@@ -135,11 +133,11 @@ class LocalizedFormKey
 
     private function replaceDotsByBrackets(string $value): string
     {
-        return FormKey::replaceDotsByBrackets($value);
+        return FieldNameHelpers::replaceDotsByBrackets($value);
     }
 
     private function replaceBracketsByDots(string $value): string
     {
-        return FormKey::replaceBracketsByDots($value);
+        return FieldNameHelpers::replaceBracketsByDots($value);
     }
 }

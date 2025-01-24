@@ -9,16 +9,80 @@ class ChiefSites
     /** @var ChiefSite[] */
     private array $sites;
 
+    /** @var ChiefSite[] */
+    private static ?array $cachedSites = null;
+
     private function __construct(ChiefSite ...$sites)
     {
-        if(empty($sites)) {
-            throw new \InvalidArgumentException('At least one site should be provided.');
-        }
+        $this->assertAllIdsAreUnique($sites);
 
         $this->sites = $sites;
     }
 
-    public static function fromArray(array $sites): self
+    public static function fromConfig(): self
+    {
+        $sites = self::fromArray(config('chief.sites', []));
+        $sites->assertAtLeastOneSiteIsAdded();
+
+        return $sites;
+    }
+
+    public function get(): array
+    {
+        return $this->sites;
+    }
+
+    public function getLocales(): array
+    {
+        return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
+    }
+
+    private function onlyActive(): self
+    {
+        return new self(...array_filter($this->sites, fn (ChiefSite $site) => $site->isActive));
+    }
+
+    public function filterByIds(array $siteIds): self
+    {
+        return new self(...array_filter($this->sites, fn (ChiefSite $site) => in_array($site->id, $siteIds)));
+    }
+
+    public static function all(): array
+    {
+        if (self::$cachedSites) {
+            return self::$cachedSites;
+        }
+
+        return self::$cachedSites = self::fromConfig()->get();
+    }
+
+    public function getPrimaryLocale(): ?string
+    {
+        foreach($this->sites as $site) {
+            if($site->isPrimary) {
+                return $site->locale;
+            }
+        }
+
+        if(empty($this->sites)) {
+            return null;
+        }
+
+        // By default, we assume the first site is primary
+        return $this->sites[0]->locale;
+    }
+
+    public function toArray(): array
+    {
+        return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);
+    }
+
+    public static function clearCache(): void
+    {
+        self::$cachedSites = null;
+    }
+
+    private static function fromArray(array $sites): self
     {
         $chiefSites = [];
 
@@ -29,68 +93,19 @@ class ChiefSites
         return new static(...$chiefSites);
     }
 
-    public function getLocales(): array
+    private function assertAtLeastOneSiteIsAdded(): void
     {
-        return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
-    }
-
-    /**
-     * Grouped locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
-     */
-    public function getFieldLocales(): FieldLocales
-    {
-        $fieldLocales = new FieldLocales();
-
-        foreach ($this->sites as $site) {
-            $fieldLocales->add($site->locale, $site->fallbackLocale);
+        if(empty($this->sites)) {
+            throw new \InvalidArgumentException('At least one site should be provided.');
         }
-
-        return $fieldLocales;
     }
 
-    public function onlyActive(): self
+    private function assertAllIdsAreUnique(array $sites): void
     {
-        return new static(...array_filter($this->sites, fn (ChiefSite $site) => $site->isActive));
-    }
+        $ids = array_map(fn (ChiefSite $site) => $site->id, $sites);
 
-    public function getPrimaryLocale(): string
-    {
-        return $this->sites[0]?->locale;
-    }
-
-    public static function fieldLocales(): FieldLocales
-    {
-        static $locales;
-
-        if ($locales) {
-            return $locales;
+        if(count($ids) !== count(array_unique($ids))) {
+            throw new \InvalidArgumentException('Site ids should be unique.');
         }
-
-        return $locales = static::fromArray(config('chief.sites', []))->getFieldLocales();
     }
-
-    public static function primaryFieldLocale(): FieldLocales
-    {
-        static $primaryFieldLocale;
-
-        if ($primaryFieldLocale) {
-            return $primaryFieldLocale;
-        }
-
-        $primaryLocale = static::fromArray(config('chief.sites', []))->getPrimaryLocale();
-
-        return $primaryFieldLocale = !$primaryLocale ? new FieldLocales() : (new FieldLocales())->add($primaryLocale);;
-    }
-
-    public function toArray(): array
-    {
-        return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);
-    }
-
-    //
-    //    public static function activeSites(): array
-    //    {
-    //        return app(ChiefSites::class)->getActiveSites();
-    //    }
-    //
 }

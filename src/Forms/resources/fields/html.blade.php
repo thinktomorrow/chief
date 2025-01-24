@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName; @endphp
+@php use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName; @endphp
 <x-chief::input.textarea
         data-editor
         data-locale="{{ $locale ?? app()->getLocale() }}"
