@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Models;
 
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults

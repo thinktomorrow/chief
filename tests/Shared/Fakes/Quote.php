@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends BaseFragment implements HasAsset, FragmentsOwner

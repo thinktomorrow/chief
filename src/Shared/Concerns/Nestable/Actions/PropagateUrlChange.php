@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Site\Urls\Application\ResaveUrlSlug;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class PropagateUrlChange
 {

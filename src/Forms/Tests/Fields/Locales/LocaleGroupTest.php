@@ -2,10 +2,10 @@
 
 namespace Fields\Locales;
 
-use Thinktomorrow\Chief\Sites\ChiefLocales;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Sites\ChiefLocales;
 
 class LocaleGroupTest extends TestCase
 {

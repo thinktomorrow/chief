@@ -24,7 +24,7 @@ class ChiefLocales
     {
         $fallbackLocales = [];
 
-        foreach(ChiefSites::all() as $site) {
+        foreach (ChiefSites::all() as $site) {
             $fallbackLocales[$site->locale] = $site->fallbackLocale;
         }
 
@@ -48,23 +48,24 @@ class ChiefLocales
 
         $groups = [];
 
-        foreach($locales as $locale) {
+        foreach ($locales as $locale) {
 
             // Locale is already set as root fallback or given locale is no longer present in the sites config
-            if(isset($groups[$locale]) || !array_key_exists($locale, $fallbackLocales)) {
+            if (isset($groups[$locale]) || ! array_key_exists($locale, $fallbackLocales)) {
                 continue;
             }
 
             $fallbackLocale = $fallbackLocales[$locale];
 
-            if(!in_array($fallbackLocale, $locales) || $fallbackLocale == $locale) {
+            if (! in_array($fallbackLocale, $locales) || $fallbackLocale == $locale) {
                 $groups[$locale] = [$locale];
+
                 continue;
             }
 
             $rootFallback = $fallbackLocale ? self::resolveRootFallback($fallbackLocale, $fallbackLocales) : $locale;
 
-            if(!isset($groups[$rootFallback])) {
+            if (! isset($groups[$rootFallback])) {
                 $groups[$rootFallback] = [$rootFallback];
             }
             $groups[$rootFallback][] = $locale;
@@ -77,7 +78,7 @@ class ChiefLocales
 
     private static function resolveRootFallback(?string $fallbackLocale, array $fallbackLocales): ?string
     {
-        while($fallbackLocale && isset($fallbackLocales[$fallbackLocale])) {
+        while ($fallbackLocale && isset($fallbackLocales[$fallbackLocale])) {
             $fallbackLocale = $fallbackLocales[$fallbackLocale];
         }
 

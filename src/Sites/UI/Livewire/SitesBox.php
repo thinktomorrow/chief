@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class SitesBox extends Component
 {

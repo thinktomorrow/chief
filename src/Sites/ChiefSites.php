@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
-use Thinktomorrow\Chief\Forms\Fields\Locales\FieldLocales;
-
 class ChiefSites
 {
     /** @var ChiefSite[] */
@@ -58,13 +56,13 @@ class ChiefSites
 
     public function getPrimaryLocale(): ?string
     {
-        foreach($this->sites as $site) {
-            if($site->isPrimary) {
+        foreach ($this->sites as $site) {
+            if ($site->isPrimary) {
                 return $site->locale;
             }
         }
 
-        if(empty($this->sites)) {
+        if (empty($this->sites)) {
             return null;
         }
 
@@ -95,7 +93,7 @@ class ChiefSites
 
     private function assertAtLeastOneSiteIsAdded(): void
     {
-        if(empty($this->sites)) {
+        if (empty($this->sites)) {
             throw new \InvalidArgumentException('At least one site should be provided.');
         }
     }
@@ -104,7 +102,7 @@ class ChiefSites
     {
         $ids = array_map(fn (ChiefSite $site) => $site->id, $sites);
 
-        if(count($ids) !== count(array_unique($ids))) {
+        if (count($ids) !== count(array_unique($ids))) {
             throw new \InvalidArgumentException('Site ids should be unique.');
         }
     }

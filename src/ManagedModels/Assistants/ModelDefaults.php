@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\Sites\ChiefLocales;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Sites\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults

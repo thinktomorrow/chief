@@ -21,9 +21,9 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasEndpoint;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStorageDisk;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
-use Thinktomorrow\Chief\Sites\ChiefLocales;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
+use Thinktomorrow\Chief\Sites\ChiefLocales;
 
 /**
  * Default field settings are overriden mostly because values of file inputs
