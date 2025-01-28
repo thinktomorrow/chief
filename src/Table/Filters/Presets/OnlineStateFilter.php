@@ -16,4 +16,15 @@ class OnlineStateFilter extends ButtonGroupFilter
                 'draft' => 'Offline',
             ])->value('');
     }
+
+    public static function makeSimpleStateDefault(): self
+    {
+        return static::make('current_state')
+            ->label('Status')
+            ->options([
+                '' => 'Alle',
+                'online' => 'Online',
+                'offline' => 'Offline',
+            ])->value('');
+    }
 }

@@ -71,4 +71,20 @@ trait HasValueMapping
             'link ontbreekt' => 'orange',
         ]);
     }
+
+    /** Preset for simple states */
+    public function simpleStates(): static
+    {
+        $this->mapValue([
+            'online' => 'online',
+            'offline' => 'offline',
+            'deleted' => 'verwijderd',
+        ]);
+
+        return $this->mapVariant([
+            'online' => 'green',
+            'offline' => 'red',
+            'deleted' => 'grey',
+        ]);
+    }
 }
