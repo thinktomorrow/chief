@@ -69,15 +69,15 @@ return new class extends Migration
 
         Schema::create('chief_urls', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('context_id')->nullable();
             $table->unsignedInteger('redirect_id')->nullable();
-            $table->string('locale');
+            $table->char('site', 8);
             $table->string('slug');
             $table->string('model_type');
             $table->integer('model_id')->unsigned();
-            $table->unsignedBigInteger('context_id')->nullable()->after('id');
             $table->timestamps();
 
-            $table->unique(['locale', 'slug']);
+            $table->unique(['site', 'slug']);
             $table->foreign('context_id')->references('id')->on('contexts')->nullOnDelete();
             $table->foreign('redirect_id')->references('id')->on('chief_urls')->onDelete('cascade');
         });

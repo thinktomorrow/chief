@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
+use Illuminate\Support\Collection;
+
 class ChiefSites
 {
     /** @var ChiefSite[] */
@@ -45,13 +47,13 @@ class ChiefSites
         return new self(...array_filter($this->sites, fn (ChiefSite $site) => in_array($site->id, $siteIds)));
     }
 
-    public static function all(): array
+    public static function all(): Collection
     {
         if (self::$cachedSites) {
-            return self::$cachedSites;
+            return collect(self::$cachedSites);
         }
 
-        return self::$cachedSites = self::fromConfig()->get();
+        return collect(self::$cachedSites = self::fromConfig()->get());
     }
 
     public function getPrimaryLocale(): ?string

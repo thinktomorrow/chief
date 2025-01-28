@@ -8,11 +8,25 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
+        if(!Schema::hasColumn('chief_urls', 'site')) {
+            Schema::table('chief_urls', function (Blueprint $table) {
+                $table->renameColumn('locale', 'site');
+            });
+
+            Schema::table('chief_urls', function (Blueprint $table) {
+                $table->dropUnique('chief_urls_locale_slug_unique');
+            });
+
+            Schema::table('chief_urls', function (Blueprint $table) {
+                $table->unique(['site', 'slug']);
+            });
+        }
+
         // This migration is meant for existing database setups.
         // It will migrate the existing fragment tables to the new structure.
         // New setups will have this structure by default.
         if($this->columnSchemaIsAlreadyAltered()) {
-            $this->insertDefaultContextLocales();
+            $this->insertDefaultContextSites();
             $this->changeModelReferencesToKeyFormat();
             $this->copyContextFragmentLookupToTree();
             $this->addActiveContextIdToUrl();
@@ -21,7 +35,8 @@ return new class extends Migration {
         }
 
         Schema::table('contexts', function (Blueprint $table) {
-            $table->json('locales')->after('owner_id')->nullable();
+            $table->json('sites')->after('owner_id')->nullable();
+            $table->string('title')->nullable();
         });
 
         // DO MIGRATION
@@ -33,7 +48,7 @@ return new class extends Migration {
         $this->renameModelReferenceColumnToKey();
         $this->nestableFragments();
 
-        $this->insertDefaultContextLocales();
+        $this->insertDefaultContextSites();
         $this->changeModelReferencesToKeyFormat();
         $this->copyContextFragmentLookupToTree();
         $this->addActiveContextIdToUrl();
@@ -43,9 +58,11 @@ return new class extends Migration {
     {
     }
 
-    private function insertDefaultContextLocales(): void
+    private function insertDefaultContextSites(): void
     {
-        DB::table('contexts')->update(['locales' => json_encode(config('chief.locales'))]);
+        $siteIds = \Thinktomorrow\Chief\Sites\ChiefSites::all()->map(fn ($site) => $site->id)->toArray();
+
+        DB::table('contexts')->update(['sites' => json_encode($siteIds)]);
     }
 
     /**
@@ -187,6 +204,6 @@ return new class extends Migration {
 
     private function columnSchemaIsAlreadyAltered(): bool
     {
-        return Schema::hasColumn('contexts', 'locales');
+        return Schema::hasColumn('contexts', 'sites');
     }
 };

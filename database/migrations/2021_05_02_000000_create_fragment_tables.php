@@ -12,7 +12,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('owner_type');
             $table->char('owner_id', 36); // account for integer ids as well as uuids
-            $table->json('locales')->nullable();
+            $table->json('sites')->nullable();
+            $table->string('title')->nullable();
             $table->timestamps();
         });
 
