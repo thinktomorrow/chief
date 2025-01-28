@@ -110,7 +110,7 @@ class SavingFieldTest extends TestCase
         ArticlePage::migrateUp();
         $article = new ArticlePage();
 
-        $field = Text::make('title_trans')->setLocalizedFormKeyTemplate(':name.:locale')->locales(['nl','en'])->prepare(function ($value, $input) {
+        $field = Text::make('title_trans')->setLocalizedFieldNameTemplate(':name.:locale')->locales(['nl','en'])->prepare(function ($value, $input) {
             return $value . '-foobar';
         });
 

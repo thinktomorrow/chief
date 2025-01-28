@@ -19,9 +19,20 @@ class PropagateUrlChange
 
     public function __construct(Registry $registry, ResaveUrlSlug $resaveUrlSlug)
     {
-        $this->locales = config('chief.locales', []);
+        $this->locales = ChiefLocales::fieldLocales();
         $this->registry = $registry;
         $this->resaveUrlSlug = $resaveUrlSlug;
+    }
+
+    public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
+    {
+        $model = $event->modelReference->instance();
+
+        if (! $model instanceof Nestable) {
+            return;
+        }
+
+        $this->handle($model);
     }
 
     /**
@@ -54,16 +65,5 @@ class PropagateUrlChange
         foreach ($model->getChildren() as $child) {
             $this->handle($child, );
         }
-    }
-
-    public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
-    {
-        $model = $event->modelReference->instance();
-
-        if (! $model instanceof Nestable) {
-            return;
-        }
-
-        $this->handle($model);
     }
 }

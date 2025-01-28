@@ -184,4 +184,27 @@ class OptionsTest extends ChiefTestCase
 
         $component->getOptions();
     }
+
+    public function test_it_can_check_if_closure_options_are_grouped()
+    {
+        $component = MultiSelect::make('xxx')->options(fn () => [
+            [
+                'label' => 'Group one',
+                'options' => [
+                    'one' => 'een',
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($component->hasOptionGroups());
+    }
+
+    public function test_it_can_assume_options_are_grouped_without_calling_closure()
+    {
+        $component = MultiSelect::make('xxx')->options(function () {
+            throw new \Exception('Should not be called');
+        })->grouped();
+
+        $this->assertTrue($component->hasOptionGroups());
+    }
 }

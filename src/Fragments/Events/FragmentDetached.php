@@ -5,12 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Events;
 
 class FragmentDetached
 {
-    public int $fragmentModelId;
-    public int $contextId;
-
-    public function __construct(int $fragmentModelId, int $contextId)
+    public function __construct(public readonly string $fragmentId, public readonly string $contextId)
     {
-        $this->fragmentModelId = $fragmentModelId;
-        $this->contextId = $contextId;
     }
 }

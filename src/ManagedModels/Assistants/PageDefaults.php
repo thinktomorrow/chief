@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\UsesPageState;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
+use Thinktomorrow\Chief\Sites\BelongsToSitesDefault;
 
 trait PageDefaults
 {
@@ -19,6 +20,7 @@ trait PageDefaults
     use ShowsPageState;
     use Publishable;
     use Archivable;
+    use BelongsToSitesDefault;
 
     /**
      * Get all related models that have at least one fragment.

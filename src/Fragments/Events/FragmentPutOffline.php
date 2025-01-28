@@ -5,10 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Events;
 
 class FragmentPutOffline
 {
-    public int $fragmentModelId;
-
-    public function __construct(int $fragmentModelId)
+    public function __construct(public readonly string $fragmentId)
     {
-        $this->fragmentModelId = $fragmentModelId;
     }
 }

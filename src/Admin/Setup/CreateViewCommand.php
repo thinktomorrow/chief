@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Admin\Setup;
 
 use Illuminate\Console\Command;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
@@ -47,7 +47,7 @@ class CreateViewCommand extends Command
 
     private function createView(string $modelClass, string $viewPath)
     {
-        $stub = $this->implementsInterface($modelClass, Fragmentable::class)
+        $stub = $this->implementsInterface($modelClass, Fragment::class)
             ? __DIR__.'/../../../resources/views/manager/windows/fragments/edit.blade.php'
             : __DIR__.'/../../../resources/views/manager/edit.blade.php';
 
@@ -58,7 +58,7 @@ class CreateViewCommand extends Command
 
     private function viewPath(string $viewKey, string $modelClass)
     {
-        $path = $this->implementsInterface($modelClass, Fragmentable::class)
+        $path = $this->implementsInterface($modelClass, Fragment::class)
             ? 'fragments'
             : 'pages';
 

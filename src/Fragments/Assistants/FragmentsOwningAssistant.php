@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\App\View\Components\Fragments;
+use ReflectionClass;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Shared\Helpers\SortModels;
 
 trait FragmentsOwningAssistant
 {
@@ -45,7 +46,7 @@ trait FragmentsOwningAssistant
         }
 
         // TODO: would be great if we could remove this specific 'nested' attitude here and just use the same routes for everything
-        if ($model instanceof Fragmentable) {
+        if ($model instanceof Fragment) {
             $model = $model->fragmentModel();
             //            return route('chief.' . $this->managedModelClass()::resourceKey() . '.nested-' . $action, array_merge([$model->fragmentModel()->id], $parameters));
         }
@@ -152,7 +153,7 @@ trait FragmentsOwningAssistant
 
     private function getSharedFragments(FragmentsOwner $owner, Request $request): array
     {
-        return $this->fragmentRepository->getAllShared($owner, [
+        return $this->fragmentRepository->getShareableFragments($owner, [
             'exclude_own' => true,
             'default_top_shared' => true,
             'owners' => array_filter($request->input('owners', []), fn ($val) => $val),
@@ -170,12 +171,16 @@ trait FragmentsOwningAssistant
     {
         $owner = $this->owner($ownerId);
 
+        if ($locale = $request->input('locale')) {
+            app()->setLocale($locale);
+        }
+
         return (new Fragments($owner))->render()->render();
     }
 
     private function owner($ownerId): FragmentsOwner
     {
-        if ((new \ReflectionClass($this->managedModelClass()))->implementsInterface(Fragmentable::class)) {
+        if ((new ReflectionClass($this->managedModelClass()))->implementsInterface(Fragment::class)) {
             return $this->fragmentRepository->find($ownerId);
         }
 

@@ -24,7 +24,7 @@ class RenderMultiSelectTest extends ChiefTestCase
     public function test_it_can_render_the_localized_field_view()
     {
         $component = MultiSelect::make('xxx')
-            ->setLocalizedFormKeyTemplate(':name.:locale')
+            ->setLocalizedFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'en']);
         $this->assertStringContainsString('name="xxx[nl]', $component->toHtml());
         $this->assertStringContainsString('name="xxx[en]', $component->toHtml());
