@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
@@ -12,6 +13,7 @@ use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 trait DuplicateAssistant
 {
     abstract protected function guard(string $action, $model = null);
+
     abstract protected function generateRoute(string $action, $model = null, ...$parameters): string;
 
     public function routesDuplicateAssistant(): array
@@ -40,7 +42,7 @@ trait DuplicateAssistant
     public function duplicate(Request $request, $id)
     {
         if (! $model = $this->managedModelClass()::findOrFail($id)) {
-            throw new \InvalidArgumentException('Missing model id or model not found by [' . $id. '].');
+            throw new \InvalidArgumentException('Missing model id or model not found by ['.$id.'].');
         }
 
         $this->guard('duplicate', $model);
@@ -50,7 +52,7 @@ trait DuplicateAssistant
 
         Audit::activity()->performedOn($model)->log('duplicated');
 
-        return redirect()->to($this->route('edit', $copiedModel))->with('messages.success', $this->resource->getPageTitle($model) . ' is gekopieerd.');
+        return redirect()->to($this->route('edit', $copiedModel))->with('messages.success', $this->resource->getPageTitle($model).' is gekopieerd.');
     }
 
     public function duplicateOnCreate(Request $request)

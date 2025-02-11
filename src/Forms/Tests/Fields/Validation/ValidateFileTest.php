@@ -18,9 +18,10 @@ class ValidateFileTest extends ChiefTestCase
     use UploadsFile;
 
     private $model;
+
     private $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -13,13 +13,15 @@ use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
-class TagModel extends Model implements ReferableModel, PageResource
+class TagModel extends Model implements PageResource, ReferableModel
 {
-    use ReferableModelDefault;
     use PageResourceDefault;
+    use ReferableModelDefault;
 
     protected $guarded = [];
+
     public $table = 'chief_tags';
+
     public $timestamps = false;
 
     public function getIndexTitle(): string
@@ -48,12 +50,12 @@ class TagModel extends Model implements ReferableModel, PageResource
     {
         yield FieldPresets::pagetitle(
             Text::make('label')
-            ->label('Label')
-            ->description('Korte labels duren het langst.')
-            ->required()
-            ->characterCount('20')
-            ->rules('max:20')
-            ->autofocus()
+                ->label('Label')
+                ->description('Korte labels duren het langst.')
+                ->required()
+                ->characterCount('20')
+                ->rules('max:20')
+                ->autofocus()
         );
 
         yield MultiSelect::make('color')

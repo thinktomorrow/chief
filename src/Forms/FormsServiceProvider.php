@@ -17,7 +17,7 @@ class FormsServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-form', __DIR__ . '/resources');
+        $this->app['view']->addNamespace('chief-form', __DIR__.'/resources');
 
         Livewire::component('chief-form::dialog', DialogComponent::class);
 

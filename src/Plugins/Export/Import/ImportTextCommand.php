@@ -12,6 +12,7 @@ class ImportTextCommand extends BaseCommand
     use ReadsCsv;
 
     protected $signature = 'chief:import-text {file}';
+
     protected $description = 'Import text translations';
 
     public function __construct()
@@ -60,6 +61,6 @@ class ImportTextCommand extends BaseCommand
             $locale
         ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of text for locale '.$locale . ' 🤘');
+        $this->info('Finished import of text for locale '.$locale.' 🤘');
     }
 }

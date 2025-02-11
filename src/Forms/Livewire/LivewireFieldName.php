@@ -12,7 +12,7 @@ class LivewireFieldName
             throw new \Exception('Dont pass locale as second parameter. Let the name be constructed as is');
         }
 
-        return "form." . static::getWithoutPrefix($name, $locale, $index);
+        return 'form.'.static::getWithoutPrefix($name, $locale, $index);
     }
 
     public static function getWithoutPrefix(string $name, ?string $locale = null, ?string $index = null): ?string
@@ -23,7 +23,7 @@ class LivewireFieldName
 
         $name = FormKey::replaceBracketsByDots($name);
 
-        return ($index ? $index . '.' : null) . $name;
+        return ($index ? $index.'.' : null).$name;
         //        return ($index ? $index . '.' : null) . $name . (isset($locale) ? '.' . $locale : null);
     }
 }

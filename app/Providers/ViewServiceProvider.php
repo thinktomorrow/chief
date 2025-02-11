@@ -9,7 +9,7 @@ class ViewServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 
@@ -53,7 +53,5 @@ class ViewServiceProvider extends ServiceProvider
         view()->share('isCollapsedOnPageLoad', $isCollapsedOnPageLoad);
     }
 
-    public function register()
-    {
-    }
+    public function register() {}
 }

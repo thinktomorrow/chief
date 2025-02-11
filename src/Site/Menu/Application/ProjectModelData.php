@@ -124,7 +124,7 @@ class ProjectModelData
                  * so we can safely prepend this on each path. However for real missing links
                  * we still set null as url on the menu item.
                  */
-                $menuItem->setUrl($fullUrl ? '/' . $path : null, $locale);
+                $menuItem->setUrl($fullUrl ? '/'.$path : null, $locale);
             }
         }
 

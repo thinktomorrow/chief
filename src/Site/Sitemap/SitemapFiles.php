@@ -19,7 +19,6 @@ class SitemapFiles
     }
 
     /**
-     * @param string $directory
      * @return Collection (SplFileInfo[])
      */
     public function allWithin(string $directory): Collection
@@ -27,7 +26,7 @@ class SitemapFiles
         $files = $this->filesystem->files($directory);
 
         return collect($files)->filter(function ($file) {
-            return (Str::startsWith($file->getFileName(), ['sitemap-', 'image-sitemap-']) && Str::endsWith($file->getFileName(), '.xml'));
+            return Str::startsWith($file->getFileName(), ['sitemap-', 'image-sitemap-']) && Str::endsWith($file->getFileName(), '.xml');
         });
     }
 }

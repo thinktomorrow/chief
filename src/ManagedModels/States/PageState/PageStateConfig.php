@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
-class PageStateConfig implements StateConfig, StateAdminConfig
+class PageStateConfig implements StateAdminConfig, StateConfig
 {
     use StateAdminConfigDefaults;
 
@@ -64,17 +64,17 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void
     {
-        if ('publish' == $transition) {
+        if ($transition == 'publish') {
             event(new ManagedModelPublished($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('published');
         }
 
-        if ('unpublish' == $transition) {
+        if ($transition == 'unpublish') {
             event(new ManagedModelUnPublished($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('unpublished');
         }
 
-        if ('archive' == $transition) {
+        if ($transition == 'archive') {
             event(
                 new ManagedModelArchived(
                     $statefulContract->modelReference(),
@@ -85,11 +85,11 @@ class PageStateConfig implements StateConfig, StateAdminConfig
             Audit::activity()->performedOn($statefulContract)->log('archived');
         }
 
-        if ('unarchive' == $transition) {
+        if ($transition == 'unarchive') {
             Audit::activity()->performedOn($statefulContract)->log('unarchived');
         }
 
-        if ('delete' == $transition) {
+        if ($transition == 'delete') {
             event(new ManagedModelQueuedForDeletion($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('deleted');
         }
@@ -144,11 +144,11 @@ class PageStateConfig implements StateConfig, StateAdminConfig
     {
         $state = $statefulContract->getState($this->getStateKey());
 
-        if (PageState::draft == $state) {
+        if ($state == PageState::draft) {
             return '<p>De pagina staat nog in draft.</p>';
         }
 
-        if (PageState::published == $state) {
+        if ($state == PageState::published) {
             return '<p>De pagina staat online. 👍</p>';
         }
 
@@ -224,23 +224,23 @@ class PageStateConfig implements StateConfig, StateAdminConfig
 
     public function getResponseNotification(string $transitionKey): ?string
     {
-        if ('publish' == $transitionKey) {
+        if ($transitionKey == 'publish') {
             return 'De pagina is online geplaatst.';
         }
 
-        if ('publish' == $transitionKey) {
+        if ($transitionKey == 'publish') {
             return 'De pagina is offline gehaald.';
         }
 
-        if ('archive' == $transitionKey) {
+        if ($transitionKey == 'archive') {
             return 'De pagina is gearchiveerd.';
         }
 
-        if ('unarchive' == $transitionKey) {
+        if ($transitionKey == 'unarchive') {
             return 'De pagina is uit het archief gehaald.';
         }
 
-        if ('delete' == $transitionKey) {
+        if ($transitionKey == 'delete') {
             return 'De pagina is definitief verwijderd.';
         }
 

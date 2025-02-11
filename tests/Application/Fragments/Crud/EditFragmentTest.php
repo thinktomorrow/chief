@@ -2,19 +2,22 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
-use function auth;
-use function route;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
+use function auth;
+use function route;
+
 class EditFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $model;
+
     private $fragmentManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

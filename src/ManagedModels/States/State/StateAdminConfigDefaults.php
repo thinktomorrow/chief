@@ -24,8 +24,8 @@ trait StateAdminConfigDefaults
 
     public function getWindowContent(StatefulContract $statefulContract, array $viewData): string
     {
-        return Blade::render('<x-slot name="labels">' .
-            $this->getStateLabel($statefulContract) .
+        return Blade::render('<x-slot name="labels">'.
+            $this->getStateLabel($statefulContract).
             '</x-slot>');
     }
 

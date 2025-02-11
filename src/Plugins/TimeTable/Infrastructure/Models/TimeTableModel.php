@@ -15,7 +15,9 @@ class TimeTableModel extends Model implements ReferableModel
     use ReferableModelDefault;
 
     protected $guarded = [];
+
     public $table = 'timetables';
+
     public $timestamps = false;
 
     //    public function getSlotsPerDay()

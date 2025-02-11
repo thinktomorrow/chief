@@ -13,9 +13,8 @@ trait ResolvingRoute
     /**
      * Resolve a page route.
      *
-     * @param $name
-     * @param null $locale
-     * @param array $parameters
+     * @param  null  $locale
+     * @param  array  $parameters
      * @return string
      */
     protected function resolveRoute($name, $parameters = [], $locale = null)

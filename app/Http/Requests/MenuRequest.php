@@ -15,8 +15,6 @@ class MenuRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function authorize(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
@@ -49,9 +47,9 @@ class MenuRequest extends FormRequest
                 continue;
             }
 
-            $rules['trans.' . $locale . '.label'] = 'required';
-            if ($this->request->get('trans.' . $locale . '.url') != null) {
-                $rules['trans.' . $locale . '.url'] = 'url';
+            $rules['trans.'.$locale.'.label'] = 'required';
+            if ($this->request->get('trans.'.$locale.'.url') != null) {
+                $rules['trans.'.$locale.'.url'] = 'url';
             }
         }
 
@@ -63,12 +61,11 @@ class MenuRequest extends FormRequest
         $attributes = [];
 
         foreach (array_keys($this->request->all('trans')) as $locale) {
-            $attributes['trans.' . $locale . '.label'] = $locale . ' label';
-            $attributes['trans.' . $locale . '.url'] = $locale . ' link';
+            $attributes['trans.'.$locale.'.label'] = $locale.' label';
+            $attributes['trans.'.$locale.'.url'] = $locale.' link';
         }
 
         $attributes['owner_reference'] = 'Interne pagina';
-
 
         return $attributes;
     }
@@ -83,7 +80,6 @@ class MenuRequest extends FormRequest
     }
 
     /**
-     * @param $data
      * @return mixed
      */
     protected function sanitizeUrl(array $data)
@@ -95,7 +91,7 @@ class MenuRequest extends FormRequest
 
             // Check if it is a relative
             if ($this->isRelativeUrl($trans['url'])) {
-                $data['trans'][$locale]['url'] = '/' . trim($trans['url'], '/');
+                $data['trans'][$locale]['url'] = '/'.trim($trans['url'], '/');
             } elseif (Str::startsWith($trans['url'], ['mailto:', 'tel:', 'https://', 'http://'])) {
                 $data['trans'][$locale]['url'] = $trans['url'];
             } else {
@@ -113,8 +109,8 @@ class MenuRequest extends FormRequest
         $nakedUrl = ltrim($url, '/');
 
         // Check if passed url is not intended as a host instead of a relative path
-        $notIntentedAsRoot = (null == Root::fromString($url)->getScheme() && false === strpos($url, '.'));
+        $notIntentedAsRoot = (Root::fromString($url)->getScheme() == null && strpos($url, '.') === false);
 
-        return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/' . $nakedUrl]));
+        return $notIntentedAsRoot && in_array($url, [$nakedUrl, '/'.$nakedUrl]);
     }
 }

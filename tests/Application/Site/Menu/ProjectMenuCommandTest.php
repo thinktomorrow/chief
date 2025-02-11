@@ -14,7 +14,7 @@ class ProjectMenuCommandTest extends ChiefTestCase
 
     private ArticlePage $page;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

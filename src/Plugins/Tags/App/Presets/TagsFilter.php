@@ -14,13 +14,17 @@ use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 class TagsFilter implements Filter
 {
     protected string $type;
+
     protected string $queryKey;
+
     protected ?Closure $query;
+
     protected ?string $view = null;
 
     protected ?string $label;
 
     protected ?string $description = null;
+
     protected ?string $placeholder = null;
 
     /** @var null|mixed */
@@ -32,7 +36,9 @@ class TagsFilter implements Filter
     private string $optionType;
 
     private Collection $tags;
+
     private array $tagGroupIds = [];
+
     private array $ownerTypes = [];
 
     final public function __construct(string $queryKey = 'tags', ?Closure $query = null)
@@ -47,7 +53,7 @@ class TagsFilter implements Filter
 
     public function applicable(Request $request): bool
     {
-        return ($request->filled($this->queryKey) || $this->value);
+        return $request->filled($this->queryKey) || $this->value;
     }
 
     public function queryKey(): string
@@ -59,7 +65,7 @@ class TagsFilter implements Filter
     {
         return function (Builder $builder, $value) {
             $builder->whereHas('tags', function ($query) use ($value) {
-                $query->whereIn('id', (array)$value);
+                $query->whereIn('id', (array) $value);
             });
         };
     }
@@ -116,7 +122,7 @@ class TagsFilter implements Filter
     public function filterByOwnerTypes(array|string $ownerTypes): static
     {
         $this->optionType = 'owner_type';
-        $this->ownerTypes = (array)$ownerTypes;
+        $this->ownerTypes = (array) $ownerTypes;
 
         return $this;
     }
@@ -124,7 +130,7 @@ class TagsFilter implements Filter
     public function filterByTagCategory(array|string|int $tagGroupIds): static
     {
         $this->optionType = 'category';
-        $this->tagGroupIds = (array)$tagGroupIds;
+        $this->tagGroupIds = (array) $tagGroupIds;
 
         return $this;
     }

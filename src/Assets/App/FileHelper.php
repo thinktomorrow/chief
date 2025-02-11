@@ -27,9 +27,9 @@ class FileHelper
 
     public static function getHumanReadableSize(int $sizeInBytes): string
     {
-        [$size, $unit] = explode(' ',  \Spatie\MediaLibrary\Support\File::getHumanReadableSize($sizeInBytes));
+        [$size, $unit] = explode(' ', \Spatie\MediaLibrary\Support\File::getHumanReadableSize($sizeInBytes));
 
-        return round($size) . ' ' . $unit;
+        return round($size).' '.$unit;
     }
 
     public static function getBaseName(string $path): string

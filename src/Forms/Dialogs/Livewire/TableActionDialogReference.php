@@ -8,7 +8,9 @@ use Thinktomorrow\Chief\Table\Table\References\TableReference;
 class TableActionDialogReference implements DialogReference
 {
     private TableReference $tableReference;
+
     private string $actionKey;
+
     private string $dialogKey;
 
     /**
@@ -16,7 +18,6 @@ class TableActionDialogReference implements DialogReference
      *
      * This is used to retrieve a specific action
      * modal present in Livewire Table component.
-     *
      */
     public function __construct(TableReference $tableReference, string $actionKey, string $dialogKey)
     {

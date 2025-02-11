@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -13,7 +14,7 @@ class PropagateUrlChangeTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -154,6 +155,7 @@ class PropagateUrlChangeTest extends ChiefTestCase
 
     /**
      * @return mixed
+     *
      * @throws BindingResolutionException
      */
     private function prepareModels()

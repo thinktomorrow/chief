@@ -20,9 +20,10 @@ class IsolateFileTest extends ChiefTestCase
     use UploadsFile;
 
     private $model;
+
     private Resource $resource;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,7 +31,7 @@ class IsolateFileTest extends ChiefTestCase
         $this->resource = app(ArticlePageResource::class);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Storage::delete('test/image-temp-name.png');
         Storage::delete('test/image-second-temp-name.jpg');
@@ -43,11 +44,11 @@ class IsolateFileTest extends ChiefTestCase
         $filename = 'image.png';
         $mimeType = 'image/png';
 
-        $tempName = Str::random() . '.' . FileHelper::getExtension($filename);
+        $tempName = Str::random().'.'.FileHelper::getExtension($filename);
         UploadedFile::fake()->image($filename)->storeAs('test', $tempName);
 
         $this->uploadAsset(
-            'test/' . $tempName,
+            'test/'.$tempName,
             $filename,
             $mimeType,
             $this->model,
@@ -56,7 +57,7 @@ class IsolateFileTest extends ChiefTestCase
 
         $model2 = $this->setUpAndCreateArticle([], false);
         $this->uploadAsset(
-            'test/' . $tempName,
+            'test/'.$tempName,
             $filename,
             $mimeType,
             $model2,
@@ -108,7 +109,7 @@ class IsolateFileTest extends ChiefTestCase
 
         $media = $this->model->fresh()->asset(ArticlePage::FILEFIELD_DISK_KEY)->media->first();
         $this->assertEquals('secondMediaDisk', $media->disk);
-        $this->assertEquals($this->getTempDirectory('media2/' . $media->id . '/' . $media->file_name), $media->getPath());
+        $this->assertEquals($this->getTempDirectory('media2/'.$media->id.'/'.$media->file_name), $media->getPath());
     }
 
     public function test_it_can_detach_and_isolate_asset_with_custom_asset_type()

@@ -7,6 +7,7 @@ use Closure;
 trait HasLink
 {
     protected null|string|Closure $link = null;
+
     protected bool $openInNewTab = false;
 
     public function link(string|Closure $link): static
@@ -16,7 +17,7 @@ trait HasLink
         return $this;
     }
 
-    public function getLink(): null|string
+    public function getLink(): ?string
     {
         if ($this->link instanceof Closure) {
             return call_user_func($this->link, $this->getModel());

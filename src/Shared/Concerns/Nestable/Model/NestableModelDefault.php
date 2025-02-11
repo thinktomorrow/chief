@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\ManagedModels\States\SimpleState\UsesSimpleState;
 
 trait NestableModelDefault
 {
+    use Archivable;
     use ModelDefaults;
     use UsesSimpleState;
-    use Archivable;
 }

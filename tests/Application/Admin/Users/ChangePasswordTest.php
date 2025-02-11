@@ -10,11 +10,11 @@ class ChangePasswordTest extends ChiefTestCase
 {
     private $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = new User();
+        $this->user = new User;
         $this->user->email = 'email';
         $this->user->firstname = 'firstname';
         $this->user->lastname = 'lastname';

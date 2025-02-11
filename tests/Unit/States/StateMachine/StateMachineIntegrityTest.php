@@ -13,13 +13,14 @@ use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\StatefulStub;
 class StateMachineIntegrityTest extends TestCase
 {
     private $statefulStub;
+
     private $machine;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->statefulStub = new StatefulStub();
+        $this->statefulStub = new StatefulStub;
         $this->machine = StateMachine::fromConfig($this->statefulStub, $this->statefulStub->getStateConfig('online_state'));
     }
 
@@ -32,14 +33,14 @@ class StateMachineIntegrityTest extends TestCase
     {
         $this->expectException(StateException::class, 'malformed');
 
-        StateMachine::fromConfig($this->statefulStub, new MalformedStateConfigStub());
+        StateMachine::fromConfig($this->statefulStub, new MalformedStateConfigStub);
     }
 
     public function test_it_throws_exception_if_transition_contains_invalid_state()
     {
         $this->expectException(StateException::class, 'non existing');
 
-        StateMachine::fromConfig($this->statefulStub, new MissingStateConfigStub());
+        StateMachine::fromConfig($this->statefulStub, new MissingStateConfigStub);
     }
 
     public function test_it_throws_exception_if_applying_unknown_transition()

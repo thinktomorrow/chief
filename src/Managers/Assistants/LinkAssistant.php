@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
@@ -25,8 +26,8 @@ trait LinkAssistant
 
     public function canLinkAssistant(string $action, $model = null): bool
     {
-        return (in_array($action, ['links-edit', 'links-update'])
-            && ($model && $model instanceof Visitable));
+        return in_array($action, ['links-edit', 'links-update'])
+            && ($model && $model instanceof Visitable);
     }
 
     /**

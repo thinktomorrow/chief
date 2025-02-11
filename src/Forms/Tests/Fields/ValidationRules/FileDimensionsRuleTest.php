@@ -17,9 +17,10 @@ class FileDimensionsRuleTest extends ChiefTestCase
     use UploadsFile;
 
     private $model;
+
     private $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -131,7 +132,6 @@ class FileDimensionsRuleTest extends ChiefTestCase
         $asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image.png', 50, 50))
             ->save();
-
 
         PageWithAssets::setFieldsDefinition(function () {
             return [

@@ -11,6 +11,7 @@ use Thinktomorrow\Url\Url;
 class VisitedUrl
 {
     private Store $session;
+
     private static string $session_key = 'visited_urls';
 
     public function __construct(Store $session)
@@ -25,7 +26,7 @@ class VisitedUrl
      * The reference is the original url of a page, which is used to track down the visitor's specific url.
      * The url is the altered version of the url, mostly filtered, sorted or paginated.
      */
-    public function add(string $reference, string $url = null): void
+    public function add(string $reference, ?string $url = null): void
     {
         // With only one argument given, we assume the specific url is passed, so we clean it up to use as our base reference.
         if (! $url) {

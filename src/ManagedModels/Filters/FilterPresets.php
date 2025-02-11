@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters;
@@ -44,7 +45,7 @@ class FilterPresets
 
                 // Extract relation searches
                 foreach ($columns as $i => $column) {
-                    if (false !== strpos($column, '.')) {
+                    if (strpos($column, '.') !== false) {
                         [$relation, $columnName] = explode('.', $column);
 
                         $builder->whereHas($relation, function ($query) use ($value, $columnName, $dynamicColumn) {
@@ -64,12 +65,12 @@ class FilterPresets
     private static function queryColumnsOrDynamicAttributes(Builder $builder, $value, $columns, $dynamicKeys, $dynamicColumn): Builder
     {
         foreach ($columns as $column) {
-            $builder->orWhere($column, 'LIKE', '%' . $value . '%');
+            $builder->orWhere($column, 'LIKE', '%'.$value.'%');
         }
 
         foreach ($dynamicKeys as $dynamicKey) {
             $dynamicColumnParts = explode('.', $dynamicColumn);
-            $builder->orWhereRaw('LOWER(json_extract(`' . implode('`.`', $dynamicColumnParts) . '`, "$.' . $dynamicKey . '")) LIKE ?', '%' . trim(strtolower($value)) . '%');
+            $builder->orWhereRaw('LOWER(json_extract(`'.implode('`.`', $dynamicColumnParts).'`, "$.'.$dynamicKey.'")) LIKE ?', '%'.trim(strtolower($value)).'%');
         }
 
         return $builder;
@@ -83,7 +84,7 @@ class FilterPresets
         return InputFilter::make($name, function ($query, $value) use ($columns) {
             return $query->where(function ($builder) use ($value, $columns) {
                 foreach ($columns as $column) {
-                    $builder->orWhere($column, 'LIKE', '%' . $value . '%');
+                    $builder->orWhere($column, 'LIKE', '%'.$value.'%');
                 }
 
                 return $builder;
@@ -100,11 +101,11 @@ class FilterPresets
             return $query->where(function ($builder) use ($value, $dynamicColumns, $astrotomicColumns, $jsonColumn) {
                 foreach ($dynamicColumns as $column) {
                     $jsonColumnParts = explode('.', $jsonColumn);
-                    $builder->orWhereRaw('LOWER(json_extract(`' . implode('`.`', $jsonColumnParts) . '`, "$.' . $column . '")) LIKE ?', '%' . trim(strtolower($value)) . '%');
+                    $builder->orWhereRaw('LOWER(json_extract(`'.implode('`.`', $jsonColumnParts).'`, "$.'.$column.'")) LIKE ?', '%'.trim(strtolower($value)).'%');
                 }
 
                 foreach ($astrotomicColumns as $column) {
-                    $builder->orWhereTranslationLike($column, '%' . $value . '%');
+                    $builder->orWhereTranslationLike($column, '%'.$value.'%');
                 }
 
                 return $builder;

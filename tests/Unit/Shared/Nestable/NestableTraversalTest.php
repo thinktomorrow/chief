@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -10,7 +11,7 @@ class NestableTraversalTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

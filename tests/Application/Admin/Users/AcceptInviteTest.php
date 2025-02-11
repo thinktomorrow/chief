@@ -13,10 +13,12 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 class AcceptInviteTest extends ChiefTestCase
 {
     private $invitee;
+
     private $inviter;
+
     private $invitation;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -116,7 +118,7 @@ class AcceptInviteTest extends ChiefTestCase
     {
         Notification::fake();
 
-        $invitee = new User();
+        $invitee = new User;
         $invitee->email = 'email';
         $invitee->firstname = 'firstname';
         $invitee->lastname = 'lastname';
@@ -134,7 +136,7 @@ class AcceptInviteTest extends ChiefTestCase
     {
         Notification::fake();
 
-        $invitee = new User();
+        $invitee = new User;
         $invitee->email = 'email';
         $invitee->firstname = 'firstname';
         $invitee->lastname = 'lastname';
@@ -159,7 +161,7 @@ class AcceptInviteTest extends ChiefTestCase
     {
         Notification::fake();
 
-        $invitee = new User();
+        $invitee = new User;
         $invitee->email = 'email';
         $invitee->firstname = 'firstname';
         $invitee->lastname = 'lastname';

@@ -45,13 +45,13 @@ class UniqueSlug
         return $this;
     }
 
-    public function get($title, SluggableContract $entity = null)
+    public function get($title, ?SluggableContract $entity = null)
     {
         $slug = $originalslug = $this->sluggify($title);
         $i = 1;
 
         while (! $this->isSlugUnique($slug, $entity)) {
-            $slug = $originalslug . '-' . $i;
+            $slug = $originalslug.'-'.$i;
             $i++;
         }
 
@@ -67,12 +67,9 @@ class UniqueSlug
     }
 
     /**
-     *
-     * @param $slug
-     * @param SluggableContract $entity
      * @return bool
      */
-    private function isSlugUnique($slug, SluggableContract $entity = null)
+    private function isSlugUnique($slug, ?SluggableContract $entity = null)
     {
         $model = $this->model->findBySlug($slug);
 

@@ -21,7 +21,7 @@ class HomepageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

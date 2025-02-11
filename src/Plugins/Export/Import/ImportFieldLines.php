@@ -12,8 +12,11 @@ use Thinktomorrow\Chief\Plugins\Export\Export\Lines\FieldLine;
 class ImportFieldLines implements ToCollection
 {
     private string $idIndex;
+
     private string $locale;
+
     private string $columnIndex;
+
     private ?OutputStyle $output = null;
 
     public function __construct(string $idIndex, string $columnIndex, string $locale)
@@ -38,7 +41,7 @@ class ImportFieldLines implements ToCollection
                 $fieldReference = FieldReference::fromEncryptedKey($encryptedId);
             } catch (DecryptException|ModelNotFoundException $e) {
                 if ($this->output && $encryptedId != 'ID') {
-                    $this->output->error('Invalid field reference: ' . $encryptedId);
+                    $this->output->error('Invalid field reference: '.$encryptedId);
                 }
 
                 continue;
@@ -75,9 +78,9 @@ class ImportFieldLines implements ToCollection
         $fieldReference->saveValue($value, $this->locale);
 
         if ($this->output) {
-            $this->output->info('Imported value for ' . decrypt($encryptedId) . ' (' . $this->locale . ')');
-            $this->output->writeln('Old value: ' . print_r($currentValue, true));
-            $this->output->writeln('New value: ' . print_r($value, true));
+            $this->output->info('Imported value for '.decrypt($encryptedId).' ('.$this->locale.')');
+            $this->output->writeln('Old value: '.print_r($currentValue, true));
+            $this->output->writeln('New value: '.print_r($value, true));
         }
     }
 

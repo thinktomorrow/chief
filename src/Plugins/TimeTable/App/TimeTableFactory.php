@@ -35,10 +35,6 @@ class TimeTableFactory
         return $this->createTimeTable($items);
     }
 
-    /**
-     * @param $items
-     * @return \Spatie\OpeningHours\OpeningHours|TimeTable
-     */
     public function createTimeTable($items): \Spatie\OpeningHours\OpeningHours|TimeTable
     {
         try {

@@ -10,8 +10,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 
 class SelectFilter extends Filter
 {
-    use HasOptions;
     use HasMultiple;
+    use HasOptions;
 
     protected string $view = 'chief-table::filters.select';
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Tests\Fixtures;
@@ -13,7 +14,9 @@ class ModelFixture extends Model
     use HasDynamicAttributes;
 
     public $table = 'chief_table_model_fixtures';
+
     public $guarded = [];
+
     public $timestamps = false;
 
     public $dynamicKeys = [

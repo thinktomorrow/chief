@@ -9,18 +9,18 @@ class PageRouteResolverTest extends ChiefTestCase
 {
     private $article;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->article = $this->setupAndCreateArticle();
 
         app(PageRouteResolver::class)->define(function ($name, $parameters = [], $locale = null) {
-            return 'foobar-' . $locale;
+            return 'foobar-'.$locale;
         });
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         // Reset the page route resolver.
         app(PageRouteResolver::class)->define(null);

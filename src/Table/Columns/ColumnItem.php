@@ -27,27 +27,26 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
 
 abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
 {
-    use HasItems;
-    use HasItemMapping;
+    use HasColumnName;
     use HasComponentRendering;
-    use HasView;
     use HasCustomAttributes;
+    use HasDefault;
+    use HasDescription;
+    use HasItemMapping;
+    use HasItems;
     use HasKey;
     use HasLabel;
-    use HasDescription;
-
-    use HasModel;
-    use HasColumnName;
-    use HasDefault;
+    use HasLink;
     use HasLocalizableProperties;
+    use HasModel;
     use HasTeaser;
     use HasValue {
         getValue as getDefaultValue;
     }
     use HasValueMapping;
-    use HasVariantMapping;
     use HasVariant;
-    use HasLink;
+    use HasVariantMapping;
+    use HasView;
 
     public function __construct(string $key)
     {
@@ -73,7 +72,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         $value = $this->getDefaultValue($locale);
 
         if (is_iterable($value)) {
-            throw new \Exception('Non expected iterable value. The column item [' . $this->getKey() . '] is expected to have a scalar value.');
+            throw new \Exception('Non expected iterable value. The column item ['.$this->getKey().'] is expected to have a scalar value.');
         }
 
         return $this->teaseValue($value);

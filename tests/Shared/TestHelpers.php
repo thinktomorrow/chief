@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Database\Eloquent\Model;
@@ -95,7 +94,7 @@ trait TestHelpers
         return User::create(array_merge([
             'firstname' => 'Ben',
             'lastname' => Str::random(),
-            'email' => Str::random() . '@example.com',
+            'email' => Str::random().'@example.com',
         ], $values));
     }
 
@@ -171,7 +170,7 @@ trait TestHelpers
             $flag = true;
         });
 
-        $this->assertTrue($flag, 'Mail [' . $mailMessage->view . '] view could\'nt be rendered!');
+        $this->assertTrue($flag, 'Mail ['.$mailMessage->view.'] view could\'nt be rendered!');
     }
 
     //    protected function invokePrivateMethod($object, $methodName, array $parameters = [])
@@ -197,10 +196,10 @@ trait TestHelpers
         @mkdir($dst);
         while (false !== ($file = readdir($dir))) {
             if (($file != '.') && ($file != '..')) {
-                if (is_dir($src . '/' . $file)) {
-                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                if (is_dir($src.'/'.$file)) {
+                    $this->recurse_copy($src.'/'.$file, $dst.'/'.$file);
                 } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
+                    copy($src.'/'.$file, $dst.'/'.$file);
                 }
             }
         }

@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 
 class DialogComponent extends Component
 {
-    use ShowsAsDialog;
     use HasForm;
+    use ShowsAsDialog;
 
     public $parentId;
 
@@ -18,6 +18,7 @@ class DialogComponent extends Component
     public array $data = [];
 
     public ?DialogReference $dialogReference = null;
+
     private ?Dialog $dialog = null;
 
     public function mount(string $parentId)
@@ -29,7 +30,7 @@ class DialogComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
         ];
     }
 
@@ -97,7 +98,7 @@ class DialogComponent extends Component
     {
         $this->validateForm();
 
-        $this->dispatch('dialogSaved-' . $this->parentId, [
+        $this->dispatch('dialogSaved-'.$this->parentId, [
             'dialogReference' => $this->dialogReference->toLivewire(),
             'form' => $this->form,
             'data' => $this->data,
@@ -108,11 +109,11 @@ class DialogComponent extends Component
         // 3. execute effect
         // 4. notify response to table component
 
-        //$this->validate(['driverId' => 'required'], ['driverId.required' => 'De id of link is verplicht in te vullen']);
+        // $this->validate(['driverId' => 'required'], ['driverId.required' => 'De id of link is verplicht in te vullen']);
 
         // execute effect of dialog...
 
-        //$this->getModal()->getEffect()($model, $data);
+        // $this->getModal()->getEffect()($model, $data);
 
         $this->resetExcept(['parentId']);
 
@@ -127,6 +128,6 @@ class DialogComponent extends Component
             $type = $this->getDialog()->getType()->value;
         }
 
-        return view('chief-form::livewire.' . $type);
+        return view('chief-form::livewire.'.$type);
     }
 }

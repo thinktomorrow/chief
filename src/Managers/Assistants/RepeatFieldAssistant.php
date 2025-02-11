@@ -56,8 +56,7 @@ trait RepeatFieldAssistant
         foreach ($this->extractRepeatFieldsFrom($this->resource->fields($model)) as $parentRepeatField) {
             $match = $this->extractRepeatFieldsFrom($parentRepeatField->getComponents())
                 ->filterBy(fn ($field) => $field->getKey() == $fieldKey)
-                ->first()
-            ;
+                ->first();
 
             if ($match) {
                 return $parentRepeatField;
@@ -70,8 +69,7 @@ trait RepeatFieldAssistant
     private function extractRepeatFieldsFrom(iterable $fields): Fields
     {
         return Fields::make($fields, fn ($field) => ! $field instanceof Repeat)
-            ->filterBy(fn ($field) => $field instanceof Repeat)
-        ;
+            ->filterBy(fn ($field) => $field instanceof Repeat);
     }
 
     private function repeatSectionView(Repeat $field, array $repeatSectionComponents): View

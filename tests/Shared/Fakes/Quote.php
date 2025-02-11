@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -18,18 +19,20 @@ use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
+class Quote extends Model implements Fragment, FragmentsOwner, HasAsset
 {
-    use OwningFragments;
+    use FragmentableDefaults;
     use HasDynamicAttributes{
         HasDynamicAttributes::dynamicLocaleFallback as standardDynamicLocaleFallback;
     }
-    use FragmentableDefaults;
-    use SoftDeletes;
     use InteractsWithAssets;
+    use OwningFragments;
+    use SoftDeletes;
 
     public $table = 'quotes';
+
     public $guarded = [];
+
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans',
     ];
@@ -42,7 +45,7 @@ class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
     public function fields($model): iterable
     {
         yield Fields\Text::make('title')->rules('min:4');
-        yield Fields\Text::make('title_trans')->locales(['nl','en']);
+        yield Fields\Text::make('title_trans')->locales(['nl', 'en']);
         yield Fields\Text::make('custom')
             ->required()
             ->validationMessages(['required' => 'custom error for :attribute'])

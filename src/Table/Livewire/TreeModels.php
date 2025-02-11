@@ -10,6 +10,7 @@ class TreeModels
 {
     /**
      * @return array [ancestors, models]
+     *
      * @throws MissingResourceRegistration
      */
     public function compose(TreeResource $resource, array $ids, int $offset, int $limit, string $keyName = 'id'): array

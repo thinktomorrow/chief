@@ -69,7 +69,7 @@ trait IndexAssistant
 
     private function defaultFilters(): Filters
     {
-        $filters = new Filters();
+        $filters = new Filters;
 
         foreach (DiscoverTraitMethods::belongingTo(static::class, 'filters') as $method) {
             $filters = $filters->merge($this->$method());

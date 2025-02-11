@@ -13,7 +13,7 @@ class ImportResourceCommandTest extends TestCase
 
         $this->artisan('chief:export-resource article_page');
 
-        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name').'-article_page-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         $article->update(['title' => 'changed title']);
@@ -24,9 +24,9 @@ class ImportResourceCommandTest extends TestCase
 
         // Now import it again
         $this->artisan('chief:import-resource', ['file' => $filepath])
-            ->expectsQuestion("Which column contains the ID references? Choose one of: id, pagina, fragment, element, nl, en, opmerking", 'id')
-            ->expectsQuestion("Which column would you like to import? Choose one of: id, pagina, fragment, element, nl, en, opmerking", 'nl')
-            ->expectsQuestion("Which locale does this column represent? Choose one of: nl, en", 'nl');
+            ->expectsQuestion('Which column contains the ID references? Choose one of: id, pagina, fragment, element, nl, en, opmerking', 'id')
+            ->expectsQuestion('Which column would you like to import? Choose one of: id, pagina, fragment, element, nl, en, opmerking', 'nl')
+            ->expectsQuestion('Which locale does this column represent? Choose one of: nl, en', 'nl');
 
         // Localized values
         $this->assertEquals('title quote nl', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'nl'));
@@ -44,7 +44,7 @@ class ImportResourceCommandTest extends TestCase
 
         $this->artisan('chief:export-resource article_page --include-static');
 
-        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name') .'-article_page-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name').'-article_page-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         $article->update(['title' => 'changed title']);
@@ -55,8 +55,8 @@ class ImportResourceCommandTest extends TestCase
 
         // Now import it again
         $this->artisan('chief:import-resource', ['file' => $filepath])
-            ->expectsQuestion("Which column contains the ID references? Choose one of: id, pagina, fragment, element, tekst, nl, en, opmerking", 'id')
-            ->expectsQuestion("Which column would you like to import? Choose one of: id, pagina, fragment, element, tekst, nl, en, opmerking", 'tekst');
+            ->expectsQuestion('Which column contains the ID references? Choose one of: id, pagina, fragment, element, tekst, nl, en, opmerking', 'id')
+            ->expectsQuestion('Which column would you like to import? Choose one of: id, pagina, fragment, element, tekst, nl, en, opmerking', 'tekst');
 
         // Non-localized values
         $this->assertEquals('article title', $article->fresh()->title);
@@ -65,7 +65,6 @@ class ImportResourceCommandTest extends TestCase
         // Localized values are unchanged
         $this->assertEquals('changed quote title nl', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'nl'));
         $this->assertEquals('changed quote title en', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'en'));
-
 
     }
 }

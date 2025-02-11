@@ -60,5 +60,4 @@ class ChiefPluginSections
     {
         return isset($this->sections[$key]) ? $this->sections[$key] : [];
     }
-
 }

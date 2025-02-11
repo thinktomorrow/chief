@@ -33,8 +33,6 @@ interface Resource
     /**
      * Attributes that will be set on a new created model.
      * Used in the create/store flow.
-     *
-     * @return array
      */
     public function getInstanceAttributes(Request $request): array;
 }

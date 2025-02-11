@@ -7,7 +7,9 @@ use Thinktomorrow\Chief\Site\Sitemap\ImageSitemapXmlFile;
 class GenerateImageSitemap extends BaseCommand
 {
     protected $signature = 'chief:image-sitemap';
+
     protected $description = 'Generate an image sitemap for all locales. Only online and visitable image urls are included.';
+
     /**
      * @var ImageSitemapXmlFile
      */
@@ -25,9 +27,9 @@ class GenerateImageSitemap extends BaseCommand
         $locales = config('chief.locales');
 
         foreach ($locales as $locale) {
-            $filepath = public_path('image-sitemap-' . $locale . '.xml');
+            $filepath = public_path('image-sitemap-'.$locale.'.xml');
 
-            $this->info('Generating an image sitemap for locale: ' . $locale . ' at: ' . $filepath);
+            $this->info('Generating an image sitemap for locale: '.$locale.' at: '.$filepath);
 
             $this->sitemapXmlFile->create($locale, $filepath);
         }

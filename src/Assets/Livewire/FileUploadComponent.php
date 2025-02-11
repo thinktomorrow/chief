@@ -18,12 +18,12 @@ use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 
 class FileUploadComponent extends Component implements HasPreviewFiles, HasSyncedFormInputs
 {
-    use WithFileUploads;
+    use EmitsToNestables;
     use FileUploadDefaults;
     use InteractsWithChoosingAssets;
-    use ShowsAsDialog;
     use RenamesErrorBagFileAttribute;
-    use EmitsToNestables;
+    use ShowsAsDialog;
+    use WithFileUploads;
 
     public $parentId;
 
@@ -40,11 +40,11 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
             'upload:errored' => 'onUploadErrored',
             'upload:finished' => 'onUploadFinished',
-            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
-            'assetsChosen-' . $this->getId() => 'onAssetsChosen',
+            'assetUpdated-'.$this->getId() => 'onAssetUpdated',
+            'assetsChosen-'.$this->getId() => 'onAssetsChosen',
         ];
     }
 

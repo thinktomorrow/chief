@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 trait HasModelValuePreparation
 {
     protected ?\Closure $setModelValue = null;
+
     protected ?\Closure $prepareModelValue = null;
 
     public function setModelValue(\Closure $setModelValue): static

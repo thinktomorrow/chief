@@ -12,11 +12,14 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class SortFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $fragment;
+
     private Quote $fragment2;
+
     private Quote $fragment3;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

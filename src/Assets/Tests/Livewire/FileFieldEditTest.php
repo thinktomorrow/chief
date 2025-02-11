@@ -13,10 +13,12 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 class FileFieldEditTest extends ChiefTestCase
 {
     private $model;
+
     private Testable $livewireInstance;
+
     private Text $textComponent;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

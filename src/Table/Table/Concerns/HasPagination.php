@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Table\Table\Concerns;
 trait HasPagination
 {
     private bool $paginate = true;
+
     private int $paginatePerPage = 20;
 
     public function paginate(int $paginatePerPage = 20): static

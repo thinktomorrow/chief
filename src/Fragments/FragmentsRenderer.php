@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 final class FragmentsRenderer
 {
     private FragmentRepository $fragmentRepository;
+
     private RenderFragments $renderFragments;
 
     public function __construct(FragmentRepository $fragmentRepository, RenderFragments $renderFragments)

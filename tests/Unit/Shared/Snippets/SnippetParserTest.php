@@ -8,12 +8,12 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class SnippetParserTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->app['config']->set('chief.loadSnippetsFrom', [
-            realpath(__DIR__ . '/snippet-stub.html'),
+            realpath(__DIR__.'/snippet-stub.html'),
         ]);
 
         SnippetCollection::refresh();

@@ -10,6 +10,7 @@ use Thinktomorrow\Vine\NodeCollection;
 class Menu
 {
     private string $key;
+
     private string $label;
 
     final public function __construct(string $key, string $label)

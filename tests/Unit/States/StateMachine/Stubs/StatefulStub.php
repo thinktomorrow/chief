@@ -33,7 +33,7 @@ class StatefulStub implements StatefulContract
 
     public function getStateConfig(string $stateKey): StateConfig
     {
-        return new OnlineStateConfigStub();
+        return new OnlineStateConfigStub;
     }
 
     public function inOnlineState(): bool

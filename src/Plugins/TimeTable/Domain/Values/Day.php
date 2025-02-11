@@ -8,13 +8,14 @@ class Day
 {
     /** @var int ISO 8601 numeric representation of the day of the week */
     private int $iso8601WeekDay;
+
     private string $label;
 
     public static function make(int $iso8601WeekDay, string $label): static
     {
         self::validateConstraints($iso8601WeekDay);
 
-        $model = new static();
+        $model = new static;
 
         $model->iso8601WeekDay = $iso8601WeekDay;
         $model->label = $label;
@@ -28,7 +29,7 @@ class Day
             $dateTime = \DateTime::createFromFormat($format, $dateTime);
 
             if (! $dateTime) {
-                throw new \Exception('Invalid date string passed ' . $dateTime);
+                throw new \Exception('Invalid date string passed '.$dateTime);
             }
         }
 
@@ -81,12 +82,12 @@ class Day
     private static function validateConstraints(int $iso8601WeekDay): void
     {
         if ($iso8601WeekDay < 1 || $iso8601WeekDay > 7) {
-            throw new InvalidDayFormat($iso8601WeekDay . ' is not a valid ISO 8601 weekday value.');
+            throw new InvalidDayFormat($iso8601WeekDay.' is not a valid ISO 8601 weekday value.');
         }
     }
 
     public static function fullList(): array
     {
-        return array_map(fn ($day) => static::fromIso8601Format($day), [1,2,3,4,5,6,7]);
+        return array_map(fn ($day) => static::fromIso8601Format($day), [1, 2, 3, 4, 5, 6, 7]);
     }
 }

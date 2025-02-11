@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
@@ -18,16 +19,15 @@ use Thinktomorrow\Chief\Managers\Manager;
 
 final class PageManager implements Manager
 {
-    use ManagerDefaults;
-    use CrudAssistant;
-    use LinkAssistant;
-    use PreviewAssistant;
-    use FragmentsOwningAssistant;
-    use FormsAssistant;
-    use RepeatFieldAssistant;
-
     use ArchiveAssistant;
+    use CrudAssistant;
+    use DuplicateAssistant;
+    use FormsAssistant;
+    use FragmentsOwningAssistant;
+    use LinkAssistant;
+    use ManagerDefaults;
+    use PreviewAssistant;
+    use RepeatFieldAssistant;
     use SortAssistant;
     use StateAssistant;
-    use DuplicateAssistant;
 }

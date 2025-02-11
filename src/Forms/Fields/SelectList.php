@@ -13,13 +13,14 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 
 class SelectList extends Component implements Field
 {
-    use HasMultiple;
-    use HasGroupedOptions;
-    use HasTaggable;
-    use HasOptions;
     use HasEloquentOptionsSync;
+    use HasGroupedOptions;
+    use HasMultiple;
+    use HasOptions;
+    use HasTaggable;
 
     protected string $view = 'chief-form::fields.select-list';
+
     protected string $windowView = 'chief-form::fields.select-window';
 
     public function getMultiSelectFieldOptions(?string $locale = null): array

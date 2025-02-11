@@ -14,8 +14,8 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class UpdateState
 {
-
     private FieldValidator $fieldValidator;
+
     private Registry $registry;
 
     public function __construct(FieldValidator $fieldValidator, Registry $registry)

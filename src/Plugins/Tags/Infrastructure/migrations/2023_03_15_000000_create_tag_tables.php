@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up()
     {
         Schema::create('chief_taggroups', function (Blueprint $table) {
@@ -32,11 +33,9 @@ return new class extends Migration {
             $table->unsignedTinyInteger('order')->default(0);
 
             $table->foreign('tag_id')->references('id')->on('chief_tags')->onDelete('cascade');
-            $table->primary(['tag_id','owner_type', 'owner_id']);
+            $table->primary(['tag_id', 'owner_type', 'owner_id']);
         });
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 };

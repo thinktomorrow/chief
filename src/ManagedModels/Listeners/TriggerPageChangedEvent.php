@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
@@ -21,6 +22,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 class TriggerPageChangedEvent
 {
     private FragmentRepository $fragmentRepository;
+
     private GetOwningModels $getOwningModels;
 
     public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels)

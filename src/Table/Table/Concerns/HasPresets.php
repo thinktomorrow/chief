@@ -20,7 +20,7 @@ trait HasPresets
             ColumnTag::make('tags')
                 ->eachItem(function ($tagModel, $columnItem) {
                     $columnItem->value($tagModel->label)
-                               ->color($tagModel->color);
+                        ->color($tagModel->color);
                 })
                 ->label('tags'),
         ])

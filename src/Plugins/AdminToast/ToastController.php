@@ -39,7 +39,7 @@ final class ToastController extends Controller
         $toastView = view('chief-admin-toast::element', [
             'editUrl' => $editUrl,
             'toggleUrl' => route('chief.toast.toggle'),
-            'inPreviewMode' => (bool)$request->input('preview_mode', false),
+            'inPreviewMode' => (bool) $request->input('preview_mode', false),
         ])->render();
 
         return response()->json(['data' => $toastView]);

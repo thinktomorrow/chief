@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
@@ -11,6 +12,7 @@ use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicateFragment;
 final class UnshareFragment
 {
     private DuplicateFragment $duplicateFragment;
+
     private DetachFragment $detachFragment;
 
     public function __construct(DuplicateFragment $duplicateFragment, DetachFragment $detachFragment)

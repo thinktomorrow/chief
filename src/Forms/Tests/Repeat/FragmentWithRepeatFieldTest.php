@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
@@ -7,7 +8,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class FragmentWithRepeatFieldTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -17,9 +18,9 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
     /** @test */
     public function it_can_retrieve_a_new_repeat_section()
     {
-        $stub = new FragmentStub();
+        $stub = new FragmentStub;
 
-        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values') . '?index=99');
+        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values').'?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];
@@ -35,9 +36,9 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
     public function it_can_retrieve_a_new_repeat_section_for_existing_fragment()
     {
         $owner = $this->setupAndCreateArticle();
-        $stub = $this->createAsFragment(new FragmentStub(), $owner);
+        $stub = $this->createAsFragment(new FragmentStub, $owner);
 
-        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->fragmentModel()->id) . '?index=99');
+        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->fragmentModel()->id).'?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];

@@ -41,7 +41,7 @@ trait HasForm
      */
     private function validateForm(array $rules = [], array $messages = [], array $validationAttributes = []): void
     {
-        list($rules, $messages, $validationAttributes) = $this->createValidation($rules, $messages, $validationAttributes);
+        [$rules, $messages, $validationAttributes] = $this->createValidation($rules, $messages, $validationAttributes);
 
         if (! $rules) {
             return;

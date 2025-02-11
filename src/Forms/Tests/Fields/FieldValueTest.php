@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class FieldValueTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -26,24 +26,24 @@ class FieldValueTest extends TestCase
         $field->value('some-value');
         $this->assertEquals('some-value', $field->getValue());
 
-        $field->value(['one','two','three']);
-        $this->assertEquals(['one','two','three'], $field->getValue());
+        $field->value(['one', 'two', 'three']);
+        $this->assertEquals(['one', 'two', 'three'], $field->getValue());
     }
 
     /** @test */
     public function it_can_set_a_localized_default()
     {
-        $field = Text::make('title')->locales(['nl','en'])->default(['nl' => 'foobar-nl','en' => 'foobar-en']);
+        $field = Text::make('title')->locales(['nl', 'en'])->default(['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
         $this->assertEquals('foobar-nl', $field->getValue('nl'));
         $this->assertEquals('foobar-en', $field->getValue('en'));
-        $this->assertEquals(['nl' => 'foobar-nl','en' => 'foobar-en'], $field->getValue());
+        $this->assertEquals(['nl' => 'foobar-nl', 'en' => 'foobar-en'], $field->getValue());
     }
 
     /** @test */
     public function when_value_is_set_default_is_not_used()
     {
-        $field = Text::make('title')->locales(['nl','en'])->default(['nl' => 'foobar-nl','en' => 'foobar-en']);
+        $field = Text::make('title')->locales(['nl', 'en'])->default(['nl' => 'foobar-nl', 'en' => 'foobar-en']);
         $field->value(['nl' => null, 'en' => 'value-en']);
 
         $this->assertEquals(null, $field->getValue('nl'));
@@ -110,7 +110,7 @@ class FieldValueTest extends TestCase
     /** @test */
     public function it_can_get_the_existing_translated_model_value()
     {
-        config()->set('chief.locales', ['nl','en','fr']);
+        config()->set('chief.locales', ['nl', 'en', 'fr']);
 
         $model = ArticlePage::make(['content_trans' => [
             'nl' => 'existing content nl',

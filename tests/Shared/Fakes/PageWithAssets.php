@@ -13,13 +13,14 @@ use Thinktomorrow\Chief\Resource\PageResourceDefault;
 
 class PageWithAssets extends Model implements Page, PageResource
 {
-    use PageDefaults;
     use InteractsWithAssets;
+    use PageDefaults;
     use PageResourceDefault;
 
     private static ?\Closure $fieldsDefinition = null;
 
     public $table = 'page_with_assets';
+
     public $guarded = [];
 
     public static function migrateUp()

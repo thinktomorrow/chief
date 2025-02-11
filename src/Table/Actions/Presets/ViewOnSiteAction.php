@@ -10,7 +10,7 @@ class ViewOnSiteAction extends Action
     {
         return static::make('view')
             ->label('Bekijk op site')
-            ->link(function ($model) use ($resourceKey) {
+            ->link(function ($model) {
                 return $model->url();
             })
             ->prependIcon('<x-chief::icon.link-square />');

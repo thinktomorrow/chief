@@ -43,7 +43,6 @@ return [
          *      Route::get('{slug?}', function($slug = '/'){
          *          return \Thinktomorrow\Chief\Site\Urls\ChiefResponse::fromSlug($slug);
          *      })->name('pages.show')->where('slug', '(.*)?');
-         *
          */
         'autoload' => env('CHIEF_ROUTE_AUTOLOAD', true),
 
@@ -78,9 +77,6 @@ return [
         //        'chunk_size_in_bytes' => 1024 * 1024 * 6, // 10MB
     ],
 
-    /**
-     *
-     */
     'fragments_structure' => [
         'algemeen' => [
             // Fragment::class,

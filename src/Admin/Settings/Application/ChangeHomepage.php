@@ -28,12 +28,12 @@ class ChangeHomepage
             if (isset($existingValues[$locale])) {
                 if ($modelReferenceString != $existingValues[$locale]) {
                     $modelReferenceInstance = ModelReference::fromString(($existingValues[$locale]));
-                    (new RevertUrlSlug())->handle($modelReferenceInstance->instance(), $locale);
+                    (new RevertUrlSlug)->handle($modelReferenceInstance->instance(), $locale);
                 }
             }
 
             $modelReferenceInstance = ModelReference::fromString($modelReferenceString);
-            (new SaveUrlSlugs())->handle($modelReferenceInstance->instance(), [$locale => '/'], false, false);
+            (new SaveUrlSlugs)->handle($modelReferenceInstance->instance(), [$locale => '/'], false, false);
         }
     }
 
@@ -53,7 +53,7 @@ class ChangeHomepage
     {
         foreach ($modelReferences as $locale => $modelReferenceString) {
             if (! $modelReferenceString) {
-                throw new \InvalidArgumentException('Homepage setting value cannot be empty. Value for locale ' . $locale . ' is missing.');
+                throw new \InvalidArgumentException('Homepage setting value cannot be empty. Value for locale '.$locale.' is missing.');
             }
         }
     }

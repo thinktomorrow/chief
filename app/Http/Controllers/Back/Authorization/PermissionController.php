@@ -20,6 +20,7 @@ class PermissionController extends Controller
 
         return view('chief::admin.permissions.index')->with('permissions', $permissions);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -31,10 +32,10 @@ class PermissionController extends Controller
 
         return view('chief::admin.permissions.create')->with('roles', $roles);
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,38 +44,38 @@ class PermissionController extends Controller
             'name' => 'required|max:40',
         ]);
         $name = $request['name'];
-        $permission = new Permission();
+        $permission = new Permission;
         $permission->name = $name;
         $roles = $request['roles'];
 
         $permission->save();
         if (! empty($request['roles'])) {
             foreach ($roles as $role) {
-                $r = Role::where('id', '=', $role)->firstOrFail(); //Match input role to db record
+                $r = Role::where('id', '=', $role)->firstOrFail(); // Match input role to db record
                 $permission = Permission::where('name', '=', $name)->first();
                 $r->givePermissionTo($permission);
             }
         }
 
         return redirect()->route('chief.back.permissions.index')
-            ->with('flash_message',     'Permission' . $permission->name . ' added!');
+            ->with('flash_message', 'Permission'.$permission->name.' added!');
     }
+
     /**
      * Display the specified resource.
      *
-     * @param int  $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function show($id)
     {
         return redirect('permissions');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int  $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
@@ -83,10 +84,10 @@ class PermissionController extends Controller
 
         return view('chief::admin.permissions.edit', compact('permission'));
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -101,8 +102,9 @@ class PermissionController extends Controller
         $permission->fill($input)->save();
 
         return redirect()->route('chief.back.permissions.index')
-            ->with('flash_message',     'Permission' . $permission->name . ' updated!');
+            ->with('flash_message', 'Permission'.$permission->name.' updated!');
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -113,14 +115,14 @@ class PermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
 
-        if ($permission->name == "Administer roles & permissions") {
+        if ($permission->name == 'Administer roles & permissions') {
             return redirect()->route('chief.back.permissions.index')
-                ->with('flash_message',         'Cannot delete this Permission!');
+                ->with('flash_message', 'Cannot delete this Permission!');
         }
 
         $permission->delete();
 
         return redirect()->route('chief.back.permissions.index')
-            ->with('flash_message',     'Permission deleted!');
+            ->with('flash_message', 'Permission deleted!');
     }
 }

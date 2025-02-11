@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Controllers;
@@ -13,11 +14,11 @@ class RemoveRedirectController
         $urlRecord = UrlRecord::find($id);
 
         if (! $urlRecord) {
-            return response()->json(['No url record found by id ' . $id], 500);
+            return response()->json(['No url record found by id '.$id], 500);
         }
 
         if (! $urlRecord->isRedirect()) {
-            return response()->json(['Url with id ' . $id . ' is not a redirect'], 500);
+            return response()->json(['Url with id '.$id.' is not a redirect'], 500);
         }
 
         $this->pointChildRedirectsToParent($urlRecord, $urlRecord->redirect_id);
@@ -31,9 +32,6 @@ class RemoveRedirectController
 
     /**
      * All redirects pointing to this redirect should be pointing to the parent of this urlRecord.
-     *
-     * @param UrlRecord $urlRecord
-     * @param $parentId
      */
     public function pointChildRedirectsToParent(UrlRecord $urlRecord, $parentId): void
     {

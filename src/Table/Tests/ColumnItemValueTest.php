@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
 
 class ColumnItemValueTest extends TestCase
 {
-
     public function test_default_value()
     {
         $column = ColumnText::make('fake')->default('foobar');
@@ -44,7 +43,7 @@ class ColumnItemValueTest extends TestCase
 
     public function test_value_originates_from_model_method()
     {
-        $model = new ModelFixture();
+        $model = new ModelFixture;
 
         $column = ColumnText::make('categories')->model($model);
 
@@ -70,7 +69,7 @@ class ColumnItemValueTest extends TestCase
 
     public function test_no_items_are_resolved_if_relation_is_empty()
     {
-        $column = ColumnText::make('tags')->model(new TaggedModelFixture());
+        $column = ColumnText::make('tags')->model(new TaggedModelFixture);
 
         $this->assertCount(0, $column->getItems());
     }

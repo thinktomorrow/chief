@@ -15,7 +15,7 @@ trait Archivable
 
     protected static function bootArchivable()
     {
-        static::addGlobalScope(new ArchiveScope());
+        static::addGlobalScope(new ArchiveScope);
     }
 
     public function isArchived(): bool

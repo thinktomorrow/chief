@@ -89,10 +89,10 @@ class LocalizedFormKeyTest extends TestCase
     {
         $this->assertEquals(
             [
-            'trans.nl.foobar',
-            'trans.fr.foobar',
+                'trans.nl.foobar',
+                'trans.fr.foobar',
             ],
-            LocalizedFormKey::make()->matrix('foobar', ['nl','fr'])
+            LocalizedFormKey::make()->matrix('foobar', ['nl', 'fr'])
         );
     }
 }

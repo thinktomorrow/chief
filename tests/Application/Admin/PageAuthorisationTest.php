@@ -9,7 +9,7 @@ class PageAuthorisationTest extends ChiefTestCase
 {
     private ArticlePage $page;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +35,7 @@ class PageAuthorisationTest extends ChiefTestCase
         $this->put($manager->route('update', $this->page), [
             'title' => 'nieuwe titel',
         ])->assertStatus(302)
-          ->assertRedirect(route('chief.back.login'));
+            ->assertRedirect(route('chief.back.login'));
 
         $this->assertEquals('existing-title', $this->page->fresh()->title);
     }

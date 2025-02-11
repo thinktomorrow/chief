@@ -26,17 +26,17 @@ trait SortAssistant
 
     public function canSortAssistant(string $action, $model = null): bool
     {
-        return (in_array($action, ['sort-index', 'index-for-sorting', 'move-index'])
-            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable()));
+        return in_array($action, ['sort-index', 'index-for-sorting', 'move-index'])
+            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable());
     }
 
     public function filtersSortAssistant(): Filters
     {
         $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        $model = new $modelClass;
 
         if (! $this->can('sort-index', $model)) {
-            return new Filters();
+            return new Filters;
         }
 
         return new Filters([

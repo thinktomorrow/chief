@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
 
 class CheckboxFilter extends SelectFilter
 {
-    use HasOptions;
     use HasMultiple;
+    use HasOptions;
 
     protected string $view = 'chief-table::filters.checkbox';
 

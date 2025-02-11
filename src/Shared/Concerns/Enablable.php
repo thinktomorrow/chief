@@ -8,7 +8,7 @@ trait Enablable
 {
     public function isEnabled(): bool
     {
-        return (int)$this->{$this->getEnabledField()} === $this->getEnabledValue();
+        return (int) $this->{$this->getEnabledField()} === $this->getEnabledValue();
     }
 
     public function disable(): void

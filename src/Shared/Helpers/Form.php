@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Helpers;
@@ -7,11 +8,6 @@ class Form
 {
     /**
      * Handle the translations form entries with a given callback
-     *
-     * @param array $translations
-     * @param \Closure $callback
-     *
-     * @return void
      */
     public static function foreachTrans(array $translations, \Closure $callback): void
     {

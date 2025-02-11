@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
@@ -14,8 +15,8 @@ use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
 class SnippetStub implements Fragmentable, FragmentsOwner
 {
-    use FragmentableDefaults;
     use ForwardFragmentProperties;
+    use FragmentableDefaults;
     use OwningFragments;
 
     public static function resourceKey(): string

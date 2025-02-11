@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
@@ -12,6 +13,7 @@ use Thinktomorrow\Chief\Resource\PageResource;
 class GetOwningModels
 {
     private FragmentOwnerRepository $fragmentOwnerRepository;
+
     private Registry $registry;
 
     public function __construct(FragmentOwnerRepository $fragmentOwnerRepository, Registry $registry)

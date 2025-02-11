@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -13,10 +14,10 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 
-class NestableArticlePage extends ArticlePage implements Page, Nestable, PageResource
+class NestableArticlePage extends ArticlePage implements Nestable, Page, PageResource
 {
-    use PageResourceDefault;
     use NestableDefault;
+    use PageResourceDefault;
     //    use NestablePageDefault;
 
     public static function migrateUp()

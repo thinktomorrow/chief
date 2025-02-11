@@ -29,7 +29,7 @@ class Permission extends BasePermission
         $abilities = ['view', 'create', 'update', 'delete'];
 
         return array_map(function ($val) use ($scope) {
-            return $val . '-' . $scope;
+            return $val.'-'.$scope;
         }, $abilities);
     }
 
@@ -37,8 +37,8 @@ class Permission extends BasePermission
     {
         $permissions = $temp = [];
         self::all()->each(function ($permission) use (&$permissions, &$temp) {
-            $model = explode("_", $permission->name, 2)[1];
-            $temp[$model][$permission->id] = explode("_", $permission->name, 2)[0];
+            $model = explode('_', $permission->name, 2)[1];
+            $temp[$model][$permission->id] = explode('_', $permission->name, 2)[0];
             $permissions = $temp;
         });
 

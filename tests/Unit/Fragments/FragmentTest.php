@@ -10,7 +10,7 @@ class FragmentTest extends ChiefTestCase
 {
     public function test_it_cascade_calls_to_fragmentmodel()
     {
-        $snippet = new SnippetStub();
+        $snippet = new SnippetStub;
         $snippet->setFragmentModel(new FragmentModel(['title' => 'foobar']));
 
         $this->assertEquals($snippet->fragmentModel()->title, $snippet->title);

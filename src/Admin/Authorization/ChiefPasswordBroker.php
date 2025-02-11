@@ -7,6 +7,4 @@ namespace Thinktomorrow\Chief\Admin\Authorization;
 use Illuminate\Auth\Passwords\PasswordBroker;
 
 /** {@inheritDoc} */
-class ChiefPasswordBroker extends PasswordBroker
-{
-}
+class ChiefPasswordBroker extends PasswordBroker {}

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 trait HasIcon
 {
     protected ?string $prependIcon = null;
+
     protected ?string $appendIcon = null;
 
     public function getPrependIcon(): ?string

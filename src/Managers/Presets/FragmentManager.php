@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
@@ -15,14 +16,16 @@ use Thinktomorrow\Chief\Resource\Resource;
 
 final class FragmentManager implements Manager
 {
-    use ManagerDefaults;
     use FragmentAssistant;
     use FragmentsOwningAssistant;
+    use ManagerDefaults;
     use RepeatFieldAssistant;
 
     //    private Resource $resource;
     private FragmentRepository $fragmentRepository;
+
     private FieldValidator $fieldValidator;
+
     private Registry $registry;
 
     public function __construct(Resource $resource, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator, Registry $registry)
@@ -32,7 +35,6 @@ final class FragmentManager implements Manager
         $this->fieldValidator = $fieldValidator;
         $this->registry = $registry;
     }
-
 
     private function fieldsModel($id)
     {

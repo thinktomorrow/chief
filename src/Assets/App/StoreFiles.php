@@ -35,14 +35,14 @@ class StoreFiles
 
     private function sluggifyFilename(string $filename): string
     {
-        if (false === strpos($filename, '.')) {
+        if (strpos($filename, '.') === false) {
             return $filename;
         }
 
         $extension = substr($filename, strrpos($filename, '.') + 1);
         $filename = substr($filename, 0, strrpos($filename, '.'));
 
-        return Str::slug($filename) . '.' . $extension;
+        return Str::slug($filename).'.'.$extension;
     }
 
     protected function setDisk(string $disk): void

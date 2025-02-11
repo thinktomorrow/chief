@@ -7,11 +7,17 @@ class FieldLine implements Line
     const NON_LOCALIZED = 'x';
 
     protected string $encryptedReference;
+
     protected string $modelReference;
+
     protected string $fieldKey;
+
     protected string $resourceLabel;
+
     protected string $modelLabel;
+
     protected string $fieldLabel;
+
     protected array $values;
 
     public function __construct(string $modelReference, string $fieldKey, string $resourceLabel, string $modelLabel, string $fieldLabel, array $values)
@@ -23,7 +29,7 @@ class FieldLine implements Line
         $this->fieldLabel = $fieldLabel;
         $this->values = $values;
 
-        $this->encryptedReference = encrypt($this->modelReference .'|'. $this->fieldKey);
+        $this->encryptedReference = encrypt($this->modelReference.'|'.$this->fieldKey);
     }
 
     public function getColumns(): array

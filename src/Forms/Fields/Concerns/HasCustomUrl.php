@@ -16,7 +16,7 @@ trait HasCustomUrl
         return ! is_null($this->customUrlGenerator) && is_callable($this->customUrlGenerator);
     }
 
-    public function generateCustomUrl(Asset $asset, Model $model = null): string
+    public function generateCustomUrl(Asset $asset, ?Model $model = null): string
     {
         return call_user_func_array($this->customUrlGenerator, [$asset, $model]);
     }

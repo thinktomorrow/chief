@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Admin\Settings;
 
 final class Homepage
 {
-    public static function is($model, string $locale = null): bool
+    public static function is($model, ?string $locale = null): bool
     {
         return SelectedModel::is($model, Setting::HOMEPAGE, $locale);
     }

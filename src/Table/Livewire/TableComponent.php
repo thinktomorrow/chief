@@ -25,23 +25,25 @@ use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 class TableComponent extends Component
 {
-    use WithPagination;
-    use WithPaginationControl;
-    use WithTreeResults;
-    use WithFilters;
-    use WithVariantFilters;
-    use WithSorters;
     use WithActions;
-    use WithRowActions;
     use WithBulkActions;
     use WithBulkSelection;
+    use WithFilters;
     use WithNotifications;
+    use WithPagination;
+    use WithPaginationControl;
     use WithReordering;
+    use WithRowActions;
+    use WithSorters;
+    use WithTreeResults;
+    use WithVariantFilters;
 
     public TableReference $tableReference;
+
     private ?Table $table = null;
 
     public ?int $resultPageCount = null;
+
     public ?int $resultTotal = null;
 
     public function mount(Table $table)
@@ -59,7 +61,7 @@ class TableComponent extends Component
     public function getListeners()
     {
         return [
-            'dialogSaved-' . $this->getId() => 'onActionDialogSaved',
+            'dialogSaved-'.$this->getId() => 'onActionDialogSaved',
             'requestRefresh' => '$refresh',
         ];
     }

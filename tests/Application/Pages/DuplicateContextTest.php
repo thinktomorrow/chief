@@ -18,11 +18,14 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class DuplicateContextTest extends ChiefTestCase
 {
     private $source;
+
     private $target;
+
     private $staticFragment;
+
     private $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +43,7 @@ class DuplicateContextTest extends ChiefTestCase
 
         $this->source = ArticlePage::create();
         $this->target = ArticlePage::create();
-        $this->staticFragment = new SnippetStub();
+        $this->staticFragment = new SnippetStub;
         $this->fragment = Quote::create();
 
         // Add fragments
@@ -103,7 +106,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->markTestIncomplete();
 
         $this->asAdmin()->post(route('chief.back.managers.store', 'singles'), array_merge([
-            'template' => get_class($this->page) . '@' . $this->page->id,
+            'template' => get_class($this->page).'@'.$this->page->id,
         ], $this->validPageParams()));
 
         $page = Single::find(3);

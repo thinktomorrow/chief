@@ -15,9 +15,10 @@ class RenderFileFieldTest extends ChiefTestCase
     use RefreshDatabase;
 
     private array $classes;
+
     private $asset;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

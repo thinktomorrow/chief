@@ -8,12 +8,12 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class SnippetTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->app['config']->set('chief.loadSnippetsFrom', [
-            realpath(__DIR__ . '/snippet-stub.html'),
+            realpath(__DIR__.'/snippet-stub.html'),
         ]);
     }
 
@@ -24,7 +24,7 @@ class SnippetTest extends ChiefTestCase
         $this->assertInstanceOf(Snippet::class, $snippet);
         $this->assertEquals('snippet-stub', $snippet->key());
         $this->assertEquals('Snippet stub', $snippet->label());
-        $this->assertEquals(realpath(__DIR__ . '/snippet-stub.html'), $snippet->path());
+        $this->assertEquals(realpath(__DIR__.'/snippet-stub.html'), $snippet->path());
     }
 
     public function test_it_can_render_a_snippet()

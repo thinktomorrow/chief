@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
@@ -14,6 +15,7 @@ use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 class DuplicateFragment
 {
     private FragmentRepository $fragmentRepository;
+
     private AddFragmentModel $addFragmentModel;
 
     public function __construct(FragmentRepository $fragmentRepository, AddFragmentModel $addFragmentModel)
@@ -29,11 +31,8 @@ class DuplicateFragment
      * - a nested static fragment is always duplicated (e.g. text, snippet)
      * - a nested dynamic fragment is not duplicated but shared (e.g. article, quote)
      *
-     * @param Model $targetModel
-     * @param FragmentModel $fragmentModel
-     * @param int $index
-     * @param bool $forceDuplicateSharedFragment
-     * @param int $level
+     * @param  int  $level
+     *
      * @throws FragmentAlreadyAdded
      */
     public function handle(Model $targetModel, FragmentModel $fragmentModel, int $index, bool $forceDuplicateSharedFragment = false, $level = 0): void

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
@@ -10,6 +11,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 class DuplicatePage
 {
     private DuplicateContext $duplicateContext;
+
     private DuplicateModel $duplicateModel;
 
     public function __construct(DuplicateModel $duplicateModel, DuplicateContext $duplicateContext)

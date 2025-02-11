@@ -42,8 +42,7 @@ class ValidationParametersTest extends TestCase
     {
         $field = Text::make('xxx')
             ->locales(['nl', 'en'])
-            ->rules('email')
-        ;
+            ->rules('email');
 
         $this->assertEquals(
             [
@@ -72,8 +71,7 @@ class ValidationParametersTest extends TestCase
     {
         $field = File::make('xxx')
             ->locales(['nl', 'en'])
-            ->rules('mimetypes:image/png,text/plain')
-        ;
+            ->rules('mimetypes:image/png,text/plain');
 
         $this->assertEquals(
             [
@@ -100,8 +98,7 @@ class ValidationParametersTest extends TestCase
     {
         $field = Text::make('xxx')
             ->validationAttribute('foobar')
-            ->rules('email')
-        ;
+            ->rules('email');
 
         $this->assertEquals(
             ['xxx' => 'foobar'],
@@ -114,8 +111,7 @@ class ValidationParametersTest extends TestCase
     {
         $field = Text::make('xxx')
             ->locales(['nl', 'en'])
-            ->rules('email')
-        ;
+            ->rules('email');
 
         $this->assertEquals(
             [
@@ -131,8 +127,7 @@ class ValidationParametersTest extends TestCase
     {
         $field = Text::make('xxx')
             ->validationAttribute('foobar')
-            ->rules('email')
-        ;
+            ->rules('email');
 
         $this->assertEquals(
             ['xxx' => 'foobar'],

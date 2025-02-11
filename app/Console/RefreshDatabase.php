@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\App\Console;
 class RefreshDatabase extends BaseCommand
 {
     protected $signature = 'chief:scaffold {--reset}';
+
     protected $description = 'This will scaffold a few records to get started for development.';
 
     /**
@@ -17,7 +18,7 @@ class RefreshDatabase extends BaseCommand
         }
 
         if ($this->option('reset')) {
-            if (! $this->confirm('You are about to force reset the database in the ' . app()->environment() . ' environment! ARE YOU SURE?')) {
+            if (! $this->confirm('You are about to force reset the database in the '.app()->environment().' environment! ARE YOU SURE?')) {
                 $this->info('aborting.');
 
                 return;

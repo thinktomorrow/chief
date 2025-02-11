@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
-class SimpleStateConfig implements StateConfig, StateAdminConfig
+class SimpleStateConfig implements StateAdminConfig, StateConfig
 {
     use StateAdminConfigDefaults;
 
@@ -52,17 +52,17 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
 
     public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void
     {
-        if ('publish' == $transition) {
+        if ($transition == 'publish') {
             event(new ManagedModelPublished($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('published');
         }
 
-        if ('unpublish' == $transition) {
+        if ($transition == 'unpublish') {
             event(new ManagedModelUnPublished($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('unpublished');
         }
 
-        if ('delete' == $transition) {
+        if ($transition == 'delete') {
             event(new ManagedModelQueuedForDeletion($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('deleted');
         }

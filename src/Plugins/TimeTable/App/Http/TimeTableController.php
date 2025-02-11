@@ -18,7 +18,9 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 class TimeTableController extends Controller
 {
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
+
     private TimeTableFactory $timeTableFactory;
 
     public function __construct(TimeTableFactory $timeTableFactory, FieldValidator $fieldValidator, SaveFields $saveFields)

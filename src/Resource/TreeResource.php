@@ -17,6 +17,4 @@ interface TreeResource
      * Retrieve the actual models either all or by given ids
      */
     public function getTreeModels(?array $ids = null): Collection;
-
-
 }

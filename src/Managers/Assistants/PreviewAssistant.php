@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
@@ -22,10 +23,8 @@ trait PreviewAssistant
      * When dealing with a dynamic route constructed from a specific model,
      * a model instance should be passed as second argument.
      *
-     * @param string $action
-     * @param null $model
-     * @param array $parameters
-     * @return null|string
+     * @param  null  $model
+     * @param  array  $parameters
      */
     public function routePreviewAssistant(string $action, $model = null, ...$parameters): ?string
     {

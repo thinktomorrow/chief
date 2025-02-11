@@ -11,8 +11,11 @@ class Setting extends Model
     public const HOMEPAGE = 'homepage';
 
     public $table = 'settings';
+
     public $timestamps = false;
+
     public $guarded = [];
+
     public $casts = [
         'value' => 'json',
     ];

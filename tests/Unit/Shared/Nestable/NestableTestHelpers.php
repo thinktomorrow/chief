@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -40,7 +41,7 @@ trait NestableTestHelpers
         ]]);
 
         if ($online) {
-            foreach (['first', 'second', 'third','fourth','fifth'] as $key) {
+            foreach (['first', 'second', 'third', 'fourth', 'fifth'] as $key) {
                 $model = $this->findNode($key);
                 $model->changeState('current_state', PageState::published);
                 $model->save();
@@ -56,7 +57,7 @@ trait NestableTestHelpers
             ->find(fn (Nestable $nestable) => $nestable->getNodeId() == $modelId);
 
         if (! $node) {
-            throw new \Exception('No node found by id ' . $modelId);
+            throw new \Exception('No node found by id '.$modelId);
         }
 
         return $node;

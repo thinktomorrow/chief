@@ -13,11 +13,13 @@ use Thinktomorrow\Vine\NodeDefaults;
 
 class MenuItem extends Model implements Node
 {
-    use NodeDefaults;
     use HasDynamicAttributes;
+    use NodeDefaults;
 
     public const TYPE_INTERNAL = 'internal';
+
     public const TYPE_CUSTOM = 'custom';
+
     public const TYPE_NOLINK = 'nolink';
 
     private ?string $locale = null;
@@ -27,13 +29,14 @@ class MenuItem extends Model implements Node
     ];
 
     public $timestamps = false;
+
     public $guarded = [];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
 
-        $this->children = new NodeCollection();
+        $this->children = new NodeCollection;
     }
 
     public function getStatus(): MenuItemStatus
@@ -73,7 +76,7 @@ class MenuItem extends Model implements Node
 
     public function setLabel(string $label, string $locale): void
     {
-        $this->setDynamic('label.' . $locale, $label);
+        $this->setDynamic('label.'.$locale, $label);
     }
 
     public function getOwnerLabel(?string $locale = null): ?string
@@ -88,7 +91,7 @@ class MenuItem extends Model implements Node
 
     public function setOwnerLabel(string $ownerLabel, string $locale): void
     {
-        $this->setDynamic('owner_label.' . $locale, $ownerLabel);
+        $this->setDynamic('owner_label.'.$locale, $ownerLabel);
     }
 
     public function getUrl(?string $locale = null): ?string
@@ -99,7 +102,7 @@ class MenuItem extends Model implements Node
 
     public function setUrl(?string $url, string $locale): void
     {
-        $this->setDynamic('url.' . $locale, $url);
+        $this->setDynamic('url.'.$locale, $url);
     }
 
     public static function getByOwner(string $ownerType, $ownerId): Collection

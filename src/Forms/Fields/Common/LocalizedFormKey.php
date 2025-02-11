@@ -21,6 +21,7 @@ class LocalizedFormKey
      * e.g. trans.nl.title -> trans[nl][title].
      */
     private bool $bracketed = false;
+
     private array $replacements = [];
 
     final private function __construct()
@@ -30,7 +31,7 @@ class LocalizedFormKey
 
     public static function make(): self
     {
-        return new static();
+        return new static;
     }
 
     public static function setDefaultTemplate(string $default_template): void

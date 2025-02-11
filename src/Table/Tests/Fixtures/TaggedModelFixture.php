@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Tests\Fixtures;
@@ -14,7 +15,9 @@ class TaggedModelFixture extends Model implements Taggable
     use TaggableDefaults;
 
     public $table = 'chief_table_tagged_model_fixtures';
+
     public $guarded = [];
+
     public $timestamps = false;
 
     public static function migrateUp()

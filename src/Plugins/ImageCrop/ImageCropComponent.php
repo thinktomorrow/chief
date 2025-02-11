@@ -13,6 +13,7 @@ class ImageCropComponent extends Component
     public $parentId;
 
     public ?PreviewFile $previewFile = null;
+
     public $form = [];
 
     public function mount(string $parentId)
@@ -24,7 +25,7 @@ class ImageCropComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
         ];
     }
 

@@ -9,7 +9,7 @@ class LineTest extends TestCase
 {
     private FieldLine $line;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

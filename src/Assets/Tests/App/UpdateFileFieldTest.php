@@ -13,9 +13,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 class UpdateFileFieldTest extends ChiefTestCase
 {
     private $model;
+
     private Resource $resource;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -23,7 +24,7 @@ class UpdateFileFieldTest extends ChiefTestCase
         $this->resource = app(ArticlePageResource::class);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Storage::delete('test/image-temp-name.png');
 

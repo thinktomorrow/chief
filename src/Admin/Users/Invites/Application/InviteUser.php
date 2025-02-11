@@ -24,7 +24,7 @@ class InviteUser
             DB::beginTransaction();
 
             /** @var StatefulContract $invitation */
-            $invitation = Invitation::make((string)$invitee->id, (string)$inviter->id);
+            $invitation = Invitation::make((string) $invitee->id, (string) $inviter->id);
 
             $stateMachine = StateMachine::fromConfig($invitation, $invitation->getStateConfig(InvitationState::KEY));
             $stateMachine->apply('invite');

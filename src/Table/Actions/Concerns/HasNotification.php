@@ -7,6 +7,7 @@ use Closure;
 trait HasNotification
 {
     protected ?Closure $notificationOnSuccess = null;
+
     protected ?Closure $notificationOnFailure = null;
 
     public function notifyOnSuccess(string|Closure $notification): static

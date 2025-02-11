@@ -97,7 +97,7 @@ trait WithActions
 
     public function openActionDialog($params): void
     {
-        $this->dispatch('open-' . $this->getId(), $params)->to('chief-form::dialog');
+        $this->dispatch('open-'.$this->getId(), $params)->to('chief-form::dialog');
     }
 
     private function showActionDialog($actionKey, array $data = []): void

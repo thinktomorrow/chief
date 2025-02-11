@@ -10,11 +10,11 @@ class UpdateYouTest extends ChiefTestCase
 {
     private $newUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->newUser = new User();
+        $this->newUser = new User;
         $this->newUser->email = 'new@example.com';
         $this->newUser->firstname = 'new firstname';
         $this->newUser->lastname = 'new lastname';
@@ -52,13 +52,13 @@ class UpdateYouTest extends ChiefTestCase
 
     public function test_when_updating_user_firstname_is_required()
     {
-        $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
+        $this->assertValidation(new User, 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
             'put');
     }
 
     public function test_when_updating_user_lastname_is_required()
     {
-        $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
+        $this->assertValidation(new User, 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
             'put');
     }
 

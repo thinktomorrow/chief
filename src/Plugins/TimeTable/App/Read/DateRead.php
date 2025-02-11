@@ -19,5 +19,5 @@ interface DateRead
      */
     public function getSlots(): array;
 
-    public function getData(string $key, string $index = null, $default = null);
+    public function getData(string $key, ?string $index = null, $default = null);
 }

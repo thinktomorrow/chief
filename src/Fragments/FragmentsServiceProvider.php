@@ -9,7 +9,7 @@ class FragmentsServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/resources');
+        $this->app['view']->addNamespace('chief-fragments', __DIR__.'/resources');
 
         Blade::component('chief-fragments::components.sidebar-fragment', 'chief-fragments::sidebar-fragment');
     }
