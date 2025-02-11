@@ -37,9 +37,9 @@ class Quote extends Model implements Fragment, FragmentsOwner, HasAsset
         'title', 'custom', 'title_trans', 'content_trans',
     ];
 
-    public function dynamicLocaleFallback(): ?string
+    public function dynamicLocaleFallback(string $locale): ?string
     {
-        return $this->standardDynamicLocaleFallback();
+        return $this->standardDynamicLocaleFallback($locale);
     }
 
     public function fields($model): iterable
