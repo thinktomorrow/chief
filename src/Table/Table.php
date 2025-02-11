@@ -32,21 +32,20 @@ class Table extends Component implements Htmlable
     use HasActions;
     use HasBulkActions;
     use HasColumns;
-
     use HasComponentRendering;
-
     use HasFilters;
-
     use HasHeaders;
-
     use HasLivewireComponent;
     use HasModelKeyName;
     use HasPagination;
     use HasPresets;
+
     /** Base Query for all table data */
     use HasQuery;
+
     /** Tree support */
     use HasResourceReference;
+
     use HasRowActions;
     use HasRows;
     use HasRowViews;
