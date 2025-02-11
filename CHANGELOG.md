@@ -6,15 +6,16 @@ principles.
 
 ## Unreleased
 
-Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
-Fixed: Redactor toolbar z-index issue where the toolbar was overlapping multiselect dropdowns.
+- Fixed: breadcrumbs were not rendered in select dropdown for nested resources.
+- Fixed: Redactor toolbar z-index issue where the toolbar was overlapping multiselect dropdowns.
+- Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
 
 ## 2025-01-06 - 0.9.0
 
+- Added: new set of UI components, originating from the new table component.
+- Added: new table component for index views. This replaces old index views and related resource methods.
 - Changed: minimum PHP version required is 8.2.
 - Changed: `thinktomorrow/vine` dependency to `0.5.*`. This will affect menu retrieval in your project files.
-- Added: new table component for index views. This replaces old index views and related resource methods.
-- Added: new set of UI components, originating from the new table component.
 - Changed: Tree retrieval. Nestable logic, classes and tree retrieval has changed. All nestable resources and models, like Page, need to be adjusted.
 
 ### General

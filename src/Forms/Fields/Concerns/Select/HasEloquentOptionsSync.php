@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns\Select;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\SelectOptions;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 
 trait HasEloquentOptionsSync
 {
