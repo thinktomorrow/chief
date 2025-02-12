@@ -87,7 +87,10 @@ trait NestableDefault
     {
         $ancestorIds = app(NestableQueries::class)->getAncestorIds($this);
 
-        return static::whereIn($this->getKeyName(), $ancestorIds)->get();
+        return static::whereIn($this->getKeyName(), $ancestorIds)
+            ->get()
+            ->sortBy(fn ($model) => array_search($model->id, $ancestorIds))
+            ->values();
     }
 
     /**
@@ -96,7 +99,7 @@ trait NestableDefault
      *
      * @return Nestable[]
      *
-     *@deprecated use getAncestors instead
+     * @deprecated use getAncestors instead
      */
     public function getBreadCrumbs(): array
     {

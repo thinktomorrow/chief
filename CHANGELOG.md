@@ -7,6 +7,7 @@ principles.
 ## Unreleased
 
 - Fixed: breadcrumbs were not rendered in select dropdown for nested resources.
+- Fixed: Ancestor sequence was not respected on NestableDefault::getAncestors() method.
 - Fixed: Redactor toolbar z-index issue where the toolbar was overlapping multiselect dropdowns.
 - Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
 
@@ -16,7 +17,8 @@ principles.
 - Added: new table component for index views. This replaces old index views and related resource methods.
 - Changed: minimum PHP version required is 8.2.
 - Changed: `thinktomorrow/vine` dependency to `0.5.*`. This will affect menu retrieval in your project files.
-- Changed: Tree retrieval. Nestable logic, classes and tree retrieval has changed. All nestable resources and models, like Page, need to be adjusted.
+- Changed: Tree retrieval. Nestable logic, classes and tree retrieval has changed. All nestable resources and models,
+  like Page, need to be adjusted.
 
 ### General
 
@@ -99,22 +101,29 @@ class Category implements TreeResource
 
 ### Menu
 
-Menu tree retrieval is now simpler. Also due to the change of the underlying Vine package. All the node data is available on the Menu item model.
+Menu tree retrieval is now simpler. Also due to the change of the underlying Vine package. All the node data is
+available on the Menu item model.
 This should not impose a breaking change but you should check your implementation to see if it still works as expected.
-Some Chief classes are removed because retrieval is now simpler. Removed classes are: `MenuItemNode`, `MenuSource` and `ChiefMenuFactory`.
+Some Chief classes are removed because retrieval is now simpler. Removed classes are: `MenuItemNode`, `MenuSource` and
+`ChiefMenuFactory`.
 
 ### Chief UI components
 
 ##### General components
 
-- `x-chief-table::button`: A new and improved button component, ready to be used everywhere in Chief. This will be replacing elements with classes such as: `.btn`, `.btn-primary`, `.btn-grey`, ... But also the old `x-chief::button` component.
-- `x-chief-table::badge`: A component to show text as a badge, ready to be used everywhere in Chief. This will be replacing elements with classes such as: `.label`, `.label-xs`, `.label-grey`, ...
+- `x-chief-table::button`: A new and improved button component, ready to be used everywhere in Chief. This will be
+  replacing elements with classes such as: `.btn`, `.btn-primary`, `.btn-grey`, ... But also the old `x-chief::button`
+  component.
+- `x-chief-table::badge`: A component to show text as a badge, ready to be used everywhere in Chief. This will be
+  replacing elements with classes such as: `.label`, `.label-xs`, `.label-grey`, ...
 
 ##### Dialog components
 
-- `x-chief::dialog`: A new dialog component replacing the old 'modal' dialog component. To be used as an interface for any dialog components, like: `x-chief::dialog.modal`, `x-chief::dialog.dropdown`, `x-chief::dialog.sidebar`.
+- `x-chief::dialog`: A new dialog component replacing the old 'modal' dialog component. To be used as an interface for
+  any dialog components, like: `x-chief::dialog.modal`, `x-chief::dialog.dropdown`, `x-chief::dialog.sidebar`.
 - `x-chief::dialog.modal`: A new modal component. This can be used to replace the old `x-chief::dialog` component.
-- `x-chief::dialog.dropdown`: A new dropdown component. This can be used to replace the old `x-chief::dropdown` component.
+- `x-chief::dialog.dropdown`: A new dropdown component. This can be used to replace the old `x-chief::dropdown`
+  component.
 - `x-chief::dialog.drawer`: A new drawer component. In time this will replace the current sidebar edit functionality.
 
 ##### Table components
@@ -126,12 +135,17 @@ Some Chief classes are removed because retrieval is now simpler. Removed classes
 
 ##### Icon components
 
-Previously all Chief icons were defined in a single `symbols.blade.php` file. These icons are still available but are going to be phased out by the new icon components. For example, where you would previously use `<svg><use xlink:href="#icon-search"></use></svg>`, you can now use `<x-chief::icon.search/>`. All icons have a `data-slot="icon"` attribute, so you can easily add them to any component and style them accordingly.
+Previously all Chief icons were defined in a single `symbols.blade.php` file. These icons are still available but are
+going to be phased out by the new icon components. For example, where you would previously use
+`<svg><use xlink:href="#icon-search"></use></svg>`, you can now use `<x-chief::icon.search/>`. All icons have a
+`data-slot="icon"` attribute, so you can easily add them to any component and style them accordingly.
 
 #### General styling updates
 
-- Changed: All manager index views are replaced by the all-new table index. Only the old sorting view is still available until the new table component sorting is implemented.
-- Changed: Some views - like the manager edit view - are now using the new `x-chief-table::button` and `x-chief-table::dialog` components. In time, these will be implemented everywhere in Chief.
+- Changed: All manager index views are replaced by the all-new table index. Only the old sorting view is still available
+  until the new table component sorting is implemented.
+- Changed: Some views - like the manager edit view - are now using the new `x-chief-table::button` and
+  `x-chief-table::dialog` components. In time, these will be implemented everywhere in Chief.
 - Changed: `x-chief::window` has a more compact styling to match the new table component.
 - Removed: All old layout views. These only existed to provide a fallback for custom Chief views in older projects.
 - Probably so much more...
