@@ -90,7 +90,7 @@ class FileApplication
     {
         $model = Asset::find($assetId)->getFirstMedia();
 
-        // Strip extension should the user has entered extension
+        // Strip extension should the user have entered extension
         $basename = basename($basename, '.'.$model->extension);
 
         $model->file_name = $basename.'.'.$model->extension;
