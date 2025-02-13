@@ -25,8 +25,8 @@ trait HasPresets
                 ->label('tags'),
         ])
             ->bulkActions([
-                AttachTagAction::makeDefault($resourceKey),
-                DetachTagAction::makeDefault($resourceKey),
+                AttachTagAction::makeDefault($resourceKey)->tertiary(),
+                DetachTagAction::makeDefault($resourceKey)->tertiary(),
             ]);
     }
 

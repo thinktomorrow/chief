@@ -8,6 +8,7 @@ principles.
 
 - Fixed: breadcrumbs were not rendered in select dropdown for nested resources.
 - Fixed: Ancestor sequence was not respected on NestableDefault::getAncestors() method.
+- Fixed: Ordering columns with uppercase keys were not ordered correctly.
 - Fixed: Redactor toolbar z-index issue where the toolbar was overlapping multiselect dropdowns.
 - Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
 
