@@ -47,7 +47,7 @@
         options: {
             allowHTML: true,
             paste: false,
-            searchResultLimit: 10,
+            searchResultLimit: 20,
             placeholder: true,
             placeholderValue: '{{ $placeholder }}',
             shouldSort: false, // Keep sorting as is

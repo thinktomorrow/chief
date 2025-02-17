@@ -10,6 +10,7 @@ principles.
 - Fixed: Ancestor sequence was not respected on NestableDefault::getAncestors() method.
 - Fixed: Ordering columns with uppercase keys were not ordered correctly.
 - Fixed: Redactor toolbar z-index issue where the toolbar was overlapping multiselect dropdowns.
+- Changed: Bump multiselect search results to 20 instead of 10 so more matches are visible.
 - Changed: Mimetype icons are now more consistent. Also added new icons for `.xls`, `.mp3` and `.csv` files.
 
 ## 2025-01-06 - 0.9.0
