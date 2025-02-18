@@ -14,7 +14,7 @@
         "astrotomic/laravel-translatable": "^11.11",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.31",
-        "laravel/pint": "^1.20",
+        "laravel/pint": "^1.21",
         "laravel/ui": "^4.2",
         "livewire/livewire": "^3.4.6",
         "ramsey/uuid": "^4.7.3",
