@@ -35,7 +35,7 @@
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^9.9",
         "phpunit/phpunit": "^11.3",
-        "spatie/opening-hours": "^2.13"
+        "spatie/opening-hours": "^4.2"
     },
     "autoload": {
         "psr-4": {

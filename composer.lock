@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6d06050d8f9d65187b3115eac04ab57",
+    "content-hash": "842a6338ece2e91edf0e981ed19dc390",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -10686,26 +10686,33 @@
         },
         {
             "name": "spatie/opening-hours",
-            "version": "2.41.0",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/opening-hours.git",
-                "reference": "2113e289b16340b24ea0743a7179ebc9dcbe5e64"
+                "reference": "4cd94916a04e75c3637384e7b677509bb85e581e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/opening-hours/zipball/2113e289b16340b24ea0743a7179ebc9dcbe5e64",
-                "reference": "2113e289b16340b24ea0743a7179ebc9dcbe5e64",
+                "url": "https://api.github.com/repos/spatie/opening-hours/zipball/4cd94916a04e75c3637384e7b677509bb85e581e",
+                "reference": "4cd94916a04e75c3637384e7b677509bb85e581e",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0 || ^8.0"
+                "php": "^8.2"
             },
             "require-dev": {
-                "kylekatarnls/multi-tester": "^1.1",
-                "phpunit/phpunit": "^6.5"
+                "kylekatarnls/multi-tester": "^2.5",
+                "phpunit/phpunit": "^11.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev",
+                    "dev-3.x": "3.x-dev",
+                    "dev-master": "4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Spatie\\OpeningHours\\": "src"
@@ -10721,6 +10728,11 @@
                     "email": "sebastian@spatie.be",
                     "homepage": "https://spatie.be",
                     "role": "Developer"
+                },
+                {
+                    "name": "kylekatarnls",
+                    "homepage": "https://github.com/kylekatarnls",
+                    "role": "Developer"
                 }
             ],
             "description": "A helper to query and format a set of opening hours",
@@ -10734,9 +10746,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/opening-hours/issues",
-                "source": "https://github.com/spatie/opening-hours/tree/2.41.0"
+                "source": "https://github.com/spatie/opening-hours/tree/4.2.0"
             },
-            "time": "2023-06-12T19:54:57+00:00"
+            "time": "2025-02-17T09:14:58+00:00"
         },
         {
             "name": "staabm/side-effects-detector",
@@ -10991,13 +11003,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3",
         "ext-json": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
