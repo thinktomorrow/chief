@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 2025-02-18 - 0.9.1
+
 - Fixed: breadcrumbs were not rendered in select dropdown for nested resources.
 - Fixed: Ancestor sequence was not respected on NestableDefault::getAncestors() method.
 - Fixed: Ordering columns with uppercase keys were not ordered correctly.
