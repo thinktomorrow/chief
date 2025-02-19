@@ -31,7 +31,6 @@
         "barryvdh/laravel-debugbar": "^3.14",
         "filp/whoops": "^2.14.6",
         "larastan/larastan": "^3.0",
-        "laravel/pint": "^1.20",
         "maatwebsite/excel": "^3.1",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^9.9",
