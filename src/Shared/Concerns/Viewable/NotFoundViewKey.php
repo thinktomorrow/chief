@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 
-class NotFoundViewKey extends \Exception {}
+class NotFoundViewKey extends \Exception
+{
+}

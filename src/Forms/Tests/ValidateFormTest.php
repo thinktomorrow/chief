@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests;
 
+use function config;
 use Illuminate\Support\Arr;
+use function session;
+
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-
-use function config;
-use function session;
 
 final class ValidateFormTest extends ChiefTestCase
 {

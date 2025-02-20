@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Exceptions;
 
-final class MissingResourceRegistration extends \Exception {}
+final class MissingResourceRegistration extends \Exception
+{
+}

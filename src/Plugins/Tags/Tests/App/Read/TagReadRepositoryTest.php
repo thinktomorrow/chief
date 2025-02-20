@@ -95,5 +95,7 @@ class TagReadRepositoryTest extends TestCase
         $this->assertEquals([1 => 'Review status', 2 => 'done'], $results);
     }
 
-    public function test_it_can_order_tags() {}
+    public function test_it_can_order_tags()
+    {
+    }
 }
