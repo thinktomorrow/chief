@@ -17,6 +17,7 @@
                 name="{{ $getName($locale ?? null) }}"
                 value="{{ $value }}"
                 :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
+                :attributes="$attributes->merge($getCustomAttributes())"
             />
 
             <span class="body body-dark leading-5">{!! $label !!}</span>

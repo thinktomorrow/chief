@@ -18,6 +18,7 @@
                 value="{{ $value }}"
                 :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
                 class="{{ $optedForToggleDisplay() ? 'appearance-none hidden' : null }}"
+                :attributes="$attributes->merge($getCustomAttributes())"
             />
 
             @if ($optedForToggleDisplay())
