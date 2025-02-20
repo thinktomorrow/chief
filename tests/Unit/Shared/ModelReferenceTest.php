@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -82,7 +82,7 @@ class ModelReferenceTest extends ChiefTestCase
 
         $reference = ModelReference::make(get_class($article), $article->id);
 
-        $this->assertEquals('article@' . $article->id, $reference->getShort());
+        $this->assertEquals('article@'.$article->id, $reference->getShort());
     }
 
     /** @test */
@@ -96,8 +96,8 @@ class ModelReferenceTest extends ChiefTestCase
 
         $reference = ModelReference::make('article', $article->id);
 
-        $this->assertEquals(get_class($article) .'@'. $article->id, $reference->get());
-        $this->assertEquals('article@' . $article->id, $reference->getShort());
+        $this->assertEquals(get_class($article).'@'.$article->id, $reference->get());
+        $this->assertEquals('article@'.$article->id, $reference->getShort());
 
         $this->assertInstanceOf(ArticlePage::class, $reference->instance());
     }

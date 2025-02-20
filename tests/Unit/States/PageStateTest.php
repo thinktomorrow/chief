@@ -11,9 +11,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 class PageStateTest extends TestCase
 {
     private $page;
+
     private $machine;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
@@ -12,5 +13,6 @@ class Slider extends Component implements Field
     use HasStep;
 
     protected string $view = 'chief-form::fields.slider';
+
     protected string $windowView = 'chief-form::fields.text-window';
 }

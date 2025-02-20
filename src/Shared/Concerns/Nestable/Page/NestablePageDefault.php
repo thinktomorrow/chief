@@ -8,10 +8,10 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 trait NestablePageDefault
 {
+    use NestableDefault;
     use PageDefaults{
         baseUrlSegment as defaultBaseUrlSegment;
     }
-    use NestableDefault;
 
     public static function bootNestablePageDefault()
     {

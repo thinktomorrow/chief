@@ -9,11 +9,11 @@ class ManageUsersTest extends ChiefTestCase
 {
     private $newUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->newUser = new User();
+        $this->newUser = new User;
         $this->newUser->email = 'email';
         $this->newUser->firstname = 'firstname';
         $this->newUser->lastname = 'lastname';
@@ -25,7 +25,7 @@ class ManageUsersTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('chief.back.users.index'));
         $response->assertViewIs('chief::admin.users.index')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */

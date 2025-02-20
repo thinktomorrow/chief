@@ -35,8 +35,7 @@ class ChiefExceptionHandler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Throwable $e
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $e)
@@ -62,7 +61,7 @@ class ChiefExceptionHandler extends ExceptionHandler
 
     private function shouldRenderChiefException(Throwable $exception): bool
     {
-        return (Str::startsWith(request()->path(), 'admin/') && ! $exception instanceof AuthenticationException && ! $exception instanceof ValidationException);
+        return Str::startsWith(request()->path(), 'admin/') && ! $exception instanceof AuthenticationException && ! $exception instanceof ValidationException;
     }
 
     protected function renderChiefException(\Illuminate\Http\Request $request, Throwable $exception)
@@ -78,7 +77,6 @@ class ChiefExceptionHandler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
-
     protected function unauthorized(\Illuminate\Http\Request $request, AuthorizationException $exception)
     {
         return redirect()->route('chief.back.dashboard')
@@ -88,8 +86,7 @@ class ChiefExceptionHandler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Illuminate\Auth\AuthenticationException $exception
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)

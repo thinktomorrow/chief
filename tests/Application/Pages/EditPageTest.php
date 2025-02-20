@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
@@ -18,7 +19,7 @@ final class EditPageTest extends ChiefTestCase
     /** @var Manager */
     private $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

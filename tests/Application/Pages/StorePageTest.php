@@ -123,7 +123,7 @@ class StorePageTest extends ChiefTestCase
         $this->assertEquals('tt-favicon.png', ArticlePage::first()->asset('thumb')->filename());
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

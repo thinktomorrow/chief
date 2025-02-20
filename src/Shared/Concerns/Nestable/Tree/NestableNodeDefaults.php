@@ -38,10 +38,10 @@ trait NestableNodeDefaults
         if (! $this->isRootNode()) {
             $label = array_reduce(array_reverse($this->getAncestorNodes()->all()), function ($carry, NestedNode $node) use ($withoutRoot) {
                 if ($node->isRootNode()) {
-                    return $withoutRoot ? $carry : $node->getLabel() . ': ' . $carry;
+                    return $withoutRoot ? $carry : $node->getLabel().': '.$carry;
                 }
 
-                return $node->getLabel() . ' > ' . $carry;
+                return $node->getLabel().' > '.$carry;
             }, $this->getLabel());
         }
 

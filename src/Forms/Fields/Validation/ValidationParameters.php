@@ -10,15 +10,16 @@ use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
 
 class ValidationParameters
 {
-    private Validatable & Localizable $source;
+    private Validatable&Localizable $source;
+
     private bool $multiple = false;
 
-    final private function __construct(Validatable & Localizable $source)
+    final private function __construct(Validatable&Localizable $source)
     {
         $this->source = $source;
     }
 
-    public static function make(Validatable & Localizable $source): self
+    public static function make(Validatable&Localizable $source): self
     {
         return new static($source);
     }
@@ -77,7 +78,7 @@ class ValidationParameters
 
         if ($this->multiple) {
             foreach ($keys as $i => $key) {
-                $keys[$i] = $key . '.*';
+                $keys[$i] = $key.'.*';
             }
         }
 

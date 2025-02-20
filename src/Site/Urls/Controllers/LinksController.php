@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Controllers;
@@ -28,12 +29,12 @@ class LinksController
             'array', 'min:1', new UniqueUrlSlugRule($model, $model), ], [], ['links.*' => 'taalspecifieke link'],
         ]);
 
-        (new SaveUrlSlugs())->handle($model, $request->input('links', []));
+        (new SaveUrlSlugs)->handle($model, $request->input('links', []));
 
         // Push update to homepage setting value
         // TODO: we should just fetch the homepages and push that instead...
         UrlRecord::getByModel($model)->reject(function ($record) {
-            return ($record->isRedirect() || ! $record->isHomepage());
+            return $record->isRedirect() || ! $record->isHomepage();
         })->each(function ($record) {
             app(ChangeHomepage::class)->onUrlChanged($record);
         });

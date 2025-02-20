@@ -18,7 +18,7 @@ class InviteUserTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('chief.back.users.create'));
         $response->assertViewIs('chief::admin.users.create')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class InviteUserTest extends ChiefTestCase
         Notification::fake();
 
         $response = $this->asAdmin()
-                         ->post(route('chief.back.users.store'), $this->validParams());
+            ->post(route('chief.back.users.store'), $this->validParams());
 
         $response->assertStatus(302)
             ->assertRedirect(route('chief.back.users.index'))
@@ -48,7 +48,7 @@ class InviteUserTest extends ChiefTestCase
         $this->assertNewValues($newUser);
         $this->assertEquals(InvitationState::pending, $newUser->invitation->last()->getState(InvitationState::KEY));
 
-        Notification::assertSentTo(new AnonymousNotifiable(), InvitationMail::class);
+        Notification::assertSentTo(new AnonymousNotifiable, InvitationMail::class);
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class InviteUserTest extends ChiefTestCase
     public function when_creating_user_firstname_is_required()
     {
         $this->assertValidation(
-            new User(),
+            new User,
             'firstname',
             $this->validParams(['firstname' => '']),
             route('chief.back.users.index'),
@@ -97,7 +97,7 @@ class InviteUserTest extends ChiefTestCase
     public function when_creating_user_lastname_is_required()
     {
         $this->assertValidation(
-            new User(),
+            new User,
             'lastname',
             $this->validParams(['lastname' => '']),
             route('chief.back.users.index'),
@@ -110,7 +110,7 @@ class InviteUserTest extends ChiefTestCase
     public function when_creating_user_role_is_required()
     {
         $this->assertValidation(
-            new User(),
+            new User,
             'roles',
             $this->validParams(['roles' => []]),
             route('chief.back.users.index'),

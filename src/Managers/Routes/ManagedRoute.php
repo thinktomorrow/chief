@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Routes;
@@ -21,23 +22,23 @@ final class ManagedRoute
         $this->uri = $uri;
     }
 
-    public static function get(string $action, string $uri = null): self
+    public static function get(string $action, ?string $uri = null): self
     {
-        return new static('GET', $action, $uri ?? $action);
+        return new self('GET', $action, $uri ?? $action);
     }
 
-    public static function post(string $action, string $uri = null): self
+    public static function post(string $action, ?string $uri = null): self
     {
-        return new static('POST', $action, $uri ?? $action);
+        return new self('POST', $action, $uri ?? $action);
     }
 
-    public static function put(string $action, string $uri = null): self
+    public static function put(string $action, ?string $uri = null): self
     {
-        return new static('PUT', $action, $uri ?? $action);
+        return new self('PUT', $action, $uri ?? $action);
     }
 
-    public static function delete(string $action, string $uri = null): self
+    public static function delete(string $action, ?string $uri = null): self
     {
-        return new static('DELETE', $action, $uri ?? $action);
+        return new self('DELETE', $action, $uri ?? $action);
     }
 }

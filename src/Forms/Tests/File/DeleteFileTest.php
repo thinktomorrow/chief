@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Forms\Tests\File;
 
-use function app;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Asset;
@@ -10,12 +9,15 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
+use function app;
+
 class DeleteFileTest extends ChiefTestCase
 {
     use PageFormParams;
     use UploadsFile;
 
     private $model;
+
     private $manager;
 
     public function test_a_file_can_be_deleted()
@@ -87,7 +89,7 @@ class DeleteFileTest extends ChiefTestCase
         $this->assertEquals('image-nl.png', $this->model->asset('thumb', 'en')->getFileName());
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

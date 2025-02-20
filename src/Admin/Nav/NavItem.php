@@ -7,8 +7,11 @@ namespace Thinktomorrow\Chief\Admin\Nav;
 final class NavItem
 {
     private string $label;
+
     private string $url;
+
     private array $tags;
+
     private string $icon;
 
     public function __construct(string $label, string $url, array $tags, string $icon)

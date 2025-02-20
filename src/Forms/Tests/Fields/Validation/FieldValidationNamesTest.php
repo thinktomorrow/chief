@@ -19,7 +19,7 @@ class FieldValidationNamesTest extends TestCase
     public function it_can_replace_placeholder_value_in_the_key()
     {
         $instance = ValidationNames::fromFormat(':key')
-                                        ->replace('key', ['foo','bar']);
+            ->replace('key', ['foo', 'bar']);
 
         $this->assertEquals([
             'foo',
@@ -31,8 +31,8 @@ class FieldValidationNamesTest extends TestCase
     public function it_can_replace_multiple_placeholder_values_in_the_key()
     {
         $instance = ValidationNames::fromFormat('file.:locale.:key')
-            ->replace('key', ['foo','bar','baz'])
-            ->replace('locale', ['nl','en']);
+            ->replace('key', ['foo', 'bar', 'baz'])
+            ->replace('locale', ['nl', 'en']);
 
         $this->assertEquals([
             'file.nl.foo',
@@ -59,8 +59,8 @@ class FieldValidationNamesTest extends TestCase
     public function it_ignores_empty_translations_that_dont_belong_to_the_default_locale()
     {
         $instance = ValidationNames::fromFormat('trans.:locale.:key')
-            ->replace('key', ['foo','bar'])
-            ->replace('locale', ['nl','en', 'fr'])
+            ->replace('key', ['foo', 'bar'])
+            ->replace('locale', ['nl', 'en', 'fr'])
             ->payload([
                 'trans' => [
                     'nl' => ['foo' => '', 'bar' => null],
@@ -82,7 +82,7 @@ class FieldValidationNamesTest extends TestCase
     public function it_removes_any_keys_that_are_marked_for_removal()
     {
         $instance = ValidationNames::fromFormat('files.:key')
-            ->replace('key', ['foo','detach'])
+            ->replace('key', ['foo', 'detach'])
             ->removeKeysContaining(['.detach']);
 
         $this->assertEquals([
@@ -94,7 +94,7 @@ class FieldValidationNamesTest extends TestCase
     public function it_can_use_a_wildcard_for_removal()
     {
         $instance = ValidationNames::fromFormat(':key')
-            ->replace('key', ['foo','bar','bor'])
+            ->replace('key', ['foo', 'bar', 'bor'])
             ->removeKeysContaining(['b*r']);
 
         $this->assertEquals([
@@ -106,8 +106,8 @@ class FieldValidationNamesTest extends TestCase
     public function it_can_expand_the_names_for_given_locales()
     {
         $instance = ValidationNames::fromFormat('trans.:locale.:key')
-            ->replace('key', ['foo','bar'])
-            ->replace('locale', ['en','fr'])
+            ->replace('key', ['foo', 'bar'])
+            ->replace('locale', ['en', 'fr'])
             ->requiredLocale('nl');
 
         $this->assertEquals([

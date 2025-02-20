@@ -15,7 +15,9 @@ class Text extends Component implements Field
     use HasRedactorToolbar;
 
     protected string $view = 'chief-form::fields.text';
+
     protected string $windowView = 'chief-form::fields.text-window';
+
     protected string $viewWithRedactor = 'chief-form::fields.text-with-redactor';
 
     public function getView(): string

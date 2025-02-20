@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree;
@@ -9,6 +10,7 @@ use Thinktomorrow\Vine\Source;
 final class NestedTreeSource implements Source
 {
     private iterable $records;
+
     public string $sortChildrenBy = 'order';
 
     public function __construct(iterable $records)
@@ -24,7 +26,7 @@ final class NestedTreeSource implements Source
     public function createNode($entry): Node
     {
         if (! $entry instanceof NestedNode) {
-            throw new \InvalidArgumentException('Entry is expected to be a ' . NestedNode::class . '.');
+            throw new \InvalidArgumentException('Entry is expected to be a '.NestedNode::class.'.');
         }
 
         return $entry;

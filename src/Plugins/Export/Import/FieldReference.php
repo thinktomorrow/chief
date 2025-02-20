@@ -15,8 +15,11 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 class FieldReference
 {
     private Resource $resource;
+
     private Model $model;
+
     private Field $field;
+
     private string $fieldName;
 
     public function __construct(Resource $resource, Model $model, Field $field, string $fieldName)

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Application;
@@ -12,6 +13,7 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 class CreateUrlForPage
 {
     private SaveUrlSlugs $saveUrlSlugs;
+
     private Registry $registry;
 
     public function __construct(SaveUrlSlugs $saveUrlSlugs, Registry $registry)
@@ -41,10 +43,6 @@ class CreateUrlForPage
         }
     }
 
-    /**
-     * @param Visitable $model
-     * @return array
-     */
     private function createLocalizedSlugArray(Visitable $model): array
     {
         $currentLocale = app()->getLocale();

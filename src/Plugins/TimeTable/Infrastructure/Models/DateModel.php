@@ -20,8 +20,11 @@ class DateModel extends Model
     use UsesContent;
 
     protected $guarded = [];
+
     public $table = 'timetable_dates';
+
     public $timestamps = false;
+
     public $casts = [
         'slots' => 'array',
         'data' => 'array',

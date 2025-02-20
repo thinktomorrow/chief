@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
@@ -13,14 +14,17 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Form\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Page\NestablePageDefault;
 
-class NestableModelStub extends Model implements Page, PageResource, Nestable
+class NestableModelStub extends Model implements Nestable, Page, PageResource
 {
-    use PageResourceDefault;
     use NestablePageDefault;
+    use PageResourceDefault;
 
     protected $guarded = [];
+
     protected $dynamicKeys = ['title'];
+
     protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $viewPath = 'test-views::nestable_page';

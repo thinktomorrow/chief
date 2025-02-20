@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 class EloquentIndexRepository implements IndexRepository
 {
     private Registry $registry;
+
     private string $resourceKey;
 
     public function __construct(Registry $registry, string $resourceKey)

@@ -30,7 +30,7 @@ class DuplicatePageTest extends ChiefTestCase
 
         // 'custom' is the title attribute in this test
         $this->assertEquals(
-            str_replace($this->source->custom, '[Copy] ' . $this->source->custom, $this->source->values),
+            str_replace($this->source->custom, '[Copy] '.$this->source->custom, $this->source->values),
             $copiedModel->values
         );
 
@@ -55,10 +55,10 @@ class DuplicatePageTest extends ChiefTestCase
     public function context_with_fragments_are_duplicated()
     {
         // Add shared and non-shared fragment
-        $snippet = $this->createAsFragment(new SnippetStub(), $this->source, 1);
+        $snippet = $this->createAsFragment(new SnippetStub, $this->source, 1);
         $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
 
-        $snippet2 = $this->createAsFragment(new SnippetStub(), $this->source, 2);
+        $snippet2 = $this->createAsFragment(new SnippetStub, $this->source, 2);
         $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
 
         $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();
@@ -92,7 +92,7 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertEquals($this->source->asset('thumb')->id, $copiedModel->asset('thumb')->id);
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -25,7 +25,6 @@ interface Nestable
     /**
      * Nested array of the complete child structure
      * belonging to this parent model.
-     *
      */
     public function getDescendants(): NestedTree;
 

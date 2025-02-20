@@ -8,6 +8,7 @@ use Thinktomorrow\Squanto\Database\DatabaseLine;
 class ExportTextCommand extends BaseCommand
 {
     protected $signature = 'chief:export-text';
+
     protected $description = 'Export static texts';
 
     public function __construct()
@@ -20,8 +21,8 @@ class ExportTextCommand extends BaseCommand
         $models = DatabaseLine::orderBy('key')->get();
 
         (new ExportTextDocument($models, config('chief.locales')))
-            ->store($filepath = 'exports/' . config('app.name') .'-text-'.date('Y-m-d').'.xlsx');
+            ->store($filepath = 'exports/'.config('app.name').'-text-'.date('Y-m-d').'.xlsx');
 
-        $this->info('Finished export. File available at: storage/app/' . $filepath);
+        $this->info('Finished export. File available at: storage/app/'.$filepath);
     }
 }

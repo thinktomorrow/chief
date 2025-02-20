@@ -13,8 +13,11 @@ use Thinktomorrow\Squanto\Domain\LineKey;
 class ImportText implements ToCollection
 {
     private string $idIndex;
+
     private string $locale;
+
     private string $columnIndex;
+
     private ?OutputStyle $output = null;
 
     // Update the translations even if they are the same
@@ -41,7 +44,7 @@ class ImportText implements ToCollection
             try {
                 $lineKey = LineKey::fromString(decrypt($encryptedId));
             } catch (DecryptException|InvalidLineKeyException $e) {
-                $this->writeToOutput('Invalid squanto id reference: ' . $encryptedId, 'error');
+                $this->writeToOutput('Invalid squanto id reference: '.$encryptedId, 'error');
 
                 continue;
             }

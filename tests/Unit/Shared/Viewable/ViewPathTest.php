@@ -10,11 +10,11 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class ViewPathTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->app['view']->addLocation(__DIR__ . '/../../../Shared/stubs/views');
+        $this->app['view']->addLocation(__DIR__.'/../../../Shared/stubs/views');
     }
 
     /** @test */

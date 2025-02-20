@@ -10,11 +10,10 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults
 {
+    use HasDynamicAttributes;
+    use InteractsWithAssets;
     use ReferableModelDefault;
     use Viewable;
-
-    use InteractsWithAssets;
-    use HasDynamicAttributes;
 
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for

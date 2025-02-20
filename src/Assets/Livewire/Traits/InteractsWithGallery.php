@@ -13,7 +13,9 @@ trait InteractsWithGallery
     use WithPagination;
 
     public $filters = [];
+
     public $sort = null;
+
     public bool $allowExternalFiles = true;
 
     public function updatedFilters()
@@ -32,7 +34,7 @@ trait InteractsWithGallery
                 $searchTerms = explode(' ', $this->filters['search']);
 
                 foreach ($searchTerms as $searchTerm) {
-                    $query->where('file_name', 'LIKE', '%' . $searchTerm . '%');
+                    $query->where('file_name', 'LIKE', '%'.$searchTerm.'%');
                 }
 
             });

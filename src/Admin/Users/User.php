@@ -16,13 +16,14 @@ use Thinktomorrow\Chief\Shared\Concerns\Enablable;
 
 class User extends Authenticatable implements HasAsset
 {
-    use Notifiable;
-    use HasRoles;
-    use InteractsWithAssets;
     use Enablable;
     use HasFactory;
+    use HasRoles;
+    use InteractsWithAssets;
+    use Notifiable;
 
     public $table = 'chief_users';
+
     protected $guard_name = 'chief';
 
     protected $guarded = [];
@@ -64,7 +65,7 @@ class User extends Authenticatable implements HasAsset
 
     public function getFullnameAttribute(): string
     {
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->firstname.' '.$this->lastname;
     }
 
     public function isSquantoDeveloper(): bool
@@ -74,6 +75,6 @@ class User extends Authenticatable implements HasAsset
 
     public function getShortNameAttribute(): string
     {
-        return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
+        return $this->firstname.' '.substr($this->lastname, 0, 1).'.';
     }
 }

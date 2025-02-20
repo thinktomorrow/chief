@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
@@ -20,23 +21,23 @@ trait ShowsPageState
             if (LinkForm::fromModel($this)->isAnyLinkOnline()) {
                 return '<span class="label label-xs label-success">Online</span>';
             }
-            if (PageState::published === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
+            if ($this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::published) {
                 return '<span class="label label-xs label-info">Nog niet online. Er ontbreekt nog een link.</span>';
             }
-            if (PageState::draft === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
+            if ($this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::draft) {
                 return '<span class="label label-xs label-error">Offline</span>';
             }
         }
 
-        if (PageState::published === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
+        if ($this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::published) {
             return '<span class="label label-xs label-success">Gepubliceerd</span>';
         }
 
-        if (PageState::draft === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
+        if ($this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::draft) {
             return '<span class="label label-xs label-error">In draft</span>';
         }
 
-        if (PageState::archived === $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY)) {
+        if ($this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::archived) {
             return '<span class="label label-xs label-warning">Gearchiveerd</span>';
         }
 

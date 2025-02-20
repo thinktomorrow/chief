@@ -12,6 +12,7 @@ use Thinktomorrow\Vine\Source;
 class MenuSource implements Source
 {
     private Collection $items;
+
     private string $locale;
 
     private function __construct(Collection $items)

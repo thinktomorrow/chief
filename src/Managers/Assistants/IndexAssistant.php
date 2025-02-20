@@ -69,7 +69,6 @@ trait IndexAssistant
         View::share('resource', $this->resource);
         View::share('model', $model = $this->managedModelClassInstance());
 
-
         if ($model instanceof Nestable) {
             // TODO: this should be changed to the repository pattern like:
             // app($resource->indexRepository(), ['resourceKey' => $resourceKey])->applyFilters(request()->all())->getNestableResults()
@@ -139,7 +138,7 @@ trait IndexAssistant
 
     private function defaultFilters(): Filters
     {
-        $filters = new Filters();
+        $filters = new Filters;
 
         foreach (DiscoverTraitMethods::belongingTo(static::class, 'filters') as $method) {
             $filters = $filters->merge($this->$method());

@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\NestableDefault;
 
 trait NestableModelDefault
 {
-    use ModelDefaults;
-    use UsesSimpleState;
     use Archivable;
+    use ModelDefaults;
     use NestableDefault;
+    use UsesSimpleState;
 }

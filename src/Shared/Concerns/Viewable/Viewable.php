@@ -7,13 +7,14 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 trait Viewable
 {
     private array $viewData = [];
+
     private ?string $ownerViewPath = null;
 
     public function renderView(): string
     {
         try {
             return view($this->viewPath(), $this->viewData())->render();
-        } catch (NotFoundView | NotFoundViewKey $e) {
+        } catch (NotFoundView|NotFoundViewKey $e) {
             if (config('chief.strict')) {
                 throw $e;
             }
@@ -41,7 +42,6 @@ trait Viewable
      * e.g. key 'articles.show'. A sensible default is set and determined based on the viewKey value.
      * But you are free to override this and change it to another value to fit your own logic.
      *
-     * @return string
      * @throws NotFoundView
      * @throws NotFoundViewKey
      */

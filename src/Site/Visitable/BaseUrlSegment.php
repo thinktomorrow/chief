@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Site\Visitable;
 
 class BaseUrlSegment
 {
-    public static function find(array $segments, string $locale = null)
+    public static function find(array $segments, ?string $locale = null)
     {
         if (count($segments) < 1) {
             return '/';
@@ -30,16 +30,11 @@ class BaseUrlSegment
     }
 
     /**
-     * @param Visitable $model
-     * @param string $slug
-     * @param $locale
-     * @param (int|string) $locale
-     *
-     * @return string
+     * @param  (int|string)  $locale
      */
     public static function prepend(Visitable $model, string $slug, $locale): string
     {
-        $slugWithBaseSegment = $model->baseUrlSegment($locale) . '/' . $slug;
+        $slugWithBaseSegment = $model->baseUrlSegment($locale).'/'.$slug;
         $slugWithBaseSegment = trim($slugWithBaseSegment, '/');
 
         // If slug with base segment is empty string, it means that the passed slug was probably a "/" character.

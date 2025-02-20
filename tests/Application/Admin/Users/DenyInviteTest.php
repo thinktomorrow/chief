@@ -10,10 +10,12 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 class DenyInviteTest extends ChiefTestCase
 {
     private $invitee;
+
     private $inviter;
+
     private $invitation;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

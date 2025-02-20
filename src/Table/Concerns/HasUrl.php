@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Table\Concerns;
 trait HasUrl
 {
     protected string $url;
+
     protected string $target = '_self';
 
     public function getUrl(): string

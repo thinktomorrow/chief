@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
@@ -24,7 +25,7 @@ class FragmentOwnerRepository
     public function getResourceOwners(FragmentModel $fragmentModel): Collection
     {
         $models = ContextModel::owning($fragmentModel)
-                    ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id));
+            ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id));
 
         $result = collect();
 

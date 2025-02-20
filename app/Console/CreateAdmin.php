@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 class CreateAdmin extends BaseCommand
 {
     protected $signature = 'chief:admin {--dev}';
+
     protected $description = 'Create a new chief admin user';
 
     public function handle(): void
@@ -37,7 +38,7 @@ class CreateAdmin extends BaseCommand
 
         $this->createUser($firstname, $lastname, $email, $password, [$role]);
 
-        $this->info($firstname . ' ' . $lastname . ' succesfully added as admin user.');
+        $this->info($firstname.' '.$lastname.' succesfully added as admin user.');
     }
 
     private function settingPermissionsAndRoles(): void

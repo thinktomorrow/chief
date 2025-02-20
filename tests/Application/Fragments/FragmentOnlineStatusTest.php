@@ -15,10 +15,12 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class FragmentOnlineStatusTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $fragment;
+
     private Manager $fragmentManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -78,7 +80,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         ]);
 
         $this->assertFragmentCount($this->owner, 1);
-        $this->assertRenderedFragments($this->owner, "");
+        $this->assertRenderedFragments($this->owner, '');
     }
 
     /** @test */
@@ -110,6 +112,6 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         session()->flash('preview-mode', false);
 
         $this->assertFragmentCount($this->owner, 1);
-        $this->assertRenderedFragments($this->owner, "");
+        $this->assertRenderedFragments($this->owner, '');
     }
 }

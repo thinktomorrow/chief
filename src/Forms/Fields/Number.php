@@ -12,10 +12,11 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasStep;
 class Number extends Component implements Field
 {
     use HasCharacterCount;
-    use HasPrependAppend;
     use HasMinMax;
+    use HasPrependAppend;
     use HasStep;
 
     protected string $view = 'chief-form::fields.number';
+
     protected string $windowView = 'chief-form::fields.text-window';
 }

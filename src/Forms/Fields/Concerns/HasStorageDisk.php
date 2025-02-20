@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
@@ -31,6 +32,6 @@ trait HasStorageDisk
             ($this->getStorageDisk() ?: config('filesystems.default'))
         );
 
-        return (isset($fileSettings['visibility']) && $fileSettings['visibility'] == "private") ? false : true;
+        return (isset($fileSettings['visibility']) && $fileSettings['visibility'] == 'private') ? false : true;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
@@ -10,10 +11,8 @@ use Thinktomorrow\Chief\Fragments\Fragmentable;
 
 final class CreateFragmentModel
 {
-    /** @var FragmentRepository */
     private FragmentRepository $fragmentRepository;
 
-    /** @var AddFragmentModel */
     private AddFragmentModel $addFragmentToContext;
 
     public function __construct(FragmentRepository $fragmentRepository, AddFragmentModel $addFragmentToContext)
@@ -24,11 +23,6 @@ final class CreateFragmentModel
 
     /**
      * Store a non-static fragmentable.
-     *
-     * @param Model $owner
-     * @param Fragmentable $fragmentable
-     * @param int $order
-     * @param array $data
      */
     public function create(Model $owner, Fragmentable $fragmentable, int $order, array $data = []): FragmentModel
     {

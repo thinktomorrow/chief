@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
@@ -8,7 +9,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class PageWithRepeatFieldTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +22,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     {
         $pageStub = PageStub::create();
 
-        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values') . '?index=99');
+        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values').'?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];
@@ -38,7 +39,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     {
         $pageStub = PageStub::create();
 
-        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values', $pageStub) . '?index=99');
+        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values', $pageStub).'?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];
@@ -57,7 +58,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
 
         $pageStub = PageStub::create();
 
-        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'nested', $pageStub) . '?index=0&prefix=repeat_values[99][nested]');
+        $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'nested', $pageStub).'?index=0&prefix=repeat_values[99][nested]');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];

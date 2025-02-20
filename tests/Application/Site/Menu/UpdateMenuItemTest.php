@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class UpdateMenuItemTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

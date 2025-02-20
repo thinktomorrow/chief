@@ -13,7 +13,9 @@ class MenuItem extends Model
     use HasDynamicAttributes;
 
     public const TYPE_INTERNAL = 'internal';
+
     public const TYPE_CUSTOM = 'custom';
+
     public const TYPE_NOLINK = 'nolink';
 
     public $dynamicKeys = [
@@ -21,6 +23,7 @@ class MenuItem extends Model
     ];
 
     public $timestamps = false;
+
     public $guarded = [];
 
     public function getLabel(string $locale): ?string
@@ -63,20 +66,19 @@ class MenuItem extends Model
 
     public function setOwnerLabel(string $locale, string $ownerLabel): void
     {
-        $this->setDynamic('owner_label.' . $locale, $ownerLabel);
+        $this->setDynamic('owner_label.'.$locale, $ownerLabel);
     }
 
     public function setUrl(string $locale, ?string $url): void
     {
-        $this->setDynamic('url.' . $locale, $url);
+        $this->setDynamic('url.'.$locale, $url);
     }
 
     public static function getByOwner(string $ownerType, $ownerId): Collection
     {
         return static::where('owner_type', $ownerType)
             ->where('owner_id', $ownerId)
-            ->get()
-        ;
+            ->get();
     }
 
     public function ofType($type): bool
@@ -92,7 +94,7 @@ class MenuItem extends Model
     public function owner(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo('owner', 'owner_type', 'owner_id')
-                    ->withoutGlobalScopes();
+            ->withoutGlobalScopes();
     }
 
     public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo

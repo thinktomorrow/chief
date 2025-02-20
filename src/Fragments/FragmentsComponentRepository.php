@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
@@ -11,7 +12,9 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 class FragmentsComponentRepository
 {
     private FragmentRepository $fragmentRepository;
+
     private FragmentsOwner $owner;
+
     private Registry $registry;
 
     /** @var null|Collection */

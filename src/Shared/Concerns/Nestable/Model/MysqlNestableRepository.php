@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
@@ -43,7 +44,7 @@ class MysqlNestableRepository implements NestableRepository
         $resource = $this->registry->resource($resourceKey);
 
         if (! $resource instanceof PageResource) {
-            throw new \DomainException('Resource [' . $resource::class . '] is expected to be a ' . PageResource::class . ', but it is not.');
+            throw new \DomainException('Resource ['.$resource::class.'] is expected to be a '.PageResource::class.', but it is not.');
         }
 
         return $resource;

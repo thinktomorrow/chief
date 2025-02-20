@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DateModel;
 class DateController extends Controller
 {
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
 
     public function __construct(FieldValidator $fieldValidator, SaveFields $saveFields)
@@ -140,7 +141,7 @@ class DateController extends Controller
     private function getModelAndFields(?string $dateId = null): array
     {
         $model = app(DateModel::class);
-        $model = $dateId ? $model::find($dateId): $model;
+        $model = $dateId ? $model::find($dateId) : $model;
 
         $fields = Fields::makeWithoutFlatteningNestedFields($model->fields($model))->each(fn ($field) => $field->model($model));
 

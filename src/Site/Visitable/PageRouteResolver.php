@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
@@ -18,8 +19,6 @@ final class PageRouteResolver
 
     /**
      * Set a default route resolver for all visitable models.
-     *
-     * @param Closure $resolver
      */
     public function define(?Closure $resolver = null): void
     {

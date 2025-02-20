@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms;
 
 use ArrayIterator;
-use function collect;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 
-class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
+use function collect;
+
+class Fields implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     private Collection $items;
 
@@ -85,9 +86,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     }
 
     /**
-     * @param \Closure|string $key
-     * @param null|mixed      $value
-     *
+     * @param  \Closure|string  $key
+     * @param  null|mixed  $value
      * @return static
      */
     public function filterBy($key, $value = null): self
@@ -96,7 +96,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
         foreach ($this->items as $field) {
             if ($key instanceof \Closure) {
-                if (true == $key($field)) {
+                if ($key($field) == true) {
                     $fields[] = $field;
                 }
 
@@ -106,7 +106,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             $method = 'get'.ucfirst($key);
 
             // Reject from list if value does not match expected one
-            if ($value && $field->{$method}() == $value) {
+            if ($value && $value == $field->{$method}()) {
                 $fields[] = $field;
             } // Reject from list if key returns null (key not present on field)
             elseif (! $value && ! is_null($field->{$method}())) {
@@ -189,7 +189,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function tagged($tag): self
     {
-        if (is_string($tag) && 'untagged' === $tag) {
+        if (is_string($tag) && $tag === 'untagged') {
             return $this->untagged();
         }
 
@@ -227,9 +227,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
      * The stopRecursiveCallback callable is set for when to stop the recursive when this function returns false.
      * This is used internally for explicitly stop nested fields detection such as a nested repeat field.
      *
-     * @param array $components
-     * @param callable|null $stopRecursiveCallback
-     * @return array
+     * @param  array  $components
      */
     private static function extractRecursive(iterable $components, ?callable $stopRecursiveCallback = null): array
     {
@@ -240,7 +238,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
                 $fields[] = $component;
             }
 
-            if ($stopRecursiveCallback && false === call_user_func($stopRecursiveCallback, $component)) {
+            if ($stopRecursiveCallback && call_user_func($stopRecursiveCallback, $component) === false) {
                 continue;
             }
 

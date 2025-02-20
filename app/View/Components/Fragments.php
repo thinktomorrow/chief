@@ -15,8 +15,11 @@ class Fragments extends Component
     public FragmentsOwner $owner;
 
     private FragmentsComponentRepository $repository;
+
     private Collection $fragments;
+
     private array $allowedFragments;
+
     private array $sharedFragments;
 
     public function __construct(FragmentsOwner $owner)

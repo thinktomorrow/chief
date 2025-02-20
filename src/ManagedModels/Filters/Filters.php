@@ -23,7 +23,7 @@ class Filters
      */
     public static function make(iterable $generator): self
     {
-        $filters = new static();
+        $filters = new static;
 
         foreach ($generator as $filter) {
             if (is_iterable($filter)) {
@@ -53,7 +53,7 @@ class Filters
     public function render(): string
     {
         return array_reduce($this->all(), function ($carry, Filter $filter) {
-            return $carry . $filter->render();
+            return $carry.$filter->render();
         }, '');
     }
 

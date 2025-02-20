@@ -15,16 +15,17 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 class ImageSitemapTest extends ChiefTestCase
 {
     private $carbon;
+
     private $sitemapXml;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->carbon = Carbon::today();
         Carbon::setTestNow($this->carbon);
 
-        $this->sitemapXml = new ImageSitemapXml();
+        $this->sitemapXml = new ImageSitemapXml;
 
         $page = $this->setUpAndCreateArticle(['current_state' => PageState::published]);
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);

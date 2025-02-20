@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
@@ -20,7 +21,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PageChangedEventTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

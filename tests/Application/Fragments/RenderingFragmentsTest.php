@@ -11,7 +11,7 @@ class RenderingFragmentsTest extends ChiefTestCase
     /** @var FragmentRepository */
     private $fragmentRepo;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -21,7 +21,7 @@ class RenderingFragmentsTest extends ChiefTestCase
     {
         $owner = $this->setupAndCreateArticle();
         $this->setupAndCreateSnippet($owner, 1);
-        $this->createAsFragment(new SnippetStub(), $owner, 2, ['title_trans' => ['nl' => 'foobar']]);
+        $this->createAsFragment(new SnippetStub, $owner, 2, ['title_trans' => ['nl' => 'foobar']]);
 
         $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW \nTHIS IS SNIPPET STUB VIEW foobar\n");
     }

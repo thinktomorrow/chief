@@ -28,9 +28,6 @@ class ModelReferencePresenter
 
     /**
      * Select values prepared for the multiselect options
-     *
-     * @param Collection $collection
-     * @return Collection
      */
     public static function toSelectValues(Collection $collection, bool $prepareForGrouping = false, bool $withModelReferenceAsKey = true): Collection
     {

@@ -13,15 +13,17 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FileEditComponent extends Component
 {
+    use EmitsToNestables;
+    use InteractsWithForm;
     use ShowsAsDialog;
     use WithFileUploads;
-    use InteractsWithForm;
-    use EmitsToNestables;
 
     public $parentId;
 
     public ?PreviewFile $previewFile = null;
+
     public ?PreviewFile $replacedPreviewFile = null;
+
     public $file = null;
 
     public function mount(string $parentId)
@@ -33,9 +35,9 @@ class FileEditComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
-            'externalAssetUpdated-' . $this->getId() => 'onExternalAssetUpdated',
-            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
+            'open-'.$this->parentId => 'open',
+            'externalAssetUpdated-'.$this->getId() => 'onExternalAssetUpdated',
+            'assetUpdated-'.$this->getId() => 'onAssetUpdated',
         ];
     }
 
@@ -84,7 +86,7 @@ class FileEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -100,7 +102,7 @@ class FileEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId));
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -141,7 +143,7 @@ class FileEditComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
 
         $this->close();
     }

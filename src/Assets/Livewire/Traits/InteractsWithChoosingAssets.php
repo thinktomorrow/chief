@@ -8,12 +8,11 @@ use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
 trait InteractsWithChoosingAssets
 {
-
     public function onAssetsChosen(array $assetIds)
     {
         if (! $this->allowMultiple) {
             // Assert only one file is added.
-            $assetIds = (array)reset($assetIds);
+            $assetIds = (array) reset($assetIds);
 
             foreach ($this->previewFiles as $previewFile) {
                 $previewFile->isQueuedForDeletion = true;

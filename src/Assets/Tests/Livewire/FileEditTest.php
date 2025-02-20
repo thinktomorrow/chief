@@ -12,9 +12,10 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 class FileEditTest extends ChiefTestCase
 {
     private $model;
+
     private Testable $livewireInstance;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

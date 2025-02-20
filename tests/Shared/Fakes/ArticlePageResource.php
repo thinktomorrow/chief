@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -66,7 +67,7 @@ class ArticlePageResource implements PageResource
                 return $value;
             }
             if (isset($input['title'])) {
-                return Str::slug($input['title']) . '-' . $locale;
+                return Str::slug($input['title']).'-'.$locale;
             }
 
             return null;

@@ -37,39 +37,40 @@ use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
 {
-    // Generic component concerns
-    use HasLocalizableProperties;
+    use HasAutofocus;
+    use HasColumnName;
     use HasComponentRendering;
-    use HasModel;
-    use HasView;
     use HasComponents;
     use HasCustomAttributes;
-    use HasTags;
-    use HasFieldToggle;
+    use HasDefault;
+    use HasDescription;
+    use HasElementId;
 
+    use HasFieldToggle;
+    use HasId;
     // Field concerns
     use HasKey;
-    use HasName;
     use HasLabel;
-    use HasDescription;
-    use HasColumnName;
-    use HasId;
-    use HasValue;
     use HasLocales;
-    use HasDefault;
+    // Generic component concerns
+    use HasLocalizableProperties;
+    use HasModel;
+    use HasModelValuePreparation;
+    use HasName;
     use HasPlaceholder;
-    use HasAutofocus;
+    use HasSave;
+    use HasTags;
     use HasTitle;
     use HasValidation;
-    use HasModelValuePreparation;
-    use HasSave;
-    use HasElementId;
+    use HasValue;
+    use HasView;
 
     /**
      * Every field is rendered in a formgroup container view,
      * this view takes care of the localization of the field.
      */
     protected string $fieldFormView = 'chief-form::templates.field-in-form';
+
     protected string $fieldWindowView = 'chief-form::templates.field-in-window';
 
     public function __construct(string $key)
@@ -80,7 +81,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         $this->columnName($key);
 
         // This causes livewire to refresh field DOM...
-        $this->elementId($key . '_' . Str::random());
+        $this->elementId($key.'_'.Str::random());
         //        $this->elementId($key);
     }
 

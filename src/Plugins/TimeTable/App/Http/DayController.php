@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 class DayController extends Controller
 {
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
 
     public function __construct(FieldValidator $fieldValidator, SaveFields $saveFields)
@@ -63,7 +64,7 @@ class DayController extends Controller
     private function getModelAndFields(?string $id = null): array
     {
         $model = app(DayModel::class);
-        $model = $id ? $model::find($id): $model;
+        $model = $id ? $model::find($id) : $model;
 
         $fields = Fields::makeWithoutFlatteningNestedFields($model->fields($model))->each(fn ($field) => $field->model($model));
 

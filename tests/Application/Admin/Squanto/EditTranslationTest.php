@@ -11,7 +11,7 @@ class EditTranslationTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('squanto.edit', 'home'));
         $response->assertViewIs('squanto::edit')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */

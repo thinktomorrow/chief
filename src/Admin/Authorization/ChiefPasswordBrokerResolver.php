@@ -8,7 +8,6 @@ use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-/** @inheritDoc */
 class ChiefPasswordBrokerResolver
 {
     private $app;
@@ -23,7 +22,7 @@ class ChiefPasswordBrokerResolver
         $config = $this->getConfig('chief');
 
         if (is_null($config)) {
-            throw new InvalidArgumentException("Password resetter [chief] is not defined.");
+            throw new InvalidArgumentException('Password resetter [chief] is not defined.');
         }
 
         return new ChiefPasswordBroker($this->createTokenRepository($config), $this->app['auth']->createUserProvider($config['provider'] ?? null));

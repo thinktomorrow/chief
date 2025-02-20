@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
@@ -13,6 +14,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 trait ArchiveAssistant
 {
     abstract protected function guard(string $action, $model = null);
+
     abstract protected function generateRoute(string $action, $model = null, ...$parameters): string;
 
     public function routesArchiveAssistant(): array

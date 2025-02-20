@@ -9,7 +9,7 @@ class CreateCommandsTest extends ChiefTestCase
     /** @test */
     public function it_can_create_a_page()
     {
-        $filepath = $this->getTempDirectory() .'/' . 'Article.php';
+        $filepath = $this->getTempDirectory().'/'.'Article.php';
 
         if (file_exists($filepath)) {
             unlink($filepath);
@@ -29,7 +29,7 @@ class CreateCommandsTest extends ChiefTestCase
     /** @test */
     public function it_can_create_a_fragment()
     {
-        $filepath = $this->getTempDirectory() .'/' . 'Quote.php';
+        $filepath = $this->getTempDirectory().'/'.'Quote.php';
 
         if (file_exists($filepath)) {
             unlink($filepath);

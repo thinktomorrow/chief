@@ -12,9 +12,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 class FileUploadTest extends ChiefTestCase
 {
     private $model;
+
     private Testable $livewireInstance;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -54,9 +55,9 @@ class FileUploadTest extends ChiefTestCase
             ->assertCount('previewFiles', 1)
             ->assertSeeHtmlInOrder([
                 'name="thumb[uploads][0][id]"',
-                'value="' . $filePath . '"',
+                'value="'.$filePath.'"',
                 'name="thumb[order][0]"',
-                'value="' . $filePath . '"',
+                'value="'.$filePath.'"',
             ]);
     }
 
@@ -76,8 +77,5 @@ class FileUploadTest extends ChiefTestCase
             ->assertDontSeeHtml('name="thumb[uploads][0][id]"');
     }
 
-    public function test_it_can_detach_asset()
-    {
-
-    }
+    public function test_it_can_detach_asset() {}
 }

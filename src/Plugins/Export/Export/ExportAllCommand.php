@@ -26,7 +26,7 @@ class ExportAllCommand extends BaseCommand
                     'resource' => $resourceKey,
                 ]);
             } catch (\Throwable $e) {
-                $this->error('Failed to export resource ' . $resourceKey .'. Reason: ' . $e->getMessage());
+                $this->error('Failed to export resource '.$resourceKey.'. Reason: '.$e->getMessage());
             }
         }
 

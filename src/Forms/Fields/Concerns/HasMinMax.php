@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
@@ -6,6 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 trait HasMinMax
 {
     protected ?string $min = null;
+
     protected ?string $max = null;
 
     public function min(string|int $min): static

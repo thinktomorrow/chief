@@ -13,6 +13,7 @@ class TaggableStub extends Model implements Taggable
     use TaggableDefaults;
 
     public $table = 'taggable_stubs';
+
     public $guarded = [];
 
     public static function migrateUp()

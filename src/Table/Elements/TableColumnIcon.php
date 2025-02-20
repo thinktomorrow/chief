@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Elements;
@@ -8,8 +9,8 @@ use Thinktomorrow\Chief\Table\Concerns\HasUrl;
 
 class TableColumnIcon extends TableColumn
 {
-    use HasUrl;
     use HasColor;
+    use HasUrl;
 
     protected string $view = 'chief-table::cells.icon';
 

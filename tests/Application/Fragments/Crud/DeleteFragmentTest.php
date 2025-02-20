@@ -14,9 +14,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class DeleteFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private SnippetStub $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +38,7 @@ class DeleteFragmentTest extends ChiefTestCase
     /** @test */
     public function a_fragment_can_remove_a_nested_fragment()
     {
-        $nestedFragment = $this->createAsFragment(new SnippetStub(), $this->fragment->fragmentModel());
+        $nestedFragment = $this->createAsFragment(new SnippetStub, $this->fragment->fragmentModel());
 
         $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-delete', $this->fragment, $nestedFragment))->assertStatus(200);
 

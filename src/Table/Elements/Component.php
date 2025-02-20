@@ -18,18 +18,18 @@ use Thinktomorrow\Chief\Table\Concerns\HasView;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable
 {
-    // Cell values
-    use HasLocalizableProperties;
     use HasComponentRendering;
-    use HasView;
     use HasComponents;
     use HasCustomAttributes;
+    use HasDescription;
     use HasHint;
-
     // Header values
     use HasKey;
+
+    // Cell values
+    use HasLocalizableProperties;
     use HasTitle;
-    use HasDescription;
+    use HasView;
 
     public function __construct(string $key)
     {

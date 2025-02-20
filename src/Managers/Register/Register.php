@@ -19,6 +19,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 final class Register
 {
     private Container $container;
+
     private AdminEnvironment $adminEnvironment;
 
     public function __construct(Container $container, AdminEnvironment $adminEnvironment)
@@ -50,8 +51,7 @@ final class Register
 
         // Add to chief registry
         $this->container->make(Registry::class)
-            ->registerResource($resource::resourceKey(), $resource, $manager)
-        ;
+            ->registerResource($resource::resourceKey(), $resource, $manager);
 
         // Register routes only when in admin...
         if (! $this->adminEnvironment->check(request())) {

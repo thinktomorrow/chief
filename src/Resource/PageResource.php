@@ -69,7 +69,6 @@ interface PageResource extends Resource, TableResource
 
     /**
      * The class responsible for fetching the results for admin index pages.
-     * @return string
      */
     public function indexRepository(): string;
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
@@ -17,9 +18,9 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 final class FragmentModel extends Model implements FragmentResource, HasAsset, ReferableModel
 {
     use FragmentResourceDefault;
-    use ReferableModelDefault;
     use HasDynamicAttributes;
     use InteractsWithAssets;
+    use ReferableModelDefault;
     use SoftDeletes;
 
     /**
@@ -29,15 +30,17 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     const MODELTYPE = 'fragmentmodel';
 
     public $table = 'context_fragments';
+
     public $guarded = [];
 
     // Allow for uuid type behaviour
     public $incrementing = false;
 
     // Force integer when query results come back (by default id is a string)
-    protected $casts = [ 'id' => 'integer' , 'meta' => 'array' ];
+    protected $casts = ['id' => 'integer', 'meta' => 'array'];
 
     public $dynamicKeys = ['*'];
+
     public $dynamicKeysBlacklist = [
         'id', 'model_reference', 'meta', 'created_at', 'updated_at',
     ];
@@ -82,7 +85,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     public function isOnline(): bool
     {
         // Default is online, except explicitly set offline
-        return (null === $this->online_status || $this->online_status === FragmentStatus::online->value);
+        return $this->online_status === null || $this->online_status === FragmentStatus::online->value;
     }
 
     public function isOffline(): bool

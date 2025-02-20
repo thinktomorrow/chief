@@ -110,7 +110,6 @@ trait HasValue
                 return (is_countable($default) && count($default) > 0) ? $default : $value;
             }
 
-
             return $value ?? $this->getDefault($locale);
         };
     }

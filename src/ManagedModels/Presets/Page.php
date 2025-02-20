@@ -9,6 +9,4 @@ use Thinktomorrow\Chief\Shared\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
-interface Page extends ReferableModel, FragmentsOwner, Visitable, ViewableContract, StatefulContract, HasAsset
-{
-}
+interface Page extends FragmentsOwner, HasAsset, ReferableModel, StatefulContract, ViewableContract, Visitable {}

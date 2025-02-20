@@ -10,6 +10,6 @@ class RepeatFieldLine extends FieldLine
     {
         parent::__construct($modelReference, $fieldKey, $resourceLabel, $modelLabel, $fieldLabel, $values);
 
-        $this->encryptedReference = encrypt($this->modelReference .'|Repeat|'. $this->fieldKey);
+        $this->encryptedReference = encrypt($this->modelReference.'|Repeat|'.$this->fieldKey);
     }
 }

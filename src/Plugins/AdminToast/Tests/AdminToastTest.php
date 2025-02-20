@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\AdminToast\Tests;
@@ -8,7 +9,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class AdminToastTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +29,7 @@ class AdminToastTest extends TestCase
     /** @test */
     public function it_can_fetch_toast()
     {
-        $response = $this->asAdmin()->get(route('chief.toast.get') . '?path=foo/bar&locale=nl');
+        $response = $this->asAdmin()->get(route('chief.toast.get').'?path=foo/bar&locale=nl');
 
         $response->assertSuccessful();
         $this->assertStringContainsString('http://localhost/admin/article_page/1/edit', $response->json('data'));
@@ -37,7 +38,7 @@ class AdminToastTest extends TestCase
     /** @test */
     public function it_can_fetch_edit_url_when_model_has_custom_locale_segment()
     {
-        $response = $this->asAdmin()->get(route('chief.toast.get') . '?path=nederlands/foo/bar&locale=nl&locale_segment=nederlands');
+        $response = $this->asAdmin()->get(route('chief.toast.get').'?path=nederlands/foo/bar&locale=nl&locale_segment=nederlands');
 
         $response->assertSuccessful();
         $this->assertStringContainsString('http://localhost/admin/article_page/1/edit', $response->json('data'));

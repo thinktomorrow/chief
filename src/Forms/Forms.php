@@ -117,7 +117,7 @@ class Forms
         $forms = [];
 
         foreach ($this->components as $form) {
-            if (true == $filter($form)) {
+            if ($filter($form) == true) {
                 $forms[] = $form;
             }
         }

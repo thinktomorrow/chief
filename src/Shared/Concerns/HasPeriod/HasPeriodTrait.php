@@ -10,7 +10,7 @@ trait HasPeriodTrait
 {
     protected static function bootHasPeriodTrait()
     {
-        static::addGlobalScope(new SortPeriodDateScope());
+        static::addGlobalScope(new SortPeriodDateScope);
     }
 
     public function initializeHasPeriodTrait()

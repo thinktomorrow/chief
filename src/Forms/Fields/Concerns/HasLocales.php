@@ -14,7 +14,7 @@ trait HasLocales
 
     public function locales(?array $locales = null): static
     {
-        $this->locales = (null === $locales)
+        $this->locales = ($locales === null)
             ? config('chief.locales', [])
             : $locales;
 

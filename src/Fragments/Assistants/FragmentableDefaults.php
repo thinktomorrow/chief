@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
@@ -62,7 +63,7 @@ trait FragmentableDefaults
     public function fragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
-            return $this->fragmentModel = new FragmentModel();
+            return $this->fragmentModel = new FragmentModel;
         }
 
         return $this->fragmentModel;

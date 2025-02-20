@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Http\UploadedFile;
@@ -52,7 +51,7 @@ trait TestingWithFiles
         return ';base64,iVBORw0KGgoAAAANSUhEUgAAA/gAAAE4AQMAAADVYspJAAAAA1BMVEUEAgSVKDOdAAAAPUlEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BicAAABWZX81AAAAABJRU5ErkJggg==';
     }
 
-    protected function dummyUploadedFile($name = "tt-document.pdf", $sizeInKilobytes = 100)
+    protected function dummyUploadedFile($name = 'tt-document.pdf', $sizeInKilobytes = 100)
     {
         return UploadedFile::fake()->create($name, $sizeInKilobytes);
     }

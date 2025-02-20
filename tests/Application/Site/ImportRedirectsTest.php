@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Site;
@@ -15,7 +16,7 @@ final class ImportRedirectsTest extends ChiefTestCase
 {
     private AddRedirect $addRedirect;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

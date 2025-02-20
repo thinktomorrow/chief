@@ -7,8 +7,11 @@ namespace Thinktomorrow\Chief\ManagedModels\States\State;
 class StateMachine
 {
     private array $states;
+
     private array $transitions;
+
     private StatefulContract $statefulContract;
+
     private string $stateKey;
 
     final public function __construct(StatefulContract $statefulContract, string $stateKey, array $states, array $transitions)
@@ -78,7 +81,6 @@ class StateMachine
     /**
      * Verify the new state is valid.
      *
-     * @param $state
      *
      * @return bool
      */

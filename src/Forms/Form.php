@@ -18,24 +18,27 @@ use Thinktomorrow\Chief\Managers\Manager;
 
 class Form extends Component
 {
-    use HasModel;
-    use HasFields;
     use HasElementId;
+    use HasFields;
     use HasLayout;
+    use HasModel;
     use HasPosition;
-    use HasTags;
     use HasProtectionAgainstFill;
+    use HasTags;
 
     protected string $action;
+
     protected string $actionMethod;
 
     protected string $windowAction;
 
     // What to do after submit: either refresh form window or redirect back to previous page
     protected ?string $refreshUrl = null;
+
     protected ?string $redirectAfterSubmit = null;
 
     protected string $view = 'chief-form::templates.form';
+
     protected string $windowView = 'chief-form::templates.form-in-window';
 
     /**
@@ -162,8 +165,7 @@ class Form extends Component
         return $this->fillModel($model)
             ->action($manager->route('form-update', $model, $this->getId()), 'PUT')
             ->windowAction($manager->route('form-edit', $model, $this->getId()))
-            ->refreshUrl($manager->route('form-show', $model, $this->getId()))
-        ;
+            ->refreshUrl($manager->route('form-show', $model, $this->getId()));
     }
 
     /**
@@ -198,7 +200,7 @@ class Form extends Component
             }
         }
 
-        if (0 == $level) {
+        if ($level == 0) {
             call_user_func($logic, $this);
 
             $this->recursiveEach($logic, $this->getComponents(), ++$level);

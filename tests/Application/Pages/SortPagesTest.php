@@ -8,9 +8,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 class SortPagesTest extends ChiefTestCase
 {
     private $page;
+
     private $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

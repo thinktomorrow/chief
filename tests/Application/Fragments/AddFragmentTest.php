@@ -12,9 +12,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class AddFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,10 +47,10 @@ class AddFragmentTest extends ChiefTestCase
     public function a_page_can_add_an_existing_fragment_with_a_given_order()
     {
         $owner2 = ArticlePage::create();
-        $snippet = $this->createAsFragment(new SnippetStub(), $this->owner);
+        $snippet = $this->createAsFragment(new SnippetStub, $this->owner);
 
-        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment) . '?order=0');
-        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $snippet) . '?order=0');
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment).'?order=0');
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $snippet).'?order=0');
 
         $this->assertFragmentCount($owner2, 2);
         $this->assertEquals(SnippetStub::class, get_class($this->firstFragment($owner2)));

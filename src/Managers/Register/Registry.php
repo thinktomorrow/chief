@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
@@ -11,7 +12,7 @@ use Thinktomorrow\Chief\Resource\Resource;
 
 final class Registry
 {
-    /** @var PageResource|Resource[] */
+    /** @var PageResource|resource[] */
     private array $resources;
 
     /** @var Manager[] */
@@ -83,18 +84,18 @@ final class Registry
         $resources = [];
 
         foreach ($this->resources as $key => $resource) {
-            if (true == $filter($resource)) {
+            if ($filter($resource) == true) {
                 $resources[$key] = $resource;
             }
         }
 
-        return new static($resources);
+        return new self($resources);
     }
 
     public function registerResource(string $key, Resource $resource, Manager $manager): self
     {
         if (isset($this->resources[$key])) {
-            throw new ResourceAlreadyRegistered('Cannot register resource. The resource key [' . $key . '] is already registered.');
+            throw new ResourceAlreadyRegistered('Cannot register resource. The resource key ['.$key.'] is already registered.');
         }
 
         $this->resources[$key] = $resource;

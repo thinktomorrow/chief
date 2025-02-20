@@ -9,7 +9,7 @@ class FileMaxRule extends FileRule
     public function validate($attribute, array $values, $params, $validator): bool
     {
         foreach ($values as $value) {
-            if ($value && false === $this->validateMax($attribute, $value, $params)) {
+            if ($value && $this->validateMax($attribute, $value, $params) === false) {
                 $this->addCustomValidationMessage($attribute, $params, $validator);
 
                 return false;
@@ -32,11 +32,6 @@ class FileMaxRule extends FileRule
     //        return parent::validateMax($attribute, $value, $parameters);
     //    }
 
-    /**
-     * @param $attribute
-     * @param $params
-     * @param $validator
-     */
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([

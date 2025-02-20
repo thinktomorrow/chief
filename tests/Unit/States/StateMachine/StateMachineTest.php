@@ -12,13 +12,14 @@ use Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs\StatefulStub;
 class StateMachineTest extends TestCase
 {
     private StatefulContract $statefulStub;
+
     private StateMachine $machine;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->statefulStub = new StatefulStub();
+        $this->statefulStub = new StatefulStub;
         $this->machine = StateMachine::fromConfig($this->statefulStub, $this->statefulStub->getStateConfig('online_state'));
     }
 

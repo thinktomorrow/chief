@@ -10,7 +10,7 @@ class ImageCropServiceProvider extends ChiefPluginServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-image-crop', __DIR__ . '/views');
+        $this->app['view']->addNamespace('chief-image-crop', __DIR__.'/views');
 
         Livewire::component('chief-wire::image-crop', ImageCropComponent::class);
 

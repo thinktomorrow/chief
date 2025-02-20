@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Redirects;
@@ -10,10 +11,6 @@ use Thinktomorrow\Url\Url;
 final class AddRedirect
 {
     /**
-     * @param string $locale
-     * @param string $redirectUrl
-     * @param string $targetUrl
-     * @return void
      * @throws RedirectUrlAlreadyExists
      * @throws \Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound
      */
@@ -25,12 +22,12 @@ final class AddRedirect
 
         // Strip out the slashes and possible host/scheme reference.
         $redirectUrl =
-            ($parsedUrl->hasPath() ? $parsedUrl->getPath() : '') .
-            ($parsedUrl->hasQuery() ? '?' . $parsedUrl->getQuery() : '') .
-            ($parsedUrl->hasHash() ? '#' . $parsedUrl->getHash() : '');
+            ($parsedUrl->hasPath() ? $parsedUrl->getPath() : '').
+            ($parsedUrl->hasQuery() ? '?'.$parsedUrl->getQuery() : '').
+            ($parsedUrl->hasHash() ? '#'.$parsedUrl->getHash() : '');
 
         if (UrlRecord::where('locale', $locale)->where('slug', $redirectUrl)->exists()) {
-            throw new RedirectUrlAlreadyExists($redirectUrl . ' [locale: '.$locale.'] already exists as url');
+            throw new RedirectUrlAlreadyExists($redirectUrl.' [locale: '.$locale.'] already exists as url');
         }
 
         $redirectRecord = $this->createRecord($targetRecord->model, $locale, $redirectUrl);

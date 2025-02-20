@@ -13,7 +13,7 @@ trait VisitableDefaults
     use ResolvingRoute;
 
     /** {@inheritdoc} */
-    public function url(string $locale = null): string
+    public function url(?string $locale = null): string
     {
         if (! $locale) {
             $locale = app()->getLocale();
@@ -30,15 +30,13 @@ trait VisitableDefaults
     {
         return $this->hasMany(UrlRecord::class, 'model_id')
             ->where('model_type', $this->getMorphClass())
-            ->whereNull('redirect_id')
-        ;
+            ->whereNull('redirect_id');
     }
 
     public function allUrls(): HasMany
     {
         return $this->hasMany(UrlRecord::class, 'model_id')
-            ->where('model_type', $this->getMorphClass())
-        ;
+            ->where('model_type', $this->getMorphClass());
     }
 
     public function isVisitable(): bool
@@ -52,7 +50,7 @@ trait VisitableDefaults
     }
 
     // TODO: just used once (in url preview) so cant we just remove this?...
-    public function resolveUrl(string $locale = null, $parameters = null): string
+    public function resolveUrl(?string $locale = null, $parameters = null): string
     {
         $routeName = config('chief.route.name');
 
@@ -60,7 +58,7 @@ trait VisitableDefaults
     }
 
     /** {@inheritdoc} */
-    public function baseUrlSegment(string $locale = null): string
+    public function baseUrlSegment(?string $locale = null): string
     {
         return BaseUrlSegment::find(isset(static::$baseUrlSegment) ? (array) static::$baseUrlSegment : [], $locale);
     }

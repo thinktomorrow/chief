@@ -11,7 +11,9 @@ class ImportRedirects extends BaseCommand
     use ReadsCsv;
 
     protected $signature = 'chief:import-redirects {file}';
+
     protected $description = 'Import a list of redirects';
+
     private AddRedirect $addRedirect;
 
     public function __construct(AddRedirect $addRedirect)
@@ -36,17 +38,12 @@ class ImportRedirects extends BaseCommand
 
                 return;
             }
-            $this->info('Added '.$row[0].' redirect: ' . $row[1] . ' -> ' . $row[2]);
+            $this->info('Added '.$row[0].' redirect: '.$row[1].' -> '.$row[2]);
         });
 
         $this->info('Finished adding redirects');
     }
 
-    /**
-     * @param array $locales
-     * @param $locale
-     * @return array
-     */
     protected function createAlternateLocales(array $locales, $locale): array
     {
         if (($key = array_search($locale, $locales)) !== false) {

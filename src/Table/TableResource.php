@@ -26,8 +26,6 @@ interface TableResource
 
     /**
      * Unique reference to each row. This value is used for the bulk action checkboxes.
-     *
-     * @param $model
      */
     public function getTableRowId($model): string;
 

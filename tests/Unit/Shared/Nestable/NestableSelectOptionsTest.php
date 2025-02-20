@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -14,7 +15,7 @@ final class NestableSelectOptionsTest extends ChiefTestCase
 
     private NestableRepository $repository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

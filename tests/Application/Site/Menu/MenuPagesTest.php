@@ -13,11 +13,11 @@ class MenuPagesTest extends ChiefTestCase
         config()->set('chief.menus.footer', [
             'label' => 'Hoofdnavigatie',
             'view' => 'front.menus.main',
-            ]);
+        ]);
 
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
         $response->assertViewIs('chief::admin.menu.index')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -26,7 +26,7 @@ class MenuPagesTest extends ChiefTestCase
         $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
         $response->assertViewIs('chief::admin.menu.show')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -36,6 +36,6 @@ class MenuPagesTest extends ChiefTestCase
 
         $response = $this->asAdmin()->get(route('chief.back.menus.show', $menu->key()));
         $response->assertViewIs('chief::admin.menu.show')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 }

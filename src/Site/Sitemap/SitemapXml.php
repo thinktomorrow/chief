@@ -37,7 +37,7 @@ class SitemapXml
 
     private function reset(): void
     {
-        $this->sitemap = new Sitemap();
+        $this->sitemap = new Sitemap;
         $this->urls = collect();
         $this->alternateUrls = [];
     }

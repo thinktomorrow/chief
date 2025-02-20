@@ -8,21 +8,20 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Exceptions\InvalidMinutesFormat
 class Hour
 {
     private string $hour;
+
     private string $minutes;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function make(string $hour, string $minutes = '00'): static
     {
         if (strlen($minutes) < 2) {
-            $minutes = '0' . $minutes;
+            $minutes = '0'.$minutes;
         }
 
         self::validateConstraints($hour, $minutes);
 
-        $model = new static();
+        $model = new static;
         $model->hour = $hour;
         $model->minutes = $minutes;
 
@@ -64,16 +63,16 @@ class Hour
 
     private static function validateConstraints(string $hour, ?string $minutes): void
     {
-        if ((int)$hour > 24 || (int)$hour < 0) {
-            throw new InvalidHourFormat('Invalid hour given [' . $hour . ']');
+        if ((int) $hour > 24 || (int) $hour < 0) {
+            throw new InvalidHourFormat('Invalid hour given ['.$hour.']');
         }
 
         if (strlen($minutes) < 2 || strlen($minutes) > 2) {
-            throw new InvalidMinutesFormat('Invalid minutes given [' . $minutes . ']. Two digits expected.');
+            throw new InvalidMinutesFormat('Invalid minutes given ['.$minutes.']. Two digits expected.');
         }
 
-        if ((int)$minutes > 60 || (int)$minutes < 0) {
-            throw new InvalidMinutesFormat('Invalid minutes given [' . $minutes . ']');
+        if ((int) $minutes > 60 || (int) $minutes < 0) {
+            throw new InvalidMinutesFormat('Invalid minutes given ['.$minutes.']');
         }
     }
 }

@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\NestableArticlePage;
 
 class IndexRepositoryTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

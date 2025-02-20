@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Database\Eloquent\Model;
@@ -62,7 +61,7 @@ trait TestingWithManagers
             chiefRegister()->fragment(SnippetStub::class);
         }
 
-        return $this->createAsFragment(new SnippetStub(), $owner, $order, $values);
+        return $this->createAsFragment(new SnippetStub, $owner, $order, $values);
     }
 
     public function setUpAndCreateHero(FragmentsOwner $owner, $order = 0, $withSetup = true): Hero
@@ -71,7 +70,7 @@ trait TestingWithManagers
             chiefRegister()->fragment(Hero::class);
         }
 
-        return $this->createAsFragment(new Hero(), $owner, $order);
+        return $this->createAsFragment(new Hero, $owner, $order);
     }
 
     public function setUpAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
@@ -121,7 +120,7 @@ trait TestingWithManagers
         $this->assertEquals($expected, app(FragmentsRenderer::class)->render($owner, []));
     }
 
-    protected function firstFragment(Model $owner, callable $callback = null)
+    protected function firstFragment(Model $owner, ?callable $callback = null)
     {
         $fragments = app(FragmentRepository::class)->getByOwner($owner);
 

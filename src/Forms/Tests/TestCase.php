@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests;
@@ -14,7 +15,7 @@ class TestCase extends OrchestraTestCase
 {
     use UnitTestHelpers;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -26,9 +26,6 @@ class GenerateRoleCommand extends Command
         $this->assignPermissionsToRole($role);
     }
 
-    /**
-     * @return string
-     */
     private function getNameArgument(): string
     {
         return strtolower(Str::singular($this->argument('name')));
@@ -49,7 +46,7 @@ class GenerateRoleCommand extends Command
         foreach ($permissionNames as $permissionName) {
             $permissionName = trim($permissionName);
             // Generate all permissions if only scope is passed
-            if (false === strpos($permissionName, '-')) {
+            if (strpos($permissionName, '-') === false) {
                 $cleanPermissionNames = array_merge($cleanPermissionNames, Permission::generate($permissionName));
             } else {
                 // Trim the value
@@ -64,6 +61,6 @@ class GenerateRoleCommand extends Command
             $role->givePermissionTo($cleanPermissionName);
         }
 
-        $this->info('Role ' . $role->name . ' was assigned the permissions: ' . implode(',', $cleanPermissionNames));
+        $this->info('Role '.$role->name.' was assigned the permissions: '.implode(',', $cleanPermissionNames));
     }
 }

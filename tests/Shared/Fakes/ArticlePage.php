@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -17,17 +18,20 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
 {
-
+    use HasPeriodTrait;
+    use InteractsWithAssets;
     use PageDefaults;
     use SoftDeletes;
-    use InteractsWithAssets;
-    use HasPeriodTrait;
     use Sortable;
+
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
+
     const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
+
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     public $table = 'article_pages';
+
     public $guarded = [];
 
     public $dynamicKeys = [

@@ -10,13 +10,17 @@ use Illuminate\Http\Request;
 abstract class AbstractFilter
 {
     protected string $type;
+
     protected string $queryKey;
+
     protected Closure $query;
+
     protected ?string $view = null;
 
     protected ?string $label;
 
     protected ?string $description = null;
+
     protected ?string $placeholder = null;
 
     /** @var null|mixed */
@@ -36,7 +40,7 @@ abstract class AbstractFilter
 
     public function applicable(Request $request): bool
     {
-        return ($request->filled($this->queryKey) || $this->value);
+        return $request->filled($this->queryKey) || $this->value;
     }
 
     public function queryKey(): string
@@ -93,7 +97,7 @@ abstract class AbstractFilter
 
     public function render(): string
     {
-        $path = $this->view ?? 'chief::manager.filters.' . $this->type;
+        $path = $this->view ?? 'chief::manager.filters.'.$this->type;
 
         return view($path, $this->viewData())->render();
     }

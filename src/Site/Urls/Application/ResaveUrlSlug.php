@@ -28,7 +28,7 @@ class ResaveUrlSlug
         $strippableBaseUrlSegments = array_merge($strippableBaseUrlSegments, [$model->baseUrlSegment($locale)]);
 
         foreach ($strippableBaseUrlSegments as $baseUrlSegment) {
-            if (0 === strpos($currentSlug, $baseUrlSegment . '/')) {
+            if (strpos($currentSlug, $baseUrlSegment.'/') === 0) {
                 $strippedSlug = substr($currentSlug, strlen($baseUrlSegment.'/'));
             }
         }

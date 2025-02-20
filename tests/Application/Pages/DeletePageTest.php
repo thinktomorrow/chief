@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
@@ -87,7 +88,7 @@ final class DeletePageTest extends ChiefTestCase
 
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField(new ArticlePageResource(), $model, 'thumb', [
+        $this->saveFileField(new ArticlePageResource, $model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -124,7 +125,7 @@ final class DeletePageTest extends ChiefTestCase
         $this->assertFragmentCount($model, 0);
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

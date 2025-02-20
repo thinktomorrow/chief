@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
@@ -65,9 +66,9 @@ final class FragmentRepository
         $classReferences = $this->expandedClassReferences($classReferences);
 
         return $builder->where(function ($query) use ($classReferences) {
-            $query->where(DB::raw("1=0"));
+            $query->where(DB::raw('1=0'));
             foreach ($classReferences as $classReference) {
-                $query->orWhere('model_reference', 'LIKE', $classReference . '@%');
+                $query->orWhere('model_reference', 'LIKE', $classReference.'@%');
             }
         });
     }
@@ -78,7 +79,7 @@ final class FragmentRepository
 
         foreach ($classNames as $className) {
             $modelReference = ModelReference::fromStatic($className);
-            $expanded[] = addSlashes($modelReference->className());
+            $expanded[] = addslashes($modelReference->className());
             $expanded[] = $modelReference->shortClassName();
         }
 
@@ -95,7 +96,7 @@ final class FragmentRepository
             ->select('context_fragments.*')
             ->groupBy('context_fragments.id')
             ->where(function ($query) use ($modelReferences) {
-                $query->where(DB::raw("1=0"));
+                $query->where(DB::raw('1=0'));
 
                 foreach ($modelReferences as $modelReference) {
                     $query->orWhere(function ($query) use ($modelReference) {
@@ -123,8 +124,6 @@ final class FragmentRepository
     }
 
     /**
-     * @param Model $owner
-     *
      * @return Collection Fragmentable[]
      */
     public function getByOwner(Model $owner): Collection
@@ -160,16 +159,15 @@ final class FragmentRepository
 
     public function exists($id): bool
     {
-        return ! is_null(FragmentModel::find((int)$id));
+        return ! is_null(FragmentModel::find((int) $id));
     }
 
     /**
-     * @param int $id
-     * @return Fragmentable
+     * @param  int  $id
      */
     public function find($id): Fragmentable
     {
-        return $this->fragmentFactory(FragmentModel::findOrFail((int)$id));
+        return $this->fragmentFactory(FragmentModel::findOrFail((int) $id));
     }
 
     public function nextId(): int

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -11,7 +12,7 @@ class NestableModelTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -109,7 +110,7 @@ class NestableModelTest extends ChiefTestCase
 
     public function test_a_non_existing_model_has_no_descendants()
     {
-        $model = new NestableModelStub();
+        $model = new NestableModelStub;
 
         $this->assertEmpty($model->getDescendantIds());
         $this->assertInstanceOf(NestedTree::class, $model->getDescendants());
@@ -118,14 +119,14 @@ class NestableModelTest extends ChiefTestCase
 
     public function test_a_non_existing_model_has_no_ancestors()
     {
-        $model = new NestableModelStub();
+        $model = new NestableModelStub;
 
         $this->assertCount(0, $model->getAncestors());
     }
 
     public function test_a_non_existing_model_has_no_siblings()
     {
-        $model = new NestableModelStub();
+        $model = new NestableModelStub;
 
         $this->assertCount(0, $model->getSiblings());
     }

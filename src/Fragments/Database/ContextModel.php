@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
@@ -10,19 +11,20 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 final class ContextModel extends Model
 {
-    public $table = "contexts";
+    public $table = 'contexts';
+
     public $guarded = [];
 
     public static function ownedBy(Model $owner): ?ContextModel
     {
-        return static::where('owner_type', $owner->getMorphClass())
-                     ->where('owner_id', $owner->id)
-                     ->first();
+        return self::where('owner_type', $owner->getMorphClass())
+            ->where('owner_id', $owner->id)
+            ->first();
     }
 
     public static function createForOwner(Model $owner): ContextModel
     {
-        return static::create([
+        return self::create([
             'owner_type' => $owner->getMorphClass(),
             'owner_id' => $owner->id,
         ]);
@@ -31,9 +33,9 @@ final class ContextModel extends Model
     public function fragments()
     {
         return $this->belongsToMany(FragmentModel::class, 'context_fragment_lookup', 'context_id', 'fragment_id')
-                ->withPivot('order')
-                ->with('assetRelation', 'assetRelation.media')
-                ->orderBy('context_fragment_lookup.order');
+            ->withPivot('order')
+            ->with('assetRelation', 'assetRelation.media')
+            ->orderBy('context_fragment_lookup.order');
     }
 
     public function findFragmentModel($fragmentModelId): ?FragmentModel
@@ -43,7 +45,7 @@ final class ContextModel extends Model
 
     public static function owning(FragmentModel $fragmentModel): Collection
     {
-        return static::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')
+        return self::join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')
             ->where('context_fragment_lookup.fragment_id', $fragmentModel->id)
             ->select(['contexts.*'])
             ->get();

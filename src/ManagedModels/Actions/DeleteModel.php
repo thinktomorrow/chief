@@ -19,6 +19,7 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 class DeleteModel
 {
     private DetachAsset $detachAsset;
+
     private DeleteContext $deleteContext;
 
     public function __construct(DetachAsset $detachAsset, DeleteContext $deleteContext)

@@ -22,6 +22,7 @@ class Audit extends Activity
             ? substr($this->subject_type, strrpos($this->subject_type, '\\') + 1)
             : $this->subject_type;
     }
+
     public function getReadableCreatedAt()
     {
         if ($this->created_at->gte(now()->subDays(6))) {
@@ -31,7 +32,7 @@ class Audit extends Activity
         return $this->created_at->format('d/m/Y H:i');
     }
 
-    public static function activity(string $logName = null): ActivityLogger
+    public static function activity(?string $logName = null): ActivityLogger
     {
         $defaultLogName = config('activitylog.default_log_name');
 

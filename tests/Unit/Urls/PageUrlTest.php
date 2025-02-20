@@ -12,7 +12,7 @@ class PageUrlTest extends ChiefTestCase
 
     private ArticlePageWithBaseSegments $model;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

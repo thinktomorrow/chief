@@ -9,10 +9,9 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class OptionsTest extends ChiefTestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }

@@ -6,15 +6,11 @@ use Illuminate\View\Component;
 
 class Index extends Component
 {
-    /**
-     * @var bool
-     */
     public bool $sidebar = true;
 
     /**
      * Create the component instance.
      *
-     * @param bool $sidebar
      * @return void
      */
     public function __construct(bool $sidebar = true)

@@ -9,7 +9,7 @@ abstract class BaseCommand extends Command
 {
     protected function createUser(string $firstname, string $lastname, string $email, string $password, $roles = []): void
     {
-        $user = new User();
+        $user = new User;
         $user->firstname = $firstname;
         $user->lastname = $lastname;
         $user->email = $email;
@@ -17,11 +17,12 @@ abstract class BaseCommand extends Command
         $user->enabled = true;
         $user->save();
 
-        $user->assignRole((array)$roles);
+        $user->assignRole((array) $roles);
     }
 
     /**
      * @return null|string
+     *
      * @throws \Exception
      */
     protected function askPassword()

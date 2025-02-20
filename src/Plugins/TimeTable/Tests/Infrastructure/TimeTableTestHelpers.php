@@ -49,7 +49,6 @@ trait TimeTableTestHelpers
         ], $values));
     }
 
-
     protected function performDateDelete($tagId): TestResponse
     {
         return $this->asAdmin()->delete(route('chief.timetable_dates.delete', $tagId));

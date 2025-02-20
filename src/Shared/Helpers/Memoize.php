@@ -21,7 +21,7 @@ class Memoize
     {
         $cachableParameters = $this->convertToCachableParameters($parameters);
 
-        $cachekey = $this->baseKey . ':' . md5(implode('', $cachableParameters));
+        $cachekey = $this->baseKey.':'.md5(implode('', $cachableParameters));
 
         if (isset(static::$cache[$cachekey])) {
             return static::$cache[$cachekey];
@@ -44,7 +44,7 @@ class Memoize
     {
         foreach ($parameters as $key => $value) {
             if ($value instanceof Model) {
-                $parameters[$key] = get_class($value) . '@' . $value->id;
+                $parameters[$key] = get_class($value).'@'.$value->id;
             }
         }
 

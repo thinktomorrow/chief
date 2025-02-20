@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Events;
@@ -6,6 +7,7 @@ namespace Thinktomorrow\Chief\Fragments\Events;
 class FragmentDetached
 {
     public int $fragmentModelId;
+
     public int $contextId;
 
     public function __construct(int $fragmentModelId, int $contextId)

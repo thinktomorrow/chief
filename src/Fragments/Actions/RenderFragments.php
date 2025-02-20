@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
@@ -15,8 +16,7 @@ final class RenderFragments
     public function render(Collection $fragmentables, FragmentsOwner $owner, array $viewData = []): string
     {
         // Validate each entry as a valid fragment object.
-        $fragmentables->each(function (Fragmentable $_fragmentable) {
-        });
+        $fragmentables->each(function (Fragmentable $_fragmentable) {});
 
         // Init new loop object
         $this->loopsStack = [];
@@ -26,7 +26,7 @@ final class RenderFragments
             $this->incrementLoopIndices();
             $loop = $this->getLastLoop();
 
-            return $carry . $fragmentable->renderFragment($owner, $loop, $viewData);
+            return $carry.$fragmentable->renderFragment($owner, $loop, $viewData);
         }, '');
     }
 }

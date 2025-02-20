@@ -15,7 +15,7 @@ class CreateMenuItemTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertViewIs('chief::admin.menu.create')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -23,7 +23,7 @@ class CreateMenuItemTest extends ChiefTestCase
     {
         $response = $this->get(route('chief.back.menuitem.create', 'main'));
         $response->assertStatus(302)
-                 ->assertRedirect(route('chief.back.login'));
+            ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
@@ -134,13 +134,13 @@ class CreateMenuItemTest extends ChiefTestCase
     /** @test */
     public function label_is_required()
     {
-        $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
+        $this->assertValidation(new MenuItem, 'trans.nl.label', $this->validParams(['trans.nl.label' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
     }
 
     /** @test */
     public function type_internal_makes_owner_required()
     {
-        $this->assertValidation(new MenuItem(), 'owner_reference', $this->validParams(['type' => 'internal', 'owner_reference' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
+        $this->assertValidation(new MenuItem, 'owner_reference', $this->validParams(['type' => 'internal', 'owner_reference' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
     }
 
     private function validParams($overrides = [])

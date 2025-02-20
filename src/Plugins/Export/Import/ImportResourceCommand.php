@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\App\Console\BaseCommand;
 class ImportResourceCommand extends BaseCommand
 {
     protected $signature = 'chief:import-resource {file : the file to import}';
+
     protected $description = 'Import model translations';
 
     public function __construct()
@@ -58,6 +59,6 @@ class ImportResourceCommand extends BaseCommand
             $locale
         ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of fields for locale '.$locale . ' 🤘');
+        $this->info('Finished import of fields for locale '.$locale.' 🤘');
     }
 }

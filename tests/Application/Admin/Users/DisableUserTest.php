@@ -9,7 +9,7 @@ class DisableUserTest extends ChiefTestCase
 {
     private $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

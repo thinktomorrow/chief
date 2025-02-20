@@ -19,9 +19,10 @@ class FileApplicationTest extends ChiefTestCase
     use UploadsFile;
 
     private $model;
+
     private Resource $resource;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -29,7 +30,7 @@ class FileApplicationTest extends ChiefTestCase
         $this->resource = app(ArticlePageResource::class);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Storage::delete('test/image-temp-name.png');
         Storage::delete('test/image-second-temp-name.jpg');
@@ -50,11 +51,11 @@ class FileApplicationTest extends ChiefTestCase
 
     private function uploadDefaultAsset(string $filename = 'image.png', string $mimeType = 'image/png'): void
     {
-        $tempName = Str::random() . '.' . FileHelper::getExtension($filename);
+        $tempName = Str::random().'.'.FileHelper::getExtension($filename);
         UploadedFile::fake()->image($filename)->storeAs('test', $tempName);
 
         $this->uploadAsset(
-            'test/' . $tempName,
+            'test/'.$tempName,
             $filename,
             $mimeType,
             $this->model,

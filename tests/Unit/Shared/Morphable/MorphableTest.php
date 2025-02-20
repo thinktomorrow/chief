@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MorphableTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -16,7 +16,7 @@ class MorphableTest extends ChiefTestCase
         Relation::morphMap(['article' => ArticleModel::class]);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         // Force empty the morphMap each time because it is kept during the entire testrun.
         Relation::$morphMap = [];

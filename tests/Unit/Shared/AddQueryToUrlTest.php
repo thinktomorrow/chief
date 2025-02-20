@@ -26,6 +26,7 @@ class AddQueryToUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider queryProvider
      */
     public function add_query_to_url_adds_query_to_url($url, $query_params, $expected, $overrides = [])

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Tags\App\Presets;
@@ -25,11 +26,11 @@ class FieldPresets
     public static function tagSelect($model): MultiSelect
     {
         return MultiSelect::make('tags')
-                ->multiple()
-                ->options(fn () => app(TagReadRepository::class)->getAllForSelect())
-                ->value($model->getTags()->map(fn (TagRead $tag) => $tag->getTagId())->all())
-                ->save(function ($_model, $field, $input) {
-                    app(TaggableRepository::class)->syncTags($_model, (array)($input['tags'] ?? []));
-                })->tag('not-on-create');
+            ->multiple()
+            ->options(fn () => app(TagReadRepository::class)->getAllForSelect())
+            ->value($model->getTags()->map(fn (TagRead $tag) => $tag->getTagId())->all())
+            ->save(function ($_model, $field, $input) {
+                app(TaggableRepository::class)->syncTags($_model, (array) ($input['tags'] ?? []));
+            })->tag('not-on-create');
     }
 }

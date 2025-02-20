@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 class Menu
 {
     private string $key;
+
     private string $label;
 
     final public function __construct(string $key, string $label)

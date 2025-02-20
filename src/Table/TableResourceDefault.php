@@ -80,7 +80,6 @@ trait TableResourceDefault
 
         $output .= '</span>';
 
-
         return $output;
     }
 }

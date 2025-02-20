@@ -19,9 +19,6 @@ class UrlRecord extends Model
      * Find matching url record for passed slug and locale. The locale parameter will try
      * to match specific given locales first and records without locale as fallback.
      *
-     * @param string $slug
-     * @param string $locale
-     * @return UrlRecord
      * @throws UrlRecordNotFound
      */
     public static function findBySlug(string $slug, string $locale): UrlRecord
@@ -37,7 +34,7 @@ class UrlRecord extends Model
             ->first();
 
         if (! $record) {
-            throw new UrlRecordNotFound('No url record found by slug [' . $slug . '] for locale [' . $locale . '].');
+            throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for locale ['.$locale.'].');
         }
 
         return $record;
@@ -52,9 +49,6 @@ class UrlRecord extends Model
      * Find matching url record for passed slug and locale. The locale parameter will try
      * to match specific given locales first and records without locale as fallback.
      *
-     * @param Model $model
-     * @param string $locale
-     * @return UrlRecord
      * @throws UrlRecordNotFound
      */
     public static function findByModel(Model $model, string $locale): UrlRecord
@@ -66,7 +60,7 @@ class UrlRecord extends Model
             ->first();
 
         if (! $record) {
-            throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
+            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for locale ['.$locale.'].');
         }
 
         return $record;
@@ -121,14 +115,14 @@ class UrlRecord extends Model
         return $newRecord;
     }
 
-    public function redirectTo(self $record = null): ?UrlRecord
+    public function redirectTo(?self $record = null): ?UrlRecord
     {
         if (! $record) {
             return $this->isRedirect() ? static::find($this->redirect_id) : null;
         }
 
         if ($record->id === $this->id) {
-            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from [' . $this->slug . '] to [' . $record->slug . ']');
+            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from ['.$this->slug.'] to ['.$record->slug.']');
         }
 
         $this->redirect_id = $record->id;
@@ -161,7 +155,7 @@ class UrlRecord extends Model
 
     public function isRedirect(): bool
     {
-        return ! ! ($this->redirect_id);
+        return (bool) ($this->redirect_id);
     }
 
     public function isHomepage(): bool
@@ -169,15 +163,12 @@ class UrlRecord extends Model
         return $this->slug === '/';
     }
 
-    /**
-     * @param null|string $slug
-     */
-    public static function existsIgnoringRedirects(?string $slug, string $locale = null, Model $ignoredModel = null): bool
+    public static function existsIgnoringRedirects(?string $slug, ?string $locale = null, ?Model $ignoredModel = null): bool
     {
         return static::exists($slug, $locale, $ignoredModel, false);
     }
 
-    public static function exists(?string $slug, string $locale = null, Model $ignoredModel = null, bool $includeRedirects = true): bool
+    public static function exists(?string $slug, ?string $locale = null, ?Model $ignoredModel = null, bool $includeRedirects = true): bool
     {
         $builder = static::where('slug', $slug);
 
@@ -198,7 +189,7 @@ class UrlRecord extends Model
             });
         }
 
-        return ($builder->count() > 0);
+        return $builder->count() > 0;
     }
 
     public static function allOnlineModels(string $locale): Collection

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Events;
@@ -10,6 +11,5 @@ final class FormUpdated
     public function __construct(
         public readonly ModelReference $modelReference,
         public readonly string $formId
-    ) {
-    }
+    ) {}
 }

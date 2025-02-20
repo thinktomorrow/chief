@@ -171,8 +171,7 @@ trait FragmentAssistant
             ->fillFields($this, $fragmentable->fragmentModel())
             ->eachForm(function (Form $form) use ($fragmentable, $ownerModel) {
                 $form->action($this->route('fragment-update', $fragmentable->fragmentModel(), $ownerModel), 'PUT');
-            })
-        ;
+            });
 
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
@@ -192,8 +191,7 @@ trait FragmentAssistant
         $fields = Forms::make($fragmentable->fields($fragmentable))
             ->fillModel($fragmentable->fragmentModel())
 //            ->find($tag) // TODO: use FormsAssistant for Fragments as well...
-            ->getFields()
-        ;
+            ->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());
 
@@ -225,14 +223,14 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0), (true == $request->input('hardcopy')));
+        return $this->handleFragmentCopy($this->ownerModel($ownerKey, $ownerId), (int) $fragmentModelId, $request->input('order', 0), ($request->input('hardcopy') == true));
     }
 
     public function nestedFragmentCopy(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0), (true == $request->input('hardcopy')));
+        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0), ($request->input('hardcopy') == true));
     }
 
     public function fragmentUnshare(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
@@ -292,9 +290,8 @@ trait FragmentAssistant
     abstract protected function guard(string $action, $model = null);
 
     /**
-     * @param mixed $owner
-     * @param mixed $order
-     *
+     * @param  mixed  $owner
+     * @param  mixed  $order
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     private function renderFragmentCreate($owner, $order)
@@ -306,13 +303,12 @@ trait FragmentAssistant
         }
 
         $forms = Forms::make($fragmentable->fields($fragmentable))
-                    ->fillModel($fragmentable->fragmentModel())
-                    ->fillFields($this, $fragmentable->fragmentModel())
-                    ->eachForm(function (Form $form) use ($fragmentable, $owner) {
-                        $form->action($this->route('fragment-store', $owner))
-                             ->refreshUrl('');
-                    })
-        ;
+            ->fillModel($fragmentable->fragmentModel())
+            ->fillFields($this, $fragmentable->fragmentModel())
+            ->eachForm(function (Form $form) use ($owner) {
+                $form->action($this->route('fragment-store', $owner))
+                    ->refreshUrl('');
+            });
 
         \Illuminate\Support\Facades\View::share('manager', $this);
         \Illuminate\Support\Facades\View::share('model', $fragmentable);
@@ -430,8 +426,6 @@ trait FragmentAssistant
     }
 
     /**
-     * @param $ownerId
-     *
      * @return Model (FragmentsOwner)
      */
     private function ownerModel(string $ownerKey, $ownerId): Model

@@ -2,16 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 
-use function app;
-use function chiefRegister;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+
+use function app;
+use function chiefRegister;
 
 class AstrotomicTranslationsTest extends ChiefTestCase
 {
     private $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

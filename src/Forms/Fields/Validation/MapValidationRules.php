@@ -12,8 +12,8 @@ class MapValidationRules
             $params = '';
 
             // Split up the rule and any parameters
-            if (false !== strpos($rule, ':')) {
-                list($rule, $params) = explode(':', $rule);
+            if (strpos($rule, ':') !== false) {
+                [$rule, $params] = explode(':', $rule);
             }
 
             if (isset($replacements[$rule])) {

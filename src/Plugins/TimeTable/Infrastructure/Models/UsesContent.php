@@ -20,7 +20,6 @@ trait UsesContent
         return $this->getContent(app()->getLocale());
     }
 
-
     public function getContent(string $locale): ?string
     {
         return $this->getData('content', $locale);
@@ -34,9 +33,9 @@ trait UsesContent
         $this->data = array_merge($this->data ?? [], $copy);
     }
 
-    private function getData(string $key, string $index = null, $default = null)
+    private function getData(string $key, ?string $index = null, $default = null)
     {
-        $key = $index ? $key .'.'.$index : $key;
+        $key = $index ? $key.'.'.$index : $key;
 
         return data_get($this->data, $key, $default);
     }

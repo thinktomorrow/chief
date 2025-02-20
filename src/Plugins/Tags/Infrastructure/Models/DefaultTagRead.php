@@ -10,21 +10,24 @@ use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagId;
 class DefaultTagRead implements TagRead
 {
     private TagId $tagId;
+
     private ?TagGroupId $tagGroupId;
+
     private string $label;
+
     private ?string $color;
+
     private array $data;
+
     private int $usages;
+
     private Collection $ownerReferences;
 
-    private function __construct()
-    {
-
-    }
+    private function __construct() {}
 
     public static function fromMappedData(array $data): static
     {
-        $model = new static();
+        $model = new static;
 
         $model->tagId = TagId::fromString($data['id']);
         $model->tagGroupId = $data['taggroup_id'] ? TagGroupId::fromString($data['taggroup_id']) : null;
@@ -68,9 +71,9 @@ class DefaultTagRead implements TagRead
         return $this->ownerReferences;
     }
 
-    public function getData(string $key, string $index = null, $default = null)
+    public function getData(string $key, ?string $index = null, $default = null)
     {
-        $key = $index ? $key .'.'.$index : $key;
+        $key = $index ? $key.'.'.$index : $key;
 
         return data_get($this->data, $key, $default);
     }

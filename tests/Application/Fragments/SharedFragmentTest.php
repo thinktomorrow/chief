@@ -16,13 +16,15 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class SharedFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $fragment;
+
     private Manager $fragmentManager;
 
     /** @var FragmentRepository */
     private $fragmentRepo;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

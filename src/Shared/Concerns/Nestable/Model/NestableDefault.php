@@ -40,6 +40,7 @@ trait NestableDefault
      * This array should contain all parents.
      *
      * @return Nestable[]
+     *
      *@deprecated use getAncestors instead
      */
     public function getBreadCrumbs(): array

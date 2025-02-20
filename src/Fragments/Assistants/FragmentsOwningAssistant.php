@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
@@ -91,7 +92,6 @@ trait FragmentsOwningAssistant
         // Select filter by owner
         $existingOwnersOptions = [];
 
-
         if (public_method_exists($owner, 'getRelatedOwners')) {
             foreach ($owner->getRelatedOwners() as $relatedOwner) {
                 $existingOwnersOptions[$relatedOwner->modelReference()->get()] = $this->registry->findResourceByModel($relatedOwner::class)->getPageTitle($relatedOwner);
@@ -123,7 +123,7 @@ trait FragmentsOwningAssistant
          * that these values are excluded. Since a fragment id consist of at least 4 digits,
          * We can safely assume that an index with less than four characters is considered an invalid fragment id.
          */
-        $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string)$index) > 3);
+        $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string) $index) > 3);
 
         app(SortModels::class)->handleFragments($owner->ownerModel(), $indices);
 

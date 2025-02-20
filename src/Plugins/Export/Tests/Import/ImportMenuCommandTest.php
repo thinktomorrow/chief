@@ -19,7 +19,7 @@ class ImportMenuCommandTest extends TestCase
 
         $this->artisan('chief:export-menu');
 
-        $filepath = storage_path('app/exports/'.config('app.name') .'-menu-'.date('Y-m-d').'.xlsx');
+        $filepath = storage_path('app/exports/'.config('app.name').'-menu-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         MenuItem::find(1)->update([

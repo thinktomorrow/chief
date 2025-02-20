@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
@@ -10,8 +11,11 @@ use Thinktomorrow\Vine\Node;
 class MenuItemNode extends DefaultNode implements Node
 {
     private MenuItemStatus $status;
+
     private ?string $label;
+
     private ?string $url;
+
     private ?string $ownerLabel;
 
     public function __construct(MenuItemStatus $status, ?string $label, ?string $url, ?string $ownerLabel, string $id, ?string $parentId, int $order)

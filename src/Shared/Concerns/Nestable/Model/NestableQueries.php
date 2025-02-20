@@ -36,22 +36,22 @@ class NestableQueries
 
         $query = $model::query()
             ->from(DB::raw($table)->getValue(DB::connection()->getQueryGrammar()))
-            ->where($table . '.id', $model->getKey());
+            ->where($table.'.id', $model->getKey());
 
         for ($i = 1; $i < $this->depth + 1; $i++) {
-            $prevTableName = $i == 1 ? $table : $table . '_' . $i;
-            $nextTableName = $table . '_' . ($i + 1);
+            $prevTableName = $i == 1 ? $table : $table.'_'.$i;
+            $nextTableName = $table.'_'.($i + 1);
 
             if ($i > 1) {
-                $query->addSelect(DB::raw($prevTableName . '.id AS parent_id_' . $i));
+                $query->addSelect(DB::raw($prevTableName.'.id AS parent_id_'.$i));
             }
 
             $query->leftJoin(
-                DB::raw($table . ' AS ' . $nextTableName),
+                DB::raw($table.' AS '.$nextTableName),
                 //                DB::raw($nextTableName)->getValue(DB::connection()->getQueryGrammar()),
-                $prevTableName . '.parent_id',
+                $prevTableName.'.parent_id',
                 '=',
-                $nextTableName . '.id'
+                $nextTableName.'.id'
             );
         }
 
@@ -70,20 +70,20 @@ class NestableQueries
         $table = $model->getTable();
 
         $query = DB::table($table)
-            ->where($table . '.parent_id', $model->getKey());
+            ->where($table.'.parent_id', $model->getKey());
 
         for ($i = 1; $i < $this->depth + 1; $i++) {
-            $prevTableName = $i == 1 ? $table : $table . '_' . $i;
-            $nextTableName = $table . '_' . ($i + 1);
+            $prevTableName = $i == 1 ? $table : $table.'_'.$i;
+            $nextTableName = $table.'_'.($i + 1);
 
             //            $query->addSelect(DB::raw('GROUP_CONCAT(' . $prevTableName . '.id) AS id_' . $i)->getValue(DB::connection()->getQueryGrammar()));
-            $query->addSelect(DB::raw('GROUP_CONCAT(' . $prevTableName . '.id) AS id_' . $i));
+            $query->addSelect(DB::raw('GROUP_CONCAT('.$prevTableName.'.id) AS id_'.$i));
             $query->leftJoin(
-                DB::raw($table . ' AS ' . $nextTableName),
+                DB::raw($table.' AS '.$nextTableName),
                 //                DB::raw($nextTableName)->getValue(DB::connection()->getQueryGrammar()),
-                $prevTableName . '.id',
+                $prevTableName.'.id',
                 '=',
-                $nextTableName . '.parent_id'
+                $nextTableName.'.parent_id'
             );
         }
 

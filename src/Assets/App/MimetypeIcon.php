@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Assets\App;
@@ -8,10 +9,12 @@ use Illuminate\Support\Str;
 class MimetypeIcon
 {
     private static $fallback = '<svg width="24" height="24"><use xlink:href="#icon-document"></use></svg>';
+
     private $mapping = [
         'application/pdf' => '<svg width="24" height="24"><use xlink:href="#icon-document"></use></svg>',
         'video' => '<svg width="24" height="24"><use xlink:href="#icon-video"></use></svg>',
     ];
+
     /** @var string */
     private $mimetype;
 

@@ -10,11 +10,11 @@ class UpdateUserTest extends ChiefTestCase
 {
     private $newUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->newUser = new User();
+        $this->newUser = new User;
         $this->newUser->email = 'new@example.com';
         $this->newUser->firstname = 'new firstname';
         $this->newUser->lastname = 'new lastname';
@@ -27,7 +27,7 @@ class UpdateUserTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('chief.back.users.edit', $this->newUser->id));
         $response->assertViewIs('chief::admin.users.edit')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     /** @test */
@@ -90,7 +90,7 @@ class UpdateUserTest extends ChiefTestCase
             ->assertSessionHas('messages.success');
 
         // Assert roles were not updated
-        $this->assertEquals(['author','developer'], $this->newUser->fresh()->roles->pluck('name')->toArray());
+        $this->assertEquals(['author', 'developer'], $this->newUser->fresh()->roles->pluck('name')->toArray());
     }
 
     /** @test */
@@ -125,14 +125,14 @@ class UpdateUserTest extends ChiefTestCase
     /** @test */
     public function when_updating_user_firstname_is_required()
     {
-        $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.users.index'), route('chief.back.users.update', $this->newUser->id), 2, // App self and existing one
+        $this->assertValidation(new User, 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.users.index'), route('chief.back.users.update', $this->newUser->id), 2, // App self and existing one
             'put');
     }
 
     /** @test */
     public function when_updating_user_lastname_is_required()
     {
-        $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.users.index'), route('chief.back.users.update', $this->newUser->id), 2, // App self and existing one
+        $this->assertValidation(new User, 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.users.index'), route('chief.back.users.update', $this->newUser->id), 2, // App self and existing one
             'put');
     }
 
@@ -175,6 +175,6 @@ class UpdateUserTest extends ChiefTestCase
         $this->assertEquals('updated firstname', $user->firstname);
         $this->assertEquals('updated lastname', $user->lastname);
         $this->assertEquals('updated@example.com', $user->email);
-        $this->assertEquals(['author','admin'], $user->roles->pluck('name')->toArray());
+        $this->assertEquals(['author', 'admin'], $user->roles->pluck('name')->toArray());
     }
 }

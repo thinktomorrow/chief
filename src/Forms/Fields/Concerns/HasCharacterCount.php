@@ -15,7 +15,7 @@ trait HasCharacterCount
 
     public function hasCharacterCount(): bool
     {
-        return 0 < $this->characterCount;
+        return $this->characterCount > 0;
     }
 
     public function getCharacterCount(): int

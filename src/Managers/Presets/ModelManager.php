@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
@@ -13,11 +14,10 @@ use Thinktomorrow\Chief\Managers\Manager;
 
 final class ModelManager implements Manager
 {
-    use ManagerDefaults;
+    use ArchiveAssistant;
     use CrudAssistant;
     use FormsAssistant;
-
-    use ArchiveAssistant;
-    use StateAssistant;
+    use ManagerDefaults;
     use SortAssistant;
+    use StateAssistant;
 }

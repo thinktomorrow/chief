@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 trait HasModel
 {
     protected ?Model $model = null;
+
     protected array $whenModelIsSetCallbacks = [];
 
     public function model(Model $model): static

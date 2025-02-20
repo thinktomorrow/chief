@@ -10,12 +10,12 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MenuForSiteTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         ChiefMenuFactory::clearLoaded();
 

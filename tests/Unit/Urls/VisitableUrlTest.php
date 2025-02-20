@@ -10,14 +10,13 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class VisitableUrlTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         ArticlePage::migrateUp();
 
-        Route::get('{slug}', function () {
-        })->name('pages.show');
+        Route::get('{slug}', function () {})->name('pages.show');
     }
 
     /** @test */

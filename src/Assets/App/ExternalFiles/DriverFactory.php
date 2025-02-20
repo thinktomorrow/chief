@@ -14,7 +14,7 @@ class DriverFactory
             }
         }
 
-        throw new \InvalidArgumentException('No driver found for type ' . $driverType);
+        throw new \InvalidArgumentException('No driver found for type '.$driverType);
     }
 
     /**

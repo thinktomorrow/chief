@@ -13,6 +13,7 @@ class CreatePageCommand extends Command
     protected $description = 'Generate a new chief page';
 
     private FileManipulation $fileManipulation;
+
     private SetupConfig $config;
 
     public function __construct(FileManipulation $fileManipulation, SetupConfig $config)
@@ -50,13 +51,13 @@ class CreatePageCommand extends Command
         }
 
         $className = Str::studly($name);
-        $namespacedClassName = '\\' . $namespace . '\\' . $className;
+        $namespacedClassName = '\\'.$namespace.'\\'.$className;
         $viewKey = strtolower($className);
 
-        $this->fileManipulation->writeFile($path . '/' . $className.'.php', $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
-                'className' => $className,
-                'namespace' => $namespace,
-            ]), $this->option('force'));
+        $this->fileManipulation->writeFile($path.'/'.$className.'.php', $this->replacePlaceholders(file_get_contents(__DIR__.'/stubs/pageModel.php.stub'), [
+            'className' => $className,
+            'namespace' => $namespace,
+        ]), $this->option('force'));
 
         //        $this->fileManipulation->writeFile($path . '/' . $className.'Resource.php', $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageResource.php.stub'), [
         //            'className' => $className.'Resource',
@@ -73,7 +74,7 @@ class CreatePageCommand extends Command
          * Create view file
          */
         if ($this->confirm('Would you like to add a frontend view (pages.'.$viewKey.')?', true)) {
-            $fullViewPath = resource_path('views/pages/' . $viewKey . '.blade.php');
+            $fullViewPath = resource_path('views/pages/'.$viewKey.'.blade.php');
             $this->fileManipulation->writeFile($fullViewPath, file_get_contents(__DIR__.'/stubs/pageView.blade.php.stub'), $this->option('force'));
         }
     }

@@ -2,17 +2,17 @@
 
 $finder = Symfony\Component\Finder\Finder::create()
     ->in([
-        __DIR__ . '/app',
-        __DIR__ . '/config',
-        __DIR__ . '/routes',
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+        __DIR__.'/app',
+        __DIR__.'/config',
+        __DIR__.'/routes',
+        __DIR__.'/src',
+        __DIR__.'/tests',
     ])
     ->name('*.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-return (new PhpCsFixer\Config())
+return (new PhpCsFixer\Config)
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
