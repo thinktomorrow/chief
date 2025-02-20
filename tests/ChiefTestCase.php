@@ -155,11 +155,14 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends ChiefExceptionHandler
-        {
-            public function __construct() {}
+        $this->app->instance(ExceptionHandler::class, new class extends ChiefExceptionHandler {
+            public function __construct()
+            {
+            }
 
-            public function report(\Throwable $e) {}
+            public function report(\Throwable $e)
+            {
+            }
 
             public function render($request, \Throwable $e)
             {

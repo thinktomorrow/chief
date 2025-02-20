@@ -123,7 +123,9 @@ final class LinkForm
 
     public static function fromModel(Model&Visitable $model, bool $includeRedirects = false): self
     {
-        return new self($model, ($includeRedirects ? $model->allUrls : $model->urls)
+        return new self(
+            $model,
+            ($includeRedirects ? $model->allUrls : $model->urls)
             ->groupBy('locale')
             ->map(function ($records) {
                 return $records->sortBy('redirect_id')->sortByDesc('created_at');

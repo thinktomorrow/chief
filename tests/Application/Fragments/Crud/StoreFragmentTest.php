@@ -2,16 +2,16 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments\Crud;
 
+use function app;
+use function chiefRegister;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-
-use function app;
-use function chiefRegister;
 
 class StoreFragmentTest extends ChiefTestCase
 {
