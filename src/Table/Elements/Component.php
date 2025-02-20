@@ -23,6 +23,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable
     use HasCustomAttributes;
     use HasDescription;
     use HasHint;
+
     // Header values
     use HasKey;
 
