@@ -52,7 +52,7 @@ trait ManagerDefaults
         return false;
     }
 
-    private function generateRoute(string $action, $model = null, ...$parameters): string
+    protected function generateRoute(string $action, $model = null, ...$parameters): string
     {
         if ($model) {
             $modelId = (is_object($model) && isset($model->{$model->getKeyName()})) ? $model->{$model->getKeyName()} : $model;
@@ -66,7 +66,7 @@ trait ManagerDefaults
     /**
      * @return void
      */
-    private function guard(string $action, $model = null)
+    protected function guard(string $action, $model = null)
     {
         if (! $this->can($action, $model)) {
             throw NotAllowedManagerAction::notAllowedAction($action, $this->resource::resourceKey());
@@ -80,7 +80,7 @@ trait ManagerDefaults
      *
      * @throws NotAllowedManagerAction
      */
-    private function authorize(string $permission): void
+    protected function authorize(string $permission): void
     {
         if (! chiefAdmin() || ! chiefAdmin()->hasPermissionTo($permission)) {
             throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
@@ -92,7 +92,7 @@ trait ManagerDefaults
         return $this->resource::modelClassName();
     }
 
-    private function managedModelClassInstance(...$attributes)
+    protected function managedModelClassInstance(...$attributes)
     {
         $modelClass = $this->managedModelClass();
 
@@ -106,12 +106,12 @@ trait ManagerDefaults
     /**
      * Which model contains the fields.
      */
-    private function fieldsModel($id)
+    protected function fieldsModel($id)
     {
         return $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
     }
 
-    private function fieldValidator(): FieldValidator
+    protected function fieldValidator(): FieldValidator
     {
         return $this->fieldValidator;
     }
