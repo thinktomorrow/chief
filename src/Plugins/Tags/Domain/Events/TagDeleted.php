@@ -6,7 +6,5 @@ use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagId;
 
 class TagDeleted
 {
-    public function __construct(public readonly TagId $tagId)
-    {
-    }
+    public function __construct(public readonly TagId $tagId) {}
 }

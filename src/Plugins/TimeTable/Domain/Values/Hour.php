@@ -11,9 +11,7 @@ class Hour
 
     private string $minutes;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function make(string $hour, string $minutes = '00'): static
     {

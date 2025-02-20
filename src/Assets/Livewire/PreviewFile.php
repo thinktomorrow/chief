@@ -51,8 +51,7 @@ class PreviewFile implements Wireable
         public array $data = [],
         public array $urls = [],
         public array $owners = [],
-    ) {
-    }
+    ) {}
 
     public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null, array $attributes = []): static
     {

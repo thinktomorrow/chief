@@ -9,9 +9,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class OnlineStateConfigStub implements StateConfig
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function getStateKey(): string
     {

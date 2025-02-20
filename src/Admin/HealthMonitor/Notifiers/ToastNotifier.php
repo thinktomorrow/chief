@@ -13,9 +13,7 @@ class ToastNotifier implements Notifier
         session()->now($this->generateUniqueSessionKey(), ['type' => 'warning', 'message' => $healthCheck->message()]);
     }
 
-    public function onSuccess(HealthCheck $healthCheck)
-    {
-    }
+    public function onSuccess(HealthCheck $healthCheck) {}
 
     private function generateUniqueSessionKey(): string
     {

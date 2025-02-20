@@ -6,7 +6,5 @@ namespace Thinktomorrow\Chief\Site\Menu\Events;
 
 class MenuItemCreated
 {
-    public function __construct(public readonly string $menuItemId)
-    {
-    }
+    public function __construct(public readonly string $menuItemId) {}
 }
