@@ -30,7 +30,7 @@ final class GetFragments
      */
     public function get(string $contextId, string $locale): FragmentCollection
     {
-        $fragmentCollection = $this->fragmentRepository->getTreeByContext($contextId, $locale);
+        $fragmentCollection = $this->fragmentRepository->getFragmentCollection($contextId, $locale);
 
         // When admin is logged in and this request is in preview mode, we allow to view all fragments
         if (PreviewMode::fromRequest()->check()) {
@@ -40,7 +40,7 @@ final class GetFragments
 
         // We don't display offline fragments
         return $fragmentCollection->remove(function (Fragment $fragment) {
-            return $fragment->fragmentModel()->isOffline();
+            return $fragment->getFragmentModel()->isOffline();
         });
     }
 }

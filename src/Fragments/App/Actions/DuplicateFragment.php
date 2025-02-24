@@ -7,41 +7,37 @@ namespace Thinktomorrow\Chief\Fragments\App\Actions;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 class DuplicateFragment
 {
-    private ContextRepository $contextRepository;
-
     private FragmentRepository $fragmentRepository;
 
     private AttachFragment $attachFragment;
 
     private AddAsset $addAsset;
 
-    public function __construct(ContextRepository $contextRepository, FragmentRepository $fragmentRepository, AttachFragment $attachFragment, AddAsset $addAsset)
+    private array $fragmentCollections;
+
+    public function __construct(FragmentRepository $fragmentRepository, AttachFragment $attachFragment, AddAsset $addAsset)
     {
-        $this->contextRepository = $contextRepository;
         $this->fragmentRepository = $fragmentRepository;
         $this->attachFragment = $attachFragment;
         $this->addAsset = $addAsset;
     }
 
     /**
-     * Duplicate a fragment
+     * Duplicate a fragment to the root of the new context
      * Nested fragments are duplicated as well
      *
      * @throws FragmentAlreadyAdded
      */
-    public function handle(ContextModel $sourceContext, ContextModel $targetContext, FragmentModel $fragmentModel, int $index, bool $forceDuplicateSharedFragment = false): void
+    public function handle(FragmentModel $fragmentModel, string $sourceContextId, string $targetContextId, ?string $parentFragmentId, int $index, bool $forceDuplicateSharedFragment = false): void
     {
         // If it's already a shared fragment, we'll use the original and share it as well
         if (! $forceDuplicateSharedFragment && $fragmentModel->isShared()) {
-            $this->attachFragment->handle($targetContext->id, $fragmentModel->id, $index);
+            $this->attachFragment->handle($targetContextId, $fragmentModel->id, $parentFragmentId, $index);
 
             return;
         }
@@ -51,27 +47,34 @@ class DuplicateFragment
         $duplicatedFragmentModel->id = $this->fragmentRepository->nextId();
         $duplicatedFragmentModel->save();
 
-        $this->attachFragment->handle($targetContext->id, $duplicatedFragmentModel->id, $index);
+        $this->attachFragment->handle($targetContextId, $duplicatedFragmentModel->id, $parentFragmentId, $index);
 
         foreach ($fragmentModel->assetRelation()->get() as $asset) {
             $this->addAsset->handle($duplicatedFragmentModel, $asset, $asset->pivot->type, $asset->pivot->locale, $asset->pivot->order, $asset->pivot->data);
         }
 
-        event(new FragmentDuplicated($fragmentModel->id, $duplicatedFragmentModel->id, $sourceContext->id, $targetContext->id));
+        event(new FragmentDuplicated($fragmentModel->id, $duplicatedFragmentModel->id, $sourceContextId, $targetContextId));
 
-        // Handle nested fragments
-        // TODO: contexts will no longer be the method by which fragments contain nested fragments. We will use the adjacent structure instead.
-        if (($fragment = $this->fragmentRepository->find($fragmentModel->id)) instanceof FragmentsOwner) {
+        $this->handleNestedFragments($fragmentModel, $duplicatedFragmentModel, $sourceContextId, $targetContextId, $forceDuplicateSharedFragment);
+    }
 
-            $duplicatedFragment = $this->fragmentRepository->find($duplicatedFragmentModel->id);
+    private function handleNestedFragments(FragmentModel $fragmentModel, FragmentModel $duplicatedFragmentModel, $sourceContextId, $targetContextId, bool $forceDuplicateSharedFragment = false): void
+    {
+        $children = $this->getFragmentCollection($sourceContextId)
+            ->find(fn ($fragment) => $fragment->id === $fragmentModel->id)
+            ->getChildNodes();
 
-            if ($fragmentContext = $this->contextRepository->findByFragmentOwner($fragment)) {
-                app(DuplicateContext::class)->handle(
-                    $fragmentContext->id,
-                    $duplicatedFragment,
-                    $targetContext->locale
-                );
-            }
+        foreach ($children as $child) {
+            $this->handle($child->getFragmentModel(), $sourceContextId, $targetContextId, $duplicatedFragmentModel->id, $child->getFragmentModel()->pivot->order, $forceDuplicateSharedFragment);
         }
+    }
+
+    private function getFragmentCollection(string $contextId)
+    {
+        if (isset($this->fragmentCollections[$contextId])) {
+            return $this->fragmentCollections[$contextId];
+        }
+
+        return $this->fragmentCollections[$contextId] = $this->fragmentRepository->getFragmentCollection($contextId);
     }
 }

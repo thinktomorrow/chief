@@ -117,9 +117,9 @@ class ComposeFieldLinesTest extends TestCase
         $article = $this->setUpAndCreateArticle([]);
         $resource = app(Registry::class)->resource('article_page');
         $snippet = $this->setUpAndCreateSnippet($article, 0, true, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
-        app(PutFragmentOffline::class)->handle($snippet->fragmentModel()->id);
+        app(PutFragmentOffline::class)->handle($snippet->getFragmentModel()->id);
 
-        $this->assertTrue($snippet->fragmentModel()->fresh()->isOffline());
+        $this->assertTrue($snippet->getFragmentModel()->fresh()->isOffline());
 
         $composeLines = app(ComposeFieldLines::class)
             ->ignoreEmptyValues()

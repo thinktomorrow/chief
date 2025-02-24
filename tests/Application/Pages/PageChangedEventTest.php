@@ -51,7 +51,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentUpdated::class);
 
-        event(new FragmentUpdated($this->fragment->fragmentModel()->id));
+        event(new FragmentUpdated($this->fragment->getFragmentModel()->id));
 
         Event::assertDispatched(PageChanged::class);
     }
@@ -60,7 +60,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentDetached::class);
 
-        event(new FragmentDetached($this->fragment->fragmentModel()->id, 123));
+        event(new FragmentDetached($this->fragment->getFragmentModel()->id, 123));
 
         Event::assertDispatched(PageChanged::class);
     }
@@ -69,7 +69,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentAttached::class);
 
-        event(new FragmentAttached($this->fragment->fragmentModel()->id, 123));
+        event(new FragmentAttached($this->fragment->getFragmentModel()->id, 123));
 
         Event::assertDispatched(PageChanged::class);
     }
@@ -78,7 +78,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentDuplicated::class);
 
-        event(new FragmentDuplicated($this->fragment->fragmentModel()->id, '123'));
+        event(new FragmentDuplicated($this->fragment->getFragmentModel()->id, '123'));
 
         Event::assertDispatched(PageChanged::class);
     }

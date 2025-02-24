@@ -29,7 +29,7 @@ class Hero extends BaseFragment
 
     public function getTitle()
     {
-        return $this->fragmentModel()->title;
+        return $this->getFragmentModel()->title;
     }
 
     public function viewKey(): string

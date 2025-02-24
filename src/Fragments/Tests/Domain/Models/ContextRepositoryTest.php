@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
@@ -72,9 +72,9 @@ class ContextRepositoryTest extends ChiefTestCase
     public function test_it_can_get_all_contexts_of_a_fragment()
     {
         $context = $this->contextRepository->create($this->owner, []);
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
 
-        $contexts = $this->contextRepository->getByFragment($fragment->getFragmentId());
+        $contexts = $this->contextRepository->getContextsByFragment($fragment->getFragmentId());
 
         $this->assertCount(1, $contexts);
         $this->assertInstanceOf(Collection::class, $contexts);
@@ -82,6 +82,6 @@ class ContextRepositoryTest extends ChiefTestCase
 
     public function test_it_returns_empty_collection_by_default()
     {
-        $this->assertCount(0, $this->contextRepository->getByFragment('xxx'));
+        $this->assertCount(0, $this->contextRepository->getContextsByFragment('xxx'));
     }
 }

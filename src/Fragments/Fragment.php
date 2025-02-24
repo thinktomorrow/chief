@@ -35,5 +35,5 @@ interface Fragment extends FragmentResource, Htmlable, Node, ReferableModel
 
     public function setFragmentModel(FragmentModel $fragmentModel): self;
 
-    public function fragmentModel(): FragmentModel;
+    public function getFragmentModel(): FragmentModel;
 }

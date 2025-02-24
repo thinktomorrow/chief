@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
 
@@ -53,7 +53,7 @@ class ComposeFieldLines
             $this->extractFieldValues($resource, $model, $locales)
         );
 
-        if ($model instanceof FragmentsOwner) {
+        if ($model instanceof ContextOwner) {
             $lines = $lines->merge($this->addFragmentFieldValues($model, $locales));
         }
 
@@ -111,7 +111,7 @@ class ComposeFieldLines
     {
         $lines = new LinesCollection;
 
-        $model = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+        $model = $model instanceof Fragment ? $model->getFragmentModel() : $model;
 
         $modelFields = Fields::makeWithoutFlatteningNestedFields($resource->fields($model))
             ->filterBy(fn ($field) => in_array($field::class, $this->textFields))
@@ -147,26 +147,26 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function addFragmentFieldValues(FragmentsOwner $model, array $locales): LinesCollection
+    private function addFragmentFieldValues(ContextOwner $model, array $locales): LinesCollection
     {
         $lines = new LinesCollection;
 
-        /** @var Fragmentable[] $fragment */
-        $fragments = app(FragmentRepository::class)->getByOwner($model instanceof Fragmentable ? $model->fragmentModel() : $model);
+        /** @var Fragment[] $fragment */
+        $fragments = app(FragmentRepository::class)->getByOwner($model instanceof Fragment ? $model->getFragmentModel() : $model);
 
         foreach ($fragments as $fragment) {
 
-            if ($this->ignoreOfflineFragments && $fragment->fragmentModel()->isOffline()) {
+            if ($this->ignoreOfflineFragments && $fragment->getFragmentModel()->isOffline()) {
                 continue;
             }
 
             // Shared fragments are only exported once to reduce translation lines
             // First time we encounter a shared fragment, we add it to the ignored list
-            if ($fragment->fragmentModel()->isShared()) {
-                if (in_array($fragment->fragmentModel()->id, $this->ignoredFragments)) {
+            if ($fragment->getFragmentModel()->isShared()) {
+                if (in_array($fragment->getFragmentModel()->id, $this->ignoredFragments)) {
                     continue;
                 } else {
-                    $this->ignoredFragments[] = $fragment->fragmentModel()->id;
+                    $this->ignoredFragments[] = $fragment->getFragmentModel()->id;
                 }
             }
 

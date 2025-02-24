@@ -33,36 +33,36 @@ class SortFragmentTest extends ChiefTestCase
     {
         $this->asAdmin()->post($this->manager($this->owner)->route('fragments-reorder', $this->owner), [
             'indices' => [
-                $this->fragment3->fragmentModel()->id,
-                $this->fragment2->fragmentModel()->id,
-                $this->fragment->fragmentModel()->id,
+                $this->fragment3->getFragmentModel()->id,
+                $this->fragment2->getFragmentModel()->id,
+                $this->fragment->getFragmentModel()->id,
             ],
         ]);
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
 
-        $this->assertEquals($this->fragment3->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
-        $this->assertEquals($this->fragment2->fragmentModel()->id, $fragments[1]->fragmentModel()->id);
-        $this->assertEquals($this->fragment->fragmentModel()->id, $fragments[2]->fragmentModel()->id);
+        $this->assertEquals($this->fragment3->getFragmentModel()->id, $fragments[0]->getFragmentModel()->id);
+        $this->assertEquals($this->fragment2->getFragmentModel()->id, $fragments[1]->getFragmentModel()->id);
+        $this->assertEquals($this->fragment->getFragmentModel()->id, $fragments[2]->getFragmentModel()->id);
     }
 
     public function test_invalid_fragmentids_are_ignored()
     {
         $this->asAdmin()->post($this->manager($this->owner)->route('fragments-reorder', $this->owner), [
             'indices' => [
-                $this->fragment3->fragmentModel()->id,
+                $this->fragment3->getFragmentModel()->id,
                 'cfv',
-                $this->fragment2->fragmentModel()->id,
+                $this->fragment2->getFragmentModel()->id,
                 '3fw',
-                $this->fragment->fragmentModel()->id,
+                $this->fragment->getFragmentModel()->id,
             ],
         ]);
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
 
-        $this->assertEquals($this->fragment3->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
-        $this->assertEquals($this->fragment2->fragmentModel()->id, $fragments[1]->fragmentModel()->id);
-        $this->assertEquals($this->fragment->fragmentModel()->id, $fragments[2]->fragmentModel()->id);
+        $this->assertEquals($this->fragment3->getFragmentModel()->id, $fragments[0]->getFragmentModel()->id);
+        $this->assertEquals($this->fragment2->getFragmentModel()->id, $fragments[1]->getFragmentModel()->id);
+        $this->assertEquals($this->fragment->getFragmentModel()->id, $fragments[2]->getFragmentModel()->id);
     }
 
     public function test_it_emits_event_after_sorting()
@@ -71,9 +71,9 @@ class SortFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->post($this->manager($this->owner)->route('fragments-reorder', $this->owner), [
             'indices' => [
-                $this->fragment3->fragmentModel()->id,
-                $this->fragment2->fragmentModel()->id,
-                $this->fragment->fragmentModel()->id,
+                $this->fragment3->getFragmentModel()->id,
+                $this->fragment2->getFragmentModel()->id,
+                $this->fragment->getFragmentModel()->id,
             ],
         ]);
 

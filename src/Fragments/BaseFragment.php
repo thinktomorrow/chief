@@ -5,19 +5,22 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Vine\NodeDefaults;
 
-abstract class BaseFragment extends \Illuminate\View\Component implements Fragment
+abstract class BaseFragment extends Component implements Fragment
 {
     use ForwardFragmentProperties;
+    use FragmentResourceDefault;
     use NodeDefaults;
-    use \Thinktomorrow\Chief\Resource\FragmentResourceDefault;
-    use \Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+    use ReferableModelDefault;
 
     public function __construct()
     {
@@ -53,7 +56,6 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
             /** @deprecated use $fragment instead */
             'model' => $this,
         ];
-
     }
 
     protected function viewPath(): string
@@ -105,7 +107,7 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
         return $this;
     }
 
-    public function fragmentModel(): FragmentModel
+    public function getFragmentModel(): FragmentModel
     {
         if (! isset($this->fragmentModel)) {
             throw new MissingFragmentModelException('Fragment model is not set. Make sure to set the fragment model before accessing it.');
@@ -116,12 +118,12 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
 
     public function modelReference(): ModelReference
     {
-        return $this->fragmentModel()->modelReference();
+        return $this->getFragmentModel()->modelReference();
     }
 
     public function getFragmentId(): string
     {
-        return $this->fragmentModel()->id;
+        return $this->getFragmentModel()->id;
     }
 
     /**
@@ -136,5 +138,13 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
     public function dynamicLocaleFallback(): ?string
     {
         return null;
+    }
+
+    /**
+     * @deprecated use getFragmentModel() instead
+     */
+    public function fragmentModel(): FragmentModel
+    {
+        return $this->getFragmentModel();
     }
 }

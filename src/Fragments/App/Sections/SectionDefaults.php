@@ -11,6 +11,6 @@ trait SectionDefaults
 
     public function getBookmark(): string
     {
-        return 'bookmark-'.$this->fragmentModel()->id;
+        return 'bookmark-'.$this->getFragmentModel()->id;
     }
 }

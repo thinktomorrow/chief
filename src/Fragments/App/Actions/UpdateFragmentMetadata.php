@@ -49,7 +49,7 @@ class UpdateFragmentMetadata
         $shared = $this->getOwningModels->getCount($fragmentId) > 1;
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
-        $fragmentable->fragmentModel()->setMeta('shared', $shared);
-        $fragmentable->fragmentModel()->save();
+        $fragmentable->getFragmentModel()->setMeta('shared', $shared);
+        $fragmentable->getFragmentModel()->save();
     }
 }

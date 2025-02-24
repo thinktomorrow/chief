@@ -27,13 +27,13 @@
     @if($model instanceof FragmentsOwner)
         <div class="border-t py-9 border-grey-100">
             {{-- nested fragments --}}
-            <x-chief-fragments::index :context-id="$context->id"/>
+            <x-chief-fragments::index :context-id="$context->id" />
         </div>
     @endif
 @endif
 
 @if($model->hasFragmentModel())
-    @if($model->fragmentModel()->isShared())
+    @if($model->getFragmentModel()->isShared())
         <div class="p-6 border border-orange-100 rounded-xl bg-orange-50">
             <p class="text-lg h6 h1-dark">Gedeeld fragment</p>
 
@@ -45,7 +45,7 @@
 
                     @php
                         $otherOwners = collect(app(GetOwningModels::class)
-                            ->get($model->fragmentModel()))
+                            ->get($model->getFragmentModel()))
                             ->reject(function($otherOwner) use ($owner) {
                                 return $otherOwner['model']->modelReference()->equals($owner->modelReference());
                             });
@@ -92,13 +92,13 @@
 @endif
 
 @if($model->hasFragmentModel())
-    <div @class(['flex flex-wrap items-center gap-4 pt-6', 'border-t border-grey-100' => !$model->fragmentModel()->isShared()])>
+    <div @class(['flex flex-wrap items-center gap-4 pt-6', 'border-t border-grey-100' => !$model->getFragmentModel()->isShared()])>
         <button
             type="submit"
             form="changeFragmentStatus{{ $model->getFragmentId() }}"
             class="btn btn-grey icon-label"
         >
-            @if($model->fragmentModel()->isOnline())
+            @if($model->getFragmentModel()->isOnline())
                 <x-chief::icon-label position="append"
                                      icon='<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /> </svg>'>
                     Zet offline
@@ -118,7 +118,7 @@
                 x-on:click="$dispatch('open-dialog', { 'id': 'delete-fragment-{{ $model->getFragmentId() }}' })"
                 class="cursor-pointer link link-grey"
             >
-                @if($model->fragmentModel()->isShared())
+                @if($model->getFragmentModel()->isShared())
                     Fragment verwijderen op deze pagina
                 @else
                     Fragment verwijderen
@@ -149,7 +149,7 @@
             method="POST"
             action="{{ route('chief::fragments.status', [$context->id, $model->getFragmentId()]) }}"
         >
-            <input type="hidden" name="online_status" value="{{ $model->fragmentModel()->isOnline()
+            <input type="hidden" name="online_status" value="{{ $model->getFragmentModel()->isOnline()
                 ? FragmentStatus::offline->value
                 : FragmentStatus::online->value
             }}">

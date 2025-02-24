@@ -10,7 +10,8 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -33,8 +34,8 @@ class DuplicateContextTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->owner2 = ArticlePage::create();
 
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner);
-        $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
+        $this->context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $this->fragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
     public function test_context_can_be_duplicated()
@@ -70,7 +71,7 @@ class DuplicateContextTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        app(AddAsset::class)->handle($this->fragment->fragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
+        app(AddAsset::class)->handle($this->fragment->getFragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
 
         app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'nl');
 
@@ -93,29 +94,30 @@ class DuplicateContextTest extends ChiefTestCase
     public function test_it_can_duplicate_context_with_nested_fragments()
     {
         // Create nested fragment
-        $nestedContext = FragmentTestAssist::createContext($this->fragment);
-        $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
+        $nestedFragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id, $this->fragment->getFragmentId());
 
-        $this->assertEquals(2, ContextModel::count());
+        $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
 
-        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
+        app(DuplicateContext::class)->handle($this->context->id, $this->owner2);
 
-        $this->assertEquals(4, ContextModel::count());
+        $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());
 
         $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
         $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
 
         // Check duplicated fragment
-        $originalNestedContext = app(ContextRepository::class)->findNestedContextByOwner($originalContext->fragments->first());
-        $duplicatedNestedContext = app(ContextRepository::class)->findNestedContextByOwner($duplicatedContext->fragments->first());
-        $originalNestedFragment = $originalNestedContext->fragments()->first();
-        $duplicatedNestedFragment = $duplicatedNestedContext->fragments()->first();
+        $originalFragmentCollection = app(FragmentRepository::class)->getFragmentCollection($originalContext->id);
+        $duplicatedFragmentCollection = app(FragmentRepository::class)->getFragmentCollection($duplicatedContext->id);
 
-        $this->assertNotEquals($originalNestedFragment->id, $duplicatedNestedFragment->id);
-        $this->assertEquals($originalNestedFragment->order, $duplicatedNestedFragment->order);
-        $this->assertEquals($originalNestedFragment->key, $duplicatedNestedFragment->key);
-        $this->assertEquals($originalNestedFragment->values, $duplicatedNestedFragment->values);
+        foreach ($originalFragmentCollection->flatten() as $originalFragment) {
+            $duplicatedFragment = $duplicatedFragmentCollection->flatten()->find('key', $originalFragment->key);
+
+            $this->assertNotEquals($originalFragment->id, $duplicatedFragment->id);
+            $this->assertEquals($originalFragment->key, $duplicatedFragment->key);
+            $this->assertEquals($originalFragment->pivot_order, $duplicatedFragment->pivot_order);
+            $this->assertEquals($originalFragment->values, $duplicatedFragment->values);
+        }
     }
 }

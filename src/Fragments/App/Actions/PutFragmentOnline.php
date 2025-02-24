@@ -20,12 +20,12 @@ class PutFragmentOnline
     {
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        if ($fragmentable->fragmentModel()->isOnline()) {
+        if ($fragmentable->getFragmentModel()->isOnline()) {
             return;
         }
 
-        $fragmentable->fragmentModel()->setOnline();
-        $fragmentable->fragmentModel()->save();
+        $fragmentable->getFragmentModel()->setOnline();
+        $fragmentable->getFragmentModel()->save();
 
         event(new FragmentPutOnline($fragmentId));
     }

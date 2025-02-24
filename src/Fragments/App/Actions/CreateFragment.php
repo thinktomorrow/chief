@@ -30,7 +30,7 @@ final class CreateFragment
         $fragment->setFragmentModel($fragmentModel);
 
         $fields = Forms::make($fragment->fields($fragment))
-            ->fillModel($fragment->fragmentModel())
+            ->fillModel($fragment->getFragmentModel())
             ->getFields()
             ->notTagged(['edit', 'not-on-create']);
 

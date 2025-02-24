@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\Domain\Models;
 
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
@@ -37,7 +37,7 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
     public function test_it_can_get_all_owners()
     {
         $context = $this->contextRepository->create($this->owner, []);
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
 
         $this->assertCount(1, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }
@@ -50,8 +50,8 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
         $context2 = $this->contextRepository->create($owner2, []);
 
         // Attach to two contexts
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
+        app(AttachRootFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
 
         $this->assertCount(2, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }
@@ -62,8 +62,8 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
         $context2 = $this->contextRepository->create($this->owner, []);
 
         // Attach to two contexts
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
-        app(AttachFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
+        app(AttachRootFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
 
         $this->assertCount(1, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }

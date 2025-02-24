@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
@@ -86,12 +86,12 @@ trait FragmentAssistant
 
             // Some fragment edit/update actions have second argument as the fragmentable
             if (in_array($action, ['fragment-edit', 'fragment-add', 'fragment-copy', 'fragment-unshare', 'fragment-delete']) && $parameters[0] instanceof Fragment) {
-                $parameters[0] = $parameters[0]->fragmentModel()->id;
+                $parameters[0] = $parameters[0]->getFragmentModel()->id;
             }
 
             // Nested fragments routes
             if ($model instanceof Fragment) {
-                return route('chief.'.$modelKey.'.nested-'.$action, array_merge([$model->fragmentModel()->id], $parameters));
+                return route('chief.'.$modelKey.'.nested-'.$action, array_merge([$model->getFragmentModel()->id], $parameters));
             }
 
             return route('chief.'.$modelKey.'.'.$action, array_merge([
@@ -101,10 +101,10 @@ trait FragmentAssistant
         }
 
         if (! $model) {
-            throw new Exception('Fragment route definition for '.$action.' requires a Model or Fragmentable as second argument.');
+            throw new Exception('Fragment route definition for '.$action.' requires a Model or Fragment as second argument.');
         }
 
-        $modelId = $model instanceof Fragment ? $model->fragmentModel()->id : $model->id;
+        $modelId = $model instanceof Fragment ? $model->getFragmentModel()->id : $model->id;
 
         return route('chief.'.$modelKey.'.'.$action, $modelId);
     }
@@ -138,8 +138,8 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentable();
 
         $forms = Forms::make($fragmentable->fields($fragmentable))
-            ->fillModel($fragmentable->fragmentModel())
-            ->fillFields($this, $fragmentable->fragmentModel())
+            ->fillModel($fragmentable->getFragmentModel())
+            ->fillFields($this, $fragmentable->getFragmentModel())
             ->eachForm(function (Form $form) use ($context) {
                 $form->action($this->route('fragment-store', $context))
                     ->refreshUrl('');
@@ -197,12 +197,12 @@ trait FragmentAssistant
 
         // Locales are passed along the request as well.
         //        if ($request->input('admin_locales')) {
-        //            $fragmentable->fragmentModel()->setLocales($request->input('locales'));
+        //            $fragmentable->getFragmentModel()->setLocales($request->input('locales'));
         //        }
 
         $fields = Forms::make($fragmentable->fields($fragmentable))
             ->fillLocalesIfEmpty((array) $request->input('admin_locales', []))
-            ->fillModel($fragmentable->fragmentModel())
+            ->fillModel($fragmentable->getFragmentModel())
             ->getFields()
             ->notTagged(['edit', 'not-on-create']);
 
@@ -210,7 +210,7 @@ trait FragmentAssistant
 
         $request->merge(['order' => (int) $request->input('order', 0)]);
 
-        $fragmentable = $this->storeFragmentable($ownerModel, $fragmentable, $request);
+        $fragmentable = $this->storeFragment($ownerModel, $fragmentable, $request);
 
         $redirectTo = null;
 
@@ -218,7 +218,7 @@ trait FragmentAssistant
         // By default other fragments will return to the main edit page after being created.
         if ($fragmentable instanceof FragmentsOwner) {
             $redirectTo = ($ownerModel instanceof FragmentModel)
-                ? $this->route('nested-fragment-edit', $ownerModel->id, $fragmentable->fragmentModel()->id)
+                ? $this->route('nested-fragment-edit', $ownerModel->id, $fragmentable->getFragmentModel()->id)
                 : $this->route('fragment-edit', $ownerModel, $fragmentable);
         }
 
@@ -226,25 +226,25 @@ trait FragmentAssistant
             'message' => 'fragment created',
             'sidebar_redirect_to' => $redirectTo,
             'data' => [
-                'fragmentmodel_id' => $fragmentable->fragmentModel()->id,
+                'fragmentmodel_id' => $fragmentable->getFragmentModel()->id,
             ],
         ], 201);
     }
 
     abstract protected function fieldValidator(): FieldValidator;
 
-    private function storeFragmentable(Model $owner, Fragment $fragmentable, Request $request): Fragment
+    private function storeFragment(Model $owner, Fragment $fragment, Request $request): Fragment
     {
-        $fragmentable->setFragmentModel(app(CreateFragment::class)->create($owner, $fragmentable, $request->order, [], $request->input('locales')));
+        $fragment->setFragmentModel(app(CreateFragment::class)->create($owner, $fragment, $request->order, [], $request->input('locales')));
 
         app($this->resource->getSaveFieldsClass())->save(
-            $fragmentable->fragmentModel(),
-            Fields::make($fragmentable->fields($fragmentable))->notTagged('edit'),
+            $fragment->getFragmentModel(),
+            Fields::make($fragment->fields($fragment))->notTagged('edit'),
             $request->all(),
             $request->allFiles()
         );
 
-        return $fragmentable;
+        return $fragment;
     }
 
     /**
@@ -261,7 +261,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentStore($this->fragmentRepository->find($fragmentModelId)->fragmentModel(), $request);
+        return $this->handleFragmentStore($this->fragmentRepository->find($fragmentModelId)->getFragmentModel(), $request);
     }
 
     public function fragmentEdit(Request $request, string $ownerKey, $ownerId, $fragmentId)
@@ -279,10 +279,10 @@ trait FragmentAssistant
         $this->guard('fragment-edit', $fragmentable);
 
         $forms = Forms::make($fragmentable->fields($fragmentable))
-            ->fillModel($fragmentable->fragmentModel())
-            ->fillFields($this, $fragmentable->fragmentModel())
+            ->fillModel($fragmentable->getFragmentModel())
+            ->fillFields($this, $fragmentable->getFragmentModel())
             ->eachForm(function (Form $form) use ($fragmentable, $ownerModel) {
-                $form->action($this->route('fragment-update', $fragmentable->fragmentModel(), $ownerModel), 'PUT');
+                $form->action($this->route('fragment-update', $fragmentable->getFragmentModel(), $ownerModel), 'PUT');
             });
 
         View::share('manager', $this);
@@ -312,25 +312,25 @@ trait FragmentAssistant
 
         // Locales are passed along the request as well to match the current model-fragment context.
         if ($request->input('locales')) {
-            $fragmentable->fragmentModel()->setLocales($request->input('locales'));
+            $fragmentable->getFragmentModel()->setLocales($request->input('locales'));
         }
 
         // Validate only the locales for given context
         $forms = Forms::make($fragmentable->fields($fragmentable))
-            ->fillModel($fragmentable->fragmentModel());
+            ->fillModel($fragmentable->getFragmentModel());
         //            ->find($tag) // TODO: use FormsAssistant for Fragments as well...
 
         $this->fieldValidator()->handle($forms->getFields(), $request->all());
 
         // Now set all locales for fields that require locales so that all values are saved on the fragment
-        $fragmentable->fragmentModel()->setLocales(ChiefLocales::fieldLocales());
-        $fields = $forms->fillModel($fragmentable->fragmentModel())->getFields();
+        $fragmentable->getFragmentModel()->setLocales(ChiefLocales::fieldLocales());
+        $fields = $forms->fillModel($fragmentable->getFragmentModel())->getFields();
 
-        app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
+        app($this->resource->getSaveFieldsClass())->save($fragmentable->getFragmentModel(), $fields, $request->all(), $request->allFiles());
 
         //        app(UpdateAssociatedFragment::class)->handle();
 
-        event(new FragmentUpdated($fragmentable->fragmentModel()->id));
+        event(new FragmentUpdated($fragmentable->getFragmentModel()->id));
 
         return response()->json([
             'message' => 'fragment updated',
@@ -350,7 +350,7 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(AttachFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order);
+            app(AttachRootFragment::class)->handle($ownerModel, $fragmentable->getFragmentModel(), $order);
         } catch (FragmentAlreadyAdded $e) {
             return response()->json([
                 'message' => 'fragment ['.$fragmentModelId.'] is already added',
@@ -368,7 +368,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, (int) $request->input('order', 0));
+        return $this->handleFragmentAdd($this->fragmentRepository->find((int) $fragmentOwnerModelId)->getFragmentModel(), (int) $fragmentModelId, (int) $request->input('order', 0));
     }
 
     public function fragmentCopy(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
@@ -382,7 +382,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
-        app(DuplicateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel(), $order, $hardCopy);
+        app(DuplicateFragment::class)->handle($ownerModel, $fragmentable->getFragmentModel(), $order, $hardCopy);
 
         return response()->json([
             'message' => 'fragment ['.$fragmentModelId.'] added as copy',
@@ -394,7 +394,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId, $request->input('order', 0), ($request->input('hardcopy') == true));
+        return $this->handleFragmentCopy($this->fragmentRepository->find($fragmentOwnerModelId)->getFragmentModel(), (int) $fragmentModelId, $request->input('order', 0), ($request->input('hardcopy') == true));
     }
 
     public function fragmentUnshare(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
@@ -408,7 +408,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
-        app(IsolateFragment::class)->handle($ownerModel, $fragmentable->fragmentModel());
+        app(IsolateFragment::class)->handle($ownerModel, $fragmentable->getFragmentModel());
 
         return response()->json([
             'message' => 'fragment ['.$fragmentModelId.'] detached as shared and now available as isolated fragment',
@@ -420,7 +420,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentUnshare($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId);
+        return $this->handleFragmentUnshare($this->fragmentRepository->find($fragmentOwnerModelId)->getFragmentModel(), (int) $fragmentModelId);
     }
 
     public function fragmentDelete(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
@@ -435,7 +435,7 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(DetachFragment::class)->handle($ownerModel, $fragmentable->fragmentModel());
+            app(DetachFragment::class)->handle($ownerModel, $fragmentable->getFragmentModel());
         } catch (FragmentAlreadyDetached $e) {
             return response()->json([
                 'message' => 'fragment ['.$fragmentModelId.'] is already removed.',
@@ -453,7 +453,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentDelete($this->fragmentRepository->find((int) $fragmentOwnerModelId)->fragmentModel(), (int) $fragmentModelId);
+        return $this->handleFragmentDelete($this->fragmentRepository->find((int) $fragmentOwnerModelId)->getFragmentModel(), (int) $fragmentModelId);
     }
 
     public function fragmentStatus(Request $request, $fragmentId)
@@ -465,11 +465,11 @@ trait FragmentAssistant
         $status = FragmentStatus::from($request->input('online_status'));
 
         if ($status == FragmentStatus::online) {
-            app(PutFragmentOnline::class)->handle($fragmentable->fragmentModel()->id);
+            app(PutFragmentOnline::class)->handle($fragmentable->getFragmentModel()->id);
         }
 
         if ($status == FragmentStatus::offline) {
-            app(PutFragmentOffline::class)->handle($fragmentable->fragmentModel()->id);
+            app(PutFragmentOffline::class)->handle($fragmentable->getFragmentModel()->id);
         }
 
         return response()->json([
@@ -488,8 +488,8 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentable();
 
         $forms = Forms::make($fragmentable->fields($fragmentable))
-            ->fillModel($fragmentable->fragmentModel())
-            ->fillFields($this, $fragmentable->fragmentModel())
+            ->fillModel($fragmentable->getFragmentModel())
+            ->fillFields($this, $fragmentable->getFragmentModel())
             ->eachForm(function (Form $form) use ($owner) {
                 $form->action($this->route('nested-fragment-store', $owner))
                     ->refreshUrl('');

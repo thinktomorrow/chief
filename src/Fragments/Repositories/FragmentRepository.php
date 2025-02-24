@@ -25,27 +25,27 @@ final class FragmentRepository
      * Get entire fragmentCollection for a given context.
      * This is used to render all page fragments.
      */
-    public function getTreeByContext(string $contextId, ?string $locale = null): FragmentCollection
+    public function getFragmentCollection(string $contextId, ?string $site = null): FragmentCollection
     {
-        $fragmentModels = $this->getByContext($contextId, $locale);
+        $fragmentModels = $this->getByContext($contextId, $site);
 
         return FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
-            $fragment->id = $fragment->fragmentModel()->id;
-            $fragment->parent_id = $fragment->fragmentModel()->pivot->parent_id;
-            $fragment->order = $fragment->fragmentModel()->pivot->order;
+            $fragment->id = $fragment->getFragmentModel()->id;
+            $fragment->parent_id = $fragment->getFragmentModel()->pivot->parent_id;
+            $fragment->order = $fragment->getFragmentModel()->pivot->order;
 
             return $fragment;
         })->sort('order');
     }
 
-    public function getByContext(string $contextId, ?string $locale = null): Collection
+    public function getByContext(string $contextId, ?string $site = null): Collection
     {
         $fragmentModels = ContextModel::findOrFail($contextId)
             ->fragments()
-            ->when($locale, fn ($query, $locale) => $query->where(function ($q) use ($locale) {
-                $q->whereJsonContains('context_fragment_tree.locales', $locale)
-                    ->orWhereNull('context_fragment_tree.locales')
-                    ->orWhereJsonLength('context_fragment_tree.locales', '=', 0);
+            ->when($site, fn ($query, $site) => $query->where(function ($q) use ($site) {
+                $q->whereJsonContains('context_fragment_tree.sites', $site)
+                    ->orWhereNull('context_fragment_tree.sites')
+                    ->orWhereJsonLength('context_fragment_tree.sites', '=', 0);
             }))
             ->with('assetRelation', 'assetRelation.media')
             ->get();

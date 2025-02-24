@@ -17,7 +17,7 @@ final class AttachFragment
         $this->reorderFragments = $reorderFragments;
     }
 
-    public function handle(string $contextId, string $fragmentId, int $order, array $data = []): void
+    public function handle(string $contextId, string $fragmentId, ?string $parentId, int $order, array $data = []): void
     {
         $context = ContextModel::findOrFail($contextId);
 
@@ -28,7 +28,7 @@ final class AttachFragment
 
         $indices = $this->fetchSortIndices($context, $order, $fragmentId);
 
-        $context->fragments()->attach($fragmentId, $data);
+        $context->fragments()->attach($fragmentId, array_merge(['parent_id' => $parentId], $data));
 
         $this->reorderFragments->handle($contextId, $indices);
 

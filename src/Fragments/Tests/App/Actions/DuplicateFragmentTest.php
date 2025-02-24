@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -30,13 +30,13 @@ class DuplicateFragmentTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
 
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner);
-        $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
+        $this->context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $this->fragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 
     public function test_it_can_duplicate_a_fragment_to_other_context()
     {
-        $targetContext = FragmentTestAssist::createContext($this->owner);
+        $targetContext = FragmentTestHelpers::createContext($this->owner);
 
         $this->assertEquals(1, FragmentModel::count());
         $this->assertCount(1, $this->context->fragments()->get());
@@ -45,7 +45,7 @@ class DuplicateFragmentTest extends ChiefTestCase
         app(DuplicateFragment::class)->handle(
             $this->context,
             $targetContext,
-            $this->fragment->fragmentModel(),
+            $this->fragment->getFragmentModel(),
             1
         );
 
@@ -64,7 +64,7 @@ class DuplicateFragmentTest extends ChiefTestCase
         app(DuplicateFragment::class)->handle(
             $this->context,
             $targetContext,
-            $this->fragment->fragmentModel(),
+            $this->fragment->getFragmentModel(),
             1
         );
 
@@ -78,14 +78,14 @@ class DuplicateFragmentTest extends ChiefTestCase
         $asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
-        app(AddAsset::class)->handle($this->fragment->fragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
+        app(AddAsset::class)->handle($this->fragment->getFragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
 
-        $targetContext = FragmentTestAssist::findOrCreateContext($this->owner);
+        $targetContext = FragmentTestHelpers::findOrCreateContext($this->owner);
 
         app(DuplicateFragment::class)->handle(
             $this->context,
             $targetContext,
-            $this->fragment->fragmentModel(),
+            $this->fragment->getFragmentModel(),
             1
         );
 
@@ -101,16 +101,16 @@ class DuplicateFragmentTest extends ChiefTestCase
     public function test_it_can_duplicate_fragment_including_child_fragments()
     {
         // TODO: wip
-        $targetContext = FragmentTestAssist::createContext($this->owner);
+        $targetContext = FragmentTestHelpers::createContext($this->owner);
 
         // Create nested fragment
-        $nestedContext = FragmentTestAssist::createContext($this->fragment);
-        $nestedFragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
+        $nestedContext = FragmentTestHelpers::createContext($this->fragment);
+        $nestedFragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
 
         $this->assertEquals(3, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
 
-        app(DuplicateFragment::class)->handle($this->context, $targetContext, $this->fragment->fragmentModel(), 1);
+        app(DuplicateFragment::class)->handle($this->context, $targetContext, $this->fragment->getFragmentModel(), 1);
 
         $this->assertEquals(4, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());

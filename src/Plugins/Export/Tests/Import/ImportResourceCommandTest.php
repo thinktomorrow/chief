@@ -17,10 +17,10 @@ class ImportResourceCommandTest extends TestCase
 
         // Change the database text
         $article->update(['title' => 'changed title']);
-        $snippet->fragmentModel()->title = 'changed quote title';
-        $snippet->fragmentModel()->setDynamic('title_trans.nl', 'changed quote title nl');
-        $snippet->fragmentModel()->setDynamic('title_trans.en', 'changed quote title en');
-        $snippet->fragmentModel()->save();
+        $snippet->getFragmentModel()->title = 'changed quote title';
+        $snippet->getFragmentModel()->setDynamic('title_trans.nl', 'changed quote title nl');
+        $snippet->getFragmentModel()->setDynamic('title_trans.en', 'changed quote title en');
+        $snippet->getFragmentModel()->save();
 
         // Now import it again
         $this->artisan('chief:import-resource', ['file' => $filepath])
@@ -29,12 +29,12 @@ class ImportResourceCommandTest extends TestCase
             ->expectsQuestion('Which locale does this column represent? Choose one of: nl, en', 'nl');
 
         // Localized values
-        $this->assertEquals('title quote nl', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'nl'));
-        $this->assertEquals('changed quote title en', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'en'));
+        $this->assertEquals('title quote nl', $snippet->getFragmentModel()->fresh()->dynamic('title_trans', 'nl'));
+        $this->assertEquals('changed quote title en', $snippet->getFragmentModel()->fresh()->dynamic('title_trans', 'en'));
 
         // Non-localized values are unchanged
         $this->assertEquals('changed title', $article->fresh()->title);
-        $this->assertEquals('changed quote title', $snippet->fragmentModel()->fresh()->title);
+        $this->assertEquals('changed quote title', $snippet->getFragmentModel()->fresh()->title);
     }
 
     public function test_it_can_import_resource_for_non_localized_values()
@@ -48,10 +48,10 @@ class ImportResourceCommandTest extends TestCase
 
         // Change the database text
         $article->update(['title' => 'changed title']);
-        $snippet->fragmentModel()->title = 'changed quote title';
-        $snippet->fragmentModel()->setDynamic('title_trans.nl', 'changed quote title nl');
-        $snippet->fragmentModel()->setDynamic('title_trans.en', 'changed quote title en');
-        $snippet->fragmentModel()->save();
+        $snippet->getFragmentModel()->title = 'changed quote title';
+        $snippet->getFragmentModel()->setDynamic('title_trans.nl', 'changed quote title nl');
+        $snippet->getFragmentModel()->setDynamic('title_trans.en', 'changed quote title en');
+        $snippet->getFragmentModel()->save();
 
         // Now import it again
         $this->artisan('chief:import-resource', ['file' => $filepath])
@@ -60,11 +60,11 @@ class ImportResourceCommandTest extends TestCase
 
         // Non-localized values
         $this->assertEquals('article title', $article->fresh()->title);
-        $this->assertEquals('quote title', $snippet->fragmentModel()->fresh()->title);
+        $this->assertEquals('quote title', $snippet->getFragmentModel()->fresh()->title);
 
         // Localized values are unchanged
-        $this->assertEquals('changed quote title nl', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'nl'));
-        $this->assertEquals('changed quote title en', $snippet->fragmentModel()->fresh()->dynamic('title_trans', 'en'));
+        $this->assertEquals('changed quote title nl', $snippet->getFragmentModel()->fresh()->dynamic('title_trans', 'nl'));
+        $this->assertEquals('changed quote title en', $snippet->getFragmentModel()->fresh()->dynamic('title_trans', 'en'));
 
     }
 }

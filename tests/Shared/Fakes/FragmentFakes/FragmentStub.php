@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class FragmentStub implements Fragment, FragmentsOwner
+class FragmentStub extends BaseFragment implements Fragment
 {
-    use FragmentableDefaults;
-    use OwningFragments;
-
     public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
         return '';

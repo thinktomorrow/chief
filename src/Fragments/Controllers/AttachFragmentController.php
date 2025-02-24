@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Controllers;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 
 class AttachFragmentController
@@ -11,7 +11,7 @@ class AttachFragmentController
     public function attach(string $contextId, string $fragmentId, Request $request)
     {
         try {
-            app(AttachFragment::class)->handle($contextId, $fragmentId, $request->input('order', 0));
+            app(AttachRootFragment::class)->handle($contextId, $fragmentId, $request->input('order', 0));
         } catch (FragmentAlreadyAdded $e) {
             return response()->json([
                 'message' => 'fragment ['.$fragmentId.'] is already added',

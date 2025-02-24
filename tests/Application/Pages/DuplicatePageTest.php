@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
@@ -69,9 +69,9 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertCount(2, $fragments);
 
         // First snippet is shared
-        $this->assertEquals($originalFragments[0]->fragmentModel()->key, $fragments[0]->fragmentModel()->key);
-        $this->assertNotEquals($originalFragments[0]->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
-        $this->assertNotEquals($originalFragments[1]->fragmentModel()->id, $fragments[1]->fragmentModel()->id);
+        $this->assertEquals($originalFragments[0]->getFragmentModel()->key, $fragments[0]->getFragmentModel()->key);
+        $this->assertNotEquals($originalFragments[0]->getFragmentModel()->id, $fragments[0]->getFragmentModel()->id);
+        $this->assertNotEquals($originalFragments[1]->getFragmentModel()->id, $fragments[1]->getFragmentModel()->id);
     }
 
     public function test_context_with_shared_fragments_keeps_fragment_shared()
@@ -81,7 +81,7 @@ class DuplicatePageTest extends ChiefTestCase
 
         // Add shared and non-shared fragment
         $snippet = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id, 1);
-        app(AttachFragment::class)->handle($context2->id, $snippet->getFragmentId(), 0, []);
+        app(AttachRootFragment::class)->handle($context2->id, $snippet->getFragmentId(), 0, []);
 
         $this->asAdmin()
             ->post($this->manager($this->source)->route('duplicate', $this->source))
@@ -95,10 +95,10 @@ class DuplicatePageTest extends ChiefTestCase
         $this->assertCount(1, $fragments);
 
         // First snippet is shared
-        $this->assertEquals($originalFragments[0]->fragmentModel()->key, $fragments[0]->fragmentModel()->key);
-        $this->assertEquals($originalFragments[0]->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
-        $this->assertTrue($originalFragments[0]->fragmentModel()->isShared());
-        $this->assertTrue($fragments[0]->fragmentModel()->isShared());
+        $this->assertEquals($originalFragments[0]->getFragmentModel()->key, $fragments[0]->getFragmentModel()->key);
+        $this->assertEquals($originalFragments[0]->getFragmentModel()->id, $fragments[0]->getFragmentModel()->id);
+        $this->assertTrue($originalFragments[0]->getFragmentModel()->isShared());
+        $this->assertTrue($fragments[0]->getFragmentModel()->isShared());
     }
 
     public function test_page_assets_are_not_duplicated_but_refer_to_same_asset()

@@ -20,7 +20,7 @@ trait OwningFragments
     public function ownerModel(): Model
     {
         return ($this instanceof Fragment)
-            ? $this->fragmentModel()
+            ? $this->getFragmentModel()
             : $this;
     }
 }

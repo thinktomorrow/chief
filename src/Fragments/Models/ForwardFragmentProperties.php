@@ -17,6 +17,6 @@ trait ForwardFragmentProperties
      */
     public function __get($key)
     {
-        return $this->fragmentModel()->$key;
+        return $this->getFragmentModel()->$key;
     }
 }

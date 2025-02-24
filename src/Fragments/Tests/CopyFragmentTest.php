@@ -30,8 +30,8 @@ class CopyFragmentTest extends ChiefTestCase
         $existingFragmentFresh = $this->firstFragment($this->owner);
         $fragmentFresh = $this->firstFragment($newOwner);
 
-        $this->assertNotEquals($existingFragmentFresh->fragmentModel()->id, $fragmentFresh->fragmentModel()->id);
-        $this->assertEquals($existingFragmentFresh->fragmentModel()->key, $fragmentFresh->fragmentModel()->key);
+        $this->assertNotEquals($existingFragmentFresh->getFragmentModel()->id, $fragmentFresh->getFragmentModel()->id);
+        $this->assertEquals($existingFragmentFresh->getFragmentModel()->key, $fragmentFresh->getFragmentModel()->key);
     }
 
     public function test_a_shared_fragment_is_copied_as_shared()
@@ -52,10 +52,10 @@ class CopyFragmentTest extends ChiefTestCase
         $existingFragmentFresh = $this->firstFragment($this->owner);
         $fragmentFresh = $this->firstFragment($newOwner);
 
-        $this->assertEquals($existingFragmentFresh->fragmentModel()->id, $fragmentFresh->fragmentModel()->id);
-        $this->assertEquals($existingFragmentFresh->fragmentModel()->key, $fragmentFresh->fragmentModel()->key);
-        $this->assertTrue($existingFragmentFresh->fragmentModel()->isShared());
-        $this->assertTrue($fragmentFresh->fragmentModel()->isShared());
+        $this->assertEquals($existingFragmentFresh->getFragmentModel()->id, $fragmentFresh->getFragmentModel()->id);
+        $this->assertEquals($existingFragmentFresh->getFragmentModel()->key, $fragmentFresh->getFragmentModel()->key);
+        $this->assertTrue($existingFragmentFresh->getFragmentModel()->isShared());
+        $this->assertTrue($fragmentFresh->getFragmentModel()->isShared());
     }
 
     public function test_nested_fragments_are_also_copied()
@@ -64,7 +64,7 @@ class CopyFragmentTest extends ChiefTestCase
         $newOwner = ArticlePage::create();
         $nestedFragment = $this->setupAndCreateSnippet($quote);
 
-        $this->createAsFragment($nestedFragment, $quote->fragmentModel());
+        $this->createAsFragment($nestedFragment, $quote->getFragmentModel());
 
         $this->asAdmin()->post($this->manager($quote)->route('fragment-copy', $newOwner, $quote), [
             'hardcopy' => true,
@@ -74,8 +74,8 @@ class CopyFragmentTest extends ChiefTestCase
 
         $fragmentFresh = $this->firstFragment($newOwner);
 
-        $existingNestedFragmentFresh = $this->firstFragment($quote->fragmentModel());
-        $nestedFragmentFresh = $this->firstFragment($fragmentFresh->fragmentModel());
+        $existingNestedFragmentFresh = $this->firstFragment($quote->getFragmentModel());
+        $nestedFragmentFresh = $this->firstFragment($fragmentFresh->getFragmentModel());
 
         $this->assertNotEquals($existingNestedFragmentFresh->fragmentModel()->id, $nestedFragmentFresh->fragmentModel()->id);
     }

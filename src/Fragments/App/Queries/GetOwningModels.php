@@ -48,7 +48,7 @@ class GetOwningModels
      */
     public function getCount(string $fragmentId): int
     {
-        return $this->contextRepository->getByFragment($fragmentId)
+        return $this->contextRepository->getContextsByFragment($fragmentId)
             ->groupBy(fn ($row) => $row->owner_type.'_'.$row->owner_id)
             ->count();
     }

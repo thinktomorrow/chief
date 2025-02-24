@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class ContextRepository
@@ -20,33 +20,18 @@ class ContextRepository
     //    }
     //
     // Used for nested fragments.
-    public function findByFragmentOwner(ReferableModel $owner): ?ContextModel
-    {
-        return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
-            ->where('owner_id', $owner->modelReference()->id())
-            ->first();
-    }
+    //    public function findByFragmentOwner(ReferableModel $owner): ?ContextModel
+    //    {
+    //        return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
+    //            ->where('owner_id', $owner->modelReference()->id())
+    //            ->first();
+    //    }
 
-    public function getByOwner(ReferableModel $owner): \Illuminate\Support\Collection
+    public function getByOwner(ReferableModel&ContextOwner $owner): \Illuminate\Support\Collection
     {
         return ContextModel::where('owner_type', $owner->modelReference()->shortClassName())
             ->where('owner_id', $owner->modelReference()->id())
             ->get();
-    }
-
-    public function getByFragment(string $fragmentId): Collection
-    {
-        return ContextModel::join('context_fragment_tree', 'contexts.id', '=', 'context_fragment_tree.context_id')
-            ->where('context_fragment_tree.child_id', $fragmentId)
-            ->select(['contexts.*'])
-            ->get();
-    }
-
-    public function countByFragment(string $fragmentId): int
-    {
-        return DB::table('context_fragment_tree')
-            ->where('fragment_id', $fragmentId)
-            ->count();
     }
 
     public function find(string $contextId): ContextModel
@@ -69,24 +54,39 @@ class ContextRepository
     //        return $contexts;
     //    }
 
-    public function create(ReferableModel $owner, array $locales): ContextModel
+    public function create(ReferableModel&ContextOwner $owner, array $sites): ContextModel
     {
         return ContextModel::create([
             'owner_type' => $owner->modelReference()->shortClassName(),
             'owner_id' => $owner->modelReference()->id(),
-            'locales' => $locales,
+            'sites' => $sites,
         ]);
+    }
+
+    public function getContextsByFragment(string $fragmentId): Collection
+    {
+        return ContextModel::join('context_fragment_tree', 'contexts.id', '=', 'context_fragment_tree.context_id')
+            ->where('context_fragment_tree.child_id', $fragmentId)
+            ->select(['contexts.*'])
+            ->get();
+    }
+
+    public function countFragments(string $fragmentId): int
+    {
+        return DB::table('context_fragment_tree')
+            ->where('child_id', $fragmentId)
+            ->count();
     }
 
     // Nested fragments don't belong to a localized content. Therefor
     // we don't query by locale for nested contexts.
     // TODO: this should be changed because fragment should not have context anymore...
-    public function findNestedContextByOwner(FragmentModel $owner): ?ContextModel
-    {
-        return ContextModel::where('owner_type', $owner::resourceKey())
-            ->where('owner_id', $owner->id)
-            ->first();
-    }
+    //    public function findNestedContextByOwner(FragmentModel $owner): ?ContextModel
+    //    {
+    //        return ContextModel::where('owner_type', $owner::resourceKey())
+    //            ->where('owner_id', $owner->id)
+    //            ->first();
+    //    }
 
     //    private function createIfNotExistsForOwner(ReferableModel $owner, Collection $contexts, array $locales): void
     //    {

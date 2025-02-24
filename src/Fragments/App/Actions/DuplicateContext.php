@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class DuplicateContext
@@ -15,21 +16,23 @@ class DuplicateContext
 
     private ContextRepository $contextRepository;
 
-    public function __construct(DuplicateFragment $duplicateFragment, ContextRepository $contextRepository)
+    private FragmentRepository $fragmentRepository;
+
+    public function __construct(DuplicateFragment $duplicateFragment, ContextRepository $contextRepository, FragmentRepository $fragmentRepository)
     {
         $this->duplicateFragment = $duplicateFragment;
         $this->contextRepository = $contextRepository;
+        $this->fragmentRepository = $fragmentRepository;
     }
 
-    //    public function handle(ReferableModel & FragmentsOwner $sourceModel, string $sourceLocale, ReferableModel & FragmentsOwner $targetModel, string $targetLocale): void
-    public function handle(string $sourceContextId, ReferableModel&FragmentsOwner $targetModel): void
+    public function handle(string $sourceContextId, ReferableModel&ContextOwner $targetModel): void
     {
         $sourceContext = $this->contextRepository->find($sourceContextId);
         $targetContext = $this->contextRepository->create($targetModel, $sourceContext->getSiteIds());
 
         /** @var FragmentModel $fragment */
-        foreach ($sourceContext->fragments as $index => $fragment) {
-            $this->duplicateFragment->handle($sourceContext, $targetContext, $fragment, $index);
+        foreach ($sourceContext->rootFragments as $index => $fragment) {
+            $this->duplicateFragment->handle($fragment, $sourceContext->id, $targetContext->id, null, $index);
         }
     }
 }

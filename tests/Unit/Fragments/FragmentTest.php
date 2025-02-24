@@ -13,7 +13,7 @@ class FragmentTest extends ChiefTestCase
         $snippet = new SnippetStub;
         $snippet->setFragmentModel(new FragmentModel(['title' => 'foobar']));
 
-        $this->assertEquals($snippet->fragmentModel()->title, $snippet->title);
+        $this->assertEquals($snippet->getFragmentModel()->title, $snippet->title);
         $this->assertEquals('foobar', $snippet->title);
     }
 

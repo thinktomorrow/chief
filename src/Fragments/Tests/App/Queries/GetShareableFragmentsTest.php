@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
@@ -31,11 +31,11 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_gets_all_shareable_fragments_including_own()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
 
-        $context2 = FragmentTestAssist::createContext($this->owner2);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id);
+        $context2 = FragmentTestHelpers::createContext($this->owner2);
+        $shareableFragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context2->id);
 
         $shareableFragments = $this->query->get($context->id);
         $this->assertCount(2, $shareableFragments);
@@ -43,11 +43,11 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_already_selected_fragments_are_flagged()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id, 0);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id, 0);
 
-        $context2 = FragmentTestAssist::createContext($this->owner2);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id, 2);
+        $context2 = FragmentTestHelpers::createContext($this->owner2);
+        $shareableFragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context2->id, 2);
 
         $shareableFragments = $this->query->get($context->id);
 
@@ -66,8 +66,8 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_filter_by_type()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
-        FragmentTestAssist::createAndAttachFragment(Hero::class, $context->id);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id);
 
         $this->assertCount(1, $this->query->get($context->id));
         $this->assertCount(0, $this->query->filterByTypes([
@@ -77,8 +77,8 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_filter_by_owner()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
-        FragmentTestAssist::createAndAttachFragment(Hero::class, $context->id);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id);
 
         $this->assertCount(1, $this->query->filterByOwners([
             $this->owner->modelReference()->get(),
@@ -90,11 +90,11 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_exclude_current_fragments()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
 
-        $context2 = FragmentTestAssist::createContext($this->owner2);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id);
+        $context2 = FragmentTestHelpers::createContext($this->owner2);
+        $shareableFragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context2->id);
 
         $this->assertCount(2, $this->query->get($context->id));
         $this->assertCount(1, $this->query->excludeAlreadySelected()->get($context->id));
@@ -102,11 +102,11 @@ class GetShareableFragmentsTest extends ChiefTestCase
 
     public function test_it_can_limit_results()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
-        $fragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context->id);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
 
-        $context2 = FragmentTestAssist::createContext($this->owner2);
-        $shareableFragment = FragmentTestAssist::createAndAttachFragment(Quote::class, $context2->id);
+        $context2 = FragmentTestHelpers::createContext($this->owner2);
+        $shareableFragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context2->id);
 
         $this->assertCount(2, $this->query->get($context->id));
         $this->assertCount(1, $this->query->limit(1)->get($context->id));

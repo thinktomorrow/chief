@@ -7,6 +7,7 @@ use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetFragments;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
@@ -14,7 +15,7 @@ use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
-class FragmentTestAssist
+class FragmentTestHelpers
 {
     public static function assertFragmentCount(string $contextId, int $count)
     {
@@ -46,7 +47,7 @@ class FragmentTestAssist
         return app(FragmentRepository::class)->getByContext($contextId);
     }
 
-    public static function findOrCreateContext($owner, array $locales = []): ContextModel
+    public static function findOrCreateContext($owner, array $sites = []): ContextModel
     {
         $contexts = app(ContextRepository::class)->getByOwner($owner);
 
@@ -54,12 +55,12 @@ class FragmentTestAssist
             return $contexts->first();
         }
 
-        return static::createContext($owner, $locales);
+        return static::createContext($owner, $sites);
     }
 
-    public static function createContext($owner, array $locales = []): ContextModel
+    public static function createContext(ContextOwner $owner, array $sites = []): ContextModel
     {
-        return app(ContextRepository::class)->create($owner, $locales);
+        return app(ContextRepository::class)->create($owner, $sites);
     }
 
     public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragment
@@ -73,25 +74,25 @@ class FragmentTestAssist
         return (new $fragmentClass)->setFragmentModel(FragmentModel::find(app(CreateFragment::class)->handle($fragmentKey, $data)));
     }
 
-    public static function attachFragment($contextId, $fragmentId, $order = 0, array $data = []): void
+    public static function attachFragment($contextId, $fragmentId, ?string $parentFragmentId = null, $order = 0, array $data = []): void
     {
-        app(AttachFragment::class)->handle($contextId, $fragmentId, $order, $data);
+        app(AttachFragment::class)->handle($contextId, $fragmentId, $parentFragmentId, $order, $data);
     }
 
-    public static function createAndAttachFragment(string $fragmentClass, $contextId, $order = 0, array $data = [], bool $register = true): Fragment
+    public static function createAndAttachFragment(string $fragmentClass, $contextId, ?string $parentFragmentId = null, $order = 0, array $data = [], bool $register = true): Fragment
     {
         $model = static::createFragment($fragmentClass, $data, $register);
 
-        static::attachFragment($contextId, $model->getFragmentId(), $order, []);
+        static::attachFragment($contextId, $model->getFragmentId(), $parentFragmentId, $order, []);
 
         return $model;
     }
 
-    public static function createContextAndAttachFragment($owner, string $fragmentClass, $order = 0, array $data = [], bool $register = true): array
+    public static function createContextAndAttachFragment($owner, string $fragmentClass, ?string $parentFragmentId = null, $order = 0, array $data = [], bool $register = true): array
     {
         $context = static::findOrCreateContext($owner);
 
-        $model = static::createAndAttachFragment($fragmentClass, $context->id, $order, $data, $register);
+        $model = static::createAndAttachFragment($fragmentClass, $context->id, $parentFragmentId, $order, $data, $register);
 
         return [$context, $model];
     }

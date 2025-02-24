@@ -34,7 +34,7 @@ class SnippetStub extends BaseFragment implements Fragment, FragmentsOwner
 
     public function getTitle()
     {
-        return $this->fragmentModel()->title;
+        return $this->getFragmentModel()->title;
     }
 
     public function viewKey(): string

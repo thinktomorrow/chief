@@ -27,15 +27,18 @@ return new class extends Migration
             $table->primary('id');
         });
 
-        Schema::create('context_fragment_lookup', function (Blueprint $table) {
+        Schema::create('context_fragment_tree', function (Blueprint $table) {
             $table->unsignedBigInteger('context_id');
-            $table->char('fragment_id', 36);
+            $table->char('parent_id', 36)->nullable(); // Root fragments have no parent
+            $table->char('child_id', 36);
+            $table->json('sites')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
 
             $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
-            $table->foreign('fragment_id')->references('id')->on('context_fragments')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('context_fragments')->onDelete('cascade');
+            $table->foreign('child_id')->references('id')->on('context_fragments')->onDelete('cascade');
 
-            $table->primary(['context_id', 'fragment_id']);
+            $table->unique(['context_id', 'parent_id', 'child_id']);
         });
     }
 

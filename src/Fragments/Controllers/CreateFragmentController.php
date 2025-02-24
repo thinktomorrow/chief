@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
@@ -19,9 +19,9 @@ class CreateFragmentController
 
     private CreateFragment $createFragment;
 
-    private AttachFragment $attachFragment;
+    private AttachRootFragment $attachFragment;
 
-    public function __construct(FieldValidator $validator, CreateFragment $createFragment, AttachFragment $attachFragment)
+    public function __construct(FieldValidator $validator, CreateFragment $createFragment, AttachRootFragment $attachFragment)
     {
         $this->validator = $validator;
         $this->createFragment = $createFragment;
@@ -35,7 +35,7 @@ class CreateFragmentController
         $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $forms = Forms::make($fragment->fields($fragment))
-//            ->fillModel($fragment->fragmentModel())
+//            ->fillModel($fragment->getFragmentModel())
             ->eachForm(function (Form $form) use ($contextId, $fragmentKey) {
                 $form->action(route('chief::fragments.store', [$contextId, $fragmentKey]))
                     ->refreshUrl('');

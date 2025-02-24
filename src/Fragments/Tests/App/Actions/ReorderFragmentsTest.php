@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -25,9 +25,9 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_can_reorder_fragments()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
-        [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
-        [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
+        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
 
         app(ReorderFragments::class)->handle($context->id, [
             $snippet3->getFragmentId(),
@@ -43,14 +43,14 @@ class ReorderFragmentsTest extends ChiefTestCase
         $this->assertEquals($snippet2->getFragmentId(), $fragments[2]->getFragmentId());
 
         // Assert order is updated accordingly
-        $this->assertEquals(0, $fragments[0]->fragmentModel()->pivot->order);
-        $this->assertEquals(1, $fragments[1]->fragmentModel()->pivot->order);
+        $this->assertEquals(0, $fragments[0]->getFragmentModel()->pivot->order);
+        $this->assertEquals(1, $fragments[1]->getFragmentModel()->pivot->order);
         $this->assertEquals(2, $fragments[2]->fragmentModel()->pivot->order);
     }
 
     public function test_it_ignores_unknown_fragment_ids()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
 
         app(ReorderFragments::class)->handle($context->id, [
             300,
@@ -71,7 +71,7 @@ class ReorderFragmentsTest extends ChiefTestCase
     {
         Event::fake();
 
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
 
         app(ReorderFragments::class)->handle($context->id, []);
 
@@ -82,7 +82,7 @@ class ReorderFragmentsTest extends ChiefTestCase
     {
         Event::fake();
 
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
 
         app(ReorderFragments::class)->handle($context->id, [
             $snippet1->getFragmentId(),
@@ -93,9 +93,9 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_can_store_a_new_fragment_with_a_specific_order()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
-        [,$snippet2] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
-        [,$snippet3] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
+        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
         $this->disableExceptionHandling();
         $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',

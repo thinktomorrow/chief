@@ -26,7 +26,7 @@ class ContextOwnerRepository
      */
     public function getOwnersByFragment(string $fragmentId): Collection
     {
-        $models = $this->contextRepository->getByFragment($fragmentId);
+        $models = $this->contextRepository->getContextsByFragment($fragmentId);
 
         return $models
             ->map(fn ($model) => $this->ownerFactory($model->owner_type, $model->owner_id))

@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
 
-class SnippetRequiredTitleStub implements Fragment, FragmentsOwner
+class SnippetRequiredTitleStub extends BaseFragment implements Fragment
 {
     use ForwardFragmentProperties;
-    use FragmentableDefaults;
-    use OwningFragments;
 
     public static function resourceKey(): string
     {
@@ -29,7 +25,7 @@ class SnippetRequiredTitleStub implements Fragment, FragmentsOwner
 
     public function getTitle()
     {
-        return $this->fragmentModel()->title;
+        return $this->getFragmentModel()->title;
     }
 
     public function viewKey(): string

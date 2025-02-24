@@ -8,16 +8,11 @@ use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class FragmentStub implements Fragment, FragmentsOwner
+class FragmentStub extends BaseFragment implements Fragment
 {
-    use FragmentableDefaults;
-    use OwningFragments;
-
     public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
         return '';

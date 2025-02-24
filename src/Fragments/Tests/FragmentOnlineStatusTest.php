@@ -32,7 +32,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
     public function test_a_fragment_is_default_online()
     {
         $this->firstFragment($this->owner, function ($fragment) {
-            $this->assertTrue($fragment->fragmentModel()->isOnline());
+            $this->assertTrue($fragment->getFragmentModel()->isOnline());
         });
     }
 
@@ -41,14 +41,14 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         Event::fake();
 
         $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
-        $this->assertTrue($fragments->first()->fragmentModel()->isOnline());
+        $this->assertTrue($fragments->first()->getFragmentModel()->isOnline());
 
         $this->asAdmin()->post($this->fragmentManager->route('fragment-status', $this->fragment), [
             'online_status' => FragmentStatus::offline->value,
         ]);
 
         $this->firstFragment($this->owner, function ($fragment) {
-            $this->assertFalse($fragment->fragmentModel()->isOnline());
+            $this->assertFalse($fragment->getFragmentModel()->isOnline());
         });
 
         Event::assertDispatched(FragmentPutOffline::class);
@@ -63,7 +63,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
         ]);
 
         $this->firstFragment($this->owner, function ($fragment) {
-            $this->assertTrue($fragment->fragmentModel()->isOnline());
+            $this->assertTrue($fragment->getFragmentModel()->isOnline());
         });
 
         Event::assertDispatched(FragmentPutOnline::class);

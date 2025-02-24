@@ -38,7 +38,7 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
         $owner = $this->setupAndCreateArticle();
         $stub = $this->createAndAttachFragment(new FragmentStub, $owner);
 
-        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->fragmentModel()->id).'?index=99');
+        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->getFragmentModel()->id).'?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];

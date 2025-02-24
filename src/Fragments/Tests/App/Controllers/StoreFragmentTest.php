@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -27,7 +27,7 @@ class StoreFragmentTest extends ChiefTestCase
 
     public function test_it_can_store_a_fragment()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
 
         $this->assertEquals(0, FragmentModel::count());
 
@@ -38,14 +38,14 @@ class StoreFragmentTest extends ChiefTestCase
 
         $this->assertEquals(1, FragmentModel::count());
 
-        $snippet = FragmentTestAssist::firstFragment($context->id);
+        $snippet = FragmentTestHelpers::firstFragment($context->id);
         $this->assertInstanceOf(SnippetStub::class, $snippet);
-        $this->assertEquals('new-title', $snippet->fragmentModel()->title);
+        $this->assertEquals('new-title', $snippet->getFragmentModel()->title);
     }
 
     public function test_it_can_store_a_fragment_with_localized_fields()
     {
-        $context = FragmentTestAssist::findOrCreateContext($this->owner);
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
 
         $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
@@ -57,23 +57,23 @@ class StoreFragmentTest extends ChiefTestCase
 
         ])->assertStatus(201);
 
-        $snippet = FragmentTestAssist::firstFragment($context->id);
+        $snippet = FragmentTestHelpers::firstFragment($context->id);
 
         app()->setLocale('nl');
-        $this->assertEquals('title_trans nl value', $snippet->fragmentModel()->title_trans);
+        $this->assertEquals('title_trans nl value', $snippet->getFragmentModel()->title_trans);
 
         app()->setLocale('en');
-        $this->assertEquals('title_trans en value', $snippet->fragmentModel()->title_trans);
+        $this->assertEquals('title_trans en value', $snippet->getFragmentModel()->title_trans);
     }
 
     public function test_it_can_store_a_nested_fragment()
     {
-        $fragment = FragmentTestAssist::createFragment(
+        $fragment = FragmentTestHelpers::createFragment(
             SnippetStub::class,
             ['title' => 'owning fragment']
         );
 
-        $context = FragmentTestAssist::createContext($fragment);
+        $context = FragmentTestHelpers::createContext($fragment);
         $this->asAdmin()->post(route('chief::fragments.nested.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',
             'order' => 2,
@@ -82,9 +82,9 @@ class StoreFragmentTest extends ChiefTestCase
 
         $this->assertEquals(2, FragmentModel::count());
 
-        $snippet = FragmentTestAssist::firstFragment($context->id);
+        $snippet = FragmentTestHelpers::firstFragment($context->id);
         $this->assertInstanceOf(SnippetStub::class, $snippet);
-        $this->assertEquals('new-title', $snippet->fragmentModel()->title);
+        $this->assertEquals('new-title', $snippet->getFragmentModel()->title);
     }
 
     public function test_it_can_upload_a_file_field()
@@ -92,7 +92,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->disableExceptionHandling();
         UploadedFile::fake()->image('tt-favicon.png')->storeAs('test', 'image-temp-name.png');
 
-        $context = FragmentTestAssist::createContext($this->owner);
+        $context = FragmentTestHelpers::createContext($this->owner);
 
         $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'custom' => 'custom-value',
@@ -113,7 +113,7 @@ class StoreFragmentTest extends ChiefTestCase
             ],
         ])->assertStatus(201);
 
-        $snippet = FragmentTestAssist::firstFragment($context->id);
+        $snippet = FragmentTestHelpers::firstFragment($context->id);
 
         $this->assertEquals('tt-favicon.png', $snippet->fragmentModel()->asset('thumb')->filename());
     }

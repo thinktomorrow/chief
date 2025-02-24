@@ -35,7 +35,7 @@ class EditFragmentController
         // TODO: $fragment->fields($resource, $section)
 
         $forms = Forms::make($fragment->fields($fragment))
-            ->fillModel($fragment->fragmentModel())
+            ->fillModel($fragment->getFragmentModel())
             ->eachForm(function (Form $form) use ($contextId, $fragmentId) {
                 $form->action(route('chief::fragments.update', [$contextId, $fragmentId]), 'PUT')
                     ->refreshUrl('');
@@ -60,27 +60,27 @@ class EditFragmentController
 
         // Locales are passed along the request as well to match the current model-fragment context.
         //        if ($request->input('locales')) {
-        //            $fragmentable->fragmentModel()->setLocales($request->input('locales'));
+        //            $fragmentable->getFragmentModel()->setLocales($request->input('locales'));
         //        }
 
         $forms = Forms::make($fragment->fields($fragment))
-            ->fillModel($fragment->fragmentModel());
+            ->fillModel($fragment->getFragmentModel());
 
         $this->validator->handle($forms->getFields(), $request->all());
 
         // Save Fragment values
         app($fragment->getSaveFieldsClass())->save(
-            $fragment->fragmentModel(),
+            $fragment->getFragmentModel(),
             $forms->getFields(),
             $request->all(),
             $request->allFiles()
         );
 
         // Now set all locales for fields that require locales so that all values are saved on the fragment
-        //        $fragment->fragmentModel()->setLocales(ChiefLocaleConfig::getLocales());
-        //        $fields = $forms->fillModel($fragment->fragmentModel())->getFields();
+        //        $fragment->getFragmentModel()->setLocales(ChiefLocaleConfig::getLocales());
+        //        $fields = $forms->fillModel($fragment->getFragmentModel())->getFields();
 
-        //        app($this->resource->getSaveFieldsClass())->save($fragmentable->fragmentModel(), $fields, $request->all(), $request->allFiles());
+        //        app($this->resource->getSaveFieldsClass())->save($fragmentable->getFragmentModel(), $fields, $request->all(), $request->allFiles());
 
         //        app(UpdateAssociatedFragment::class)->handle();
 

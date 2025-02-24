@@ -32,12 +32,12 @@ class DeleteFragment
         $fragment = $this->fragmentRepository->find($fragmentId);
 
         try {
-            $this->detachAsset->handleAll($fragment->fragmentModel());
+            $this->detachAsset->handleAll($fragment->getFragmentModel());
         } catch (\Exception $e) {
             report($e);
         }
 
-        $fragment->fragmentModel()->delete();
+        $fragment->getFragmentModel()->delete();
     }
 
     /**
@@ -47,8 +47,7 @@ class DeleteFragment
      */
     public function onFragmentDetached(FragmentDetached $event)
     {
-        // TODO: also check if it is nested and owner by another fragment, not just context...
-        if ($this->contextRepository->countByFragment($event->fragmentId) > 0) {
+        if ($this->contextRepository->countFragments($event->fragmentId) > 0) {
             return;
         }
 

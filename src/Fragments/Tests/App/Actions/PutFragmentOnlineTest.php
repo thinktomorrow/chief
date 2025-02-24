@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
 use Thinktomorrow\Chief\Fragments\Events\FragmentPutOnline;
-use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
@@ -30,8 +30,8 @@ class PutFragmentOnlineTest extends ChiefTestCase
 
         app(PutFragmentOnline::class)->handle($fragment->getFragmentId());
 
-        $fragment = FragmentTestAssist::findFragment($fragment->getFragmentId());
-        $this->assertTrue($fragment->fragmentModel()->isOnline());
+        $fragment = FragmentTestHelpers::findFragment($fragment->getFragmentId());
+        $this->assertTrue($fragment->getFragmentModel()->isOnline());
     }
 
     public function test_it_emits_event()

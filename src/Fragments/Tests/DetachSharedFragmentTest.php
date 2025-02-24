@@ -32,7 +32,7 @@ class DetachSharedFragmentTest extends ChiefTestCase
     public function test_detach_a_shared_fragment()
     {
         // Assert it is a shared fragment
-        $this->assertEquals($this->firstFragment($this->owner)->fragmentModel()->id, $this->firstFragment($this->owner2)->fragmentModel()->id);
+        $this->assertEquals($this->firstFragment($this->owner)->getFragmentModel()->id, $this->firstFragment($this->owner2)->getFragmentModel()->id);
 
         $this->asAdmin()->post($this->fragmentManager->route('fragment-unshare', $this->owner2, $this->fragment));
 
@@ -41,14 +41,14 @@ class DetachSharedFragmentTest extends ChiefTestCase
         // Assert no longer the same shared fragment, but a separate one
         $detachedFragment = $this->firstFragment($this->owner2);
 
-        $this->assertFalse($detachedFragment->fragmentModel()->isShared());
-        $this->assertNotEquals($this->firstFragment($this->owner)->fragmentModel()->id, $detachedFragment->fragmentModel()->id);
+        $this->assertFalse($detachedFragment->getFragmentModel()->isShared());
+        $this->assertNotEquals($this->firstFragment($this->owner)->getFragmentModel()->id, $detachedFragment->getFragmentModel()->id);
     }
 
     public function test_a_detached_fragment_is_no_longer_considered_shared_when_its_only_used_by_one_model()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-unshare', $this->owner2, $this->fragment));
 
-        $this->assertFalse($this->firstFragment($this->owner)->fragmentModel()->isShared());
+        $this->assertFalse($this->firstFragment($this->owner)->getFragmentModel()->isShared());
     }
 }
