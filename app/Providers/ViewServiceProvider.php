@@ -53,5 +53,7 @@ class ViewServiceProvider extends ServiceProvider
         view()->share('isCollapsedOnPageLoad', $isCollapsedOnPageLoad);
     }
 
-    public function register() {}
+    public function register()
+    {
+    }
 }

@@ -10,5 +10,6 @@ class LocalesUpdated
         public readonly ModelReference $modelReference,
         public readonly array $newState,
         public readonly array $previousState
-    ) {}
+    ) {
+    }
 }

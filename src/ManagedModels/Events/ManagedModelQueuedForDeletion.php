@@ -8,5 +8,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class ManagedModelQueuedForDeletion
 {
-    public function __construct(public readonly ModelReference $modelReference) {}
+    public function __construct(public readonly ModelReference $modelReference)
+    {
+    }
 }

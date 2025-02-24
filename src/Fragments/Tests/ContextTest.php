@@ -13,7 +13,9 @@ class ContextTest extends ChiefTestCase
         parent::setUp();
     }
 
-    public function test_it_can_get_context_per_locale() {}
+    public function test_it_can_get_context_per_locale()
+    {
+    }
 
     public function test_it_can_get_fragments_for_given_locale()
     {
