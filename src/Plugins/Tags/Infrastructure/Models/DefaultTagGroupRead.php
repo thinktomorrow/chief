@@ -13,9 +13,7 @@ class DefaultTagGroupRead implements TagGroupRead
 
     private array $data;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function fromMappedData(array $data): static
     {

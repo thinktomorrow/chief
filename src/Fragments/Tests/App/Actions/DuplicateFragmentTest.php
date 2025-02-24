@@ -127,7 +127,5 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertEquals($originalNestedFragment->values, $duplicatedNestedFragment->values);
     }
 
-    public function test_it_can_duplicate_shared_fragment()
-    {
-    }
+    public function test_it_can_duplicate_shared_fragment() {}
 }

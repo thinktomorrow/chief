@@ -12,7 +12,5 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
  */
 class PageChanged
 {
-    public function __construct(public readonly ModelReference $modelReference)
-    {
-    }
+    public function __construct(public readonly ModelReference $modelReference) {}
 }

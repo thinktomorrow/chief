@@ -134,10 +134,10 @@ final class LinkForm
         return new self(
             $model,
             ($includeRedirects ? $model->allUrls : $model->urls)
-            ->groupBy('locale')
-            ->map(function ($records) {
-                return $records->sortBy('redirect_id')->sortByDesc('created_at');
-            })
+                ->groupBy('locale')
+                ->map(function ($records) {
+                    return $records->sortBy('redirect_id')->sortByDesc('created_at');
+                })
         );
     }
 

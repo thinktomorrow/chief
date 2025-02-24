@@ -13,8 +13,7 @@ readonly class ChiefSite
         public string $name,
         public string $shortName,
         public ?string $url,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $site): self
     {

@@ -6,7 +6,5 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\DateId;
 
 class DateCreated
 {
-    public function __construct(public readonly DateId $tagId)
-    {
-    }
+    public function __construct(public readonly DateId $tagId) {}
 }

@@ -11,6 +11,5 @@ final class FormUpdated
     public function __construct(
         public readonly ModelReference $modelReference,
         public readonly string $formId
-    ) {
-    }
+    ) {}
 }
