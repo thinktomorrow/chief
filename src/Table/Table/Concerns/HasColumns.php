@@ -42,6 +42,9 @@ trait HasColumns
         $ordered = [];
         $unOrdered = [];
 
+        // Sanitize keys to match the column key formatting
+        $keysInOrder = array_map(fn ($key) => strtolower($key), $keysInOrder);
+
         foreach ($this->columns as $column) {
             foreach ($column->getItems() as $item) {
                 if (in_array($item->getKey(), $keysInOrder)) {

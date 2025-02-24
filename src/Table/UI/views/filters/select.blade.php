@@ -7,9 +7,11 @@
         {{ $getLabel() ?? $getKey() }}
 
         @if ($this->getActiveFilterValue($getKey()))
-            <span class="text-grey-200">|</span>
+            <div class="flex max-w-64 items-start gap-1 overflow-x-auto">
+                <span class="text-grey-200">|</span>
 
-            <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+                <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+            </div>
         @endif
     </x-chief-table::filter.select>
 </button>

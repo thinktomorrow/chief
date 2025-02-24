@@ -29,6 +29,8 @@ use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
 
+use function Orchestra\Testbench\default_skeleton_path;
+
 abstract class ChiefTestCase extends OrchestraTestCase
 {
     use RefreshDatabase;
@@ -40,7 +42,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function resolveApplication()
     {
-        return (new ApplicationBuilder(new Application($this->getBasePath())))
+        return (new ApplicationBuilder(new Application(default_skeleton_path())))
             ->withProviders()
             ->withMiddleware(static function ($middleware) {
                 $middleware->redirectGuestsTo('/admin/login');
