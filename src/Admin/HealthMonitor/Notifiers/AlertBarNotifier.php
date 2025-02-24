@@ -19,5 +19,7 @@ class AlertBarNotifier implements Notifier
     /**
      * @return void
      */
-    public function onSuccess(HealthCheck $healthCheck) {}
+    public function onSuccess(HealthCheck $healthCheck)
+    {
+    }
 }

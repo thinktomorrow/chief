@@ -6,5 +6,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\TimeTableId;
 
 class TimeTableUpdated
 {
-    public function __construct(public readonly TimeTableId $tagGroupId) {}
+    public function __construct(public readonly TimeTableId $tagGroupId)
+    {
+    }
 }

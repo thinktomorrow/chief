@@ -11,4 +11,6 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
 
-interface Page extends BelongsToSites, ContextOwner, FragmentsOwner, HasAsset, ReferableModel, StatefulContract, ViewableContract, Visitable {}
+interface Page extends BelongsToSites, ContextOwner, FragmentsOwner, HasAsset, ReferableModel, StatefulContract, ViewableContract, Visitable
+{
+}

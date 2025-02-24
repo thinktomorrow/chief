@@ -2,4 +2,6 @@
 
 namespace Thinktomorrow\Chief\Plugins\TimeTable\Domain\Exceptions;
 
-class InvalidMinutesFormat extends \DomainException {}
+class InvalidMinutesFormat extends \DomainException
+{
+}
