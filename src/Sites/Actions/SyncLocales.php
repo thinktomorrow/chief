@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
 
 class SyncLocales
 {
-    public function handle(BelongsToSites & ReferableModel $model, array $locales): void
+    public function handle(BelongsToSites&ReferableModel $model, array $locales): void
     {
         $previousState = $model->getSiteIds();
 

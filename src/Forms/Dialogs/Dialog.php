@@ -18,20 +18,20 @@ use Thinktomorrow\Chief\Forms\Layouts\Component;
 
 class Dialog extends Component implements Wireable
 {
-    use HasDialogType;
-    use HasModel;
-    use HasFields;
-    use HasElementId;
-    use HasLayout;
-    use HasSubTitle;
-    use HasContent;
     use HasButton;
+    use HasContent;
+    use HasDialogType;
+    use HasElementId;
+    use HasFields;
+    use HasLayout;
+    use HasModel;
+    use HasSubTitle;
 
     public function __construct(string $id = 'modal')
     {
         parent::__construct($id);
 
-        $this->elementId($this->id . '_' . Str::random());
+        $this->elementId($this->id.'_'.Str::random());
     }
 
     public function toLivewire()
@@ -88,7 +88,7 @@ class Dialog extends Component implements Wireable
 
     /**
      * Shorthand for setting the fields of the modal form.
-     * @param $fields
+     *
      * @return $this
      */
     public function form($fields): static

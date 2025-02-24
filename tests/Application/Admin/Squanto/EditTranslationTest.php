@@ -10,7 +10,7 @@ class EditTranslationTest extends ChiefTestCase
     {
         $response = $this->asAdmin()->get(route('squanto.edit', 'home'));
         $response->assertViewIs('squanto::edit')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
     public function test_guests_cannot_view_the_edit_form()

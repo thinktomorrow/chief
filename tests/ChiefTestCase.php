@@ -33,8 +33,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
 {
     use RefreshDatabase;
     use TestHelpers;
-    use TestingWithManagers;
     use TestingWithFiles;
+    use TestingWithManagers;
 
     protected $protectTestEnvironment = true;
 
@@ -79,17 +79,17 @@ abstract class ChiefTestCase extends OrchestraTestCase
         // Register the Chief Exception handler
         $this->app->singleton(ExceptionHandler::class, ChiefExceptionHandler::class);
 
-        Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\' . class_basename($modelName) . 'Factory');
+        Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\'.class_basename($modelName).'Factory');
 
         $this->setUpChiefEnvironment();
 
         // Set nl as default locale for testing env
         config()->set('app.fallback_locale', 'nl');
 
-        $this->app['view']->addLocation(__DIR__ . '/Shared/stubs/views');
+        $this->app['view']->addLocation(__DIR__.'/Shared/stubs/views');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         // Clear out any memoized values
         Memoize::clear();
@@ -105,7 +105,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
     protected function getEnvironmentSetUp($app)
     {
         $this->recurse_copy($this->getStubDirectory(), $this->getTempDirectory());
-        $app['path.base'] = realpath(__DIR__ . '/../');
+        $app['path.base'] = realpath(__DIR__.'/../');
 
         $app->bind('path.public', function () {
             return $this->getTempDirectory();
@@ -128,7 +128,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         // Connection is defined in the phpunit config xml
         $app['config']->set('database.connections.testing', [
             'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', __DIR__ . '/../database/testing.sqlite'),
+            'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
             'prefix' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -174,14 +174,11 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends ChiefExceptionHandler {
-            public function __construct()
-            {
-            }
+        $this->app->instance(ExceptionHandler::class, new class extends ChiefExceptionHandler
+        {
+            public function __construct() {}
 
-            public function report(\Throwable $e)
-            {
-            }
+            public function report(\Throwable $e) {}
 
             public function render($request, \Throwable $e)
             {
@@ -207,27 +204,27 @@ abstract class ChiefTestCase extends OrchestraTestCase
             return;
         }
 
-        if ("testing" !== $this->app->environment()) {
-            throw new \Exception('Make sure your testing environment is properly set. You are now running tests in the [' . $this->app->environment() . '] environment');
+        if ($this->app->environment() !== 'testing') {
+            throw new \Exception('Make sure your testing environment is properly set. You are now running tests in the ['.$this->app->environment().'] environment');
         }
 
-        if (DB::getName() != "testing" && DB::getName() != "setup") {
-            throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using [' . DB::getName() . ']. Are you crazy?');
+        if (DB::getName() != 'testing' && DB::getName() != 'setup') {
+            throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using ['.DB::getName().']. Are you crazy?');
         }
     }
 
     private function getStubDirectory($dir = null)
     {
-        return __DIR__ . '/Shared/stubs/' . $dir;
+        return __DIR__.'/Shared/stubs/'.$dir;
     }
 
     protected function getTempDirectory($dir = null)
     {
-        return __DIR__ . '/Shared/Tmp/' . $dir;
+        return __DIR__.'/Shared/Tmp/'.$dir;
     }
 
     public function getMediaDirectory($suffix = '')
     {
-        return $this->getTempDirectory() . '/media' . ($suffix == '' ? '' : '/' . $suffix);
+        return $this->getTempDirectory().'/media'.($suffix == '' ? '' : '/'.$suffix);
     }
 }

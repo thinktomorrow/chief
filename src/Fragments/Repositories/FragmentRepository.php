@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Repositories;
@@ -43,11 +44,11 @@ final class FragmentRepository
             ->fragments()
             ->when($locale, fn ($query, $locale) => $query->where(function ($q) use ($locale) {
                 $q->whereJsonContains('context_fragment_tree.locales', $locale)
-                  ->orWhereNull('context_fragment_tree.locales')
-                  ->orWhereJsonLength('context_fragment_tree.locales', '=', 0);
+                    ->orWhereNull('context_fragment_tree.locales')
+                    ->orWhereJsonLength('context_fragment_tree.locales', '=', 0);
             }))
-                ->with('assetRelation', 'assetRelation.media')
-                ->get();
+            ->with('assetRelation', 'assetRelation.media')
+            ->get();
 
         return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }

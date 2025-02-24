@@ -15,30 +15,30 @@ return [
      * Chief is designed with localisation in mind. You can set up the different locales
      * that should be available in the admin and site.
      */
-//    'locales' => [
-//
-//        /**
-//         * Application locales
-//         *
-//         * The available application locales in which model values can be localized in.
-//         * The translatable fields will be editable for each locale accordingly. Note
-//         * that you can still override this for each model.
-//         *
-//         * The first locale in this list is considered the default required locale.
-//         */
-//        'admin' => [
-//            'nl',
-//        ],
-//
-//        /**
-//         * Active sites.
-//         * These are the locales (sites) that are allowed on the frontend.
-//         *
-//         * Default this value is null, which means that all sites are active.
-//         * You can change this to an array of locales. e.g. ['nl', 'fr']
-//         */
-//        'site' => null,
-//    ],
+    //    'locales' => [
+    //
+    //        /**
+    //         * Application locales
+    //         *
+    //         * The available application locales in which model values can be localized in.
+    //         * The translatable fields will be editable for each locale accordingly. Note
+    //         * that you can still override this for each model.
+    //         *
+    //         * The first locale in this list is considered the default required locale.
+    //         */
+    //        'admin' => [
+    //            'nl',
+    //        ],
+    //
+    //        /**
+    //         * Active sites.
+    //         * These are the locales (sites) that are allowed on the frontend.
+    //         *
+    //         * Default this value is null, which means that all sites are active.
+    //         * You can change this to an array of locales. e.g. ['nl', 'fr']
+    //         */
+    //        'site' => null,
+    //    ],
 
     /**
      * Sites
@@ -58,7 +58,6 @@ return [
      * - name               The name of the site used throughout the admin
      * - short_name         A short name used in admin select lists or tabs.
      * - url                The base url of the site
-     *
      */
     'sites' => [
         [
@@ -130,7 +129,6 @@ return [
          *      Route::get('{slug?}', function($slug = '/'){
          *          return \Thinktomorrow\Chief\Site\Urls\ChiefResponse::fromSlug($slug);
          *      })->name('pages.show')->where('slug', '(.*)?');
-         *
          */
         'autoload' => env('CHIEF_ROUTE_AUTOLOAD', true),
 
@@ -181,9 +179,6 @@ return [
         'admin_view_path' => 'back.fragments',
     ],
 
-    /**
-     *
-     */
     'fragments_structure' => [
         'algemeen' => [
             // Fragment::class,

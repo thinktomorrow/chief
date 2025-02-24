@@ -9,6 +9,7 @@ use Thinktomorrow\AssetLibrary\Asset;
 class AssetDeleteComponent extends Component
 {
     public $isOpen = false;
+
     public $parentId;
 
     public $assetIds = [];
@@ -22,7 +23,7 @@ class AssetDeleteComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
         ];
     }
 

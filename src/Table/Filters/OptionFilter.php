@@ -10,7 +10,9 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 class OptionFilter extends Filter
 {
     private string $displayType = 'select';
+
     private array $options = [];
+
     private bool $multiple = false;
 
     public static function make(string $queryKey, Closure $query): self

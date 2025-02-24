@@ -13,10 +13,12 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class DeleteContextTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private $context;
+
     private $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -15,6 +15,7 @@ class CreateViewCommand extends Command
     protected $description = 'Create a chief admin view for a page or fragment';
 
     private FileManipulation $fileManipulation;
+
     private Registry $registry;
 
     public function __construct(Registry $registry, FileManipulation $fileManipulation)
@@ -34,7 +35,7 @@ class CreateViewCommand extends Command
         try {
             $resource = $this->registry->resource($resourceKey);
         } catch (MissingResourceRegistration $e) {
-            $this->error('No model registrered via ' . $resourceKey);
+            $this->error('No model registrered via '.$resourceKey);
 
             return;
         }
@@ -51,7 +52,7 @@ class CreateViewCommand extends Command
             ? __DIR__.'/../../../resources/views/manager/windows/fragments/edit.blade.php'
             : __DIR__.'/../../../resources/views/manager/edit.blade.php';
 
-        $fullViewPath = resource_path('views/' . $viewPath);
+        $fullViewPath = resource_path('views/'.$viewPath);
 
         $this->fileManipulation->writeFile($fullViewPath, file_get_contents($stub), $this->option('force'));
     }
@@ -62,12 +63,12 @@ class CreateViewCommand extends Command
             ? 'fragments'
             : 'pages';
 
-        return 'back/' . $path . '/' . $viewKey . '/edit.blade.php';
+        return 'back/'.$path.'/'.$viewKey.'/edit.blade.php';
     }
 
     private function addMethod(string $modelClass, string $viewPath)
     {
-        $path = str_replace('\\', '/', $modelClass) . '.php';
+        $path = str_replace('\\', '/', $modelClass).'.php';
 
         $this->fileManipulation->addMethodToClass(base_path($path), $this->adminStub($modelClass, $viewPath));
     }

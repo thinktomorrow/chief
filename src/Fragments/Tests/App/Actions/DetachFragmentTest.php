@@ -13,7 +13,7 @@ class DetachFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,13 +28,13 @@ class DetachFragmentTest extends ChiefTestCase
         $context2 = FragmentTestAssist::createContext($this->owner);
         FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,  1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
         FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertNotNull(FragmentModel::find($fragment->getFragmentId()));
 
         app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,  0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
         FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertNotNull(FragmentModel::find($fragment->getFragmentId()));
     }
@@ -44,12 +44,12 @@ class DetachFragmentTest extends ChiefTestCase
         $context = FragmentTestAssist::findOrCreateContext($this->owner);
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
-        FragmentTestAssist::assertFragmentCount($context->id,  1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
         $this->assertNotNull(FragmentModel::find($fragment->getFragmentId()));
 
         app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,  0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
         $this->assertNull(FragmentModel::find($fragment->getFragmentId()));
     }
 
@@ -68,9 +68,8 @@ class DetachFragmentTest extends ChiefTestCase
 
         app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,  0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
         FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Nav;
@@ -20,7 +21,7 @@ final class Nav
     }
 
     /**
-     * @param string[] $tags
+     * @param  string[]  $tags
      */
     public function tagged(array $tags): self
     {
@@ -28,7 +29,7 @@ final class Nav
             return $navItem->isTagged($tags);
         });
 
-        return static::fromItems($filteredItems);
+        return self::fromItems($filteredItems);
     }
 
     public function untagged(): self
@@ -37,12 +38,12 @@ final class Nav
             return $navItem->isUntagged();
         });
 
-        return static::fromItems($filteredItems);
+        return self::fromItems($filteredItems);
     }
 
     public static function fromItems(array $navItems): self
     {
-        $instance = new static();
+        $instance = new self;
 
         foreach ($navItems as $item) {
             $instance->add($item);

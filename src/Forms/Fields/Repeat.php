@@ -15,7 +15,9 @@ class Repeat extends Component implements Field
     use Fields\Concerns\HasEndpoint;
 
     protected string $view = 'chief-form::fields.repeat.repeat';
+
     protected string $sectionView = 'chief-form::fields.repeat.repeat-section';
+
     protected string $windowView = 'chief-form::fields.repeat.repeat-window';
 
     public function getRepeatedComponents(?string $locale = null): array
@@ -36,10 +38,9 @@ class Repeat extends Component implements Field
 
     public function getRepeatSection(int $index, array $values = [], ?string $locale = null, ?string $prefix = null): array
     {
-        $clonedComponents = (new DeepCopy())
+        $clonedComponents = (new DeepCopy)
             ->skipUncloneable()
-            ->copy($this->components)
-        ;
+            ->copy($this->components);
 
         // Populate fields with the correct name and the given values
         Fields::make($clonedComponents, fn ($field) => ! $field instanceof self)
@@ -48,16 +49,13 @@ class Repeat extends Component implements Field
                     ->template(':prefix.'.$index.'.:name.:locale')
                     ->replace('prefix', $prefix ?: $this->getName())
                     ->bracketed()
-                    ->get($field->getName(), $locale)
-                ;
+                    ->get($field->getName(), $locale);
 
                 $field->name($fieldName)
                     ->elementId($field->getElementId().'_'.Str::random())
                     ->value(data_get($values, $field->getColumnName(), null))
-                    ->setLocalizedFormKeyTemplate(':name.:locale')
-                ;
-            })
-        ;
+                    ->setLocalizedFormKeyTemplate(':name.:locale');
+            });
 
         return $clonedComponents;
     }

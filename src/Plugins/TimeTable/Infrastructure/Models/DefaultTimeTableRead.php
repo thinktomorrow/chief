@@ -12,17 +12,16 @@ class DefaultTimeTableRead implements TimeTableRead
 
     /** @var SlotsByDay[] */
     private array $days;
+
     private string $label;
+
     private array $data;
 
-    private function __construct()
-    {
-
-    }
+    private function __construct() {}
 
     public static function fromMappedData(array $data, array $days): static
     {
-        $model = new static();
+        $model = new static;
 
         $model->timeTableId = TimeTableId::fromString($data['id']);
         $model->days = array_map(fn ($day) => SlotsByDay::fromMappedData($day['key'], json_decode($day['slots'], true)), $days);
@@ -47,9 +46,9 @@ class DefaultTimeTableRead implements TimeTableRead
         return $this->days;
     }
 
-    public function getData(string $key, string $locale = null, $default = null)
+    public function getData(string $key, ?string $locale = null, $default = null)
     {
-        $key = $locale ? $key .'.'.$locale : $key;
+        $key = $locale ? $key.'.'.$locale : $key;
 
         return data_get($this->data, $key, $default);
     }

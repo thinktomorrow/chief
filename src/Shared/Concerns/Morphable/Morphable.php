@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Morphable;
 
 trait Morphable
 {
-    use EloquentMorphableInstantiation;
     use EloquentMorphableCreation;
+    use EloquentMorphableInstantiation;
 
     public function morphKey(): ?string
     {
@@ -27,11 +27,9 @@ trait Morphable
     /**
      * Retrieve results for one specific morphable model.
      *
-     * @param $query
-     * @param string|null $morphkey
      * @return mixed
      */
-    public function scopeMorphable($query, string $morphkey = null)
+    public function scopeMorphable($query, ?string $morphkey = null)
     {
         return $query->withoutGlobalScope(static::globalMorphableScope())
             ->where('morph_key', '=', $morphkey);
@@ -53,7 +51,7 @@ trait Morphable
 
     protected static function globalMorphableScope()
     {
-        return new GlobalMorphableScope();
+        return new GlobalMorphableScope;
     }
 
     protected function initializeMorphable()

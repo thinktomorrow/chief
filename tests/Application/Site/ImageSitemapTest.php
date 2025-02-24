@@ -16,14 +16,14 @@ class ImageSitemapTest extends ChiefTestCase
 {
     private ImageSitemapXml $sitemapXml;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $carbon = Carbon::today();
         Carbon::setTestNow($carbon);
 
-        $this->sitemapXml = new ImageSitemapXml();
+        $this->sitemapXml = new ImageSitemapXml;
 
         $page = $this->setUpAndCreateArticle(['current_state' => PageState::published]);
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);

@@ -16,8 +16,11 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 class UpdateFileField
 {
     protected AddAsset $addAsset;
+
     private CreateAsset $createAsset;
+
     private ReorderAssets $reorderAssets;
+
     private DetachAsset $detachAsset;
 
     /** @var string the media disk where the files should be stored. */
@@ -55,7 +58,7 @@ class UpdateFileField
 
         $existingAssets = $model->assetRelation()->get();
 
-        foreach (data_get($input, 'files.' . $field->getName(), []) as $locale => $values) {
+        foreach (data_get($input, 'files.'.$field->getName(), []) as $locale => $values) {
 
             $assetsForUpload = $values['uploads'] ?? [];
             $assetsForAttach = $values['attach'] ?? [];
@@ -148,14 +151,14 @@ class UpdateFileField
 
     private function sluggifyFilename(string $filename): string
     {
-        if (false === strpos($filename, '.')) {
+        if (strpos($filename, '.') === false) {
             return $filename;
         }
 
         $extension = substr($filename, strrpos($filename, '.') + 1);
         $filename = substr($filename, 0, strrpos($filename, '.'));
 
-        return Str::slug($filename) . '.' . $extension;
+        return Str::slug($filename).'.'.$extension;
     }
 
     protected function getDisk(): string

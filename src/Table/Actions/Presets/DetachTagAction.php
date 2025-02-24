@@ -12,7 +12,6 @@ use Thinktomorrow\Chief\Table\Actions\BulkAction;
 
 class DetachTagAction extends BulkAction
 {
-
     public static function makeDefault(string $resourceKey): static
     {
         return static::make('detach-tag')
@@ -31,14 +30,13 @@ class DetachTagAction extends BulkAction
 
                 return Dialog::make('tagModal')
                     ->title('Verwijder tags van aan selectie')
-                    ->subTitle(count($modelIds) . ' items geselecteerd')
+                    ->subTitle(count($modelIds).' items geselecteerd')
                     ->form([
                         MultiSelect::make('tags')
                             ->multiple()
                             ->options($tagsForSelect),
                     ])
                     ->button('Verwijderen');
-
 
             })
 //            ->dialog(
@@ -53,21 +51,21 @@ class DetachTagAction extends BulkAction
 //                    ])
 //                    ->button('Verwijderen')
 //            )
-        ->effect(function ($formData, $data) use ($resourceKey) {
+            ->effect(function ($formData, $data) use ($resourceKey) {
 
-            $tagIds = (array) ($formData['tags'] ?? []);
-            $modelIds = $data['items'];
+                $tagIds = (array) ($formData['tags'] ?? []);
+                $modelIds = $data['items'];
 
-            try {
-                app(TaggableRepository::class)->detachTags($resourceKey, $modelIds, $tagIds);
+                try {
+                    app(TaggableRepository::class)->detachTags($resourceKey, $modelIds, $tagIds);
 
-                return true;
-            } catch (\Exception $e) {
-                report($e);
+                    return true;
+                } catch (\Exception $e) {
+                    report($e);
 
-                return false;
-            }
-        })
+                    return false;
+                }
+            })
             ->notifyOnSuccess('Tags verwijderd!')
             ->notifyOnFailure('Er is iets misgegaan bij het verwijderen van de tags.');
     }

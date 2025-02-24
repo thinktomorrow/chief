@@ -25,5 +25,4 @@ trait HasDialog
     {
         return $this->dialogResolver;
     }
-
 }

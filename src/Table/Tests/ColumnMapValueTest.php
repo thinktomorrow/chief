@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
 
 class ColumnMapValueTest extends TestCase
 {
-
     public function test_it_can_map_value()
     {
         ModelFixture::migrateUp();
@@ -66,7 +65,7 @@ class ColumnMapValueTest extends TestCase
 
     public function test_it_can_map_object()
     {
-        $model = (object)['books' => [
+        $model = (object) ['books' => [
             ['title' => 'dutch title'],
             ['title' => 'English title'],
         ]];
@@ -80,7 +79,7 @@ class ColumnMapValueTest extends TestCase
 
     public function test_it_can_map_values_multiple_times()
     {
-        $model = (object)['books' => [
+        $model = (object) ['books' => [
             ['title' => 'dutch title'],
             ['title' => 'English title'],
         ]];
@@ -97,7 +96,7 @@ class ColumnMapValueTest extends TestCase
 
     public function test_it_can_map_value_via_array_mapping()
     {
-        $model = (object)['books' => [
+        $model = (object) ['books' => [
             ['title' => 'dutch title'],
             ['title' => 'English title'],
         ]];
@@ -113,5 +112,4 @@ class ColumnMapValueTest extends TestCase
         $this->assertEquals('DUTCH TITLE', $column->getItems()->first()->getValue());
         $this->assertEquals('ENGLISH TITLE', $column->getItems()[1]->getValue());
     }
-
 }

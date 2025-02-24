@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 class EloquentTimeTableReadRepository implements TimeTableReadRepository
 {
     private ContainerInterface $container;
+
     private TimeTableFactory $timeTableFactory;
 
     public function __construct(ContainerInterface $container, TimeTableFactory $timeTableFactory)

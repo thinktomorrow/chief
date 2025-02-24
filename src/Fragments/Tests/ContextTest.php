@@ -8,21 +8,18 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ContextTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
 
-    public function test_it_can_get_context_per_locale()
-    {
-
-    }
+    public function test_it_can_get_context_per_locale() {}
 
     public function test_it_can_get_fragments_for_given_locale()
     {
         $owner = $this->setupAndCreateArticle();
         $this->setupAndCreateSnippet($owner, 1);
-        $this->createAsFragment(new SnippetStub(), $owner, 2, ['title_trans' => ['nl' => 'foobar', 'en' => 'foobaz']]);
+        $this->createAsFragment(new SnippetStub, $owner, 2, ['title_trans' => ['nl' => 'foobar', 'en' => 'foobaz']]);
 
         $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW \nTHIS IS SNIPPET STUB VIEW foobar\n");
 
@@ -33,7 +30,7 @@ class ContextTest extends ChiefTestCase
     {
         $owner = $this->setupAndCreateArticle();
         $this->setupAndCreateSnippet($owner, 1);
-        $this->createAsFragment(new SnippetStub(), $owner, 2, ['title_trans' => ['nl' => 'foobar', 'en' => 'foobaz']]);
+        $this->createAsFragment(new SnippetStub, $owner, 2, ['title_trans' => ['nl' => 'foobar', 'en' => 'foobaz']]);
 
         $this->assertRenderedFragments($owner, "THIS IS SNIPPET STUB VIEW \nTHIS IS SNIPPET STUB VIEW foobar\n");
 

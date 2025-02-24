@@ -50,7 +50,7 @@ class FieldValidator
     //            );
     //            $validator = \Illuminate\Support\Facades\Validator::make([$field->getKey() => [$uploadedFile]], [$field->getKey() => $field->getRules()]);
     //            $validator->validate();
-    ////        }
+    // //        }
     //        }
     //
     //

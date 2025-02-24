@@ -12,7 +12,7 @@ class FragmentRepositoryTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -43,5 +43,4 @@ class FragmentRepositoryTest extends ChiefTestCase
         $this->assertCount(1, app(FragmentRepository::class)->getByContext($context->id));
         $this->assertCount(0, app(FragmentRepository::class)->getByContext($context2->id));
     }
-
 }

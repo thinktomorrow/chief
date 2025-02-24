@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
 
 class ColumnMapVariantTest extends TestCase
 {
-
     public function test_it_can_map_variant()
     {
         ModelFixture::migrateUp();
@@ -28,7 +27,7 @@ class ColumnMapVariantTest extends TestCase
         $model->tags()->create(['label' => 'second tag label']);
 
         $column = ColumnText::make('tags')
-            ->mapVariant(fn ($tag) => match($tag->label) {
+            ->mapVariant(fn ($tag) => match ($tag->label) {
                 'first tag label' => 'green',
                 'second tag label' => 'blue',
             })
@@ -40,7 +39,7 @@ class ColumnMapVariantTest extends TestCase
 
     public function test_it_can_map_variants_multiple_times()
     {
-        $model = (object)['books' => [
+        $model = (object) ['books' => [
             ['title' => 'dutch title'],
             ['title' => 'English title'],
         ]];
@@ -56,7 +55,7 @@ class ColumnMapVariantTest extends TestCase
 
     public function test_it_can_map_value_via_array_mapping()
     {
-        $model = (object)['books' => [
+        $model = (object) ['books' => [
             ['title' => 'dutch title'],
             ['title' => 'English title'],
         ]];
@@ -71,5 +70,4 @@ class ColumnMapVariantTest extends TestCase
         $this->assertEquals('DUTCH TITLE', $column->getItems()->first()->getVariant());
         $this->assertEquals('ENGLISH TITLE', $column->getItems()[1]->getVariant());
     }
-
 }

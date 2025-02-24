@@ -57,5 +57,4 @@ class TimeTableFactoryTest extends TestCase
 
         $this->assertCount(1, $result->exceptions());
     }
-
 }

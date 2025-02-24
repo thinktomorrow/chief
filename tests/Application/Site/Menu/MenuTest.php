@@ -10,7 +10,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class MenuTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -144,7 +144,7 @@ class MenuTest extends ChiefTestCase
         $collection = Menu::tree('main');
         $this->assertInstanceof(NodeCollection::class, $collection);
 
-        $this->assertEquals("last item", $collection->first()->getChildNodes()->first()->getLabel());
+        $this->assertEquals('last item', $collection->first()->getChildNodes()->first()->getLabel());
 
         $second->order = 1;
         $second->save();
@@ -153,7 +153,7 @@ class MenuTest extends ChiefTestCase
         $third->save();
 
         $collection = Menu::tree('main');
-        $this->assertEquals("second item", $collection->first()->getChildNodes()->first()->getLabel());
+        $this->assertEquals('second item', $collection->first()->getChildNodes()->first()->getLabel());
     }
 
     public function test_it_can_get_menu_by_type()

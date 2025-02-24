@@ -20,5 +20,5 @@ interface TagRead
 
     public function getOwnerReferences(): Collection;
 
-    public function getData(string $key, string $index = null, $default = null);
+    public function getData(string $key, ?string $index = null, $default = null);
 }

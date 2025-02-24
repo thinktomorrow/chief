@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories\EloquentTaggabl
 
 class TaggableRepositoryTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -100,6 +100,6 @@ class TaggableRepositoryTest extends TestCase
 
     private function repositories(): Generator
     {
-        yield new EloquentTaggableRepository();
+        yield new EloquentTaggableRepository;
     }
 }

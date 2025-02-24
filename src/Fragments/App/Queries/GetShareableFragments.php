@@ -13,9 +13,11 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 class GetShareableFragments
 {
     private FragmentFactory $fragmentFactory;
+
     private FragmentRepository $fragmentRepository;
 
     private array $filters = [];
+
     private int $limit = 30;
 
     public function __construct(FragmentRepository $fragmentRepository, FragmentFactory $fragmentFactory)
@@ -95,7 +97,7 @@ class GetShareableFragments
         $classReferences = $this->expandedClassReferences($classReferences);
 
         return $builder->where(function ($query) use ($classReferences) {
-            $query->where(DB::raw("1=0"));
+            $query->where(DB::raw('1=0'));
             foreach ($classReferences as $classReference) {
                 $query->orWhere('key', '=', $classReference);
             }
@@ -112,7 +114,7 @@ class GetShareableFragments
             ->select('context_fragments.*')
             ->groupBy('context_fragments.id')
             ->where(function ($query) use ($modelReferences) {
-                $query->where(DB::raw("1=0"));
+                $query->where(DB::raw('1=0'));
 
                 foreach ($modelReferences as $modelReference) {
                     $query->orWhere(function ($query) use ($modelReference) {
@@ -138,7 +140,7 @@ class GetShareableFragments
 
         foreach ($classNames as $className) {
             $modelReference = ModelReference::fromStatic($className);
-            $expanded[] = addSlashes($modelReference->className());
+            $expanded[] = addslashes($modelReference->className());
             $expanded[] = $modelReference->shortClassName();
         }
 

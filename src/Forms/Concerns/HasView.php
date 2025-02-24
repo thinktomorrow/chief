@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Forms\Concerns;
 trait HasView
 {
     protected string $view;
+
     protected string $windowView;
 
     protected bool $editInSidebar = false;

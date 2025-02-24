@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
@@ -15,12 +16,14 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 class QuoteWithAstrotomicTranslations extends Model implements PageResource, ReferableModel
 {
+    use \Astrotomic\Translatable\Translatable;
     use PageResourceDefault;
     use ReferableModelDefault;
-    use \Astrotomic\Translatable\Translatable;
 
     public $table = 'quotes';
+
     public $guarded = [];
+
     private $translatedAttributes = [
         'title_trans',
     ];

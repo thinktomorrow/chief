@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Repositories;
@@ -21,7 +22,6 @@ class ContextOwnerRepository
     }
 
     /**
-     * @param string $fragmentId
      * @return Collection ContextOwner[]
      */
     public function getOwnersByFragment(string $fragmentId): Collection

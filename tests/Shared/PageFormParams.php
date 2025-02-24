@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Support\Arr;

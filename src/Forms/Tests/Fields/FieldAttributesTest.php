@@ -18,7 +18,7 @@ class FieldAttributesTest extends TestCase
 {
     private array $classes;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

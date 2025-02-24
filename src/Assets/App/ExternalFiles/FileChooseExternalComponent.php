@@ -11,9 +11,13 @@ class FileChooseExternalComponent extends Component
     use ShowsAsDialog;
 
     public $parentId;
+
     public $driverType;
+
     public $driverTypes = [];
+
     public $driverId;
+
     public $assetId = null; // Existing asset id
 
     private array $cachedDrivers = [];
@@ -29,7 +33,7 @@ class FileChooseExternalComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
         ];
     }
 
@@ -79,10 +83,10 @@ class FileChooseExternalComponent extends Component
 
         if ($this->assetId) {
             $asset = $driver->updateAsset(Asset::find($this->assetId), $this->driverId);
-            $this->dispatch('externalAssetUpdated-' . $this->parentId, [$asset->id]);
+            $this->dispatch('externalAssetUpdated-'.$this->parentId, [$asset->id]);
         } else {
             $asset = $driver->createAsset($this->driverId);
-            $this->dispatch('assetsChosen-' . $this->parentId, [$asset->id]);
+            $this->dispatch('assetsChosen-'.$this->parentId, [$asset->id]);
         }
 
         $this->reset('driverType', 'driverId', 'assetId');

@@ -87,12 +87,11 @@ class UpdateMenuItem
     /**
      * If no link is required, we make sure to remove any current url and force it in the request so we remove it
      *
-     * @param MenuRequest $request
      * @return \Illuminate\Http\Request|MenuRequest
      */
     private function forceRemoveUrlWhenNoLinkIsRequested(MenuRequest $request)
     {
-        if (MenuItem::TYPE_NOLINK == $request->input('type')) {
+        if ($request->input('type') == MenuItem::TYPE_NOLINK) {
             $trans = $request->input('trans', []);
 
             foreach (array_keys($trans) as $locale) {

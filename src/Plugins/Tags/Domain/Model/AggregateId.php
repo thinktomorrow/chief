@@ -11,17 +11,13 @@ trait AggregateId
         //
     }
 
-    /**
-     * @param string $id
-     * @return static
-     */
     public static function fromString(string $id): static
     {
         if ($id === '') {
             throw new \DomainException('Aggregate id string cannot be empty.');
         }
 
-        $aggregateId = new static();
+        $aggregateId = new static;
         $aggregateId->id = $id;
 
         return $aggregateId;
@@ -40,6 +36,6 @@ trait AggregateId
     public function equals($other): bool
     {
         return get_class($other) === get_class($this)
-            && (string)$this === (string)$other;
+            && (string) $this === (string) $other;
     }
 }

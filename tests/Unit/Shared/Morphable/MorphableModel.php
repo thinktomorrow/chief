@@ -13,6 +13,7 @@ class MorphableModel extends Model implements MorphableContract
     use Morphable;
 
     public $table = 'morphables';
+
     public $guarded = [];
 
     public static function migrateUp()

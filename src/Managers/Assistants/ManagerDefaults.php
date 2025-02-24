@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
@@ -14,8 +15,11 @@ use Thinktomorrow\Chief\Resource\Resource;
 trait ManagerDefaults
 {
     private Resource $resource;
+
     private FragmentRepository $fragmentRepository;
+
     private FieldValidator $fieldValidator;
+
     private Registry $registry;
 
     public function __construct(PageResource $resource, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator, Registry $registry)
@@ -40,7 +44,7 @@ trait ManagerDefaults
     public function can(string $action, $model = null): bool
     {
         foreach (DiscoverTraitMethods::belongingTo(static::class, 'can') as $method) {
-            if (true === $this->$method($action, $model)) {
+            if ($this->$method($action, $model) === true) {
                 return true;
             }
         }
@@ -53,10 +57,10 @@ trait ManagerDefaults
         if ($model) {
             $modelId = (is_object($model) && isset($model->{$model->getKeyName()})) ? $model->{$model->getKeyName()} : $model;
 
-            $parameters = array_merge((array)$modelId, $parameters);
+            $parameters = array_merge((array) $modelId, $parameters);
         }
 
-        return route('chief.' . $this->resource::resourceKey() . '.' . $action, $parameters);
+        return route('chief.'.$this->resource::resourceKey().'.'.$action, $parameters);
     }
 
     /**
@@ -72,7 +76,8 @@ trait ManagerDefaults
     /**
      * The authorize method provides a check against the current admin permissions.
      *
-     * @param string $action
+     * @param  string  $action
+     *
      * @throws NotAllowedManagerAction
      */
     private function authorize(string $permission): void

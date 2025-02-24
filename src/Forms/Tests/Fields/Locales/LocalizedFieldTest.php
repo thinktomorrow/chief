@@ -11,7 +11,7 @@ class LocalizedFieldTest extends TestCase
 {
     private LocalizedField $localizedField;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +43,7 @@ class LocalizedFieldTest extends TestCase
 
     public function test_it_sets_locales_based_on_model_sites_when_model_is_set()
     {
-        $model = new ArticlePage();
+        $model = new ArticlePage;
         $model->sites = ['fr'];
 
         $this->localizedField->locales()->model($model);
@@ -52,7 +52,7 @@ class LocalizedFieldTest extends TestCase
 
     public function test_it_does_not_set_model_locales_when_locales_are_already_set()
     {
-        $model = new ArticlePage();
+        $model = new ArticlePage;
 
         $this->localizedField->locales(['en']);
         $this->assertEquals(['en'], $this->localizedField->getLocales());

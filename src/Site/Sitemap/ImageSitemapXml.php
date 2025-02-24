@@ -24,7 +24,7 @@ class ImageSitemapXml
 
     private function reset(): void
     {
-        $this->sitemap = new Sitemap();
+        $this->sitemap = new Sitemap;
     }
 
     public function generate(string $locale): string

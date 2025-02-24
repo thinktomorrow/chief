@@ -12,9 +12,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class UpdateFragmentTest extends ChiefTestCase
 {
     private $owner;
+
     private Fragment $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

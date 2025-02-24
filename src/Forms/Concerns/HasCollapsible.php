@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Concerns;
 trait HasCollapsible
 {
     protected bool $collapsible = false;
+
     protected bool $collapsed = false;
 
     public function collapsible(bool $collapsible = true): static

@@ -10,5 +10,5 @@ interface TagGroupRead
 
     public function getLabel(): string;
 
-    public function getData(string $key, string $locale = null, $default = null);
+    public function getData(string $key, ?string $locale = null, $default = null);
 }

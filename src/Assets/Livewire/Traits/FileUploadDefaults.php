@@ -23,13 +23,16 @@ trait FileUploadDefaults
     public string $assetType = PreviewFile::DEFAULT_ASSETTYPE;
 
     public bool $allowMultiple = false;
+
     public array $acceptedMimeTypes = [];
+
     /**
      * The temporary uploaded files and the existing ones as previewFile object
      *
      * @var PreviewFile[]
      */
     public $previewFiles = [];
+
     /**
      * The temporary uploaded files. These files
      * are not yet stored as media records.
@@ -38,9 +41,13 @@ trait FileUploadDefaults
      * FileRef is added as soon as the file is completely uploaded by Livewire
      */
     public $files = [];
+
     public array $rules = [];
+
     protected FilePreview $filePreview;
+
     protected FileSelect $fileSelect;
+
     protected array $components = [];
 
     public function getPreviewFiles(): array
@@ -55,7 +62,7 @@ trait FileUploadDefaults
 
     public function getFieldId(): string
     {
-        return $this->getId() . '-' . $this->fieldName;
+        return $this->getId().'-'.$this->fieldName;
     }
 
     public function getFieldName(): string
@@ -133,7 +140,7 @@ trait FileUploadDefaults
             $this->setFilesValidatedState($fileId, true);
         } catch (ValidationException $e) {
             $this->setFilesValidatedState($fileId, false, $e->validator->errors()->first('files'));
-            $this->removeUpload('files.' . $this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
+            $this->removeUpload('files.'.$this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
         }
     }
 
@@ -174,7 +181,7 @@ trait FileUploadDefaults
         $index = $this->findUploadFileIndex($fileId);
 
         if (is_null($index)) {
-            throw new InvalidArgumentException('No uploadFile found by id ' . $fileId);
+            throw new InvalidArgumentException('No uploadFile found by id '.$fileId);
         }
 
         $this->files[$index][$key] = $value;
@@ -214,7 +221,7 @@ trait FileUploadDefaults
             // are going to track it a bit to try to understand why id is missing.
             if (! isset($newFileDetails['id'])) {
 
-                report(new InvalidArgumentException('id is unexpectedly missing... from file entry: ' . print_r($newFileDetails, true)));
+                report(new InvalidArgumentException('id is unexpectedly missing... from file entry: '.print_r($newFileDetails, true)));
 
                 continue;
             }
@@ -246,8 +253,7 @@ trait FileUploadDefaults
      * The previewFile that has the uploadFileId as its id, is a pending previewFile and
      * once the file is fully uploaded, the temporaryUploadFile id will be used.
      *
-     * @param $fileId
-     * @return int|null
+     * @param  $fileId
      */
     private function findPreviewFileIndex($id): ?int
     {

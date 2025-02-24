@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 class SelectExistingFragmentController
 {
     private Registry $registry;
+
     private GetShareableFragments $getShareableFragments;
 
     public function __construct(GetShareableFragments $getShareableFragments, Registry $registry)

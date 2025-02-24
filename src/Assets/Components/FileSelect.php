@@ -12,8 +12,11 @@ use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 class FileSelect extends Component implements Htmlable
 {
     private HasSyncedFormInputs $component;
+
     private bool $allowToUploadFiles;
+
     private bool $allowToChooseFiles;
+
     private bool $allowToChooseExternalFiles;
 
     public function __construct(HasSyncedFormInputs $component, bool $allowToUploadFiles = true, bool $allowToChooseFiles = true, bool $allowToChooseExternalFiles = false)

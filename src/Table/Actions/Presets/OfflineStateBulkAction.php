@@ -22,7 +22,7 @@ class OfflineStateBulkAction extends Action
                     try {
                         app(UpdateState::class)->handle(
                             $resourceKey,
-                            ModelReference::fromString($resourceKey .'@'. $modelId),
+                            ModelReference::fromString($resourceKey.'@'.$modelId),
                             $stateKey,
                             $transitionKey,
                             []
@@ -40,7 +40,6 @@ class OfflineStateBulkAction extends Action
                 return true;
             })
             ->notifyOnSuccess('De selectie staat offline!')
-            ->notifyOnFailure('Er is iets misgegaan bij het offline plaatsen.')
-        ;
+            ->notifyOnFailure('Er is iets misgegaan bij het offline plaatsen.');
     }
 }

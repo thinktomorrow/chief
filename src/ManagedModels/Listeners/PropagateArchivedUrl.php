@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
@@ -23,7 +24,7 @@ class PropagateArchivedUrl
         // Ok now get all urls from this model and point them to the new records
         foreach ($archivedUrlRecords as $urlRecord) {
             if ($targetRecord = $targetRecords->first(function ($record) use ($urlRecord) {
-                return ($record->locale == $urlRecord->locale && ! $record->isRedirect());
+                return $record->locale == $urlRecord->locale && ! $record->isRedirect();
             })) {
                 $urlRecord->redirectTo($targetRecord);
             }

@@ -29,6 +29,6 @@ class ViewableTest extends ChiefTestCase
     {
         $this->expectException(NotFoundView::class);
 
-        (new Viewless())->renderView();
+        (new Viewless)->renderView();
     }
 }

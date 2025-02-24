@@ -13,10 +13,12 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class ContextOwnerRepositoryTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private ContextOwnerRepository $contextOwnerRepository;
+
     private ContextRepository $contextRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -65,5 +67,4 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
 
         $this->assertCount(1, $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId()));
     }
-
 }

@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Table\Sorters\TreeSort;
 trait HasSorters
 {
     private array $sorters = [];
+
     private bool $withDefaultTreeSorting = true;
 
     public function sorters(array $sorters = []): static

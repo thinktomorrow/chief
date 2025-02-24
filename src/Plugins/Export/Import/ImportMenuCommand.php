@@ -12,6 +12,7 @@ class ImportMenuCommand extends BaseCommand
     use ReadsCsv;
 
     protected $signature = 'chief:import-menu {file}';
+
     protected $description = 'Import menu translations';
 
     public function __construct()
@@ -35,6 +36,6 @@ class ImportMenuCommand extends BaseCommand
             $locales
         ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of menu for locale ' . implode(',', $locales) . ' 🤘');
+        $this->info('Finished import of menu for locale '.implode(',', $locales).' 🤘');
     }
 }

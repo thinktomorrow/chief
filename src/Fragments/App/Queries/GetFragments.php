@@ -16,6 +16,7 @@ final class GetFragments
     use ManagesLoops;
 
     private FragmentRepository $fragmentRepository;
+
     private ContextRepository $contextRepository;
 
     public function __construct(ContextRepository $contextRepository, FragmentRepository $fragmentRepository)

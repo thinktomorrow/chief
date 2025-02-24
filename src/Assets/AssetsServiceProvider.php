@@ -23,7 +23,7 @@ class AssetsServiceProvider extends ServiceProvider
     {
         (new AssetLibraryServiceProvider($this->app))->boot();
 
-        $this->app['view']->addNamespace('chief-assets', __DIR__ . '/App/resources');
+        $this->app['view']->addNamespace('chief-assets', __DIR__.'/App/resources');
 
         // Livewire components
         Livewire::addPersistentMiddleware([
@@ -46,7 +46,7 @@ class AssetsServiceProvider extends ServiceProvider
         // instead so we can have a uniform validation flow
         if ($maxFileSize = config('chief.assets.max_file_size_in_bytes')) {
             config()->set('livewire.temporary_file_upload.rules', [
-                'required', 'file', 'max:' . ($maxFileSize / 1024),
+                'required', 'file', 'max:'.($maxFileSize / 1024),
             ]);
 
             config()->set('media-library.max_file_size', $maxFileSize);

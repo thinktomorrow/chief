@@ -24,7 +24,7 @@ class GuessEditUrl
         // Remove the locale segment if present - we assume the first segment is the locale
         $localeSegment = $localeSegment ?: $locale;
 
-        if (str_starts_with($path, $localeSegment . '/') || $path === $localeSegment) {
+        if (str_starts_with($path, $localeSegment.'/') || $path === $localeSegment) {
             $path = substr($path, strlen($localeSegment.'/'));
 
             if (! $path) {

@@ -15,7 +15,7 @@ class ReorderFragmentsTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_ignores_unknown_fragment_ids()
     {
-        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class,  1);
+        [$context,$snippet1] = FragmentTestAssist::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
 
         app(ReorderFragments::class)->handle($context->id, [
             300,

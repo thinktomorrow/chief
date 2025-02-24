@@ -22,7 +22,7 @@ class OnlineStateBulkAction extends Action
                     try {
                         app(UpdateState::class)->handle(
                             $resourceKey,
-                            ModelReference::fromString($resourceKey .'@'. $modelId),
+                            ModelReference::fromString($resourceKey.'@'.$modelId),
                             $stateKey,
                             $transitionKey,
                             []
@@ -39,7 +39,6 @@ class OnlineStateBulkAction extends Action
 
                 return true;
             })
-            ->notifyOnSuccess('De selectie staat online!')->notifyOnFailure('Er is iets misgegaan bij het online plaatsen.')
-        ;
+            ->notifyOnSuccess('De selectie staat online!')->notifyOnFailure('Er is iets misgegaan bij het online plaatsen.');
     }
 }

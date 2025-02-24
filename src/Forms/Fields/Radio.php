@@ -9,9 +9,10 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
 
 class Radio extends Component implements Field
 {
-    use HasOptions;
     use HasGroupedOptions;
+    use HasOptions;
 
     protected string $view = 'chief-form::fields.radio';
+
     protected string $windowView = 'chief-form::fields.select-window';
 }

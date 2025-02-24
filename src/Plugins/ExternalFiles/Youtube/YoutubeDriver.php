@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Assets\App\FileApplication;
 class YoutubeDriver implements Driver
 {
     private CreateAsset $createAsset;
+
     private FileApplication $fileApplication;
 
     public function __construct(CreateAsset $createAsset, FileApplication $fileApplication)
@@ -60,14 +61,14 @@ class YoutubeDriver implements Driver
      */
     private function getInfo(string $idOrUrl): array
     {
-        $query = str_contains($idOrUrl, 'http') ? $idOrUrl : 'https://youtube.com/watch?v=' . $idOrUrl;
+        $query = str_contains($idOrUrl, 'http') ? $idOrUrl : 'https://youtube.com/watch?v='.$idOrUrl;
 
         try {
             $response = file_get_contents('https://youtube.com/oembed?format=json&url='.urlencode($query));
 
             return json_decode($response, true);
         } catch (\ErrorException $e) {
-            throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Youtube verwijzing: ' . '['.$idOrUrl.']']);
+            throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Youtube verwijzing: '.'['.$idOrUrl.']']);
         }
     }
 
@@ -87,7 +88,7 @@ class YoutubeDriver implements Driver
 
     private function createPreviewThumbByResponse(array $oEmbedResponse): AssetContract
     {
-        $fileName = Str::slug($oEmbedResponse['title']) . '.jpg';
+        $fileName = Str::slug($oEmbedResponse['title']).'.jpg';
         $thumbUrl = $oEmbedResponse['thumbnail_url'];
 
         $asset = $this->createAsset
@@ -118,7 +119,7 @@ class YoutubeDriver implements Driver
 
     private function updatePreviewThumbByResponse(AssetContract $asset, array $oEmbedResponse): void
     {
-        $fileName = Str::slug($oEmbedResponse['title']) . '.jpg';
+        $fileName = Str::slug($oEmbedResponse['title']).'.jpg';
         $thumbUrl = $oEmbedResponse['thumbnail_url'];
 
         $media = $asset->getFirstMedia();
@@ -129,12 +130,11 @@ class YoutubeDriver implements Driver
         $this->fileApplication->replaceMediaByUrl($asset->id, $thumbUrl);
     }
 
-
     /**
      * Get Youtube video ID from URL
      * Source: https://stackoverflow.com/questions/3392993/php-regex-to-get-youtube-video-id#answer-17799714
      *
-     * @param string $url
+     * @param  string  $url
      * @return mixed Youtube video ID or FALSE if not found
      */
     private function getYoutubeIdFromUrl($url)

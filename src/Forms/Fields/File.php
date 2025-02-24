@@ -31,16 +31,17 @@ use Thinktomorrow\Chief\Sites\ChiefLocales;
  */
 class File extends Component implements Field
 {
-    use HasMultiple;
-    use HasStorageDisk;
+    use AllowsExternalFiles;
+    use HasAcceptedMimeTypes;
     use HasAssetType;
     use HasCustomUrl;
-    use HasUploadButtonLabel;
     use HasEndpoint;
-    use HasAcceptedMimeTypes;
-    use AllowsExternalFiles;
+    use HasMultiple;
+    use HasStorageDisk;
+    use HasUploadButtonLabel;
 
     protected string $view = 'chief-form::fields.file';
+
     protected string $windowView = 'chief-form::fields.file-window';
 
     public function __construct(string $key)
@@ -66,7 +67,7 @@ class File extends Component implements Field
         });
     }
 
-    private function getMedia(Model & HasAsset $model, string $locale): array
+    private function getMedia(Model&HasAsset $model, string $locale): array
     {
         return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
             return $asset->pivot->locale == $locale;
@@ -93,10 +94,10 @@ class File extends Component implements Field
         $preppedPayload = [];
 
         foreach ($ruleKeys as $ruleKey) {
-            if (Arr::has($payload, $ruleKey . '.uploads')) {
-                $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey . '.uploads'));
-            } elseif (Arr::has($payload, $ruleKey . '.attach')) {
-                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey . '.attach'));
+            if (Arr::has($payload, $ruleKey.'.uploads')) {
+                $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey.'.uploads'));
+            } elseif (Arr::has($payload, $ruleKey.'.attach')) {
+                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey.'.attach'));
             }
         }
 
@@ -121,7 +122,7 @@ class File extends Component implements Field
 
     public function getRules(): array
     {
-        return (new MapValidationRules())->handle(parent::getRules(), [
+        return (new MapValidationRules)->handle(parent::getRules(), [
             'required' => 'file_required',
             'mimetypes' => 'file_mimetypes',
             'dimensions' => 'file_dimensions',

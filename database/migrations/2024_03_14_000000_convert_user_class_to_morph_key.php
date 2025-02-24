@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up()
     {
         DB::table('model_has_roles')
@@ -13,8 +12,5 @@ return new class extends Migration {
             ->update(['model_type' => 'chiefuser']);
     }
 
-    public function down()
-    {
-
-    }
+    public function down() {}
 };

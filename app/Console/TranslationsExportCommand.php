@@ -12,6 +12,7 @@ class TranslationsExportCommand extends BaseCommand
     protected $signature = 'chief:translations-export
                                     {locale : the origin locale}
                                     {--target= : the locales for which you want to provde a column}';
+
     protected $description = 'Export page text content for translations';
 
     public function __construct()
@@ -25,7 +26,7 @@ class TranslationsExportCommand extends BaseCommand
         $locale = $this->argument('locale');
 
         if (! in_array($locale, $locales)) {
-            throw new \InvalidArgumentException('Passed locale ' . $locale .' is not found as Chief locale. Available locales are ' . implode(',', $locales));
+            throw new \InvalidArgumentException('Passed locale '.$locale.' is not found as Chief locale. Available locales are '.implode(',', $locales));
         }
 
         $targetLocales = $locales;

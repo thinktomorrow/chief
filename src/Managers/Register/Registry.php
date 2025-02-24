@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
@@ -13,7 +14,7 @@ use Thinktomorrow\Chief\Resource\TreeResource;
 
 final class Registry
 {
-    /** @var PageResource|Resource[] */
+    /** @var PageResource|resource[] */
     private array $resources;
 
     /** @var Manager[] */
@@ -61,7 +62,7 @@ final class Registry
         $resource = $this->findResourceByModel($modelClass);
 
         if (! $resource instanceof TreeResource || ! $resource instanceof Resource) {
-            throw new MissingTreeResource('Class ['.$modelClass.'] should implement ' . TreeResource::class .'.');
+            throw new MissingTreeResource('Class ['.$modelClass.'] should implement '.TreeResource::class.'.');
         }
 
         return $resource;
@@ -101,18 +102,18 @@ final class Registry
         $resources = [];
 
         foreach ($this->resources as $key => $resource) {
-            if (true == $filter($resource)) {
+            if ($filter($resource) == true) {
                 $resources[$key] = $resource;
             }
         }
 
-        return new static($resources);
+        return new self($resources);
     }
 
     public function registerResource(string $key, Resource $resource, Manager $manager): self
     {
         if ($this->exists($key)) {
-            throw new ResourceAlreadyRegistered('Cannot register resource. The resource key [' . $key . '] is already registered.');
+            throw new ResourceAlreadyRegistered('Cannot register resource. The resource key ['.$key.'] is already registered.');
         }
 
         $this->resources[$key] = $resource;

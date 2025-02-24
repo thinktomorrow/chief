@@ -9,8 +9,11 @@ use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
 class FragmentContextSelection extends Component
 {
     public string $resourceKey;
+
     public array $contextIds = [];
+
     public string $modelReference;
+
     public string $currentContextId;
 
     public function mount(string $resourceKey, ModelReference $modelReference, string $currentContextId)
@@ -62,7 +65,7 @@ class FragmentContextSelection extends Component
     private function askConfirmation()
     {
         $this->showConfirmButton = true;
-        $this->warningMessage = 'Opgelet! Als u <strong>' . $this->getRemovedLocalesAsString() . '</strong> verwijdert, zullen ook de links en inhoud worden verwijderd van deze pagina.';
+        $this->warningMessage = 'Opgelet! Als u <strong>'.$this->getRemovedLocalesAsString().'</strong> verwijdert, zullen ook de links en inhoud worden verwijderd van deze pagina.';
     }
 
     public function close()

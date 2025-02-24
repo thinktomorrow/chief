@@ -41,7 +41,7 @@ class SnippetCollection extends Collection
         return static::$loadedSnippets = new self($files->map(function (SplFileInfo $file) {
             $path = $file->getRealPath();
 
-            if (0 === strpos($path, resource_path('views')) && false !== strpos($file->getBasename(), '.blade.php')) {
+            if (strpos($path, resource_path('views')) === 0 && strpos($file->getBasename(), '.blade.php') !== false) {
                 $path = substr($path, strlen(resource_path('views')));
             }
 
@@ -66,7 +66,6 @@ class SnippetCollection extends Collection
      * realpath() returns false if dir does not exists.
      * If then the directory still does not exists, we will silently abort and continue.
      *
-     * @param $path
      * @return bool|string
      */
     private static function constructFullPath($path)

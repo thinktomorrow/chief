@@ -16,10 +16,12 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class AttachFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Fragment $fragment;
+
     private ContextModel $context;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -48,10 +50,10 @@ class AttachFragmentTest extends ChiefTestCase
         $otherFragmentId = FragmentTestAssist::createFragment(Quote::class)->getFragmentId();
 
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
+            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]).'?order=0')
             ->assertStatus(201);
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]) . '?order=0')
+            ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]).'?order=0')
             ->assertStatus(201);
 
         $fragments = app(FragmentRepository::class)->getByContext($context->id);
@@ -86,13 +88,12 @@ class AttachFragmentTest extends ChiefTestCase
         $context = FragmentTestAssist::createContext($this->owner);
 
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
+            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]).'?order=0')
             ->assertStatus(201);
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]) . '?order=0')
+            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->fragmentModel()->id]).'?order=0')
             ->assertStatus(400);
 
-        FragmentTestAssist::assertFragmentCount($context->id,  1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
     }
-
 }

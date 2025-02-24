@@ -50,23 +50,23 @@ class TagReadTest extends TestCase
             'label' => 'internal label',
             'color' => '#333333',
             'owner_references' => collect([
-                (object)[
+                (object) [
                     'owner_type' => TaggableStub::class,
                     'owner_id' => '1',
                 ],
-                (object)[
+                (object) [
                     'owner_type' => TaggableStub::class,
                     'owner_id' => '2',
                 ],
-                (object)[
+                (object) [
                     'owner_type' => TaggableStub::class,
                     'owner_id' => '3',
                 ],
-                (object)[
+                (object) [
                     'owner_type' => TaggableStub::class,
                     'owner_id' => '4',
                 ],
-                (object)[
+                (object) [
                     'owner_type' => TaggableStub::class,
                     'owner_id' => '5',
                 ],

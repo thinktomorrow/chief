@@ -16,16 +16,19 @@ class TableComponentTest extends TestCase
     use RefreshDatabase;
 
     private $root;
+
     private $child1;
+
     private $child2;
+
     private $grandchild;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         TreeModelFixture::migrateUp();
-        $this->resource = new TreeResourceFixture();
+        $this->resource = new TreeResourceFixture;
 
         $this->root = TreeModelFixture::create(['parent_id' => null, 'title' => 'root title']);
         $this->child1 = TreeModelFixture::create(['parent_id' => $this->root->id, 'title' => 'child1 title']);

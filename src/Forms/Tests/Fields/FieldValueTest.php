@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class FieldValueTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

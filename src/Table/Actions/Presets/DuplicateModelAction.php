@@ -16,10 +16,10 @@ class DuplicateModelAction extends Action
         $manager = app(Registry::class)->manager($resourceKey);
 
         return static::make('duplicate')
-            ->label('Kopiëer ' . $resource->getLabel())
+            ->label('Kopiëer '.$resource->getLabel())
             ->description('Hiermee maak je een kopie aan, die je meteen kan bewerken.')
             ->prependIcon('<x-chief::icon.copy />')
-            ->effect(function ($formData, &$data) use ($resource, $manager) {
+            ->effect(function ($formData, &$data) use ($resource) {
                 try {
                     $model = ModelReference::fromString($data['item'])->instance();
                     $copiedModel = app(DuplicatePage::class)->handle($model, $resource->getTitleAttributeKey());
@@ -38,7 +38,6 @@ class DuplicateModelAction extends Action
                 if (isset($data['copied_model'])) {
                     return $manager->route('edit', $data['copied_model']->id);
                 }
-            })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.')
-        ;
+            })->notifyOnFailure('Er is iets misgegaan bij het dupliceren van dit item.');
     }
 }

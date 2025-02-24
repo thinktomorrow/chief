@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Widgets;
@@ -25,7 +26,7 @@ final class RenderWidgets
             $this->incrementLoopIndices();
             $loop = $this->getLastLoop();
 
-            return $carry . $widget->renderAdminWidget($loop, $widgets);
+            return $carry.$widget->renderAdminWidget($loop, $widgets);
         }, '');
     }
 }

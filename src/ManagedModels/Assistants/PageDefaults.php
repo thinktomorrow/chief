@@ -12,15 +12,14 @@ use Thinktomorrow\Chief\Sites\BelongsToSitesDefault;
 
 trait PageDefaults
 {
-    use ModelDefaults;
-
-    use VisitableDefaults;
-    use OwningFragments;
-    use UsesPageState;
-    use ShowsPageState;
-    use Publishable;
     use Archivable;
     use BelongsToSitesDefault;
+    use ModelDefaults;
+    use OwningFragments;
+    use Publishable;
+    use ShowsPageState;
+    use UsesPageState;
+    use VisitableDefaults;
 
     /**
      * Get all related models that have at least one fragment.

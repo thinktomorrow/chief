@@ -14,7 +14,7 @@ class DeleteFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -41,7 +41,7 @@ class DeleteFragmentTest extends ChiefTestCase
 
         $this->assertDatabaseCount(FragmentModel::class, 1);
         FragmentTestAssist::assertFragmentCount($context->id, 1);
-        FragmentTestAssist::assertFragmentCount($context2->id,  1);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
 
         app(DeleteFragment::class)->handle($fragment->getFragmentId());
 
@@ -57,5 +57,4 @@ class DeleteFragmentTest extends ChiefTestCase
 
         app(DeleteFragment::class)->handle('xxx');
     }
-
 }

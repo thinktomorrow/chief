@@ -20,9 +20,13 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 class FileApplication
 {
     private UpdateAssociatedAssetData $updateAssociatedAssetData;
+
     private CreateAsset $createAsset;
+
     private ReplaceMedia $replaceMedia;
+
     private UpdateAssetData $updateAssetData;
+
     private Registry $registry;
 
     public function __construct(Registry $registry, UpdateAssociatedAssetData $updateAssociatedAssetData, UpdateAssetData $updateAssetData, CreateAsset $createAsset, ReplaceMedia $replaceMedia)
@@ -80,9 +84,9 @@ class FileApplication
         $model = Asset::find($assetId)->getFirstMedia();
 
         // Strip extension should the user has entered extension
-        $basename = basename($basename, '.' . $model->extension);
+        $basename = basename($basename, '.'.$model->extension);
 
-        $model->file_name = $basename . '.' . $model->extension;
+        $model->file_name = $basename.'.'.$model->extension;
         $model->save();
     }
 

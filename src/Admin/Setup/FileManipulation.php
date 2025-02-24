@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Setup;
@@ -36,13 +37,13 @@ final class FileManipulation
     public function addMethodToClass($filepath, $method)
     {
         if (! $this->files->exists($filepath)) {
-            $this->error('File ' . $filepath .' does not exist.');
+            $this->error('File '.$filepath.' does not exist.');
 
             return;
         }
 
         $originalContent = file_get_contents($filepath);
-        $replacedContent = preg_replace('#(}$)#', $method . "$1", $originalContent);
+        $replacedContent = preg_replace('#(}$)#', $method.'$1', $originalContent);
 
         file_put_contents($filepath, $replacedContent);
     }
@@ -50,13 +51,13 @@ final class FileManipulation
     public function addToMethod($filepath, $method, $content)
     {
         if (! $this->files->exists($filepath)) {
-            $this->error('File ' . $filepath .' does not exist.');
+            $this->error('File '.$filepath.' does not exist.');
 
             return;
         }
 
         $originalContent = file_get_contents($filepath);
-        $replacedContent = preg_replace('#('.$method.'\(\)\s*{)#', "$1\n        " . $content, $originalContent);
+        $replacedContent = preg_replace('#('.$method.'\(\)\s*{)#', "$1\n        ".$content, $originalContent);
 
         file_put_contents($filepath, $replacedContent);
     }

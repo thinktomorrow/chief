@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
@@ -13,7 +14,9 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 class DuplicatePage
 {
     private DuplicateContext $duplicateContext;
+
     private DuplicateModel $duplicateModel;
+
     private ContextRepository $contextRepository;
 
     public function __construct(ContextRepository $contextRepository, DuplicateModel $duplicateModel, DuplicateContext $duplicateContext)
@@ -23,7 +26,7 @@ class DuplicatePage
         $this->contextRepository = $contextRepository;
     }
 
-    public function handle(Model & ReferableModel $model, string $titleKey = 'title'): Model
+    public function handle(Model&ReferableModel $model, string $titleKey = 'title'): Model
     {
         $copiedModel = $this->duplicateModel->handle($model, $titleKey);
 

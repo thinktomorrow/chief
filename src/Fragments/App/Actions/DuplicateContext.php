@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 class DuplicateContext
 {
     private DuplicateFragment $duplicateFragment;
+
     private ContextRepository $contextRepository;
 
     public function __construct(DuplicateFragment $duplicateFragment, ContextRepository $contextRepository)
@@ -21,7 +22,7 @@ class DuplicateContext
     }
 
     //    public function handle(ReferableModel & FragmentsOwner $sourceModel, string $sourceLocale, ReferableModel & FragmentsOwner $targetModel, string $targetLocale): void
-    public function handle(string $sourceContextId, ReferableModel & FragmentsOwner $targetModel): void
+    public function handle(string $sourceContextId, ReferableModel&FragmentsOwner $targetModel): void
     {
         $sourceContext = $this->contextRepository->find($sourceContextId);
         $targetContext = $this->contextRepository->create($targetModel, $sourceContext->getSiteIds());

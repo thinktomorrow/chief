@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up()
     {
         Schema::create('timetables', function (Blueprint $table) {
@@ -38,11 +39,9 @@ return new class extends Migration {
 
             $table->foreign('timetable_id')->references('id')->on('timetables')->onDelete('cascade');
             $table->foreign('timetable_date_id')->references('id')->on('timetable_dates')->onDelete('cascade');
-            $table->primary(['timetable_id','timetable_date_id']);
+            $table->primary(['timetable_id', 'timetable_date_id']);
         });
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 };

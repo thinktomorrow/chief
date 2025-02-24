@@ -10,7 +10,7 @@ class HotSpotsServiceProvider extends ChiefPluginServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-hotspots', __DIR__ . '/views');
+        $this->app['view']->addNamespace('chief-hotspots', __DIR__.'/views');
 
         Livewire::component('chief-wire::hotspots', HotSpotComponent::class);
 

@@ -15,7 +15,7 @@ class FieldReferenceTest extends TestCase
 
     private FieldReference $fieldReference;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -24,7 +24,7 @@ class FieldReferenceTest extends TestCase
 
     public function test_it_can_create_reference_from_encrypted_key()
     {
-        $reference = FieldReference::fromEncryptedKey(encrypt(ArticlePage::first()->modelReference()->get() . '|title'));
+        $reference = FieldReference::fromEncryptedKey(encrypt(ArticlePage::first()->modelReference()->get().'|title'));
 
         $this->assertEquals(ArticlePage::first(), $this->getPrivateProperty($reference, 'model'));
         $this->assertEquals(app(Registry::class)->resource('article_page'), $this->getPrivateProperty($reference, 'resource'));
@@ -38,7 +38,7 @@ class FieldReferenceTest extends TestCase
         $snippet = $this->setUpAndCreateSnippet($article);
         $resource = app(Registry::class)->resource($snippet::resourceKey());
 
-        $reference = FieldReference::fromEncryptedKey(encrypt($snippet->fragmentModel()->modelReference()->get() . '|links.1.title'));
+        $reference = FieldReference::fromEncryptedKey(encrypt($snippet->fragmentModel()->modelReference()->get().'|links.1.title'));
 
         $this->assertEquals($snippet->fragmentModel()->fresh(), $this->getPrivateProperty($reference, 'model'));
         $this->assertEquals($resource, $this->getPrivateProperty($reference, 'resource'));

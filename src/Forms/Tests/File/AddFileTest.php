@@ -17,9 +17,10 @@ class AddFileTest extends ChiefTestCase
     use UploadsFile;
 
     private $model;
+
     private $manager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -167,7 +168,7 @@ class AddFileTest extends ChiefTestCase
 
         $media = $this->model->asset(ArticlePage::FILEFIELD_DISK_KEY)->media->first();
         $this->assertEquals('secondMediaDisk', $media->disk);
-        $this->assertEquals($this->getTempDirectory('media2/' . $media->id . '/' . $media->file_name), $media->getPath());
+        $this->assertEquals($this->getTempDirectory('media2/'.$media->id.'/'.$media->file_name), $media->getPath());
     }
 
     public function test_it_can_add_a_new_file_as_custom_asset_type()

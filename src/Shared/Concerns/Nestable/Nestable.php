@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
@@ -8,7 +9,9 @@ use Thinktomorrow\Vine\Node;
 interface Nestable extends Node
 {
     public function getNodeLabel(): string;
+
     public function getBreadCrumbLabel(bool $withoutRoot = false): string;
+
     public function getBreadCrumbLabelWithoutRoot(): string;
 
     public function getParent(): ?self;
@@ -30,7 +33,6 @@ interface Nestable extends Node
     /**
      * Nested array of the complete child structure
      * belonging to this parent model.
-     *
      */
     public function getDescendants(): NestableTree;
 

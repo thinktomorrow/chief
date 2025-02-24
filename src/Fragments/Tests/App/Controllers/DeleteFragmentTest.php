@@ -17,7 +17,7 @@ class DeleteFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -97,7 +97,7 @@ class DeleteFragmentTest extends ChiefTestCase
         $fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $context->id);
 
         $this->asAdmin()->delete(route('chief::fragments.delete', [$context->id, $fragment->getFragmentId()]));
-        FragmentTestAssist::assertFragmentCount($context->id,  0);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
 
         $deletedFragmentModel = FragmentModel::find($fragment->fragmentModel()->id);
         $this->assertNull($deletedFragmentModel);

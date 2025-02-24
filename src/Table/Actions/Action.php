@@ -26,23 +26,23 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
 
 class Action extends \Illuminate\View\Component implements Htmlable
 {
+    use CloseDialog;
     use HasComponentRendering;
     use HasCustomAttributes;
+    use HasDescription;
+    use HasDialog;
+    use HasEffect;
+    use HasIcon;
     use HasKey;
     use HasLabel;
-    use HasDescription;
+    use HasLink;
     use HasLocalizableProperties;
     use HasModel;
-    use HasIcon;
-    use HasVariant;
-    use HasOrdinalLevel;
-    use HasLink;
-    use HasEffect;
-    use CloseDialog;
-    use HasDialog;
     use HasNotification;
-    use HasRefresh;
+    use HasOrdinalLevel;
     use HasRedirectOnSuccess;
+    use HasRefresh;
+    use HasVariant;
     use HasWhenCondition;
 
     public function __construct(string $key)

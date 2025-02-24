@@ -18,12 +18,14 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class DuplicateContextTest extends ChiefTestCase
 {
     private $context;
+
     private $fragment;
 
     private ArticlePage $owner;
+
     private ArticlePage $owner2;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -31,7 +33,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->owner2 = ArticlePage::create();
 
-        $this->context = FragmentTestAssist::findOrCreateContext($this->owner, );
+        $this->context = FragmentTestAssist::findOrCreateContext($this->owner);
         $this->fragment = FragmentTestAssist::createAndAttachFragment(SnippetStub::class, $this->context->id);
     }
 

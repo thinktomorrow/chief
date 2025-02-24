@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
@@ -15,8 +16,11 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 class DuplicateFragment
 {
     private ContextRepository $contextRepository;
+
     private FragmentRepository $fragmentRepository;
+
     private AttachFragment $attachFragment;
+
     private AddAsset $addAsset;
 
     public function __construct(ContextRepository $contextRepository, FragmentRepository $fragmentRepository, AttachFragment $attachFragment, AddAsset $addAsset)
@@ -30,6 +34,7 @@ class DuplicateFragment
     /**
      * Duplicate a fragment
      * Nested fragments are duplicated as well
+     *
      * @throws FragmentAlreadyAdded
      */
     public function handle(ContextModel $sourceContext, ContextModel $targetContext, FragmentModel $fragmentModel, int $index, bool $forceDuplicateSharedFragment = false): void

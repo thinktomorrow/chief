@@ -101,7 +101,7 @@ trait EditAssistant
         $model = $this->handleUpdate($request, $id);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $this->resource->getPageTitle($model) . '</a> is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="'.$this->route('edit', $model).'">'.$this->resource->getPageTitle($model).'</a> is aangepast');
     }
 
     private function handleUpdate(Request $request, $id)

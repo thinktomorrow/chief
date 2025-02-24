@@ -26,7 +26,7 @@ class FragmentTestAssist
         Assert::assertEquals($expected, app(GetFragments::class)->render($owner, []));
     }
 
-    public static function firstFragment(string $contextId, callable $callback = null)
+    public static function firstFragment(string $contextId, ?callable $callback = null)
     {
         $fragments = static::getFragments($contextId);
 
@@ -101,7 +101,6 @@ class FragmentTestAssist
         return app(FragmentRepository::class)->find($fragmentId);
     }
 
-
     //
     //
     //    public static function registerAndCreateFragment(FragmentsOwner $owner, $order = 0, $withSetup = true, array $values = [], string $locale = 'nl'): SnippetStub
@@ -136,7 +135,6 @@ class FragmentTestAssist
     //
     //        return static::createAndAttachFragment(Hero::resourceKey(), $context->id, $order);
     //    }
-
 
     //    public static function setUpAndCreateQuote(FragmentsOwner $owner, array $values = [], $order = 0, $withSetup = true, string $locale = 'nl'): Quote
     //    {

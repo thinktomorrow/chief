@@ -19,6 +19,7 @@ class FragmentsServiceProvider extends ServiceProvider
          *
          * This directive does not make use of the component rendering of fragments.
          * Best to loop the fragments in the view like:
+         *
          * @foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
          */
         Blade::directive('fragments', function () {
@@ -28,7 +29,7 @@ class FragmentsServiceProvider extends ServiceProvider
 
     public function bootAdmin(): void
     {
-        $this->app['view']->addNamespace('chief-fragments', __DIR__ . '/UI/views');
+        $this->app['view']->addNamespace('chief-fragments', __DIR__.'/UI/views');
 
         Blade::component(SidebarFragment::class, 'chief-fragments::sidebar');
         Blade::component(Fragments::class, 'chief-fragments::index');

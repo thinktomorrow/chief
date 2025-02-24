@@ -167,10 +167,10 @@ class ChiefServiceProvider extends ServiceProvider
     private function bootChiefSquanto(): void
     {
         // Project specific squanto files
-        $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', __DIR__.'/../../resources/views/vendor/squanto');
 
         // Chief squanto defaults
-        $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', base_path().'/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
 
         // Use the chief routing
         $this->app['config']['squanto.use_default_routes'] = false;
@@ -181,7 +181,7 @@ class ChiefServiceProvider extends ServiceProvider
         // User events
         Event::listen(Login::class, LogSuccessfulLogin::class);
         Event::listen(UserInvited::class, SendInvite::class);
-        Event::listen(InviteAccepted::class, EnableUser::class . '@onAcceptingInvite');
+        Event::listen(InviteAccepted::class, EnableUser::class.'@onAcceptingInvite');
 
         // Managed model events
         Event::listen(ManagedModelCreated::class, [CreateUrlForPage::class, 'onManagedModelCreated']);
@@ -220,8 +220,8 @@ class ChiefServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'chief');
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'chief-settings');
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'chief');
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'chief-settings');
 
         if ($this->app->runningInConsole()) {
             (new ConsoleServiceProvider($this->app))->register();
@@ -232,7 +232,7 @@ class ChiefServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(Settings::class, function () {
-            return new Settings();
+            return new Settings;
         });
 
         $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
@@ -245,7 +245,7 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->when(SettingsController::class)
                 ->needs(SettingFields::class)
                 ->give(function () {
-                    return new SettingFields(new Settings());
+                    return new SettingFields(new Settings);
                 });
             Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
             Relation::morphMap(['chiefuser' => User::class]);
@@ -253,7 +253,7 @@ class ChiefServiceProvider extends ServiceProvider
 
             // Global chief nav singleton
             $this->app->singleton(Nav::class, function () {
-                return new Nav();
+                return new Nav;
             });
 
             (new AssetsServiceProvider($this->app))->register();

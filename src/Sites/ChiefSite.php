@@ -5,16 +5,15 @@ namespace Thinktomorrow\Chief\Sites;
 readonly class ChiefSite
 {
     public function __construct(
-        public string  $id,
-        public string  $locale,
+        public string $id,
+        public string $locale,
         public ?string $fallbackLocale,
-        public bool    $isActive,
-        public bool    $isPrimary,
-        public string  $name,
-        public string  $shortName,
-        public ?string  $url,
-    ) {
-    }
+        public bool $isActive,
+        public bool $isPrimary,
+        public string $name,
+        public string $shortName,
+        public ?string $url,
+    ) {}
 
     public static function fromArray(array $site): self
     {

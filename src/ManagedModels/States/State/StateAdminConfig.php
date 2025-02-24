@@ -69,9 +69,6 @@ interface StateAdminConfig extends StateConfig
 
     /**
      * The notification shown in the notification bubble
-     *
-     * @param string $transitionKey
-     * @return string|null
      */
     public function getResponseNotification(string $transitionKey): ?string;
 }

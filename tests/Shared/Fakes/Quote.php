@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -13,14 +14,14 @@ use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-class Quote extends BaseFragment implements HasAsset, FragmentsOwner
+class Quote extends BaseFragment implements FragmentsOwner, HasAsset
 {
-    use OwningFragments;
     use HasDynamicAttributes {
         HasDynamicAttributes::dynamicLocaleFallback as standardDynamicLocaleFallback;
     }
-    use SoftDeletes;
     use InteractsWithAssets;
+    use OwningFragments;
+    use SoftDeletes;
 
     public function dynamicLocaleFallback(): ?string
     {

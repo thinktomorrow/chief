@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
@@ -18,7 +19,7 @@ class DetachFragment
         $context = ContextModel::findOrFail($contextId);
 
         if (! $context->fragments()->where('id', $fragmentId)->exists()) {
-            throw new FragmentAlreadyDetached('Fragment [' . $fragmentId . '] already detached or does not exist in context [' . $contextId . ']');
+            throw new FragmentAlreadyDetached('Fragment ['.$fragmentId.'] already detached or does not exist in context ['.$contextId.']');
         }
 
         $context->fragments()->detach($fragmentId);

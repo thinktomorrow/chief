@@ -24,7 +24,7 @@ class DeleteMenuItem
 
             DB::commit();
 
-            event(new MenuItemDeleted((string)$model->id));
+            event(new MenuItemDeleted((string) $model->id));
 
             return $model;
         } catch (\Throwable $e) {

@@ -30,7 +30,6 @@ class OfflineStateRowAction extends Action
             ->notifyOnSuccess('Staat nu offline')->notifyOnFailure('Er is iets misgegaan bij het offline zetten van dit item.')
             ->when(function ($model) {
                 return $model instanceof StatefulContract && $model->inOnlineState();
-            })
-        ;
+            });
     }
 }

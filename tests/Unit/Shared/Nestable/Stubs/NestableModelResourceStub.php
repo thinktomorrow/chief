@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs;
@@ -19,7 +20,7 @@ class NestableModelResourceStub implements PageResource, TreeResource
 
     public static function migrateUp()
     {
-        Schema::create((new NestableModelStub())->getTable(), function (Blueprint $table) {
+        Schema::create((new NestableModelStub)->getTable(), function (Blueprint $table) {
             $table->char('id', 36)->primary();
             $table->char('parent_id', 36)->index()->nullable();
             $table->json('values')->nullable();

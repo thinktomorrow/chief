@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 
-use function auth;
-use function route;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestAssist;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -11,13 +9,18 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
+use function auth;
+use function route;
+
 class EditFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $fragment;
+
     private ContextModel $context;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

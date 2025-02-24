@@ -14,16 +14,19 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 
 class HotSpotComponent extends Component
 {
-    use ShowsAsDialog;
-    use WithFileUploads;
     use InteractsWithForm;
     use InteractsWithGroupedForms;
+    use ShowsAsDialog;
+    use WithFileUploads;
 
     public $parentId;
+
     public $previousSiblingId;
+
     public ?PreviewFile $previewFile = null;
 
     public $hotSpots = [];
+
     public $activeHotSpotId = null;
 
     public function mount(string $parentId)
@@ -35,7 +38,7 @@ class HotSpotComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
         ];
     }
 
@@ -85,8 +88,8 @@ class HotSpotComponent extends Component
             'product_id' => null,
             'top' => $relativeTop,
             'left' => $relativeLeft,
-            'x' => (int)$x,
-            'y' => (int)$y,
+            'x' => (int) $x,
+            'y' => (int) $y,
         ];
 
         $this->activeHotSpotId = $id;
@@ -123,7 +126,7 @@ class HotSpotComponent extends Component
         $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
         $this->previewFile->data = array_merge($this->previewFile->data, ['hotspots' => $hotspots]);
 
-        $this->dispatch('assetUpdated-' . $this->previousSiblingId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->previousSiblingId, $this->previewFile);
 
         $this->close();
     }
@@ -145,7 +148,7 @@ class HotSpotComponent extends Component
 
     private function composeGroupIndex($index)
     {
-        return 'hotspots.' . $index;
+        return 'hotspots.'.$index;
     }
 
     private function componentIndices(): array

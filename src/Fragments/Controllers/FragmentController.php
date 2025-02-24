@@ -23,14 +23,14 @@ class FragmentController
          * that these values are excluded. Since a fragment id consist of at least 4 digits,
          * We can safely assume that an index with less than four characters is considered an invalid fragment id.
          */
-        $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string)$index) > 3);
+        $indices = array_filter($request->input('indices', []), fn ($index) => strlen((string) $index) > 3);
 
         $this->reorderFragments->handle($contextId, $indices);
 
         event(new FragmentsReordered($contextId));
 
         return response()->json([
-            'message' => 'models sorted for context ' . $contextId,
+            'message' => 'models sorted for context '.$contextId,
         ]);
     }
 

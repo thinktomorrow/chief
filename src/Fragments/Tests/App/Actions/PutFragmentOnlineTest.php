@@ -16,7 +16,7 @@ class PutFragmentOnlineTest extends ChiefTestCase
 
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -67,5 +67,4 @@ class PutFragmentOnlineTest extends ChiefTestCase
 
         Event::assertNotDispatched(FragmentPutOnline::class);
     }
-
 }

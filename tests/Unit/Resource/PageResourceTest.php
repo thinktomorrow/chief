@@ -11,8 +11,8 @@ class PageResourceTest extends TestCase
 {
     public function test_it_provides_chief_with_resource_info()
     {
-        $stub = new PageResourceStub();
-        $model = new SnippetStub();
+        $stub = new PageResourceStub;
+        $model = new SnippetStub;
 
         $this->assertEquals('snippet stub', $stub->getLabel());
         $this->assertEquals('snippet_stub', $stub::resourceKey());

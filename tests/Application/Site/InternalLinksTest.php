@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class InternalLinksTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -41,7 +41,7 @@ class InternalLinksTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle(['title' => 'foobar', 'current_state' => PageState::published]);
         $this->updateLinks($article, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
-        $response = $this->asAdmin()->get(route('chief.api.internal-links') . '?locale=en');
+        $response = $this->asAdmin()->get(route('chief.api.internal-links').'?locale=en');
         $response->assertJson([
             ['name' => '...', 'url' => ''],
             ['name' => 'foobar', 'url' => 'http://localhost/foobar-en'],

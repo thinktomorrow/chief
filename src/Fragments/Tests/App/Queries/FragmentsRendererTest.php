@@ -12,7 +12,7 @@ class FragmentsRendererTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,6 +32,6 @@ class FragmentsRendererTest extends ChiefTestCase
     {
         $context = FragmentTestAssist::createContext($this->owner);
 
-        $this->assertEquals("", app(GetFragments::class)->render($context->id));
+        $this->assertEquals('', app(GetFragments::class)->render($context->id));
     }
 }

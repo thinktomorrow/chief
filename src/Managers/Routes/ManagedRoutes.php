@@ -1,14 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Routes;
 
 use ArrayIterator;
 
-final class ManagedRoutes implements \IteratorAggregate, \Countable
+final class ManagedRoutes implements \Countable, \IteratorAggregate
 {
     private string $managerClass;
+
     private string $prefix;
+
     private array $routes;
 
     private function __construct(string $managerClass, string $prefix, array $routes)
@@ -23,12 +26,12 @@ final class ManagedRoutes implements \IteratorAggregate, \Countable
 
     public static function empty(string $managerClass, string $prefix): self
     {
-        return new static($managerClass, $prefix, []);
+        return new self($managerClass, $prefix, []);
     }
 
     public function push($managedRoutes): self
     {
-        return new static($this->managerClass, $this->prefix, array_merge($this->routes, (array) $managedRoutes));
+        return new self($this->managerClass, $this->prefix, array_merge($this->routes, (array) $managedRoutes));
     }
 
     public function getManagerClass(): string

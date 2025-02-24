@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Models;
@@ -13,8 +14,10 @@ final class ContextModel extends Model implements BelongsToSites
 {
     use BelongsToSitesDefault;
 
-    public $table = "contexts";
+    public $table = 'contexts';
+
     public $guarded = [];
+
     public $casts = [
         'id' => 'string',
     ];

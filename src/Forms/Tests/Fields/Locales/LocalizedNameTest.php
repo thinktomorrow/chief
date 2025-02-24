@@ -12,7 +12,7 @@ class LocalizedNameTest extends TestCase
 {
     private LocalizedField $localizedField;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

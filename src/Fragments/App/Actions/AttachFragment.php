@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
@@ -22,7 +23,7 @@ final class AttachFragment
 
         // Protect against duplicate addition...
         if ($context->fragments()->where('id', $fragmentId)->exists()) {
-            throw new FragmentAlreadyAdded('Fragment [' . $fragmentId . '] was already added to context [' . $context->id . ']');
+            throw new FragmentAlreadyAdded('Fragment ['.$fragmentId.'] was already added to context ['.$context->id.']');
         }
 
         $indices = $this->fetchSortIndices($context, $order, $fragmentId);
@@ -35,9 +36,7 @@ final class AttachFragment
     }
 
     /**
-     * @param ContextModel $context
-     * @param int $order
-     * @param int $fragmentId
+     * @param  int  $fragmentId
      * @return mixed
      */
     private function fetchSortIndices(ContextModel $context, int $order, string $fragmentId): array

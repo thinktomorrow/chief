@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
@@ -9,7 +10,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class PrepareMenuItemsForAdminSelect
 {
-    public function prepare(NodeCollection $items, MenuItem $model = null): Collection
+    public function prepare(NodeCollection $items, ?MenuItem $model = null): Collection
     {
         $collection = $items;
 
@@ -21,7 +22,7 @@ class PrepareMenuItemsForAdminSelect
 
         $menu = $collection->mapRecursive(function (MenuItem $node) {
             $node->setLabel(
-                ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())) . '> ' : '') .
+                ($node->getNodeDepth() != 0 ? (str_repeat('-', $node->getNodeDepth())).'> ' : '').
                 $node->getAnyLabel(),
                 app()->getLocale()
             );

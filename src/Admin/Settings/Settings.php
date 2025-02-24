@@ -56,7 +56,7 @@ class Settings extends Collection
 
         $config_values = static::configValues();
 
-        $database_values = Schema::hasTable((new Setting())->getTable())
+        $database_values = Schema::hasTable((new Setting)->getTable())
             ? Setting::all()->pluck('value', 'key')->toArray()
             : [];
 

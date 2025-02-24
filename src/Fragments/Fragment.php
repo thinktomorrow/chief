@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
@@ -10,7 +11,7 @@ use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Vine\Node;
 
-interface Fragment extends FragmentResource, ReferableModel, Htmlable, Node
+interface Fragment extends FragmentResource, Htmlable, Node, ReferableModel
 {
     //    public function renderAdminFragment($owner, $loop, $viewData = []);
 

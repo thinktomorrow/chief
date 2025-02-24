@@ -17,17 +17,16 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait PageDefaults
 {
-    use ReferableModelDefault;
-    use Viewable;
-    use InteractsWithAssets;
-    use HasDynamicAttributes;
-
-    use VisitableDefaults;
-    use OwningFragments;
-    use UsesPageState;
-    use ShowsPageState;
     use Archivable;
     use BelongsToSitesDefault;
+    use HasDynamicAttributes;
+    use InteractsWithAssets;
+    use OwningFragments;
+    use ReferableModelDefault;
+    use ShowsPageState;
+    use UsesPageState;
+    use Viewable;
+    use VisitableDefaults;
 
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for

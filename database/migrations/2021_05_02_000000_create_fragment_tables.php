@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up()
     {
-        Schema::create('contexts', function(Blueprint $table){
+        Schema::create('contexts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('owner_type');
             $table->char('owner_id', 36); // account for integer ids as well as uuids
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('context_fragments', function(Blueprint $table){
+        Schema::create('context_fragments', function (Blueprint $table) {
             $table->char('id', 36);
             $table->string('key');
             $table->json('data')->nullable();

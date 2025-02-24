@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Queries;
@@ -12,7 +13,9 @@ use Thinktomorrow\Chief\Resource\PageResource;
 class GetOwningModels
 {
     private ContextOwnerRepository $fragmentOwnerRepository;
+
     private ContextRepository $contextRepository;
+
     private Registry $registry;
 
     public function __construct(ContextRepository $contextRepository, ContextOwnerRepository $fragmentOwnerRepository, Registry $registry)

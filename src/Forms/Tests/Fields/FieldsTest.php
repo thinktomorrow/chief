@@ -86,7 +86,7 @@ class FieldsTest extends TestCase
             Fields\Text::make('yyy'),
         ]);
 
-        $this->assertEquals(['xxx','yyy'], $fields->keys());
+        $this->assertEquals(['xxx', 'yyy'], $fields->keys());
     }
 
     /** @test */
@@ -164,7 +164,7 @@ class FieldsTest extends TestCase
             Fields\Text::make('yyy'),
         ]);
 
-        $fields = $fields->model($articlePage = new ArticlePage());
+        $fields = $fields->model($articlePage = new ArticlePage);
 
         foreach ($fields->all() as $field) {
             $this->assertEquals($articlePage, $field->getModel());
@@ -228,7 +228,7 @@ class FieldsTest extends TestCase
         $mergedFields = $fields->merge($fields2);
 
         $this->assertCount(4, $mergedFields->all());
-        $this->assertEquals(['xxx','yyy','aaa','bbb'], $mergedFields->keys());
+        $this->assertEquals(['xxx', 'yyy', 'aaa', 'bbb'], $mergedFields->keys());
     }
 
     /** @test */
@@ -247,7 +247,7 @@ class FieldsTest extends TestCase
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
         $this->assertCount(2, $mergedFields->all());
-        $this->assertEquals(['xxx','yyy'], $mergedFields->keys());
+        $this->assertEquals(['xxx', 'yyy'], $mergedFields->keys());
 
         // Assert the first input is overwritten
         $this->assertInstanceOf(Fields\Textarea::class, $mergedFields->first());
@@ -269,7 +269,7 @@ class FieldsTest extends TestCase
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
         $this->assertCount(2, $mergedFields->all());
-        $this->assertEquals(['xxx','yyy'], $mergedFields->keys());
+        $this->assertEquals(['xxx', 'yyy'], $mergedFields->keys());
 
         // Assert the first input is overwritten
         $this->assertInstanceOf(Fields\Textarea::class, $mergedFields->find('xxx'));

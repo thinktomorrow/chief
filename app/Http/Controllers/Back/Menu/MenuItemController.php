@@ -29,7 +29,7 @@ class MenuItemController extends Controller
     {
         $this->authorize('create-page');
 
-        $menuitem = new MenuItem();
+        $menuitem = new MenuItem;
         $menuitem->type = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
 
@@ -55,7 +55,7 @@ class MenuItemController extends Controller
             ->performedOn($menu)
             ->log('created');
 
-        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
+        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label.' is aangemaakt');
     }
 
     /**
@@ -93,7 +93,7 @@ class MenuItemController extends Controller
             ->performedOn($menu)
             ->log('updated');
 
-        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangepast');
+        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label.' is aangepast');
     }
 
     public function destroy($id)

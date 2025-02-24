@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Tests;
@@ -11,9 +12,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class FragmentOwningHandlingTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private Quote $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -17,9 +17,10 @@ class SitemapTest extends ChiefTestCase
     private $carbon;
 
     private SitemapXml $sitemapXml;
+
     private $mockHandler;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +29,7 @@ class SitemapTest extends ChiefTestCase
         $this->carbon = Carbon::today();
         Carbon::setTestNow($this->carbon);
 
-        $this->mockHandler = new MockHandler();
+        $this->mockHandler = new MockHandler;
         $this->sitemapXml = new SitemapXml(new Client(['handler' => $this->mockHandler]));
 
         $page = ArticlePage::create(['current_state' => PageState::published]);

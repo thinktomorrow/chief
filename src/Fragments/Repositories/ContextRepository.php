@@ -54,7 +54,6 @@ class ContextRepository
         return ContextModel::findOrFail($contextId);
     }
 
-
     //
     //    public function getOrCreateByOwner(ReferableModel $owner, array $locales): \Illuminate\Support\Collection
     //    {

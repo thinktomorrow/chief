@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
@@ -16,7 +17,6 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableStaticModelDefault;
 
 /**
  * @deprecated use Thinktomorrow\Chief\Fragments\BaseFragment instead
-
  */
 trait FragmentableDefaults
 {
@@ -53,7 +53,7 @@ trait FragmentableDefaults
 
     public function renderFragment($owner, $loop, $viewData = []): string
     {
-        //$this->setOwnerViewPath($owner);
+        // $this->setOwnerViewPath($owner);
 
         $this->setViewData(array_merge($viewData, [
             'fragment' => $this,

@@ -4,12 +4,13 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use function route;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic\QuoteWithAstrotomicTranslations;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+
+use function route;
 
 class UpdatePageTest extends ChiefTestCase
 {
@@ -109,7 +110,7 @@ class UpdatePageTest extends ChiefTestCase
         $this->assertEquals('tt-favicon.png', ArticlePage::first()->asset('thumb')->filename());
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

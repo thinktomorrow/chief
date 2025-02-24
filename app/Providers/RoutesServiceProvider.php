@@ -33,7 +33,7 @@ class RoutesServiceProvider extends ServiceProvider
 
     private function autoloadFrontendRoute()
     {
-        if (true !== config('chief.route.autoload')) {
+        if (config('chief.route.autoload') !== true) {
             return;
         }
 
@@ -51,14 +51,14 @@ class RoutesServiceProvider extends ServiceProvider
     private function loadOpenAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-open-routes.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/chief-open-routes.php');
         });
     }
 
     private function loadAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-admin-routes.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/chief-admin-routes.php');
 
             // Add project specific chief routing...
             $projectChiefRoutePath = config('chief.route.admin-filepath', null);

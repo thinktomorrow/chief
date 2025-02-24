@@ -16,7 +16,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
 {
     private array $classes;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -81,7 +81,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
     /** @test */
     public function it_can_render_a_custom_view()
     {
-        $this->app['view']->addNamespace('test-views', __DIR__ . '/../../stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../../stubs/views');
 
         $this->assertStringContainsString(
             'this is a custom field view',

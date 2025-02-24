@@ -47,7 +47,7 @@ class FilterPresets
 
                 // Extract relation searches
                 foreach ($columns as $i => $column) {
-                    if (false !== strpos($column, '.')) {
+                    if (strpos($column, '.') !== false) {
                         [$relation, $columnName] = explode('.', $column);
 
                         $builder->whereHas($relation, function ($query) use ($value, $columnName, $dynamicColumn) {
@@ -85,12 +85,12 @@ class FilterPresets
     private static function queryColumnsOrDynamicAttributes(Builder $builder, $value, $columns, $dynamicKeys, $dynamicColumn): Builder
     {
         foreach ($columns as $column) {
-            $builder->orWhere($column, 'LIKE', '%' . $value . '%');
+            $builder->orWhere($column, 'LIKE', '%'.$value.'%');
         }
 
         foreach ($dynamicKeys as $dynamicKey) {
             $dynamicColumnParts = explode('.', $dynamicColumn);
-            $builder->orWhereRaw('LOWER(json_extract(`' . implode('`.`', $dynamicColumnParts) . '`, "$.' . $dynamicKey . '")) LIKE ?', '%' . trim(strtolower($value)) . '%');
+            $builder->orWhereRaw('LOWER(json_extract(`'.implode('`.`', $dynamicColumnParts).'`, "$.'.$dynamicKey.'")) LIKE ?', '%'.trim(strtolower($value)).'%');
         }
 
         return $builder;

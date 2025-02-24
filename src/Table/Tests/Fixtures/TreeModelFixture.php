@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Tests\Fixtures;
@@ -16,7 +17,9 @@ class TreeModelFixture extends Model implements Nestable
     use NestableDefault;
 
     public $table = 'chief_table_tree_models_fixtures';
+
     public $guarded = [];
+
     public $timestamps = false;
 
     public $dynamicKeys = [

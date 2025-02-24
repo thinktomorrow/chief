@@ -20,18 +20,17 @@ use Thinktomorrow\Chief\Table\Filters\Concerns\HasValue;
 
 abstract class Sorter extends Component
 {
+    use CanBeDefault;
+    use CanHideFromView;
+    use CanShowActiveLabel;
     use HasComponentRendering;
-    use HasLocalizableProperties;
-    use HasView;
+    use HasDescription;
     use HasKey;
     use HasLabel;
-    use HasDescription;
-    use HasValue;
-    use CanBeDefault;
-    use CanShowActiveLabel;
-    use CanHideFromView;
-
+    use HasLocalizableProperties;
     use HasQuery;
+    use HasValue;
+    use HasView;
 
     public function __construct(string $key)
     {

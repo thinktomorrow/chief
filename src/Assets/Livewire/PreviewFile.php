@@ -24,36 +24,34 @@ class PreviewFile implements Wireable
     const DEFAULT_ASSETTYPE = 'default';
 
     private function __construct(
-        public string  $id,
+        public string $id,
         public ?string $mediaId, // The actual Asset id
         public ?string $previewUrl,
-        public bool    $isPreviewable,
+        public bool $isPreviewable,
         public ?string $tempPath,
         public string $assetType,
-        public string  $filename,
-        public string  $size,
-        public string  $humanReadableSize,
-        public string  $mimeType,
-        public string  $extension,
+        public string $filename,
+        public string $size,
+        public string $humanReadableSize,
+        public string $mimeType,
+        public string $extension,
         public ?string $width = null,
         public ?string $height = null,
-        public bool    $isUploading = true,
-        public bool    $isValidated = false,
-        public bool    $isQueuedForDeletion = false,
-        public bool    $isAttachedToModel = false,
-        public bool    $isExternalAsset = false,
-        public array   $fieldValues = [],
+        public bool $isUploading = true,
+        public bool $isValidated = false,
+        public bool $isQueuedForDeletion = false,
+        public bool $isAttachedToModel = false,
+        public bool $isExternalAsset = false,
+        public array $fieldValues = [],
         public ?string $validationMessage = null,
         public ?string $createdAt = null,
         public ?string $updatedAt = null,
 
         // Asset related values
-        public array   $data = [],
-        public array   $urls = [],
-        public array   $owners = [],
-    ) {
-
-    }
+        public array $data = [],
+        public array $urls = [],
+        public array $owners = [],
+    ) {}
 
     public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null, array $attributes = []): static
     {
@@ -121,7 +119,7 @@ class PreviewFile implements Wireable
             $asset->id,
             $asset->id,
             $thumbUrl,
-            ('image' == $asset->getPreviewExtensionType()),
+            ($asset->getPreviewExtensionType() == 'image'),
             null,
             AssetTypeFactory::assetTypeByClassName(get_class($asset)),
             $asset->getFileName() ?: '',
@@ -162,7 +160,7 @@ class PreviewFile implements Wireable
         $media = $asset->getFirstMedia();
 
         if (! $media) {
-            throw new InvalidArgumentException('No media found for asset ' . $asset->id);
+            throw new InvalidArgumentException('No media found for asset '.$asset->id);
         }
 
         $urls = [
@@ -178,7 +176,7 @@ class PreviewFile implements Wireable
             $asset->id,
             $asset->id,
             $thumbUrl,
-            ('image' == $asset->getExtensionType()),
+            ($asset->getExtensionType() == 'image'),
             null,
             AssetTypeFactory::assetTypeByClassName(get_class($asset)),
             $asset->getFileName() ?: '',
@@ -356,7 +354,7 @@ class PreviewFile implements Wireable
 
                 // If a fragmentModel is owner, we use this fragment as the real model reference.
                 ...($fragmentModel) ? ['modelReference' => $fragmentModel->modelReference()->get()] : [],
-                ...($fragmentModel) ? ['label' => $resource->getPageTitle($resourceModel) .' > '. $fragment->getLabel()] : [],
+                ...($fragmentModel) ? ['label' => $resource->getPageTitle($resourceModel).' > '.$fragment->getLabel()] : [],
             ];
         } catch (Exception $e) {
             report($e);

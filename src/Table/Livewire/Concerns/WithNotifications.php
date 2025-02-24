@@ -8,9 +8,9 @@ trait WithNotifications
     {
         $this->dispatch(
             'create-notification',
-            type:$type,
-            content:$notification,
-            duration:2000
+            type: $type,
+            content: $notification,
+            duration: 2000
         );
     }
 }

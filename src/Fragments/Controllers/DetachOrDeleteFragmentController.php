@@ -15,13 +15,13 @@ class DetachOrDeleteFragmentController
             app(DetachFragment::class)->handle($contextId, $fragmentId);
         } catch (FragmentAlreadyDetached $e) {
             return response()->json([
-                'message' => 'fragment [' . $fragmentId . '] is already removed.',
+                'message' => 'fragment ['.$fragmentId.'] is already removed.',
                 'data' => [],
             ], 400);
         }
 
         return response()->json([
-            'message' => 'fragment [' . $fragmentId . '] detached',
+            'message' => 'fragment ['.$fragmentId.'] detached',
             'data' => [],
         ]);
     }

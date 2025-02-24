@@ -15,14 +15,14 @@ trait RenamesErrorBagFileAttribute
 
                         $index = $this->extractIndexFromFileKey($messageKey);
 
-                        if ("" === $index || ! isset($this->files[$index])) {
+                        if ($index === '' || ! isset($this->files[$index])) {
                             return $message;
                         }
 
                         $fileName = $this->files[$index]['fileName'];
 
                         // Livewire uses either the message key or returns the validation.attributes entry.
-                        return str_replace([$messageKey, 'validation.attributes.' . strtolower($messageKey)], $fileName, $message);
+                        return str_replace([$messageKey, 'validation.attributes.'.strtolower($messageKey)], $fileName, $message);
                     });
                 })
                 ->toArray()

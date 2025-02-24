@@ -15,10 +15,13 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 class Fragments extends Component
 {
     private FragmentRepository $fragmentRepository;
+
     private GetShareableFragments $getShareableFragments;
 
     public ContextOwner $owner;
+
     public string $contextId;
+
     private $context;
 
     public function __construct(string $contextId)

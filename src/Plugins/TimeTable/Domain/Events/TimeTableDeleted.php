@@ -6,8 +6,5 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Model\TimeTableId;
 
 class TimeTableDeleted
 {
-    public function __construct(public readonly TimeTableId $tagGroupId)
-    {
-
-    }
+    public function __construct(public readonly TimeTableId $tagGroupId) {}
 }

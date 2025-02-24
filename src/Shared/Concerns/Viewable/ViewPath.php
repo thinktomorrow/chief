@@ -7,23 +7,24 @@ namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 class ViewPath
 {
     private string $filePath;
+
     private ?string $ownerFolder;
+
     private ?string $baseFolder;
 
-    final private function __construct(string $filePath, string $baseFolder = null, string $ownerFolder = null)
+    final private function __construct(string $filePath, ?string $baseFolder = null, ?string $ownerFolder = null)
     {
         $this->filePath = $filePath;
         $this->ownerFolder = $ownerFolder;
         $this->baseFolder = $baseFolder;
     }
 
-    public static function make(string $filepath, string $baseFolder = null, string $ownerFolder = null): self
+    public static function make(string $filepath, ?string $baseFolder = null, ?string $ownerFolder = null): self
     {
         return new static($filepath, $baseFolder, $ownerFolder);
     }
 
     /**
-     * @return string
      * @throws NotFoundView
      */
     public function get(): string
@@ -44,7 +45,7 @@ class ViewPath
             return $path;
         }
 
-        throw new NotFoundView('View file not found for [' . $this->filePath . ']. Make sure to create one of the following views: [' . implode(', ', $viewPaths) . '].');
+        throw new NotFoundView('View file not found for ['.$this->filePath.']. Make sure to create one of the following views: ['.implode(', ', $viewPaths).'].');
     }
 
     private function parseToPath(array $parts): ?string

@@ -54,7 +54,7 @@ class PageTable extends Table
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {
-                    return '/admin/' . $resourceKey . '/' . $model->getKey() . '/edit';
+                    return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
                 })->tease(64, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ColumnDate::make('updated_at')

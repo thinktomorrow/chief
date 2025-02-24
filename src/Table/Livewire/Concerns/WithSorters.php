@@ -97,7 +97,7 @@ trait WithSorters
             }
         }
 
-        throw new \InvalidArgumentException('No sorter found by key ' . $sorterKey);
+        throw new \InvalidArgumentException('No sorter found by key '.$sorterKey);
     }
 
     private function findActiveSorterValue(string $sorterKey): mixed
@@ -126,6 +126,6 @@ trait WithSorters
 
     private function isEmptySorterValue($value): bool
     {
-        return is_null($value) || empty($value) || '' === $value;
+        return is_null($value) || empty($value) || $value === '';
     }
 }

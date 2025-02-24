@@ -15,7 +15,9 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 class EditFragmentController
 {
     private FieldValidator $validator;
+
     private FragmentRepository $fragmentRepository;
+
     private ContextOwnerRepository $contextOwnerRepository;
 
     public function __construct(FieldValidator $validator, ContextOwnerRepository $contextOwnerRepository, FragmentRepository $fragmentRepository)
@@ -34,7 +36,7 @@ class EditFragmentController
 
         $forms = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->fragmentModel())
-            ->eachForm(function (Form $form) use ($fragment, $contextId, $fragmentId) {
+            ->eachForm(function (Form $form) use ($contextId, $fragmentId) {
                 $form->action(route('chief::fragments.update', [$contextId, $fragmentId]), 'PUT')
                     ->refreshUrl('');
             });

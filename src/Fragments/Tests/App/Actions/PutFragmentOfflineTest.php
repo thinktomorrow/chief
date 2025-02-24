@@ -16,7 +16,7 @@ class PutFragmentOfflineTest extends ChiefTestCase
 
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -67,5 +67,4 @@ class PutFragmentOfflineTest extends ChiefTestCase
 
         Event::assertNotDispatched(FragmentPutOffline::class);
     }
-
 }

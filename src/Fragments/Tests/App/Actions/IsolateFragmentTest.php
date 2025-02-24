@@ -13,9 +13,10 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class IsolateFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private ArticlePage $owner2;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -41,8 +42,8 @@ class IsolateFragmentTest extends ChiefTestCase
         $this->assertEquals(2, FragmentModel::count());
         $fragment1 = FragmentTestAssist::firstFragment($context->id);
         $fragment2 = FragmentTestAssist::firstFragment($context2->id);
-        FragmentTestAssist::assertFragmentCount($context->id,  1);
-        FragmentTestAssist::assertFragmentCount($context2->id,  1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
         $this->assertFalse($fragment1->fragmentModel()->isShared());
         $this->assertFalse($fragment2->fragmentModel()->isShared());
@@ -58,14 +59,14 @@ class IsolateFragmentTest extends ChiefTestCase
         $context2 = FragmentTestAssist::createContext($owner2);
         FragmentTestAssist::attachFragment($context2->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,  1);
+        FragmentTestAssist::assertFragmentCount($context->id, 1);
         FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
 
         app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
 
-        FragmentTestAssist::assertFragmentCount($context->id,  0);
-        FragmentTestAssist::assertFragmentCount($context2->id,  1);
+        FragmentTestAssist::assertFragmentCount($context->id, 0);
+        FragmentTestAssist::assertFragmentCount($context2->id, 1);
         $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
     }
 

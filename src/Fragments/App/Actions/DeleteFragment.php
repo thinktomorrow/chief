@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
@@ -11,7 +12,9 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 class DeleteFragment
 {
     private FragmentRepository $fragmentRepository;
+
     private ContextRepository $contextRepository;
+
     private DetachAsset $detachAsset;
 
     public function __construct(FragmentRepository $fragmentRepository, ContextRepository $contextRepository, DetachAsset $detachAsset)

@@ -22,7 +22,7 @@ class FragmentFactory
     private function findClassName(string $fragmentKey): string
     {
         if (! $className = Relation::getMorphedModel($fragmentKey)) {
-            throw new \InvalidArgumentException('Fragment by key [' . $fragmentKey . '] cannot be found. Make sure you have registered the fragment via chiefRegister()->fragment().');
+            throw new \InvalidArgumentException('Fragment by key ['.$fragmentKey.'] cannot be found. Make sure you have registered the fragment via chiefRegister()->fragment().');
         }
 
         return $className;

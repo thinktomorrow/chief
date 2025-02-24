@@ -9,11 +9,7 @@ trait TranslatableCommand
     /**
      * Update or create translatable fields for a translatable entity
      *
-     * @param $translations
-     * @param TranslatableContract $entity
-     * @param array $keys pass the columns that need to be translated. these need to match the passed request keys
-     *
-     * @return void
+     * @param  array  $keys  pass the columns that need to be translated. these need to match the passed request keys
      */
     protected function saveTranslations($translations, TranslatableContract $entity, array $keys): void
     {
@@ -30,14 +26,6 @@ trait TranslatableCommand
         }
     }
 
-    /**
-     * @param TranslatableContract $entity
-     * @param array $keys
-     * @param $translation
-     * @param $available_locale
-     *
-     * @return void
-     */
     protected function updateTranslation(TranslatableContract $entity, array $keys, array $translation, $available_locale): void
     {
         $attributes = [];
@@ -54,8 +42,6 @@ trait TranslatableCommand
     /**
      * Check if certain locale input submission is left empty
      *
-     * @param array $keys
-     * @param $translation
      * @return bool
      */
     protected function isCompletelyEmpty(array $keys, array $translation)

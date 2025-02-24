@@ -9,10 +9,11 @@ use Thinktomorrow\Chief\Forms\Concerns\HasLayoutType;
 
 class Card extends Component
 {
-    use HasLayoutType;
     use HasCollapsible;
+    use HasLayoutType;
 
     protected string $view = 'chief-form::layouts.card';
+
     protected string $windowView = 'chief-form::layouts.default-window';
 
     public function __construct(?string $id = null)

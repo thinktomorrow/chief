@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Thinktomorrow\Chief\Managers\Manager;
@@ -66,6 +65,4 @@ trait TestingWithManagers
 
         return app(Registry::class)->findManagerByModel($managedModel);
     }
-
-
 }

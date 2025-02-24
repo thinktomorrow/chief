@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Layouts;
@@ -16,12 +17,12 @@ use Thinktomorrow\Chief\Forms\Concerns\HasView;
 abstract class Component extends \Illuminate\View\Component implements Htmlable
 {
     use HasComponentRendering;
-    use HasView;
     use HasComponents;
-    use HasTitle;
-    use HasDescription;
     use HasCustomAttributes;
+    use HasDescription;
     use HasId;
+    use HasTitle;
+    use HasView;
 
     public function __construct(?string $id = null)
     {

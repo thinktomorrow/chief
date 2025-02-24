@@ -16,7 +16,9 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentFactory;
 class CreateFragmentController
 {
     private FieldValidator $validator;
+
     private CreateFragment $createFragment;
+
     private AttachFragment $attachFragment;
 
     public function __construct(FieldValidator $validator, CreateFragment $createFragment, AttachFragment $attachFragment)
@@ -34,7 +36,7 @@ class CreateFragmentController
 
         $forms = Forms::make($fragment->fields($fragment))
 //            ->fillModel($fragment->fragmentModel())
-            ->eachForm(function (Form $form) use ($fragment, $contextId, $fragmentKey) {
+            ->eachForm(function (Form $form) use ($contextId, $fragmentKey) {
                 $form->action(route('chief::fragments.store', [$contextId, $fragmentKey]))
                     ->refreshUrl('');
             });

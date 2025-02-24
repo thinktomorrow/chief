@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions;
@@ -14,7 +15,9 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 class PropagateUrlChange
 {
     private array $locales;
+
     private Registry $registry;
+
     private ResaveUrlSlug $resaveUrlSlug;
 
     public function __construct(Registry $registry, ResaveUrlSlug $resaveUrlSlug)
@@ -39,7 +42,7 @@ class PropagateUrlChange
      * When a nestable url gets saved, we'll make sure that all
      * underlying children will have their urls updated.
      */
-    public function handle(Nestable & Visitable $model, ?Model $formerParent = null): void
+    public function handle(Nestable&Visitable $model, ?Model $formerParent = null): void
     {
         $parentModel = $model->getParent();
 
@@ -63,7 +66,7 @@ class PropagateUrlChange
         }
 
         foreach ($model->getChildren() as $child) {
-            $this->handle($child, );
+            $this->handle($child);
         }
     }
 }

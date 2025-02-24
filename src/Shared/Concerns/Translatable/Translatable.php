@@ -13,7 +13,6 @@ use InvalidArgumentException;
  *
  * Allows the entity to contain multiple translations
  * requires the parent entity to include the Dimsav/Translatable/Translatable trait
- *
  */
 trait Translatable
 {
@@ -28,9 +27,6 @@ trait Translatable
 
     /**
      * Save multiple attributes at once
-     *
-     * @param $locale
-     * @param array $values
      */
     public function updateTranslation($locale, array $values)
     {
@@ -43,10 +39,6 @@ trait Translatable
 
     /**
      * Save a single attribute
-     *
-     * @param $locale
-     * @param $attribute
-     * @param $value
      */
     public function saveTranslation($locale, $attribute, $value)
     {
@@ -58,9 +50,7 @@ trait Translatable
     /**
      * Get translation for a specific column
      *
-     * @param $attribute
-     * @param $locale
-     * @param bool $strict false = use fallback locale, true = no result if locale not present
+     * @param  bool  $strict  false = use fallback locale, true = no result if locale not present
      * @return null
      */
     public function getTranslationFor($attribute, $locale = null, $strict = true)
@@ -80,10 +70,6 @@ trait Translatable
     /**
      * Create or update a translation attribute.
      * Note: only sets to entity, does not save it.
-     *
-     * @param $locale
-     * @param $attribute
-     * @param $value
      */
     private function setTranslation($locale, $attribute, $value)
     {
@@ -104,11 +90,12 @@ trait Translatable
     public static function availableLocales()
     {
         // This is a method expected from the dimsav package
-        return (new self())->getLocalesHelper()->all();
+        return (new self)->getLocalesHelper()->all();
     }
 
     /**
      * @return \Illuminate\Config\Repository|mixed
+     *
      * @deprecated use availableLocales instead
      */
     public static function getAvailableLocales()
@@ -141,7 +128,7 @@ trait Translatable
     /**
      * Get all locales associated with this entity
      *
-     * @param bool $available
+     * @param  bool  $available
      * @return array
      */
     private function fetchLocales($available = true)
@@ -156,13 +143,11 @@ trait Translatable
 
     /**
      * Is passed locale one of the allowed ones from config?
-     *
-     * @param $locale
      */
     private function validateLocale($locale)
     {
         if (! in_array($locale, static::availableLocales())) {
-            throw new InvalidArgumentException('Locale [' . $locale . '] is not available');
+            throw new InvalidArgumentException('Locale ['.$locale.'] is not available');
         }
     }
 
@@ -208,8 +193,6 @@ trait Translatable
      * Note that this is only valid if the injectTranslationForForm() method
      * is called prior to calling this method.
      *
-     * @param $locale
-     * @param $key
      * @return string|null
      */
     public function translateForForm($locale, $key)
@@ -224,9 +207,7 @@ trait Translatable
     /**
      * Update or create translatable fields for a translatable entity
      *
-     * @param $translations
-     * @param TranslatableContract $entity
-     * @param array $keys pass the columns that need to be translated. these need to match the passed request keys
+     * @param  array  $keys  pass the columns that need to be translated. these need to match the passed request keys
      */
     protected function persistTranslations($translations, TranslatableContract $entity, array $keys)
     {
@@ -245,8 +226,6 @@ trait Translatable
     /**
      * Check if certain locale input submission is left empty
      *
-     * @param array $keys
-     * @param $translation
      * @return array
      */
     protected function isCompletelyEmpty(array $keys, array $translation)
@@ -264,12 +243,6 @@ trait Translatable
         return $is_completely_empty;
     }
 
-    /**
-     * @param TranslatableContract $entity
-     * @param array $keys
-     * @param $translation
-     * @param $available_locale
-     */
     protected function persistTranslation(TranslatableContract $entity, array $keys, array $translation, $available_locale)
     {
         $attributes = [];

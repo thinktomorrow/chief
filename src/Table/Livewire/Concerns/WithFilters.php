@@ -88,14 +88,9 @@ trait WithFilters
 
     public function getFiltersUpdatedEvent(): string
     {
-        return 'filters-updated-' . strtolower($this->getId());
+        return 'filters-updated-'.strtolower($this->getId());
     }
 
-    /**
-     * @param string $filterKey
-     * @param array $filterValue
-     * @return array
-     */
     public function getFilterValueFromOptions(string $filterKey, array $filterValue): array
     {
         $filter = $this->findFilter($filterKey);
@@ -124,7 +119,7 @@ trait WithFilters
             }
         }
 
-        throw new \InvalidArgumentException('No filter found by key ' . $filterKey);
+        throw new \InvalidArgumentException('No filter found by key '.$filterKey);
     }
 
     private function findActiveFilterValue(string $filterKey): mixed
@@ -163,7 +158,7 @@ trait WithFilters
             return count($value) == 1 && $this->isEmptyFilterValue(reset($value));
         }
 
-        return is_null($value) || empty($value) || '' === $value;
+        return is_null($value) || empty($value) || $value === '';
     }
 
     public function hasAnyFiltersOrSorters(): bool

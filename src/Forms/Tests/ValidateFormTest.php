@@ -1,13 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests;
 
-use function config;
 use Illuminate\Support\Arr;
-use function session;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+
+use function config;
+use function session;
 
 final class ValidateFormTest extends ChiefTestCase
 {
@@ -18,7 +20,7 @@ final class ValidateFormTest extends ChiefTestCase
     {
 
         $this->assertValidation(
-            new ArticlePage(),
+            new ArticlePage,
             ['title' => 'The title field is required.'],
             $this->payload(['title' => '']),
             $this->manager($this->model)->route('edit', $this->model),
@@ -54,7 +56,7 @@ final class ValidateFormTest extends ChiefTestCase
     public function a_field_can_be_validated()
     {
         $this->assertValidation(
-            new ArticlePage(),
+            new ArticlePage,
             ['title' => 'The title field must be at least 4 characters.'],
             $this->payload(['title' => 'xx']),
             $this->manager($this->model)->route('edit', $this->model),
@@ -68,7 +70,7 @@ final class ValidateFormTest extends ChiefTestCase
     public function a_required_translatable_field_can_be_validated()
     {
         $this->assertValidation(
-            new ArticlePage(),
+            new ArticlePage,
             'trans.nl.content_trans',
             $this->payload(['trans.nl.content_trans' => '', 'trans.en.content_trans' => '']),
             $this->manager($this->model)->route('edit', $this->model),
@@ -82,7 +84,7 @@ final class ValidateFormTest extends ChiefTestCase
     public function a_required_translatable_field_can_be_validated_when_null_is_passed()
     {
         $this->assertValidation(
-            new ArticlePage(),
+            new ArticlePage,
             'trans.nl.content_trans',
             $this->payload(['trans.nl.content_trans' => null]),
             $this->manager($this->model)->route('edit', $this->model),
@@ -101,7 +103,7 @@ final class ValidateFormTest extends ChiefTestCase
         $this->assertNull(session('errors'));
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

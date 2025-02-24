@@ -11,13 +11,12 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults
 {
-    use ReferableModelDefault;
-    use Viewable;
-
-    use InteractsWithAssets;
     use HasDynamicAttributes{
         dynamicLocaleFallback as protected dynamicLocaleFallbackTrait;
     }
+    use InteractsWithAssets;
+    use ReferableModelDefault;
+    use Viewable;
 
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for

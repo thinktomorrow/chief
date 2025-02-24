@@ -132,7 +132,7 @@ trait PageResourceDefault
     {
         $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
 
-        return $this->getPageTitle($model) . $suffix;
+        return $this->getPageTitle($model).$suffix;
     }
 
     public function getPageTitle($model): string

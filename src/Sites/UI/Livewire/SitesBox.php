@@ -15,16 +15,22 @@ class SitesBox extends Component
     use ShowsAsDialog;
 
     public string $resourceKey;
+
     public string $modelReference;
+
     public array $siteIds = [];
 
     public array $activeSites = [];
+
     public array $currentLocales = [];
+
     public bool $showConfirmButton = false;
+
     public $warningMessage;
+
     public bool $isSaving = false;
 
-    public function mount(string $resourceKey, BelongsToSites & ReferableModel $model)
+    public function mount(string $resourceKey, BelongsToSites&ReferableModel $model)
     {
         $this->resourceKey = $resourceKey;
         $this->modelReference = $model->modelReference()->get();
@@ -80,7 +86,7 @@ class SitesBox extends Component
     private function askConfirmation()
     {
         $this->showConfirmButton = true;
-        $this->warningMessage = 'Opgelet! Als u <strong>' . $this->getRemovedLocalesAsString() . '</strong> verwijdert, zullen ook de links en inhoud worden verwijderd van deze pagina.';
+        $this->warningMessage = 'Opgelet! Als u <strong>'.$this->getRemovedLocalesAsString().'</strong> verwijdert, zullen ook de links en inhoud worden verwijderd van deze pagina.';
     }
 
     public function close()

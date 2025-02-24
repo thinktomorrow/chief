@@ -46,7 +46,7 @@ trait HasItems
         $this->items(function ($model) use ($relationName) {
             return $model->{$relationName};
         })->mapValue(fn ($value) => is_array($value) ? $value[$relationAttribute] : $value->{$relationAttribute})
-        ->label($relationName);
+            ->label($relationName);
 
         return $this;
     }

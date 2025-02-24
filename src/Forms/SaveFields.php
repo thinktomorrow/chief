@@ -82,7 +82,7 @@ class SaveFields
 
     private function isValidFile($file): bool
     {
-        return $file instanceof SplFileInfo && '' !== $file->getPath();
+        return $file instanceof SplFileInfo && $file->getPath() !== '';
     }
 
     private function localizedValueCallable($model, $field, $input): Closure
@@ -100,7 +100,7 @@ class SaveFields
             if ($this->isFieldForDynamicValue($model, $field)) {
                 $model->setDynamic($key, $value, $locale);
             } else {
-                $model->{$field->getColumnName() . ':' . $locale} = $value;
+                $model->{$field->getColumnName().':'.$locale} = $value;
             }
         };
     }

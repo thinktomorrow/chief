@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
@@ -20,7 +21,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class PageChangedEventTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -77,7 +78,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentDuplicated::class);
 
-        event(new FragmentDuplicated($this->fragment->fragmentModel()->id, "123"));
+        event(new FragmentDuplicated($this->fragment->fragmentModel()->id, '123'));
 
         Event::assertDispatched(PageChanged::class);
     }

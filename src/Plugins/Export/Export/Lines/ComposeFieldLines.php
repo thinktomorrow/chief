@@ -40,12 +40,12 @@ class ComposeFieldLines
     public function __construct(Registry $registry)
     {
         $this->registry = $registry;
-        $this->lines = new LinesCollection();
+        $this->lines = new LinesCollection;
     }
 
     public function compose(Resource $resource, $model, array $locales): static
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         $this->modelLabel = $resource->getPageTitle($model);
 
@@ -109,7 +109,7 @@ class ComposeFieldLines
 
     private function extractFieldValues($resource, $model, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         $model = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
 
@@ -128,7 +128,7 @@ class ComposeFieldLines
 
     private function extractRepeatField(Resource $resource, $model, Fields\Repeat $field, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         if ($this->ignoreEmptyValues && ! $field->getValue()) {
             return $lines;
@@ -149,7 +149,7 @@ class ComposeFieldLines
 
     private function addFragmentFieldValues(FragmentsOwner $model, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         /** @var Fragmentable[] $fragment */
         $fragments = app(FragmentRepository::class)->getByOwner($model instanceof Fragmentable ? $model->fragmentModel() : $model);
@@ -191,7 +191,7 @@ class ComposeFieldLines
 
     private function addFieldLines($resource, $model, $field, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         if (in_array($field->getKey(), $this->ignoredFieldKeys)) {
             return $lines;
@@ -219,7 +219,7 @@ class ComposeFieldLines
         $fieldLabel = $field->getLabel() ?: $field->getKey();
 
         if (str_starts_with($field->getKey(), 'seo_')) {
-            $fieldLabel = 'SEO ' . $fieldLabel;
+            $fieldLabel = 'SEO '.$fieldLabel;
         }
 
         $lines->push(new FieldLine(

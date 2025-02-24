@@ -4,7 +4,8 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 trait HasModel
 {
-    protected null|object $model = null;
+    protected ?object $model = null;
+
     protected array $whenModelIsSetCallbacks = [];
 
     public function model(object $model): static
@@ -18,7 +19,7 @@ trait HasModel
         return $this;
     }
 
-    public function getModel(): null|object
+    public function getModel(): ?object
     {
         return $this->model;
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
@@ -12,6 +13,7 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 class UpdateFragmentMetadata
 {
     private FragmentRepository $fragmentRepository;
+
     private GetOwningModels $getOwningModels;
 
     public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels)

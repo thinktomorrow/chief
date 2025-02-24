@@ -19,8 +19,6 @@ trait EloquentMorphableInstantiation
      *
      * @ref \Illuminate\Database\Eloquent\Model::newCollection()
      *
-     * @param array $models
-     * @return
      * @throws NotFoundMorphKey
      */
     public function newCollection(array $models = [])
@@ -36,11 +34,9 @@ trait EloquentMorphableInstantiation
 
     /**
      * Clone the model into its expected collection class
+     *
      * @ref \Illuminate\Database\Eloquent\Model::replicate()
      *
-     * @param Model $model
-     * @param string $morphKey
-     * @return Model
      * @throws NotFoundMorphKey
      */
     private function convertToMorphInstance(Model $model, string $morphKey): Model
@@ -59,8 +55,6 @@ trait EloquentMorphableInstantiation
      * When eager loading the translations via the with attribute, they are loaded every time.
      * Here we eager load the proper translations if they are set on a different model than the original one.
      * The current loaded translations are empty because of they tried matching with the original table.
-     *
-     * @param $instance
      */
     private function loadCustomTranslations($instance)
     {
@@ -75,10 +69,6 @@ trait EloquentMorphableInstantiation
         }
     }
 
-    /**
-     * @param $instance
-     * @return bool
-     */
     private function requiresCustomTranslation(Model $instance): bool
     {
         // TODO: this check should not be explicitly targeted at PageTranslation ...
@@ -88,8 +78,8 @@ trait EloquentMorphableInstantiation
     /**
      * Create a new instance of the given model.
      *
-     * @param array $attributes
-     * @param bool $exists
+     * @param  array  $attributes
+     * @param  bool  $exists
      * @return static
      */
     public function newInstance($attributes = [], $exists = false)
@@ -98,7 +88,7 @@ trait EloquentMorphableInstantiation
             return parent::newInstance($attributes, $exists);
         }
 
-        $model = Morphables::instance($attributes['morph_key'], (array)$attributes);
+        $model = Morphables::instance($attributes['morph_key'], (array) $attributes);
 
         $model->exists = $exists;
 

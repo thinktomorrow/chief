@@ -14,13 +14,13 @@ class AttachFragmentController
             app(AttachFragment::class)->handle($contextId, $fragmentId, $request->input('order', 0));
         } catch (FragmentAlreadyAdded $e) {
             return response()->json([
-                'message' => 'fragment [' . $fragmentId . '] is already added',
+                'message' => 'fragment ['.$fragmentId.'] is already added',
                 'data' => [],
             ], 400);
         }
 
         return response()->json([
-            'message' => 'fragment [' . $fragmentId . '] added',
+            'message' => 'fragment ['.$fragmentId.'] added',
             'data' => [],
         ], 201);
     }

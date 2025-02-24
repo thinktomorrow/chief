@@ -8,7 +8,7 @@ trait WithPagination
 {
     private function getPaginationId(): string
     {
-        return 'page' . Str::slug($this->tableReference->getTableKey());
+        return 'page'.Str::slug($this->tableReference->getTableKey());
     }
 
     public function hasPagination(): bool

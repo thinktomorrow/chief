@@ -16,7 +16,7 @@ class SyncLocalesTest extends ChiefTestCase
         Event::fake();
 
         $page = $this->setUpAndCreateArticle();
-        $resource = new LocaleRepositoryStub();
+        $resource = new LocaleRepositoryStub;
 
         app(SyncLocales::class)->handle($page, ['nl', 'fr', 'en']);
 
@@ -46,7 +46,7 @@ class SyncLocalesTest extends ChiefTestCase
         Event::fake();
 
         $page = $this->setUpAndCreateArticle();
-        $resource = new LocaleRepositoryStub();
+        $resource = new LocaleRepositoryStub;
 
         config()->set('chief.locales.admin', ['fr', 'nl', 'en']);
 
@@ -67,7 +67,7 @@ class SyncLocalesTest extends ChiefTestCase
         Event::fake();
 
         $page = $this->setUpAndCreateArticle();
-        $resource = new LocaleRepositoryStub();
+        $resource = new LocaleRepositoryStub;
 
         app(AddSite::class)->handle($resource, $page, ['nl', 'fr']);
 
@@ -86,7 +86,7 @@ class SyncLocalesTest extends ChiefTestCase
         Event::fake();
 
         $page = $this->setUpAndCreateArticle();
-        $resource = new LocaleRepositoryStub();
+        $resource = new LocaleRepositoryStub;
 
         $page->locales = ['nl', 'fr'];
         $page->save();

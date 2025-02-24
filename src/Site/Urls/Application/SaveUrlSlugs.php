@@ -59,10 +59,9 @@ final class SaveUrlSlugs
     {
         // Existing ones for this locale?
         $nonRedirectsWithSameLocale = $existingRecords->filter(function ($record) use ($locale) {
-            return (
+            return
                 $record->locale == $locale &&
-                ! $record->isRedirect()
-            );
+                ! $record->isRedirect();
         });
 
         // If slug entry is left empty, all existing records will be deleted
@@ -125,18 +124,13 @@ final class SaveUrlSlugs
 
     /**
      * Remove any redirects owned by this model that equal the new slug.
-     *
-     * @param $existingRecords
-     * @param $locale
-     * @param $slug
      */
     private function deleteIdenticalRedirects(Collection $existingRecords, string $locale, string $slug): void
     {
         $existingRecords->filter(function ($record) use ($locale) {
-            return (
+            return
                 $record->locale == $locale &&
-                $record->isRedirect()
-            );
+                $record->isRedirect();
         })->each(function ($existingRecord) use ($slug) {
             if ($existingRecord->slug == $slug) {
                 $existingRecord->delete();
@@ -149,9 +143,9 @@ final class SaveUrlSlugs
         // The old homepage url should be removed since this is no longer in effect.
         // In case of any redirect to this old homepage, the last used redirect is now back in effect.
         $existingRecords->reject(function ($existingRecord) use ($model) {
-            return (
+            return
                 $existingRecord->model_type == $model->getMorphClass() &&
-                $existingRecord->model_id == $model->id);
+                $existingRecord->model_id == $model->id;
         })->each(function ($existingRecord) {
             // TODO: if there is a redirect to this page, we'll take this one as the new url
             $existingRecord->delete();
@@ -159,11 +153,7 @@ final class SaveUrlSlugs
     }
 
     /**
-     * @param string $slug
-     * @param $locale
-     * @param (int|string) $locale
-     *
-     * @return string
+     * @param  (int|string)  $locale
      */
     private function prependBaseUrlSegment(Visitable $model, string $slug, $locale): string
     {

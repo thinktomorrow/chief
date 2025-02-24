@@ -19,7 +19,7 @@ trait NestableDefault
 
     public function initializeNestableDefault(): void
     {
-        $this->children = new NestableTree();
+        $this->children = new NestableTree;
     }
 
     public function getId(): string
@@ -46,10 +46,10 @@ trait NestableDefault
         if (! $this->isRootNode()) {
             $label = array_reduce(array_reverse($this->getAncestorNodes()->all()), function ($carry, Nestable $node) use ($withoutRoot) {
                 if ($node->isRootNode()) {
-                    return $withoutRoot ? $carry : $node->getNodeLabel() . ': ' . $carry;
+                    return $withoutRoot ? $carry : $node->getNodeLabel().': '.$carry;
                 }
 
-                return $node->getNodeLabel() . ' > ' . $carry;
+                return $node->getNodeLabel().' > '.$carry;
             }, $this->getNodeLabel());
         }
 
@@ -95,6 +95,7 @@ trait NestableDefault
      * This array should contain all parents.
      *
      * @return Nestable[]
+     *
      *@deprecated use getAncestors instead
      */
     public function getBreadCrumbs(): array

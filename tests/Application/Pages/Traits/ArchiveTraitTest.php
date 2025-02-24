@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ArchiveTraitTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Models;
@@ -16,9 +17,9 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 final class FragmentModel extends Model implements FragmentResource, HasAsset, ReferableModel
 {
     use FragmentResourceDefault;
-    use ReferableModelDefault;
     use HasDynamicAttributes;
     use InteractsWithAssets;
+    use ReferableModelDefault;
 
     /**
      * Used as reference to the fragmentModel
@@ -27,17 +28,22 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     const MODELTYPE = 'fragmentmodel';
 
     public $table = 'context_fragments';
+
     public $guarded = [];
 
     // Allow for uuid type behaviour
     public $keyType = 'string';
+
     public $incrementing = false;
 
     public $dynamicKeys = ['*'];
+
     public $dynamicKeysBlacklist = [
         'id', 'key', 'meta', 'created_at', 'updated_at',
     ];
+
     protected $casts = ['id' => 'string', 'meta' => 'array'];
+
     private ?string $dynamicLocaleFallback = null;
 
     // Non-persisted property that is used when pivot (model-fragment) context is missing,
@@ -82,12 +88,12 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     public function isOnline(): bool
     {
         // Default is online, except explicitly set offline
-        return (null === $this->online_status || $this->online_status === FragmentStatus::online->value);
+        return $this->online_status === null || $this->online_status === FragmentStatus::online->value;
     }
 
     public function isShared(): bool
     {
-        return (bool)$this->getMeta('shared');
+        return (bool) $this->getMeta('shared');
     }
 
     private function getMeta(string $key)

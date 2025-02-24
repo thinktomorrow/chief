@@ -37,7 +37,7 @@ class ValidationNames
         $this->format = $format;
         $this->placeholders = $this->payload = $this->keysToBeRemoved = [];
 
-        $this->requiredLocale((string)config('app.fallback_locale', 'nl'));
+        $this->requiredLocale((string) config('app.fallback_locale', 'nl'));
     }
 
     /**
@@ -99,7 +99,7 @@ class ValidationNames
                 }
 
                 foreach ($replacements as $replacement) {
-                    $newKeySet[] = str_replace(':' . $placeholder, $replacement, $key);
+                    $newKeySet[] = str_replace(':'.$placeholder, $replacement, $key);
                 }
             }
 
@@ -117,7 +117,7 @@ class ValidationNames
             $pattern = preg_quote($keyToBeRemoved, '#');
 
             /* Any asterix which work as an wildcard of characters */
-            if (false !== strpos($pattern, '*')) {
+            if (strpos($pattern, '*') !== false) {
                 $pattern = str_replace('\*', '(.+)', $pattern);
             }
 
@@ -147,7 +147,7 @@ class ValidationNames
 
             // Remove all 'trans' entries for this locale
             foreach ($filteredKeys as $i => $key) {
-                if (Str::startsWith($key, 'trans.' . $locale)) {
+                if (Str::startsWith($key, 'trans.'.$locale)) {
                     unset($filteredKeys[$i]);
                 }
             }
@@ -168,7 +168,7 @@ class ValidationNames
             $payload = Arr::get($this->payload, $key, '_notfound_');
 
             // If the payload is empty and this is not the entry for the required locale
-            if ($payload !== '_notfound_' && ! $payload && ! Str::endsWith($key, '.' . $this->requiredLocale)) {
+            if ($payload !== '_notfound_' && ! $payload && ! Str::endsWith($key, '.'.$this->requiredLocale)) {
                 unset($filteredKeys[$i]);
             }
         }

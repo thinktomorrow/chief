@@ -56,7 +56,7 @@ trait HasValueMapping
                 return 'offline';
             }
 
-            return match($rawValue) {
+            return match ($rawValue) {
                 'published' => 'online',
                 'draft' => 'offline',
                 'archived' => 'archived',

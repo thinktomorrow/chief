@@ -5,15 +5,14 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values;
 class Slot
 {
     private ?Hour $from;
+
     private ?Hour $until;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function make(?Hour $from, ?Hour $until): static
     {
-        $model = new static();
+        $model = new static;
 
         $model->from = $from;
         $model->until = $until;
@@ -35,7 +34,7 @@ class Slot
     {
         $until = $this->until ?: $this->from;
 
-        return $this->from?->getFormat('H:i') . '-' . $until->getFormat('H:i');
+        return $this->from?->getFormat('H:i').'-'.$until->getFormat('H:i');
     }
 
     public function __toString(): string

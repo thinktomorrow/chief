@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Helpers;
@@ -8,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SortModels
 {
-
-    public function handle(string $table, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true, string $extraWhere = null): void
+    public function handle(string $table, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true, ?string $extraWhere = null): void
     {
         static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers, $extraWhere);
     }
@@ -23,10 +23,8 @@ class SortModels
 
     /**
      * Taken from: https://github.com/laravel/ideas/issues/575
-     *
-     * @return void
      */
-    private static function batchUpdateColumn(string $table, string $column, array $indices, string $indexColumn = 'id', bool $castIdToIntegers = true, string $extraWhere = null): void
+    private static function batchUpdateColumn(string $table, string $column, array $indices, string $indexColumn = 'id', bool $castIdToIntegers = true, ?string $extraWhere = null): void
     {
         if (count($indices) < 1) {
             return;
@@ -37,7 +35,7 @@ class SortModels
         $params = [];
 
         foreach ($indices as $index => $modelId) {
-            $id = $castIdToIntegers ? (int)$modelId : $modelId;
+            $id = $castIdToIntegers ? (int) $modelId : $modelId;
             $ids[] = "'{$id}'";
 
             $cases[] = "WHEN '{$id}' then ?";
@@ -48,9 +46,9 @@ class SortModels
         $cases = implode(' ', $cases);
 
         if ($extraWhere) {
-            $extraWhere = ' AND ' . DB::raw($extraWhere)->getValue(DB::connection()->getQueryGrammar());
+            $extraWhere = ' AND '.DB::raw($extraWhere)->getValue(DB::connection()->getQueryGrammar());
         }
 
-        DB::update("UPDATE `{$table}` SET `{$column}` = CASE `" . $indexColumn . "` {$cases} END WHERE `" . $indexColumn . "` in ({$ids})" . $extraWhere, $params);
+        DB::update("UPDATE `{$table}` SET `{$column}` = CASE `".$indexColumn."` {$cases} END WHERE `".$indexColumn."` in ({$ids})".$extraWhere, $params);
     }
 }

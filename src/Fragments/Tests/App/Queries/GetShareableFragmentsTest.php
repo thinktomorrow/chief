@@ -12,10 +12,12 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 class GetShareableFragmentsTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private ArticlePage $owner2;
+
     private GetShareableFragments $query;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

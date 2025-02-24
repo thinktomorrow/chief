@@ -12,7 +12,9 @@ use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 trait InteractsWithForm
 {
     public $form = [];
+
     public $components = []; // The initial components + the generic ones of the Asset combined
+
     public $initialComponents = []; // The initial components as passed to this class
 
     /**
@@ -68,7 +70,7 @@ trait InteractsWithForm
      */
     private function validateForm(array $rules = [], array $messages = [], array $validationAttributes = []): void
     {
-        list($rules, $messages, $validationAttributes) = $this->addFormComponentValidation($rules, $messages, $validationAttributes);
+        [$rules, $messages, $validationAttributes] = $this->addFormComponentValidation($rules, $messages, $validationAttributes);
 
         $this->validate($rules, $messages, $validationAttributes);
     }

@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Concerns;
 trait HasColumns
 {
     protected int $columns = 1;
+
     protected array $span = [1];
 
     public function columns(int $columns): static
@@ -25,7 +26,7 @@ trait HasColumns
     {
         $span = func_get_args();
 
-        if (1 == count($span)) {
+        if (count($span) == 1) {
             $span = (array) $span[0];
         }
 

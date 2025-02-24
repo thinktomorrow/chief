@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\App\Http\Middleware;
@@ -13,7 +14,6 @@ final class ChiefNavigation
     /** @var Container */
     private $container;
 
-    /** @var Registry */
     private Registry $registry;
 
     public function __construct(Registry $registry, Container $container)

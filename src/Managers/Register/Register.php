@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 final class Register
 {
     private Container $container;
+
     private AdminEnvironment $adminEnvironment;
 
     public function __construct(Container $container, AdminEnvironment $adminEnvironment)
@@ -39,14 +40,14 @@ final class Register
     private function assertModelIsResource(string $modelClass): void
     {
         if (! (new ReflectionClass($modelClass))->implementsInterface(Resource::class)) {
-            throw new InvalidArgumentException($modelClass . ' should implement ' . Resource::class);
+            throw new InvalidArgumentException($modelClass.' should implement '.Resource::class);
         }
     }
 
     private function assertModelIsReferable(string $modelClass): void
     {
         if (! (new ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
-            throw new InvalidArgumentException($modelClass . ' should implement ' . ReferableModel::class);
+            throw new InvalidArgumentException($modelClass.' should implement '.ReferableModel::class);
         }
     }
 

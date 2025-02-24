@@ -58,7 +58,7 @@ class PairOptions
             if (is_array($label)) {
 
                 if (! isset($label['value'], $label['label'])) {
-                    throw new InvalidOptionsForMultiSelect('Invalid MultiSelect option passed: [' . key($label) . ':' . reset($label) . ']');
+                    throw new InvalidOptionsForMultiSelect('Invalid MultiSelect option passed: ['.key($label).':'.reset($label).']');
                 }
 
                 return $label;

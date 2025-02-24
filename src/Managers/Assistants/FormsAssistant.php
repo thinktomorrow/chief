@@ -27,8 +27,7 @@ trait FormsAssistant
     }
 
     /**
-     * @param mixed $id
-     *
+     * @param  mixed  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function formEdit(Request $request, $id, string $formId)

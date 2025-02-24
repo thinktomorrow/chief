@@ -8,8 +8,8 @@ use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults
 {
-    use ReferableModelDefault;
     use HasDynamicAttributes;
+    use ReferableModelDefault;
 
     /**
      * This is an optional method for the DynamicAttributes behavior and allows for

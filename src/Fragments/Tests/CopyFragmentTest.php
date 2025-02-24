@@ -11,7 +11,7 @@ class CopyFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -85,7 +85,7 @@ class CopyFragmentTest extends ChiefTestCase
         $snippet = $this->setupAndCreateSnippet($this->owner);
 
         // Make snippet shared
-        $snippetNested = $this->createAsFragment(new SnippetStub(), $this->owner);
+        $snippetNested = $this->createAsFragment(new SnippetStub, $this->owner);
         $this->asAdmin()->post($this->manager($snippetNested)->route('fragment-add', $snippet, $snippetNested));
 
         $newOwner = ArticlePage::create();

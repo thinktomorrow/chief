@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Setup;
@@ -12,7 +13,7 @@ final class SetupConfig
         $this->config = $config;
     }
 
-    public function namespace(string $path = null): string
+    public function namespace(?string $path = null): string
     {
         if ($path) {
             $parts = explode('/', rtrim($path, '/'));
@@ -32,18 +33,18 @@ final class SetupConfig
     public function namespacedClass(string $className): string
     {
         if (isset($this->config['namespace'])) {
-            return '\\' . $this->config['namespace'] . ($className ? '\\' . $className : '');
+            return '\\'.$this->config['namespace'].($className ? '\\'.$className : '');
         }
 
-        return '\\App\\Models' . ($className ? '\\' . $className : '');
+        return '\\App\\Models'.($className ? '\\'.$className : '');
     }
 
-    public function path(string $filename = null): string
+    public function path(?string $filename = null): string
     {
         if (isset($this->config['path'])) {
-            return $this->config['path'] . '/' . $filename;
+            return $this->config['path'].'/'.$filename;
         }
 
-        return 'app/Models/' . $filename;
+        return 'app/Models/'.$filename;
     }
 }

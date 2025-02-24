@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
@@ -13,8 +14,11 @@ use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 final class IsolateFragment
 {
     private DuplicateFragment $duplicateFragment;
+
     private DetachFragment $detachFragment;
+
     private FragmentRepository $fragmentRepository;
+
     private ContextRepository $contextRepository;
 
     public function __construct(ContextRepository $contextRepository, FragmentRepository $fragmentRepository, DuplicateFragment $duplicateFragment, DetachFragment $detachFragment)

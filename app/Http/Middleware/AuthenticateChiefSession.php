@@ -56,7 +56,7 @@ class AuthenticateChiefSession
 
         $request->session()->put([
             'chief_password_hash' => $request->user('chief')->getAuthPassword(),
-            ]);
+        ]);
     }
 
     /**
@@ -73,6 +73,6 @@ class AuthenticateChiefSession
 
         $request->session()->remove('chief_password_hash');
 
-        throw new AuthenticationException();
+        throw new AuthenticationException;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
@@ -13,14 +14,14 @@ use Thinktomorrow\Vine\NodeDefaults;
 
 abstract class BaseFragment extends \Illuminate\View\Component implements Fragment
 {
-    use \Thinktomorrow\Chief\Resource\FragmentResourceDefault;
-    use \Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
     use ForwardFragmentProperties;
     use NodeDefaults;
+    use \Thinktomorrow\Chief\Resource\FragmentResourceDefault;
+    use \Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
     public function __construct()
     {
-        $this->children = new FragmentCollection();
+        $this->children = new FragmentCollection;
     }
 
     protected ?FragmentModel $fragmentModel = null;
@@ -61,7 +62,7 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
             return $this->viewPath;
         }
 
-        return config('chief.fragments.view_path', 'fragments') . '.' . $this->viewKey();
+        return config('chief.fragments.view_path', 'fragments').'.'.$this->viewKey();
     }
 
     protected function adminViewPath(): string
@@ -70,7 +71,7 @@ abstract class BaseFragment extends \Illuminate\View\Component implements Fragme
             return $this->adminViewPath;
         }
 
-        return config('chief.fragments.admin_view_path', 'back.fragments') . '.' . $this->viewKey();
+        return config('chief.fragments.admin_view_path', 'back.fragments').'.'.$this->viewKey();
     }
 
     protected function viewKey(): string

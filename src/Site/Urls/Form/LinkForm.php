@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Form;
@@ -12,9 +13,11 @@ use Thinktomorrow\Url\Root;
 final class LinkForm
 {
     private Visitable $model;
+
     private Collection $urlRecords;
 
     private Collection $links;
+
     private Collection $formValues;
 
     private function __construct(Visitable $model, Collection $urlRecords)
@@ -44,7 +47,7 @@ final class LinkForm
 
             $url = $this->model->url($locale);
 
-            $links[$locale] = (object)[
+            $links[$locale] = (object) [
                 'current' => $currentRecord,
                 'url' => urldecode($url),
                 'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())), '/') : '',
@@ -60,7 +63,7 @@ final class LinkForm
         foreach ($this->links as $locale => $links) {
             [$is_online, $offline_reason] = [
                 false,
-                'Er is nog geen url voor ' . $locale,
+                'Er is nog geen url voor '.$locale,
             ];
 
             if ($links->current) {
@@ -72,11 +75,6 @@ final class LinkForm
         }
     }
 
-    /**
-     * @param $currentRecord
-     * @param $locale
-     * @return array
-     */
     private function determineOnlineStatusInfo($currentRecord, $locale): array
     {
         $inOnlineState = $this->model->inOnlineState();
@@ -86,7 +84,7 @@ final class LinkForm
         $offline_reason = 'De pagina staat offline.';
 
         if (! $is_online && ! $inOnlineState) {
-            $offline_reason = 'Offline, gearchiveerd of er ontbreekt nog een link voor de ' . $locale . ' taal.';
+            $offline_reason = 'Offline, gearchiveerd of er ontbreekt nog een link voor de '.$locale.' taal.';
         }
 
         return [$is_online, $offline_reason];
@@ -99,8 +97,8 @@ final class LinkForm
         foreach ($this->getLocales() as $locale) {
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
-            $values[$locale] = (object)[
-                'host' => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
+            $values[$locale] = (object) [
+                'host' => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)).'/',
                 'fixedSegment' => $this->model->baseUrlSegment($locale),
                 'value' => $currentRecord
                     ? $this->rawSlugValue($currentRecord->slug, $this->model->baseUrlSegment($locale))
@@ -124,16 +122,16 @@ final class LinkForm
 
     private function removeBaseUrlSegment(string $slug, string $baseUrlSegment): string
     {
-        if ($baseUrlSegment && 0 === strpos($slug, $baseUrlSegment)) {
+        if ($baseUrlSegment && strpos($slug, $baseUrlSegment) === 0) {
             return trim(substr($slug, strlen($baseUrlSegment)), '/');
         }
 
         return $slug;
     }
 
-    public static function fromModel(Model & Visitable $model, bool $includeRedirects = false): self
+    public static function fromModel(Model&Visitable $model, bool $includeRedirects = false): self
     {
-        return new static($model, ($includeRedirects ? $model->allUrls : $model->urls)
+        return new self($model, ($includeRedirects ? $model->allUrls : $model->urls)
             ->groupBy('locale')
             ->map(function ($records) {
                 return $records->sortBy('redirect_id')->sortByDesc('created_at');

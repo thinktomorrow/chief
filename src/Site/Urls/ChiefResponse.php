@@ -33,20 +33,20 @@ final class ChiefResponse
             $urlRecord = UrlRecord::findBySlug($slug, $locale);
 
             if ($urlRecord->isRedirect()) {
-                return static::createRedirect(
-                    static::findModel($urlRecord->redirectTo())->url($locale)
+                return self::createRedirect(
+                    self::findModel($urlRecord->redirectTo())->url($locale)
                 );
             }
 
-            return static::createResponse($urlRecord);
+            return self::createResponse($urlRecord);
 
         } catch (Throwable $e) {
-            if (config('chief.strict') || ! static::shouldBeIgnored($e)) {
+            if (config('chief.strict') || ! self::shouldBeIgnored($e)) {
                 throw $e;
             }
         }
 
-        throw new NotFoundHttpException('No url or model found for request [' . $slug . '] for locale [' . $locale . '].');
+        throw new NotFoundHttpException('No url or model found for request ['.$slug.'] for locale ['.$locale.'].');
     }
 
     private static function createRedirect(string $url): RedirectResponse
@@ -56,7 +56,7 @@ final class ChiefResponse
 
     private static function createResponse(UrlRecord $urlRecord): BaseResponse
     {
-        $model = static::findModel($urlRecord);
+        $model = self::findModel($urlRecord);
 
         ActiveContextId::set($urlRecord->context_id);
 
@@ -68,7 +68,7 @@ final class ChiefResponse
         $model = ModelReference::make($urlRecord->model_type, $urlRecord->model_id)->instance();
 
         if (! $model->isVisitable()) {
-            throw new NotFoundHttpException('Model found for request [' . $urlRecord->slug . '] but it is not visitable.');
+            throw new NotFoundHttpException('Model found for request ['.$urlRecord->slug.'] but it is not visitable.');
         }
 
         // TEST THE STUFF BELOW!
@@ -85,7 +85,7 @@ final class ChiefResponse
 
     private static function shouldBeIgnored(Throwable $e): bool
     {
-        return ! is_null(Arr::first(static::ignoredExceptions(), fn ($type) => $e instanceof $type));
+        return ! is_null(Arr::first(self::ignoredExceptions(), fn ($type) => $e instanceof $type));
     }
 
     private static function ignoredExceptions(): array

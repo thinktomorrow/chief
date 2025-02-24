@@ -8,7 +8,9 @@ use Thinktomorrow\Chief\Table\Table;
 class TableReference implements Wireable
 {
     private string $resourceClass;
+
     private string $tableKey;
+
     private array $parameters;
 
     /**

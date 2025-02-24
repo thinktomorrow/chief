@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-//class SavingFieldTest extends ChiefTestCase
+// class SavingFieldTest extends ChiefTestCase
 class SavingFieldTest extends TestCase
 {
     /** @test */
@@ -25,10 +25,10 @@ class SavingFieldTest extends TestCase
     public function a_custom_save_logic_can_be_performed()
     {
         ArticlePage::migrateUp();
-        $article = new ArticlePage();
+        $article = new ArticlePage;
 
         $field = Text::make('title')->save(function ($model, $field, $input, $files) {
-            $model->title = $input['title'] .  '-foobar';
+            $model->title = $input['title'].'-foobar';
             $model->save();
         });
 
@@ -53,10 +53,10 @@ class SavingFieldTest extends TestCase
     public function a_custom_set_logic_sets_the_value_for_saving()
     {
         ArticlePage::migrateUp();
-        $article = new ArticlePage();
+        $article = new ArticlePage;
 
         $field = Text::make('title')->setModelValue(function ($model, $field, $input, $files) {
-            $model->title = $input['title'] .  '-foobar';
+            $model->title = $input['title'].'-foobar';
         });
 
         (new SaveFields)->save($article, Fields::make([$field]), [
@@ -70,10 +70,10 @@ class SavingFieldTest extends TestCase
     public function it_can_prepare_the_value_before_process()
     {
         ArticlePage::migrateUp();
-        $article = new ArticlePage();
+        $article = new ArticlePage;
 
         $field = Text::make('title')->prepare(function ($value, $input) {
-            return $value . '-foobar';
+            return $value.'-foobar';
         });
 
         (new SaveFields)->save($article, Fields::make([$field]), [
@@ -87,10 +87,10 @@ class SavingFieldTest extends TestCase
     public function it_can_prepare_localized_values()
     {
         ArticlePage::migrateUp();
-        $article = new ArticlePage();
+        $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->locales(['nl','en'])->prepare(function ($value, $input) {
-            return $value . '-foobar';
+        $field = Text::make('title_trans')->locales(['nl', 'en'])->prepare(function ($value, $input) {
+            return $value.'-foobar';
         });
 
         (new SaveFields)->save($article, Fields::make([$field]), [
@@ -108,10 +108,10 @@ class SavingFieldTest extends TestCase
     public function it_can_save_localized_values_with_custom_formkey()
     {
         ArticlePage::migrateUp();
-        $article = new ArticlePage();
+        $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->setLocalizedFieldNameTemplate(':name.:locale')->locales(['nl','en'])->prepare(function ($value, $input) {
-            return $value . '-foobar';
+        $field = Text::make('title_trans')->setLocalizedFieldNameTemplate(':name.:locale')->locales(['nl', 'en'])->prepare(function ($value, $input) {
+            return $value.'-foobar';
         });
 
         (new SaveFields)->save($article, Fields::make([$field]), [

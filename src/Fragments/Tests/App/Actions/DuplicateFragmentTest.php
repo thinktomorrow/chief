@@ -18,10 +18,12 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class DuplicateFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
+
     private ContextModel $context;
+
     private Fragment $fragment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -125,8 +127,5 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertEquals($originalNestedFragment->values, $duplicatedNestedFragment->values);
     }
 
-    public function test_it_can_duplicate_shared_fragment()
-    {
-
-    }
+    public function test_it_can_duplicate_shared_fragment() {}
 }

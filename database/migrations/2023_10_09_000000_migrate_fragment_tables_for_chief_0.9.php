@@ -5,10 +5,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up()
     {
-        if(!Schema::hasColumn('chief_urls', 'site')) {
+        if (! Schema::hasColumn('chief_urls', 'site')) {
             Schema::table('chief_urls', function (Blueprint $table) {
                 $table->renameColumn('locale', 'site');
             });
@@ -25,7 +26,7 @@ return new class extends Migration {
         // This migration is meant for existing database setups.
         // It will migrate the existing fragment tables to the new structure.
         // New setups will have this structure by default.
-        if($this->columnSchemaIsAlreadyAltered()) {
+        if ($this->columnSchemaIsAlreadyAltered()) {
             $this->insertDefaultContextSites();
             $this->changeModelReferencesToKeyFormat();
             $this->copyContextFragmentLookupToTree();
@@ -54,9 +55,7 @@ return new class extends Migration {
         $this->addActiveContextIdToUrl();
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 
     private function insertDefaultContextSites(): void
     {
@@ -65,9 +64,6 @@ return new class extends Migration {
         DB::table('contexts')->update(['sites' => json_encode($siteIds)]);
     }
 
-    /**
-     * @return void
-     */
     public function addActiveContextToUrl(): void
     {
         Schema::table('chief_urls', function (Blueprint $table) {
@@ -118,13 +114,13 @@ return new class extends Migration {
         // Get all contexts of all pages
         $contextRows = DB::table('contexts')->whereNot('owner_type', 'fragmentmodel')->get();
 
-        foreach($contextRows as $contextRow) {
+        foreach ($contextRows as $contextRow) {
             $urlRecords = DB::table('chief_urls')
                 ->where('model_type', $contextRow->owner_type)
                 ->where('model_id', $contextRow->owner_id)
                 ->get();
 
-            foreach($urlRecords as $urlRecord) {
+            foreach ($urlRecords as $urlRecord) {
                 DB::table('chief_urls')->where('id', $urlRecord->id)->update([
                     'context_id' => $contextRow->id,
                 ]);
@@ -137,10 +133,10 @@ return new class extends Migration {
         // TODO: differentiate between context of page or fragment contexts...
         $contextRows = DB::table('contexts')->whereNot('owner_type', 'fragmentmodel')->get();
 
-        foreach($contextRows as $contextRow) {
+        foreach ($contextRows as $contextRow) {
             $lookups = DB::table('context_fragment_lookup')->where('context_id', $contextRow->id)->get();
 
-            foreach($lookups as $lookup) {
+            foreach ($lookups as $lookup) {
                 DB::table('context_fragment_tree')->insert([
                     'context_id' => $contextRow->id,
                     'parent_id' => null,
@@ -162,10 +158,10 @@ return new class extends Migration {
             ->where('owner_id', $fragmentId)
             ->get();
 
-        foreach($contextRows as $contextRow) {
+        foreach ($contextRows as $contextRow) {
             $lookups = DB::table('context_fragment_lookup')->where('context_id', $contextRow->id)->get();
 
-            foreach($lookups as $lookup) {
+            foreach ($lookups as $lookup) {
                 DB::table('context_fragment_tree')->insert([
                     'context_id' => $mainContextId,
                     'parent_id' => $fragmentId,

@@ -16,12 +16,12 @@ trait LocalizedFieldDefaults
 
     public function locales(?array $locales = null): static
     {
-        $this->locales = (null === $locales)
+        $this->locales = ($locales === null)
             ? ChiefLocales::locales()
             : $locales;
 
         $this->whenModelIsSet(function ($model, $field) use ($locales) {
-            if ($model instanceof BelongsToSites && (null === $locales)) {
+            if ($model instanceof BelongsToSites && ($locales === null)) {
                 $field->locales = ChiefLocales::localesBySites($model->getSiteIds());
             }
         });
