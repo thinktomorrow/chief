@@ -59,7 +59,7 @@ return new class extends Migration
 
     private function insertDefaultContextSites(): void
     {
-        $siteIds = \Thinktomorrow\Chief\Sites\ChiefSites::all()->map(fn ($site) => $site->id)->toArray();
+        $siteIds = \Thinktomorrow\Chief\Sites\ChiefSites::all()->toCollection()->map(fn ($site) => $site->id)->toArray();
 
         DB::table('contexts')->update(['sites' => json_encode($siteIds)]);
     }

@@ -34,10 +34,18 @@ final class IsolateFragment
         $context = $this->contextRepository->find($contextId);
         $fragment = $this->fragmentRepository->findByContext($fragmentId, $contextId);
 
+        $parentId = $fragment->getFragmentModel()->pivot->parent_id;
         $order = $fragment->getFragmentModel()->pivot->order;
 
         // Duplicate the shared fragment first
-        $this->duplicateFragment->handle($context, $context, $fragment->getFragmentModel(), $order, true);
+        $this->duplicateFragment->handle(
+            $fragment->getFragmentModel(),
+            $context->id,
+            $context->id,
+            $parentId,
+            $order,
+            true
+        );
 
         // Now remove the shared version from current context
         $this->detachFragment->handle($contextId, $fragmentId);

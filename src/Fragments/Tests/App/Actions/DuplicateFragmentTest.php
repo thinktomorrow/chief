@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Actions;
+namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -43,9 +42,10 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertCount(0, $targetContext->fragments()->get());
 
         app(DuplicateFragment::class)->handle(
-            $this->context,
-            $targetContext,
             $this->fragment->getFragmentModel(),
+            $this->context->id,
+            $targetContext->id,
+            null,
             1
         );
 
@@ -62,9 +62,10 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertCount(1, $this->context->fragments()->get());
 
         app(DuplicateFragment::class)->handle(
-            $this->context,
-            $targetContext,
             $this->fragment->getFragmentModel(),
+            $this->context->id,
+            $targetContext->id,
+            null,
             1
         );
 
@@ -83,9 +84,10 @@ class DuplicateFragmentTest extends ChiefTestCase
         $targetContext = FragmentTestHelpers::findOrCreateContext($this->owner);
 
         app(DuplicateFragment::class)->handle(
-            $this->context,
-            $targetContext,
             $this->fragment->getFragmentModel(),
+            $this->context->id,
+            $targetContext->id,
+            null,
             1
         );
 
@@ -97,35 +99,4 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertEquals($originalFragmentAsset->pivot->type, $duplicatedFragmentAsset->pivot->type);
         $this->assertEquals($originalFragmentAsset->pivot->locale, $duplicatedFragmentAsset->pivot->locale);
     }
-
-    public function test_it_can_duplicate_fragment_including_child_fragments()
-    {
-        // TODO: wip
-        $targetContext = FragmentTestHelpers::createContext($this->owner);
-
-        // Create nested fragment
-        $nestedContext = FragmentTestHelpers::createContext($this->fragment);
-        $nestedFragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $nestedContext->id);
-
-        $this->assertEquals(3, ContextModel::count());
-        $this->assertEquals(2, FragmentModel::count());
-
-        app(DuplicateFragment::class)->handle($this->context, $targetContext, $this->fragment->getFragmentModel(), 1);
-
-        $this->assertEquals(4, ContextModel::count());
-        $this->assertEquals(4, FragmentModel::count());
-
-        // Check duplicated nested fragment
-        $originalNestedContext = app(ContextRepository::class)->findNestedContextByOwner($this->context->fragments()->first());
-        $duplicatedNestedContext = app(ContextRepository::class)->findNestedContextByOwner($targetContext->fragments()->first());
-        $originalNestedFragment = $originalNestedContext->fragments()->first();
-        $duplicatedNestedFragment = $duplicatedNestedContext->fragments()->first();
-
-        $this->assertNotEquals($originalNestedFragment->id, $duplicatedNestedFragment->id);
-        $this->assertEquals($originalNestedFragment->order, $duplicatedNestedFragment->order);
-        $this->assertEquals($originalNestedFragment->key, $duplicatedNestedFragment->key);
-        $this->assertEquals($originalNestedFragment->values, $duplicatedNestedFragment->values);
-    }
-
-    public function test_it_can_duplicate_shared_fragment() {}
 }

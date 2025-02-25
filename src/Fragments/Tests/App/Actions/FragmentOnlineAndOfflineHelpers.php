@@ -10,7 +10,7 @@ trait FragmentOnlineAndOfflineHelpers
 {
     private function prepareOfflineFragment($owner): Fragment
     {
-        [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($owner, SnippetStub::class, 0, ['online_status' => 'offline']);
+        [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($owner, SnippetStub::class, null, 0, ['online_status' => 'offline']);
         $fragment->getFragmentModel()->setOffline();
         $fragment->getFragmentModel()->save();
 
@@ -21,7 +21,7 @@ trait FragmentOnlineAndOfflineHelpers
 
     private function prepareOnlineFragment($owner): Fragment
     {
-        [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($owner, SnippetStub::class, 0, ['online_status' => 'offline']);
+        [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($owner, SnippetStub::class, null, 0, ['online_status' => 'offline']);
         $fragment->getFragmentModel()->setOnline();
         $fragment->getFragmentModel()->save();
 

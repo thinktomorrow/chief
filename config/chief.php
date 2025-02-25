@@ -20,7 +20,7 @@ return [
      *
      * Each site entry contains the following values:
      * - id                 The unique identifier of the site - used in the db and views. Don't alter this!
-     * - locale             The locale used for this site
+     * - locale             The locale used by this site
      * - fallback_locale    The locale to fall back to when a field value is not available in the locale
      *                      Great for when you just want a few values different from another locale. e.g. be -> nl, or en-us -> en-gb.
      *                      All translations use this locale by default and user can opt to occasionally add own locale values when needed.

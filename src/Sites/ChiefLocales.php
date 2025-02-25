@@ -12,12 +12,12 @@ class ChiefLocales
             return $locales;
         }
 
-        return $locales = ChiefSites::fromConfig()->getLocales();
+        return $locales = ChiefSites::all()->getLocales();
     }
 
     public static function localesBySites(array $siteIds): array
     {
-        return ChiefSites::fromConfig()->filterByIds($siteIds)->getLocales();
+        return ChiefSites::all()->filterByIds($siteIds)->getLocales();
     }
 
     public static function fallbackLocales(): array
@@ -39,7 +39,7 @@ class ChiefLocales
             return $primaryFieldLocale;
         }
 
-        return $primaryFieldLocale = ChiefSites::fromConfig()->getPrimaryLocale();
+        return $primaryFieldLocale = ChiefSites::all()->getPrimaryLocale();
     }
 
     public static function localeGroups(array $locales, array $distinctLocales): array

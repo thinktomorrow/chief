@@ -18,7 +18,7 @@ readonly class ChiefSite
     public static function fromArray(array $site): self
     {
         if (! isset($site['id'], $site['locale'])) {
-            throw new \InvalidArgumentException('Site array should contain at least a id and locale key.');
+            throw new \InvalidArgumentException('Site array should contain at least an id and locale key.');
         }
 
         return new static(

@@ -93,9 +93,9 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_can_store_a_new_fragment_with_a_specific_order()
     {
-        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
-        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
-        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 1);
+        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 2);
+        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 3);
         $this->disableExceptionHandling();
         $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
             'title' => 'new-title',

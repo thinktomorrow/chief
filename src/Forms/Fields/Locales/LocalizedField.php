@@ -19,7 +19,7 @@ interface LocalizedField
     public function getLocales(): array;
 
     /**
-     * Grouped locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
+     * Group locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
      * This is used to determine the tabs shown in the admin for the field.
      */
     public function getLocaleGroups(): array;

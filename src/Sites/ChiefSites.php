@@ -2,29 +2,35 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
-use Illuminate\Support\Collection;
-
 class ChiefSites
 {
     /** @var ChiefSite[] */
     private array $sites;
 
-    /** @var ChiefSite[] */
-    private static ?array $cachedSites = null;
+    private static ?ChiefSites $cachedSites = null;
 
     private function __construct(ChiefSite ...$sites)
     {
-        $this->assertAllIdsAreUnique($sites);
-
         $this->sites = $sites;
+
+        $this->assertAtLeastOneSiteIsAdded();
+        $this->assertAllIdsAreUnique($sites);
     }
 
     public static function fromConfig(): self
     {
-        $sites = self::fromArray(config('chief.sites', []));
-        $sites->assertAtLeastOneSiteIsAdded();
+        return self::fromArray(config('chief.sites', []));
+    }
 
-        return $sites;
+    private static function fromArray(array $sites): self
+    {
+        $chiefSites = [];
+
+        foreach ($sites as $site) {
+            $chiefSites[] = ChiefSite::fromArray($site);
+        }
+
+        return new static(...$chiefSites);
     }
 
     public function get(): array
@@ -37,6 +43,16 @@ class ChiefSites
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
     }
 
+    public function toArray(): array
+    {
+        return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);
+    }
+
+    public function toCollection(): \Illuminate\Support\Collection
+    {
+        return collect($this->sites);
+    }
+
     private function onlyActive(): self
     {
         return new self(...array_filter($this->sites, fn (ChiefSite $site) => $site->isActive));
@@ -47,50 +63,35 @@ class ChiefSites
         return new self(...array_filter($this->sites, fn (ChiefSite $site) => in_array($site->id, $siteIds)));
     }
 
-    public static function all(): Collection
+    public static function all(): self
     {
         if (self::$cachedSites) {
-            return collect(self::$cachedSites);
+            return self::$cachedSites;
         }
 
-        return collect(self::$cachedSites = self::fromConfig()->get());
+        return self::$cachedSites = self::fromConfig();
     }
 
     public function getPrimaryLocale(): ?string
     {
+        return $this->getPrimarySite()->locale;
+    }
+
+    private function getPrimarySite(): ChiefSite
+    {
         foreach ($this->sites as $site) {
             if ($site->isPrimary) {
-                return $site->locale;
+                return $site;
             }
         }
 
-        if (empty($this->sites)) {
-            return null;
-        }
-
         // By default, we assume the first site is primary
-        return $this->sites[0]->locale;
-    }
-
-    public function toArray(): array
-    {
-        return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);
+        return $this->sites[0];
     }
 
     public static function clearCache(): void
     {
         self::$cachedSites = null;
-    }
-
-    private static function fromArray(array $sites): self
-    {
-        $chiefSites = [];
-
-        foreach ($sites as $site) {
-            $chiefSites[] = ChiefSite::fromArray($site);
-        }
-
-        return new static(...$chiefSites);
     }
 
     private function assertAtLeastOneSiteIsAdded(): void
