@@ -12,13 +12,17 @@ use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
+use Thinktomorrow\Chief\Sites\Locales\Localized;
+use Thinktomorrow\Chief\Sites\Locales\LocalizedDefault;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-final class FragmentModel extends Model implements FragmentResource, HasAsset, ReferableModel
+final class FragmentModel extends Model implements FragmentResource, HasAsset, Localized, ReferableModel
 {
     use FragmentResourceDefault;
     use HasDynamicAttributes;
     use InteractsWithAssets;
+    use LocalizedDefault;
     use ReferableModelDefault;
 
     /**
@@ -44,12 +48,6 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
 
     protected $casts = ['id' => 'string', 'meta' => 'array'];
 
-    private ?string $dynamicLocaleFallback = null;
-
-    // Non-persisted property that is used when pivot (model-fragment) context is missing,
-    // e.g. when validating upon storing / updating a fragment.
-    private array $locales = [];
-
     public static function resourceKey(): string
     {
         return 'fragmentmodel';
@@ -58,11 +56,6 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
     public function fields($model): iterable
     {
         return [];
-    }
-
-    public function setDynamicLocaleFallback(?string $dynamicLocaleFallback = null): void
-    {
-        $this->dynamicLocaleFallback = $dynamicLocaleFallback;
     }
 
     public function setOnline(): void
@@ -119,14 +112,9 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
         return 'data';
     }
 
-    protected function dynamicLocales(): array
+    protected function getDynamicLocales(): array
     {
         // Locales based on the sites of the model.
-        return ChiefLocales::fieldLocales();
-    }
-
-    public function dynamicLocaleFallback(): ?string
-    {
-        return $this->dynamicLocaleFallback;
+        return ChiefLocales::locales();
     }
 }

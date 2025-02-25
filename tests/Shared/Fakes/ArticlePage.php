@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Models\Page;
+use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
-use Thinktomorrow\Chief\Sites\ChiefLocales;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
@@ -72,7 +72,7 @@ class ArticlePage extends Model implements Page
         return 'article_page';
     }
 
-    protected function dynamicLocales(): array
+    protected function getDynamicLocales(): array
     {
         return ChiefLocales::locales();
     }

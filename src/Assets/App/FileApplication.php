@@ -14,6 +14,7 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -146,8 +147,6 @@ class FileApplication
 
     private function fragmentFactory(FragmentModel $fragmentModel): Fragment
     {
-        return ModelReference::fromString($fragmentModel->key)
-            ->instance()
-            ->setFragmentModel($fragmentModel);
+        return app(FragmentFactory::class)->create($fragmentModel);
     }
 }

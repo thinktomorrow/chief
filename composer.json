@@ -22,8 +22,8 @@
         "spatie/laravel-permission": "^6.10",
         "spatie/laravel-sitemap": "^7.3.1",
         "thinktomorrow/assetlibrary": "^1.0.0",
-        "thinktomorrow/dynamic-attributes": "^1.0.1",
-        "thinktomorrow/squanto": "^4.0.0",
+        "thinktomorrow/dynamic-attributes": "^2.0.0",
+        "thinktomorrow/squanto": "^5.0.0",
         "thinktomorrow/url": "^4.0.0",
         "thinktomorrow/vine": "^0.5.0"
     },

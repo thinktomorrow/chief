@@ -17,9 +17,19 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class FragmentTestHelpers
 {
-    public static function assertFragmentCount(string $contextId, int $count)
+    public static function assertFragmentCount(string $contextId, int $count, ?string $fragmentId = null, ?string $parentFragmentId = null)
     {
-        Assert::assertCount($count, app(FragmentRepository::class)->getByContext($contextId));
+        $fragments = app(FragmentRepository::class)->getByContext($contextId);
+
+        if ($fragmentId) {
+            $fragments = $fragments->filter(fn (Fragment $fragment) => $fragment->getFragmentModel()->id === $fragmentId);
+        }
+
+        if ($parentFragmentId) {
+            $fragments = $fragments->filter(fn (Fragment $fragment) => $fragment->getFragmentModel()->pivot->parent_id === $parentFragmentId);
+        }
+
+        Assert::assertCount($count, $fragments);
     }
 
     public static function assertRenderedFragments(Model $owner, string $expected)

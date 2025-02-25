@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -31,12 +30,12 @@ class AttachFragmentTest extends ChiefTestCase
         $this->fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $this->context->id);
     }
 
-    public function test_a_context_can_attach_an_fragment()
+    public function test_a_context_can_attach_a_root_fragment()
     {
         $context = FragmentTestHelpers::createContext($this->owner);
 
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->getFragmentModel()->id]))
+            ->post(route('chief::fragments.attach-root', [$context->id, $this->fragment->getFragmentModel()->id]))
             ->assertStatus(201);
 
         FragmentTestHelpers::assertFragmentCount($this->context->id, 1);
@@ -50,10 +49,10 @@ class AttachFragmentTest extends ChiefTestCase
         $otherFragmentId = FragmentTestHelpers::createFragment(Quote::class)->getFragmentId();
 
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
+            ->post(route('chief::fragments.attach-root', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
             ->assertStatus(201);
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]).'?order=0')
+            ->post(route('chief::fragments.attach-root', [$context->id, $otherFragmentId]).'?order=0')
             ->assertStatus(201);
 
         $fragments = app(FragmentRepository::class)->getByContext($context->id);
@@ -65,35 +64,49 @@ class AttachFragmentTest extends ChiefTestCase
 
     public function test_a_fragment_can_attach_a_nested_fragment()
     {
-        $ownerFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
-        $context = FragmentTestHelpers::createContext($ownerFragment = FragmentModel::find($ownerFragmentId));
-
+        $parentFragmentId = $this->fragment->getFragmentId();
         $otherFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
 
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $otherFragmentId]))
+            ->post(route('chief::fragments.attach', [$this->context->id, $otherFragmentId, $parentFragmentId]))
             ->assertStatus(201);
 
-        FragmentTestHelpers::assertFragmentCount($context->id, 1);
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 2);
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 1, $otherFragmentId, $parentFragmentId);
     }
 
-    //    public function test_it_can_check_if_a_model_allows_for_adding_a_fragment()
-    //    {
-    //        $this->assertFalse($this->manager($this->owner)->can('chief::fragments.attach'));
-    //        $this->assertTrue($this->manager($this->fragment)->can('chief::fragments.attach'));
-    //    }
-
-    public function test_adding_a_fragment_multiple_times_only_adds_it_once()
+    public function test_it_cannot_add_a_root_fragment_twice()
     {
         $context = FragmentTestHelpers::createContext($this->owner);
 
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
+            ->post(route('chief::fragments.attach-root', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
             ->assertStatus(201);
         $this->asAdmin()
-            ->post(route('chief::fragments.attach', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
+            ->post(route('chief::fragments.attach-root', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
             ->assertStatus(400);
 
         FragmentTestHelpers::assertFragmentCount($context->id, 1);
+    }
+
+    public function test_it_cannot_add_a_fragment_twice()
+    {
+        $parentFragmentId = $this->fragment->getFragmentId();
+        $parentFragmentId2 = FragmentTestHelpers::createAndAttachFragment(Quote::class, $this->context->id)->getFragmentId();
+        $otherFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
+
+        $this->asAdmin()
+            ->post(route('chief::fragments.attach', [$this->context->id, $otherFragmentId, $parentFragmentId]))
+            ->assertStatus(201);
+
+        $this->asAdmin()
+            ->post(route('chief::fragments.attach', [$this->context->id, $otherFragmentId, $parentFragmentId2]))
+            ->assertStatus(400);
+
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 3);
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 1, $parentFragmentId);
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 1, $parentFragmentId2);
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 1, $otherFragmentId, $parentFragmentId);
+        FragmentTestHelpers::assertFragmentCount($this->context->id, 0, $otherFragmentId, $parentFragmentId2);
     }
 }

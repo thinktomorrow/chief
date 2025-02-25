@@ -5,13 +5,19 @@ namespace Thinktomorrow\Chief\Fragments\Repositories;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class FragmentFactory
 {
     public function create(FragmentModel $fragmentModel): Fragment
     {
-        return $this->createObject($fragmentModel->key)
-            ->setFragmentModel($fragmentModel);
+        $fragment = $this->createObject($fragmentModel->key);
+
+        $fragmentModel->setFallbackLocales(ChiefLocales::fallbackLocales());
+
+        $fragment->setFragmentModel($fragmentModel);
+
+        return $fragment;
     }
 
     public function createObject(string $fragmentKey): Fragment

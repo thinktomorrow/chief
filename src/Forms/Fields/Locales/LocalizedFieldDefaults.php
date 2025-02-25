@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
-use Thinktomorrow\Chief\Sites\ChiefLocales;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 trait LocalizedFieldDefaults
 {

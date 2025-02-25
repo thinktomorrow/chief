@@ -1,6 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites;
+namespace Thinktomorrow\Chief\Sites\Locales;
+
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ChiefLocales
 {

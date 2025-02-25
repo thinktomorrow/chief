@@ -34,7 +34,7 @@ final class LinkForm
     {
         return $this->model instanceof BelongsToSites
             ? $this->model->getSiteIds()
-            : \Thinktomorrow\Chief\Sites\ChiefLocales::fieldLocales();
+            : \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::fieldLocales();
     }
 
     private function setLinks(): void

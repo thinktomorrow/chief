@@ -16,7 +16,7 @@ trait ModelDefaults
      * proper localized values to be returned. Here we provide the default in
      * advance in case the model decides to make use of DynamicAttributes.
      */
-    public function dynamicLocales(): array
+    public function getDynamicLocales(): array
     {
         // TODO: get only the locales that are used by this model
         return ChiefLocales::fieldLocales();

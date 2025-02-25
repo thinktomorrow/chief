@@ -102,7 +102,10 @@ abstract class BaseFragment extends Component implements Fragment
     {
         $this->fragmentModel = $fragmentModel;
 
-        $this->fragmentModel->setDynamicLocaleFallback($this->dynamicLocaleFallback());
+        // FragmentModel has the site ids -> locales mapping ...
+        // If specific locales are given, we'll respect it.
+
+        //        $this->fragmentModel->setDynamicLocaleFallback($this->dynamicLocaleFallback());
 
         return $this;
     }
@@ -133,11 +136,6 @@ abstract class BaseFragment extends Component implements Fragment
     public function getFragments(): FragmentCollection
     {
         return $this->getChildNodes();
-    }
-
-    public function dynamicLocaleFallback(): ?string
-    {
-        return null;
     }
 
     /**

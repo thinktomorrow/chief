@@ -83,7 +83,7 @@ class DuplicateModel
         $isTitleLocalized = $field ? $field->hasLocales() : false;
 
         if ($isTitleLocalized) {
-            $locales = \Thinktomorrow\Chief\Sites\ChiefLocales::fieldLocales();
+            $locales = \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::fieldLocales();
             $defaultLocale = reset($locales);
             $copiedModel->setDynamic($titleKey, '[Copy] '.$model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)), $defaultLocale);
         } else {

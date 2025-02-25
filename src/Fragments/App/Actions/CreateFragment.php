@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 final class CreateFragment
@@ -20,14 +20,12 @@ final class CreateFragment
 
     public function handle(string $fragmentKey, array $input, array $files = []): string
     {
-        $fragment = app(Relation::getMorphedModel($fragmentKey));
-
         $fragmentModel = FragmentModel::create([
             'id' => $this->fragmentRepository->nextId(),
             'key' => $fragmentKey,
         ]);
 
-        $fragment->setFragmentModel($fragmentModel);
+        $fragment = app(FragmentFactory::class)->create($fragmentModel);
 
         $fields = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->getFragmentModel())

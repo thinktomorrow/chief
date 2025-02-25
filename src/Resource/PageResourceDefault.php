@@ -15,7 +15,7 @@ trait PageResourceDefault
 {
     use ResourceDefault;
 
-    public function allowedSections(): array
+    public function allowedFragments(): array
     {
         return [];
     }

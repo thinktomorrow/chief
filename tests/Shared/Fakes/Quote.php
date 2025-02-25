@@ -9,24 +9,16 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-class Quote extends BaseFragment implements FragmentsOwner, HasAsset
+class Quote extends BaseFragment implements Fragment, HasAsset
 {
-    use HasDynamicAttributes {
-        HasDynamicAttributes::dynamicLocaleFallback as standardDynamicLocaleFallback;
-    }
+    use HasDynamicAttributes;
     use InteractsWithAssets;
-    use OwningFragments;
     use SoftDeletes;
-
-    public function dynamicLocaleFallback(): ?string
-    {
-        return $this->standardDynamicLocaleFallback();
-    }
 
     public function fields($model): iterable
     {
@@ -46,8 +38,8 @@ class Quote extends BaseFragment implements FragmentsOwner, HasAsset
         return 'quote';
     }
 
-    protected function dynamicLocales(): array
+    protected function getgetDynamicLocales(): array
     {
-        return ChiefLocales::fieldLocales();
+        return ChiefLocales::locales();
     }
 }

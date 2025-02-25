@@ -7,15 +7,11 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
-class SnippetStub extends BaseFragment implements Fragment, FragmentsOwner
+class SnippetStub extends BaseFragment implements Fragment
 {
-    use OwningFragments;
-
     public static function resourceKey(): string
     {
         return 'snippet-stub';

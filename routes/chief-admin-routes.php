@@ -61,7 +61,8 @@ Route::post('fragments/{context_id}/reorder', [FragmentController::class, 'reord
 //            ManagedRoute::post('nested-fragments-reorder', 'nestedfragments/{fragmentmodelowner_id}/reorder'),
 
 Route::post('fragments/{context_id}/{fragment_id}/status', [FragmentController::class, 'status'])->name('chief::fragments.status');
-Route::post('fragments/{context_id}/{fragment_id}/attach', [AttachFragmentController::class, 'attach'])->name('chief::fragments.attach');
+Route::post('fragments/{context_id}/{fragment_id}/attach', [AttachFragmentController::class, 'attachRoot'])->name('chief::fragments.attach-root');
+Route::post('fragments/{context_id}/{fragment_id}/{parent_id}/attach', [AttachFragmentController::class, 'attach'])->name('chief::fragments.attach');
 Route::post('fragments/{context_id}/{fragment_id}/copy', [FragmentController::class, 'copy'])->name('chief::fragments.copy');
 Route::post('fragments/{context_id}/{fragment_id}/unshare', [FragmentController::class, 'unshare'])->name('chief::fragments.unshare');
 

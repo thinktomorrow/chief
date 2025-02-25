@@ -7,9 +7,7 @@ namespace Thinktomorrow\Chief\Fragments\Repositories;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
-use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class ContextOwnerRepository
@@ -45,10 +43,5 @@ class ContextOwnerRepository
         $key = Relation::getMorphedModel($key) ?? $key;
 
         return ModelReference::make($key, $id)->instance();
-    }
-
-    private function fragmentFactory(FragmentModel $fragmentModel): Fragment
-    {
-        return app(FragmentFactory::class)->create($fragmentModel);
     }
 }
