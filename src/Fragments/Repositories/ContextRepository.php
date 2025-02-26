@@ -54,12 +54,12 @@ class ContextRepository
     //        return $contexts;
     //    }
 
-    public function create(ReferableModel&ContextOwner $owner, array $sites): ContextModel
+    public function create(ReferableModel&ContextOwner $owner, array $locales): ContextModel
     {
         return ContextModel::create([
             'owner_type' => $owner->modelReference()->shortClassName(),
             'owner_id' => $owner->modelReference()->id(),
-            'sites' => $sites,
+            'locales' => $locales,
         ]);
     }
 

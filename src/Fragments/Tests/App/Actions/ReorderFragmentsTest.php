@@ -102,7 +102,7 @@ class ReorderFragmentsTest extends ChiefTestCase
             'order' => 1,
         ])->assertStatus(201);
 
-        $insertedFragmentId = $response->getOriginalContent()['data']['fragmentmodel_id'];
+        $insertedFragmentId = $response->getOriginalContent()['data']['fragmentModelId'];
 
         $fragments = app(FragmentRepository::class)->getByContext($context->id);
         $this->assertCount(4, $fragments);

@@ -17,18 +17,13 @@
             <directory suffix="Test.php">./src/Assets/Tests</directory>
         </testsuite>
         <testsuite name="fragments">
-            <directory suffix="Test.php">./src/Fragments</directory>
+            <directory suffix="Test.php">./src/Fragments/Tests</directory>
         </testsuite>
-        <testsuite name="resources">
-            <directory suffix="Test.php">./src/ManagedModels</directory>
-            <directory suffix="Test.php">./src/Managers</directory>
-            <directory suffix="Test.php">./src/Resource</directory>
+        <testsuite name="table">
+            <directory suffix="Test.php">./src/Table/Tests</directory>
         </testsuite>
-        <testsuite name="admin">
-            <directory suffix="Test.php">./src/Admin</directory>
-            <directory suffix="Test.php">./src/Site</directory>
-            <directory suffix="Test.php">./src/Shared</directory>
-            <directory suffix="Test.php">./src/Table</directory>
+        <testsuite name="sites">
+            <directory suffix="Test.php">./src/Sites/Tests</directory>
         </testsuite>
         <testsuite name="plugins">
             <directory suffix="Test.php">./src/Plugins</directory>

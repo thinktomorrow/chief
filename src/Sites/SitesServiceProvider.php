@@ -6,7 +6,8 @@ use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SitesBox;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteTabs;
 
 class SitesServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,8 @@ class SitesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-sites', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::resource-sites', SitesBox::class);
+        Livewire::component('chief-wire::site-tabs', SiteTabs::class);
+        Livewire::component('chief-wire::site-links', SiteLinks::class);
     }
 
     public function register()

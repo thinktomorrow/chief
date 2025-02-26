@@ -2,14 +2,12 @@
 
 namespace Thinktomorrow\Chief\Fragments\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Repositories\FragmentFactory;
 
@@ -28,10 +26,10 @@ class CreateFragmentController
         $this->attachFragment = $attachFragment;
     }
 
-    public function create(string $contextId, string $fragmentKey, Request $request)
+    public function create(string $contextId, string $fragmentKey, ?string $parentId = null)
     {
         $context = ContextModel::find($contextId);
-        $order = $request->input('order', 0);
+        $order = request()->input('order', 0);
         $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $forms = Forms::make($fragment->fields($fragment))
@@ -50,8 +48,9 @@ class CreateFragmentController
         return view('chief-fragments::create');
     }
 
-    public function store(string $contextId, string $fragmentKey, Request $request, ?string $redirectToRouteIfFragmentsOwner = null)
+    public function store(string $contextId, string $fragmentKey, ?string $parentId, ?string $redirectToRouteIfFragmentsOwner)
     {
+        $request = request();
         $fragment = app(FragmentFactory::class)->createObject($fragmentKey);
 
         $fields = Forms::make($fragment->fields($fragment))
@@ -64,19 +63,21 @@ class CreateFragmentController
         $fragmentId = $this->createFragment->handle($fragmentKey, $request->all(), $request->allFiles());
 
         // Attach fragment to context
-        $this->attachFragment->handle($contextId, $fragmentId, $request->input('order', 0));
+        $this->attachFragment->handle($contextId, $fragmentId, $parentId, $request->input('order', 0));
 
         // If the fragment is a fragment owner ( = has nested fragments), we'll show the edit page of this fragment after creation
         // By default other fragments will return to the main edit page after being created.
-        $redirectTo = ($fragment instanceof FragmentsOwner
-            ? route($redirectToRouteIfFragmentsOwner ?: 'chief::fragments.edit', [$contextId, $fragmentId])
+        $redirectTo = ($parentId
+            ? route($redirectToRouteIfFragmentsOwner ?: 'chief::fragments.edit', [$contextId, $parentId])
             : null);
 
         return response()->json([
             'message' => 'fragment created',
             'sidebar_redirect_to' => $redirectTo,
             'data' => [
-                'fragmentmodel_id' => $fragmentId,
+                'fragmentModelId' => $fragmentId,
+                'parentId' => $parentId,
+                'contextId' => $contextId,
             ],
         ], 201);
     }

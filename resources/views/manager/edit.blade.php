@@ -7,7 +7,7 @@
         <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb('edit')]">
             @if ($forms->has('pagetitle'))
                 <x-slot name="customTitle">
-                    <x-chief-form::forms id="pagetitle"/>
+                    <x-chief-form::forms id="pagetitle" />
                 </x-slot>
             @else
                 <x-slot name="title">
@@ -15,35 +15,16 @@
                 </x-slot>
             @endif
 
-            @if (count(config('chief.locales')) > 1)
-                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3 mt-1">
-                    @foreach (config('chief.locales') as $locale)
-                        <x-chief::tabs.tab tab-id="{{ $locale }}"></x-chief::tabs.tab>
-                    @endforeach
-                </x-chief::tabs>
-            @endif
-
             @if($model instanceof BelongsToSites)
-                <livewire:chief-wire::resource-sites
-                    :resource-key="$resource::resourceKey()"
-                    :modelReference="$model->modelReference()"
-                    :sites="$model->getSiteIds()"/>
+                <livewire:chief-wire::site-tabs :resource-key="$resource::resourceKey()" :model="$model" />
             @endif
-
-            {{--                        @if(count(ChiefLocaleConfig::getLocales()) > 1)--}}
-            {{--                            <x-chief::tabs :listen-for-external-tab="true" class="-mb-3">--}}
-            {{--                                @foreach(ChiefLocaleConfig::getLocales() as $locale)--}}
-            {{--                                    <x-chief::tabs.tab tab-id='{{ $locale }}'></x-chief::tabs.tab>--}}
-            {{--                                @endforeach--}}
-            {{--                            </x-chief::tabs>--}}
-            {{--                        @endif--}}
 
             @include('chief::manager._partials.edit-actions')
         </x-chief::page.hero>
     </x-slot>
 
     <x-chief::page.grid>
-        <x-chief-form::forms position="main"/>
+        <x-chief-form::forms position="main" />
 
         @adminCan('fragments-index', $model)
         <div x-data='{
@@ -60,17 +41,21 @@
                 }
             }"
         >
-            <x-chief-fragments::index :context-id="$context->id"/>
+            <x-chief-fragments::index :context-id="$context->id" />
         </div>
         @endAdminCan
 
-        <x-chief-form::forms position="main-bottom"/>
+        <x-chief-form::forms position="main-bottom" />
 
         <x-slot name="aside">
-            <x-chief-form::forms position="aside-top"/>
-            <x-chief::window.states/>
-            <x-chief::window.links/>
-            <x-chief-form::forms position="aside"/>
+            <x-chief-form::forms position="aside-top" />
+
+            @if($model instanceof BelongsToSites)
+                <livewire:chief-wire::site-links :resource-key="$resource::resourceKey()" :model="$model" />
+            @endif
+            {{--            <x-chief::window.states />--}}
+            {{--            <x-chief::window.links />--}}
+            <x-chief-form::forms position="aside" />
         </x-slot>
     </x-chief::page.grid>
 

@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Fragments\Repositories;
 
 use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
-use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
@@ -25,9 +25,9 @@ final class FragmentRepository
      * Get entire fragmentCollection for a given context.
      * This is used to render all page fragments.
      */
-    public function getFragmentCollection(string $contextId, ?string $site = null): FragmentCollection
+    public function getFragmentCollection(string $contextId): FragmentCollection
     {
-        $fragmentModels = $this->getByContext($contextId, $site);
+        $fragmentModels = $this->getByContext($contextId);
 
         return FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
             $fragment->id = $fragment->getFragmentModel()->id;
@@ -38,15 +38,10 @@ final class FragmentRepository
         })->sort('order');
     }
 
-    public function getByContext(string $contextId, ?string $site = null): Collection
+    public function getByContext(string $contextId): Collection
     {
         $fragmentModels = ContextModel::findOrFail($contextId)
             ->fragments()
-            ->when($site, fn ($query, $site) => $query->where(function ($q) use ($site) {
-                $q->whereJsonContains('context_fragment_tree.sites', $site)
-                    ->orWhereNull('context_fragment_tree.sites')
-                    ->orWhereJsonLength('context_fragment_tree.sites', '=', 0);
-            }))
             ->with('assetRelation', 'assetRelation.media')
             ->get();
 

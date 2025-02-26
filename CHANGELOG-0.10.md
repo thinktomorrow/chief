@@ -79,7 +79,18 @@ class Image extends BaseFragment
 ### Fragment rendering
 
 Fragments now behave and render in the views as blade components. This is similar to the way the form fields are
-rendered.
+rendered. These changes should make fragment rendering more structured, predictable, and easier to extend.
+
+Refactored rendering logic to introduce clearer extensibility and standard view component behaviour.
+Replaced old renderFragment() and renderAdminFragment() methods with new render() and renderInAdmin() methods.
+
+- Added: `render()` and `renderInAdmin()` methods.
+- Added: `viewData()` method to pass data to the fragment view. The default data payload is:
+    - `fragment` - the fragment model
+    - `section` - the root fragment (if any)
+    - `model` - deprecated in favor of `fragment`
+- Properties `viewPath` and `adminViewPath` allow to set the view path of the fragment.
+- Removed: `renderFragment()` and `renderAdminFragment()` methods.
 
 ### New glossary
 

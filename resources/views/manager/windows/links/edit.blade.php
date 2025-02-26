@@ -20,7 +20,7 @@
                             <x-slot name="prepend">
                                 @if($formValues->fixedSegment !== '/')
                                     <span class="flex items-center gap-0.5">
-                                        <svg class="w-5 h-5 shrink-0"><use xlink:href="#icon-home"/></svg>
+                                        <svg class="w-5 h-5 shrink-0"><use xlink:href="#icon-home" /></svg>
 
                                         <span class="leading-5">
                                             /{{ $formValues->fixedSegment }}/
@@ -28,16 +28,16 @@
                                     </span>
                                 @else
                                     <svg class="w-5 h-5">
-                                        <use xlink:href="#icon-home"/>
+                                        <use xlink:href="#icon-home" />
                                     </svg>
                                 @endif
                             </x-slot>
 
                             <x-chief::input.text
-                                    id="links.{{ $locale }}"
-                                    name="links[{{ $locale }}]"
-                                    value="{{ $formValues->value }}"
-                                    x-on:input.debounce.300ms="(e) => {
+                                id="links.{{ $locale }}"
+                                name="links[{{ $locale }}]"
+                                value="{{ $formValues->value }}"
+                                x-on:input.debounce.300ms="(e) => {
                                     // An empty value is never checked for uniqueness
                                     if (!e.target.value) {
                                         hint = '';
@@ -58,7 +58,7 @@
                             />
                         </x-chief::input.prepend-append>
 
-                        <x-chief::inline-notification type="warning" size="sm" x-html="hint" x-show="hint"/>
+                        <x-chief::inline-notification type="warning" size="sm" x-html="hint" x-show="hint" />
                     </x-chief::input.group>
                 @endforeach
             </div>
@@ -73,9 +73,9 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if(!$links->redirects->isEmpty())
                         <div class="flex items-start space-x-4">
-                            @if(count(ChiefLocales::fieldLocales()) > 1)
+                            @if(count(ChiefLocales::locales()) > 1)
                                 <span
-                                        class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
+                                    class="w-8 px-0 text-sm text-center shrink-0 label label-grey">{{ $locale }}</span>
                             @endif
 
                             <div class="w-full px-4 py-3">

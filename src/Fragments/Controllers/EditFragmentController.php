@@ -89,7 +89,7 @@ class EditFragmentController
         return response()->json([
             'message' => 'fragment updated',
             'data' => [
-                'fragmentmodel_id' => $fragment->getFragmentId(),
+                'fragmentModelId' => $fragment->getFragmentId(),
             ],
         ], 204);
     }

@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Fragments\App\ActiveContext\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Exceptions\MissingFragmentModelException;
 use Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties;
+use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;

@@ -21,20 +21,20 @@ use Throwable;
 
 final class ChiefResponse
 {
-    public static function fromSlug(string $slug, $locale = null): BaseResponse
+    public static function fromSlug(string $slug, ?string $siteId = null): BaseResponse
     {
-        if (! $locale) {
-            $locale = app()->getLocale();
+        if (! $siteId) {
+            $siteId = app()->getLocale();
         }
 
         try {
             $slug = Str::ascii($slug);
 
-            $urlRecord = UrlRecord::findBySlug($slug, $locale);
+            $urlRecord = UrlRecord::findBySlug($slug, $siteId);
 
             if ($urlRecord->isRedirect()) {
                 return self::createRedirect(
-                    self::findModel($urlRecord->redirectTo())->url($locale)
+                    self::findModel($urlRecord->redirectTo())->url($siteId)
                 );
             }
 
@@ -46,7 +46,7 @@ final class ChiefResponse
             }
         }
 
-        throw new NotFoundHttpException('No url or model found for request ['.$slug.'] for locale ['.$locale.'].');
+        throw new NotFoundHttpException('No url or model found for request ['.$slug.'] for locale ['.$siteId.'].');
     }
 
     private static function createRedirect(string $url): RedirectResponse

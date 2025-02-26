@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\ChiefSite;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Url\Root;
 
 final class LinkForm
@@ -30,24 +32,28 @@ final class LinkForm
         $this->setFormValues();
     }
 
-    private function getLocales(): array
+    private function getSites(): ChiefSites
     {
+        // TODO: remove this one...
+        return ChiefSites::all();
+
         return $this->model instanceof BelongsToSites
-            ? $this->model->getSiteIds()
-            : \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::fieldLocales();
+            ? ChiefSites::all()->filterByIds($this->model->getSiteIds())
+            : ChiefSites::all();
     }
 
     private function setLinks(): void
     {
         $links = [];
 
-        foreach ($this->getLocales() as $locale) {
-            $records = $this->urlRecords->get($locale, collect());
+        /** @var ChiefSite $site */
+        foreach ($this->getSites() as $site) {
+            $records = $this->urlRecords->flatten()->filter(fn ($urlRecord) => $urlRecord->site == $site->id);
             $currentRecord = $records->reject->isRedirect()->first();
 
-            $url = $this->model->url($locale);
+            $url = $this->model->url($site->id);
 
-            $links[$locale] = (object) [
+            $links[$site->id] = (object) [
                 'current' => $currentRecord,
                 'url' => urldecode($url),
                 'full_path' => $url ? trim(substr($url, strlen(Root::fromString($url)->get())), '/') : '',
@@ -94,7 +100,7 @@ final class LinkForm
     {
         $values = [];
 
-        foreach ($this->getLocales() as $locale) {
+        foreach ($this->getSites() as $locale) {
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object) [

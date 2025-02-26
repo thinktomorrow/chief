@@ -25,7 +25,7 @@ class StoreFragmentTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
     }
 
-    public function test_it_can_store_a_fragment()
+    public function test_it_can_store_a_root_fragment()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner);
 
@@ -37,6 +37,27 @@ class StoreFragmentTest extends ChiefTestCase
         ])->assertStatus(201);
 
         $this->assertEquals(1, FragmentModel::count());
+
+        $snippet = FragmentTestHelpers::firstFragment($context->id);
+        $this->assertInstanceOf(SnippetStub::class, $snippet);
+        $this->assertEquals('new-title', $snippet->getFragmentModel()->title);
+    }
+
+    public function test_it_can_store_a_fragment()
+    {
+        $fragment = FragmentTestHelpers::createFragment(
+            SnippetStub::class,
+            ['title' => 'owning fragment']
+        );
+
+        $context = FragmentTestHelpers::createContext($fragment);
+        $this->asAdmin()->post(route('chief::fragments.nested.store', [$context->id, SnippetStub::resourceKey()]), [
+            'title' => 'new-title',
+            'order' => 2,
+
+        ])->assertStatus(201);
+
+        $this->assertEquals(2, FragmentModel::count());
 
         $snippet = FragmentTestHelpers::firstFragment($context->id);
         $this->assertInstanceOf(SnippetStub::class, $snippet);
@@ -64,27 +85,6 @@ class StoreFragmentTest extends ChiefTestCase
 
         app()->setLocale('en');
         $this->assertEquals('title_trans en value', $snippet->getFragmentModel()->title_trans);
-    }
-
-    public function test_it_can_store_a_nested_fragment()
-    {
-        $fragment = FragmentTestHelpers::createFragment(
-            SnippetStub::class,
-            ['title' => 'owning fragment']
-        );
-
-        $context = FragmentTestHelpers::createContext($fragment);
-        $this->asAdmin()->post(route('chief::fragments.nested.store', [$context->id, SnippetStub::resourceKey()]), [
-            'title' => 'new-title',
-            'order' => 2,
-
-        ])->assertStatus(201);
-
-        $this->assertEquals(2, FragmentModel::count());
-
-        $snippet = FragmentTestHelpers::firstFragment($context->id);
-        $this->assertInstanceOf(SnippetStub::class, $snippet);
-        $this->assertEquals('new-title', $snippet->getFragmentModel()->title);
     }
 
     public function test_it_can_upload_a_file_field()

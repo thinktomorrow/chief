@@ -8,6 +8,6 @@ class SidebarFragment extends Component
 {
     public function render()
     {
-        return view('chief-fragments::sidebar');
+        return view('chief-fragments::components.sidebar');
     }
 }

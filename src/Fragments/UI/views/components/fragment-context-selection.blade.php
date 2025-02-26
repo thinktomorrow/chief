@@ -10,7 +10,7 @@
 
         <x-chief::button wire:click="open" class="cursor-pointer">
             <svg class="w-5 h-5">
-                <use xlink:href="#icon-ellipsis-vertical"/>
+                <use xlink:href="#icon-ellipsis-vertical" />
             </svg>
         </x-chief::button>
     </div>
@@ -18,14 +18,14 @@
 
     <x-chief::dialog wired title="Op welke taalversies toont dit fragment" size="xs">
         <div class="block px-4 py-2 text-sm text-grey-700 space-y-4" tabindex="-1">
-            @foreach(ChiefLocales::fieldLocales() as $locale)
+            @foreach(ChiefLocales::locales() as $locale)
                 <x-chief::input.group class="w-64">
                     <div class="flex items-start gap-2 ">
                         <x-chief::input.checkbox
-                                id="{{ $locale }}"
-                                :checked="in_array($locale, $activeLocales)"
-                                wire:model.live="activeLocales"
-                                value="{{ $locale }}"
+                            id="{{ $locale }}"
+                            :checked="in_array($locale, $activeLocales)"
+                            wire:model.live="activeLocales"
+                            value="{{ $locale }}"
                         ></x-chief::input.checkbox>
                         <x-chief::input.label for="{{ $locale }}">{{ $locale }}</x-chief::input.label>
                     </div>

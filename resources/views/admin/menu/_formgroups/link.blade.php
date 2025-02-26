@@ -7,11 +7,11 @@
         <div class="space-y-2">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
-                        id="type-internal"
-                        name="type"
-                        value="internal"
-                        :checked="old('type', $menuitem->type) == 'internal'"
-                        x-on:click="type = 'internal'"
+                    id="type-internal"
+                    name="type"
+                    value="internal"
+                    :checked="old('type', $menuitem->type) == 'internal'"
+                    x-on:click="type = 'internal'"
                 />
 
                 <x-chief::input.label for="type-internal" unset class="body body-dark leading-5">
@@ -22,9 +22,9 @@
             <div x-cloak x-show="type == 'internal'">
                 <x-chief::input.group rule="owner_reference">
                     <x-chief::multiselect
-                            name="owner_reference"
-                            :options="\Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toMultiSelectPairs($pages)"
-                            :selection="old('owner_reference', $ownerReference)"
+                        name="owner_reference"
+                        :options="\Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toMultiSelectPairs($pages)"
+                        :selection="old('owner_reference', $ownerReference)"
                     />
                 </x-chief::input.group>
             </div>
@@ -34,11 +34,11 @@
         <div class="space-y-2">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
-                        id="type-custom"
-                        name="type"
-                        value="custom"
-                        :checked="old('type', $menuitem->type) == 'custom'"
-                        x-on:click="type = 'custom'"
+                    id="type-custom"
+                    name="type"
+                    value="custom"
+                    :checked="old('type', $menuitem->type) == 'custom'"
+                    x-on:click="type = 'custom'"
                 />
 
                 <x-chief::input.label for="type-custom" unset class="body body-dark leading-5">
@@ -47,29 +47,29 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if(count(ChiefLocales::fieldLocales()) > 1)
+                @if(count(ChiefLocales::locales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach(ChiefLocales::fieldLocales() as $locale)
+                        @foreach(ChiefLocales::locales() as $locale)
                             <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                 <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
-                                            id="trans-{{ $locale }}-url"
-                                            name="trans[{{ $locale }}][url]"
-                                            value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
-                                            placeholder="e.g. https://google.com"
+                                        id="trans-{{ $locale }}-url"
+                                        name="trans[{{ $locale }}][url]"
+                                        value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
+                                        placeholder="e.g. https://google.com"
                                     />
                                 </x-chief::input.group>
                             </x-chief::tabs.tab>
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach(ChiefLocales::fieldLocales() as $locale)
+                    @foreach(ChiefLocales::locales() as $locale)
                         <x-chief::input.group :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
-                                    id="trans-{{ $locale }}-url"
-                                    name="trans[{{ $locale }}][url]"
-                                    value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
-                                    placeholder="e.g. https://google.com"
+                                id="trans-{{ $locale }}-url"
+                                name="trans[{{ $locale }}][url]"
+                                value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
+                                placeholder="e.g. https://google.com"
                             />
                         </x-chief::input.group>
                     @endforeach
@@ -80,11 +80,11 @@
         {{-- Option: no link --}}
         <div class="flex items-start gap-2">
             <x-chief::input.radio
-                    id="type-nolink"
-                    name="type"
-                    value="nolink"
-                    :checked="old('type', $menuitem->type) == 'nolink'"
-                    x-on:click="type = 'nolink'"
+                id="type-nolink"
+                name="type"
+                value="nolink"
+                :checked="old('type', $menuitem->type) == 'nolink'"
+                x-on:click="type = 'nolink'"
             />
 
             <x-chief::input.label for="type-nolink" unset class="body body-dark leading-5">

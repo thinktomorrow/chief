@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
+use Thinktomorrow\Chief\Fragments\UI\Components\SidebarFragment;
 
 class FragmentsServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class FragmentsServiceProvider extends ServiceProvider
          * @foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
          */
         Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\Render\\RenderFragments::class)->render(\\Thinktomorrow\\Chief\\Fragments\\Render\\ActiveContextId::get()); ?>';
+            return '<?php foreach(getFragments() as $fragment): ?><?= $fragment->render(); ?><?php endforeach; ?>';
         });
     }
 

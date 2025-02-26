@@ -11,6 +11,11 @@ trait BelongsToSitesDefault
         return $this->sites ?? [];
     }
 
+    public function setSiteIds(array $siteIds): void
+    {
+        $this->sites = $siteIds;
+    }
+
     protected function initializeBelongsToSitesDefault()
     {
         $this->mergeCasts(['sites' => 'array']);

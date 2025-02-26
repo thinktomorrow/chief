@@ -13,17 +13,17 @@ trait VisitableDefaults
     use ResolvingRoute;
 
     /** {@inheritdoc} */
-    public function url(?string $locale = null): string
+    public function url(?string $site = null): string
     {
-        if (! $locale) {
-            $locale = app()->getLocale();
+        if (! $site) {
+            $site = app()->getLocale();
         }
 
-        if (! $urlRecord = $this->urls->first(fn ($urlRecord) => $urlRecord->locale == $locale)) {
+        if (! $urlRecord = $this->urls->first(fn ($urlRecord) => $urlRecord->site == $site)) {
             return '';
         }
 
-        return $this->resolveUrl($locale, [$urlRecord->slug]);
+        return $this->resolveUrl($site, [$urlRecord->slug]);
     }
 
     public function urls(): HasMany
@@ -50,17 +50,17 @@ trait VisitableDefaults
     }
 
     // TODO: just used once (in url preview) so cant we just remove this?...
-    public function resolveUrl(?string $locale = null, $parameters = null): string
+    public function resolveUrl(?string $site = null, $parameters = null): string
     {
         $routeName = config('chief.route.name');
 
-        return $this->resolveRoute($routeName, $parameters, $locale);
+        return $this->resolveRoute($routeName, $parameters, $site);
     }
 
     /** {@inheritdoc} */
-    public function baseUrlSegment(?string $locale = null): string
+    public function baseUrlSegment(?string $site = null): string
     {
-        return BaseUrlSegment::find(isset(static::$baseUrlSegment) ? (array) static::$baseUrlSegment : [], $locale);
+        return BaseUrlSegment::find(isset(static::$baseUrlSegment) ? (array) static::$baseUrlSegment : [], $site);
     }
 
     public function response(): Response

@@ -57,7 +57,7 @@ class FragmentTestHelpers
         return app(FragmentRepository::class)->getByContext($contextId);
     }
 
-    public static function findOrCreateContext($owner, array $sites = []): ContextModel
+    public static function findOrCreateContext($owner, array $locales = []): ContextModel
     {
         $contexts = app(ContextRepository::class)->getByOwner($owner);
 
@@ -65,12 +65,12 @@ class FragmentTestHelpers
             return $contexts->first();
         }
 
-        return static::createContext($owner, $sites);
+        return static::createContext($owner, $locales);
     }
 
-    public static function createContext(ContextOwner $owner, array $sites = []): ContextModel
+    public static function createContext(ContextOwner $owner, array $locales = []): ContextModel
     {
-        return app(ContextRepository::class)->create($owner, $sites);
+        return app(ContextRepository::class)->create($owner, $locales);
     }
 
     public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragment

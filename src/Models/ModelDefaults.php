@@ -19,7 +19,7 @@ trait ModelDefaults
     public function getDynamicLocales(): array
     {
         // TODO: get only the locales that are used by this model
-        return ChiefLocales::fieldLocales();
+        return ChiefLocales::locales();
     }
 
     public function viewKey(): string

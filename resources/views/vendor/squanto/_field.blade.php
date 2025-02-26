@@ -19,7 +19,7 @@
             @endphp
 
             <div class="flex w-full gap-2">
-                @if(count(ChiefLocales::fieldLocales()) > 1)
+                @if(count(ChiefLocales::locales()) > 1)
                     <div class="flex items-center justify-center w-8 p-2 rounded-md shrink-0 bg-grey-50">
                         <span class="text-xs uppercase text-grey-500">{{ $locale }}</span>
                     </div>
@@ -28,15 +28,15 @@
                 <div class="w-full form-light">
                     @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
                         <x-chief::input.textarea
-                                name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
-                                id="{{ $fieldId }}"
-                                class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
+                            name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
+                            id="{{ $fieldId }}"
+                            class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
                         >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</x-chief::input.textarea>
                     @else
                         <x-chief::input.text
-                                name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
-                                id="{{ $fieldId }}"
-                                value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
+                            name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
+                            id="{{ $fieldId }}"
+                            value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
                         />
                     @endif
                 </div>

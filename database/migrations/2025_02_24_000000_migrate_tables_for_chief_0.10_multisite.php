@@ -27,16 +27,17 @@ return new class extends Migration
         // It will migrate the existing fragment tables to the new structure.
         // New setups will have this structure by default.
         if ($this->columnSchemaIsAlreadyAltered()) {
-            $this->insertDefaultContextSites();
+            $this->insertDefaultContextLocales();
             $this->changeModelReferencesToKeyFormat();
             $this->copyContextFragmentLookupToTree();
             $this->addActiveContextIdToUrl();
+            $this->changeStateAccordingToOwnerState();
 
             return;
         }
 
         Schema::table('contexts', function (Blueprint $table) {
-            $table->json('sites')->after('owner_id')->nullable();
+            $table->json('locales')->after('owner_id')->nullable();
             $table->string('title')->nullable();
         });
 
@@ -44,24 +45,26 @@ return new class extends Migration
         // TODO: migration expand to different contexts per locale
         // TODO: migrate active context ids to each url db record.
         $this->addActiveContextToUrl();
+        $this->addStateToUrls();
         $this->changeFragmentIdColumnToChar();
         $this->removeSoftDeletion();
         $this->renameModelReferenceColumnToKey();
         $this->nestableFragments();
 
-        $this->insertDefaultContextSites();
+        $this->insertDefaultContextLocales();
         $this->changeModelReferencesToKeyFormat();
         $this->copyContextFragmentLookupToTree();
         $this->addActiveContextIdToUrl();
+        $this->changeStateAccordingToOwnerState();
     }
 
     public function down() {}
 
-    private function insertDefaultContextSites(): void
+    private function insertDefaultContextLocales(): void
     {
-        $siteIds = \Thinktomorrow\Chief\Sites\ChiefSites::all()->toCollection()->map(fn ($site) => $site->id)->toArray();
+        $locales = \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales();
 
-        DB::table('contexts')->update(['sites' => json_encode($siteIds)]);
+        DB::table('contexts')->update(['locales' => json_encode($locales)]);
     }
 
     public function addActiveContextToUrl(): void
@@ -70,6 +73,27 @@ return new class extends Migration
             $table->unsignedBigInteger('context_id')->nullable()->after('id');
             $table->foreign('context_id')->references('id')->on('contexts')->nullOnDelete();
         });
+    }
+
+    public function addStateToUrls(): void
+    {
+        Schema::table('chief_urls', function (Blueprint $table) {
+            $table->char('status', 32)->default('offline')->after('site');
+        });
+    }
+
+    public function changeStateAccordingToOwnerState(): void
+    {
+        $records = \Thinktomorrow\Chief\Site\Urls\UrlRecord::all();
+
+        foreach ($records as $record) {
+            $owner = $record->model;
+
+            if ($owner && $owner->inOnlineState()) {
+                $record->status = \Thinktomorrow\Chief\Site\Urls\LinkStatus::online->value;
+                $record->save();
+            }
+        }
     }
 
     private function changeFragmentIdColumnToChar(): void
@@ -200,6 +224,6 @@ return new class extends Migration
 
     private function columnSchemaIsAlreadyAltered(): bool
     {
-        return Schema::hasColumn('contexts', 'sites');
+        return Schema::hasColumn('contexts', 'locales');
     }
 };

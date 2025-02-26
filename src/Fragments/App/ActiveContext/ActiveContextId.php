@@ -24,4 +24,9 @@ class ActiveContextId
 
         return self::$activeContextId;
     }
+
+    public static function clear(): void
+    {
+        self::$activeContextId = null;
+    }
 }

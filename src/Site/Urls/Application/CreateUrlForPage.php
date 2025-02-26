@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class CreateUrlForPage
 {
@@ -30,7 +31,7 @@ class CreateUrlForPage
             return;
         }
 
-        $slugs = $this->createLocalizedSlugArray($model);
+        $slugs = $this->createSlugsForAllSites($model);
 
         if (count($slugs) < 0) {
             return;
@@ -43,7 +44,7 @@ class CreateUrlForPage
         }
     }
 
-    private function createLocalizedSlugArray(Visitable $model): array
+    private function createSlugsForAllSites(Visitable $model): array
     {
         $currentLocale = app()->getLocale();
         $slugs = [];
@@ -52,11 +53,15 @@ class CreateUrlForPage
             return [];
         }
 
-        foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::fieldLocales() as $locale) {
-            app()->setLocale($locale);
-            $slugs[$locale] = Str::slug($resource->getPageTitle($model));
+        foreach (ChiefSites::all() as $site) {
+            $siteId = $site->id;
+            $siteLocale = $site->locale;
+
+            app()->setLocale($siteLocale);
+            $slugs[$siteId] = Str::slug($resource->getPageTitle($model));
         }
 
+        // Reset locale
         app()->setLocale($currentLocale);
 
         return array_filter($slugs, fn ($item) => $item);

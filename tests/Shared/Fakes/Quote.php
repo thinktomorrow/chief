@@ -38,7 +38,7 @@ class Quote extends BaseFragment implements Fragment, HasAsset
         return 'quote';
     }
 
-    protected function getgetDynamicLocales(): array
+    protected function getDynamicLocales(): array
     {
         return ChiefLocales::locales();
     }

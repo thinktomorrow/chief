@@ -19,9 +19,8 @@ class CreateFragmentTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
     }
 
-    public function test_admin_can_view_the_fragment_create_form()
+    public function test_admin_can_view_a_root_fragment_create_form()
     {
-        $this->disableExceptionHandling();
         $context = FragmentTestHelpers::createContext($this->owner);
 
         $this->asAdmin()->get(route('chief::fragments.create', [$context->id, SnippetStub::resourceKey(), 1]))
@@ -29,12 +28,12 @@ class CreateFragmentTest extends ChiefTestCase
             ->assertViewIs('chief-fragments::create');
     }
 
-    public function test_admin_can_view_create_form_for_a_nested_fragment()
+    public function test_admin_can_view_a_fragment_create_form()
     {
+        $context = FragmentTestHelpers::createContext($this->owner);
         $fragment = FragmentTestHelpers::createFragment(SnippetStub::class);
-        $context = FragmentTestHelpers::createContext($fragment);
 
-        $this->asAdmin()->get(route('chief::fragments.nested.create', [$context->id, SnippetStub::resourceKey(), 1]))
+        $this->asAdmin()->get(route('chief::fragments.nested.create', [$context->id, SnippetStub::resourceKey(), $fragment->getFragmentId(), 1]))
             ->assertStatus(200)
             ->assertViewIs('chief-fragments::create');
     }

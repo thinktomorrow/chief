@@ -72,6 +72,7 @@ return new class extends Migration
             $table->unsignedBigInteger('context_id')->nullable();
             $table->unsignedInteger('redirect_id')->nullable();
             $table->char('site', 8);
+            $table->char('status', 32)->default('offline');
             $table->string('slug');
             $table->string('model_type');
             $table->integer('model_id')->unsigned();

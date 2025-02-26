@@ -2,7 +2,10 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
-class ChiefSites
+use ArrayIterator;
+use Traversable;
+
+class ChiefSites implements \Countable, \IteratorAggregate
 {
     /** @var ChiefSite[] */
     private array $sites;
@@ -13,13 +16,15 @@ class ChiefSites
     {
         $this->sites = $sites;
 
-        $this->assertAtLeastOneSiteIsAdded();
         $this->assertAllIdsAreUnique($sites);
     }
 
     public static function fromConfig(): self
     {
-        return self::fromArray(config('chief.sites', []));
+        $self = self::fromArray(config('chief.sites', []));
+        $self->assertAtLeastOneSiteIsAdded();
+
+        return $self;
     }
 
     private static function fromArray(array $sites): self
@@ -108,5 +113,15 @@ class ChiefSites
         if (count($ids) !== count(array_unique($ids))) {
             throw new \InvalidArgumentException('Site ids should be unique.');
         }
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->sites);
+    }
+
+    public function count(): int
+    {
+        return count($this->sites);
     }
 }

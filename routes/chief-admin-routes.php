@@ -74,8 +74,8 @@ Route::get('fragments/{context_id}/{fragment_type}/create', [CreateFragmentContr
 // Nested fragment routes
 Route::put('fragments/{context_id}/nested/{fragment_id}', [EditNestedFragmentController::class, 'update'])->name('chief::fragments.nested.update');
 Route::get('fragments/{context_id}/nested/{fragment_id}/edit', [EditNestedFragmentController::class, 'edit'])->name('chief::fragments.nested.edit');
-Route::post('fragments/{context_id}/nested/{fragment_type}', [CreateNestedFragmentController::class, 'store'])->name('chief::fragments.nested.store');
-Route::get('fragments/{context_id}/nested/{fragment_type}/create', [CreateNestedFragmentController::class, 'create'])->name('chief::fragments.nested.create');
+Route::post('fragments/{context_id}/nested/{fragment_type}/{parent_id}', [CreateNestedFragmentController::class, 'store'])->name('chief::fragments.nested.store');
+Route::get('fragments/{context_id}/nested/{fragment_type}/{parent_id}/create', [CreateNestedFragmentController::class, 'create'])->name('chief::fragments.nested.create');
 Route::delete('fragments/{context_id}/nested/{fragment_id}', [DeleteNestedFragmentController::class, 'delete'])->name('chief::fragments.nested.delete');
 
 Route::post('fragments/{context_id}/nested/{fragment_id}/add', [NestedFragmentController::class, 'add'])->name('chief::fragments.nested.add');

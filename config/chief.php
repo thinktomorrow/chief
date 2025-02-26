@@ -39,19 +39,19 @@ return [
      */
     'sites' => [
         [
-            'id' => 'nl-be',
+            'id' => 'nl',
             'locale' => 'nl',
             'fallback_locale' => null,
-            'name' => 'België (nl)',
+            'name' => 'Vlaanderen (nl)',
             'short_name' => 'be',
             'url' => env('CHIEF_SITES_PRIMARY_URL', env('APP_URL', 'http://localhost')),
             'active' => true,
             'primary' => true,
         ],
         [
-            'id' => 'fr-site',
+            'id' => 'fr',
             'locale' => 'fr',
-            'name' => 'Site (fr)',
+            'name' => 'Wallonië (fr)',
             'short_name' => 'fr',
             'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
             'active' => false,
