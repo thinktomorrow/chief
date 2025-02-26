@@ -44,10 +44,11 @@ class UpgradeFrom9To10Command extends BaseCommand
         // Exclude the vendor, node_modules and public files
         $files = $this->listProjectFiles->get();
 
-        //        $this->textReplacements($files);
+        // Perform text replacements
+        $this->textReplacements($files);
 
+        // Show manual refactorings
         $result = $this->textOccurrences($files);
-
         while (! $result && $this->confirm('Please refactor manually and check again', true)) {
             $result = $this->textOccurrences($files);
         }
@@ -64,11 +65,17 @@ class UpgradeFrom9To10Command extends BaseCommand
             'Thinktomorrow\Chief\Fragments\Fragmentable' => Fragment::class,
             'Thinktomorrow\Chief\Fragments\Assistants\HasBookmark' => HasBookmark::class,
             'use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;' => '',
+            'use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;' => '',
+            'use Thinktomorrow\Chief\Fragments\FragmentsOwner;' => '',
             'use ForwardFragmentProperties;' => '',
             'use FragmentableDefaults;' => '',
+            'use OwningFragments;' => '',
+            'FragmentsOwner, ' => '',
+            'FragmentsOwner ' => '',
             ' implements Fragment' => ' extends BaseFragment implements Fragment',
             ' implements Fragmentable' => ' extends BaseFragment implements Fragment',
-            'fragmentModel()' => 'getFragmentModel()',
+            'extends BaseFragment extends BaseFragment' => 'extends BaseFragment',
+            '->fragmentModel()' => '->getFragmentModel()',
             'Thinktomorrow\Chief\ManagedModels\Presets\Fragment' => Fragment::class,
 
             // Page

@@ -48,4 +48,9 @@ trait FragmentResourceDefault
         $model->setLocales($locales);
         $model->save();
     }
+
+    public function allowedFragments(): array
+    {
+        return [];
+    }
 }

@@ -13,10 +13,6 @@ use Thinktomorrow\Vine\Node;
 
 interface Fragment extends FragmentResource, Htmlable, Node, ReferableModel
 {
-    //    public function renderAdminFragment($owner, $loop, $viewData = []);
-
-    //    public function renderFragment($owner, $loop, $viewData = []): string;
-
     public function render(): View;
 
     public function renderInAdmin(): View;
