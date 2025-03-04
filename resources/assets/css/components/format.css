@@ -27,10 +27,7 @@
         @apply text-base;
     }
 
-    .h1-weight {
-        font-weight: theme('fontWeight.extrabold');
-    }
-
+    .h1-weight,
     .h2-weight {
         font-weight: theme('fontWeight.bold');
     }

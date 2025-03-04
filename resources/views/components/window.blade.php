@@ -6,23 +6,23 @@
 
 <div {{ $attributes->merge(['class' => 'space-y-4']) }}>
     {{-- Window header --}}
-    @if($title || $labels || $buttons)
-        <div class="flex justify-end space-x-4">
-            <div class="w-full space-x-1">
-                @if($title)
-                    <span class="text-lg h6 h1-dark">
+    @if ($title || $labels || $buttons)
+        <div class="flex items-start justify-between gap-4">
+            <div class="flex items-start gap-1">
+                @if ($title)
+                    <h2 class="mt-[0.1875rem] text-lg/6 font-medium text-grey-950">
                         {!! $title !!}
-                    </span>
+                    </h2>
                 @endif
 
-                @if($labels)
-                    <span class="align-bottom with-xs-labels">
+                @if ($labels)
+                    <span class="with-xs-labels align-bottom">
                         {!! $labels !!}
                     </span>
                 @endif
             </div>
 
-            @if($buttons)
+            @if ($buttons)
                 <div class="shrink-0">
                     {!! $buttons !!}
                 </div>
@@ -31,9 +31,9 @@
     @endif
 
     {{-- Window content --}}
-    @if($slot->isNotEmpty())
+    @if ($slot->isNotEmpty())
         <div>
             {!! $slot !!}
         </div>
-    @endisset
+    @endif
 </div>

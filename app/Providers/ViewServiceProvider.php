@@ -27,6 +27,9 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::templates.mail.layout', 'chief::mail.layout');
         Blade::component('chief::templates.mail.template', 'chief::mail.template');
 
+        // Multisite template components
+        Blade::component('chief::templates.page.multisite-template', 'chief::page.multisite-template');
+
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {
             return "<?php echo \$manager->route({$expression}); ?>";

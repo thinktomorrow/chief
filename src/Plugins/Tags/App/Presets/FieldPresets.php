@@ -18,6 +18,8 @@ class FieldPresets
         yield Form::make('tags')
             ->title('Tags')
             ->position('aside')
+            ->editInSidebar()
+            ->showAsBlank()
             ->items([
                 $field ?: static::tagSelect($model),
             ]);

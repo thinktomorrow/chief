@@ -24,22 +24,27 @@ class FieldPresets
 
     public static function seo(): iterable
     {
-        yield Form::make('form_seo')->title('Seo')->position('aside')->editInSidebar()->items([
-            Text::make('seo_title')
-                ->label('Titel')
-                ->locales()
-                ->characterCount(66)
-                ->tag(['seo', 'not-on-create']),
-            Textarea::make('seo_content')
-                ->label('Omschrijving')
-                ->description('Korte omschrijving in zoekmachines.')
-                ->locales()
-                ->characterCount(160)
-                ->tag(['seo', 'not-on-create']),
-            Image::make('seo_image')
-                ->label('Afbeelding')
-                ->locales()
-                ->tag(['seo', 'not-on-create']),
-        ]);
+        yield Form::make('form_seo')
+            ->title('Seo')
+            ->position('aside')
+            ->editInSidebar()
+            ->showAsBlank()
+            ->items([
+                Text::make('seo_title')
+                    ->label('Titel')
+                    ->locales()
+                    ->characterCount(66)
+                    ->tag(['seo', 'not-on-create']),
+                Textarea::make('seo_content')
+                    ->label('Omschrijving')
+                    ->description('Korte omschrijving in zoekmachines.')
+                    ->locales()
+                    ->characterCount(160)
+                    ->tag(['seo', 'not-on-create']),
+                Image::make('seo_image')
+                    ->label('Afbeelding')
+                    ->locales()
+                    ->tag(['seo', 'not-on-create']),
+            ]);
     }
 }
