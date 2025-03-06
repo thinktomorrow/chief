@@ -6,6 +6,8 @@ principles.
 
 ## Unreleased
 
+## 2025-03-06 - 0.9.2
+
 - Fixed: custom attributes on checkbox and radio fields were not rendered.
 
 ## 2025-02-18 - 0.9.1
