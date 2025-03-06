@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
-use Thinktomorrow\Chief\App\Console\TranslationsExportCommand;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
@@ -53,7 +52,6 @@ class ConsoleServiceProvider extends ServiceProvider
             'command.chief:view',
             'command.chief:project-menu',
             'command.chief:import-redirects',
-            'command.chief:translations-export',
         ]);
 
         // Bind our commands to the container
@@ -70,7 +68,6 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:developer', CreateDeveloper::class);
         $this->app->bind('command.chief:project-menu', ProjectMenuCommand::class);
         $this->app->bind('command.chief:import-redirects', ImportRedirects::class);
-        $this->app->bind('command.chief:translations-export', TranslationsExportCommand::class);
     }
 
     public function register()

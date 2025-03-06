@@ -4,7 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -18,7 +19,6 @@ class DuplicatePageTest extends ChiefTestCase
 
     public function test_it_can_duplicate_all_fields()
     {
-        $this->disableExceptionHandling();
         $this->assertCount(1, ArticlePage::all());
 
         $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
@@ -51,31 +51,54 @@ class DuplicatePageTest extends ChiefTestCase
 
     public function test_context_with_fragments_are_duplicated()
     {
-        // Add shared and non-shared fragment
-        $snippet = $this->createAsFragment(new SnippetStub, $this->source, 1);
-        $this->asAdmin()->post($this->manager($snippet)->route('fragment-add', $otherOwner = ArticlePage::create(), $snippet))->assertStatus(201);
+        $this->disableExceptionHandling();
+        $context = $this->findOrCreateContext($this->source, 'nl');
 
-        $snippet2 = $this->createAsFragment(new SnippetStub, $this->source, 2);
-        $response = $this->asAdmin()->post($this->manager($this->source)->route('duplicate', $this->source));
+        $snippet = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id, 1);
+        $snippet2 = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id, 2);
 
-        $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();
+        $this->asAdmin()
+            ->post($this->manager($this->source)->route('duplicate', $this->source))
+            ->assertRedirect();
 
-        $originalFragments = app(FragmentRepository::class)->getByOwner($this->source);
-        $fragments = app(FragmentRepository::class)->getByOwner($copiedModel);
+        $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id])->first();
+
+        $originalFragments = app(FragmentRepository::class)->getByOwner($this->source, 'nl');
+        $fragments = app(FragmentRepository::class)->getByOwner($copiedModel, 'nl');
 
         $this->assertCount(2, $fragments);
 
         // First snippet is shared
-        $this->assertEquals($originalFragments[0]->fragmentModel()->model_reference, $fragments[0]->fragmentModel()->model_reference);
-        $this->assertEquals($originalFragments[0]->fragmentModel()->id, $fragments[0]->fragmentModel()->id);
-        $this->assertTrue($originalFragments[0]->fragmentModel()->isShared());
-        $this->assertTrue($fragments[0]->fragmentModel()->isShared());
+        $this->assertEquals($originalFragments[0]->getFragmentModel()->key, $fragments[0]->getFragmentModel()->key);
+        $this->assertNotEquals($originalFragments[0]->getFragmentModel()->id, $fragments[0]->getFragmentModel()->id);
+        $this->assertNotEquals($originalFragments[1]->getFragmentModel()->id, $fragments[1]->getFragmentModel()->id);
+    }
 
-        // Second Snippet is static so is copied
-        $this->assertNotEquals($originalFragments[1]->fragmentModel()->id, $fragments[1]->fragmentModel()->id);
+    public function test_context_with_shared_fragments_keeps_fragment_shared()
+    {
+        $context = $this->findOrCreateContext($this->source, 'nl');
+        $context2 = $this->findOrCreateContext($otherOwner = ArticlePage::create(), 'nl');
 
-        // method on model to allow to duplicate e.g. duplicate(targetModel);
-        // Or dedicated duplicate class Duplicator() => Duplicate::handle()
+        // Add shared and non-shared fragment
+        $snippet = $this->createAndAttachFragment(SnippetStub::resourceKey(), $context->id, 1);
+        app(AttachRootFragment::class)->handle($context2->id, $snippet->getFragmentId(), 0, []);
+
+        $this->asAdmin()
+            ->post($this->manager($this->source)->route('duplicate', $this->source))
+            ->assertRedirect();
+
+        $copiedModel = ArticlePage::whereNotIn('id', [$this->source->id, $otherOwner->id])->first();
+
+        $originalFragments = app(FragmentRepository::class)->getByOwner($this->source, 'nl');
+        $fragments = app(FragmentRepository::class)->getByOwner($copiedModel, 'nl');
+
+        $this->assertCount(1, $fragments);
+
+        // First snippet is shared
+        $this->assertEquals($originalFragments[0]->getFragmentModel()->key, $fragments[0]->getFragmentModel()->key);
+        $this->assertEquals($originalFragments[0]->getFragmentModel()->id, $fragments[0]->getFragmentModel()->id);
+        $this->assertTrue($originalFragments[0]->getFragmentModel()->isShared());
+        $this->assertTrue($fragments[0]->getFragmentModel()->isShared());
     }
 
     public function test_page_assets_are_not_duplicated_but_refer_to_same_asset()

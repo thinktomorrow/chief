@@ -58,8 +58,8 @@ class TableServiceProvider extends ServiceProvider
                                 ->from('contexts')
                                 ->whereColumn('contexts.owner_id', $this->from.'.id')
                                 ->where('contexts.owner_type', '=', $model_type)
-                                ->join('context_fragment_lookup', 'contexts.id', '=', 'context_fragment_lookup.context_id')
-                                ->join('context_fragments', 'context_fragment_lookup.fragment_id', '=', 'context_fragments.id')
+                                ->join('context_fragment_tree', 'contexts.id', '=', 'context_fragment_tree.context_id')
+                                ->join('context_fragments', 'context_fragment_tree.child_id', '=', 'context_fragments.id')
                                 ->where(function ($query) use ($value) {
                                     $query->whereJsonLike(['title', 'content'], $value, 'data', 'context_fragments');
                                 });

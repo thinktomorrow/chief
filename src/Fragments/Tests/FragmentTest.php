@@ -1,0 +1,18 @@
+<?php
+
+namespace Thinktomorrow\Chief\Fragments\Tests;
+
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+
+class FragmentTest extends ChiefTestCase
+{
+    public function test_it_cascade_calls_to_fragmentmodel()
+    {
+        $snippet = $this->setupAndCreateSnippet($this->setupAndCreateArticle(), 0, true, [
+            'title' => 'foobar',
+        ]);
+
+        $this->assertEquals($snippet->getFragmentModel()->title, $snippet->title);
+        $this->assertEquals('foobar', $snippet->title);
+    }
+}

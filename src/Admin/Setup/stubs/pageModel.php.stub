@@ -6,8 +6,8 @@ namespace __STUB_NAMESPACE__;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page as PageContract;
-use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
+use Thinktomorrow\Chief\Models\Page as PageContract;
+use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 
 class __STUB_CLASSNAME__ extends Model implements PageContract, PageResource

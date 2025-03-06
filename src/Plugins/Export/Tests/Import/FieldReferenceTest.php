@@ -38,11 +38,11 @@ class FieldReferenceTest extends TestCase
         $snippet = $this->setUpAndCreateSnippet($article);
         $resource = app(Registry::class)->resource($snippet::resourceKey());
 
-        $reference = FieldReference::fromEncryptedKey(encrypt($snippet->fragmentModel()->modelReference()->get().'|links.1.title'));
+        $reference = FieldReference::fromEncryptedKey(encrypt($snippet->getFragmentModel()->modelReference()->get().'|links.1.title'));
 
-        $this->assertEquals($snippet->fragmentModel()->fresh(), $this->getPrivateProperty($reference, 'model'));
+        $this->assertEquals($snippet->getFragmentModel()->fresh(), $this->getPrivateProperty($reference, 'model'));
         $this->assertEquals($resource, $this->getPrivateProperty($reference, 'resource'));
-        $this->assertEquals($resource->field($snippet->fragmentModel(), 'links')->getKey(), $this->getPrivateProperty($reference, 'field')->getKey());
+        $this->assertEquals($resource->field($snippet->getFragmentModel(), 'links')->getKey(), $this->getPrivateProperty($reference, 'field')->getKey());
         $this->assertEquals('links.1.title', $this->getPrivateProperty($reference, 'fieldName'));
     }
 
@@ -87,6 +87,6 @@ class FieldReferenceTest extends TestCase
         $snippet = $this->setUpAndCreateSnippet($article);
         $resource = app(Registry::class)->resource($snippet::resourceKey());
 
-        return new FieldReference($resource, $snippet->fragmentModel(), $resource->field($snippet, 'links'), 'links.0.title');
+        return new FieldReference($resource, $snippet->getFragmentModel(), $resource->field($snippet, 'links'), 'links.0.title');
     }
 }

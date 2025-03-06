@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
 <x-chief::input.group>
     <x-chief::input.label required>
         Label
@@ -7,9 +8,9 @@
         Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.
     </x-chief::input.description>
 
-    @if(count(config('chief.locales')) > 1)
+    @if(count(ChiefLocales::locales()) > 1)
         <x-chief::tabs :listen-for-external-tab="true">
-            @foreach(config('chief.locales') as $locale)
+            @foreach(ChiefLocales::locales() as $locale)
                 <x-chief::tabs.tab tab-id='{{ $locale }}'>
                     <x-chief::input.group :rule="'trans.' . $locale . '.label'">
                         <x-chief::input.text
@@ -23,7 +24,7 @@
             @endforeach
         </x-chief::tabs>
     @else
-        @foreach(config('chief.locales') as $locale)
+        @foreach(ChiefLocales::locales() as $locale)
             <x-chief::input.group :rule="'trans.' . $locale . '.label'">
                 <x-chief::input.text
                     name="trans[{{ $locale }}][label]"

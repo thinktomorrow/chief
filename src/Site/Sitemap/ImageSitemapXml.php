@@ -73,11 +73,11 @@ class ImageSitemapXml
         $assets = $model->assets(null, $locale);
 
         $fragments = app(FragmentRepository::class)->getByOwner($model)->reject(function ($fragment) {
-            return $fragment->fragmentModel()->isOffline();
+            return $fragment->getFragmentModel()->isOffline();
         });
 
         foreach ($fragments as $fragment) {
-            $assets = $assets->merge($fragment->fragmentModel()->assets(null, $locale));
+            $assets = $assets->merge($fragment->getFragmentModel()->assets(null, $locale));
         }
 
         return $assets;

@@ -110,7 +110,7 @@ class FieldValueTest extends TestCase
     /** @test */
     public function it_can_get_the_existing_translated_model_value()
     {
-        config()->set('chief.locales', ['nl', 'en', 'fr']);
+        config()->set('chief.locales.admin', ['nl', 'en', 'fr']);
 
         $model = ArticlePage::make(['content_trans' => [
             'nl' => 'existing content nl',

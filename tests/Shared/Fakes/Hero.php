@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
 use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
 
-class Hero implements Fragmentable
+class Hero extends BaseFragment
 {
-    use FragmentableDefaults;
-
     public function renderAdminFragment($owner, $loop, $viewData = []): string
     {
         return 'hero-admin-fragment';
@@ -32,7 +29,7 @@ class Hero implements Fragmentable
 
     public function getTitle()
     {
-        return $this->fragmentModel()->title;
+        return $this->getFragmentModel()->title;
     }
 
     public function viewKey(): string

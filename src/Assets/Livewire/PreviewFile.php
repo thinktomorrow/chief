@@ -14,6 +14,7 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
 use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -339,7 +340,7 @@ class PreviewFile implements Wireable
     private function createOwnerFields($resourceModel, ?FragmentModel $fragmentModel = null): array
     {
         if ($fragmentModel) {
-            $fragment = ModelReference::fromString($fragmentModel->model_reference)->instance()->setFragmentModel($fragmentModel);
+            $fragment = app(FragmentFactory::class)->create($fragmentModel);
         }
 
         try {

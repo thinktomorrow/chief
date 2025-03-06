@@ -45,7 +45,7 @@ class ImageSitemapTest extends ChiefTestCase
         $asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image-2.png'))
             ->save();
-        app(AddAsset::class)->handle($fragment->fragmentModel(), $asset, 'image', 'nl', 0, []);
+        app(AddAsset::class)->handle($fragment->getFragmentModel(), $asset, 'image', 'nl', 0, []);
     }
 
     public function test_it_can_generate_an_xml_per_locale()

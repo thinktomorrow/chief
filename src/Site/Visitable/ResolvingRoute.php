@@ -12,15 +12,11 @@ trait ResolvingRoute
 
     /**
      * Resolve a page route.
-     *
-     * @param  null  $locale
-     * @param  array  $parameters
-     * @return string
      */
-    protected function resolveRoute($name, $parameters = [], $locale = null)
+    protected function resolveRoute(string $name, array $parameters = [], ?string $site = null)
     {
         if (static::$routeResolver) {
-            return call_user_func_array(static::$routeResolver, [$name, $parameters, $locale]);
+            return call_user_func_array(static::$routeResolver, [$name, $parameters, $site]);
         }
 
         return route($name, $parameters);

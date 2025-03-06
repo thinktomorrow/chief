@@ -24,8 +24,6 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasFieldToggle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasId;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocales;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModelValuePreparation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasName;
@@ -33,6 +31,8 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
 use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
@@ -51,7 +51,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     // Field concerns
     use HasKey;
     use HasLabel;
-    use HasLocales;
 
     // Generic component concerns
     use HasLocalizableProperties;
@@ -65,6 +64,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasValidation;
     use HasValue;
     use HasView;
+    use LocalizedFieldDefaults;
 
     /**
      * Every field is rendered in a formgroup container view,
@@ -136,6 +136,10 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
 
     public function toLivewire()
     {
+        if (isset($this->options) && is_callable($this->options)) {
+            $this->options = call_user_func($this->options);
+        }
+
         return [
             'class' => static::class,
             'key' => $this->key,
@@ -146,8 +150,10 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),
                 ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
                 ...(isset($this->locales) ? ['locales' => $this->locales] : []),
-                ...(isset($this->localizedFormKeyTemplate) ? ['setLocalizedFormKeyTemplate' => $this->localizedFormKeyTemplate] : []),
+                ...(isset($this->localizedFieldNameTemplate) ? ['setLocalizedFormKeyTemplate' => $this->localizedFieldNameTemplate] : []),
                 ...(isset($this->label) ? ['label' => $this->label] : []),
+                ...(isset($this->value) ? ['value' => $this->value] : []),
+                ...(isset($this->default) ? ['default' => $this->default] : []),
                 ...(isset($this->description) ? ['description' => $this->description] : []),
                 ...(isset($this->options) ? ['options' => $this->options] : []),
                 ...(isset($this->allowMultiple) ? ['multiple' => $this->allowMultiple] : []),

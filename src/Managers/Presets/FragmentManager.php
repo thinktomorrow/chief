@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Presets;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\RepeatFieldAssistant;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -21,7 +21,7 @@ final class FragmentManager implements Manager
     use ManagerDefaults;
     use RepeatFieldAssistant;
 
-    //    private Resource $resource;
+    //    private Domain $resource;
     private FragmentRepository $fragmentRepository;
 
     private FieldValidator $fieldValidator;

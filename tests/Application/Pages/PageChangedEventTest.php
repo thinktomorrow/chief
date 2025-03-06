@@ -6,12 +6,12 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
@@ -51,7 +51,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentUpdated::class);
 
-        event(new FragmentUpdated($this->fragment->fragmentModel()->id));
+        event(new FragmentUpdated($this->fragment->getFragmentModel()->id));
 
         Event::assertDispatched(PageChanged::class);
     }
@@ -60,16 +60,16 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentDetached::class);
 
-        event(new FragmentDetached($this->fragment->fragmentModel()->id, 123));
+        event(new FragmentDetached($this->fragment->getFragmentModel()->id, 123));
 
         Event::assertDispatched(PageChanged::class);
     }
 
     public function test_it_can_be_triggered_when_fragment_is_added()
     {
-        Event::fakeExcept(FragmentAdded::class);
+        Event::fakeExcept(FragmentAttached::class);
 
-        event(new FragmentAdded($this->fragment->fragmentModel()->id, 123));
+        event(new FragmentAttached($this->fragment->getFragmentModel()->id, 123));
 
         Event::assertDispatched(PageChanged::class);
     }
@@ -78,7 +78,7 @@ class PageChangedEventTest extends ChiefTestCase
     {
         Event::fakeExcept(FragmentDuplicated::class);
 
-        event(new FragmentDuplicated($this->fragment->fragmentModel()->id, 123));
+        event(new FragmentDuplicated($this->fragment->getFragmentModel()->id, '123'));
 
         Event::assertDispatched(PageChanged::class);
     }
