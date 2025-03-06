@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Plugins\Upgrade\Commands;
 
 use Thinktomorrow\Chief\App\Console\BaseCommand;
-use Thinktomorrow\Chief\Fragments\App\Sections\HasBookmark;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\HasBookmark;
 use Thinktomorrow\Chief\Models\ModelDefaults;
 use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Models\PageDefaults;
@@ -58,6 +58,8 @@ class UpgradeFrom9To10Command extends BaseCommand
 
     private function textReplacements(array $files): void
     {
+        $this->info('Start with replacing texts');
+
         $textReplacements = [
 
             // Fragment
@@ -77,6 +79,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'extends BaseFragment extends BaseFragment' => 'extends BaseFragment',
             '->fragmentModel()' => '->getFragmentModel()',
             'Thinktomorrow\Chief\ManagedModels\Presets\Fragment' => Fragment::class,
+            'private string $viewPath' => 'protected string $viewPath',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,
@@ -91,21 +94,23 @@ class UpgradeFrom9To10Command extends BaseCommand
                 $this->replaceTextInFile->replace($file->getRealPath(), $search, $replace);
             }
         }
+
+        $this->info('Text replacements completed');
     }
 
-    private function textOccurrences(array $files): bool
+    private function textOccurrences(array $allFiles): bool
     {
         $textOccurrences = [
-            'renderFragment(' => 'The following files have the old renderFragment method. This method has been removed in Chief 0.10. Please replace it with render().',
             'renderAdminFragment(' => 'The following files have the old renderAdminFragment method. This method has been removed in Chief 0.10. Please replace it with renderInAdmin().',
+            'renderFragment(' => 'The following files have the old renderFragment method. This method has been removed in Chief 0.10. Please replace it with render().',
         ];
 
         $allClean = true;
 
-        /** @var \SplFileInfo $file */
         foreach ($textOccurrences as $search => $note) {
 
-            $files = array_filter($files, function ($file) use ($search) {
+            /** @var \SplFileInfo $file */
+            $files = array_filter($allFiles, function ($file) use ($search) {
                 return strpos(file_get_contents($file->getRealPath()), $search) !== false;
             });
 

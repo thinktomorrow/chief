@@ -33,7 +33,7 @@ if (! function_exists('getFragments')) {
     function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\Models\FragmentCollection
     {
         return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get(
-            $contextId ?: app(\Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId::class)->get()
+            $contextId ?: app(\Thinktomorrow\Chief\Fragments\ActiveContextId::class)->get()
         );
     }
 }

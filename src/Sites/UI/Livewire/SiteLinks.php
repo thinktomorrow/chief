@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire;
 
 use Illuminate\Support\Arr;
 use Livewire\Component;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Urls\LinkStatus;
@@ -55,7 +55,7 @@ class SiteLinks extends Component
 
         $sites = ChiefSites::all()->filterByIds($this->siteIds);
         $model = ModelReference::fromString($this->modelReference)->instance();
-        $contexts = app(ContextRepository::class)->getByOwner($model);
+        $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
         $activeRecords = $model->urls;
 
         /** @var ChiefSite $site */

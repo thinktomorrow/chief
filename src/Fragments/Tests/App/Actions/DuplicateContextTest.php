@@ -7,10 +7,10 @@ use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -53,8 +53,8 @@ class DuplicateContextTest extends ChiefTestCase
     {
         app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
 
-        $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
-        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
+        $originalContext = app(ContextRepository::class)->getByOwner($this->owner->modelReference())->first();
+        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2->modelReference())->first();
 
         // Check duplicated fragment
         $originalStaticFragment = $originalContext->fragments->first();
@@ -79,8 +79,8 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(2, FragmentModel::count());
         $this->assertEquals(1, Asset::count());
 
-        $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
-        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
+        $originalContext = app(ContextRepository::class)->getByOwner($this->owner->modelReference())->first();
+        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2->modelReference())->first();
 
         $originalFragmentAsset = $originalContext->fragments->first()->assetRelation()->first();
         $duplicatedFragmentAsset = $duplicatedContext->fragments->first()->assetRelation()->first();
@@ -104,8 +104,8 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());
 
-        $originalContext = app(ContextRepository::class)->getByOwner($this->owner)->first();
-        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2)->first();
+        $originalContext = app(ContextRepository::class)->getByOwner($this->owner->modelReference())->first();
+        $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2->modelReference())->first();
 
         // Check duplicated fragment
         $originalFragmentCollection = app(FragmentRepository::class)->getFragmentCollection($originalContext->id);

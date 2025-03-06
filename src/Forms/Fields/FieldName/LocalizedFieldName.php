@@ -6,7 +6,8 @@ namespace Thinktomorrow\Chief\Forms\Fields\FieldName;
 
 class LocalizedFieldName
 {
-    const DEFAULT_TEMPLATE = 'trans.:locale.:name';
+    //    const DEFAULT_TEMPLATE = 'trans.:locale.:name';
+    const DEFAULT_TEMPLATE = ':name.:locale';
 
     /**
      * The default structure of a localized form key. The default
@@ -64,7 +65,7 @@ class LocalizedFieldName
         $keys = [];
 
         foreach ($locales as $locale) {
-            $keys[] = $this->get($value, $locale, false);
+            $keys[$locale] = $this->get($value, $locale, false);
         }
 
         return $keys;

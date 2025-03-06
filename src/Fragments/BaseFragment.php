@@ -22,6 +22,8 @@ abstract class BaseFragment extends Component implements Fragment
     use NodeDefaults;
     use ReferableModelDefault;
 
+    protected array $addedViewData = [];
+
     public function __construct()
     {
         $this->children = new FragmentCollection;
@@ -48,14 +50,21 @@ abstract class BaseFragment extends Component implements Fragment
     {
         $this->attributes = $this->attributes ?: $this->newAttributeBag();
 
-        return [
+        return array_merge([
             'attributes' => $this->attributes,
             'fragment' => $this,
             'section' => $this->getRootNode(),
 
             /** @deprecated use $fragment instead */
             'model' => $this,
-        ];
+        ], $this->addedViewData);
+    }
+
+    public function with(array $viewData): static
+    {
+        $this->addedViewData = $viewData;
+
+        return $this;
     }
 
     protected function viewPath(): string
@@ -144,5 +153,25 @@ abstract class BaseFragment extends Component implements Fragment
     public function fragmentModel(): FragmentModel
     {
         return $this->getFragmentModel();
+    }
+
+    public function isOffline(): bool
+    {
+        return ! $this->isOnline();
+    }
+
+    public function isOnline(): bool
+    {
+        return $this->getFragmentModel()->isOnline();
+    }
+
+    public function isShared(): bool
+    {
+        return $this->getFragmentModel()->isShared();
+    }
+
+    public function getBookmark(): string
+    {
+        return $this->getFragmentModel()->getBookmark() ?? '';
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests;
 
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 

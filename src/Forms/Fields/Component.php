@@ -136,6 +136,10 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
 
     public function toLivewire()
     {
+        if (isset($this->options) && is_callable($this->options)) {
+            $this->options = call_user_func($this->options);
+        }
+
         return [
             'class' => static::class,
             'key' => $this->key,
@@ -148,6 +152,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->locales) ? ['locales' => $this->locales] : []),
                 ...(isset($this->localizedFieldNameTemplate) ? ['setLocalizedFormKeyTemplate' => $this->localizedFieldNameTemplate] : []),
                 ...(isset($this->label) ? ['label' => $this->label] : []),
+                ...(isset($this->value) ? ['value' => $this->value] : []),
+                ...(isset($this->default) ? ['default' => $this->default] : []),
                 ...(isset($this->description) ? ['description' => $this->description] : []),
                 ...(isset($this->options) ? ['options' => $this->options] : []),
                 ...(isset($this->allowMultiple) ? ['multiple' => $this->allowMultiple] : []),

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
-use Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId;
+use Thinktomorrow\Chief\Fragments\ActiveContextId;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetFragments;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Fragments\Tests\Stubs\RootFragmentStub;

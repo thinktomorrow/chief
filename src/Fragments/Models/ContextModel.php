@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Models;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
@@ -43,9 +42,8 @@ final class ContextModel extends Model implements BelongsToSites
             ->orderBy('context_fragment_tree.order');
     }
 
-    /** @deprecated use ContextOwnerRepository::findOwner($contextId) instead */
-    public function getOwner()
+    public function owner()
     {
-        throw new Exception('Deprecated method. Use ContextOwnerRepository::findOwner($contextId) instead.');
+        return $this->morphTo('owner');
     }
 }

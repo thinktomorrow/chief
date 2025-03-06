@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -35,7 +35,7 @@ class DuplicatePage
             $copiedModel->save();
         }
 
-        foreach ($this->contextRepository->getByOwner($model) as $context) {
+        foreach ($this->contextRepository->getByOwner($model->modelReference()) as $context) {
             $this->duplicateContext->handle($context->id, $copiedModel, $context->locale);
         }
 

@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Vine\Node;
 
-interface Fragment extends FragmentResource, Htmlable, Node, ReferableModel
+interface Fragment extends FragmentResource, HasBookmark, Htmlable, Node, ReferableModel
 {
     public function render(): View;
 
@@ -32,4 +32,10 @@ interface Fragment extends FragmentResource, Htmlable, Node, ReferableModel
     public function setFragmentModel(FragmentModel $fragmentModel): self;
 
     public function getFragmentModel(): FragmentModel;
+
+    public function isOffline(): bool;
+
+    public function isOnline(): bool;
+
+    public function isShared(): bool;
 }

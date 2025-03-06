@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\Domain\Models;
 
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextOwnerRepository;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;

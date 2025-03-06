@@ -36,3 +36,9 @@ Best to loop the fragments in the view like:
 ```php 
 @foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
 ```
+
+Default localized key is now `:name.:locale` instead of `trans.:locale.:name`. For existing projects, you
+can set the default key back by adding the following to your AppServiceProvider file:
+
+```php
+Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName::setDefaultTemplate('trans.:locale.:name');

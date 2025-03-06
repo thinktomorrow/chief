@@ -6,10 +6,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextOwnerRepository;
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 // Nested fragments component in sidebar (cannot use livewire for this)
 class Fragments extends Component

@@ -21,7 +21,6 @@
             {!! $getDescription() !!}
         </x-chief::input.description>
     @endif
-
     @if (! $hasLocales())
         <div>
             @include($getView())
@@ -47,11 +46,11 @@
 
     @if ($hasLocales())
         @foreach ($getLocales() as $locale)
-            <x-chief::input.error :rule="LivewireFieldName::get($getId($locale ?? null))"/>
-            <x-chief::input.error :rule="$getId($locale)"/>
+            <x-chief::input.error :rule="LivewireFieldName::get($getId($locale ?? null))" />
+            <x-chief::input.error :rule="$getId($locale)" />
         @endforeach
     @else
-        <x-chief::input.error :rule="LivewireFieldName::get($getId())"/>
-        <x-chief::input.error :rule="$getId()"/>
+        <x-chief::input.error :rule="LivewireFieldName::get($getId())" />
+        <x-chief::input.error :rule="$getId()" />
     @endif
 </div>

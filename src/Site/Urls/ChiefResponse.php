@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Thinktomorrow\Chief\Fragments\App\ActiveContext\ActiveContextId;
+use Thinktomorrow\Chief\Fragments\ActiveContextId;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Throwable;

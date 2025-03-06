@@ -89,6 +89,11 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, L
         return (bool) $this->getMeta('shared');
     }
 
+    public function getBookmark(): ?string
+    {
+        return $this->bookmark ?? null;
+    }
+
     private function getMeta(string $key)
     {
         if (! $this->meta || ! array_key_exists($key, $this->meta)) {

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Queries;
 
-use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetOwners;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -31,7 +31,7 @@ class GetOwningModelsTest extends ChiefTestCase
         $context2 = FragmentTestHelpers::createContext($owner2);
         FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
 
-        $owners = app(GetOwningModels::class)->get($fragment->getFragmentId());
+        $owners = app(GetOwners::class)->getSharedFragmentDtos($fragment->getFragmentId());
 
         $this->assertCount(2, $owners);
 
@@ -51,7 +51,7 @@ class GetOwningModelsTest extends ChiefTestCase
         $context2 = FragmentTestHelpers::createContext($owner2);
         FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
 
-        $this->assertEquals(2, app(GetOwningModels::class)->getCount($fragment->getFragmentId()));
+        $this->assertEquals(2, app(GetOwners::class)->getCount($fragment->getFragmentId()));
     }
 
     public function test_when_getting_count_of_owners_it_ignores_same_owner_with_multiple_contexts()
@@ -62,6 +62,6 @@ class GetOwningModelsTest extends ChiefTestCase
         $fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id);
         FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
 
-        $this->assertEquals(1, app(GetOwningModels::class)->getCount($fragment->getFragmentId()));
+        $this->assertEquals(1, app(GetOwners::class)->getCount($fragment->getFragmentId()));
     }
 }

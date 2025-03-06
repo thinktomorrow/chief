@@ -1,4 +1,4 @@
-@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\Sections\HasBookmark)
+@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\HasBookmark)
     <div class="flex flex-wrap items-center gap-2">
         <span class="label label-grey">#{{ $model->getBookmark() }}</span>
 
@@ -11,7 +11,9 @@
                 class="link link-primary"
             >
                 <x-chief::button>
-                    <svg><use xlink:href="#icon-external-link"></use></svg>
+                    <svg>
+                        <use xlink:href="#icon-external-link"></use>
+                    </svg>
                 </x-chief::button>
             </a>
 
@@ -20,7 +22,9 @@
                 successContent="#{{ $model->getBookmark() }} gekopieerd!"
             >
                 <x-chief::button>
-                    <svg><use xlink:href="#icon-link"></use></svg>
+                    <svg>
+                        <use xlink:href="#icon-link"></use>
+                    </svg>
                 </x-chief::button>
             </x-chief::copy-button>
         @endif

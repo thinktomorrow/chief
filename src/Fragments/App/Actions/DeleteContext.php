@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 
 final class DeleteContext
 {

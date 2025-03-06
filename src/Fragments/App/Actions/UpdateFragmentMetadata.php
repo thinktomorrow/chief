@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetOwners;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 
 class UpdateFragmentMetadata
 {
     private FragmentRepository $fragmentRepository;
 
-    private GetOwningModels $getOwningModels;
+    private GetOwners $getOwners;
 
-    public function __construct(FragmentRepository $fragmentRepository, GetOwningModels $getOwningModels)
+    public function __construct(FragmentRepository $fragmentRepository, GetOwners $getOwners)
     {
         $this->fragmentRepository = $fragmentRepository;
-        $this->getOwningModels = $getOwningModels;
+        $this->getOwners = $getOwners;
     }
 
     public function onFragmentAdded(FragmentAttached $event): void
@@ -46,7 +46,7 @@ class UpdateFragmentMetadata
 
         // We consider shared state only when the fragment belongs to two or more pages.
         // If the fragment belongs to multiple contexts of the same page, it is not considered shared.
-        $shared = $this->getOwningModels->getCount($fragmentId) > 1;
+        $shared = $this->getOwners->getCount($fragmentId) > 1;
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
         $fragmentable->getFragmentModel()->setMeta('shared', $shared);

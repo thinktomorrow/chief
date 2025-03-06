@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\View\Concerns\ManagesLoops;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 
 final class GetFragments

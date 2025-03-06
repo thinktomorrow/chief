@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Fragments\App\Queries\GetOwningModels;use Thinktomorrow\Chief\Fragments\Fragment;use Thinktomorrow\Chief\Fragments\FragmentsOwner;use Thinktomorrow\Chief\Fragments\FragmentStatus; @endphp
+@php use Thinktomorrow\Chief\Fragments\App\Queries\GetOwners;use Thinktomorrow\Chief\Fragments\Fragment;use Thinktomorrow\Chief\Fragments\FragmentsOwner;use Thinktomorrow\Chief\Fragments\FragmentStatus; @endphp
 
 <div class="py-6 space-y-6 border-t border-grey-100">
     <div class="space-y-2">
@@ -44,8 +44,8 @@
                     Elke aanpassing aan dit fragment zal dus doorgevoerd worden op de volgende pagina's:
 
                     @php
-                        $otherOwners = collect(app(GetOwningModels::class)
-                            ->get($model->getFragmentModel()))
+                        $otherOwners = collect(app(GetOwners::class)
+                            ->getSharedFragmentDtos($model->getFragmentModel()))
                             ->reject(function($otherOwner) use ($owner) {
                                 return $otherOwner['model']->modelReference()->equals($owner->modelReference());
                             });
@@ -133,7 +133,7 @@
 @if($model->hasFragmentModel())
     <div data-form data-form-tags="fragments">
         <div>
-            @include('chief-fragments::components.delete-fragment-modal')
+            @include('chief-fragments::livewire._partials.delete-fragment-action')
         </div>
 
         <form

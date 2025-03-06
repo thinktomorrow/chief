@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 
 /**
  * Takes a shared fragment and duplicates it as

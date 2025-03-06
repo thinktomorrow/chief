@@ -26,6 +26,8 @@
     <x-chief::page.grid>
         <x-chief-form::forms position="main" />
 
+        <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
+
         @adminCan('fragments-index', $model)
         <div x-data='{
             contexts: @json($contextsForSwitch)
@@ -41,7 +43,7 @@
                 }
             }"
         >
-            <x-chief-fragments::index :context-id="$context->id" />
+            {{--            <x-chief-fragments::index :context-id="$context->id" />--}}
         </div>
         @endAdminCan
 

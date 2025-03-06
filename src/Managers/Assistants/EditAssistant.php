@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
@@ -70,7 +70,7 @@ trait EditAssistant
         // Find or create the context... TODO: this should be something to do elsewhere?
 
         // WIP
-        $contexts = app(ContextRepository::class)->getByOwner($model);
+        $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
         View::share('contexts', $contexts);
         View::share('context', $contexts->first());
         View::share('contextsForSwitch', $contexts);
