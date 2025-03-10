@@ -16,7 +16,6 @@
 @import './components/badge';
 @import './components/tag';
 
-@import './components/form';
 @import './components/form/index.css';
 
 @import './general/base';

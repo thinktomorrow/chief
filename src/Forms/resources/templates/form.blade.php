@@ -1,5 +1,6 @@
 <x-chief-form::window
     :title="$getTitle()"
+    :description="$getDescription()"
     :refresh-url="$getRefreshUrl()"
     :tags="$getTagsAsString()"
     :class="$getLayout()->class()"
@@ -22,12 +23,6 @@
         @endif
 
         <div class="relative space-y-4">
-            @if ($getDescription())
-                <p class="body body-dark">
-                    {!! $getDescription() !!}
-                </p>
-            @endif
-
             @foreach ($getComponents() as $_component)
                 {{ $_component }}
             @endforeach

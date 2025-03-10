@@ -7,7 +7,7 @@
 <x-chief::page.layout>
     <div class="flex min-h-screen items-stretch">
         {{-- Navigation --}}
-        <div class="relative top-0 w-full shrink-0 lg:sticky lg:w-96">
+        <div class="relative top-0 w-full shrink-0 lg:sticky lg:w-64 2xl:w-96">
             @include('chief::templates.page.nav.nav')
         </div>
 
@@ -34,7 +34,7 @@
 
                 {{-- Sidebar --}}
                 @if ($sidebar)
-                    <div class="w-96 shrink-0">
+                    <div class="w-64 shrink-0 2xl:w-96">
                         {{ $sidebar }}
                     </div>
                 @endif

@@ -63,22 +63,27 @@
             <div
                 x-ref="tabMarker"
                 x-show="activeTab"
-                class="bui-btn bui-btn-xs bui-btn-outline-white absolute left-0 px-2 text-sm/5 ring-0 transition-all duration-150 ease-out"
+                class="bui-btn bui-btn-xs bui-btn-outline-white absolute left-0 rounded-[0.4375rem] px-2 text-sm/5 ring-0 transition-all duration-150 ease-out"
             >
                 <span class="h-5"></span>
             </div>
 
             <template x-for="(tab, index) in tabs()">
-                <a
+                <button
+                    type="button"
                     :key="tab.id"
                     role="tab"
                     x-on:click.prevent="showTab(tab.id)"
-                    {{-- TODO: wrong in so many ways --}}
+                    {{-- TODO(tijs): wrong in so many ways --}}
                     x-html="tab.label == 'nl' ? 'Nederlands' : 'Frans'"
                     x-bind:aria-controls="tab.id"
                     x-bind:aria-selected="tab.id === activeTab"
-                    class="bui-btn bui-btn-xs relative cursor-pointer px-2 text-sm/5 text-grey-800 shadow-none peer-checked:text-grey-950"
-                ></a>
+                    class="bui-btn bui-btn-xs relative cursor-pointer px-2 text-sm/5 shadow-none"
+                    :class="{
+                        'text-grey-950': tab.id === activeTab,
+                        'text-grey-700': tab.id !== activeTab,
+                    }"
+                ></button>
             </template>
         </nav>
     </div>

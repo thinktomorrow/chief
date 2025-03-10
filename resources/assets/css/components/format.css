@@ -65,7 +65,7 @@
     .h4-dark,
     .h5-dark,
     .h6-dark {
-        @apply text-black;
+        @apply text-grey-950;
     }
 
     .body-dark {

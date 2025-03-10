@@ -8,7 +8,7 @@
     data-field-key="{{ $getId($locale ?? null) }}"
     data-field-type="{{ $fieldType }}"
     {!! $fieldType == 'hidden' ? 'hidden' : null !!}
-    class="space-y-1"
+    class="space-y-1.5"
 >
     @if ($getLabel())
         <x-chief::input.label :required="$isRequired()">
