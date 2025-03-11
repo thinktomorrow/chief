@@ -7,6 +7,7 @@
 <div
     x-cloak
     wire:ignore
+    data-slot="tabs"
     x-on:chieftab.window="listenForExternalTab"
     x-data="{
         activeTab: null,

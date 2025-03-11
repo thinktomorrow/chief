@@ -1,9 +1,9 @@
 @props([
-    'autofocus' => false
+    'autofocus' => false,
 ])
 
 <input
     type="text"
-    {{ $attributes->class('form-input-field') }}
+    {{ $attributes->merge(['data-slot' => 'control'])->class('form-input-field') }}
     {!! $autofocus ? 'autofocus' : null !!}
 />

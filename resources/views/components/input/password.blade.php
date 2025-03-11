@@ -1,1 +1,9 @@
-<input type="password" {{ $attributes->class('form-input-field') }}>
+@props([
+    'autofocus' => false,
+])
+
+<input
+    type="password"
+    {{ $attributes->merge(['data-slot' => 'control'])->class('form-input-field') }}
+    {!! $autofocus ? 'autofocus' : null !!}
+/>

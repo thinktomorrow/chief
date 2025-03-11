@@ -5,11 +5,11 @@
 
 <x-chief::input.group :rule="$id" inner-class="space-y-2">
     @if ($label)
-        <x-chief::input.label unset class="h6 body-dark font-medium">{{ $label }}</x-chief::input.label>
+        <x-chief::form.label unset class="h6 body-dark font-medium">{{ $label }}</x-chief::form.label>
     @endif
 
     @if ($description)
-        <x-chief::input.description>{{ $description }}</x-chief::input.description>
+        <x-chief::form.description>{{ $description }}</x-chief::form.description>
     @endif
 
     <div class="space-y-1">
@@ -22,9 +22,9 @@
                     :checked="($option == ($value ?: $default))"
                 />
 
-                <x-chief::input.label for="{{ $id . '-' . $option }}" unset class="body body-dark leading-5">
+                <x-chief::form.label for="{{ $id . '-' . $option }}" unset class="body body-dark leading-5">
                     {{ $optionLabel }}
-                </x-chief::input.label>
+                </x-chief::form.label>
             </div>
         @endforeach
     </div>

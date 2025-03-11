@@ -1,1 +1,9 @@
-<input type="email" {{ $attributes->class('form-input-field') }}>
+@props([
+    'autofocus' => false,
+])
+
+<input
+    type="email"
+    {{ $attributes->merge(['data-slot' => 'control'])->class('form-input-field') }}
+    {!! $autofocus ? 'autofocus' : null !!}
+/>

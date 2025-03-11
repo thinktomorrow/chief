@@ -15,9 +15,9 @@
                         hint: '',
                     }"
                     >
-                        <x-chief::input.label for="links.{{ $locale }}">
+                        <x-chief::form.label for="links.{{ $locale }}">
                             {{ strtoupper($locale) }} link
-                        </x-chief::input.label>
+                        </x-chief::form.label>
 
                         <x-chief::input.prepend-append>
                             <x-slot name="prepend">
@@ -64,7 +64,7 @@
 
         @if ($linkForm->hasAnyRedirects())
             <div class="space-y-3">
-                <x-chief::input.label>Redirects</x-chief::input.label>
+                <x-chief::form.label>Redirects</x-chief::form.label>
 
                 @foreach ($linkForm->links() as $locale => $links)
                     @if (! $links->redirects->isEmpty())

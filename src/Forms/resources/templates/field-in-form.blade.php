@@ -1,38 +1,46 @@
 @php
     use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+
     $fieldType = strtolower(class_basename($component));
+
+    $attributes = $attributes->merge([
+        'data-field-key' => $getId($locale ?? null),
+        'data-field-type' => $fieldType,
+    ]);
+
+    if ($fieldToggles = $getFieldToggles()) {
+        $attributes = $attributes->merge([
+            'data-conditional-toggle' => json_encode($fieldToggles),
+        ]);
+    }
+
+    if ($fieldType == 'hidden') {
+        $attributes = $attributes->merge([
+            'hidden' => true,
+        ]);
+    }
 @endphp
 
-<div
-    {!! $getFieldToggles() ? "data-conditional-toggle='" . json_encode($getFieldToggles()) . "'" : null !!}
-    data-field-key="{{ $getId($locale ?? null) }}"
-    data-field-type="{{ $fieldType }}"
-    {!! $fieldType == 'hidden' ? 'hidden' : null !!}
-    class="space-y-1.5"
->
+<x-chief::form.fieldset :attributes="$attributes">
     @if ($getLabel())
-        <x-chief::input.label :required="$isRequired()">
+        <x-chief::form.label :required="$isRequired()">
             {{ $getLabel() }}
-        </x-chief::input.label>
+        </x-chief::form.label>
     @endif
 
     @if ($getDescription())
-        <x-chief::input.description>
+        <x-chief::form.description>
             {!! $getDescription() !!}
-        </x-chief::input.description>
+        </x-chief::form.description>
     @endif
 
     @if (! $hasLocales())
-        <div>
-            @include($getView())
-            @include('chief-form::fields._partials.charactercount')
-        </div>
+        @include($getView())
+        @include('chief-form::fields._partials.charactercount')
     @elseif (count($getLocales()) == 1)
         @foreach ($getLocales() as $locale)
-            <div>
-                @include($getView(), ['component' => $component, 'locale' => $locale])
-                @include('chief-form::fields._partials.charactercount')
-            </div>
+            @include($getView(), ['component' => $component, 'locale' => $locale])
+            @include('chief-form::fields._partials.charactercount')
         @endforeach
     @else
         <x-chief::tabs :listen-for-external-tab="true">
@@ -47,11 +55,11 @@
 
     @if ($hasLocales())
         @foreach ($getLocales() as $locale)
-            <x-chief::input.error :rule="LivewireFieldName::get($getId($locale ?? null))" />
-            <x-chief::input.error :rule="$getId($locale)" />
+            <x-chief::form.error :rule="LivewireFieldName::get($getId($locale ?? null))" />
+            <x-chief::form.error :rule="$getId($locale)" />
         @endforeach
     @else
-        <x-chief::input.error :rule="LivewireFieldName::get($getId())" />
-        <x-chief::input.error :rule="$getId()" />
+        <x-chief::form.error :rule="LivewireFieldName::get($getId())" />
+        <x-chief::form.error :rule="$getId()" />
     @endif
-</div>
+</x-chief::form.fieldset>

@@ -32,15 +32,15 @@
                     <div class="space-y-2">
                         <div>
                             @if ($filter->getLabel())
-                                <x-chief::input.label>
+                                <x-chief::form.label>
                                     {{ $filter->getLabel() }}
-                                </x-chief::input.label>
+                                </x-chief::form.label>
                             @endif
 
                             @if ($filter->getDescription())
-                                <x-chief::input.description>
+                                <x-chief::form.description>
                                     {!! $filter->getDescription() !!}
-                                </x-chief::input.description>
+                                </x-chief::form.description>
                             @endif
                         </div>
 

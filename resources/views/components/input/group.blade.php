@@ -8,5 +8,5 @@
         {{ $slot }}
     </div>
 
-    <x-chief::input.error :rule="$rule" />
+    <x-chief::form.error :rule="$rule" />
 </div>

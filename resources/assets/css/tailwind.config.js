@@ -14,7 +14,6 @@ module.exports = {
         'src/Plugins/**/resources/**/*.blade.php',
         'src/Plugins/HotSpots/views/**/*.blade.php',
         'src/Assets/App/resources/**/*.blade.php',
-
         'src/Table/**/*.{blade.php,php}',
     ],
     theme: {
@@ -78,7 +77,7 @@ module.exports = {
             },
         },
         fontFamily: {
-            display: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+            display: ['Inter Tight', 'Helvetica', 'Arial', 'sans-serif'],
             body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
         },
         fontSize: {

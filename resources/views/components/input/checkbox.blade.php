@@ -1,9 +1,9 @@
 @props([
-    'checked' => false
+    'checked' => false,
 ])
 
 <input
     type="checkbox"
     {!! $checked ? 'checked' : null !!}
-    {{ $attributes->class('form-input-checkbox') }}
->
+    {{ $attributes->merge(['data-slot' => 'control'])->class('form-input-checkbox') }}
+/>

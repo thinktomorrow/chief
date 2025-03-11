@@ -13,7 +13,7 @@
             @endif
 
             <x-chief::input.group>
-                <x-chief::input.label for="email" required>E-mailadres</x-chief::input.label>
+                <x-chief::form.label for="email" required>E-mailadres</x-chief::form.label>
                 <x-chief::input.email
                     id="email"
                     name="email"
@@ -24,15 +24,15 @@
             </x-chief::input.group>
 
             <x-chief::input.group>
-                <x-chief::input.label for="password" required>Wachtwoord</x-chief::input.label>
+                <x-chief::form.label for="password" required>Wachtwoord</x-chief::form.label>
                 <x-chief::input.password id="password" name="password" />
             </x-chief::input.group>
 
             <x-chief::input.group inner-class="flex items-start gap-2">
                 <x-chief::input.checkbox id="remember" name="remember" :checked="old('remember')" />
-                <x-chief::input.label for="remember" class="body-dark body leading-5" unset>
+                <x-chief::form.label for="remember" class="body-dark body leading-5" unset>
                     Ingelogd blijven
-                </x-chief::input.label>
+                </x-chief::form.label>
             </x-chief::input.group>
 
             <div class="space-y-3">

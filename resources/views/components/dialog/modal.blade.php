@@ -42,7 +42,7 @@
         <div class="container pointer-events-none relative inline-flex max-w-screen-2xl justify-center">
             <div
                 @class([
-                    'pointer-events-auto animate-dialog-pop-in overflow-hidden rounded-2xl rounded-xl bg-white shadow-lg ring-1 ring-black/5',
+                    'pointer-events-auto animate-dialog-pop-in overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black/5',
                     'w-96' => $size === 'xxs',
                     'w-xs' => $size === 'xs',
                     'w-sm' => $size === 'sm',

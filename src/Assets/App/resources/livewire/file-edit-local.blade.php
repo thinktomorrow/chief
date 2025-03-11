@@ -66,7 +66,7 @@
 
         <div class="space-y-4">
             <x-chief::input.group rule="form.basename">
-                <x-chief::input.label for="form.basename">Bestandsnaam</x-chief::input.label>
+                <x-chief::form.label for="form.basename">Bestandsnaam</x-chief::form.label>
 
                 <x-chief::input.prepend-append :append="'.'.$previewFile->extension">
                     <x-chief::input.text

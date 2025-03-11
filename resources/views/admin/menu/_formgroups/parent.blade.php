@@ -1,9 +1,9 @@
 <x-chief::input.group rule="allow_parent" x-data="{ type: '{{ !!old('parent_id', $menuitem->parent_id) }}' }">
-    <x-chief::input.label required>Niveau</x-chief::input.label>
+    <x-chief::form.label required>Niveau</x-chief::form.label>
 
-    <x-chief::input.description>
+    <x-chief::form.description>
         Zet dit item op het hoogste niveau of plaats het onder een bestaand.
-    </x-chief::input.description>
+    </x-chief::form.description>
 
     <div class="space-y-2">
         <div class="flex items-start gap-2">
@@ -15,9 +15,9 @@
                 x-on:click="type = '0'"
             />
 
-            <x-chief::input.label for="without-parent-id" unset class="body body-dark leading-5">
+            <x-chief::form.label for="without-parent-id" unset class="body body-dark leading-5">
                 Geef dit menu item weer op het hoogste niveau
-            </x-chief::input.label>
+            </x-chief::form.label>
         </div>
 
         <div class="space-y-2">
@@ -30,9 +30,9 @@
                     x-on:click="type = '1'"
                 />
 
-                <x-chief::input.label for="parent-id" unset class="body body-dark leading-5">
+                <x-chief::form.label for="parent-id" unset class="body body-dark leading-5">
                     Selecteer het menu item waaronder dit item behoort
-                </x-chief::input.label>
+                </x-chief::form.label>
             </div>
 
             <div x-cloak x-show="type == '1'">

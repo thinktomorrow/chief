@@ -1,16 +1,14 @@
 <x-chief::input.group>
-    <x-chief::input.label required>
-        Label
-    </x-chief::input.label>
+    <x-chief::form.label required>Label</x-chief::form.label>
 
-    <x-chief::input.description>
+    <x-chief::form.description>
         Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.
-    </x-chief::input.description>
+    </x-chief::form.description>
 
-    @if(count(config('chief.locales')) > 1)
+    @if (count(config('chief.locales')) > 1)
         <x-chief::tabs :listen-for-external-tab="true">
-            @foreach(config('chief.locales') as $locale)
-                <x-chief::tabs.tab tab-id='{{ $locale }}'>
+            @foreach (config('chief.locales') as $locale)
+                <x-chief::tabs.tab tab-id="{{ $locale }}">
                     <x-chief::input.group :rule="'trans.' . $locale . '.label'">
                         <x-chief::input.text
                             name="trans[{{ $locale }}][label]"
@@ -23,7 +21,7 @@
             @endforeach
         </x-chief::tabs>
     @else
-        @foreach(config('chief.locales') as $locale)
+        @foreach (config('chief.locales') as $locale)
             <x-chief::input.group :rule="'trans.' . $locale . '.label'">
                 <x-chief::input.text
                     name="trans[{{ $locale }}][label]"

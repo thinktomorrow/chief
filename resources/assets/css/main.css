@@ -8,13 +8,12 @@
 @import './components/link';
 @import './components/prose';
 @import './components/card';
-@import './components/sort';
 
 /* New Table UI button */
-@import './components/bui-button';
-@import './components/bui-dropdown-item';
-@import './components/badge';
-@import './components/tag';
+@import './components/bui/button';
+@import './components/bui/dropdown-item';
+@import './components/bui/badge';
+@import './components/bui/tag';
 
 @import './components/form/index.css';
 

@@ -1,8 +1,10 @@
 @props([
-    'autofocus' => false
+    'autofocus' => false,
 ])
 
 <textarea
-    {{ $attributes->class('form-input-field') }}
+    {{ $attributes->merge(['data-slot' => 'control'])->class('form-input-field') }}
     {!! $autofocus ? 'autofocus' : null !!}
->{{ $slot }}</textarea>
+>
+{{ $slot }}</textarea
+>

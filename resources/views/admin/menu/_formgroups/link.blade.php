@@ -1,5 +1,5 @@
 <x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
-    <x-chief::input.label required>Link</x-chief::input.label>
+    <x-chief::form.label required>Link</x-chief::form.label>
 
     <div class="space-y-3">
         {{-- Option: internal link --}}
@@ -13,9 +13,9 @@
                     x-on:click="type = 'internal'"
                 />
 
-                <x-chief::input.label for="type-internal" unset class="body body-dark leading-5">
+                <x-chief::form.label for="type-internal" unset class="body body-dark leading-5">
                     Kies een interne pagina
-                </x-chief::input.label>
+                </x-chief::form.label>
             </div>
 
             <div x-cloak x-show="type == 'internal'">
@@ -40,9 +40,9 @@
                     x-on:click="type = 'custom'"
                 />
 
-                <x-chief::input.label for="type-custom" unset class="body body-dark leading-5">
+                <x-chief::form.label for="type-custom" unset class="body body-dark leading-5">
                     Kies een eigen link
-                </x-chief::input.label>
+                </x-chief::form.label>
             </div>
 
             <div x-cloak x-show="type == 'custom'">
@@ -86,9 +86,9 @@
                 x-on:click="type = 'nolink'"
             />
 
-            <x-chief::input.label for="type-nolink" unset class="body body-dark leading-5">
+            <x-chief::form.label for="type-nolink" unset class="body body-dark leading-5">
                 Geen link toevoegen aan dit menu item
-            </x-chief::input.label>
+            </x-chief::form.label>
         </div>
     </div>
 </x-chief::input.group>

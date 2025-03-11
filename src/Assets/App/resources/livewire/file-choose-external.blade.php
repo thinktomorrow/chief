@@ -6,9 +6,9 @@
     @if ($isOpen)
         <div class="space-y-4">
             <x-chief::input.group>
-                <x-chief::input.label for="driverType">Platform</x-chief::input.label>
+                <x-chief::form.label for="driverType">Platform</x-chief::form.label>
 
-                <x-chief::input.select id="driverType" wire:model.live="driverType" container-class="w-full">
+                <x-chief::input.select id="driverType" wire:model.live="driverType">
                     @foreach ($driverTypes as $driverTypeOption)
                         <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
                     @endforeach
@@ -17,13 +17,13 @@
 
             @if ($driverType)
                 <x-chief::input.group>
-                    <x-chief::input.label for="driverId">
+                    <x-chief::form.label for="driverId">
                         {{ $this->getLabel() }}
-                    </x-chief::input.label>
+                    </x-chief::form.label>
 
-                    <x-chief::input.description>
+                    <x-chief::form.description>
                         {!! $this->getDescription() !!}
-                    </x-chief::input.description>
+                    </x-chief::form.description>
 
                     <x-chief::input.text
                         x-data="{}"

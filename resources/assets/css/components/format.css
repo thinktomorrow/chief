@@ -46,7 +46,7 @@
     .h1-tracking,
     .h2-tracking,
     .h3-tracking {
-        letter-spacing: theme('letterSpacing.tight');
+        letter-spacing: theme('letterSpacing.normal');
     }
 
     .h4-tracking,

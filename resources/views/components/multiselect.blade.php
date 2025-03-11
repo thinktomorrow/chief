@@ -10,6 +10,7 @@
 <div
     x-cloak
     wire:ignore
+    data-slot="control"
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
     x-modelable="selection"
     x-data="{

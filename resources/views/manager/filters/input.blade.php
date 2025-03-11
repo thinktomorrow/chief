@@ -5,11 +5,13 @@
 
 <x-chief::input.group :rule="$id">
     @if ($label)
-        <x-chief::input.label for="{{ $id }}" unset class="font-medium h6 body-dark">{{ $label }}</x-chief::input.label>
+        <x-chief::form.label for="{{ $id }}" unset class="h6 body-dark font-medium">
+            {{ $label }}
+        </x-chief::form.label>
     @endif
 
     @if ($description)
-        <x-chief::input.description>{{ $description }}</x-chief::input.description>
+        <x-chief::form.description>{{ $description }}</x-chief::form.description>
     @endif
 
     <x-chief::input.text

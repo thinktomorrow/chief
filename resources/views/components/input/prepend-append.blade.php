@@ -3,7 +3,7 @@
     'append' => null,
 ])
 
-<div class="flex">
+<div data-slot="control" class="flex">
     @if ($prepend)
         <div class="form-input-prepend">
             <span>{!! $prepend !!}</span>

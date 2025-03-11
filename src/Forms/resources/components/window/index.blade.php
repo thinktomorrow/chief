@@ -5,6 +5,7 @@
     'title' => null,
     'labels' => null,
     'buttons' => null,
+    'description' => null,
 ])
 
 <x-chief::window
@@ -13,6 +14,7 @@
     data-form-tags="{{ $tags }}"
     :title="$title"
     :labels="$labels"
+    :description="$description"
     {{ $attributes }}
 >
     @if($editUrl || $buttons)
