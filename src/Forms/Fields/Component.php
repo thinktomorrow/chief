@@ -48,13 +48,13 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasElementId;
     use HasFieldToggle;
     use HasId;
+
     // Field concerns
     use HasKey;
-
     use HasLabel;
+
     // Generic component concerns
     use HasLocalizableProperties;
-
     use HasModel;
     use HasModelValuePreparation;
     use HasName;
