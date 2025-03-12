@@ -18,7 +18,7 @@ class ContextOwnerRepository
     }
 
     /**
-     * @return Collection ContextOwner[]
+     * @return Collection<ContextOwner>
      */
     public function getOwnersByFragment(string $fragmentId): Collection
     {
@@ -27,6 +27,21 @@ class ContextOwnerRepository
         return $models
             ->map(fn ($model) => $model->owner)
             ->unique();
+    }
+
+    /**
+     * Get all owners of contexts in the system.
+     *
+     * @return Collection<ContextOwner>
+     */
+    public function getAllOwners(): Collection
+    {
+        return ContextModel::with('owner')
+            ->get()
+            ->map(fn ($model) => $model->owner)
+            ->unique()
+            ->reject(fn ($owner) => ! $owner instanceof ContextOwner)  // Don't allow Fragments
+            ->values();
     }
 
     public function findOwner(string $contextId): ContextOwner

@@ -33,6 +33,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
+use Thinktomorrow\Chief\Forms\Livewire\PacksComponentsForLivewire;
 use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
@@ -47,13 +48,13 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasElementId;
     use HasFieldToggle;
     use HasId;
-
     // Field concerns
     use HasKey;
-    use HasLabel;
 
+    use HasLabel;
     // Generic component concerns
     use HasLocalizableProperties;
+
     use HasModel;
     use HasModelValuePreparation;
     use HasName;
@@ -65,6 +66,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasValue;
     use HasView;
     use LocalizedFieldDefaults;
+    use PacksComponentsForLivewire;
 
     /**
      * Every field is rendered in a formgroup container view,
@@ -84,17 +86,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         // This causes livewire to refresh field DOM...
         $this->elementId($key.'_'.Str::random());
         //        $this->elementId($key);
-    }
-
-    public static function fromLivewire($value)
-    {
-        $component = static::make($value['key']);
-
-        foreach ($value['methods'] as $method => $parameters) {
-            $component->{$method}($parameters);
-        }
-
-        return $component;
     }
 
     public static function make(string $key)
@@ -134,17 +125,37 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         return $this;
     }
 
+    public static function fromLivewire($value)
+    {
+        $component = static::make($value['key']);
+
+        foreach ($value['methods'] as $method => $parameters) {
+
+            if ($method == 'components') {
+                $parameters = static::unpackComponentsFromLivewire($parameters);
+            }
+
+            $component->{$method}($parameters);
+        }
+
+        return $component;
+    }
+
     public function toLivewire()
     {
         if (isset($this->options) && is_callable($this->options)) {
             $this->options = call_user_func($this->options);
         }
 
+        // recursive loop for nested items ...
+        $components = $this->packComponentsToLivewire();
+
         return [
             'class' => static::class,
             'key' => $this->key,
             'methods' => [
                 ...(isset($this->id) ? ['id' => $this->id] : []),
+                ...['components' => $components],
                 ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
                 ...(isset($this->name) ? ['name' => $this->name] : []),
                 ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),
@@ -152,7 +163,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->locales) ? ['locales' => $this->locales] : []),
                 ...(isset($this->localizedFieldNameTemplate) ? ['setLocalizedFormKeyTemplate' => $this->localizedFieldNameTemplate] : []),
                 ...(isset($this->label) ? ['label' => $this->label] : []),
-                ...(isset($this->value) ? ['value' => $this->value] : []),
                 ...(isset($this->default) ? ['default' => $this->default] : []),
                 ...(isset($this->description) ? ['description' => $this->description] : []),
                 ...(isset($this->options) ? ['options' => $this->options] : []),
@@ -163,6 +173,12 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->rules) ? ['rules' => $this->rules] : []),
                 ...(isset($this->validationMessages) ? ['validationMessages' => $this->validationMessages] : []),
                 ...(isset($this->validationAttribute) ? ['validationAttribute' => $this->validationAttribute] : []),
+                ...(isset($this->fieldToggles) ? ['toggleFields' => $this->fieldToggles] : []),
+                ...(isset($this->characterCount) ? ['characterCount' => $this->characterCount] : []),
+                ...(isset($this->redactorOptions) ? ['redactorOptions' => $this->redactorOptions] : []),
+                ...(isset($this->customAttributes) ? ['customAttributes' => $this->customAttributes] : []),
+                ...(isset($this->view) ? ['setView' => $this->view] : []),
+                ...(isset($this->windowView) ? ['windowView' => $this->windowView] : []),
             ],
         ];
     }

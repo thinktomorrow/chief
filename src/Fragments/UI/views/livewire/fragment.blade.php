@@ -11,7 +11,7 @@
 
             <div class="flex flex-wrap items-start gap-1 my-1 grow">
                 <span class="font-medium leading-6 h1-dark">
-                    {{ ucfirst($fragment->label) }}
+                    {{ ucfirst($fragment->label) }} - order: {{ $fragment->order }}
                 </span>
 
                 <span class="align-bottom with-xs-labels">
@@ -54,19 +54,25 @@
                 {!! $adminFragment !!}
             </div>
         @endif
-
-        {{--        @if($fragment->hasChildNodes())--}}
-        {{--            @foreach($fragment->getFragments() as $childFragment)--}}
-        {{--                {!! $childFragment->renderInAdmin() !!}--}}
-        {{--            @endforeach--}}
-        {{--        @endif--}}
     </div>
 
     <livewire:chief-fragments::edit-fragment
-        :key="$fragment->fragmentId . '-edit'"
-        :parent-id="$this->getId()"
+        :key="$fragment->getId() . '-edit'"
         :fragment="$fragment"
+        :parent-component-id="$this->getId()"
     />
 
-    {{--    @include('chief-fragments::components.fragment-select')--}}
+    <!-- plus icon -->
+    <div class="relative w-full">
+        <div class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]">
+            <div class="absolute">
+                <x-chief::button
+                    x-on:click="$wire.$parent.addFragment({{ $fragment->order }}, '{{ $fragment->parentId }}')">
+                    <svg>
+                        <use xlink:href="#icon-plus"></use>
+                    </svg>
+                </x-chief::button>
+            </div>
+        </div>
+    </div>
 </div>

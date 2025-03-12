@@ -11,6 +11,8 @@ trait InteractsWithFields
     {
         foreach ($components as $component) {
             if (! $component instanceof Field) {
+                $this->injectFormValues($component->getComponents());
+
                 continue;
             }
 
@@ -19,15 +21,15 @@ trait InteractsWithFields
                     $this->injectFormValue($name, $component->getValue($locale));
                 }
             } else {
-                dump($component->getValue());
                 $this->injectFormValue($component->getName(), $component->getValue());
             }
+
+            $this->injectFormValues($component->getComponents());
         }
     }
 
     private function injectFormValue(string $key, $value): void
     {
-        dump($key, $value);
         Arr::set($this->form, $key, $value);
     }
     //

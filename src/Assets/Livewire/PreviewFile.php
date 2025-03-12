@@ -296,6 +296,18 @@ class PreviewFile implements Wireable
         ];
     }
 
+    // The form payload that our UpdateFileField action expects
+    public function toFormPayload(): array
+    {
+        return [
+            'id' => $this->id,
+            'path' => $this->tempPath,
+            'originalName' => $this->filename,
+            'mimeType' => $this->mimeType,
+            'fieldValues' => $this->fieldValues,
+        ];
+    }
+
     public function loadOwners(): void
     {
         if (! $this->mediaId) {

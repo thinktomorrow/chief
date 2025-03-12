@@ -25,17 +25,23 @@ final class FragmentRepository
      * Get entire fragmentCollection for a given context.
      * This is used to render all page fragments.
      */
-    public function getFragmentCollection(string $contextId): FragmentCollection
+    public function getFragmentCollection(string $contextId, ?string $fragmentId = null): FragmentCollection
     {
         $fragmentModels = $this->getByContext($contextId);
 
-        return FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
+        $collection = FragmentCollection::fromIterable($fragmentModels, function (Fragment $fragment) {
             $fragment->id = $fragment->getFragmentModel()->id;
             $fragment->parent_id = $fragment->getFragmentModel()->pivot->parent_id;
             $fragment->order = $fragment->getFragmentModel()->pivot->order;
 
             return $fragment;
         })->sort('order');
+
+        if ($fragmentId) {
+            return $collection->find(fn (Fragment $fragment) => $fragment->getFragmentId() == $fragmentId)->getChildNodes();
+        }
+
+        return $collection;
     }
 
     public function getByContext(string $contextId): Collection
@@ -48,11 +54,19 @@ final class FragmentRepository
         return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 
+    public function getFragmentIdsByContext(string $contextId): array
+    {
+        return ContextModel::findOrFail($contextId)
+            ->fragments()
+            ->pluck('id')
+            ->toArray();
+    }
+
     /**
      * Find a fragment for a specific context.
      * This includes the context pivot data
      */
-    public function findByContext(string $fragmentId, string $contextId): Fragment
+    public function findInContext(string $fragmentId, string $contextId): Fragment
     {
         $fragmentModel = ContextModel::findOrFail($contextId)->fragments()->find($fragmentId);
 

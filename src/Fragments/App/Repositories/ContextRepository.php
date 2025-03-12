@@ -31,13 +31,14 @@ class ContextRepository
     public function getByOwner(ModelReference $modelReference): \Illuminate\Support\Collection
     {
         return ContextModel::where('owner_type', $modelReference->shortClassName())
+            ->with('owner')
             ->where('owner_id', $modelReference->id())
             ->get();
     }
 
     public function find(string $contextId): ContextModel
     {
-        return ContextModel::findOrFail($contextId);
+        return ContextModel::with('owner')->findOrFail($contextId);
     }
 
     //

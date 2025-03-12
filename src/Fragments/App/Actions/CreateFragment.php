@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
@@ -13,9 +14,12 @@ final class CreateFragment
 {
     private FragmentRepository $fragmentRepository;
 
-    public function __construct(FragmentRepository $fragmentRepository)
+    private FieldValidator $validator;
+
+    public function __construct(FragmentRepository $fragmentRepository, FieldValidator $validator)
     {
         $this->fragmentRepository = $fragmentRepository;
+        $this->validator = $validator;
     }
 
     public function handle(string $fragmentKey, array $input, array $files = []): string
@@ -31,6 +35,8 @@ final class CreateFragment
             ->fillModel($fragment->getFragmentModel())
             ->getFields()
             ->notTagged(['edit', 'not-on-create']);
+
+        $this->validator->handle($fields, $input);
 
         // Save Fragment values
         app($fragment->getSaveFieldsClass())->save(

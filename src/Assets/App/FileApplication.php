@@ -47,19 +47,21 @@ class FileApplication
         $model = ModelReference::fromString($modelReference)->instance();
 
         if ($model instanceof FragmentModel) {
-            $model = $this->fragmentFactory($model);
+            $fragment = $this->fragmentFactory($model);
+            $field = $fragment->field($model, $fieldKey);
+        } else {
+            $resource = $this->registry->findResourceByModel($model::class);
+            $field = $resource->field($model, $fieldKey);
         }
 
-        $resource = $this->registry->findResourceByModel($model::class);
-
         // Split model specific values and generic ones
-        $fieldKeys = array_map(fn ($field) => $field->getKey(), $resource->field($model, $fieldKey)->getComponents());
+        $fieldKeys = array_map(fn ($_field) => $_field->getKey(), $field->getComponents());
         $modelValues = Arr::only($values, $fieldKeys);
         $genericValues = Arr::except($values, $fieldKeys);
 
         if (count($modelValues) > 0) {
             $this->updateAssociatedAssetData->handle(
-                $model instanceof Fragment ? $model->getFragmentModel() : $model,
+                $model,
                 $assetId,
                 $fieldKey,
                 $locale,

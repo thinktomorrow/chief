@@ -43,7 +43,6 @@ trait HasValue
     private function getRawValue(?string $locale = null): mixed
     {
         if (! $this->valueGiven) {
-            dump($this->getModel());
             if (! $this->getModel()) {
                 return $this->getDefault($locale);
             }

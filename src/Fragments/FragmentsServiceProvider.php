@@ -9,10 +9,11 @@ use Livewire\Livewire;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
 use Thinktomorrow\Chief\Fragments\UI\Components\SidebarFragment;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\AddFragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Contexts;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\EditFragment;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\Section;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment;
 
 class FragmentsServiceProvider extends ServiceProvider
 {
@@ -39,7 +40,8 @@ class FragmentsServiceProvider extends ServiceProvider
 
         Livewire::component('chief-fragments::contexts', Contexts::class);
         Livewire::component('chief-fragments::context', Context::class);
-        Livewire::component('chief-fragments::section', Section::class);
+        Livewire::component('chief-fragments::fragment', Fragment::class);
+        Livewire::component('chief-fragments::add-fragment', AddFragment::class);
         Livewire::component('chief-fragments::edit-fragment', EditFragment::class);
 
         Blade::component(SidebarFragment::class, 'chief-fragments::sidebar');

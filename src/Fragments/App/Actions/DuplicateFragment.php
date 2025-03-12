@@ -33,13 +33,13 @@ class DuplicateFragment
      *
      * @throws FragmentAlreadyAdded
      */
-    public function handle(FragmentModel $fragmentModel, string $sourceContextId, string $targetContextId, ?string $parentFragmentId, int $index, bool $forceDuplicateSharedFragment = false): void
+    public function handle(FragmentModel $fragmentModel, string $sourceContextId, string $targetContextId, ?string $parentFragmentId, int $index, bool $forceDuplicateSharedFragment = false): string
     {
         // If it's already a shared fragment, we'll use the original and share it as well
         if (! $forceDuplicateSharedFragment && $fragmentModel->isShared()) {
             $this->attachFragment->handle($targetContextId, $fragmentModel->id, $parentFragmentId, $index);
 
-            return;
+            return $fragmentModel->id;
         }
 
         // Otherwise do a full copy of the fragment instead
@@ -56,12 +56,14 @@ class DuplicateFragment
         event(new FragmentDuplicated($fragmentModel->id, $duplicatedFragmentModel->id, $sourceContextId, $targetContextId));
 
         $this->handleNestedFragments($fragmentModel, $duplicatedFragmentModel, $sourceContextId, $targetContextId, $forceDuplicateSharedFragment);
+
+        return $duplicatedFragmentModel->id;
     }
 
     private function handleNestedFragments(FragmentModel $fragmentModel, FragmentModel $duplicatedFragmentModel, $sourceContextId, $targetContextId, bool $forceDuplicateSharedFragment = false): void
     {
         $children = $this->getFragmentCollection($sourceContextId)
-            ->find(fn ($fragment) => $fragment->id === $fragmentModel->id)
+            ->find(fn ($fragment) => $fragment->getFragmentId() === $fragmentModel->id)
             ->getChildNodes();
 
         foreach ($children as $child) {

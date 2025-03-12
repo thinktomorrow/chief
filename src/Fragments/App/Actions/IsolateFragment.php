@@ -29,16 +29,16 @@ final class IsolateFragment
         $this->contextRepository = $contextRepository;
     }
 
-    public function handle(string $contextId, string $fragmentId): void
+    public function handle(string $contextId, string $fragmentId): string
     {
         $context = $this->contextRepository->find($contextId);
-        $fragment = $this->fragmentRepository->findByContext($fragmentId, $contextId);
+        $fragment = $this->fragmentRepository->findInContext($fragmentId, $contextId);
 
         $parentId = $fragment->getFragmentModel()->pivot->parent_id;
         $order = $fragment->getFragmentModel()->pivot->order;
 
         // Duplicate the shared fragment first
-        $this->duplicateFragment->handle(
+        $isolatedFragmentId = $this->duplicateFragment->handle(
             $fragment->getFragmentModel(),
             $context->id,
             $context->id,
@@ -49,5 +49,7 @@ final class IsolateFragment
 
         // Now remove the shared version from current context
         $this->detachFragment->handle($contextId, $fragmentId);
+
+        return $isolatedFragmentId;
     }
 }

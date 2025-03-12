@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -22,10 +22,30 @@ class Contexts extends Component
         $this->modelReference = $model->modelReference()->get();
     }
 
+    /** @return Collection<ContextDto> */
     public function getContexts(): Collection
     {
-        return app(ContextRepository::class)->getByOwner(ModelReference::fromString($this->modelReference));
+        return app(ComposeLivewireDto::class)
+            ->getContextsByOwner(ModelReference::fromString($this->modelReference));
     }
+
+    //    public function getListeners()
+    //    {
+    //        return [
+    //            'fragment-updated' => 'onFragmentUpdated',
+    //        ];
+    //    }
+    //
+    //    public function onFragmentUpdated()
+    //    {
+    //        dd('sisi');
+    //        // We are gonna update all the fragment previews in the contexts
+    //    }
+    //
+    //    //    public function refreshSection(string $fragmentId): void
+    //    //    {
+    //    //        $this->dispatch('fragment-refresh-'.$this->getId(), $fragmentId);
+    //    //    }
 
     public function submit()
     {

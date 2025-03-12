@@ -30,6 +30,8 @@ trait InteractsWithChoosingAssets
 
             $this->previewFiles[] = $previewFile;
         });
+
+        $this->dispatchFilesUpdatedEvent();
     }
 
     public function openFilesChoose()

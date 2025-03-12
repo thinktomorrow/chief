@@ -42,3 +42,21 @@ can set the default key back by adding the following to your AppServiceProvider 
 
 ```php
 Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName::setDefaultTemplate('trans.:locale.:name');
+```
+
+### Redactor
+
+Add next snippet to your `vendor/chief/editors/redactor/editor.blade.php` file to make the redactor work in livewire
+dialogs.
+
+```php
+// Load redactor in livewire dialogs
+document.addEventListener('fragment-dialog-opened', (event) => {
+
+    // Next tick my friend... next tick
+    setTimeout(() => {
+        const dialogEl = event.detail.componentId ? document.querySelector(`[wire\\:id="${event.detail.componentId}"]`) : document;
+        loadRedactorInstances(dialogEl);
+    }, 0);
+});
+```

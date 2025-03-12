@@ -33,6 +33,13 @@ class GetShareableFragments
         return $this;
     }
 
+    public function filterByShared(): self
+    {
+        $this->filters['shared'] = true;
+
+        return $this;
+    }
+
     public function filterByOwners(array $owners): self
     {
         $this->filters['owners'] = $owners;
@@ -47,6 +54,23 @@ class GetShareableFragments
         return $this;
     }
 
+    /**
+     * All child fragments residing in a root shared fragment are also marked as shared.
+     *
+     * By design, we only allow root fragments to be available for sharing.
+     * This reduces edge cases in UX and simplifies the user experience.
+     *
+     * If needed, you can switch this off to return child fragments as well.
+     *
+     * @return $this
+     */
+    public function includeNonRootFragments(): self
+    {
+        $this->filters['include_non_root_fragments'] = true;
+
+        return $this;
+    }
+
     public function limit(int $limit): self
     {
         $this->limit = $limit;
@@ -57,7 +81,11 @@ class GetShareableFragments
     public function get(string $contextId): Collection
     {
         $builder = FragmentModel::query()
-            ->limit($this->limit);
+            ->limit($this->limit)
+            ->join('context_fragment_tree', 'context_fragments.id', '=', 'context_fragment_tree.child_id')
+            ->join('contexts', 'context_fragment_tree.context_id', '=', 'contexts.id')
+            ->select('context_fragments.*')
+            ->groupBy('context_fragments.id');
 
         if ($isFilteringByType = isset($this->filters['types']) && count($this->filters['types']) > 0) {
             $builder = $this->queryFilterByTypes($builder, $this->filters['types']);
@@ -70,10 +98,18 @@ class GetShareableFragments
         // Default only top shared ones
         if (! $isFilteringByType && ! $isFilteringByOwner) {
             // Get top used already shared ones...
-            $builder = $this->filterByUsage($builder);
+            $builder = $this->queryFilterByUsage($builder);
         }
 
-        $currentFragmentIds = $this->fragmentRepository->getByContext($contextId)->map(fn ($fragment) => $fragment->getFragmentId())->toArray();
+        if (isset($this->filters['shared']) && $this->filters['shared']) {
+            $builder = $this->queryFilterByShared($builder);
+        }
+
+        if (! isset($this->filters['include_non_root_fragments']) || $this->filters['include_non_root_fragments'] == false) {
+            $builder->whereNull('context_fragment_tree.parent_id');
+        }
+
+        $currentFragmentIds = $this->fragmentRepository->getFragmentIdsByContext($contextId);
 
         $collection = $builder
             ->get()
@@ -109,10 +145,6 @@ class GetShareableFragments
         $modelReferences = array_map(fn ($value) => ModelReference::fromString($value), $modelReferences);
 
         return $builder
-            ->join('context_fragment_lookup', 'context_fragments.id', '=', 'context_fragment_lookup.fragment_id')
-            ->join('contexts', 'context_fragment_lookup.context_id', '=', 'contexts.id')
-            ->select('context_fragments.*')
-            ->groupBy('context_fragments.id')
             ->where(function ($query) use ($modelReferences) {
                 $query->where(DB::raw('1=0'));
 
@@ -125,13 +157,17 @@ class GetShareableFragments
             });
     }
 
-    private function filterByUsage($builder): Builder
+    private function queryFilterByUsage($builder): Builder
     {
         return $builder
-            ->join('context_fragment_lookup', 'context_fragments.id', '=', 'context_fragment_lookup.fragment_id')
-            ->select(['context_fragments.*', DB::raw("count('context_fragment_lookup.fragment_id') AS 'usage'")])
-            ->groupBy('context_fragments.id')
+            ->addSelect(DB::raw("count('context_fragment_tree.child_id') AS 'usage'"))
             ->orderBy('usage', 'DESC');
+    }
+
+    private function queryFilterByShared($builder): Builder
+    {
+        return $builder
+            ->whereJsonContains('meta->shared', true);
     }
 
     private function expandedClassReferences(array $classNames): array

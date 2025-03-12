@@ -79,6 +79,8 @@ interface Field extends LocalizedField, Validatable
 
     public function toggleField(string $fieldName, string|array $values): static;
 
+    public function toggleFields(array $fieldToggles): static;
+
     public function getFieldToggles(): array;
 
     // TODO: no more getTYPE: conditional fields now still depend on it...

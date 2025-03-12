@@ -10,14 +10,14 @@
 <div
     {{ $attributes->class('space-y-3') }}
     x-cloak
-    wire:ignore
+    wire:key="tabs-index-{{ \Illuminate\Support\Str::random() }}"
     x-on:chieftab.window="listenForExternalTab"
     x-data="{
         activeTab: null,
         showNav: @js($showNav),
 
         init: function() {
-            this.activeTab = @js($activeTab) || this.tabs()[0].id;
+            this.activeTab = @js($activeTab) || (this.tabs().length > 0 ? this.tabs()[0].id : null);
         },
         listenForExternalTab: function(e){
             if(!@js($listenForExternalTab)) return;
@@ -48,7 +48,8 @@
         },
     }"
 >
-    <nav x-show="showNav" aria-label="Tabs" role="tablist" class="flex w-full gap-2 border-b border-grey-100">
+    <nav x-show="showNav" aria-label="Tabs" role="tablist"
+         class="flex w-full gap-2 border-b border-grey-100">
         <template x-for="(tab,index) in tabs()">
             <a
                 :key="tab.id"
@@ -61,10 +62,10 @@
 
                 @if($showNavAsButtons)
                     class="text-grey-500 hover:text-grey-700 rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
-                    x-bind:class="{ 'bg-primary-100 text-primary-700': tab.id === activeTab }"
+                x-bind:class="{ 'bg-primary-100 text-primary-700': tab.id === activeTab }"
                 @else
                     class="block pb-1.5 cursor-pointer text-grey-600 with-bottomline px-1.5"
-                    x-bind:class="{ 'active': tab.id === activeTab }"
+                x-bind:class="{ 'active': tab.id === activeTab }"
                 @endif
             ></a>
         </template>

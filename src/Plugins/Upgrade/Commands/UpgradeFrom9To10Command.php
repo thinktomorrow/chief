@@ -80,6 +80,8 @@ class UpgradeFrom9To10Command extends BaseCommand
             '->fragmentModel()' => '->getFragmentModel()',
             'Thinktomorrow\Chief\ManagedModels\Presets\Fragment' => Fragment::class,
             'private string $viewPath' => 'protected string $viewPath',
+            'Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey' => 'Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName',
+            'LocalizedFormKey' => 'LocalizedFieldName',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,

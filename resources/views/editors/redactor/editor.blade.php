@@ -20,5 +20,15 @@
 
         // Load redactor for all data-editor instances
         $R('[data-editor]');
+
+        // Init redactor in livewire dialogs
+        document.addEventListener('fragment-dialog-opened', () => {
+            console.log('sisisi R');
+
+            // Next tick my friend... next tick
+            setTimeout(() => {
+                $R('[data-editor]');
+            }, 0);
+        });
     </script>
 @endpush

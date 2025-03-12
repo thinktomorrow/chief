@@ -6,10 +6,12 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\SharedFragmentDto;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-class GetOwners
+class ComposeLivewireDto
 {
     private ContextRepository $contextRepository;
 
@@ -19,6 +21,38 @@ class GetOwners
     {
         $this->contextRepository = $contextRepository;
         $this->registry = $registry;
+    }
+
+    public function getContext(string $contextId): ContextDto
+    {
+        $context = $this->contextRepository->find($contextId);
+        $owner = $context->owner;
+        $ownerResource = $this->registry->findResourceByModel($owner::class);
+
+        return ContextDto::fromContext(
+            $context,
+            $owner->modelReference(),
+            $ownerResource->getPageTitle($owner),
+            $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
+        );
+    }
+
+    /** @return Collection<ContextDto> */
+    public function getContextsByOwner(ModelReference $modelReference): Collection
+    {
+        return $this->contextRepository->getByOwner($modelReference)
+            ->map(function ($context) {
+
+                $owner = $context->owner;
+                $ownerResource = $this->registry->findResourceByModel($owner::class);
+
+                return ContextDto::fromContext(
+                    $context,
+                    $owner->modelReference(),
+                    $ownerResource->getPageTitle($owner),
+                    $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
+                );
+            });
     }
 
     /** @return Collection<SharedFragmentDto> */
@@ -40,16 +74,5 @@ class GetOwners
                     $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
                 );
             });
-    }
-
-    /**
-     * Get the count of the different owners. This count does not reflect
-     * the amount of contexts since each owner can own multiple contexts.
-     */
-    public function getCount(string $fragmentId): int
-    {
-        return $this->contextRepository->getContextsByFragment($fragmentId)
-            ->groupBy(fn ($row) => $row->owner_type.'_'.$row->owner_id)
-            ->count();
     }
 }
