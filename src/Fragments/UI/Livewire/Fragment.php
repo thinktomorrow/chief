@@ -53,13 +53,35 @@ class Fragment extends Component
         $this->fragment = $this->fragment->changeOrder($order);
     }
 
-    public function onFragmentDeleting(string $fragmentId, string $contextId, ?string $parentId): void
+    //    public function deleteFragment(): void
+    //    {
+    //        //        $this->queuedForDeletion = true;
+    //
+    //        //        try {
+    //        //            // This detaches the fragment from given context - if the fragment is not shared / used
+    //        //            // elsewhere it will be deleted completely via listener on the FragmentDetached event
+    //        //            app(DetachFragment::class)->handle($this->fragment->contextId, $this->fragment->fragmentId);
+    //        //        } catch (FragmentAlreadyDetached $e) {
+    //        //            //
+    //        //        }
+    //
+    //        //        $this->dispatch('fragment-deleted', ...[
+    //        //            'fragmentId' => $this->fragment->fragmentId,
+    //        //            'contextId' => $this->fragment->contextId,
+    //        //            'parentId' => $this->fragment->parentId,
+    //        //            'componentId' => $this->getId(),
+    //        //            'parentComponentId' => $this->parentComponentId,
+    //        //        ]);
+    //
+    //        $this->close();
+    //    }
+
+    public function onFragmentDeleted(string $fragmentId, string $contextId, ?string $parentId): void
     {
-        if (! $parentId || $parentId !== $this->fragment->fragmentId) {
+        if ($this->fragment->fragmentId !== $fragmentId || $this->fragment->contextId !== $contextId) {
             return;
         }
-
-        //        $this->refreshSelf();
+        //        $this->fragment = $this->fragment->changeFragmentId('deleted');
     }
 
     private function refreshSelf(): void

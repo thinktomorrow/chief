@@ -10,7 +10,8 @@
 
     <x-slot name="footer">
         <x-chief-table::button x-on:click="close" class="shrink-0">Annuleer</x-chief-table::button>
-        <x-chief-table::button wire:click="deleteFragment" variant="red" class="shrink-0">
+        <x-chief-table::button wire:click="deleteFragment" variant="red"
+                               class="shrink-0">
             Verwijder fragment
         </x-chief-table::button>
     </x-slot>

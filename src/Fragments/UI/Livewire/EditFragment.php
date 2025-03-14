@@ -7,14 +7,12 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
 use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 
 class EditFragment extends Component
 {
@@ -32,11 +30,6 @@ class EditFragment extends Component
         $this->parentComponentId = $parentComponentId;
         $this->fragment = $fragment;
     }
-
-    //    public function updatedForm()
-    //    {
-    //        dd($this->form);
-    //    }
 
     public function getListeners()
     {
@@ -103,15 +96,7 @@ class EditFragment extends Component
 
     public function deleteFragment(): void
     {
-        try {
-            // This detaches the fragment from given context - if the fragment is not shared / used
-            // elsewhere it will be deleted completely via listener on the FragmentDetached event
-            app(DetachFragment::class)->handle($this->fragment->contextId, $this->fragment->fragmentId);
-        } catch (FragmentAlreadyDetached $e) {
-            //
-        }
-
-        $this->dispatch('fragment-deleted', ...[
+        $this->dispatch('fragment-deleting', ...[
             'fragmentId' => $this->fragment->fragmentId,
             'contextId' => $this->fragment->contextId,
             'parentId' => $this->fragment->parentId,

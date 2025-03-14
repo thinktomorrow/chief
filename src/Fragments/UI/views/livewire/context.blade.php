@@ -15,16 +15,22 @@
         </div>
     </div>
 
+    {{--    @dd($fragments)--}}
+
     <div wire:ignore.self
          x-sortable
          x-sortable-group="{{ 'group-' . $context->contextId }}"
-         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
+         x-on:end.stop="setTimeout(() => $wire.reorder($event.target.sortable.toArray()), 300)"
          class="divide-y divide-grey-100">
-        @foreach($this->getRootFragments() as $fragment)
-            <livewire:chief-fragments::fragment
-                :key="$fragment->getId() . '-section'"
-                :fragment="$fragment"
-            />
+        @foreach($fragments as $i => $fragment)
+            <div wire:key="{{ 'loop-'.$fragment->getId() }}" x-sortable-item="{{ $fragment->fragmentId }}"
+                 class="w-full">
+                <livewire:chief-fragments::fragment
+                    :key="'fragment-' . $fragment->getId()"
+                    :fragment="$fragment"
+                />
+            </div>
+
         @endforeach
     </div>
 
