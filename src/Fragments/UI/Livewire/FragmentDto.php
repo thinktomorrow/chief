@@ -105,8 +105,8 @@ class FragmentDto implements Wireable
             $value['bookmark'],
             $value['urls'],
             ContextDto::fromLivewire($value['context']),
-            $value['fields']->map(fn ($fieldData) => $fieldData['class']::fromLivewire($fieldData)),
-            $value['sharedFragmentDtos']->map(fn ($sharedFragmentDto) => SharedFragmentDto::fromLivewire($sharedFragmentDto)),
+            collect($value['fields'])->map(fn ($fieldData) => $fieldData['class']::fromLivewire($fieldData)),
+            collect($value['sharedFragmentDtos'])->map(fn ($sharedFragmentDto) => SharedFragmentDto::fromLivewire($sharedFragmentDto)),
         );
     }
 
@@ -117,6 +117,11 @@ class FragmentDto implements Wireable
         }
 
         return $this->fragmentModel = FragmentModel::find($this->fragmentId);
+    }
+
+    public function isDeleted(): bool
+    {
+        return ! FragmentModel::where('id', $this->fragmentId)->exists();
     }
 
     public function getId(): string

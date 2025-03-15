@@ -23,18 +23,19 @@ class EditFragment extends Component
     // parent livewire component id
     public string $parentComponentId;
 
-    public FragmentDto $fragment;
+    public string $contextId;
 
-    public function mount(string $parentComponentId, FragmentDto $fragment)
+    public ?FragmentDto $fragment = null;
+
+    public function mount(string $contextId, ?string $parentComponentId = null)
     {
+        $this->contextId = $contextId;
         $this->parentComponentId = $parentComponentId;
-        $this->fragment = $fragment;
     }
 
     public function getListeners()
     {
         return [
-            'open' => 'open',
             'open-'.$this->parentComponentId => 'open',
             'files-updated' => 'onfilesUpdated',
             'fragment-added' => 'onFragmentAdded',
@@ -44,6 +45,12 @@ class EditFragment extends Component
 
     public function open($values = [])
     {
+        $this->fragment = FragmentDto::fromLivewire($values['fragment']);
+
+        if ($this->fragment->isDeleted()) {
+            throw new \InvalidArgumentException('Fragment ['.$this->fragment->fragmentId.'] has been deleted');
+        }
+
         $this->isOpen = true;
 
         /**
@@ -62,7 +69,7 @@ class EditFragment extends Component
 
     public function close()
     {
-        $this->reset(['form']);
+        $this->reset(['fragment', 'form']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -181,7 +188,7 @@ class EditFragment extends Component
             'fragmentId' => $this->fragment->fragmentId,
             'contextId' => $this->fragment->contextId,
             'parentComponentId' => $this->parentComponentId,
-        ])->to('chief-fragments::fragment');
+        ])->to('chief-fragments::context');
 
         $this->close();
     }

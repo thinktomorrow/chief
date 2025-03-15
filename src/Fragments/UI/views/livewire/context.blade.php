@@ -23,16 +23,15 @@
          x-on:end.stop="setTimeout(() => $wire.reorder($event.target.sortable.toArray()), 300)"
          class="divide-y divide-grey-100">
         @foreach($fragments as $i => $fragment)
-            <div wire:key="{{ 'loop-'.$fragment->getId() }}" x-sortable-item="{{ $fragment->fragmentId }}"
-                 class="w-full">
-                <livewire:chief-fragments::fragment
-                    :key="'fragment-' . $fragment->getId()"
-                    :fragment="$fragment"
-                />
-            </div>
-
+            @include('chief-fragments::livewire._partials.fragment')
         @endforeach
     </div>
+
+    <livewire:chief-fragments::edit-fragment
+        :key="$context->contextId . '-edit-fragment'"
+        :context-id="$context->contextId"
+        :parent-component-id="$this->getId()"
+    />
 
     <livewire:chief-fragments::add-fragment
         :key="$context->contextId . '-add-fragment'"

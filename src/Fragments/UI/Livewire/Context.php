@@ -24,6 +24,7 @@ class Context extends Component
     public function getListeners()
     {
         return [
+            'fragment-updated' => 'onFragmentUpdated',
             'root-fragment-added' => 'onRootFragmentAdded',
             'fragment-deleting' => 'onFragmentDeleting',
             'request-refresh' => '$refresh',
@@ -44,7 +45,13 @@ class Context extends Component
         app(ReorderFragments::class)->handle($this->context->contextId, $fragmentIds);
 
         // Reoorder $fragments by given fragmentIds order
-        $this->fragments = $this->fragments->sortBy(fn (FragmentDto $fragment) => array_search($fragment->fragmentId, $fragmentIds));
+        $this->fragments = $this->fragments
+            ->map(function (FragmentDto $fragment) use ($fragmentIds) {
+                $fragment->order = array_search($fragment->fragmentId, $fragmentIds);
+
+                return $fragment;
+            })
+            ->sortBy('order');
 
         // $this->refreshFragments();
 
@@ -53,12 +60,46 @@ class Context extends Component
         //        ]);
     }
 
+    public function onFragmentUpdated(string $fragmentId, string $contextId)
+    {
+        if ($contextId !== $this->context->contextId) {
+            return;
+        }
+
+        $this->refreshFragments($fragmentId);
+    }
+
     private function refreshFragments(): void
     {
         $fragmentCollection = app(FragmentRepository::class)->getFragmentCollection($this->context->contextId);
 
         $this->fragments = collect($fragmentCollection->all())
             ->map(fn ($fragment) => FragmentDto::fromFragment($fragment, $this->context));
+    }
+
+    private function refreshOneFragment(string $fragmentId): void
+    {
+        $updatedFragment = app(FragmentRepository::class)->findById($fragmentId, $this->context->contextId);
+
+        // Update given fragment in the fragment collection
+        foreach ($this->fragments as $i => $fragment) {
+            if ($fragment->fragmentId === $fragmentId) {
+                $this->fragments[$i] = FragmentDto::fromFragment($updatedFragment, $this->context);
+            }
+        }
+    }
+
+    public function editFragment(string $fragmentId): void
+    {
+        $fragment = $this->fragments->first(fn (FragmentDto $fragment) => $fragment->fragmentId === $fragmentId);
+
+        if (! $fragment) {
+            throw new \InvalidArgumentException('Fragment not found by id: '.$fragmentId);
+        }
+
+        $this->dispatch('open-'.$this->getId(), [
+            'fragment' => $fragment->toLivewire(),
+        ])->to('chief-fragments::edit-fragment');
     }
 
     public function addFragment(int $order, ?string $parentId = null): void
@@ -75,7 +116,7 @@ class Context extends Component
             return;
         }
 
-        $this->refreshSelf();
+        $this->refreshFragments();
     }
 
     public function onFragmentIsolated(string $fragmentId, string $formerFragmentId, string $contextId): void
@@ -84,7 +125,7 @@ class Context extends Component
             return;
         }
 
-        $this->refreshSelf();
+        $this->refreshFragments();
     }
 
     public function onFragmentDeleting(string $fragmentId, string $contextId): void
@@ -100,14 +141,16 @@ class Context extends Component
         } catch (FragmentAlreadyDetached $e) {
             //
         }
+
+        $this->refreshFragments();
     }
 
-    private function refreshSelf(): void
-    {
-        $this->reorder($this->getFragmentIdsInOrder());
-
-        $this->dispatch('request-refresh')->self();
-    }
+    //    private function refreshSelf(): void
+    //    {
+    //        $this->reorder($this->getFragmentIdsInOrder());
+    //
+    //        $this->dispatch('request-refresh')->self();
+    //    }
 
     public function render()
     {

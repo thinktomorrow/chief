@@ -1,4 +1,5 @@
-<div x-sortable-item="{{ $fragment->fragmentId }}" class="w-full">
+<div wire:key="{{ 'context-fragment-'.$fragment->getId() }}" x-sortable-item="{{ $fragment->fragmentId }}"
+     class="w-full">
     <div class="py-6 space-y-4">
         <div class="flex items-start justify-end space-x-3">
             <button type="button" x-sortable-handle class="shrink-0">
@@ -41,7 +42,7 @@
                 </span>
             </div>
             <span
-                wire:click="editFragment"
+                wire:click="editFragment('{{ $fragment->fragmentId }}')"
                 title="Fragment aanpassen"
                 class="shrink-0 cursor-pointer"
             >
@@ -56,18 +57,12 @@
         @endif
     </div>
 
-    <livewire:chief-fragments::edit-fragment
-        :key="$fragment->getId() . '-edit'"
-        :fragment="$fragment"
-        :parent-component-id="$this->getId()"
-    />
-
     <!-- plus icon -->
     <div class="relative w-full">
         <div class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]">
             <div class="absolute">
                 <x-chief::button
-                    x-on:click="$wire.$parent.addFragment({{ $fragment->order }}, '{{ $fragment->parentId }}')">
+                    x-on:click="$wire.addFragment({{ $fragment->order }}, '{{ $fragment->parentId }}')">
                     <svg>
                         <use xlink:href="#icon-plus"></use>
                     </svg>
