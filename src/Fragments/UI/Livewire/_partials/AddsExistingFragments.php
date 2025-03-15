@@ -19,13 +19,22 @@ trait AddsExistingFragments
             ->excludeAlreadySelected();
 
         if (count($this->filters) > 0) {
-
             foreach ($this->filters as $filter => $value) {
                 $builder->{'filterBy'.ucfirst($filter)}($value);
             }
         }
 
         return $builder->get($this->contextId);
+    }
+
+    public function updatedFilters(): void
+    {
+        // Remove falsy values like ['filters' => [null]]
+        foreach ($this->filters as $key => $value) {
+            if (! $value || (is_array($value) && count($value) === 1 && ! $value[0])) {
+                unset($this->filters[$key]);
+            }
+        }
     }
 
     /**

@@ -1,12 +1,11 @@
 <x-chief-form::window class="card w-full">
-    <span>CONTEXT: {{ $context->contextId }}</span>
 
     <!-- plus icon -->
     <div class="relative w-full">
         <div class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]">
             <div class="absolute">
                 <x-chief::button
-                    x-on:click="$wire.addFragment(0)">
+                    x-on:click="$wire.addFragment(-1)">
                     <svg>
                         <use xlink:href="#icon-plus"></use>
                     </svg>
@@ -14,8 +13,6 @@
             </div>
         </div>
     </div>
-
-    {{--    @dd($fragments)--}}
 
     <div wire:ignore.self
          x-sortable

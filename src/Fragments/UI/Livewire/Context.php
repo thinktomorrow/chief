@@ -25,6 +25,7 @@ class Context extends Component
     {
         return [
             'fragment-updated' => 'onFragmentUpdated',
+            'fragment-isolated' => 'onFragmentIsolated',
             'root-fragment-added' => 'onRootFragmentAdded',
             'fragment-deleting' => 'onFragmentDeleting',
             'request-refresh' => '$refresh',
@@ -66,7 +67,16 @@ class Context extends Component
             return;
         }
 
-        $this->refreshFragments($fragmentId);
+        $this->refreshOneFragment($fragmentId);
+    }
+
+    public function onFragmentIsolated(string $fragmentId, string $formerFragmentId, string $contextId): void
+    {
+        if ($contextId !== $this->context->contextId) {
+            return;
+        }
+
+        $this->refreshOneFragment($fragmentId, $formerFragmentId);
     }
 
     private function refreshFragments(): void
@@ -77,13 +87,19 @@ class Context extends Component
             ->map(fn ($fragment) => FragmentDto::fromFragment($fragment, $this->context));
     }
 
-    private function refreshOneFragment(string $fragmentId): void
+    /**
+     * Refresh a single fragment in the collection.
+     *
+     * The formerFragmentId is used when a fragment is isolated, which results
+     * in the former fragment id being replaced by a (cloned) new one.
+     */
+    private function refreshOneFragment(string $fragmentId, ?string $formerFragmentId = null): void
     {
-        $updatedFragment = app(FragmentRepository::class)->findById($fragmentId, $this->context->contextId);
+        $updatedFragment = app(FragmentRepository::class)->findInContext($fragmentId, $this->context->contextId);
 
         // Update given fragment in the fragment collection
         foreach ($this->fragments as $i => $fragment) {
-            if ($fragment->fragmentId === $fragmentId) {
+            if ($fragment->fragmentId === ($formerFragmentId ?: $fragmentId)) {
                 $this->fragments[$i] = FragmentDto::fromFragment($updatedFragment, $this->context);
             }
         }
@@ -111,15 +127,6 @@ class Context extends Component
     }
 
     public function onRootFragmentAdded(string $fragmentId, string $contextId, ?string $parentId, int $order): void
-    {
-        if ($contextId !== $this->context->contextId) {
-            return;
-        }
-
-        $this->refreshFragments();
-    }
-
-    public function onFragmentIsolated(string $fragmentId, string $formerFragmentId, string $contextId): void
     {
         if ($contextId !== $this->context->contextId) {
             return;
