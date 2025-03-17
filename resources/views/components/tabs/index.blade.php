@@ -1,16 +1,16 @@
 {{-- "reference" => Reference of this tabs, context that is passed with the event for finetuning listeners --}}
 
 @props([
-    "activeTab" => null,
-    "listenForExternalTab" => false,
-    "showNav" => true,
-    "showNavAsButtons" => false,
-    "dispatchTab" => true,
-    "reference" => null,
+    'activeTab' => null,
+    'listenForExternalTab' => false,
+    'showNav' => true,
+    'dispatchTab' => true,
+    'reference' => null,
 ])
 
 <div
     x-cloak
+    data-slot="tabs"
     wire:key="tabs-index-{{ \Illuminate\Support\Str::random() }}"
     x-on:chieftab.window="listenForExternalTab"
     x-data="{
@@ -83,16 +83,10 @@
                     role="tab"
                     x-on:click.prevent="showTab(tab.id)"
                     {{-- TODO(tijs): wrong in so many ways --}}
-                    x-html="tab.label"
+                    x-html="tab.label == 'nl' ? 'Nederlands' : 'Frans'"
                     x-bind:aria-controls="tab.id"
                     x-bind:aria-selected="tab.id === activeTab"
-                    @if ($showNavAsButtons)
-                        class="bui-btn bui-btn-xs relative cursor-pointer px-2 text-sm/5 shadow-none"
-                        x-bind:class="{ 'bg-primary-100 text-primary-700': tab.id === activeTab }"
-                    @else
-                        class="block pb-1.5 cursor-pointer text-grey-600 with-bottomline px-1.5"
-                        x-bind:class="{ 'active': tab.id === activeTab }"
-                    @endif
+                    class="bui-btn bui-btn-xs relative cursor-pointer px-2 text-sm/5 shadow-none"
                     :class="{
                         'text-grey-950': tab.id === activeTab,
                         'text-grey-700': tab.id !== activeTab,

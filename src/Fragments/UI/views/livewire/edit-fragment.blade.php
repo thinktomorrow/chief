@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired>
+<x-chief::dialog.drawer wired>
     @if ($isOpen)
         <x-slot name="title">
             {{ ucfirst($fragment->label) }}
@@ -62,9 +62,9 @@
         @include('chief-fragments::livewire._partials.status-fragment-actions')
         @include('chief-fragments::livewire._partials.delete-fragment-action')
 
-        <x-slot name="footer">
-            <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+        <x-slot name="footer" class="flex items-start gap-2">
             <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
+            <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
         </x-slot>
     @endif
-</x-chief::dialog.modal>
+</x-chief::dialog.drawer>
