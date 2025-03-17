@@ -13,7 +13,7 @@
                 <div class="space-y-1">
                     <div class="flex items-start gap-1">
                         @if ($title)
-                            <h2 class="mt-[0.1875rem] text-base/6 font-medium text-grey-900">
+                            <h2 class="mt-[0.1875rem] text-base/6 font-medium text-grey-950">
                                 {!! $title !!}
                             </h2>
                         @endif

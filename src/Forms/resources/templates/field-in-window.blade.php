@@ -2,14 +2,18 @@
     $component->ignoreDefault();
 @endphp
 
-<tr class="[&>*:first-child]:pl-4 [&>*:last-child]:pr-4 [&>*:not(:last-child)]:pr-6">
-    <td class="@lg:table-cell table-row align-top">
-        <x-chief::form.label class="leading-6 @lg:max-w-48">
-            {{ ucfirst($getLabel()) }}
-        </x-chief::form.label>
-    </td>
+<tr
+    class="@lg:table-row @lg:[&>*:not(:last-child)]:pr-6 @lg:space-y-0 block space-y-1 [&:not(:first-child)]:pt-3 [&:not(:last-child)]:pb-3"
+>
+    @if ($getLabel())
+        <td class="@lg:table-cell block align-top">
+            <x-chief::form.label class="leading-6 @lg:max-w-48">
+                {{ ucfirst($getLabel()) }}
+            </x-chief::form.label>
+        </td>
+    @endif
 
-    <td class="@lg:table-cell table-row">
+    <td class="@lg:table-cell block">
         @if (! $hasLocales())
             @include($getView())
         @elseif (count($getLocales()) == 1)

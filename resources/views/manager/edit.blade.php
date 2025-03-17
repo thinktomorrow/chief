@@ -1,3 +1,13 @@
+@php
+    $sites = [
+        'thinktomorrow.be' => 'thinktomorrow.be',
+        'thinktomorrow.be/nl' => 'thinktomorrow.be/nl',
+        'thinktomorrow.be/en' => 'thinktomorrow.be/en',
+        'thinktomorrow.be/fr' => 'thinktomorrow.be/fr',
+        'thinktomorrow.be/de' => 'thinktomorrow.be/de',
+    ];
+@endphp
+
 <x-chief::page.multisite-template container="2xl">
     <x-slot name="hero">
         <h1 class="h1 h1-dark">{{ $resource->getPageTitle($model) }}</h1>
@@ -14,28 +24,25 @@
     </div>
 
     <x-slot name="sidebar">
-        <div class="divide-y divide-black/10 [&>*:not(:first-child)]:pt-6 [&>*:not(:last-child)]:pb-6">
+        <div class="[&>*:not(:first-child)]:pt-6">
             <x-chief::window title="Sites">
                 <div class="space-y-1">
-                    @foreach ([
-                            'thinktomorrow.be' => 'thinktomorrow.be',
-                            'thinktomorrow.be/nl' => 'thinktomorrow.be/nl',
-                            'thinktomorrow.be/en' => 'thinktomorrow.be/en',
-                            'thinktomorrow.be/fr' => 'thinktomorrow.be/fr',
-                            'thinktomorrow.be/de' => 'thinktomorrow.be/de'
-                        ]
-                        as $site => $url)
-                        <div class="flex items-start gap-2">
-                            <div class="my-1.5">
-                                <svg class="size-3 fill-green-500" viewBox="0 0 6 6" aria-hidden="true">
-                                    <circle cx="3" cy="3" r="3" />
-                                </svg>
+                    @foreach ($sites as $site)
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex items-start gap-2">
+                                <div class="my-1">
+                                    <svg class="size-3 fill-green-500" viewBox="0 0 6 6" aria-hidden="true">
+                                        <circle cx="3" cy="3" r="3" />
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <p class="text-sm leading-5 text-grey-500">{{ $site }}</p>
+                                    <p class="leading-6 text-grey-700">/over-ons</p>
+                                </div>
                             </div>
 
-                            <div>
-                                <p class="leading-6 text-grey-500">{{ $site }}</p>
-                                <p class="font-medium leading-6 text-grey-900">/over-ons</p>
-                            </div>
+                            <x-chief-table::badge>Default</x-chief-table::badge>
                         </div>
                     @endforeach
                 </div>

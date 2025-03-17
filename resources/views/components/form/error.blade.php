@@ -3,7 +3,7 @@
 ])
 
 @if ($rule)
-    @if(isset($errors))
+    @if (isset($errors))
         @error($rule)
             <x-chief::inline-notification type="error" class="mt-2">
                 {{ ucfirst($message) }}
@@ -11,7 +11,7 @@
         @enderror
     @endif
 
-    <x-chief::inline-notification data-error-placeholder="{{ $rule }}" type="error" class="hidden mt-2">
+    <x-chief::inline-notification data-error-placeholder="{{ $rule }}" type="error" class="mt-2 hidden">
         <div data-error-placeholder-content></div>
     </x-chief::inline-notification>
 @endif

@@ -16,7 +16,7 @@
     }
 
     .badge-xs {
-        @apply rounded-lg px-1.5 py-1 text-xs leading-[.875rem];
+        @apply rounded-md px-1.5 py-0.5 text-xs leading-4;
     }
 
     .badge-green {
