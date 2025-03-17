@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tags;
 
+use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
+
 trait WithTaggedComponents
 {
+    use WithComponents;
+
     public function filterByTagged($tag): static
     {
         if (is_string($tag) && $tag === 'untagged') {
@@ -53,7 +57,7 @@ trait WithTaggedComponents
             }
         }
 
-        $parentComponent->components = $components;
+        $parentComponent->components($components);
 
         return $this;
     }

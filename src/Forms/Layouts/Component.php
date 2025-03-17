@@ -8,16 +8,16 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasId;
 use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
-use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Livewire\PacksComponentsForLivewire;
+use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
+use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 
-abstract class Component extends \Illuminate\View\Component implements HasComponents, Htmlable, Wireable
+abstract class Component extends \Illuminate\View\Component implements HasTaggedComponents, Htmlable, Wireable
 {
     use HasComponentRendering;
     use HasCustomAttributes;
@@ -26,7 +26,7 @@ abstract class Component extends \Illuminate\View\Component implements HasCompon
     use HasTitle;
     use HasView;
     use PacksComponentsForLivewire;
-    use WithComponents;
+    use WithTaggedComponents;
 
     public function __construct(?string $id = null)
     {

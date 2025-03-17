@@ -274,8 +274,8 @@ class Fields implements \ArrayAccess, \Countable, \IteratorAggregate, HasTaggedC
 
     public function components(array $components): static
     {
-        $this->items = collect();
+        $this->items = collect($components);
 
-        return $this->add(...$components);
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Console;
 
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class GenerateSitemap extends BaseCommand
 {
