@@ -21,6 +21,15 @@ trait HasFieldToggle
         return $this;
     }
 
+    public function toggleFields(array $fieldToggles): static
+    {
+        foreach ($fieldToggles as $fieldName => $values) {
+            $this->toggleField($fieldName, $values);
+        }
+
+        return $this;
+    }
+
     public function getFieldToggles(): array
     {
         return $this->fieldToggles;

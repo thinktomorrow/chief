@@ -48,7 +48,7 @@ class TimeTableController extends Controller
         [, $fields] = $this->getModelAndFields();
 
         return view('chief-timetable::timetables.create', [
-            'fields' => $fields->notTagged('not-on-create'),
+            'fields' => $fields->filterByNotTagged('not-on-create'),
         ]);
     }
 
@@ -58,7 +58,7 @@ class TimeTableController extends Controller
 
         [$model, $fields] = $this->getModelAndFields();
 
-        $fields = $fields->notTagged('not-on-create');
+        $fields = $fields->filterByNotTagged('not-on-create');
 
         $this->fieldValidator->handle($fields, $request->all());
 

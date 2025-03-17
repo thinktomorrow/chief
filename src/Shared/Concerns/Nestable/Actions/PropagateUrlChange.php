@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Site\Urls\Application\ResaveUrlSlug;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class PropagateUrlChange
 {
@@ -22,9 +23,20 @@ class PropagateUrlChange
 
     public function __construct(Registry $registry, ResaveUrlSlug $resaveUrlSlug)
     {
-        $this->locales = config('chief.locales', []);
+        $this->locales = ChiefLocales::locales();
         $this->registry = $registry;
         $this->resaveUrlSlug = $resaveUrlSlug;
+    }
+
+    public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
+    {
+        $model = $event->modelReference->instance();
+
+        if (! $model instanceof Nestable) {
+            return;
+        }
+
+        $this->handle($model);
     }
 
     /**
@@ -57,16 +69,5 @@ class PropagateUrlChange
         foreach ($model->getChildren() as $child) {
             $this->handle($child);
         }
-    }
-
-    public function onManagedModelUrlUpdated(ManagedModelUrlUpdated $event): void
-    {
-        $model = $event->modelReference->instance();
-
-        if (! $model instanceof Nestable) {
-            return;
-        }
-
-        $this->handle($model);
     }
 }

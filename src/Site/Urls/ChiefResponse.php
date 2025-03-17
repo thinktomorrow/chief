@@ -14,42 +14,53 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\Fragments\ActiveContextId;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Throwable;
 
 final class ChiefResponse
 {
-    public static function fromSlug(string $slug, $locale = null): BaseResponse
+    public static function fromSlug(string $slug, ?string $site = null): BaseResponse
     {
-        if (! $locale) {
-            $locale = app()->getLocale();
+        if (! $site) {
+            $site = app()->getLocale();
         }
 
         try {
             $slug = Str::ascii($slug);
 
-            $urlRecord = UrlRecord::findBySlug($slug, $locale);
+            $urlRecord = UrlRecord::findBySlug($slug, $site);
 
             if ($urlRecord->isRedirect()) {
                 return self::createRedirect(
-                    self::findModel($urlRecord->redirectTo())->url($locale)
+                    self::findModel($urlRecord->redirectTo())->url($site)
                 );
             }
 
-            return self::findModel($urlRecord)->response();
+            return self::createResponse($urlRecord);
+
         } catch (Throwable $e) {
             if (config('chief.strict') || ! self::shouldBeIgnored($e)) {
                 throw $e;
             }
         }
 
-        throw new NotFoundHttpException('No url or model found for request ['.$slug.'] for locale ['.$locale.'].');
+        throw new NotFoundHttpException('No url or model found for request ['.$slug.'] for locale ['.$site.'].');
     }
 
     private static function createRedirect(string $url): RedirectResponse
     {
         return new RedirectResponse($url, 301, []);
+    }
+
+    private static function createResponse(UrlRecord $urlRecord): BaseResponse
+    {
+        $model = self::findModel($urlRecord);
+
+        ActiveContextId::set($urlRecord->context_id);
+
+        return $model->response();
     }
 
     private static function findModel(UrlRecord $urlRecord): Visitable

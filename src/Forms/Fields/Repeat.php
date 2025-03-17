@@ -7,12 +7,18 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 use DeepCopy\DeepCopy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
+use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Managers\Manager;
 
-class Repeat extends Component implements Field
+class Repeat extends Component implements Field, HasComponents, HasTaggedComponents
 {
     use Fields\Concerns\HasEndpoint;
+    use WithComponents;
+    use WithTaggedComponents;
 
     protected string $view = 'chief-form::fields.repeat.repeat';
 
@@ -45,7 +51,7 @@ class Repeat extends Component implements Field
         // Populate fields with the correct name and the given values
         Fields::make($clonedComponents, fn ($field) => ! $field instanceof self)
             ->each(function (Field $field) use ($index, $locale, $values, $prefix) {
-                $fieldName = Common\LocalizedFormKey::make()
+                $fieldName = FieldName\LocalizedFieldName::make()
                     ->template(':prefix.'.$index.'.:name.:locale')
                     ->replace('prefix', $prefix ?: $this->getName())
                     ->bracketed()

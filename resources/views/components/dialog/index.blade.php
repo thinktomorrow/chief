@@ -1,8 +1,8 @@
 @props(['wired' => false])
 
 <div
-    x-cloak
     wire:ignore.self
+    x-cloak
     x-data="{
         isOpen: {{ $wired ? '$wire.entangle(\'isOpen\')' : 'false' }},
         open() {

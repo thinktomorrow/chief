@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 
     $fieldType = strtolower(class_basename($component));
 
@@ -33,7 +33,6 @@
             {!! $getDescription() !!}
         </x-chief::form.description>
     @endif
-
     @if (! $hasLocales())
         @include($getView())
         @include('chief-form::fields._partials.charactercount')

@@ -1,4 +1,6 @@
 @php
+    $locale = $locale ?? \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::primaryLocale();
+
     use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
     use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $assets */
@@ -58,7 +60,7 @@
                         @else
                             {{ $asset->getHumanReadableSize() }} -
                             @if ($asset->isImage())
-                                    {{ $asset->getWidth() }}x{{ $asset->getHeight() }} -
+                                {{ $asset->getWidth() }}x{{ $asset->getHeight() }} -
                             @endif
 
                             {{ strtoupper($asset->getExtension()) }}

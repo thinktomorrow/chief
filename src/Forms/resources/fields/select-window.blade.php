@@ -4,7 +4,7 @@
 
 @if (count($selected) > 0)
     <div class="flex flex-wrap gap-0.5">
-        @if ($hasOptionGroups())
+        @if ($field->hasOptionGroups())
             @foreach ($selected as $value)
                 @foreach ($getOptions() as $group)
                     @foreach ($group['options'] as $optionValue)

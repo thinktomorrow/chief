@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
+use Thinktomorrow\Chief\Forms\Tags\HasTags;
 
-interface Field extends Localizable, Validatable
+interface Field extends HasTags, LocalizedField, Validatable
 {
     public function key(string $key): static;
 
@@ -70,15 +70,9 @@ interface Field extends Localizable, Validatable
 
     public function getDefault(?string $locale = null): null|string|int|array;
 
-    public function tagged(string|array $tags): bool;
-
-    public function untagged(): bool;
-
-    public function tag(string|array $tags): static;
-
-    public function untag(string|array $tags): static;
-
     public function toggleField(string $fieldName, string|array $values): static;
+
+    public function toggleFields(array $fieldToggles): static;
 
     public function getFieldToggles(): array;
 

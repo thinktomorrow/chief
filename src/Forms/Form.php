@@ -10,10 +10,10 @@ use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Concerns\HasPosition;
 use Thinktomorrow\Chief\Forms\Concerns\HasProtectionAgainstFill;
-use Thinktomorrow\Chief\Forms\Concerns\HasTags;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
+use Thinktomorrow\Chief\Forms\Tags\WithTags;
 use Thinktomorrow\Chief\Managers\Manager;
 
 class Form extends Component
@@ -24,7 +24,7 @@ class Form extends Component
     use HasModel;
     use HasPosition;
     use HasProtectionAgainstFill;
-    use HasTags;
+    use WithTags;
 
     protected string $action;
 

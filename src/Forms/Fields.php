@@ -6,15 +6,20 @@ namespace Thinktomorrow\Chief\Forms;
 
 use ArrayIterator;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
+use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 
 use function collect;
 
-class Fields implements \ArrayAccess, \Countable, \IteratorAggregate
+class Fields implements \ArrayAccess, \Countable, \IteratorAggregate, HasTaggedComponents
 {
+    use WithTaggedComponents;
+
     private Collection $items;
 
     final private function __construct(array $items = [])
@@ -187,30 +192,30 @@ class Fields implements \ArrayAccess, \Countable, \IteratorAggregate
         });
     }
 
-    public function tagged($tag): self
-    {
-        if (is_string($tag) && $tag === 'untagged') {
-            return $this->untagged();
-        }
-
-        return $this->filterBy(function (Field $field) use ($tag) {
-            return $field->tagged($tag);
-        });
-    }
-
-    public function notTagged($tag): self
-    {
-        return $this->filterBy(function (Field $field) use ($tag) {
-            return ! $field->tagged($tag);
-        });
-    }
-
-    public function untagged(): self
-    {
-        return $this->filterBy(function (Field $field) {
-            return $field->untagged();
-        });
-    }
+    //    public function tagged($tag): self
+    //    {
+    //        if (is_string($tag) && $tag === 'untagged') {
+    //            return $this->untagged();
+    //        }
+    //
+    //        return $this->filterBy(function (Field $field) use ($tag) {
+    //            return $field->isTagged($tag);
+    //        });
+    //    }
+    //
+    //    public function notTagged($tag): self
+    //    {
+    //        return $this->filterBy(function (Field $field) use ($tag) {
+    //            return ! $field->isTagged($tag);
+    //        });
+    //    }
+    //
+    //    public function untagged(): self
+    //    {
+    //        return $this->filterBy(function (Field $field) {
+    //            return $field->isUntagged();
+    //        });
+    //    }
 
     public function remove(array|string|callable $keys): self
     {
@@ -242,7 +247,9 @@ class Fields implements \ArrayAccess, \Countable, \IteratorAggregate
                 continue;
             }
 
-            $fields = array_merge($fields, static::extractRecursive($component->getComponents(), $stopRecursiveCallback));
+            if ($component instanceof HasComponents) {
+                $fields = array_merge($fields, static::extractRecursive($component->getComponents(), $stopRecursiveCallback));
+            }
         }
 
         return $fields;
@@ -258,5 +265,17 @@ class Fields implements \ArrayAccess, \Countable, \IteratorAggregate
         array_map(function (Field $field) {
             return $field;
         }, $fields);
+    }
+
+    public function getComponents(): array
+    {
+        return $this->items->all();
+    }
+
+    public function components(array $components): static
+    {
+        $this->items = collect($components);
+
+        return $this;
     }
 }

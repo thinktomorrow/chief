@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
 <x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
     <x-chief::form.label required>Link</x-chief::form.label>
 
@@ -46,10 +47,10 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if (count(config('chief.locales')) > 1)
+                @if(count(ChiefLocales::locales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach (config('chief.locales') as $locale)
-                            <x-chief::tabs.tab tab-id="{{ $locale }}">
+                        @foreach(ChiefLocales::locales() as $locale)
+                            <x-chief::tabs.tab tab-id='{{ $locale }}'>
                                 <x-chief::input.group :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
                                         id="trans-{{ $locale }}-url"
@@ -62,7 +63,7 @@
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach (config('chief.locales') as $locale)
+                    @foreach(ChiefLocales::locales() as $locale)
                         <x-chief::input.group :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
                                 id="trans-{{ $locale }}-url"

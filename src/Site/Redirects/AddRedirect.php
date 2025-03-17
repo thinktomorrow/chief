@@ -16,6 +16,9 @@ final class AddRedirect
      */
     public function handle(string $locale, string $redirectUrl, string $targetUrl): void
     {
+        // TODO: strip out host
+        // TODO: optionally strip out locale in slug /fr/, /en/,... for both redirect or target url (because we just want to paste full urls)
+
         $targetRecord = UrlRecord::findBySlug($targetUrl, $locale);
 
         $parsedUrl = Url::fromString($redirectUrl);

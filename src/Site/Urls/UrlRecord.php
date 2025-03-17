@@ -16,12 +16,11 @@ class UrlRecord extends Model
     public $guarded = [];
 
     /**
-     * Find matching url record for passed slug and locale. The locale parameter will try
-     * to match specific given locales first and records without locale as fallback.
+     * Find matching url record for passed slug and site.
      *
      * @throws UrlRecordNotFound
      */
-    public static function findBySlug(string $slug, string $locale): UrlRecord
+    public static function findBySlug(string $slug, string $siteId): UrlRecord
     {
         // Clear the input from any trailing slashes.
         if ($slug != '/') {
@@ -29,12 +28,12 @@ class UrlRecord extends Model
         }
 
         $record = static::where('slug', $slug)
-            ->where('locale', $locale)
+            ->where('site', $siteId)
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
         if (! $record) {
-            throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for locale ['.$locale.'].');
+            throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for site ['.$siteId.'].');
         }
 
         return $record;
@@ -46,30 +45,29 @@ class UrlRecord extends Model
     }
 
     /**
-     * Find matching url record for passed slug and locale. The locale parameter will try
-     * to match specific given locales first and records without locale as fallback.
+     * Find matching url record for passed slug and site.
      *
      * @throws UrlRecordNotFound
      */
-    public static function findByModel(Model $model, string $locale): UrlRecord
+    public static function findByModel(Model $model, string $siteId): UrlRecord
     {
         $record = static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
-            ->where('locale', $locale)
+            ->where('site', $siteId)
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
         if (! $record) {
-            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for locale ['.$locale.'].');
+            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for site ['.$siteId.'].');
         }
 
         return $record;
     }
 
-    public static function findSlugByModel(Model $model, ?string $locale = null): ?string
+    public static function findSlugByModel(Model $model, string $siteId): ?string
     {
         try {
-            $currentSlug = static::findByModel($model, $locale ?? app()->getLocale())->slug;
+            $currentSlug = static::findByModel($model, $siteId)->slug;
         } catch (UrlRecordNotFound $e) {
             $currentSlug = '';
         }
@@ -91,11 +89,11 @@ class UrlRecord extends Model
             ->exists();
     }
 
-    public static function findRecentRedirect(Model $model, string $locale): ?self
+    public static function findRecentRedirect(Model $model, string $siteId): ?self
     {
         return static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
-            ->where('locale', $locale)
+            ->where('site', $siteId)
             ->where('redirect_id', '<>', null)
             ->orderBy('updated_at', 'DESC')
             ->first();
@@ -104,7 +102,7 @@ class UrlRecord extends Model
     public function replaceAndRedirect(string $slug): UrlRecord
     {
         $newRecord = static::firstOrCreate([
-            'locale' => $this->locale,
+            'site' => $this->site,
             'model_type' => $this->model_type,
             'model_id' => $this->model_id,
             'slug' => $slug,
@@ -163,17 +161,17 @@ class UrlRecord extends Model
         return $this->slug === '/';
     }
 
-    public static function existsIgnoringRedirects(?string $slug, ?string $locale = null, ?Model $ignoredModel = null): bool
+    public static function existsIgnoringRedirects(?string $slug, ?string $siteId = null, ?Model $ignoredModel = null): bool
     {
-        return static::exists($slug, $locale, $ignoredModel, false);
+        return static::exists($slug, $siteId, $ignoredModel, false);
     }
 
-    public static function exists(?string $slug, ?string $locale = null, ?Model $ignoredModel = null, bool $includeRedirects = true): bool
+    public static function exists(?string $slug, ?string $siteId = null, ?Model $ignoredModel = null, bool $includeRedirects = true): bool
     {
         $builder = static::where('slug', $slug);
 
-        if ($locale) {
-            $builder->where('locale', $locale);
+        if ($siteId) {
+            $builder->where('site', $siteId);
         }
 
         if (! $includeRedirects) {
@@ -192,9 +190,9 @@ class UrlRecord extends Model
         return $builder->count() > 0;
     }
 
-    public static function allOnlineModels(string $locale): Collection
+    public static function allOnlineModels(string $siteId): Collection
     {
-        $records = static::where('locale', $locale)
+        $records = static::where('site', $siteId)
             ->where('redirect_id', '=', null)
             ->orderBy('updated_at', 'DESC')
             ->get();

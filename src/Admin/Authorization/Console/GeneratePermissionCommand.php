@@ -53,7 +53,9 @@ class GeneratePermissionCommand extends Command
 
         foreach ($roleNames as $roleName) {
             if ($role = Role::where('name', trim($roleName))->first()) {
-                $role->syncPermissions($permissions);
+                foreach ($permissions as $permission) {
+                    $role->givePermissionTo($permission);
+                }
                 $this->info('Role '.$roleName.' assigned the given permissions.');
             } else {
                 $this->warn('Role not found by name '.$roleName.'!');

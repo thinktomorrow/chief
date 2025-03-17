@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="vendor/autoload.php"
-         colors="true" processIsolation="false" stopOnFailure="false"
+         colors="true" processIsolation="false" stopOnError="true" stopOnFailure="true"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd" cacheDirectory=".phpunit.cache"
          backupStaticProperties="false">
     <testsuites>
@@ -17,18 +17,13 @@
             <directory suffix="Test.php">./src/Assets/Tests</directory>
         </testsuite>
         <testsuite name="fragments">
-            <directory suffix="Test.php">./src/Fragments</directory>
+            <directory suffix="Test.php">./src/Fragments/Tests</directory>
         </testsuite>
-        <testsuite name="resources">
-            <directory suffix="Test.php">./src/ManagedModels</directory>
-            <directory suffix="Test.php">./src/Managers</directory>
-            <directory suffix="Test.php">./src/Resource</directory>
+        <testsuite name="table">
+            <directory suffix="Test.php">./src/Table/Tests</directory>
         </testsuite>
-        <testsuite name="admin">
-            <directory suffix="Test.php">./src/Admin</directory>
-            <directory suffix="Test.php">./src/Site</directory>
-            <directory suffix="Test.php">./src/Shared</directory>
-            <directory suffix="Test.php">./src/Table</directory>
+        <testsuite name="sites">
+            <directory suffix="Test.php">./src/Sites/Tests</directory>
         </testsuite>
         <testsuite name="plugins">
             <directory suffix="Test.php">./src/Plugins</directory>

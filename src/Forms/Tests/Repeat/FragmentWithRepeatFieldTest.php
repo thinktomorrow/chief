@@ -36,9 +36,9 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
     public function it_can_retrieve_a_new_repeat_section_for_existing_fragment()
     {
         $owner = $this->setupAndCreateArticle();
-        $stub = $this->createAsFragment(new FragmentStub, $owner);
+        $stub = $this->createAndAttachFragment(new FragmentStub, $owner);
 
-        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->fragmentModel()->id).'?index=99');
+        $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->getFragmentModel()->id).'?index=99');
         $response->assertStatus(200);
 
         $responseData = $response->getOriginalContent()['data'];

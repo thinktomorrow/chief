@@ -8,6 +8,8 @@ interface FragmentResource extends Resource
 {
     public function adminView(): View;
 
+    public function allowedFragments(): array;
+
     /**
      * The svg representation of this fragment. This is
      * used in the fragment selection screens.

@@ -12,7 +12,7 @@ interface Visitable
     /**
      * Full url to be used in frontend navigation
      */
-    public function url(?string $locale = null): string;
+    public function url(?string $site = null): string;
 
     /**
      * Check whether this model can be viewed
@@ -24,18 +24,20 @@ interface Visitable
      * The base category uri segment for this type of model.
      * e.g. /news/, /events/.
      */
-    public function baseUrlSegment(?string $locale = null): string;
+    public function baseUrlSegment(?string $site = null): string;
 
     /**
      * Create the full url for this given resource
      *
      * @param  array|string|null  $parameters
      */
-    public function resolveUrl(?string $locale = null, $parameters = null): string;
+    public function resolveUrl(?string $site = null, $parameters = null): string;
 
     public function response(): Response;
 
+    /** All current urls, excluding redirects */
     public function urls(): HasMany;
 
+    /** All urls, including redirects */
     public function allUrls(): HasMany;
 }

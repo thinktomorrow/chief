@@ -12,8 +12,9 @@ use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssociatedAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -46,19 +47,21 @@ class FileApplication
         $model = ModelReference::fromString($modelReference)->instance();
 
         if ($model instanceof FragmentModel) {
-            $model = $this->fragmentFactory($model);
+            $fragment = $this->fragmentFactory($model);
+            $field = $fragment->field($model, $fieldKey);
+        } else {
+            $resource = $this->registry->findResourceByModel($model::class);
+            $field = $resource->field($model, $fieldKey);
         }
 
-        $resource = $this->registry->findResourceByModel($model::class);
-
         // Split model specific values and generic ones
-        $fieldKeys = array_map(fn ($field) => $field->getKey(), $resource->field($model, $fieldKey)->getComponents());
+        $fieldKeys = array_map(fn ($_field) => $_field->getKey(), $field->getComponents());
         $modelValues = Arr::only($values, $fieldKeys);
         $genericValues = Arr::except($values, $fieldKeys);
 
         if (count($modelValues) > 0) {
             $this->updateAssociatedAssetData->handle(
-                $model instanceof Fragmentable ? $model->fragmentModel() : $model,
+                $model,
                 $assetId,
                 $fieldKey,
                 $locale,
@@ -69,13 +72,6 @@ class FileApplication
         if (count($genericValues) > 0) {
             $this->updateAssetData($assetId, $genericValues);
         }
-    }
-
-    private function fragmentFactory(FragmentModel $fragmentModel): Fragmentable
-    {
-        return ModelReference::fromString($fragmentModel->model_reference)
-            ->instance()
-            ->setFragmentModel($fragmentModel);
     }
 
     /**
@@ -90,7 +86,7 @@ class FileApplication
     {
         $model = Asset::find($assetId)->getFirstMedia();
 
-        // Strip extension should the user have entered extension
+        // Strip extension should the user has entered extension
         $basename = basename($basename, '.'.$model->extension);
 
         $model->file_name = $basename.'.'.$model->extension;
@@ -149,5 +145,10 @@ class FileApplication
         app(AddAsset::class)->handle($model, $newAsset, $fieldKey, $locale, $existingAsset->pivot->order, $existingAsset->pivot->data ?? []);
 
         return $model->fresh()->assets($fieldKey)->firstWhere(fn ($asset) => $asset->id == $newAsset->id && $asset->pivot->locale == $locale);
+    }
+
+    private function fragmentFactory(FragmentModel $fragmentModel): Fragment
+    {
+        return app(FragmentFactory::class)->create($fragmentModel);
     }
 }

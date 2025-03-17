@@ -44,8 +44,8 @@ jobs:
       - name: Execute fragments tests
         run: vendor/bin/phpunit --testsuite fragments
 
-      - name: Execute resources tests
-        run: vendor/bin/phpunit --testsuite resources
+      - name: Execute table tests
+        run: vendor/bin/phpunit --testsuite table
 
-      - name: Execute admin tests
-        run: vendor/bin/phpunit --testsuite admin
+      - name: Execute sites tests
+        run: vendor/bin/phpunit --testsuite sites

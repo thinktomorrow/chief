@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait HasValue
@@ -89,6 +88,7 @@ trait HasValue
     {
         return function ($model, $locale = null) {
             if ($locale && $this->hasLocales()) {
+
                 if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
                     return $model->dynamic($this->getColumnName(), $locale, $this->getDefault($locale));
                 }

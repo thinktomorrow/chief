@@ -27,11 +27,16 @@ final class Registry
 
     public function resource(string $key): PageResource|Resource
     {
-        if (! isset($this->resources[$key])) {
+        if (! $this->exists($key)) {
             throw new MissingResourceRegistration('No resource class registered for key ['.$key.']');
         }
 
         return $this->resources[$key];
+    }
+
+    public function exists(string $key): bool
+    {
+        return isset($this->resources[$key]);
     }
 
     public function manager(string $key): Manager
@@ -107,7 +112,7 @@ final class Registry
 
     public function registerResource(string $key, Resource $resource, Manager $manager): self
     {
-        if (isset($this->resources[$key])) {
+        if ($this->exists($key)) {
             throw new ResourceAlreadyRegistered('Cannot register resource. The resource key ['.$key.'] is already registered.');
         }
 

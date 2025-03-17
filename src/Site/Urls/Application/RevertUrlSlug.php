@@ -12,9 +12,9 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
  */
 final class RevertUrlSlug
 {
-    public function handle(Visitable $model, string $locale): void
+    public function handle(Visitable $model, string $siteId): void
     {
-        if ($recentRedirect = UrlRecord::findRecentRedirect($model, $locale)) {
+        if ($recentRedirect = UrlRecord::findRecentRedirect($model, $siteId)) {
             $recentRedirect->revert();
         }
     }

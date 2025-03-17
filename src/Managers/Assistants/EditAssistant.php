@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
@@ -65,6 +66,21 @@ trait EditAssistant
         View::share('model', $model);
         View::share('resource', $this->resource);
         View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
+
+        // Find or create the context... TODO: this should be something to do elsewhere?
+
+        // WIP
+        $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
+        View::share('contexts', $contexts);
+        View::share('context', $contexts->first());
+        View::share('contextsForSwitch', $contexts);
+
+        //        $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
+        //            'id' => $context->id,
+        //            'locale' => $context->locale,
+        //            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
+        //        ];
+        //        });
 
         $stateConfigs = [];
 
