@@ -82,6 +82,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'private string $viewPath' => 'protected string $viewPath',
             'Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey' => 'Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName',
             'LocalizedFormKey' => 'LocalizedFieldName',
+            'Thinktomorrow\Chief\Forms\Fields\Repeat' => 'Thinktomorrow\Chief\Forms\Fields\Repeat\Repeat',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,

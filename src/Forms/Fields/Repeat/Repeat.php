@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields;
+namespace Thinktomorrow\Chief\Forms\Fields\Repeat;
 
 use DeepCopy\DeepCopy;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Component;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\FieldName;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -25,6 +28,8 @@ class Repeat extends Component implements Field, HasComponents, HasTaggedCompone
     protected string $sectionView = 'chief-form::fields.repeat.repeat-section';
 
     protected string $windowView = 'chief-form::fields.repeat.repeat-window';
+
+    // filters, sorters, actions, rowActions, ...
 
     public function getRepeatedComponents(?string $locale = null): array
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Table\Table\Concerns;
+namespace Thinktomorrow\Chief\Forms\Fields\Repeat\Concerns;
 
-use Thinktomorrow\Chief\Table\Livewire\TableComponent;
+use Thinktomorrow\Chief\Forms\Fields\Repeat\Livewire\RepeatComponent;
 
 trait HasLivewireComponent
 {
     // Default Livewire table component
-    private string $livewireComponentClass = TableComponent::class;
+    private string $livewireComponentClass = RepeatComponent::class;
 
     public function usesLivewireComponent(string $livewireComponentClass): static
     {
