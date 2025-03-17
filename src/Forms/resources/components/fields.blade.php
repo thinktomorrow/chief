@@ -6,11 +6,11 @@
     }
 
     if(isset($tagged)) {
-        $fields = $fields->tagged(explode(',', $tagged));
+        $fields = $fields->filterByTagged(explode(',', $tagged));
     }
 
     if(isset($notTagged)) {
-        $fields = $fields->notTagged(explode(',', $notTagged));
+        $fields = $fields->filterByNotTagged(explode(',', $notTagged));
     }
 @endphp
 

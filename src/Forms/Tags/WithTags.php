@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Concerns;
+namespace Thinktomorrow\Chief\Forms\Tags;
 
-trait HasTags
+trait WithTags
 {
     protected array $tags = [];
 
@@ -13,14 +13,14 @@ trait HasTags
         return implode(',', $this->tags);
     }
 
-    public function tagged(string|array $tags): bool
+    public function isTagged(string|array $tags): bool
     {
         $tags = (array) $tags;
 
         return count(array_intersect($this->tags, $tags)) > 0;
     }
 
-    public function untagged(): bool
+    public function isUntagged(): bool
     {
         return count($this->tags) < 1;
     }

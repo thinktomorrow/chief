@@ -80,7 +80,7 @@ trait CreateAssistant
         $fields = Forms::make($this->resource->fields($model))
             ->fillModel($model)
             ->getFields()
-            ->notTagged(['edit', 'not-on-create']);
+            ->filterByNotTagged(['edit', 'not-on-create']);
 
         $this->fieldValidator()->handle($fields, $request->all());
 

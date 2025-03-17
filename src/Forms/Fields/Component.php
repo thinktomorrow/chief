@@ -10,11 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
-use Thinktomorrow\Chief\Forms\Concerns\HasTags;
 use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAutofocus;
@@ -34,6 +32,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
 use Thinktomorrow\Chief\Forms\Livewire\PacksComponentsForLivewire;
+use Thinktomorrow\Chief\Forms\Tags\WithTags;
 use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
@@ -41,7 +40,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasAutofocus;
     use HasColumnName;
     use HasComponentRendering;
-    use HasComponents;
     use HasCustomAttributes;
     use HasDefault;
     use HasDescription;
@@ -60,13 +58,13 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasName;
     use HasPlaceholder;
     use HasSave;
-    use HasTags;
     use HasTitle;
     use HasValidation;
     use HasValue;
     use HasView;
     use LocalizedFieldDefaults;
     use PacksComponentsForLivewire;
+    use WithTags;
 
     /**
      * Every field is rendered in a formgroup container view,
@@ -155,7 +153,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             'key' => $this->key,
             'methods' => [
                 ...(isset($this->id) ? ['id' => $this->id] : []),
-                ...['components' => $components],
+                ...(isset($this->components) ? ['components' => $components] : []),
                 ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
                 ...(isset($this->name) ? ['name' => $this->name] : []),
                 ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),

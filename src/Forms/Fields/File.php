@@ -13,6 +13,8 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
 use Thinktomorrow\Chief\Assets\App\UpdateFileField;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\AllowsExternalFiles;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAssetType;
@@ -29,7 +31,7 @@ use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
  * Default field settings are overriden mostly because values of file inputs
  * are always localized and always considered an array of items.
  */
-class File extends Component implements Field
+class File extends Component implements Field, HasComponents
 {
     use AllowsExternalFiles;
     use HasAcceptedMimeTypes;
@@ -39,6 +41,7 @@ class File extends Component implements Field
     use HasMultiple;
     use HasStorageDisk;
     use HasUploadButtonLabel;
+    use WithComponents;
 
     protected string $view = 'chief-form::fields.file';
 

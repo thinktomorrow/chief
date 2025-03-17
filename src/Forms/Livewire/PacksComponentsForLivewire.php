@@ -2,10 +2,16 @@
 
 namespace Thinktomorrow\Chief\Forms\Livewire;
 
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+
 trait PacksComponentsForLivewire
 {
     private function packComponentsToLivewire(): array
     {
+        if (! $this instanceof HasComponents) {
+            return [];
+        }
+
         $converted = [];
 
         foreach ($this->getComponents() as $component) {

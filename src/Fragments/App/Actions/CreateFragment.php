@@ -34,14 +34,14 @@ final class CreateFragment
         $fields = Forms::make($fragment->fields($fragment))
             ->fillModel($fragment->getFragmentModel())
             ->getFields()
-            ->notTagged(['edit', 'not-on-create']);
+            ->filterByNotTagged(['edit', 'not-on-create']);
 
         $this->validator->handle($fields, $input);
 
         // Save Fragment values
         app($fragment->getSaveFieldsClass())->save(
             $fragmentModel,
-            $fields,  // Fields::make($fragment->fields($fragment))->notTagged('edit'),
+            $fields,  // Fields::make($fragment->fields($fragment))->filterByNotTagged('edit'),
             $input,
             $files
         );

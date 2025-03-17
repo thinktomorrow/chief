@@ -7,8 +7,9 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 use Closure;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
+use Thinktomorrow\Chief\Forms\Tags\HasTags;
 
-interface Field extends LocalizedField, Validatable
+interface Field extends HasTags, LocalizedField, Validatable
 {
     public function key(string $key): static;
 
@@ -68,14 +69,6 @@ interface Field extends LocalizedField, Validatable
     public function default(null|string|int|array|Closure $default): static;
 
     public function getDefault(?string $locale = null): null|string|int|array;
-
-    public function tagged(string|array $tags): bool;
-
-    public function untagged(): bool;
-
-    public function tag(string|array $tags): static;
-
-    public function untag(string|array $tags): static;
 
     public function toggleField(string $fieldName, string|array $values): static;
 

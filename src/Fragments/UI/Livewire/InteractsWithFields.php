@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 
 use Illuminate\Support\Arr;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 
 trait InteractsWithFields
@@ -10,7 +11,7 @@ trait InteractsWithFields
     private function injectFormValues(iterable $components): void
     {
         foreach ($components as $component) {
-            if (! $component instanceof Field) {
+            if (! $component instanceof Field && $component instanceof HasComponents) {
                 $this->injectFormValues($component->getComponents());
 
                 continue;
@@ -24,7 +25,9 @@ trait InteractsWithFields
                 $this->injectFormValue($component->getName(), $component->getValue());
             }
 
-            $this->injectFormValues($component->getComponents());
+            if ($component instanceof HasComponents) {
+                $this->injectFormValues($component->getComponents());
+            }
         }
     }
 

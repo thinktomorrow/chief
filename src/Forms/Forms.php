@@ -6,14 +6,17 @@ namespace Thinktomorrow\Chief\Forms;
 
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
+use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
+use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Managers\Manager;
 
-class Forms
+class Forms implements HasTaggedComponents
 {
-    use HasComponents;
     use HasFields;
+    use WithComponents;
+    use WithTaggedComponents;
 
     final private function __construct(array $components)
     {

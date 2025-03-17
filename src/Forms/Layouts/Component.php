@@ -14,18 +14,19 @@ use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasId;
 use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
+use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Livewire\PacksComponentsForLivewire;
 
-abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
+abstract class Component extends \Illuminate\View\Component implements HasComponents, Htmlable, Wireable
 {
     use HasComponentRendering;
-    use HasComponents;
     use HasCustomAttributes;
     use HasDescription;
     use HasId;
     use HasTitle;
     use HasView;
     use PacksComponentsForLivewire;
+    use WithComponents;
 
     public function __construct(?string $id = null)
     {
@@ -71,7 +72,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             'class' => static::class,
             'methods' => [
                 ...(isset($this->id) ? ['id' => $this->id] : []),
-                ...['components' => $components],
+                ...(isset($this->components) ? ['components' => $components] : []),
                 ...(isset($this->customAttributes) ? ['customAttributes' => $this->customAttributes] : []),
                 ...(isset($this->title) ? ['title' => $this->title] : []),
                 ...(isset($this->description) ? ['description' => $this->description] : []),

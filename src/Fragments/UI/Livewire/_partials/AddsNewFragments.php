@@ -37,7 +37,7 @@ trait AddsNewFragments
         $fragment = $this->getFragment();
 
         $forms = Forms::make($fragment->fields($fragment))
-            // ->notTagged(['edit', 'not-on-create']) // TODO: make consistent tags...
+            ->filterByNotTagged(['edit', 'not-on-create']) // TODO: make consistent tags...
             ->get();
 
         return collect($forms)->map(fn ($form) => $form->getComponents())->flatten();

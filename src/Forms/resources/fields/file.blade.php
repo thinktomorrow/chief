@@ -4,12 +4,16 @@
     use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 
     $locale ??= ChiefSites::primaryLocale();
+
+    // Check if component is used inside a parent Livewire component (such as AddFragment)
+    $insideComponent = (isset($this) && method_exists($this, 'getId'));
+
 @endphp
 
 <div>
     <livewire:chief-wire::file-field-upload
         wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
-        parent-component-id="{{ $this->getId() ?? null }}"
+        parent-component-id="{{ $insideComponent ? $this->getId() : null }}"
         :model-reference="$getModel()?->modelReference()->get()"
         :field-key="$field->getKey()"
         :locale="$locale"

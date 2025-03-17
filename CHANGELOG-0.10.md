@@ -23,6 +23,9 @@ first param fragment is not needed.
   thrown.
 - vine dep upgrades...
 
+- Fragment field tags are now in use. In prior releases, the fields tags 'not-on-create' were not being used by
+  fragments and fields were always shown and saved.
+
 ### Code architecture
 
 All the fragment logic has been moved to the `Thinktomorrow\Chief\Fragments` namespace and cleanup up.
