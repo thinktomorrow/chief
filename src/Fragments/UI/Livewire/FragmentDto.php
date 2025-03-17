@@ -14,13 +14,14 @@ class FragmentDto implements Wireable
     // Memoized fragment model
     private ?FragmentModel $fragmentModel = null;
 
-    public function __construct(
+    private function __construct(
         public string $fragmentId,
         public string $contextId,
         public ?string $parentId,
         public int $order,
         public string $label,
         public string $content,
+        public bool $allowsFragments, // Has child fragments
         public bool $isOnline,
         public bool $isShared,
         public string $bookmark,
@@ -41,6 +42,7 @@ class FragmentDto implements Wireable
             $fragment->pivot->order,
             $fragment->getLabel(),
             $fragment->renderInAdmin()->render(),
+            count($fragment->allowedFragments()) > 0,
             $fragment->isOnline(),
             $fragment->isShared(),
             $fragment->getBookmark(),
@@ -53,17 +55,9 @@ class FragmentDto implements Wireable
 
     private static function composeFields(Fragment $fragment): Collection
     {
-        $fields = collect(Forms::make($fragment->fields($fragment))
+        return collect(Forms::make($fragment->fields($fragment))
             ->get())->map(fn ($form) => $form->getComponents())
             ->flatten();
-
-        return $fields;
-        //
-        //        dd($fields);
-        //
-        //        return Forms::make($fragment->fields($fragment))
-        //            ->getComponents()
-        //            ->all();
     }
 
     private static function composeSharedFragmentDtos(string $fragmentId)
@@ -81,6 +75,7 @@ class FragmentDto implements Wireable
             'order' => $this->order,
             'label' => $this->label,
             'content' => $this->content,
+            'allowsFragments' => $this->allowsFragments,
             'isOnline' => $this->isOnline,
             'isShared' => $this->isShared,
             'bookmark' => $this->bookmark,
@@ -100,6 +95,7 @@ class FragmentDto implements Wireable
             $value['order'],
             $value['label'],
             $value['content'],
+            $value['allowsFragments'],
             $value['isOnline'],
             $value['isShared'],
             $value['bookmark'],
@@ -117,11 +113,6 @@ class FragmentDto implements Wireable
         }
 
         return $this->fragmentModel = FragmentModel::find($this->fragmentId);
-    }
-
-    public function isDeleted(): bool
-    {
-        return ! FragmentModel::where('id', $this->fragmentId)->exists();
     }
 
     public function getId(): string

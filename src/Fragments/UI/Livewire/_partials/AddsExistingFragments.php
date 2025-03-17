@@ -18,6 +18,11 @@ trait AddsExistingFragments
         $builder = app(GetShareableFragments::class)
             ->excludeAlreadySelected();
 
+        // Default is always filtered by allowed fragments
+        if (! isset($this->filters['types'])) {
+            $builder->filterByTypes($this->getAllowedFragments()->map(fn ($fragment) => $fragment::class)->toArray());
+        }
+
         if (count($this->filters) > 0) {
             foreach ($this->filters as $filter => $value) {
                 $builder->{'filterBy'.ucfirst($filter)}($value);
@@ -60,7 +65,7 @@ trait AddsExistingFragments
 
     public function getTypeFilterValues(): array
     {
-        $values = $this->getAllowedFragments()->flatten()->mapWithKeys(function ($allowedFragment) {
+        $values = $this->getAllowedFragments()->mapWithKeys(function ($allowedFragment) {
             return [$allowedFragment::class => $allowedFragment->getLabel()];
         })->toArray();
 

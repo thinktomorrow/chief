@@ -42,7 +42,7 @@
                 </span>
             </div>
             <span
-                wire:click="editFragment('{{ $fragment->fragmentId }}')"
+                x-on:click="$wire.editFragment('{{ $fragment->fragmentId }}')"
                 title="Fragment aanpassen"
                 class="shrink-0 cursor-pointer"
             >

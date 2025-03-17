@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('fragment-dialog-opened', () => {
     // Get DOM element
 
-    console.log('sisisi in de main!!!');
+    console.log('fragment-dialog-opened');
 
     // Next tick my friend... next tick
     setTimeout(() => {

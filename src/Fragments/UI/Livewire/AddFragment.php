@@ -65,6 +65,13 @@ class AddFragment extends Component
         return view('chief-fragments::livewire.add-fragment');
     }
 
+    public function getAllowedFragmentsGrouped(): Collection
+    {
+        return $this->getAllowedFragments()
+            ->groupBy(fn (Fragment $fragment) => $fragment->getCategory())
+            ->sortDesc();
+    }
+
     public function getAllowedFragments(): Collection
     {
         if ($this->parentId) {
@@ -76,12 +83,10 @@ class AddFragment extends Component
         }
 
         return collect($allowedFragments)
-            ->map(fn ($fragmentClass) => app($fragmentClass))
-            ->groupBy(fn (Fragment $fragment) => $fragment->getCategory())
-            ->sortDesc();
+            ->map(fn ($fragmentClass) => app($fragmentClass));
     }
 
-    public function addFragment(string $fragmentId)
+    public function attachFragment(string $fragmentId)
     {
         $order = $this->insertAfterOrder + 1;
 
@@ -100,9 +105,9 @@ class AddFragment extends Component
         ];
 
         if ($this->parentId) {
-            $this->dispatch('fragment-added', ...$eventPayload)->to('chief-fragments::edit-fragment');
+            $this->dispatch('fragment-added-'.$this->parentComponentId, ...$eventPayload)->to('chief-fragments::edit-fragment');
         } else {
-            $this->dispatch('root-fragment-added', ...$eventPayload)->to('chief-fragments::context');
+            $this->dispatch('fragment-added-'.$this->parentComponentId, ...$eventPayload)->to('chief-fragments::context');
         }
 
         $this->close();

@@ -1,4 +1,4 @@
-@forelse($this->getAllowedFragments() as $category => $fragmentsByCategory)
+@forelse($this->getAllowedFragmentsGrouped() as $category => $fragmentsByCategory)
     <div @class(['space-y-3', 'pt-6 border-t border-grey-100' => !$loop->first, 'pb-6' => !$loop->last])>
         @if($category)
             <div>

@@ -44,6 +44,13 @@ final class FragmentRepository
         return $collection;
     }
 
+    public function findInFragmentCollection(string $contextId, string $fragmentId): Fragment
+    {
+        $collection = $this->getFragmentCollection($contextId);
+
+        return $collection->find(fn (Fragment $fragment) => $fragment->getFragmentId() == $fragmentId);
+    }
+
     public function getByContext(string $contextId): Collection
     {
         $fragmentModels = ContextModel::findOrFail($contextId)

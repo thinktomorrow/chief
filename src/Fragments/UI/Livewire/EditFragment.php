@@ -10,46 +10,48 @@ use Thinktomorrow\Chief\Forms\Forms;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
-use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragment;
+use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 
 class EditFragment extends Component
 {
     use HasForm;
     use InteractsWithFields;
     use ShowsAsDialog;
+    use WithFragments;
 
     // parent livewire component id
     public string $parentComponentId;
 
-    public string $contextId;
+    public ContextDto $context;
 
     public ?FragmentDto $fragment = null;
 
-    public function mount(string $contextId, ?string $parentComponentId = null)
+    public function mount(ContextDto $context, string $parentComponentId)
     {
-        $this->contextId = $contextId;
+        $this->context = $context;
         $this->parentComponentId = $parentComponentId;
     }
 
     public function getListeners()
     {
-        return [
-            'open-'.$this->parentComponentId => 'open',
-            'files-updated' => 'onfilesUpdated',
-            'fragment-added' => 'onFragmentAdded',
-            'request-refresh' => '$refresh',
-        ];
+        return array_merge(
+            $this->getListenersWithFragments(),
+            [
+                'open-'.$this->parentComponentId => 'open',
+                'request-refresh' => '$refresh',
+            ]
+        );
     }
 
     public function open($values = [])
     {
-        $this->fragment = FragmentDto::fromLivewire($values['fragment']);
+        $this->fragment = $this->composeFragmentDto($values['fragmentId']);
 
-        if ($this->fragment->isDeleted()) {
-            throw new \InvalidArgumentException('Fragment ['.$this->fragment->fragmentId.'] has been deleted');
-        }
+        // Load any child fragments
+        $this->refreshFragments();
 
         $this->isOpen = true;
 
@@ -65,6 +67,14 @@ class EditFragment extends Component
             'contextId' => $this->fragment->contextId,
             'fragmentId' => $this->fragment->fragmentId,
         ]);
+    }
+
+    private function composeFragmentDto(string $fragmentId): FragmentDto
+    {
+        return FragmentDto::fromFragment(
+            app(FragmentRepository::class)->findInContext($fragmentId, $this->context->contextId),
+            app(ComposeLivewireDto::class)->getContext($this->context->contextId)
+        );
     }
 
     public function close()
@@ -84,26 +94,9 @@ class EditFragment extends Component
         return collect($forms)->map(fn ($form) => $form->getComponents())->flatten();
     }
 
-    /** @return Collection<FragmentDto> */
-    public function getFragments(): Collection
-    {
-        $fragmentCollection = app(FragmentRepository::class)->getFragmentCollection($this->fragment->contextId, $this->fragment->fragmentId);
-
-        return collect($fragmentCollection->all())
-            ->map(fn ($fragment) => FragmentDto::fromFragment($fragment, $this->fragment->context));
-    }
-
-    public function addFragment(int $order): void
-    {
-        $this->dispatch('open-'.$this->getId(), [
-            'order' => $order,
-            'parentId' => $this->fragment->fragmentId,
-        ])->to('chief-fragments::add-fragment');
-    }
-
     public function deleteFragment(): void
     {
-        $this->dispatch('fragment-deleting', ...[
+        $this->dispatch('fragment-deleting-'.$this->parentComponentId, ...[
             'fragmentId' => $this->fragment->fragmentId,
             'contextId' => $this->fragment->contextId,
             'parentId' => $this->fragment->parentId,
@@ -118,10 +111,11 @@ class EditFragment extends Component
     {
         $isolatedFragmentId = app(IsolateFragment::class)->handle($this->fragment->contextId, $this->fragment->fragmentId);
 
-        $this->dispatch('fragment-isolated', ...[
+        $this->dispatch('fragment-isolated-'.$this->parentComponentId, ...[
             'fragmentId' => $isolatedFragmentId,
             'formerFragmentId' => $this->fragment->fragmentId,
             'contextId' => $this->fragment->contextId,
+            'parentId' => $this->fragment->parentId,
             'parentComponentId' => $this->parentComponentId,
         ]);
 
@@ -146,28 +140,12 @@ class EditFragment extends Component
         $this->dispatchUpdateEventAndClose();
     }
 
-    public function onFragmentAdded(string $fragmentId, string $contextId, ?string $parentId, int $order): void
-    {
-        if (! $parentId || $parentId !== $this->fragment->fragmentId) {
-            return;
-        }
-
-        $this->dispatch('request-refresh')->self();
-
-        $this->reorder($this->getFragmentIdsInOrder());
-    }
-
-    private function getFragmentIdsInOrder(): array
-    {
-        return $this->getFragments()
-            ->map(fn (FragmentDto $fragment) => $fragment->fragmentId)
-            ->all();
-    }
-
-    public function reorder($orderedIds)
-    {
-        app(ReorderFragments::class)->handle($this->fragment->contextId, $orderedIds, $this->fragment->fragmentId);
-    }
+    //    private function getFragmentIdsInOrder(): array
+    //    {
+    //        return $this->fragments
+    //            ->map(fn (FragmentDto $fragment) => $fragment->fragmentId)
+    //            ->all();
+    //    }
 
     public function save()
     {
@@ -184,11 +162,12 @@ class EditFragment extends Component
 
     private function dispatchUpdateEventAndClose(): void
     {
-        $this->dispatch('fragment-updated', ...[
+        $this->dispatch('fragment-updated-'.$this->parentComponentId, ...[
             'fragmentId' => $this->fragment->fragmentId,
             'contextId' => $this->fragment->contextId,
+            'parentId' => $this->fragment->parentId,
             'parentComponentId' => $this->parentComponentId,
-        ])->to('chief-fragments::context');
+        ]);
 
         $this->close();
     }

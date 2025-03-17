@@ -52,7 +52,7 @@ trait AddsNewFragments
             [],
         );
 
-        $this->addFragment($fragmentId);
+        $this->attachFragment($fragmentId);
     }
 
     /** Reference of fragment for create form */

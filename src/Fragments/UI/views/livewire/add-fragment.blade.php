@@ -15,6 +15,7 @@
         </x-slot>
 
         <div class="space-y-4">
+
             <div>
                 @if($showCreate)
                     @include('chief-fragments::livewire._partials.add-fragment-new-form')

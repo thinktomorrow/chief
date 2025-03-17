@@ -17,7 +17,7 @@
     <div wire:ignore.self
          x-sortable
          x-sortable-group="{{ 'group-' . $context->contextId }}"
-         x-on:end.stop="setTimeout(() => $wire.reorder($event.target.sortable.toArray()), 300)"
+         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
          class="divide-y divide-grey-100">
         @foreach($fragments as $i => $fragment)
             @include('chief-fragments::livewire._partials.fragment')
@@ -26,7 +26,7 @@
 
     <livewire:chief-fragments::edit-fragment
         :key="$context->contextId . '-edit-fragment'"
-        :context-id="$context->contextId"
+        :context="$context"
         :parent-component-id="$this->getId()"
     />
 

@@ -53,7 +53,7 @@ abstract class BaseFragment extends Component implements Fragment
         return array_merge([
             'attributes' => $this->attributes,
             'fragment' => $this,
-            'section' => $this->getRootNode(),
+            'rootFragment' => $this->getRootNode(),
 
             /** @deprecated use $fragment instead */
             'model' => $this,
