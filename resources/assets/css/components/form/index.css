@@ -1,4 +1,5 @@
 @import './label.css';
+@import './fieldset.css';
 
 /* Default form input field layout (text, email, password ...) */
 @import './field.css';

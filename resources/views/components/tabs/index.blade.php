@@ -52,15 +52,10 @@
             })
         },
     }"
-    {{ $attributes->class('space-y-2') }}
+    {{ $attributes }}
 >
-    <div class="inline-block rounded-[0.5rem] bg-grey-100">
-        <nav
-            x-show="showNav"
-            aria-label="Tabs"
-            role="tablist"
-            class="relative flex items-start justify-start border border-transparent"
-        >
+    <div x-show="showNav" class="mb-2 inline-block rounded-[0.5rem] bg-grey-100">
+        <nav aria-label="Tabs" role="tablist" class="relative flex items-start justify-start border border-transparent">
             <div
                 x-ref="tabMarker"
                 x-show="activeTab"

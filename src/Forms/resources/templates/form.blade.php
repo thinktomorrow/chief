@@ -22,7 +22,7 @@
             <input type="hidden" name="order" value="{{ $order ?? 0 }}" />
         @endif
 
-        <div class="relative space-y-4">
+        <div class="relative">
             @foreach ($getComponents() as $_component)
                 {{ $_component }}
             @endforeach

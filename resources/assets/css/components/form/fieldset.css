@@ -1,0 +1,3 @@
+[data-slot='fieldset'] + [data-slot='fieldset'] {
+    @apply mt-4;
+}
