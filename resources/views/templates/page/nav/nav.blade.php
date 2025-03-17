@@ -1,5 +1,5 @@
 {{-- Mobile navigation toggle --}}
-<div class="container block lg:hidden">
+<div class="container lg:hidden">
     <div class="-ml-2 flex items-center justify-start pt-6 lg:hidden">
         <div
             data-mobile-navigation-toggle
@@ -18,10 +18,7 @@
     data-mobile-navigation
     class="fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:block lg:animate-none"
 >
-    <div
-        data-collapsible-navigation
-        class="flex h-screen select-none flex-col justify-between gap-y-9 overflow-y-auto py-6 pl-4"
-    >
+    <div data-collapsible-navigation class="flex select-none flex-col justify-between gap-y-9 py-6 pl-4">
         <div class="space-y-9">
             {{-- Desktop Chief title --}}
             <div class="hidden items-center justify-start lg:flex">

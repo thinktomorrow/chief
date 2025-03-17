@@ -5,9 +5,9 @@
 ])
 
 <x-chief::page.layout>
-    <div class="flex min-h-screen items-stretch">
+    <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
         {{-- Navigation --}}
-        <div class="relative top-0 w-full shrink-0 lg:sticky lg:w-64 2xl:w-96">
+        <div class="w-full shrink-0 lg:w-64 2xl:w-96">
             @include('chief::templates.page.nav.nav')
         </div>
 
@@ -26,7 +26,7 @@
                 </div>
             @endif
 
-            <div class="flex gap-8">
+            <div class="flex gap-8 max-md:flex-col">
                 {{-- Main content --}}
                 <div class="grow">
                     {{ $slot }}
@@ -34,7 +34,7 @@
 
                 {{-- Sidebar --}}
                 @if ($sidebar)
-                    <div class="w-64 shrink-0 2xl:w-96">
+                    <div class="w-full shrink-0 md:w-64 2xl:w-96">
                         {{ $sidebar }}
                     </div>
                 @endif

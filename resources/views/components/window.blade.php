@@ -5,7 +5,7 @@
     'description' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'space-y-4']) }}>
+<div {{ $attributes->merge(['class' => 'space-y-3']) }}>
     {{-- Window header --}}
     @if ($title || $labels || $buttons || $description)
         <div class="flex items-start justify-between gap-4">
@@ -19,7 +19,7 @@
                         @endif
 
                         @if ($labels)
-                            <div class="flex min-h-6 items-center gap-1">
+                            <div class="flex items-center gap-1">
                                 {!! $labels !!}
                             </div>
                         @endif

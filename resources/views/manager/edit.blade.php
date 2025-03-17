@@ -1,10 +1,25 @@
 @php
     $sites = [
-        'thinktomorrow.be' => 'thinktomorrow.be',
-        'thinktomorrow.be/nl' => 'thinktomorrow.be/nl',
-        'thinktomorrow.be/en' => 'thinktomorrow.be/en',
-        'thinktomorrow.be/fr' => 'thinktomorrow.be/fr',
-        'thinktomorrow.be/de' => 'thinktomorrow.be/de',
+        'thinktomorrow.be' => [
+            'url' => 'thinktomorrow.be',
+            'status' => 'online',
+        ],
+        'thinktomorrow.be/nl' => [
+            'url' => 'thinktomorrow.be/nl',
+            'status' => 'online',
+        ],
+        'thinktomorrow.be/en' => [
+            'url' => 'thinktomorrow.be/en',
+            'status' => 'online',
+        ],
+        'thinktomorrow.be/fr' => [
+            'url' => 'thinktomorrow.be/fr',
+            'status' => 'offline',
+        ],
+        'thinktomorrow.be/de' => [
+            'url' => 'thinktomorrow.be/de',
+            'status' => 'offline',
+        ],
     ];
 @endphp
 
@@ -30,14 +45,30 @@
                     @foreach ($sites as $site)
                         <div class="flex items-start justify-between gap-2">
                             <div class="flex items-start gap-2">
-                                <div class="my-1.5">
-                                    <svg class="size-3 fill-green-500" viewBox="0 0 6 6" aria-hidden="true">
+                                <div class="relative my-1 flex size-4 items-center justify-center p-1">
+                                    <div
+                                        @class([
+                                            'absolute inset-0 animate-pulse rounded-full',
+                                            'bg-green-200' => $site['status'] === 'online',
+                                            'bg-grey-200' => $site['status'] === 'offline',
+                                        ])
+                                    ></div>
+
+                                    <svg
+                                        @class([
+                                            'relative size-2',
+                                            'fill-green-500' => $site['status'] === 'online',
+                                            'fill-grey-400' => $site['status'] === 'offline',
+                                        ])
+                                        viewBox="0 0 6 6"
+                                        aria-hidden="true"
+                                    >
                                         <circle cx="3" cy="3" r="3" />
                                     </svg>
                                 </div>
 
                                 <div>
-                                    <p class="text-sm leading-6 text-grey-500">{{ $site }}</p>
+                                    <p class="text-sm leading-6 text-grey-500">{{ $site['url'] }}</p>
                                     <p class="leading-6 text-grey-700">/over-ons</p>
                                 </div>
                             </div>
