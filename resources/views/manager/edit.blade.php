@@ -26,26 +26,9 @@
     <x-chief::page.grid>
         <x-chief-form::forms position="main" />
 
-        <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
-
-        @adminCan('fragments-index', $model)
-        <div x-data='{
-            contexts: @json($contextsForSwitch)
-        }'
-             {{-- refresh the fragments window when locale tabs change --}}
-             x-on:chieftab.window="(e) => {
-                if(e.detail.reference === 'modelLocalesTabs') {
-                     const matchingContext = $data.contexts.find((context) => context.locale == e.detail.id);
-
-                     if(matchingContext) {
-                        $dispatch('chief-refresh-form', {selector: '[data-fragments-window]', refreshUrl: matchingContext.refreshUrl});
-                     }
-                }
-            }"
-        >
-            {{--            <x-chief-fragments::index :context-id="$context->id" />--}}
-        </div>
-        @endAdminCan
+        @if($model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner)
+            <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
+        @endif
 
         <x-chief-form::forms position="main-bottom" />
 
