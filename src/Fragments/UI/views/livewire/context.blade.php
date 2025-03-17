@@ -1,4 +1,4 @@
-<x-chief-form::window class="card w-full">
+<x-chief::window class="card w-full">
 
     <!-- plus icon -->
     <div class="relative w-full">
@@ -35,4 +35,4 @@
         :context-id="$context->contextId"
         :parent-component-id="$this->getId()"
     />
-</x-chief-form::window>
+</x-chief::window>
