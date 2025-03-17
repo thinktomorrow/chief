@@ -24,20 +24,20 @@
     </div>
 
     <x-slot name="sidebar">
-        <div class="[&>*:not(:first-child)]:pt-6">
+        <div class="space-y-8">
             <x-chief::window title="Sites">
                 <div class="space-y-1">
                     @foreach ($sites as $site)
                         <div class="flex items-start justify-between gap-2">
                             <div class="flex items-start gap-2">
-                                <div class="my-1">
+                                <div class="my-1.5">
                                     <svg class="size-3 fill-green-500" viewBox="0 0 6 6" aria-hidden="true">
                                         <circle cx="3" cy="3" r="3" />
                                     </svg>
                                 </div>
 
                                 <div>
-                                    <p class="text-sm leading-5 text-grey-500">{{ $site }}</p>
+                                    <p class="text-sm leading-6 text-grey-500">{{ $site }}</p>
                                     <p class="leading-6 text-grey-700">/over-ons</p>
                                 </div>
                             </div>

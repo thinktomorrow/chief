@@ -1,5 +1,5 @@
 <div data-fragment data-sortable-id="{{ $model->fragmentModel()->id }}" class="w-full">
-    <div class="space-y-4 py-4">
+    <div class="space-y-2 py-4">
         <div class="flex items-start justify-end space-x-3">
             <x-chief-table::button
                 data-sortable-handle

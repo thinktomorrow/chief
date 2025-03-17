@@ -62,7 +62,7 @@
                             <div class="space-y-4 bg-white/[0.85] px-6 pb-4 pt-6 backdrop-blur-md backdrop-filter">
                                 @if ($title || $subtitle)
                                     <div class="flex items-start justify-between gap-4">
-                                        <div class="space-y-1">
+                                        <div class="space-y-2">
                                             @if ($title)
                                                 <h2 class="text-lg font-medium leading-5 text-black">
                                                     {{ $title }}

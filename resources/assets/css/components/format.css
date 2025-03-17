@@ -33,10 +33,13 @@
     }
 
     .h3-weight,
-    .h4-weight,
+    .h4-weight {
+        font-weight: theme('fontWeight.semibold');
+    }
+
     .h5-weight,
     .h6-weight {
-        font-weight: theme('fontWeight.semibold');
+        font-weight: theme('fontWeight.medium');
     }
 
     .body-weight {
@@ -94,21 +97,21 @@
     }
 
     .h4 {
-        @apply font-display;
+        @apply font-body;
         @extend .h4-size;
         @extend .h4-weight;
         @extend .h4-tracking;
     }
 
     .h5 {
-        @apply font-display;
+        @apply font-body;
         @extend .h5-size;
         @extend .h5-weight;
         @extend .h5-tracking;
     }
 
     .h6 {
-        @apply font-display;
+        @apply font-body;
         @extend .h6-size;
         @extend .h6-weight;
         @extend .h6-tracking;

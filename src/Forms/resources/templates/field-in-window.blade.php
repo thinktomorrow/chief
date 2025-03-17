@@ -7,7 +7,7 @@
 >
     @if ($getLabel())
         <td class="@lg:table-cell block align-top">
-            <x-chief::form.label class="leading-6 @lg:max-w-48">
+            <x-chief::form.label class="text-sm/6 font-normal text-grey-500 @lg:max-w-48">
                 {{ ucfirst($getLabel()) }}
             </x-chief::form.label>
         </td>

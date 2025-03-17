@@ -38,7 +38,7 @@
                         title="{!! $label !!}"
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm font-medium leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
+                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
@@ -46,7 +46,7 @@
                 @else
                     <span
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm font-medium leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
+                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
                     >
                         {!! $label !!}
                     </span>

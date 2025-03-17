@@ -33,7 +33,7 @@
                     data-toggle-classes="hidden"
                     href="{{ route('chief.back.dashboard') }}"
                     title="Ga naar Dashboard"
-                    class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} block w-full py-2 text-sm font-medium leading-6 text-grey-700"
+                    class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} block w-full py-2 text-sm leading-6 text-grey-700"
                 >
                     {{ config('app.client', 'Chief') }}
                 </a>

@@ -1,11 +1,11 @@
 @props([
     'content' => null,
-    'characters' => 144
+    'characters' => 144,
 ])
 
-@if($content || $slot->isNotEmpty())
-    <p {{ $attributes->class('text-sm body body-dark') }}>
-        @if($content)
+@if ($content || $slot->isNotEmpty())
+    <p {{ $attributes->class('body body-dark') }}>
+        @if ($content)
             {{ teaser($content, $characters, '...') }}
         @else
             {{ $slot }}

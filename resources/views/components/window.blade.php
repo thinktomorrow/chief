@@ -10,23 +10,23 @@
     @if ($title || $labels || $buttons || $description)
         <div class="flex items-start justify-between gap-4">
             @if ($title || $labels || $description)
-                <div class="space-y-1">
+                <div class="space-y-1.5">
                     <div class="flex items-start gap-1">
                         @if ($title)
-                            <h2 class="mt-[0.1875rem] text-base/6 font-medium text-grey-950">
+                            <h2 class="mt-[0.1875rem] text-lg/6 font-medium text-grey-950">
                                 {!! $title !!}
                             </h2>
                         @endif
 
                         @if ($labels)
-                            <span class="with-xs-labels align-bottom">
+                            <div class="flex min-h-6 items-center gap-1">
                                 {!! $labels !!}
-                            </span>
+                            </div>
                         @endif
                     </div>
 
                     @if ($description)
-                        <p class="body text-sm text-grey-500">
+                        <p class="body text-grey-500">
                             {!! $description !!}
                         </p>
                     @endif
