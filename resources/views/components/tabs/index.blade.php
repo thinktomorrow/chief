@@ -1,10 +1,12 @@
+{{-- "reference" => Reference of this tabs, context that is passed with the event for finetuning listeners --}}
+
 @props([
-    'activeTab' => null,
-    'listenForExternalTab' => false,
-    'showNav' => true,
-    'showNavAsButtons' => false,
-    'dispatchTab' => true,
-    'reference' => null, // Reference of this tabs, context that is passed with the event for finetuning listeners
+    "activeTab" => null,
+    "listenForExternalTab" => false,
+    "showNav" => true,
+    "showNavAsButtons" => false,
+    "dispatchTab" => true,
+    "reference" => null,
 ])
 
 <div
@@ -14,24 +16,25 @@
     x-data="{
         activeTab: null,
         showNav: @js($showNav),
-        init: function() {
-            this.activeTab = @js($activeTab) || (this.tabs().length > 0 ? this.tabs()[0].id : null);
+        init: function () {
+            this.activeTab =
+                @js($activeTab) || (this.tabs().length > 0 ? this.tabs()[0].id : null)
 
             this.repositionTabMarker()
         },
-        listenForExternalTab: function(e){
-            if(!@js($listenForExternalTab)) return;
+        listenForExternalTab: function (e) {
+            if (! @js($listenForExternalTab)) return
 
-            if(this.activeTab === e.detail.id) return;
+            if (this.activeTab === e.detail.id) return
 
             // Check if this tabs accepts the given external tab
-            this.tabs().forEach(({id}) => {
-                if(id === e.detail.id) {
-                    this.activeTab = e.detail.id;
+            this.tabs().forEach(({ id }) => {
+                if (id === e.detail.id) {
+                    this.activeTab = e.detail.id
                 }
-            });
+            })
 
-            this.repositionTabMarker();
+            this.repositionTabMarker()
         },
         tabs: function () {
             const nodes = this.$refs.tabs.children
@@ -44,9 +47,9 @@
         showTab: function (id) {
             this.activeTab = id
 
-            if(!@js($dispatchTab)) return;
+            if (! @js($dispatchTab)) return
 
-            this.$dispatch('chieftab', {id: id, reference: '{{ $reference }}'});
+            this.$dispatch('chieftab', { id: id, reference: '{{ $reference }}' })
 
             this.repositionTabMarker()
         },
@@ -83,20 +86,17 @@
                     x-html="tab.label"
                     x-bind:aria-controls="tab.id"
                     x-bind:aria-selected="tab.id === activeTab"
-
-                    @if($showNavAsButtons)
+                    @if ($showNavAsButtons)
                         class="bui-btn bui-btn-xs relative cursor-pointer px-2 text-sm/5 shadow-none"
-                    x-bind:class="{ 'bg-primary-100 text-primary-700': tab.id === activeTab }"
+                        x-bind:class="{ 'bg-primary-100 text-primary-700': tab.id === activeTab }"
                     @else
                         class="block pb-1.5 cursor-pointer text-grey-600 with-bottomline px-1.5"
-                    x-bind:class="{ 'active': tab.id === activeTab }"
+                        x-bind:class="{ 'active': tab.id === activeTab }"
                     @endif
-
                     :class="{
                         'text-grey-950': tab.id === activeTab,
                         'text-grey-700': tab.id !== activeTab,
                     }"
-
                 ></button>
             </template>
         </nav>
