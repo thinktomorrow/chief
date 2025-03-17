@@ -1,5 +1,5 @@
 @php
-    use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 @endphp
 
 <x-chief::multiselect

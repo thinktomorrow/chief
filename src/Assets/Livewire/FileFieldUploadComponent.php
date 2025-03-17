@@ -31,6 +31,8 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 
     public bool $allowLocalFiles = true;
 
+    public ?string $parentComponentId = null;
+
     public function mount(?string $modelReference, string $fieldKey, string $locale, string $fieldName, array $assets = [], array $components = [])
     {
         $this->modelReference = $modelReference;

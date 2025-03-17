@@ -62,7 +62,7 @@ class FieldReference
         $fields = Fields::make([$this->field]);
 
         $this->field->name($this->fieldName); // To support nested fields
-        $key = Fields\Common\FormKey::replaceBracketsByDots(
+        $key = Fields\FieldName\FieldNameHelpers::replaceBracketsByDots(
             $locale !== FieldLine::NON_LOCALIZED
                 ? $this->field->getName($locale)
                 : $this->field->getName()

@@ -15,6 +15,11 @@ trait PageResourceDefault
 {
     use ResourceDefault;
 
+    public function allowedFragments(): array
+    {
+        return [];
+    }
+
     public function getNavItem(): ?NavItem
     {
         $this->assertManager();
@@ -73,11 +78,6 @@ trait PageResourceDefault
         return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
     }
 
-    public function getIndexDescription(): ?string
-    {
-        return null;
-    }
-
     protected function getNavTags(): array
     {
         return ['nav'];
@@ -86,6 +86,11 @@ trait PageResourceDefault
     protected function getNavIcon(): string
     {
         return Blade::render('<x-chief::icon.folder-library />');
+    }
+
+    public function getIndexDescription(): ?string
+    {
+        return null;
     }
 
     public function getCreatePageView(): View

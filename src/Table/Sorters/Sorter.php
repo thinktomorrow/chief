@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
+use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanBeDefault;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanHideFromView;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanShowActiveLabel;

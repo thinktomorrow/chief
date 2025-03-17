@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Assets\Livewire\Traits;
 
 use Illuminate\Support\Arr;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 
 trait InteractsWithGroupedForms
 {
@@ -39,7 +39,7 @@ trait InteractsWithGroupedForms
                 $components = collect($this->getComponents())->map(function ($component) use ($index) {
                     $component->id(LivewireFieldName::getWithoutPrefix($component->getId(), null, $this->composeGroupIndex($index))); // For error rule matching
                     $component->key(LivewireFieldName::getWithoutPrefix($component->getKey(), null, $this->composeGroupIndex($index)));
-                    $component->name(FormKey::replaceDotsByBrackets(LivewireFieldName::getWithoutPrefix($component->getName(), null, $this->composeGroupIndex($index))));
+                    $component->name(FieldNameHelpers::replaceDotsByBrackets(LivewireFieldName::getWithoutPrefix($component->getName(), null, $this->composeGroupIndex($index))));
 
                     return $component;
                 });

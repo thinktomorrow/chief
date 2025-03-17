@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Console;
 
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class GenerateSitemap extends BaseCommand
 {
@@ -24,7 +25,7 @@ class GenerateSitemap extends BaseCommand
 
     public function handle(): void
     {
-        $locales = config('chief.locales');
+        $locales = ChiefLocales::locales();
 
         foreach ($locales as $locale) {
             $filepath = public_path('sitemap-'.$locale.'.xml');

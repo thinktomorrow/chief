@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateContext;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class DuplicatePage
 {
@@ -14,13 +17,16 @@ class DuplicatePage
 
     private DuplicateModel $duplicateModel;
 
-    public function __construct(DuplicateModel $duplicateModel, DuplicateContext $duplicateContext)
+    private ContextRepository $contextRepository;
+
+    public function __construct(ContextRepository $contextRepository, DuplicateModel $duplicateModel, DuplicateContext $duplicateContext)
     {
         $this->duplicateContext = $duplicateContext;
         $this->duplicateModel = $duplicateModel;
+        $this->contextRepository = $contextRepository;
     }
 
-    public function handle(Model $model, string $titleKey = 'title'): Model
+    public function handle(Model&ReferableModel $model, string $titleKey = 'title'): Model
     {
         $copiedModel = $this->duplicateModel->handle($model, $titleKey);
 
@@ -29,7 +35,9 @@ class DuplicatePage
             $copiedModel->save();
         }
 
-        $this->duplicateContext->handle($model, $copiedModel);
+        foreach ($this->contextRepository->getByOwner($model->modelReference()) as $context) {
+            $this->duplicateContext->handle($context->id, $copiedModel, $context->locale);
+        }
 
         return $copiedModel;
     }

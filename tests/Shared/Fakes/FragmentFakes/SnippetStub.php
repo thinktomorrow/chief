@@ -7,18 +7,11 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
+use Thinktomorrow\Chief\Fragments\Fragment;
 
-class SnippetStub implements Fragmentable, FragmentsOwner
+class SnippetStub extends BaseFragment implements Fragment
 {
-    use ForwardFragmentProperties;
-    use FragmentableDefaults;
-    use OwningFragments;
-
     public static function resourceKey(): string
     {
         return 'snippet-stub';
@@ -37,7 +30,7 @@ class SnippetStub implements Fragmentable, FragmentsOwner
 
     public function getTitle()
     {
-        return $this->fragmentModel()->title;
+        return $this->getFragmentModel()->title;
     }
 
     public function viewKey(): string

@@ -1,4 +1,4 @@
-@php use Thinktomorrow\Chief\Forms\Livewire\LivewireFieldName; @endphp
+@php use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName; @endphp
 
 <x-chief::input.select
         wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
@@ -8,7 +8,7 @@
 >
     <option value="">---</option>
 
-    @if($hasOptionGroups())
+    @if($hasOptionGroups($locale ?? null))
         @foreach ($getOptions() as $optionGroup)
             <optgroup label="{{ $optionGroup['label'] }}">
                 @foreach ($optionGroup['options'] as $option)

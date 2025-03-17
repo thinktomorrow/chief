@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 
 trait HasId
 {
@@ -25,6 +25,6 @@ trait HasId
             return $this->getLocalizedFormKey()->dotted()->get($this->id, $locale);
         }
 
-        return FormKey::replaceBracketsByDots($this->id);
+        return FieldNameHelpers::replaceBracketsByDots($this->id);
     }
 }

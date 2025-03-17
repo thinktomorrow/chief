@@ -16,3 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     FormSubmit.listen('[data-submit-form]');
 });
+
+document.addEventListener('fragment-dialog-opened', () => {
+    // Get DOM element
+
+    console.log('fragment-dialog-opened');
+
+    // Next tick my friend... next tick
+    setTimeout(() => {
+        initRepeatFields();
+        initConditionalFields();
+        initFormNotifications();
+        initCharacterCount();
+    }, 0);
+});

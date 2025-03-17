@@ -1,3 +1,4 @@
+@php use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
 <div class="flex flex-wrap justify-between w-full sm:flex-nowrap gap-y-3 gap-x-6">
     <div class="w-full space-y-1 sm:w-64 shrink-0">
         <p class="font-medium h6 h1-dark">
@@ -18,7 +19,7 @@
             @endphp
 
             <div class="flex w-full gap-2">
-                @if(count(config('chief.locales')) > 1)
+                @if(count(ChiefLocales::locales()) > 1)
                     <div class="flex items-center justify-center w-8 p-2 rounded-md shrink-0 bg-grey-50">
                         <span class="text-xs uppercase text-grey-500">{{ $locale }}</span>
                     </div>

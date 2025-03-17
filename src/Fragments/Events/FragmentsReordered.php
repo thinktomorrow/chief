@@ -6,10 +6,5 @@ namespace Thinktomorrow\Chief\Fragments\Events;
 
 class FragmentsReordered
 {
-    public int $contextId;
-
-    public function __construct(int $contextId)
-    {
-        $this->contextId = $contextId;
-    }
+    public function __construct(public readonly string $contextId) {}
 }

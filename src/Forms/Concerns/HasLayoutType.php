@@ -8,17 +8,17 @@ use Thinktomorrow\Chief\Forms\Layouts\LayoutType;
 
 trait HasLayoutType
 {
-    protected LayoutType $type = LayoutType::none;
+    protected LayoutType $layoutType = LayoutType::none;
 
     public function layoutType(string $type): static
     {
-        $this->type = LayoutType::from($type);
+        $this->layoutType = LayoutType::from($type);
 
         return $this;
     }
 
     public function getLayoutType(): LayoutType
     {
-        return $this->type;
+        return $this->layoutType;
     }
 }

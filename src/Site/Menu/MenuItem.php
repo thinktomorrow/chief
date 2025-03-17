@@ -149,9 +149,9 @@ class MenuItem extends Model implements Node
         return static::where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->orderBy('order', 'ASC')->get();
     }
 
-    public function dynamicLocales(): array
+    public function getDynamicLocales(): array
     {
-        return config('chief.locales', []);
+        return \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales();
     }
 
     public function getId()

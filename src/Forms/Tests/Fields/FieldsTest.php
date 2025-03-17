@@ -140,7 +140,7 @@ class FieldsTest extends TestCase
 
         $this->assertEquals(collect([
             'xxx' => $values[0],
-        ]), $fields->notTagged('foobar')->all());
+        ]), $fields->filterByNotTagged('foobar')->all());
     }
 
     /** @test */

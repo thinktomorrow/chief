@@ -1,5 +1,19 @@
+@php
+    // Assets always expect a locale. We enforce this even when locales are missing
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+    use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
+
+    $locale ??= ChiefLocales::primaryLocale();
+
+    // Check if component is used inside a parent Livewire component (such as AddFragment)
+    $insideComponent = (isset($this) && method_exists($this, 'getId'));
+
+@endphp
+
 <div data-slot="control">
     <livewire:chief-wire::file-field-upload
+        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        parent-component-id="{{ $insideComponent ? $this->getId() : null }}"
         :model-reference="$getModel()?->modelReference()->get()"
         :field-key="$field->getKey()"
         :locale="$locale"

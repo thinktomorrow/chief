@@ -36,6 +36,7 @@ const Forms = function (mainContainer, sidebar) {
 
     // Listen for tab changes (so we can direct the visitor to the same tab after form refresh
     window.addEventListener('chieftab', this.onTabDispatch.bind(this));
+    window.addEventListener('chief-refresh-form', this.onChiefRefreshForm.bind(this));
 };
 
 Forms.prototype.load = function (container = document) {
@@ -81,6 +82,14 @@ Forms.prototype.handleSubmitFromSidebar = function (responseData, meta) {
 
 Forms.prototype.onTabDispatch = function (e) {
     this.lastVisitedTabId = e.detail;
+};
+
+Forms.prototype.onChiefRefreshForm = function (e) {
+    const { selector, refreshUrl } = e.detail;
+
+    Array.from(document.querySelectorAll(selector)).forEach((el) => {
+        new Form(el, this.sidebar).refresh(refreshUrl);
+    });
 };
 
 export { Forms as default };

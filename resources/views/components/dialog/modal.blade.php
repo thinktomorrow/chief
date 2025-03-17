@@ -53,6 +53,7 @@
                 ])
             >
                 <div
+                    wire:ignore.self
                     x-ref="container"
                     x-on:scroll="toggleInnerShadows()"
                     class="relative max-h-[calc(100vh-4rem)] overflow-auto shadow-black/5 transition-all duration-150 ease-in-out"

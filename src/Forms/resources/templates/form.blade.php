@@ -14,8 +14,9 @@
         action="{{ $getAction() }}"
     >
         @csrf
-        @if ($getActionMethod() == 'PUT')
-            @method('put')
+        
+        @if($getActionMethod())
+            @method($getActionMethod())
         @endif
 
         @if (isset($order))
