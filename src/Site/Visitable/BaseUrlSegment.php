@@ -29,12 +29,9 @@ class BaseUrlSegment
         return reset($segments);
     }
 
-    /**
-     * @param  (int|string)  $locale
-     */
-    public static function prepend(Visitable $model, string $slug, $locale): string
+    public static function prepend(Visitable $model, string $slug, string $site): string
     {
-        $slugWithBaseSegment = $model->baseUrlSegment($locale).'/'.$slug;
+        $slugWithBaseSegment = $model->baseUrlSegment($site).'/'.$slug;
         $slugWithBaseSegment = trim($slugWithBaseSegment, '/');
 
         // If slug with base segment is empty string, it means that the passed slug was probably a "/" character.

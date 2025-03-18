@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
+use Thinktomorrow\Chief\Sites\Actions\SaveModelSites;
 
 class Contexts extends Component
 {
@@ -49,7 +49,7 @@ class Contexts extends Component
 
     public function submit()
     {
-        app(SyncLocales::class)->handle(
+        app(SaveModelSites::class)->handle(
             $this->resourceKey,
             $model = ModelReference::fromString($this->modelReference)->instance(),
             $this->activeLocales,

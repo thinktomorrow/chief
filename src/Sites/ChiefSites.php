@@ -43,6 +43,17 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $this->sites;
     }
 
+    public function find(string $siteId): ChiefSite
+    {
+        foreach ($this->sites as $site) {
+            if ($site->id === $siteId) {
+                return $site;
+            }
+        }
+
+        throw new \InvalidArgumentException('Site with id ['.$siteId.'] not found in chief config.');
+    }
+
     public function getLocales(): array
     {
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
@@ -66,6 +77,11 @@ class ChiefSites implements \Countable, \IteratorAggregate
     public function filterByIds(array $siteIds): self
     {
         return new self(...array_filter($this->sites, fn (ChiefSite $site) => in_array($site->id, $siteIds)));
+    }
+
+    public function rejectByIds(array $siteIds): self
+    {
+        return new self(...array_filter($this->sites, fn (ChiefSite $site) => ! in_array($site->id, $siteIds)));
     }
 
     public static function all(): self

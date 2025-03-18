@@ -90,7 +90,7 @@ final class SaveUrlSlugs
                 $existingRecord->slug = $slug;
                 $existingRecord->save();
             } elseif ($existingRecord->slug != $slug) {
-                $existingRecord->replaceAndRedirect($slug);
+                app(RedirectUrl::class)->handle($existingRecord, $slug);
             }
         });
     }

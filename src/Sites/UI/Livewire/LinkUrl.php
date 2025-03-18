@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire;
 class LinkUrl
 {
     public function __construct(
-        public readonly string $urlRecordId,
+        public readonly string $id,
         public readonly string $url,
-        public readonly string $path,
+        public readonly string $slug,
     ) {
         //
     }
@@ -15,18 +15,18 @@ class LinkUrl
     public function toArray(): array
     {
         return [
-            'urlRecordId' => $this->urlRecordId,
+            'id' => $this->id,
             'url' => $this->url,
-            'path' => $this->path,
+            'slug' => $this->slug,
         ];
     }
 
     public static function fromArray(array $data): self
     {
         return new static(
-            urlRecordId: $data['urlRecordId'],
+            id: $data['id'],
             url: $data['url'],
-            path: $data['path'],
+            slug: $data['slug'],
         );
     }
 }

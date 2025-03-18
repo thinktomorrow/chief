@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Site\Urls;
 
 enum LinkStatus: string
 {
-    case none = 'none'; // No status
     case online = 'online';
     case offline = 'offline';
 

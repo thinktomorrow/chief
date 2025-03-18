@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
+use Thinktomorrow\Chief\Site\Urls\Application\RedirectUrl;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\UrlRecordNotFound;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -49,7 +50,7 @@ class UrlRecordTest extends ChiefTestCase
     public function test_when_adding_new_url_it_sets_existing_url_as_redirect()
     {
         $existing = UrlRecord::create(['locale' => 'fr', 'slug' => 'foo/bar', 'model_type' => 'foobar', 'model_id' => '1']);
-        $new = $existing->replaceAndRedirect('foo/bare');
+        $new = app(RedirectUrl::class)->handle($existing, 'foo/bare');
 
         $this->assertEquals($new->id, UrlRecord::findBySlug('foo/bare', 'fr')->id);
 

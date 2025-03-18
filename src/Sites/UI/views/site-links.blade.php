@@ -1,55 +1,45 @@
-<div class="card p-4 space-y-4">
+@php
 
-    @if(!$inEditMode)
+    $siteLinks = $this->getSiteLinks();
 
-        <div class="w-full">
-            @if(count($siteLinks = $this->getActiveSiteLinks()) > 0)
-                @foreach($siteLinks as $siteLink)
-                    <div class="w-full flex gap-2 items-center">
-                        <span class="label label-primary label-xs">{{ $siteLink->status->value }}</span>
-                        <span>{{ $siteLink->url->path }}</span>
+@endphp
+<x-chief::window title="Sites">
+
+    <x-chief::button wire:click="edit" class="cursor-pointer text-xs">
+        Aanpassen
+    </x-chief::button>
+
+    <div class="space-y-1">
+
+        @if(count($siteLinks) > 0)
+            @foreach($siteLinks as $siteLink)
+
+                <div wire:key="site-link-{{ $siteLink->siteId }}">
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="flex items-start gap-2">
+                            @include('chief-sites::link-status-dot')
+
+                            <div>
+                                <p class="text-sm leading-6 text-grey-500">{{ $siteLink->site->name }}</p>
+                                <p class="leading-6 text-grey-700">{{ $siteLink->url->slug }}</p>
+                            </div>
+                        </div>
+
                         @if($siteLink->contextId)
-                            <span>{{ $siteLink->contextTitle }}</span>
+                            <x-chief-table::badge>
+                                <span>{{ $siteLink->contextTitle }}</span>
+                            </x-chief-table::badge>
                         @endif
+
                     </div>
-                @endforeach
-            @else
-                <span class="text-sm text-grey-600 py-1 px-2">geen talen actief</span>
-            @endif
-        </div>
-
-        <x-chief::button wire:click="$set('inEditMode', true)" class="cursor-pointer text-xs">
-            edit
-        </x-chief::button>
-    @else
-
-        <h2>Links bewerken</h2>
-
-        <div class="w-full">
-            @foreach($this->getAllSiteLinks() as $siteLink)
-                <div class="w-full flex gap-2 items-center">
-
-                    <x-chief::input.select wire:model.live="siteLinks.{{ $siteLink->siteId }}">
-                        <option value="">---</option>
-                        @foreach($this->getLinkStatusOptions() as $value => $label)
-                            <option value="{{ $value }}">{{ $label }}</option>
-                        @endforeach
-                    </x-chief::input.select>
-
-                    <span class="label label-primary label-xs">{{ $siteLink->status->value }}</span>
-                    <span>{{ $siteLink->url?->path }}</span>
-                    @if($siteLink->contextId)
-                        <span>{{ $siteLink->contextTitle }}</span>
-                    @endif
                 </div>
+
             @endforeach
-        </div>
+        @else
+            <span class="text-sm text-grey-600 py-1 px-2">Nog geen sites geselecteerd.</span>
+        @endif
+    </div>
 
-        <x-chief::button wire:click="save" class="cursor-pointer text-xs">
-            Bewaren
-        </x-chief::button>
-    @endif
+    <livewire:chief-wire::edit-site-links key="edit-site-links" :model-reference="$modelReference" />
 
-</div>
-
-
+</x-chief::window>

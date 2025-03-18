@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Tests\Unit\Resource\Locale;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Sites\Actions\AddSite;
 use Thinktomorrow\Chief\Sites\Actions\RemoveLocale;
-use Thinktomorrow\Chief\Sites\Actions\SyncLocales;
-use Thinktomorrow\Chief\Sites\Events\LocalesUpdated;
+use Thinktomorrow\Chief\Sites\Actions\SaveModelSites;
+use Thinktomorrow\Chief\Sites\Events\ModelSitesUpdated;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class SyncLocalesTest extends ChiefTestCase
@@ -18,23 +18,23 @@ class SyncLocalesTest extends ChiefTestCase
         $page = $this->setUpAndCreateArticle();
         $resource = new LocaleRepositoryStub;
 
-        app(SyncLocales::class)->handle($page, ['nl', 'fr', 'en']);
+        app(SaveModelSites::class)->handle($page, ['nl', 'fr', 'en']);
 
         $this->assertEquals(['nl', 'fr', 'en'], $page->refresh()->locales);
         $this->assertEquals(['nl', 'fr', 'en'], $resource->getLocales($page));
 
-        Event::assertDispatched(function (LocalesUpdated $event) use ($page) {
+        Event::assertDispatched(function (ModelSitesUpdated $event) use ($page) {
             return $event->modelReference == $page->modelReference() &&
                 $event->newState == ['nl', 'fr', 'en'] &&
                 $event->previousState == [];
         });
 
-        app(SyncLocales::class)->handle($page, ['nl']);
+        app(SaveModelSites::class)->handle($page, ['nl']);
 
         $this->assertEquals(['nl'], $page->refresh()->locales);
         $this->assertEquals(['nl'], $resource->getLocales($page));
 
-        Event::assertDispatched(function (LocalesUpdated $event) use ($page) {
+        Event::assertDispatched(function (ModelSitesUpdated $event) use ($page) {
             return $event->modelReference == $page->modelReference() &&
                 $event->newState == ['nl'] &&
                 $event->previousState == ['nl', 'fr', 'en'];
@@ -50,12 +50,12 @@ class SyncLocalesTest extends ChiefTestCase
 
         config()->set('chief.locales.admin', ['fr', 'nl', 'en']);
 
-        app(SyncLocales::class)->handle($page, ['nl', 'fr', 'en']);
+        app(SaveModelSites::class)->handle($page, ['nl', 'fr', 'en']);
 
         $this->assertEquals(['fr', 'nl', 'en'], $page->refresh()->locales);
         $this->assertEquals(['fr', 'nl', 'en'], $resource->getLocales($page));
 
-        Event::assertDispatched(function (LocalesUpdated $event) use ($page) {
+        Event::assertDispatched(function (ModelSitesUpdated $event) use ($page) {
             return $event->modelReference == $page->modelReference() &&
                 $event->newState == ['fr', 'nl', 'en'] &&
                 $event->previousState == [];
@@ -74,7 +74,7 @@ class SyncLocalesTest extends ChiefTestCase
         $this->assertEquals(['nl', 'fr'], $page->refresh()->locales);
         $this->assertEquals(['nl', 'fr'], $resource->getLocales($page));
 
-        Event::assertDispatched(function (LocalesUpdated $event) use ($page) {
+        Event::assertDispatched(function (ModelSitesUpdated $event) use ($page) {
             return $event->modelReference == $page->modelReference() &&
                 $event->newState == ['nl', 'fr'] &&
                 $event->previousState == [];
@@ -96,7 +96,7 @@ class SyncLocalesTest extends ChiefTestCase
         $this->assertEquals(['fr'], $page->refresh()->locales);
         $this->assertEquals(['fr'], $resource->getLocales($page));
 
-        Event::assertDispatched(function (LocalesUpdated $event) use ($page) {
+        Event::assertDispatched(function (ModelSitesUpdated $event) use ($page) {
             return $event->modelReference == $page->modelReference() &&
                 $event->newState == ['fr'] &&
                 $event->previousState == ['nl', 'fr'];

@@ -99,36 +99,6 @@ class UrlRecord extends Model
             ->first();
     }
 
-    public function replaceAndRedirect(string $slug): UrlRecord
-    {
-        $newRecord = static::firstOrCreate([
-            'site' => $this->site,
-            'model_type' => $this->model_type,
-            'model_id' => $this->model_id,
-            'slug' => $slug,
-        ]);
-
-        $this->redirectTo($newRecord);
-
-        return $newRecord;
-    }
-
-    public function redirectTo(?self $record = null): ?UrlRecord
-    {
-        if (! $record) {
-            return $this->isRedirect() ? static::find($this->redirect_id) : null;
-        }
-
-        if ($record->id === $this->id) {
-            throw new \InvalidArgumentException('Cannot redirect to itself. Failed to create a redirect from ['.$this->slug.'] to ['.$record->slug.']');
-        }
-
-        $this->redirect_id = $record->id;
-        $this->save();
-
-        return null;
-    }
-
     // Remove all urls that came after this one
 
     /**

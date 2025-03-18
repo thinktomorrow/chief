@@ -32,48 +32,9 @@
     <x-slot name="sidebar">
         <div class="space-y-8">
 
-            @if($model instanceof BelongsToSites)
-                <livewire:chief-wire::site-links :resource-key="$resource::resourceKey()" :model="$model" />
+            @if($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+                <livewire:chief-wire::site-links :model="$model" />
             @endif
-
-            <x-chief::window title="Sites">
-                <div class="space-y-1">
-                    @foreach ([] as $site)
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-start gap-2">
-                                <div class="relative my-1 flex size-4 items-center justify-center p-1">
-                                    <div
-                                        @class([
-                                            'absolute inset-0 animate-pulse rounded-full',
-                                            'bg-green-200' => $site['status'] === 'online',
-                                            'bg-grey-200' => $site['status'] === 'offline',
-                                        ])
-                                    ></div>
-
-                                    <svg
-                                        @class([
-                                            'relative size-2',
-                                            'fill-green-500' => $site['status'] === 'online',
-                                            'fill-grey-400' => $site['status'] === 'offline',
-                                        ])
-                                        viewBox="0 0 6 6"
-                                        aria-hidden="true"
-                                    >
-                                        <circle cx="3" cy="3" r="3" />
-                                    </svg>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm leading-6 text-grey-500">{{ $site['url'] }}</p>
-                                    <p class="leading-6 text-grey-700">/over-ons</p>
-                                </div>
-                            </div>
-
-                            <x-chief-table::badge>Default</x-chief-table::badge>
-                        </div>
-                    @endforeach
-                </div>
-            </x-chief::window>
 
             <x-chief-form::forms position="aside-top" />
 

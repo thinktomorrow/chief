@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Sites\Events;
 
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-class LocalesUpdated
+class ModelSitesUpdated
 {
     public function __construct(
         public readonly ModelReference $modelReference,
