@@ -1,55 +1,91 @@
 @php
     use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
     use Thinktomorrow\Chief\Fragments\Fragment;
+
+    $ownerCount = $fragment->sharedFragmentDtos->count();
 @endphp
 
-@if($fragment->isShared)
-    <div class="p-6 border border-orange-100 rounded-xl bg-orange-50">
-        <p class="text-lg h6 h1-dark">Gedeeld fragment</p>
+{{--
+    @php
+    $otherOwners = collect(app(GetOwners::class)->getSharedFragmentDtos($model->getFragmentModel()))->reject(function (
+    $otherOwner,
+    ) use ($owner) {
+    return $otherOwner['model']->modelReference()->equals($owner->modelReference());
+    });
+    @endphp
+--}}
 
-        <div class="mt-4 prose prose-dark prose-spacing">
-            <p>
-                Dit is een gedeeld fragment. Dat betekent dat het ook toegevoegd werd op een andere plaats
-                op de website. Elke aanpassing aan dit fragment zal dus doorgevoerd worden op de volgende pagina's:
+@if ($fragment->isShared)
+    <div class="mb-4 flex items-start gap-1.5 rounded-xl bg-primary-50 p-2.5">
+        <svg class="h-5 w-5 shrink-0 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
 
-                {{--                @php--}}
-                {{--                    $otherOwners = collect(app(GetOwners::class)--}}
-                {{--                        ->getSharedFragmentDtos($model->getFragmentModel()))--}}
-                {{--                        ->reject(function($otherOwner) use ($owner) {--}}
-                {{--                            return $otherOwner['model']->modelReference()->equals($owner->modelReference());--}}
-                {{--                        });--}}
-                {{--                @endphp--}}
+        <p class="body text-sm text-primary-500">
+            Dit fragment is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit fragment, worden
+            deze op alle gekoppelde plaatsen doorgevoerd.
 
-                @foreach($fragment->sharedFragmentDtos as $sharedFragmentDto)
-                    <a
-                        href="{{ $sharedFragmentDto->ownerAdminUrl }}"
-                        title="{{ $sharedFragmentDto->ownerLabel }}"
-                        class="underline link link-primary"
-                    >
-                        {{ $sharedFragmentDto->ownerLabel }}
-                    </a>
-
-                    @if(!$loop->last)
-                        ,
-                    @endif
-                @endforeach
-            </p>
-
-            <p>
-                Wil je een aanpassing maken aan dit fragment zonder dat je die doorvoert op de andere
-                pagina's?
-                Koppel het fragment dan los op deze pagina.
-            </p>
-
-            <p>
-                <button
-                    type="button"
-                    wire:click="isolateFragment"
-                    class="btn btn-warning-outline"
-                >
-                    Fragment loskoppelen en afzonderlijk bewerken
-                </button>
-            </p>
-        </div>
+            <span
+                class="cursor-pointer underline"
+                x-on:click="$dispatch('open-dialog', { 'id': 'shared-fragment-modal-{{ $this->getId() }}' })"
+            >
+                Bekijk koppelingen
+            </span>
+        </p>
     </div>
+
+    <template x-teleport="body">
+        <x-chief::dialog.modal
+            size="sm"
+            id="shared-fragment-modal-{{ $this->getId() }}"
+            title="Dit fragment wordt gebruikt op {{ $ownerCount == 1 ? ' één plaats' : $ownerCount . ' plaatsen' }}"
+        >
+            <p class="body text-grey-500">
+                Het aanpassen of vervangen van dit fragment is van toepassing op volgende
+                {{ $ownerCount == 1 ? 'plaats' : 'plaatsen' }}:
+            </p>
+
+            <div class="mt-2 overflow-hidden rounded-md border border-grey-100">
+                <div class="max-h-48 divide-y divide-grey-100 overflow-y-auto">
+                    @foreach ($fragment->sharedFragmentDtos as $sharedFragmentDto)
+                        <div class="flex items-start justify-between gap-3 px-3 py-2.5">
+                            <div class="body-dark body leading-6">
+                                {{ $sharedFragmentDto->ownerLabel }}
+                            </div>
+
+                            <a
+                                href="{{ $sharedFragmentDto->ownerAdminUrl }}"
+                                title="{{ $sharedFragmentDto->ownerLabel }}"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <x-chief::link>
+                                    <svg><use xlink:href="#icon-external-link"></use></svg>
+                                </x-chief::link>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <p class="body mt-4 text-grey-500">
+                Wil je aanpassingen enkel op deze plaats doorvoeren? Kies dan om het fragment te ontkoppelen en apart te
+                bewerken.
+            </p>
+
+            <x-slot name="footer" class="flex flex-wrap items-center justify-end gap-3">
+                <x-chief-table::button x-on:click.stop="close" type="button" variant="grey">
+                    Sluit
+                </x-chief-table::button>
+
+                <x-chief-table::button
+                    x-on:click="
+                        close()
+                        $wire.isolateFragment()
+                    "
+                    variant="orange"
+                >
+                    Ontkoppel en bewerk dit fragment apart
+                </x-chief-table::button>
+            </x-slot>
+        </x-chief::dialog.modal>
+    </template>
 @endif

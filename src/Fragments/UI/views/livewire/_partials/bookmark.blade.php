@@ -1,5 +1,5 @@
-@if($fragment->bookmark && count($fragment->urls))
-    @foreach($fragment->urls as $url)
+@if ($fragment->bookmark && count($fragment->urls))
+    @foreach ($fragment->urls as $url)
         <div class="flex flex-wrap items-center gap-2">
             <span class="label label-grey">#{{ $fragment->bookmark }}</span>
 

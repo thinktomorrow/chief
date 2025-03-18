@@ -1,19 +1,48 @@
 <x-chief::dialog.drawer wired>
     @if ($isOpen)
-        <x-slot name="title">
-            {{ ucfirst($fragment->label) }}
+        @php
+            $badges = [];
+            if (! $fragment->isOnline) {
+                $badges[] = ['label' => 'Offline', 'variant' => 'grey'];
+            }
+            if ($fragment->isShared) {
+                $badges[] = ['label' => 'Gedeeld', 'variant' => 'blue'];
+            }
+        @endphp
+
+        <x-slot name="header">
+            <x-chief::dialog.drawer.header
+                :title="ucfirst($fragment->label)"
+                subtitle="id: {{ $this->getId() }} parent: {{ $this->parentComponentId }}"
+                :badges="$badges"
+            >
+                <div class="flex items-start gap-2">
+                    <x-chief-table::button
+                        variant="outline-white"
+                        type="button"
+                        class="shrink-0"
+                        x-on:click="$dispatch('open-dialog', { 'id': 'fragment-actions-{{ $fragment->getId() }}' })"
+                    >
+                        <span>Acties</span>
+                        <x-chief::icon.more-vertical-circle />
+                    </x-chief-table::button>
+
+                    <x-chief::dialog.dropdown id="fragment-actions-{{ $fragment->getId() }}">
+                        @include('chief-fragments::livewire._partials.status-fragment-actions')
+                        @include('chief-fragments::livewire._partials.delete-fragment-action')
+                    </x-chief::dialog.dropdown>
+                </div>
+            </x-chief::dialog.drawer.header>
         </x-slot>
 
-        <x-slot name="subtitle">
-            <span>id: {{ $this->getId() }} parent: {{ $this->parentComponentId }}</span>
-            @include('chief-fragments::livewire._partials.bookmark')
-        </x-slot>
+        {{-- TODO(ben): get fragment urls --}}
+        @include('chief-fragments::livewire._partials.bookmark')
 
-        <div class="space-y-4">
-            @foreach ($this->getFields() as $field)
-                {{ $field }}
-            @endforeach
-        </div>
+        @include('chief-fragments::livewire._partials.shared-fragment-actions')
+
+        @foreach ($this->getFields() as $field)
+            {{ $field }}
+        @endforeach
 
         <x-chief::form.fieldset>
             <x-chief::form.label>Fragmenten</x-chief::form.label>
@@ -58,11 +87,7 @@
             />
         </x-chief::form.fieldset>
 
-        @include('chief-fragments::livewire._partials.shared-fragment-actions')
-        @include('chief-fragments::livewire._partials.status-fragment-actions')
-        @include('chief-fragments::livewire._partials.delete-fragment-action')
-
-        <x-slot name="footer" class="flex items-start gap-2">
+        <x-slot name="footer" class="flex flex-wrap items-start gap-2">
             <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
             <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
         </x-slot>

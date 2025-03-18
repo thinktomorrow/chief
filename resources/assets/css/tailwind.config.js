@@ -31,7 +31,6 @@ module.exports = {
             transparent: 'transparent',
             black: colors.black,
             white: colors.white,
-            // grey: colors.gray,
             grey: {
                 25: '#FAFAFB',
                 50: '#f7f7f8',
@@ -49,6 +48,7 @@ module.exports = {
 
             primary: colors.indigo,
             secondary: colors.teal,
+
             // Better UI colors added for Tables v2 release that should be adopted by the rest of the app over time
             'bui-primary': {
                 50: '#f9f8fb',

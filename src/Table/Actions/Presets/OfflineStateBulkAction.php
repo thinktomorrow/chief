@@ -14,7 +14,6 @@ class OfflineStateBulkAction extends Action
         return static::make('offline-state-bulk')
             ->label('Zet offline')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
-
                 $modelIds = $data['items'];
                 $failedModelIds = [];
 
@@ -31,11 +30,6 @@ class OfflineStateBulkAction extends Action
                         $failedModelIds[] = $modelId;
                     }
                 }
-
-                // TODO: allow to pass effect data to notification to show amount of fails...
-                //                if(count($failedModelIds) > 0) {
-                //                    return false;
-                //                }
 
                 return true;
             })

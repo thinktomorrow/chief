@@ -15,6 +15,7 @@
             },
             match ($variant) {
                 'grey' => 'badge-grey',
+                'blue' => 'badge-blue',
                 'red' => 'badge-red',
                 'orange' => 'badge-orange',
                 'green' => 'badge-green',

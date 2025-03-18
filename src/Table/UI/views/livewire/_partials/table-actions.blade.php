@@ -21,7 +21,7 @@
                 variant="outline-white"
             >
                 <span>Meer acties</span>
-                <x-chief::icon.arrow-down />
+                <x-chief::icon.chevron-down />
             </x-chief-table::button>
 
             <x-chief::dialog.dropdown id="table-tertiary-actions" placement="bottom-start">

@@ -35,7 +35,7 @@
         {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
     >
         <div
-            x-on:click="close()"
+            x-on:click.stop="close()"
             class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-black/20 backdrop-blur-sm backdrop-filter"
         ></div>
 
@@ -77,7 +77,7 @@
                                             @endif
                                         </div>
 
-                                        <button type="button" x-on:click="close()" class="ml-auto shrink-0">
+                                        <button type="button" x-on:click.stop="close()" class="ml-auto shrink-0">
                                             <svg class="hover:body-dark h-5 w-5 text-grey-400">
                                                 <use xlink:href="#icon-x-mark"></use>
                                             </svg>

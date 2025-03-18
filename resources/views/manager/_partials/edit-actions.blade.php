@@ -1,7 +1,7 @@
 @adminCan('duplicate')
 <x-chief-table::button x-data x-on:click="$dispatch('open-dialog', { 'id': 'edit-options' })" variant="outline-white">
     <span>Acties</span>
-    <x-chief::icon.arrow-down />
+    <x-chief::icon.chevron-down />
 </x-chief-table::button>
 
 <x-chief::dialog.dropdown id="edit-options">

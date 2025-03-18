@@ -3,8 +3,8 @@
     $parentId ??= null;
 @endphp
 
-<div class="relative w-full">
-    <div class="pointer-events-none absolute z-[1] flex h-8 w-full justify-center">
+<div class="pointer-events-none relative">
+    <div class="absolute z-[1] flex h-8 w-full justify-center">
         <x-chief-table::button
             x-on:click="$wire.addFragment({{ $order }}, '{{ $parentId }}')"
             size="sm"
