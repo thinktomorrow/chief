@@ -135,9 +135,13 @@ class EditSiteLinks extends Component
             $siteLink = $this->siteLinks->first(fn ($siteLink) => $siteLink->siteId == $siteId);
             $urlRecordExists = $siteLink->url && $siteLink->url->id;
 
-            if (! $values && $urlRecordExists) {
-                app(DeleteUrl::class)->handle($siteLink->url->id);
+            if (! $values || ! $values['slug']) {
 
+                if ($urlRecordExists) {
+                    app(DeleteUrl::class)->handle($siteLink->url->id);
+                }
+
+                // If slug is empty and no url record exists, we can skip this one
                 continue;
             }
 
