@@ -77,6 +77,7 @@ class EditFragment extends Component
         );
     }
 
+    // TODO(ben): this also closes parent dialogs
     public function close()
     {
         $this->reset(['fragment', 'form']);

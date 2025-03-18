@@ -1,13 +1,13 @@
 <x-chief::page.template title="Bewerk jouw profiel">
     <x-slot name="hero">
-        <x-chief::page.hero title="Bewerk jouw profiel" class="max-w-3xl"/>
+        <x-chief::page.hero title="Bewerk jouw profiel" class="max-w-3xl" />
     </x-slot>
 
     <x-chief::page.grid class="max-w-3xl">
         <x-chief::window title="Jouw gegevens" class="card">
-            <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
+            <form id="updateForm" action="{{ route('chief.back.you.update', $user->id) }}" method="POST">
                 {!! csrf_field() !!}
-                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_method" value="PUT" />
 
                 @include('chief::admin.you._form')
             </form>
@@ -24,20 +24,16 @@
                         href="{{ route('chief.back.password.edit') }}"
                         title="Wijzig wachtwoord"
                         class="btn btn-warning-outline"
-                    > Wijzig wachtwoord </a>
+                    >
+                        Wijzig wachtwoord
+                    </a>
                 </div>
             </div>
         </x-chief::window>
 
         <div>
-            <a
-                href="{{ route('chief.back.logout') }}"
-                title="Uitloggen"
-                class="link link-grey"
-            >
-                <x-chief::icon-label icon="icon-arrow-right-on-rectangle" size="24">
-                    Uitloggen
-                </x-chief::icon-label>
+            <a href="{{ route('chief.back.logout') }}" title="Uitloggen" class="link link-grey">
+                <x-chief::icon-label icon="icon-chevron-right-on-rectangle" size="24">Uitloggen</x-chief::icon-label>
             </a>
         </div>
     </x-chief::page.grid>

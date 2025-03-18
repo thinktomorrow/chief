@@ -33,6 +33,7 @@
             {!! $getDescription() !!}
         </x-chief::form.description>
     @endif
+
     @if (! $hasLocales())
         @include($getView())
         @include('chief-form::fields._partials.charactercount')

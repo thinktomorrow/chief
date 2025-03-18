@@ -10,5 +10,5 @@
         {{ $slot }}
     </select>
 
-    <x-chief::icon.arrow-down class="body-dark pointer-events-none absolute right-3 size-4" />
+    <x-chief::icon.chevron-down class="body-dark pointer-events-none absolute right-3 size-4" />
 </div>

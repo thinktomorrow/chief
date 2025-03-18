@@ -9,7 +9,7 @@
                             variant="outline-white"
                             class="pointer-events-none text-grey-400"
                         >
-                            <x-chief::icon.arrow-left />
+                            <x-chief::icon.chevron-left />
                             <span>Vorige</span>
                         </x-chief-table::button>
                     @else
@@ -20,7 +20,7 @@
                             size="sm"
                             variant="outline-white"
                         >
-                            <x-chief::icon.arrow-left />
+                            <x-chief::icon.chevron-left />
                             <span>Vorige</span>
                         </x-chief-table::button>
                     @endif
@@ -36,7 +36,7 @@
                             variant="outline-white"
                         >
                             <span>Vorige</span>
-                            <x-chief::icon.arrow-right />
+                            <x-chief::icon.chevron-right />
                         </x-chief-table::button>
                     @else
                         <x-chief-table::button
@@ -45,7 +45,7 @@
                             class="pointer-events-none text-grey-400"
                         >
                             <span>Vorige</span>
-                            <x-chief::icon.arrow-right />
+                            <x-chief::icon.chevron-right />
                         </x-chief-table::button>
                     @endif
                 </span>
@@ -74,7 +74,7 @@
                                         variant="outline-white"
                                         class="rounded-r-none text-grey-400"
                                     >
-                                        <x-chief::icon.arrow-left />
+                                        <x-chief::icon.chevron-left />
                                     </x-chief-table::button>
                                 </span>
                             @else
@@ -87,7 +87,7 @@
                                     variant="outline-white"
                                     class="rounded-r-none hover:relative"
                                 >
-                                    <x-chief::icon.arrow-left />
+                                    <x-chief::icon.chevron-left />
                                 </x-chief-table::button>
                             @endif
                         </span>
@@ -149,7 +149,7 @@
                                     variant="outline-white"
                                     class="rounded-l-none hover:relative"
                                 >
-                                    <x-chief::icon.arrow-right />
+                                    <x-chief::icon.chevron-right />
                                 </x-chief-table::button>
                             @else
                                 <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
@@ -158,7 +158,7 @@
                                         variant="outline-white"
                                         class="rounded-l-none text-grey-400"
                                     >
-                                        <x-chief::icon.arrow-right />
+                                        <x-chief::icon.chevron-right />
                                     </x-chief-table::button>
                                 </span>
                             @endif

@@ -14,5 +14,5 @@
         {{ $slot }}
     </span>
 
-    <x-chief::icon.arrow-down class="text-grey-500" />
+    <x-chief::icon.chevron-down class="text-grey-500" />
 </span>

@@ -11,7 +11,7 @@
                 </x-slot>
             @endif
 
-            @if($model instanceof BelongsToSites)
+            @if ($model instanceof BelongsToSites)
                 <livewire:chief-wire::site-tabs :resource-key="$resource::resourceKey()" :model="$model" />
             @endif
 
@@ -22,7 +22,7 @@
     <div class="space-y-6">
         <x-chief-form::forms position="main" />
 
-        @if($model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner)
+        @if ($model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner)
             <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
         @endif
 
@@ -31,16 +31,14 @@
 
     <x-slot name="sidebar">
         <div class="space-y-8">
-
             @if($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
                 <livewire:chief-wire::site-links :model="$model" />
             @endif
 
             <x-chief-form::forms position="aside-top" />
 
-
-            {{--            <x-chief::window.states />--}}
-            {{--            <x-chief::window.links />--}}
+            {{-- <x-chief::window.states /> --}}
+            {{-- <x-chief::window.links /> --}}
             <x-chief-form::forms position="aside" />
         </div>
     </x-slot>

@@ -6,8 +6,7 @@
     $locale ??= ChiefLocales::primaryLocale();
 
     // Check if component is used inside a parent Livewire component (such as AddFragment)
-    $insideComponent = (isset($this) && method_exists($this, 'getId'));
-
+    $insideComponent = isset($this) && method_exists($this, 'getId');
 @endphp
 
 <div data-slot="control">

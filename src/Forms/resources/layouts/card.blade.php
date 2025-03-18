@@ -1,4 +1,7 @@
-<div {{ $attributes->merge($getCustomAttributes())->class(['p-6 rounded-lg', $getLayoutType()->cardClass()]) }}>
+<div
+    data-slot="fieldset"
+    {{ $attributes->merge($getCustomAttributes())->class(['rounded-lg p-6', $getLayoutType()->cardClass()]) }}
+>
     <div x-data="{ open: {{ $isCollapsed() ? 'false' : 'true' }} }" class="space-y-6">
         <div class="flex items-start justify-between">
             @include('chief-form::layouts._partials.header')
@@ -6,8 +9,9 @@
             @if ($isCollapsible())
                 <button
                     type="button"
-                    class="p-1 ml-auto -mt-0.5 rounded-lg hover:bg-black/5 text-grey-500 hover:text-black"
-                    x-on:click="open = !open">
+                    class="-mt-0.5 ml-auto rounded-lg p-1 text-grey-500 hover:bg-black/5 hover:text-black"
+                    x-on:click="open = !open"
+                >
                     <svg x-show="open" class="size-4">
                         <use xlink:href="#icon-chevron-down"></use>
                     </svg>

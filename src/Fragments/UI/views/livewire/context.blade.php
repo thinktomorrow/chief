@@ -1,26 +1,26 @@
-<x-chief::window class="card w-full">
+<x-chief::window title="Fragmenten" class="card">
+    <div
+        wire:ignore.self
+        x-sortable
+        x-sortable-group="{{ 'group-' . $context->contextId }}"
+        x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
+        class="-mb-4 divide-y divide-grey-100"
+    >
+        @include(
+            'chief-fragments::livewire._partials.add-fragment-button',
+            [
+                'order' => -1,
+                'parentId' => null,
+            ]
+        )
 
-    <!-- plus icon -->
-    <div class="relative w-full">
-        <div class="absolute flex justify-center w-full h-8 border-none cursor-pointer mt-[-16px] z-[1]">
-            <div class="absolute">
-                <x-chief::button
-                    x-on:click="$wire.addFragment(-1)">
-                    <svg>
-                        <use xlink:href="#icon-plus"></use>
-                    </svg>
-                </x-chief::button>
-            </div>
-        </div>
-    </div>
-
-    <div wire:ignore.self
-         x-sortable
-         x-sortable-group="{{ 'group-' . $context->contextId }}"
-         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-         class="divide-y divide-grey-100">
-        @foreach($fragments as $i => $fragment)
-            @include('chief-fragments::livewire._partials.fragment')
+        @foreach ($fragments as $fragment)
+            @include(
+                'chief-fragments::livewire._partials.fragment',
+                [
+                    'parentId' => $fragment->parentId,
+                ]
+            )
         @endforeach
     </div>
 

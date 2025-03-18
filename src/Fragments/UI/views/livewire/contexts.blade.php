@@ -1,23 +1,18 @@
-<div class="border border-grey-400 w-full rounded-lg">
-
+<div class="space-y-4">
     <div>
-        <x-chief::button wire:click="open" class="cursor-pointer">
-            Aanpassen
-        </x-chief::button>
+        <x-chief-table::button wire:click="open">Aanpassen</x-chief-table::button>
     </div>
 
-    <div>
-        <x-chief::tabs wire:key="{{ Str::random() }}" :show-nav-as-buttons="true" reference="contextTabs">
-            @foreach($this->getContexts() as $context)
-                <x-chief::tabs.tab wire:key="{{ Str::random() }}" tab-id='{{ $context->contextId }}'>
-                    <span>{{ $context->contextId }}</span>
-                    <livewire:chief-fragments::context
-                        :key="$context->contextId"
-                        :context="$context" />
-                </x-chief::tabs.tab>
-            @endforeach
-        </x-chief::tabs>
-    </div>
+    {{-- Tabs should only be visible if there's more than 1 context --}}
+    <x-chief::tabs wire:key="{{ Str::random() }}" :show-nav-as-buttons="true" reference="contextTabs" size="base">
+        @foreach ($this->getContexts() as $context)
+            <x-chief::tabs.tab
+                wire:key="{{ Str::random() }}"
+                tab-id="{{ $context->contextId }}"
+                tab-label="Context #{{ $context->contextId }}"
+            >
+                <livewire:chief-fragments::context :key="$context->contextId" :context="$context" />
+            </x-chief::tabs.tab>
+        @endforeach
+    </x-chief::tabs>
 </div>
-
-

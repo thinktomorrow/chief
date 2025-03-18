@@ -31,6 +31,10 @@
         @apply bg-orange-100 text-orange-800;
     }
 
+    .badge-blue {
+        @apply bg-primary-50 text-primary-500;
+    }
+
     .badge-grey {
         @apply bg-grey-100 text-grey-800;
     }

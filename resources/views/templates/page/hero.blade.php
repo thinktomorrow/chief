@@ -5,13 +5,8 @@
     'breadcrumbs' => [],
 ])
 
-<div {{ $attributes->merge(['class' => 'container mb-6']) }}>
-    @include(
-        'chief::templates.page._partials.breadcrumbs',
-        [
-            'breadcrumbs' => $breadcrumbs,
-        ]
-    )
+<div {{ $attributes }}>
+    @include('chief::templates.page._partials.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
 
     @if ($title || $description || $customTitle || $slot->isNotEmpty())
         <div class="space-y-4">
@@ -20,7 +15,7 @@
                     @if ($customTitle)
                         {{ $customTitle }}
                     @else
-                        <h1 class="h2 h2-dark">{{ $title }}</h1>
+                        <h1 class="h1 h1-dark">{{ $title }}</h1>
                     @endif
 
                     @if ($slot->isNotEmpty())

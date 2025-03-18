@@ -1,43 +1,55 @@
-<div class="space-y-6">
-    <div>
-        <div class="flex items-center gap-4">
-            <x-chief::multiselect
-                wire:model.live="filters.owners"
-                placeholder="Kies een pagina"
-                :options="$this->getOwnerFilterValues()"
-                class="w-1/2"
-            ></x-chief::multiselect>
+<div>
+    <div class="row-start-start gutter-3">
+        <div class="w-1/2">
+            <x-chief::form.fieldset>
+                <x-chief::form.label>Kies een pagina</x-chief::form.label>
+                <x-chief::multiselect
+                    wire:model.live="filters.owners"
+                    placeholder="Kies een pagina"
+                    :options="$this->getOwnerFilterValues()"
+                />
+            </x-chief::form.fieldset>
+        </div>
 
-            <x-chief::multiselect
-                wire:model.live="filters.types"
-                name="types[]"
-                placeholder="Kies een type"
-                :options="$this->getTypeFilterValues()"
-                class="w-1/2"
-            ></x-chief::multiselect>
+        <div class="w-1/2">
+            <x-chief::form.fieldset>
+                <x-chief::form.label>Kies een type</x-chief::form.label>
+                <x-chief::multiselect
+                    wire:model.live="filters.types"
+                    name="types[]"
+                    placeholder="Kies een type"
+                    :options="$this->getTypeFilterValues()"
+                />
+            </x-chief::form.fieldset>
         </div>
     </div>
 
-    <div data-sidebar-component="existingFragments" class="space-y-3">
-        @forelse($this->getShareableFragments() as $shareableFragment)
-            <div>
-                <button
-                    wire:click="attachFragment('{{ $shareableFragment->getFragmentId() }}')"
-                    class="w-full p-3 space-y-3 text-left transition-all duration-75 ease-in-out border rounded-lg border-grey-100 bg-grey-50 hover:shadow-card hover:border-primary-500"
-                    type="button"
-                >
-                    <div>
-                        <span class="h6-dark h6">
-                            {{ ucfirst($shareableFragment->getLabel()) }}
-                        </span>
-                    </div>
+    <div data-sidebar-component="existingFragments" class="-mx-2 mt-6 space-y-2 border-t border-grey-100 pt-4">
+        @forelse ($this->getShareableFragments() as $shareableFragment)
+            <button
+                type="button"
+                wire:click="attachFragment('{{ $shareableFragment->getFragmentId() }}')"
+                class="group flex w-full items-start gap-2 rounded-xl p-2 text-left hover:bg-grey-50"
+            >
+                <div class="shrink-0 text-grey-400 *:size-6 group-hover:text-primary-500">
+                    {!! $shareableFragment->getIcon() !!}
+                </div>
 
-                    {!! $shareableFragment->renderInAdmin() !!}
-                </button>
-            </div>
+                <div class="grow space-y-2">
+                    <h3 class="text-base/6 font-medium text-grey-800 group-hover:text-grey-950">
+                        {{ ucfirst($shareableFragment->getLabel()) }}
+                    </h3>
+
+                    @if ($adminView = $shareableFragment->renderInAdmin())
+                        <div>
+                            {!! $adminView !!}
+                        </div>
+                    @endif
+                </div>
+            </button>
         @empty
-            <div>
-                <p class="body body-dark">Geen fragmenten gevonden.</p>
+            <div class="px-2">
+                <p class="body text-grey-500">Geen fragmenten gevonden.</p>
             </div>
         @endforelse
     </div>
