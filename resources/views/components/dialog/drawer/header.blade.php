@@ -2,19 +2,24 @@
     'title' => null,
     'subtitle' => null,
     'badges' => [],
+    'backButton' => null,
 ])
 
 <header {{ $attributes->class(['flex shrink-0 items-start justify-between border-b border-grey-100 p-4']) }}>
     <div class="flex items-start gap-2">
-        <x-chief-table::button
-            size="sm"
-            variant="grey"
-            type="button"
-            x-on:click="close()"
-            class="mt-[0.1875rem] shrink-0"
-        >
-            <x-chief::icon.arrow-left />
-        </x-chief-table::button>
+        @if ($backButton)
+            {{ $backButton }}
+        @else
+            <x-chief-table::button
+                size="sm"
+                variant="grey"
+                type="button"
+                x-on:click="close()"
+                class="mt-[0.1875rem] shrink-0"
+            >
+                <x-chief::icon.arrow-left />
+            </x-chief-table::button>
+        @endif
 
         @if ($title || $subtitle || count($badges) > 0)
             <div class="mt-[0.375rem] space-y-1.5">

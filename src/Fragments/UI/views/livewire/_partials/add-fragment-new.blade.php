@@ -1,41 +1,43 @@
-@forelse($this->getAllowedFragmentsGrouped() as $category => $fragmentsByCategory)
-    <div @class(['space-y-3', 'pt-6 border-t border-grey-100' => !$loop->first, 'pb-6' => !$loop->last])>
-        @if($category)
-            <div>
-                <p class="text-sm tracking-wider uppercase h6 body-dark">{{ ucfirst($category) }}</p>
-            </div>
-        @endif
+<div class="columns-2 gap-6 space-y-4">
+    @forelse ($this->getAllowedFragmentsGrouped() as $category => $fragmentsByCategory)
+        <div class="inline-block space-y-1">
+            <p class="text-sm/6 font-normal text-grey-500">
+                @if ($category)
+                    {{ ucfirst($category) }}
+                @else
+                    Standaard
+                @endif
+            </p>
 
-        <div class="row-start-stretch gutter-1.5">
-            @foreach($fragmentsByCategory as $allowedFragment)
-                <div class="w-full sm:w-1/2">
-                    <span
+            <div class="-mx-2 flex flex-wrap items-start">
+                @foreach ($fragmentsByCategory as $allowedFragment)
+                    <button
+                        type="button"
                         wire:click="showCreateForm('{{ $allowedFragment::resourceKey() }}')"
-                        title="{{ ucfirst($allowedFragment->getLabel()) }}"
-                        class="cursor-pointer flex gap-3 p-3 transition-all duration-75 ease-in-out border rounded-lg border-grey-100 bg-grey-50 hover:shadow-card hover:border-primary-500"
+                        class="group flex w-full items-start gap-2 rounded-xl p-2 text-left hover:bg-grey-50"
                     >
-                        <div class="shrink-0 body-dark [&>*]:w-6 [&>*]:h-6">
+                        <div class="shrink-0 text-grey-400 *:size-6 group-hover:text-primary-500">
                             {!! $allowedFragment->getIcon() !!}
                         </div>
 
-                        <div class="space-y-2">
-                            <p class="h6 h1-dark">
+                        <div class="grow space-y-0.5">
+                            <h3 class="text-base/6 font-medium text-grey-800 group-hover:text-grey-950">
                                 {{ ucfirst($allowedFragment->getLabel()) }}
-                            </p>
+                            </h3>
 
-                            @if($hint = $allowedFragment->getHint())
-                                <p class="text-sm body body-dark">
+                            @if ($hint = $allowedFragment->getHint())
+                                <p class="body text-sm text-grey-500">
                                     {!! $hint !!}
                                 </p>
                             @endif
                         </div>
-                    </span>
-                </div>
-            @endforeach
+                    </button>
+                @endforeach
+            </div>
         </div>
-    </div>
-@empty
-    <div class="w-full">
-        <p class="body body-dark">Geen fragmenten gevonden.</p>
-    </div>
-@endforelse
+    @empty
+        <div class="w-full">
+            <p class="body body-dark">Geen fragmenten gevonden.</p>
+        </div>
+    @endforelse
+</div>

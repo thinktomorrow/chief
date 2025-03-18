@@ -70,11 +70,11 @@
     <div
         x-show="showNav"
         @class([
-            'mb-2 inline-block bg-grey-100',
+            'inline-block bg-grey-100',
             match ($size) {
-                'xs' => 'rounded-[0.4375rem]',
-                'sm' => 'rounded-[0.5625rem]',
-                'base' => 'rounded-[0.6875rem]',
+                'xs' => 'mb-2 rounded-[0.4375rem]',
+                'sm' => 'mb-3 rounded-[0.5625rem]',
+                'base' => 'mb-4 rounded-[0.6875rem]',
                 default => 'rounded-[0.4375rem]',
             },
         ])

@@ -37,55 +37,65 @@
 
         {{-- TODO(ben): get fragment urls --}}
         @include('chief-fragments::livewire._partials.bookmark')
-
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
 
         @foreach ($this->getFields() as $field)
             {{ $field }}
         @endforeach
 
-        <x-chief::form.fieldset>
-            <x-chief::form.label>Fragmenten</x-chief::form.label>
+        @if ($fragment->allowsFragments)
+            <x-chief::form.fieldset>
+                <x-chief::form.label>Fragmenten</x-chief::form.label>
 
-            <div
-                data-slot="control"
-                wire:ignore.self
-                x-sortable
-                x-sortable-group="{{ 'group-fragment-' . $fragment->fragmentId }}"
-                x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-                class="divide-y divide-grey-100"
-            >
-                @include(
-                    'chief-fragments::livewire._partials.add-fragment-button',
-                    [
-                        'order' => -1,
-                        'parentId' => $fragment->fragmentId,
-                    ]
-                )
+                <div
+                    data-slot="control"
+                    wire:ignore.self
+                    x-sortable
+                    x-sortable-group="{{ 'group-fragment-' . $fragment->fragmentId }}"
+                    x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
+                    class="divide-y divide-grey-100"
+                >
+                    @if ($fragments->count() > 1)
+                        @include(
+                            'chief-fragments::livewire._partials.add-fragment-button',
+                            [
+                                'order' => -1,
+                                'parentId' => $fragment->fragmentId,
+                            ]
+                        )
 
-                @foreach ($fragments as $childFragment)
-                    @include(
-                        'chief-fragments::livewire._partials.fragment',
-                        [
-                            'fragment' => $childFragment,
-                            'parentId' => $fragment->fragmentId,
-                        ]
-                    )
-                @endforeach
-            </div>
+                        @foreach ($fragments as $childFragment)
+                            @include(
+                                'chief-fragments::livewire._partials.fragment',
+                                [
+                                    'fragment' => $childFragment,
+                                    'parentId' => $fragment->fragmentId,
+                                ]
+                            )
+                        @endforeach
+                    @else
+                        @include(
+                            'chief-fragments::livewire._partials.empty-context',
+                            [
+                                'parentId' => $fragment->fragmentId,
+                            ]
+                        )
+                    @endif
+                </div>
 
-            <livewire:chief-fragments::edit-fragment
-                :key="$fragment->getId() . '-edit-fragment'"
-                :context="$context"
-                :parent-component-id="$this->getId()"
-            />
+                <livewire:chief-fragments::edit-fragment
+                    :key="$fragment->getId() . '-edit-fragment'"
+                    :context="$context"
+                    :parent-component-id="$this->getId()"
+                />
 
-            <livewire:chief-fragments::add-fragment
-                :key="$fragment->getId() . '-add-fragment'"
-                :context-id="$context->contextId"
-                :parent-component-id="$this->getId()"
-            />
-        </x-chief::form.fieldset>
+                <livewire:chief-fragments::add-fragment
+                    :key="$fragment->getId() . '-add-fragment'"
+                    :context-id="$context->contextId"
+                    :parent-component-id="$this->getId()"
+                />
+            </x-chief::form.fieldset>
+        @endif
 
         <x-slot name="footer" class="flex flex-wrap items-start gap-2">
             <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
