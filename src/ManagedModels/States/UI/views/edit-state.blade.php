@@ -51,70 +51,7 @@
                                                variant="{{ $transition->variant}}">
                             {{ $transition->label }}
                         </x-chief-table::button>
-
-                        {{--                        <x-chief::button x-data x-on:click="$dispatch('open-dialog', { 'id': 'user-edit-options' });">--}}
-                        {{--                            <x-chief::icon.more-vertical-circle class="size-5" />--}}
-                        {{--                        </x-chief::button>--}}
-
-
-
-                        {{--                        @if ($stateConfig->hasConfirmationForTransition($transitionKey))--}}
-                        {{--                            <button--}}
-                        {{--                                type="button"--}}
-                        {{--                                x-on:click="$dispatch('open-dialog', { id: 'state-modal-{{ $transitionKey }}-{{ $model->id }}'})"--}}
-                        {{--                                @class([--}}
-                        {{--                                    'btn',--}}
-                        {{--                                    'btn-primary' => $transitionKey === 'publish',--}}
-                        {{--                                    'btn-warning' => $transitionKey === 'archive',--}}
-                        {{--                                    'btn-error' => $transitionKey === 'delete',--}}
-                        {{--                                    'btn-grey' => ! in_array($transitionKey, ['publish', 'archive', 'delete']),--}}
-                        {{--                                ])--}}
-                        {{--                            >--}}
-                        {{--                                {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}--}}
-                        {{--                            </button>--}}
-
-                        {{--                            <template x-teleport="body">--}}
-                        {{--                                @include('chief::manager.windows.state.state-modal')--}}
-                        {{--                            </template>--}}
-                        {{--                        @else--}}
-                        {{--                            <form--}}
-                        {{--                                action="@adminRoute('state-update', $model, $stateConfig->getStateKey(), $transitionKey)"--}}
-                        {{--                                method="POST"--}}
-                        {{--                            >--}}
-                        {{--                                @csrf--}}
-                        {{--                                @method('PUT')--}}
-
-                        {{--                                <div class="space-y-6">--}}
-                        {{--                                    @foreach ($stateConfig->getTransitionFields($transitionKey, $model) as $field)--}}
-                        {{--                                        {{ $field->render() }}--}}
-                        {{--                                    @endforeach--}}
-
-                        {{--                                    <button--}}
-                        {{--                                        type="submit"--}}
-                        {{--                                        @class([--}}
-                        {{--                                            'btn',--}}
-                        {{--                                            'btn-primary' => $transitionKey === 'publish',--}}
-                        {{--                                            'btn-warning' => $transitionKey === 'archive',--}}
-                        {{--                                            'btn-error' => $transitionKey === 'delete',--}}
-                        {{--                                            'btn-grey' => ! in_array($transitionKey, ['publish', 'archive', 'delete']),--}}
-                        {{--                                        ])--}}
-                        {{--                                    >--}}
-                        {{--                                        {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}--}}
-                        {{--                                    </button>--}}
-
-                        {{--                                    @if ($content = $stateConfig->getTransitionContent($transitionKey))--}}
-                        {{--                                        <x-chief::inline-notification--}}
-                        {{--                                            type="{{ $stateConfig->getTransitionType($transitionKey) }}"--}}
-                        {{--                                            size="large"--}}
-                        {{--                                        >--}}
-                        {{--                                            <p>--}}
-                        {{--                                                {!! $content !!}--}}
-                        {{--                                            </p>--}}
-                        {{--                                        </x-chief::inline-notification>--}}
-                        {{--                                    @endif--}}
-                        {{--                                </div>--}}
-                        {{--                            </form>--}}
-                        {{--                        @endif--}}
+                        
                     @endforeach
                 </div>
             @endif

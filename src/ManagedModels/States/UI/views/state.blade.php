@@ -12,4 +12,3 @@
                                      :state-key="$stateKey"
                                      :model-reference="$modelReference" />
 </div>
-
