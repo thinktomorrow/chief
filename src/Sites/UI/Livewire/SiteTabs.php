@@ -10,8 +10,6 @@ use Thinktomorrow\Chief\Sites\BelongsToSites;
 
 class SiteTabs extends Component
 {
-    public string $resourceKey;
-
     public string $modelReference;
 
     public array $sites = [];
@@ -19,9 +17,8 @@ class SiteTabs extends Component
     // Edit the site selection
     public bool $showSettings = false;
 
-    public function mount(string $resourceKey, Visitable&BelongsToSites&ReferableModel $model)
+    public function mount(Visitable&BelongsToSites&ReferableModel $model)
     {
-        $this->resourceKey = $resourceKey;
         $this->modelReference = $model->modelReference()->get();
         $this->sites = $model->getSiteIds();
     }

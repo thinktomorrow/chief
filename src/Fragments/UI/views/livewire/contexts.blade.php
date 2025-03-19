@@ -9,7 +9,7 @@
             <x-chief::tabs.tab
                 wire:key="{{ Str::random() }}"
                 tab-id="{{ $context->contextId }}"
-                tab-label="{{ $context->label ?: 'Default' }}"
+                tab-label="{{ $context->label }}"
             >
                 <livewire:chief-fragments::context :key="$context->contextId" :context="$context" />
             </x-chief::tabs.tab>

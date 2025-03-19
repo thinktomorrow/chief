@@ -11,8 +11,8 @@
                 </x-slot>
             @endif
 
-            @if ($model instanceof BelongsToSites)
-                <livewire:chief-wire::site-tabs :resource-key="$resource::resourceKey()" :model="$model" />
+            @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+                <livewire:chief-wire::site-tabs :model="$model" />
             @endif
 
             @include('chief::manager._partials.edit-actions')
