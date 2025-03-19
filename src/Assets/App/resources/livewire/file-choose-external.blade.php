@@ -47,13 +47,15 @@
         </div>
 
         <x-slot name="footer">
-            <button wire:click="save" type="button" class="btn btn-primary">
-                @if ($assetId)
-                    Vervang extern bestand
-                @else
-                    Voeg extern bestand toe
-                @endif
-            </button>
+            <x-chief::dialog.modal.footer>
+                <x-chief-table::button wire:click="save" variant="primary" type="button">
+                    @if ($assetId)
+                        Vervang extern bestand
+                    @else
+                        Voeg extern bestand toe
+                    @endif
+                </x-chief-table::button>
+            </x-chief::dialog.modal.footer>
         </x-slot>
     @endif
 </x-chief::dialog.modal>

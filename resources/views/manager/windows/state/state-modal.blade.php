@@ -5,8 +5,7 @@
             x-html="customHtml"
             x-init="
                 $watch('isOpen', (value) => {
-
-                    if(value === false) {
+                    if (value === false) {
                         return
                     }
 
@@ -46,14 +45,15 @@
     @endif
 
     <x-slot name="footer">
-        <button type="submit" x-on:click="close()" class="btn btn-grey">Annuleer</button>
-
-        <button
-            type="submit"
-            form="state-modal-{{ $transitionKey }}-{{ $model->id }}-form"
-            class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
-        >
-            {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
-        </button>
+        <x-chief::dialog.modal.footer>
+            <button type="submit" x-on:click="close()" class="btn btn-grey">Annuleer</button>
+            <button
+                type="submit"
+                form="state-modal-{{ $transitionKey }}-{{ $model->id }}-form"
+                class="btn btn-primary btn-{{ $stateConfig->getTransitionType($transitionKey) }}"
+            >
+                {{ $stateConfig->getTransitionButtonLabel($transitionKey) }}
+            </button>
+        </x-chief::dialog.modal.footer>
     </x-slot>
 </x-chief::dialog.modal>

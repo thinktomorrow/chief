@@ -29,17 +29,27 @@
             </x-chief-assets::upload-and-dropzone>
         </form>
 
-        <x-slot name="footer" class="flex justify-end">
-            <button
-                type="submit"
-                form="file-upload-form-{{ $this->getId() }}"
-                @disabled($this->countUploadedOrSelectedFiles() < 1)
-                @class(['btn btn-primary', 'btn-disabled' => $this->countUploadedOrSelectedFiles() < 1])
-            >
-                Voeg
-                {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
-                toe
-            </button>
+        <x-slot name="footer">
+            <x-chief::dialog.modal.footer>
+                @if ($this->countUploadedOrSelectedFiles() < 1)
+                    <x-chief-table::button
+                        variant="grey"
+                        type="submit"
+                        form="file-upload-form-{{ $this->getId() }}"
+                        disabled
+                    >
+                        Voeg
+                        {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
+                        toe
+                    </x-chief-table::button>
+                @else
+                    <x-chief-table::button variant="primary" type="submit" form="file-upload-form-{{ $this->getId() }}">
+                        Voeg
+                        {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
+                        toe
+                    </x-chief-table::button>
+                @endif
+            </x-chief::dialog.modal.footer>
         </x-slot>
     @endif
 </x-chief::dialog.modal>

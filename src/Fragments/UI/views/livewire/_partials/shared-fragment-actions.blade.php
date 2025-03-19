@@ -71,20 +71,14 @@
                 bewerken.
             </p>
 
-            <x-slot name="footer" class="flex flex-wrap items-center justify-end gap-3">
-                <x-chief-table::button x-on:click.stop="close" type="button" variant="grey">
-                    Sluit
-                </x-chief-table::button>
+            <x-slot name="footer">
+                <x-chief::dialog.modal.footer>
+                    <x-chief-table::button x-on:click.stop="close" type="button">Sluit</x-chief-table::button>
 
-                <x-chief-table::button
-                    x-on:click="
-                        close()
-                        $wire.isolateFragment()
-                    "
-                    variant="orange"
-                >
-                    Ontkoppel en bewerk dit fragment apart
-                </x-chief-table::button>
+                    <x-chief-table::button x-on:click="$wire.isolateFragment(); close();" variant="orange">
+                        Ontkoppel en bewerk dit fragment apart
+                    </x-chief-table::button>
+                </x-chief::dialog.modal.footer>
             </x-slot>
         </x-chief::dialog.modal>
     </template>

@@ -17,8 +17,11 @@
     </div>
 
     <x-slot name="footer">
-        <button type="button" x-on:click="close()" class="btn btn-grey">Annuleer</button>
-
-        <button type="submit" form="deleteForm-menuitem-{{ $menuitem->id }}" class="btn btn-error">Verwijder</button>
+        <x-chief::dialog.modal.footer>
+            <x-chief-table::button type="button" x-on:click.stop="close()">Annuleer</x-chief-table::button>
+            <x-chief-table::button type="submit" form="deleteForm-menuitem-{{ $menuitem->id }}">
+                Verwijder
+            </x-chief-table::button>
+        </x-chief::dialog.modal.footer>
     </x-slot>
 </x-chief::dialog.modal>

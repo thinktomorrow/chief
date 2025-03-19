@@ -101,10 +101,11 @@
     </form>
 
     <x-slot name="footer">
-        <div class="flex flex-wrap justify-end gap-3">
-            <button type="button" x-on:click="close()" class="btn btn-grey">Annuleer</button>
-
-            <button wire:click.prevent="submit" type="submit" class="btn btn-primary">Bewaar bestand</button>
-        </div>
+        <x-chief::dialog.modal.footer>
+            <x-chief-table::button type="button" x-on:click="close()">Annuleer</x-chief-table::button>
+            <x-chief-table::button wire:click.prevent="submit" variant="primary" type="submit">
+                Bewaar bestand
+            </x-chief-table::button>
+        </x-chief::dialog.modal.footer>
     </x-slot>
 @endif

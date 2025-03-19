@@ -1,4 +1,4 @@
-<x-chief::dialog.drawer wired size="xxs">
+<x-chief::dialog.drawer wired size="sm">
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}
@@ -9,11 +9,11 @@
         </x-slot>
 
         <div class="space-y-4">
-            <div class="prose prose-dark prose-spacing">
-                @if ($this->getContent())
+            @if ($this->getContent())
+                <div class="prose prose-dark prose-spacing">
                     {!! $this->getContent() !!}
-                @endif
-            </div>
+                </div>
+            @endif
 
             @foreach ($this->getFields() as $field)
                 {{ $field }}
@@ -21,10 +21,12 @@
         </div>
 
         <x-slot name="footer">
-            <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
-            <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">
-                {{ $this->getButton() }}
-            </x-chief-table::button>
+            <x-chief::dialog.drawer.footer>
+                <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">
+                    {{ $this->getButton() }}
+                </x-chief-table::button>
+                <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+            </x-chief::dialog.drawer.footer>
         </x-slot>
     @endif
 </x-chief::dialog.drawer>

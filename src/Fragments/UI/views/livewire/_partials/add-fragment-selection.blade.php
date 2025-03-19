@@ -17,5 +17,7 @@
 </x-chief::tabs>
 
 <x-slot name="footer">
-    <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+    <x-chief::dialog.modal.footer>
+        <x-chief-table::button wire:click="close" type="button">Annuleer</x-chief-table::button>
+    </x-chief::dialog.modal.footer>
 </x-slot>
