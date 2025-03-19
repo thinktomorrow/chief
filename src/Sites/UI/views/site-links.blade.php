@@ -17,11 +17,12 @@
                 <div wire:key="site-link-{{ $siteLink->siteId }}">
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-2">
-                            @include('chief-sites::link-status-dot')
+                            @include('chief-sites::_partials.link-status-dot')
 
                             <div>
                                 <p class="text-sm leading-6 text-grey-500">{{ $siteLink->site->name }}</p>
-                                <p class="leading-6 text-grey-700">{{ $siteLink->url->slug }}</p>
+                                <a href="{{ $siteLink->url?->url }}"
+                                   class="leading-6 text-grey-700">{{ $siteLink->url->slug }}</a>
                             </div>
                         </div>
 

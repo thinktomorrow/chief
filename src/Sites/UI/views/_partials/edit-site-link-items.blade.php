@@ -1,7 +1,7 @@
 @foreach($this->siteLinks as $i => $siteLink)
     <div wire:key="{{ $siteLink->siteId }}">
         <div>
-            @include('chief-sites::link-status-dot')
+            @include('chief-sites::_partials.link-status-dot')
 
             <div>
                 <p class="text-sm leading-6 text-grey-500">{{ $siteLink->site->name }}</p>
@@ -38,7 +38,7 @@
                                                wire:model="form.{{ $siteLink->siteId }}.context">
                             @foreach ($contexts as $context)
                                 <option wire:key="context-option-{{ $context->contextId }}"
-                                        value="{{ $context->contextId }}">{{ $context->label ?: 'Default' }}</option>
+                                        value="{{ $context->contextId }}">{{ $context->label }}</option>
                             @endforeach
                         </x-chief::input.select>
                     </x-chief::input.group>
