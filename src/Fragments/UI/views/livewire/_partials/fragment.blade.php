@@ -14,7 +14,6 @@
             <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-2">
                 <h3 class="text-base/6 font-medium text-grey-800">
                     {{ ucfirst($fragment->label) }}
-                    {{-- - order: {{ $fragment->order }} --}}
                 </h3>
 
                 <div class="flex flex-wrap items-start gap-1">

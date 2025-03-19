@@ -35,7 +35,7 @@
                 </div>
 
                 @if ($footer)
-                    <div {{ $footer->attributes->class(['shrink-0 border-t border-grey-100 p-4']) }}>
+                    <div {{ $footer->attributes }}>
                         {{ $footer }}
                     </div>
                 @endif

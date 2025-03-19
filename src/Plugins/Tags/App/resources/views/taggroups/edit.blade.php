@@ -63,9 +63,15 @@
                 </div>
 
                 <x-slot name="footer">
-                    <button type="submit" form="delete-taggroup-modal-form-{{ $model->id }}" class="btn btn-error">
-                        Verwijder tag groep
-                    </button>
+                    <x-chief::dialog.modal.footer>
+                        <x-chief-table::button
+                            type="submit"
+                            form="delete-taggroup-modal-form-{{ $model->id }}"
+                            variant="red"
+                        >
+                            Verwijder tag groep
+                        </x-chief-table::button>
+                    </x-chief::dialog.modal.footer>
                 </x-slot>
             </x-chief::dialog.modal>
         @endpush

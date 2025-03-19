@@ -55,9 +55,12 @@
             </div>
 
             <x-slot name="footer">
-                <button type="submit" form="delete-tag-modal-form-{{ $model->id }}" class="btn btn-error">
-                    <x-chief::icon-label icon="icon-trash">Verwijder tag</x-chief::icon-label>
-                </button>
+                <x-chief::dialog.modal.footer>
+                    <x-chief-table::button type="submit" form="delete-tag-modal-form-{{ $model->id }}" variant="red">
+                        <x-chief::icon.delete />
+                        <span>Verwijder tag</span>
+                    </x-chief-table::button>
+                </x-chief::dialog.modal.footer>
             </x-slot>
         </x-chief::dialog.modal>
     @endpush

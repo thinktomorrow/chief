@@ -20,7 +20,9 @@
     {{ $field }}
 @endforeach
 
-<x-slot name="footer" class="flex flex-wrap items-start gap-2">
-    <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
-    <x-chief-table::button wire:click="$set('showCreate', false)" class="shrink-0">Annuleer</x-chief-table::button>
+<x-slot name="footer">
+    <x-chief::dialog.modal.footer>
+        <x-chief-table::button wire:click="$set('showCreate', false)" type="button">Annuleer</x-chief-table::button>
+        <x-chief-table::button wire:click="save" variant="blue" type="button">Bewaren</x-chief-table::button>
+    </x-chief::dialog.modal.footer>
 </x-slot>

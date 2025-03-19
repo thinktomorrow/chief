@@ -54,22 +54,22 @@
         @endif
 
         <x-slot name="footer">
-            <div class="flex flex-wrap items-center justify-end gap-3">
-                <button x-on:click="close" type="button" class="btn btn-grey">Sluit</button>
+            <x-chief::dialog.modal.footer>
+                <x-chief-table::button x-on:click="close" type="button">Sluit</x-chief-table::button>
 
                 @if ($currentOwner && $ownerCount > 1)
-                    <button
+                    <x-chief-table::button
+                        variant="primary"
                         type="button"
-                        x-on:click="
+                        x-on:click.stop="
                             close()
                             $wire.isolateAsset()
                         "
-                        class="btn btn-primary"
                     >
                         Ontkoppel en bewerk apart in {{ $currentOwner['label'] }}
-                    </button>
+                    </x-chief-table::button>
                 @endif
-            </div>
+            </x-chief::dialog.modal.footer>
         </x-slot>
     </x-chief::dialog.modal>
 @endteleport

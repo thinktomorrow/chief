@@ -14,7 +14,7 @@
                 size="sm"
                 variant="grey"
                 type="button"
-                x-on:click="close()"
+                x-on:click.stop="close()"
                 class="mt-[0.1875rem] shrink-0"
             >
                 <x-chief::icon.arrow-left />
@@ -27,7 +27,7 @@
                     <div class="flex flex-wrap items-start gap-2">
                         @if ($title)
                             <h2 class="text-lg/6 font-medium text-grey-950">
-                                {{ $title ?? 'Default drawer title' }}
+                                {{ $title }}
                             </h2>
                         @endif
 

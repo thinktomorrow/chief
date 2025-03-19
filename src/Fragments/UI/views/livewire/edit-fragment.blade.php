@@ -97,9 +97,11 @@
             </x-chief::form.fieldset>
         @endif
 
-        <x-slot name="footer" class="flex flex-wrap items-start gap-2">
-            <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
-            <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+        <x-slot name="footer">
+            <x-chief::dialog.drawer.footer>
+                <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
+                <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+            </x-chief::dialog.drawer.footer>
         </x-slot>
     @endif
 </x-chief::dialog.drawer>

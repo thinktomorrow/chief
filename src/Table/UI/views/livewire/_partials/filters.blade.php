@@ -49,11 +49,11 @@
                 @endforeach
             </div>
 
-            <x-slot name="footer" class="flex items-center justify-start gap-2">
-                <x-chief-table::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief-table::button>
-                <div>
+            <x-slot name="footer">
+                <x-chief::dialog.modal.footer class="!justify-start">
+                    <x-chief-table::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief-table::button>
                     <span>{{ $this->resultTotal }} resultaten gevonden</span>
-                </div>
+                </x-chief::dialog.modal.footer>
             </x-slot>
         </x-chief::dialog.drawer>
     </div>

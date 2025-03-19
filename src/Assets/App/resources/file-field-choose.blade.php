@@ -6,7 +6,7 @@
         @endphp
 
         <x-slot name="header">
-            <div class="flex grow flex-wrap items-start justify-between gap-3">
+            <div class="flex shrink-0 flex-wrap items-start justify-between gap-3 p-4">
                 <div x-data="{}" class="relative flex grow items-center justify-end">
                     <x-chief::icon.search class="body-dark pointer-events-none absolute left-3 size-5" />
 
@@ -49,7 +49,7 @@
         </div>
 
         <x-slot name="footer">
-            <div class="w-full space-y-4">
+            <div class="space-y-4 border-t border-grey-100 p-4">
                 @if ($rows->total() > $rows->count())
                     <div class="shrink-0">
                         {{ $rows->onEachSide(0)->links() }}
@@ -75,12 +75,14 @@
                         </div>
                     </div>
 
-                    <div class="flex shrink-0 flex-wrap justify-end gap-3 max-lg:w-full">
-                        <button wire:click="close" type="button" class="btn btn-grey shrink-0">Annuleren</button>
+                    <div class="flex shrink-0 flex-wrap justify-end gap-2 max-lg:w-full">
+                        <x-chief-table::button wire:click="close" type="button" class="shrink-0">
+                            Annuleren
+                        </x-chief-table::button>
 
-                        <button wire:click="save" type="button" class="btn btn-primary shrink-0">
+                        <x-chief-table::button variant="blue" wire:click="save" type="button" class="shrink-0">
                             Voeg selectie toe
-                        </button>
+                        </x-chief-table::button>
                     </div>
                 </div>
             </div>

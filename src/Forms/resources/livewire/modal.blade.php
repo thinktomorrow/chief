@@ -9,27 +9,30 @@
         </x-slot>
 
         <div class="space-y-4">
-            <div class="prose prose-dark prose-spacing">
-                @if ($this->getContent())
+            @if ($this->getContent())
+                <div class="prose prose-dark prose-spacing">
                     {!! $this->getContent() !!}
-                @endif
-            </div>
+                </div>
+            @endif
 
             @foreach ($this->getFields() as $field)
                 @php
-                    if($field instanceof \Thinktomorrow\Chief\Forms\Fields\MultiSelect && !$field->hasDropdownPosition()) {
+                    if ($field instanceof \Thinktomorrow\Chief\Forms\Fields\MultiSelect && ! $field->hasDropdownPosition()) {
                         $field->dropdownPositionStatic();
                     }
                 @endphp
+
                 {{ $field }}
             @endforeach
         </div>
 
         <x-slot name="footer">
-            <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
-            <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">
+            <x-chief::dialog.modal.footer>
+                <x-chief-table::button wire:click="close">Annuleer</x-chief-table::button>
+                <x-chief-table::button wire:click="save" variant="blue">
                     {{ $this->getButton() }}
-            </x-chief-table::button>
+                </x-chief-table::button>
+            </x-chief::dialog.modal.footer>
         </x-slot>
     @endif
-</x-chief::dialog.drawer>
+</x-chief::dialog.modal>

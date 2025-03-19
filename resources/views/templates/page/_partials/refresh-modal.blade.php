@@ -4,9 +4,11 @@
     </div>
 
     <x-slot name="footer">
-        <button type="button" x-on:click="window.location.reload()" class="btn btn-primary">
-            Herlaad de pagina
-        </button>
+        <x-chief::dialog.modal.footer>
+            <x-chief-table::button variant="blue" type="button" x-on:click="window.location.reload()">
+                Herlaad de pagina
+            </x-chief-table::button>
+        </x-chief::dialog.modal.footer>
     </x-slot>
 </x-chief::dialog.modal>
 
