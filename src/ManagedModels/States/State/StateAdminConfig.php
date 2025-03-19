@@ -16,12 +16,6 @@ interface StateAdminConfig extends StateConfig
     public function getWindowContent(StatefulContract $statefulContract, array $viewData): string;
 
     /**
-     * The html representing a state. This is shown as label
-     * on the index and as label in the window tile
-     */
-    public function getStateLabel(StatefulContract $statefulContract): ?string;
-
-    /**
      * The optional intro content on the edit view of the state. This can
      * be used to display an inline message to the user.
      */
@@ -55,6 +49,8 @@ interface StateAdminConfig extends StateConfig
      * Might be a good idea for destructive actions.
      */
     public function hasConfirmationForTransition(string $transitionKey): bool;
+
+    public function getConfirmationContent(string $transitionKey, StatefulContract $statefulContract): ?string;
 
     /**
      * For modals with heavy content, you can consider loading the modal content async.

@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class PageStateConfig implements StateAdminConfig, StateConfig
@@ -75,6 +76,7 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         }
 
         if ($transition == 'archive') {
+
             event(
                 new ManagedModelArchived(
                     $statefulContract->modelReference(),
@@ -110,24 +112,24 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         if ($statefulContract instanceof Visitable) {
             if ($statefulContract->inOnlineState()) {
                 if ($statefulContract->urls->isNotEmpty()) {
-                    return '<span class="label label-xs label-success">Online</span>';
+                    return '<span class="label label-xs label-success">Gepubliceerd</span>';
                 } else {
-                    return '<span class="label label-xs label-warning">Link ontbreekt</span>';
+                    return '<span class="label label-xs label-warning">Gepubliceerd - Link ontbreekt</span>';
                 }
             }
 
             switch ($statefulContract->getState($this->getStateKey())) {
                 case PageState::draft:
-                    return '<span class="label label-xs label-error">Offline</span>';
+                    return '<span class="label label-xs label-error">Draft</span>';
             }
         }
 
         switch ($statefulContract->getState($this->getStateKey())) {
             case PageState::published:
-                return '<span class="label label-xs label-success">Online</span>';
+                return '<span class="label label-xs label-success">Gepubliceerd</span>';
 
             case PageState::draft:
-                return '<span class="label label-xs label-error">Offline</span>';
+                return '<span class="label label-xs label-error">Draft</span>';
 
             case PageState::archived:
                 return '<span class="label label-xs label-grey">Gearchiveerd</span>';
@@ -149,7 +151,7 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         }
 
         if ($state == PageState::published) {
-            return '<p>De pagina staat online. 👍</p>';
+            return '<p>De pagina is gepubliceerd. 👍</p>';
         }
 
         return null;
@@ -162,7 +164,7 @@ class PageStateConfig implements StateAdminConfig, StateConfig
                 return 'Publiceer deze pagina';
 
             case 'unpublish':
-                return 'Haal offline';
+                return 'Zet terug in draft';
 
             case 'archive':
                 return 'Archiveer';
@@ -182,16 +184,16 @@ class PageStateConfig implements StateAdminConfig, StateConfig
     {
         switch ($transitionKey) {
             case 'publish':
-                return 'success';
+                return 'green';
 
             case 'archive':
-                return 'warning';
+                return 'orange';
 
             case 'delete':
-                return 'error';
+                return 'red';
 
             default:
-                return 'info';
+                return 'grey';
         }
     }
 
@@ -225,11 +227,7 @@ class PageStateConfig implements StateAdminConfig, StateConfig
     public function getResponseNotification(string $transitionKey): ?string
     {
         if ($transitionKey == 'publish') {
-            return 'De pagina is online geplaatst.';
-        }
-
-        if ($transitionKey == 'publish') {
-            return 'De pagina is offline gehaald.';
+            return 'De pagina is gepubliceerd.';
         }
 
         if ($transitionKey == 'archive') {
@@ -242,6 +240,24 @@ class PageStateConfig implements StateAdminConfig, StateConfig
 
         if ($transitionKey == 'delete') {
             return 'De pagina is definitief verwijderd.';
+        }
+
+        return null;
+    }
+
+    public function getConfirmationContent(string $transitionKey, StatefulContract $statefulContract): ?string
+    {
+        if ($transitionKey == 'archive') {
+            $manager = app(Registry::class)->findManagerByModel($statefulContract::class);
+            $resource = app(Registry::class)->findResourceByModel($statefulContract::class);
+
+            return view('chief-states::archive-confirmation', [
+                'manager' => $manager,
+                'model' => $statefulContract,
+                'resource' => $resource,
+                'stateConfig' => $statefulContract->getStateConfig(PageState::KEY),
+                'targetModels' => UrlHelper::allOnlineModels(false, $statefulContract),
+            ])->render();
         }
 
         return null;

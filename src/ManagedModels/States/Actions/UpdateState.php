@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\ManagedModels\States\Actions;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
+use Thinktomorrow\Chief\ManagedModels\States\Events\ModelStateUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
@@ -40,12 +41,18 @@ class UpdateState
             $this->saveTransitionFields($resource, $model, $stateConfig->getTransitionFields($transitionKey, $model), $data, $files);
         }
 
+        $formerState = $model->getState($stateKey)->getValueAsString();
+
         $machine = StateMachine::fromConfig($model, $stateConfig);
         $machine->apply($transitionKey);
 
         $model->save();
 
         $stateConfig->emitEvent($model, $transitionKey, $data);
+
+        $newState = $model->getState($stateKey)->getValueAsString();
+
+        event(new ModelStateUpdated($modelReference->get(), $stateKey, $formerState, $newState, $transitionKey));
 
         event(new PageChanged($model->modelReference()));
     }
