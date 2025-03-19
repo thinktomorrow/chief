@@ -1,4 +1,9 @@
-<x-chief::dialog.modal wired size="xs" :title="$addingSites ? 'Voeg links toe' : 'Bewerk links'">
+<x-chief::dialog.drawer
+    wired
+    size="sm"
+    :title="$addingSites ? 'Voeg links toe' : 'Bewerk links'"
+    :edge-to-edge="!$addingSites"
+>
     @if ($isOpen)
         @if ($addingSites)
             @include('chief-sites::_partials.adding-sites')
@@ -6,4 +11,4 @@
             @include('chief-sites::_partials.editing-sites')
         @endif
     @endif
-</x-chief::dialog.modal>
+</x-chief::dialog.drawer>

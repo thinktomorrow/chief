@@ -1,5 +1,5 @@
-@foreach ($this->getNonAddedSites() as $site)
-    <x-chief::input.group class="w-full">
+<x-chief::input.group class="w-full">
+    @foreach ($this->getNonAddedSites() as $site)
         <div class="flex items-start gap-2">
             <x-chief::input.checkbox
                 id="{{ $site->id }}"
@@ -8,12 +8,12 @@
             ></x-chief::input.checkbox>
             <x-chief::form.label for="{{ $site->id }}">{{ $site->name }}</x-chief::form.label>
         </div>
-    </x-chief::input.group>
-@endforeach
+    @endforeach
+</x-chief::input.group>
 
 <x-slot name="footer">
-    <x-chief::dialog.modal.footer>
-        <x-chief-table::button wire:click="closeAddingSites">Annuleer</x-chief-table::button>
+    <x-chief::dialog.drawer.footer>
         <x-chief-table::button wire:click="saveAddingSites" variant="blue">Toevoegen</x-chief-table::button>
-    </x-chief::dialog.modal.footer>
+        <x-chief-table::button wire:click="closeAddingSites">Annuleer</x-chief-table::button>
+    </x-chief::dialog.drawer.footer>
 </x-slot>

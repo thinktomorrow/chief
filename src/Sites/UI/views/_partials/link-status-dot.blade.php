@@ -2,18 +2,22 @@
     <div
         @class([
             'absolute inset-0 animate-pulse rounded-full',
-            'bg-green-200' => $siteLink->status->value === 'online',
-            'bg-grey-200' => $siteLink->status->value === 'offline',
-            'bg-grey-200' => $siteLink->status->value === 'none',
+            match ($siteLink->status->value) {
+                'online' => 'bg-green-200',
+                'offline' => 'bg-grey-200',
+                'none' => 'bg-grey-200',
+            },
         ])
     ></div>
 
     <svg
         @class([
             'relative size-2',
-            'fill-green-500' => $siteLink->status->value === 'online',
-            'fill-grey-400' => $siteLink->status->value === 'offline',
-            'fill-grey-400' => $siteLink->status->value === 'none',
+            match ($siteLink->status->value) {
+                'online' => 'fill-green-500',
+                'offline' => 'fill-grey-400',
+                'none' => 'fill-grey-400',
+            },
         ])
         viewBox="0 0 6 6"
         aria-hidden="true"

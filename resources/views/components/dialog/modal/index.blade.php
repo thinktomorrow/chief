@@ -44,7 +44,7 @@
                         <x-chief::dialog.modal.header data-slot="header" :title="$title" :subtitle="$subtitle" />
                     @endif
 
-                    <div data-slot="content" class="grow overflow-y-auto p-4">
+                    <div data-slot="content" class="overflow-y-auto p-4">
                         {{ $slot }}
                     </div>
 

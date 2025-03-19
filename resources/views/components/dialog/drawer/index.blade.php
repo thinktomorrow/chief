@@ -4,6 +4,7 @@
     'title' => null,
     'subtitle' => null,
     'badges' => [],
+    'edgeToEdge' => true,
     'header' => null,
     'footer' => null,
 ])
@@ -30,7 +31,12 @@
                     <x-chief::dialog.drawer.header :title="$title" :subtitle="$subtitle" :badges="$badges" />
                 @endif
 
-                <div class="grow overflow-y-auto p-4">
+                <div
+                    @class([
+                        'grow overflow-y-auto',
+                        'px-4 py-6' => $edgeToEdge === false,
+                    ])
+                >
                     {{ $slot }}
                 </div>
 

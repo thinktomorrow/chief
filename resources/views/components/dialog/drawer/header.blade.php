@@ -1,3 +1,5 @@
+@aware(['title', 'subtitle'])
+
 @props([
     'title' => null,
     'subtitle' => null,

@@ -106,4 +106,39 @@ Sections are the html elements that can be referenced via bookmarks.
 
 ### Menu
 
-- Changed: Menu rendering is now done with the new vine logic. 
+- Changed: Menu rendering is now done with the new vine logic.
+
+### View components
+
+#### Dialogs
+
+- A new `x-chief::dialog.drawer` component. This component consists of two new smaller components:
+    - Drawer header: `x-chief::dialog.drawer.header`
+    - Drawer footer: `x-chief::dialog.drawer.footer`
+- Refactored the `x-chief::dialog.modal` component so it uses the same API as the new `x-chief::dialog.drawer` component. Built with the following components:
+    - Modal header: `x-chief::dialog.modal.header`
+    - Modal footer: `x-chief::dialog.modal.footer`
+
+#### Tabs
+
+- Visual update
+- Added `size` attribute for some additional control. Choices are: `xs`, `sm` and `base`.
+
+#### Forms
+
+A firm clean-up of all existing form styling/components.
+
+##### New components:
+
+- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested components are using the correct margins, relative to each other. The old `x-chief::input.group` still exists, but will be phased out until completely gone in future versions.
+
+##### Renamed components:
+
+- `x-chief::form.label` (Previously called `x-chief::input.label`)
+- `x-chief::form.description` (Previously called `x-chief::input.description`)
+- `x-chief::form.error` (Previously called `x-chief::input.error`)
+
+##### Clean-up
+
+- Changed some old `x-chief::button` components to the newer `x-chief-table::button`. In time, when all these are replaced, the component will be extracted from the table UI and added to the base Chief components.
+- Removed the legacy `form.css` styling, as this wasn't in use anymore for quiet some time.
