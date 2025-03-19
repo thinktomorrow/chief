@@ -37,8 +37,8 @@
                         <x-chief::input.select id="context"
                                                wire:model="form.{{ $siteLink->siteId }}.context">
                             @foreach ($contexts as $context)
-                                <option wire:key="context-option-{{ $context->id }}"
-                                        value="{{ $context->contextId }}">{{ $context->label }}</option>
+                                <option wire:key="context-option-{{ $context->contextId }}"
+                                        value="{{ $context->contextId }}">{{ $context->label ?: 'Default' }}</option>
                             @endforeach
                         </x-chief::input.select>
                     </x-chief::input.group>
