@@ -9,15 +9,15 @@ class RedirectUrl
     /**
      * @return int The id of the newly created redirect record
      */
-    public function handle(UrlRecord $original, string $slug, array $values = []): int
+    public function handle(UrlRecord $original, string|UrlRecord $target, array $values = []): int
     {
-        $targetRecord = UrlRecord::firstOrCreate(array_merge([
+        $targetRecord = $target instanceof UrlRecord ? $target : UrlRecord::firstOrCreate(array_merge([
             'site' => $original->site,
             'status' => $original->status,
             'context_id' => $original->context_id,
             'model_type' => $original->model_type,
             'model_id' => $original->model_id,
-            'slug' => $slug,
+            'slug' => $target,
         ], $values));
 
         // redirect the original record to the new record

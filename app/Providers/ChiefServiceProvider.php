@@ -46,6 +46,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
+use Thinktomorrow\Chief\ManagedModels\States\StatesServiceProvider;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
@@ -69,6 +70,7 @@ class ChiefServiceProvider extends ServiceProvider
     // NOt in use yet... perhaps use a ChiefServiceProviderInterface for this.
     private array $internalProviders = [
         SitesServiceProvider::class,
+        StatesServiceProvider::class,
         SquantoServiceProvider::class,
         RoutesServiceProvider::class,
         FragmentsServiceProvider::class,
@@ -127,6 +129,7 @@ class ChiefServiceProvider extends ServiceProvider
     private function bootEssentials()
     {
         (new SitesServiceProvider($this->app))->boot();
+        (new StatesServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new RoutesServiceProvider($this->app))->boot();
 
@@ -238,6 +241,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
 
         (new SitesServiceProvider($this->app))->register();
+        (new StatesServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new FragmentsServiceProvider($this->app))->register();
 

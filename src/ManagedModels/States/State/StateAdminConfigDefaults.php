@@ -59,6 +59,11 @@ trait StateAdminConfigDefaults
         return false;
     }
 
+    public function getConfirmationContent(string $transitionKey, StatefulContract $statefulContract): ?string
+    {
+        return null;
+    }
+
     public function getAsyncModalUrl(string $transitionKey, StatefulContract $statefulContract): ?string
     {
         return null;

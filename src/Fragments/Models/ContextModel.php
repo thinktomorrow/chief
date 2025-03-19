@@ -44,6 +44,6 @@ final class ContextModel extends Model implements BelongsToSites
 
     public function owner()
     {
-        return $this->morphTo('owner');
+        return $this->morphTo('owner')->withoutGlobalScopes();
     }
 }
