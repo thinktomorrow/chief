@@ -55,6 +55,6 @@ class UrlRecordTest extends ChiefTestCase
         $this->assertEquals($new->id, UrlRecord::findBySlug('foo/bare', 'fr')->id);
 
         $this->assertTrue($existing->fresh()->isRedirect());
-        $this->assertEquals($new->id, $existing->fresh()->redirectTo()->id);
+        $this->assertEquals($new->id, $existing->fresh()->getRedirectTo()->id);
     }
 }

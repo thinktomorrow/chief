@@ -36,6 +36,15 @@ class ContextRepository
             ->get();
     }
 
+    public function getDefaultContextId(ModelReference $modelReference): ?string
+    {
+        return (string) ContextModel::where('owner_type', $modelReference->shortClassName())
+            ->where('owner_id', $modelReference->id())
+            ->orderBy('created_at', 'ASC')
+            ->select('id')
+            ->first()?->id;
+    }
+
     public function find(string $contextId): ContextModel
     {
         return ContextModel::with('owner')->findOrFail($contextId);

@@ -34,7 +34,7 @@ final class ChiefResponse
 
             if ($urlRecord->isRedirect()) {
                 return self::createRedirect(
-                    self::findModel($urlRecord->redirectTo())->url($site)
+                    self::findModel($urlRecord->getRedirectTo())->url($site)
                 );
             }
 
@@ -58,7 +58,7 @@ final class ChiefResponse
     {
         $model = self::findModel($urlRecord);
 
-        ActiveContextId::set($urlRecord->context_id);
+        ActiveContextId::setIfNeeded($urlRecord->context_id, $model);
 
         return $model->response();
     }

@@ -22,7 +22,7 @@ abstract class BaseFragment extends Component implements Fragment
     use NodeDefaults;
     use ReferableModelDefault;
 
-    protected array $addedViewData = [];
+    protected array $withViewData = [];
 
     public function __construct()
     {
@@ -57,12 +57,12 @@ abstract class BaseFragment extends Component implements Fragment
 
             /** @deprecated use $fragment instead */
             'model' => $this,
-        ], $this->addedViewData);
+        ], $this->withViewData);
     }
 
     public function with(array $viewData): static
     {
-        $this->addedViewData = $viewData;
+        $this->withViewData = array_merge($this->withViewData, $viewData);
 
         return $this;
     }
@@ -71,6 +71,10 @@ abstract class BaseFragment extends Component implements Fragment
     {
         if (property_exists($this, 'viewPath') && isset($this->viewPath)) {
             return $this->viewPath;
+        }
+
+        if (strpos($this->viewKey(), '::')) {
+            return $this->viewKey();
         }
 
         return config('chief.fragments.view_path', 'fragments').'.'.$this->viewKey();
