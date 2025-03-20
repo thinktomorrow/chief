@@ -9,10 +9,10 @@
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief-table::button type="button" x-on:click="close()">Annuleer</x-chief-table::button>
-                <x-chief-table::button wire:click.prevent="submit" type="submit" variant="red">
+                <x-chief::button type="button" x-on:click="close()">Annuleer</x-chief::button>
+                <x-chief::button wire:click.prevent="submit" type="submit" variant="red">
                     Verwijder bestand
-                </x-chief-table::button>
+                </x-chief::button>
             </x-chief::dialog.modal.footer>
         </x-slot>
     @endif

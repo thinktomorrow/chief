@@ -28,10 +28,10 @@
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief-table::button wire:click="close">Annuleer</x-chief-table::button>
-                <x-chief-table::button wire:click="save" variant="blue">
+                <x-chief::button wire:click="close">Annuleer</x-chief::button>
+                <x-chief::button wire:click="save" variant="blue">
                     {{ $this->getButton() }}
-                </x-chief-table::button>
+                </x-chief::button>
             </x-chief::dialog.modal.footer>
         </x-slot>
     @endif

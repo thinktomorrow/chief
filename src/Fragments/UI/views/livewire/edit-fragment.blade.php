@@ -17,7 +17,7 @@
                 :badges="$badges"
             >
                 <div class="flex items-start gap-2">
-                    <x-chief-table::button
+                    <x-chief::button
                         variant="outline-white"
                         type="button"
                         class="shrink-0"
@@ -25,7 +25,7 @@
                     >
                         <span>Acties</span>
                         <x-chief::icon.more-vertical-circle />
-                    </x-chief-table::button>
+                    </x-chief::button>
 
                     <x-chief::dialog.dropdown id="fragment-actions-{{ $fragment->getId() }}">
                         @include('chief-fragments::livewire._partials.status-fragment-actions')
@@ -99,8 +99,8 @@
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
-                <x-chief-table::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief-table::button>
-                <x-chief-table::button wire:click="close" class="shrink-0">Annuleer</x-chief-table::button>
+                <x-chief::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief::button>
+                <x-chief::button wire:click="close" class="shrink-0">Annuleer</x-chief::button>
             </x-chief::dialog.drawer.footer>
         </x-slot>
     @endif

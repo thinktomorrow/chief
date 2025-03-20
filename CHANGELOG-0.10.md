@@ -140,5 +140,5 @@ A firm clean-up of all existing form styling/components.
 
 ##### Clean-up
 
-- Changed some old `x-chief::button` components to the newer `x-chief-table::button`. In time, when all these are replaced, the component will be extracted from the table UI and added to the base Chief components.
+- Changed all `x-chief::button` components to the newer `x-chief-table::button`. Then `x-chief-table::button` was renamed to the existing, shorter `x-chief::button`.
 - Removed the legacy `form.css` styling, as this wasn't in use anymore for quiet some time.

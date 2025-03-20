@@ -14,8 +14,8 @@
         action="{{ $getAction() }}"
     >
         @csrf
-        
-        @if($getActionMethod())
+
+        @if ($getActionMethod())
             @method($getActionMethod())
         @endif
 
@@ -28,7 +28,7 @@
                 {{ $_component }}
             @endforeach
 
-            <x-chief-table::button type="submit" variant="blue">
+            <x-chief::button type="submit" variant="blue">
                 Opslaan
                 <svg
                     data-form-submit-spinner
@@ -44,7 +44,7 @@
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                 </svg>
-            </x-chief-table::button>
+            </x-chief::button>
 
             <div data-form-refreshed-notification class="absolute bottom-0 right-0 hidden scale-0 animate-pop-in-out">
                 <span class="label label-success label-xs">Opgeslagen</span>

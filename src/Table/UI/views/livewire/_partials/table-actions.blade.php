@@ -16,13 +16,13 @@
         @endforeach
 
         @if (count($this->getTertiaryActions()) > 0)
-            <x-chief-table::button
+            <x-chief::button
                 x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-actions' })"
                 variant="outline-white"
             >
                 <span>Meer acties</span>
                 <x-chief::icon.chevron-down />
-            </x-chief-table::button>
+            </x-chief::button>
 
             <x-chief::dialog.dropdown id="table-tertiary-actions" placement="bottom-start">
                 @foreach ($this->getTertiaryActions() as $action)

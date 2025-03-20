@@ -15,10 +15,10 @@
                 </div>
 
                 <div class="flex justify-center">
-                    <x-chief-table::button wire:click="resetFilters()" size="sm" variant="grey">
+                    <x-chief::button wire:click="resetFilters()" size="sm" variant="grey">
                         <x-chief::icon.filter-remove />
                         <span>Reset filters</span>
-                    </x-chief-table::button>
+                    </x-chief::button>
                 </div>
             </div>
         </div>

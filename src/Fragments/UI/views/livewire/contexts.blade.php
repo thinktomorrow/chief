@@ -1,6 +1,6 @@
 <div class="space-y-4">
     <div>
-        <x-chief-table::button wire:click="open">Aanpassen</x-chief-table::button>
+        <x-chief::button wire:click="open">Aanpassen</x-chief::button>
     </div>
 
     {{-- Tabs should only be visible if there's more than 1 context --}}

@@ -5,9 +5,9 @@
 
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
-            <x-chief-table::button variant="blue" type="button" x-on:click="window.location.reload()">
+            <x-chief::button variant="blue" type="button" x-on:click="window.location.reload()">
                 Herlaad de pagina
-            </x-chief-table::button>
+            </x-chief::button>
         </x-chief::dialog.modal.footer>
     </x-slot>
 </x-chief::dialog.modal>

@@ -16,7 +16,7 @@
     </div>
 
     @if ($editUrl)
-        <x-chief-table::button
+        <x-chief::button
             data-sidebar-trigger
             href="{{ $editUrl }}"
             title="Aanpassen"
@@ -25,6 +25,6 @@
             class="mt-2 shrink-0"
         >
             <x-chief::icon.quill-write />
-        </x-chief-table::button>
+        </x-chief::button>
     @endif
 </div>

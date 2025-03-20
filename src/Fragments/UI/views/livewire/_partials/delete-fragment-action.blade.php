@@ -7,10 +7,8 @@
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief-table::button x-on:click="close">Annuleer</x-chief-table::button>
-                <x-chief-table::button wire:click="deleteFragment" variant="red">
-                    Verwijder fragment
-                </x-chief-table::button>
+                <x-chief::button x-on:click="close">Annuleer</x-chief::button>
+                <x-chief::button wire:click="deleteFragment" variant="red">Verwijder fragment</x-chief::button>
             </x-chief::dialog.modal.footer>
         </x-slot>
     </x-chief::dialog.modal>

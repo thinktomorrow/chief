@@ -20,9 +20,9 @@
     @if($editUrl || $actions)
         <x-slot name="actions">
             @if($editUrl)
-                <x-chief-table::button data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" size="sm" variant="grey">
+                <x-chief::button data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" size="sm" variant="grey">
                     <x-chief::icon.quill-write />
-                </x-chief-table::button>
+                </x-chief::button>
             @endif
 
             @if($actions)

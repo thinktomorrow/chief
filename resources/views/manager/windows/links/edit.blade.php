@@ -88,7 +88,7 @@
                                         <div x-data class="flex items-center justify-between px-4 py-2">
                                             <div>{{ $urlRecord->slug }}</div>
 
-                                            <x-chief-table::button
+                                            <x-chief::button
                                                 x-on:click="() => {
                                                     window.axios.post('{{ route('chief.back.assistants.url.remove-redirect', $urlRecord->id) }}', {
                                                         _method: 'DELETE',
@@ -98,7 +98,7 @@
                                                 }"
                                             >
                                                 <x-chief::icon.delete />
-                                            </x-chief-table::button>
+                                            </x-chief::button>
                                         </div>
                                     @endforeach
                                 </div>
@@ -109,8 +109,6 @@
             </div>
         @endif
 
-        <x-chief-table::button type="submit" form="linksUpdateForm" variant="primary">
-            Wijzigingen opslaan
-        </x-chief-table::button>
+        <x-chief::button type="submit" form="linksUpdateForm" variant="primary">Wijzigingen opslaan</x-chief::button>
     </div>
 </div>

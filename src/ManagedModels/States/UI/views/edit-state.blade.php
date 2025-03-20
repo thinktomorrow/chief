@@ -32,23 +32,23 @@
                     @endif
                 </div>
 
-                <x-chief-table::button
+                <x-chief::button
                     x-data
                     x-on:click="$wire.saveState('{{ $transitionInConfirm->key }}')"
                     variant="{{ $transitionInConfirm->variant}}"
                 >
                     {{ $transitionInConfirm->label }}
-                </x-chief-table::button>
+                </x-chief::button>
             @else
                 <div class="space-y-4">
                     @foreach ($this->getTransitions() as $transition)
-                        <x-chief-table::button
+                        <x-chief::button
                             x-data
                             x-on:click="$wire.transition('{{ $transition->key }}')"
                             variant="{{ $transition->variant}}"
                         >
                             {{ $transition->label }}
-                        </x-chief-table::button>
+                        </x-chief::button>
                     @endforeach
                 </div>
             @endif

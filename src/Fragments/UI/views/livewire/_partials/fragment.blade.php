@@ -1,15 +1,9 @@
 <div wire:key="{{ 'context-fragment-' . $fragment->getId() }}" x-sortable-item="{{ $fragment->fragmentId }}">
     <div class="space-y-2 py-4">
         <div class="flex items-start justify-end gap-3">
-            <x-chief-table::button
-                x-sortable-handle
-                size="sm"
-                variant="outline-white"
-                title="herschikken"
-                class="shrink-0"
-            >
+            <x-chief::button x-sortable-handle size="sm" variant="outline-white" title="herschikken" class="shrink-0">
                 <x-chief::icon.drag-drop-vertical />
-            </x-chief-table::button>
+            </x-chief::button>
 
             <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-2">
                 <h3 class="text-base/6 font-medium text-grey-800">
@@ -29,7 +23,7 @@
                 </div>
             </div>
 
-            <x-chief-table::button
+            <x-chief::button
                 x-on:click="$wire.editFragment('{{ $fragment->fragmentId }}')"
                 size="sm"
                 variant="grey"
@@ -37,7 +31,7 @@
                 class="shrink-0"
             >
                 <x-chief::icon.quill-write />
-            </x-chief-table::button>
+            </x-chief::button>
         </div>
 
         @if ($adminFragment = $fragment->content)

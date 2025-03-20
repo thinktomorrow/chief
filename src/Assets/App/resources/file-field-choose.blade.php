@@ -76,13 +76,11 @@
                     </div>
 
                     <div class="flex shrink-0 flex-wrap justify-end gap-2 max-lg:w-full">
-                        <x-chief-table::button wire:click="close" type="button" class="shrink-0">
-                            Annuleren
-                        </x-chief-table::button>
+                        <x-chief::button wire:click="close" type="button" class="shrink-0">Annuleren</x-chief::button>
 
-                        <x-chief-table::button variant="blue" wire:click="save" type="button" class="shrink-0">
+                        <x-chief::button variant="blue" wire:click="save" type="button" class="shrink-0">
                             Voeg selectie toe
-                        </x-chief-table::button>
+                        </x-chief::button>
                     </div>
                 </div>
             </div>

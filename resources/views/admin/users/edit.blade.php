@@ -12,9 +12,9 @@
                     <button form="updateForm" type="submit" class="btn btn-primary">Opslaan</button>
                 @endif
 
-                <x-chief-table::button x-data x-on-click="$dispatch('open-dialog', { 'id': 'user-edit-options' });">
+                <x-chief::button x-data x-on-click="$dispatch('open-dialog', { 'id': 'user-edit-options' });">
                     <x-chief::icon.more-vertical-circle />
-                </x-chief-table::button>
+                </x-chief::button>
 
                 <x-chief::dialog.dropdown id="user-edit-options">
                     <x-chief::dialog.dropdown.item

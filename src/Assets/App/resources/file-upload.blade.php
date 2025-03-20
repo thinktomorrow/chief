@@ -32,22 +32,17 @@
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
                 @if ($this->countUploadedOrSelectedFiles() < 1)
-                    <x-chief-table::button
-                        variant="grey"
-                        type="submit"
-                        form="file-upload-form-{{ $this->getId() }}"
-                        disabled
-                    >
+                    <x-chief::button variant="grey" type="submit" form="file-upload-form-{{ $this->getId() }}" disabled>
                         Voeg
                         {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
                         toe
-                    </x-chief-table::button>
+                    </x-chief::button>
                 @else
-                    <x-chief-table::button variant="primary" type="submit" form="file-upload-form-{{ $this->getId() }}">
+                    <x-chief::button variant="primary" type="submit" form="file-upload-form-{{ $this->getId() }}">
                         Voeg
                         {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
                         toe
-                    </x-chief-table::button>
+                    </x-chief::button>
                 @endif
             </x-chief::dialog.modal.footer>
         </x-slot>

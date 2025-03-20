@@ -1,8 +1,43 @@
-<span {{
-    $attributes
-        ->merge(['class' => 'inline-flex items-start text-sm leading-5 gap-2 py-1.5 px-2 rounded-xl transition-all duration-75 ease-in-out'])
-        ->merge(['class' => 'text-grey-700 bg-grey-100 hover:text-primary-500 hover:bg-primary-50 shadow-sm'])
-        ->merge(['class' => '[&_svg]:shrink-0 [&_svg]:w-5 [&_svg]:h-5 [&_svg]:-mx-0.5 [&_svg]:transition-all [&_svg]:duration-75 [&_svg]:ease-in-out [&:hover_svg]:scale-110'])
-}}>
-    {{ $slot }}
-</span>
+@props([
+    'size' => 'base',
+    'variant' => 'outline-white',
+])
+
+@php
+    $attributes = $attributes->class([
+        'bui-btn cursor-pointer font-medium',
+        match ($size) {
+            'base' => 'bui-btn-base',
+            'sm' => 'bui-btn-sm',
+            'xs' => 'bui-btn-xs',
+            default => 'bui-btn-base',
+        },
+        match ($variant) {
+            'blue' => 'bui-btn-blue',
+            'grey' => 'bui-btn-grey',
+            'transparent' => 'bui-btn-transparent',
+            'red' => 'bui-btn-red',
+            'orange' => 'bui-btn-orange',
+            'light-blue' => 'bui-btn-light-blue',
+            'green' => 'bui-btn-green',
+            'outline-white' => 'bui-btn-outline-white',
+            'outline-blue' => 'bui-btn-outline-blue',
+            'outline-green' => 'bui-btn-outline-green',
+            default => 'bui-btn-outline-white',
+        },
+    ]);
+@endphp
+
+@if ($attributes->has('href'))
+    <a {{ $attributes }}>
+        {{ $slot }}
+    </a>
+@elseif ($attributes->has('for'))
+    <label {{ $attributes }}>
+        {{ $slot }}
+    </label>
+@else
+    <button {{ $attributes->merge(['type' => 'button']) }}>
+        {{ $slot }}
+    </button>
+@endif

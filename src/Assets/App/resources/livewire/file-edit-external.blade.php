@@ -37,31 +37,15 @@
             @include('chief-assets::_partials.file-edit-owner-info')
 
             <div class="flex flex-wrap gap-2">
-                <button wire:click="openFilesChooseExternal" type="button">
-                    <x-chief::button>
-                        <svg><use xlink:href="#icon-replace"></use></svg>
-                        Vervang extern bestand
-                    </x-chief::button>
-                </button>
+                <x-chief::button wire:click="openFilesChooseExternal" variant="grey" size="sm">
+                    <x-chief::icon.exchange />
+                    <span>Vervang extern bestand</span>
+                </x-chief::button>
 
-                <button wire:click="updateExternalAsset" type="button">
-                    <x-chief::button>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                            />
-                        </svg>
-                        Haal thumbnail opnieuw op van {{ ucfirst($previewFile->getData('external.type')) }}
-                    </x-chief::button>
-                </button>
+                <x-chief::button wire:click="updateExternalAsset" variant="grey" size="sm">
+                    <x-chief::icon.refresh />
+                    <span>Haal thumbnail opnieuw op van {{ ucfirst($previewFile->getData('external.type')) }}</span>
+                </x-chief::button>
 
                 @include('chief-assets::_partials.file-edit-owner-action')
             </div>
@@ -90,10 +74,10 @@
 
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
-            <x-chief-table::button wire:click.prevent="close" type="button">Annuleer</x-chief-table::button>
-            <x-chief-table::button wire:click.prevent="submit" variant="primary" type="submit">
+            <x-chief::button wire:click.prevent="close" type="button">Annuleer</x-chief::button>
+            <x-chief::button wire:click.prevent="submit" variant="primary" type="submit">
                 Bewaar bestand
-            </x-chief-table::button>
+            </x-chief::button>
         </x-chief::dialog.modal.footer>
     </x-slot>
 @endif

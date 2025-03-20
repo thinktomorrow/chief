@@ -37,12 +37,12 @@
                         </div>
 
                         @if (chiefAdmin()->can('update-user') && (! $user->hasRole('developer') || chiefAdmin()->hasRole('developer')))
-                            <x-chief-table::button
+                            <x-chief::button
                                 href="{{ route('chief.back.users.edit', $user->id) }}"
                                 title="Pas user aan"
                             >
                                 <x-chief::icon.quill-write />
-                            </x-chief-table::button>
+                            </x-chief::button>
                         @endif
                     </div>
                 @endforeach
