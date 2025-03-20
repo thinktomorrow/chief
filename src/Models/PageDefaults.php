@@ -27,7 +27,7 @@ trait PageDefaults
 
     protected function getDynamicLocales(): array
     {
-        return ChiefLocales::verifiedLocales($this->getSiteLocales());
+        return ChiefLocales::locales();
     }
 
     protected function getDynamicFallbackLocales(): array
