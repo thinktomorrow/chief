@@ -11,6 +11,16 @@
                 </x-slot>
             @endif
 
+            @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+                <livewire:chief-wire::site-tabs :model="$model" />
+            @endif
+
+            @if ($model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page'))
+                @foreach ($model->getStateKeys() as $stateKey)
+                    <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                @endforeach
+            @endif
+
             @include('chief::manager._partials.edit-actions')
         </x-chief::page.hero>
     </x-slot>
@@ -27,15 +37,7 @@
 
     <x-slot name="sidebar">
         <div class="space-y-8">
-
-            @if($model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page'))
-                @foreach($model->getStateKeys() as $stateKey)
-                    <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
-                @endforeach
-            @endif
-
-            @if($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
-                <livewire:chief-wire::site-tabs :model="$model" />
+            @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
                 <livewire:chief-wire::site-links :model="$model" />
             @endif
 

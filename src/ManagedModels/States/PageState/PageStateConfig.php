@@ -76,7 +76,6 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         }
 
         if ($transition == 'archive') {
-
             event(
                 new ManagedModelArchived(
                     $statefulContract->modelReference(),
