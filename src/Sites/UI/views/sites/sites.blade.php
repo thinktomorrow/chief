@@ -4,9 +4,9 @@
 
 <x-chief::window title="Sites">
     <x-slot name="actions">
-        <x-chief-table::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
+        <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
-        </x-chief-table::button>
+        </x-chief::button>
     </x-slot>
 
     @if (count($sites) > 0)
@@ -15,8 +15,6 @@
                 <div wire:key="site-{{ $site->locale }}">
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-2">
-                            @include('chief-sites::_partials.link-status-dot')
-
                             <div>
                                 <p class="text-sm leading-6 text-grey-500">{{ $site->name }}</p>
                             </div>

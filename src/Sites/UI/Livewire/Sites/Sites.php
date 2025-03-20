@@ -37,6 +37,6 @@ class Sites extends Component
 
     public function render()
     {
-        return view('chief-sites::sites');
+        return view('chief-sites::sites.sites');
     }
 }

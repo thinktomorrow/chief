@@ -2,7 +2,7 @@
     <div
         @class([
             'absolute inset-0 animate-pulse rounded-full',
-            match ($siteLink->status->value) {
+            match ($site->status->value) {
                 'online' => 'bg-green-100',
                 'offline' => 'bg-grey-100',
                 'none' => 'bg-grey-100',
@@ -13,7 +13,7 @@
     <svg
         @class([
             'relative size-2',
-            match ($siteLink->status->value) {
+            match ($site->status->value) {
                 'online' => 'fill-green-500',
                 'offline' => 'fill-grey-400',
                 'none' => 'fill-grey-400',

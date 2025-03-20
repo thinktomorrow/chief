@@ -41,8 +41,10 @@
     <x-slot name="sidebar">
         <x-chief-form::forms position="aside-top" />
 
-        @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+        @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             <livewire:chief-wire::site-links :model="$model" />
+        @elseif ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+            <livewire:chief-wire::sites :model="$model" />
         @endif
 
         <x-chief-form::forms position="aside" />

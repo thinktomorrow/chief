@@ -1,7 +1,7 @@
 <x-chief::dialog.drawer
     wired
     size="sm"
-    :title="$addingSites ? 'Voeg links toe' : 'Bewerk links'"
+    :title="$addingSites ? 'Voeg sites toe' : 'Bewerk sites'"
     :edge-to-edge="!$addingSites"
 >
     @if ($isOpen)

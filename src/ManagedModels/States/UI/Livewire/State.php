@@ -3,10 +3,8 @@
 namespace Thinktomorrow\Chief\ManagedModels\States\UI\Livewire;
 
 use Livewire\Component;
-use Thinktomorrow\Chief\Fragments\ContextOwner;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
 
 class State extends Component
 {
@@ -16,7 +14,7 @@ class State extends Component
 
     public string $modelReference;
 
-    public function mount(string $stateKey, Visitable&BelongsToSites&ReferableModel&ContextOwner $model)
+    public function mount(string $stateKey, StatefulContract&ReferableModel $model)
     {
         $this->stateKey = $stateKey;
         $this->modelReference = $model->modelReference()->get();

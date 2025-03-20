@@ -58,7 +58,7 @@ class EditSites extends Component
     public function saveAddingSites(): void
     {
         $addedSites = collect($this->addingLocales)->map(function ($locale) {
-            return Site::empty($locale);
+            return SiteDto::fromConfig(ChiefSites::all()->find($locale));
         });
 
         $this->sites = $this->sites->merge($addedSites);
@@ -109,7 +109,7 @@ class EditSites extends Component
 
     public function render()
     {
-        return view('chief-sites::edit-sites');
+        return view('chief-sites::sites.edit-sites');
     }
 
     public function queuedForDeletion(string $locale): bool
