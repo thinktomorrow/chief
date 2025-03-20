@@ -5,7 +5,7 @@
         </x-slot>
 
         <x-slot name="subtitle">
-            {!! $content !!}
+            {!! $this->getContent() !!}
         </x-slot>
 
         <div class="space-y-6">

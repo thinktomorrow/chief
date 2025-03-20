@@ -20,18 +20,6 @@ class State extends Component
     {
         $this->stateKey = $stateKey;
         $this->modelReference = $model->modelReference()->get();
-
-        // $stateConfig = $model->getStateConfig($key);
-
-        // $model = $this->fieldsModel($id);
-        //        $stateConfig = $model->getStateConfig($key);
-        //
-        //        return view('chief::manager.windows.state.window', [
-        //            'manager' => app(Registry::class)->findManagerByModel($model::class),
-        //            'model' => $model,
-        //            'stateConfig' => $stateConfig,
-        //            'allowedToEdit' => count(StateMachine::fromConfig($model, $stateConfig)->getAllowedTransitions()) > 0,
-        //        ]);
     }
 
     public function getListeners()
