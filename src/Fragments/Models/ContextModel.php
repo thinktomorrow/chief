@@ -7,11 +7,11 @@ namespace Thinktomorrow\Chief\Fragments\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
-use Thinktomorrow\Chief\Sites\BelongsToSitesDefault;
+use Thinktomorrow\Chief\Sites\BelongsToSitesDefaults;
 
 final class ContextModel extends Model implements BelongsToSites
 {
-    use BelongsToSitesDefault;
+    use BelongsToSitesDefaults;
 
     public $table = 'contexts';
 

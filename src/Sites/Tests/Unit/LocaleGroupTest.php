@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\Locales;
+namespace Thinktomorrow\Chief\Sites\Tests\Unit;
 
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -18,13 +18,13 @@ class LocaleGroupTest extends TestCase
         $this->localizedField = Text::make('title');
 
         config()->set('chief.sites', [
-            ['id' => 'nl', 'locale' => 'nl', 'fallback_locale' => null],
-            ['id' => 'fr-be', 'locale' => 'fr-be', 'fallback_locale' => 'fr'],
-            ['id' => 'fr', 'locale' => 'fr', 'fallback_locale' => null],
+            ['locale' => 'nl', 'fallback_locale' => null],
+            ['locale' => 'fr-be', 'fallback_locale' => 'fr'],
+            ['locale' => 'fr', 'fallback_locale' => null],
         ]);
     }
 
-    public function test_it_can_get_all_fallback_locales()
+    public function test_it_can_get_all_fallback_locales_as_map()
     {
         $this->assertEquals([
             'nl' => null,
@@ -65,9 +65,9 @@ class LocaleGroupTest extends TestCase
     public function test_it_can_group_multiple_locales_by_fallback(): void
     {
         config()->set('chief.sites', [
-            ['id' => 'nl', 'locale' => 'nl', 'fallback_locale' => 'fr'],
-            ['id' => 'fr', 'locale' => 'fr', 'fallback_locale' => 'en'],
-            ['id' => 'en', 'locale' => 'en', 'fallback_locale' => null],
+            ['locale' => 'nl', 'fallback_locale' => 'fr'],
+            ['locale' => 'fr', 'fallback_locale' => 'en'],
+            ['locale' => 'en', 'fallback_locale' => null],
         ]);
 
         $this->localizedField->locales(['nl', 'fr', 'en']);
@@ -76,6 +76,4 @@ class LocaleGroupTest extends TestCase
             'en' => ['en', 'nl', 'fr'],
         ], $this->localizedField->getLocaleGroups());
     }
-
-    // Model influences...
 }

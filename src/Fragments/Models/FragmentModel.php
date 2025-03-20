@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\Chief\Sites\Locales\Localized;
-use Thinktomorrow\Chief\Sites\Locales\LocalizedDefault;
+use Thinktomorrow\Chief\Sites\Locales\LocalizedDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 final class FragmentModel extends Model implements FragmentResource, HasAsset, Localized, ReferableModel
@@ -22,7 +22,7 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, L
     use FragmentResourceDefault;
     use HasDynamicAttributes;
     use InteractsWithAssets;
-    use LocalizedDefault;
+    use LocalizedDefaults;
     use ReferableModelDefault;
 
     /**
