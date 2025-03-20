@@ -1,13 +1,13 @@
 @props([
     'title' => null,
     'labels' => null,
-    'buttons' => null,
+    'actions' => null,
     'description' => null,
 ])
 
 <div {{ $attributes->merge(['class' => 'space-y-3']) }}>
     {{-- Window header --}}
-    @if ($title || $labels || $buttons || $description)
+    @if ($title || $labels || $actions || $description)
         <div class="flex items-start justify-between gap-4">
             @if ($title || $labels || $description)
                 <div class="space-y-1.5">
@@ -33,9 +33,9 @@
                 </div>
             @endif
 
-            @if ($buttons)
+            @if ($actions)
                 <div class="shrink-0">
-                    {!! $buttons !!}
+                    {!! $actions !!}
                 </div>
             @endif
         </div>

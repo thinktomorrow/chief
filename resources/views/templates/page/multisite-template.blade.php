@@ -1,49 +1,57 @@
 @props([
-    'hero' => null,
-    'sidebar' => null,
     'container' => '2xl',
+    'title' => null,
+    'header' => null,
+    'sidebar' => null,
 ])
+
+{{--
+    Explanation "min-w-0" class:
+    If the min-width property isn't set on these flex items, they will overflow their parent flex container if they happen to contain a table (go figure).
+    Dev sessions saved by this comment: 2.
+--}}
 
 <x-chief::page.layout>
     <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
         {{-- Navigation --}}
-        <div class="w-full shrink-0 lg:w-64 2xl:w-96">
+        <div class="w-full shrink-0 lg:w-64">
             @include('chief::templates.page.nav.nav')
         </div>
 
         <div
+            {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
             @class([
-                'container grow space-y-8 py-12',
+                'container min-w-0 grow space-y-8 py-8',
                 'max-w-screen-lg' => $container === 'lg',
                 'max-w-screen-xl' => $container === 'xl',
                 'max-w-screen-2xl' => $container === '2xl',
             ])
         >
-            {{-- Hero --}}
-            @if ($hero)
-                <div>
-                    {{ $hero }}
+            {{-- Header --}}
+            @if ($header)
+                <div {{ $header->attributes }}>
+                    {{ $header }}
                 </div>
+            @else
+                <x-chief::page.header />
             @endif
 
             <div class="flex gap-8 max-md:flex-col">
                 {{-- Main content --}}
-                <div class="grow">
+                {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
+                <div class="min-w-0 grow space-y-4">
                     {{ $slot }}
                 </div>
 
                 {{-- Sidebar --}}
                 @if ($sidebar)
-                    <div class="w-full shrink-0 md:w-64 2xl:w-96">
+                    <section
+                        {{ $sidebar->attributes->merge(['role' => 'sidebar', 'class' => 'w-full shrink-0 md:w-64 2xl:w-96 space-y-8']) }}
+                    >
                         {{ $sidebar }}
-                    </div>
+                    </section>
                 @endif
             </div>
         </div>
     </div>
-
-    {{-- TODO: Remove this once we have a proper sidebar for the multisite template --}}
-    <section role="sidebar">
-        @include('chief::templates.page._partials.sidebar')
-    </section>
 </x-chief::page.layout>

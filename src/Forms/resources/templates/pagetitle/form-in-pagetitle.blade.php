@@ -1,4 +1,4 @@
-<h1 class="h2 h2-dark">
+<h1 class="h1 h1-dark">
     {{
         $getComponents()[0]
             ->windowView('chief-form::templates.pagetitle.text-in-pagetitle')

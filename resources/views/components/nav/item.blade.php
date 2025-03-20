@@ -8,7 +8,7 @@
 @endphp
 
 <div class="group relative">
-    <div data-toggle-dropdown="{{ $dropdownIdentifier }}" class="cursor-pointer rounded-md hover:bg-grey-100">
+    <div data-toggle-dropdown="{{ $dropdownIdentifier }}" class="cursor-pointer rounded-lg hover:bg-grey-100">
         <div class="flex justify-between gap-3 px-2">
             <div class="flex grow gap-2">
                 @isset($icon)
@@ -17,7 +17,7 @@
                             href="{{ $url }}"
                             title="{!! $label !!}"
                             data-toggle-dropdown-ignore
-                            class="shrink-0 py-1.5 [&>*]:h-6 [&>*]:w-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
+                            class="shrink-0 py-1.5 [&>*]:h-6 [&>*]:w-6 [&>*]:text-grey-400 group-hover:[&>*]:text-primary-500"
                             {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                         >
                             {!! $icon !!}
@@ -25,7 +25,7 @@
                     @else
                         <div
                             data-expand-navigation
-                            class="shrink-0 py-1.5 [&>*]:h-6 [&>*]:w-6 [&>*]:text-grey-500 group-hover:[&>*]:text-grey-900"
+                            class="shrink-0 py-1.5 [&>*]:h-6 [&>*]:w-6 [&>*]:text-grey-400 group-hover:[&>*]:text-primary-500"
                         >
                             {!! $icon !!}
                         </div>
@@ -38,7 +38,7 @@
                         title="{!! $label !!}"
                         data-toggle-dropdown-ignore
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
+                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm/6 text-grey-800 group-hover:text-grey-950 lg:w-36"
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
@@ -46,7 +46,7 @@
                 @else
                     <span
                         data-toggle-classes="{{ $collapsible ? 'hidden' : null }}"
-                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm leading-6 text-grey-700 group-hover:text-grey-900 lg:w-36"
+                        class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} inline-block w-full py-1.5 text-sm/6 text-grey-800 group-hover:text-grey-950 lg:w-36"
                     >
                         {!! $label !!}
                     </span>
@@ -59,7 +59,7 @@
                     class="{{ $isCollapsedOnPageLoad && $collapsible ? 'hidden' : null }} mt-2.5 shrink-0"
                 >
                     <div class="flex items-center justify-center">
-                        <span class="text-grey-700 hover:scale-105">
+                        <span class="text-grey-800 hover:scale-105">
                             <svg class="h-4 w-4"><use xlink:href="#icon-chevron-down"></use></svg>
                         </span>
                     </div>

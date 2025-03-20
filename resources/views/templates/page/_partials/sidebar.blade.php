@@ -1,4 +1,4 @@
-<div id="js-sidebar-container"></div>
+<section role="sidebar" id="js-sidebar-container"></section>
 
 @push('custom-scripts')
     <template id="js-sidebar-template">

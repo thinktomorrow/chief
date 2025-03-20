@@ -2,7 +2,6 @@
     'title' => null,
 ])
 
-{{-- This makes the title prop available in parent components, e.g page.layout metatags --}}
 @aware(['title'])
 
 <x-chief::solo.layout :title="$title">

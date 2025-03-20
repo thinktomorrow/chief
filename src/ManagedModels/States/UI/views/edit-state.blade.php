@@ -1,28 +1,22 @@
-<x-chief::dialog.modal wired>
+<x-chief::dialog.drawer wired>
     @if ($isOpen)
-
         <x-slot name="title">
             {{ $this->getTitle() }}
         </x-slot>
 
         <x-slot name="subtitle">
-            @if ($content = $this->getContent())
-                <div class="prose prose-dark">
-                    <p>{!! $content !!}</p>
-                </div>
-            @endif
+            {!! $content !!}
         </x-slot>
 
         <div class="space-y-6">
-
-            @if($errorMessage)
+            @if ($errorMessage)
                 <x-chief::inline-notification type="error" size="large">
                     <p>{!! $errorMessage !!}</p>
                 </x-chief::inline-notification>
             @endif
 
-            @if($transitionInConfirm = $this->getTransitionInConfirmationState())
-                @if($transitionInConfirm->confirmationContent)
+            @if ($transitionInConfirm = $this->getTransitionInConfirmationState())
+                @if ($transitionInConfirm->confirmationContent)
                     {!! $transitionInConfirm->confirmationContent !!}
                 @endif
 
@@ -38,24 +32,26 @@
                     @endif
                 </div>
 
-                <x-chief-table::button x-data x-on:click="$wire.saveState('{{ $transitionInConfirm->key }}')"
-                                       variant="{{ $transitionInConfirm->variant}}">
+                <x-chief-table::button
+                    x-data
+                    x-on:click="$wire.saveState('{{ $transitionInConfirm->key }}')"
+                    variant="{{ $transitionInConfirm->variant}}"
+                >
                     {{ $transitionInConfirm->label }}
                 </x-chief-table::button>
             @else
-
                 <div class="space-y-4">
                     @foreach ($this->getTransitions() as $transition)
-
-                        <x-chief-table::button x-data x-on:click="$wire.transition('{{ $transition->key }}')"
-                                               variant="{{ $transition->variant}}">
+                        <x-chief-table::button
+                            x-data
+                            x-on:click="$wire.transition('{{ $transition->key }}')"
+                            variant="{{ $transition->variant}}"
+                        >
                             {{ $transition->label }}
                         </x-chief-table::button>
-                        
                     @endforeach
                 </div>
             @endif
         </div>
-
     @endif
-</x-chief::dialog.modal>
+</x-chief::dialog.drawer>

@@ -39,13 +39,14 @@
 
         @stack('custom-styles')
     </head>
-    <body class="min-h-screen bg-grey-50">
+    <body class="min-h-screen bg-grey-50/50">
         <main>
             {{ $slot }}
 
             @stack('portals')
         </main>
 
+        @include('chief::templates.page._partials.sidebar')
         @include('chief::templates.page._partials.symbols')
         @include('chief::templates.page._partials.refresh-modal')
 

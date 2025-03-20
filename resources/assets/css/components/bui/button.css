@@ -4,7 +4,7 @@
  **/
 @layer components {
     .bui-btn {
-        @apply flex w-max items-start text-left;
+        @apply flex w-max items-start text-left font-medium;
         @apply transition-all duration-150 ease-in-out;
         /**
          * TODO(tijs): Ideally the outlines shouldn't be removed.

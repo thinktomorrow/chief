@@ -21,7 +21,7 @@
                         </div>
 
                         <div class="grow space-y-0.5">
-                            <h3 class="text-base/6 font-medium text-grey-800 group-hover:text-grey-950">
+                            <h3 class="text-base/6 text-grey-800 group-hover:text-grey-950">
                                 {{ ucfirst($allowedFragment->getLabel()) }}
                             </h3>
 

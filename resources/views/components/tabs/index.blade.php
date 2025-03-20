@@ -65,13 +65,17 @@
             })
         },
     }"
-    {{
-        $attributes->class([
-            'space-y-2' => $size === 'xs',
-            'space-y-3' => $size === 'sm',
-            'space-y-4' => $size === 'base',
-        ])
-    }}
+    {{ $attributes }}
+    :class="{
+        '{{
+            match ($size) {
+                'xs' => 'space-y-2',
+                'sm' => 'space-y-3',
+                'base' => 'space-y-4',
+                default => 'space-y-2',
+            }
+        }}': showNav && showTabs
+    }"
 >
     <div
         x-show="showNav"
@@ -90,7 +94,7 @@
                 x-ref="tabMarker"
                 x-show="activeTab"
                 @class([
-                    'bui-btn bui-btn-outline-white absolute left-0 ring-0 transition-all duration-150 ease-out',
+                    'bui-btn bui-btn-outline-white absolute left-0 font-normal ring-0 transition-all duration-150 ease-out',
                     match ($size) {
                         'xs' => 'bui-btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
                         'sm' => 'bui-btn-sm py-[0.3125rem] *:h-[1.125rem]',
@@ -112,7 +116,7 @@
                     x-bind:aria-controls="tab.id"
                     x-bind:aria-selected="tab.id === activeTab"
                     @class([
-                        'bui-btn relative shadow-none',
+                        'bui-btn relative font-normal shadow-none',
                         match ($size) {
                             'xs' => 'bui-btn-xs px-2 text-sm/[1.125rem]',
                             'sm' => 'bui-btn-sm py-[0.3125rem]',
