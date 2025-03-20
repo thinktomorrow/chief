@@ -57,6 +57,11 @@ class State extends Component
         return $this->getStateConfig()->getStateLabel($this->getModel());
     }
 
+    public function getStateLabelString(): string
+    {
+        return $this->getStateConfig()->getStateLabelString($this->getModel());
+    }
+
     public function isAllowedToEdit(): bool
     {
         return count($this->getStateMachine()->getAllowedTransitions()) > 0;

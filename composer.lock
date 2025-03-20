@@ -6839,16 +6839,16 @@
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/dynamic-attributes.git",
-                "reference": "88263f2e964ecfd2114e9843638e9f12ee35ea0b"
+                "reference": "d88e99649709d399fcdd9abd85521ca268afaeaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/88263f2e964ecfd2114e9843638e9f12ee35ea0b",
-                "reference": "88263f2e964ecfd2114e9843638e9f12ee35ea0b",
+                "url": "https://api.github.com/repos/thinktomorrow/dynamic-attributes/zipball/d88e99649709d399fcdd9abd85521ca268afaeaa",
+                "reference": "d88e99649709d399fcdd9abd85521ca268afaeaa",
                 "shasum": ""
             },
             "require": {
@@ -6880,9 +6880,9 @@
             "description": "easily store and retrieve document values of an eloquent model",
             "support": {
                 "issues": "https://github.com/thinktomorrow/dynamic-attributes/issues",
-                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/2.0.0"
+                "source": "https://github.com/thinktomorrow/dynamic-attributes/tree/2.0.2"
             },
-            "time": "2025-02-25T11:18:04+00:00"
+            "time": "2025-03-20T11:19:03+00:00"
         },
         {
             "name": "thinktomorrow/squanto",

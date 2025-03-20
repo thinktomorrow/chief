@@ -10,29 +10,30 @@
     } elseif ($is_reorder_index) {
         $title .= ' herschikken ';
     }
+
+    if (! $is_archive_index && ! $is_reorder_index) {
+        $breadcrumbs = [['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'], $resource->getIndexTitle($model)];
+    } else {
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+            ['label' => $resource->getIndexTitle($model), 'url' => $manager->route('index', $model), 'icon' => $resource->getNavIcon()],
+            'Archief',
+        ];
+    }
 @endphp
 
-<x-chief::page.template>
-    <x-slot name="hero">
-        <x-chief::page.hero
-            :title="$title"
-            :breadcrumbs="(!$is_archive_index && !$is_reorder_index) ? [$resource->getPageBreadCrumb()] : [
-                new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', $manager->route('index'))
-            ]"
-        >
-            @if ($resource->getIndexDescription())
-                <x-slot name="description">
-                    {{ $resource->getIndexDescription() }}
-                </x-slot>
-            @endif
+<x-chief::page.multisite-template>
+    <x-slot name="header">
+        <x-chief::page.header :title="$title" :breadcrumbs="$breadcrumbs">
+            <x-slot name="actions">
+                @if ($resource->getIndexHeaderContent())
+                    {!! $resource->getIndexHeaderContent() !!}
+                @endif
+            </x-slot>
 
-            @if ($resource->getIndexHeaderContent())
-                {!! $resource->getIndexHeaderContent() !!}
-            @endif
-        </x-chief::page.hero>
+            {!! $resource->getIndexDescription() !!}
+        </x-chief::page.header>
     </x-slot>
 
-    <div class="container">
-        {{ $table->render() }}
-    </div>
-</x-chief::page.template>
+    {{ $table->render() }}
+</x-chief::page.multisite-template>

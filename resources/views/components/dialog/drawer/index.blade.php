@@ -4,7 +4,7 @@
     'title' => null,
     'subtitle' => null,
     'badges' => [],
-    'edgeToEdge' => true,
+    'edgeToEdge' => false,
     'header' => null,
     'footer' => null,
 ])

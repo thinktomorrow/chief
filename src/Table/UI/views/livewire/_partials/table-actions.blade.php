@@ -1,5 +1,5 @@
 <div
-    class="mt-2 flex items-start justify-between gap-4"
+    class="flex items-start justify-between gap-4"
     :class="{ '*:opacity-40 *:pointer-events-none cursor-not-allowed': selection.length > 0 }"
 >
     <div class="flex items-start gap-2">

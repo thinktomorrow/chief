@@ -1,7 +1,7 @@
 @props([
     'title' => null,
-    'description' => null,
     'customTitle' => null,
+    'description' => null,
     'breadcrumbs' => [],
 ])
 
@@ -19,7 +19,7 @@
                     @endif
 
                     @if ($slot->isNotEmpty())
-                        <div class="flex shrink-0 items-start gap-3">
+                        <div class="flex shrink-0 items-start gap-2">
                             {{ $slot }}
                         </div>
                     @endif

@@ -1,9 +1,9 @@
-@aware(['title', 'subtitle'])
-
 @props([
     'title' => null,
     'subtitle' => null,
 ])
+
+@aware(['title', 'subtitle'])
 
 @if ($title || $subtitle)
     <header {{ $attributes->class(['flex items-start justify-between gap-4 p-4']) }}>

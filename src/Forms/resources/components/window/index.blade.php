@@ -4,7 +4,7 @@
     'tags' => null,
     'title' => null,
     'labels' => null,
-    'buttons' => null,
+    'actions' => null,
     'description' => null,
 ])
 
@@ -17,16 +17,16 @@
     :description="$description"
     {{ $attributes }}
 >
-    @if($editUrl || $buttons)
-        <x-slot name="buttons">
+    @if($editUrl || $actions)
+        <x-slot name="actions">
             @if($editUrl)
                 <x-chief-table::button data-sidebar-trigger href="{{ $editUrl }}" title="Aanpassen" size="sm" variant="grey">
                     <x-chief::icon.quill-write />
                 </x-chief-table::button>
             @endif
 
-            @if($buttons)
-                {!! $buttons !!}
+            @if($actions)
+                {!! $actions !!}
             @endif
         </x-slot>
     @endif

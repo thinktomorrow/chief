@@ -3,7 +3,7 @@
 @endphp
 
 <x-chief::window title="Sites">
-    <x-slot name="buttons">
+    <x-slot name="actions">
         <x-chief-table::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
         </x-chief-table::button>
@@ -19,7 +19,7 @@
 
                             <div>
                                 <p class="text-sm leading-6 text-grey-500">{{ $siteLink->site->name }}</p>
-                                <a href="{{ $siteLink->url?->url }}" class="leading-6 text-grey-700">
+                                <a href="{{ $siteLink->url?->url }}" class="font-medium leading-6 text-grey-700">
                                     {{ $siteLink->url->slug }}
                                 </a>
                             </div>

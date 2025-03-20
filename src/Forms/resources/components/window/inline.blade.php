@@ -9,7 +9,7 @@
     data-form
     data-form-url="{{ $refreshUrl }}"
     data-form-tags="{{ $tags }}"
-    {{ $attributes->class('flex flex-wrap items-end gap-3 sm:flex-nowrap') }}
+    {{ $attributes->class('flex items-start gap-3') }}
 >
     <div class="w-full">
         {!! $slot !!}
@@ -22,7 +22,7 @@
             title="Aanpassen"
             size="sm"
             variant="grey"
-            class="inline-block shrink-0 sm:mb-0.5"
+            class="mt-[0.3125rem] shrink-0"
         >
             <x-chief::icon.quill-write />
         </x-chief-table::button>

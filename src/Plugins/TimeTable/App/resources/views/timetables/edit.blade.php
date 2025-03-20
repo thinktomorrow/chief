@@ -34,7 +34,7 @@
 
         <x-slot name="aside">
             <x-chief::window title="Uitzonderingen" class="card">
-                <x-slot name="buttons">
+                <x-slot name="actions">
                     <a href="{{ route('chief.timetable_dates.create', $model->id) }}">
                         <x-chief::icon-button icon="icon-plus" color="grey" class="shadow-none bg-grey-50 text-grey-500" />
                     </a>

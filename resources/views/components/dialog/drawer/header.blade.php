@@ -1,10 +1,12 @@
-@aware(['title', 'subtitle'])
-
 @props([
-    'title' => null,
-    'subtitle' => null,
     'badges' => [],
     'backButton' => null,
+])
+
+{{-- Always declare @aware after @props, otherwise the default values will not be applied. --}}
+@aware([
+    'title' => null,
+    'subtitle' => null,
 ])
 
 <header {{ $attributes->class(['flex shrink-0 items-start justify-between border-b border-grey-100 p-4']) }}>
