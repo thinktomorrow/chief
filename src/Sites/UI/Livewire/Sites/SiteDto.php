@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire;
+namespace Thinktomorrow\Chief\Sites\UI\Livewire\Sites;
 
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Sites\ChiefSite;

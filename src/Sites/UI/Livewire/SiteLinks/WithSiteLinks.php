@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire;
+namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\LinkStatus;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
 
 trait WithSiteLinks
 {

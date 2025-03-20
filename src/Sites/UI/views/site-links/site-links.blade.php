@@ -1,5 +1,5 @@
 @php
-    $siteLinks = $this->getSiteLinks();
+    $sites = $this->getSiteLinks();
 @endphp
 
 <x-chief::window title="Sites">
@@ -9,9 +9,9 @@
         </x-chief-table::button>
     </x-slot>
 
-    @if (count($siteLinks) > 0)
+    @if (count($sites) > 0)
         <div class="space-y-1">
-            @foreach ($siteLinks as $siteLink)
+            @foreach ($sites as $siteLink)
                 <div wire:key="site-link-{{ $siteLink->locale }}">
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-2">

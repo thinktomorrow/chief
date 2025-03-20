@@ -8,7 +8,7 @@
         @if ($addingSites)
             @include('chief-sites::_partials.adding-sites')
         @else
-            @include('chief-sites::_partials.editing-sites')
+            @include('chief-sites::sites.editing-sites')
         @endif
     @endif
 </x-chief::dialog.drawer>

@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
 
 class SiteTabs extends Component
 {

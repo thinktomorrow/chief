@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire;
+namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
@@ -39,6 +39,6 @@ class SiteLinks extends Component
 
     public function render()
     {
-        return view('chief-sites::site-links');
+        return view('chief-sites::site-links.site-links');
     }
 }

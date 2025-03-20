@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire;
+namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -14,25 +14,21 @@ use Thinktomorrow\Chief\Site\Urls\Application\DeleteUrl;
 use Thinktomorrow\Chief\Site\Urls\Application\UpdateUrl;
 use Thinktomorrow\Chief\Site\Urls\LinkStatus;
 use Thinktomorrow\Chief\Sites\Actions\SaveModelSites;
-use Thinktomorrow\Chief\Sites\ChiefSite;
-use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\WithAddingSites;
 
 class EditSiteLinks extends Component
 {
     use HasForm;
     use ShowsAsDialog;
+    use WithAddingSites;
     use WithSiteLinks;
 
     public string $modelReference;
 
-    public Collection $siteLinks;
+    public Collection $sites;
 
     /** @var Collection<ContextDto> */
     public Collection $contexts;
-
-    public bool $addingSites = false;
-
-    public array $addingLocales = [];
 
     public function mount(string $modelReference)
     {
@@ -49,7 +45,7 @@ class EditSiteLinks extends Component
 
     public function open($values = [])
     {
-        $this->siteLinks = $this->getSiteLinks();
+        $this->sites = $this->getSiteLinks();
 
         /**
          * Inject all field values in the Livewire form object
@@ -62,22 +58,10 @@ class EditSiteLinks extends Component
 
     public function close()
     {
-        $this->reset(['form', 'siteLinks']);
+        $this->reset(['form', 'sites', 'addingLocales']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
-    }
-
-    public function addSites(): void
-    {
-        $this->addingSites = true;
-    }
-
-    public function closeAddingSites(): void
-    {
-        $this->addingSites = false;
-
-        $this->reset('addingLocales');
     }
 
     public function saveAddingSites(): void
@@ -86,19 +70,11 @@ class EditSiteLinks extends Component
             return SiteLink::empty($locale);
         });
 
-        $this->siteLinks = $this->siteLinks->merge($addedSiteLinks);
+        $this->sites = $this->sites->merge($addedSiteLinks);
 
         $this->initialFormValues();
 
         $this->closeAddingSites();
-    }
-
-    /** @return ChiefSite[] */
-    public function getNonAddedSites(): array
-    {
-        $locales = $this->siteLinks->map(fn ($siteLink) => $siteLink->locale)->toArray();
-
-        return ChiefSites::all()->rejectByLocales($locales)->get();
     }
 
     public function getLinkStatusOptions(): array
@@ -133,7 +109,7 @@ class EditSiteLinks extends Component
 
         foreach ($this->form as $locale => $values) {
 
-            $siteLink = $this->siteLinks->first(fn ($siteLink) => $siteLink->locale == $locale);
+            $siteLink = $this->sites->first(fn ($siteLink) => $siteLink->locale == $locale);
             $urlRecordExists = $siteLink->url && $siteLink->url->id;
 
             if (! $values || ! $values['slug']) {
@@ -175,7 +151,7 @@ class EditSiteLinks extends Component
 
     public function render()
     {
-        return view('chief-sites::edit-site-links');
+        return view('chief-sites::site-links.edit-site-links');
     }
 
     public function queuedForDeletion(string $locale): bool
@@ -185,7 +161,7 @@ class EditSiteLinks extends Component
 
     private function initialFormValues()
     {
-        foreach ($this->siteLinks as $siteLink) {
+        foreach ($this->sites as $siteLink) {
 
             // Keep existing form values, only add new ones
             if (isset($this->form[$siteLink->locale])) {
