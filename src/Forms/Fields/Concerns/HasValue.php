@@ -90,6 +90,7 @@ trait HasValue
             if ($locale && $this->hasLocales()) {
 
                 if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
+                    //                    return $model->localizedDynamic($this->getColumnName(), $locale);
                     return $model->dynamic($this->getColumnName(), $locale, $this->getDefault($locale));
                 }
 
