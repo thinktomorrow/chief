@@ -15,12 +15,14 @@
         match ($variant) {
             'blue' => 'bui-btn-blue',
             'grey' => 'bui-btn-grey',
-            'outline-white' => 'bui-btn-outline-white',
             'transparent' => 'bui-btn-transparent',
             'red' => 'bui-btn-red',
             'orange' => 'bui-btn-orange',
             'light-blue' => 'bui-btn-light-blue',
             'green' => 'bui-btn-green',
+            'outline-white' => 'bui-btn-outline-white',
+            'outline-blue' => 'bui-btn-outline-blue',
+            'outline-green' => 'bui-btn-outline-green',
             default => 'bui-btn-outline-white',
         },
     ]);

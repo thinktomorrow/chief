@@ -4,6 +4,7 @@
     'activeTab' => null,
     'listenForExternalTab' => false,
     'showNav' => true,
+    'showTabs' => true,
     'dispatchTab' => true,
     'reference' => null,
     'size' => 'xs',
@@ -17,6 +18,7 @@
     x-data="{
         activeTab: null,
         showNav: @js($showNav),
+        showTabs: @js($showTabs),
         init: function () {
             this.activeTab =
                 @js($activeTab) || (this.tabs().length > 0 ? this.tabs()[0].id : null)
@@ -38,9 +40,7 @@
             this.repositionTabMarker()
         },
         tabs: function () {
-            const nodes = this.$refs.tabs.children
-
-            return Array.from(nodes).map((node) => ({
+            return Array.from(this.$refs.tabs.children).map((node) => ({
                 'id': node.getAttribute('data-tab-id'),
                 'label': node.getAttribute('data-tab-label'),
             }))
@@ -65,16 +65,22 @@
             })
         },
     }"
-    {{ $attributes }}
+    {{
+        $attributes->class([
+            'space-y-2' => $size === 'xs',
+            'space-y-3' => $size === 'sm',
+            'space-y-4' => $size === 'base',
+        ])
+    }}
 >
     <div
         x-show="showNav"
         @class([
             'inline-block bg-grey-100',
             match ($size) {
-                'xs' => 'mb-2 rounded-[0.4375rem]',
-                'sm' => 'mb-3 rounded-[0.5625rem]',
-                'base' => 'mb-4 rounded-[0.6875rem]',
+                'xs' => 'rounded-[0.4375rem]',
+                'sm' => 'rounded-[0.5625rem]',
+                'base' => 'rounded-[0.6875rem]',
                 default => 'rounded-[0.4375rem]',
             },
         ])
@@ -123,7 +129,7 @@
         </nav>
     </div>
 
-    <div x-ref="tabs">
+    <div x-show="showTabs" x-ref="tabs">
         {{ $slot }}
     </div>
 </div>
