@@ -44,27 +44,27 @@
             <div
                 class="pointer-events-none absolute inset-0 hidden flex-wrap items-center justify-center gap-1.5 bg-black/25 p-1 group-hover:flex"
             >
-                <x-chief-table::button aria-label="Bewerk bestand" wire:click="openAssetEdit('{{ $asset->id }}')">
+                <x-chief::button aria-label="Bewerk bestand" wire:click="openAssetEdit('{{ $asset->id }}')">
                     <x-chief::icon.quill-write />
-                </x-chief-table::button>
+                </x-chief::button>
 
-                <x-chief-table::button aria-label="Verwijder bestand" wire:click="deleteAsset('{{ $asset->id }}')">
+                <x-chief::button aria-label="Verwijder bestand" wire:click="deleteAsset('{{ $asset->id }}')">
                     <x-chief::icon.delete />
-                </x-chief-table::button>
+                </x-chief::button>
 
                 @if ($asset instanceof ExternalAssetContract)
-                    <x-chief-table::button
+                    <x-chief::button
                         href="{{ $asset->getUrl() }}"
                         title="Bekijk op platform"
                         target="_blank"
                         rel="noopener"
                     >
                         <x-chief::icon.link-square />
-                    </x-chief-table::button>
+                    </x-chief::button>
                 @else
-                    <x-chief-table::button href="{{ $asset->getUrl() }}" title="Download" download>
+                    <x-chief::button href="{{ $asset->getUrl() }}" title="Download" download>
                         <x-chief::icon.download />
-                    </x-chief-table::button>
+                    </x-chief::button>
                 @endif
             </div>
         @endif

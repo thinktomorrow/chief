@@ -96,11 +96,11 @@
 
                 <x-slot name="footer">
                     <x-chief::dialog.modal.footer>
-                        <x-chief-table::button x-on:click="$wire.close()">Annuleren</x-chief-table::button>
+                        <x-chief::button x-on:click="$wire.close()">Annuleren</x-chief::button>
 
-                        <x-chief-table::button wire:click.prevent="submit" variant="primary" type="submit">
+                        <x-chief::button wire:click.prevent="submit" variant="primary" type="submit">
                             Opslaan
-                        </x-chief-table::button>
+                        </x-chief::button>
                     </x-chief::dialog.modal.footer>
                 </x-slot>
             </div>

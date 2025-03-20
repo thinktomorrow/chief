@@ -18,6 +18,6 @@
 
 <x-slot name="footer">
     <x-chief::dialog.modal.footer>
-        <x-chief-table::button wire:click="close" type="button">Annuleer</x-chief-table::button>
+        <x-chief::button wire:click="close" type="button">Annuleer</x-chief::button>
     </x-chief::dialog.modal.footer>
 </x-slot>

@@ -48,13 +48,13 @@
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief-table::button wire:click="save" variant="primary" type="button">
+                <x-chief::button wire:click="save" variant="primary" type="button">
                     @if ($assetId)
                         Vervang extern bestand
                     @else
                         Voeg extern bestand toe
                     @endif
-                </x-chief-table::button>
+                </x-chief::button>
             </x-chief::dialog.modal.footer>
         </x-slot>
     @endif

@@ -44,14 +44,13 @@
             <div class="flex flex-wrap gap-2">
                 @if ($previewFile)
                     {{-- Replace file action --}}
-                    <label for="{{ $this->getId() }}" class="cursor-pointer">
+                    <div>
                         <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden" />
-
-                        <x-chief::button>
-                            <svg><use xlink:href="#icon-replace"></use></svg>
-                            Vervang bestand
+                        <x-chief::button for="{{ $this->getId() }}" variant="grey" size="sm">
+                            <x-chief::icon.exchange />
+                            <span>Vervang bestand</span>
                         </x-chief::button>
-                    </label>
+                    </div>
 
                     @if ($ownerCount > 1)
                         @include('chief-assets::_partials.file-edit-owner-action')
@@ -102,10 +101,10 @@
 
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
-            <x-chief-table::button type="button" x-on:click="close()">Annuleer</x-chief-table::button>
-            <x-chief-table::button wire:click.prevent="submit" variant="primary" type="submit">
+            <x-chief::button type="button" x-on:click="close()">Annuleer</x-chief::button>
+            <x-chief::button wire:click.prevent="submit" variant="primary" type="submit">
                 Bewaar bestand
-            </x-chief-table::button>
+            </x-chief::button>
         </x-chief::dialog.modal.footer>
     </x-slot>
 @endif

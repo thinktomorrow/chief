@@ -30,9 +30,9 @@
 
                 <x-slot name="footer">
                     <x-chief::dialog.modal.footer>
-                        <x-chief-table::button form="delete-tag-modal-form-{{ $modalId }}" type="submit" variant="red">
+                        <x-chief::button form="delete-tag-modal-form-{{ $modalId }}" type="submit" variant="red">
                             Verwijder tag
-                        </x-chief-table::button>
+                        </x-chief::button>
                     </x-chief::dialog.modal.footer>
                 </x-slot>
             </x-chief::dialog.modal>

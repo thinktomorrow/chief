@@ -7,7 +7,7 @@
             </span>
 
             <div class="flex items-start gap-1">
-                <x-chief-table::button
+                <x-chief::button
                     wire:key="bulk-select-all"
                     :class="$this->shouldShowSelectAll() ? '' : 'hidden'"
                     wire:click="bulkSelectAll"
@@ -15,9 +15,9 @@
                     size="xs"
                 >
                     Selecteer alle {{ $this->resultTotal }}
-                </x-chief-table::button>
+                </x-chief::button>
 
-                <x-chief-table::button
+                <x-chief::button
                     wire:key="bulk-deselect-all"
                     x-show="hasSelectionAcrossPages"
                     wire:click="bulkDeselectAll"
@@ -26,7 +26,7 @@
                 >
                     Deselecteer alle
                     <span x-text="selection.length"></span>
-                </x-chief-table::button>
+                </x-chief::button>
             </div>
         </div>
 
@@ -51,13 +51,13 @@
 
             @if (count($this->getTertiaryBulkActions()) > 0)
                 <div>
-                    <x-chief-table::button
+                    <x-chief::button
                         x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-bulk-actions' })"
                         size="xs"
                         variant="outline-white"
                     >
                         <x-chief::icon.more-vertical-circle />
-                    </x-chief-table::button>
+                    </x-chief::button>
 
                     <x-chief::dialog.dropdown id="table-tertiary-bulk-actions" placement="bottom-end">
                         @foreach ($this->getTertiaryBulkActions() as $action)

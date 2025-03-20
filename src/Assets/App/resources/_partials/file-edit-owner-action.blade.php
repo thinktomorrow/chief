@@ -1,7 +1,11 @@
 @if ($currentOwner && $ownerCount > 1)
-    <x-chief-table::button x-on:click="$dispatch('open-dialog', { 'id': 'file-owners-modal-{{ $this->getId() }}' })">
-        <span>Bewerk koppeling</span>
-    </x-chief-table::button>
+    <x-chief::button
+        x-on:click="$dispatch('open-dialog', { 'id': 'file-owners-modal-{{ $this->getId() }}' })"
+        variant="grey"
+        size="sm"
+    >
+        Bewerk koppeling
+    </x-chief::button>
 @endif
 
 @teleport('body')
@@ -48,10 +52,10 @@
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief-table::button x-on:click="close" type="button">Sluit</x-chief-table::button>
+                <x-chief::button x-on:click="close" type="button">Sluit</x-chief::button>
 
                 @if ($currentOwner && $ownerCount > 1)
-                    <x-chief-table::button
+                    <x-chief::button
                         variant="primary"
                         type="button"
                         x-on:click.stop="
@@ -60,7 +64,7 @@
                         "
                     >
                         Ontkoppel en bewerk apart in {{ $currentOwner['label'] }}
-                    </x-chief-table::button>
+                    </x-chief::button>
                 @endif
             </x-chief::dialog.modal.footer>
         </x-slot>

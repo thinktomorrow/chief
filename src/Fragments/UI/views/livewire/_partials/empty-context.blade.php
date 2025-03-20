@@ -13,10 +13,10 @@
         </div>
 
         <div class="flex justify-center">
-            <x-chief-table::button x-on:click="$wire.addFragment(-1, '{{ $parentId }}')" size="sm" variant="grey">
+            <x-chief::button x-on:click="$wire.addFragment(-1, '{{ $parentId }}')" size="sm" variant="grey">
                 <x-chief::icon.plus-sign />
                 <span>Fragment toevoegen</span>
-            </x-chief-table::button>
+            </x-chief::button>
         </div>
     </div>
 </div>

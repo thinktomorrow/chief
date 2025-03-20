@@ -12,7 +12,7 @@
     }
 @endphp
 
-<x-chief-table::button :attributes="$attributes">
+<x-chief::button :attributes="$attributes">
     {!! $action->getPrependIcon() !!}
 
     @if ($action->getLabel())
@@ -20,4 +20,4 @@
     @endif
 
     {!! $action->getAppendIcon() !!}
-</x-chief-table::button>
+</x-chief::button>

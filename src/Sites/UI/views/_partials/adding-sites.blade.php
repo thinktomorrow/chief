@@ -13,7 +13,7 @@
 
 <x-slot name="footer">
     <x-chief::dialog.drawer.footer>
-        <x-chief-table::button wire:click="saveAddingSites" variant="blue">Toevoegen</x-chief-table::button>
-        <x-chief-table::button wire:click="closeAddingSites">Annuleer</x-chief-table::button>
+        <x-chief::button wire:click="saveAddingSites" variant="blue">Toevoegen</x-chief::button>
+        <x-chief::button wire:click="closeAddingSites">Annuleer</x-chief::button>
     </x-chief::dialog.drawer.footer>
 </x-slot>

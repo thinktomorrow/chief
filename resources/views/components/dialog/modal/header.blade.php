@@ -21,14 +21,8 @@
             @endif
         </div>
 
-        <x-chief-table::button
-            size="sm"
-            variant="grey"
-            type="button"
-            x-on:click.stop="close()"
-            class="ml-auto shrink-0"
-        >
+        <x-chief::button size="sm" variant="grey" type="button" x-on:click.stop="close()" class="ml-auto shrink-0">
             <x-chief::icon.cancel />
-        </x-chief-table::button>
+        </x-chief::button>
     </header>
 @endif

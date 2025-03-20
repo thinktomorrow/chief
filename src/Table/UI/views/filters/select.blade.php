@@ -28,8 +28,8 @@
         />
 
         <div class="flex items-start justify-between gap-2">
-            <x-chief-table::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief-table::button>
-            <x-chief-table::button
+            <x-chief::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief::button>
+            <x-chief::button
                 x-on:click="() => {
                     close()
                     $wire.addFilter()
@@ -38,7 +38,7 @@
                 variant="blue"
             >
                 Pas filter toe
-            </x-chief-table::button>
+            </x-chief::button>
         </div>
     </div>
 </x-chief::dialog.dropdown>

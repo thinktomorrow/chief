@@ -4,9 +4,9 @@
 
 <x-chief::window title="Sites">
     <x-slot name="actions">
-        <x-chief-table::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
+        <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
-        </x-chief-table::button>
+        </x-chief::button>
     </x-slot>
 
     @if (count($siteLinks) > 0)

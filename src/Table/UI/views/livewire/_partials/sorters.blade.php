@@ -2,15 +2,15 @@
     @if (count($this->getActiveFilters()) > 0)
         <div class="flex items-center justify-end gap-2">
             <span class="text-sm leading-5 text-grey-500">{{ $this->resultTotal }} items</span>
-            <x-chief-table::button wire:click="resetFilters" variant="grey">
+            <x-chief::button wire:click="resetFilters" variant="grey">
                 <x-chief::icon.filter-remove />
                 <span>Reset filters</span>
-            </x-chief-table::button>
+            </x-chief::button>
         </div>
     @endif
 
     @if (count($this->getSortersForView()) > 1)
-        <x-chief-table::button x-on:click="$dispatch('open-dialog', { 'id': 'table-sorting' })" variant="outline-white">
+        <x-chief::button x-on:click="$dispatch('open-dialog', { 'id': 'table-sorting' })" variant="outline-white">
             <x-chief::icon.sorting />
 
             @if (count($this->getActiveSorters()) > 0)
@@ -22,7 +22,7 @@
                     @endif
                 @endforeach
             @endif
-        </x-chief-table::button>
+        </x-chief::button>
 
         <x-chief::dialog.dropdown id="table-sorting" placement="bottom-end">
             <div
@@ -39,9 +39,7 @@
                 </div>
 
                 <div class="flex items-start justify-between gap-2">
-                    <x-chief-table::button x-on:click="close()" size="sm" variant="grey">
-                        Annuleer
-                    </x-chief-table::button>
+                    <x-chief::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief::button>
                 </div>
             </div>
         </x-chief::dialog.dropdown>

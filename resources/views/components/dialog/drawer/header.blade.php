@@ -14,7 +14,7 @@
         @if ($backButton)
             {{ $backButton }}
         @else
-            <x-chief-table::button
+            <x-chief::button
                 size="sm"
                 variant="grey"
                 type="button"
@@ -22,7 +22,7 @@
                 class="mt-[0.1875rem] shrink-0"
             >
                 <x-chief::icon.arrow-left />
-            </x-chief-table::button>
+            </x-chief::button>
         @endif
 
         @if ($title || $subtitle || count($badges) > 0)

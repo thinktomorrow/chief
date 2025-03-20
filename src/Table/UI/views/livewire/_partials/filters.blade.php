@@ -7,7 +7,7 @@
 
     <div>
         @if (count($this->getTertiaryFilters()) > 0)
-            <x-chief-table::button
+            <x-chief::button
                 x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })"
                 variant="outline-white"
                 class="relative"
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 @endif
-            </x-chief-table::button>
+            </x-chief::button>
         @endif
 
         <x-chief::dialog.drawer id="table-filters-drawer" title="Meer filters">
@@ -51,7 +51,7 @@
 
             <x-slot name="footer">
                 <x-chief::dialog.modal.footer class="!justify-start">
-                    <x-chief-table::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief-table::button>
+                    <x-chief::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief::button>
                     <span>{{ $this->resultTotal }} resultaten gevonden</span>
                 </x-chief::dialog.modal.footer>
             </x-slot>
