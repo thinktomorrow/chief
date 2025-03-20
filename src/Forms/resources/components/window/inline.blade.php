@@ -22,7 +22,7 @@
             title="Aanpassen"
             size="sm"
             variant="grey"
-            class="mt-[0.3125rem] shrink-0"
+            class="mt-2 shrink-0"
         >
             <x-chief::icon.quill-write />
         </x-chief-table::button>

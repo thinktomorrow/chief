@@ -47,7 +47,6 @@
                     id="delete-taggroup-modal-form-{{ $model->id }}"
                     action="{{ route('chief.taggroups.delete', $model->id) }}"
                     method="POST"
-                    v-cloak
                 >
                     @csrf
                     @method('DELETE')

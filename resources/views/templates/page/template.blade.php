@@ -24,7 +24,7 @@
                     <x-chief::page.hero :title="$title" />
                 @endif
 
-                <div v-cloak>
+                <div>
                     {{ $slot }}
                 </div>
             </div>

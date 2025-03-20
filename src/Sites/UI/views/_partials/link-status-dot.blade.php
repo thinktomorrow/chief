@@ -3,9 +3,9 @@
         @class([
             'absolute inset-0 animate-pulse rounded-full',
             match ($siteLink->status->value) {
-                'online' => 'bg-green-200',
-                'offline' => 'bg-grey-200',
-                'none' => 'bg-grey-200',
+                'online' => 'bg-green-100',
+                'offline' => 'bg-grey-100',
+                'none' => 'bg-grey-100',
             },
         ])
     ></div>

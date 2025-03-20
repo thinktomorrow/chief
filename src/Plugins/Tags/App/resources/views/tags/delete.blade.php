@@ -43,7 +43,6 @@
         id="delete-tag-form-{{ $tag->getTagId() }}"
         action="{{ route('chief.tags.delete', $tag->getTagId()) }}"
         method="POST"
-        v-cloak
     >
         @csrf
         @method('DELETE')

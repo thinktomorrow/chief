@@ -10,8 +10,7 @@
     If the min-width property isn't set on these flex items, they will overflow their parent flex container if they happen to contain a table (go figure).
     Dev sessions saved by this comment: 2.
 --}}
-
-<x-chief::page.layout>
+<x-chief::page.layout :title="$title">
     <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
         {{-- Navigation --}}
         <div class="w-full shrink-0 lg:w-64">
