@@ -126,4 +126,9 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, L
     {
         return ChiefLocales::fallbackLocales();
     }
+
+    protected function getAssetFallbackLocales(): array
+    {
+        return ChiefLocales::fallbackLocales();
+    }
 }

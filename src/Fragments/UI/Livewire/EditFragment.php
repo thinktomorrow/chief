@@ -42,6 +42,7 @@ class EditFragment extends Component
             [
                 'open-'.$this->parentComponentId => 'open',
                 'request-refresh' => '$refresh',
+                'files-updated' => 'onFilesUpdated',
             ]
         );
     }

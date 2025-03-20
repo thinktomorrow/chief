@@ -50,13 +50,14 @@ return [
         [
             'locale' => 'fr',
             'name' => 'Wallonië (fr)',
+            'fallback_locale' => 'nl',
             'short_name' => 'fr',
             'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
             'active' => false,
         ],
         [
             'locale' => 'en',
-            'fallback_locale' => 'nl',
+            'fallback_locale' => 'fr',
             'name' => 'Brits',
             'short_name' => 'english',
             'url' => env('CHIEF_SITES_URL_EN', env('APP_URL', 'http://localhost')),

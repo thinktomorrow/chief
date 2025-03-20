@@ -35,6 +35,11 @@ trait PageDefaults
         return ChiefLocales::fallbackLocales();
     }
 
+    protected function getAssetFallbackLocales(): array
+    {
+        return ChiefLocales::fallbackLocales();
+    }
+
     public function viewKey(): string
     {
         return (new ResourceKeyFormat(static::class))->getKey();

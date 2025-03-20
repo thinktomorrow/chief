@@ -36,7 +36,7 @@ class AddFragment extends Component
     {
         return [
             'open-'.$this->parentComponentId => 'open',
-            'files-updated' => 'onfilesUpdated',
+            'files-updated' => 'onFilesUpdated',
         ];
     }
 

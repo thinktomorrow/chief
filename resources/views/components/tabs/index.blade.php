@@ -13,7 +13,8 @@
 <div
     x-cloak
     data-slot="tabs"
-    wire:key="tabs-index-{{ \Illuminate\Support\Str::random() }}"
+    wire:ignore
+    {{--    wire:key="tabs-index-{{ \Illuminate\Support\Str::random() }}"--}}
     x-on:chieftab.window="listenForExternalTab"
     x-data="{
         activeTab: null,

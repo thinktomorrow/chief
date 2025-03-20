@@ -96,7 +96,7 @@ trait HasForm
      *      return ['files-updated' => 'onfilesUpdated'];
      * }
      */
-    public function onfilesUpdated(string $fieldName, array $files, ?string $parentComponentId = null)
+    public function onFilesUpdated(string $fieldName, array $files, ?string $parentComponentId = null)
     {
         // Make sure that the FileFieldUploadComponent is a child component of this component
         if ($this->getId() !== $parentComponentId) {
