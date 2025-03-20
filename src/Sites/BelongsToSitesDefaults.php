@@ -15,6 +15,8 @@ trait BelongsToSitesDefaults
      */
     public function initializeBelongsToSitesDefaults(): void
     {
+        $this->mergeCasts(['sites' => 'array']);
+
         // Set all available locales
         $this->setLocales(ChiefLocales::verifiedLocales($this->getSiteLocales()));
 
@@ -34,11 +36,6 @@ trait BelongsToSitesDefaults
         $this->sites = $locales;
     }
 
-    protected function initializeBelongsToSitesDefault()
-    {
-        $this->mergeCasts(['sites' => 'array']);
-    }
-
     public function scopeBySite(Builder $query, string $site): void
     {
         // Site should be more of a ID. -> site as db table...
@@ -51,9 +48,9 @@ trait BelongsToSitesDefaults
     public function scopeByLocaleOrNone(Builder $query, string $locale): void
     {
         $query->when($locale, fn ($q, $locale) => $q->where(function ($q) use ($locale) {
-            $q->whereJsonContains($this->getTable().'.locales', $locale)
-                ->orWhereNull($this->getTable().'.locales')
-                ->orWhereJsonLength($this->getTable().'.locales', '=', 0);
+            $q->whereJsonContains($this->getTable().'.sites', $locale)
+                ->orWhereNull($this->getTable().'.sites')
+                ->orWhereJsonLength($this->getTable().'.sites', '=', 0);
         }));
     }
 }
