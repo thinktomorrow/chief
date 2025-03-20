@@ -3,8 +3,8 @@
         <x-chief::page.header
             :title="$resource->getPageTitle($model)"
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'], 
-                ['label' => $resource->getIndexTitle($model), 'url' => $manager->route('index', $model), 'icon' => $resource->getNavIcon()],
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => $resource->getIndexTitle($model), 'url' => $manager->route('index', $model), 'icon' => $resource->getNavItem()?->icon()],
                 $resource->getPageTitle($model)
             ]"
         >

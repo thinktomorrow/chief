@@ -16,7 +16,7 @@
     } else {
         $breadcrumbs = [
             ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
-            ['label' => $resource->getIndexTitle($model), 'url' => $manager->route('index', $model), 'icon' => $resource->getNavIcon()],
+            ['label' => $resource->getIndexTitle($model), 'url' => $manager->route('index', $model), 'icon' => $resource->getNavItem()?->icon()],
             'Archief',
         ];
     }

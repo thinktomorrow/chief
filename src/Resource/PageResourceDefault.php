@@ -83,7 +83,7 @@ trait PageResourceDefault
         return ['nav'];
     }
 
-    public function getNavIcon(): string
+    protected function getNavIcon(): string
     {
         return Blade::render('<x-chief::icon.folder-library />');
     }
