@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\Chief\Sites\Locales\LocalizedDefaults;
 
 trait BelongsToSitesDefaults
@@ -16,14 +15,6 @@ trait BelongsToSitesDefaults
     public function initializeBelongsToSitesDefaults(): void
     {
         $this->mergeCasts(['sites' => 'array']);
-
-        // Set all available locales
-        $this->setLocales(ChiefLocales::verifiedLocales($this->getSiteLocales()));
-
-        // Set fallback locales
-        $this->setFallbackLocales(ChiefLocales::fallbackLocales());
-
-        // TODO: for assets as well...
     }
 
     public function getSiteLocales(): array

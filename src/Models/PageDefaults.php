@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Models;
 
-use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\ManagedModels\States\Archivable\Archivable;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\UsesPageState;
@@ -11,6 +10,7 @@ use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\Chief\Sites\BelongsToSitesDefaults;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait PageDefaults
@@ -25,16 +25,18 @@ trait PageDefaults
     use Viewable;
     use VisitableDefaults;
 
+    protected function getDynamicLocales(): array
+    {
+        return ChiefLocales::verifiedLocales($this->getSiteLocales());
+    }
+
+    protected function getDynamicFallbackLocales(): array
+    {
+        return ChiefLocales::fallbackLocales();
+    }
+
     public function viewKey(): string
     {
         return (new ResourceKeyFormat(static::class))->getKey();
-    }
-
-    /**
-     * Get all related models that have at least one fragment.
-     */
-    public function getRelatedOwners(): Collection
-    {
-        return static::where('id', '<>', $this->id)->get();
     }
 }

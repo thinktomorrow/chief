@@ -2,69 +2,142 @@
 
 namespace Thinktomorrow\Chief\Sites\Tests\App;
 
-use Thinktomorrow\Chief\Sites\Tests\Fixtures\LocalizedFixture;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\Tests\Fixtures\LocalizedPageFixture;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class LocalizedPageTest extends ChiefTestCase
 {
+    private LocalizedPageFixture $model;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         LocalizedPageFixture::migrateUp();
+
+        $this->model = new LocalizedPageFixture;
+
+        $this->model->setSiteLocales(['nl', 'en']);
+        $this->model->save();
     }
 
     public function test_it_has_locales_based_on_sites(): void
     {
-        $model = new LocalizedPageFixture;
+        $this->model->fresh();
 
-        $model->setSiteLocales(['nl', 'en']);
-        dd($model);
-        $model->save();
-
-        $this->assertEquals(['nl', 'en'], $model->getSiteLocales());
-
+        $this->assertEquals(['nl', 'en'], $this->model->getSiteLocales());
+        $this->assertEquals(['nl', 'en'], $this->model->getLocales());
     }
 
     public function test_it_can_get_localized_value()
     {
-        $model = new LocalizedPageFixture;
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
+        $this->model->setDynamic('title', 'English title', 'en');
 
-        $model->setLocales(['nl', 'en']);
+        app()->setLocale('en');
+        $this->assertEquals('English title', $this->model->title);
 
-        $model->setDynamic('title', 'Nederlandse titel', 'nl');
-        $model->setDynamic('title', 'English title', 'en');
-
-        $model->setActiveLocale('en');
-        $this->assertEquals('English title', $model->title);
-
-        $model->setActiveLocale('nl');
-        $this->assertEquals('Nederlandse titel', $model->title);
+        app()->setLocale('nl');
+        $this->assertEquals('Nederlandse titel', $this->model->title);
     }
 
-    public function test_it_can_get_fallback_value(): void
+    public function test_it_gets_fallback_value_when_value_is_missing(): void
     {
-        $model = new LocalizedFixture;
+        ChiefSites::clearCache();
+        config()->set('chief.sites', [
+            ['locale' => 'nl', 'fallback_locale' => null],
+            ['locale' => 'en', 'fallback_locale' => 'nl'],
+        ]);
 
-        $model->setLocales(['nl', 'en']);
-        $model->setFallbackLocales(['en' => 'nl']);
+        $this->model->fresh();
 
-        $model->setDynamic('title', 'Nederlandse titel', 'nl');
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
 
-        $model->setActiveLocale('en');
-        $this->assertEquals('Nederlandse titel', $model->title);
+        app()->setLocale('en');
+        $this->assertEquals('Nederlandse titel', $this->model->title);
+    }
+
+    public function test_it_gets_fallback_value_when_value_is_null(): void
+    {
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
+        $this->model->setDynamic('title', null, 'en');
+
+        app()->setLocale('en');
+        $this->assertEquals('Nederlandse titel', $this->model->title);
+    }
+
+    public function test_it_gets_own_value_when_value_is_empty_string(): void
+    {
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
+        $this->model->setDynamic('title', '', 'en');
+
+        app()->setLocale('en');
+        $this->assertEquals('', $this->model->title);
+    }
+
+    public function test_it_gets_null_when_locale_is_missing_and_no_fallback_is_provided(): void
+    {
+        ChiefSites::clearCache();
+        config()->set('chief.sites', [
+            ['locale' => 'nl', 'fallback_locale' => null],
+            ['locale' => 'en', 'fallback_locale' => null],
+        ]);
+
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
+
+        app()->setLocale('en');
+        $this->assertNull($this->model->title);
     }
 
     public function test_when_it_does_not_have_fallback_value(): void
     {
-        $model = new LocalizedFixture;
+        app()->setLocale('en');
+        $this->assertNull($this->model->title);
+    }
 
-        $model->setLocales(['nl', 'en']);
+    public function test_when_it_does_not_have_fallback(): void
+    {
+        ChiefSites::clearCache();
+        config()->set('chief.sites', [
+            ['locale' => 'nl', 'fallback_locale' => null],
+            ['locale' => 'en', 'fallback_locale' => null],
+        ]);
 
-        $model->setDynamic('title', 'Nederlandse titel', 'nl');
+        app()->setLocale('en');
+        $this->assertNull($this->model->title);
+    }
 
-        $model->setActiveLocale('en');
-        $this->assertEquals(null, $model->title);
+    public function test_it_returns_null_when_requested_locale_is_not_in_site_locales()
+    {
+        ChiefSites::clearCache();
+        config()->set('chief.sites', [
+            ['locale' => 'nl', 'fallback_locale' => null],
+            ['locale' => 'en', 'fallback_locale' => null],
+        ]);
+
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
+        $this->model->setDynamic('title', 'English title', 'en');
+
+        app()->setLocale('fr'); // 'fr' is not in model site locales ['nl', 'en']
+        $this->assertNull($this->model->title);
+    }
+
+    public function test_it_falls_back_through_multiple_levels()
+    {
+        ChiefSites::clearCache();
+        config()->set('chief.sites', [
+            ['locale' => 'fr', 'fallback_locale' => 'en'],
+            ['locale' => 'en', 'fallback_locale' => 'nl'],
+            ['locale' => 'nl', 'fallback_locale' => null],
+        ]);
+
+        $this->model->setSiteLocales(['nl', 'en', 'fr']);
+        $this->model->save();
+
+        $this->model->setDynamic('title', 'Nederlandse titel', 'nl');
+
+        app()->setLocale('fr');
+        $this->assertEquals('Nederlandse titel', $this->model->title);
     }
 }

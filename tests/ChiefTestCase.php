@@ -24,6 +24,7 @@ use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
@@ -95,6 +96,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
     {
         // Clear out any memoized values
         Memoize::clear();
+
+        ChiefSites::clearCache();
 
         parent::tearDown();
     }
