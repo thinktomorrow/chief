@@ -25,7 +25,6 @@
             id="state-modal-{{ $transitionKey }}-{{ $model->id }}-form"
             action="@adminRoute('state-update', $model, $stateConfig->getStateKey(), $transitionKey)"
             method="POST"
-            v-cloak
         >
             @csrf
             @method('PUT')

@@ -44,52 +44,27 @@
             <div
                 class="pointer-events-none absolute inset-0 hidden flex-wrap items-center justify-center gap-1.5 bg-black/25 p-1 group-hover:flex"
             >
-                <button
-                    type="button"
-                    aria-label="Bewerk bestand"
-                    wire:click="openAssetEdit('{{ $asset->id }}')"
-                    class="pointer-events-auto"
-                >
-                    <x-chief::button>
-                        <svg>
-                            <use xlink:href="#icon-edit"></use>
-                        </svg>
-                    </x-chief::button>
-                </button>
+                <x-chief-table::button aria-label="Bewerk bestand" wire:click="openAssetEdit('{{ $asset->id }}')">
+                    <x-chief::icon.quill-write />
+                </x-chief-table::button>
 
-                <button
-                    type="button"
-                    aria-label="Verwijder bestand"
-                    wire:click="deleteAsset('{{ $asset->id }}')"
-                    class="pointer-events-auto"
-                >
-                    <x-chief::button>
-                        <svg>
-                            <use xlink:href="#icon-trash"></use>
-                        </svg>
-                    </x-chief::button>
-                </button>
+                <x-chief-table::button aria-label="Verwijder bestand" wire:click="deleteAsset('{{ $asset->id }}')">
+                    <x-chief::icon.delete />
+                </x-chief-table::button>
 
                 @if ($asset instanceof ExternalAssetContract)
-                    <a
+                    <x-chief-table::button
                         href="{{ $asset->getUrl() }}"
                         title="Bekijk op platform"
                         target="_blank"
                         rel="noopener"
-                        class="pointer-events-auto"
                     >
-                        <x-chief::button>
-                            <svg>
-                                <use xlink:href="#icon-external-link"></use>
-                            </svg>
-                        </x-chief::button>
-                    </a>
+                        <x-chief::icon.link-square />
+                    </x-chief-table::button>
                 @else
-                    <a href="{{ $asset->getUrl() }}" title="Download" download class="pointer-events-auto">
-                        <x-chief::button>
-                            <x-chief::icon.download />
-                        </x-chief::button>
-                    </a>
+                    <x-chief-table::button href="{{ $asset->getUrl() }}" title="Download" download>
+                        <x-chief::icon.download />
+                    </x-chief-table::button>
                 @endif
             </div>
         @endif
