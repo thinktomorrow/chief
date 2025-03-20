@@ -26,9 +26,9 @@ final class SaveUrlSlugs
         /** @var Collection $existingRecords */
         $existingRecords = UrlRecord::getByModel($model);
 
-        foreach ($slugs as $siteId => $slug) {
+        foreach ($slugs as $locale => $slug) {
             if (! $slug) {
-                $this->deleteEmptyRecord($model, $siteId, $existingRecords);
+                $this->deleteEmptyRecord($model, $locale, $existingRecords);
 
                 continue;
             }
@@ -39,28 +39,28 @@ final class SaveUrlSlugs
              *  This asserts a consistent behaviour in both the application and the database
              */
             //            $slug = Str::ascii($slug);
-            $slug = $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $siteId) : $slug;
+            $slug = $prependBaseUrlSegment ? $this->prependBaseUrlSegment($model, $slug, $locale) : $slug;
 
             $this->saveRecord(
                 $model,
-                $siteId,
+                $locale,
                 $slug,
                 $existingRecords
             );
         }
     }
 
-    private function deleteEmptyRecord(Visitable $model, string $siteId, Collection $existingRecords): void
+    private function deleteEmptyRecord(Visitable $model, string $locale, Collection $existingRecords): void
     {
-        $this->saveRecord($model, $siteId, null, $existingRecords);
+        $this->saveRecord($model, $locale, null, $existingRecords);
     }
 
-    private function saveRecord(Visitable $model, string $siteId, ?string $slug, Collection $existingRecords): void
+    private function saveRecord(Visitable $model, string $locale, ?string $slug, Collection $existingRecords): void
     {
         // Existing ones for this site?
-        $nonRedirectsForSameSite = $existingRecords->filter(function ($record) use ($siteId) {
+        $nonRedirectsForSameSite = $existingRecords->filter(function ($record) use ($locale) {
             return
-                $record->site == $siteId &&
+                $record->site == $locale &&
                 ! $record->isRedirect();
         });
 
@@ -73,11 +73,11 @@ final class SaveUrlSlugs
             return;
         }
 
-        $this->cleanupExistingRecords($model, $siteId, $slug, $existingRecords);
+        $this->cleanupExistingRecords($model, $locale, $slug, $existingRecords);
 
         // If there are no matching urls, the url is created
         if ($nonRedirectsForSameSite->isEmpty()) {
-            $this->createRecord($model, $siteId, $slug);
+            $this->createRecord($model, $locale, $slug);
 
             return;
         }
@@ -95,26 +95,26 @@ final class SaveUrlSlugs
         });
     }
 
-    private function createRecord(Visitable $model, string $siteId, string $slug): void
+    private function createRecord(Visitable $model, string $locale, string $slug): void
     {
         UrlRecord::create([
-            'site' => $siteId,
+            'site' => $locale,
             'slug' => $slug,
             'model_type' => $model->getMorphClass(),
             'model_id' => $model->id,
         ]);
     }
 
-    private function cleanupExistingRecords(Visitable $model, string $siteId, string $slug, Collection $existingRecords): void
+    private function cleanupExistingRecords(Visitable $model, string $locale, string $slug, Collection $existingRecords): void
     {
         // In the case where we have any redirects that match the given slug, we need to
         // remove the redirect record in favour of the newly added one.
-        $this->deleteIdenticalRedirects($existingRecords, $siteId, $slug);
+        $this->deleteIdenticalRedirects($existingRecords, $locale, $slug);
 
-        $sameExistingRecords = UrlRecord::where('slug', $slug)->where('site', $siteId)->get();
+        $sameExistingRecords = UrlRecord::where('slug', $slug)->where('site', $locale)->get();
 
         // Also delete any redirects that match this site and slug but are related to another model
-        $this->deleteIdenticalRedirects($sameExistingRecords, $siteId, $slug);
+        $this->deleteIdenticalRedirects($sameExistingRecords, $locale, $slug);
 
         // Also delete any urls that match this site and slug but are related to another model
         if (! $this->strict) {
@@ -125,11 +125,11 @@ final class SaveUrlSlugs
     /**
      * Remove any redirects owned by this model that equal the new slug.
      */
-    private function deleteIdenticalRedirects(Collection $existingRecords, string $siteId, string $slug): void
+    private function deleteIdenticalRedirects(Collection $existingRecords, string $locale, string $slug): void
     {
-        $existingRecords->filter(function ($record) use ($siteId) {
+        $existingRecords->filter(function ($record) use ($locale) {
             return
-                $record->site == $siteId &&
+                $record->site == $locale &&
                 $record->isRedirect();
         })->each(function ($existingRecord) use ($slug) {
             if ($existingRecord->slug == $slug) {
@@ -152,8 +152,8 @@ final class SaveUrlSlugs
         });
     }
 
-    private function prependBaseUrlSegment(Visitable $model, string $slug, string $siteId): string
+    private function prependBaseUrlSegment(Visitable $model, string $slug, string $locale): string
     {
-        return BaseUrlSegment::prepend($model, $slug, $siteId);
+        return BaseUrlSegment::prepend($model, $slug, $locale);
     }
 }

@@ -8,13 +8,13 @@ use Thinktomorrow\Chief\Sites\Events\ModelSitesUpdated;
 
 class SaveModelSites
 {
-    public function handle(BelongsToSites&ReferableModel $model, array $siteIds): void
+    public function handle(BelongsToSites&ReferableModel $model, array $locales): void
     {
-        $previousState = $model->getSiteIds();
+        $previousState = $model->getSiteLocales();
 
-        $model->setSiteIds($siteIds);
+        $model->setSiteLocales($locales);
         $model->save();
 
-        event(new ModelSitesUpdated($model->modelReference(), $model->getSiteIds(), $previousState));
+        event(new ModelSitesUpdated($model->modelReference(), $model->getSiteLocales(), $previousState));
     }
 }

@@ -43,15 +43,15 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $this->sites;
     }
 
-    public function find(string $siteId): ChiefSite
+    public function find(string $locale): ChiefSite
     {
         foreach ($this->sites as $site) {
-            if ($site->id === $siteId) {
+            if ($site->locale === $locale) {
                 return $site;
             }
         }
 
-        throw new \InvalidArgumentException('Site with id ['.$siteId.'] not found in chief config.');
+        throw new \InvalidArgumentException('Site with id ['.$locale.'] not found in chief config.');
     }
 
     public function getLocales(): array
@@ -74,14 +74,14 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return new self(...array_filter($this->sites, fn (ChiefSite $site) => $site->isActive));
     }
 
-    public function filterByIds(array $siteIds): self
+    public function filterByLocales(array $locales): self
     {
-        return new self(...array_filter($this->sites, fn (ChiefSite $site) => in_array($site->id, $siteIds)));
+        return new self(...array_filter($this->sites, fn (ChiefSite $site) => in_array($site->locale, $locales)));
     }
 
-    public function rejectByIds(array $siteIds): self
+    public function rejectByLocales(array $locales): self
     {
-        return new self(...array_filter($this->sites, fn (ChiefSite $site) => ! in_array($site->id, $siteIds)));
+        return new self(...array_filter($this->sites, fn (ChiefSite $site) => ! in_array($site->locale, $locales)));
     }
 
     public static function all(): self
@@ -124,10 +124,10 @@ class ChiefSites implements \Countable, \IteratorAggregate
 
     private function assertAllIdsAreUnique(array $sites): void
     {
-        $ids = array_map(fn (ChiefSite $site) => $site->id, $sites);
+        $locales = array_map(fn (ChiefSite $site) => $site->locale, $sites);
 
-        if (count($ids) !== count(array_unique($ids))) {
-            throw new \InvalidArgumentException('Site ids should be unique.');
+        if (count($locales) !== count(array_unique($locales))) {
+            throw new \InvalidArgumentException('Site locales should be unique.');
         }
     }
 

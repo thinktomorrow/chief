@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 trait VisitableDefaults
 {
@@ -23,7 +24,10 @@ trait VisitableDefaults
             return '';
         }
 
-        return $this->resolveUrl($site, [$urlRecord->slug]);
+        // External logic such as the urls and thinktomorrow/locale package use locales instead of site ids.
+        $locale = ChiefSites::all()->find($site)->locale;
+
+        return $this->resolveUrl($locale, [$urlRecord->slug]);
     }
 
     public function urls(): HasMany
@@ -50,11 +54,11 @@ trait VisitableDefaults
     }
 
     // TODO: just used once (in url preview) so cant we just remove this?...
-    public function resolveUrl(?string $site = null, $parameters = null): string
+    public function resolveUrl(?string $locale = null, $parameters = null): string
     {
         $routeName = config('chief.route.name');
 
-        return $this->resolveRoute($routeName, $parameters, $site);
+        return $this->resolveRoute($routeName, $parameters, $locale);
     }
 
     /** {@inheritdoc} */

@@ -17,9 +17,12 @@ class ChiefLocales
         return $locales = ChiefSites::all()->getLocales();
     }
 
-    public static function localesBySites(array $siteIds): array
+    /**
+     * Verify that passed locales are present in the sites config.
+     */
+    public static function verifiedLocales(array $locales): array
     {
-        return ChiefSites::all()->filterByIds($siteIds)->getLocales();
+        return ChiefSites::all()->filterByLocales($locales)->getLocales();
     }
 
     public static function fallbackLocales(): array

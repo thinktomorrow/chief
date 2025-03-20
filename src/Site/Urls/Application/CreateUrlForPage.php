@@ -54,11 +54,10 @@ class CreateUrlForPage
         }
 
         foreach (ChiefSites::all() as $site) {
-            $siteId = $site->id;
             $siteLocale = $site->locale;
 
             app()->setLocale($siteLocale);
-            $slugs[$siteId] = Str::slug($resource->getPageTitle($model));
+            $slugs[$locale] = Str::slug($resource->getPageTitle($model));
         }
 
         // Reset locale

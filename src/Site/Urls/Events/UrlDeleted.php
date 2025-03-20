@@ -9,7 +9,7 @@ class UrlDeleted
     public function __construct(
         public readonly int $id,
         public readonly string $slug,
-        public readonly string $siteId,
+        public readonly string $locale,
         public readonly ModelReference $modelReference
     ) {}
 }

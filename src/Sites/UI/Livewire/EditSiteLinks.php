@@ -32,7 +32,7 @@ class EditSiteLinks extends Component
 
     public bool $addingSites = false;
 
-    public array $addingSiteIds = [];
+    public array $addingLocales = [];
 
     public function mount(string $modelReference)
     {
@@ -50,6 +50,7 @@ class EditSiteLinks extends Component
     public function open($values = [])
     {
         $this->siteLinks = $this->getSiteLinks();
+
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
@@ -76,13 +77,13 @@ class EditSiteLinks extends Component
     {
         $this->addingSites = false;
 
-        $this->reset('addingSiteIds');
+        $this->reset('addingLocales');
     }
 
     public function saveAddingSites(): void
     {
-        $addedSiteLinks = collect($this->addingSiteIds)->map(function ($siteId) {
-            return SiteLink::empty($siteId);
+        $addedSiteLinks = collect($this->addingLocales)->map(function ($locale) {
+            return SiteLink::empty($locale);
         });
 
         $this->siteLinks = $this->siteLinks->merge($addedSiteLinks);
@@ -95,9 +96,9 @@ class EditSiteLinks extends Component
     /** @return ChiefSite[] */
     public function getNonAddedSites(): array
     {
-        $siteIds = $this->siteLinks->map(fn ($siteLink) => $siteLink->siteId)->toArray();
+        $locales = $this->siteLinks->map(fn ($siteLink) => $siteLink->locale)->toArray();
 
-        return ChiefSites::all()->rejectByIds($siteIds)->get();
+        return ChiefSites::all()->rejectByLocales($locales)->get();
     }
 
     public function getLinkStatusOptions(): array
@@ -105,14 +106,14 @@ class EditSiteLinks extends Component
         return LinkStatus::options();
     }
 
-    public function deleteSite(string $siteId): void
+    public function deleteSite(string $locale): void
     {
         $form = $this->form;
 
-        $this->form[$siteId] = null;
+        $this->form[$locale] = null;
     }
 
-    public function undoDeleteSite(string $siteId): void
+    public function undoDeleteSite(string $locale): void
     {
         $this->initialFormValues();
     }
@@ -126,13 +127,13 @@ class EditSiteLinks extends Component
 
         $model = ModelReference::fromString($this->modelReference)->instance();
 
-        $siteIds = collect($this->form)->reject(fn ($values) => ! $values)->keys()->toArray();
+        $locales = collect($this->form)->reject(fn ($values) => ! $values)->keys()->toArray();
 
-        app(SaveModelSites::class)->handle($model, $siteIds);
+        app(SaveModelSites::class)->handle($model, $locales);
 
-        foreach ($this->form as $siteId => $values) {
+        foreach ($this->form as $locale => $values) {
 
-            $siteLink = $this->siteLinks->first(fn ($siteLink) => $siteLink->siteId == $siteId);
+            $siteLink = $this->siteLinks->first(fn ($siteLink) => $siteLink->locale == $locale);
             $urlRecordExists = $siteLink->url && $siteLink->url->id;
 
             if (! $values || ! $values['slug']) {
@@ -159,7 +160,7 @@ class EditSiteLinks extends Component
             // Create
             app(CreateUrl::class)->handle(
                 $model,
-                $siteId,
+                $locale,
                 $values['slug'],
                 $values['context'],
                 LinkStatus::from($values['status'])
@@ -177,14 +178,9 @@ class EditSiteLinks extends Component
         return view('chief-sites::edit-site-links');
     }
 
-    public function queuedForDeletion(string $siteId): bool
+    public function queuedForDeletion(string $locale): bool
     {
-        return ! isset($this->form[$siteId]) || ! $this->form[$siteId];
-    }
-
-    public function getFormSiteIds(): array
-    {
-        return array_keys($this->form);
+        return ! isset($this->form[$locale]) || ! $this->form[$locale];
     }
 
     private function initialFormValues()
@@ -192,11 +188,11 @@ class EditSiteLinks extends Component
         foreach ($this->siteLinks as $siteLink) {
 
             // Keep existing form values, only add new ones
-            if (isset($this->form[$siteLink->siteId])) {
+            if (isset($this->form[$siteLink->locale])) {
                 continue;
             }
 
-            $this->form[$siteLink->siteId] = [
+            $this->form[$siteLink->locale] = [
                 'slug' => $siteLink->url?->slug,
                 'status' => $siteLink->status->value,
                 'context' => $siteLink->contextId,

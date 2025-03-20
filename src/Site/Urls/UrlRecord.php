@@ -20,7 +20,7 @@ class UrlRecord extends Model
      *
      * @throws UrlRecordNotFound
      */
-    public static function findBySlug(string $slug, string $siteId): UrlRecord
+    public static function findBySlug(string $slug, string $locale): UrlRecord
     {
         // Clear the input from any trailing slashes.
         if ($slug != '/') {
@@ -28,12 +28,12 @@ class UrlRecord extends Model
         }
 
         $record = static::where('slug', $slug)
-            ->where('site', $siteId)
+            ->where('site', $locale)
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
         if (! $record) {
-            throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for site ['.$siteId.'].');
+            throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for site ['.$locale.'].');
         }
 
         return $record;
@@ -49,25 +49,25 @@ class UrlRecord extends Model
      *
      * @throws UrlRecordNotFound
      */
-    public static function findByModel(Model $model, string $siteId): UrlRecord
+    public static function findByModel(Model $model, string $locale): UrlRecord
     {
         $record = static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
-            ->where('site', $siteId)
+            ->where('site', $locale)
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
         if (! $record) {
-            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for site ['.$siteId.'].');
+            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for site ['.$locale.'].');
         }
 
         return $record;
     }
 
-    public static function findSlugByModel(Model $model, string $siteId): ?string
+    public static function findSlugByModel(Model $model, string $locale): ?string
     {
         try {
-            $currentSlug = static::findByModel($model, $siteId)->slug;
+            $currentSlug = static::findByModel($model, $locale)->slug;
         } catch (UrlRecordNotFound $e) {
             $currentSlug = '';
         }
@@ -89,11 +89,11 @@ class UrlRecord extends Model
             ->exists();
     }
 
-    public static function findRecentRedirect(Model $model, string $siteId): ?self
+    public static function findRecentRedirect(Model $model, string $locale): ?self
     {
         return static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
-            ->where('site', $siteId)
+            ->where('site', $locale)
             ->where('redirect_id', '<>', null)
             ->orderBy('updated_at', 'DESC')
             ->first();
@@ -136,17 +136,17 @@ class UrlRecord extends Model
         return $this->slug === '/';
     }
 
-    public static function existsIgnoringRedirects(?string $slug, ?string $siteId = null, ?Model $ignoredModel = null): bool
+    public static function existsIgnoringRedirects(?string $slug, ?string $locale = null, ?Model $ignoredModel = null): bool
     {
-        return static::exists($slug, $siteId, $ignoredModel, false);
+        return static::exists($slug, $locale, $ignoredModel, false);
     }
 
-    public static function exists(?string $slug, ?string $siteId = null, ?Model $ignoredModel = null, bool $includeRedirects = true): bool
+    public static function exists(?string $slug, ?string $locale = null, ?Model $ignoredModel = null, bool $includeRedirects = true): bool
     {
         $builder = static::where('slug', $slug);
 
-        if ($siteId) {
-            $builder->where('site', $siteId);
+        if ($locale) {
+            $builder->where('site', $locale);
         }
 
         if (! $includeRedirects) {
@@ -165,9 +165,9 @@ class UrlRecord extends Model
         return $builder->count() > 0;
     }
 
-    public static function allOnlineModels(string $siteId): Collection
+    public static function allOnlineModels(string $locale): Collection
     {
-        $records = static::where('site', $siteId)
+        $records = static::where('site', $locale)
             ->where('redirect_id', '=', null)
             ->orderBy('updated_at', 'DESC')
             ->get();

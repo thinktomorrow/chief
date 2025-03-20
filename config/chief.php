@@ -19,8 +19,8 @@ return [
      * to the Laravel translation locale in resources/lang. e.g. nl, en, en-US, nl-NL, fr-BE
      *
      * Each site entry contains the following values:
-     * - id                 The unique identifier of the site - used in the db and views. Don't alter this!
-     * - locale             The locale used by this site
+     * - locale             The locale used for this site and the unique identifier of the site.
+     *                      This reference is used in the db and views. Don't alter this!
      * - fallback_locale    The locale to fall back to when a field value is not available in the locale
      *                      Great for when you just want a few values different from another locale. e.g. be -> nl, or en-us -> en-gb.
      *                      All translations use this locale by default and user can opt to occasionally add own locale values when needed.
@@ -39,7 +39,6 @@ return [
      */
     'sites' => [
         [
-            'id' => 'nl',
             'locale' => 'nl',
             'fallback_locale' => null,
             'name' => 'Vlaanderen (nl)',
@@ -49,11 +48,18 @@ return [
             'primary' => true,
         ],
         [
-            'id' => 'fr',
             'locale' => 'fr',
             'name' => 'Wallonië (fr)',
             'short_name' => 'fr',
             'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
+            'active' => false,
+        ],
+        [
+            'locale' => 'en',
+            'fallback_locale' => 'nl',
+            'name' => 'Brits',
+            'short_name' => 'english',
+            'url' => env('CHIEF_SITES_URL_EN', env('APP_URL', 'http://localhost')),
             'active' => false,
         ],
     ],

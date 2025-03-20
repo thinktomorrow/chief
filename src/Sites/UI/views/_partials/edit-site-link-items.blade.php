@@ -1,6 +1,6 @@
 <div class="divide-y divide-grey-100">
     @foreach ($this->siteLinks as $i => $siteLink)
-        <div wire:key="{{ $siteLink->siteId }}" class="space-y-3 px-4 py-6">
+        <div wire:key="{{ $siteLink->locale }}" class="space-y-3 px-4 py-6">
             <div class="flex items-start justify-between gap-2">
                 <div class="mt-[0.1875rem] flex items-center gap-2">
                     <h3 class="text-sm/6 font-medium text-grey-500">{{ $siteLink->site->name }}</h3>
@@ -11,9 +11,9 @@
                     </x-chief-table::badge>
                 </div>
 
-                @if ($this->queuedForDeletion($siteLink->siteId))
+                @if ($this->queuedForDeletion($siteLink->locale))
                     <x-chief-table::button
-                        x-on:click="$wire.undoDeleteSite('{{ $siteLink->siteId }}')"
+                        x-on:click="$wire.undoDeleteSite('{{ $siteLink->locale }}')"
                         variant="grey"
                         size="sm"
                     >
@@ -22,7 +22,7 @@
                     </x-chief-table::button>
                 @else
                     <x-chief-table::button
-                        x-on:click="$wire.deleteSite('{{ $siteLink->siteId }}')"
+                        x-on:click="$wire.deleteSite('{{ $siteLink->locale }}')"
                         variant="grey"
                         size="sm"
                     >
@@ -31,20 +31,20 @@
                 @endif
             </div>
 
-            @if (! $this->queuedForDeletion($siteLink->siteId))
+            @if (! $this->queuedForDeletion($siteLink->locale))
                 <div>
                     <div class="row-start-start gutter-3">
                         <div class="w-full">
                             <x-chief::form.fieldset rule="slug">
                                 <x-chief::form.label for="slug" required>Slug</x-chief::form.label>
-                                <x-chief::input.text id="slug" wire:model="form.{{ $siteLink->siteId }}.slug" />
+                                <x-chief::input.text id="slug" wire:model="form.{{ $siteLink->locale }}.slug" />
                             </x-chief::form.fieldset>
                         </div>
 
                         <div class="w-full lg:w-1/2">
                             <x-chief::form.fieldset rule="status">
                                 <x-chief::form.label for="status">Status</x-chief::form.label>
-                                <x-chief::input.select id="status" wire:model="form.{{ $siteLink->siteId }}.status">
+                                <x-chief::input.select id="status" wire:model="form.{{ $siteLink->locale }}.status">
                                     @foreach (\Thinktomorrow\Chief\Site\Urls\LinkStatus::options() as $optionValue => $optionLabel)
                                         <option
                                             wire:key="status-option-{{ $optionValue }}"
@@ -63,7 +63,7 @@
                                     <x-chief::form.label for="context">Context</x-chief::form.label>
                                     <x-chief::input.select
                                         id="context"
-                                        wire:model="form.{{ $siteLink->siteId }}.context"
+                                        wire:model="form.{{ $siteLink->locale }}.context"
                                     >
                                         @foreach ($contexts as $context)
                                             <option

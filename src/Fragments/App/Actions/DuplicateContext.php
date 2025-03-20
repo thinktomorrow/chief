@@ -28,7 +28,7 @@ class DuplicateContext
     public function handle(string $sourceContextId, ReferableModel&ContextOwner $targetModel): void
     {
         $sourceContext = $this->contextRepository->find($sourceContextId);
-        $targetContext = $this->contextRepository->create($targetModel, $sourceContext->getSiteIds());
+        $targetContext = $this->contextRepository->create($targetModel, $sourceContext->getSiteLocales());
 
         /** @var FragmentModel $fragment */
         foreach ($sourceContext->rootFragments as $index => $fragment) {

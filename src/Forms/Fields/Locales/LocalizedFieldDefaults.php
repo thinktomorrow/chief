@@ -22,7 +22,7 @@ trait LocalizedFieldDefaults
 
         $this->whenModelIsSet(function ($model, $field) use ($locales) {
             if ($model instanceof BelongsToSites && ($locales === null)) {
-                $field->locales = ChiefLocales::localesBySites($model->getSiteIds());
+                $field->locales = ChiefLocales::verifiedLocales($model->getSiteLocales());
             }
         });
 
@@ -45,7 +45,7 @@ trait LocalizedFieldDefaults
      */
     public function getLocaleGroups(): array
     {
-        $localesWithOwnValue = array_filter($this->locales, fn ($locale) => ! is_null($this->getValue($locale)));
+        $localesWithOwnValue = array_filter($this->locales, fn($locale) => !is_null($this->getValue($locale)));
 
         return ChiefLocales::localeGroups($this->locales, $localesWithOwnValue);
     }
@@ -80,7 +80,7 @@ trait LocalizedFieldDefaults
 
     public function getLocalizedFieldNameTemplate(): string
     {
-        if (! $this->localizedFieldNameTemplate) {
+        if (!$this->localizedFieldNameTemplate) {
             return LocalizedFieldName::getDefaultTemplate();
         }
 

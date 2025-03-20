@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait BelongsToSitesDefault
 {
-    public function getSiteIds(): array
+    public function getSiteLocales(): array
     {
         return $this->sites ?? [];
     }
 
-    public function setSiteIds(array $siteIds): void
+    public function setSiteLocales(array $locales): void
     {
-        $this->sites = $siteIds;
+        $this->sites = $locales;
     }
 
     protected function initializeBelongsToSitesDefault()

@@ -38,7 +38,7 @@ final class LinkForm
         return ChiefSites::all();
 
         return $this->model instanceof BelongsToSites
-            ? ChiefSites::all()->filterByIds($this->model->getSiteIds())
+            ? ChiefSites::all()->filterByLocales($this->model->getSiteLocales())
             : ChiefSites::all();
     }
 

@@ -19,13 +19,13 @@ class ResaveUrlSlug
      * This will retrigger the save for a nested page, which will now
      * take the updated parent slug as its base url segment.
      */
-    public function handle(Visitable $model, string $siteId, array $strippableBaseUrlSegments = []): void
+    public function handle(Visitable $model, string $locale, array $strippableBaseUrlSegments = []): void
     {
-        $currentSlug = UrlRecord::findSlugByModel($model, $siteId);
+        $currentSlug = UrlRecord::findSlugByModel($model, $locale);
         $strippedSlug = $currentSlug;
 
         // These are the base url segments of the parent model that should be removed.
-        $strippableBaseUrlSegments = array_merge($strippableBaseUrlSegments, [$model->baseUrlSegment($siteId)]);
+        $strippableBaseUrlSegments = array_merge($strippableBaseUrlSegments, [$model->baseUrlSegment($locale)]);
 
         foreach ($strippableBaseUrlSegments as $baseUrlSegment) {
             if (strpos($currentSlug, $baseUrlSegment.'/') === 0) {
@@ -37,10 +37,10 @@ class ResaveUrlSlug
         //                $strippedSlug = false != strpos($currentSlug, '/') ? substr($currentSlug, strrpos($currentSlug, '/') + 1) : $currentSlug;
 
         // Avoid saving the new slug in case that this slug already exists on another model
-        if (! (new UniqueUrlSlugRule($model, $model))->passes(null, [$siteId => $strippedSlug])) {
+        if (! (new UniqueUrlSlugRule($model, $model))->passes(null, [$locale => $strippedSlug])) {
             return;
         }
 
-        $this->saveUrlSlugs->handle($model, [$siteId => $strippedSlug]);
+        $this->saveUrlSlugs->handle($model, [$locale => $strippedSlug]);
     }
 }

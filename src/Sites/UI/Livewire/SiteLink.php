@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Sites\ChiefSites;
 class SiteLink implements Wireable
 {
     public function __construct(
-        public readonly string $siteId,
+        public readonly string $locale,
         public readonly ?string $contextId,
         public readonly ?string $contextTitle,
         public readonly SiteDto $site,
@@ -19,12 +19,12 @@ class SiteLink implements Wireable
         //
     }
 
-    public static function empty(string $siteId): self
+    public static function empty(string $locale): self
     {
-        $site = ChiefSites::all()->find($siteId);
+        $site = ChiefSites::all()->find($locale);
 
         return new static(
-            siteId: $siteId,
+            locale: $locale,
             contextId: null,
             contextTitle: null,
             site: SiteDto::fromConfig($site),
@@ -36,7 +36,7 @@ class SiteLink implements Wireable
     public function toLivewire()
     {
         return [
-            'siteId' => $this->siteId,
+            'locale' => $this->locale,
             'contextId' => $this->contextId,
             'contextTitle' => $this->contextTitle,
             'site' => $this->site->toLivewire(),
@@ -48,7 +48,7 @@ class SiteLink implements Wireable
     public static function fromLivewire($value)
     {
         return new static(
-            siteId: $value['siteId'],
+            locale: $value['locale'],
             contextId: $value['contextId'],
             contextTitle: $value['contextTitle'],
             site: SiteDto::fromLivewire($value['site']),

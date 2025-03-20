@@ -26,7 +26,7 @@ class SiteTabs extends Component
     private function getSites(BelongsToSites $model): Collection
     {
         return ChiefSites::all()
-            ->filterByIds($model->getSiteIds())
+            ->filterByLocales($model->getSiteLocales())
             ->toCollection()
             ->map(fn (ChiefSite $site) => SiteDto::fromConfig($site));
     }

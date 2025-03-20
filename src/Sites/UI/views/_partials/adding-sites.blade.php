@@ -2,11 +2,11 @@
     @foreach ($this->getNonAddedSites() as $site)
         <div class="flex items-start gap-2">
             <x-chief::input.checkbox
-                id="{{ $site->id }}"
-                wire:model="addingSiteIds"
-                value="{{ $site->id }}"
+                id="{{ $site->locale }}"
+                wire:model="addingLocales"
+                value="{{ $site->locale }}"
             ></x-chief::input.checkbox>
-            <x-chief::form.label for="{{ $site->id }}">{{ $site->name }}</x-chief::form.label>
+            <x-chief::form.label for="{{ $site->locale }}">{{ $site->name }}</x-chief::form.label>
         </div>
     @endforeach
 </x-chief::input.group>

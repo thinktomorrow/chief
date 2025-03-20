@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Sites;
 readonly class ChiefSite
 {
     public function __construct(
-        public string $id,
         public string $locale,
         public ?string $fallbackLocale,
         public bool $isActive,
@@ -17,12 +16,11 @@ readonly class ChiefSite
 
     public static function fromArray(array $site): self
     {
-        if (! isset($site['id'], $site['locale'])) {
+        if (! isset($site['locale'])) {
             throw new \InvalidArgumentException('Site array should contain at least an id and locale key.');
         }
 
         return new static(
-            $site['id'],
             $site['locale'],
             $site['fallback_locale'] ?? null,
             $site['active'] ?? false,
@@ -36,7 +34,6 @@ readonly class ChiefSite
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'locale' => $this->locale,
             'fallback_locale' => $this->fallbackLocale,
             'active' => $this->isActive,

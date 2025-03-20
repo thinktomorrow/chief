@@ -12,7 +12,7 @@
     @if (count($siteLinks) > 0)
         <div class="space-y-1">
             @foreach ($siteLinks as $siteLink)
-                <div wire:key="site-link-{{ $siteLink->siteId }}">
+                <div wire:key="site-link-{{ $siteLink->locale }}">
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-2">
                             @include('chief-sites::_partials.link-status-dot')
