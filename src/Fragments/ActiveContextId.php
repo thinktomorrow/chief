@@ -2,13 +2,31 @@
 
 namespace Thinktomorrow\Chief\Fragments;
 
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+
 class ActiveContextId
 {
     private static ?string $activeContextId = null;
 
-    public static function set(null|string|int $activeContextId): void
+    public static function set(string|int $activeContextId): void
     {
-        self::$activeContextId = $activeContextId ? (string) $activeContextId : null;
+        self::$activeContextId = (string) $activeContextId;
+    }
+
+    public static function setIfNeeded(null|string|int $activeContextId, $model): void
+    {
+        if ($activeContextId) {
+            self::set($activeContextId);
+
+            return;
+        }
+
+        // Use the default context if none is set explicitly for this site link
+        if ($model instanceof ContextOwner) {
+            if ($defaultContextId = app(ContextRepository::class)->getDefaultContextId($model->modelReference())) {
+                self::set($defaultContextId);
+            }
+        }
     }
 
     public static function exists(): bool

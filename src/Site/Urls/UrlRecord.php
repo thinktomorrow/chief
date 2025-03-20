@@ -126,6 +126,11 @@ class UrlRecord extends Model
         return (bool) ($this->redirect_id);
     }
 
+    public function getRedirectTo(): ?self
+    {
+        return static::find($this->redirect_id);
+    }
+
     public function isHomepage(): bool
     {
         return $this->slug === '/';

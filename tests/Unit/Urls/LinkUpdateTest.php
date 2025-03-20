@@ -201,7 +201,7 @@ class LinkUpdateTest extends ChiefTestCase
                 'redirect_id' => $model2->modelReference()->get(),
             ]);
 
-        $this->assertEquals($model2->id, UrlRecord::findBySlug('foobar-updated', 'nl')->redirectTo()->model_id);
+        $this->assertEquals($model2->id, UrlRecord::findBySlug('foobar-updated', 'nl')->getRedirectTo()->model_id);
         $this->assertEquals($model2->id, UrlRecord::findBySlug('foobar-updated-2', 'nl')->model_id);
     }
 
