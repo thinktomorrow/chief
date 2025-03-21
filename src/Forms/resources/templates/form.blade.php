@@ -28,7 +28,7 @@
                 {{ $_component }}
             @endforeach
 
-            <x-chief::button type="submit" variant="blue">
+            <x-chief::button data-slot="submit" type="submit" variant="blue">
                 Opslaan
                 <svg
                     data-form-submit-spinner

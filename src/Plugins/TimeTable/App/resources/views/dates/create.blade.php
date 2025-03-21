@@ -1,23 +1,23 @@
-@php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug', route('chief.timetables.edit', $timetable_id));
-@endphp
-
 <x-chief::page.template title="Uitzondering toevoegen">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Nieuwe uitzondering toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"></x-chief::page.hero>
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => 'Weekschema', 'url' => route('chief.timetables.edit', $timetable_id), 'icon' => 'calendar'],
+                'Uitzondering toevoegen',
+            ]"
+        />
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <form action="{{ route('chief.timetable_dates.store') }}" method="POST" class="card">
+    <x-chief::window class="card">
+        <form action="{{ route('chief.timetable_dates.store') }}" method="POST">
             @csrf
 
-            <div class="space-y-4">
-                @foreach($fields as $field)
-                    {!! $field->render() !!}
-                @endforeach
-            </div>
+            @foreach ($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
 
-            <button class="btn btn-primary mt-4" type="submit">Voeg uitzondering toe</button>
+            <x-chief::button data-slot="submit" type="submit" variant="blue">Voeg uitzondering toe</x-chief::button>
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

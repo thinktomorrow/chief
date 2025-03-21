@@ -73,4 +73,8 @@
         @apply shadow-sm;
         @apply bg-blue-50 text-primary-500 ring-1 ring-inset ring-primary-100 hover:ring-primary-200;
     }
+    .bui-btn-outline-red {
+        @apply shadow-sm;
+        @apply text-red-700 ring-1 ring-inset ring-red-200 hover:ring-red-300;
+    }
 }

@@ -1,10 +1,13 @@
-@php use Thinktomorrow\Chief\Sites\ChiefSites; @endphp
-<x-chief::input.group rule="type" inner-class="space-y-2" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
+@php
+    use Thinktomorrow\Chief\Sites\ChiefSites;
+@endphp
+
+<x-chief::form.fieldset rule="type" x-data="{ type: '{{ old('type', $menuitem->type) }}' }">
     <x-chief::form.label required>Link</x-chief::form.label>
 
-    <div class="space-y-3">
+    <div data-slot="control" class="space-y-2">
         {{-- Option: internal link --}}
-        <div class="space-y-2">
+        <div class="space-y-1">
             <div class="flex items-start gap-2">
                 <x-chief::input.radio
                     id="type-internal"
@@ -20,13 +23,13 @@
             </div>
 
             <div x-cloak x-show="type == 'internal'">
-                <x-chief::input.group rule="owner_reference">
+                <x-chief::form.fieldset rule="owner_reference">
                     <x-chief::multiselect
                         name="owner_reference"
                         :options="\Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions::toMultiSelectPairs($pages)"
                         :selection="old('owner_reference', $ownerReference)"
                     />
-                </x-chief::input.group>
+                </x-chief::form.fieldset>
             </div>
         </div>
 
@@ -47,31 +50,31 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if(count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
+                @if (count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
                     <x-chief::tabs :listen-for-external-tab="true">
-                        @foreach(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
-                            <x-chief::tabs.tab tab-id='{{ $locale }}'>
-                                <x-chief::input.group :rule="'trans' . $locale . 'url'">
+                        @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
+                            <x-chief::tabs.tab tab-id="{{ $locale }}">
+                                <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
                                     <x-chief::input.text
                                         id="trans-{{ $locale }}-url"
                                         name="trans[{{ $locale }}][url]"
                                         value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                         placeholder="e.g. https://google.com"
                                     />
-                                </x-chief::input.group>
+                                </x-chief::form.fieldset>
                             </x-chief::tabs.tab>
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
-                        <x-chief::input.group :rule="'trans' . $locale . 'url'">
+                    @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
+                        <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
                             <x-chief::input.text
                                 id="trans-{{ $locale }}-url"
                                 name="trans[{{ $locale }}][url]"
                                 value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                 placeholder="e.g. https://google.com"
                             />
-                        </x-chief::input.group>
+                        </x-chief::form.fieldset>
                     @endforeach
                 @endif
             </div>
@@ -92,4 +95,4 @@
             </x-chief::form.label>
         </div>
     </div>
-</x-chief::input.group>
+</x-chief::form.fieldset>

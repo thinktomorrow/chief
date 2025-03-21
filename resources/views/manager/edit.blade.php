@@ -1,4 +1,4 @@
-<x-chief::page.multisite-template :title="$resource->getPageTitle($model)">
+<x-chief::page.template :title="$resource->getPageTitle($model)">
     <x-slot name="header">
         <x-chief::page.header
             :title="$resource->getPageTitle($model)"
@@ -51,4 +51,4 @@
     </x-slot>
 
     @include('chief::templates.page._partials.editor-script')
-</x-chief::page.multisite-template>
+</x-chief::page.template>

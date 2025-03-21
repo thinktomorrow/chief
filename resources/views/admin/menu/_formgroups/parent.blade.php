@@ -1,11 +1,11 @@
-<x-chief::input.group rule="allow_parent" x-data="{ type: '{{ !!old('parent_id', $menuitem->parent_id) }}' }">
+<x-chief::form.fieldset rule="allow_parent" x-data="{ type: '{{ !!old('parent_id', $menuitem->parent_id) }}' }">
     <x-chief::form.label required>Niveau</x-chief::form.label>
 
     <x-chief::form.description>
         Zet dit item op het hoogste niveau of plaats het onder een bestaand.
     </x-chief::form.description>
 
-    <div class="space-y-2">
+    <div data-slot="control" class="space-y-2">
         <div class="flex items-start gap-2">
             <x-chief::input.radio
                 id="without-parent-id"
@@ -36,15 +36,15 @@
             </div>
 
             <div x-cloak x-show="type == '1'">
-                <x-chief::input.group rule="parent_id">
+                <x-chief::form.fieldset rule="parent_id">
                     <x-chief::multiselect
                         name="parent_id"
                         :options="$parents"
                         :selection="old('parent_id', $menuitem->parent_id)"
                         placeholder="Kies het bovenliggende menu item"
                     />
-                </x-chief::input.group>
+                </x-chief::form.fieldset>
             </div>
         </div>
     </div>
-</x-chief::input.group>
+</x-chief::form.fieldset>

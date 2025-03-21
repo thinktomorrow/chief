@@ -98,7 +98,7 @@
                     <x-chief::dialog.modal.footer>
                         <x-chief::button x-on:click="$wire.close()">Annuleren</x-chief::button>
 
-                        <x-chief::button wire:click.prevent="submit" variant="primary" type="submit">
+                        <x-chief::button wire:click.prevent="submit" variant="blue" type="submit">
                             Opslaan
                         </x-chief::button>
                     </x-chief::dialog.modal.footer>

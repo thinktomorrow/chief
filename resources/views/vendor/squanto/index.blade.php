@@ -1,10 +1,6 @@
-<x-chief::page.template title="Vaste teksten">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Vaste teksten" class="max-w-3xl"/>
-    </x-slot>
-
-    <x-chief::page.grid class="max-w-3xl mt-8">
-        <div class="divide-y card divide-grey-100">
+<x-chief::page.template title="Vaste teksten" container="md">
+    <x-chief::window class="card">
+        <div class="divide-y divide-grey-100">
             @foreach($pages as $page)
                 @php
                     $completionPercentage = $page->completionPercentage();
@@ -35,5 +31,5 @@
                 </div>
             @endforeach
         </div>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

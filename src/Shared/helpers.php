@@ -16,7 +16,7 @@ if (! function_exists('trap')) {
             print_r('[dumped at: '.str_replace($basePath, '', $trace[0]['file']).', line: '.$trace[0]['line']."]\n");
         }
 
-        dd($var, ...$moreVars);
+        // dd($var, ...$moreVars);
     }
 }
 

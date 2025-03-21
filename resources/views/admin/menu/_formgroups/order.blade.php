@@ -1,4 +1,4 @@
-<x-chief::input.group>
+<x-chief::form.fieldset>
     <x-chief::form.label for="order" required>Sortering</x-chief::form.label>
 
     <x-chief::form.description>Sortering van dit menu item op het huidige niveau.</x-chief::form.description>
@@ -33,4 +33,4 @@
             </div>
         </div>
     </div>
-</x-chief::input.group>
+</x-chief::form.fieldset>

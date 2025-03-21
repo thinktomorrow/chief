@@ -1,30 +1,32 @@
-@php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar het menu', route('chief.back.menus.show', $menuitem->menu_type));
-@endphp
-
-<x-chief::page.template title="Menu item toevoegen">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Menu item toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <button form="createForm" type="submit" class="btn btn-primary">
-                Voeg menu item toe
-            </button>
-        </x-chief::page.hero>
+<x-chief::page.template title="Menu item toevoegen" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => 'Menu', 'url' => route('chief.back.menus.index'), 'icon' => 'menu'],
+                ['label' => $menuitem->menu_type, 'url' => route('chief.back.menus.show', $menuitem->menu_type), 'icon' => 'menu'],
+                'Menu item toevoegen'
+            ]"
+        >
+            <x-slot name="actions">
+                <x-chief::button form="createForm" type="submit" variant="blue">Voeg menu item toe</x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
+    <x-chief::window class="card">
         <form
             id="createForm"
             method="POST"
             action="{{ route('chief.back.menuitem.store') }}"
             enctype="multipart/form-data"
             role="form"
-            class="card"
         >
             @csrf
 
-            <input type="hidden" name="menu_type" value="{{ $menuitem->menu_type }}">
+            <input type="hidden" name="menu_type" value="{{ $menuitem->menu_type }}" />
 
             @include('chief::admin.menu._partials.form')
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

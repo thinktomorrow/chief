@@ -7,7 +7,7 @@
 
 @aware(['title'])
 
-<div {{ $attributes->class('space-y-4') }}>
+<div {{ $attributes->class('space-y-3') }}>
     @include('chief::templates.page._partials.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
 
     @if ($title || $customTitle || $actions)

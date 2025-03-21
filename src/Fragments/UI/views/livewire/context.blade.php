@@ -1,10 +1,10 @@
-<x-chief::window title="Fragmenten" class="card">
+<x-chief::window class="card !py-0">
     <div
         wire:ignore.self
         x-sortable
         x-sortable-group="{{ 'group-' . $context->contextId }}"
         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-        class="-mb-4 divide-y divide-grey-100"
+        class="[&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
     >
         @include(
             'chief-fragments::livewire._partials.add-fragment-button',

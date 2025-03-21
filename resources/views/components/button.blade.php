@@ -23,6 +23,7 @@
             'outline-white' => 'bui-btn-outline-white',
             'outline-blue' => 'bui-btn-outline-blue',
             'outline-green' => 'bui-btn-outline-green',
+            'outline-red' => 'bui-btn-outline-red',
             default => 'bui-btn-outline-white',
         },
     ]);

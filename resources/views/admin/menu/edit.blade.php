@@ -1,42 +1,41 @@
-@php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar het menu', route('chief.back.menus.show', $menuitem->menu_type));
-@endphp
-
-<x-chief::page.template title="Menu item bewerken">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Menu item bewerken" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <div class="space-x-3">
-                <button
-                    type="button"
+<x-chief::page.template title="Menu item bewerken" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => 'Menu', 'url' => route('chief.back.menus.index'), 'icon' => 'menu'],
+                ['label' => $menuitem->menu_type, 'url' => route('chief.back.menus.show', $menuitem->menu_type), 'icon' => 'menu'],
+                'Menu item bewerken'
+            ]"
+        >
+            <x-slot name="actions">
+                <x-chief::button
                     x-data
                     x-on:click="$dispatch('open-dialog', { 'id': 'delete-menuitem-{{ $menuitem->id }}'})"
-                    class="btn btn-error-outline"
+                    variant="outline-red"
                 >
                     Verwijder
-                </button>
+                </x-chief::button>
 
-                <button form="updateForm" type="submit" class="btn btn-primary">
-                    Bewaar
-                </button>
-            </div>
-        </x-chief::page.hero>
+                <x-chief::button form="updateForm" type="submit" variant="blue">Bewaar</x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
+    <x-chief::window class="card">
         <form
             id="updateForm"
             method="POST"
             action="{{ route('chief.back.menuitem.update', $menuitem->id) }}"
             enctype="multipart/form-data"
             role="form"
-            class="card"
         >
             @csrf
             @method('put')
 
             @include('chief::admin.menu._partials.form')
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 
     @include('chief::admin.menu._partials.delete-modal')
 </x-chief::page.template>

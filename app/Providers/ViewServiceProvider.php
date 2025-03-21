@@ -20,16 +20,11 @@ class ViewServiceProvider extends ServiceProvider
         // Template components
         Blade::component('chief::templates.page.layout', 'chief::page.layout');
         Blade::component('chief::templates.page.template', 'chief::page.template');
-        Blade::component('chief::templates.page.hero', 'chief::page.hero');
         Blade::component('chief::templates.page.header', 'chief::page.header');
-        Blade::component('chief::templates.page.grid', 'chief::page.grid');
         Blade::component('chief::templates.solo.layout', 'chief::solo.layout');
         Blade::component('chief::templates.solo.template', 'chief::solo.template');
         Blade::component('chief::templates.mail.layout', 'chief::mail.layout');
         Blade::component('chief::templates.mail.template', 'chief::mail.template');
-
-        // Multisite template components
-        Blade::component('chief::templates.page.multisite-template', 'chief::page.multisite-template');
 
         // Chief directives
         Blade::directive('adminRoute', function ($expression) {

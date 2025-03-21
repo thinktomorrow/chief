@@ -1,31 +1,35 @@
-<x-chief::page.template title="Menu overzicht">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Menu overzicht" class="max-w-3xl"/>
+<x-chief::page.template title="Menu overzicht" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                'Menu overzicht'
+            ]"
+        />
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <div class="card">
-            <div class="-my-3 divide-y divide-grey-100">
-                @foreach($menus as $menu)
-                    <div class="flex items-center justify-between py-3">
-                        <a
-                            href="{{ route('chief.back.menus.show', $menu->key()) }}"
-                            title="{{ ucfirst($menu->label()) }}"
-                            class="font-medium body-dark hover:underline"
-                        >
-                            {{ ucfirst($menu->label()) }}
-                        </a>
+    <x-chief::window class="card">
+        <div class="-my-4 divide-y divide-grey-100">
+            @foreach ($menus as $menu)
+                <div class="flex items-center justify-between py-3">
+                    <a
+                        href="{{ route('chief.back.menus.show', $menu->key()) }}"
+                        title="{{ ucfirst($menu->label()) }}"
+                        class="body-dark font-medium hover:underline"
+                    >
+                        {{ ucfirst($menu->label()) }}
+                    </a>
 
-                        <a
-                            href="{{ route('chief.back.menus.show', $menu->key()) }}"
-                            title="{{ ucfirst($menu->label()) }}"
-                            class="shrink-0 link link-primary"
-                        >
-                            <x-chief::icon-button icon="icon-edit"/>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
+                    <x-chief::button
+                        href="{{ route('chief.back.menus.show', $menu->key()) }}"
+                        title="{{ ucfirst($menu->label()) }}"
+                        size="sm"
+                        variant="grey"
+                    >
+                        <x-chief::icon.quill-write />
+                    </x-chief::button>
+                </div>
+            @endforeach
         </div>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>
