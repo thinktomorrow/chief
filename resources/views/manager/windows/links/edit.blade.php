@@ -109,6 +109,6 @@
             </div>
         @endif
 
-        <x-chief::button type="submit" form="linksUpdateForm" variant="primary">Wijzigingen opslaan</x-chief::button>
+        <x-chief::button type="submit" form="linksUpdateForm" variant="blue">Wijzigingen opslaan</x-chief::button>
     </div>
 </div>

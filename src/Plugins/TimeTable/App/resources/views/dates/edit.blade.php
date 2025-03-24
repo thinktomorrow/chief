@@ -3,22 +3,26 @@
 @endphp
 
 <x-chief::page.template title="Uitzondering aanpassen">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Uitzondering aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"></x-chief::page.hero>
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => 'Weekschema', 'url' => route('chief.timetables.edit', $timetable_id), 'icon' => 'calendar'],
+                'Uitzondering aanpassen',
+            ]"
+        />
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <form id="tagsEditForm" action="{{ route('chief.timetable_dates.update', $model->id) }}" method="POST" class="card">
+    <x-chief::window class="card">
+        <form id="tagsEditForm" action="{{ route('chief.timetable_dates.update', $model->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="space-y-4">
-                @foreach($fields as $field)
-                    {!! $field->render() !!}
-                @endforeach
-            </div>
+            @foreach ($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
 
-            <button class="btn btn-primary mt-4" type="submit">Bewaar aanpassingen</button>
+            <x-chief::button data-slot="submit" type="submit" variant="blue">Bewaar aanpassingen</x-chief::button>
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

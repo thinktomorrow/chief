@@ -1,36 +1,34 @@
 <x-chief::page.template title="Weekschema's">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Weekschema's">
-            <a href="{{ route('chief.timetables.create') }}" title="Weekschema toevoegen" class="btn btn-primary">
-                Weekschema toevoegen
-            </a>
-        </x-chief::page.hero>
+    <x-slot name="header">
+        <x-chief::page.header title="Weekschema's">
+            <x-slot name="actions">
+                <x-chief::button href="{{ route('chief.timetables.create') }}" variant="blue">
+                    Voeg weekschema toe
+                </x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <div class="container">
-        <div class="row-start-start gutter-3">
-            @foreach($timeTables as $timeTableModel)
-                <div class="w-full">
-                    <div class="space-y-4 card">
-                        <a
-                            href="{{ route('chief.timetables.edit', $timeTableModel->id) }}"
-                            title="Aanpassen"
-                            class="flex items-start justify-between gap-4 group"
-                        >
-                            <span class="font-medium leading-8 h1-dark body group-hover:underline">
-                                {{ $timeTableModel->label }}
-                            </span>
+    @foreach ($timeTables as $timeTableModel)
+        <x-chief::window class="card">
+            <div class="space-y-4">
+                <a
+                    href="{{ route('chief.timetables.edit', $timeTableModel->id) }}"
+                    title="Aanpassen"
+                    class="group flex items-start justify-between gap-4"
+                >
+                    <span class="h1-dark body font-medium leading-8 group-hover:underline">
+                        {{ $timeTableModel->label }}
+                    </span>
 
-                            <x-chief::icon-button color="grey" class="shadow-none text-grey-500"/>
-                        </a>
+                    <x-chief::icon-button color="grey" class="text-grey-500 shadow-none" />
+                </a>
 
-                        <x-chief-timetable::time-table
-                            :time-table="$timeTableModel->timeTable"
-                            :days="$timeTableModel->timeTable->forWeeks(4)"
-                        />
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+                <x-chief-timetable::time-table
+                    :time-table="$timeTableModel->timeTable"
+                    :days="$timeTableModel->timeTable->forWeeks(4)"
+                />
+            </div>
+        </x-chief::window>
+    @endforeach
 </x-chief::page.template>

@@ -1,23 +1,24 @@
-@php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar overzicht', route('chief.back.roles.index'));
-    $title = ucfirst($role->name);
-@endphp
-
-<x-chief::page.template :title="$title">
-    <x-slot name="hero">
-        <x-chief::page.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <button form="editForm" type="submit" class="btn btn-primary">Rol opslaan</button>
-        </x-chief::page.hero>
+<x-chief::page.template :title="ucfirst($role->name)" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => 'Rechten', 'url' => route('chief.back.roles.index'), 'icon' => 'user-star'],
+                ucfirst($role->name)
+            ]"
+        >
+            <x-slot name="actions">
+                <x-chief::button form="editForm" type="submit" variant="blue">Rol opslaan</x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST" class="card">
+    <x-chief::window class="card">
+        <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
             @csrf
             @method('put')
 
-            <div class="space-y-6">
-                @include('chief::admin.authorization.roles._form')
-            </div>
+            @include('chief::admin.authorization.roles._form')
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

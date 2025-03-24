@@ -1,40 +1,34 @@
-@php
-    $title = ucfirst($menu->label());
-    $breadcrumb = null;
-
-    if(\Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1) {
-        $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar menu overzicht', route('chief.back.menus.index'));
-    }
-@endphp
-
-<x-chief::page.template :title="$title">
-    <x-slot name="hero">
-        <x-chief::page.hero :title="$title" :breadcrumbs="[$breadcrumb]" class="max-w-3xl">
-            <a
-                href="{{ route('chief.back.menuitem.create', $menu->key()) }}"
-                title="Menu item toevoegen"
-                class="btn btn-primary"
-            >
-                <x-chief::icon-label type="add">Menu item toevoegen</x-chief::icon-label>
-            </a>
-        </x-chief::page.hero>
+<x-chief::page.template :title="ucfirst($menu->label())" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
+                ['label' => 'Menu', 'url' => route('chief.back.menus.index'), 'icon' => 'menu'],
+                ucfirst($menu->label())
+            ]"
+        >
+            <x-slot name="actions">
+                <x-chief::button href="{{ route('chief.back.menuitem.create', $menu->key()) }}" variant="blue">
+                    <x-chief::icon.plus-sign />
+                    <span>Menu item toevoegen</span>
+                </x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <div class="card">
-            @if($menuItems->isEmpty() )
-                <p class="body-dark">Momenteel zijn er nog geen menu items toegevoegd.</p>
-            @else
-                <div class="-my-3 divide-y divide-grey-100">
-                    @foreach($menuItems as $item)
-                        <x-chief::hierarchy
-                            :item="$item"
-                            view-path="chief::admin.menu._partials.menu-item"
-                            iconMarginTop="0.2rem"
-                        />
-                    @endforeach
-                </div>
-            @endif
-        </div>
-    </x-chief::page.grid>
+    <x-chief::window class="card">
+        @if ($menuItems->isEmpty())
+            <p class="body-dark">Momenteel zijn er nog geen menu items toegevoegd.</p>
+        @else
+            <div class="-my-3 divide-y divide-grey-100">
+                @foreach ($menuItems as $item)
+                    <x-chief::hierarchy
+                        :item="$item"
+                        view-path="chief::admin.menu._partials.menu-item"
+                        iconMarginTop="0.2rem"
+                    />
+                @endforeach
+            </div>
+        @endif
+    </x-chief::window>
 </x-chief::page.template>

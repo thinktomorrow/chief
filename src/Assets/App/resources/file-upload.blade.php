@@ -38,7 +38,7 @@
                         toe
                     </x-chief::button>
                 @else
-                    <x-chief::button variant="primary" type="submit" form="file-upload-form-{{ $this->getId() }}">
+                    <x-chief::button variant="blue" type="submit" form="file-upload-form-{{ $this->getId() }}">
                         Voeg
                         {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
                         toe

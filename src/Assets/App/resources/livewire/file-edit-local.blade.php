@@ -102,9 +102,7 @@
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
             <x-chief::button type="button" x-on:click="close()">Annuleer</x-chief::button>
-            <x-chief::button wire:click.prevent="submit" variant="primary" type="submit">
-                Bewaar bestand
-            </x-chief::button>
+            <x-chief::button wire:click.prevent="submit" variant="blue" type="submit">Bewaar bestand</x-chief::button>
         </x-chief::dialog.modal.footer>
     </x-slot>
 @endif

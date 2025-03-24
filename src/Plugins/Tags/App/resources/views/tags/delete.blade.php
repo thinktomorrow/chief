@@ -5,9 +5,15 @@
 
 @if ($tag->getUsages() > 0)
     <div>
-        <button type="button" x-data x-on:click="$dispatch('open-dialog', { 'id': 'state-modal-{{ $modalId }}' })">
-            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white text-grey-500 shadow-none" />
-        </button>
+        <x-chief::button
+            type="button"
+            x-data
+            x-on:click="$dispatch('open-dialog', { 'id': 'state-modal-{{ $modalId }}' })"
+            variant="outline-red"
+            size="sm"
+        >
+            <x-chief::icon.delete />
+        </x-chief::button>
 
         @push('portals')
             <x-chief::dialog.modal id="state-modal-{{ $modalId }}" title="Verwijder deze tag" size="xs">
@@ -47,8 +53,8 @@
         @csrf
         @method('DELETE')
 
-        <button type="submit" form="delete-tag-form-{{ $tag->getTagId() }}">
-            <x-chief::icon-button icon="icon-trash" color="grey" class="bg-white text-grey-500 shadow-none" />
-        </button>
+        <x-chief::button type="submit" form="delete-tag-form-{{ $tag->getTagId() }}" variant="outline-red" size="sm">
+            <x-chief::icon.delete />
+        </x-chief::button>
     </form>
 @endif

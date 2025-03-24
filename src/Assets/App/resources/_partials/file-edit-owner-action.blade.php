@@ -56,7 +56,7 @@
 
                 @if ($currentOwner && $ownerCount > 1)
                     <x-chief::button
-                        variant="primary"
+                        variant="blue"
                         type="button"
                         x-on:click.stop="
                             close()

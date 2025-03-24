@@ -19,7 +19,9 @@
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
             <x-chief::button type="button" x-on:click.stop="close()">Annuleer</x-chief::button>
-            <x-chief::button type="submit" form="deleteForm-menuitem-{{ $menuitem->id }}">Verwijder</x-chief::button>
+            <x-chief::button type="submit" form="deleteForm-menuitem-{{ $menuitem->id }}" variant="red">
+                Verwijder
+            </x-chief::button>
         </x-chief::dialog.modal.footer>
     </x-slot>
 </x-chief::dialog.modal>

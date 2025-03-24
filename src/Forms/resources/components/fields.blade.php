@@ -1,20 +1,20 @@
 @php
     $fields = $forms->getFields();
 
-    if(isset($id)) {
+    if (isset($id)) {
         $fields = $fields->keyed(explode(',', $id));
     }
 
-    if(isset($tagged)) {
+    if (isset($tagged)) {
         $fields = $fields->filterByTagged(explode(',', $tagged));
     }
 
-    if(isset($notTagged)) {
+    if (isset($notTagged)) {
         $fields = $fields->filterByNotTagged(explode(',', $notTagged));
     }
-    dd($fields, $fields->all());
+    // dd($fields, $fields->all());
 @endphp
 
-@foreach($fields->all() as $field)
+@foreach ($fields->all() as $field)
     {{ $field->render() }}
 @endforeach

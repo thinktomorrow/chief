@@ -48,7 +48,7 @@
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief::button wire:click="save" variant="primary" type="button">
+                <x-chief::button wire:click="save" variant="blue" type="button">
                     @if ($assetId)
                         Vervang extern bestand
                     @else

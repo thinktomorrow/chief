@@ -14,8 +14,6 @@
     x-cloak
     data-slot="tabs"
     wire:ignore
-    {{--    wire:key="tabs-index-{{ \Illuminate\Support\Str::random() }}"--}}
-    x-on:chieftab.window="listenForExternalTab"
     x-data="{
         activeTab: null,
         showNav: @js($showNav),
@@ -66,6 +64,7 @@
             })
         },
     }"
+    x-on:chieftab.window="listenForExternalTab"
     {{ $attributes }}
     :class="{
         '{{

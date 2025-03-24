@@ -22,7 +22,7 @@
     }
 @endphp
 
-<x-chief::page.multisite-template>
+<x-chief::page.template>
     <x-slot name="header">
         <x-chief::page.header :title="$title" :breadcrumbs="$breadcrumbs">
             <x-slot name="actions">
@@ -36,4 +36,4 @@
     </x-slot>
 
     {{ $table->render() }}
-</x-chief::page.multisite-template>
+</x-chief::page.template>

@@ -4,7 +4,7 @@
     );
 @endphp
 
-<x-chief::page.multisite-template title="Dashboard">
+<x-chief::page.template title="Dashboard">
     <x-slot name="header">
         <x-chief::page.header :title="'Welkom op je dashboard, ' . ucfirst(Auth::user()->firstname)" />
     </x-slot>
@@ -18,4 +18,4 @@
             {!! $widgets !!}
         @endif
     </div>
-</x-chief::page.multisite-template>
+</x-chief::page.template>
