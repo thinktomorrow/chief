@@ -59,4 +59,15 @@ document.addEventListener('fragment-dialog-opened', (event) => {
         loadRedactorInstances(dialogEl);
     }, 0);
 });
+
+// Add following snippet to the redactor options to allow sync between redactor content and livewire wire:model.
+customOptions['callbacks'] = {
+    changed: function(e) {
+        let content = this.source.getCode();
+        el.value = content;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+    },
+};
+
+window.Redactor(el, customOptions);
 ```
