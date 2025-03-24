@@ -60,7 +60,7 @@ document.addEventListener('fragment-dialog-opened', (event) => {
     }, 0);
 });
 
-// Add following snippet to the redactor options to allow sync between redactor content and livewire wire:model.
+// Add following snippet to the redactor options in your project editor file (resources/views/vendor/chief/editors/redactor/editor.blade.php) to allow sync between redactor content and livewire wire:model.
 customOptions['callbacks'] = {
     changed: function(e) {
         let content = this.source.getCode();
