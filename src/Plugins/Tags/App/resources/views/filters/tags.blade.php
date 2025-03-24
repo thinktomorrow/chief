@@ -4,7 +4,7 @@
 @endphp
 
 @if (count($tags) > 0)
-    <x-chief::input.group :rule="$id">
+    <x-chief::form.input.group :rule="$id">
         @if ($label)
             <x-chief::form.label for="{{ $id }}" unset class="h6 body-dark font-medium">
                 {{ $label }}
@@ -18,7 +18,7 @@
         <div class="flex flex-wrap items-start gap-1">
             @foreach ($tags as $tag)
                 <x-chief::form.label for="{{ $tag->getTagId() . '-' . $tag->getColor() }}" class="cursor-pointer">
-                    <x-chief::input.radio
+                    <x-chief::form.input.radio
                         id="{{ $tag->getTagId() . '-' . $tag->getColor() }}"
                         name="{{ $name }}"
                         value="{{ $tag->getTagId() }}"
@@ -36,5 +36,5 @@
                 </x-chief::form.label>
             @endforeach
         </div>
-    </x-chief::input.group>
+    </x-chief::form.input.group>
 @endif

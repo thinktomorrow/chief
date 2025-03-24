@@ -24,11 +24,15 @@
         <p class="body text-sm text-primary-500">
             Dit bestand wordt gebruikt op:
             @foreach ($previewFile->owners as $owner)
-                <a href="{{ $owner['adminUrl'] }}" title="Bekijk" target="_blank" rel="noopener">
-                    <x-chief::link underline class="break-all font-medium text-primary-500">
-                        {{ $owner['label'] }}
-                    </x-chief::link>
-                </a>
+                <x-chief::link
+                    href="{{ $owner['adminUrl'] }}"
+                    title="Bekijk"
+                    target="_blank"
+                    rel="noopener"
+                    class="break-all"
+                >
+                    {{ $owner['label'] }}
+                </x-chief::link>
             @endforeach
         </p>
     </div>

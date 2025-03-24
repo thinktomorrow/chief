@@ -38,9 +38,9 @@
                         @if (count($badges) > 0)
                             <div class="flex flex-wrap items-center gap-1">
                                 @foreach ($badges as $badge)
-                                    <x-chief-table::badge size="sm" :variant="$badge['variant']">
+                                    <x-chief::badge size="sm" :variant="$badge['variant']">
                                         {{ $badge['label'] }}
-                                    </x-chief-table::badge>
+                                    </x-chief::badge>
                                 @endforeach
                             </div>
                         @endif

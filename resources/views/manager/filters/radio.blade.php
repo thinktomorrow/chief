@@ -3,7 +3,7 @@
     $description = $description ?? null;
 @endphp
 
-<x-chief::input.group :rule="$id" inner-class="space-y-2">
+<x-chief::form.input.group :rule="$id" inner-class="space-y-2">
     @if ($label)
         <x-chief::form.label unset class="h6 body-dark font-medium">{{ $label }}</x-chief::form.label>
     @endif
@@ -15,7 +15,7 @@
     <div class="space-y-2">
         @foreach ($options as $option => $optionLabel)
             <div class="flex items-start gap-2">
-                <x-chief::input.radio
+                <x-chief::form.input.radio
                     id="{{ $id . '-' . $option }}"
                     name="{{ $name }}"
                     value="{{ $option }}"
@@ -28,4 +28,4 @@
             </div>
         @endforeach
     </div>
-</x-chief::input.group>
+</x-chief::form.input.group>

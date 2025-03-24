@@ -1,4 +1,4 @@
-<x-chief::window class="card !py-0">
+<x-chief::window class="!py-0">
     <div
         wire:ignore.self
         x-sortable

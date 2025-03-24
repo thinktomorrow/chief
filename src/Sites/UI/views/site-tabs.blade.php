@@ -6,7 +6,7 @@
                     wire:key="{{ $site->locale }}"
                     tab-id="{{ $site->locale }}"
                     tab-label="{{ $site->shortName }}"
-                ></x-chief::tabs.tab>
+                />
             @endforeach
         </x-chief::tabs>
     @endif

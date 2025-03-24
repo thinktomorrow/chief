@@ -1,15 +1,15 @@
-<div data-repeat-section class="flex gap-3 p-3 border rounded-lg border-grey-100">
-    <span data-sortable-handle class="cursor-pointer shrink-0">
-        <x-chief::icon-button icon="icon-chevron-up-down" color="grey" />
-    </span>
+<div data-repeat-section class="flex items-start gap-3 rounded-lg border border-grey-100 p-3">
+    <x-chief::button size="sm" data-sortable-handle class="shrink-0">
+        <x-chief::icon.drag-drop-vertical />
+    </x-chief::button>
 
-    <div class="w-full my-1 space-y-4">
-        @foreach($components as $childComponent)
+    <div class="my-1 w-full space-y-4">
+        @foreach ($components as $childComponent)
             {{ $childComponent }}
         @endforeach
     </div>
 
-    <span data-delete-repeat-section class="cursor-pointer shrink-0">
-        <x-chief::icon-button icon="icon-trash" color="grey" />
-    </span>
+    <x-chief::button size="sm" variant="outline-red" data-delete-repeat-section class="shrink-0">
+        <x-chief::icon.delete />
+    </x-chief::button>
 </div>

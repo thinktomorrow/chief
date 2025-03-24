@@ -9,7 +9,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="tagGroupsCreateForm" action="{{ route('chief.taggroups.store') }}" method="POST">
             @csrf
 

@@ -3,7 +3,7 @@
     $description = $description ?? null;
 @endphp
 
-<x-chief::input.group :rule="$id">
+<x-chief::form.input.group :rule="$id">
     @if ($label)
         <x-chief::form.label for="{{ $id }}" unset class="h6 body-dark font-medium">
             {{ $label }}
@@ -21,4 +21,4 @@
         :selection='$value ?: $default'
         :multiple='$multiple'
     />
-</x-chief::input.group>
+</x-chief::form.input.group>

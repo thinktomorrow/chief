@@ -5,18 +5,18 @@
 >
     @if ($isOpen)
         <div class="space-y-4">
-            <x-chief::input.group>
+            <x-chief::form.input.group>
                 <x-chief::form.label for="driverType">Platform</x-chief::form.label>
 
-                <x-chief::input.select id="driverType" wire:model.live="driverType">
+                <x-chief::form.input.select id="driverType" wire:model.live="driverType">
                     @foreach ($driverTypes as $driverTypeOption)
                         <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
                     @endforeach
-                </x-chief::input.select>
-            </x-chief::input.group>
+                </x-chief::form.input.select>
+            </x-chief::form.input.group>
 
             @if ($driverType)
-                <x-chief::input.group>
+                <x-chief::form.input.group>
                     <x-chief::form.label for="driverId">
                         {{ $this->getLabel() }}
                     </x-chief::form.label>
@@ -25,7 +25,7 @@
                         {!! $this->getDescription() !!}
                     </x-chief::form.description>
 
-                    <x-chief::input.text
+                    <x-chief::form.input.text
                         x-data="{}"
                         {{-- Prevents directive to be triggered twice --}}
                         x-prevent-submit-on-enter
@@ -34,7 +34,7 @@
                         placeholder="{{ $this->getLabel() }}"
                         class="w-full"
                     />
-                </x-chief::input.group>
+                </x-chief::form.input.group>
             @endif
 
             @if ($errors && count($errors) > 0)

@@ -8,7 +8,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <div class="-my-4 divide-y divide-grey-100">
             @foreach ($menus as $menu)
                 <div class="flex items-center justify-between py-3">

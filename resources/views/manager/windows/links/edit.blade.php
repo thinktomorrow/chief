@@ -12,7 +12,7 @@
 
             <div class="space-y-4">
                 @foreach ($linkForm->formValues() as $locale => $formValues)
-                    <x-chief::input.group
+                    <x-chief::form.input.group
                         rule="links"
                         class="space-y-2"
                         x-data="{
@@ -23,7 +23,7 @@
                             {{ strtoupper($locale) }} link
                         </x-chief::form.label>
 
-                        <x-chief::input.prepend-append>
+                        <x-chief::form.input.prepend-append>
                             <x-slot name="prepend">
                                 @if ($formValues->fixedSegment !== '/')
                                     <span class="flex items-center gap-0.5">
@@ -38,7 +38,7 @@
                                 @endif
                             </x-slot>
 
-                            <x-chief::input.text
+                            <x-chief::form.input.text
                                 id="links.{{ $locale }}"
                                 name="links[{{ $locale }}]"
                                 value="{{ $formValues->value }}"
@@ -61,10 +61,10 @@
                                     });
                                 }"
                             />
-                        </x-chief::input.prepend-append>
+                        </x-chief::form.input.prepend-append>
 
                         <x-chief::inline-notification type="warning" size="sm" x-html="hint" x-show="hint" />
-                    </x-chief::input.group>
+                    </x-chief::form.input.group>
                 @endforeach
             </div>
         </form>

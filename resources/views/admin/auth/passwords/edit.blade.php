@@ -19,15 +19,15 @@
                 </x-chief::inline-notification>
             @endif
 
-            <x-chief::input.group>
+            <x-chief::form.input.group>
                 <x-chief::form.label for="password" required>Nieuw wachtwoord</x-chief::form.label>
-                <x-chief::input.password id="password" name="password" />
-            </x-chief::input.group>
+                <x-chief::form.input.password id="password" name="password" />
+            </x-chief::form.input.group>
 
-            <x-chief::input.group>
+            <x-chief::form.input.group>
                 <x-chief::form.label for="password_confirmation" required>Herhaal wachtwoord</x-chief::form.label>
-                <x-chief::input.password id="password_confirmation" name="password_confirmation" />
-            </x-chief::input.group>
+                <x-chief::form.input.password id="password_confirmation" name="password_confirmation" />
+            </x-chief::form.input.group>
 
             <div class="space-y-3">
                 @if ($new_password)

@@ -20,15 +20,15 @@
             {{ csrf_field() }}
 
             <div class="space-y-6">
-                <x-chief::input.group rule="email">
+                <x-chief::form.input.group rule="email">
                     <x-chief::form.label for="email" required>E-mailadres</x-chief::form.label>
 
                     <x-chief::form.description>
                         Geef je e-mailadres in om je wachtwoord opnieuw in te stellen.
                     </x-chief::form.description>
 
-                    <x-chief::input.email id="email" name="email" value="{{ old('email') }}" />
-                </x-chief::input.group>
+                    <x-chief::form.input.email id="email" name="email" value="{{ old('email') }}" />
+                </x-chief::form.input.group>
 
                 <div class="space-y-3">
                     <button type="submit" class="btn btn-primary flex w-full justify-center">

@@ -1,6 +1,8 @@
-@php use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName; @endphp
+@php
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+@endphp
 
-<x-chief::input.textarea
+<x-chief::form.input.textarea
     data-editor
     data-locale="{{ $locale ?? app()->getLocale() }}"
     data-custom-redactor-options="{{ json_encode($getRedactorOptions($locale ?? null)) }}"
@@ -13,4 +15,6 @@
     :autofocus="$hasAutofocus()"
     :attributes="$attributes->merge($getCustomAttributes())"
     style="resize: vertical"
->{{ $getActiveValue($locale ?? null) }}</x-chief::input.textarea>
+>
+    {{ $getActiveValue($locale ?? null) }}
+</x-chief::form.input.textarea>

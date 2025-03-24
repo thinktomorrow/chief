@@ -9,7 +9,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form action="{{ route('chief.timetable_dates.store') }}" method="POST">
             @csrf
 

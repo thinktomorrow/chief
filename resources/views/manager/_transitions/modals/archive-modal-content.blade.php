@@ -21,7 +21,7 @@
                 kiezen om door te linken naar een andere pagina:
             </p>
 
-            <x-chief::input.select id="redirectId" name="redirect_id" class="my-4">
+            <x-chief::form.input.select id="redirectId" name="redirect_id" class="my-4">
                 @foreach ($targetModels as $targetModelGroup)
                     <option value="">---</option>
                     <optgroup label="{{ $targetModelGroup['label'] }}">
@@ -30,7 +30,7 @@
                         @endforeach
                     </optgroup>
                 @endforeach
-            </x-chief::input.select>
+            </x-chief::form.input.select>
         @else
             <p>Archiveren haalt de {{ $resource->getPageTitle($model) }} onmiddellijk van de site.</p>
         @endif

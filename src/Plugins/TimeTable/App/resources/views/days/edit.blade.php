@@ -13,7 +13,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form
             data-form
             id="timeTableEditForm"

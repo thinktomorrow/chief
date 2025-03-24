@@ -1,6 +1,7 @@
 import './vendors';
 import './utilities/chiefRedactorImageUpload';
 
+import copyDirective from './alpine-directives/copy';
 import dropdown from './alpine-directives/dropdown';
 import tableFilters from './alpine-directives/tablefilters';
 import multiselectDirective from './alpine-directives/multiselect';
@@ -48,3 +49,4 @@ window.Alpine.data('tableFilters', tableFilters);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
 window.Alpine.directive('sortable', sortableDirective);
+window.Alpine.directive('copy', copyDirective);

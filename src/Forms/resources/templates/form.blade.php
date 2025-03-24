@@ -3,7 +3,7 @@
     :description="$getDescription()"
     :refresh-url="$getRefreshUrl()"
     :tags="$getTagsAsString()"
-    :class="$getLayout()->class()"
+    :variant="$getLayout()->variant()"
 >
     <form
         {{ $attributes->merge($getCustomAttributes()) }}

@@ -28,9 +28,9 @@
                 <h1 class="h2 h2-dark sm:text-center">{{ $title }}</h1>
             @endif
 
-            <div class="card">
+            <x-chief::window>
                 {{ $slot }}
-            </div>
+            </x-chief::window>
         </div>
     </div>
 </x-chief::solo.layout>

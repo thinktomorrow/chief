@@ -23,8 +23,9 @@
     </template>
 
     <template id="js-sidebar-close-button">
-        <div class="link link-primary cursor-pointer">
-            <x-chief::icon-label type="back">Ga terug</x-chief::icon-label>
-        </div>
+        <x-chief::link variant="blue">
+            <x-chief::icon.arrow-left />
+            <span>Ga terug</span>
+        </x-chief::link>
     </template>
 @endpush

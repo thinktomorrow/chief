@@ -13,7 +13,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="tagsCreateForm" action="{{ route('chief.tags.store') }}" method="POST">
             @csrf
 

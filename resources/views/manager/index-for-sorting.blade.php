@@ -9,7 +9,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <div
             data-sortable
             data-sortable-is-sorting
@@ -40,7 +40,7 @@
     @endif
 
     <x-slot name="sidebar">
-        <x-chief::window class="card">
+        <x-chief::window>
             <div class="space-y-4">
                 <x-chief::button href="{{ $manager->route('index') }}" variant="blue">
                     Stop met herschikken

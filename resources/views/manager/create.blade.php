@@ -13,7 +13,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
             @csrf
 

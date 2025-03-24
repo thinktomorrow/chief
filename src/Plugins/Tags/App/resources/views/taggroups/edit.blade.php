@@ -13,7 +13,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="tagGroupsEditForm" method="POST" action="{{ route('chief.taggroups.update', $model->id) }}">
             @csrf
             @method('PUT')

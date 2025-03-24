@@ -3,7 +3,7 @@
 @endphp
 
 <x-chief::page.template title="Sitemap" container="md">
-    <x-chief::window class="card">
+    <x-chief::window>
         <div class="prose prose-dark prose-spacing">
             <p>De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.</p>
 

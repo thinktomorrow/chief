@@ -11,7 +11,7 @@
         @endphp
 
         <label for="{{ $id }}" class="flex items-start gap-2">
-            <x-chief::input.checkbox
+            <x-chief::form.input.checkbox
                 wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
                 id="{{ $id }}"
                 name="{{ $getName($locale ?? null) . '[]' }}"

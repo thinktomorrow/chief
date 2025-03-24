@@ -11,7 +11,7 @@
         @endphp
 
         <label for="{{ $id }}" class="flex items-start gap-2">
-            <x-chief::input.radio
+            <x-chief::form.input.radio
                 wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
                 id="{{ $id }}"
                 name="{{ $getName($locale ?? null) }}"

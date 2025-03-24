@@ -11,7 +11,7 @@
     data-form-tags="{{ $tags }}"
     {{ $attributes->class('flex items-start gap-3') }}
 >
-    <div class="w-full">
+    <div class="w-full text-pretty">
         {!! $slot !!}
     </div>
 

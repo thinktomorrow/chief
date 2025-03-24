@@ -4,7 +4,7 @@
     <x-chief::form.description>Sortering van dit menu item op het huidige niveau.</x-chief::form.description>
 
     <div class="space-y-4">
-        <x-chief::input.number
+        <x-chief::form.input.number
             id="order"
             name="order"
             placeholder="Menu order"

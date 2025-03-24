@@ -51,16 +51,14 @@
                                 {{ $sharedFragmentDto->ownerLabel }}
                             </div>
 
-                            <a
+                            <x-chief::link
                                 href="{{ $sharedFragmentDto->ownerAdminUrl }}"
                                 title="{{ $sharedFragmentDto->ownerLabel }}"
                                 target="_blank"
                                 rel="noopener"
                             >
-                                <x-chief::link>
-                                    <svg><use xlink:href="#icon-external-link"></use></svg>
-                                </x-chief::link>
-                            </a>
+                                <x-chief::icon.link-square />
+                            </x-chief::link>
                         </div>
                     @endforeach
                 </div>

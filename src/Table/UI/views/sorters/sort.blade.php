@@ -3,7 +3,7 @@
 @endphp
 
 <label for="{{ $radioId }}" class="flex items-start gap-2">
-    <x-chief::input.radio
+    <x-chief::form.input.radio
         wire:model="sorters.{{ $getKey() }}"
         id="{{ $radioId }}"
         name="sorter"

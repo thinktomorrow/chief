@@ -5,7 +5,7 @@
 
 @php
     $attributes = $attributes->class([
-        'bui-btn cursor-pointer font-medium',
+        'bui-btn cursor-pointer',
         match ($size) {
             'base' => 'bui-btn-base',
             'sm' => 'bui-btn-sm',

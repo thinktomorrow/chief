@@ -70,11 +70,11 @@
         @apply bg-green-50 text-green-700 ring-1 ring-inset ring-green-200 hover:ring-green-300;
     }
     .bui-btn-outline-blue {
-        @apply shadow-sm;
-        @apply bg-blue-50 text-primary-500 ring-1 ring-inset ring-primary-100 hover:ring-primary-200;
+        @apply shadow-sm shadow-primary-500/10;
+        @apply bg-white text-primary-500 ring-1 ring-inset ring-primary-100 hover:ring-primary-200;
     }
     .bui-btn-outline-red {
-        @apply shadow-sm;
-        @apply text-red-700 ring-1 ring-inset ring-red-200 hover:ring-red-300;
+        @apply shadow-sm shadow-red-500/10;
+        @apply bg-white text-red-500 ring-1 ring-inset ring-red-200 hover:ring-red-300;
     }
 }

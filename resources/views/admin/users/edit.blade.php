@@ -47,7 +47,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="updateForm" action="{{ route('chief.back.users.update', $user->id) }}" method="POST">
             @csrf
             @method('put')

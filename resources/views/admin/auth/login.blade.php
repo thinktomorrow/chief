@@ -12,28 +12,28 @@
                 </x-chief::inline-notification>
             @endif
 
-            <x-chief::input.group>
+            <x-chief::form.input.group>
                 <x-chief::form.label for="email" required>E-mailadres</x-chief::form.label>
-                <x-chief::input.email
+                <x-chief::form.input.email
                     id="email"
                     name="email"
                     value="{{ old('email') }}"
                     placeholder="emailaddress@example.com"
                     autofocus
                 />
-            </x-chief::input.group>
+            </x-chief::form.input.group>
 
-            <x-chief::input.group>
+            <x-chief::form.input.group>
                 <x-chief::form.label for="password" required>Wachtwoord</x-chief::form.label>
-                <x-chief::input.password id="password" name="password" />
-            </x-chief::input.group>
+                <x-chief::form.input.password id="password" name="password" />
+            </x-chief::form.input.group>
 
-            <x-chief::input.group inner-class="flex items-start gap-2">
-                <x-chief::input.checkbox id="remember" name="remember" :checked="old('remember')" />
+            <x-chief::form.input.group inner-class="flex items-start gap-2">
+                <x-chief::form.input.checkbox id="remember" name="remember" :checked="old('remember')" />
                 <x-chief::form.label for="remember" class="body-dark body leading-5" unset>
                     Ingelogd blijven
                 </x-chief::form.label>
-            </x-chief::input.group>
+            </x-chief::form.input.group>
 
             <div class="space-y-3">
                 <button type="submit" form="valid" class="btn btn-primary flex w-full justify-center text-lg shadow-lg">

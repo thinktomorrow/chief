@@ -13,7 +13,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
             @csrf
             @method('put')

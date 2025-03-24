@@ -16,7 +16,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         @if ($menuItems->isEmpty())
             <p class="body-dark">Momenteel zijn er nog geen menu items toegevoegd.</p>
         @else

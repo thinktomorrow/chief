@@ -25,7 +25,7 @@
                                 {{-- This header contains the checkbox to select/deselect all items. It will only show if bulk actions are available --}}
                                 <th x-show="showCheckboxes" scope="col" class="w-5">
                                     <div class="flex items-center">
-                                        <x-chief::input.checkbox x-ref="tableHeaderCheckbox" />
+                                        <x-chief::form.input.checkbox x-ref="tableHeaderCheckbox" />
                                     </div>
                                 </th>
 

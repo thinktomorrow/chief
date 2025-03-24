@@ -24,19 +24,6 @@
     }
 }
 
-/* Icon label hover effect */
-.icon-label {
-    .icon-label-icon {
-        @apply inline-block transition-all duration-75 ease-in-out;
-    }
-
-    &:hover {
-        .icon-label-icon {
-            @apply scale-110;
-        }
-    }
-}
-
 .hierarchy-sub-level {
     .hierarchy-sub-level\:block {
         @apply block;

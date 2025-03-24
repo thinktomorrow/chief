@@ -8,35 +8,36 @@
     :edit-url="$manager->route('links-edit', $model)"
     :refresh-url="$manager->route('links-window', $model)"
     tags="status,links"
-    class="card"
 >
     <div class="space-y-2">
-        @unless($linkForm->exist())
-            <a
-                class="link link-primary"
-                data-sidebar-trigger="links"
+        @unless ($linkForm->exist())
+            <x-chief::link
+                variant="blue"
                 href="{{ $manager->route('links-edit', $model) }}"
+                data-sidebar-trigger="links"
             >
-                <x-chief::icon-label type="add">Voeg een eerste link toe</x-chief::icon-label>
-            </a>
+                <x-chief::icon.plus-sign />
+                <span>Voeg een eerste link toe</span>
+            </x-chief::link>
         @else
-            @foreach($linkForm->links() as $locale => $link)
-                @if($link->current)
+            @foreach ($linkForm->links() as $locale => $link)
+                @if ($link->current)
                     <div class="flex items-start gap-4">
-                        @if(count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
+                        @if (count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
                             <span
-                                class="inline-flex items-center justify-center w-8 p-0 mt-1 shrink-0 label label-grey label-sm">
-                                    {{ $locale }}
-                                </span>
+                                class="label label-grey label-sm mt-1 inline-flex w-8 shrink-0 items-center justify-center p-0"
+                            >
+                                {{ $locale }}
+                            </span>
                         @endif
 
                         <a
                             href="{{ $link->url }}"
                             title="Bekijk deze pagina"
-                            class="mt-0.5 space-x-1 link {{ $link->is_online ? 'link-primary' : 'link-warning' }} underline"
-                            style="word-break: break-word;"
+                            class="link {{ $link->is_online ? 'link-primary' : 'link-warning' }} mt-0.5 space-x-1 underline"
+                            style="word-break: break-word"
                         >
-                            {{ str_replace(['http://','https://'], '', $link->url) }}
+                            {{ str_replace(['http://', 'https://'], '', $link->url) }}
                         </a>
                     </div>
                 @endif
