@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Forms\Dialogs\Livewire\DialogComponent;
+use Thinktomorrow\Chief\Forms\Fields\Repeat\Livewire\RepeatComponent;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileDimensionsRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FileMaxRule;
@@ -20,6 +21,7 @@ class FormsServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-form', __DIR__.'/resources');
 
         Livewire::component('chief-form::dialog', DialogComponent::class);
+        Livewire::component('chief-wire::repeat', RepeatComponent::class);
 
         // Custom validation rules
         Validator::extendImplicit(FallbackLocaleRequiredRule::RULE, FallbackLocaleRequiredRule::class.'@validate');
