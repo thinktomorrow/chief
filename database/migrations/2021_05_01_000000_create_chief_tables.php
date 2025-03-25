@@ -41,8 +41,10 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->json('active_sites')->nullable();
             $table->json('sites')->nullable();
             $table->string('title')->nullable();
+            $table->unsignedSmallInteger('order')->default(0);
             $table->timestamps();
         });
 

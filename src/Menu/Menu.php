@@ -6,11 +6,13 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Thinktomorrow\Chief\Sites\BelongsToActiveSitesDefaults;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
 use Thinktomorrow\Chief\Sites\BelongsToSitesDefaults;
 
 class Menu extends Model implements BelongsToSites
 {
+    use BelongsToActiveSitesDefaults;
     use BelongsToSitesDefaults;
 
     public $guarded = [];
@@ -28,5 +30,10 @@ class Menu extends Model implements BelongsToSites
     public function items(): HasMany
     {
         return $this->hasMany(MenuItem::class);
+    }
+
+    public static function findDefault(string $type): static
+    {
+        return static::where('type', $type)->orderBy('order')->firstOrFail();
     }
 }

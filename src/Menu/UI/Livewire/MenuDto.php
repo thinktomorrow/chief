@@ -12,8 +12,10 @@ class MenuDto implements Wireable
 {
     public function __construct(
         public readonly string $id,
+        public readonly string $type,
         public readonly string $title,
         public readonly array $locales,
+        public readonly array $activeSites,
     ) {
         //
     }
@@ -22,8 +24,10 @@ class MenuDto implements Wireable
     {
         return new static(
             id: $menu->id,
+            type: $menu->type,
             title: $menu->title,
             locales: $menu->sites,
+            activeSites: $menu->getActiveSiteLocales(),
         );
     }
 
@@ -31,8 +35,10 @@ class MenuDto implements Wireable
     {
         return new static(
             id: 'new-'.Str::random(),
+            type: $type,
             title: MenuType::find($type)->getLabel().' #'.$order,
             locales: ChiefLocales::locales(),
+            activeSites: [],
         );
     }
 
@@ -40,8 +46,10 @@ class MenuDto implements Wireable
     {
         return [
             'id' => $this->id,
+            'type' => $this->type,
             'title' => $this->title,
             'locales' => $this->locales,
+            'activeSites' => $this->activeSites,
         ];
     }
 
@@ -49,8 +57,15 @@ class MenuDto implements Wireable
     {
         return new static(
             id: $value['id'],
+            type: $value['type'],
             title: $value['title'],
             locales: $value['locales'],
+            activeSites: $value['activeSites'],
         );
+    }
+
+    public function hasActiveSite(string $site): bool
+    {
+        return in_array($site, $this->activeSites);
     }
 }

@@ -80,8 +80,7 @@ class EditMenus extends Component
         //        dd($this->form);
         app(SaveMenus::class)->handle($this->type, $this->form);
 
-        $this->dispatch('menus-updated')
-            ->to('chief-wire::menus');
+        $this->dispatch($this->type.'-menus-updated');
 
         $this->close();
     }

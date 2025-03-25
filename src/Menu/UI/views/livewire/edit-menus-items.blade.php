@@ -32,7 +32,7 @@
                         <div class="w-full">
                             <x-chief::form.fieldset rule="title">
                                 <x-chief::form.label for="title">Interne titel</x-chief::form.label>
-                                <x-chief::input.text id="title" wire:model="form.{{ $menu->id }}.title" />
+                                <x-chief::form.input.text id="title" wire:model="form.{{ $menu->id }}.title" />
                             </x-chief::form.fieldset>
                         </div>
 

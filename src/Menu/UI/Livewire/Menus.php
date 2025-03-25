@@ -26,7 +26,7 @@ class Menus extends Component
     public function getListeners()
     {
         return [
-            'menus-updated' => 'onMenusUpdated',
+            $this->type.'-menus-updated' => 'onMenusUpdated',
         ];
     }
 

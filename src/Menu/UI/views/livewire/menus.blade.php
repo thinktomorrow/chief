@@ -22,7 +22,16 @@
             @endforeach
         </nav>
 
-        <x-chief::button wire:click="editMenus" variant="grey" size="xs">Aanpassen</x-chief::button>
+
+        @if(count($menus) < 2)
+            <x-chief::link wire:click="editMenus" variant="grey" size="xs">
+                Een menu specifiek voor een bepaalde site?
+            </x-chief::link>
+        @else
+            <x-chief::button wire:click="editMenus" variant="grey" size="xs">
+                Menu's aanpassen
+            </x-chief::button>
+        @endif
     </div>
 
     @foreach ($menus as $menu)
@@ -34,4 +43,5 @@
     @endforeach
 
     <livewire:chief-wire::edit-menus :type="$type" />
+    <livewire:chief-wire::menu-sites :type="$type" />
 </div>
