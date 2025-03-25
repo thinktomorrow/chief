@@ -9,9 +9,7 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\SaveContexts;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
-use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class EditContexts extends Component
@@ -23,9 +21,9 @@ class EditContexts extends Component
 
     public Collection $contexts;
 
-    public function mount(ReferableModel&ContextOwner $model)
+    public function mount(string $modelReference)
     {
-        $this->modelReference = $model->modelReference()->get();
+        $this->modelReference = $modelReference;
     }
 
     public function getListeners()
@@ -91,14 +89,14 @@ class EditContexts extends Component
         //        dd($this->form);
         app(SaveContexts::class)->handle(ModelReference::fromString($this->modelReference), $this->form);
 
-        $this->dispatch($this->type.'-contexts-updated');
+        $this->dispatch($this->modelReference.'-contexts-updated');
 
         $this->close();
     }
 
     public function render()
     {
-        return view('chief-menu::livewire.edit-contexts');
+        return view('chief-fragments::livewire.edit-contexts');
     }
 
     public function queuedForDeletion(string $locale): bool

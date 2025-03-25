@@ -12,14 +12,14 @@
                 <button
                     type="button"
                     role="tab"
-                    wire:click.prevent="showMenu('{{ $context->contextId }}')"
-                    aria-controls="{{ $context->contextId }}"
-                    aria-selected="{{ $context->contextId === $activeContextId }}"
-                    wire:key="menu-tabs-{{ $context->contextId }}"
+                    wire:click.prevent="showContext('{{ $context->id }}')"
+                    aria-controls="{{ $context->id }}"
+                    aria-selected="{{ $context->id === $activeContextId }}"
+                    wire:key="menu-tabs-{{ $context->id }}"
                     @class([
                         'bui-btn font-normal ring-0 transition-all duration-150 ease-out bui-btn-sm py-[0.3125rem] *:h-[1.125rem]',
-                        'bui-btn-grey text-grey-950' => ($context->contextId === $activeContextId),
-                        'text-grey-700 bui-btn-outline-white' => ($context->contextId !== $activeContextId),
+                        'bui-btn-grey text-grey-950' => ($context->id === $activeContextId),
+                        'text-grey-700 bui-btn-outline-white' => ($context->id !== $activeContextId),
                     ])
                 >{{ $context->title }}</button>
             @endforeach
@@ -31,9 +31,9 @@
     </div>
 
     @foreach ($contexts as $context)
-        <div wire:key="context-tab-content-{{ $context->contextId }}">
-            @if($context->contextId === $activeContextId)
-                <livewire:chief-fragments::context :key="$context->contextId" :context="$context" />
+        <div wire:key="context-tab-content-{{ $context->id }}">
+            @if($context->id === $activeContextId)
+                <livewire:chief-fragments::context :key="$context->id" :context="$context" />
             @endif
         </div>
     @endforeach

@@ -11,14 +11,17 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class Contexts extends Component
 {
-    public string $resourceKey;
-
     public string $modelReference;
 
-    public function mount(string $resourceKey, ReferableModel&ContextOwner $model)
+    public ?string $activeContextId = null;
+
+    public function mount(ReferableModel&ContextOwner $model, ?string $activeContextId = null)
     {
-        $this->resourceKey = $resourceKey;
         $this->modelReference = $model->modelReference()->get();
+
+        $this->activeContextId = (is_null($activeContextId))
+            ? $this->getContexts()->first()?->id
+            : $activeContextId;
     }
 
     /** @return Collection<ContextDto> */
@@ -26,6 +29,28 @@ class Contexts extends Component
     {
         return app(ComposeLivewireDto::class)
             ->getContextsByOwner(ModelReference::fromString($this->modelReference));
+    }
+
+    public function getListeners()
+    {
+        return [
+            $this->modelReference.'-contexts-updated' => 'onContextsUpdated',
+        ];
+    }
+
+    public function showContext(string $contextId): void
+    {
+        $this->activeContextId = $contextId;
+    }
+
+    public function editContexts(): void
+    {
+        $this->dispatch('open-edit-contexts')->to('chief-wire::edit-contexts');
+    }
+
+    public function onContextsUpdated(): void
+    {
+        // The contexts are automatically updated in the view
     }
 
     public function render()

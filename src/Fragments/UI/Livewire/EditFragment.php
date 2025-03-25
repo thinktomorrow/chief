@@ -73,8 +73,8 @@ class EditFragment extends Component
     private function composeFragmentDto(string $fragmentId): FragmentDto
     {
         return FragmentDto::fromFragment(
-            app(FragmentRepository::class)->findInContext($fragmentId, $this->context->contextId),
-            app(ComposeLivewireDto::class)->getContext($this->context->contextId)
+            app(FragmentRepository::class)->findInContext($fragmentId, $this->context->id),
+            app(ComposeLivewireDto::class)->getContext($this->context->id)
         );
     }
 

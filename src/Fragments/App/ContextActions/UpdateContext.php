@@ -8,14 +8,14 @@ final class UpdateContext
 {
     private string $contextId;
 
-    private array $sites;
+    private array $locales;
 
     private ?string $title;
 
-    public function __construct(string $contextId, array $sites, ?string $title = null)
+    public function __construct(string $contextId, array $locales, ?string $title = null)
     {
         $this->contextId = $contextId;
-        $this->sites = $sites;
+        $this->locales = $locales;
         $this->title = $title;
     }
 
@@ -24,9 +24,9 @@ final class UpdateContext
         return $this->contextId;
     }
 
-    public function getSites(): array
+    public function getLocales(): array
     {
-        return $this->sites;
+        return $this->locales;
     }
 
     public function getTitle(): ?string

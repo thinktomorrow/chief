@@ -14,30 +14,30 @@ trait BelongsToSitesDefaults
      */
     public function initializeBelongsToSitesDefaults(): void
     {
-        $this->mergeCasts(['sites' => 'array']);
+        $this->mergeCasts(['locales' => 'array']);
     }
 
     public function getSiteLocales(): array
     {
-        return $this->sites ?? [];
+        return $this->locales ?? [];
     }
 
     public function setSiteLocales(array $locales): void
     {
-        $this->sites = $locales;
+        $this->locales = $locales;
     }
 
     public function scopeBySite(Builder $query, string $site): void
     {
-        $query->whereJsonContains($this->getTable().'.sites', $site);
+        $query->whereJsonContains($this->getTable().'.locales', $site);
     }
 
     public function scopeBySiteOrNone(Builder $query, string $site): void
     {
         $query->when($site, fn ($q) => $q->where(function ($q) use ($site) {
-            $q->whereJsonContains($this->getTable().'.sites', $site)
-                ->orWhereNull($this->getTable().'.sites')
-                ->orWhereJsonLength($this->getTable().'.sites', '=', 0);
+            $q->whereJsonContains($this->getTable().'.locales', $site)
+                ->orWhereNull($this->getTable().'.locales')
+                ->orWhereJsonLength($this->getTable().'.locales', '=', 0);
         }));
     }
 }

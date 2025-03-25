@@ -10,14 +10,14 @@ final class CreateContext
 {
     private ModelReference $modelReference;
 
-    private array $sites;
+    private array $locales;
 
     private ?string $title;
 
-    public function __construct(ModelReference $modelReference, array $sites, ?string $title = null)
+    public function __construct(ModelReference $modelReference, array $locales, ?string $title = null)
     {
         $this->modelReference = $modelReference;
-        $this->sites = $sites;
+        $this->locales = $locales;
         $this->title = $title;
     }
 
@@ -26,9 +26,9 @@ final class CreateContext
         return $this->modelReference;
     }
 
-    public function getSites(): array
+    public function getLocales(): array
     {
-        return $this->sites;
+        return $this->locales;
     }
 
     public function getTitle(): ?string

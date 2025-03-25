@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 class ContextDto implements Wireable
 {
     public function __construct(
-        public string $contextId,
+        public string $id,
         public string $title,
         public ModelReference $ownerReference,
         public string $ownerLabel,
@@ -46,7 +46,7 @@ class ContextDto implements Wireable
     public function toLivewire()
     {
         return [
-            'contextId' => $this->contextId,
+            'id' => $this->id,
             'title' => $this->title,
             'ownerReference' => $this->ownerReference->get(),
             'ownerLabel' => $this->ownerLabel,
@@ -58,7 +58,7 @@ class ContextDto implements Wireable
     public static function fromLivewire($value)
     {
         return new static(
-            $value['contextId'],
+            $value['id'],
             $value['title'],
             ModelReference::fromString($value['ownerReference']),
             $value['ownerLabel'],

@@ -26,7 +26,7 @@ class ContextApplication
     {
         $context = $this->contextRepository->create(
             $command->getModelReference(),
-            $command->getSites(),
+            $command->getLocales(),
             $command->getTitle()
         );
 
@@ -39,7 +39,7 @@ class ContextApplication
 
         $context->update([
             'title' => $command->getTitle(),
-            'sites' => $command->getSites(),
+            'locales' => $command->getLocales(),
         ]);
     }
 

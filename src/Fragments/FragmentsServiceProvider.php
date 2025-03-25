@@ -39,7 +39,7 @@ class FragmentsServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-fragments', __DIR__.'/UI/views');
 
         Livewire::component('chief-fragments::contexts', Contexts::class);
-        Livewire::component('chief-fragments::edit-contexts', EditContexts::class);
+        Livewire::component('chief-wire::edit-contexts', EditContexts::class);
         Livewire::component('chief-fragments::context', Context::class);
         Livewire::component('chief-fragments::add-fragment', AddFragment::class);
         Livewire::component('chief-fragments::edit-fragment', EditFragment::class);
