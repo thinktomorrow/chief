@@ -29,17 +29,13 @@ trait BelongsToSitesDefaults
 
     public function scopeBySite(Builder $query, string $site): void
     {
-        // Site should be more of a ID. -> site as db table...
-        // Locale is for fields and such... can be used by multiple sites.
-        // Site is selection, choice. Locale is language, not WHAT is shown.
-        // WHAT,HOW = site, language = locale
         $query->whereJsonContains($this->getTable().'.sites', $site);
     }
 
-    public function scopeByLocaleOrNone(Builder $query, string $locale): void
+    public function scopeBySiteOrNone(Builder $query, string $site): void
     {
-        $query->when($locale, fn ($q, $locale) => $q->where(function ($q) use ($locale) {
-            $q->whereJsonContains($this->getTable().'.sites', $locale)
+        $query->when($site, fn ($q) => $q->where(function ($q) use ($site) {
+            $q->whereJsonContains($this->getTable().'.sites', $site)
                 ->orWhereNull($this->getTable().'.sites')
                 ->orWhereJsonLength($this->getTable().'.sites', '=', 0);
         }));

@@ -71,7 +71,7 @@ trait WithActions
         if ($action->hasEffect()) {
 
             // Perform effect
-            $effectResult = $action->getEffect()($formData, $data);
+            $effectResult = $action->getEffect()($formData, $data, $action, $this);
 
             // Redirect after success
             if ($effectResult && $action->hasRedirectOnSuccess()) {

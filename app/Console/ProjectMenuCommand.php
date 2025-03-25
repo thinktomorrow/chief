@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 class ProjectMenuCommand extends BaseCommand
 {

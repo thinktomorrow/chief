@@ -44,6 +44,9 @@ jobs:
       - name: Execute fragments tests
         run: vendor/bin/phpunit --testsuite fragments
 
+      - name: Execute menu tests
+        run: vendor/bin/phpunit --testsuite menu
+
       - name: Execute table tests
         run: vendor/bin/phpunit --testsuite table
 

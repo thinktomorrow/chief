@@ -6,7 +6,7 @@ use Illuminate\Console\OutputStyle;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 class ImportMenu implements ToCollection
 {

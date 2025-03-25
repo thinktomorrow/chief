@@ -19,6 +19,9 @@
         <testsuite name="fragments">
             <directory suffix="Test.php">./src/Fragments/Tests</directory>
         </testsuite>
+        <testsuite name="menu">
+            <directory suffix="Test.php">./src/Menu/Tests</directory>
+        </testsuite>
         <testsuite name="table">
             <directory suffix="Test.php">./src/Table/Tests</directory>
         </testsuite>

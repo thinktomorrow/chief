@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
 class ExportMenuCommandTest extends TestCase
 {

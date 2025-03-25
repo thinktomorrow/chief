@@ -140,7 +140,9 @@ class TableComponent extends Component
         if ($this->shouldReturnResultsAsTree()) {
             $this->areResultsAsTree = true;
 
-            return $this->getResultsAsTree($builder, $this->getTable()->getResourceReference()->getResource(), $forceAsCollection);
+            $treeResource = $this->getTable()->getTreeResource() ?: $this->getTable()->getResourceReference()->getResource();
+
+            return $this->getResultsAsTree($builder, $treeResource, $forceAsCollection);
         }
 
         if (! $this->hasPagination()) {
