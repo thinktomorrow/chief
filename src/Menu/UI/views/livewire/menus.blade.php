@@ -43,5 +43,4 @@
     @endforeach
 
     <livewire:chief-wire::edit-menus :type="$type" />
-    <livewire:chief-wire::menu-sites :type="$type" />
 </div>
