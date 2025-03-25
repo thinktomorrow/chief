@@ -55,14 +55,14 @@
                             </button>
 
                             @if ($content = $stateConfig->getTransitionContent($transitionKey))
-                                <x-chief::inline-notification
+                                <x-chief::callout
                                     type="{{ $stateConfig->getTransitionType($transitionKey) }}"
                                     size="large"
                                 >
                                     <p>
                                         {!! $content !!}
                                     </p>
-                                </x-chief::inline-notification>
+                                </x-chief::callout>
                             @endif
                         </div>
                     </form>

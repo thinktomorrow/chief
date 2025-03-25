@@ -60,13 +60,11 @@
         @endif
 
         @if ($errors->any())
-            <div class="space-y-2">
+            <x-chief::callout size="small" variant="red">
                 @foreach ($errors->all() as $error)
-                    <x-chief::inline-notification type="error">
-                        {{ ucfirst($error) }}
-                    </x-chief::inline-notification>
+                    <p>{{ ucfirst($error) }}</p>
                 @endforeach
-            </div>
+            </x-chief::callout>
         @endif
     </form>
 

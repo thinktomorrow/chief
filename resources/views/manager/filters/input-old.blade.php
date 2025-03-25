@@ -3,7 +3,7 @@
     $description = $description ?? null;
 @endphp
 
-<x-chief::form.input.group :rule="$id">
+<x-chief::form.fieldset :rule="$id">
     @if ($label)
         <x-chief::form.label for="{{ $id }}" unset class="h6 body-dark font-medium">
             {{ $label }}
@@ -14,11 +14,10 @@
         <x-chief::form.description>{{ $description }}</x-chief::form.description>
     @endif
 
-    <x-chief::multiselect
+    <x-chief::form.input.text
         id="{{ $id }}"
-        name="{{ $name . ($multiple ? '[]' : '') }}"
-        :options='$options'
-        :selection='$value ?: $default'
-        :multiple='$multiple'
+        name="{{ $name }}"
+        placeholder="{{ $placeholder }}"
+        value="{{ $value ?: $default }}"
     />
-</x-chief::form.input.group>
+</x-chief::form.fieldset>

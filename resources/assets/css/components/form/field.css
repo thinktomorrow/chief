@@ -1,9 +1,9 @@
 .form-input-field {
     @apply block w-full rounded-[0.625rem] border px-3 py-2 shadow-sm;
-    @apply border-grey-100 bg-white text-grey-700;
+    @apply border-grey-200 bg-white text-grey-700;
 
     &:focus {
-        @apply border-grey-200 outline-none;
+        @apply border-grey-300 outline-none;
     }
 
     &:disabled {

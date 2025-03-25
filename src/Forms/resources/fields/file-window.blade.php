@@ -20,7 +20,7 @@
                     'rounded-lg border-2 border-white' => $count > 1,
                 ])
             >
-                <div class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-grey-100">
+                <div class="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-grey-100">
                     @if ($asset->isImage())
                         <img
                             src="{{ $asset->getUrl('thumb') }}"
@@ -60,7 +60,7 @@
                         @else
                             {{ $asset->getHumanReadableSize() }} -
                             @if ($asset->isImage())
-                                {{ $asset->getWidth() }}x{{ $asset->getHeight() }} -
+                                    {{ $asset->getWidth() }}x{{ $asset->getHeight() }} -
                             @endif
 
                             {{ strtoupper($asset->getExtension()) }}

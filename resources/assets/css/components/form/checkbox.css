@@ -1,10 +1,10 @@
 .form-input-checkbox {
-    @apply relative h-5 w-5 appearance-none rounded-md leading-none;
+    @apply relative size-5 appearance-none rounded-md leading-none;
 
     &:before {
         content: '';
-        @apply inline-block h-5 w-5 rounded-md bg-white shadow ring-1 ring-grey-100;
-        @apply hover:ring-grey-200;
+        @apply inline-block size-5 rounded-md bg-white shadow ring-1 ring-grey-200;
+        @apply hover:ring-grey-300;
     }
 
     &:focus {

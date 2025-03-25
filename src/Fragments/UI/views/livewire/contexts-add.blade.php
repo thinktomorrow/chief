@@ -1,27 +1,31 @@
 <x-chief::dialog wired title="Voeg een paginaopbouw toe" size="xs">
-    <div class="block space-y-4 px-4 py-2 text-sm text-grey-700" tabindex="-1">
+    <div class="space-y-4 px-4 py-2 text-sm text-grey-700" tabindex="-1">
         @foreach (ChiefLocales::locales() as $locale)
-            <x-chief::form.input.group class="w-64">
+            <x-chief::form.fieldset class="w-64">
                 <div class="flex items-start gap-2">
                     <x-chief::form.input.checkbox
                         id="{{ $locale }}"
                         :checked="in_array($locale, $activeLocales)"
                         wire:model.live="activeLocales"
                         value="{{ $locale }}"
-                    ></x-chief::form.input.checkbox>
+                    />
                     <x-chief::form.input.label for="{{ $locale }}">{{ $locale }}</x-chief::form.input.label>
                 </div>
-            </x-chief::form.input.group>
+            </x-chief::form.fieldset>
         @endforeach
 
         <x-slot:footer
             x-data="{showSpinner: Livewire.find('{{ $this->getId() }}').entangle('isSaving').live}"
         >
-            <button class="btn btn-primary gap-2" x-on:click="
-                $wire.isSaving = true
-                $wire.submit()
-            " type="button">
-                Bewaren
+            <x-chief::button
+                type="button"
+                variant="blue"
+                x-on:click="
+                    $wire.isSaving = true
+                    $wire.submit()
+                "
+            >
+                <span>Bewaren</span>
                 <svg
                     x-show="showSpinner"
                     class="h-5 w-5 animate-spin"
