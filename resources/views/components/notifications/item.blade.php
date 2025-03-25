@@ -1,40 +1,54 @@
 @props([
-    'type' => 'info',
-    'duration' => 5000,
+    "type" => "info",
+    "duration" => 5000,
 ])
 
 <div
-    {{ $attributes->class(['flex items-center px-6 py-4 gap-6 origin-right bg-white border rounded-lg shadow-lg border-grey-100 pop']) }}
-    @if(!$attributes->has('x-data'))
-        x-data="{ isOpen: true, type: '{{ $type }}', duration: '{{ $duration }}' }"
+    {{ $attributes->class(["pop flex origin-right items-center gap-6 rounded-lg border border-grey-100 bg-white px-6 py-4 shadow-lg"]) }}
+    @if (! $attributes->has("x-data"))
+        x-data="{
+            isOpen: true,
+            type: '{{ $type }}',
+            duration: '{{ $duration }}',
+        }"
     @endif
-    x-init="() => {
-        setTimeout(() => { isOpen = false }, duration);
+    x-init="
+        () => {
+            setTimeout(() => {
+                isOpen = false
+            }, duration)
 
-        $watch('isOpen', value => {
-            value ?  $dispatch('notification-opened') : $dispatch('notification-closed');
-        });
+            $watch('isOpen', (value) => {
+                value
+                    ? $dispatch('notification-opened')
+                    : $dispatch('notification-closed')
+            })
 
-        window.addEventListener('close-all-notifications', () => { isOpen = false });
-        window.addEventListener('open-all-notifications', () => { isOpen = true });
-    }"
+            window.addEventListener('close-all-notifications', () => {
+                isOpen = false
+            })
+            window.addEventListener('open-all-notifications', () => {
+                isOpen = true
+            })
+        }
+    "
     x-show="isOpen"
 >
-    <div class="rounded-full shrink-0">
+    <div class="shrink-0 rounded-full">
         <template x-if="type == 'info'">
-            <svg class="w-6 h-6 text-primary-500 bg-primary-50"><use xlink:href="#icon-information-circle"></use></svg>
+            <svg class="h-6 w-6 bg-primary-50 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
         </template>
 
         <template x-if="type == 'success'">
-            <svg class="w-6 h-6 text-green-500 bg-green-50"><use xlink:href="#icon-check-circle"></use></svg>
+            <svg class="h-6 w-6 bg-green-50 text-green-500"><use xlink:href="#icon-check-circle"></use></svg>
         </template>
 
         <template x-if="type == 'warning'">
-            <svg class="w-6 h-6 text-orange-500 bg-orange-50"><use xlink:href="#icon-exclamation-triangle"></use></svg>
+            <svg class="h-6 w-6 bg-orange-50 text-orange-500"><use xlink:href="#icon-exclamation-triangle"></use></svg>
         </template>
 
         <template x-if="type == 'error'">
-            <svg class="w-6 h-6 text-red-500 bg-red-50"><use xlink:href="#icon-exclamation-circle"></use></svg>
+            <svg class="h-6 w-6 bg-red-50 text-red-500"><use xlink:href="#icon-exclamation-circle"></use></svg>
         </template>
     </div>
 
@@ -43,6 +57,6 @@
     </div>
 
     <button type="button" class="shrink-0" x-on:click="isOpen = false">
-        <svg class="w-5 h-5 text-grey-500"><use xlink:href="#icon-x-mark"></use></svg>
+        <svg class="h-5 w-5 text-grey-500"><use xlink:href="#icon-x-mark"></use></svg>
     </button>
 </div>

@@ -23,7 +23,7 @@
                 {!! $field->render() !!}
             @endforeach
 
-            <x-chief::button data-slot="submit" type="submit" variant="blue">Bewaar naam</x-chief::button>
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">Bewaar naam</x-chief::button>
         </form>
     </x-chief::window>
 

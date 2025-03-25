@@ -5,30 +5,21 @@
     $ownerCount = $fragment->sharedFragmentDtos->count();
 @endphp
 
-{{--
-    @php
-    $otherOwners = collect(app(GetOwners::class)->getSharedFragmentDtos($model->getFragmentModel()))->reject(function (
-    $otherOwner,
-    ) use ($owner) {
-    return $otherOwner['model']->modelReference()->equals($owner->modelReference());
-    });
-    @endphp
---}}
-
 @if ($fragment->isShared)
-    <div class="mb-4 flex items-start gap-1.5 rounded-xl bg-primary-50 p-2.5">
-        <svg class="h-5 w-5 shrink-0 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
+    <div class="body mb-4 flex items-start gap-1.5 rounded-xl bg-primary-50 p-2.5 text-sm text-primary-500">
+        <svg class="size-5 shrink-0"><use xlink:href="#icon-information-circle"></use></svg>
 
-        <p class="body text-sm text-primary-500">
+        <p>
             Dit fragment is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit fragment, worden
             deze op alle gekoppelde plaatsen doorgevoerd.
 
-            <span
-                class="cursor-pointer underline"
+            <button
+                type="button"
+                class="underline"
                 x-on:click="$dispatch('open-dialog', { 'id': 'shared-fragment-modal-{{ $this->getId() }}' })"
             >
                 Bekijk koppelingen
-            </span>
+            </button>
         </p>
     </div>
 

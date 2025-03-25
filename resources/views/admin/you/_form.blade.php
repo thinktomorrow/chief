@@ -14,4 +14,4 @@
     <x-chief::form.input.email id="email" name="email" value="{{ old('email', $user->email) }}" />
 </x-chief::form.fieldset>
 
-<x-chief::button data-slot="submit" form="updateForm" type="submit" variant="blue">Bewaar</x-chief::button>
+<x-chief::button data-slot="form-group" form="updateForm" type="submit" variant="blue">Bewaar</x-chief::button>

@@ -17,7 +17,7 @@
                 {!! $field->render() !!}
             @endforeach
 
-            <x-chief::button data-slot="submit" type="submit" variant="blue">Voeg uitzondering toe</x-chief::button>
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">Voeg uitzondering toe</x-chief::button>
         </form>
     </x-chief::window>
 </x-chief::page.template>

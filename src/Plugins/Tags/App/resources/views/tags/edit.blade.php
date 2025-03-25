@@ -22,7 +22,7 @@
                 {!! $field->render() !!}
             @endforeach
 
-            <div data-slot="submit" class="flex items-start gap-2">
+            <div data-slot="form-group" class="flex items-start gap-2">
                 <x-chief::button type="submit" variant="blue">Bewaar</x-chief::button>
 
                 <x-chief::button
