@@ -4,7 +4,7 @@
 @endphp
 
 @if (count($tags) > 0)
-    <x-chief::form.input.group :rule="$id">
+    <x-chief::form.fieldset :rule="$id">
         @if ($label)
             <x-chief::form.label for="{{ $id }}" unset class="h6 body-dark font-medium">
                 {{ $label }}
@@ -36,5 +36,5 @@
                 </x-chief::form.label>
             @endforeach
         </div>
-    </x-chief::form.input.group>
+    </x-chief::form.fieldset>
 @endif

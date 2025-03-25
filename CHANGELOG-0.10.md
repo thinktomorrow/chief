@@ -130,7 +130,7 @@ A firm clean-up of all existing form styling/components.
 
 ##### New components:
 
-- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested components are using the correct margins, relative to each other. The old `x-chief::input.group` still exists, but will be phased out until completely gone in future versions.
+- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested components are using the correct margins, relative to each other.
 
 ##### Renamed components:
 
@@ -147,3 +147,4 @@ A firm clean-up of all existing form styling/components.
     - `x-chief::copy-button`
     - `x-chief::icon-label`
     - `x-chief::icon-button`
+    - `x-chief::inline-notification`

@@ -63,8 +63,8 @@
             </div>
         </div>
 
-        <div class="space-y-4">
-            <x-chief::form.input.group rule="form.basename">
+        <div>
+            <x-chief::form.fieldset rule="form.basename">
                 <x-chief::form.label for="form.basename">Bestandsnaam</x-chief::form.label>
 
                 <x-chief::form.input.prepend-append :append="'.'.$previewFile->extension">
@@ -81,22 +81,20 @@
                         Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}
                     </span>
                 @endif
-            </x-chief::form.input.group>
+            </x-chief::form.fieldset>
 
             @foreach ($this->getComponents() as $component)
                 {{ $component }}
             @endforeach
-        </div>
 
-        @if ($errors->any())
-            <div class="space-y-2">
-                @foreach ($errors->all() as $error)
-                    <x-chief::inline-notification type="error">
-                        {{ ucfirst($error) }}
-                    </x-chief::inline-notification>
-                @endforeach
-            </div>
-        @endif
+            @if ($errors->any())
+                <x-chief::callout data-slot="form-group" size="small" variant="red">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ ucfirst($error) }}</p>
+                    @endforeach
+                </x-chief::callout>
+            @endif
+        </div>
     </form>
 
     <x-slot name="footer">

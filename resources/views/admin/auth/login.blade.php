@@ -3,7 +3,7 @@
         {{ csrf_field() }}
 
         {{-- TODO: field errors are handled but still need to show error if login credentials are incorrect --}}
-        @if ($errors && count($errors) > 0)
+        @if ($errors->any())
             <x-chief::callout data-slot="form-group" variant="red" title="Oops, er klopt iets niet">
                 <x-slot name="icon">
                     <x-chief::icon.solid.alert />

@@ -12,7 +12,7 @@
 
             <div class="space-y-4">
                 @foreach ($linkForm->formValues() as $locale => $formValues)
-                    <x-chief::form.input.group
+                    <x-chief::form.fieldset
                         rule="links"
                         class="space-y-2"
                         x-data="{
@@ -63,8 +63,8 @@
                             />
                         </x-chief::form.input.prepend-append>
 
-                        <x-chief::inline-notification type="warning" size="sm" x-html="hint" x-show="hint" />
-                    </x-chief::form.input.group>
+                        <x-chief::callout type="warning" size="sm" x-html="hint" x-show="hint" />
+                    </x-chief::form.fieldset>
                 @endforeach
             </div>
         </form>

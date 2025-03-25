@@ -9,9 +9,9 @@
                 {{ $this->filePreview }}
 
                 @error('files.0')
-                    <x-chief::inline-notification type="error" class="mt-2">
-                        {{ ucfirst($message) }}
-                    </x-chief::inline-notification>
+                    <x-chief::callout size="small" variant="red" class="mt-2">
+                        <p>{{ ucfirst($message) }}</p>
+                    </x-chief::callout>
                 @enderror
 
                 {{ $this->fileSelect }}
