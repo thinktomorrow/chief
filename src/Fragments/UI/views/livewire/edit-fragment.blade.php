@@ -53,9 +53,9 @@
                     x-sortable
                     x-sortable-group="{{ 'group-fragment-' . $fragment->fragmentId }}"
                     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-                    class="divide-y divide-grey-100"
+                    class="divide-y divide-grey-100 rounded-xl border border-grey-100 px-4"
                 >
-                    @if ($fragments->count() > 1)
+                    @if ($fragments->count() > 0)
                         @include(
                             'chief-fragments::livewire._partials.add-fragment-button',
                             [

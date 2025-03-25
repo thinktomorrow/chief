@@ -15,7 +15,7 @@
         >
             @include('chief-table::livewire._partials.table-actions')
 
-            <div class="divide-y divide-grey-100 rounded-xl bg-white shadow-md ring-1 ring-grey-100">
+            <div class="divide-y divide-grey-100 rounded-xl bg-white shadow-md shadow-grey-500/10 ring-1 ring-grey-100">
                 @include('chief-table::livewire._partials.table-container-header')
 
                 <div class="overflow-x-auto whitespace-nowrap">

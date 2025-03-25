@@ -68,7 +68,7 @@
     }
     .bui-btn-outline-white {
         @apply shadow-sm;
-        @apply bg-white text-grey-800 ring-1 ring-inset ring-grey-100 hover:text-grey-950 hover:ring-grey-200;
+        @apply bg-white text-grey-800 ring-1 ring-inset ring-grey-200 hover:text-grey-950 hover:ring-grey-300;
     }
     .bui-btn-outline-green {
         @apply shadow-sm;

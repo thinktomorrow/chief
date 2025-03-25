@@ -11,9 +11,9 @@
         $attributes->class([
             'space-y-3',
             match ($variant) {
-                'white' => 'rounded-xl bg-white p-4 shadow-md ring-1 ring-grey-100',
+                'white' => 'rounded-xl bg-white p-4 shadow-md shadow-grey-500/10 ring-1 ring-grey-200',
                 'transparent' => '',
-                default => 'rounded-xl bg-white p-4 shadow-md ring-1 ring-grey-100',
+                default => 'rounded-xl bg-white p-4 shadow-md shadow-grey-500/10 ring-1 ring-grey-100',
             },
         ])
     }}
