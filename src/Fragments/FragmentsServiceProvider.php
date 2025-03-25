@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Fragments\UI\Components\SidebarFragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\AddFragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Contexts;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\EditContexts;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\EditFragment;
 
 class FragmentsServiceProvider extends ServiceProvider
@@ -38,6 +39,7 @@ class FragmentsServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-fragments', __DIR__.'/UI/views');
 
         Livewire::component('chief-fragments::contexts', Contexts::class);
+        Livewire::component('chief-fragments::edit-contexts', EditContexts::class);
         Livewire::component('chief-fragments::context', Context::class);
         Livewire::component('chief-fragments::add-fragment', AddFragment::class);
         Livewire::component('chief-fragments::edit-fragment', EditFragment::class);

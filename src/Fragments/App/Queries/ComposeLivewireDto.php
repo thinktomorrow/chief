@@ -55,6 +55,18 @@ class ComposeLivewireDto
             });
     }
 
+    public function composeEmptyContext(ModelReference $modelReference): ContextDto
+    {
+        $owner = $modelReference->instance();
+        $ownerResource = $this->registry->findResourceByModel($owner::class);
+
+        return ContextDto::empty(
+            $owner->modelReference(),
+            $ownerResource->getPageTitle($owner),
+            $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
+        );
+    }
+
     /** @return Collection<SharedFragmentDto> */
     public function getSharedFragmentDtos(string $fragmentId): Collection
     {

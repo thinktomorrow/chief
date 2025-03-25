@@ -2,15 +2,17 @@
 
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 
+use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class ContextDto implements Wireable
 {
     public function __construct(
         public string $contextId,
-        public string $label,
+        public string $title,
         public ModelReference $ownerReference,
         public string $ownerLabel,
         public string $ownerAdminUrl,
@@ -29,11 +31,23 @@ class ContextDto implements Wireable
         );
     }
 
+    public static function empty(ModelReference $ownerReference, string $ownerLabel, string $ownerAdminUrl): static
+    {
+        return new static(
+            'new-'.Str::random(),
+            '',
+            $ownerReference,
+            $ownerLabel,
+            $ownerAdminUrl,
+            ChiefLocales::locales(),
+        );
+    }
+
     public function toLivewire()
     {
         return [
             'contextId' => $this->contextId,
-            'label' => $this->label,
+            'title' => $this->title,
             'ownerReference' => $this->ownerReference->get(),
             'ownerLabel' => $this->ownerLabel,
             'ownerAdminUrl' => $this->ownerAdminUrl,
@@ -45,7 +59,7 @@ class ContextDto implements Wireable
     {
         return new static(
             $value['contextId'],
-            $value['label'],
+            $value['title'],
             ModelReference::fromString($value['ownerReference']),
             $value['ownerLabel'],
             $value['ownerAdminUrl'],
