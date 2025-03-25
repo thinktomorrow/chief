@@ -1,0 +1,41 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .bui-link {
+        @apply inline-flex items-start text-left font-medium;
+        @apply transition-all duration-150 ease-in-out;
+    }
+
+    /* Sizes */
+    .bui-link-base {
+        @apply gap-1 text-base/6;
+        & > [data-slot='icon'],
+        & > svg {
+            @apply mt-0.5 size-5 shrink-0;
+        }
+    }
+    .bui-link-sm {
+        @apply gap-[0.1875rem] text-sm/5;
+        & > [data-slot='icon'],
+        & > svg {
+            @apply mt-px size-[1.125rem] shrink-0;
+        }
+    }
+    .bui-link-xs {
+        @apply gap-0.5 text-xs/5;
+        & > [data-slot='icon'],
+        & > svg {
+            @apply mt-px size-[1.125rem] shrink-0;
+        }
+    }
+
+    /* Variants */
+    .bui-link-blue {
+        @apply text-primary-500 hover:text-primary-600;
+    }
+    .bui-link-body-dark {
+        @apply text-grey-700 hover:text-primary-600;
+    }
+}

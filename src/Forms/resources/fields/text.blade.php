@@ -1,9 +1,12 @@
-@php use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName; @endphp
-<x-chief::input.prepend-append
+@php
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+@endphp
+
+<x-chief::form.input.prepend-append
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
-    <x-chief::input.text
+    <x-chief::form.input.text
         wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
@@ -12,4 +15,4 @@
         :autofocus="$hasAutofocus()"
         :attributes="$attributes->merge($getCustomAttributes())"
     />
-</x-chief::input.prepend-append>
+</x-chief::form.input.prepend-append>

@@ -13,14 +13,14 @@
                 <span>Kopieer</span>
             </x-chief::button>
 
-            <x-chief::copy-button
-                :content="'#'.$fragment->bookmark"
-                successContent="#{{ $fragment->bookmark }} gekopieerd!"
+            <x-chief::button
+                x-copy="{
+                        content: '#{{ $fragment->bookmark }}',
+                        successContent: '#{{ $fragment->bookmark }} gekopieerd!'
+                    }"
             >
-                <x-chief::button>
-                    <x-chief::icon.link />
-                </x-chief::button>
-            </x-chief::copy-button>
+                <x-chief::icon.link />
+            </x-chief::button>
         </div>
     @endforeach
 @endif

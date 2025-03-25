@@ -9,11 +9,11 @@ enum Layout: string
     case card = 'card';
     case blank = 'blank';
 
-    public function class(): string
+    public function variant(): string
     {
         return match ($this) {
             self::card => 'card',
-            self::blank => '',
+            self::blank => 'transparent',
         };
     }
 }

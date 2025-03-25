@@ -11,7 +11,7 @@
     class="relative block overflow-hidden rounded-lg cursor-pointer group hover:bg-grey-100"
 >
     <div class="absolute top-0 left-0 m-2 z-[1]">
-        <x-chief::input.checkbox id="asset_{{ $index }}" name="asset_ids[]" value="{{ $asset->id }}"/>
+        <x-chief::form.input.checkbox id="asset_{{ $index }}" name="asset_ids[]" value="{{ $asset->id }}"/>
     </div>
 
     <div class="flex items-center justify-center overflow-hidden rounded-lg group-hover:bg-grey-100 bg-grey-50">

@@ -25,7 +25,7 @@ final class Nav extends Component
      */
     public function render()
     {
-        return view('chief::components.nav.index');
+        return view('chief::components.nav.nav');
     }
 
     public function items(): Collection

@@ -14,11 +14,11 @@
         <div class="space-y-4">
             @if ($title || $customTitle || $slot->isNotEmpty())
                 <div class="flex items-start justify-between gap-x-12 gap-y-4 max-xl:flex-wrap">
-                    <div class="max-w-4xl">
+                    <div class="max-w-3xl">
                         @if ($customTitle)
                             {{ $customTitle }}
                         @else
-                            <h1 class="h1 h1-dark">{{ $title }}</h1>
+                            <h1 class="h1 h1-dark text-pretty">{{ $title }}</h1>
                         @endif
                     </div>
 

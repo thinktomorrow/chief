@@ -1,4 +1,0 @@
-[data-slot='fieldset'] + [data-slot='fieldset'],
-[data-slot='fieldset'] + [data-slot='submit'] {
-    @apply mt-6;
-}

@@ -53,7 +53,7 @@
                 x-on:change="repositionOptionMarker($el)"
                 class="relative"
             >
-                <x-chief::input.radio
+                <x-chief::form.input.radio
                     wire:model.change="filters.{{ $getKey() }}"
                     id="{{ $id }}-{{ $option['value'] }}"
                     value="{{ $option['value'] }}"

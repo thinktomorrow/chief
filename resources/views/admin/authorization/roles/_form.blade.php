@@ -3,7 +3,7 @@
 
     <x-chief::form.description>Unieke benaming van de rol.</x-chief::form.description>
 
-    <x-chief::input.text id="name" name="name" value="{{ old('name', $role->name) }}" />
+    <x-chief::form.input.text id="name" name="name" value="{{ old('name', $role->name) }}" />
 </x-chief::form.fieldset>
 
 <x-chief::form.fieldset rule="permission_names">

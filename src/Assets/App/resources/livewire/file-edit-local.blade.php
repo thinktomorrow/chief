@@ -64,24 +64,24 @@
         </div>
 
         <div class="space-y-4">
-            <x-chief::input.group rule="form.basename">
+            <x-chief::form.input.group rule="form.basename">
                 <x-chief::form.label for="form.basename">Bestandsnaam</x-chief::form.label>
 
-                <x-chief::input.prepend-append :append="'.'.$previewFile->extension">
-                    <x-chief::input.text
+                <x-chief::form.input.prepend-append :append="'.'.$previewFile->extension">
+                    <x-chief::form.input.text
                         id="form.basename"
                         name="form[basename]"
                         placeholder="Bestandsnaam"
                         wire:model="form.basename"
                     />
-                </x-chief::input.prepend-append>
+                </x-chief::form.input.prepend-append>
 
                 @if ($replacedPreviewFile)
                     <span class="text-sm text-grey-500">
                         Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}
                     </span>
                 @endif
-            </x-chief::input.group>
+            </x-chief::form.input.group>
 
             @foreach ($this->getComponents() as $component)
                 {{ $component }}

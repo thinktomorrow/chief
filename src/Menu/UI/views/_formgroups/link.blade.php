@@ -5,7 +5,7 @@
         {{-- Option: internal link --}}
         <div class="space-y-1">
             <div class="flex items-start gap-2">
-                <x-chief::input.radio
+                <x-chief::form.input.radio
                     id="type-internal"
                     name="type"
                     value="internal"
@@ -32,7 +32,7 @@
         {{-- Option: custom link --}}
         <div class="space-y-2">
             <div class="flex items-start gap-2">
-                <x-chief::input.radio
+                <x-chief::form.input.radio
                     id="type-custom"
                     name="type"
                     value="custom"
@@ -51,7 +51,7 @@
                         @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
                             <x-chief::tabs.tab tab-id="{{ $locale }}">
                                 <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
-                                    <x-chief::input.text
+                                    <x-chief::form.input.text
                                         id="trans-url-{{ $locale }}"
                                         name="trans[url][{{ $locale }}]"
                                         value="{{ old('trans.url.'.$locale, $menuitem->dynamic('url', $locale)) }}"
@@ -64,7 +64,7 @@
                 @else
                     @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
                         <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
-                            <x-chief::input.text
+                            <x-chief::form.input.text
                                 id="trans-url-{{ $locale }}"
                                 name="trans[url][{{ $locale }}]"
                                 value="{{ old('trans.url.'.$locale, $menuitem->dynamic('url', $locale)) }}"
@@ -78,7 +78,7 @@
 
         {{-- Option: no link --}}
         <div class="flex items-start gap-2">
-            <x-chief::input.radio
+            <x-chief::form.input.radio
                 id="type-nolink"
                 name="type"
                 value="nolink"

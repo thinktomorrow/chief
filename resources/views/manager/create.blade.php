@@ -13,13 +13,13 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
             @csrf
 
             <x-chief-form::fields not-tagged="edit,not-on-create" />
 
-            <x-chief::button data-slot="submit" type="submit" variant="blue">Aanmaken</x-chief::button>
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">Aanmaken</x-chief::button>
         </form>
     </x-chief::window>
 

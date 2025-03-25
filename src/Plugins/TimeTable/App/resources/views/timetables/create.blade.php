@@ -13,7 +13,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="timeTableCreateForm" action="{{ route('chief.timetables.store') }}" method="POST">
             @csrf
 
@@ -21,7 +21,7 @@
                 {!! $field->render() !!}
             @endforeach
 
-            <x-chief::button data-slot="submit" type="submit" variant="blue">Maak weekschema aan</x-chief::button>
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">Maak weekschema aan</x-chief::button>
         </form>
     </x-chief::window>
 </x-chief::page.template>

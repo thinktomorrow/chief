@@ -32,11 +32,14 @@
                         </div>
 
                         @if (! isset($modelReference) || $owner['modelReference'] != $modelReference)
-                            <a href="{{ $owner['adminUrl'] }}" title="Bekijk" target="_blank" rel="noopener">
-                                <x-chief::link>
-                                    <svg><use xlink:href="#icon-external-link"></use></svg>
-                                </x-chief::link>
-                            </a>
+                            <x-chief::link
+                                href="{{ $owner['adminUrl'] }}"
+                                title="Bekijk"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <x-chief::icon.link-square />
+                            </x-chief::link>
                         @endif
                     </div>
                 @endforeach

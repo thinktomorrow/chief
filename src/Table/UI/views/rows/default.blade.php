@@ -10,7 +10,7 @@
         :class="{ 'before:absolute before:block before:top-0 before:bottom-0 before:left-0 before:w-px before:bg-primary-500': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
     >
         <div class="flex min-h-6 items-center">
-            <x-chief::input.checkbox
+            <x-chief::form.input.checkbox
                 data-table-row-checkbox
                 name="{{ $this->getRowKey($item)  }}"
                 id="{{ $this->getRowKey($item)  }}"

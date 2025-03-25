@@ -141,4 +141,9 @@ A firm clean-up of all existing form styling/components.
 ##### Clean-up
 
 - Changed all `x-chief::button` components to the newer `x-chief-table::button`. Then `x-chief-table::button` was renamed to the existing, shorter `x-chief::button`.
+- Changed the `x-chief::link` component so it works with a similar API as the `x-chief::button` component.
 - Removed the legacy `form.css` styling, as this wasn't in use anymore for quiet some time.
+- Replaced and removed the following components
+    - `x-chief::copy-button`
+    - `x-chief::icon-label`
+    - `x-chief::icon-button`

@@ -3,7 +3,6 @@
     {{-- selector for async fetching via chief tabs --}}
     refresh-url="{{ route('chief::fragments.refresh-index', $context->id) }}"
     tags="fragments"
-    class="card"
 >
     <div class="relative -my-6">
         @include(

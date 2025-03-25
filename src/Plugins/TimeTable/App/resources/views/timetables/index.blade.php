@@ -10,7 +10,7 @@
     </x-slot>
 
     @foreach ($timeTables as $timeTableModel)
-        <x-chief::window class="card">
+        <x-chief::window>
             <div class="space-y-4">
                 <a
                     href="{{ route('chief.timetables.edit', $timeTableModel->id) }}"
@@ -21,7 +21,7 @@
                         {{ $timeTableModel->label }}
                     </span>
 
-                    <x-chief::icon-button color="grey" class="text-grey-500 shadow-none" />
+                    <x-chief::icon.quill-write class="text-grey-500" />
                 </a>
 
                 <x-chief-timetable::time-table

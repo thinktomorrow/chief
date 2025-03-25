@@ -59,6 +59,8 @@
                     this.$root.querySelectorAll(`[role='tablist'] [role='tab']`),
                 ).find((tab) => tab.getAttribute('aria-selected') === 'true')
 
+                if (! tabElement) return
+
                 this.$refs.tabMarker.style.width = tabElement.offsetWidth + 'px'
                 this.$refs.tabMarker.style.left = tabElement.offsetLeft + 'px'
             })

@@ -2,7 +2,7 @@
     $sites = $this->getSiteLinks();
 @endphp
 
-<x-chief::window title="Sites">
+<x-chief::window title="Sites" variant="transparent">
     <x-slot name="actions">
         <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
@@ -26,9 +26,9 @@
                         </div>
 
                         @if ($site->contextId)
-                            <x-chief-table::badge>
+                            <x-chief::badge>
                                 <span>{{ $site->contextTitle }}</span>
-                            </x-chief-table::badge>
+                            </x-chief::badge>
                         @endif
                     </div>
                 </div>

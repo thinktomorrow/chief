@@ -1,26 +1,26 @@
 @php
-    switch($type ?? null) {
+    switch ($type ?? null) {
         case 'default':
-            $classesForType = 'bg-grey-100 text-grey-700 border-grey-200';
+            $classesForType = 'border-grey-200 bg-grey-100 text-grey-700';
             break;
         case 'error':
-            $classesForType = 'bg-red-50 text-red-500 border-red-100';
+            $classesForType = 'border-red-100 bg-red-50 text-red-500';
             break;
         case 'warning':
-            $classesForType = 'bg-orange-50 text-orange-500 border-orange-100';
+            $classesForType = 'border-orange-100 bg-orange-50 text-orange-500';
             break;
         case 'info':
-            $classesForType = 'bg-blue-50 text-blue-500 border-blue-100';
+            $classesForType = 'border-blue-100 bg-blue-50 text-blue-500';
             break;
         case 'success':
-            $classesForType = 'bg-green-50 text-green-500 border-green-100';
+            $classesForType = 'border-green-100 bg-green-50 text-green-500';
             break;
         default:
-            $classesForType = 'bg-grey-100 text-grey-700 border-grey-200';
+            $classesForType = 'border-grey-200 bg-grey-100 text-grey-700';
             break;
     }
 
-    switch($size ?? null) {
+    switch ($size ?? null) {
         case 'small':
             $classesForSize = 'px-2 py-1 text-sm';
             break;
@@ -36,6 +36,8 @@
     }
 @endphp
 
-<div {{ $attributes->merge(['class' => $classesForType . ' ' . $classesForSize . ' inline-block rounded-md border']) }}>
+<div
+    {{ $attributes->merge(['class' => $classesForType . ' ' . $classesForSize . ' inline-block rounded-md border']) }}
+>
     {{ $slot }}
 </div>

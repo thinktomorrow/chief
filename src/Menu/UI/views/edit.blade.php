@@ -22,7 +22,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form
             id="updateForm"
             method="POST"

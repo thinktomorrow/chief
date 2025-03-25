@@ -14,7 +14,7 @@
         />
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="timeTableEditForm" action="{{ route('chief.timetables.update', $model->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -23,11 +23,11 @@
                 {!! $field->render() !!}
             @endforeach
 
-            <x-chief::button data-slot="submit" type="submit" variant="blue">Bewaar naam</x-chief::button>
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">Bewaar naam</x-chief::button>
         </form>
     </x-chief::window>
 
-    <x-chief::window title="Weekschema" class="card">
+    <x-chief::window title="Weekschema">
         {{-- TODO: this shouldn't display the current week, but rather a week with all default day values --}}
         <x-chief-timetable::time-table
             :time-table="$timeTable"
@@ -38,7 +38,7 @@
     </x-chief::window>
 
     <x-slot name="sidebar">
-        <x-chief::window title="Uitzonderingen" class="card">
+        <x-chief::window title="Uitzonderingen">
             <x-slot name="actions">
                 <x-chief::button
                     href="{{ route('chief.timetable_dates.create', $model->id) }}"

@@ -1,5 +1,0 @@
-@layer utilities {
-    .card {
-        @apply rounded-xl bg-white p-4 shadow-md ring-1 ring-grey-100;
-    }
-}

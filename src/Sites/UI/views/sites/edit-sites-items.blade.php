@@ -7,18 +7,14 @@
                 </div>
 
                 @if ($this->queuedForDeletion($site->locale))
-                    <x-chief::button
-                        x-on:click="$wire.undoDeleteSite('{{ $site->locale }}')"
-                        variant="grey"
-                        size="sm"
-                    >
+                    <x-chief::button x-on:click="$wire.undoDeleteSite('{{ $site->locale }}')" variant="grey" size="sm">
                         <x-chief::icon.arrow-turn-backward />
                         <span>Ongedaan maken</span>
                     </x-chief::button>
                 @else
                     <x-chief::button
                         x-on:click="$wire.deleteSite('{{ $site->locale }}')"
-                        variant="grey"
+                        variant="outline-red"
                         size="sm"
                     >
                         <x-chief::icon.delete />

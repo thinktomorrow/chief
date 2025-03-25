@@ -1,35 +1,32 @@
-@if($previewFile->getUrl())
+@if ($previewFile->getUrl())
     <div class="flex items-start justify-between gap-2">
-        <a
+        <x-chief::link
+            size="sm"
             href="{{ $previewFile->getUrl() }}"
             title="{{ $previewFile->getUrl() }}"
             target="_blank"
             rel="noopener"
-            class="leading-5"
+            class="break-all"
         >
-            <x-chief::link underline class="break-all">
-                {{ $previewFile->getUrl() }}
+            {{ $previewFile->getUrl() }}
+        </x-chief::link>
+
+        <div class="flex shrink-0 items-start gap-2">
+            <x-chief::link
+                x-copy="{ content: '{{ $previewFile->getUrl() }}', successContent: 'Link naar bestand gekopieerd!' }"
+            >
+                <x-chief::icon.link />
             </x-chief::link>
-        </a>
 
-        <div class="flex items-start gap-2 shrink-0">
-            <x-chief::copy-button :content="$previewFile->getUrl()" successContent="Link naar bestand gekopieerd!">
-                <x-chief::link>
-                    <svg><use xlink:href="#icon-link"></use></svg>
-                </x-chief::link>
-            </x-chief::copy-button>
-
-            <a
+            <x-chief::link
+                size="sm"
                 href="{{ $previewFile->getUrl() }}"
                 title="{{ $previewFile->getUrl() }}"
                 target="_blank"
                 rel="noopener"
-                class="leading-5"
             >
-                <x-chief::link>
-                    <svg><use xlink:href="#icon-external-link"></use></svg>
-                </x-chief::link>
-            </a>
+                <x-chief::icon.link-square />
+            </x-chief::link>
         </div>
     </div>
 @endif

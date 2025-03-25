@@ -11,6 +11,8 @@ const dropdown = (config) => ({
         });
     },
     create(reference) {
+        console.log('create', reference);
+
         // This returns a function which should be invoked when the floating element is removed from the screen.
         autoUpdate(reference, this.$el, () => {
             computePosition(reference, this.$el, {

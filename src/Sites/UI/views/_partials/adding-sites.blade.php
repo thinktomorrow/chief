@@ -1,15 +1,15 @@
-<x-chief::input.group class="w-full">
+<x-chief::form.input.group class="w-full">
     @foreach ($this->getNonAddedSites() as $site)
         <div class="flex items-start gap-2">
-            <x-chief::input.checkbox
+            <x-chief::form.input.checkbox
                 id="{{ $site->locale }}"
                 wire:model="addingLocales"
                 value="{{ $site->locale }}"
-            ></x-chief::input.checkbox>
+            ></x-chief::form.input.checkbox>
             <x-chief::form.label for="{{ $site->locale }}">{{ $site->name }}</x-chief::form.label>
         </div>
     @endforeach
-</x-chief::input.group>
+</x-chief::form.input.group>
 
 <x-slot name="footer">
     <x-chief::dialog.drawer.footer>

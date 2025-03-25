@@ -7,7 +7,7 @@
 
     <div data-slot="control" class="space-y-2">
         <div class="flex items-start gap-2">
-            <x-chief::input.radio
+            <x-chief::form.input.radio
                 id="without-parent-id"
                 name="allow_parent"
                 value="0"
@@ -22,7 +22,7 @@
 
         <div class="space-y-2">
             <div class="flex items-start gap-2">
-                <x-chief::input.radio
+                <x-chief::form.input.radio
                     id="parent-id"
                     name="allow_parent"
                     value="1"

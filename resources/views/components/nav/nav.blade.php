@@ -22,14 +22,14 @@
     @endphp
 
     @if ($title)
-        <div data-toggle-classes="hidden" class="{{ $isCollapsedOnPageLoad ? 'hidden' : '' }} mb-2 mt-6 px-2">
+        <div class="mb-2 mt-6 px-2">
             <span class="body text-xs text-grey-500">
                 {{ ucfirst($title) }}
             </span>
         </div>
     @endif
 
-    <x-chief::nav.item label="{{ $label }}" icon="{!! $icon !!}" collapsible {{ $attributes }}>
+    <x-chief::nav.item label="{{ $label }}" icon="{!! $icon !!}" {{ $attributes }}>
         @if (! isset($append))
             {{ $slot }}
         @endif
@@ -44,7 +44,7 @@
     </x-chief::nav.item>
 @elseif ($items->count() > 0)
     @if ($title)
-        <div data-toggle-classes="hidden" class="{{ $isCollapsedOnPageLoad ? 'hidden' : '' }} mb-2 mt-6 px-2">
+        <div class="mb-2 mt-6 px-2">
             <span class="body text-xs text-grey-500">
                 {{ ucfirst($title) }}
             </span>
@@ -60,7 +60,6 @@
             label="{{ ucfirst($item->label()) }}"
             url="{{ $item->url() }}"
             icon="{!! $item->icon() !!}"
-            collapsible
             {{ $attributes }}
         />
     @endforeach

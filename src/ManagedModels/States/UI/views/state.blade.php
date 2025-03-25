@@ -1,6 +1,10 @@
 <div>
     @if ($this->isAllowedToEdit())
-        <x-chief::button wire:click="edit" variant="outline-blue">
+        <x-chief::button
+            wire:click="edit"
+            variant="outline-blue"
+            x-on:click="$dispatch('open-dialog', { id: 'edit-state' })"
+        >
             <span>{{ strip_tags($this->getStateLabel()) }}</span>
             <x-chief::icon.chevron-down />
         </x-chief::button>
@@ -12,9 +16,4 @@
         :state-key="$stateKey"
         :model-reference="$modelReference"
     />
-
-    {{-- <x-chief::button variant="blue"> --}}
-    {{-- <span>Publiceer</span> --}}
-    {{-- <x-chief::icon.solid.sent /> --}}
-    {{-- </x-chief::button> --}}
 </div>

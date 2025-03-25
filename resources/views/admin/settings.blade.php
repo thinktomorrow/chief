@@ -9,7 +9,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
             @csrf
             @method('put')
