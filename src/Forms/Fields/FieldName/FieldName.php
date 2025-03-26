@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\FieldName;
 
-class LocalizedFieldName
+class FieldName
 {
-    //    const DEFAULT_TEMPLATE = 'trans.:locale.:name';
     const DEFAULT_TEMPLATE = ':name.:locale';
 
     /**

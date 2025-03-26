@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\FieldLine;
 use Thinktomorrow\Chief\Resource\Resource;
@@ -102,7 +101,7 @@ class FieldReference
 
     public function isRepeatField(): bool
     {
-        return $this->field instanceof Fields\Repeat;
+        return $this->field instanceof Fields\Repeat\Repeat;
     }
 
     private function array_merge_overwrite(): array

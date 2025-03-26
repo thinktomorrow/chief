@@ -17,7 +17,7 @@ class ComposeFieldLines
         Fields\Text::class,
         Fields\Textarea::class,
         Fields\Html::class,
-        Fields\Repeat::class,
+        Fields\Repeat\Repeat::class,
     ];
 
     private LinesCollection $lines;
