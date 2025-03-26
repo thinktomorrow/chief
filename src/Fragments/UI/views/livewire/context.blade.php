@@ -1,27 +1,36 @@
-<x-chief::window class="!py-0">
+<div>
     <div
         wire:ignore.self
         x-sortable
         x-sortable-group="{{ 'group-' . $context->id }}"
         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-        class="[&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
+        class="border-y border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
     >
-        @include(
-            'chief-fragments::livewire._partials.add-fragment-button',
-            [
-                'order' => -1,
-                'parentId' => null,
-            ]
-        )
-
-        @foreach ($fragments as $fragment)
+        @if ($fragments->count() > 0)
             @include(
-                'chief-fragments::livewire._partials.fragment',
+                'chief-fragments::livewire._partials.add-fragment-button',
                 [
-                    'parentId' => $fragment->parentId,
+                    'order' => -1,
+                    'parentId' => null,
                 ]
             )
-        @endforeach
+
+            @foreach ($fragments as $fragment)
+                @include(
+                    'chief-fragments::livewire._partials.fragment',
+                    [
+                        'parentId' => $fragment->parentId,
+                    ]
+                )
+            @endforeach
+        @else
+            @include(
+                'chief-fragments::livewire._partials.empty-context',
+                [
+                    'parentId' => null,
+                ]
+            )
+        @endif
     </div>
 
     <livewire:chief-fragments::edit-fragment
@@ -35,4 +44,4 @@
         :context-id="$context->id"
         :parent-component-id="$this->getId()"
     />
-</x-chief::window>
+</div>

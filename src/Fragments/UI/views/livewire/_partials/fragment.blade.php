@@ -36,9 +36,9 @@
             </x-chief::button>
         </div>
 
-        @if ($adminFragment = $fragment->content)
+        @if ($fragment->content)
             <div class="px-[2.65rem]">
-                {!! $adminFragment !!}
+                {!! $fragment->content !!}
             </div>
         @endif
     </div>
