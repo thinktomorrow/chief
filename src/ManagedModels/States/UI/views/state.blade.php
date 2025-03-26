@@ -1,6 +1,6 @@
 <div>
     @if ($this->isAllowedToEdit())
-        <x-chief::button wire:click="edit" variant="outline-white">
+        <x-chief::button wire:click="edit" variant="{{ $this->getStateVariant() }}">
             <span>{{ $this->getStateLabel() }}</span>
             <x-chief::icon.chevron-down />
         </x-chief::button>
