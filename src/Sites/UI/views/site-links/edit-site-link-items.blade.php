@@ -64,10 +64,10 @@
                                     >
                                         @foreach ($contexts as $context)
                                             <option
-                                                wire:key="context-option-{{ $context->contextId }}"
-                                                value="{{ $context->contextId }}"
+                                                wire:key="context-option-{{ $context->id }}"
+                                                value="{{ $context->id }}"
                                             >
-                                                {{ $context->label }}
+                                                {{ $context->title }}
                                             </option>
                                         @endforeach
                                     </x-chief::form.input.select>

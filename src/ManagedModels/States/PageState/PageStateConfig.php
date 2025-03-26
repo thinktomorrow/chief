@@ -98,7 +98,7 @@ class PageStateConfig implements StateAdminConfig
 
     public function getEditTitle(StatefulContract $statefulContract): string
     {
-        return 'Status';
+        return 'Publicatie';
     }
 
     public function getStateLabel(StatefulContract $statefulContract): ?string
