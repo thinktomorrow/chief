@@ -142,4 +142,20 @@
             @apply text-green-950;
         }
     }
+    .callout-outline-white {
+        @apply border border-grey-200;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-grey-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-grey-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-grey-700;
+        }
+    }
 }

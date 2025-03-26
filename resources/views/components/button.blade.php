@@ -24,6 +24,7 @@
             'outline-blue' => 'bui-btn-outline-blue',
             'outline-green' => 'bui-btn-outline-green',
             'outline-red' => 'bui-btn-outline-red',
+            'outline-orange' => 'bui-btn-outline-orange',
             default => 'bui-btn-outline-white',
         },
     ]);

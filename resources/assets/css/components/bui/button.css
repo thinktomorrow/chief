@@ -82,4 +82,8 @@
         @apply shadow-sm shadow-red-500/10;
         @apply bg-white text-red-500 ring-1 ring-inset ring-red-200 hover:ring-red-300;
     }
+    .bui-btn-outline-orange {
+        @apply shadow-sm shadow-orange-500/10;
+        @apply bg-white text-orange-500 ring-1 ring-inset ring-orange-200 hover:ring-orange-300;
+    }
 }
