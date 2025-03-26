@@ -55,7 +55,7 @@ class EditState extends Component
 
     public function getTitle(): ?string
     {
-        return $this->getStateAdminConfig()?->getWindowTitle($this->getModel());
+        return $this->getStateAdminConfig()?->getEditTitle($this->getModel());
     }
 
     public function getContent(): ?string

@@ -1,6 +1,6 @@
 @adminCan('state-edit', $model)
 <x-chief-form::window
-    title="{{ $stateConfig->getWindowTitle($model) }}"
+    title="{{ $stateConfig->getEditTitle($model) }}"
     :edit-url="isset($allowedToEdit) ? $manager->route('state-edit', $model, $stateConfig->getStateKey()) : null"
     :refresh-url="$manager->route('state-window', $model, $stateConfig->getStateKey())"
     tags="status,links"

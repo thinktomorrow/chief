@@ -7,13 +7,7 @@ interface StateAdminConfig extends StateConfig
     /**
      * The title of the window tile on a page.
      */
-    public function getWindowTitle(StatefulContract $statefulContract): string;
-
-    /**
-     * The content of the window tile on a page. The second parameter is the
-     * defined view data of the page containing the window.
-     */
-    public function getWindowContent(StatefulContract $statefulContract, array $viewData): string;
+    public function getEditTitle(StatefulContract $statefulContract): string;
 
     /**
      * The optional intro content on the edit view of the state. This can
@@ -24,19 +18,24 @@ interface StateAdminConfig extends StateConfig
     /**
      * Transition button label
      */
-    public function getTransitionButtonLabel(string $transitionKey): ?string;
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string;
 
     /**
      * This indicates in a visual manner the type of transition. Options are:
      * success, info, warning, error, grey
      */
-    public function getTransitionType(string $transitionKey): ?string;
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string;
 
     /**
-     * Optional message to show next to the transition button. If a confirmation modal
+     * Optional callout title
+     */
+    public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string;
+
+    /**
+     * Optional callout message to show next to the transition button. If a confirmation modal
      * is used, this message will be shown in the modal instead of on the edit view
      */
-    public function getTransitionContent(string $transitionKey): ?string;
+    public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string;
 
     /**
      * Optional message to show next to the transition button. If a confirmation modal

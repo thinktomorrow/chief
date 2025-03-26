@@ -11,7 +11,9 @@ class TransitionDto
         public readonly string $key,
         public readonly string $label,
         public readonly string $variant,
+        public readonly ?string $title,
         public readonly ?string $content,
+
         public readonly bool $hasConfirmation,
         public readonly ?string $confirmationContent,
         public readonly array $fields,
@@ -23,9 +25,10 @@ class TransitionDto
     {
         return new self(
             $transitionKey,
-            $config->getTransitionButtonLabel($transitionKey),
-            $config->getTransitionType($transitionKey),
-            $config->getTransitionContent($transitionKey),
+            $config->getTransitionLabel($model, $transitionKey),
+            $config->getTransitionType($model, $transitionKey),
+            $config->getTransitionTitle($model, $transitionKey),
+            $config->getTransitionContent($model, $transitionKey),
             $config->hasConfirmationForTransition($transitionKey),
             $config->getConfirmationContent($transitionKey, $model),
             $config->getTransitionFields($transitionKey, $model),

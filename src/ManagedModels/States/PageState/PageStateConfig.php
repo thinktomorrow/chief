@@ -11,14 +11,13 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
-class PageStateConfig implements StateAdminConfig, StateConfig
+class PageStateConfig implements StateAdminConfig
 {
     use StateAdminConfigDefaults;
 
@@ -96,14 +95,9 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getWindowTitle(StatefulContract $statefulContract): string
+    public function getEditTitle(StatefulContract $statefulContract): string
     {
         return 'Status';
-    }
-
-    public function getWindowContent(StatefulContract $statefulContract, array $viewData): string
-    {
-        return view('chief::manager.windows.state.pagestate-window-content', $viewData)->render();
     }
 
     public function getStateLabel(StatefulContract $statefulContract): ?string
@@ -156,11 +150,11 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         return null;
     }
 
-    public function getTransitionButtonLabel(string $transitionKey): ?string
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
-                return 'Publiceer deze pagina';
+                return 'Publiceer';
 
             case 'unpublish':
                 return 'Zet terug in draft';
@@ -179,7 +173,7 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getTransitionType(string $transitionKey): ?string
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
@@ -196,13 +190,50 @@ class PageStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getTransitionContent(string $transitionKey): ?string
+    public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        if ($transitionKey == 'delete') {
-            return 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt.';
-        }
+        switch ($transitionKey) {
+            case 'publish':
+                return 'Publiceer deze pagina';
 
-        return null;
+            case 'unpublish':
+                return 'Hall pagina offline';
+
+            case 'archive':
+                return 'Archiveer';
+
+            case 'unarchive':
+                return 'Haal uit archief';
+
+            case 'delete':
+                return 'Verwijder';
+
+            default:
+                return $transitionKey;
+        }
+    }
+
+    public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        switch ($transitionKey) {
+            case 'publish':
+                return 'Publiceer deze pagina';
+
+            case 'unpublish':
+                return 'Hall pagina offline';
+
+            case 'archive':
+                return 'Archiveer';
+
+            case 'unarchive':
+                return 'Haal uit archief';
+
+            case 'delete':
+                return 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt.';
+
+            default:
+                return null;
+        }
     }
 
     public function hasConfirmationForTransition(string $transitionKey): bool

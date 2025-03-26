@@ -68,7 +68,7 @@ class SimpleStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getWindowTitle(StatefulContract $statefulContract): string
+    public function getEditTitle(StatefulContract $statefulContract): string
     {
         return 'Status';
     }
@@ -90,7 +90,7 @@ class SimpleStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getTransitionButtonLabel(string $transitionKey): ?string
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
@@ -107,7 +107,7 @@ class SimpleStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getTransitionType(string $transitionKey): ?string
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
@@ -121,7 +121,7 @@ class SimpleStateConfig implements StateAdminConfig, StateConfig
         }
     }
 
-    public function getTransitionContent(string $transitionKey): ?string
+    public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         if ($transitionKey == 'delete') {
             return 'Opgelet! Het verwijderen is definitief. Dit kan niet worden ongedaan gemaakt.';

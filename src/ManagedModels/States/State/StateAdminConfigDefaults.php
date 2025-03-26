@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
 
 trait StateAdminConfigDefaults
@@ -17,16 +16,9 @@ trait StateAdminConfigDefaults
         return $statefulContract->getState($this->getStateKey())->getValueAsString();
     }
 
-    public function getWindowTitle(StatefulContract $statefulContract): string
+    public function getEditTitle(StatefulContract $statefulContract): string
     {
         return 'Status';
-    }
-
-    public function getWindowContent(StatefulContract $statefulContract, array $viewData): string
-    {
-        return Blade::render('<x-slot name="labels">'.
-            $this->getStateLabel($statefulContract).
-            '</x-slot>');
     }
 
     public function getEditContent(StatefulContract $statefulContract): ?string
@@ -34,17 +26,22 @@ trait StateAdminConfigDefaults
         return null;
     }
 
-    public function getTransitionButtonLabel(string $transitionKey): ?string
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return Str::replace('_', ' ', $transitionKey);
     }
 
-    public function getTransitionType(string $transitionKey): ?string
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
     }
 
-    public function getTransitionContent(string $transitionKey): ?string
+    public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return null;
+    }
+
+    public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
     }
