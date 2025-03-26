@@ -112,7 +112,7 @@ class PageStateConfig implements StateAdminConfig
             default => $statefulContract->getState($this->getStateKey())->getValueAsString(),
         };
 
-        if ($this->visitableModelDoesNotHaveAnyLinks($statefulContract)) {
+        if ($this->visitableModelHasAnyLinks($statefulContract)) {
             $stateLabel .= ' (link ontbreekt)';
         }
 
@@ -211,25 +211,25 @@ class PageStateConfig implements StateAdminConfig
     public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return match ($transitionKey) {
-            'publish' => $this->visitableModelDoesNotHaveAnyLinks($statefulContract)
-                ? 'Opgelet! Deze pagina heeft nog geen links. Voeg na het publiceren nog de nodige links toe om de pagina online te zetten.'
-                : ($this->visitableModelDoesNotHaveAnyOnlineLinks($statefulContract)
+            'publish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
+                ? 'Hiermee zal de pagina onmiddellijk online komen te staan.'
+                : ($this->visitableModelHasAnyLinks($statefulContract)
                     ? 'Opgelet! Deze pagina heeft geen online links. Na het publiceren dien je nog de links online te zetten.'
-                    : 'Hiermee zal de pagina onmiddellijk online komen te staan.'
+                    : 'Opgelet! Deze pagina heeft nog geen links. Voeg na het publiceren nog de nodige links toe om de pagina online te zetten.'
                 ),
-            'unpublish' => $this->visitableModelDoesNotHaveAnyLinks($statefulContract)
-                ? ''
-                : ($this->visitableModelDoesNotHaveAnyOnlineLinks($statefulContract)
-                    ? 'Opgelet! Deze pagina heeft geen online links. Na het publiceren dien je nog de links online te zetten.'
-                    : 'Alle links naar deze pagina zullen niet meer werken. Ze werken pas weer zodra de pagina opnieuw wordt gepubliceerd.'
+            'unpublish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
+                ? 'Alle links naar deze pagina zullen niet meer werken. Ze werken pas weer zodra de pagina opnieuw wordt gepubliceerd.'
+                : ($this->visitableModelHasAnyLinks($statefulContract)
+                    ? 'Deze pagina heeft geen online links. Het offline halen van deze pagina heeft geen direct effect voor de bezoeker.'
+                    : ''
                 ),
-            'archive' => $this->visitableModelDoesNotHaveAnyLinks($statefulContract)
-                ? 'Eenmaal gearchiveerd kan je de pagina nog herstellen vanuit het archief.'
-                : ($this->visitableModelDoesNotHaveAnyOnlineLinks($statefulContract)
+            'archive' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
+                ? 'Na het archiveren zullen alle links naar deze pagina niet meer werken. Zorg best voor een redirect naar een andere pagina zodat bezoekers altijd op een bestaande pagina terechtkomen.'
+                : ($this->visitableModelHasAnyLinks($statefulContract)
                     ? 'Eenmaal gearchiveerd kan je de pagina nog herstellen vanuit het archief.'
-                    : 'Na het archiveren zullen alle links naar deze pagina niet meer werken. Zorg best voor een redirect naar een andere pagina zodat bezoekers altijd op een bestaande pagina terechtkomen.'
+                    : 'Eenmaal gearchiveerd kan je de pagina nog herstellen vanuit het archief.'
                 ),
-            'delete' => 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt.',
+            'delete' => 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt. Links zullen worden verwijderd.',
             default => null,
         };
     }
@@ -300,7 +300,7 @@ class PageStateConfig implements StateAdminConfig
         return null;
     }
 
-    private function visitableModelDoesNotHaveAnyLinks(StatefulContract $statefulContract): bool
+    private function visitableModelHasAnyLinks(StatefulContract $statefulContract): bool
     {
         if (! $statefulContract instanceof Visitable) {
             return false;
@@ -309,10 +309,10 @@ class PageStateConfig implements StateAdminConfig
         return $statefulContract->urls->isEmpty();
     }
 
-    private function visitableModelDoesNotHaveAnyOnlineLinks(StatefulContract $statefulContract): bool
+    private function visitableModelHasAnyOnlineLinks(StatefulContract $statefulContract): bool
     {
         if (! $statefulContract instanceof Visitable) {
-            return false;
+            return true;
         }
 
         foreach ($statefulContract->urls as $url) {
