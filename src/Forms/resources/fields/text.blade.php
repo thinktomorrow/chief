@@ -7,7 +7,7 @@
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
     <x-chief::form.input.text
-        wire:model.live="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"

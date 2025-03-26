@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
-use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Sites\BelongsToSites;
 use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 trait LocalizedFieldDefaults
 {
     protected array $locales = [];
-
-    protected ?string $localizedFieldNameTemplate = null;
 
     public function locales(?array $locales = null): static
     {
@@ -52,63 +50,40 @@ trait LocalizedFieldDefaults
 
     public function getLocalizedKeys(): array
     {
-        return $this->getLocalizedFieldName()
+        return $this->getFieldName()
             ->dotted()
             ->matrix($this->getKey(), $this->getLocales());
     }
 
     public function getBracketedLocalizedNames(): array
     {
-        return $this->getLocalizedFieldName()
+        return $this->getFieldName()
             ->bracketed()
             ->matrix($this->getName(), $this->getLocales());
     }
 
     public function getDottedLocalizedNames(): array
     {
-        return $this->getLocalizedFieldName()
+        return $this->getFieldName()
             ->dotted()
             ->matrix($this->getName(), $this->getLocales());
     }
 
-    public function getLocalizedFieldName(): LocalizedFieldName
-    {
-        return LocalizedFieldName::make()
-            ->bracketed()
-            ->template(str_contains($this->name, ':locale') ? ':name' : $this->getLocalizedFieldNameTemplate());
-    }
-
-    public function getLocalizedFieldNameTemplate(): string
-    {
-        if (! $this->localizedFieldNameTemplate) {
-            return LocalizedFieldName::getDefaultTemplate();
-        }
-
-        return $this->localizedFieldNameTemplate;
-    }
-
-    public function setLocalizedFieldNameTemplate(string $localizedFieldNameTemplate): static
-    {
-        $this->localizedFieldNameTemplate = $localizedFieldNameTemplate;
-
-        return $this;
-    }
-
     /** @deprecated use getLocalizedFieldName() */
-    public function getLocalizedFormKey(): LocalizedFieldName
+    public function getLocalizedFormKey(): FieldName
     {
-        return $this->getLocalizedFieldName();
+        return $this->getFieldName();
     }
 
     /** @deprecated use getLocalizedFieldNameTemplate() */
     public function getLocalizedFormKeyTemplate(): string
     {
-        return $this->getLocalizedFieldNameTemplate();
+        return $this->getFieldNameTemplate();
     }
 
     /** @deprecated use setLocalizedFieldNameTemplate() */
     public function setLocalizedFormKeyTemplate(string $localizedFieldNameTemplate): static
     {
-        return $this->setLocalizedFieldNameTemplate($localizedFieldNameTemplate);
+        return $this->setFieldNameTemplate($localizedFieldNameTemplate);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
 use Thinktomorrow\Chief\Forms\Tags\HasTags;
@@ -69,6 +70,16 @@ interface Field extends HasTags, LocalizedField, Validatable
     public function default(null|string|int|array|Closure $default): static;
 
     public function getDefault(?string $locale = null): null|string|int|array;
+
+    public function getFieldName(): FieldName;
+
+    /**
+     * Define a specific format for the locale key.
+     * e.g. ':name.:locale' or 'trans.:locale.:name'
+     */
+    public function setFieldNameTemplate(string $fieldNameTemplate): static;
+
+    public function getFieldNameTemplate(): string;
 
     public function toggleField(string $fieldName, string|array $values): static;
 

@@ -41,7 +41,7 @@ Default localized key is now `:name.:locale` instead of `trans.:locale.:name`. F
 can set the default key back by adding the following to your AppServiceProvider file:
 
 ```php
-Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName::setDefaultTemplate('trans.:locale.:name');
+Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName::setDefaultTemplate('trans.:locale.:name');
 ```
 
 ### Redactor

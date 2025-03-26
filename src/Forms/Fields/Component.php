@@ -29,6 +29,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameDefaults;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
 use Thinktomorrow\Chief\Forms\Livewire\PacksComponentsForLivewire;
@@ -37,6 +38,7 @@ use Thinktomorrow\Chief\Managers\Manager;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
 {
+    use FieldNameDefaults;
     use HasAutofocus;
     use HasColumnName;
     use HasComponentRendering;
@@ -159,7 +161,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
                 ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),
                 ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
                 ...(isset($this->locales) ? ['locales' => $this->locales] : []),
-                ...(isset($this->localizedFieldNameTemplate) ? ['setLocalizedFormKeyTemplate' => $this->localizedFieldNameTemplate] : []),
+                ...(isset($this->fieldNameTemplate) ? ['setFieldNameTemplate' => $this->fieldNameTemplate] : []),
                 ...(isset($this->label) ? ['label' => $this->label] : []),
                 ...(isset($this->default) ? ['default' => $this->default] : []),
                 ...(isset($this->description) ? ['description' => $this->description] : []),

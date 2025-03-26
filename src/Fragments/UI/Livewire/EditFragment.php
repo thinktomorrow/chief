@@ -142,13 +142,6 @@ class EditFragment extends Component
         $this->dispatchUpdateEventAndClose();
     }
 
-    //    private function getFragmentIdsInOrder(): array
-    //    {
-    //        return $this->fragments
-    //            ->map(fn (FragmentDto $fragment) => $fragment->fragmentId)
-    //            ->all();
-    //    }
-
     public function save()
     {
         // Validation is done via the update command

@@ -35,9 +35,9 @@
 
                 </div>
             </div>
+
         </div>
     @endforeach
-
 
     <button type="button" wire:click="addSection" class="btn btn-grey w-full">
         <span class="inline-block w-full text-center">Voeg een extra blok toe</span>

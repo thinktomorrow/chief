@@ -51,7 +51,7 @@ class DayModel extends Model
             ]);
 
         yield Text::make('content')
-            ->setLocalizedFieldNameTemplate('content.:locale')
+            ->setFieldNameTemplate('content.:locale')
             ->tag('not-on-create')
             ->label('Eigen tekst')
             ->value($model->data['content'] ?? [])
@@ -88,7 +88,7 @@ class DayModel extends Model
     private static function defaultSlots($weekDay): array
     {
         return match ((string) $weekDay) {
-            '6','7' => [],
+            '6', '7' => [],
             default => [
                 ['from' => '08:30', 'until' => '12:00'],
                 ['from' => '13:00', 'until' => '17:00'],

@@ -24,7 +24,7 @@ class RenderSelectTest extends ChiefTestCase
     public function test_it_can_render_the_localized_field_view()
     {
         $component = Select::make('xxx')
-            ->setLocalizedFieldNameTemplate(':name.:locale')
+            ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'en']);
         $this->assertStringContainsString('name="xxx[nl]', $component->toHtml());
         $this->assertStringContainsString('name="xxx[en]', $component->toHtml());
