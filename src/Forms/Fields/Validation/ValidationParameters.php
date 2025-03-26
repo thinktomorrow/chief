@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
-use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 
 class ValidationParameters
@@ -77,7 +77,7 @@ class ValidationParameters
             ];
         }
 
-        $keys = $this->source->getLocalizedFieldName()
+        $keys = $this->source->getFieldName()
             ->dotted()
             ->matrix($this->source->getName(), $this->source->getLocales());
 
@@ -95,7 +95,7 @@ class ValidationParameters
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
-                LocalizedFieldName::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
+                FieldName::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
             );
     }
 

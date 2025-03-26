@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
-use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
-
 interface LocalizedField
 {
     public function locales(?array $locales = null): static;
@@ -28,16 +26,6 @@ interface LocalizedField
      * Indicates whether this field is localized or not.
      */
     public function hasLocales(): bool;
-
-    /**
-     * Define a specific format for the locale key.
-     * e.g. ':name.:locale' or 'trans.:locale.:name'
-     */
-    public function setLocalizedFieldNameTemplate(string $localizedFieldNameTemplate): static;
-
-    //    public function getLocalizedFormKeyTemplate(): string;
-
-    public function getLocalizedFieldName(): LocalizedFieldName;
 
     /**
      * Get all the localized keys for this field in bracketed format

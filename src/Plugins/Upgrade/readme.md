@@ -41,7 +41,7 @@ Default localized key is now `:name.:locale` instead of `trans.:locale.:name`. F
 can set the default key back by adding the following to your AppServiceProvider file:
 
 ```php
-Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName::setDefaultTemplate('trans.:locale.:name');
+Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName::setDefaultTemplate('trans.:locale.:name');
 ```
 
 ### Redactor
@@ -59,4 +59,15 @@ document.addEventListener('fragment-dialog-opened', (event) => {
         loadRedactorInstances(dialogEl);
     }, 0);
 });
+
+// Add following snippet to the redactor options in your project editor file (resources/views/vendor/chief/editors/redactor/editor.blade.php) to allow sync between redactor content and livewire wire:model.
+customOptions['callbacks'] = {
+    changed: function(e) {
+        let content = this.source.getCode();
+        el.value = content;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+    },
+};
+
+window.Redactor(el, customOptions);
 ```

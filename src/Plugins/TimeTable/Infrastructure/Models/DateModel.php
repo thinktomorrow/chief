@@ -67,7 +67,7 @@ class DateModel extends Model
             ]);
 
         yield Text::make('content')
-            ->setLocalizedFieldNameTemplate('content.:locale')
+            ->setFieldNameTemplate('content.:locale')
             ->tag('not-on-create')
             ->label('Eigen tekst')
             ->value($model->data['content'] ?? [])

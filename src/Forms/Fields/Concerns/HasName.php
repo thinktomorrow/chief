@@ -17,10 +17,12 @@ trait HasName
 
     public function getName(?string $locale = null): string
     {
-        if ($locale) {
-            return $this->getLocalizedFormKey()->get($this->name, $locale);
-        }
+        return $this->getFieldName()->get($this->name, $locale);
 
-        return $this->name;
+        //        if ($locale) {
+        //            return $this->getFieldName()->get($this->name, $locale);
+        //        }
+        //
+        //        return $this->name;
     }
 }

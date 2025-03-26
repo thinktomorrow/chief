@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Repeat\Repeat;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 

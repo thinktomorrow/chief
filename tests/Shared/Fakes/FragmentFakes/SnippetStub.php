@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
 use Thinktomorrow\Chief\Forms\Fields\File;
-use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Repeat\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;

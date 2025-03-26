@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Repeat\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;

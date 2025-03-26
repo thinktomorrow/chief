@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Fields;
+namespace Thinktomorrow\Chief\Forms\Fields\Repeat;
 
 use DeepCopy\DeepCopy;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Component;
+use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\FieldName;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -22,17 +25,14 @@ class Repeat extends Component implements Field, HasComponents, HasTaggedCompone
 
     protected string $view = 'chief-form::fields.repeat.repeat';
 
-    protected string $sectionView = 'chief-form::fields.repeat.repeat-section';
-
     protected string $windowView = 'chief-form::fields.repeat.repeat-window';
 
+    /**
+     * Provide the repeated components so that they are easily presented in
+     * the admin windows based on their field type of rendering.
+     */
     public function getRepeatedComponents(?string $locale = null): array
     {
-        // Loop over fields and populate them with the value...
-
-        // Group every component stack into a repeat-section
-        // Multiply it with the values - keep in mind the startWithAmount value
-        // Populate the fields of each group with the values given.
         $components = [];
 
         foreach ($this->getActiveValue($locale) ?? [[]] as $index => $values) {
@@ -42,7 +42,7 @@ class Repeat extends Component implements Field, HasComponents, HasTaggedCompone
         return $components;
     }
 
-    public function getRepeatSection(int $index, array $values = [], ?string $locale = null, ?string $prefix = null): array
+    private function getRepeatSection(int $index, array $values = [], ?string $locale = null, ?string $prefix = null): array
     {
         $clonedComponents = (new DeepCopy)
             ->skipUncloneable()
@@ -51,7 +51,7 @@ class Repeat extends Component implements Field, HasComponents, HasTaggedCompone
         // Populate fields with the correct name and the given values
         Fields::make($clonedComponents, fn ($field) => ! $field instanceof self)
             ->each(function (Field $field) use ($index, $locale, $values, $prefix) {
-                $fieldName = FieldName\LocalizedFieldName::make()
+                $fieldName = FieldName\FieldName::make()
                     ->template(':prefix.'.$index.'.:name.:locale')
                     ->replace('prefix', $prefix ?: $this->getName())
                     ->bracketed()
@@ -71,15 +71,15 @@ class Repeat extends Component implements Field, HasComponents, HasTaggedCompone
         $this->endpoint($manager->route('repeat-section', [$this->getKey(), $model->id]));
     }
 
-    public function sectionView(string $view): static
-    {
-        $this->sectionView = $view;
-
-        return $this;
-    }
-
-    public function getSectionView(): string
-    {
-        return $this->sectionView;
-    }
+    //    public function sectionView(string $view): static
+    //    {
+    //        $this->sectionView = $view;
+    //
+    //        return $this;
+    //    }
+    //
+    //    public function getSectionView(): string
+    //    {
+    //        return $this->sectionView;
+    //    }
 }

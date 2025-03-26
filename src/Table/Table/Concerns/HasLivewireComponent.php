@@ -9,7 +9,7 @@ trait HasLivewireComponent
     // Default Livewire table component
     private string $livewireComponentClass = TableComponent::class;
 
-    public function usesLivewireTable(string $livewireComponentClass): static
+    public function usesLivewireComponent(string $livewireComponentClass): static
     {
         $this->livewireComponentClass = $livewireComponentClass;
 

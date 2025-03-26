@@ -2,7 +2,7 @@
 
 namespace Fields\Locales;
 
-use Thinktomorrow\Chief\Forms\Fields\FieldName\LocalizedFieldName;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -21,18 +21,18 @@ class LocalizedNameTest extends TestCase
             ['id' => 'fr', 'locale' => 'fr', 'fallbackLocale' => 'fr-be'],
         ]);
 
-        $this->localizedField = Text::make('title')->setLocalizedFieldNameTemplate(':name.:locale');
+        $this->localizedField = Text::make('title')->setFieldNameTemplate(':name.:locale');
     }
 
     public function test_it_can_set_and_retrieve_localized_form_key_template(): void
     {
         $template = 'field.:locale';
 
-        $this->localizedField->setLocalizedFieldNameTemplate($template);
+        $this->localizedField->setFieldNameTemplate($template);
 
-        $localizedFormKey = $this->localizedField->getLocalizedFieldName();
+        $localizedFormKey = $this->localizedField->getFieldName();
 
-        $this->assertInstanceOf(LocalizedFieldName::class, $localizedFormKey);
+        $this->assertInstanceOf(FieldName::class, $localizedFormKey);
         $this->assertSame($template, $localizedFormKey->getTemplate());
     }
 
@@ -130,7 +130,7 @@ class LocalizedNameTest extends TestCase
     public function test_it_can_get_all_localized_keys_by_custom_template()
     {
         $field = Text::make('title')
-            ->setLocalizedFieldNameTemplate(':name.:locale')
+            ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([
@@ -154,7 +154,7 @@ class LocalizedNameTest extends TestCase
     {
         $field = Text::make('title')
             ->name('foobar')
-            ->setLocalizedFieldNameTemplate(':name.:locale')
+            ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([

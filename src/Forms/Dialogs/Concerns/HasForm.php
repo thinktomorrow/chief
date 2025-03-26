@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\Dialogs\Concerns;
 
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Modelable;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
@@ -11,6 +12,7 @@ use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 
 trait HasForm
 {
+    #[Modelable]
     public array $form = [];
 
     public function addFormData(array $data): void
