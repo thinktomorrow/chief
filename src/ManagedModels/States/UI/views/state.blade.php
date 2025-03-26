@@ -1,10 +1,6 @@
 <div>
     @if ($this->isAllowedToEdit())
-        <x-chief::button
-            wire:click="edit"
-            variant="outline-blue"
-            x-on:click="$dispatch('open-dialog', { id: 'edit-state' })"
-        >
+        <x-chief::button wire:click="edit" variant="outline-blue">
             <span>{{ strip_tags($this->getStateLabel()) }}</span>
             <x-chief::icon.chevron-down />
         </x-chief::button>

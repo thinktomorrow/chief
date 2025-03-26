@@ -42,7 +42,7 @@ class EditState extends Component
 
     public function open($values = [])
     {
-        // $this->isOpen = true;
+        $this->isOpen = true;
     }
 
     public function close()

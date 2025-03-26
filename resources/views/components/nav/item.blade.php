@@ -32,13 +32,13 @@
                     <a
                         href="{{ $url }}"
                         title="{!! $label !!}"
-                        class="inline-block w-full py-1.5 text-sm/6 text-grey-800 group-hover:text-grey-950 lg:w-36"
+                        class="inline-block w-full py-1.5 text-sm/6 text-grey-700 group-hover:text-grey-950 lg:w-36"
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
                     </a>
                 @else
-                    <span class="inline-block w-full py-1.5 text-sm/6 text-grey-800 group-hover:text-grey-950 lg:w-36">
+                    <span class="inline-block w-full py-1.5 text-sm/6 text-grey-700 group-hover:text-grey-950 lg:w-36">
                         {!! $label !!}
                     </span>
                 @endisset
@@ -47,8 +47,8 @@
             @if (! $slot->isEmpty())
                 <div class="mt-2.5 shrink-0">
                     <div x-on:click="isOpen = !isOpen" class="flex items-center justify-center">
-                        <x-chief::icon.chevron-left class="size-4 text-grey-800" x-show="!isOpen" />
-                        <x-chief::icon.chevron-down class="size-4 text-grey-800" x-show="isOpen" />
+                        <x-chief::icon.chevron-left class="size-4 text-grey-700" x-show="!isOpen" />
+                        <x-chief::icon.chevron-down class="size-4 text-grey-700" x-show="isOpen" />
                     </div>
                 </div>
             @endif

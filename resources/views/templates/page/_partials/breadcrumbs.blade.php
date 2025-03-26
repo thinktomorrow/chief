@@ -17,7 +17,7 @@
                     class="group inline-flex items-start gap-1.5 text-sm/6"
                 >
                     @if (isset($breadcrumb['icon']))
-                        <span aria-hidden="true" class="my-0.5 text-grey-500 *:size-5 group-hover:text-primary-500">
+                        <span aria-hidden="true" class="my-0.5 text-grey-400 *:size-5 group-hover:text-primary-500">
                             @if ($breadcrumb['icon'] === strip_tags($breadcrumb['icon']))
                                 <x-dynamic-component :component="'chief::icon.' . $breadcrumb['icon']" />
                             @else
@@ -26,7 +26,7 @@
                         </span>
                     @endif
 
-                    <span class="text-grey-500 group-hover:text-grey-950">
+                    <span class="text-grey-700 group-hover:text-grey-950">
                         {{ teaser(ucfirst($breadcrumb['label']), 64, '...') }}
                     </span>
                 </a>
@@ -37,7 +37,7 @@
                     class="group inline-flex items-start gap-1.5 text-sm/6"
                 >
                     @if ($breadcrumb->icon)
-                        <span aria-hidden="true" class="my-0.5 text-grey-500 *:size-5 group-hover:text-primary-500">
+                        <span aria-hidden="true" class="my-0.5 text-grey-400 *:size-5 group-hover:text-primary-500">
                             @if ($breadcrumb->icon === strip_tags($breadcrumb->icon))
                                 <x-dynamic-component :component="'chief::icon.' . $breadcrumb->icon" />
                             @else
@@ -46,14 +46,14 @@
                         </span>
                     @endif
 
-                    <span class="text-grey-500 group-hover:text-grey-950">
+                    <span class="text-grey-700 group-hover:text-grey-950">
                         {{ teaser(ucfirst($breadcrumb->label), 64, '...') }}
                     </span>
                 </a>
             @endif
 
             @if (! $loop->last)
-                <x-chief::icon.chevron-right aria-hidden="true" class="my-1 size-4 text-grey-500" />
+                <x-chief::icon.chevron-right aria-hidden="true" class="my-1 size-4 text-grey-400" />
             @endif
         @endforeach
     </div>

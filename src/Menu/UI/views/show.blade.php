@@ -1,4 +1,4 @@
-<x-chief::page.template :title="$typeLabel" container="md">
+<x-chief::page.template :title="$typeLabel">
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
@@ -14,6 +14,4 @@
     <x-slot name="sidebar">
         <livewire:chief-wire::menu-sites :type="$type" />
     </x-slot>
-
 </x-chief::page.template>
-

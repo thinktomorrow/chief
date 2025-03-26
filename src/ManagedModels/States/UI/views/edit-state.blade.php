@@ -1,4 +1,4 @@
-<x-chief::dialog.dropdown wired id="edit-state">
+<x-chief::dialog.drawer wired>
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}
@@ -54,4 +54,4 @@
             @endif
         </div>
     @endif
-</x-chief::dialog.dropdown>
+</x-chief::dialog.drawer>
