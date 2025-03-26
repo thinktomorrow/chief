@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -102,37 +103,35 @@ class PageStateConfig implements StateAdminConfig
 
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
-        if ($statefulContract instanceof Visitable) {
-            if ($statefulContract->inOnlineState()) {
-                if ($statefulContract->urls->isNotEmpty()) {
-                    return '<span class="label label-xs label-success">Gepubliceerd</span>';
-                } else {
-                    return '<span class="label label-xs label-warning">Gepubliceerd - Link ontbreekt</span>';
-                }
-            }
+        $stateLabel = match ($statefulContract->getState($this->getStateKey())) {
+            PageState::published => 'Gepubliceerd',
+            PageState::draft => 'Draft',
+            PageState::archived => 'Gearchiveerd',
+            PageState::deleted => 'Verwijderd',
+            default => $statefulContract->getState($this->getStateKey())->getValueAsString(),
+        };
 
-            switch ($statefulContract->getState($this->getStateKey())) {
-                case PageState::draft:
-                    return '<span class="label label-xs label-error">Draft</span>';
-            }
+        if ($this->visitableModelDoesNotHaveOnlineLinks($statefulContract)) {
+            $stateLabel .= ' (link ontbreekt)';
         }
 
-        switch ($statefulContract->getState($this->getStateKey())) {
-            case PageState::published:
-                return '<span class="label label-xs label-success">Gepubliceerd</span>';
+        return $stateLabel;
+    }
 
-            case PageState::draft:
-                return '<span class="label label-xs label-error">Draft</span>';
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        return $this->getVariantForState($statefulContract->getState($this->getStateKey()));
+    }
 
-            case PageState::archived:
-                return '<span class="label label-xs label-grey">Gearchiveerd</span>';
-
-            case PageState::deleted:
-                return '<span class="label label-xs label-grey">Verwijderd</span>';
-
-            default:
-                return $statefulContract->getState($this->getStateKey())->getValueAsString();
-        }
+    private function getVariantForState(State $state): string
+    {
+        return match ($state) {
+            PageState::published => 'outline-green',
+            PageState::draft => 'outline-blue',
+            PageState::archived => 'outline-orange',
+            PageState::deleted => 'outline-red',
+            default => 'outline-blue',
+        };
     }
 
     public function getEditContent(StatefulContract $statefulContract): ?string
@@ -175,19 +174,14 @@ class PageStateConfig implements StateAdminConfig
 
     public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        switch ($transitionKey) {
-            case 'publish':
-                return 'green';
-
-            case 'archive':
-                return 'orange';
-
-            case 'delete':
-                return 'red';
-
-            default:
-                return 'grey';
-        }
+        return match ($transitionKey) {
+            'publish' => 'outline-blue',
+            'unpublish' => 'outline-blue',
+            'archive' => 'outline-orange',
+            'unarchive' => 'outline-orange',
+            'delete' => 'outline-red',
+            default => 'outline-blue',
+        };
     }
 
     public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string
@@ -300,5 +294,14 @@ class PageStateConfig implements StateAdminConfig
         }
 
         return null;
+    }
+
+    private function visitableModelDoesNotHaveOnlineLinks(StatefulContract $statefulContract): bool
+    {
+        if (! $statefulContract instanceof Visitable) {
+            return false;
+        }
+
+        return $statefulContract->urls->isEmpty();
     }
 }

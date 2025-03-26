@@ -16,6 +16,11 @@ trait StateAdminConfigDefaults
         return $statefulContract->getState($this->getStateKey())->getValueAsString();
     }
 
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        return 'outline-blue';
+    }
+
     public function getEditTitle(StatefulContract $statefulContract): string
     {
         return 'Status';

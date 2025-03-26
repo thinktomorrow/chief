@@ -10,11 +10,10 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
-class SimpleStateConfig implements StateAdminConfig, StateConfig
+class SimpleStateConfig implements StateAdminConfig
 {
     use StateAdminConfigDefaults;
 
@@ -77,13 +76,13 @@ class SimpleStateConfig implements StateAdminConfig, StateConfig
     {
         switch ($statefulContract->getState($this->getStateKey())) {
             case SimpleState::online:
-                return '<span class="label label-xs label-success">Online</span>';
+                return 'Online';
 
             case SimpleState::offline:
-                return '<span class="label label-xs label-error">Offline</span>';
+                return 'Offline';
 
             case SimpleState::deleted:
-                return '<span class="label label-xs label-grey">Verwijderd</span>';
+                return 'Verwijderd';
 
             default:
                 return $statefulContract->getState($this->getStateKey())?->getValueAsString();

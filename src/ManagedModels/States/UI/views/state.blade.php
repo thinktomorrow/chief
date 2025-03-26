@@ -1,7 +1,7 @@
 <div>
     @if ($this->isAllowedToEdit())
-        <x-chief::button wire:click="edit" variant="outline-blue">
-            <span>{{ strip_tags($this->getStateLabel()) }}</span>
+        <x-chief::button wire:click="edit" variant="{{ $this->getStateVariant() }}">
+            <span>{{ $this->getStateLabel() }}</span>
             <x-chief::icon.chevron-down />
         </x-chief::button>
     @endif

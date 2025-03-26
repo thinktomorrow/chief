@@ -43,9 +43,9 @@ class State extends Component
         return $this->getStateConfig()->getStateLabel($this->getModel());
     }
 
-    public function getStateLabelString(): string
+    public function getStateVariant(): string
     {
-        return $this->getStateConfig()->getStateLabelString($this->getModel());
+        return $this->getStateConfig()->getStateVariant($this->getModel());
     }
 
     public function isAllowedToEdit(): bool
