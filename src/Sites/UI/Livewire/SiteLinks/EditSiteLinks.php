@@ -53,6 +53,11 @@ class EditSiteLinks extends Component
          */
         $this->initialFormValues();
 
+        // Immediately show the add sites dialog if no sites are present
+        if (count($this->sites) < 1) {
+            $this->addSites();
+        }
+
         $this->isOpen = true;
     }
 
