@@ -127,11 +127,11 @@ class PageStateConfig implements StateAdminConfig
     private function getVariantForState(State $state): string
     {
         return match ($state) {
-            PageState::published => 'outline-green',
-            PageState::draft => 'outline-blue',
+            PageState::published => 'outline-blue',
+            PageState::draft => 'outline-white',
             PageState::archived => 'outline-orange',
             PageState::deleted => 'outline-red',
-            default => 'outline-blue',
+            default => 'outline-white',
         };
     }
 
