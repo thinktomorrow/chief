@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\CreateContext;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetFragments;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
@@ -68,9 +70,11 @@ class FragmentTestHelpers
         return static::createContext($owner, $locales);
     }
 
-    public static function createContext(ContextOwner $owner, array $locales = []): ContextModel
+    public static function createContext(ContextOwner $owner, array $locales = [], ?string $title = null): ContextModel
     {
-        return app(ContextRepository::class)->create($owner, $locales);
+        $contextId = app(ContextApplication::class)->create(new CreateContext($owner->modelReference(), $locales, $title));
+
+        return app(ContextRepository::class)->find($contextId);
     }
 
     public static function createFragment(string $fragmentClass, array $data = [], bool $register = true): Fragment

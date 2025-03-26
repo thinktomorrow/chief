@@ -2,6 +2,7 @@
 
 namespace Tests\App\Actions;
 
+use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
@@ -18,6 +19,8 @@ class DeleteContextTest extends ChiefTestCase
 
     private $fragment;
 
+    private ContextApplication $contextApplication;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -26,13 +29,15 @@ class DeleteContextTest extends ChiefTestCase
         $this->owner = $this->setupAndCreateArticle();
         $this->context = FragmentTestHelpers::findOrCreateContext($this->owner);
         $this->fragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id);
+
+        $this->contextApplication = app(ContextApplication::class);
     }
 
     public function test_context_can_be_deleted()
     {
         $this->assertEquals(1, ContextModel::count());
 
-        app(DeleteContext::class)->handle($this->context->id);
+        $this->contextApplication->delete(new DeleteContext($this->context->id));
 
         $this->assertEquals(0, ContextModel::count());
     }
@@ -41,7 +46,7 @@ class DeleteContextTest extends ChiefTestCase
     {
         $this->assertEquals(1, FragmentModel::count());
 
-        app(DeleteContext::class)->handle($this->context->id);
+        $this->contextApplication->delete(new DeleteContext($this->context->id));
 
         $this->assertEquals(0, FragmentModel::count());
     }
@@ -54,7 +59,7 @@ class DeleteContextTest extends ChiefTestCase
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(1, FragmentModel::count());
 
-        app(DeleteContext::class)->handle($this->context->id);
+        $this->contextApplication->delete(new DeleteContext($this->context->id));
 
         $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(1, FragmentModel::count());
