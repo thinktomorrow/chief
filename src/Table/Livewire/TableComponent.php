@@ -46,6 +46,8 @@ class TableComponent extends Component
 
     public ?int $resultTotal = null;
 
+    public string $variant = 'card';
+
     public function mount(Table $table)
     {
         $this->table = $table;

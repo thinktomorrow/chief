@@ -2,44 +2,41 @@
     $menus = $this->getMenus();
 @endphp
 
-<div class="space-y-4">
-    <div class="flex items-start justify-between gap-2">
-        <nav aria-label="Tabs" role="tablist" class="flex items-start justify-start">
+<x-chief::window>
+    <x-slot name="tabs">
+        <x-chief::window.tabs>
             @foreach ($menus as $menu)
-                <button
-                    type="button"
-                    role="tab"
-                    wire:click.prevent="showMenu('{{ $menu->id }}')"
+                <x-chief::window.tabs.item
                     aria-controls="{{ $menu->id }}"
                     aria-selected="{{ $menu->id === $activeMenuId }}"
                     wire:key="menu-tabs-{{ $menu->id }}"
-                    @class([
-                        'bui-btn bui-btn-sm py-[0.3125rem] font-normal ring-0 transition-all duration-150 ease-out *:h-[1.125rem]',
-                        'bui-btn-grey text-grey-950' => $menu->id === $activeMenuId,
-                        'bui-btn-outline-white text-grey-700' => $menu->id !== $activeMenuId,
-                    ])
+                    wire:click.prevent="showMenu('{{ $menu->id }}')"
+                    :active="$menu->id === $activeMenuId"
                 >
                     {{ $menu->title }}
-                </button>
+                    {{-- <x-chief::badge>{{ Arr::join($menu->locales, ', ', ' en ') }}</x-chief::badge> --}}
+                </x-chief::window.tabs.item>
             @endforeach
-        </nav>
 
-        @if (count($menus) < 2)
-            <x-chief::link wire:click="editMenus" variant="grey" size="xs">
-                Een menu specifiek voor een bepaalde site?
-            </x-chief::link>
-        @else
-            <x-chief::button wire:click="editMenus" variant="grey" size="xs">Menu's aanpassen</x-chief::button>
-        @endif
-    </div>
+            <x-slot name="actions">
+                <x-chief::button wire:click="editMenus" variant="grey" size="sm">
+                    <x-chief::icon.settings />
+                </x-chief::button>
+            </x-slot>
+        </x-chief::window.tabs>
+    </x-slot>
 
     @foreach ($menus as $menu)
         <div wire:key="menu-tab-content-{{ $menu->id }}">
             @if ($menu->id === $activeMenuId)
-                <livewire:chief-wire::table :key="'table-'.$menu->id" :table="$this->getMenuTable($menu->id)" />
+                <livewire:chief-wire::table
+                    :key="'table-'.$menu->id"
+                    :table="$this->getMenuTable($menu->id)"
+                    variant="transparent"
+                />
             @endif
         </div>
     @endforeach
 
     <livewire:chief-wire::edit-menus :type="$type" />
-</div>
+</x-chief::window>

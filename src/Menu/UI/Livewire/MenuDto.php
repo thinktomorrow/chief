@@ -26,7 +26,8 @@ class MenuDto implements Wireable
             id: $menu->id,
             type: $menu->type,
             title: $menu->title,
-            locales: $menu->sites,
+            // TODO(ben): fix
+            locales: (array) $menu->sites,
             activeSites: $menu->getActiveSiteLocales(),
         );
     }
