@@ -1,11 +1,15 @@
 <x-chief::dialog.drawer wired size="sm" title="Bewerk menus" :edge-to-edge="true">
     @if ($isOpen)
-        @include('chief-menu::livewire.edit-menus-items')
+        <x-slot name="header">
+            <x-chief::dialog.drawer.header>
+                <x-chief::button wire:click="addMenu" variant="grey">
+                    <x-chief::icon.plus-sign />
+                    <span>Voeg een menu toe</span>
+                </x-chief::button>
+            </x-chief::dialog.drawer.header>
+        </x-slot>
 
-        <x-chief::button wire:click="addMenu" variant="grey">
-            <x-chief::icon.plus-sign />
-            <span>Voeg een menu toe</span>
-        </x-chief::button>
+        @include('chief-menu::livewire.edit-menus-items')
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>

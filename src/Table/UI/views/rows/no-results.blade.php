@@ -1,6 +1,6 @@
 <tr>
     <td colspan="9999">
-        <div class="flex items-center justify-center py-16">
+        <div class="flex items-center justify-center py-4">
             <div class="mx-auto max-w-2xl space-y-4 text-center">
                 <x-chief::icon.search-list class="inline size-10 text-grey-500" />
 
