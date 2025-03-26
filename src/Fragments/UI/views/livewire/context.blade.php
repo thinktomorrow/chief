@@ -2,7 +2,7 @@
     <div
         wire:ignore.self
         x-sortable
-        x-sortable-group="{{ 'group-' . $context->contextId }}"
+        x-sortable-group="{{ 'group-' . $context->id }}"
         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
         class="[&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
     >
@@ -25,14 +25,14 @@
     </div>
 
     <livewire:chief-fragments::edit-fragment
-        :key="$context->contextId . '-edit-fragment'"
+        :key="$context->id . '-edit-fragment'"
         :context="$context"
         :parent-component-id="$this->getId()"
     />
 
     <livewire:chief-fragments::add-fragment
-        :key="$context->contextId . '-add-fragment'"
-        :context-id="$context->contextId"
+        :key="$context->id . '-add-fragment'"
+        :context-id="$context->id"
         :parent-component-id="$this->getId()"
     />
 </x-chief::window>
