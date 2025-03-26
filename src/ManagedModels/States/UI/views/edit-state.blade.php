@@ -40,15 +40,37 @@
                     {{ $transitionInConfirm->label }}
                 </x-chief::button>
             @else
-                <div class="space-y-4">
+                <div class="space-y-3">
                     @foreach ($this->getTransitions() as $transition)
-                        <x-chief::button
-                            x-data
-                            x-on:click="$wire.transition('{{ $transition->key }}')"
-                            variant="{{ $transition->variant}}"
+                        <x-chief::callout
+                            :variant="match($transition->key) {
+                                'publish' => 'grey',
+                                'archive' => 'orange',
+                                'delete' => 'red',
+                                default => 'grey',
+                            }"
                         >
-                            {{ $transition->label }}
-                        </x-chief::button>
+                            <div class="space-y-2">
+                                @if ($transition->content)
+                                    <p>
+                                        {!! $transition->content !!}
+                                    </p>
+                                @endif
+
+                                <x-chief::button
+                                    x-data
+                                    x-on:click="$wire.transition('{{ $transition->key }}')"
+                                    :variant="match($transition->key) {
+                                        'publish' => 'outline-blue',
+                                        'archive' => 'outline-orange',
+                                        'delete' => 'outline-red',
+                                        default => 'outline-white',
+                                    }"
+                                >
+                                    {{ $transition->label }}
+                                </x-chief::button>
+                            </div>
+                        </x-chief::callout>
                     @endforeach
                 </div>
             @endif

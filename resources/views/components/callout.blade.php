@@ -21,6 +21,7 @@
                 'orange' => 'callout-orange',
                 'green' => 'callout-green',
                 'grey' => 'callout-grey',
+                'outline-white' => 'callout-outline-white',
                 default => 'callout-blue',
             },
         ])

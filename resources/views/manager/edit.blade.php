@@ -19,12 +19,6 @@
                     <livewire:chief-wire::site-tabs :model="$model" />
                 @endif
 
-                @if ($model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page'))
-                    @foreach ($model->getStateKeys() as $stateKey)
-                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
-                    @endforeach
-                @endif
-
                 @include('chief::manager._partials.edit-actions')
             </x-slot>
         </x-chief::page.header>
