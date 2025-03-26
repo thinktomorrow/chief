@@ -43,6 +43,7 @@
                 <div class="space-y-3">
                     @foreach ($this->getTransitions() as $transition)
                         <x-chief::callout
+                            :title="$transition->title"
                             :variant="match($transition->key) {
                                 'publish' => 'grey',
                                 'archive' => 'orange',
