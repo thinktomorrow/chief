@@ -6,23 +6,6 @@
 @endphp
 
 @if ($fragment->isShared)
-    <div class="body mb-4 flex items-start gap-1.5 rounded-xl bg-primary-50 p-2.5 text-sm text-primary-500">
-        <svg class="size-5 shrink-0"><use xlink:href="#icon-information-circle"></use></svg>
-
-        <p>
-            Dit fragment is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit fragment, worden
-            deze op alle gekoppelde plaatsen doorgevoerd.
-
-            <button
-                type="button"
-                class="underline"
-                x-on:click="$dispatch('open-dialog', { 'id': 'shared-fragment-modal-{{ $this->getId() }}' })"
-            >
-                Bekijk koppelingen
-            </button>
-        </p>
-    </div>
-
     <template x-teleport="body">
         <x-chief::dialog.modal
             size="sm"
@@ -71,4 +54,23 @@
             </x-slot>
         </x-chief::dialog.modal>
     </template>
+
+    <x-chief::callout data-slot="form-group" variant="blue" title="Gedeeld fragment">
+        <x-slot name="icon">
+            <x-chief::icon.information-diamond />
+        </x-slot>
+
+        <p>
+            Dit fragment is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit fragment, worden
+            deze op alle gekoppelde plaatsen doorgevoerd.
+
+            <button
+                type="button"
+                class="underline"
+                x-on:click="$dispatch('open-dialog', { 'id': 'shared-fragment-modal-{{ $this->getId() }}' })"
+            >
+                Bekijk koppelingen
+            </button>
+        </p>
+    </x-chief::callout>
 @endif

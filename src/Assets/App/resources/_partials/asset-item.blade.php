@@ -44,25 +44,37 @@
             <div
                 class="pointer-events-none absolute inset-0 hidden flex-wrap items-center justify-center gap-1.5 bg-black/25 p-1 group-hover:flex"
             >
-                <x-chief::button aria-label="Bewerk bestand" wire:click="openAssetEdit('{{ $asset->id }}')">
+                <x-chief::button
+                    variant="grey"
+                    aria-label="Bewerk bestand"
+                    wire:click="openAssetEdit('{{ $asset->id }}')"
+                    class="pointer-events-auto"
+                >
                     <x-chief::icon.quill-write />
                 </x-chief::button>
 
-                <x-chief::button aria-label="Verwijder bestand" wire:click="deleteAsset('{{ $asset->id }}')">
+                <x-chief::button
+                    variant="grey"
+                    aria-label="Verwijder bestand"
+                    wire:click="deleteAsset('{{ $asset->id }}')"
+                    class="pointer-events-auto"
+                >
                     <x-chief::icon.delete />
                 </x-chief::button>
 
                 @if ($asset instanceof ExternalAssetContract)
                     <x-chief::button
+                        variant="grey"
                         href="{{ $asset->getUrl() }}"
                         title="Bekijk op platform"
                         target="_blank"
                         rel="noopener"
+                        class="pointer-events-auto"
                     >
                         <x-chief::icon.link-square />
                     </x-chief::button>
                 @else
-                    <x-chief::button href="{{ $asset->getUrl() }}" title="Download" download>
+                    <x-chief::button variant="grey" href="{{ $asset->getUrl() }}" title="Download" download>
                         <x-chief::icon.download />
                     </x-chief::button>
                 @endif

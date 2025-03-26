@@ -25,7 +25,7 @@
                 <a
                     href="{{ route('chief.back.dashboard') }}"
                     title="Ga naar Dashboard"
-                    class="block w-full py-2 text-sm leading-6 text-grey-800 hover:text-grey-950"
+                    class="block w-full py-2 text-sm leading-6 text-grey-700 hover:text-grey-950"
                 >
                     {{ config('app.client', 'Chief') }}
                 </a>
