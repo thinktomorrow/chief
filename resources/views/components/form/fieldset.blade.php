@@ -4,7 +4,7 @@
 
 @if ($slot->isNotEmpty())
     <fieldset
-        data-slot="fieldset"
+        data-slot="form-group"
         {{
             $attributes->class([
                 '[&>[data-slot=control]+[data-slot=error]]:mt-2.5',

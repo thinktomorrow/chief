@@ -20,7 +20,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">
             @csrf
 

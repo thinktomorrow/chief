@@ -42,14 +42,6 @@ class ViewServiceProvider extends ServiceProvider
         Blade::directive('endAdminCan', function () {
             return '<?php } ?>';
         });
-
-        // TODO(ben): better solution for this ugly mess
-        // Hello Tijs. We meet again
-        $isCollapsedOnPageLoad =
-            isset($_COOKIE['is-navigation-collapsed'])
-            ? filter_var($_COOKIE['is-navigation-collapsed'], FILTER_VALIDATE_BOOLEAN)
-            : false;
-        view()->share('isCollapsedOnPageLoad', $isCollapsedOnPageLoad);
     }
 
     public function register() {}

@@ -37,7 +37,7 @@ class FragmentDto implements Wireable
 
         return new static(
             $fragment->getFragmentId(),
-            $context->contextId,
+            $context->id,
             $fragment->pivot->parent_id,
             $fragment->pivot->order,
             $fragment->getLabel(),

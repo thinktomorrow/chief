@@ -12,7 +12,12 @@
 
     <div class="ml-auto flex items-center justify-end gap-2">
         @foreach ($this->getSecondaryActions() as $action)
-            <x-chief-table::action.button :action="$action" size="base" variant="grey" />
+            <x-chief-table::action.button
+                :action="$action"
+                wire:click="applyAction('{{ $action->getKey() }}')"
+                size="base"
+                variant="grey"
+            />
         @endforeach
 
         @if (count($this->getTertiaryActions()) > 0)

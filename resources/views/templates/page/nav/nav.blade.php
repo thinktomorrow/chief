@@ -1,11 +1,7 @@
 {{-- Mobile navigation toggle --}}
 <div class="container max-w-full lg:hidden">
     <div class="-ml-2 flex items-center justify-start pt-6 lg:hidden">
-        <div
-            data-mobile-navigation-toggle
-            data-expand-navigation
-            class="shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-200"
-        >
+        <div data-mobile-navigation-toggle class="shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-200">
             <x-chief::icon.menu class="size-6 text-grey-700" />
         </div>
 
@@ -18,19 +14,18 @@
     data-mobile-navigation
     class="fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:block lg:animate-none"
 >
-    <div data-collapsible-navigation class="flex select-none flex-col justify-between gap-y-9 py-6 pl-6">
+    <div class="flex select-none flex-col justify-between gap-y-9 py-6 pl-6">
         <div class="space-y-9">
             {{-- Desktop Chief title --}}
             <div class="hidden items-center justify-start lg:flex">
-                <div data-toggle-navigation class="group shrink-0 cursor-pointer rounded-lg p-2">
-                    <x-chief::icon.sidebar-left class="size-6 text-grey-400 group-hover:text-primary-500" />
+                <div class="shrink-0 p-2">
+                    <x-chief::icon.quill-write class="size-6 text-grey-400" />
                 </div>
 
                 <a
-                    data-toggle-classes="hidden"
                     href="{{ route('chief.back.dashboard') }}"
                     title="Ga naar Dashboard"
-                    class="{{ $isCollapsedOnPageLoad ? 'hidden' : null }} block w-full py-2 text-sm leading-6 text-grey-800 hover:text-grey-950"
+                    class="block w-full py-2 text-sm leading-6 text-grey-700 hover:text-grey-950"
                 >
                     {{ config('app.client', 'Chief') }}
                 </a>
@@ -61,13 +56,7 @@
         <div>
             @include('chief::templates.page.nav.nav-user')
 
-            <p
-                data-toggle-classes="hidden"
-                @class([
-                    'mt-3 px-2 text-xs text-grey-400',
-                    'hidden' => $isCollapsedOnPageLoad,
-                ])
-            >
+            <p class="mt-3 px-2 text-xs text-grey-400">
                 Chief v{{ \Composer\InstalledVersions::getVersion('thinktomorrow/chief') }}
             </p>
         </div>

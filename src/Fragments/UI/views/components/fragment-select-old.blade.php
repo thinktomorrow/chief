@@ -57,9 +57,9 @@
 
             <div class="flex w-8 shrink-0 justify-end">
                 @if ($hideSelectOptions)
-                    <span data-fragment-select-close class="cursor-pointer">
-                        <x-chief::icon-button icon="icon-x-mark" color="grey" />
-                    </span>
+                    <x-chief::button size="sm" data-fragment-select-close class="shrink-0">
+                        <x-chief::icon.cancel />
+                    </x-chief::button>
                 @endif
             </div>
         </div>

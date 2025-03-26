@@ -105,6 +105,10 @@ trait HasItems
             $item->link($this->link);
         }
 
+        if ($this->openInNewTab) {
+            $item->openInNewTab();
+        }
+
         return $item;
     }
 }

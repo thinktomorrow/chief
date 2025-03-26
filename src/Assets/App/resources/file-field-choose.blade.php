@@ -10,7 +10,7 @@
                 <div x-data="{}" class="relative flex grow items-center justify-end">
                     <x-chief::icon.search class="body-dark pointer-events-none absolute left-3 size-5" />
 
-                    <x-chief::input.text
+                    <x-chief::form.input.text
                         wire:model.live.debounce.500ms="filters.search"
                         x-data="{}"
                         {{-- Prevents directive to be triggered twice --}}
@@ -20,10 +20,10 @@
                     />
                 </div>
 
-                <x-chief::input.select wire:model.live="sort" class="w-64 shrink-0">
+                <x-chief::form.input.select wire:model.live="sort" class="w-64 shrink-0">
                     <option value="created_at_desc">Datum laatst toegevoegd</option>
                     <option value="created_at_asc">Datum eerst toegevoegd</option>
-                </x-chief::input.select>
+                </x-chief::form.input.select>
             </div>
         </x-slot>
 

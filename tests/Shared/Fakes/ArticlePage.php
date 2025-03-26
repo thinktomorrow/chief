@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Models\PageDefaults;
@@ -20,7 +19,6 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 class ArticlePage extends Model implements Page
 {
     use HasPeriodTrait;
-    use InteractsWithAssets;
     use PageDefaults;
     use SoftDeletes;
     use Sortable;

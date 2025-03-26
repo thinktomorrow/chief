@@ -38,16 +38,28 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('menus', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->json('active_sites')->nullable();
+            $table->json('sites')->nullable();
+            $table->string('title')->nullable();
+            $table->unsignedSmallInteger('order')->default(0);
+            $table->timestamps();
+        });
+
         Schema::create('menu_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('menu_id');
             $table->enum('type', ['internal', 'custom', 'nolink'])->default('custom');
-            $table->string('menu_type')->default('main');
             $table->boolean('hidden_in_menu')->default(false);
             $table->string('owner_type')->nullable();
             $table->unsignedInteger('owner_id')->nullable();
             $table->json('values')->nullable();
             $table->integer('order')->default(0);
+
+            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
         });
 
         Schema::create(config('activitylog.table_name'), function (Blueprint $table) {

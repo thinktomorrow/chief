@@ -4,10 +4,8 @@ namespace Thinktomorrow\Chief\Fragments\App\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class ContextRepository
 {
@@ -65,12 +63,13 @@ class ContextRepository
     //        return $contexts;
     //    }
 
-    public function create(ReferableModel&ContextOwner $owner, array $locales): ContextModel
+    public function create(ModelReference $ownerReference, array $locales, ?string $title = null): ContextModel
     {
         return ContextModel::create([
-            'owner_type' => $owner->modelReference()->shortClassName(),
-            'owner_id' => $owner->modelReference()->id(),
+            'owner_type' => $ownerReference->shortClassName(),
+            'owner_id' => $ownerReference->id(),
             'locales' => $locales,
+            'title' => $title,
         ]);
     }
 

@@ -16,13 +16,11 @@
 
                 <div class="flex flex-wrap items-start gap-1">
                     @if (! $fragment->isOnline)
-                        <x-chief-table::badge size="sm" variant="grey" class="block">Offline</x-chief-table::badge>
+                        <x-chief::badge size="sm" variant="grey" class="block">Offline</x-chief::badge>
                     @endif
 
                     @if ($fragment->isShared)
-                        <x-chief-table::badge size="sm" variant="blue" class="block">
-                            Gedeeld fragment
-                        </x-chief-table::badge>
+                        <x-chief::badge size="sm" variant="blue" class="block">Gedeeld fragment</x-chief::badge>
                     @endif
                 </div>
             </div>

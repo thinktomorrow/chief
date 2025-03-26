@@ -3,7 +3,7 @@
     :description="$getDescription()"
     :refresh-url="$getRefreshUrl()"
     :tags="$getTagsAsString()"
-    :class="$getLayout()->class()"
+    :variant="$getLayout()->variant()"
 >
     <form
         {{ $attributes->merge($getCustomAttributes()) }}
@@ -28,7 +28,7 @@
                 {{ $_component }}
             @endforeach
 
-            <x-chief::button data-slot="submit" type="submit" variant="blue">
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">
                 Opslaan
                 <svg
                     data-form-submit-spinner

@@ -89,7 +89,7 @@ if (! function_exists('chiefmenu')) {
             $locale = app()->getLocale();
         }
 
-        return \Thinktomorrow\Chief\Site\Menu\Menu::forSite($key, $locale);
+        return \Thinktomorrow\Chief\Menu\App\Queries\MenuTree::bySite($locale, $key);
     }
 }
 

@@ -83,15 +83,11 @@
                 @endforelse
 
                 @if ($errors->any())
-                    <div class="mt-6 space-y-2 border-t border-grey-100 pt-6">
-                        @if ($errors && count($errors) > 0)
-                            <x-chief::inline-notification type="error" size="medium" class="w-full">
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ ucfirst($error) }}</p>
-                                @endforeach
-                            </x-chief::inline-notification>
-                        @endif
-                    </div>
+                    <x-chief::callout variant="red" class="mt-6">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ ucfirst($error) }}</p>
+                        @endforeach
+                    </x-chief::callout>
                 @endif
 
                 <x-slot name="footer">

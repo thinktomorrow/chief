@@ -31,15 +31,15 @@
 
                 <div class="form-light w-full">
                     @if ($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
-                        <x-chief::input.textarea
+                        <x-chief::form.input.textarea
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
                         >
                             {!! old('squanto[' . $lineViewModel->key() . '][' . $locale . ']', $lineViewModel->value($locale)) !!}
-                        </x-chief::input.textarea>
+                        </x-chief::form.input.textarea>
                     @else
-                        <x-chief::input.text
+                        <x-chief::form.input.text
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"

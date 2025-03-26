@@ -47,27 +47,27 @@ trait HasValueMapping
 
                 if ($model->inOnlineState()) {
                     if ($model->urls->isNotEmpty()) {
-                        return 'online';
+                        return 'gepubliceerd';
                     } else {
                         return 'link ontbreekt';
                     }
                 }
 
-                return 'offline';
+                return 'draft';
             }
 
             return match ($rawValue) {
-                'published' => 'online',
-                'draft' => 'offline',
-                'archived' => 'archived',
+                'published' => 'gepubliceerd',
+                'draft' => 'draft',
+                'archived' => 'gearchiveerd',
                 default => $rawValue,
             };
         });
 
         return $this->mapVariant([
-            'online' => 'green',
-            'offline' => 'red',
-            'archived' => 'red',
+            'gepubliceerd' => 'green',
+            'draft' => 'red',
+            'gearchiveerd' => 'red',
             'link ontbreekt' => 'orange',
         ]);
     }

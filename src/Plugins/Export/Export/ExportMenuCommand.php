@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Plugins\Export\Export;
 
 use Illuminate\Database\Eloquent\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 class ExportMenuCommand extends BaseCommand
 {

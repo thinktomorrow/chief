@@ -10,15 +10,13 @@ trait PageFormParams
     {
         $params = [
             'title' => 'title',
-            'trans' => [
-                'nl' => [
-                    'title_trans' => 'new title',
-                    'content_trans' => 'xx',
-                ],
-                'en' => [
-                    'title_trans' => 'nouveau title',
-                    'content_trans' => 'xx',
-                ],
+            'title_trans' => [
+                'nl' => 'new title',
+                'en' => 'nouveau title',
+            ],
+            'content_trans' => [
+                'nl' => 'xx',
+                'en' => 'xx',
             ],
             'url-slugs' => [
                 'nl' => 'new-slug',
@@ -39,20 +37,16 @@ trait PageFormParams
         $params = [
             'title' => 'title',
             'custom' => 'custom',
-            'trans' => [
-                'nl' => [
-                    'content_trans' => 'aangepaste content trans',
-                    'title' => 'aangepaste title',
-                    'seo_title' => 'aangepaste seo title',
-                    'seo_description' => 'aangepaste seo description',
-                    'seo_keywords' => 'aangepaste seo keywords',
-                ],
-                'en' => [
-                    'title' => 'updated title',
-                    'seo_title' => 'updated seo title',
-                    'seo_description' => 'updated seo description',
-                    'seo_keywords' => 'updated seo keywords',
-                ],
+            'content_trans' => [
+                'nl' => 'aangepaste content trans',
+            ],
+            'seo_title' => [
+                'nl' => 'aangepaste seo title',
+                'en' => 'updated seo title',
+            ],
+            'seo_description' => [
+                'nl' => 'aangepaste seo description',
+                'en' => 'updated seo description',
             ],
             'url-slugs' => [
                 'nl' => 'aangepaste-slug',

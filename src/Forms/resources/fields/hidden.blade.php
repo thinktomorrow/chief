@@ -1,4 +1,4 @@
-<x-chief::input.hidden
+<x-chief::form.input.hidden
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
     value="{{ $getActiveValue($locale ?? null) }}"

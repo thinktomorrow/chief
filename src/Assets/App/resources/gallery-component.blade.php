@@ -10,23 +10,23 @@
         </x-chief::button>
     </div>
 
-    <x-chief::window class="card">
+    <x-chief::window>
         <div class="space-y-6">
             <div class="flex flex-wrap gap-3">
                 <div class="relative flex grow items-center justify-end">
                     <x-chief::icon.search class="body-dark pointer-events-none absolute left-3 size-5" />
 
-                    <x-chief::input.text
+                    <x-chief::form.input.text
                         wire:model.live.debounce.500ms="filters.search"
                         placeholder="Zoek op bestandsnaam"
                         class="w-full pl-10"
                     />
                 </div>
 
-                <x-chief::input.select wire:model.live="sort">
+                <x-chief::form.input.select wire:model.live="sort">
                     <option value="created_at_desc">Datum laatst toegevoegd</option>
                     <option value="created_at_asc">Datum eerst toegevoegd</option>
-                </x-chief::input.select>
+                </x-chief::form.input.select>
             </div>
 
             {{ $this->table }}

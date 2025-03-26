@@ -130,7 +130,7 @@ A firm clean-up of all existing form styling/components.
 
 ##### New components:
 
-- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested components are using the correct margins, relative to each other. The old `x-chief::input.group` still exists, but will be phased out until completely gone in future versions.
+- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested components are using the correct margins, relative to each other.
 
 ##### Renamed components:
 
@@ -141,4 +141,10 @@ A firm clean-up of all existing form styling/components.
 ##### Clean-up
 
 - Changed all `x-chief::button` components to the newer `x-chief-table::button`. Then `x-chief-table::button` was renamed to the existing, shorter `x-chief::button`.
+- Changed the `x-chief::link` component so it works with a similar API as the `x-chief::button` component.
 - Removed the legacy `form.css` styling, as this wasn't in use anymore for quiet some time.
+- Replaced and removed the following components
+    - `x-chief::copy-button`
+    - `x-chief::icon-label`
+    - `x-chief::icon-button`
+    - `x-chief::inline-notification`

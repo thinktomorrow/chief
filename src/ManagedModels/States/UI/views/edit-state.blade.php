@@ -10,9 +10,9 @@
 
         <div class="space-y-6">
             @if ($errorMessage)
-                <x-chief::inline-notification type="error" size="large">
+                <x-chief::callout variant="red">
                     <p>{!! $errorMessage !!}</p>
-                </x-chief::inline-notification>
+                </x-chief::callout>
             @endif
 
             @if ($transitionInConfirm = $this->getTransitionInConfirmationState())

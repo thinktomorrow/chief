@@ -87,16 +87,17 @@ Route::post('fragments/{context_id}/nested/{fragment_id}/unshare', [NestedFragme
  * MENU MANAGEMENT
  * -----------------------------------------------------------------
  */
-Route::get('menus', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuController@index')->name('chief.back.menus.index');
-Route::get('menus/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuController@show')->name('chief.back.menus.show');
+Route::get('menus', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuController::class, 'index'])->name('chief.back.menus.index');
+Route::get('menus/{id}/reorder', [\Thinktomorrow\Chief\Menu\App\Controllers\ReorderMenuController::class, 'index'])->name('chief.back.menus.reorder');
+Route::post('menus/{id}/reorder', [\Thinktomorrow\Chief\Menu\App\Controllers\ReorderMenuController::class, 'update'])->name('chief.back.menus.reorder.update');
+Route::post('menus/{id}/menuitem', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'store'])->name('chief.back.menuitem.store');
+Route::get('menus/{id}/menuitem/create', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'create'])->name('chief.back.menuitem.create');
+Route::get('menus/{type}/{id?}', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuController::class, 'show'])->name('chief.back.menus.show');
 
-Route::get('menuitem', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@index')->name('chief.back.menuitem.index');
-Route::post('menuitem', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@store')->name('chief.back.menuitem.store');
-Route::get('menuitem/create/{menutype}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@create')->name('chief.back.menuitem.create');
-Route::put('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@update')->name('chief.back.menuitem.update');
-Route::get('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@show')->name('chief.back.menuitem.show');
-Route::delete('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@destroy')->name('chief.back.menuitem.destroy');
-Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@edit')->name('chief.back.menuitem.edit');
+Route::put('menuitem/{id}', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'update'])->name('chief.back.menuitem.update');
+Route::get('menuitem/{id}', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'show'])->name('chief.back.menuitem.show');
+Route::delete('menuitem/{id}', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'destroy'])->name('chief.back.menuitem.destroy');
+Route::get('menuitem/{id}/edit', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'edit'])->name('chief.back.menuitem.edit');
 
 /**
  * -----------------------------------------------------------------

@@ -1,4 +1,4 @@
-<x-chief::input.range
+<x-chief::form.input.range
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
     placeholder="{{ $getPlaceholder($locale ?? null) }}"

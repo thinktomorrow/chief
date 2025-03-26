@@ -14,34 +14,30 @@ trait BelongsToSitesDefaults
      */
     public function initializeBelongsToSitesDefaults(): void
     {
-        $this->mergeCasts(['sites' => 'array']);
+        $this->mergeCasts(['locales' => 'array']);
     }
 
     public function getSiteLocales(): array
     {
-        return $this->sites ?? [];
+        return $this->locales ?? [];
     }
 
     public function setSiteLocales(array $locales): void
     {
-        $this->sites = $locales;
+        $this->locales = $locales;
     }
 
     public function scopeBySite(Builder $query, string $site): void
     {
-        // Site should be more of a ID. -> site as db table...
-        // Locale is for fields and such... can be used by multiple sites.
-        // Site is selection, choice. Locale is language, not WHAT is shown.
-        // WHAT,HOW = site, language = locale
-        $query->whereJsonContains($this->getTable().'.sites', $site);
+        $query->whereJsonContains($this->getTable().'.locales', $site);
     }
 
-    public function scopeByLocaleOrNone(Builder $query, string $locale): void
+    public function scopeBySiteOrNone(Builder $query, string $site): void
     {
-        $query->when($locale, fn ($q, $locale) => $q->where(function ($q) use ($locale) {
-            $q->whereJsonContains($this->getTable().'.sites', $locale)
-                ->orWhereNull($this->getTable().'.sites')
-                ->orWhereJsonLength($this->getTable().'.sites', '=', 0);
+        $query->when($site, fn ($q) => $q->where(function ($q) use ($site) {
+            $q->whereJsonContains($this->getTable().'.locales', $site)
+                ->orWhereNull($this->getTable().'.locales')
+                ->orWhereJsonLength($this->getTable().'.locales', '=', 0);
         }));
     }
 }

@@ -4,14 +4,16 @@ namespace Thinktomorrow\Chief\ManagedModels\States\UI\Livewire;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class EditState extends Component
 {
-    use \Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-    use \Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+    use HasForm;
+    use ShowsAsDialog;
     use WithStateConfig;
 
     public string $parentComponentId;

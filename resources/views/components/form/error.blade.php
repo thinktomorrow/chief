@@ -3,15 +3,17 @@
 ])
 
 @if ($rule)
-    @if (isset($errors))
-        @error($rule)
-            <x-chief::inline-notification type="error" class="mt-2">
-                {{ ucfirst($message) }}
-            </x-chief::inline-notification>
-        @enderror
-    @endif
+    <div {{ $attributes->merge(['data-slot' => 'error']) }}>
+        @if (isset($errors))
+            @error($rule)
+                <x-chief::callout size="sm" variant="red" class="px-2.5 py-1">
+                    {{ ucfirst($message) }}
+                </x-chief::callout>
+            @enderror
+        @endif
 
-    <x-chief::inline-notification data-error-placeholder="{{ $rule }}" type="error" class="mt-2 hidden">
-        <div data-error-placeholder-content></div>
-    </x-chief::inline-notification>
+        <x-chief::callout data-error-placeholder="{{ $rule }}" size="sm" variant="red" class="hidden px-2.5 py-1">
+            <div data-error-placeholder-content></div>
+        </x-chief::callout>
+    </div>
 @endif

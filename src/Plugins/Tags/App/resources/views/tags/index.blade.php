@@ -6,7 +6,7 @@
             });
         @endphp
 
-        <x-chief::window class="card">
+        <x-chief::window>
             @if ($tagGroups->count() > 1)
                 <div id="taggroup-{{ $tagGroup->getTagGroupId() }}" class="mb-2 flex items-start justify-between">
                     <div class="flex items-center gap-2">
@@ -119,11 +119,12 @@
         <div class="space-y-4 py-4">
             <h2 class="h6 h6-dark">Nog geen enkele tag te zien... 😭</h2>
 
-            <p class="body body-dark">
-                <a href="{{ route('chief.tags.create') }}" title="Tag toevoegen" class="btn btn-primary">
-                    <x-chief::icon-label icon="icon-plus">Jouw eerste tag toevoegen</x-chief::icon-label>
-                </a>
-            </p>
+            <div>
+                <x-chief::button href="{{ route('chief.tags.create') }}" title="Tag toevoegen">
+                    <x-chief::icon.plus-sign />
+                    <span>Jouw eerste tag toevoegen</span>
+                </x-chief::button>
+            </div>
 
             <p class="body text-sm text-grey-500">
                 Tags houden jouw paginabeheer overzichtelijk.

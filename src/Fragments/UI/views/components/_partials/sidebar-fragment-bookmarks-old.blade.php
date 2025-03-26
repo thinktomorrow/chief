@@ -1,4 +1,4 @@
-@if($owner && $model instanceof \Thinktomorrow\Chief\Fragments\HasBookmark)
+@if ($owner && $model instanceof \Thinktomorrow\Chief\Fragments\HasBookmark)
     <div class="flex flex-wrap items-center gap-2">
         <span class="label label-grey">#{{ $model->getBookmark() }}</span>
 
@@ -17,16 +17,14 @@
                 </x-chief::button>
             </a>
 
-            <x-chief::copy-button
-                :content="'#'.$model->getBookmark()"
-                successContent="#{{ $model->getBookmark() }} gekopieerd!"
+            <x-chief::button
+                x-copy="{
+                    content: '#{{ $model->getBookmark() }}',
+                    successContent: '#{{ $model->getBookmark() }} gekopieerd!'
+                }"
             >
-                <x-chief::button>
-                    <svg>
-                        <use xlink:href="#icon-link"></use>
-                    </svg>
-                </x-chief::button>
-            </x-chief::copy-button>
+                <x-chief::icon.link />
+            </x-chief::button>
         @endif
     </div>
 @endif

@@ -45,8 +45,9 @@ class SaveFields
 
                 continue;
             }
+
             if ($field->getLocalizedFieldNameTemplate() == ':name.:locale') {
-                foreach (data_get($input, $field->getColumnName()) as $locale => $value) {
+                foreach (data_get($input, $field->getColumnName(), []) as $locale => $value) {
                     $this->localizedValueCallable($model, $field, $input)($locale, $field->getColumnName(), $value);
                 }
             } else {

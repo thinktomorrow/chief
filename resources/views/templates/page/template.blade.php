@@ -47,7 +47,12 @@
                 {{-- Sidebar --}}
                 @if ($sidebar)
                     <section
-                        {{ $sidebar->attributes->merge(['role' => 'sidebar', 'class' => 'w-full shrink-0 md:w-64 2xl:w-96 space-y-6']) }}
+                        {{
+                            $sidebar->attributes->merge([
+                                'role' => 'sidebar',
+                                'class' => 'w-full shrink-0 md:w-64 xl:w-80 2xl:w-96 space-y-6',
+                            ])
+                        }}
                     >
                         {{ $sidebar }}
                     </section>

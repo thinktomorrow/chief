@@ -1,10 +1,10 @@
 .form-input-radio {
-    @apply relative h-5 w-5 appearance-none rounded-full leading-none;
+    @apply relative size-5 appearance-none rounded-full leading-none;
 
     &:before {
         content: '';
-        @apply inline-block h-5 w-5 rounded-full bg-white shadow-sm ring-1 ring-grey-100;
-        @apply hover:ring-grey-100;
+        @apply inline-block size-5 rounded-full bg-white shadow-sm ring-1 ring-grey-200;
+        @apply hover:ring-grey-300;
     }
 
     &:after {

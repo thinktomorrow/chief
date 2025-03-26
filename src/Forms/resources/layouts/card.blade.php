@@ -1,5 +1,5 @@
 <div
-    data-slot="fieldset"
+    data-slot="form-group"
     {{ $attributes->merge($getCustomAttributes())->class(['rounded-lg p-6', $getLayoutType()->cardClass()]) }}
 >
     <div x-data="{ open: {{ $isCollapsed() ? 'false' : 'true' }} }" class="space-y-6">

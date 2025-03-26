@@ -1,5 +1,5 @@
 <x-chief::page.template title="Bewerk jouw profiel" container="md">
-    <x-chief::window title="Jouw gegevens" class="card">
+    <x-chief::window title="Jouw gegevens">
         <form id="updateForm" action="{{ route('chief.back.you.update', $user->id) }}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="PUT" />
@@ -8,7 +8,7 @@
         </form>
     </x-chief::window>
 
-    <x-chief::window title="Wachtwoord wijzigen" class="card">
+    <x-chief::window title="Wachtwoord wijzigen">
         <div class="space-y-4">
             <p class="body text-grey-500">Om je wachtwoord te wijzigen, word je doorverwezen naar een aparte pagina.</p>
 

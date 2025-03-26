@@ -34,7 +34,6 @@ use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
-use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
@@ -48,12 +47,10 @@ use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
 use Thinktomorrow\Chief\ManagedModels\States\StatesServiceProvider;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
+use Thinktomorrow\Chief\Menu\MenuServiceProvider;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
-use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
@@ -74,6 +71,7 @@ class ChiefServiceProvider extends ServiceProvider
         SquantoServiceProvider::class,
         RoutesServiceProvider::class,
         FragmentsServiceProvider::class,
+        MenuServiceProvider::class,
         SquantoManagerServiceProvider::class,
         AssetsServiceProvider::class,
     ];
@@ -110,6 +108,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
         (new FragmentsServiceProvider($this->app))->bootAdmin();
+        (new MenuServiceProvider($this->app))->bootAdmin();
         (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
@@ -136,6 +135,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->bootChiefAuth();
 
         (new FragmentsServiceProvider($this->app))->boot();
+        (new MenuServiceProvider($this->app))->boot();
     }
 
     private function bootChiefAuth(): void
@@ -215,10 +215,6 @@ class ChiefServiceProvider extends ServiceProvider
         // Form events
         Event::listen(FormUpdated::class, [TriggerPageChangedEvent::class, 'onFormUpdated']);
         Event::listen(FormUpdated::class, [ProjectModelData::class, 'onFormUpdated']);
-
-        // Menu events
-        Event::listen(MenuItemCreated::class, [ProjectModelData::class, 'onMenuItemCreated']);
-        Event::listen(MenuItemUpdated::class, [ProjectModelData::class, 'onMenuItemUpdated']);
     }
 
     public function register()
@@ -244,6 +240,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new StatesServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new FragmentsServiceProvider($this->app))->register();
+        (new MenuServiceProvider($this->app))->register();
 
         if ($this->app->make(AdminEnvironment::class)->check(request())) {
             $this->app->when(SettingsController::class)
@@ -251,9 +248,7 @@ class ChiefServiceProvider extends ServiceProvider
                 ->give(function () {
                     return new SettingFields(new Settings);
                 });
-            Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
             Relation::morphMap(['chiefuser' => User::class]);
-            Relation::morphMap(['menuitem' => MenuItem::class]);
 
             // Global chief nav singleton
             $this->app->singleton(Nav::class, function () {

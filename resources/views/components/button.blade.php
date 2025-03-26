@@ -5,8 +5,9 @@
 
 @php
     $attributes = $attributes->class([
-        'bui-btn cursor-pointer font-medium',
+        'bui-btn cursor-pointer',
         match ($size) {
+            'lg' => 'bui-btn-lg',
             'base' => 'bui-btn-base',
             'sm' => 'bui-btn-sm',
             'xs' => 'bui-btn-xs',
@@ -18,7 +19,6 @@
             'transparent' => 'bui-btn-transparent',
             'red' => 'bui-btn-red',
             'orange' => 'bui-btn-orange',
-            'light-blue' => 'bui-btn-light-blue',
             'green' => 'bui-btn-green',
             'outline-white' => 'bui-btn-outline-white',
             'outline-blue' => 'bui-btn-outline-blue',

@@ -75,7 +75,7 @@ trait WithFragments
         try {
             // This detaches the fragment from given context - if the fragment is not shared / used
             // elsewhere it will be deleted completely via listener on the FragmentDetached event
-            app(DetachFragment::class)->handle($this->context->contextId, $fragmentId);
+            app(DetachFragment::class)->handle($this->context->id, $fragmentId);
         } catch (FragmentAlreadyDetached $e) {
             //
         }
@@ -85,7 +85,7 @@ trait WithFragments
 
     public function reorder($fragmentIds)
     {
-        app(ReorderFragments::class)->handle($this->context->contextId, $fragmentIds, isset($this->fragment) ? $this->fragment->fragmentId : null);
+        app(ReorderFragments::class)->handle($this->context->id, $fragmentIds, isset($this->fragment) ? $this->fragment->fragmentId : null);
 
         // Reoorder $fragments by given fragmentIds order
         $this->fragments = $this->fragments
@@ -100,7 +100,7 @@ trait WithFragments
     private function refreshFragments(): void
     {
         $fragmentCollection = app(FragmentRepository::class)->getFragmentCollection(
-            $this->context->contextId,
+            $this->context->id,
             isset($this->fragment) ? $this->fragment->fragmentId : null
         );
 
@@ -118,8 +118,8 @@ trait WithFragments
     {
         // Include all children as well to provide consistent preview content
         $updatedFragment = $this->findFragment($formerFragmentId ?: $fragmentId)->allowsFragments
-            ? app(FragmentRepository::class)->findInFragmentCollection($this->context->contextId, $fragmentId)
-            : app(FragmentRepository::class)->findInContext($fragmentId, $this->context->contextId);
+            ? app(FragmentRepository::class)->findInFragmentCollection($this->context->id, $fragmentId)
+            : app(FragmentRepository::class)->findInContext($fragmentId, $this->context->id);
 
         // Update given fragment in the fragment collection
         foreach ($this->fragments as $i => $fragment) {
@@ -140,7 +140,7 @@ trait WithFragments
      */
     private function isApplicable(string $fragmentId, string $contextId, ?string $parentId): bool
     {
-        if ($contextId !== $this->context->contextId) {
+        if ($contextId !== $this->context->id) {
             return false;
         }
 

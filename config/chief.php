@@ -121,6 +121,22 @@ return [
     ],
 
     /**
+     * Define your menus here. By default there is a generic 'main' menu but you
+     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     */
+    'menus' => [
+        'main' => [
+            'label' => 'Hoofdnavigatie',
+        ],
+        'footer' => [
+            'label' => 'Footer links',
+        ],
+        'legal' => [
+            'label' => 'Juridische links',
+        ],
+    ],
+
+    /**
      * view_path            The default view path for all fragment classes.
      *                      Relative to the resources/views directory. Use dotted syntax for
      *                      nested directories, e.g. 'fragments.nested'. You can override this
@@ -142,16 +158,6 @@ return [
      */
     'widgets' => [
 
-    ],
-
-    /**
-     * Define your menus here. By default there is a generic 'main' menu but you
-     * are free to add different ones as well. e.g. footer-menu, sidebar,...
-     */
-    'menus' => [
-        'main' => [
-            'label' => 'Hoofdnavigatie',
-        ],
     ],
 
     /**

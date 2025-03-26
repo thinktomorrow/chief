@@ -6,6 +6,8 @@ use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
+use Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites\EditMenuSites;
+use Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites\MenuSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\EditSiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\EditSites;
@@ -23,6 +25,8 @@ class SitesServiceProvider extends ServiceProvider
         Livewire::component('chief-wire::edit-site-links', EditSiteLinks::class);
         Livewire::component('chief-wire::sites', Sites::class);
         Livewire::component('chief-wire::edit-sites', EditSites::class);
+        Livewire::component('chief-wire::menu-sites', MenuSites::class);
+        Livewire::component('chief-wire::menu-edit-sites', EditMenuSites::class);
     }
 
     public function register()

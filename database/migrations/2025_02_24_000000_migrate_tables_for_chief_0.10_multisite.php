@@ -56,6 +56,7 @@ return new class extends Migration
         $this->copyContextFragmentLookupToTree();
         $this->addActiveContextIdToUrl();
         $this->changeStateAccordingToOwnerState();
+        $this->addSitesToMenuItems();
     }
 
     public function down() {}
@@ -204,6 +205,49 @@ return new class extends Migration
         Schema::table('context_fragments', function (Blueprint $table) {
             $table->renameColumn('model_reference', 'key');
         });
+    }
+
+    private function addSitesToMenuItems(): void
+    {
+        Schema::create('menus', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->json('active_sites')->nullable();
+            $table->json('sites')->nullable();
+            $table->string('title')->nullable();
+            $table->unsignedSmallInteger('order')->default(0);
+            $table->timestamps();
+        });
+
+        // Create default menus based on the existing types in config
+        $menuTypes = config('chief.menus', []);
+
+        foreach ($menuTypes as $type => $values) {
+            $label = ucfirst($values['label']);
+            app(\Thinktomorrow\Chief\Menu\App\Actions\MenuApplication::class)->create(
+                new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales(), $label));
+        }
+
+        Schema::table('menu_items', function (Blueprint $table) {
+            $table->unsignedBigInteger('menu_id')->default(1); // Otherwise it will fail on FK constraint
+            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
+        });
+
+        // Add each menu_item to its menu based on their menu type
+        $menuItems = DB::table('menu_items')->get();
+
+        foreach ($menuItems as $menuItem) {
+            $menu = DB::table('menus')->where('type', $menuItem->menu_type)->first();
+
+            DB::table('menu_items')->where('id', $menuItem->id)->update([
+                'menu_id' => $menu->id,
+            ]);
+        }
+
+        Schema::table('menu_items', function (Blueprint $table) {
+            $table->dropColumn('menu_type');
+        });
+
     }
 
     private function removeSoftDeletion(): void

@@ -3,7 +3,7 @@
     'refreshUrl' => null,
     'tags' => null,
     'title' => null,
-    'labels' => null,
+    'badges' => null,
     'actions' => null,
     'description' => null,
 ])
@@ -13,7 +13,7 @@
     data-form-url="{{ $refreshUrl }}"
     data-form-tags="{{ $tags }}"
     :title="$title"
-    :labels="$labels"
+    :badges="$badges"
     :description="$description"
     {{ $attributes }}
 >

@@ -12,9 +12,4 @@
         :state-key="$stateKey"
         :model-reference="$modelReference"
     />
-
-    {{-- <x-chief::button variant="blue"> --}}
-    {{-- <span>Publiceer</span> --}}
-    {{-- <x-chief::icon.solid.sent /> --}}
-    {{-- </x-chief::button> --}}
 </div>

@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Import;
 
+use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
 class ImportMenuCommandTest extends TestCase
 {

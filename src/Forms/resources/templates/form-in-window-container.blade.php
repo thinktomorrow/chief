@@ -3,7 +3,7 @@
     :edit-url="$getWindowAction()"
     :refresh-url="$getRefreshUrl()"
     :tags="$getTagsAsString()"
-    :class="$getLayout()->class()"
+    :variant="$getLayout()->variant()"
 >
     @include($getWindowView())
 </x-chief-form::window>

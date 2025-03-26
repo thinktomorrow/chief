@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('menu_items', function (Blueprint $table) {
-            $table->string('status')->default(\Thinktomorrow\Chief\Site\Menu\MenuItemStatus::online->value);
+            $table->string('status')->default(\Thinktomorrow\Chief\Menu\MenuItemStatus::online->value);
         });
 
         Schema::table('menu_items', function (Blueprint $table) {

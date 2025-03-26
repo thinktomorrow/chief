@@ -1,11 +1,14 @@
-@php use Thinktomorrow\Chief\Plugins\ChiefPluginSections; @endphp
+@php
+    use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
+@endphp
+
 <x-chief-assets::upload-and-dropzone>
     {{ $this->filePreview }}
 
     @error('files.0')
-    <x-chief::inline-notification type="error" class="mt-2">
-        {{ ucfirst($message) }}
-    </x-chief::inline-notification>
+        <x-chief::callout size="small" variant="red" class="mt-2">
+            {{ ucfirst($message) }}
+        </x-chief::callout>
     @enderror
 
     {{ $this->fileSelect }}
@@ -34,7 +37,7 @@
         />
     </div>
 
-    @foreach(app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
+    @foreach (app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
         <div>
             <livewire:is
                 component="{{ $livewireFileComponent }}"
