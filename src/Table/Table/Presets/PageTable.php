@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\OfflineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateBulkAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\OnlineStateRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
+use Thinktomorrow\Chief\Table\Actions\Presets\UnArchiveRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
@@ -46,6 +47,7 @@ class PageTable extends Table
                 EditModelAction::makeDefault($resourceKey)->primary(),
                 OnlineStateRowAction::makeDefault($resourceKey)->tertiary(),
                 OfflineStateRowAction::makeDefault($resourceKey)->tertiary(),
+                UnArchiveRowAction::makeDefault($resourceKey)->tertiary(),
                 DuplicateModelAction::makeDefault($resourceKey)->tertiary(),
             ])
             ->filters([
