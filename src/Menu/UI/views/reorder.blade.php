@@ -2,7 +2,6 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
                 ['label' => 'Menu', 'url' => route('chief.back.menus.index'), 'icon' => 'menu'],
                 ['label' => $menu->getTitle(), 'url' => route('chief.back.menus.show', [$menu->type, $menu->id]), 'icon' => 'menu'],
                 'Herschikken'

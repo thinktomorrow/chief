@@ -6,7 +6,6 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
                 ['label' => 'Weekschema', 'url' => route('chief.timetables.index'), 'icon' => 'calendar'],
                 'Nieuw schema toevoegen',
             ]"

@@ -6,7 +6,6 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
                 ['label' => 'Tags', 'url' => route('chief.tags.index'), 'icon' => 'tags'],
                 'Tag aanpassen',
             ]"

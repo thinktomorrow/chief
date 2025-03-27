@@ -12,13 +12,9 @@
     }
 
     if (! $is_archive_index && ! $is_reorder_index) {
-        $breadcrumbs = [['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'], $resource->getIndexTitle($model)];
+        $breadcrumbs = [];
     } else {
-        $breadcrumbs = [
-            ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
-            ['label' => $resource->getIndexTitle(), 'url' => $manager->route('index'), 'icon' => $resource->getNavItem()?->icon()],
-            'Archief',
-        ];
+        $breadcrumbs = [['label' => $resource->getIndexTitle(), 'url' => $manager->route('index'), 'icon' => $resource->getNavItem()?->icon()], 'Archief'];
     }
 @endphp
 

@@ -1,13 +1,4 @@
 <x-chief::page.template title="Menu overzicht" container="md">
-    <x-slot name="header">
-        <x-chief::page.header
-            :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
-                'Menu overzicht'
-            ]"
-        />
-    </x-slot>
-
     <x-chief::window>
         <div class="-my-4 divide-y divide-grey-100">
             @foreach ($menuTypes as $menuType)
