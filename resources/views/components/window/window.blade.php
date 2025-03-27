@@ -68,7 +68,7 @@
                 @endif
 
                 @if ($actions)
-                    <div {{ $actions->attributes->class(['flex shrink-0 items-start gap-1.5']) }}>
+                    <div {{ $actions->attributes->class(['ml-auto flex shrink-0 items-start gap-1.5']) }}>
                         {!! $actions !!}
                     </div>
                 @endif

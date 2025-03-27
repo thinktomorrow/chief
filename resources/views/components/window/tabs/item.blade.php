@@ -17,13 +17,13 @@
         data-slot="tab-label"
         @class([
             'relative border-x border-t px-2',
-            'rounded-t-xl border-grey-100 bg-white py-1.5' => $active,
-            'my-1.5 border-transparent text-grey-500' => ! $active,
+            'rounded-t-xl border-grey-100 bg-white py-2' => $active,
+            'my-2 border-transparent text-grey-500' => ! $active,
         ])
     >
         <div
             @class([
-                'text-nowrap px-2 py-1.5 text-base/5',
+                'text-nowrap px-2 py-1 text-base/5 font-medium',
                 'text-grey-950' => $active,
                 'rounded-[0.625rem] text-grey-500 group-hover:bg-grey-100 group-hover:text-grey-700' => ! $active,
             ])
