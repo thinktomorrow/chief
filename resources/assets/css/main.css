@@ -1,10 +1,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
+/* Components */
 @import './components/badge';
 @import './components/button';
 @import './components/callout';
-@import './components/dropdown';
 @import './components/dropdown-item';
 @import './components/form/index.css';
 @import './components/format';
@@ -14,11 +14,14 @@
 @import './components/tag';
 @import './components/window';
 
+/* General */
 @import './general/base';
 @import './general/animations';
 @import './general/utilities';
 
+/* Tailwind utilities */
 @import 'tailwindcss/utilities';
 
+/* Overrides */
 @import './overrides/redactor';
 @import './overrides/choices.css';

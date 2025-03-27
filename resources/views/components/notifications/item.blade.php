@@ -4,7 +4,7 @@
 ])
 
 <div
-    {{ $attributes->class(["pop flex origin-right items-center gap-6 rounded-lg border border-grey-100 bg-white px-6 py-4 shadow-lg"]) }}
+    {{ $attributes->class(["flex origin-right items-center gap-6 rounded-lg border border-grey-100 bg-white px-6 py-4 shadow-lg"]) }}
     @if (! $attributes->has("x-data"))
         x-data="{
             isOpen: true,
