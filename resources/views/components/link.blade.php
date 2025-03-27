@@ -5,17 +5,17 @@
 
 @php
     $attributes = $attributes->class([
-        'bui-link cursor-pointer',
+        'link cursor-pointer',
         match ($size) {
-            'base' => 'bui-link-base',
-            'sm' => 'bui-link-sm',
-            'xs' => 'bui-link-xs',
-            default => 'bui-link-base',
+            'base' => 'link-base',
+            'sm' => 'link-sm',
+            'xs' => 'link-xs',
+            default => 'link-base',
         },
         match ($variant) {
-            'blue' => 'bui-link-blue',
-            'body-dark' => 'bui-link-body-dark',
-            default => 'bui-link-body-dark',
+            'blue' => 'link-blue',
+            'body-dark' => 'link-body-dark',
+            default => 'link-body-dark',
         },
     ]);
 @endphp

@@ -14,10 +14,6 @@
 @import './components/tag';
 @import './components/window';
 
-/* New Table UI button */
-@import './components/bui/button';
-@import './components/bui/link';
-
 @import './general/base';
 @import './general/animations';
 @import './general/utilities';

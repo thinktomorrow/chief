@@ -13,14 +13,14 @@
                         <div class="flex flex-col space-y-1">
                             <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
 
-                            <a
+                            <x-chief::link
                                 href="{{ url($sitemapFile->getFileName()) }}"
                                 title="Download sitemap"
-                                class="link link-primary"
+                                variant="blue"
                                 download
                             >
                                 {{ url($sitemapFile->getFileName()) }}
-                            </a>
+                            </x-chief::link>
                         </div>
 
                         <span class="text-grey-500">
@@ -34,15 +34,15 @@
             <p>
                 De sitemaps worden automatisch gebruikt door de zoekpagina's zoals Google en Bing. U kan ook de links
                 toevoegen aan jouw
-                <a
+                <x-chief::link
                     href="https://search.google.com/search-console"
                     title="Google search console"
                     target="_blank"
                     rel="noopener"
-                    class="link link-primary"
+                    variant="blue"
                 >
                     search console
-                </a>
+                </x-chief::link>
                 .
             </p>
 
@@ -94,15 +94,15 @@
             </p>
 
             <p>
-                <a
+                <x-chief::link
                     href="https://support.google.com/webmasters/answer/156184?hl=nl"
                     title="Meer lezen over Google sitemaps"
                     target="_blank"
                     rel="noopener"
-                    class="link link-primary"
+                    variant="blue"
                 >
                     Meer lezen over Google sitemaps
-                </a>
+                </x-chief::link>
             </p>
         </div>
     </x-chief::window>

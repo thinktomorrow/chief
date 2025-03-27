@@ -96,12 +96,12 @@
                 x-ref="tabMarker"
                 x-show="activeTab"
                 @class([
-                    'bui-btn bui-btn-outline-white absolute left-0 font-normal ring-0 transition-all duration-150 ease-out',
+                    'btn btn-outline-white absolute left-0 font-normal ring-0 transition-all duration-150 ease-out',
                     match ($size) {
-                        'xs' => 'bui-btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
-                        'sm' => 'bui-btn-sm py-[0.3125rem] *:h-[1.125rem]',
-                        'base' => 'bui-btn-base py-[0.4375rem] *:h-5',
-                        default => 'bui-btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
+                        'xs' => 'btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
+                        'sm' => 'btn-sm py-[0.3125rem] *:h-[1.125rem]',
+                        'base' => 'btn-base py-[0.4375rem] *:h-5',
+                        default => 'btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
                     },
                 ])
             >
@@ -118,12 +118,12 @@
                     x-bind:aria-controls="tab.id"
                     x-bind:aria-selected="tab.id === activeTab"
                     @class([
-                        'bui-btn relative font-normal shadow-none',
+                        'btn relative font-normal shadow-none',
                         match ($size) {
-                            'xs' => 'bui-btn-xs px-2 text-sm/[1.125rem]',
-                            'sm' => 'bui-btn-sm py-[0.3125rem]',
-                            'base' => 'bui-btn-base py-[0.4375rem]',
-                            default => 'bui-btn-xs px-2 text-sm/[1.125rem]',
+                            'xs' => 'btn-xs px-2 text-sm/[1.125rem]',
+                            'sm' => 'btn-sm py-[0.3125rem]',
+                            'base' => 'btn-base py-[0.4375rem]',
+                            default => 'btn-xs px-2 text-sm/[1.125rem]',
                         },
                     ])
                     :class="{

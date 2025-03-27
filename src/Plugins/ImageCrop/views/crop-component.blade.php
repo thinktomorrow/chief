@@ -10,10 +10,8 @@
                 @endif
             </div>
 
-            <div class="grow space-y-6">
-                <div>
-                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">Opslaan</button>
-                </div>
+            <div class="grow">
+                <x-chief::button wire:click.prevent="submit" variant="blue">Opslaan</x-chief::button>
             </div>
         </form>
     @endif

@@ -17,18 +17,21 @@
         </div>
 
         <div class="space-y-3">
-            <a
+            <x-chief::button
                 href="mailto:{{ chiefSetting('contact_email') }}"
                 title="Contacteer beheerder"
-                class="btn btn-primary flex w-full justify-center"
+                size="lg"
+                variant="blue"
+                class="flex w-full justify-center"
             >
-                Beheerder contacteren
-            </a>
+                Contacteer beheerder
+            </x-chief::button>
 
-            <a
+            <x-chief::button
                 href="{{ route('chief.back.login') }}"
-                title="Ga naar login pagina"
-                class="btn btn-grey flex w-full justify-center"
+                title="Naar login pagina"
+                size="lg"
+                class="flex w-full justify-center"
             >
                 Naar login pagina
             </a>
