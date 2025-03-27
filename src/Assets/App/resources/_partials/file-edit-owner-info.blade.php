@@ -6,13 +6,14 @@
         <p class="body text-sm text-primary-500">
             Dit bestand is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit bestand of dit
             bestand vervangt, wordt dit op alle gekoppelde plaatsen doorgevoerd.
+
             @if (! $currentOwner)
-                <span
-                    class="cursor-pointer underline"
+                <x-chief::link
                     x-on:click="$dispatch('open-dialog', { 'id': 'file-owners-modal-{{ $this->getId() }}' })"
+                    class="underline"
                 >
                     Bekijk koppelingen
-                </span>
+                </x-chief::link>
             @endif
         </p>
     </div>

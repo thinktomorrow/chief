@@ -1,13 +1,4 @@
-<x-chief::page.template title="Site menus" container="md">
-    <x-slot name="header">
-        <x-chief::page.header
-            :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
-                'Menus'
-            ]"
-        />
-    </x-slot>
-
+<x-chief::page.template title="Menus" container="md">
     <x-chief::window>
         <div class="-my-4 divide-y divide-grey-100">
             @foreach ($menuTypes as $menuType)

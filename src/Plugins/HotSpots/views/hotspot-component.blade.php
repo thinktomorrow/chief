@@ -41,7 +41,7 @@
 
                             <div
                                 x-on:click.stop="$wire.activateHotSpot('{{ $hotSpot['id'] }}')"
-                                class="hover:bg-primary relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out"
+                                class="relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out hover:bg-primary"
                                 x-bind:class="{
                                     '!bg-primary-500 !border !border-primary-600':
                                         '{{ $hotSpot['id'] }}' === activeIndex,
@@ -67,9 +67,9 @@
                             {{ $component }}
                         @endforeach
 
-                        <button type="button" wire:click="removeHotSpot('{{ $hotSpotId }}')" class="btn btn-grey">
+                        <x-chief::button type="button" wire:click="removeHotSpot('{{ $hotSpotId }}')" variant="grey">
                             Verwijder deze hotspot
-                        </button>
+                        </x-chief::button>
                     </div>
                 @empty
                     <div class="space-y-2">

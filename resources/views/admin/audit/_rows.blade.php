@@ -12,13 +12,13 @@
 
                         <div class="flex items-center justify-between">
                             @if ($event->causer)
-                                <a
+                                <x-chief::link
                                     href="{{ route('chief.back.audit.show', $event->causer_id) }}"
                                     title="{{ $event->causer->fullname }}"
-                                    class="link link-primary"
+                                    variant="blue"
                                 >
                                     {{ $event->causer->fullname }}
-                                </a>
+                                </x-chief::link>
                             @endif
 
                             <span class="text-grey-500">{{ $event->getReadableCreatedAt() }}</span>

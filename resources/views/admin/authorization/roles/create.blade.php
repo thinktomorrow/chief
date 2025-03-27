@@ -2,7 +2,6 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
                 ['label' => 'Rechten', 'url' => route('chief.back.roles.index'), 'icon' => 'user-star'],
                 'Nieuwe rol toevoegen'
             ]"

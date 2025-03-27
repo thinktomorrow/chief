@@ -2,7 +2,6 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
                 ['label' => 'Menu', 'url' => route('chief.back.menus.index'), 'icon' => 'menu'],
                 ['label' => $menu->getTitle(), 'url' => route('chief.back.menus.show', [$menu->type, $menu->id]), 'icon' => 'menu'],
                 'Herschikken'
@@ -24,7 +23,7 @@
                     class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                 >
                     <div
-                        class="transition-75 h-full cursor-move rounded-md border border-grey-100 bg-grey-50 p-3 hover:bg-grey-100"
+                        class="h-full cursor-move rounded-md border border-grey-100 bg-grey-50 p-3 transition duration-75 ease-in-out hover:bg-grey-100"
                     >
                         <p class="h6 h1-dark text-sm">
                             {{ $menuItem->getLabel() }}

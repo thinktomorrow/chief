@@ -23,8 +23,6 @@
 
         // Init redactor in livewire dialogs
         document.addEventListener('fragment-dialog-opened', () => {
-            console.log('sisisi R');
-
             // Next tick my friend... next tick
             setTimeout(() => {
                 $R('[data-editor]');

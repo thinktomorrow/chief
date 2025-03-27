@@ -1,11 +1,6 @@
 <x-chief::page.template title="Rechten" container="md">
     <x-slot name="header">
-        <x-chief::page.header
-            :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
-                'Rechten'
-            ]"
-        >
+        <x-chief::page.header>
             <x-slot name="actions">
                 <x-chief::button variant="blue" href="{{ route('chief.back.roles.create') }}">
                     Rol toevoegen

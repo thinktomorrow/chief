@@ -34,7 +34,7 @@
                         <a
                             href="{{ $link->url }}"
                             title="Bekijk deze pagina"
-                            class="link {{ $link->is_online ? 'link-primary' : 'link-warning' }} mt-0.5 space-x-1 underline"
+                            class="link {{ $link->is_online ? 'link-blue' : 'link-warning' }} mt-0.5 space-x-1 underline"
                             style="word-break: break-word"
                         >
                             {{ str_replace(['http://', 'https://'], '', $link->url) }}

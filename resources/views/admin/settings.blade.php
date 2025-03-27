@@ -1,8 +1,6 @@
 <x-chief::page.template title="Instellingen" container="md">
     <x-slot name="header">
-        <x-chief::page.header
-            :breadcrumbs="[['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'], 'Instellingen']"
-        >
+        <x-chief::page.header>
             <x-slot name="actions">
                 <x-chief::button form="updateForm" type="submit" variant="blue">Wijzigingen opslaan</x-chief::button>
             </x-slot>

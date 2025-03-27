@@ -112,7 +112,6 @@ class EditContexts extends Component
     private function initialFormValues()
     {
         foreach ($this->contexts as $context) {
-
             if (isset($this->form[$context->id])) {
                 continue;
             }

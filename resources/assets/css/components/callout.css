@@ -9,15 +9,15 @@
 
     /* Sizes */
     .callout-base {
-        @apply gap-2.5 rounded-xl px-4 py-3;
+        @apply gap-2.5 rounded-xl px-4 py-3.5;
 
-        & [data-slot='icon'],
-        & svg {
+        & > [data-slot='icon-container'] > [data-slot='icon'],
+        & > [data-slot='icon-container'] > svg {
             @apply size-6 shrink-0;
         }
 
         & [data-slot='title'] {
-            @apply text-lg/6 font-semibold;
+            @apply text-lg/6 font-medium;
         }
 
         & [data-slot='content'] {
@@ -29,15 +29,15 @@
         }
     }
     .callout-sm {
-        @apply gap-2 rounded-[0.625rem] px-3.5 py-2.5;
+        @apply gap-2 rounded-[0.625rem] px-3.5 py-3;
 
-        & [data-slot='icon'],
-        & svg {
+        & > [data-slot='icon-container'] > [data-slot='icon'],
+        & > [data-slot='icon-container'] > svg {
             @apply size-6 shrink-0;
         }
 
         & [data-slot='title'] {
-            @apply text-base/6 font-semibold;
+            @apply text-base/6 font-medium;
         }
 
         & [data-slot='content'] {
@@ -45,15 +45,15 @@
         }
     }
     .callout-xs {
-        @apply gap-1.5 rounded-lg px-3 py-2;
+        @apply gap-1.5 rounded-lg px-3 py-2.5;
 
-        & [data-slot='icon'],
-        & svg {
+        & > [data-slot='icon-container'] > [data-slot='icon'],
+        & > [data-slot='icon-container'] > svg {
             @apply size-5 shrink-0;
         }
 
         & [data-slot='title'] {
-            @apply text-sm/5 font-semibold;
+            @apply text-sm/5 font-medium;
         }
 
         & [data-slot='content'] {

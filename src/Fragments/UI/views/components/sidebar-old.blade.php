@@ -61,7 +61,7 @@
                             <a
                                 href="{{ $otherOwner['manager']->route('edit', $otherOwner['model']) }}"
                                 title="{{ $otherOwner['pageTitle'] }}"
-                                class="link link-primary underline"
+                                class="link link-blue underline"
                             >
                                 {{ $otherOwner['pageTitle'] }}
                             </a>

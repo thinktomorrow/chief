@@ -28,7 +28,7 @@
     }}
 >
     @if ($icon)
-        <div {{ $icon->attributes->merge(['data-slot' => 'icon']) }}>
+        <div {{ $icon->attributes->merge(['data-slot' => 'icon-container']) }}>
             {{ $icon }}
         </div>
     @endif
@@ -40,7 +40,7 @@
             </p>
         @endif
 
-        <div data-slot="content">
+        <div data-slot="content" class="prose">
             {{ $slot }}
         </div>
     </div>

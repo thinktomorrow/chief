@@ -1,0 +1,12 @@
+[data-slot='window'] + [data-slot='window'] {
+    @apply mt-6;
+}
+
+[data-slot='window'][data-variant='transparent'] + [data-slot='window'][data-variant='transparent'] {
+    @apply mt-0;
+}
+
+[data-slot='window'][data-variant='card'] + [data-slot='window'][data-variant='transparent'],
+[data-slot='window'][data-variant='transparent'] + [data-slot='window'][data-variant='card'] {
+    @apply mt-4;
+}

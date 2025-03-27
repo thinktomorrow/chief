@@ -208,7 +208,7 @@
 
         a:not(.btn):not(.link) {
             @extend .link;
-            @extend .link-primary;
+            @extend .link-blue;
         }
     }
 

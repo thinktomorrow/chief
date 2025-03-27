@@ -8,7 +8,7 @@
         <div class="absolute inset-0 bg-black/50"></div>
 
         <div class="relative rounded-xl bg-white p-12">
-            <button class="btn btn-primary-outline" type="button" x-on:click="close()">X</button>
+            <x-chief::button variant="grey" size="sm" type="button" x-on:click="close()">
 
             <h1>CROPPING</h1>
 
@@ -32,9 +32,9 @@
                     </div>
 
                     <div>
-                        <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
+                        <x-chief::button type="submit" variant="blue" size="sm" wire:click.prevent="submit">
                             Bestand opslaan
-                        </button>
+                        </x-chief::button>
                     </div>
                 </div>
             </form>

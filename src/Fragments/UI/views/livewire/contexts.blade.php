@@ -2,7 +2,7 @@
     $contexts = $this->getContexts();
 @endphp
 
-<x-chief::window>
+<x-chief::window title="Fragmenten">
     <x-slot name="tabs">
         <x-chief::window.tabs>
             @foreach ($contexts as $context)
@@ -14,16 +14,26 @@
                     :active="$context->id === $activeContextId"
                 >
                     {{ $context->title }}
-                    <x-chief::badge>{{ Arr::join($context->locales, ', ', ' en ') }}</x-chief::badge>
                 </x-chief::window.tabs.item>
             @endforeach
 
-            <x-slot name="actions">
-                <x-chief::button wire:click="editContexts" variant="grey" size="sm">
-                    <x-chief::icon.settings />
-                </x-chief::button>
-            </x-slot>
+            <x-chief::window.tabs.item wire:click="editContexts">
+                <x-chief::icon.plus-sign class="size-5" />
+            </x-chief::window.tabs.item>
         </x-chief::window.tabs>
+    </x-slot>
+
+    <x-slot name="badges">
+        {{-- TODO: use active context instead --}}
+        @foreach ($context->locales as $locale)
+            <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
+        @endforeach
+    </x-slot>
+
+    <x-slot name="actions">
+        <x-chief::button wire:click="editContexts" variant="grey" size="sm">
+            <x-chief::icon.settings />
+        </x-chief::button>
     </x-slot>
 
     @foreach ($contexts as $context)

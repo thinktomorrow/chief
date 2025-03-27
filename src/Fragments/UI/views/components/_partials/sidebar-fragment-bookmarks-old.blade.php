@@ -8,7 +8,7 @@
                 title="Ga naar dit fragment op de website"
                 target="_blank"
                 rel="noopener"
-                class="link link-primary"
+                class="link link-blue"
             >
                 <x-chief::button>
                     <svg>
