@@ -1,13 +1,32 @@
-<x-chief::form.fieldset class="w-full">
+<x-chief::form.fieldset class="w-full space-y-2">
     @foreach ($this->getNonAddedSites() as $site)
-        <div class="flex items-start gap-2">
+        {{--
+            <div class="flex items-start gap-2">
             <x-chief::form.input.checkbox
-                id="{{ $site->locale }}"
-                wire:model="addingLocales"
-                value="{{ $site->locale }}"
+            id="{{ $site->locale }}"
+            wire:model="addingLocales"
+            value="{{ $site->locale }}"
             />
             <x-chief::form.label for="{{ $site->locale }}">{{ $site->name }}</x-chief::form.label>
-        </div>
+            </div>
+        --}}
+
+        <label class="flex items-start gap-2 rounded-xl border border-grey-200 p-2">
+            <x-chief::form.input.checkbox
+                wire:model="addingLocales"
+                id="{{ $site->locale }}"
+                value="{{ $site->locale }}"
+                class="peer"
+            />
+
+            <label for="{{ $site->locale }}" class="leading-5">
+                {{ $site->name }}
+                {{ $site->url }}
+                {{ $site->shortName }}
+                {{ $site->locale }}
+                {{ $site->fallbackLocale }}
+            </label>
+        </label>
     @endforeach
 </x-chief::form.fieldset>
 

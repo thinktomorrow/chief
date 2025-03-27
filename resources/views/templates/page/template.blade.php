@@ -37,10 +37,10 @@
                 <x-chief::page.header />
             @endif
 
-            <div class="flex gap-8 max-md:flex-col">
+            <div class="flex gap-6 max-md:flex-col">
                 {{-- Main content --}}
                 {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-                <div class="min-w-0 grow space-y-6">
+                <div class="min-w-0 grow">
                     {{ $slot }}
                 </div>
 
@@ -50,7 +50,7 @@
                         {{
                             $sidebar->attributes->merge([
                                 'role' => 'sidebar',
-                                'class' => 'w-full shrink-0 md:w-64 xl:w-80 2xl:w-96 space-y-6',
+                                'class' => 'w-full shrink-0 md:w-64 lg:w-80 xl:w-96 2xl:w-[26rem]',
                             ])
                         }}
                     >

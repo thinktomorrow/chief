@@ -28,7 +28,7 @@ class FieldPresets
             ->title('Seo')
             ->position('aside')
             ->editInSidebar()
-            ->showAsBlank()
+            // ->showAsBlank()
             ->items([
                 Text::make('seo_title')
                     ->label('Titel')

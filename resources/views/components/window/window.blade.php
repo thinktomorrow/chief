@@ -8,6 +8,8 @@
 ])
 
 <div
+    data-slot="window"
+    data-variant="{{ $variant }}"
     @class([
         '-space-y-px',
         '[&>[data-slot=window-tabs]:has(:first-child[data-slot=inactive-tab])+[data-slot=window-content]]:rounded-tl-xl',
@@ -32,7 +34,7 @@
                 'rounded-b-xl rounded-tr-xl' => $tabs,
                 match ($variant) {
                     'white' => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
-                    'transparent' => '',
+                    'transparent' => 'p-4',
                     default => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
                 },
             ])
@@ -45,7 +47,7 @@
                     <div class="space-y-1.5">
                         <div class="mt-[0.1875rem] flex items-start gap-2">
                             @if ($title)
-                                <h2 class="text-lg/6 font-medium text-grey-950">
+                                <h2 class="font-display text-lg/6 font-semibold text-grey-950">
                                     {!! $title !!}
                                 </h2>
                             @endif

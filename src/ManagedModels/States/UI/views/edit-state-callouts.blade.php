@@ -12,28 +12,26 @@
             <x-chief::callout
                 :title="$transition->title"
                 :variant="match($transition->key) {
-                                'publish' => 'grey',
-                                'archive' => 'orange',
-                                'delete' => 'red',
-                                default => 'grey',
-                            }"
+                    'publish' => 'grey',
+                    'archive' => 'orange',
+                    'delete' => 'red',
+                    default => 'grey',
+                }"
             >
                 <div class="space-y-2">
                     @if ($transition->content)
-                        <div class="prose prose-dark">
-                            <p>{!! $transition->content !!}</p>
-                        </div>
+                        <p class="body">{!! $transition->content !!}</p>
                     @endif
 
                     <x-chief::button
                         x-data
                         x-on:click="$wire.transition('{{ $transition->key }}')"
                         :variant="match($transition->key) {
-                                        'publish' => 'outline-blue',
-                                        'archive' => 'outline-orange',
-                                        'delete' => 'outline-red',
-                                        default => 'outline-white',
-                                    }"
+                            'publish' => 'outline-blue',
+                            'archive' => 'outline-orange',
+                            'delete' => 'outline-red',
+                            default => 'outline-white',
+                        }"
                     >
                         {{ $transition->label }}
                     </x-chief::button>

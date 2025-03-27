@@ -2,7 +2,7 @@
     $sites = $this->getSites();
 @endphp
 
-<x-chief::window title="Sites" variant="transparent">
+<x-chief::window title="Sites">
     <x-slot name="actions">
         @if (count($menus) > 1)
             <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">

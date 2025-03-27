@@ -6,17 +6,17 @@
 @import './components/callout';
 @import './components/dropdown';
 @import './components/dropdown-item';
+@import './components/form/index.css';
 @import './components/format';
 @import './components/label';
 @import './components/link';
 @import './components/prose';
 @import './components/tag';
+@import './components/window';
 
 /* New Table UI button */
 @import './components/bui/button';
 @import './components/bui/link';
-
-@import './components/form/index.css';
 
 @import './general/base';
 @import './general/animations';

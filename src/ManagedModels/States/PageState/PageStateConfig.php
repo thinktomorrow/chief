@@ -128,10 +128,10 @@ class PageStateConfig implements StateAdminConfig
     {
         return match ($state) {
             PageState::published => 'outline-blue',
-            PageState::draft => 'outline-white',
+            PageState::draft => 'outline-orange',
             PageState::archived => 'outline-orange',
             PageState::deleted => 'outline-red',
-            default => 'outline-white',
+            default => 'outline-blue',
         };
     }
 
