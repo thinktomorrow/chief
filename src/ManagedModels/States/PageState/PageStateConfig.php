@@ -112,7 +112,7 @@ class PageStateConfig implements StateAdminConfig
             default => $statefulContract->getState($this->getStateKey())->getValueAsString(),
         };
 
-        if ($this->visitableModelHasAnyLinks($statefulContract)) {
+        if ($statefulContract->inOnlineState() && ! $this->visitableModelHasAnyLinks($statefulContract)) {
             $stateLabel .= ' (link ontbreekt)';
         }
 
@@ -297,7 +297,7 @@ class PageStateConfig implements StateAdminConfig
             return false;
         }
 
-        return $statefulContract->urls->isEmpty();
+        return $statefulContract->urls->isNotEmpty();
     }
 
     private function visitableModelHasAnyOnlineLinks(StatefulContract $statefulContract): bool

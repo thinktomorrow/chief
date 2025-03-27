@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table\Columns\Concerns;
 
 use Closure;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 
@@ -43,17 +44,18 @@ trait HasValueMapping
     public function pageStates(): static
     {
         $this->mapValue(function ($rawValue, ColumnItem $columnItem, $model) {
-            if ($model instanceof Visitable) {
+            if ($model instanceof StatefulContract) {
+                return $model->getStateConfig($columnItem->key)->getStateLabel($model);
+            }
 
+            if ($model instanceof Visitable) {
                 if ($model->inOnlineState()) {
                     if ($model->urls->isNotEmpty()) {
                         return 'gepubliceerd';
                     } else {
-                        return 'link ontbreekt';
+                        return 'gepubliceerd (link ontbreekt)';
                     }
                 }
-
-                return 'draft';
             }
 
             return match ($rawValue) {
