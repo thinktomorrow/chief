@@ -51,19 +51,29 @@ trait StateAdminConfigDefaults
         return null;
     }
 
-    public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable
-    {
-        return [];
-    }
-
     public function hasConfirmationForTransition(string $transitionKey): bool
     {
         return false;
     }
 
-    public function getConfirmationContent(string $transitionKey, StatefulContract $statefulContract): ?string
+    public function getConfirmationLabel(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return $this->getTransitionLabel($statefulContract, $transitionKey);
+    }
+
+    public function getConfirmationTitle(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return $this->getTransitionTitle($statefulContract, $transitionKey);
+    }
+
+    public function getConfirmationContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
+    }
+
+    public function getConfirmationFields(StatefulContract $statefulContract, string $transitionKey): iterable
+    {
+        return [];
     }
 
     public function getAsyncModalUrl(string $transitionKey, StatefulContract $statefulContract): ?string
@@ -71,7 +81,7 @@ trait StateAdminConfigDefaults
         return null;
     }
 
-    public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string
+    public function getRedirectAfterTransition(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
     }

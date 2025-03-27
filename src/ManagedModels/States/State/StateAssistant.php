@@ -99,7 +99,7 @@ trait StateAssistant
         // In case that the state makes the model inaccessible (such as a deletion)
         // we'll want to redirect to a different page.
         $stateConfig = $model->getStateConfig($key);
-        $redirect = $stateConfig->getRedirectAfterTransition($transitionKey, $model);
+        $redirect = $stateConfig->getRedirectAfterTransition($model, $transitionKey);
 
         // A custom redirect is present so we'll return to the redirect.
         if ($redirect && ! $request->expectsJson()) {

@@ -92,6 +92,11 @@ class EditState extends Component
         return $this->findTransition($this->transitionInConfirmationState);
     }
 
+    public function closeConfirm(): void
+    {
+        $this->transitionInConfirmationState = null;
+    }
+
     private function findTransition(string $transitionKey): TransitionDto
     {
         return $this->getTransitions()->first(fn ($transition) => $transition->key === $transitionKey);

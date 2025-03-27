@@ -15,8 +15,10 @@ class TransitionDto
         public readonly ?string $content,
 
         public readonly bool $hasConfirmation,
+        public readonly ?string $confirmationLabel,
+        public readonly ?string $confirmationTitle,
         public readonly ?string $confirmationContent,
-        public readonly array $fields,
+        public readonly array $confirmationFields,
         public readonly ?string $redirectTo,
         public readonly ?string $redirectNotification,
     ) {}
@@ -30,9 +32,11 @@ class TransitionDto
             $config->getTransitionTitle($model, $transitionKey),
             $config->getTransitionContent($model, $transitionKey),
             $config->hasConfirmationForTransition($transitionKey),
-            $config->getConfirmationContent($transitionKey, $model),
-            $config->getTransitionFields($transitionKey, $model),
-            $config->getRedirectAfterTransition($transitionKey, $model),
+            $config->getConfirmationLabel($model, $transitionKey),
+            $config->getConfirmationTitle($model, $transitionKey),
+            $config->getConfirmationContent($model, $transitionKey),
+            $config->getConfirmationFields($model, $transitionKey),
+            $config->getRedirectAfterTransition($model, $transitionKey),
             $config->getResponseNotification($transitionKey),
         );
     }

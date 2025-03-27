@@ -38,7 +38,7 @@ class UpdateState
         $stateConfig = $model->getStateConfig($stateKey);
 
         if ($stateConfig instanceof StateAdminConfig) {
-            $this->saveTransitionFields($resource, $model, $stateConfig->getTransitionFields($transitionKey, $model), $data, $files);
+            $this->saveTransitionFields($resource, $model, $stateConfig->getConfirmationFields($model, $transitionKey), $data, $files);
         }
 
         $formerState = $model->getState($stateKey)->getValueAsString();

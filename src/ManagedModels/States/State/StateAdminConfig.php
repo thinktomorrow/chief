@@ -38,29 +38,27 @@ interface StateAdminConfig extends StateConfig
     public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string;
 
     /**
-     * Optional message to show next to the transition button. If a confirmation modal
-     * is used, this message will be shown in the modal instead of on the edit view
-     */
-    public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable;
-
-    /**
      * Indicates whether or not this transition action requires confirmation via modal
      * Might be a good idea for destructive actions.
      */
     public function hasConfirmationForTransition(string $transitionKey): bool;
 
-    public function getConfirmationContent(string $transitionKey, StatefulContract $statefulContract): ?string;
+    public function getConfirmationLabel(StatefulContract $statefulContract, string $transitionKey): ?string;
+
+    public function getConfirmationTitle(StatefulContract $statefulContract, string $transitionKey): ?string;
+
+    public function getConfirmationContent(StatefulContract $statefulContract, string $transitionKey): ?string;
 
     /**
-     * For modals with heavy content, you can consider loading the modal content async.
-     * Here you can provide the url to request the async content from.
+     * Optional message to show next to the transition button. If a confirmation modal
+     * is used, this message will be shown in the modal instead of on the edit view
      */
-    public function getAsyncModalUrl(string $transitionKey, StatefulContract $statefulContract): ?string;
+    public function getConfirmationFields(StatefulContract $statefulContract, string $transitionKey): iterable;
 
     /**
      * Should the request be redirected after this transition and to where.
      */
-    public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string;
+    public function getRedirectAfterTransition(StatefulContract $statefulContract, string $transitionKey): ?string;
 
     /**
      * The notification shown in the notification bubble

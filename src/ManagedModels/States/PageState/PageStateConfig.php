@@ -186,19 +186,19 @@ class PageStateConfig implements StateAdminConfig
     {
         switch ($transitionKey) {
             case 'publish':
-                return 'Publiceer de pagina';
+                return 'Publiceer';
 
             case 'unpublish':
-                return 'Zet de pagina offline';
+                return 'Draft';
 
             case 'archive':
                 return 'Archiveer';
 
             case 'unarchive':
-                return 'Herstel de pagina uit het archief';
+                return 'Herstel';
 
             case 'delete':
-                return 'Verwijder de pagina';
+                return 'Verwijder';
 
             default:
                 return $transitionKey;
@@ -209,23 +209,17 @@ class PageStateConfig implements StateAdminConfig
     {
         return match ($transitionKey) {
             'publish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
-                ? 'Hiermee zal de pagina onmiddellijk online komen te staan.'
+                ? 'De pagina zal onmiddellijk online komen te staan.'
                 : ($this->visitableModelHasAnyLinks($statefulContract)
-                    ? 'Deze pagina heeft geen online links. Na het publiceren dien je nog de links online te zetten.'
-                    : 'Deze pagina heeft nog geen links. Voeg na het publiceren nog de nodige links toe om de pagina online te zetten.'
+                    ? 'Deze pagina heeft nog geen online links. Om de pagina zichtbaar te maken voor bezoekers, moet je ook nog de links online zetten.'
+                    : 'Deze pagina heeft nog geen links. Om de pagina zichtbaar te maken voor bezoekers, moet je ook nog links toevoegen.'
                 ),
             'unpublish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
-                ? 'Alle links naar deze pagina zullen niet meer werken. Ze werken pas weer zodra de pagina opnieuw wordt gepubliceerd.'
-                : ($this->visitableModelHasAnyLinks($statefulContract)
-                    ? 'Deze pagina heeft geen online links. Het offline halen van deze pagina heeft geen direct effect voor de bezoeker.'
-                    : ''
-                ),
+                ? 'De pagina wordt offline gehaald en alle links zullen niet langer werken. Ze werken pas weer zodra de pagina opnieuw wordt gepubliceerd.'
+                : 'De pagina is nog niet klaar voor publicatie en wordt terug in draft gezet.',
             'archive' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
                 ? 'Na het archiveren zullen alle links naar deze pagina niet meer werken. Zorg best voor een redirect naar een andere pagina zodat bezoekers altijd op een bestaande pagina terechtkomen.'
-                : ($this->visitableModelHasAnyLinks($statefulContract)
-                    ? 'Eenmaal gearchiveerd kan je de pagina nog herstellen vanuit het archief.'
-                    : 'Eenmaal gearchiveerd kan je de pagina nog herstellen vanuit het archief.'
-                ),
+                : 'Hiermee verplaats je de pagina naar het archief. Alle pagina links zullen worden verwijderd. Je kan de pagina nadien nog herstellen vanuit het archief.',
             'delete' => 'Opgelet! Het verwijderen van een pagina is definitief en kan niet worden ongedaan gemaakt. Links zullen worden verwijderd.',
             default => null,
         };
@@ -240,7 +234,25 @@ class PageStateConfig implements StateAdminConfig
         return false;
     }
 
-    public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string
+    public function getConfirmationContent(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        if ($transitionKey == 'archive') {
+            $manager = app(Registry::class)->findManagerByModel($statefulContract::class);
+            $resource = app(Registry::class)->findResourceByModel($statefulContract::class);
+
+            return view('chief-states::archive-confirmation', [
+                'manager' => $manager,
+                'model' => $statefulContract,
+                'resource' => $resource,
+                'stateConfig' => $statefulContract->getStateConfig(PageState::KEY),
+                'targetModels' => UrlHelper::allOnlineModels(false, $statefulContract),
+            ])->render();
+        }
+
+        return $this->getTransitionContent($statefulContract, $transitionKey);
+    }
+
+    public function getRedirectAfterTransition(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         if (in_array($transitionKey, ['archive', 'unarchive', 'delete'])) {
             return app(Registry::class)->findManagerByModel($statefulContract::class)->route('index');
@@ -265,24 +277,6 @@ class PageStateConfig implements StateAdminConfig
 
         if ($transitionKey == 'delete') {
             return 'De pagina is definitief verwijderd.';
-        }
-
-        return null;
-    }
-
-    public function getConfirmationContent(string $transitionKey, StatefulContract $statefulContract): ?string
-    {
-        if ($transitionKey == 'archive') {
-            $manager = app(Registry::class)->findManagerByModel($statefulContract::class);
-            $resource = app(Registry::class)->findResourceByModel($statefulContract::class);
-
-            return view('chief-states::archive-confirmation', [
-                'manager' => $manager,
-                'model' => $statefulContract,
-                'resource' => $resource,
-                'stateConfig' => $statefulContract->getStateConfig(PageState::KEY),
-                'targetModels' => UrlHelper::allOnlineModels(false, $statefulContract),
-            ])->render();
         }
 
         return null;

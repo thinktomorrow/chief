@@ -138,7 +138,7 @@ class SimpleStateConfig implements StateAdminConfig
         return false;
     }
 
-    public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string
+    public function getRedirectAfterTransition(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         if (in_array($transitionKey, ['delete'])) {
             return app(Registry::class)->findManagerByModel($statefulContract::class)->route('index');
