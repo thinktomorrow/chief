@@ -1,9 +1,9 @@
-<x-chief::page.template title="Menu overzicht" container="md">
+<x-chief::page.template title="Site menus" container="md">
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
                 ['label' => 'Dashboard', 'url' => route('chief.back.dashboard'), 'icon' => 'home'],
-                'Menu overzicht'
+                'Menus'
             ]"
         />
     </x-slot>
