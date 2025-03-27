@@ -10,7 +10,7 @@
         {{ $slot }}
 
         @if (isset($required) && $required)
-            <span class="text-orange-500">*</span>
+            <span class="text-secondary-400">*</span>
         @endif
     </label>
 @endif

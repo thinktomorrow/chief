@@ -25,7 +25,9 @@
 
     <x-slot name="badges">
         {{-- TODO: use active context instead --}}
-        <x-chief::badge size="sm">{{ Arr::join($context->locales, ', ') }}</x-chief::badge>
+        @foreach ($context->locales as $locale)
+            <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
+        @endforeach
     </x-slot>
 
     <x-slot name="actions">

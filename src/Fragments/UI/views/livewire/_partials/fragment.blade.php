@@ -3,16 +3,20 @@
     wire:key="{{ 'context-fragment-' . $fragment->getId() }}"
     x-sortable-item="{{ $fragment->fragmentId }}"
 >
-    <div class="space-y-2 py-4">
+    <div class="space-y-1 py-4">
         <div class="flex items-start justify-end gap-3">
             <x-chief::button x-sortable-handle size="sm" variant="outline-white" title="herschikken" class="shrink-0">
                 <x-chief::icon.drag-drop-vertical />
             </x-chief::button>
 
-            <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-2">
+            <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-1.5">
                 <h3 class="text-base/6 font-medium text-grey-800">
                     {{ ucfirst($fragment->label) }}
                 </h3>
+
+                <div class="shrink-0 text-grey-400 *:size-6">
+                    {!! $fragment->icon !!}
+                </div>
 
                 <div class="flex flex-wrap items-start gap-1">
                     @if (! $fragment->isOnline)

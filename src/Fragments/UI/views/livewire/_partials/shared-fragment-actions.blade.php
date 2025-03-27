@@ -57,20 +57,19 @@
 
     <x-chief::callout data-slot="form-group" variant="blue" title="Gedeeld fragment">
         <x-slot name="icon">
-            <x-chief::icon.information-diamond />
+            <x-chief::icon.solid.information-diamond />
         </x-slot>
 
         <p>
             Dit fragment is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit fragment, worden
             deze op alle gekoppelde plaatsen doorgevoerd.
 
-            <button
-                type="button"
-                class="underline"
+            <x-chief::link
                 x-on:click="$dispatch('open-dialog', { 'id': 'shared-fragment-modal-{{ $this->getId() }}' })"
+                class="underline"
             >
                 Bekijk koppelingen
-            </button>
+            </x-chief::link>
         </p>
     </x-chief::callout>
 @endif

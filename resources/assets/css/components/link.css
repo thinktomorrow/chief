@@ -6,7 +6,7 @@
     .link {
         @apply inline-flex items-start text-left font-medium;
         @apply transition-all duration-150 ease-in-out;
-        @apply hover:underline hover:underline-offset-2;
+        @apply underline-offset-2 hover:underline;
     }
 
     /* Sizes */
@@ -35,6 +35,9 @@
     /* Variants */
     .link-blue {
         @apply text-primary-500 hover:text-primary-600;
+    }
+    .link-red {
+        @apply text-red-500 hover:text-red-600;
     }
     .link-body-dark {
         @apply text-grey-700 hover:text-primary-600;

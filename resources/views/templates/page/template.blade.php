@@ -20,7 +20,7 @@
         <div
             {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
             @class([
-                'container min-w-0 grow space-y-8 py-8',
+                'container min-w-0 grow space-y-6 py-8',
                 'max-w-screen-sm' => $container === 'sm',
                 'max-w-screen-md' => $container === 'md',
                 'max-w-screen-lg' => $container === 'lg',

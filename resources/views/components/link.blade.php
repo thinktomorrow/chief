@@ -14,6 +14,7 @@
         },
         match ($variant) {
             'blue' => 'link-blue',
+            'red' => 'link-red',
             'body-dark' => 'link-body-dark',
             default => 'link-body-dark',
         },

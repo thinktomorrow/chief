@@ -1,6 +1,7 @@
 @props([
     'title' => null,
     'subtitle' => null,
+    'actions' => [],
 ])
 
 @aware(['title', 'subtitle'])
@@ -21,8 +22,14 @@
             @endif
         </div>
 
-        <x-chief::button size="sm" variant="grey" type="button" x-on:click.stop="close()" class="ml-auto shrink-0">
-            <x-chief::icon.cancel />
-        </x-chief::button>
+        <div class="ml-auto flex shrink-0 items-start justify-end gap-1.5">
+            @if ($actions)
+                {{ $actions }}
+            @endif
+
+            <x-chief::button size="sm" variant="grey" type="button" x-on:click.stop="close()">
+                <x-chief::icon.cancel />
+            </x-chief::button>
+        </div>
     </header>
 @endif
