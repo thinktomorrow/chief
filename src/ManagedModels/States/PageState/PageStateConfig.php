@@ -99,7 +99,7 @@ class PageStateConfig implements StateAdminConfig
 
     public function getEditTitle(StatefulContract $statefulContract): string
     {
-        return 'Publicatie';
+        return 'Pas de pagina status aan';
     }
 
     public function getStateLabel(StatefulContract $statefulContract): ?string
@@ -137,23 +137,20 @@ class PageStateConfig implements StateAdminConfig
 
     public function getEditContent(StatefulContract $statefulContract): ?string
     {
-        $state = $statefulContract->getState($this->getStateKey());
-
-        if ($state == PageState::draft) {
-            return '<p>De pagina staat nog in draft.</p>';
-        }
-
-        if ($state == PageState::published) {
-            return '<p>De pagina is gepubliceerd. 👍</p>';
-        }
-
-        return null;
+        return match ($statefulContract->getState($this->getStateKey())) {
+            PageState::draft => '<p>De pagina staat momenteel in draft. Klik op publiceren om de pagina online te zetten.</p>',
+            PageState::published => '<p>De pagina is momenteel gepubliceerd. Klik op offline halen om de pagina offline te zetten.</p>',
+            PageState::archived => '<p>De pagina is momenteel gearchiveerd. Klik op herstellen om de pagina terug online te zetten.</p>',
+            default => null,
+        };
     }
 
     public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
+                return 'Publiceer';
+
                 return 'Publiceer';
 
             case 'unpublish':
@@ -189,19 +186,19 @@ class PageStateConfig implements StateAdminConfig
     {
         switch ($transitionKey) {
             case 'publish':
-                return 'Publiceer deze pagina';
+                return 'Publiceer de pagina';
 
             case 'unpublish':
-                return 'Hall pagina offline';
+                return 'Zet de pagina offline';
 
             case 'archive':
                 return 'Archiveer';
 
             case 'unarchive':
-                return 'Haal uit archief';
+                return 'Herstel de pagina uit het archief';
 
             case 'delete':
-                return 'Verwijder';
+                return 'Verwijder de pagina';
 
             default:
                 return $transitionKey;
@@ -214,8 +211,8 @@ class PageStateConfig implements StateAdminConfig
             'publish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
                 ? 'Hiermee zal de pagina onmiddellijk online komen te staan.'
                 : ($this->visitableModelHasAnyLinks($statefulContract)
-                    ? 'Opgelet! Deze pagina heeft geen online links. Na het publiceren dien je nog de links online te zetten.'
-                    : 'Opgelet! Deze pagina heeft nog geen links. Voeg na het publiceren nog de nodige links toe om de pagina online te zetten.'
+                    ? 'Deze pagina heeft geen online links. Na het publiceren dien je nog de links online te zetten.'
+                    : 'Deze pagina heeft nog geen links. Voeg na het publiceren nog de nodige links toe om de pagina online te zetten.'
                 ),
             'unpublish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
                 ? 'Alle links naar deze pagina zullen niet meer werken. Ze werken pas weer zodra de pagina opnieuw wordt gepubliceerd.'

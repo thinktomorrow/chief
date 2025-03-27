@@ -1,4 +1,4 @@
-<x-chief::dialog.drawer wired>
+<x-chief::dialog.modal wired>
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}
@@ -77,4 +77,4 @@
             @endif
         </div>
     @endif
-</x-chief::dialog.drawer>
+</x-chief::dialog.modal>
