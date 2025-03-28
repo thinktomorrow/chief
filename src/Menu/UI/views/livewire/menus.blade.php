@@ -2,7 +2,7 @@
     $menus = $this->getMenus();
 @endphp
 
-<x-chief::window>
+<x-chief::window title="Menu items">
     <x-slot name="tabs">
         <x-chief::window.tabs>
             @foreach ($menus as $menu)
@@ -14,16 +14,26 @@
                     :active="$menu->id === $activeMenuId"
                 >
                     {{ $menu->title }}
-                    {{-- <x-chief::badge>{{ Arr::join($menu->locales, ', ', ' en ') }}</x-chief::badge> --}}
                 </x-chief::window.tabs.item>
             @endforeach
 
-            <x-slot name="actions">
-                <x-chief::button wire:click="editMenus" variant="grey" size="sm">
-                    <x-chief::icon.settings />
-                </x-chief::button>
-            </x-slot>
+            <x-chief::window.tabs.item wire:click="editMenus">
+                <x-chief::icon.plus-sign class="size-5" />
+            </x-chief::window.tabs.item>
         </x-chief::window.tabs>
+    </x-slot>
+
+    <x-slot name="badges">
+        {{-- TODO: use active context instead --}}
+        @foreach ($menu->locales as $locale)
+            <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
+        @endforeach
+    </x-slot>
+
+    <x-slot name="actions">
+        <x-chief::button wire:click="editMenus" variant="grey" size="sm">
+            <x-chief::icon.settings />
+        </x-chief::button>
     </x-slot>
 
     @foreach ($menus as $menu)
