@@ -2,7 +2,7 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => $resource->getIndexTitle($model), 'url' => $manager->route('index', $model), 'icon' => $resource->getNavItem()?->icon()],
+                ['label' => $resource->getIndexTitle(), 'url' => $manager->route('index'), 'icon' => $resource->getNavItem()?->icon()],
                 'Herschikken'
             ]"
         />
