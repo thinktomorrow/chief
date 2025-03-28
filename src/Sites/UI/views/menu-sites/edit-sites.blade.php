@@ -1,9 +1,4 @@
-<x-chief::dialog.drawer
-    wired
-    size="sm"
-    title="Bepaal het menu per site"
-    :edge-to-edge="true"
->
+<x-chief::dialog.drawer wired size="sm" title="Bepaal het menu per site">
     @if ($isOpen)
         @include('chief-sites::menu-sites.edit-sites-items')
 

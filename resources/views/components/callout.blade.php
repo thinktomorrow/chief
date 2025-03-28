@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    <div>
+    <div class="grow">
         @if ($title)
             <p data-slot="title">
                 {{ $title }}

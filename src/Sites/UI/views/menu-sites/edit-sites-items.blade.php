@@ -1,26 +1,32 @@
-<div class="divide-y divide-grey-100">
+<div class="space-y-4">
     @foreach ($this->sites as $i => $site)
-        <div wire:key="{{ $site->locale }}" class="space-y-3 px-4 py-6">
-            <div class="flex items-start justify-between gap-2">
-                <div class="mt-[0.1875rem] flex items-center gap-2">
-                    <h3 class="text-sm/6 font-medium text-grey-500">{{ $site->name }}</h3>
-                </div>
-            </div>
+        <x-chief::callout :title="$site->name" wire:key="{{ $site->locale }}" variant="outline-white">
+            <div class="space-y-3">
+                <div class="flex items-start justify-between gap-2">
+                    <div class="mt-[0.1875rem] flex items-center gap-2">
+                        <p class="text-sm/6 font-medium text-grey-500">{{ $site->url }}</p>
+                    </div>
 
-            <div class="w-full lg:w-1/2">
+                    <x-chief::button
+                        x-on:click="$wire.deleteSite('{{ $site->locale }}')"
+                        variant="outline-red"
+                        size="sm"
+                    >
+                        <x-chief::icon.delete />
+                    </x-chief::button>
+                </div>
+
                 <x-chief::form.fieldset rule="menu">
-                    <x-chief::form.input.select wire:model="form.{{ $site->locale }}.menu">
+                    <x-chief::form.label for="menu">Menuopbouw</x-chief::form.label>
+                    <x-chief::form.input.select id="menu" wire:model="form.{{ $site->locale }}.menu">
                         @foreach ($menus as $menu)
-                            <option
-                                wire:key="menu-option-{{ $menu->id }}"
-                                value="{{ $menu->id }}"
-                            >
+                            <option wire:key="menu-option-{{ $menu->id }}" value="{{ $menu->id }}">
                                 {{ $menu->title }}
                             </option>
                         @endforeach
                     </x-chief::form.input.select>
                 </x-chief::form.fieldset>
             </div>
-        </div>
+        </x-chief::callout>
     @endforeach
 </div>
