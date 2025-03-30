@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
@@ -17,7 +17,7 @@ class ComposeFieldLines
         Fields\Text::class,
         Fields\Textarea::class,
         Fields\Html::class,
-        Fields\Repeat\Repeat::class,
+        Fields\Repeat::class,
     ];
 
     private LinesCollection $lines;

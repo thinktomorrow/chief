@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FormsAssistant
@@ -37,7 +37,7 @@ trait FormsAssistant
         $this->guard('form-edit', $model);
 
         // TODO: unify default form routes to the form itself...
-        View::share('form', Forms::make($this->resource->fields($model))->find($formId)->fill($this, $model));
+        View::share('form', Layout::make($this->resource->fields($model))->findForm($formId)->fill($this, $model));
 
         return view('chief-form::templates.form-in-sidebar');
     }
@@ -48,7 +48,7 @@ trait FormsAssistant
 
         $this->guard('form-update', $model);
 
-        $form = Forms::make($this->resource->fields($model))
+        $form = Layout::make($this->resource->fields($model))
             ->fillModel($model)
             ->find($formId);
 
@@ -73,7 +73,7 @@ trait FormsAssistant
 
         $this->guard('form-show', $model);
 
-        return Forms::make($this->resource->fields($model))->find($formId)->fill($this, $model)->toHtml();
+        return Layout::make($this->resource->fields($model))->find($formId)->fill($this, $model)->toHtml();
     }
 
     abstract protected function fieldsModel($id);

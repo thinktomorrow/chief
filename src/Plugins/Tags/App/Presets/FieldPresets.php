@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Plugins\Tags\App\Presets;
 
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagRead;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
@@ -18,8 +18,6 @@ class FieldPresets
         yield Form::make('tags')
             ->title('Tags')
             ->position('aside')
-            ->editInSidebar()
-            ->showAsBlank()
             ->items([
                 $field ?: static::tagSelect($model),
             ]);

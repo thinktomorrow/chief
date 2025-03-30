@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Tests;
 
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 
 class FormTest extends TestCase
 {

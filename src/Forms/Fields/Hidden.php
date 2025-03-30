@@ -8,5 +8,5 @@ class Hidden extends Component implements Field
 {
     protected string $view = 'chief-form::fields.hidden';
 
-    protected string $windowView = 'chief-form::fields.hidden-window';
+    protected string $previewView = 'chief-form::previews.fields.hidden';
 }

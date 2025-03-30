@@ -6,20 +6,21 @@ trait HasView
 {
     protected string $view;
 
-    protected string $windowView;
+    protected string $previewView;
 
-    protected bool $editInSidebar = false;
-
-    public function getEditInSidebar(): bool
-    {
-        return $this->editInSidebar;
-    }
+    //    protected bool $editInSidebar = false;
+    //
+    //    public function getEditInSidebar(): bool
+    //    {
+    //        return $this->editInSidebar;
+    //    }
 
     public function getView(): string
     {
-        return ($this->editInSidebar && isset($this->windowView))
-            ? $this->windowView
-            : $this->view;
+        return $this->view;
+        //        return ($this->editInSidebar && isset($this->previewView))
+        //            ? $this->previewView
+        //            : $this->view;
     }
 
     public function setView(string $view): static
@@ -29,28 +30,33 @@ trait HasView
         return $this;
     }
 
-    public function windowView(string $windowView): static
+    public function previewView(string $previewView): static
     {
-        $this->windowView = $windowView;
+        $this->previewView = $previewView;
 
         return $this;
     }
 
-    public function editInSidebar(?string $windowView = null): static
+    public function getPreviewView(): string
     {
-        $this->editInSidebar = true;
-
-        if ($windowView) {
-            $this->windowView($windowView);
-        }
-
-        return $this;
+        return $this->previewView;
     }
 
-    public function editInline(): static
-    {
-        $this->editInSidebar = false;
-
-        return $this;
-    }
+    //    public function editInSidebar(?string $previewView = null): static
+    //    {
+    //        $this->editInSidebar = true;
+    //
+    //        if ($previewView) {
+    //            $this->previewView($previewView);
+    //        }
+    //
+    //        return $this;
+    //    }
+    //
+    //    public function editInline(): static
+    //    {
+    //        $this->editInSidebar = false;
+    //
+    //        return $this;
+    //    }
 }

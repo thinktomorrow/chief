@@ -8,16 +8,18 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 
 class FieldPresets
 {
     public static function pagetitle(?Field $field = null): iterable
     {
-        yield Form::make('pagetitle')->editInSidebar(
-            'chief-form::templates.pagetitle.form-in-pagetitle',
-            'chief-form::templates.pagetitle.form-in-inline-container',
-        )->items([
+        // ->editInSidebar(
+        //            'chief-form::templates.pagetitle.form-in-pagetitle',
+        //            'chief-form::templates.pagetitle.form-in-inline-container',
+        //        )
+
+        yield Form::make('pagetitle')->items([
             $field ?? Text::make('title')->label('Titel')->locales()->required(),
         ]);
     }
@@ -27,8 +29,6 @@ class FieldPresets
         yield Form::make('form_seo')
             ->title('Seo')
             ->position('aside')
-            ->editInSidebar()
-            ->showAsBlank()
             ->items([
                 Text::make('seo_title')
                     ->label('Titel')

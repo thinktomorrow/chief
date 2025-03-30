@@ -95,6 +95,13 @@ Replaced old renderFragment() and renderAdminFragment() methods with new render(
 - Properties `viewPath` and `adminViewPath` allow to set the view path of the fragment.
 - Removed: `renderFragment()` and `renderAdminFragment()` methods.
 
+### Form livewire component
+
+- Removed: `Form::action()`, `Form::windowAction()`;  `Form::refreshUrl()` and `Form::redirectAfterSubmit()` methods.
+- Removed: `Field::editInSidebar()` and `Field::editInline()` methods.
+- Removed: `Form::windowContainerView()` and `Form::previewView()`. Just use `Form::view()` instead.
+- Removed: Form `ProtectAgainstFill` trait.
+
 ### New glossary
 
 #### Section
@@ -115,7 +122,8 @@ Sections are the html elements that can be referenced via bookmarks.
 - A new `x-chief::dialog.drawer` component. This component consists of two new smaller components:
     - Drawer header: `x-chief::dialog.drawer.header`
     - Drawer footer: `x-chief::dialog.drawer.footer`
-- Refactored the `x-chief::dialog.modal` component so it uses the same API as the new `x-chief::dialog.drawer` component. Built with the following components:
+- Refactored the `x-chief::dialog.modal` component so it uses the same API as the new `x-chief::dialog.drawer`
+  component. Built with the following components:
     - Modal header: `x-chief::dialog.modal.header`
     - Modal footer: `x-chief::dialog.modal.footer`
 
@@ -130,7 +138,8 @@ A firm clean-up of all existing form styling/components.
 
 ##### New components:
 
-- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested components are using the correct margins, relative to each other.
+- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested
+  components are using the correct margins, relative to each other.
 
 ##### Renamed components:
 
@@ -140,7 +149,8 @@ A firm clean-up of all existing form styling/components.
 
 ##### Clean-up
 
-- Changed all `x-chief::button` components to the newer `x-chief-table::button`. Then `x-chief-table::button` was renamed to the existing, shorter `x-chief::button`.
+- Changed all `x-chief::button` components to the newer `x-chief-table::button`. Then `x-chief-table::button` was
+  renamed to the existing, shorter `x-chief::button`.
 - Changed the `x-chief::link` component so it works with a similar API as the `x-chief::button` component.
 - Removed some legacy css styling
     - `form.css`: not in use for quiet some time

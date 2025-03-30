@@ -7,13 +7,13 @@ namespace Thinktomorrow\Chief\Forms\Dialogs;
 use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
+use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayout;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasButton;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogType;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
-use Thinktomorrow\Chief\Forms\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Component;
 
 class Dialog extends Component implements Wireable
@@ -27,9 +27,9 @@ class Dialog extends Component implements Wireable
     use HasModel;
     use HasSubTitle;
 
-    public function __construct(string $id = 'modal')
+    public function __construct(string $key = 'modal')
     {
-        parent::__construct($id);
+        parent::__construct($key);
 
         $this->elementId($this->id.'_'.Str::random());
     }

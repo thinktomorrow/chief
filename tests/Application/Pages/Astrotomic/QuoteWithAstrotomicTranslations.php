@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;

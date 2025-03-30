@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use Thinktomorrow\Chief\Forms\Concerns\HasCollapsible;
-use Thinktomorrow\Chief\Forms\Concerns\HasLayoutType;
+use Thinktomorrow\Chief\Forms\Concerns\HasLayoutVariant;
 
 class Card extends Component
 {
     use HasCollapsible;
-    use HasLayoutType;
+    use HasLayoutVariant;
 
     protected string $view = 'chief-form::layouts.card';
 
-    protected string $windowView = 'chief-form::layouts.default-window';
+    protected string $previewView = 'chief-form::layouts.default-window';
 
-    public function __construct(?string $id = null)
+    public function __construct(?string $key = null)
     {
-        parent::__construct($id);
+        parent::__construct($key);
 
-        $this->layoutType(LayoutType::default->value);
+        $this->layoutType(LayoutVariant::default->value);
     }
 }

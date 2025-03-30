@@ -21,7 +21,7 @@ class SelectList extends Component implements Field
 
     protected string $view = 'chief-form::fields.select-list';
 
-    protected string $windowView = 'chief-form::fields.select-window';
+    protected string $previewView = 'chief-form::previews.fields.select';
 
     public function getMultiSelectFieldOptions(?string $locale = null): array
     {

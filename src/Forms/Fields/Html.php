@@ -12,5 +12,5 @@ class Html extends Component implements Field
 
     protected string $view = 'chief-form::fields.html';
 
-    protected string $windowView = 'chief-form::fields.html-window';
+    protected string $previewView = 'chief-form::previews.fields.html';
 }

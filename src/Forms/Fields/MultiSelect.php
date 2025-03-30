@@ -23,7 +23,16 @@ class MultiSelect extends Component implements Field
 
     protected string $view = 'chief-form::fields.multiselect';
 
-    protected string $windowView = 'chief-form::fields.select-window';
+    protected string $previewView = 'chief-form::previews.fields.select';
+
+    public function __construct(string $key)
+    {
+        parent::__construct($key);
+
+        $this->prepForSaving(function ($value) {
+            return $this->allowMultiple() ? $value : (is_array($value) && count($value) ? reset($value) : null);
+        });
+    }
 
     public function getMultiSelectFieldOptions(?string $locale = null): array
     {

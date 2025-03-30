@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Http;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Forms\SaveFields;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 
 class DayController extends Controller
@@ -29,7 +29,7 @@ class DayController extends Controller
         [$model, $fields] = $this->getModelAndFields($id);
 
         // Enrich fields with the layout components
-        $forms = Forms::make($model->fields($model))->fillModel($model)->getComponents();
+        $forms = Layout::make($model->fields($model))->model($model)->getComponents();
         $fields = $forms[0]->getComponents();
 
         return view('chief-timetable::days.edit', [

@@ -14,7 +14,7 @@ class Date extends Component implements Field
 
     protected string $view = 'chief-form::fields.date';
 
-    protected string $windowView = 'chief-form::fields.date-window';
+    protected string $previewView = 'chief-form::previews.fields.date';
 
     public function getValue(?string $locale = null): mixed
     {

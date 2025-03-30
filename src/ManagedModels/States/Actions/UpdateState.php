@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\Actions;
 
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\Events\ModelStateUpdated;

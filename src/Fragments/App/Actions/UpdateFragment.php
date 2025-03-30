@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 
@@ -23,8 +23,8 @@ class UpdateFragment
     {
         $fragment = $this->repository->find($fragmentId);
 
-        $forms = Forms::make($fragment->fields($fragment))
-            ->fillModel($fragment->getFragmentModel());
+        $forms = Layout::make($fragment->fields($fragment))
+            ->model($fragment->getFragmentModel());
 
         $this->validator->handle($forms->getFields(), $data);
 

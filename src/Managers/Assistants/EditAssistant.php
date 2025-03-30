@@ -5,11 +5,9 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -65,33 +63,20 @@ trait EditAssistant
         View::share('manager', $this);
         View::share('model', $model);
         View::share('resource', $this->resource);
-        View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
+        View::share('layout', Layout::make($this->resource->fields($model))->model($model));
 
         // Find or create the context... TODO: this should be something to do elsewhere?
 
-        // WIP
-        $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
-        View::share('contexts', $contexts);
-        View::share('context', $contexts->first());
-        View::share('contextsForSwitch', $contexts);
-
-        //        $contextsForSwitch = app(\Thinktomorrow\Chief\Fragments\Models\ContextRepository::class)->getOrCreateByOwner($model)->map(function($context){ return [
-        //            'id' => $context->id,
-        //            'locale' => $context->locale,
-        //            'refreshUrl' => route('chief::fragments.refresh-index', $context->id)
-        //        ];
-        //        });
-
-        $stateConfigs = [];
-
-        if ($model instanceof StatefulContract) {
-            $stateConfigs = collect($model->getStateKeys())
-                ->map(fn (string $stateKey) => $model->getStateConfig($stateKey))
-                ->filter(fn ($stateConfig) => $stateConfig instanceof StateAdminConfig)
-                ->all();
-        }
-
-        View::share('stateConfigs', $stateConfigs);
+        //        $stateConfigs = [];
+        //
+        //        if ($model instanceof StatefulContract) {
+        //            $stateConfigs = collect($model->getStateKeys())
+        //                ->map(fn (string $stateKey) => $model->getStateConfig($stateKey))
+        //                ->filter(fn ($stateConfig) => $stateConfig instanceof StateAdminConfig)
+        //                ->all();
+        //        }
+        //
+        //        View::share('stateConfigs', $stateConfigs);
 
         return $this->resource->getPageView();
     }
@@ -110,8 +95,8 @@ trait EditAssistant
 
         $this->guard('update', $model);
 
-        $fields = Forms::make($this->resource->fields($model))
-            ->fillModel($model)
+        $fields = Layout::make($this->resource->fields($model))
+            ->model($model)
             ->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());

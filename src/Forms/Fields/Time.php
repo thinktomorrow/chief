@@ -12,7 +12,7 @@ class Time extends Component implements Field
 
     protected string $view = 'chief-form::fields.time';
 
-    protected string $windowView = 'chief-form::fields.time-window';
+    protected string $previewView = 'chief-form::previews.fields.time';
 
     public static function make(string $key)
     {

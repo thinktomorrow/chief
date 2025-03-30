@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions;
 
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 
 class NestableFormPresets
 {
@@ -12,8 +12,6 @@ class NestableFormPresets
         yield Form::make('nestable_parent_form')
             ->title('Bovenliggend item')
             ->position('aside')
-            ->editInSidebar()
-            ->showAsBlank()
             ->items([
                 MultiSelect::make('parent_id')
                     ->description('Onder welk item hoort deze thuis?')

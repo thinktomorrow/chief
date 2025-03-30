@@ -12,5 +12,5 @@ class Textarea extends Component implements Field
 
     protected string $view = 'chief-form::fields.textarea';
 
-    protected string $windowView = 'chief-form::fields.textarea-window';
+    protected string $previewView = 'chief-form::previews.fields.textarea';
 }

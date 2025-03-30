@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -47,9 +47,9 @@ trait CreateAssistant
         View::share('model', $model);
         View::share('resource', $this->resource);
 
-        View::share('forms', Forms::make($this->resource->fields($model))
-            ->fillModel($model)
-            ->fillFields($this, $model));
+        View::share('forms', Layout::make($this->resource->fields($model))
+            ->model($model));
+        //            ->fillFields($this, $model));
 
         return $this->resource->getCreatePageView();
     }
@@ -77,8 +77,8 @@ trait CreateAssistant
     {
         $model = $this->managedModelClassInstance(...$this->resource->getInstanceAttributes($request));
 
-        $fields = Forms::make($this->resource->fields($model))
-            ->fillModel($model)
+        $fields = Layout::make($this->resource->fields($model))
+            ->model($model)
             ->getFields()
             ->filterByNotTagged(['edit', 'not-on-create']);
 

@@ -4,11 +4,11 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\_partials;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\InteractsWithFields;
 
 trait AddsNewFragments
 {
@@ -36,9 +36,9 @@ trait AddsNewFragments
     {
         $fragment = $this->getFragment();
 
-        $forms = Forms::make($fragment->fields($fragment))
+        $forms = Layout::make($fragment->fields($fragment))
             ->filterByNotTagged(['edit', 'not-on-create']) // TODO: make consistent tags...
-            ->get();
+            ->getComponents();
 
         return collect($forms)->map(fn ($form) => $form->getComponents())->flatten();
     }

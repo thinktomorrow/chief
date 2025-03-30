@@ -6,7 +6,8 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
@@ -89,9 +90,9 @@ class EditFragment extends Component
 
     public function getFields(): Collection
     {
-        $forms = Forms::make($this->fragment->fields)
-            ->fillModel($this->fragment->getFragmentModel())
-            ->get();
+        $forms = Layout::make($this->fragment->fields)
+            ->model($this->fragment->getFragmentModel())
+            ->getComponents();
 
         return collect($forms)->map(fn ($form) => $form->getComponents())->flatten();
     }

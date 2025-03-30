@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 
@@ -51,7 +51,7 @@ class ArticlePageResource implements PageResource
         yield Image::make(ArticlePage::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
         yield File::make(ArticlePage::FILEFIELD_ASSETTYPE_KEY)->assetType('custom')->tag('edit');
 
-        yield Text::make('title_sanitized')->prepare(function ($value, array $input) {
+        yield Text::make('title_sanitized')->prepForSaving(function ($value, array $input) {
             if ($value) {
                 return $value;
             }
@@ -62,7 +62,7 @@ class ArticlePageResource implements PageResource
             return null;
         });
 
-        yield Text::make('title_sanitized_trans')->locales()->prepare(function ($value, array $input, $locale = null) {
+        yield Text::make('title_sanitized_trans')->locales()->prepForSaving(function ($value, array $input, $locale = null) {
             if ($value) {
                 return $value;
             }

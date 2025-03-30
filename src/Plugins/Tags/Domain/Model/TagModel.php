@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;

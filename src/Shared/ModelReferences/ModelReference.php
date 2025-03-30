@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Shared\ModelReferences;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Livewire\Wireable;
 
-final class ModelReference
+final class ModelReference implements Wireable
 {
     private string $className;
 
@@ -155,5 +156,15 @@ final class ModelReference
         if (! $className) {
             throw new InvalidModelReference('['.$className.'] is not a valid class reference.');
         }
+    }
+
+    public function toLivewire()
+    {
+        return ['model-reference' => $this->get()];
+    }
+
+    public static function fromLivewire($value)
+    {
+        return self::fromString($value['model-reference']);
     }
 }

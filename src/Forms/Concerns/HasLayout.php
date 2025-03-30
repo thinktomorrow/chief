@@ -4,33 +4,26 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Concerns;
 
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
-
 trait HasLayout
 {
-    protected Layout $layout = Layout::card;
+    protected string $layout = 'card';
 
-    public function getLayout(): Layout
+    public function getLayout(): string
     {
         return $this->layout;
     }
 
     public function showAsCard(): static
     {
-        $this->layout = Layout::card;
+        $this->layout = 'card';
 
         return $this;
     }
 
     public function showAsBlank(): static
     {
-        $this->layout = Layout::blank;
+        $this->layout = 'blank';
 
         return $this;
-    }
-
-    public function showAsGard(): static
-    {
-        return $this->showAsCard();
     }
 }

@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\FileUploadController;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\StoreFiles;
-use Thinktomorrow\Chief\Assets\App\UpdateFileField;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
 use Thinktomorrow\Chief\Resource\Resource;
 
 trait TestingWithFiles
 {
     protected function saveFileField(Resource $resource, HasAsset $model, $fieldKey, array $payload)
     {
-        app(UpdateFileField::class)->handle(
+        app(SaveFileField::class)->handle(
             $model,
             $resource->field($model, $fieldKey),
             [

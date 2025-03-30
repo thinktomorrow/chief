@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
 
-use Thinktomorrow\Chief\Forms\Fields\Repeat\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;

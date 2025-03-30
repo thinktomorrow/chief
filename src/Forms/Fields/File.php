@@ -12,7 +12,7 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
-use Thinktomorrow\Chief\Assets\App\UpdateFileField;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\AllowsExternalFiles;
@@ -45,7 +45,7 @@ class File extends Component implements Field, HasComponents
 
     protected string $view = 'chief-form::fields.file';
 
-    protected string $windowView = 'chief-form::fields.file-window';
+    protected string $previewView = 'chief-form::previews.fields.file';
 
     public function __construct(string $key)
     {
@@ -66,7 +66,7 @@ class File extends Component implements Field, HasComponents
         $this->default([]);
 
         $this->save(function ($model, $field, $input, $files) {
-            app(UpdateFileField::class)->handle($model, $field, $input, $files);
+            app(SaveFileField::class)->handle($model, $field, $input, $files);
         });
     }
 

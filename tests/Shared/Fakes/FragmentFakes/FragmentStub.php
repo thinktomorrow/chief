@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 

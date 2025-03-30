@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Forms\Tests\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -72,7 +72,7 @@ class SavingFieldTest extends TestCase
         ArticlePage::migrateUp();
         $article = new ArticlePage;
 
-        $field = Text::make('title')->prepare(function ($value, $input) {
+        $field = Text::make('title')->prepForSaving(function ($value, $input) {
             return $value.'-foobar';
         });
 
@@ -89,7 +89,7 @@ class SavingFieldTest extends TestCase
         ArticlePage::migrateUp();
         $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->locales(['nl', 'en'])->prepare(function ($value, $input) {
+        $field = Text::make('title_trans')->locales(['nl', 'en'])->prepForSaving(function ($value, $input) {
             return $value.'-foobar';
         });
 
@@ -110,7 +110,7 @@ class SavingFieldTest extends TestCase
         ArticlePage::migrateUp();
         $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->setFieldNameTemplate(':name.:locale')->locales(['nl', 'en'])->prepare(function ($value, $input) {
+        $field = Text::make('title_trans')->setFieldNameTemplate(':name.:locale')->locales(['nl', 'en'])->prepForSaving(function ($value, $input) {
             return $value.'-foobar';
         });
 

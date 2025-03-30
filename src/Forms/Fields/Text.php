@@ -16,7 +16,7 @@ class Text extends Component implements Field
 
     protected string $view = 'chief-form::fields.text';
 
-    protected string $windowView = 'chief-form::fields.text-window';
+    protected string $previewView = 'chief-form::previews.fields.text';
 
     protected string $viewWithRedactor = 'chief-form::fields.text-with-redactor';
 

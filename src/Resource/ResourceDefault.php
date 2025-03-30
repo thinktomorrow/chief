@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Resource;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Manager;
 

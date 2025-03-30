@@ -42,17 +42,17 @@ interface Field extends HasTags, LocalizedField, Validatable
 
     public function getColumnName(): string;
 
-    public function prepare(Closure $prepareModelValue): static;
+    public function prepForSaving(Closure $prepForSaving): static;
 
-    public function hasPrepareModelValue(): bool;
+    public function hasPrepForSaving(): bool;
 
-    public function getPrepareModelValue(): ?Closure;
+    public function getPrepForSaving(): ?Closure;
 
-    public function setModelValue(Closure $setModelValue): static;
+    public function fillForSaving(Closure $fillForSaving): static;
 
-    public function hasSetModelValue(): bool;
+    public function hasFillForSaving(): bool;
 
-    public function getSetModelValue(): ?Closure;
+    public function getFillForSaving(): ?Closure;
 
     public function save(Closure $save): static;
 

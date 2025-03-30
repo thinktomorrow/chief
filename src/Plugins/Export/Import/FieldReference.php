@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Plugins\Export\Import;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\FieldLine;
@@ -101,7 +101,7 @@ class FieldReference
 
     public function isRepeatField(): bool
     {
-        return $this->field instanceof Fields\Repeat\Repeat;
+        return $this->field instanceof Fields\Repeat;
     }
 
     private function array_merge_overwrite(): array

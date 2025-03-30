@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\Tests\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 

@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;

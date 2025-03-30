@@ -14,5 +14,5 @@ class Slider extends Component implements Field
 
     protected string $view = 'chief-form::fields.slider';
 
-    protected string $windowView = 'chief-form::fields.text-window';
+    protected string $previewView = 'chief-form::previews.fields.text';
 }

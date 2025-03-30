@@ -12,15 +12,21 @@
 
 <div
     x-cloak
+    wire:ignore.self
     data-slot="tabs"
-    wire:ignore
     x-data="{
         activeTab: null,
         showNav: @js($showNav),
         showTabs: @js($showTabs),
+        tabs: [],
         init: function () {
-            this.activeTab =
-                @js($activeTab) || (this.tabs().length > 0 ? this.tabs()[0].id : null)
+
+            this.tabs = Array.from(this.$refs.tabs.children).map((node) => ({
+                    'id': node.getAttribute('data-tab-id'),
+                    'label': node.getAttribute('data-tab-label'),
+                }));
+
+            this.activeTab = @js($activeTab) || (this.tabs.length > 0 ? this.tabs[0].id : null)
 
             this.repositionTabMarker()
         },
@@ -30,19 +36,13 @@
             if (this.activeTab === e.detail.id) return
 
             // Check if this tabs accepts the given external tab
-            this.tabs().forEach(({ id }) => {
+            this.tabs.forEach(({ id }) => {
                 if (id === e.detail.id) {
                     this.activeTab = e.detail.id
                 }
             })
 
             this.repositionTabMarker()
-        },
-        tabs: function () {
-            return Array.from(this.$refs.tabs.children).map((node) => ({
-                'id': node.getAttribute('data-tab-id'),
-                'label': node.getAttribute('data-tab-label'),
-            }))
         },
         showTab: function (id) {
             this.activeTab = id
@@ -59,7 +59,7 @@
                     this.$root.querySelectorAll(`[role='tablist'] [role='tab']`),
                 ).find((tab) => tab.getAttribute('aria-selected') === 'true')
 
-                if (! tabElement) return
+                if (! tabElement) return;
 
                 this.$refs.tabMarker.style.width = tabElement.offsetWidth + 'px'
                 this.$refs.tabMarker.style.left = tabElement.offsetLeft + 'px'
@@ -91,7 +91,8 @@
             },
         ])
     >
-        <nav aria-label="Tabs" role="tablist" class="relative flex items-start justify-start border border-transparent">
+        <nav aria-label="Tabs" role="tablist"
+             class="relative flex items-start justify-start border border-transparent">
             <div
                 x-ref="tabMarker"
                 x-show="activeTab"
@@ -108,7 +109,7 @@
                 <span data-slot="tab-marker-content"></span>
             </div>
 
-            <template x-for="(tab, index) in tabs()">
+            <template x-for="(tab, index) in tabs" :key="tab.id">
                 <button
                     type="button"
                     :key="tab.id"

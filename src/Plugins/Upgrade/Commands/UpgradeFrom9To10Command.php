@@ -82,7 +82,9 @@ class UpgradeFrom9To10Command extends BaseCommand
             'private string $viewPath' => 'protected string $viewPath',
             'Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey' => 'Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName',
             'LocalizedFormKey' => 'LocalizedFieldName',
-            'Thinktomorrow\Chief\Forms\Fields\Repeat' => 'Thinktomorrow\Chief\Forms\Fields\Repeat\Repeat',
+            'Thinktomorrow\Chief\Forms\Form;' => 'Thinktomorrow\Chief\Forms\Layouts\Form;',
+            'Thinktomorrow\Chief\Forms\Form::' => 'Thinktomorrow\Chief\Forms\Layouts\Form::',
+            '->windowView(' => '->previewView(',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,
@@ -106,6 +108,8 @@ class UpgradeFrom9To10Command extends BaseCommand
         $textOccurrences = [
             'renderAdminFragment(' => 'The following files have the old renderAdminFragment method. This method has been removed in Chief 0.10. Please replace it with renderInAdmin().',
             'renderFragment(' => 'The following files have the old renderFragment method. This method has been removed in Chief 0.10. Please replace it with render().',
+            'editInSidebar()' => 'The following files have the old Form::editInSidebar method. This method has been removed in Chief 0.10. Please remove it.',
+            'showAsBlank()' => 'The following files have the old Form::showAsBlank method. This method has been removed in Chief 0.10. Please remove it.',
         ];
 
         $allClean = true;
