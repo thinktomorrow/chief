@@ -8,11 +8,17 @@
     'dispatchTab' => true,
     'reference' => null,
     'size' => 'xs',
+    'wireIgnore' => false,
 ])
+
+{{--
+    wire:ignore - needed for file inputs else they have their state removed ...
+    wire:ignore.self - needed wire:modeling for everything else...
+--}}
 
 <div
     x-cloak
-    wire:ignore.self
+    {{ $wireIgnore ? 'wire:ignore' : 'wire:ignore.self' }}
     data-slot="tabs"
     x-data="{
         activeTab: null,

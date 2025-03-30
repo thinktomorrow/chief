@@ -22,7 +22,7 @@
         $R('[data-editor]');
 
         // Init redactor in livewire dialogs
-        document.addEventListener('fragment-dialog-opened', () => {
+        document.addEventListener('form-dialog-opened', () => {
             // Next tick my friend... next tick
             setTimeout(() => {
                 $R('[data-editor]');

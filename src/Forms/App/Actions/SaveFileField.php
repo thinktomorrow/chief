@@ -11,6 +11,7 @@ use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReorderAssets;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Forms\Fields\File;
 
 class SaveFileField

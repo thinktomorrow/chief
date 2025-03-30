@@ -22,6 +22,13 @@ class Form extends Component
         $this->tag($key);
     }
 
+    protected function wireableMethods(array $components): array
+    {
+        return array_merge(parent::wireableMethods($components), [
+            ...(isset($this->formDisplay) ? ['setFormDisplay' => $this->formDisplay] : []),
+        ]);
+    }
+
     //    public function getpreviewView(): string
     //    {
     //        return $this->previewView;

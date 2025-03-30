@@ -55,6 +55,14 @@ class FormComponent extends Component
 
     public function render()
     {
+        if ($this->form->getFormDisplay() == 'inline') {
+            return view('chief-form::livewire.form-inline');
+        }
+
+        if ($this->form->getFormDisplay() == 'compact') {
+            return view('chief-form::livewire.form-compact');
+        }
+
         return view('chief-form::livewire.form');
     }
 }

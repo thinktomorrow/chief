@@ -7,11 +7,11 @@
                 $resource->getPageTitle($model)
             ]"
         >
-            {{--            @if ($layout->has('pagetitle'))--}}
-            <x-slot name="customTitle">
-                {{--                    <x-chief-form::forms id="pagetitle" />--}}
-            </x-slot>
-            {{--            @endif--}}
+            @if ($layout->hasForm('pagetitle'))
+                <x-slot name="customTitle">
+                    {{ $layout->findForm('pagetitle')->render() }}
+                </x-slot>
+            @endif
 
             <x-slot name="actions">
                 @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
@@ -23,10 +23,9 @@
         </x-chief::page.header>
     </x-slot>
 
-    @foreach ($layout->filterByPosition('main')->getComponents() as $component)
+    @foreach ($layout->filterByPosition('main')->exclude('pagetitle')->getComponents() as $component)
         {{ $component->render() }}
     @endforeach
-    {{--    <x-chief-form::forms position="main" />--}}
 
     @if ($model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner)
         <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
@@ -36,15 +35,11 @@
         {{ $component->render() }}
     @endforeach
 
-    {{--    <x-chief-form::forms position="main-bottom" />--}}
-
     <x-slot name="sidebar">
 
         @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
-            {{ $component->render() }}
+            {{ $component->displayAsBlankForm()->render() }}
         @endforeach
-
-        {{--        <x-chief-form::forms position="aside-top" />--}}
 
         @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             <livewire:chief-wire::site-links :model="$model" />
@@ -53,9 +48,8 @@
         @endif
 
         @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
-            {{ $component->render() }}
+            {{ $component->displayAsBlankForm()->render() }}
         @endforeach
-        {{--        <x-chief-form::forms position="aside" />--}}
     </x-slot>
 
     @include('chief::templates.page._partials.editor-script')

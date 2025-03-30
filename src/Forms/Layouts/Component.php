@@ -71,7 +71,7 @@ abstract class Component extends \Illuminate\View\Component implements HasTagged
             ...(isset($this->columns) ? ['columns' => $this->columns] : []),
             ...(isset($this->collapsible) ? ['collapsible' => $this->collapsible] : []),
             ...(isset($this->collapsed) ? ['collapsed' => $this->collapsed] : []),
-            ...(isset($this->layoutType) ? ['layoutType' => $this->layoutType->value] : []),
+            ...(isset($this->layoutType) ? ['layoutType' => $this->layoutType] : []),
             ...(isset($this->position) ? ['position' => $this->position] : []),
             ...(isset($this->tags) ? ['tag' => $this->tags] : []),
         ];

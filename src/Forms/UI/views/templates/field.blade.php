@@ -19,6 +19,9 @@
             'hidden' => true,
         ]);
     }
+
+    $wireIgnoredTabs = $component instanceof \Thinktomorrow\Chief\Forms\Fields\File;
+
 @endphp
 
 <x-chief::form.fieldset :attributes="$attributes">
@@ -43,7 +46,8 @@
             @include('chief-form::fields._partials.charactercount')
         @endforeach
     @else
-        <x-chief::tabs :listen-for-external-tab="true">
+
+        <x-chief::tabs :listen-for-external-tab="true" :wire-ignore="$wireIgnoredTabs">
             @foreach ($getLocales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">
                     @include($getView(), ['component' => $component, 'locale' => $locale])

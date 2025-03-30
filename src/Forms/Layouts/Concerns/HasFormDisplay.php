@@ -14,21 +14,27 @@ trait HasFormDisplay
 
     public function displayAsWindowForm(): static
     {
-        $this->formDisplay = 'window';
-
-        return $this;
+        return $this->setFormDisplay('window');
     }
 
     public function displayAsBlankForm(): static
     {
-        $this->formDisplay = 'blank';
-
-        return $this;
+        return $this->setFormDisplay('blank');
     }
 
     public function displayAsInlineForm(): static
     {
-        $this->formDisplay = 'inline';
+        return $this->setFormDisplay('inline');
+    }
+
+    public function displayAsCompactForm(): static
+    {
+        return $this->setFormDisplay('compact');
+    }
+
+    public function setFormDisplay(string $formDisplay): static
+    {
+        $this->formDisplay = $formDisplay;
 
         return $this;
     }

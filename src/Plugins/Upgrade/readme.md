@@ -51,7 +51,7 @@ dialogs.
 
 ```php
 // Load redactor in livewire dialogs
-document.addEventListener('fragment-dialog-opened', (event) => {
+document.addEventListener('form-dialog-opened', (event) => {
 
     // Next tick my friend... next tick
     setTimeout(() => {

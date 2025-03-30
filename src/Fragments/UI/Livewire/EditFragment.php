@@ -63,7 +63,7 @@ class EditFragment extends Component
          */
         $this->injectFormValues($this->getFields());
 
-        $this->dispatch('fragment-dialog-opened', ...[
+        $this->dispatch('form-dialog-opened', ...[
             'componentId' => $this->getId(),
             'parentComponentId' => $this->parentComponentId,
             'contextId' => $this->fragment->contextId,

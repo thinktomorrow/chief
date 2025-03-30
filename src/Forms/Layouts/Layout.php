@@ -93,6 +93,17 @@ class Layout implements HasTaggedComponents
     //        return false;
     //    }
 
+    public function hasForm(string $formId): bool
+    {
+        foreach ($this->components as $form) {
+            if ($form->getId() == $formId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function findForm(string $formId): Form
     {
         foreach ($this->components as $form) {
@@ -111,10 +122,14 @@ class Layout implements HasTaggedComponents
             ->filter(fn ($component) => $component->getPosition() == $position);
     }
 
-    //    private function exclude(array $formIds): static
-    //    {
-    //        return $this->filter(fn ($form) => ! in_array($form->getId(), $formIds));
-    //    }
+    public function exclude(array|string $componentKeys): static
+    {
+        if (! is_array($componentKeys)) {
+            $componentKeys = [$componentKeys];
+        }
+
+        return $this->filter(fn ($component) => ! in_array($component->getKey(), $componentKeys));
+    }
 
     private function filter(callable $filter): static
     {
