@@ -38,7 +38,7 @@
     <x-slot name="sidebar">
 
         @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
-            {{ $component->displayAsBlankForm()->render() }}
+            {{ $component->displayAsTransparentForm()->render() }}
         @endforeach
 
         @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
@@ -48,7 +48,7 @@
         @endif
 
         @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
-            {{ $component->displayAsBlankForm()->render() }}
+            {{ $component->displayAsTransparentForm()->render() }}
         @endforeach
     </x-slot>
 
