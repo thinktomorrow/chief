@@ -92,7 +92,7 @@ module.exports = {
             },
         },
         fontFamily: {
-            display: ['Inter Tight', 'Helvetica', 'Arial', 'sans-serif'],
+            display: ['Ronzino', 'Inter Tight', 'Helvetica', 'Arial', 'sans-serif'],
             body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
         },
         fontSize: {
