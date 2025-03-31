@@ -37,7 +37,7 @@
     </x-slot>
 
     @foreach ($contexts as $context)
-        <div wire:key="context-tab-content-{{ $context->id }}">
+        <div wire:key="context-tab-content-{{ $context->id }}" class="-mb-4">
             @if ($context->id === $activeContextId)
                 <livewire:chief-fragments::context :key="$context->id" :context="$context" />
             @endif

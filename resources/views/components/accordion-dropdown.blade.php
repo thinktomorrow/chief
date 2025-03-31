@@ -2,10 +2,23 @@
     'size' => 'base',
     'variant' => 'grey',
     'title' => null,
-    'icon' => null,
 ])
 
+{{--
+    Options
+    - size: base, sm, xs
+    - variant: grey, blue, red, orange, green, outline-white
+    - edge-to-edge: true, false
+    
+    Thoughts:
+    - Header instead of title? For badges etc.
+    - Other icon than chevron?
+    - Make it so when you click the header/chevron, other toggles close (optional)
+    - Maybe better to have a different styling for this?
+--}}
+
 <div
+    x-data="{ isOpen: false }"
     {{
         $attributes->class([
             'callout',
@@ -27,12 +40,6 @@
         ])
     }}
 >
-    @if ($icon)
-        <div {{ $icon->attributes->merge(['data-slot' => 'icon-container']) }}>
-            {{ $icon }}
-        </div>
-    @endif
-
     <div class="grow">
         @if ($title)
             <p data-slot="title">
@@ -40,8 +47,13 @@
             </p>
         @endif
 
-        <div data-slot="content" class="prose">
+        <div data-slot="content" class="prose" x-show="isOpen">
             {{ $slot }}
         </div>
+    </div>
+
+    <div data-slot="icon-container" x-on:click="isOpen = !isOpen">
+        <x-chief::icon.chevron-left x-show="!isOpen" />
+        <x-chief::icon.chevron-down x-show="isOpen" />
     </div>
 </div>

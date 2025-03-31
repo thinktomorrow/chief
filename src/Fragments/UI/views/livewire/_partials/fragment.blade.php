@@ -3,7 +3,7 @@
     wire:key="{{ 'context-fragment-' . $fragment->getId() }}"
     x-sortable-item="{{ $fragment->fragmentId }}"
 >
-    <div class="space-y-1 py-4">
+    <div class="space-y-3 py-4">
         <div class="flex items-start justify-end gap-3">
             <x-chief::button x-sortable-handle size="sm" variant="outline-white" title="herschikken" class="shrink-0">
                 <x-chief::icon.drag-drop-vertical />
@@ -41,7 +41,7 @@
         </div>
 
         @if ($fragment->content)
-            <div class="px-[2.65rem]">
+            <div>
                 {!! $fragment->content !!}
             </div>
         @endif

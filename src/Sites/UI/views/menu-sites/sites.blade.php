@@ -11,15 +11,18 @@
         @endif
     </x-slot>
 
-    <div class="space-y-1">
+    <div>
         @foreach ($sites as $site)
-            <div wire:key="site-{{ $site->locale }}">
+            <div
+                wire:key="site-link-{{ $site->locale }}"
+                @class([
+                    'space-y-1',
+                    'mt-3 border-t border-grey-100 pt-3' => ! $loop->first,
+                ])
+            >
                 <div class="flex items-start justify-between gap-2">
-                    <div class="flex items-start gap-2">
-                        <div>
-                            <p class="text-sm leading-6 text-grey-500">{{ $site->name }}</p>
-                        </div>
-                    </div>
+                    <p class="text-sm/5 text-grey-700">{{ $site->name }}</p>
+
                     @if ($activeMenu = $this->findActiveMenu($site->locale))
                         <x-chief::badge>
                             <span>{{ $activeMenu->title }}</span>
