@@ -1,4 +1,9 @@
-{{-- "reference" => Reference of this tabs, context that is passed with the event for finetuning listeners --}}
+{{--
+    reference: Reference of this tabs, context that is passed with the event for finetuning listeners
+    wireIgnore:
+    - true: wire:ignore - Needed for file inputs else they have their state removed ...
+    - false: wire:ignore.self - Needed wire:modeling for everything else...
+--}}
 
 @props([
     'activeTab' => null,
@@ -11,11 +16,6 @@
     'wireIgnore' => false,
 ])
 
-{{--
-    wire:ignore - needed for file inputs else they have their state removed ...
-    wire:ignore.self - needed wire:modeling for everything else...
---}}
-
 <div
     x-cloak
     {{ $wireIgnore ? 'wire:ignore' : 'wire:ignore.self' }}
@@ -26,13 +26,13 @@
         showTabs: @js($showTabs),
         tabs: [],
         init: function () {
-
             this.tabs = Array.from(this.$refs.tabs.children).map((node) => ({
-                    'id': node.getAttribute('data-tab-id'),
-                    'label': node.getAttribute('data-tab-label'),
-                }));
+                'id': node.getAttribute('data-tab-id'),
+                'label': node.getAttribute('data-tab-label'),
+            }))
 
-            this.activeTab = @js($activeTab) || (this.tabs.length > 0 ? this.tabs[0].id : null)
+            this.activeTab =
+                @js($activeTab) || (this.tabs.length > 0 ? this.tabs[0].id : null)
 
             this.repositionTabMarker()
         },
@@ -65,7 +65,7 @@
                     this.$root.querySelectorAll(`[role='tablist'] [role='tab']`),
                 ).find((tab) => tab.getAttribute('aria-selected') === 'true')
 
-                if (! tabElement) return;
+                if (! tabElement) return
 
                 this.$refs.tabMarker.style.width = tabElement.offsetWidth + 'px'
                 this.$refs.tabMarker.style.left = tabElement.offsetLeft + 'px'
@@ -97,8 +97,7 @@
             },
         ])
     >
-        <nav aria-label="Tabs" role="tablist"
-             class="relative flex items-start justify-start border border-transparent">
+        <nav aria-label="Tabs" role="tablist" class="relative flex items-start justify-start border border-transparent">
             <div
                 x-ref="tabMarker"
                 x-show="activeTab"
